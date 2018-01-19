@@ -11,6 +11,15 @@
         android:theme="@style/AppTheme">
         <activity android:name=".Home.HomeActivity"
             android:screenOrientation="portrait">
+            <!--<intent-filter>-->
+                <!--&lt;!&ndash;<action android:name="android.intent.action.MAIN" />&ndash;&gt;-->
+
+                <!--&lt;!&ndash;<category android:name="android.intent.category.DEFAULT" />&ndash;&gt;-->
+            <!--</intent-filter>-->
+        </activity>
+
+        <activity android:name=".Utility.Splash_Activity"
+            android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

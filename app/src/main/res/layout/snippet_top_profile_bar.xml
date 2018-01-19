@@ -1,0 +1,34 @@
+<merge xmlns:android="http://schemas.android.com/apk/res/android"
+    >
+    <android.support.design.widget.AppBarLayout
+
+        android:layout_height="50dp"
+        android:layout_width="match_parent"
+        android:background="@drawable/white_grey_bottom_border">
+        
+        <android.support.v7.widget.Toolbar
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/profile_toolbar"
+            ></android.support.v7.widget.Toolbar>
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:text="User name"
+                android:textSize="25dp"
+                android:textColor="@color/black"
+                android:layout_marginLeft="15dp"
+                android:id="@+id/profilename"
+
+                />
+        </RelativeLayout>
+
+
+    </android.support.design.widget.AppBarLayout>
+
+    </merge>

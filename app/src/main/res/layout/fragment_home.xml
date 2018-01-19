@@ -11,4 +11,15 @@
         android:text="home fragment"
         android:textSize="20dp" />
 
+    <Button
+        android:id="@+id/button_userprofile"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="goto user profile" />
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="goto shop profile"
+        android:id="@+id/button_shopprofile"/>
+
 </LinearLayout>
