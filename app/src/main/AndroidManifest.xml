@@ -26,6 +26,12 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity android:name=".Profile.ShopProfileActivity"
+            android:screenOrientation="portrait">
+        </activity>
+        <activity android:name=".Profile.UserProfileActivity"
+            android:screenOrientation="portrait">
+        </activity>
     </application>
 
 </manifest>
