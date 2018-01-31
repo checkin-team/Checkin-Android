@@ -29,23 +29,20 @@
                 android:layout_height="wrap_content"
                 >
 
-                <include layout="@layout/layout_top_bar" />
+
 
             </RelativeLayout>
 
-            <RelativeLayout
-                android:id="@+id/relativelayout2"
-                android:layout_width="match_parent"
+            <TextView
+                android:id="@+id/textView"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_alignParentBottom="true"
+                android:layout_centerHorizontal="true"
+                android:layout_marginBottom="221dp"
+                android:textSize="20sp"
+                android:text="This is where the posts will \nbe shown." />
 
-
-
-                android:layout_below="@+id/relativelayout1">
-
-                <include layout="@layout/layout_centre_viewpager" />
-
-
-            </RelativeLayout>
 
             <!--<include layout="@layout/layout_bottom_nav_bar"/>-->
 
@@ -60,8 +57,19 @@
         android:layout_height="match_parent"
         android:layout_width="wrap_content"
         android:layout_gravity="start"
+        android:fitsSystemWindows="true"
         app:headerLayout="@layout/layout_header"
         app:menu="@menu/drawer_menu"
+        />
+
+    <android.support.design.widget.NavigationView
+        android:id="@+id/navigation_view_right"
+        android:layout_height="match_parent"
+        android:layout_width="wrap_content"
+
+        android:fitsSystemWindows="true"
+        android:layout_gravity="end"
+        app:menu="@menu/chats"
         />
 
 

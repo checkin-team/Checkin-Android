@@ -18,6 +18,7 @@ import android.widget.Button;
 import android.widget.Toast;
 
 import com.alcatraz.admin.project_alcatraz.R;
+import com.google.zxing.integration.android.IntentIntegrator;
 
 /**
  * Created by admin on 1/14/2018.
@@ -29,69 +30,72 @@ public class HomeActivity extends AppCompatActivity {
     private NavigationView navigationView=null;
     private DrawerLayout drawerLayout=null;
     private Toolbar toolbar=null;
+    private IntentIntegrator qrScan;
 
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_home);
-//        toolbar = (Toolbar) findViewById(R.id.toolbar);
-//        setSupportActionBar(toolbar);
+        setContentView(R.layout.activity_main_with_drawer);
+        toolbar = (Toolbar) findViewById(R.id.toolbar);
+       setSupportActionBar(toolbar);
         Log.d(TAG,"onCreate: starting.");
-//        navigationView=(NavigationView)findViewById(R.id.navigation_view);
-//        navigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
-//            @Override
-//            public boolean onNavigationItemSelected(MenuItem item) {
-//                drawerLayout.closeDrawers();
-//                switch (item.getItemId())
-//                {
-//
-//                    case R.id.drawer_profile:
-//                        Toast.makeText(HomeActivity.this, "profile menu item selected", Toast.LENGTH_SHORT).show();
-//                        break;
-//                    case R.id.drawer_settings:
-//                        Toast.makeText(HomeActivity.this, "settings menu item selected", Toast.LENGTH_SHORT).show();
-//                        break;
-//                    case R.id.drawer_privacysettings:
-//                        Toast.makeText(HomeActivity.this, "privacy settings menu item selected", Toast.LENGTH_SHORT).show();
-//                        break;
-//                        default:
-//                            Toast.makeText(HomeActivity.this, "yo whats up, default of switch case selected", Toast.LENGTH_SHORT).show();
-//                            break;
-//
-//
-//
-//                }
-//                return true;
-//
-//            }
-//        });
-//
-//        drawerLayout=(DrawerLayout)findViewById(R.id.drawer);
-//        ActionBarDrawerToggle actionBarDrawerToggle=new ActionBarDrawerToggle(this,drawerLayout,toolbar,R.string.app_name,R.string.app_name){
-//            @Override
-//            public void onDrawerClosed(View drawerView) {
-//                // Code here will be triggered once the drawer closes as we dont want anything to happen so we leave this blank
-//                super.onDrawerClosed(drawerView);
-//            }
-//
-//            @Override
-//            public void onDrawerOpened(View drawerView) {
-//
-//
-//                super.onDrawerOpened(drawerView);
-//            }
-//
-//        };
-//        drawerLayout.addDrawerListener(actionBarDrawerToggle);
+      navigationView=(NavigationView)findViewById(R.id.navigation_view);
+       navigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
+            @Override
+            public boolean onNavigationItemSelected(MenuItem item) {
+                drawerLayout.closeDrawers();
+                switch (item.getItemId())
+                {
+
+                    case R.id.drawer_profile:
+                        Toast.makeText(HomeActivity.this, "profile menu item selected", Toast.LENGTH_SHORT).show();
+                        break;
+                    case R.id.drawer_settings:
+                        Toast.makeText(HomeActivity.this, "settings menu item selected", Toast.LENGTH_SHORT).show();
+                        break;
+                    case R.id.drawer_privacysettings:
+                        Toast.makeText(HomeActivity.this, "privacy settings menu item selected", Toast.LENGTH_SHORT).show();
+                        break;
+                        default:
+                            Toast.makeText(HomeActivity.this, "yo whats up, default of switch case selected", Toast.LENGTH_SHORT).show();
+                            break;
+
+
+
+                }
+                return true;
+
+            }
+        });
+
+        drawerLayout=(DrawerLayout)findViewById(R.id.drawer);
+        ActionBarDrawerToggle actionBarDrawerToggle=new ActionBarDrawerToggle(this,drawerLayout,toolbar,R.string.app_name,R.string.app_name){
+            @Override
+            public void onDrawerClosed(View drawerView) {
+                // Code here will be triggered once the drawer closes as we dont want anything to happen so we leave this blank
+                super.onDrawerClosed(drawerView);
+
+            }
+
+            @Override
+            public void onDrawerOpened(View drawerView) {
+
+                super.onDrawerOpened(drawerView);
+            }
+
+        };
+        actionBarDrawerToggle.syncState();
+       drawerLayout.addDrawerListener(actionBarDrawerToggle);
 //
 //        //calling sync state is necessay or else your hamburger icon wont show up
-//        actionBarDrawerToggle.syncState();
 
 
 
-//        setupBottomNavigationView();
-        setupViewPager();
+
+//       setupBottomNavigationView();
+//        setupViewPager();
+        qrScan = new IntentIntegrator(this);
 
     }
 
@@ -100,6 +104,11 @@ public class HomeActivity extends AppCompatActivity {
      * for adding the fragments in ghome activity
      *
      */
+    public void startQr(View v)
+    {
+        qrScan.initiateScan();
+
+    }
 
 
     private void setupViewPager()
