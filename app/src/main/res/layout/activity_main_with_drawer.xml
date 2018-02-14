@@ -12,41 +12,98 @@
         android:layout_height="match_parent"
         android:layout_width="match_parent"
         >
-        <include
-
-            layout="@layout/tool_bar"
-            />
-
-
-        <RelativeLayout
+        <android.support.design.widget.AppBarLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_height="wrap_content"
+            android:scrollbars="none"
+            android:id="@+id/highest"
+            android:elevation="6dp"
+            android:background="?attr/colorPrimary">
+            <android.support.v7.widget.Toolbar xmlns:android="http://schemas.android.com/apk/res/android"
+                xmlns:app="http://schemas.android.com/apk/res-auto"
 
 
-            <android.support.v7.widget.RecyclerView
-                android:id="@+id/recyclerview1"
-                android:scrollbars="horizontal"
-                android:layout_width="wrap_content"
+                android:id="@+id/toolbar"
+                android:layout_width="match_parent"
+                android:scrollbars="none"
+                android:layout_marginLeft="15dp"
+                android:layout_marginRight="15dp"
+                android:layout_marginTop="10dp"
                 android:layout_height="56dp"
-                android:elevation="6dp"
-                android:layout_centerHorizontal="true"
-                android:layout_marginTop="61dp"  />
+                app:theme="@style/Theme.AppCompat.Light.NoActionBar"
+                android:background="#0ff"
+                app:layout_scrollFlags="scroll|enterAlways|snap"
+                style="@style/HeaderBar"
+                android:elevation="10dp"
+                android:visibility="visible"
+                >
+
+
+                <!--make a custom toolbar-->
+
+                <!--add msg icon-->
+
+
+                <Button
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:background="@android:color/transparent"
+                    android:layout_gravity="center_horizontal"
+                    android:onClick="startQr"
+                    android:text="CHECK  IN!"
+                    android:textStyle="italic"
+                    android:textAlignment="center"
+                    android:textColor="#000"
+                    android:textSize="30sp"
+                    android:clickable="true"
+                    android:focusable="true"
+                    />
+
+            </android.support.v7.widget.Toolbar>
+        </android.support.design.widget.AppBarLayout>
+
+
+
+
+<android.widget.FrameLayout android:layout_height="wrap_content"
+    android:layout_width="match_parent"
+    app:layout_behavior="@string/appbar_scrolling_view_behavior">
+
             <android.support.v7.widget.RecyclerView
                 android:id="@+id/recyclerview2"
-                android:scrollbars="vertical"
+                android:scrollbars="none"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="121dp"
+                android:layout_marginTop="111dp"
+
+
                 android:layout_centerHorizontal="true"
-                app:layout_behavior="@string/appbar_scrolling_view_behavior"/>
+
+                />
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/recyclerviewhorizontal2"
+        android:scrollbars="none"
+        android:background="@color/white"
+        android:layout_width="wrap_content"
+        android:layout_height="106dp"
+        android:elevation="6dp"
+        android:visibility="gone"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="111dp"  />
+       <android.support.v7.widget.RecyclerView
+            android:id="@+id/recyclerview1"
+            android:scrollbars="none"
+            android:layout_width="wrap_content"
+            android:layout_height="106dp"
+            android:elevation="6dp"
+            android:layout_centerHorizontal="true"
+
+            android:layout_marginTop="5dp"  />
+
+</android.widget.FrameLayout>
 
 
-            <!--<include layout="@layout/layout_bottom_nav_bar"/>-->
-            app:layout_behavior="@strings/appbar_scrolling_view_behavior"
 
-
-
-        </RelativeLayout>
     </android.support.design.widget.CoordinatorLayout>
 
     <android.support.design.widget.NavigationView

@@ -16,7 +16,7 @@ import java.util.List;
  * Created by TAIYAB on 05-02-2018.
  */
 
-public class Feeds extends RecyclerView.Adapter<Feeds.MyView> {
+public class FeedsAdapter extends RecyclerView.Adapter<FeedsAdapter.MyView> {
 
     private List<String> list;
 
@@ -33,7 +33,7 @@ public class Feeds extends RecyclerView.Adapter<Feeds.MyView> {
     }
 
 
-    public Feeds(List<String> horizontalList) {
+    public FeedsAdapter(List<String> horizontalList) {
         this.list = horizontalList;
     }
 
@@ -47,7 +47,7 @@ public class Feeds extends RecyclerView.Adapter<Feeds.MyView> {
 
     @Override
     public void onBindViewHolder(final MyView holder, final int position) {
-        Log.e("TAG",list.get(position));
+       // Log.e("TAG",list.get(position));
         holder.textView.setText(list.get(position));
 
 

@@ -9,6 +9,7 @@
     card_view:cardCornerRadius="7dp"
     card_view:cardElevation="7dp"
     card_view:cardBackgroundColor="#000000"
+
     android:layout_margin="2dp"
     >
 

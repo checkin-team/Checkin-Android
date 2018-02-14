@@ -1,12 +1,13 @@
 package com.alcatraz.admin.project_alcatraz.Home;
 
-import android.nfc.Tag;
-import android.os.Build;
+import android.animation.Animator;
+import android.animation.AnimatorListenerAdapter;
+import android.content.res.Resources;
 import android.os.Bundle;
-import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.design.widget.NavigationView;
 import android.support.design.widget.TabLayout;
+import android.support.v4.view.GestureDetectorCompat;
 import android.support.v4.view.ViewPager;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
@@ -15,12 +16,14 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
+import android.util.TypedValue;
 import android.view.GestureDetector;
 import android.view.MenuItem;
 import android.view.MotionEvent;
 import android.view.View;
-import android.view.Window;
-import android.widget.Button;
+import android.view.ViewGroup;
+import android.view.animation.AccelerateInterpolator;
+import android.view.animation.DecelerateInterpolator;
 import android.widget.Toast;
 
 import com.alcatraz.admin.project_alcatraz.R;
@@ -35,6 +38,7 @@ import java.util.Scanner;
 
 public class HomeActivity extends AppCompatActivity {
     private  RecyclerView recyclerView;
+    private GestureDetectorCompat mDetector;
     private ArrayList<String> Number;
     private RecyclerView.LayoutManager RecyclerViewLayoutManager;
     private RecyclerViewAdapter RecyclerViewHorizontalAdapter;
@@ -136,7 +140,6 @@ public class HomeActivity extends AppCompatActivity {
         drawerLayout.addDrawerListener(right_toggle);
         getSupportActionBar().setTitle("");
 
-
        // getSupportActionBar().setHideOnContentScrollEnabled(true);}
 //
 //        //calling sync state is necessary or else your hamburger icon wont show up
@@ -146,8 +149,24 @@ public class HomeActivity extends AppCompatActivity {
 
 //       setupBottomNavigationView();
 //        setupViewPager();
-        recyclerView = (RecyclerView)findViewById(R.id.recyclerview1);
+        initializeHorizontalView(R.id.recyclerview1);
+        initializeHorizontalView(R.id.recyclerviewhorizontal2);
+        initializeFeeds();
+        qrScan = new IntentIntegrator(this);
+        mDetector = new GestureDetectorCompat(this, new ListenToHorizontal());
 
+
+    }
+    private void initializeHorizontalView(int id)
+    {
+
+        recyclerView = (RecyclerView)findViewById(id);
+        recyclerView.setOnTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View v, MotionEvent event){
+                return mDetector.onTouchEvent(event);
+            }
+        });
         RecyclerViewLayoutManager = new LinearLayoutManager(getApplicationContext());
 
         recyclerView.setLayoutManager(RecyclerViewLayoutManager);
@@ -185,7 +204,7 @@ public class HomeActivity extends AppCompatActivity {
                     RecyclerViewItemPosition = Recyclerview.getChildAdapterPosition(ChildView);
 
                     // Showing clicked item value on screen using toast message.
-                    Toast.makeText(HomeActivity.this, Number.get(RecyclerViewItemPosition), Toast.LENGTH_LONG).show();
+                    Toast.makeText(HomeActivity.this, Number.get(RecyclerViewItemPosition), Toast.LENGTH_SHORT).show();
 
                 }
 
@@ -202,9 +221,6 @@ public class HomeActivity extends AppCompatActivity {
 
             }
         });
-        initializeFeeds();
-        qrScan = new IntentIntegrator(this);
-
     }
     private void initializeFeeds()
     {
@@ -214,7 +230,13 @@ public class HomeActivity extends AppCompatActivity {
         while(sc.hasNext())
             feed.add(sc.next());
 
-        RecyclerView recyclerView = (RecyclerView)findViewById(R.id.recyclerview2);
+        final RecyclerView recyclerView = (RecyclerView)findViewById(R.id.recyclerview2);
+        recyclerView.setOnTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View v, MotionEvent event){
+                return new GestureDetectorCompat(getApplicationContext(), new ListenToVertical()).onTouchEvent(event);
+            }
+        });
 
         LinearLayoutManager RecyclerViewLayoutManager = new LinearLayoutManager(getApplicationContext());
 
@@ -222,18 +244,55 @@ public class HomeActivity extends AppCompatActivity {
 
         // Adding items to RecyclerView.
 
-        Feeds RecyclerViewHorizontalAdapter = new Feeds(feed);
+        FeedsAdapter RecyclerViewHorizontalAdapter = new FeedsAdapter(feed);
 
         LinearLayoutManager HorizontalLayout = new LinearLayoutManager(HomeActivity.this, LinearLayoutManager.VERTICAL, false);
         recyclerView.setLayoutManager(HorizontalLayout);
 
         recyclerView.setAdapter(RecyclerViewHorizontalAdapter);
+        final RecyclerView r1=findViewById(R.id.recyclerview1);
 
 
         // Adding on item click listener to RecyclerView.
         recyclerView.addOnItemTouchListener(new RecyclerView.OnItemTouchListener() {
 
+            boolean showing=true;
             GestureDetector gestureDetector = new GestureDetector(HomeActivity.this, new GestureDetector.SimpleOnGestureListener() {
+               /* @Override                public boolean onScroll(MotionEvent e1, MotionEvent e2, float distanceX, float distanceY) {
+
+                    if (distanceY > 0) {
+                        // Scrolled upward
+                        if (e2.getAction() == MotionEvent.ACTION_MOVE&&showing==true)
+                        {
+                            showing=false;
+                            Log.e("g","GOing uP");
+                            toolbar.setVisibility(View.GONE);
+                            ViewGroup.MarginLayoutParams params = (ViewGroup.MarginLayoutParams) recyclerView.getLayoutParams();
+                            params.topMargin =(int)TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 121-56, getResources().getDisplayMetrics());
+                            ViewGroup.MarginLayoutParams params1 = (ViewGroup.MarginLayoutParams) r1.getLayoutParams();
+                            params1.topMargin =(int)TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 5, getResources().getDisplayMetrics());
+
+                            // The pointer has gone up, ending the gesture
+                        }
+                    }
+                    if (distanceY < 0) {
+                        Log.e("g","GOing DOWNTOWn");
+
+                        // Scrolled upward
+                        if (e2.getAction() == MotionEvent.ACTION_MOVE&&showing==false)
+                        {
+                            showing=true;
+                            toolbar.setVisibility(View.VISIBLE);
+                            ViewGroup.MarginLayoutParams params = (ViewGroup.MarginLayoutParams) recyclerView.getLayoutParams();
+                            params.topMargin =(int)TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 121, getResources().getDisplayMetrics());
+                            ViewGroup.MarginLayoutParams params1 = (ViewGroup.MarginLayoutParams) r1.getLayoutParams();
+                            params1.topMargin =(int)TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 61, getResources().getDisplayMetrics());
+
+                            // The pointer has gone up, ending the gesture
+                        }
+                    }
+                    return false;
+                }*/
 
                 @Override public boolean onSingleTapUp(MotionEvent motionEvent) {
 
@@ -321,4 +380,61 @@ public class HomeActivity extends AppCompatActivity {
 
     }
 
+    public class ListenToHorizontal extends GestureDetector.SimpleOnGestureListener {
+        private static final String DEBUG_TAG = "Gestures";
+
+        @Override
+        public boolean onDown(MotionEvent event) {
+            Log.e(DEBUG_TAG, "onDown: " + event.toString());
+            return true;
+        }
+
+        @Override
+        public void onLongPress(MotionEvent e) {
+            Log.e("HERE","HERE");
+            final RecyclerView r = findViewById(R.id.recyclerviewhorizontal2);
+            r.animate()
+                    .translationY(0)
+                    .alpha(1.0f)
+                    .setDuration(500)
+                    .setListener(new AnimatorListenerAdapter() {
+                        @Override
+                        public void onAnimationEnd(Animator animation) {
+                            super.onAnimationEnd(animation);
+                            r.setVisibility(View.VISIBLE);
+                        }
+                    });
+
+
+        }
+    }
+    public class ListenToVertical extends GestureDetector.SimpleOnGestureListener {
+        private static final String DEBUG_TAG = "Gestures";
+
+        @Override
+        public boolean onDown(MotionEvent event) {
+            final View view=findViewById(R.id.recyclerviewhorizontal2);
+            Log.e(DEBUG_TAG, "VERTICLA DOWN: " + event.toString());view.animate()
+                    .translationY(-view.getHeight())
+                    .alpha(0.0f)
+                    .setDuration(300)
+                    .setListener(new AnimatorListenerAdapter() {
+                        @Override
+                        public void onAnimationEnd(Animator animation) {
+                            super.onAnimationEnd(animation);
+                            view.clearAnimation();
+                            view.setVisibility(View.GONE);
+                        }
+                    });
+
+
+            return true;
+        }
+
+        @Override
+        public boolean onSingleTapUp(MotionEvent e) {
+            Log.e("","CONFIRMED");
+            return super.onSingleTapUp(e);
+        }
+    }
 }
