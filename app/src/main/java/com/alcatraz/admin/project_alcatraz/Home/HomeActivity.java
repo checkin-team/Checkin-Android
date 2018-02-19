@@ -12,6 +12,7 @@ import android.support.v4.view.ViewPager;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.CardView;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
@@ -169,6 +170,7 @@ public class HomeActivity extends AppCompatActivity {
         });
         RecyclerViewLayoutManager = new LinearLayoutManager(getApplicationContext());
 
+
         recyclerView.setLayoutManager(RecyclerViewLayoutManager);
 
         // Adding items to RecyclerView.
@@ -258,45 +260,65 @@ public class HomeActivity extends AppCompatActivity {
 
             boolean showing=true;
             GestureDetector gestureDetector = new GestureDetector(HomeActivity.this, new GestureDetector.SimpleOnGestureListener() {
-               /* @Override                public boolean onScroll(MotionEvent e1, MotionEvent e2, float distanceX, float distanceY) {
+                @Override
+                public boolean onScroll(MotionEvent e1, MotionEvent e2, float distanceX, float distanceY) {
+                    RecyclerView recyclerView1=findViewById(R.id.recyclerview2);
+                    View child=recyclerView1.getLayoutManager().getChildAt(0);
 
-                    if (distanceY > 0) {
+                    Log.e("T",(recyclerView1.getLayoutManager().isViewPartiallyVisible(child,true,true))+"");
+
+
+                    if (distanceY >20) {
                         // Scrolled upward
-                        if (e2.getAction() == MotionEvent.ACTION_MOVE&&showing==true)
+                        if (showing==true)
                         {
                             showing=false;
                             Log.e("g","GOing uP");
-                            toolbar.setVisibility(View.GONE);
-                            ViewGroup.MarginLayoutParams params = (ViewGroup.MarginLayoutParams) recyclerView.getLayoutParams();
-                            params.topMargin =(int)TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 121-56, getResources().getDisplayMetrics());
-                            ViewGroup.MarginLayoutParams params1 = (ViewGroup.MarginLayoutParams) r1.getLayoutParams();
-                            params1.topMargin =(int)TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 5, getResources().getDisplayMetrics());
+                            final RecyclerView view = findViewById(R.id.recyclerview1);
 
-                            // The pointer has gone up, ending the gesture
+                            view.animate()
+                                    .translationY(-view.getHeight())
+                                    .alpha(0.0f)
+                                    .setDuration(300)
+                                    .setListener(new AnimatorListenerAdapter() {
+                                        @Override
+                                        public void onAnimationEnd(Animator animation) {
+                                            super.onAnimationEnd(animation);
+                                            view.clearAnimation();
+                                            view.setVisibility(View.GONE);
+                                        }
+                                    });
                         }
                     }
                     if (distanceY < 0) {
                         Log.e("g","GOing DOWNTOWn");
 
                         // Scrolled upward
-                        if (e2.getAction() == MotionEvent.ACTION_MOVE&&showing==false)
+                        if (showing==false)
                         {
+                            if((recyclerView1.getLayoutManager().isViewPartiallyVisible(child,true,true))==false)
+                                return false;
                             showing=true;
-                            toolbar.setVisibility(View.VISIBLE);
-                            ViewGroup.MarginLayoutParams params = (ViewGroup.MarginLayoutParams) recyclerView.getLayoutParams();
-                            params.topMargin =(int)TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 121, getResources().getDisplayMetrics());
-                            ViewGroup.MarginLayoutParams params1 = (ViewGroup.MarginLayoutParams) r1.getLayoutParams();
-                            params1.topMargin =(int)TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 61, getResources().getDisplayMetrics());
-
-                            // The pointer has gone up, ending the gesture
+                            final RecyclerView view = findViewById(R.id.recyclerview1);
+                            view.animate()
+                                .translationY(0)
+                                .alpha(1.0f)
+                                .setDuration(100)
+                                .setListener(new AnimatorListenerAdapter() {
+                                    @Override
+                                    public void onAnimationEnd(Animator animation) {
+                                        super.onAnimationEnd(animation);
+                                        view.setVisibility(View.VISIBLE);
+                                    }
+                                });
                         }
                     }
                     return false;
-                }*/
+                }
 
                 @Override public boolean onSingleTapUp(MotionEvent motionEvent) {
 
-                    return true;
+                    return false;
                 }
 
             });
@@ -388,6 +410,51 @@ public class HomeActivity extends AppCompatActivity {
             Log.e(DEBUG_TAG, "onDown: " + event.toString());
             return true;
         }
+        @Override
+        public boolean onFling(MotionEvent event1, MotionEvent event2,
+                               float velocityX, float velocityY) {
+           // Log.e(DEBUG_TAG, "onFling: " + event1.toString() + event2.toString());
+            return false;
+        }
+       public boolean onScroll(MotionEvent event1, MotionEvent event2, float distanceX,
+                                float distanceY) {
+            if(Math.abs(distanceX)>10)return false;
+            if(distanceY>15)
+            {
+                final RecyclerView view = findViewById(R.id.recyclerviewhorizontal2);
+                view.animate()
+                        .translationY(-view.getHeight())
+                        .alpha(0.0f)
+                        .setDuration(300)
+                        .setListener(new AnimatorListenerAdapter() {
+                            @Override
+                            public void onAnimationEnd(Animator animation) {
+                                super.onAnimationEnd(animation);
+                                view.clearAnimation();
+                                view.setVisibility(View.GONE);
+                            }
+                        });
+                return true;
+            }
+            if(distanceY>-15)return false;
+
+            Log.e(DEBUG_TAG, "onScroll: " + distanceX + "   ,,,  "+distanceY);
+            final RecyclerView r = findViewById(R.id.recyclerviewhorizontal2);
+            r.animate()
+                    .translationY(0)
+                    .alpha(1.0f)
+                    .setDuration(500)
+                    .setListener(new AnimatorListenerAdapter() {
+                        @Override
+                        public void onAnimationEnd(Animator animation) {
+                            super.onAnimationEnd(animation);
+                            r.setVisibility(View.VISIBLE);
+                        }
+                    });
+
+            return true;
+        }
+
 
         @Override
         public void onLongPress(MotionEvent e) {
