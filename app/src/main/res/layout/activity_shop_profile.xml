@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.widget.ListView android:layout_height="wrap_content"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_weight="100">
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="200dp"
+        android:src="@drawable/water"
+        />
+    <Space
+        android:layout_width="match_parent"
+        android:layout_height="10dp" 
+        />
+    <android.support.design.widget.TabLayout
+        android:layout_width="match_parent"
+        android:layout_height="20dp"
+        android:layout_gravity="start"
+        android:background="@color/colorPrimary"
+        app:tabGravity="fill"
+        app:tabMode="scrollable"/>
+  <android.support.v4.view.ViewPager
+      android:id="@+id/view_pager"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+      app:layout_behavior="@string/appbar_scrolling_view_behavior"/></android.widget.ListView>

@@ -2,6 +2,7 @@ package com.alcatraz.admin.project_alcatraz.Home;
 
 import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
+import android.content.Intent;
 import android.content.res.Resources;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -27,6 +28,7 @@ import android.view.animation.AccelerateInterpolator;
 import android.view.animation.DecelerateInterpolator;
 import android.widget.Toast;
 
+import com.alcatraz.admin.project_alcatraz.Profile.UserProfileActivity;
 import com.alcatraz.admin.project_alcatraz.R;
 import com.google.zxing.integration.android.IntentIntegrator;
 
@@ -72,10 +74,13 @@ public class HomeActivity extends AppCompatActivity {
                 {
 
                     case R.id.drawer_profile:
-                        Toast.makeText(HomeActivity.this, "profile menu item selected", Toast.LENGTH_SHORT).show();
+                        //Toast.makeText(HomeActivity.this, "profile menu item selected", Toast.LENGTH_SHORT).show();
+                        //showprofile();
+                        Intent intent=new Intent(getApplicationContext(),UserProfileNew.class);
+                        startActivity(intent);
                         break;
                     case R.id.drawer_settings:
-                        Toast.makeText(HomeActivity.this, "settings menu item selected", Toast.LENGTH_SHORT).show();
+                        setContentView(R.layout.activity_shop_profile);
                         break;
                     case R.id.drawer_privacysettings:
                         Toast.makeText(HomeActivity.this, "privacy settings menu item selected", Toast.LENGTH_SHORT).show();
@@ -279,15 +284,17 @@ public class HomeActivity extends AppCompatActivity {
                             view.animate()
                                     .translationY(-view.getHeight())
                                     .alpha(0.0f)
-                                    .setDuration(300)
+                                    //.setDuration(300)
                                     .setListener(new AnimatorListenerAdapter() {
                                         @Override
                                         public void onAnimationEnd(Animator animation) {
                                             super.onAnimationEnd(animation);
                                             view.clearAnimation();
                                             view.setVisibility(View.GONE);
+                                            findViewById(R.id.recyclerviewhorizontal2).setVisibility(View.GONE);
                                         }
                                     });
+
                         }
                     }
                     if (distanceY < 0) {
@@ -303,7 +310,7 @@ public class HomeActivity extends AppCompatActivity {
                             view.animate()
                                 .translationY(0)
                                 .alpha(1.0f)
-                                .setDuration(100)
+                               // .setDuration(100)
                                 .setListener(new AnimatorListenerAdapter() {
                                     @Override
                                     public void onAnimationEnd(Animator animation) {
@@ -425,13 +432,14 @@ public class HomeActivity extends AppCompatActivity {
                 view.animate()
                         .translationY(-view.getHeight())
                         .alpha(0.0f)
-                        .setDuration(300)
+                      //  .setDuration(300)
                         .setListener(new AnimatorListenerAdapter() {
                             @Override
                             public void onAnimationEnd(Animator animation) {
                                 super.onAnimationEnd(animation);
                                 view.clearAnimation();
                                 view.setVisibility(View.GONE);
+                                findViewById(R.id.recyclerviewhorizontal2).setVisibility(View.GONE);
                             }
                         });
                 return true;
@@ -440,10 +448,12 @@ public class HomeActivity extends AppCompatActivity {
 
             Log.e(DEBUG_TAG, "onScroll: " + distanceX + "   ,,,  "+distanceY);
             final RecyclerView r = findViewById(R.id.recyclerviewhorizontal2);
+            if(findViewById(R.id.recyclerview1).getVisibility()==View.GONE)
+                return true;
             r.animate()
                     .translationY(0)
                     .alpha(1.0f)
-                    .setDuration(500)
+                  //  .setDuration(500)
                     .setListener(new AnimatorListenerAdapter() {
                         @Override
                         public void onAnimationEnd(Animator animation) {
@@ -463,7 +473,7 @@ public class HomeActivity extends AppCompatActivity {
             r.animate()
                     .translationY(0)
                     .alpha(1.0f)
-                    .setDuration(500)
+                  //  .setDuration(500)
                     .setListener(new AnimatorListenerAdapter() {
                         @Override
                         public void onAnimationEnd(Animator animation) {
@@ -484,13 +494,14 @@ public class HomeActivity extends AppCompatActivity {
             Log.e(DEBUG_TAG, "VERTICLA DOWN: " + event.toString());view.animate()
                     .translationY(-view.getHeight())
                     .alpha(0.0f)
-                    .setDuration(300)
+                  //  .setDuration(300)
                     .setListener(new AnimatorListenerAdapter() {
                         @Override
                         public void onAnimationEnd(Animator animation) {
                             super.onAnimationEnd(animation);
                             view.clearAnimation();
                             view.setVisibility(View.GONE);
+                            findViewById(R.id.recyclerviewhorizontal2).setVisibility(View.GONE);
                         }
                     });
 

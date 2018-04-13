@@ -1,0 +1,214 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/upper"
+    android:layout_width="fill_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+    <LinearLayout
+        android:id="@+id/linear"
+        android:layout_width="match_parent"
+        android:orientation="vertical"
+        android:weightSum="100"
+        android:layout_height="match_parent">
+
+        <RelativeLayout
+            android:id="@+id/top"
+            android:layout_width="fill_parent"
+            android:layout_height="0dp"
+            android:layout_weight="70">
+            <Button
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:layout_marginLeft="20dp"
+                android:layout_alignParentRight="false"
+                android:background="@drawable/whiteedit"/>
+            <Button
+                android:layout_marginRight="20dp"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:layout_alignParentRight="true"
+                android:background="@drawable/whitecross"/>
+
+            <ImageView
+                android:id="@+id/imgg"
+
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:scaleType="fitXY"
+                android:src="@drawable/fin"/>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentBottom="true"
+                android:text="250"
+                android:layout_marginLeft="5dp"
+                android:fontFamily="cursive"
+
+                android:textStyle="bold"
+                android:textSize="20sp"
+
+                android:textColor="@color/white"
+                android:layout_marginBottom="50dp"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentBottom="true"
+                android:layout_centerHorizontal="true"
+                android:layout_marginBottom="50dp"
+                android:fontFamily="cursive"
+                android:text="250"
+                android:textColor="@color/white"
+                android:textSize="20sp"
+                android:textStyle="bold" />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentBottom="true"
+                android:layout_alignParentRight="true"
+                android:textStyle="bold"
+                android:text="250"
+
+                android:fontFamily="cursive"
+
+                android:layout_marginRight="5dp"
+                android:textSize="20sp"
+                android:textColor="@color/white"
+                android:layout_marginBottom="50dp"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentBottom="true"
+
+                android:text="Following"
+                android:layout_marginBottom="20dp"
+
+                android:textColor="@color/white"
+                android:textSize="20sp" />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentBottom="true"
+                android:layout_centerHorizontal="true"
+                android:elegantTextHeight="true"
+                android:text="Posts"
+                android:textSize="20sp"
+                android:layout_marginBottom="20dp"
+
+                android:textColor="@color/white"
+                />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentBottom="true"
+                android:layout_alignParentRight="true"
+                android:text="Checkins"
+                android:layout_marginBottom="20dp"
+                android:textSize="20sp"
+                android:textColor="@color/white"
+                />
+
+        </RelativeLayout>
+<RelativeLayout
+    android:layout_marginTop="-10dp"
+    android:id="@+id/bottommmmm"
+    android:layout_width="match_parent"
+    android:background="@drawable/curve"
+
+    android:layout_height="0dp"
+    android:layout_below="@id/top"
+    android:layout_weight="30">
+    <LinearLayout
+
+        android:id="@+id/lin"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:weightSum="30">
+    <RelativeLayout
+        android:id="@+id/sec"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="8"
+        >
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
+            android:layout_marginTop="10dp"
+            android:text="Coding_Genius"
+            android:textColor="@color/black"
+            android:textSize="25sp"
+            android:textStyle="bold" />
+
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentRight="true"
+            android:layout_marginRight="10dp"
+            android:background="@android:color/transparent"
+            android:text="Follow"
+            android:textStyle="italic"
+            android:textColor="@color/colorPrimaryDark"
+            android:gravity="bottom"
+            android:textAlignment="gravity"
+            android:textSize="25sp" />
+    </RelativeLayout>
+
+
+        <RelativeLayout
+
+            android:layout_below="@id/sec"
+            android:id="@+id/th"
+            android:layout_weight="29"
+            android:layout_width="match_parent"
+            android:layout_height="0dp">
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textSize="20sp"
+                android:textStyle="bold"
+                android:text="
+    \tIt is an honor and privilige to meet you
+    \n\t on the night of christmas!!!!"/>
+
+        </RelativeLayout>
+    </LinearLayout>
+        </RelativeLayout>
+
+      <!--  <GridView
+            android:id="@+id/gridView"
+            android:layout_below="@id/th"
+            android:layout_marginTop="5dp"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="5dp"
+            android:columnWidth="175dp"
+            android:drawSelectorOnTop="true"
+            android:gravity="center"
+            android:numColumns="auto_fit"
+            android:stretchMode="columnWidth"
+            android:verticalSpacing="5dp"
+            android:focusable="true"
+            android:clickable="true"/>-->
+    </LinearLayout>
+    <GridView
+        android:id="@+id/gridView"
+        android:layout_below="@id/linear"
+        android:layout_marginTop="0dp"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="5dp"
+        android:columnWidth="175dp"
+        android:drawSelectorOnTop="true"
+        android:gravity="center"
+        android:numColumns="auto_fit"
+        android:stretchMode="columnWidth"
+        android:verticalSpacing="5dp"
+        android:focusable="true"
+        android:clickable="true"/>
+    </RelativeLayout>

@@ -11,15 +11,7 @@
         android:theme="@style/Theme.AppCompat.Light.NoActionBar">
         <activity
             android:name=".Home.HomeActivity"
-            android:screenOrientation="portrait">
-
-            <!-- <intent-filter> -->
-            <!-- &lt;!&ndash;<action android:name="android.intent.action.MAIN" />&ndash;&gt; -->
-
-
-            <!-- &lt;!&ndash;<category android:name="android.intent.category.DEFAULT" />&ndash;&gt; -->
-            <!-- </intent-filter> -->
-        </activity>
+            android:screenOrientation="portrait"></activity>
         <activity
             android:name=".Utility.Splash_Activity"
             android:screenOrientation="portrait">
@@ -31,14 +23,18 @@
         </activity>
         <activity
             android:name=".Profile.ShopProfileActivity"
-            android:screenOrientation="portrait"></activity>
+            android:screenOrientation="portrait" />
         <activity
             android:name=".Profile.UserProfileActivity"
-            android:screenOrientation="portrait"></activity>
+            android:screenOrientation="portrait" />
         <activity
-            android:name=".check"
-            android:label="@string/title_activity_check"
-            android:theme="@style/AppTheme"></activity>
+            android:name=".Profile.EditProfile"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".shop"
+            android:label="@string/title_activity_shop"
+            android:theme="@style/Theme.AppCompat.Light.NoActionBar"></activity>
+        <activity android:name=".Home.UserProfileNew" />
     </application>
 
 </manifest>
