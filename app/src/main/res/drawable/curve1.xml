@@ -8,7 +8,7 @@
     <!-- view background color -->
     <solid
 
-        android:color="#fff"
+        android:color="@color/lightgrey"
         >
     </solid>
 
@@ -16,7 +16,7 @@
     <stroke
         android:width="0dp"
 
-        android:color="@color/grey" >
+        android:color="#000" >
     </stroke>
 
     <!-- If you want to add some padding -->
@@ -32,6 +32,9 @@
     <corners
         android:topLeftRadius="10dp"
         android:topRightRadius="10dp"
+        android:bottomRightRadius="10dp"
+        android:bottomLeftRadius="10dp"
+
         >
     </corners>
 

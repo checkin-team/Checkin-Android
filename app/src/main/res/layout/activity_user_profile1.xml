@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/upper"
     android:layout_width="fill_parent"
     android:layout_height="match_parent"
@@ -18,64 +19,94 @@
             android:layout_height="0dp"
             android:layout_weight="70">
             <Button
-                android:layout_width="50dp"
-                android:layout_height="50dp"
-                android:layout_marginLeft="20dp"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:layout_marginTop="10dp"
+                android:layout_marginLeft="18dp"
                 android:layout_alignParentRight="false"
                 android:background="@drawable/whiteedit"/>
             <Button
                 android:layout_marginRight="20dp"
-                android:layout_width="50dp"
-                android:layout_height="50dp"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:layout_marginTop="10dp"
                 android:layout_alignParentRight="true"
                 android:background="@drawable/whitecross"/>
 
             <ImageView
                 android:id="@+id/imgg"
+                android:scaleType="centerCrop"
 
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
+                android:background="@drawable/flier"/>
+
+            <ImageView
+                android:layout_width="match_parent"
+                android:layout_height="200dp"
+                android:layout_alignParentBottom="true"
+                android:layout_alignParentLeft="true"
+                android:layout_alignParentStart="true"
                 android:scaleType="fitXY"
-                android:src="@drawable/fin"/>
+                android:src="@drawable/shadow_gradient" />
+
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignParentBottom="true"
-                android:text="250"
-                android:layout_marginLeft="5dp"
-                android:fontFamily="cursive"
+                android:layout_marginBottom="27dp"
+                android:layout_marginLeft="18dp"
+                android:fontFamily="@font/amiri"
+                android:paddingRight="5dp"
+                android:shadowColor="#000"
+                android:shadowDx="5"
+                android:shadowDy="5"
 
-                android:textStyle="bold"
-                android:textSize="20sp"
+
+                android:shadowRadius="7"
+                android:text="250"
 
                 android:textColor="@color/white"
-                android:layout_marginBottom="50dp"/>
+                android:textSize="17sp"
+                android:textStyle="bold" />
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignParentBottom="true"
                 android:layout_centerHorizontal="true"
-                android:layout_marginBottom="50dp"
-                android:fontFamily="cursive"
+                android:layout_marginBottom="27dp"
+
+                android:fontFamily="@font/amiri"
+                android:paddingRight="5dp"
+                android:shadowColor="#000"
+                android:shadowDx="5"
+                android:shadowDy="5"
+                android:shadowRadius="7"
                 android:text="250"
                 android:textColor="@color/white"
-                android:textSize="20sp"
+                android:textSize="17sp"
                 android:textStyle="bold" />
+
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignParentBottom="true"
                 android:layout_alignParentRight="true"
-                android:textStyle="bold"
+                android:layout_marginBottom="27dp"
+                android:layout_marginRight="18dp"
+
+
+                android:fontFamily="@font/amiri"
+                android:paddingRight="5dp"
+                android:shadowColor="#000"
+                android:shadowDx="5"
+                android:shadowDy="5"
+                android:shadowRadius="7"
                 android:text="250"
-
-                android:fontFamily="cursive"
-
-                android:layout_marginRight="5dp"
-                android:textSize="20sp"
                 android:textColor="@color/white"
-                android:layout_marginBottom="50dp"/>
+                android:textSize="17sp"
+                android:textStyle="bold" />
 
             <TextView
                 android:layout_width="wrap_content"
@@ -83,55 +114,73 @@
                 android:layout_alignParentBottom="true"
 
                 android:text="Following"
+                android:fontFamily="sans-serif-light"
                 android:layout_marginBottom="20dp"
+                android:shadowColor="#000"
+                android:shadowDx="5"
+                android:shadowDy="5"
+                android:shadowRadius="7"
+                android:paddingRight="5dp"
+                android:layout_marginLeft="18dp"
 
                 android:textColor="@color/white"
-                android:textSize="20sp" />
+                android:textSize="15sp" />
+
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignParentBottom="true"
                 android:layout_centerHorizontal="true"
-                android:elegantTextHeight="true"
-                android:text="Posts"
-                android:textSize="20sp"
                 android:layout_marginBottom="20dp"
+                android:fontFamily="sans-serif-light"
+                android:paddingRight="5dp"
+                android:shadowColor="#000"
+                android:shadowDx="5"
+                android:shadowDy="5"
+                android:shadowRadius="7"
+                android:text="Posts"
 
                 android:textColor="@color/white"
-                />
+                android:textSize="15sp" />
+
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignParentBottom="true"
                 android:layout_alignParentRight="true"
-                android:text="Checkins"
                 android:layout_marginBottom="20dp"
-                android:textSize="20sp"
+                android:fontFamily="sans-serif-light"
+                android:paddingRight="5dp"
+                android:layout_marginRight="18dp"
+                android:shadowColor="#000"
+                android:shadowDx="5"
+                android:shadowDy="5"
+                android:shadowRadius="7"
+                android:text="CheckIns"
                 android:textColor="@color/white"
-                />
+                android:textSize="15sp" />
 
         </RelativeLayout>
 <RelativeLayout
     android:layout_marginTop="-10dp"
-    android:id="@+id/bottommmmm"
+    android:id="@+id/botomm"
     android:layout_width="match_parent"
-    android:background="@drawable/curve"
-
     android:layout_height="0dp"
     android:layout_below="@id/top"
     android:layout_weight="30">
     <LinearLayout
 
         android:id="@+id/lin"
+        android:background="@drawable/curve1"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical"
         android:weightSum="30">
     <RelativeLayout
+        android:background="@drawable/curve1"
         android:id="@+id/sec"
         android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="8"
+        android:layout_height="50dp"
         >
 
         <TextView
@@ -164,17 +213,19 @@
 
             android:layout_below="@id/sec"
             android:id="@+id/th"
-            android:layout_weight="29"
+            android:background="@drawable/curve"
+            android:layout_marginTop="0dp"
             android:layout_width="match_parent"
-            android:layout_height="0dp">
+            android:layout_height="wrap_content">
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:background="@drawable/curve"
                 android:textSize="20sp"
                 android:textStyle="bold"
                 android:text="
     \tIt is an honor and privilige to meet you
-    \n\t on the night of christmas!!!!"/>
+    \n\t \ton the night of christmas!!!!"/>
 
         </RelativeLayout>
     </LinearLayout>
@@ -196,7 +247,7 @@
             android:focusable="true"
             android:clickable="true"/>-->
     </LinearLayout>
-    <GridView
+<!--    <GridView
         android:id="@+id/gridView"
         android:layout_below="@id/linear"
         android:layout_marginTop="0dp"
@@ -210,5 +261,5 @@
         android:stretchMode="columnWidth"
         android:verticalSpacing="5dp"
         android:focusable="true"
-        android:clickable="true"/>
+        android:clickable="true"/>-->
     </RelativeLayout>

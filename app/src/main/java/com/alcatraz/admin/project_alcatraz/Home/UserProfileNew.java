@@ -14,7 +14,9 @@ import android.content.res.Resources;
     import android.graphics.Bitmap;
     import android.graphics.BitmapFactory;
     import android.graphics.Canvas;
+    import android.graphics.Matrix;
     import android.graphics.Paint;
+    import android.graphics.Point;
     import android.graphics.PorterDuff;
     import android.graphics.PorterDuffXfermode;
     import android.graphics.Rect;
@@ -46,8 +48,11 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.AccelerateInterpolator;
 import android.view.animation.DecelerateInterpolator;
+    import android.widget.FrameLayout;
     import android.widget.ImageView;
+    import android.widget.LinearLayout;
     import android.widget.OverScroller;
+    import android.widget.RelativeLayout;
     import android.widget.Toast;
 
 import com.alcatraz.admin.project_alcatraz.Profile.UserProfileActivity;
@@ -66,15 +71,32 @@ public class UserProfileNew  extends AppCompatActivity {
         setContentView(R.layout.activity_user_profile1);
         final WallpaperManager wallpaperManager = WallpaperManager.getInstance(this);
         final Drawable wallpaperDrawable = wallpaperManager.getDrawable();
-        Drawable imagetoshow = ContextCompat.getDrawable(getApplicationContext(),R.drawable.fin);
+        Drawable imagetoshow = ContextCompat.getDrawable(getApplicationContext(),R.drawable.flier);
         final Drawable mod= new BitmapDrawable(getResources(),getRoundedCornerBitmap(((BitmapDrawable)imagetoshow).getBitmap(),getApplicationContext()));
-        ImageView v=(ImageView)findViewById(R.id.imgg);
+        ImageView imageView=findViewById(R.id.imgg);
+        /*final Matrix matrix = imageView.getImageMatrix();
+        final float imageWidth = imageView.getDrawable().getIntrinsicWidth();
+        final int screenWidth = getResources().getDisplayMetrics().widthPixels;
+        final float scaleRatio = screenWidth / imageWidth;
+        matrix.postScale(scaleRatio, scaleRatio);
+        imageView.setImageMatrix(matrix);*/
         View v1=findViewById(R.id.th);
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) {
-            v.setBackground(wallpaperDrawable);
-            v.setImageDrawable(mod);
+          //  v.setBackground(wallpaperDrawable);
+            imageView.setImageDrawable(mod);
            // v1.setBackground(wallpaperDrawable);
         }
+        LinearLayout.LayoutParams params=(LinearLayout.LayoutParams)(findViewById(R.id.top)).getLayoutParams();
+
+        maxy=getWindowManager().getDefaultDisplay().getHeight()*.7f;
+        params.height=(int)maxy;
+        findViewById(R.id.top).setLayoutParams(params);
+        miny=getWindowManager().getDefaultDisplay().getHeight()*.3f;
+        params=(LinearLayout.LayoutParams)(findViewById(R.id.top)).getLayoutParams();
+        params.height=(int)miny;
+        findViewById(R.id.top).setLayoutParams(params);
+        Log.e(TAG, "onCreate: "+maxy+" "+miny);
+
         listen(getApplicationContext());
 
 
@@ -161,17 +183,50 @@ public class UserProfileNew  extends AppCompatActivity {
     @Override
     public boolean onTouchEvent(MotionEvent event){
 
+
         int action = MotionEventCompat.getActionMasked(event);
 
         switch(action) {
             case (MotionEvent.ACTION_DOWN) :
                 Log.d(TAG,"Action was DOWN");
+                x=event.getX();
+                y=event.getY();
+                Log.d(TAG, x+","+y);
+                down=true;
                 return true;
             case (MotionEvent.ACTION_MOVE) :
                 Log.d(TAG,"Action was MOVE");
+
+                    RelativeLayout v=(RelativeLayout)findViewById(R.id.top);
+                RelativeLayout v1=(RelativeLayout)findViewById(R.id.botomm);
+
+                LinearLayout.LayoutParams p=(LinearLayout.LayoutParams)v.getLayoutParams();
+                LinearLayout.LayoutParams p1=(LinearLayout.LayoutParams)v1.getLayoutParams();
+                Log.e(TAG, "onTouchEvent: "+p.height+" ~~ "+p1.height );
+
+                if(p.height+(event.getY()-y)>maxy) {
+                    p.height = (int) maxy;
+                    p1.height = (int) miny;
+                }
+                else
+            {
+                p.height += (event.getY() - y);
+                p1.height -= (event.getY() - y);
+            }
+
+                if(p.height<0)p.height=0;
+                if(p1.height<0)p1.height=0;
+
+                v.setLayoutParams(p);
+                    v1.setLayoutParams(p1);
+                    x=event.getX();
+                    y=event.getY();
+
                 return true;
             case (MotionEvent.ACTION_UP) :
                 Log.d(TAG,"Action was UP");
+                x=0;y=0;
+                down=false;
                 return true;
             case (MotionEvent.ACTION_CANCEL) :
                 Log.d(TAG,"Action was CANCEL");
@@ -184,4 +239,7 @@ public class UserProfileNew  extends AppCompatActivity {
                 return super.onTouchEvent(event);
         }
     }
+    boolean state_up=true;
+    boolean down=false;
+    float x=0,y=0,maxy=0,miny=0;
 }
