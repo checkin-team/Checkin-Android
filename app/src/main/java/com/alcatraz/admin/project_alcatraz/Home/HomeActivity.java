@@ -30,6 +30,7 @@ import android.widget.Toast;
 
 import com.alcatraz.admin.project_alcatraz.Profile.UserProfileActivity;
 import com.alcatraz.admin.project_alcatraz.R;
+import com.alcatraz.admin.project_alcatraz.Session.MenuUserActivity;
 import com.google.zxing.integration.android.IntentIntegrator;
 
 import java.util.ArrayList;
@@ -80,7 +81,9 @@ public class HomeActivity extends AppCompatActivity {
                         startActivity(intent);
                         break;
                     case R.id.drawer_settings:
-                        setContentView(R.layout.activity_shop_profile);
+                        //setContentView(R.layout.activity_shop_profile);
+                        intent = new Intent(getApplicationContext(), MenuUserActivity.class);
+                        startActivity(intent);
                         break;
                     case R.id.drawer_privacysettings:
                         Toast.makeText(HomeActivity.this, "privacy settings menu item selected", Toast.LENGTH_SHORT).show();
