@@ -70,7 +70,7 @@ public class UserProfileNew  extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_user_profile1);
         final WallpaperManager wallpaperManager = WallpaperManager.getInstance(this);
-        final Drawable wallpaperDrawable = wallpaperManager.getDrawable();
+        //final Drawable wallpaperDrawable = wallpaperManager.getDrawable();
         Drawable imagetoshow = ContextCompat.getDrawable(getApplicationContext(),R.drawable.flier);
         final Drawable mod= new BitmapDrawable(getResources(),getRoundedCornerBitmap(((BitmapDrawable)imagetoshow).getBitmap(),getApplicationContext()));
         ImageView imageView=findViewById(R.id.imgg);

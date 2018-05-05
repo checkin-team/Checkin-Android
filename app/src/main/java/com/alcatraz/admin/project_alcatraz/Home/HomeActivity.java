@@ -80,7 +80,7 @@ public class HomeActivity extends AppCompatActivity {
                         startActivity(intent);
                         break;
                     case R.id.drawer_settings:
-                        setContentView(R.layout.activity_shop_profile);
+                       // setContentView(R.layout.activity_shop_profile);
                         break;
                     case R.id.drawer_privacysettings:
                         Toast.makeText(HomeActivity.this, "privacy settings menu item selected", Toast.LENGTH_SHORT).show();
@@ -97,6 +97,8 @@ public class HomeActivity extends AppCompatActivity {
             }
         });
 
+   //What to do when clicked Uncomment afterwards
+        /*
         nav_right.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
             @Override
             public boolean onNavigationItemSelected(MenuItem item) {
@@ -105,7 +107,7 @@ public class HomeActivity extends AppCompatActivity {
                 return true;
 
             }
-        });
+        });*/
 
         drawerLayout=(DrawerLayout)findViewById(R.id.drawer);
         drawerLayout1=(DrawerLayout)findViewById(R.id.right_nav);
@@ -161,7 +163,7 @@ public class HomeActivity extends AppCompatActivity {
         qrScan = new IntentIntegrator(this);
         mDetector = new GestureDetectorCompat(this, new ListenToHorizontal());
 
-
+        messages();
     }
     private void initializeHorizontalView(int id)
     {
@@ -257,7 +259,6 @@ public class HomeActivity extends AppCompatActivity {
         recyclerView.setLayoutManager(HorizontalLayout);
 
         recyclerView.setAdapter(RecyclerViewHorizontalAdapter);
-        final RecyclerView r1=findViewById(R.id.recyclerview1);
 
 
         // Adding on item click listener to RecyclerView.
@@ -515,4 +516,32 @@ public class HomeActivity extends AppCompatActivity {
             return super.onSingleTapUp(e);
         }
     }
-}
+    private void messages() {
+        final ArrayList<String> feed = new ArrayList<>();
+        final ArrayList<Integer> im=new ArrayList<>();
+        String ss = "Heelo How are you I1 am awesome erf w ";
+        Scanner sc = new Scanner(ss);
+        while (sc.hasNext()) {
+            feed.add(sc.next());
+            im.add(R.drawable.fin);
+        }
+
+        final RecyclerView recyclerView = (RecyclerView) findViewById(R.id.nav_drawer_recycler_view);
+       /* recyclerView.setOnTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View v, MotionEvent event) {
+                return new GestureDetectorCompat(getApplicationContext(), new ListenToVertical()).onTouchEvent(event);
+            }
+        });*/
+
+
+
+        MessageAdapter RecyclerViewHorizontalAdapter = new MessageAdapter(feed,feed,im);
+
+        LinearLayoutManager HorizontalLayout = new LinearLayoutManager(HomeActivity.this, LinearLayoutManager.VERTICAL, false);
+        recyclerView.setLayoutManager(HorizontalLayout);
+
+        recyclerView.setAdapter(RecyclerViewHorizontalAdapter);
+
+    }
+    }
