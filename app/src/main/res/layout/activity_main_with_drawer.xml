@@ -135,7 +135,9 @@
             android:layout_height="wrap_content"
             android:orientation="vertical">
 
-
+<Space
+                android:layout_width="match_parent"
+                android:layout_height="20dp" />
             <android.support.v7.widget.RecyclerView
                 android:id="@+id/nav_drawer_recycler_view"
                 android:layout_width="280dp"

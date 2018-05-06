@@ -1,14 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.v7.widget.CardView xmlns:card_view="http://schemas.android.com/apk/res-auto"
+<android.support.v7.widget.CardView
+    xmlns:card_view="http://schemas.android.com/apk/res-auto"
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/cardview1"
     android:layout_width="match_parent"
-    android:layout_height="120dp"
+    android:layout_height="100dp"
     card_view:contentPadding="7dp"
     card_view:cardCornerRadius="10dp"
-    card_view:cardElevation="7dp"
-    android:layout_margin="2dp">
+    card_view:cardElevation="10dp"
+    android:layout_marginLeft="7dp"
+    android:layout_marginRight="7dp"
+    android:layout_marginTop="2dp"
+    android:layout_marginBottom="2dp">
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent">
@@ -16,14 +20,16 @@
             android:id="@+id/cimg"
             android:layout_width="wrap_content"
             android:layout_height="match_parent">
-            <de.hdodenhof.circleimageview.CircleImageView
-                android:layout_width="120dp"
-                android:layout_height="120dp"
+
+            <com.makeramen.roundedimageview.RoundedImageView
+                android:scaleType="centerCrop"
+                android:layout_width="60dp"
+                android:layout_height="100dp"
+                card_view:riv_corner_radius="10dp"
                 android:id="@+id/msg_photo"
                 android:layout_marginTop="20dp"
                 android:src="@drawable/fin"
-                app:border_color="@color/black"
-                app:border_width="2dp"
+
                 android:layout_centerHorizontal="true"
                 android:layout_centerVertical="true"/>
         </RelativeLayout>
@@ -32,36 +38,52 @@
 
             android:layout_height="match_parent"
             android:layout_toRightOf="@+id/cimg">
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical">
             <RelativeLayout
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
+                android:layout_marginLeft="6dp"
+                android:layout_marginTop="2dp"
 
                 android:id="@+id/t1"
                 android:layout_height="wrap_content">
     <TextView
         android:id="@+id/msg_name"
-        android:layout_gravity="center_horizontal"
-        android:textSize="40sp"
-        android:text="Hello"
+        android:textSize="18sp"
+        android:text="Rahul Dev"
         android:layout_marginTop="3dp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:textStyle="bold"
         android:textColor="#000"/>
+                <TextView
+
+                    android:textAlignment="textEnd"
+                    android:gravity="end"
+                    android:textSize="15sp"
+                    android:layout_marginRight="6dp"
+
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Yesterday"
+                    android:textColor="#23975a"
+                    android:layout_toRightOf="@+id/msg_name"/>
             </RelativeLayout>
             <RelativeLayout
-                android:layout_width="wrap_content"
-                android:layout_alignParentBottom="true"
+                android:layout_marginLeft="6dp"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content">
     <TextView
         android:id="@+id/msg_last"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:textSize="40sp"
-        android:textColor="#000"
-        android:textStyle="bold"
-        android:text="Bye"
+        android:fontFamily="sans-serif-light"
+        android:textSize="11sp"
+        android:text="Deal done.Will See you Later.Bye Bye.Ok see you after a lifetime."
         android:layout_gravity="bottom"/>
             </RelativeLayout>
+            </LinearLayout>
         </RelativeLayout>
     </RelativeLayout>
 </android.support.v7.widget.CardView>

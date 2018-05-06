@@ -26,7 +26,7 @@ public class MessageAdapter extends RecyclerView.Adapter<MessageAdapter.MyView> 
 
         public TextView textView;
         public TextView last;
-        public de.hdodenhof.circleimageview.CircleImageView im;
+        public com.makeramen.roundedimageview.RoundedImageView im;
 
         public MyView(View view) {
             super(view);

@@ -518,11 +518,15 @@ public class HomeActivity extends AppCompatActivity {
     }
     private void messages() {
         final ArrayList<String> feed = new ArrayList<>();
+        final ArrayList<String> feed1 = new ArrayList<>();
+
         final ArrayList<Integer> im=new ArrayList<>();
-        String ss = "Heelo How are you I1 am awesome erf w ";
+        String ss = "Heelo How are you I1 am awesome erf w 3 3 3 3 3 3  3 6 6 6 6 6 6 6 6 6 6 6 6 6 6";
         Scanner sc = new Scanner(ss);
         while (sc.hasNext()) {
-            feed.add(sc.next());
+            feed.add("Rahul Dev");
+            feed1.add("Deal done.Will See you Later.Bye Bye");
+            sc.next();
             im.add(R.drawable.fin);
         }
 
@@ -536,7 +540,7 @@ public class HomeActivity extends AppCompatActivity {
 
 
 
-        MessageAdapter RecyclerViewHorizontalAdapter = new MessageAdapter(feed,feed,im);
+        MessageAdapter RecyclerViewHorizontalAdapter = new MessageAdapter(feed,feed1,im);
 
         LinearLayoutManager HorizontalLayout = new LinearLayoutManager(HomeActivity.this, LinearLayoutManager.VERTICAL, false);
         recyclerView.setLayoutManager(HorizontalLayout);
