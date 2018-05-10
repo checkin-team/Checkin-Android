@@ -11,8 +11,8 @@
     card_view:cardElevation="10dp"
     android:layout_marginLeft="7dp"
     android:layout_marginRight="7dp"
-    android:layout_marginTop="2dp"
-    android:layout_marginBottom="2dp">
+    android:layout_marginTop="4dp"
+    android:layout_marginBottom="0dp">
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent">

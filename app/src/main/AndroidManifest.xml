@@ -11,7 +11,7 @@
         android:theme="@style/Theme.AppCompat.Light.NoActionBar">
         <activity
             android:name=".Home.HomeActivity"
-            android:screenOrientation="portrait"></activity>
+            android:screenOrientation="portrait" />
         <activity
             android:name=".Utility.Splash_Activity"
             android:screenOrientation="portrait">
@@ -33,13 +33,17 @@
         <activity
             android:name=".shop"
             android:label="@string/title_activity_shop"
-            android:theme="@style/Theme.AppCompat.Light.NoActionBar"></activity>
+            android:theme="@style/Theme.AppCompat.Light.NoActionBar" />
         <activity android:name=".Home.UserProfileNew" />
 
         <meta-data
             android:name="preloaded_fonts"
             android:resource="@array/preloaded_fonts" />
-        <activity android:name=".Session.MenuUserActivity" />
+
+        <activity
+            android:name=".Session.SessionUserActivity"
+            android:label="@string/title_activity_session_user"
+            android:theme="@style/SessionTheme" />
     </application>
 
 </manifest>
