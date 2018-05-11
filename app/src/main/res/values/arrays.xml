@@ -12,4 +12,11 @@
 
     </integer-array>
 
+    <string-array name="menu_items">
+        <item>Rice</item>
+        <item>Rice Biryani</item>
+        <item>Rice Fried</item>
+        <item>Naan</item>
+        <item>Roti</item>
+    </string-array>
 </resources>

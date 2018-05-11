@@ -3,7 +3,6 @@ package com.alcatraz.admin.project_alcatraz.Home;
 import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
 import android.content.Intent;
-import android.content.res.Resources;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.NavigationView;
@@ -13,23 +12,19 @@ import android.support.v4.view.ViewPager;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.CardView;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
-import android.util.TypedValue;
 import android.view.GestureDetector;
 import android.view.MenuItem;
 import android.view.MotionEvent;
 import android.view.View;
-import android.view.ViewGroup;
-import android.view.animation.AccelerateInterpolator;
-import android.view.animation.DecelerateInterpolator;
 import android.widget.Toast;
 
-import com.alcatraz.admin.project_alcatraz.Profile.UserProfileActivity;
 import com.alcatraz.admin.project_alcatraz.R;
+import com.alcatraz.admin.project_alcatraz.Session.MenuUserFragment;
+import com.alcatraz.admin.project_alcatraz.Session.SessionUserActivity;
 import com.google.zxing.integration.android.IntentIntegrator;
 
 import java.util.ArrayList;
@@ -80,7 +75,9 @@ public class HomeActivity extends AppCompatActivity {
                         startActivity(intent);
                         break;
                     case R.id.drawer_settings:
-                       // setContentView(R.layout.activity_shop_profile);
+                        //setContentView(R.layout.activity_shop_profile);
+                        intent = new Intent(getApplicationContext(), SessionUserActivity.class);
+                        startActivity(intent);
                         break;
                     case R.id.drawer_privacysettings:
                         Toast.makeText(HomeActivity.this, "privacy settings menu item selected", Toast.LENGTH_SHORT).show();

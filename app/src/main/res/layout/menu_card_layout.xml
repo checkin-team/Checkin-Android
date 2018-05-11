@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.design.widget.CoordinatorLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/cardview"
+    android:layout_width="match_parent"
+    android:layout_height="98dp"
+    android:background="@drawable/menu_group_card_box"
+    android:layout_marginTop="3dp"
+    android:layout_marginStart="3dp"
+    android:layout_marginLeft="3dp"
+    android:layout_marginEnd="3dp"
+    android:layout_marginRight="3dp">
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <ImageView
+            android:id="@+id/group_image"
+            android:layout_gravity="center_vertical"
+            android:elevation="0dp"
+            android:layout_marginLeft="15dp"
+            android:layout_marginStart="15dp"
+            android:layout_width="60dp"
+            android:layout_height="60dp" />
+
+        <TextView
+            android:id="@+id/group_title"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:text="GROUP TITLE"
+            android:textAlignment="center"
+            android:textColor="@color/brownish_grey"
+            android:textSize="21.5sp" />
+    </FrameLayout>
+
+</android.support.design.widget.CoordinatorLayout>
