@@ -1,6 +1,11 @@
 package com.alcatraz.admin.project_alcatraz.Session;
 
+import android.content.Intent;
+import android.graphics.Typeface;
+import android.speech.RecognizerIntent;
+import android.support.design.widget.Snackbar;
 import android.support.design.widget.TabLayout;
+import android.support.v4.content.res.ResourcesCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 
@@ -9,14 +14,18 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.os.Bundle;
-import android.util.Log;
+import android.text.TextUtils;
 import android.view.Menu;
 import android.view.View;
-import android.view.Window;
-import android.view.WindowManager;
+import android.widget.ImageButton;
 
 import com.alcatraz.admin.project_alcatraz.R;
-import com.alcatraz.admin.project_alcatraz.Utility.SearchBar;
+import com.alcatraz.admin.project_alcatraz.Utility.DynamicSwipableViewPager;
+import com.alcatraz.admin.project_alcatraz.Utility.Util;
+import com.miguelcatalan.materialsearchview.MaterialSearchView;
+
+import java.lang.reflect.Type;
+import java.util.ArrayList;
 
 public class SessionUserActivity extends AppCompatActivity {
 
@@ -33,19 +42,19 @@ public class SessionUserActivity extends AppCompatActivity {
     /**
      * The {@link ViewPager} that will host the section contents.
      */
-    private ViewPager mViewPager;
-    private View mIncludeToolbar;
-    private SearchBar mSearchBar;
-    private final float positionFromRight = -2;
+    private DynamicSwipableViewPager mViewPager;
+    private Toolbar mToolbar;
+    private MaterialSearchView mSearchView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_session_user);
 
-        Toolbar toolbar = findViewById(R.id.session_toolbar);
-        setSupportActionBar(toolbar);
+        mToolbar = findViewById(R.id.session_toolbar);
+        setSupportActionBar(mToolbar);
         getSupportActionBar().setTitle("");
+        getSupportActionBar().setElevation(0);
         // Create the adapter that will return a fragment for each of the three
         // primary sections of the activity.
         mSectionsPagerAdapter = new SectionsPagerAdapter(getSupportFragmentManager());
@@ -54,10 +63,10 @@ public class SessionUserActivity extends AppCompatActivity {
         mViewPager = findViewById(R.id.container);
         mViewPager.setAdapter(mSectionsPagerAdapter);
 
-        TabLayout tabLayout = findViewById(R.id.tabs);
-
+        final TabLayout tabLayout = findViewById(R.id.tabs);
         mViewPager.addOnPageChangeListener(new TabLayout.TabLayoutOnPageChangeListener(tabLayout));
-        tabLayout.addOnTabSelectedListener(new TabLayout.ViewPagerOnTabSelectedListener(mViewPager) {
+
+        final TabLayout.ViewPagerOnTabSelectedListener tabSelectedListener = new TabLayout.ViewPagerOnTabSelectedListener(mViewPager) {
             @Override
             public void onTabSelected(TabLayout.Tab tab) {
                 super.onTabSelected(tab);
@@ -65,16 +74,76 @@ public class SessionUserActivity extends AppCompatActivity {
                     case 0:
                         findViewById(R.id.action_finish).setVisibility(View.VISIBLE);
                         findViewById(R.id.action_search).setVisibility(View.VISIBLE);
+                        findViewById(R.id.action_filter).setVisibility(View.VISIBLE);
                         break;
                     case 1:
                         findViewById(R.id.action_finish).setVisibility(View.INVISIBLE);
                         findViewById(R.id.action_search).setVisibility(View.INVISIBLE);
+                        findViewById(R.id.action_filter).setVisibility(View.GONE);
                         break;
                 }
             }
-        });
+        };
 
-        mSearchBar = new SearchBar(this, toolbar);
+        tabLayout.addOnTabSelectedListener(tabSelectedListener);
+
+        mSearchView = findViewById(R.id.search_view);
+        mSearchView.setVoiceSearch(true);
+        mSearchView.setStartFromRight(false);
+        mSearchView.setCursorDrawable(R.drawable.color_cursor_white);
+        mSearchView.setSuggestions(getResources().getStringArray(R.array.menu_items));
+
+        mSearchView.setOnQueryTextListener(new MaterialSearchView.OnQueryTextListener() {
+            @Override
+            public boolean onQueryTextSubmit(String query) {
+                Snackbar.make(findViewById(R.id.main_content), "Query: " + query, Snackbar.LENGTH_LONG).show();
+                return false;
+            }
+
+            @Override
+            public boolean onQueryTextChange(String newText) {
+                // TODO: Do some magic!
+                return false;
+            }
+
+            @Override
+            public boolean onQueryClear() {
+                return false;
+            }
+        });
+        mSearchView.setOnSearchViewListener(new MaterialSearchView.SearchViewListener() {
+            @Override
+            public void onSearchViewShown() {
+
+            }
+
+            @Override
+            public void onSearchViewClosed() {
+                tabLayout.setVisibility(View.VISIBLE);
+                mViewPager.setEnabled(true);
+            }
+        });
+        ImageButton btn_search = findViewById(R.id.action_search);
+        btn_search.setOnClickListener(new ImageButton.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                tabLayout.setVisibility(View.GONE);
+                mViewPager.setEnabled(false);
+                mSearchView.showSearch();
+            }
+        });
+        Typeface tf = ResourcesCompat.getFont(this, R.font.arial_rounded_mt_bold);
+        Util.setTabsFont(tabLayout, tf);
+    }
+
+    @Override
+    public void onBackPressed() {
+        if (mSearchView.isSearchOpen()) {
+            mSearchView.closeSearch();
+        }
+        else {
+            super.onBackPressed();
+        }
     }
 
 
@@ -116,12 +185,18 @@ public class SessionUserActivity extends AppCompatActivity {
     }
 
     @Override
-    public void onBackPressed() {
-        // if the searchToolBar is visible, hide it
-        // otherwise, do parent onBackPressed method
-        if (mIncludeToolbar.getVisibility() == View.VISIBLE)
-            mSearchBar.hideSearchBar(positionFromRight);
-        else
-            super.onBackPressed();
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if (requestCode == MaterialSearchView.REQUEST_VOICE && resultCode == RESULT_OK) {
+            ArrayList<String> matches = data.getStringArrayListExtra(RecognizerIntent.EXTRA_RESULTS);
+            if (matches != null && matches.size() > 0) {
+                String searchWrd = matches.get(0);
+                if (!TextUtils.isEmpty(searchWrd)) {
+                    mSearchView.setQuery(searchWrd, false);
+                }
+            }
+
+            return;
+        }
+        super.onActivityResult(requestCode, resultCode, data);
     }
 }

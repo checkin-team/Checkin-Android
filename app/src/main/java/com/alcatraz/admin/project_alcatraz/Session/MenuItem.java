@@ -3,8 +3,8 @@ package com.alcatraz.admin.project_alcatraz.Session;
 import android.graphics.Bitmap;
 import android.provider.MediaStore;
 
+import java.util.ArrayList;
 import java.util.Dictionary;
-import java.util.List;
 
 /**
  * Created by shivanshs9 on 6/5/18.
@@ -16,5 +16,5 @@ public class MenuItem {
     protected String quantity;
     protected Bitmap image;
     protected MediaStore.Video video;
-    protected List<MenuItem> items;
+    protected ArrayList<MenuItem> items;
 }

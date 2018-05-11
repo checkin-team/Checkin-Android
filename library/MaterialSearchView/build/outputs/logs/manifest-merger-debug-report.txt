@@ -1,0 +1,39 @@
+-- Merging decision tree log ---
+manifest
+ADDED from /home/shivanshs9/AndroidStudioProjects/Project_Alcatraz/library/MaterialSearchView/src/main/AndroidManifest.xml:1:1-6:12
+INJECTED from /home/shivanshs9/AndroidStudioProjects/Project_Alcatraz/library/MaterialSearchView/src/main/AndroidManifest.xml:1:1-6:12
+INJECTED from /home/shivanshs9/AndroidStudioProjects/Project_Alcatraz/library/MaterialSearchView/src/main/AndroidManifest.xml:1:1-6:12
+INJECTED from /home/shivanshs9/AndroidStudioProjects/Project_Alcatraz/library/MaterialSearchView/src/main/AndroidManifest.xml:1:1-6:12
+INJECTED from /home/shivanshs9/AndroidStudioProjects/Project_Alcatraz/library/MaterialSearchView/src/main/AndroidManifest.xml:1:1-6:12
+INJECTED from /home/shivanshs9/AndroidStudioProjects/Project_Alcatraz/library/MaterialSearchView/src/main/AndroidManifest.xml:1:1-6:12
+INJECTED from /home/shivanshs9/AndroidStudioProjects/Project_Alcatraz/library/MaterialSearchView/src/main/AndroidManifest.xml:1:1-6:12
+	package
+		ADDED from /home/shivanshs9/AndroidStudioProjects/Project_Alcatraz/library/MaterialSearchView/src/main/AndroidManifest.xml:2:5-51
+		INJECTED from /home/shivanshs9/AndroidStudioProjects/Project_Alcatraz/library/MaterialSearchView/src/main/AndroidManifest.xml
+		INJECTED from /home/shivanshs9/AndroidStudioProjects/Project_Alcatraz/library/MaterialSearchView/src/main/AndroidManifest.xml
+	android:versionName
+		INJECTED from /home/shivanshs9/AndroidStudioProjects/Project_Alcatraz/library/MaterialSearchView/src/main/AndroidManifest.xml
+		ADDED from /home/shivanshs9/AndroidStudioProjects/Project_Alcatraz/library/MaterialSearchView/src/main/AndroidManifest.xml:1:1-6:12
+		INJECTED from /home/shivanshs9/AndroidStudioProjects/Project_Alcatraz/library/MaterialSearchView/src/main/AndroidManifest.xml
+	android:versionCode
+		INJECTED from /home/shivanshs9/AndroidStudioProjects/Project_Alcatraz/library/MaterialSearchView/src/main/AndroidManifest.xml
+		ADDED from /home/shivanshs9/AndroidStudioProjects/Project_Alcatraz/library/MaterialSearchView/src/main/AndroidManifest.xml:1:1-6:12
+		INJECTED from /home/shivanshs9/AndroidStudioProjects/Project_Alcatraz/library/MaterialSearchView/src/main/AndroidManifest.xml
+	xmlns:android
+		ADDED from /home/shivanshs9/AndroidStudioProjects/Project_Alcatraz/library/MaterialSearchView/src/main/AndroidManifest.xml:1:11-69
+application
+ADDED from /home/shivanshs9/AndroidStudioProjects/Project_Alcatraz/library/MaterialSearchView/src/main/AndroidManifest.xml:4:5-20
+uses-sdk
+INJECTED from /home/shivanshs9/AndroidStudioProjects/Project_Alcatraz/library/MaterialSearchView/src/main/AndroidManifest.xml reason: use-sdk injection requested
+INJECTED from /home/shivanshs9/AndroidStudioProjects/Project_Alcatraz/library/MaterialSearchView/src/main/AndroidManifest.xml
+INJECTED from /home/shivanshs9/AndroidStudioProjects/Project_Alcatraz/library/MaterialSearchView/src/main/AndroidManifest.xml
+INJECTED from /home/shivanshs9/AndroidStudioProjects/Project_Alcatraz/library/MaterialSearchView/src/main/AndroidManifest.xml
+INJECTED from /home/shivanshs9/AndroidStudioProjects/Project_Alcatraz/library/MaterialSearchView/src/main/AndroidManifest.xml
+	android:targetSdkVersion
+		INJECTED from /home/shivanshs9/AndroidStudioProjects/Project_Alcatraz/library/MaterialSearchView/src/main/AndroidManifest.xml
+		ADDED from /home/shivanshs9/AndroidStudioProjects/Project_Alcatraz/library/MaterialSearchView/src/main/AndroidManifest.xml
+		INJECTED from /home/shivanshs9/AndroidStudioProjects/Project_Alcatraz/library/MaterialSearchView/src/main/AndroidManifest.xml
+	android:minSdkVersion
+		INJECTED from /home/shivanshs9/AndroidStudioProjects/Project_Alcatraz/library/MaterialSearchView/src/main/AndroidManifest.xml
+		ADDED from /home/shivanshs9/AndroidStudioProjects/Project_Alcatraz/library/MaterialSearchView/src/main/AndroidManifest.xml
+		INJECTED from /home/shivanshs9/AndroidStudioProjects/Project_Alcatraz/library/MaterialSearchView/src/main/AndroidManifest.xml

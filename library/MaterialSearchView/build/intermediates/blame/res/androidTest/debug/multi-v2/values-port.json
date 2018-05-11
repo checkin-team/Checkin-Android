@@ -1,0 +1,19 @@
+{
+    "logs": [
+        {
+            "outputFile": "/home/shivanshs9/AndroidStudioProjects/Project_Alcatraz/library/MaterialSearchView/build/intermediates/incremental/mergeDebugAndroidTestResources/merged.dir/values-port/values-port.xml",
+            "map": [
+                {
+                    "source": "/home/shivanshs9/.gradle/caches/transforms-1/files-1.1/appcompat-v7-27.1.1.aar/e121c96b342e6d062678094d651e524e/res/values-port/values-port.xml",
+                    "from": {
+                        "startLines": "2",
+                        "startColumns": "4",
+                        "startOffsets": "55",
+                        "endColumns": "55",
+                        "endOffsets": "106"
+                    }
+                }
+            ]
+        }
+    ]
+}

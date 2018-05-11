@@ -7,6 +7,7 @@
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
         <item name="colorAccent">@color/colorAccent</item>
         <item name="actionBarStyle">@style/AppTheme.AppBarOverlay</item>
+        <item name="android:fontFamily">@font/arial_rounded_mt_bold</item>
     </style>
 
     <style name="CustomActionBarTheme" parent="Theme.AppCompat.Light.NoActionBar">
@@ -18,6 +19,7 @@
     <style name="AppTheme.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar">
         <item name="android:windowContentOverlay">@null</item>
         <item name="elevation">0dp</item>
+        <item name="android:actionBarDivider">@android:color/transparent</item>
     </style>
 
     <style name="AppTheme.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
@@ -26,12 +28,41 @@
         <item name="android:background">#303F9F</item>
     </style>
 
-    <style name="AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
+    <style name="AppBarOverlay" parent="AppTheme.AppBarOverlay" />
 
     <style name="PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
     <style name="SessionTheme" parent="Theme.AppCompat.Light.NoActionBar">
         <item name="android:windowNoTitle">true</item>
         <item name="actionBarStyle">@style/AppTheme.AppBarOverlay</item>
+    </style>
+
+    <style name="MaterialSearchViewStyle">
+        <!-- Background for the search bar-->
+        <item name="searchBackground">@color/light_red</item>
+
+        <!-- Change voice icon-->
+        <item name="searchVoiceIcon">@drawable/ic_action_voice_search_inverted</item>
+
+        <!-- Change clear text icon-->
+        <item name="searchCloseIcon">@drawable/ic_action_navigation_close_inverted</item>
+
+        <!-- Change up icon-->
+        <item name="searchBackIcon">@drawable/ic_action_navigation_arrow_back_inverted</item>
+
+        <!-- Change icon for the suggestions-->
+        <item name="searchSuggestionIcon">@drawable/ic_suggestion</item>
+
+        <!-- Change background for the suggestions list view-->
+        <item name="searchSuggestionBackground">@android:color/white</item>
+
+        <!-- Change text color for edit text. This will also be the color of the cursor-->
+        <item name="android:textColor">@color/white</item>
+
+        <!-- Change hint text color for edit text-->
+        <item name="android:textColorHint">@color/grey</item>
+
+        <!-- Hint for edit text-->
+        <item name="android:hint">@string/search_hint</item>
     </style>
 
 </resources>

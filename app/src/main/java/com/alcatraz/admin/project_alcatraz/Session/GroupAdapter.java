@@ -9,7 +9,7 @@ import android.widget.TextView;
 
 import com.alcatraz.admin.project_alcatraz.R;
 
-import java.util.List;
+import java.util.ArrayList;
 
 /**
  * Created by shivanshs9 on 6/5/18.
@@ -17,9 +17,9 @@ import java.util.List;
 
 public class GroupAdapter extends RecyclerView.Adapter<GroupAdapter.GroupViewHolder> {
 
-    private List<MenuGroup> groupList;
+    private ArrayList<MenuGroup> groupList;
 
-    public GroupAdapter(List<MenuGroup> groupsList) {
+    public GroupAdapter(ArrayList<MenuGroup> groupsList) {
         this.groupList = groupsList;
     }
 
