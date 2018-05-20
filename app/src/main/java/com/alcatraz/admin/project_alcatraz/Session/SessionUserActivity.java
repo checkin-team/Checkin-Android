@@ -1,5 +1,7 @@
 package com.alcatraz.admin.project_alcatraz.Session;
 
+import android.animation.Animator;
+import android.animation.AnimatorListenerAdapter;
 import android.content.Intent;
 import android.graphics.Typeface;
 import android.speech.RecognizerIntent;
@@ -16,6 +18,7 @@ import android.support.v4.view.ViewPager;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.Menu;
+import android.view.MotionEvent;
 import android.view.View;
 import android.widget.ImageButton;
 
@@ -24,18 +27,13 @@ import com.alcatraz.admin.project_alcatraz.Utility.DynamicSwipableViewPager;
 import com.alcatraz.admin.project_alcatraz.Utility.Util;
 import com.miguelcatalan.materialsearchview.MaterialSearchView;
 
-import java.lang.reflect.Type;
 import java.util.ArrayList;
 
 public class SessionUserActivity extends AppCompatActivity {
 
     /**
      * The {@link android.support.v4.view.PagerAdapter} that will provide
-     * fragments for each of the sections. We use a
-     * {@link FragmentPagerAdapter} derivative, which will keep every
-     * loaded fragment in memory. If this becomes too memory intensive, it
-     * may be best to switch to a
-     * {@link android.support.v4.app.FragmentStatePagerAdapter}.
+     * fragments for each of the sections.
      */
     private SectionsPagerAdapter mSectionsPagerAdapter;
 
@@ -45,6 +43,9 @@ public class SessionUserActivity extends AppCompatActivity {
     private DynamicSwipableViewPager mViewPager;
     private Toolbar mToolbar;
     private MaterialSearchView mSearchView;
+    private ImageButton mFilterToggle;
+    private View mFilterContainer;
+    private View mDarkFilter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -63,6 +64,18 @@ public class SessionUserActivity extends AppCompatActivity {
         mViewPager = findViewById(R.id.container);
         mViewPager.setAdapter(mSectionsPagerAdapter);
 
+        mFilterToggle = findViewById(R.id.action_filter_toggle);
+        mFilterContainer = findViewById(R.id.filter_container);
+        mDarkFilter = findViewById(R.id.darkfilter);
+        mDarkFilter.setOnTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View view, MotionEvent motionEvent) {
+                if (motionEvent.getAction() == MotionEvent.ACTION_DOWN)
+                    hideFilter();
+                return true;
+            }
+        });
+
         final TabLayout tabLayout = findViewById(R.id.tabs);
         mViewPager.addOnPageChangeListener(new TabLayout.TabLayoutOnPageChangeListener(tabLayout));
 
@@ -74,12 +87,12 @@ public class SessionUserActivity extends AppCompatActivity {
                     case 0:
                         findViewById(R.id.action_finish).setVisibility(View.VISIBLE);
                         findViewById(R.id.action_search).setVisibility(View.VISIBLE);
-                        findViewById(R.id.action_filter).setVisibility(View.VISIBLE);
+                        mFilterToggle.setVisibility(View.VISIBLE);
                         break;
                     case 1:
                         findViewById(R.id.action_finish).setVisibility(View.INVISIBLE);
                         findViewById(R.id.action_search).setVisibility(View.INVISIBLE);
-                        findViewById(R.id.action_filter).setVisibility(View.GONE);
+                        mFilterToggle.setVisibility(View.GONE);
                         break;
                 }
             }
@@ -119,7 +132,15 @@ public class SessionUserActivity extends AppCompatActivity {
 
             @Override
             public void onSearchViewClosed() {
-                tabLayout.setVisibility(View.VISIBLE);
+                tabLayout.animate()
+                        .alpha(1.0f)
+                        .setDuration(100)
+                        .setListener(new AnimatorListenerAdapter() {
+                            @Override
+                            public void onAnimationStart(Animator animation) {
+                                tabLayout.setVisibility(View.VISIBLE);
+                            }
+                        });
                 mViewPager.setEnabled(true);
             }
         });
@@ -127,30 +148,92 @@ public class SessionUserActivity extends AppCompatActivity {
         btn_search.setOnClickListener(new ImageButton.OnClickListener() {
             @Override
             public void onClick(View view) {
-                tabLayout.setVisibility(View.GONE);
+                tabLayout.animate()
+                        .alpha(0.0f)
+                        .setDuration(100)
+                        .setListener(new AnimatorListenerAdapter() {
+                            @Override
+                            public void onAnimationEnd(Animator animation) {
+                                tabLayout.setVisibility(View.GONE);
+                            }
+                        });
                 mViewPager.setEnabled(false);
                 mSearchView.showSearch();
             }
         });
         Typeface tf = ResourcesCompat.getFont(this, R.font.arial_rounded_mt_bold);
         Util.setTabsFont(tabLayout, tf);
+
+        mFilterToggle.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if (mDarkFilter.getVisibility() == View.VISIBLE)
+                    hideFilter();
+                else
+                    showFilter();
+            }
+        });
+    }
+
+    private void showFilter() {
+        mDarkFilter.animate()
+                .alpha(0.67f)
+                .setListener(new AnimatorListenerAdapter() {
+                    @Override
+                    public void onAnimationStart(Animator animation) {
+                        mDarkFilter.setVisibility(View.VISIBLE);
+                    }
+                });
+        mFilterContainer.animate()
+                .rotationBy(-180)
+                .alpha(1.0f)
+                .setListener(new AnimatorListenerAdapter() {
+                    @Override
+                    public void onAnimationStart(Animator animation) {
+                        mFilterContainer.setVisibility(View.VISIBLE);
+                    }
+                    @Override
+                    public void onAnimationEnd(Animator animation) {
+                        mFilterContainer.setRotation(0);
+                    }
+                });
+    }
+
+    private void hideFilter() {
+        mFilterContainer.animate()
+                .rotationBy(-180)
+                .alpha(0.0f)
+                .setListener(new AnimatorListenerAdapter() {
+                    @Override
+                    public void onAnimationEnd(Animator animation) {
+                        mFilterContainer.setVisibility(View.GONE);
+                        mFilterContainer.setRotation(180);
+                    }
+                });
+
+        mDarkFilter.animate()
+                .alpha(0.0f)
+                .setListener(new AnimatorListenerAdapter() {
+                    @Override
+                    public void onAnimationEnd(Animator animation) {
+                        mDarkFilter.setVisibility(View.GONE);
+                    }
+                });
     }
 
     @Override
     public void onBackPressed() {
-        if (mSearchView.isSearchOpen()) {
+        if (mSearchView.isSearchOpen())
             mSearchView.closeSearch();
-        }
-        else {
+        else if (mDarkFilter.getVisibility() == View.VISIBLE)
+            hideFilter();
+        else
             super.onBackPressed();
-        }
     }
 
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
-        //getMenuInflater().inflate(R.menu.menu_session_user, menu);
         return false;
     }
 
@@ -194,7 +277,6 @@ public class SessionUserActivity extends AppCompatActivity {
                     mSearchView.setQuery(searchWrd, false);
                 }
             }
-
             return;
         }
         super.onActivityResult(requestCode, resultCode, data);

@@ -23,8 +23,8 @@ import android.view.View;
 import android.widget.Toast;
 
 import com.alcatraz.admin.project_alcatraz.R;
-import com.alcatraz.admin.project_alcatraz.Session.MenuUserFragment;
 import com.alcatraz.admin.project_alcatraz.Session.SessionUserActivity;
+import com.alcatraz.admin.project_alcatraz.Utility.Util;
 import com.google.zxing.integration.android.IntentIntegrator;
 
 import java.util.ArrayList;
@@ -35,20 +35,15 @@ import java.util.Scanner;
  */
 
 public class HomeActivity extends AppCompatActivity {
-    private  RecyclerView recyclerView;
+    private RecyclerView recyclerView, mRvHorizontal1, mRvHorizontal2;
     private GestureDetectorCompat mDetector;
     private ArrayList<String> Number;
-    private RecyclerView.LayoutManager RecyclerViewLayoutManager;
-    private RecyclerViewAdapter RecyclerViewHorizontalAdapter;
-    private LinearLayoutManager HorizontalLayout ;
     private View ChildView ;
     int RecyclerViewItemPosition ;
 
 
     private final String TAG="HomeActivity";
-    private NavigationView navigationView=null,nav_right=null;
-    private DrawerLayout drawerLayout=null,drawerLayout1=null;
-    private Toolbar toolbar=null;
+    private DrawerLayout drawerLayout=null;
     private IntentIntegrator qrScan;
 
 
@@ -56,60 +51,40 @@ public class HomeActivity extends AppCompatActivity {
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main_with_drawer);
-        toolbar = (Toolbar) findViewById(R.id.toolbar);
-       setSupportActionBar(toolbar);
-        Log.d(TAG,"onCreate: starting.");
-       nav_right=findViewById(R.id.navigation_view_right);
-      navigationView=(NavigationView)findViewById(R.id.navigation_view);
-       navigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
+        Toolbar toolbar = findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
+        NavigationView navigationView = findViewById(R.id.navigation_view);
+        navigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
             @Override
             public boolean onNavigationItemSelected(MenuItem item) {
-                drawerLayout.closeDrawers();
-                switch (item.getItemId())
-                {
-
-                    case R.id.drawer_profile:
-                        //Toast.makeText(HomeActivity.this, "profile menu item selected", Toast.LENGTH_SHORT).show();
-                        //showprofile();
-                        Intent intent=new Intent(getApplicationContext(),UserProfileNew.class);
-                        startActivity(intent);
+            drawerLayout.closeDrawers();
+            switch (item.getItemId())
+            {
+                case R.id.drawer_profile:
+                    //Toast.makeText(HomeActivity.this, "profile menu item selected", Toast.LENGTH_SHORT).show();
+                    //showprofile();
+                    Intent intent=new Intent(getApplicationContext(),UserProfileNew.class);
+                    startActivity(intent);
+                    break;
+                case R.id.drawer_settings:
+                    //setContentView(R.layout.activity_shop_profile);
+                    intent = new Intent(getApplicationContext(), SessionUserActivity.class);
+                    startActivity(intent);
+                    break;
+                case R.id.drawer_privacysettings:
+                    Toast.makeText(HomeActivity.this, "privacy settings menu item selected", Toast.LENGTH_SHORT).show();
+                    break;
+                    default:
+                        Toast.makeText(HomeActivity.this, "yo whats up, default of switch case selected", Toast.LENGTH_SHORT).show();
                         break;
-                    case R.id.drawer_settings:
-                        //setContentView(R.layout.activity_shop_profile);
-                        intent = new Intent(getApplicationContext(), SessionUserActivity.class);
-                        startActivity(intent);
-                        break;
-                    case R.id.drawer_privacysettings:
-                        Toast.makeText(HomeActivity.this, "privacy settings menu item selected", Toast.LENGTH_SHORT).show();
-                        break;
-                        default:
-                            Toast.makeText(HomeActivity.this, "yo whats up, default of switch case selected", Toast.LENGTH_SHORT).show();
-                            break;
-
-
-
-                }
-                return true;
+            }
+            return true;
 
             }
         });
 
-   //What to do when clicked Uncomment afterwards
-        /*
-        nav_right.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
-            @Override
-            public boolean onNavigationItemSelected(MenuItem item) {
-                drawerLayout.closeDrawers();
-                Toast.makeText(HomeActivity.this, item.getTitle(), Toast.LENGTH_SHORT).show();
-                return true;
-
-            }
-        });*/
-
-        drawerLayout=(DrawerLayout)findViewById(R.id.drawer);
-        drawerLayout1=(DrawerLayout)findViewById(R.id.right_nav);
-
-        ActionBarDrawerToggle actionBarDrawerToggle=new ActionBarDrawerToggle(this,drawerLayout,toolbar,R.string.app_name,R.string.app_name){
+        drawerLayout = findViewById(R.id.drawer);
+        ActionBarDrawerToggle actionBarDrawerToggle=new ActionBarDrawerToggle(this,drawerLayout, toolbar,R.string.app_name,R.string.app_name){
             @Override
             public void onDrawerClosed(View drawerView) {
                 // Code here will be triggered once the drawer closes as we dont want anything to happen so we leave this blank
@@ -125,18 +100,16 @@ public class HomeActivity extends AppCompatActivity {
 
         };
         actionBarDrawerToggle.syncState();
-       drawerLayout.addDrawerListener(actionBarDrawerToggle);
-        EndDrawerToggle right_toggle=new EndDrawerToggle(this,drawerLayout,toolbar,R.string.app_name,R.string.app_name){
+        drawerLayout.addDrawerListener(actionBarDrawerToggle);
+        EndDrawerToggle right_toggle=new EndDrawerToggle(this,drawerLayout, toolbar,R.string.app_name,R.string.app_name){
             @Override
             public void onDrawerClosed(View drawerView) {
                 // Code here will be triggered once the drawer closes as we dont want anything to happen so we leave this blank
                 super.onDrawerClosed(drawerView);
-
             }
 
             @Override
             public void onDrawerOpened(View drawerView) {
-
                 super.onDrawerOpened(drawerView);
             }
 
@@ -154,38 +127,39 @@ public class HomeActivity extends AppCompatActivity {
 
 //       setupBottomNavigationView();
 //        setupViewPager();
-        initializeHorizontalView(R.id.recyclerview1);
-        initializeHorizontalView(R.id.recyclerviewhorizontal2);
+        mRvHorizontal1 = findViewById(R.id.rv_horizontal_1);
+        mRvHorizontal2 = findViewById(R.id.rv_horizontal_2);
+        initializeHorizontalView(mRvHorizontal1);
+        initializeHorizontalView(mRvHorizontal2);
         initializeFeeds();
         qrScan = new IntentIntegrator(this);
         mDetector = new GestureDetectorCompat(this, new ListenToHorizontal());
 
         messages();
     }
-    private void initializeHorizontalView(int id)
+    private void initializeHorizontalView(RecyclerView recyclerView)
     {
 
-        recyclerView = (RecyclerView)findViewById(id);
         recyclerView.setOnTouchListener(new View.OnTouchListener() {
             @Override
             public boolean onTouch(View v, MotionEvent event){
                 return mDetector.onTouchEvent(event);
             }
         });
-        RecyclerViewLayoutManager = new LinearLayoutManager(getApplicationContext());
+        RecyclerView.LayoutManager recyclerViewLayoutManager = new LinearLayoutManager(getApplicationContext());
 
 
-        recyclerView.setLayoutManager(RecyclerViewLayoutManager);
+        recyclerView.setLayoutManager(recyclerViewLayoutManager);
 
         // Adding items to RecyclerView.
         AddItemsToRecyclerViewArrayList();
 
-        RecyclerViewHorizontalAdapter = new RecyclerViewAdapter(Number);
+        RecyclerViewAdapter recyclerViewHorizontalAdapter = new RecyclerViewAdapter(Number);
 
-        HorizontalLayout = new LinearLayoutManager(HomeActivity.this, LinearLayoutManager.HORIZONTAL, false);
-        recyclerView.setLayoutManager(HorizontalLayout);
+        LinearLayoutManager horizontalLayout = new LinearLayoutManager(HomeActivity.this, LinearLayoutManager.HORIZONTAL, false);
+        recyclerView.setLayoutManager(horizontalLayout);
 
-        recyclerView.setAdapter(RecyclerViewHorizontalAdapter);
+        recyclerView.setAdapter(recyclerViewHorizontalAdapter);
 
 
         // Adding on item click listener to RecyclerView.
@@ -193,11 +167,11 @@ public class HomeActivity extends AppCompatActivity {
 
             GestureDetector gestureDetector = new GestureDetector(HomeActivity.this, new GestureDetector.SimpleOnGestureListener() {
 
-                @Override public boolean onSingleTapUp(MotionEvent motionEvent) {
+                @Override
+                public boolean onSingleTapUp(MotionEvent motionEvent) {
 
                     return true;
                 }
-
             });
             @Override
             public boolean onInterceptTouchEvent(RecyclerView Recyclerview, MotionEvent motionEvent) {
@@ -236,7 +210,7 @@ public class HomeActivity extends AppCompatActivity {
         while(sc.hasNext())
             feed.add(sc.next());
 
-        final RecyclerView recyclerView = (RecyclerView)findViewById(R.id.recyclerview2);
+        recyclerView = findViewById(R.id.recyclerview2);
         recyclerView.setOnTouchListener(new View.OnTouchListener() {
             @Override
             public boolean onTouch(View v, MotionEvent event){
@@ -261,62 +235,16 @@ public class HomeActivity extends AppCompatActivity {
         // Adding on item click listener to RecyclerView.
         recyclerView.addOnItemTouchListener(new RecyclerView.OnItemTouchListener() {
 
-            boolean showing=true;
             GestureDetector gestureDetector = new GestureDetector(HomeActivity.this, new GestureDetector.SimpleOnGestureListener() {
                 @Override
                 public boolean onScroll(MotionEvent e1, MotionEvent e2, float distanceX, float distanceY) {
-                    RecyclerView recyclerView1=findViewById(R.id.recyclerview2);
-                    View child=recyclerView1.getLayoutManager().getChildAt(0);
+                    //Log.e("T",(recyclerView1.getLayoutManager().isViewPartiallyVisible(child,true,true))+"");
 
-                    Log.e("T",(recyclerView1.getLayoutManager().isViewPartiallyVisible(child,true,true))+"");
-
-
-                    if (distanceY >20) {
-                        // Scrolled upward
-                        if (showing==true)
-                        {
-                            showing=false;
-                            Log.e("g","GOing uP");
-                            final RecyclerView view = findViewById(R.id.recyclerview1);
-
-                            view.animate()
-                                    .translationY(-view.getHeight())
-                                    .alpha(0.0f)
-                                    //.setDuration(300)
-                                    .setListener(new AnimatorListenerAdapter() {
-                                        @Override
-                                        public void onAnimationEnd(Animator animation) {
-                                            super.onAnimationEnd(animation);
-                                            view.clearAnimation();
-                                            view.setVisibility(View.GONE);
-                                            findViewById(R.id.recyclerviewhorizontal2).setVisibility(View.GONE);
-                                        }
-                                    });
-
-                        }
+                    if (distanceY > 0) {
+                        // Scrolled downward
                     }
                     if (distanceY < 0) {
-                        Log.e("g","GOing DOWNTOWn");
-
                         // Scrolled upward
-                        if (showing==false)
-                        {
-                            if((recyclerView1.getLayoutManager().isViewPartiallyVisible(child,true,true))==false)
-                                return false;
-                            showing=true;
-                            final RecyclerView view = findViewById(R.id.recyclerview1);
-                            view.animate()
-                                .translationY(0)
-                                .alpha(1.0f)
-                               // .setDuration(100)
-                                .setListener(new AnimatorListenerAdapter() {
-                                    @Override
-                                    public void onAnimationEnd(Animator animation) {
-                                        super.onAnimationEnd(animation);
-                                        view.setVisibility(View.VISIBLE);
-                                    }
-                                });
-                        }
                     }
                     return false;
                 }
@@ -355,9 +283,6 @@ public class HomeActivity extends AppCompatActivity {
 
             }
         });
-
-
-
     }
 
     /**
@@ -411,76 +336,28 @@ public class HomeActivity extends AppCompatActivity {
         private static final String DEBUG_TAG = "Gestures";
 
         @Override
-        public boolean onDown(MotionEvent event) {
-            Log.e(DEBUG_TAG, "onDown: " + event.toString());
-            return true;
+        public boolean onDown(MotionEvent e) {
+            return super.onDown(e);
         }
+
         @Override
-        public boolean onFling(MotionEvent event1, MotionEvent event2,
-                               float velocityX, float velocityY) {
-           // Log.e(DEBUG_TAG, "onFling: " + event1.toString() + event2.toString());
+        public boolean onScroll(MotionEvent event1, MotionEvent event2, float distanceX, float distanceY) {
+            Log.e(DEBUG_TAG, "onScroll: ( " + distanceX + ", " + distanceY + " )");
+            /*if (Math.abs(distanceX) < 10) {
+                if (distanceY > 15) {
+                    Util.animateHide(mRvHorizontal2, -getResources().getDimensionPixelSize(R.dimen.home_horizontal_rv_height));
+                    return true;
+                }
+                Util.animateShow(mRvHorizontal2, getResources().getDimensionPixelSize(R.dimen.home_horizontal_rv_height));
+                return true;
+            }*/
             return false;
         }
-       public boolean onScroll(MotionEvent event1, MotionEvent event2, float distanceX,
-                                float distanceY) {
-            if(Math.abs(distanceX)>10)return false;
-            if(distanceY>15)
-            {
-                final RecyclerView view = findViewById(R.id.recyclerviewhorizontal2);
-                view.animate()
-                        .translationY(-view.getHeight())
-                        .alpha(0.0f)
-                      //  .setDuration(300)
-                        .setListener(new AnimatorListenerAdapter() {
-                            @Override
-                            public void onAnimationEnd(Animator animation) {
-                                super.onAnimationEnd(animation);
-                                view.clearAnimation();
-                                view.setVisibility(View.GONE);
-                                findViewById(R.id.recyclerviewhorizontal2).setVisibility(View.GONE);
-                            }
-                        });
-                return true;
-            }
-            if(distanceY>-15)return false;
-
-            Log.e(DEBUG_TAG, "onScroll: " + distanceX + "   ,,,  "+distanceY);
-            final RecyclerView r = findViewById(R.id.recyclerviewhorizontal2);
-            if(findViewById(R.id.recyclerview1).getVisibility()==View.GONE)
-                return true;
-            r.animate()
-                    .translationY(0)
-                    .alpha(1.0f)
-                  //  .setDuration(500)
-                    .setListener(new AnimatorListenerAdapter() {
-                        @Override
-                        public void onAnimationEnd(Animator animation) {
-                            super.onAnimationEnd(animation);
-                            r.setVisibility(View.VISIBLE);
-                        }
-                    });
-
-            return true;
-        }
-
 
         @Override
         public void onLongPress(MotionEvent e) {
             Log.e("HERE","HERE");
-            final RecyclerView r = findViewById(R.id.recyclerviewhorizontal2);
-            r.animate()
-                    .translationY(0)
-                    .alpha(1.0f)
-                  //  .setDuration(500)
-                    .setListener(new AnimatorListenerAdapter() {
-                        @Override
-                        public void onAnimationEnd(Animator animation) {
-                            super.onAnimationEnd(animation);
-                            r.setVisibility(View.VISIBLE);
-                        }
-                    });
-
-
+            Util.animateShow(mRvHorizontal2, getResources().getDimensionPixelSize(R.dimen.home_horizontal_rv_height));
         }
     }
     public class ListenToVertical extends GestureDetector.SimpleOnGestureListener {
@@ -488,22 +365,18 @@ public class HomeActivity extends AppCompatActivity {
 
         @Override
         public boolean onDown(MotionEvent event) {
-            final View view=findViewById(R.id.recyclerviewhorizontal2);
-            Log.e(DEBUG_TAG, "VERTICLA DOWN: " + event.toString());view.animate()
-                    .translationY(-view.getHeight())
-                    .alpha(0.0f)
-                  //  .setDuration(300)
-                    .setListener(new AnimatorListenerAdapter() {
-                        @Override
-                        public void onAnimationEnd(Animator animation) {
-                            super.onAnimationEnd(animation);
-                            view.clearAnimation();
-                            view.setVisibility(View.GONE);
-                            findViewById(R.id.recyclerviewhorizontal2).setVisibility(View.GONE);
-                        }
-                    });
+            Log.e(DEBUG_TAG, "VERTICAL DOWN: " + event.toString());
+            Util.animateHide(mRvHorizontal2, -getResources().getDimensionPixelSize(R.dimen.home_horizontal_rv_height));
+            return true;
+        }
 
-
+        @Override
+        public boolean onFling(MotionEvent event1, MotionEvent event2, float velocityX, float velocityY) {
+            if (event1.getY() > event2.getY()) {
+                Log.e(TAG, "Down -> Up FLING performed!");
+                if (recyclerView != null)
+                    recyclerView.getLayoutManager().scrollToPosition(0);
+            }
             return true;
         }
 
@@ -518,7 +391,7 @@ public class HomeActivity extends AppCompatActivity {
         final ArrayList<String> feed1 = new ArrayList<>();
 
         final ArrayList<Integer> im=new ArrayList<>();
-        String ss = "Heelo How are you I1 am awesome erf w 3 3 3 3 3 3  3 6 6 6 6 6 6 6 6 6 6 6 6 6 6";
+        String ss = "Hello How are you I1 am awesome erf w 3 3 3 3 3 3  3 6 6 6 6 6 6 6 6 6 6 6 6 6 6";
         Scanner sc = new Scanner(ss);
         while (sc.hasNext()) {
             feed.add("Rahul Dev");
@@ -527,7 +400,7 @@ public class HomeActivity extends AppCompatActivity {
             im.add(R.drawable.fin);
         }
 
-        final RecyclerView recyclerView = (RecyclerView) findViewById(R.id.nav_drawer_recycler_view);
+        final RecyclerView recyclerView = findViewById(R.id.nav_drawer_recycler_view);
        /* recyclerView.setOnTouchListener(new View.OnTouchListener() {
             @Override
             public boolean onTouch(View v, MotionEvent event) {

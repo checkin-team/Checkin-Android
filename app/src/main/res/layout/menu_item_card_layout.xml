@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.design.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/card_view"
+    android:layout_width="match_parent"
+    android:layout_height="@dimen/menu_item_default_height"
+    android:layout_marginStart="5dp"
+    android:layout_marginLeft="5dp"
+    android:layout_marginTop="5dp"
+    android:background="@drawable/menu_item_card_box">
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <TextView
+            android:id="@+id/item_title"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="4dp"
+            android:fontFamily="@font/arial_rounded_mt_bold"
+            android:text="ITEM TITLE"
+            android:textAlignment="center"
+            android:textColor="@color/brownish_grey"
+            android:textSize="16.5sp" />
+
+        <FrameLayout
+            android:layout_width="84dp"
+            android:layout_height="32dp"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="50dp"
+            android:clickable="true"
+            android:focusable="true">
+
+            <ImageView
+                android:id="@+id/price_button"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@android:color/transparent"
+                android:src="@drawable/menu_item_price" />
+
+
+            <TextView
+                android:id="@+id/price_value"
+                android:layout_width="50dp"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="28dp"
+                android:layout_marginStart="28dp"
+                android:layout_marginTop="5dp"
+                android:text="-"
+                android:textAlignment="center"
+                android:textColor="@color/colorPrimaryRed"
+                android:textSize="13sp" />
+        </FrameLayout>
+
+    </FrameLayout>
+
+</android.support.design.widget.CoordinatorLayout>

@@ -11,10 +11,14 @@ import java.util.Dictionary;
  */
 
 public class MenuItem {
-    protected String name;
+    protected String title;
     protected Dictionary cost;
     protected String quantity;
     protected Bitmap image;
     protected MediaStore.Video video;
     protected ArrayList<MenuItem> items;
+
+    MenuItem(String title) {
+        this.title = title;
+    }
 }

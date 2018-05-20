@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.design.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/card_view"
+    android:layout_width="match_parent"
+    android:layout_height="@dimen/menu_group_default_height"
+    android:layout_marginEnd="3dp"
+    android:layout_marginLeft="3dp"
+    android:layout_marginRight="3dp"
+    android:layout_marginStart="3dp"
+    android:layout_marginTop="3dp"
+    android:background="@drawable/menu_group_card_box">
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <ImageView
+            android:id="@+id/group_image"
+            android:layout_width="60dp"
+            android:layout_height="60dp"
+            android:layout_gravity="center_vertical"
+            android:layout_marginLeft="15dp"
+            android:layout_marginStart="15dp"
+            android:elevation="0dp" />
+
+        <TextView
+            android:id="@+id/group_title"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:text="GROUP TITLE"
+            android:textAlignment="center"
+            android:textColor="@color/brownish_grey"
+            android:textSize="21.5sp" />
+
+            <android.support.v7.widget.RecyclerView
+                android:id="@+id/group_menu"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="4dp"
+                android:layout_marginRight="4dp"
+                android:layout_marginLeft="4dp"
+                android:layout_marginStart="4dp"
+                android:alpha="0.0"
+                android:visibility="gone"/>
+
+    </FrameLayout>
+
+</android.support.design.widget.CoordinatorLayout>

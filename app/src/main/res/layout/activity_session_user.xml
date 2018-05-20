@@ -15,15 +15,6 @@
         android:layout_height="match_parent"
         app:layout_behavior="@string/appbar_scrolling_view_behavior" />
 
-    <android.support.design.widget.FloatingActionButton
-        android:id="@+id/action_filter"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:clickable="true"
-        android:layout_marginBottom="5dp"
-        android:layout_gravity="bottom|center_horizontal"
-        app:srcCompat="@drawable/ic_filter" />
-
     <android.support.design.widget.AppBarLayout
         android:id="@+id/appbar"
         app:elevation="0dp"
@@ -95,4 +86,51 @@
 
     </android.support.design.widget.AppBarLayout>
 
+    <FrameLayout
+        android:id="@+id/darkfilter"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:alpha="0.0"
+        android:visibility="gone"
+        android:background="@color/black" />
+
+    <android.support.constraint.ConstraintLayout
+        android:id="@+id/filter_container"
+        android:layout_width="306.5dp"
+        android:layout_height="357dp"
+        android:layout_gravity="bottom|center_horizontal"
+        android:layout_marginBottom="10dp"
+        android:layout_marginLeft="1dp"
+        android:layout_marginStart="1dp"
+        android:background="@drawable/menu_filter_back"
+        android:rotation="180"
+        android:alpha="0.0"
+        android:visibility="gone"
+        android:clickable="true"
+        android:focusable="true"
+        android:transformPivotX="151.75dp"
+        android:transformPivotY="331.25dp">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="150dp"
+            android:layout_marginStart="150dp"
+            android:layout_marginTop="8dp"
+            android:text="@string/action_filter"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+    </android.support.constraint.ConstraintLayout>
+
+    <ImageButton
+        android:id="@+id/action_filter_toggle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom|center_horizontal"
+        android:layout_marginBottom="11.5dp"
+        android:alpha="0.75"
+        android:background="@android:color/transparent"
+        android:contentDescription="@string/action_filter"
+        android:scaleType="fitCenter"
+        android:src="@drawable/ic_filter" />
 </android.support.design.widget.CoordinatorLayout>

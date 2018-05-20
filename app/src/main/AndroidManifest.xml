@@ -11,15 +11,15 @@
         android:theme="@style/Theme.AppCompat.Light.NoActionBar">
         <activity
             android:name=".Home.HomeActivity"
-            android:screenOrientation="portrait" />
-        <activity
-            android:name=".Utility.Splash_Activity"
             android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
+        </activity>
+        <activity
+            android:name=".Utility.Splash_Activity"
+            android:screenOrientation="portrait">
         </activity>
         <activity
             android:name=".Profile.ShopProfileActivity"
