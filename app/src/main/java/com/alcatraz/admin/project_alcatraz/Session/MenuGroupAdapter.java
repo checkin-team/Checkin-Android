@@ -4,12 +4,10 @@ import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
 import android.animation.AnimatorSet;
 import android.support.annotation.NonNull;
-import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
-import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
@@ -29,8 +27,9 @@ public class MenuGroupAdapter extends RecyclerView.Adapter<MenuGroupAdapter.Grou
     private ArrayList<MenuGroup> groupList;
     private GroupViewHolder mPrevExpandedViewHolder = null;
     private RecyclerView mRecyclerView;
+    private static MenuItemAdapter.OnItemClickListener menuitemClickListener;
 
-    public MenuGroupAdapter(ArrayList<MenuGroup> groupsList) {
+    MenuGroupAdapter(ArrayList<MenuGroup> groupsList) {
         this.groupList = groupsList;
     }
 
@@ -94,12 +93,15 @@ public class MenuGroupAdapter extends RecyclerView.Adapter<MenuGroupAdapter.Grou
         }
     }
 
+    public void setMenuItemClickListener(MenuItemAdapter.OnItemClickListener listener) {
+        menuitemClickListener = listener;
+    }
+
     static class GroupViewHolder extends RecyclerView.ViewHolder {
         TextView vTitle;
         ImageView vImage;
         RecyclerView vGroupMenu;
 //        RecyclerView vRecMenu;
-        MenuGroupAdapter menuGroupAdapter;
         boolean isExpanded = false;
 
         GroupViewHolder(View v, MenuGroupAdapter groupAdapter) {
@@ -108,7 +110,6 @@ public class MenuGroupAdapter extends RecyclerView.Adapter<MenuGroupAdapter.Grou
             vImage = v.findViewById(R.id.group_image);
             vGroupMenu = v.findViewById(R.id.group_menu);
 //            vRecMenu = v.findViewById(R.id.group_menu_list);
-            menuGroupAdapter = groupAdapter;
         }
 
         void bindData(final MenuGroup menuGroup) {
@@ -116,7 +117,8 @@ public class MenuGroupAdapter extends RecyclerView.Adapter<MenuGroupAdapter.Grou
             vTitle.setText(menuGroup.title);
             vImage.setImageBitmap(menuGroup.image);
 
-            MenuItemAdapter menuItemAdapter = new MenuItemAdapter(menuGroup.items, menuGroupAdapter, this);
+            MenuItemAdapter menuItemAdapter = new MenuItemAdapter(menuGroup.items, this);
+            menuItemAdapter.setOnItemClickListener(menuitemClickListener);
             vGroupMenu.setAdapter(menuItemAdapter);
             Log.e("MenuItemAdapter", "Done!");
         }

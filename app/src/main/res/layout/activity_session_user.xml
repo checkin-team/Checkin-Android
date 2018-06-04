@@ -111,15 +111,7 @@
         android:transformPivotX="151.75dp"
         android:transformPivotY="331.25dp">
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="150dp"
-            android:layout_marginStart="150dp"
-            android:layout_marginTop="8dp"
-            android:text="@string/action_filter"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+        <include layout="@layout/menu_filter" />
     </android.support.constraint.ConstraintLayout>
 
     <ImageButton

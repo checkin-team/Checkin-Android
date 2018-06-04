@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.design.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="wrap_content"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/chip_layout"
+    android:background="@color/white">
+
+    <com.robertlevonyan.views.chip.Chip
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/chip_view"
+        app:mcv_closable="true"
+        app:mcv_chipText="DUMMY"
+        app:mcv_backgroundColor="#bebebe"
+        app:mcv_textColor="@color/white"
+        app:mcv_closeColor="@color/light_red"
+        app:mcv_selectable="false">
+
+    </com.robertlevonyan.views.chip.Chip>
+
+</android.support.design.widget.CoordinatorLayout>
