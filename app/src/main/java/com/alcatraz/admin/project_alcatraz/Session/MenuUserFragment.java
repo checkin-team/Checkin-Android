@@ -19,7 +19,9 @@ import com.alcatraz.admin.project_alcatraz.Utility.StartSnapHelper;
 import java.util.ArrayList;
 import java.util.Locale;
 
-public class MenuUserFragment extends Fragment {
+public class MenuUserFragment extends Fragment implements MenuItemAdapter.OnItemClickListener {
+
+    private MenuChipAdapter mChipAdapter;
 
     public MenuUserFragment() {
         setHasOptionsMenu(true);
@@ -47,6 +49,11 @@ public class MenuUserFragment extends Fragment {
 
         final View rootView = inflater.inflate(R.layout.fragment_menu_user, container, false);
 
+        final RecyclerView chipsList = rootView.findViewById(R.id.chips_item_list);
+        chipsList.setLayoutManager(new LinearLayoutManager(getActivity(), RecyclerView.HORIZONTAL, false));
+        mChipAdapter = new MenuChipAdapter();
+        chipsList.setAdapter(mChipAdapter);
+
         final RecyclerView recList = rootView.findViewById(R.id.groups_list);
         recList.setHasFixedSize(true);
         LinearLayoutManager llm = new LinearLayoutManager(getActivity(), RecyclerView.VERTICAL, false);
@@ -54,6 +61,8 @@ public class MenuUserFragment extends Fragment {
 
         MenuGroupAdapter groupAdapter = new MenuGroupAdapter(createDummyData(30));
         recList.setAdapter(groupAdapter);
+
+        groupAdapter.setMenuItemClickListener(this);
 
         final StartSnapHelper snapHelper = new StartSnapHelper();
         snapHelper.attachToRecyclerView(recList);
@@ -75,4 +84,10 @@ public class MenuUserFragment extends Fragment {
         return menuGroupList;
     }
 
+    @Override
+    public void onItemClicked(View view, MenuItem menuItem) {
+        MenuChip menuChip = new MenuChip(menuItem.title, 1);
+        mChipAdapter.addChip(menuChip);
+        mChipAdapter.notifyItemInserted(mChipAdapter.getItemCount() - 1);
+    }
 }

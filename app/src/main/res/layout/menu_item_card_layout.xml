@@ -24,6 +24,7 @@
             android:textSize="16.5sp" />
 
         <FrameLayout
+            android:id="@+id/price_layout"
             android:layout_width="84dp"
             android:layout_height="32dp"
             android:layout_gravity="center_horizontal"
@@ -51,6 +52,21 @@
                 android:textColor="@color/colorPrimaryRed"
                 android:textSize="13sp" />
         </FrameLayout>
+
+        <ImageView
+            android:layout_width="118dp"
+            android:layout_height="53dp"
+            android:layout_marginBottom="3.8dp"
+            android:src="@drawable/menu_quantity_selection_bar"
+            android:layout_gravity="center_horizontal|bottom"
+            />
+
+        <android.support.v7.widget.AppCompatSpinner
+            android:id="@+id/spinner"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="end|bottom"
+            android:entries="@array/spinner_options"/>
 
     </FrameLayout>
 

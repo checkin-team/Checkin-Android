@@ -1,5 +1,6 @@
 package com.alcatraz.admin.project_alcatraz.Session;
 
+import android.content.Context;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -11,20 +12,26 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.alcatraz.admin.project_alcatraz.R;
-import com.alcatraz.admin.project_alcatraz.Utility.StartSnapHelper;
 
 import java.util.ArrayList;
 
 public class MenuItemAdapter extends RecyclerView.Adapter<MenuItemAdapter.ItemViewHolder> {
     private ArrayList<MenuItem> mItemsList;
     private MenuGroupAdapter.GroupViewHolder mGroupViewHolder;
-    private MenuGroupAdapter menuGroupAdapter;
     private RecyclerView mRecyclerView;
+    private static OnItemClickListener mOnItemClickListener;
 
-    public MenuItemAdapter(ArrayList<MenuItem> itemsList, MenuGroupAdapter groupAdapter, MenuGroupAdapter.GroupViewHolder groupViewHolder) {
+    public MenuItemAdapter(ArrayList<MenuItem> itemsList, MenuGroupAdapter.GroupViewHolder groupViewHolder) {
         mItemsList = itemsList;
         mGroupViewHolder = groupViewHolder;
-        menuGroupAdapter = groupAdapter;
+    }
+
+    public interface OnItemClickListener {
+        void onItemClicked(View view, MenuItem menuItem);
+    }
+
+    public void setOnItemClickListener(OnItemClickListener listener) {
+        mOnItemClickListener = listener;
     }
 
     @Override
@@ -67,15 +74,34 @@ public class MenuItemAdapter extends RecyclerView.Adapter<MenuItemAdapter.ItemVi
         return mItemsList.size();
     }
 
-    static class ItemViewHolder extends RecyclerView.ViewHolder {
+    static class ItemViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
         TextView vTitle;
+        View vPriceLayout;
+        MenuItem mMenuItem;
+//        NiceSpinner vSpinner;
         ItemViewHolder(View itemView) {
             super(itemView);
             vTitle = itemView.findViewById(R.id.item_title);
+            vPriceLayout = itemView.findViewById(R.id.price_layout);
+            vPriceLayout.setOnClickListener(this);
+            /*vSpinner = itemView.findViewById(R.id.spinner);
+            vSpinner.attachDataSource(Arrays.asList(itemView.getResources().getStringArray(R.array.spinner_options)));
+            vSpinner.addOnItemClickListener(new AdapterView.OnItemClickListener() {
+                @Override
+                public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+                    Log.e("Spinner", "Selected: #" + vSpinner.getSelectedIndex());
+                }
+            });*/
         }
 
-        public void bindData(MenuItem menuItem) {
+        void bindData(MenuItem menuItem) {
+            mMenuItem = menuItem;
             vTitle.setText(menuItem.title);
+        }
+
+        @Override
+        public void onClick(View view) {
+            mOnItemClickListener.onItemClicked(view, mMenuItem);
         }
     }
 }

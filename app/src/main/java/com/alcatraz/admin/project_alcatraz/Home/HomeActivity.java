@@ -416,6 +416,42 @@ public class HomeActivity extends AppCompatActivity {
         recyclerView.setLayoutManager(HorizontalLayout);
 
         recyclerView.setAdapter(RecyclerViewHorizontalAdapter);
+        recyclerView.addOnItemTouchListener(new RecyclerView.OnItemTouchListener() {
+
+            GestureDetector gestureDetector = new GestureDetector(HomeActivity.this, new GestureDetector.SimpleOnGestureListener() {
+
+                @Override
+                public boolean onSingleTapUp(MotionEvent motionEvent) {
+
+                    return true;
+                }
+            });
+            @Override
+            public boolean onInterceptTouchEvent(RecyclerView Recyclerview, MotionEvent motionEvent) {
+
+                ChildView = Recyclerview.findChildViewUnder(motionEvent.getX(), motionEvent.getY());
+
+                if(ChildView != null && gestureDetector.onTouchEvent(motionEvent)) {
+
+                    //Getting clicked value.
+                    RecyclerViewItemPosition = Recyclerview.getChildAdapterPosition(ChildView);
+                    Intent i=new Intent(getApplicationContext(),ChatActivity.class);
+                    startActivity(i);
+                }
+
+                return false;
+            }
+
+            @Override
+            public void onTouchEvent(RecyclerView Recyclerview, MotionEvent motionEvent) {
+
+            }
+
+            @Override
+            public void onRequestDisallowInterceptTouchEvent(boolean disallowIntercept) {
+
+            }
+        });
 
     }
     }
