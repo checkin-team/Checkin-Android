@@ -22,7 +22,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:maxWidth="240dp"
-
+        app:layout_constraintLeft_toLeftOf="parent"
         android:paddingLeft="12dp"
         android:paddingRight="12dp"
         android:paddingTop="6dp"
