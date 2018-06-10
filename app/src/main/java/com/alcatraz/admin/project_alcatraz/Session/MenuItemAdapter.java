@@ -1,7 +1,7 @@
 package com.alcatraz.admin.project_alcatraz.Session;
 
-import android.content.Context;
 import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
@@ -9,11 +9,20 @@ import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.alcatraz.admin.project_alcatraz.R;
+import com.alcatraz.admin.project_alcatraz.Utility.TextBaseAdapter;
+import com.alcatraz.admin.project_alcatraz.Utility.Util;
+import com.yarolegovich.discretescrollview.DiscreteScrollView;
+import com.yarolegovich.discretescrollview.transform.ScaleTransformer;
+
+import org.angmarch.views.NiceSpinnerArrowOnly;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 
 public class MenuItemAdapter extends RecyclerView.Adapter<MenuItemAdapter.ItemViewHolder> {
     private ArrayList<MenuItem> mItemsList;
@@ -77,21 +86,44 @@ public class MenuItemAdapter extends RecyclerView.Adapter<MenuItemAdapter.ItemVi
     static class ItemViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
         TextView vTitle;
         View vPriceLayout;
+        ImageView vPriceButton;
         MenuItem mMenuItem;
-//        NiceSpinner vSpinner;
+        NiceSpinnerArrowOnly vSpinner;
+        DiscreteScrollView vQuantityPicker;
+
         ItemViewHolder(View itemView) {
             super(itemView);
             vTitle = itemView.findViewById(R.id.item_title);
             vPriceLayout = itemView.findViewById(R.id.price_layout);
+            vPriceButton = itemView.findViewById(R.id.price_button);
             vPriceLayout.setOnClickListener(this);
-            /*vSpinner = itemView.findViewById(R.id.spinner);
+
+            vQuantityPicker = itemView.findViewById(R.id.quantity_picker);
+            vQuantityPicker.setAdapter(new TextBaseAdapter(
+                    Util.range(0, 30),
+                    itemView.getResources().getColor(R.color.light_grey),
+                    itemView.getResources().getColor(R.color.brownish_grey))
+            );
+            vQuantityPicker.addOnItemChangedListener(new DiscreteScrollView.OnItemChangedListener<RecyclerView.ViewHolder>() {
+                @Override
+                public void onCurrentItemChanged(@Nullable RecyclerView.ViewHolder viewHolder, int adapterPosition) {
+                    if (adapterPosition != 0) {
+                        vPriceButton.setImageResource(R.drawable.menu_selected_item_price);
+                    }
+                    else {
+                        vPriceButton.setImageResource(R.drawable.menu_item_price);
+                    }
+                }
+            });
+
+            vSpinner = itemView.findViewById(R.id.spinner);
             vSpinner.attachDataSource(Arrays.asList(itemView.getResources().getStringArray(R.array.spinner_options)));
             vSpinner.addOnItemClickListener(new AdapterView.OnItemClickListener() {
                 @Override
                 public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
                     Log.e("Spinner", "Selected: #" + vSpinner.getSelectedIndex());
                 }
-            });*/
+            });
         }
 
         void bindData(MenuItem menuItem) {

@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/container"
+    android:layout_width="25dp"
+    android:layout_height="25dp"
+    android:layout_gravity="center"
+    android:layout_margin="2dp"
+    >
+    <TextView
+        android:textAlignment="center"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:id="@+id/item_text"
+        android:textSize="20sp"
+        android:textStyle="bold"
+        android:textColor="@color/brownish_grey"
+        android:text="DUMMY"/>
+</FrameLayout>

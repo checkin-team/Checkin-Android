@@ -16,6 +16,8 @@ import android.view.animation.AccelerateDecelerateInterpolator;
 import android.view.animation.AnimationSet;
 import android.widget.TextView;
 
+import java.util.ArrayList;
+
 /**
  * Created by shivanshs9 on 12/5/18.
  */
@@ -146,4 +148,15 @@ public class Util {
     }
 
 
+    public static int[] range(int start, int stop) {
+        return range(start, stop, 1);
+    }
+
+    private static int[] range(int start, int stop, int step) {
+        int[] ar = new int[(stop - start) / step];
+        int j = 0;
+        for (int i = start; i < stop; i += step)
+            ar[j++] = i;
+        return ar;
+    }
 }
