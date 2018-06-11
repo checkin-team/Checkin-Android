@@ -49,5 +49,5 @@ dependencies {
     implementation 'com.yarolegovich:discrete-scrollview:1.4.7'
     implementation project(':library:MaterialSearchView')
     implementation project(':library:NiceSpinner')
-    implementation 'com.robertlevonyan.view:MaterialChipView:1.2.1'
+    implementation project(':library:MaterialChipView')
 }

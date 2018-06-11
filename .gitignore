@@ -1,9 +1,23 @@
+# Build-apk files
+*.apk
+
+# Java class files
+*.class
+
+*.dex
+bin/
+gen/
+
+# Windows Thumbnail db
+Thumbs.db
+
+# Android Studio
 *.iml
 .gradle
 /local.properties
 /.idea/workspace.xml
 /.idea/libraries
 .DS_Store
-/build
+build/
 /captures
 .externalNativeBuild

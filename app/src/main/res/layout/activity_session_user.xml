@@ -96,8 +96,8 @@
 
     <android.support.constraint.ConstraintLayout
         android:id="@+id/filter_container"
-        android:layout_width="306.5dp"
-        android:layout_height="357dp"
+        android:layout_width="343.42dp"
+        android:layout_height="400dp"
         android:layout_gravity="bottom|center_horizontal"
         android:layout_marginBottom="10dp"
         android:layout_marginLeft="1dp"
@@ -108,8 +108,8 @@
         android:visibility="gone"
         android:clickable="true"
         android:focusable="true"
-        android:transformPivotX="151.75dp"
-        android:transformPivotY="331.25dp">
+        android:transformPivotX="171dp"
+        android:transformPivotY="374.25dp">
 
         <include layout="@layout/menu_filter" />
     </android.support.constraint.ConstraintLayout>

@@ -19,10 +19,4 @@
         <item>Naan</item>
         <item>Roti</item>
     </string-array>
-
-    <string-array name="spinner_options">
-        <item>Pint</item>
-        <item>Bottle</item>
-        <item>Can</item>
-    </string-array>
 </resources>

@@ -8,6 +8,8 @@
     android:layout_marginRight="3dp"
     android:layout_marginStart="3dp"
     android:layout_marginTop="3dp"
+    android:clickable="true"
+    android:focusable="true"
     android:background="@drawable/menu_group_card_box">
 
     <FrameLayout
