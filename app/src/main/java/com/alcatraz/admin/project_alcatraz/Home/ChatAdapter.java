@@ -17,9 +17,8 @@ import java.util.List;
 
 public class ChatAdapter extends RecyclerView.Adapter<ChatAdapter.MyView> {
 
-    private List<String> message;
-    private List<String> time;
-    private List<Integer> sentorget;
+
+    private List<MessageUnit> messageList;
     private static final int VIEW_TYPE_MESSAGE_SENT = 1;
     private static final int VIEW_TYPE_MESSAGE_RECEIVED = 2;
 
@@ -42,17 +41,15 @@ public class ChatAdapter extends RecyclerView.Adapter<ChatAdapter.MyView> {
     }
 
 
-    public ChatAdapter(List<String> horizontalList,List<String> time,List<Integer> sentorget) {
-        this.message = horizontalList;
-        this.sentorget=sentorget;
-        this.time=time;
+    public ChatAdapter(List<MessageUnit> messageList){
+        this.messageList=messageList;
     }
 
     @Override
     public int getItemViewType(int position) {
         // Just as an example, return 0 or 2 depending on position
         // Note that unlike in ListView adapters, types don't have to be contiguous
-        return sentorget.get(position);
+        return messageList.get(position).sentorget;
     }
     @Override
 
@@ -75,14 +72,14 @@ public class ChatAdapter extends RecyclerView.Adapter<ChatAdapter.MyView> {
     @Override
     public void onBindViewHolder(final MyView holder, final int position) {
         // Log.e("TAG",name.get(position));
-        holder.message.setText(message.get(position));
-        holder.time.setText(time.get(position));
+        holder.message.setText(messageList.get(position).message);
+        holder.time.setText(messageList.get(position).time);
     }
 
     @Override
     public int getItemCount()
     {
-        return message.size();
+        return messageList.size();
     }
 
 }
