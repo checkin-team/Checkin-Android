@@ -4,6 +4,9 @@
 # Java class files
 *.class
 
+# Signature file
+*.jks
+
 *.dex
 bin/
 gen/
@@ -17,6 +20,7 @@ Thumbs.db
 /local.properties
 /.idea/workspace.xml
 /.idea/libraries
+/.idea/caches
 .DS_Store
 build/
 /captures
