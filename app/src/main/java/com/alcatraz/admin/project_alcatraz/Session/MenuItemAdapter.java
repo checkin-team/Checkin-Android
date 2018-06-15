@@ -2,6 +2,7 @@ package com.alcatraz.admin.project_alcatraz.Session;
 
 import android.content.Context;
 import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
@@ -9,29 +10,37 @@ import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.alcatraz.admin.project_alcatraz.R;
+import com.alcatraz.admin.project_alcatraz.Utility.TextBaseAdapter;
+import com.alcatraz.admin.project_alcatraz.Utility.Util;
+import com.yarolegovich.discretescrollview.DiscreteScrollView;
+
+import org.angmarch.views.NiceSpinnerArrowOnly;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 
 public class MenuItemAdapter extends RecyclerView.Adapter<MenuItemAdapter.ItemViewHolder> {
     private ArrayList<MenuItem> mItemsList;
     private MenuGroupAdapter.GroupViewHolder mGroupViewHolder;
     private RecyclerView mRecyclerView;
-    private static OnItemClickListener mOnItemClickListener;
+    private static OnItemClickListener btnPriceClickListener;
 
-    public MenuItemAdapter(ArrayList<MenuItem> itemsList, MenuGroupAdapter.GroupViewHolder groupViewHolder) {
+    MenuItemAdapter(ArrayList<MenuItem> itemsList, MenuGroupAdapter.GroupViewHolder groupViewHolder) {
         mItemsList = itemsList;
         mGroupViewHolder = groupViewHolder;
     }
 
     public interface OnItemClickListener {
-        void onItemClicked(View view, MenuItem menuItem);
+        void onItemOrdered(View view, OrderedItem item);
     }
 
-    public void setOnItemClickListener(OnItemClickListener listener) {
-        mOnItemClickListener = listener;
+    public void setOnPriceClickListener(OnItemClickListener listener) {
+        btnPriceClickListener = listener;
     }
 
     @Override
@@ -76,27 +85,62 @@ public class MenuItemAdapter extends RecyclerView.Adapter<MenuItemAdapter.ItemVi
 
     static class ItemViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
         TextView vTitle;
+        NiceSpinnerArrowOnly vSpinner;
+        DiscreteScrollView vQuantityPicker;
         View vPriceLayout;
-        MenuItem mMenuItem;
-//        NiceSpinner vSpinner;
+        ImageView vPriceButton;
+        TextView vPriceValue;
+
         ItemViewHolder(View itemView) {
             super(itemView);
             vTitle = itemView.findViewById(R.id.item_title);
             vPriceLayout = itemView.findViewById(R.id.price_layout);
-            vPriceLayout.setOnClickListener(this);
-            /*vSpinner = itemView.findViewById(R.id.spinner);
-            vSpinner.attachDataSource(Arrays.asList(itemView.getResources().getStringArray(R.array.spinner_options)));
-            vSpinner.addOnItemClickListener(new AdapterView.OnItemClickListener() {
-                @Override
-                public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-                    Log.e("Spinner", "Selected: #" + vSpinner.getSelectedIndex());
-                }
-            });*/
+            vPriceButton = itemView.findViewById(R.id.price_button);
+            vPriceValue = itemView.findViewById(R.id.price_value);
+            vQuantityPicker = itemView.findViewById(R.id.quantity_picker);
+            vSpinner = itemView.findViewById(R.id.spinner);
         }
 
         void bindData(MenuItem menuItem) {
-            mMenuItem = menuItem;
             vTitle.setText(menuItem.title);
+            vSpinner.attachDataSource(Arrays.asList(menuItem.types));
+            vPriceLayout.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    int quantity = vQuantityPicker.getCurrentItem();
+                    int typeIndex = vSpinner.getSelectedIndex();
+                    btnPriceClickListener.onItemOrdered(view, OrderedItem.order(menuItem, quantity, typeIndex));
+                }
+            });
+            vQuantityPicker.setAdapter(new TextBaseAdapter(
+                    Util.range(0, 30),
+                    itemView.getResources().getColor(R.color.light_grey),
+                    itemView.getResources().getColor(R.color.brownish_grey))
+            );
+            vQuantityPicker.addOnItemChangedListener(new DiscreteScrollView.OnItemChangedListener<RecyclerView.ViewHolder>() {
+                @Override
+                public void onCurrentItemChanged(@Nullable RecyclerView.ViewHolder viewHolder, int adapterPosition) {
+                    if (adapterPosition > 0) {
+                        vPriceButton.setImageResource(R.drawable.menu_selected_item_price);
+                        vPriceLayout.setClickable(true);
+                        vPriceValue.setText(String.valueOf(menuItem.costs[vSpinner.getSelectedIndex()] * adapterPosition));
+                    }
+                    else {
+                        vPriceButton.setImageResource(R.drawable.menu_item_price);
+                        vPriceLayout.setClickable(false);
+                        vPriceValue.setText(R.string.menu_item_default_price);
+                    }
+                }
+            });
+            vSpinner.addOnItemClickListener(new AdapterView.OnItemClickListener() {
+                @Override
+                public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+                    int quantity = vQuantityPicker.getCurrentItem();
+                    if (quantity > 0) {
+                        vPriceValue.setText(String.valueOf(menuItem.costs[vSpinner.getSelectedIndex()] * quantity));
+                    }
+                }
+            });
         }
 
         @Override

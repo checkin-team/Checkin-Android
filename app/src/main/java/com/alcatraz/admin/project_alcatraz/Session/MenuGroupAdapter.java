@@ -14,6 +14,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.alcatraz.admin.project_alcatraz.R;
+import com.alcatraz.admin.project_alcatraz.Utility.ItemClickSupport;
 import com.alcatraz.admin.project_alcatraz.Utility.Util;
 
 import java.util.ArrayList;
@@ -25,9 +26,9 @@ import java.util.ArrayList;
 public class MenuGroupAdapter extends RecyclerView.Adapter<MenuGroupAdapter.GroupViewHolder> {
 
     private ArrayList<MenuGroup> groupList;
-    private GroupViewHolder mPrevExpandedViewHolder = null;
+    GroupViewHolder mPrevExpandedViewHolder = null;
     private RecyclerView mRecyclerView;
-    private static MenuItemAdapter.OnItemClickListener menuitemClickListener;
+    private static MenuItemAdapter.OnItemClickListener priceClickListener;
 
     MenuGroupAdapter(ArrayList<MenuGroup> groupsList) {
         this.groupList = groupsList;
@@ -38,6 +39,10 @@ public class MenuGroupAdapter extends RecyclerView.Adapter<MenuGroupAdapter.Grou
         super.onAttachedToRecyclerView(recyclerView);
         mRecyclerView = recyclerView;
         mRecyclerView.requestDisallowInterceptTouchEvent(true);
+    }
+
+    public void setPriceClickListener(MenuItemAdapter.OnItemClickListener listener) {
+        priceClickListener = listener;
     }
 
     @Override
@@ -101,7 +106,7 @@ public class MenuGroupAdapter extends RecyclerView.Adapter<MenuGroupAdapter.Grou
         TextView vTitle;
         ImageView vImage;
         RecyclerView vGroupMenu;
-//        RecyclerView vRecMenu;
+        MenuGroupAdapter mGroupAdapter;
         boolean isExpanded = false;
 
         GroupViewHolder(View v, MenuGroupAdapter groupAdapter) {
@@ -109,7 +114,7 @@ public class MenuGroupAdapter extends RecyclerView.Adapter<MenuGroupAdapter.Grou
             vTitle = v.findViewById(R.id.group_title);
             vImage = v.findViewById(R.id.group_image);
             vGroupMenu = v.findViewById(R.id.group_menu);
-//            vRecMenu = v.findViewById(R.id.group_menu_list);
+            mGroupAdapter = groupAdapter;
         }
 
         void bindData(final MenuGroup menuGroup) {
@@ -118,9 +123,39 @@ public class MenuGroupAdapter extends RecyclerView.Adapter<MenuGroupAdapter.Grou
             vImage.setImageBitmap(menuGroup.image);
 
             MenuItemAdapter menuItemAdapter = new MenuItemAdapter(menuGroup.items, this);
-            menuItemAdapter.setOnItemClickListener(menuitemClickListener);
+
+            ItemClickSupport.addTo(vGroupMenu).setOnItemClickListener(new ItemClickSupport.OnItemClickListener() {
+                @Override
+                public void onItemClicked(RecyclerView recyclerView, int position, View v) {
+                    mGroupAdapter.contractView(GroupViewHolder.this);
+                }
+            });
+            vGroupMenu.addOnItemTouchListener(new RecyclerView.OnItemTouchListener() {
+                @Override
+                public boolean onInterceptTouchEvent(RecyclerView rv, MotionEvent e) {
+                    if (e.getAction() == MotionEvent.ACTION_UP) {
+                        View childView = rv.findChildViewUnder(e.getX(), e.getY());
+                        if (childView == null) {
+                            mGroupAdapter.contractView(GroupViewHolder.this);
+                        }
+                    }
+                    return false;
+                }
+
+                @Override
+                public void onTouchEvent(RecyclerView rv, MotionEvent e) {
+
+                }
+
+                @Override
+                public void onRequestDisallowInterceptTouchEvent(boolean disallowIntercept) {
+
+                }
+            });
+
+            if (priceClickListener != null)
+                menuItemAdapter.setOnPriceClickListener(priceClickListener);
             vGroupMenu.setAdapter(menuItemAdapter);
-            Log.e("MenuItemAdapter", "Done!");
         }
 
         void showMenu(View view) {

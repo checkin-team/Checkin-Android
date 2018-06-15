@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <declare-styleable name="NiceSpinner">
+        <attr name="ns_arrowTint" format="color" />
+        <attr name="ns_hideArrow" format="boolean" />
+        <attr name="ns_arrowDrawable" format="reference|color"/>
+        <attr name="ns_dropDownListPaddingBottom" format="dimension"/>
+        <attr name="ns_backgroundSelector" format="integer"/>
+        <attr name="ns_textTint" format="color"/>
+    </declare-styleable>
+    <declare-styleable name="NiceSpinnerArrowOnly">
+        <attr name="arrowTint" format="color" />
+        <attr name="hideArrow" format="boolean" />
+        <attr name="arrowDrawable" format="reference|color"/>
+        <attr name="dropDownListPaddingBottom" format="dimension"/>
+        <attr name="backgroundSelector" format="integer"/>
+        <attr name="textTint" format="color"/>
+        <attr name="selectedTextTint" format="color" />
+        <attr name="popupWidth" format="dimension" />
+    </declare-styleable>
+</resources>

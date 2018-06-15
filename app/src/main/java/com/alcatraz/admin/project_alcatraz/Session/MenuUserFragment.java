@@ -8,20 +8,24 @@ import android.support.v4.app.Fragment;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
 
 import com.alcatraz.admin.project_alcatraz.R;
+import com.alcatraz.admin.project_alcatraz.Utility.ItemClickSupport;
 import com.alcatraz.admin.project_alcatraz.Utility.StartSnapHelper;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Locale;
 
 public class MenuUserFragment extends Fragment implements MenuItemAdapter.OnItemClickListener {
 
     private MenuChipAdapter mChipAdapter;
+    private MenuGroupAdapter groupAdapter;
 
     public MenuUserFragment() {
         setHasOptionsMenu(true);
@@ -59,10 +63,10 @@ public class MenuUserFragment extends Fragment implements MenuItemAdapter.OnItem
         LinearLayoutManager llm = new LinearLayoutManager(getActivity(), RecyclerView.VERTICAL, false);
         recList.setLayoutManager(llm);
 
-        MenuGroupAdapter groupAdapter = new MenuGroupAdapter(createDummyData(30));
+        groupAdapter = new MenuGroupAdapter(createDummyData(30));
         recList.setAdapter(groupAdapter);
 
-        groupAdapter.setMenuItemClickListener(this);
+        groupAdapter.setPriceClickListener(this);
 
         final StartSnapHelper snapHelper = new StartSnapHelper();
         snapHelper.attachToRecyclerView(recList);
@@ -77,7 +81,9 @@ public class MenuUserFragment extends Fragment implements MenuItemAdapter.OnItem
         for (int i = 1; i <= count; i++) {
             ArrayList<MenuItem> menuItems = new ArrayList<>();
             for (int j = 0; j <= i/2; j++) {
-                menuItems.add(new MenuItem("Carlsburg #" + j));
+                float[] costs = {300, 150, 100};
+                String[] types = {"Pint", "Bottle", "Can"};
+                menuItems.add(new MenuItem("Carlsburg #" + j, types, costs));
             }
             menuGroupList.add(new MenuGroup(String.format(Locale.US, "Beer #%d", i), menuItems, imBitmap));
         }
@@ -85,9 +91,17 @@ public class MenuUserFragment extends Fragment implements MenuItemAdapter.OnItem
     }
 
     @Override
-    public void onItemClicked(View view, MenuItem menuItem) {
-        MenuChip menuChip = new MenuChip(menuItem.title, 1);
+    public void onItemOrdered(View view, OrderedItem item) {
+        MenuChip menuChip = new MenuChip(item.title, item.quantity);
+        Log.e("ItemOrdered", menuChip.title + " X " + menuChip.count);
         mChipAdapter.addChip(menuChip);
-        mChipAdapter.notifyItemInserted(mChipAdapter.getItemCount() - 1);
+    }
+
+    public void onBackPressed() {
+        groupAdapter.contractView(groupAdapter.mPrevExpandedViewHolder);
+    }
+
+    public boolean isGroupExpanded() {
+        return groupAdapter.mPrevExpandedViewHolder != null;
     }
 }

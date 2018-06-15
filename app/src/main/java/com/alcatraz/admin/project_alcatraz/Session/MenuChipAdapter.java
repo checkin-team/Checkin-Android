@@ -13,7 +13,7 @@ import com.robertlevonyan.views.chip.OnCloseClickListener;
 import java.util.ArrayList;
 
 public class MenuChipAdapter extends RecyclerView.Adapter<MenuChipAdapter.ChipViewHolder> {
-    private static ArrayList<MenuChip> chipsList;
+    private ArrayList<MenuChip> chipsList;
 
     MenuChipAdapter() {
         chipsList = new ArrayList<>();
@@ -43,9 +43,16 @@ public class MenuChipAdapter extends RecyclerView.Adapter<MenuChipAdapter.ChipVi
 
     public void addChip(MenuChip menuChip) {
         chipsList.add(menuChip);
+        notifyItemInserted(chipsList.size() - 1);
     }
 
-    static class ChipViewHolder extends RecyclerView.ViewHolder {
+    public void removeAt(int position) {
+        chipsList.remove(position);
+        notifyItemRemoved(position);
+        notifyItemRangeChanged(position, chipsList.size());
+    }
+
+    class ChipViewHolder extends RecyclerView.ViewHolder {
         Chip vChip;
         MenuChipAdapter mChipAdapter;
 
@@ -56,15 +63,13 @@ public class MenuChipAdapter extends RecyclerView.Adapter<MenuChipAdapter.ChipVi
             vChip.setOnCloseClickListener(new OnCloseClickListener() {
                 @Override
                 public void onCloseClick(View v) {
-                    int pos = getAdapterPosition();
-                    chipsList.remove(pos);
-                    mChipAdapter.notifyItemRemoved(pos);
+                    removeAt(getAdapterPosition());
                 }
             });
         }
 
         void bindData(MenuChip menuChip) {
-            vChip.setChipText(menuChip.title);
+            vChip.setChipText(menuChip.title + " x " + menuChip.count);
         }
     }
 }

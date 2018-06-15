@@ -223,10 +223,14 @@ public class SessionUserActivity extends AppCompatActivity {
 
     @Override
     public void onBackPressed() {
+        Fragment fragment = (Fragment) mSectionsPagerAdapter.instantiateItem(mViewPager, mViewPager.getCurrentItem());
         if (mSearchView.isSearchOpen())
             mSearchView.closeSearch();
         else if (mDarkFilter.getVisibility() == View.VISIBLE)
             hideFilter();
+        else if (fragment instanceof MenuUserFragment && ((MenuUserFragment) fragment).isGroupExpanded()) {
+            ((MenuUserFragment) fragment).onBackPressed();
+        }
         else
             super.onBackPressed();
     }
