@@ -1,7 +1,5 @@
 package com.alcatraz.admin.project_alcatraz.Home;
 
-import android.animation.Animator;
-import android.animation.AnimatorListenerAdapter;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -24,8 +22,16 @@ import android.widget.Toast;
 
 import com.alcatraz.admin.project_alcatraz.R;
 import com.alcatraz.admin.project_alcatraz.Session.SessionUserActivity;
+import com.alcatraz.admin.project_alcatraz.Social.ChatActivity;
+import com.alcatraz.admin.project_alcatraz.Social.MessageAdapter;
+import com.alcatraz.admin.project_alcatraz.Social.MessagesFragment;
+import com.alcatraz.admin.project_alcatraz.Utility.Constants;
 import com.alcatraz.admin.project_alcatraz.Utility.Util;
 import com.google.zxing.integration.android.IntentIntegrator;
+import com.google.zxing.integration.android.IntentResult;
+
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.Scanner;
@@ -452,6 +458,26 @@ public class HomeActivity extends AppCompatActivity {
 
             }
         });
+    }
 
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        IntentResult result = IntentIntegrator.parseActivityResult(requestCode, resultCode, data);
+        if (result != null) {
+            if (result.getContents() == null) {
+                // cancelled operation
+            } else {
+                String requestJson = String.format("{'data': %s}", result.getContents());
+                String response = Util.postApi(Constants.API_URL_DECRYPT_QR, requestJson);
+                try {
+                    JSONObject object = new JSONObject(response);
+                    SessionUserActivity.startSession(this, object.getInt("shop_id"), object.getInt("qr_id"));
+                } catch (JSONException e) {
+                    Toast.makeText(this, "Invalid QR!", Toast.LENGTH_SHORT).show();
+                }
+            }
+        } else {
+            super.onActivityResult(requestCode, resultCode, data);
+        }
     }
-    }
+}

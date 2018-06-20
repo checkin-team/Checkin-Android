@@ -16,6 +16,9 @@ import android.view.animation.AccelerateDecelerateInterpolator;
 import android.view.animation.AnimationSet;
 import android.widget.TextView;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import java.util.ArrayList;
 
 /**
@@ -158,5 +161,22 @@ public class Util {
         for (int i = start; i < stop; i += step)
             ar[j++] = i;
         return ar;
+    }
+
+    public static String postApi(String partialUrl, String data) {
+        String url = Util.getUrl(partialUrl);
+        //TODO: Implement the networking part.
+        String responseJson = "{'detail': 'dummy'}";
+        try {
+            JSONObject object = new JSONObject(responseJson);
+            return object.getString("detail");
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
+    private static String getUrl(String partialUrl) {
+        return Constants.API_HOST + ":" + Constants.API_PORT + partialUrl;
     }
 }

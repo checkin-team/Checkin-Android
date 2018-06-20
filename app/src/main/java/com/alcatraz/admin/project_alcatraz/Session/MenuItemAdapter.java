@@ -83,7 +83,7 @@ public class MenuItemAdapter extends RecyclerView.Adapter<MenuItemAdapter.ItemVi
         return mItemsList.size();
     }
 
-    static class ItemViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
+    class ItemViewHolder extends RecyclerView.ViewHolder {
         TextView vTitle;
         NiceSpinnerArrowOnly vSpinner;
         DiscreteScrollView vQuantityPicker;
@@ -141,11 +141,6 @@ public class MenuItemAdapter extends RecyclerView.Adapter<MenuItemAdapter.ItemVi
                     }
                 }
             });
-        }
-
-        @Override
-        public void onClick(View view) {
-            mOnItemClickListener.onItemClicked(view, mMenuItem);
         }
     }
 }

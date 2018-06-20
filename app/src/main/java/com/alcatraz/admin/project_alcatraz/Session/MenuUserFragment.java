@@ -1,5 +1,6 @@
 package com.alcatraz.admin.project_alcatraz.Session;
 
+import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
@@ -15,17 +16,24 @@ import android.view.ViewGroup;
 
 
 import com.alcatraz.admin.project_alcatraz.R;
-import com.alcatraz.admin.project_alcatraz.Utility.ItemClickSupport;
 import com.alcatraz.admin.project_alcatraz.Utility.StartSnapHelper;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Locale;
 
-public class MenuUserFragment extends Fragment implements MenuItemAdapter.OnItemClickListener {
+import butterknife.BindView;
+import butterknife.ButterKnife;
+import butterknife.Unbinder;
 
+public class MenuUserFragment extends Fragment implements MenuItemAdapter.OnItemClickListener {
+    private final String TAG = MenuUserFragment.class.getSimpleName();
+
+    @BindView(R.id.chips_item_list) RecyclerView chipsList;
+    @BindView(R.id.groups_list) RecyclerView groupsList;
     private MenuChipAdapter mChipAdapter;
     private MenuGroupAdapter groupAdapter;
+    private OnMenuFragmentInteractionListener mMenuInteractionListener;
+    private Unbinder unbinder;
 
     public MenuUserFragment() {
         setHasOptionsMenu(true);
@@ -41,6 +49,7 @@ public class MenuUserFragment extends Fragment implements MenuItemAdapter.OnItem
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        Log.e(TAG, "onCreate");
     }
 
     @Override
@@ -50,26 +59,23 @@ public class MenuUserFragment extends Fragment implements MenuItemAdapter.OnItem
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-
         final View rootView = inflater.inflate(R.layout.fragment_menu_user, container, false);
-
-        final RecyclerView chipsList = rootView.findViewById(R.id.chips_item_list);
+        unbinder = ButterKnife.bind(this, rootView);
         chipsList.setLayoutManager(new LinearLayoutManager(getActivity(), RecyclerView.HORIZONTAL, false));
-        mChipAdapter = new MenuChipAdapter();
+        mChipAdapter = new MenuChipAdapter(getContext(), true, mMenuInteractionListener);
         chipsList.setAdapter(mChipAdapter);
 
-        final RecyclerView recList = rootView.findViewById(R.id.groups_list);
-        recList.setHasFixedSize(true);
+        groupsList.setHasFixedSize(true);
         LinearLayoutManager llm = new LinearLayoutManager(getActivity(), RecyclerView.VERTICAL, false);
-        recList.setLayoutManager(llm);
+        groupsList.setLayoutManager(llm);
 
-        groupAdapter = new MenuGroupAdapter(createDummyData(30));
-        recList.setAdapter(groupAdapter);
+        groupAdapter = new MenuGroupAdapter(createDummyData(30), getContext());
+        groupsList.setAdapter(groupAdapter);
 
         groupAdapter.setPriceClickListener(this);
 
         final StartSnapHelper snapHelper = new StartSnapHelper();
-        snapHelper.attachToRecyclerView(recList);
+        snapHelper.attachToRecyclerView(groupsList);
 
         return rootView;
     }
@@ -92,9 +98,10 @@ public class MenuUserFragment extends Fragment implements MenuItemAdapter.OnItem
 
     @Override
     public void onItemOrdered(View view, OrderedItem item) {
-        MenuChip menuChip = new MenuChip(item.title, item.quantity);
-        Log.e("ItemOrdered", menuChip.title + " X " + menuChip.count);
+        MenuChip menuChip = new MenuChip(item);
+        Log.e("ItemOrdered", menuChip.getLabel() + " -> " + menuChip.getInfo());
         mChipAdapter.addChip(menuChip);
+        Log.e(TAG, "ItemOrdered: " + areItemsPending());
     }
 
     public void onBackPressed() {
@@ -103,5 +110,49 @@ public class MenuUserFragment extends Fragment implements MenuItemAdapter.OnItem
 
     public boolean isGroupExpanded() {
         return groupAdapter.mPrevExpandedViewHolder != null;
+    }
+
+    @Override
+    public void onAttach(Context context) {
+        super.onAttach(context);
+        // This makes sure that the container activity has implemented
+        // the callback interface. If not, it throws an exception
+        try {
+            mMenuInteractionListener = (OnMenuFragmentInteractionListener) context;
+        } catch (ClassCastException e) {
+            throw new ClassCastException(context.toString()
+                    + " must implement OnMenuFragmentInteractionListener");
+        }
+    }
+
+    public OrderedItem[] getOrderedItems() {
+        if (areItemsPending())
+            return mChipAdapter.getItems();
+        return null;
+    }
+
+    public void clearPendingItems() {
+        if (areItemsPending())
+            mChipAdapter.clearItems();
+    }
+
+    public boolean areItemsPending() {
+        if (mChipAdapter == null) {
+            Log.e(TAG, "Chip Adapter is null?!");
+            return false;//mChipAdapter = (MenuChipAdapter) chipsList.getAdapter();
+        }
+        Log.e(TAG, "Pending items: " + mChipAdapter.getItemCount());
+        return mChipAdapter.getItemCount() > 0;
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        Log.e(TAG, "onDestroy");
+        unbinder.unbind();
+    }
+
+    public interface OnMenuFragmentInteractionListener {
+        void onItemOrderInteraction(int count);
     }
 }

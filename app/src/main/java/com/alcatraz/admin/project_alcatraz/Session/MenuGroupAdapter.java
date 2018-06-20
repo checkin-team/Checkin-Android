@@ -3,11 +3,14 @@ package com.alcatraz.admin.project_alcatraz.Session;
 import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
 import android.animation.AnimatorSet;
+import android.content.Context;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
+import android.view.GestureDetector;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
@@ -28,10 +31,12 @@ public class MenuGroupAdapter extends RecyclerView.Adapter<MenuGroupAdapter.Grou
     private ArrayList<MenuGroup> groupList;
     GroupViewHolder mPrevExpandedViewHolder = null;
     private RecyclerView mRecyclerView;
+    private Context mContext;
     private static MenuItemAdapter.OnItemClickListener priceClickListener;
 
-    MenuGroupAdapter(ArrayList<MenuGroup> groupsList) {
+    MenuGroupAdapter(ArrayList<MenuGroup> groupsList, Context context) {
         this.groupList = groupsList;
+        mContext = context;
     }
 
     @Override
@@ -59,7 +64,7 @@ public class MenuGroupAdapter extends RecyclerView.Adapter<MenuGroupAdapter.Grou
     @Override
     public GroupViewHolder onCreateViewHolder(@NonNull final ViewGroup parent, final int viewType) {
         final View itemView = LayoutInflater.from(parent.getContext()).inflate(viewType, parent, false);
-        final GroupViewHolder holder = new GroupViewHolder(itemView, this);
+        final GroupViewHolder holder = new GroupViewHolder(itemView);
 
         itemView.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -98,23 +103,17 @@ public class MenuGroupAdapter extends RecyclerView.Adapter<MenuGroupAdapter.Grou
         }
     }
 
-    public void setMenuItemClickListener(MenuItemAdapter.OnItemClickListener listener) {
-        menuitemClickListener = listener;
-    }
-
-    static class GroupViewHolder extends RecyclerView.ViewHolder {
+    public class GroupViewHolder extends RecyclerView.ViewHolder {
         TextView vTitle;
         ImageView vImage;
         RecyclerView vGroupMenu;
-        MenuGroupAdapter mGroupAdapter;
         boolean isExpanded = false;
 
-        GroupViewHolder(View v, MenuGroupAdapter groupAdapter) {
+        GroupViewHolder(View v) {
             super(v);
             vTitle = v.findViewById(R.id.group_title);
             vImage = v.findViewById(R.id.group_image);
             vGroupMenu = v.findViewById(R.id.group_menu);
-            mGroupAdapter = groupAdapter;
         }
 
         void bindData(final MenuGroup menuGroup) {
@@ -123,21 +122,19 @@ public class MenuGroupAdapter extends RecyclerView.Adapter<MenuGroupAdapter.Grou
             vImage.setImageBitmap(menuGroup.image);
 
             MenuItemAdapter menuItemAdapter = new MenuItemAdapter(menuGroup.items, this);
-
-            ItemClickSupport.addTo(vGroupMenu).setOnItemClickListener(new ItemClickSupport.OnItemClickListener() {
+            /*ItemClickSupport.addTo(vGroupMenu).setOnItemClickListener(new ItemClickSupport.OnItemClickListener() {
                 @Override
                 public void onItemClicked(RecyclerView recyclerView, int position, View v) {
                     mGroupAdapter.contractView(GroupViewHolder.this);
                 }
-            });
+            });*/
             vGroupMenu.addOnItemTouchListener(new RecyclerView.OnItemTouchListener() {
                 @Override
                 public boolean onInterceptTouchEvent(RecyclerView rv, MotionEvent e) {
-                    if (e.getAction() == MotionEvent.ACTION_UP) {
-                        View childView = rv.findChildViewUnder(e.getX(), e.getY());
-                        if (childView == null) {
-                            mGroupAdapter.contractView(GroupViewHolder.this);
-                        }
+                    View childView = rv.findChildViewUnder(e.getX(), e.getY());
+                    if (childView == null) {
+                        contractView(GroupViewHolder.this);
+                        return true;
                     }
                     return false;
                 }

@@ -12,17 +12,21 @@
         android:theme="@style/Theme.AppCompat.Light.NoActionBar"
         tools:replace="android:theme">
         <activity
-            android:name=".Home.HomeActivity"
-            android:screenOrientation="portrait">
+            android:name=".Home.LoginActivity"
+            android:theme="@style/Theme.AppCompat.Light.NoActionBar">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
+
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
         <activity
-            android:name=".Utility.Splash_Activity"
+            android:name=".Home.HomeActivity"
             android:screenOrientation="portrait">
         </activity>
+        <activity
+            android:name=".Utility.Splash_Activity"
+            android:screenOrientation="portrait"></activity>
         <activity
             android:name=".Profile.ShopProfileActivity"
             android:screenOrientation="portrait" />
@@ -32,7 +36,6 @@
         <activity
             android:name=".Profile.EditProfile"
             android:screenOrientation="portrait" />
-
         <activity android:name=".Home.UserProfileNew" />
 
         <meta-data
@@ -43,9 +46,9 @@
             android:name=".Session.SessionUserActivity"
             android:label="@string/title_activity_session_user"
             android:theme="@style/SessionTheme" />
-        <activity android:name=".Home.ChatActivity"
-            android:screenOrientation="portrait"
-            />
+        <activity
+            android:name=".Social.ChatActivity"
+            android:screenOrientation="portrait" />
     </application>
 
 </manifest>

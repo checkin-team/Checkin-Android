@@ -25,5 +25,9 @@ public class MenuItem {
         this.types = types;
         this.costs = costs;
     }
+
+    public String getTitle() {
+        return title;
+    }
 }
 

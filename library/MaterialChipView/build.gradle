@@ -1,25 +1,24 @@
 apply plugin: 'com.android.library'
-apply plugin: 'com.novoda.bintray-release'
-
-buildscript {
-    repositories {
-        jcenter()
-    }
-    dependencies {
-        classpath 'com.novoda:bintray-release:0.8.0'
-    }
-}
 
 android {
     compileSdkVersion 27
     buildToolsVersion '27.0.3'
+
     defaultConfig {
-        minSdkVersion 14
+        minSdkVersion 15
         targetSdkVersion 27
-        versionCode 1
-        versionName "1.0"
+        versionCode 170615
+        versionName "2.0.6"
+        testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+        multiDexEnabled true
+
     }
     buildTypes {
+        debug{
+            debuggable true
+            minifyEnabled false
+        }
+
         release {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
@@ -28,19 +27,16 @@ android {
 }
 
 dependencies {
-    implementation fileTree(dir: 'libs', include: ['*.jar'])
+    implementation fileTree(include: ['*.jar'], dir: 'libs')
     androidTestImplementation('com.android.support.test.espresso:espresso-core:2.2.2', {
         exclude group: 'com.android.support', module: 'support-annotations'
     })
     implementation 'com.android.support:appcompat-v7:27.1.1'
     testImplementation 'junit:junit:4.12'
+    // recycler
+    implementation 'com.android.support:recyclerview-v7:27.1.1'
+    implementation 'com.beloo.widget:ChipsLayoutManager:0.3.7@aar'
+    // circle image view
+    implementation 'de.hdodenhof:circleimageview:2.2.0'
 }
 
-publish {
-    groupId = 'com.robertlevonyan.view'
-    artifactId = 'MaterialChipView'
-    publishVersion = '1.1.2'
-    desc = 'Material Chip view. Can be used as tags for categories, contacts or creating text clouds'
-    licences = ['Apache-2.0']
-    website = 'https://github.com/robertlevonyan/materialChipView'
-}

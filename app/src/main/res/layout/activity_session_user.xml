@@ -60,34 +60,34 @@
         </android.support.v7.widget.Toolbar>
 
         <android.support.design.widget.TabLayout
-        android:id="@+id/tabs"
-        app:tabTextColor="@color/grey"
-        app:tabSelectedTextColor="@color/white"
-        app:tabIndicatorColor="@color/white"
-        android:background="@color/colorPrimaryRed"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        app:tabGravity="fill"
-        app:tabMode="fixed">
-
-        <android.support.design.widget.TabItem
-            android:id="@+id/tab_item1"
-            android:layout_width="wrap_content"
+            android:id="@+id/tabs"
+            app:tabTextColor="@color/grey"
+            app:tabSelectedTextColor="@color/white"
+            app:tabIndicatorColor="@color/white"
+            android:background="@color/colorPrimaryRed"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="@string/tab_menu" />
+            app:tabGravity="fill"
+            app:tabMode="fixed">
 
-        <android.support.design.widget.TabItem
-            android:id="@+id/tab_item2"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/tab_session_detail" />
+            <android.support.design.widget.TabItem
+                android:id="@+id/tab_item1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/tab_menu" />
 
-    </android.support.design.widget.TabLayout>
+            <android.support.design.widget.TabItem
+                android:id="@+id/tab_item2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/tab_session_detail" />
+
+        </android.support.design.widget.TabLayout>
 
     </android.support.design.widget.AppBarLayout>
 
     <FrameLayout
-        android:id="@+id/darkfilter"
+        android:id="@+id/dark_back"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:alpha="0.0"
