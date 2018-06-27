@@ -31,6 +31,7 @@
     <style name="AppBarOverlay" parent="AppTheme.AppBarOverlay" />
 
     <style name="PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
+
     <style name="SessionTheme" parent="Theme.AppCompat.Light.NoActionBar">
         <item name="android:windowNoTitle">true</item>
         <item name="actionBarStyle">@style/AppTheme.AppBarOverlay</item>

@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="horizontal">
+
+    <TextView
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:id="@+id/ordered_item_no"
+        android:layout_weight="1"
+        android:textSize="12sp"
+        android:text="NO"/>
+
+    <TextView
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:id="@+id/ordered_item_info"
+        android:layout_weight="6"
+        android:singleLine="true"
+        android:text="NAME (TYPE) X COUNT"/>
+
+    <TextView
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:id="@+id/ordered_item_price"
+        android:layout_weight="2"
+        android:singleLine="true"
+        android:text="PRICE"/>
+
+    <CheckedTextView
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:id="@+id/ordered_item_status"
+        android:layout_weight="2"
+        android:checked="true"
+        android:singleLine="true"
+        android:text="DONE"
+        android:checkMark="@android:drawable/checkbox_on_background"/>
+
+</LinearLayout>

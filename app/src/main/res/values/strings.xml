@@ -113,4 +113,7 @@
     <string name="tab_session_detail">Detail</string>
     <string name="action_search">Search</string>
     <string name="action_finish">Finish</string>
+    <string name="action_filter">Filter Items</string>
+    <string name="menu_item_default_price">-</string>
+    <string name="title_activity_login">LoginActivity</string>
 </resources>

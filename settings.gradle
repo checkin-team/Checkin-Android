@@ -1,1 +1,1 @@
-include ':app', ':library:MaterialSearchView'
+include ':app', ':library:MaterialSearchView', ':library:NiceSpinner', ':library:MaterialChipView'
