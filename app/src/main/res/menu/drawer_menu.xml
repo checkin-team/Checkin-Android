@@ -14,6 +14,9 @@
 
             android:icon="@drawable/settings"
             android:title="Settings" />
+        <item
+            android:id="@+id/useless"
+            android:title="Test Feature"/>
 
         <!--<item-->
             <!--android:id="@+id/sent_mail"-->
