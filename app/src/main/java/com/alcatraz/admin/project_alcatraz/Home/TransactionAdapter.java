@@ -67,8 +67,16 @@ public class TransactionAdapter extends RecyclerView.Adapter<TransactionAdapter.
 
             holder.mymoney.setTextColor(Color.GREEN);
             holder.rupsmall.setImageResource(R.drawable.rupsmall);
+            holder.mymoney.setText(transaction.amount);
         }
-        holder.mymoney.setText(transaction.amount);
+        else {
+            holder.debit.setText("Paid To XYZ Restaurant");
+
+            holder.mymoney.setTextColor(Color.BLACK);
+            holder.rupsmall.setImageResource(R.drawable.rupee);
+
+            holder.mymoney.setText(transaction.amount);
+        }
 
 
     }
