@@ -161,25 +161,29 @@
 
         </RelativeLayout>
 <RelativeLayout
-    android:layout_marginTop="-10dp"
+    android:layout_marginTop="-20dp"
     android:id="@+id/botomm"
+    android:background="@drawable/curve1"
     android:layout_width="match_parent"
+
     android:layout_height="0dp"
     android:layout_below="@id/top"
-    android:layout_weight="30">
+    android:layout_weight="35">
     <LinearLayout
 
         android:id="@+id/lin"
+        android:alpha="1"
         android:background="@drawable/curve1"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:layout_alignParentBottom="true"
         android:orientation="vertical"
         android:weightSum="30">
     <RelativeLayout
         android:background="@drawable/curve1"
         android:id="@+id/sec"
         android:layout_width="match_parent"
-        android:layout_height="50dp"
+        android:layout_height="80dp"
         >
 
         <TextView
@@ -210,21 +214,21 @@
 
         <RelativeLayout
 
-            android:layout_below="@id/sec"
-            android:id="@+id/th"
-            android:background="@drawable/curve"
-            android:layout_marginTop="0dp"
+            android:id="@+id/third"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            android:background="@drawable/curve2">
+
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:background="@drawable/curve"
+                android:textAlignment="center"
+                android:layout_alignParentTop="true"
+                android:text="It is an honor and privilige to meet you on the night of christmas!!!!\n\n"
                 android:textSize="20sp"
-                android:textStyle="bold"
-                android:text="
-    \tIt is an honor and privilige to meet you
-    \n\t \ton the night of christmas!!!!"/>
+                android:textStyle="bold" />
 
         </RelativeLayout>
     </LinearLayout>

@@ -83,19 +83,10 @@ public class UserProfileNew  extends AppCompatActivity {
         View v1=findViewById(R.id.th);
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) {
           //  v.setBackground(wallpaperDrawable);
-            imageView.setImageDrawable(mod);
+            imageView.setImageResource(R.drawable.flier);
            // v1.setBackground(wallpaperDrawable);
         }
-        LinearLayout.LayoutParams params=(LinearLayout.LayoutParams)(findViewById(R.id.top)).getLayoutParams();
 
-        maxy=getWindowManager().getDefaultDisplay().getHeight()*.7f;
-        params.height=(int)maxy;
-        findViewById(R.id.top).setLayoutParams(params);
-        miny=getWindowManager().getDefaultDisplay().getHeight()*.3f;
-        params=(LinearLayout.LayoutParams)(findViewById(R.id.top)).getLayoutParams();
-        params.height=(int)miny;
-        findViewById(R.id.top).setLayoutParams(params);
-        Log.e(TAG, "onCreate: "+maxy+" "+miny);
 
         listen(getApplicationContext());
 
@@ -202,20 +193,22 @@ public class UserProfileNew  extends AppCompatActivity {
 
                 LinearLayout.LayoutParams p=(LinearLayout.LayoutParams)v.getLayoutParams();
                 LinearLayout.LayoutParams p1=(LinearLayout.LayoutParams)v1.getLayoutParams();
-                Log.e(TAG, "onTouchEvent: "+p.height+" ~~ "+p1.height );
+                Log.e(TAG, "onTouchEvent: "+p.weight+" ~~ "+p1.weight );
 
-                if(p.height+(event.getY()-y)>maxy) {
-                    p.height = (int) maxy;
-                    p1.height = (int) miny;
+
+                if(p.weight+(event.getY() - y)*2*100.0/screen>70) {
+                    p.weight = (int) 70;
+                    p1.weight = (int) 35;
                 }
                 else
             {
-                p.height += (event.getY() - y);
-                p1.height -= (event.getY() - y);
+                p.weight += (event.getY() - y)*2*100.0/screen;
+                p1.weight -= (event.getY() - y)*2*100.0/screen;
             }
 
-                if(p.height<0)p.height=0;
-                if(p1.height<0)p1.height=0;
+
+                if(p.weight<dpToPx(20)*100.0/screen)p.weight=dpToPx(20)*100f/screen;
+                findViewById(R.id.lin).setAlpha(p.weight-35<=0?0:(p.weight-35)/35);
 
                 v.setLayoutParams(p);
                     v1.setLayoutParams(p1);
@@ -239,6 +232,19 @@ public class UserProfileNew  extends AppCompatActivity {
                 return super.onTouchEvent(event);
         }
     }
+    @Override
+    public void onWindowFocusChanged (boolean hasFocus) {
+        // the height will be set at this point
+        screen = findViewById(R.id.linear).getHeight();
+        Log.e(TAG, "onWindowFocusChanged: "+screen );
+        maxy=screen*.7f;
+        miny=screen*.35f;
+    }
+    public static int dpToPx(int dp)
+    {
+        return (int) (dp * Resources.getSystem().getDisplayMetrics().density);
+    }
+    int screen;
     boolean state_up=true;
     boolean down=false;
     float x=0,y=0,maxy=0,miny=0;
