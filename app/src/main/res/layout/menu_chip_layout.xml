@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="wrap_content"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/chip_layout"
+    android:background="@color/white">
+
+    <com.pchmn.materialchips.ChipView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/chip_view"
+        android:layout_marginEnd="5dp"
+        android:layout_marginRight="5dp"
+        app:label="DUMMY"
+        app:deleteIconColor="@color/light_red"
+        app:deletable="true"
+        app:backgroundColor="#bebebe"/>
+
+</FrameLayout>

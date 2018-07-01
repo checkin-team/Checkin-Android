@@ -12,47 +12,103 @@
         android:layout_height="match_parent"
         android:layout_width="match_parent"
         >
-        <include
-            android:id="@+id/toolbar"
-            layout="@layout/tool_bar"
-            />
+        <android.support.design.widget.AppBarLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:scrollbars="none"
+            android:id="@+id/highest"
+            android:elevation="6dp"
+            android:background="?attr/colorPrimary">
+            <android.support.v7.widget.Toolbar xmlns:android="http://schemas.android.com/apk/res/android"
+                xmlns:app="http://schemas.android.com/apk/res-auto"
+
+                android:id="@+id/toolbar"
+                android:layout_width="match_parent"
+                android:scrollbars="none"
+                android:layout_height="56dp"
+                app:theme="@style/Theme.AppCompat.Light.NoActionBar"
+                android:background="#0ff"
+                app:layout_scrollFlags="scroll|enterAlways|snap"
+                style="@style/HeaderBar"
+                android:elevation="10dp"
+                android:visibility="visible"
+                >
 
 
-        <RelativeLayout
+                <!--make a custom toolbar-->
+
+                <!--add msg icon-->
+
+
+                <Button
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:background="@android:color/transparent"
+                    android:layout_gravity="center_horizontal"
+                    android:onClick="startQr"
+                    android:text="CHECK IN!"
+                    android:textStyle="italic"
+                    android:textAlignment="center"
+                    android:textColor="#000"
+                    android:textSize="30sp"
+                    android:clickable="true"
+                    android:focusable="true"
+                    />
+
+            </android.support.v7.widget.Toolbar>
+        </android.support.design.widget.AppBarLayout>
+
+
+
+
+<android.widget.FrameLayout
+    android:layout_height="wrap_content"
+    android:layout_width="match_parent"
+    app:layout_behavior="@string/appbar_scrolling_view_behavior">
+<!--
+
+    <android.support.v4.widget.NestedScrollView
+        android:id="@+id/nested_scroll_home"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+-->
+
+        <LinearLayout
+            android:orientation="vertical"
             android:layout_width="match_parent"
             android:layout_height="match_parent">
 
-
-            <RelativeLayout
-                android:id="@+id/relativelayout1"
+            <android.support.v7.widget.RecyclerView
+                android:id="@+id/rv_horizontal_1"
+                android:layout_width="wrap_content"
+                android:layout_height="@dimen/home_horizontal_rv_height"
+                android:background="@color/white"
+                android:elevation="6dp"
+                android:scrollbars="none" />
+            <android.support.v7.widget.RecyclerView
+                android:id="@+id/recyclerview2"
                 android:layout_width="match_parent"
+                android:background="@color/white"
                 android:layout_height="wrap_content"
-                >
+                android:scrollbars="none" />
+        </LinearLayout>
 
-                <include layout="@layout/layout_top_bar" />
+    <!--</android.support.v4.widget.NestedScrollView>-->
 
-            </RelativeLayout>
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/rv_horizontal_2"
+        android:layout_width="wrap_content"
+        android:layout_height="@dimen/home_horizontal_rv_height"
+        android:layout_marginTop="@dimen/home_horizontal_rv_height"
+        android:alpha="0"
+        android:background="@color/black"
+        android:elevation="6dp"
+        android:scrollbars="none" />
 
-            <RelativeLayout
-                android:id="@+id/relativelayout2"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-
-
-
-                android:layout_below="@+id/relativelayout1">
-
-                <include layout="@layout/layout_centre_viewpager" />
-
-
-            </RelativeLayout>
-
-            <!--<include layout="@layout/layout_bottom_nav_bar"/>-->
+</android.widget.FrameLayout>
 
 
 
-
-        </RelativeLayout>
     </android.support.design.widget.CoordinatorLayout>
 
     <android.support.design.widget.NavigationView
@@ -60,10 +116,42 @@
         android:layout_height="match_parent"
         android:layout_width="wrap_content"
         android:layout_gravity="start"
+        android:fitsSystemWindows="true"
         app:headerLayout="@layout/layout_header"
         app:menu="@menu/drawer_menu"
         />
 
+    <android.support.design.widget.NavigationView
+        android:id="@+id/navigation_view_right"
+        android:layout_height="match_parent"
+        android:layout_width="wrap_content"
+        android:keepScreenOn="true"
+        android:fitsSystemWindows="true"
+        android:layout_gravity="end"
+        >
+        <android.support.v4.widget.NestedScrollView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
 
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+<Space
+                android:layout_width="match_parent"
+                android:layout_height="20dp" />
+            <android.support.v7.widget.RecyclerView
+                android:id="@+id/nav_drawer_recycler_view"
+                android:layout_width="280dp"
+                android:layout_height="wrap_content"
+                android:background="@android:color/white"
+                android:nestedScrollingEnabled="false"
+                android:layout_marginTop="5dp"
+                tools:targetApi="lollipop" />
+
+        </LinearLayout>
+        </android.support.v4.widget.NestedScrollView>
+    </android.support.design.widget.NavigationView>
 
 </android.support.v4.widget.DrawerLayout>

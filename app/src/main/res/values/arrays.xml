@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <integer-array name="image_ids">
+        <item>@drawable/download</item>
+        <item>@drawable/download1</item>
+        <item>@drawable/hat</item>
+        <item>@drawable/fin</item>
+        <item>@drawable/water</item>
+        <item>@drawable/download</item>
+
+
+    </integer-array>
+
+    <string-array name="menu_items">
+        <item>Rice</item>
+        <item>Rice Biryani</item>
+        <item>Rice Fried</item>
+        <item>Naan</item>
+        <item>Roti</item>
+    </string-array>
+
+    <string-array name="spinner_options">
+        <item>Pint</item>
+        <item>Bottle</item>
+        <item>Can</item>
+    </string-array>
+</resources>

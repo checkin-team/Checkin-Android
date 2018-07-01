@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.v7.widget.CardView
+    xmlns:card_view="http://schemas.android.com/apk/res-auto"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/cardview1"
+    android:layout_width="match_parent"
+    android:layout_height="100dp"
+    card_view:contentPadding="7dp"
+    card_view:cardCornerRadius="10dp"
+    card_view:cardElevation="10dp"
+    android:layout_marginLeft="7dp"
+    android:layout_marginRight="7dp"
+    android:layout_marginTop="4dp"
+    android:layout_marginBottom="0dp">
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+        <RelativeLayout
+            android:id="@+id/cimg"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent">
+
+            <com.makeramen.roundedimageview.RoundedImageView
+                android:scaleType="centerCrop"
+                android:layout_width="60dp"
+                android:layout_height="100dp"
+                card_view:riv_corner_radius="10dp"
+                android:id="@+id/msg_photo"
+                android:layout_marginTop="20dp"
+                android:src="@drawable/fin"
+
+                android:layout_centerHorizontal="true"
+                android:layout_centerVertical="true"/>
+        </RelativeLayout>
+        <RelativeLayout
+            android:layout_width="wrap_content"
+
+            android:layout_height="match_parent"
+            android:layout_toRightOf="@+id/cimg">
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical">
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_marginLeft="6dp"
+                android:layout_marginTop="2dp"
+
+                android:id="@+id/t1"
+                android:layout_height="wrap_content">
+    <TextView
+        android:id="@+id/msg_name"
+        android:textSize="18sp"
+        android:text="Rahul Dev"
+        android:layout_marginTop="3dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textColor="#000"/>
+                <TextView
+
+                    android:textAlignment="textEnd"
+                    android:gravity="end"
+                    android:textSize="15sp"
+                    android:layout_marginRight="6dp"
+
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Yesterday"
+                    android:textColor="#23975a"
+                    android:layout_toRightOf="@+id/msg_name"/>
+            </RelativeLayout>
+            <RelativeLayout
+                android:layout_marginLeft="6dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+    <TextView
+        android:id="@+id/msg_last"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:fontFamily="sans-serif-light"
+        android:textSize="11sp"
+        android:text="Deal done.Will See you Later.Bye Bye.Ok see you after a lifetime."
+        android:layout_gravity="bottom"/>
+            </RelativeLayout>
+            </LinearLayout>
+        </RelativeLayout>
+    </RelativeLayout>
+</android.support.v7.widget.CardView>

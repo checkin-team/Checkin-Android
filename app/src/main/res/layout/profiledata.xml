@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="80dp">
+
+    <TextView
+        android:id="@+id/textView"
+        android:layout_width="169dp"
+        android:layout_height="0dp"
+        android:layout_marginBottom="8dp"
+
+        android:textSize="20sp"
+        android:text="Name:"
+        app:layout_constraintBottom_toTopOf="@+id/textView3"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/textView2"
+        android:layout_width="169dp"
+        android:textSize="20sp"
+        android:layout_height="36dp"
+        android:text="Checkings:"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/textView3"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:textSize="20sp"
+        android:text="Followers:"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="@+id/textView"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textView" />
+
+    <Button
+        android:id="@+id/button"
+        android:layout_width="169dp"
+        android:layout_height="36dp"
+        android:textColor="@color/black"
+        android:background="@color/colorPrimary"
+
+        android:textSize="20sp"
+        android:text="FOLLOW"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textView"/>
+</android.support.constraint.ConstraintLayout>

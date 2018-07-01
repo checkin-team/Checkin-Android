@@ -1,0 +1,268 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/upper"
+    android:layout_width="fill_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+    <LinearLayout
+        android:id="@+id/linear"
+        android:layout_width="match_parent"
+        android:orientation="vertical"
+        android:weightSum="100"
+        android:layout_height="match_parent">
+
+        <RelativeLayout
+            android:id="@+id/top"
+            android:layout_width="fill_parent"
+            android:layout_height="0dp"
+            android:layout_weight="70">
+            <Button
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:layout_marginTop="10dp"
+                android:layout_marginLeft="18dp"
+                android:layout_alignParentRight="false"
+                android:background="@drawable/whiteedit"/>
+            <Button
+                android:layout_marginRight="20dp"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:layout_marginTop="10dp"
+                android:layout_alignParentRight="true"
+                android:background="@drawable/whitecross"/>
+
+            <ImageView
+                android:id="@+id/imgg"
+                android:scaleType="centerCrop"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@drawable/flier"/>
+
+            <ImageView
+                android:layout_width="match_parent"
+                android:layout_height="200dp"
+                android:layout_alignParentBottom="true"
+                android:layout_alignParentLeft="true"
+                android:layout_alignParentStart="true"
+                android:scaleType="fitXY"
+                android:src="@drawable/shadow_gradient" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentBottom="true"
+                android:layout_marginBottom="27dp"
+                android:layout_marginLeft="18dp"
+                android:fontFamily="@font/amiri"
+                android:paddingRight="5dp"
+                android:shadowColor="#000"
+                android:shadowDx="5"
+                android:shadowDy="5"
+
+
+                android:shadowRadius="7"
+                android:text="250"
+
+                android:textColor="@color/white"
+                android:textSize="17sp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentBottom="true"
+                android:layout_centerHorizontal="true"
+                android:layout_marginBottom="27dp"
+
+                android:fontFamily="@font/amiri"
+                android:paddingRight="5dp"
+                android:shadowColor="#000"
+                android:shadowDx="5"
+                android:shadowDy="5"
+                android:shadowRadius="7"
+                android:text="250"
+                android:textColor="@color/white"
+                android:textSize="17sp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentBottom="true"
+                android:layout_alignParentRight="true"
+                android:layout_marginBottom="27dp"
+                android:layout_marginRight="18dp"
+
+
+                android:fontFamily="@font/amiri"
+                android:paddingRight="5dp"
+                android:shadowColor="#000"
+                android:shadowDx="5"
+                android:shadowDy="5"
+                android:shadowRadius="7"
+                android:text="250"
+                android:textColor="@color/white"
+                android:textSize="17sp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentBottom="true"
+
+                android:text="Following"
+                android:fontFamily="sans-serif-light"
+                android:layout_marginBottom="20dp"
+                android:shadowColor="#000"
+                android:shadowDx="5"
+                android:shadowDy="5"
+                android:shadowRadius="7"
+                android:paddingRight="5dp"
+                android:layout_marginLeft="18dp"
+
+                android:textColor="@color/white"
+                android:textSize="15sp" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentBottom="true"
+                android:layout_centerHorizontal="true"
+                android:layout_marginBottom="20dp"
+                android:fontFamily="sans-serif-light"
+                android:paddingRight="5dp"
+                android:shadowColor="#000"
+                android:shadowDx="5"
+                android:shadowDy="5"
+                android:shadowRadius="7"
+                android:text="Posts"
+
+                android:textColor="@color/white"
+                android:textSize="15sp" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentBottom="true"
+                android:layout_alignParentRight="true"
+                android:layout_marginBottom="20dp"
+                android:fontFamily="sans-serif-light"
+                android:paddingRight="5dp"
+                android:layout_marginRight="18dp"
+                android:shadowColor="#000"
+                android:shadowDx="5"
+                android:shadowDy="5"
+                android:shadowRadius="7"
+                android:text="CheckIns"
+                android:textColor="@color/white"
+                android:textSize="15sp" />
+
+        </RelativeLayout>
+<RelativeLayout
+    android:layout_marginTop="-20dp"
+    android:id="@+id/botomm"
+    android:background="@drawable/curve1"
+    android:layout_width="match_parent"
+
+    android:layout_height="0dp"
+    android:layout_below="@id/top"
+    android:layout_weight="35">
+    <LinearLayout
+
+        android:id="@+id/lin"
+        android:alpha="1"
+        android:background="@drawable/curve1"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_alignParentBottom="true"
+        android:orientation="vertical"
+        android:weightSum="30">
+    <RelativeLayout
+        android:background="@drawable/curve1"
+        android:id="@+id/sec"
+        android:layout_width="match_parent"
+        android:layout_height="80dp"
+        >
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
+            android:layout_marginTop="10dp"
+            android:text="Coding_Genius"
+            android:textColor="@color/black"
+            android:textSize="25sp"
+            android:textStyle="bold" />
+
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentRight="true"
+            android:layout_marginRight="10dp"
+            android:background="@android:color/transparent"
+            android:text="Follow"
+            android:textStyle="italic"
+            android:textColor="@color/colorPrimaryDark"
+            android:gravity="bottom"
+            android:textAlignment="gravity"
+            android:textSize="25sp" />
+    </RelativeLayout>
+
+
+        <RelativeLayout
+
+            android:id="@+id/third"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/curve2">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textAlignment="center"
+                android:layout_alignParentTop="true"
+                android:text="It is an honor and privilige to meet you on the night of christmas!!!!\n\n"
+                android:textSize="20sp"
+                android:textStyle="bold" />
+
+        </RelativeLayout>
+    </LinearLayout>
+        </RelativeLayout>
+
+      <!--  <GridView
+            android:id="@+id/gridView"
+            android:layout_below="@id/th"
+            android:layout_marginTop="5dp"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="5dp"
+            android:columnWidth="175dp"
+            android:drawSelectorOnTop="true"
+            android:gravity="center"
+            android:numColumns="auto_fit"
+            android:stretchMode="columnWidth"
+            android:verticalSpacing="5dp"
+            android:focusable="true"
+            android:clickable="true"/>-->
+    </LinearLayout>
+<!--    <GridView
+        android:id="@+id/gridView"
+        android:layout_below="@id/linear"
+        android:layout_marginTop="0dp"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="5dp"
+        android:columnWidth="175dp"
+        android:drawSelectorOnTop="true"
+        android:gravity="center"
+        android:numColumns="auto_fit"
+        android:stretchMode="columnWidth"
+        android:verticalSpacing="5dp"
+        android:focusable="true"
+        android:clickable="true"/>-->
+    </RelativeLayout>

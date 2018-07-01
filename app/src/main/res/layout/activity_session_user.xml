@@ -1,0 +1,128 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.design.widget.CoordinatorLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main_content"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:fitsSystemWindows="true"
+    tools:context="com.alcatraz.admin.project_alcatraz.Session.SessionUserActivity">
+
+    <com.alcatraz.admin.project_alcatraz.Utility.DynamicSwipableViewPager
+        android:id="@+id/container"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior" />
+
+    <android.support.design.widget.AppBarLayout
+        android:id="@+id/appbar"
+        app:elevation="0dp"
+        android:elevation="0dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:theme="@style/AppBarOverlay">
+
+        <android.support.v7.widget.Toolbar
+            android:id="@+id/session_toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="top"
+            android:background="@color/colorPrimaryRed"
+            app:layout_scrollFlags="scroll|enterAlways"
+            app:popupTheme="@style/PopupOverlay"
+            app:title=""
+            android:contentInsetEnd="0dp"
+            android:contentInsetLeft="0dp"
+            android:contentInsetRight="0dp"
+            android:contentInsetStart="0dp"
+            app:contentInsetEnd="0dp"
+            app:contentInsetLeft="0dp"
+            app:contentInsetRight="0dp"
+            app:contentInsetStart="0dp"
+            android:elevation="0dp">
+
+            <FrameLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+                <include
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/menu_header"
+                    layout="@layout/menu_appbar_menu" />
+                <com.miguelcatalan.materialsearchview.MaterialSearchView
+                    android:id="@+id/search_view"
+                    style="@style/MaterialSearchViewStyle"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content" />
+            </FrameLayout>
+
+        </android.support.v7.widget.Toolbar>
+
+        <android.support.design.widget.TabLayout
+            android:id="@+id/tabs"
+            app:tabTextColor="@color/grey"
+            app:tabSelectedTextColor="@color/white"
+            app:tabIndicatorColor="@color/white"
+            android:background="@color/colorPrimaryRed"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:tabGravity="fill"
+            app:tabMode="fixed">
+
+            <android.support.design.widget.TabItem
+                android:id="@+id/tab_item1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/tab_menu" />
+
+            <android.support.design.widget.TabItem
+                android:id="@+id/tab_item2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/tab_session_detail" />
+
+        </android.support.design.widget.TabLayout>
+
+    </android.support.design.widget.AppBarLayout>
+
+    <FrameLayout
+        android:id="@+id/dark_back"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:alpha="0.0"
+        android:visibility="gone"
+        android:background="@color/black" />
+
+    <android.support.constraint.ConstraintLayout
+        android:id="@+id/filter_container"
+        android:layout_width="343.42dp"
+        android:layout_height="400dp"
+        android:layout_gravity="bottom|center_horizontal"
+        android:layout_marginBottom="10dp"
+        android:layout_marginLeft="1dp"
+        android:layout_marginStart="1dp"
+        android:background="@drawable/menu_filter_back"
+        android:rotation="180"
+        android:alpha="0.0"
+        android:visibility="gone"
+        android:clickable="true"
+        android:focusable="true"
+        android:transformPivotX="171dp"
+        android:transformPivotY="374.25dp">
+
+        <include layout="@layout/menu_filter" />
+    </android.support.constraint.ConstraintLayout>
+
+    <ImageButton
+        android:id="@+id/action_filter_toggle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom|center_horizontal"
+        android:layout_marginBottom="11.5dp"
+        android:alpha="0.75"
+        android:background="@android:color/transparent"
+        android:contentDescription="@string/action_filter"
+        android:scaleType="fitCenter"
+        android:src="@drawable/ic_filter" />
+</android.support.design.widget.CoordinatorLayout>

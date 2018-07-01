@@ -1,4 +1,4 @@
-package com.alcatraz.admin.project_alcatraz.Home;
+package com.alcatraz.admin.project_alcatraz.Social;
 
 import android.os.Bundle;
 import android.support.annotation.NonNull;
