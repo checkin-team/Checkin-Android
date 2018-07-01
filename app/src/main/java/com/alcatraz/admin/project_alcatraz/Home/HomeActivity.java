@@ -78,7 +78,8 @@ public class HomeActivity extends AppCompatActivity {
                     startActivity(intent);
                     break;
                 case R.id.drawer_privacysettings:
-                    Toast.makeText(HomeActivity.this, "privacy settings menu item selected", Toast.LENGTH_SHORT).show();
+                    intent = new Intent(getApplicationContext(), TransactionActivity.class);
+                    startActivity(intent);
                     break;
                     default:
                         Toast.makeText(HomeActivity.this, "yo whats up, default of switch case selected", Toast.LENGTH_SHORT).show();
