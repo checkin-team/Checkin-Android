@@ -6,7 +6,6 @@ import android.animation.AnimatorSet;
 import android.arch.lifecycle.ViewModelProviders;
 import android.content.Intent;
 import android.os.Bundle;
-import android.os.Environment;
 import android.support.annotation.NonNull;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.NavigationView;
@@ -17,7 +16,6 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.MenuItem;
 import android.view.MotionEvent;
 import android.view.View;
@@ -27,10 +25,8 @@ import android.widget.Toast;
 import com.alcatraz.admin.project_alcatraz.R;
 import com.alcatraz.admin.project_alcatraz.Session.SessionUserActivity;
 import com.alcatraz.admin.project_alcatraz.Shop.Shop;
-import com.alcatraz.admin.project_alcatraz.Social.Chat;
 import com.alcatraz.admin.project_alcatraz.Social.ChatActivity;
 import com.alcatraz.admin.project_alcatraz.Social.ChatAdapter;
-import com.alcatraz.admin.project_alcatraz.Social.ChatDao;
 import com.alcatraz.admin.project_alcatraz.Social.MessageViewModel;
 import com.alcatraz.admin.project_alcatraz.User.UserViewModel;
 import com.alcatraz.admin.project_alcatraz.Utility.ClipRevealFrame;
@@ -44,13 +40,7 @@ import com.google.zxing.integration.android.IntentResult;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.nio.channels.FileChannel;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 import butterknife.BindView;
@@ -187,6 +177,10 @@ public class HomeActivity extends AppCompatActivity
         switch (id) {
             case R.id.nav_profile:
                 intent = new Intent(getApplicationContext(), UserProfileActivity.class);
+                startActivity(intent);
+                break;
+            case R.id.nav_wallet:
+                intent = new Intent(getApplicationContext(), TransactionActivity.class);
                 startActivity(intent);
                 break;
             case R.id.nav_settings:
