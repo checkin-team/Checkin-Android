@@ -20,6 +20,7 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.widget.Toast;
 
+import com.alcatraz.admin.project_alcatraz.Profile.ShopProfile.ShopProfileActivity;
 import com.alcatraz.admin.project_alcatraz.R;
 import com.alcatraz.admin.project_alcatraz.Session.SessionUserActivity;
 import com.alcatraz.admin.project_alcatraz.Social.ChatActivity;
@@ -79,6 +80,11 @@ public class HomeActivity extends AppCompatActivity {
                     break;
                 case R.id.drawer_privacysettings:
                     Toast.makeText(HomeActivity.this, "privacy settings menu item selected", Toast.LENGTH_SHORT).show();
+                    break;
+
+                case R.id.drawer_shop_profile:
+                    //Toast.makeText(HomeActivity.this, "", Toast.LENGTH_SHORT).show();
+                    startActivity(new Intent(getApplicationContext(), ShopProfileActivity.class));
                     break;
                     default:
                         Toast.makeText(HomeActivity.this, "yo whats up, default of switch case selected", Toast.LENGTH_SHORT).show();

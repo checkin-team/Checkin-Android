@@ -48,5 +48,12 @@
 
             android:title="privacy settings"
             android:icon="@drawable/privacy"/>
+
+
+        <item
+            android:id="@+id/drawer_shop_profile"
+
+            android:title="Shop Profile"
+            android:icon="@drawable/ic_shop_profie"/>
 </group>
 </menu>
