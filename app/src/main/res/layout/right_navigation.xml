@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/right_nav"
     android:fitsSystemWindows="true"
-    tools:context=".Home.HomeActivity"
+    tools:context=".Home.HomeActivity2"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 

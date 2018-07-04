@@ -1,6 +1,5 @@
 package com.alcatraz.admin.project_alcatraz.Session;
 
-import android.content.Context;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.GridLayoutManager;
@@ -23,6 +22,9 @@ import org.angmarch.views.NiceSpinnerArrowOnly;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+
+import butterknife.BindView;
+import butterknife.ButterKnife;
 
 public class MenuItemAdapter extends RecyclerView.Adapter<MenuItemAdapter.ItemViewHolder> {
     private ArrayList<MenuItem> mItemsList;
@@ -84,21 +86,16 @@ public class MenuItemAdapter extends RecyclerView.Adapter<MenuItemAdapter.ItemVi
     }
 
     class ItemViewHolder extends RecyclerView.ViewHolder {
-        TextView vTitle;
-        NiceSpinnerArrowOnly vSpinner;
-        DiscreteScrollView vQuantityPicker;
-        View vPriceLayout;
-        ImageView vPriceButton;
-        TextView vPriceValue;
+        @BindView(R.id.item_title) TextView vTitle;
+        @BindView(R.id.spinner) NiceSpinnerArrowOnly vSpinner;
+        @BindView(R.id.quantity_picker) DiscreteScrollView vQuantityPicker;
+        @BindView(R.id.price_layout) View vPriceLayout;
+        @BindView(R.id.price_button) ImageView vPriceButton;
+        @BindView(R.id.price_value) TextView vPriceValue;
 
         ItemViewHolder(View itemView) {
             super(itemView);
-            vTitle = itemView.findViewById(R.id.item_title);
-            vPriceLayout = itemView.findViewById(R.id.price_layout);
-            vPriceButton = itemView.findViewById(R.id.price_button);
-            vPriceValue = itemView.findViewById(R.id.price_value);
-            vQuantityPicker = itemView.findViewById(R.id.quantity_picker);
-            vSpinner = itemView.findViewById(R.id.spinner);
+            ButterKnife.bind(this, itemView);
         }
 
         void bindData(MenuItem menuItem) {
@@ -114,7 +111,7 @@ public class MenuItemAdapter extends RecyclerView.Adapter<MenuItemAdapter.ItemVi
             });
             vQuantityPicker.setAdapter(new TextBaseAdapter(
                     Util.range(0, 30),
-                    itemView.getResources().getColor(R.color.light_grey),
+                    itemView.getResources().getColor(R.color.pinkish_grey),
                     itemView.getResources().getColor(R.color.brownish_grey))
             );
             vQuantityPicker.addOnItemChangedListener(new DiscreteScrollView.OnItemChangedListener<RecyclerView.ViewHolder>() {

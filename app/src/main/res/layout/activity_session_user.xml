@@ -16,12 +16,12 @@
         app:layout_behavior="@string/appbar_scrolling_view_behavior" />
 
     <android.support.design.widget.AppBarLayout
-        android:id="@+id/appbar"
+        android:id="@+id/appbar_session"
         app:elevation="0dp"
         android:elevation="0dp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:theme="@style/AppBarOverlay">
+        android:theme="@style/appbar_main">
 
         <android.support.v7.widget.Toolbar
             android:id="@+id/session_toolbar"

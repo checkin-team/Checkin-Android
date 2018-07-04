@@ -1,9 +1,11 @@
 <resources>
-    <string name="app_name">Project_Alcatraz</string>
+    <string name="app_name">Check-In</string>
     <string name="title_activity_check">check</string>
 
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
+    <string name="messages_drawer_open">Open messages drawer</string>
+    <string name="messages_drawer_close">Close messages drawer</string>
     <string name="appbar_scrolling_view_behavior" translatable="false">android.support.design.widget.AppBarLayout$ScrollingViewBehavior</string>
 
     <string name="action_settings">Settings</string>
@@ -102,7 +104,6 @@
     <string name="menu_layout_total_price">Total price:</string>
     <string name="layout_button_done">Finish</string>
 
-    <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="title_activity_session_user">SessionUserActivity</string>
     <string name="tab_text_1">Tab 1</string>
@@ -116,4 +117,13 @@
     <string name="action_filter">Filter Items</string>
     <string name="menu_item_default_price">-</string>
     <string name="title_activity_login">LoginActivity</string>
+    <string name="title_activity_home">HomeActivity</string>
+    <string name="nav_header_title">Android Studio</string>
+    <string name="nav_header_subtitle">android.studio@android.com</string>
+    <string name="nav_header_desc">Navigation header</string>
+    <string name="shop_status_check">Check Status</string>
+    <string name="nav_text_wallet">Wallet</string>
+    <string name="home_text_qrscanner">Scan QR!</string>
+    <string name="home_text_delivery">Delivery</string>
+    <string name="home_text_offers">Offers</string>
 </resources>

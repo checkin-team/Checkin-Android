@@ -23,7 +23,7 @@
         android:fontFamily="@font/arial_rounded_mt_bold"
         android:text="SESSION"
         android:textColor="#ffffff"
-        android:textSize="25.5sp"
+        android:textSize="@dimen/font_largest"
         android:textStyle="bold" />
 
     <ImageButton

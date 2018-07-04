@@ -3,6 +3,10 @@
     xmlns:tools="http://schemas.android.com/tools"
     package="com.alcatraz.admin.project_alcatraz">
 
+    <uses-permission android:name="android.permission.INTERNET"  />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+
     <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
@@ -22,21 +26,17 @@
         </activity>
         <activity
             android:name=".Home.HomeActivity"
-            android:screenOrientation="portrait">
-        </activity>
+            android:screenOrientation="sensorPortrait"
+            tools:replace="screenOrientation"
+            android:label="@string/title_activity_home"
+            android:theme="@style/Theme.AppCompat.Light.NoActionBar"/>
         <activity
-            android:name=".Utility.Splash_Activity"
-            android:screenOrientation="portrait"></activity>
-        <activity
-            android:name=".Profile.ShopProfileActivity"
+            android:name=".User.ShopProfileActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".Profile.UserProfileActivity"
+            android:name=".User.EditProfile"
             android:screenOrientation="portrait" />
-        <activity
-            android:name=".Profile.EditProfile"
-            android:screenOrientation="portrait" />
-        <activity android:name=".Home.UserProfileNew" />
+        <activity android:name=".Home.UserProfileActivity" />
 
         <meta-data
             android:name="preloaded_fonts"
