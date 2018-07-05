@@ -72,4 +72,5 @@ dependencies {
     implementation project(':library:MaterialSearchView')
     implementation project(':library:NiceSpinner')
     implementation project(':library:MaterialChipView')
+    implementation 'com.jsibbold:zoomage:1.1.0'
 }

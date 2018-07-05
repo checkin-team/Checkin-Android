@@ -50,6 +50,7 @@
             android:name=".Social.ChatActivity"
             android:screenOrientation="portrait" />
         <activity android:name=".Home.TransactionActivity" />
+        <activity android:name=".Home.StoryActivity"/>
     </application>
 
 </manifest>

@@ -187,6 +187,10 @@ public class HomeActivity extends AppCompatActivity
                 intent = new Intent(getApplicationContext(), SessionUserActivity.class);
                 startActivity(intent);
                 break;
+            case R.id.nav_privacy_settings:
+                intent = new Intent(getApplicationContext(), StoryActivity.class);
+                startActivity(intent);
+                break;
         }
         drawerLayout.closeDrawer(GravityCompat.START);
         return true;
