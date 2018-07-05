@@ -10,6 +10,8 @@ import android.widget.TextView;
 
 import com.alcatraz.admin.project_alcatraz.R;
 
+import org.jetbrains.annotations.NotNull;
+
 import java.util.List;
 
 
@@ -50,7 +52,7 @@ public class TransactionAdapter extends RecyclerView.Adapter<TransactionAdapter.
     }
 
     @Override
-    public void onBindViewHolder(final MyView holder, final int position) {
+    public void onBindViewHolder(@NotNull final MyView holder, final int position) {
         Transaction transaction=list.get(position);
         if(!transaction.showdate)
         {

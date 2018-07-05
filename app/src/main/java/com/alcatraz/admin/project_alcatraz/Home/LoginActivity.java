@@ -58,6 +58,9 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                     editor.apply();
                     startActivity(new Intent(this, HomeActivity.class));
                 }
+                break;
+            case R.id.text_forgot:
+                startActivity(new Intent(this,ForgotPassword.class));
         }
     }
 
