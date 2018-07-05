@@ -3,7 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     package="com.alcatraz.admin.project_alcatraz">
 
-    <uses-permission android:name="android.permission.INTERNET"  />
+    <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
 
@@ -20,15 +20,16 @@
             android:theme="@style/Theme.AppCompat.Light.NoActionBar">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
+
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
         <activity
             android:name=".Home.HomeActivity"
-            android:screenOrientation="sensorPortrait"
-            tools:replace="screenOrientation"
             android:label="@string/title_activity_home"
-            android:theme="@style/Theme.AppCompat.Light.NoActionBar"/>
+            android:screenOrientation="sensorPortrait"
+            android:theme="@style/Theme.AppCompat.Light.NoActionBar"
+            tools:replace="screenOrientation" />
         <activity
             android:name=".User.ShopProfileActivity"
             android:screenOrientation="portrait" />
@@ -49,8 +50,9 @@
             android:name=".Social.ChatActivity"
             android:screenOrientation="portrait" />
         <activity android:name=".Home.TransactionActivity" />
-        <activity android:name=".Home.StoryActivity"/>
+        <activity android:name=".Home.StoryActivity" />
         <activity android:name=".Home.ForgotPassword" />
+        <activity android:name=".Home.FilterTransactions"></activity>
     </application>
 
 </manifest>
