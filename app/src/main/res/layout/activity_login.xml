@@ -82,6 +82,9 @@
             android:id="@+id/text_forgot"
             android:textColor="#aaaaaa"
             android:textSize="18sp"
+            android:clickable="true"
+            android:onClick="onClick"
+            android:background="?android:selectableItemBackground"
             android:text="Forgot Password?" />
     </LinearLayout>
 
@@ -106,11 +109,11 @@
         android:layout_weight=".05"
         android:layout_gravity="center_horizontal">
 
-        <ImageView
-            android:layout_width="100dp"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center_vertical"
-            android:src="@drawable/ic_line"/>
+        <View
+            android:layout_width="84dp"
+            android:layout_height="2dp"
+            android:background="@color/colorPrimaryRed"
+            android:layout_gravity="center_vertical"/>
 
         <TextView
             android:layout_width="wrap_content"
@@ -120,11 +123,11 @@
             android:textSize="14sp"
             android:text=" OR CONNECT WITH " />
 
-        <ImageView
-            android:layout_width="100dp"
-            android:layout_height="wrap_content"
-            android:src="@drawable/ic_line"
-            android:layout_gravity="center_vertical"/>
+        <View
+            android:layout_width="84dp"
+            android:layout_height="2dp"
+            android:layout_gravity="center_vertical"
+            android:background="@color/colorPrimaryRed" />
 
     </LinearLayout>
 
@@ -141,23 +144,32 @@
 
         <ImageView
             android:layout_width="wrap_content"
+            android:clickable="true"
+            android:focusable="true"
+            android:foreground="?android:selectableItemBackground"
             android:layout_height="match_parent"
             android:src="@drawable/ic_connect_facebook"
             android:id="@+id/btn_connect_facebook"/>
 
         <ImageView
+            android:foreground="?android:selectableItemBackground"
+            android:clickable="true"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:layout_centerInParent="true"
             android:src="@drawable/ic_connect_twitter"
-            android:id="@+id/btn_connect_twitter"/>
+            android:id="@+id/btn_connect_twitter"
+            android:focusable="true" />
 
 
         <ImageView
+            android:foreground="?android:selectableItemBackground"
+            android:clickable="true"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:layout_alignParentRight="true"
             android:id="@+id/btn_connect_google"
-            android:src="@drawable/ic_connect_google" />
+            android:src="@drawable/ic_connect_google"
+            android:focusable="true" />
     </RelativeLayout>
 </LinearLayout>

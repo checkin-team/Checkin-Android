@@ -118,12 +118,13 @@
     <string name="menu_item_default_price">-</string>
     <string name="title_activity_login">LoginActivity</string>
     <string name="title_activity_home">HomeActivity</string>
-    <string name="nav_header_title">Android Studio</string>
-    <string name="nav_header_subtitle">android.studio@android.com</string>
+    <string name="nav_header_title">Nav Header Title</string>
+    <string name="nav_header_subtitle">Nav Header Subtitle</string>
     <string name="nav_header_desc">Navigation header</string>
     <string name="shop_status_check">Check Status</string>
     <string name="nav_text_wallet">Wallet</string>
     <string name="home_text_qrscanner">Scan QR!</string>
     <string name="home_text_delivery">Delivery</string>
     <string name="home_text_offers">Offers</string>
+    <string name="reset_my_password">Reset My Password</string>
 </resources>

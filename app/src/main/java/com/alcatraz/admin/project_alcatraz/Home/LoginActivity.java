@@ -39,7 +39,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
 
     @Override
     public void onClick(View view) {
-        switch(view.getId()) {
+        switch (view.getId()) {
             case R.id.btn_signin:
                 EditText et_username = findViewById(R.id.login_username);
                 EditText et_password = findViewById(R.id.login_password);
@@ -62,6 +62,9 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                     editor.apply();
                     launchHomeActivity();
                 }
+                break;
+            case R.id.text_forgot:
+                startActivity(new Intent(this, ForgotPassword.class));
         }
     }
 
