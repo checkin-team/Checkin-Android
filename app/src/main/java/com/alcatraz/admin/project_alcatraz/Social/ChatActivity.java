@@ -82,6 +82,7 @@ public class ChatActivity extends AppCompatActivity{
         Log.e(TAG, NamedFormatter.format("senderID: %(sender), recipientID: %(recipient) & chatID: %(chat)", values));
         mMessageViewModel.sendMessages(msg);
         edChatText.setText("");
-        rvChatList.smoothScrollToPosition(rvChatList.getAdapter().getItemCount());
+        rvChatList.smoothScrollToPosition(rvChatList.getAdapter().getItemCount()+1);
+        //rvChatList.smoothScrollToPosition(rvChatList.getAdapter().getItemCount());
     }
 }

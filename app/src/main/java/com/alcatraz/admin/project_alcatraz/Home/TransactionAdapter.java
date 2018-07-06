@@ -119,4 +119,8 @@ public class TransactionAdapter extends RecyclerView.Adapter<TransactionAdapter.
     public int getItemViewType(int position) {
         return position==0?0:1;
     }
+
+    public List<Transaction> getList(){
+        return list;
+    }
 }

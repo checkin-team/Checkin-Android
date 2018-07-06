@@ -35,7 +35,7 @@
             android:layout_marginBottom="24dp"
             android:layout_marginStart="56dp"
             android:layout_marginTop="16dp"
-            android:maxLines="3"
+            android:maxLines="4"
             android:text="Paid for Order\nRestaurant Atithi Palace\nOrder no. #xxxxxxxxxxxxx"
             android:textSize="18sp"
             app:layout_constraintBottom_toBottomOf="parent"

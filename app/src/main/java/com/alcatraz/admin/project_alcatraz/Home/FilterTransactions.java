@@ -6,6 +6,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.StaggeredGridLayoutManager;
 import android.util.Log;
 import android.util.TypedValue;
 import android.view.View;
@@ -22,7 +23,8 @@ import java.util.ArrayList;
 import java.util.Scanner;
 
 public class FilterTransactions extends AppCompatActivity {
-int yf,mf,df,yt,mt,dt;
+int yf=1990,mf=1,df=1,yt=2099,mt=12,dt=31;
+boolean from=false,to=false;
     ArrayList<Boolean> bool;
     ArrayList<String> arr;
     @Override
@@ -30,14 +32,43 @@ int yf,mf,df,yt,mt,dt;
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_filter_transactions);
         RecyclerView recyclerView=findViewById(R.id.transaction_filter);
-        recyclerView.setLayoutManager(new GridLayoutManager(this,3));
+
+
         arr=new ArrayList<>() ;
         bool=new ArrayList<>();
-        Scanner s=new Scanner("Brunners`fdgfdhm` jhhijhhbj`hjhvhvh`hjhjhhj`vhjhjjh`jhgvvvhh`hvhvjhh`utykfgtug");
-        s.useDelimiter("`");
-        while(s.hasNext()){
-            arr.add(s.next());
-            bool.add(false);
+        Scanner s;
+        String r=getIntent().getStringExtra("min");
+        if(r.length()!=0) {
+            from=true;
+            s = new Scanner(r);
+            s.useDelimiter("/");
+            df = Integer.valueOf(s.next());
+            mf = Integer.valueOf(s.next());
+            yf = Integer.valueOf(s.next());
+            ((TextView)findViewById(R.id.textView10)).setText(r);
+            ((TextView) findViewById(R.id.textView10)).setTextSize(TypedValue.COMPLEX_UNIT_SP, 18f);
+        }
+        r=getIntent().getStringExtra("max");
+        if(r.length()!=0) {
+            to=true;
+            s = new Scanner(r);
+            s.useDelimiter("/");
+            dt = Integer.valueOf(s.next());
+            mt = Integer.valueOf(s.next());
+            yt = Integer.valueOf(s.next());
+            ((TextView)findViewById(R.id.textView11)).setText(r);
+            ((TextView) findViewById(R.id.textView11)).setTextSize(TypedValue.COMPLEX_UNIT_SP, 18f);
+        }
+        ArrayList<String> allRestaurants=getIntent().getStringArrayListExtra("all");
+        ArrayList<String> visibleRestaurants=getIntent().getStringArrayListExtra("vis");
+        for(String i:allRestaurants) {
+            if(arr.contains(i))
+                continue;
+            arr.add(i);
+            if (visibleRestaurants.contains(i))
+                bool.add(true);
+            else
+                bool.add(false);
         }
         findViewById(R.id.calendarView).setVisibility(View.GONE);
         WalletFilterAdapter adapter=new WalletFilterAdapter(bool,arr);
@@ -49,6 +80,29 @@ int yf,mf,df,yt,mt,dt;
                 recyclerView.setAdapter(new WalletFilterAdapter(bool,arr));
             }
         });
+
+        GridLayoutManager layoutManager=new GridLayoutManager(this,3);
+
+        layoutManager.setSpanSizeLookup(new GridLayoutManager.SpanSizeLookup() {
+           /* *
+             * Returns the number of span occupied by the item at <code>position</code>.
+             *
+             * @param position The adapter position of the item
+             * @return The number of spans occupied by the item at the provided position
+             */
+            @Override
+            public int getSpanSize(int position) {
+
+                if(arr.get(position).length()>10)
+                    return 2;
+                return 1;
+            }
+
+
+        });
+        recyclerView.setLayoutManager(layoutManager);
+
+
 
     }
     public void from(View v){

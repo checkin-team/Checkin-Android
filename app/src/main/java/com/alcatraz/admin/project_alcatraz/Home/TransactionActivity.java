@@ -19,6 +19,7 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.List;
 import java.util.Locale;
 
 /**
@@ -28,6 +29,7 @@ import java.util.Locale;
 public class TransactionActivity extends AppCompatActivity {
     ArrayList<Transaction> ar;
     RecyclerView recyclerView;
+    String mindate="",maxdate="";
     static ClickableSpan clickableSpan;
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -65,7 +67,20 @@ public class TransactionActivity extends AppCompatActivity {
     }
     public void filter(View view)
     {
-        startActivityForResult(new Intent(this,FilterTransactions.class),1);
+        Intent intent=new Intent(this,FilterTransactions.class);
+        ArrayList<String> allRestaurants=new ArrayList<>();
+        for(Transaction tt:ar)
+            if(tt.hotel.length()!=0)
+                allRestaurants.add(tt.hotel);
+        ArrayList<String> visibleRestaurants=new ArrayList<>();
+        List<Transaction> lt=((TransactionAdapter)recyclerView.getAdapter()).getList();
+        for(Transaction tt:lt)
+            visibleRestaurants.add(tt.hotel);
+        intent.putExtra("min",mindate);
+        intent.putExtra("max",maxdate);
+        intent.putExtra("all",allRestaurants);
+        intent.putExtra("vis",visibleRestaurants);
+        startActivityForResult(intent,1);
 
     }
 
@@ -79,18 +94,31 @@ public class TransactionActivity extends AppCompatActivity {
      */
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if(requestCode!=1 ||resultCode!=1)
+            return;
         ArrayList<String> out=data.getStringArrayListExtra("name");
         ArrayList<Transaction> res=new ArrayList<>();
         SimpleDateFormat sdf = new SimpleDateFormat("dd MMM yyyy", Locale.ENGLISH);
         Calendar min=Calendar.getInstance();
+        Log.e(TAG, "onActivityResult: "+data.getIntExtra("yf",199));
         min.set(Calendar.YEAR,data.getIntExtra("yf", 1990));
         min.set(Calendar.MONTH,data.getIntExtra("mf", 1));
         min.set(Calendar.DAY_OF_MONTH,data.getIntExtra("df",1));
+        if(min.get(Calendar.YEAR)!=1990)
+            mindate=min.get(Calendar.DAY_OF_MONTH)+"/"+min.get(Calendar.MONTH)+"/"+min.get(Calendar.YEAR);
+        else
+            mindate="";
+
         Calendar max=Calendar.getInstance();
-        max.set(Calendar.YEAR,data.getIntExtra("yt",2090));
+        max.set(Calendar.YEAR,data.getIntExtra("yt",2099));
         max.set(Calendar.MONTH,data.getIntExtra("mt",12));
         max.set(Calendar.DAY_OF_MONTH,data.getIntExtra("dt",31));
-        Log.e(TAG, "onActivityResult: "+min +"   "+max);
+        if(max.get(Calendar.YEAR)!=2099 &&max.get(Calendar.YEAR)!=2100)
+            maxdate=max.get(Calendar.DAY_OF_MONTH)+"/"+max.get(Calendar.MONTH)+"/"+max.get(Calendar.YEAR);
+        else
+            maxdate="";
+
+        Log.e(TAG, "onActivityResult: "+min.get(Calendar.YEAR) +"   "+max.get(Calendar.YEAR));
         for(Transaction tt:ar) {
             if(tt.date.length()==0){
                 res.add(tt);
@@ -117,6 +145,11 @@ public class TransactionActivity extends AppCompatActivity {
             if(!(res.get(i).date.equals(res.get(i-1).date))) {
                 Transaction element = res.get(i);
                 element.showdate = true;
+                res.set(i, element);
+            }
+            else {
+                Transaction element = res.get(i);
+                element.showdate = false;
                 res.set(i, element);
             }
         }

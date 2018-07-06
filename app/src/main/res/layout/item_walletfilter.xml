@@ -19,7 +19,7 @@
         android:paddingRight="8dp"
         android:paddingTop="8dp"
         android:text="Restaurant_Name"
-        android:textSize="24sp"
+        android:textSize="21sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
