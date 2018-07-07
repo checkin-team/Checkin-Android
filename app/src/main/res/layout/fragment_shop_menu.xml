@@ -2,6 +2,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:id="@+id/fregment_shopmenu"
     tools:context="com.alcatraz.admin.project_alcatraz.Profile.ShopProfile.FragmentShopMenu">
 
     <!-- TODO: Update blank fragment layout -->

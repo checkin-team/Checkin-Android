@@ -48,7 +48,10 @@
             android:label="@string/title_activity_session_user"
             android:theme="@style/SessionTheme" />
         <activity
-            android:name=".Social.ChatActivity"
+        android:name=".Social.ChatActivity"
+        android:screenOrientation="portrait" />
+        <activity
+            android:name=".Profile.ShopProfile.ShopProfileActivity2"
             android:screenOrientation="portrait" />
     </application>
 

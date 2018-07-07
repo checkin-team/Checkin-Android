@@ -14,6 +14,8 @@ import android.widget.Toast;
 import com.alcatraz.admin.project_alcatraz.R;
 import com.alcatraz.admin.project_alcatraz.R.id;
 
+import it.sephiroth.android.library.bottomnavigation.BottomNavigation;
+
 public class ShopProfileActivity extends AppCompatActivity {
 
     private TextView mTextMessage;
@@ -63,7 +65,8 @@ public class ShopProfileActivity extends AppCompatActivity {
         viewPager=(ViewPager)findViewById(id.shop_acivity_viewpager);
 
         mTextMessage = (TextView) findViewById(R.id.message);
-        BottomNavigationView navigation = (BottomNavigationView) findViewById(R.id.navigation);
+        BottomNavigationView navigation = (BottomNavigationView) findViewById(id.bottomnavbar);
+        BottomNavigation navigation1=(BottomNavigation)findViewById(id.bottomnavbar) ;
         navigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
 
         viewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
@@ -93,7 +96,7 @@ public class ShopProfileActivity extends AppCompatActivity {
 
             }
         });
-        setupViewPager(viewPager);
+       // setupViewPager(viewPager);
 
         /*  //Disable ViewPager Swipe
        viewPager.setOnTouchListener(new View.OnTouchListener()
@@ -108,20 +111,20 @@ public class ShopProfileActivity extends AppCompatActivity {
         
     }
 
-    private void setupViewPager(ViewPager viewPager) {
-
-        ViewPagerAdapter adapter=new ViewPagerAdapter(getSupportFragmentManager());
-
-        fragmentprofile=new FragmentShopProfile();
-        fragmentmenu=new FragmentShopMenu();
-        fragmentinsights=new FragmentShopInsights();
-        fragmentdailyactivity=new FragmentShopDailyActivity();
-        adapter.addFragment(fragmentprofile);
-        adapter.addFragment(fragmentmenu);
-        adapter.addFragment(fragmentinsights);
-        adapter.addFragment(fragmentdailyactivity);
-
-        viewPager.setAdapter(adapter);
-    }
+//    private void setupViewPager(ViewPager viewPager) {
+//
+//        ViewPagerAdapter adapter=new ViewPagerAdapter(getSupportFragmentManager());
+//
+//        fragmentprofile=new FragmentShopProfile();
+//        fragmentmenu=new FragmentShopMenu();
+//        fragmentinsights=new FragmentShopInsights();
+//        fragmentdailyactivity=new FragmentShopDailyActivity();
+//        adapter.addFragment(fragmentprofile);
+//        adapter.addFragment(fragmentmenu);
+//        adapter.addFragment(fragmentinsights);
+//        adapter.addFragment(fragmentdailyactivity);
+//
+//        viewPager.setAdapter(adapter);
+//    }
 
 }
