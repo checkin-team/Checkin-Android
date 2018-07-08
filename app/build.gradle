@@ -8,7 +8,7 @@ android {
     compileSdkVersion 27
     defaultConfig {
         applicationId "com.alcatraz.admin.project_alcatraz"
-        minSdkVersion 16
+        minSdkVersion 19
         targetSdkVersion 27
         versionCode 1
         versionName "1.0"
@@ -16,7 +16,7 @@ android {
     }
     buildTypes {
         release {
-            minifyEnabled false
+            minifyEnabled true
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
     }
@@ -39,27 +39,44 @@ dependencies {
     implementation 'com.android.support:design:27.1.1'
     implementation 'de.hdodenhof:circleimageview:2.2.0'
     implementation 'com.journeyapps:zxing-android-embedded:3.6.0'
-    implementation 'com.makeramen:roundedimageview:2.3.0'
-    implementation 'com.github.Jawnnypoo:circleindicator:1.4.0'
     implementation('com.android.support:cardview-v7:27.1.1') {
         force = true
     }
+    implementation 'com.github.bumptech.glide:glide:4.7.1'
+    annotationProcessor 'com.github.bumptech.glide:compiler:4.7.1'
+    implementation 'jp.wasabeef:glide-transformations:3.3.0'
     implementation 'com.jakewharton:butterknife:8.8.1'
     annotationProcessor 'com.jakewharton:butterknife-compiler:8.8.1'
     implementation 'com.yarolegovich:discrete-scrollview:1.4.7'
+
+    // Network libraries and JSON <-> POJO
+    implementation 'com.google.code.gson:gson:2.8.5'
+    implementation 'com.squareup.retrofit2:retrofit:2.4.0'
+    implementation 'com.squareup.retrofit2:converter-gson:2.4.0'
+    debugImplementation 'com.squareup.okhttp3:logging-interceptor:3.10.0'
+
+    // Room components
+    implementation "android.arch.persistence.room:runtime:1.1.1"
+    annotationProcessor "android.arch.persistence.room:compiler:1.1.1"
+    androidTestImplementation "android.arch.persistence.room:testing:1.1.1"
+
+    // Lifecycle components
+    implementation "android.arch.lifecycle:extensions:1.1.1"
+    annotationProcessor "android.arch.lifecycle:compiler:1.1.1"
+
+    // Dagger components
+    implementation 'com.google.dagger:dagger:2.15'
+    annotationProcessor 'com.google.dagger:dagger-compiler:2.15'
+
+    // Modified libraries
     implementation project(':library:MaterialSearchView')
     implementation project(':library:NiceSpinner')
     implementation project(':library:MaterialChipView')
 
-
-    def room_version = "1.1.0"
-    implementation "android.arch.persistence.room:runtime:$room_version"
-    annotationProcessor "android.arch.persistence.room:compiler:$room_version"
-    // Test helpers
-    testImplementation "android.arch.persistence.room:testing:$room_version"
 //    for graphs
     implementation 'com.github.PhilJay:MPAndroidChart:v3.0.3'
     //for bottomnavbar
-
     implementation 'it.sephiroth.android.library.bottomnavigation:bottom-navigation:2.0.1-rc1'
+
+    implementation 'com.jsibbold:zoomage:1.1.0'
 }

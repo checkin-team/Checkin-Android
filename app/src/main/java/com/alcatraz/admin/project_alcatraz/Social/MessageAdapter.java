@@ -1,5 +1,6 @@
 package com.alcatraz.admin.project_alcatraz.Social;
 
+import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -17,52 +18,85 @@ import java.util.List;
 
 public class MessageAdapter extends RecyclerView.Adapter<MessageAdapter.MyView> {
 
-    private List<String> name;
-    private List<String> lastmsg;
-    private List<Integer> img;
-    
+    private List<Message> mMessageList;
+    private final int VIEW_TYPE_MESSAGE_SENT = 1;
+    private final int VIEW_TYPE_MESSAGE_RECEIVED = 2;
 
-    public static class MyView extends RecyclerView.ViewHolder {
+    MessageAdapter(List<Message> messageList){
+        mMessageList = messageList;
+    }
 
-        public TextView textView;
-        public TextView last;
-        public com.makeramen.roundedimageview.RoundedImageView im;
+    public void addMessage(Message message) {
+        mMessageList.add(message);
+        notifyItemInserted(getItemCount() - 1);
+    }
 
-        public MyView(View view) {
-            super(view);
-            textView = (TextView) view.findViewById(R.id.msg_name);
-            last=view.findViewById(R.id.msg_last);
-            im=view.findViewById(R.id.msg_photo);
+    @Override
+    public int getItemViewType(int position) {
+        return (mMessageList.get(position).getSenderId() == 0 ? VIEW_TYPE_MESSAGE_SENT : VIEW_TYPE_MESSAGE_RECEIVED);
+    }
 
+    @NonNull
+    @Override
+    public MyView onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+        View view = null;
 
+        switch (viewType) {
+            case VIEW_TYPE_MESSAGE_SENT:
+                view = LayoutInflater.from(parent.getContext())
+                        .inflate(R.layout.chat_message_sent, parent, false);
+                break;
+            case VIEW_TYPE_MESSAGE_RECEIVED:
+                view = LayoutInflater.from(parent.getContext())
+                        .inflate(R.layout.chat_message_received, parent, false);
+                break;
         }
-    }
 
-
-    public MessageAdapter(List<String> horizontalList,List<String> last,List<Integer> img) {
-        this.name = horizontalList;
-        this.img=img;
-        this.lastmsg=last;
+        return new MyView(view, viewType);
     }
 
     @Override
-    public MyView onCreateViewHolder(ViewGroup parent, int viewType) {
-        View itemView = LayoutInflater.from(parent.getContext()).inflate(R.layout.message, parent, false);
-        return new MyView(itemView);
-    }
+    public void onBindViewHolder(@NonNull final MyView holder, final int position) {
+        if (mMessageList != null)
+            holder.bindData(mMessageList.get(position));
+        else {
+            // Data not ready
+        }
 
-    @Override
-    public void onBindViewHolder(final MyView holder, final int position) {
-       // Log.e("TAG",name.get(position));
-        holder.textView.setText(name.get(position));
-        holder.last.setText(lastmsg.get(position));
-        holder.im.setImageResource(img.get(position));
     }
 
     @Override
     public int getItemCount()
     {
-        return name.size();
+        if (mMessageList != null)
+            return mMessageList.size();
+        return 0;
     }
 
+    public void setMessages(List<Message> messages) {
+        mMessageList = messages;
+        notifyDataSetChanged();
+    }
+
+    class MyView extends RecyclerView.ViewHolder {
+
+        TextView tv_message;
+        TextView tv_time;
+
+        MyView(View view, int viewType) {
+            super(view);
+            if (viewType == VIEW_TYPE_MESSAGE_SENT) {
+                tv_message = view.findViewById(R.id.sent_message);
+                tv_time = view.findViewById(R.id.sent_time);
+            } else {
+                tv_message = view.findViewById(R.id.received_message);
+                tv_time = view.findViewById(R.id.recieved_time);
+            }
+        }
+
+        void bindData(Message message) {
+            tv_message.setText(message.getMessage());
+            tv_time.setText(message.getTime());
+        }
+    }
 }

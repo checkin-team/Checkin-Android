@@ -1,85 +1,100 @@
 package com.alcatraz.admin.project_alcatraz.Social;
 
+import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
+import android.text.format.DateFormat;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.alcatraz.admin.project_alcatraz.R;
+import com.alcatraz.admin.project_alcatraz.Social.ChatDao.BriefChat;
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.resource.bitmap.RoundedCorners;
+import com.bumptech.glide.request.RequestOptions;
 
 import java.util.List;
+
+import butterknife.BindView;
+import butterknife.ButterKnife;
 
 
 /**
  * Created by TAIYAB on 05-02-2018.
  */
 
-public class ChatAdapter extends RecyclerView.Adapter<ChatAdapter.MyView> {
+public class ChatAdapter extends RecyclerView.Adapter<ChatAdapter.ViewHolder> {
 
-
-    private List<MessageUnit> messageList;
-    private static final int VIEW_TYPE_MESSAGE_SENT = 1;
-    private static final int VIEW_TYPE_MESSAGE_RECEIVED = 2;
-
-
-    public static class MyView extends RecyclerView.ViewHolder {
-
-        public TextView message;
-        public TextView time;
-
-        public MyView(View view, int viewType) {
-            super(view);
-            if (viewType == VIEW_TYPE_MESSAGE_SENT) {
-                message = (TextView) view.findViewById(R.id.sent_message);
-                time = view.findViewById(R.id.sent_time);
-            } else {
-                message = (TextView) view.findViewById(R.id.received_message);
-                time = view.findViewById(R.id.recieved_time);
-            }
-        }
+    private List<BriefChat> mBriefChats;
+    
+    public ChatAdapter(List<BriefChat> briefChats) {
+        mBriefChats = briefChats;
     }
 
+    public void setBriefChats(@NonNull List<BriefChat> briefChats) {
+        mBriefChats = briefChats;
+        notifyDataSetChanged();
+    }
 
-    public ChatAdapter(List<MessageUnit> messageList){
-        this.messageList=messageList;
+    public BriefChat getBriefChat(final int position) {
+        return mBriefChats.get(position);
     }
 
     @Override
     public int getItemViewType(int position) {
-        // Just as an example, return 0 or 2 depending on position
-        // Note that unlike in ListView adapters, types don't have to be contiguous
-        return messageList.get(position).sentorget;
+        return R.layout.chat_brief_item;
     }
+
+    @NonNull
     @Override
-
-    public MyView onCreateViewHolder(ViewGroup parent, int viewType) {
-        View view;
-
-        if (viewType == VIEW_TYPE_MESSAGE_SENT) {
-            view = LayoutInflater.from(parent.getContext())
-                    .inflate(R.layout.item_message_sent, parent, false);
-            return new MyView(view,viewType);
-        } else if (viewType == VIEW_TYPE_MESSAGE_RECEIVED) {
-            view = LayoutInflater.from(parent.getContext())
-                    .inflate(R.layout.item_message_received, parent, false);
-            return new MyView(view,viewType);
-        }
-
-        return null;
+    public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+        View itemView = LayoutInflater.from(parent.getContext()).inflate(viewType, parent, false);
+        return new ViewHolder(itemView);
     }
 
     @Override
-    public void onBindViewHolder(final MyView holder, final int position) {
-        // Log.e("TAG",name.get(position));
-        holder.message.setText(messageList.get(position).message);
-        holder.time.setText(messageList.get(position).time);
+    public void onBindViewHolder(@NonNull final ViewHolder holder, final int position) {
+       holder.bindData(mBriefChats.get(position));
     }
 
     @Override
     public int getItemCount()
     {
-        return messageList.size();
+        return mBriefChats != null ? mBriefChats.size() : 0;
+    }
+
+    public class ViewHolder extends RecyclerView.ViewHolder {
+        @BindView(R.id.msg_user_name)
+        TextView tvUserName;
+        @BindView(R.id.msg_timestamp)
+        TextView tvTimestamp;
+        @BindView(R.id.msg_last)
+        TextView tvLastMsg;
+        @BindView(R.id.msg_user_photo)
+        ImageView imUserPhoto;
+
+        public final static String dateFormat = "hh:mm a";
+
+        public ViewHolder(View view) {
+            super(view);
+            ButterKnife.bind(this, view);
+        }
+
+        void bindData(BriefChat briefChat) {
+            if (briefChat.lastMessage == null || briefChat.sentAt == null) {
+                tvLastMsg.setText("No message sent.");
+                tvTimestamp.setText("");
+            } else {
+                tvLastMsg.setText(briefChat.lastMessage);
+                tvTimestamp.setText(DateFormat.format(dateFormat, briefChat.sentAt));
+            }
+            tvUserName.setText(String.valueOf(briefChat.userName));
+            Glide.with(imUserPhoto.getContext()).load(R.drawable.fin)
+                    .apply(RequestOptions.bitmapTransform(new RoundedCorners(10)))
+                    .into(imUserPhoto);
+        }
     }
 
 }

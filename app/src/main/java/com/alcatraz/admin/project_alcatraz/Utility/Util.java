@@ -3,23 +3,31 @@ package com.alcatraz.admin.project_alcatraz.Utility;
 import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
 import android.animation.AnimatorSet;
+import android.animation.ArgbEvaluator;
+import android.animation.ObjectAnimator;
 import android.animation.ValueAnimator;
-import android.app.Activity;
-import android.content.res.AssetManager;
+import android.annotation.TargetApi;
+import android.content.Context;
+import android.content.res.ColorStateList;
+import android.graphics.Color;
 import android.graphics.Typeface;
+import android.os.Build;
 import android.support.annotation.NonNull;
+import android.support.annotation.RequiresApi;
 import android.support.design.widget.TabLayout;
-import android.support.v7.widget.RecyclerView;
 import android.view.View;
+import android.view.ViewAnimationUtils;
 import android.view.ViewGroup;
 import android.view.animation.AccelerateDecelerateInterpolator;
-import android.view.animation.AnimationSet;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.util.ArrayList;
+import java.util.Map;
+import java.util.regex.MatchResult;
+import java.util.regex.Matcher;
 
 /**
  * Created by shivanshs9 on 12/5/18.
@@ -150,6 +158,68 @@ public class Util {
         return animator;
     }
 
+    public static Animator createRotationAnimator(final View view, float targetDegrees) {
+        float initialDegrees = view.getRotation();
+        final Animator rotate = ObjectAnimator.ofFloat(view, "rotation", initialDegrees, targetDegrees);
+        rotate.setDuration(DEFAULT_DURATION);
+        rotate.setInterpolator(new AccelerateDecelerateInterpolator());
+        return rotate;
+    }
+
+    @RequiresApi(Build.VERSION_CODES.LOLLIPOP)
+    public static Animator createTintAnimator(final ImageView view, int initialColor, int finalColor) {
+        ColorStateList tintList = view.getImageTintList();
+        initialColor = (tintList != null) ? tintList.getDefaultColor() : initialColor;
+        final ObjectAnimator animator = ObjectAnimator.ofInt(view, "imageTint", initialColor, finalColor);
+        animator.setDuration(DEFAULT_DURATION);
+        animator.setEvaluator(new ArgbEvaluator());
+        animator.setInterpolator(new AccelerateDecelerateInterpolator());
+        animator.addUpdateListener(new ObjectAnimator.AnimatorUpdateListener() {
+            @Override
+            public void onAnimationUpdate(ValueAnimator animation) {
+                int animatedValue = (int) animation.getAnimatedValue();
+                view.setImageTintList(ColorStateList.valueOf(animatedValue));
+            }
+        });
+        return animator;
+    }
+
+    public static Animator createCircularRevealAnimator(final ClipRevealFrame view, int x, int y, float startRadius, float endRadius) {
+
+        final Animator reveal;
+        if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP){
+            reveal = ViewAnimationUtils.createCircularReveal(view, x, y, startRadius, endRadius);
+        } else {
+            view.setClipOutLines(true);
+            view.setClipCenter(x, y);
+            reveal = ObjectAnimator.ofFloat(view, "ClipRadius", startRadius, endRadius);
+            reveal.addListener(new Animator.AnimatorListener() {
+                @Override
+                public void onAnimationStart(Animator animation) {
+
+                }
+
+                @Override
+                public void onAnimationEnd(Animator animation) {
+                    view.setClipOutLines(false);
+                }
+
+                @Override
+                public void onAnimationCancel(Animator animation) {
+
+                }
+
+                @Override
+                public void onAnimationRepeat(Animator animation) {
+
+                }
+            });
+        }
+        reveal.setDuration(DEFAULT_DURATION);
+        reveal.setInterpolator(new AccelerateDecelerateInterpolator());
+        return reveal;
+    }
+
 
     public static int[] range(int start, int stop) {
         return range(start, stop, 1);
@@ -161,6 +231,29 @@ public class Util {
         for (int i = start; i < stop; i += step)
             ar[j++] = i;
         return ar;
+    }
+
+    public static String replaceAll(String text, Matcher matcher, @NonNull MatchResultFunction replacer) {
+        matcher.reset();
+        boolean result = matcher.find();
+        if (result) {
+            StringBuffer sb = new StringBuffer();
+            do {
+                String replacement = replacer.apply(matcher);
+                matcher.appendReplacement(sb, replacement);
+                result = matcher.find();
+            } while (result);
+            matcher.appendTail(sb);
+            return sb.toString();
+        }
+        return text;
+    }
+
+    public static Object getOrDefault(Map<String, ?> map, Object key, Object defaultValue) {
+        Object v;
+        return (((v = map.get(key)) != null) || map.containsKey(key))
+                ? v
+                : defaultValue;
     }
 
     public static String postApi(String partialUrl, String data) {
@@ -178,5 +271,9 @@ public class Util {
 
     private static String getUrl(String partialUrl) {
         return Constants.API_HOST + ":" + Constants.API_PORT + partialUrl;
+    }
+
+    public interface MatchResultFunction {
+        String apply(MatchResult match);
     }
 }

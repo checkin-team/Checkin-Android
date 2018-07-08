@@ -5,7 +5,6 @@
     android:layout_width="match_parent"
     android:layout_height="@dimen/menu_item_default_height"
     android:layout_marginStart="5dp"
-    android:layout_marginLeft="5dp"
     android:layout_marginTop="5dp"
     android:background="@drawable/menu_item_card_box">
 
@@ -22,7 +21,7 @@
             android:text="ITEM TITLE"
             android:textAlignment="center"
             android:textColor="@color/brownish_grey"
-            android:textSize="16.5sp" />
+            android:textSize="@dimen/font_small_heading" />
 
         <FrameLayout
             android:id="@+id/price_layout"
@@ -64,16 +63,14 @@
             <ImageView
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:src="@drawable/menu_quantity_selection_bar"
-                />
+                android:src="@drawable/menu_quantity_selection_bar" />
 
             <com.yarolegovich.discretescrollview.DiscreteScrollView
                 android:id="@+id/quantity_picker"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
-                app:dsv_orientation="horizontal"
-                />
+                app:dsv_orientation="horizontal" />
 
         </FrameLayout>
 

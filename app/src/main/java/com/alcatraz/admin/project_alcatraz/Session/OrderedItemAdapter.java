@@ -1,7 +1,6 @@
 package com.alcatraz.admin.project_alcatraz.Session;
 
 import android.content.Context;
-import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -88,10 +87,10 @@ public class OrderedItemAdapter extends HeaderFooterRecyclerViewAdapter {
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {
-        @BindView(R.id.ordered_item_no) TextView mItemNo;
-        @BindView(R.id.ordered_item_info) TextView mItemInfo;
-        @BindView(R.id.ordered_item_price) TextView mItemPrice;
-        @BindView(R.id.ordered_item_status) CheckedTextView mItemStatus;
+        @BindView(R.id.ordered_item_no) TextView vItemNo;
+        @BindView(R.id.ordered_item_info) TextView vItemInfo;
+        @BindView(R.id.ordered_item_price) TextView vItemPrice;
+        @BindView(R.id.ordered_item_status) CheckedTextView vItemStatus;
 
         public ViewHolder(View itemView) {
             super(itemView);
@@ -100,10 +99,10 @@ public class OrderedItemAdapter extends HeaderFooterRecyclerViewAdapter {
 
         public void bindData(int position) {
             OrderedItem item = mOrderedItems.get(position);
-            mItemNo.setText(String.valueOf(position + 1));
-            mItemInfo.setText(String.format(Locale.ENGLISH, "%s (%s) x %d", item.getTitle(), item.getType(), item.getCount()));
-            mItemPrice.setText(String.valueOf(item.getPrice()));
-            mItemStatus.setText(item.getRemainingSeconds() == 0 ? "DONE" : "WAIT");
+            vItemNo.setText(String.valueOf(position + 1));
+            vItemInfo.setText(String.format(Locale.ENGLISH, "%s (%s) x %d", item.getTitle(), item.getType(), item.getCount()));
+            vItemPrice.setText(String.valueOf(item.getPrice()));
+            vItemStatus.setText(item.getRemainingSeconds() == 0 ? "DONE" : "WAIT");
         }
 
         public void bindFooterView() {
@@ -111,17 +110,17 @@ public class OrderedItemAdapter extends HeaderFooterRecyclerViewAdapter {
             for (OrderedItem orderedItem: mOrderedItems) {
                 totalPrice += orderedItem.getPrice();
             }
-            mItemInfo.setText("TOTAL");
-            mItemPrice.setText(String.valueOf(totalPrice));
+            vItemInfo.setText("TOTAL");
+            vItemPrice.setText(String.valueOf(totalPrice));
         }
 
         public void bindEmptyData() {
-            mItemNo.setText("");
-            mItemInfo.setText("");
-            mItemStatus.setText("");
-            mItemStatus.setChecked(false);
-            mItemStatus.setCheckMarkDrawable(null);
-            mItemPrice.setText("");
+            vItemNo.setText("");
+            vItemInfo.setText("");
+            vItemStatus.setText("");
+            vItemStatus.setChecked(false);
+            vItemStatus.setCheckMarkDrawable(null);
+            vItemPrice.setText("");
         }
     }
 }

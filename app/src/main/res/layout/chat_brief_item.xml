@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.design.widget.CoordinatorLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="100dp"
+    android:id="@+id/root_view"
+    android:background="@drawable/bordered_card"
+    android:elevation="@dimen/card_elevation"
+    android:foreground="?android:selectableItemBackgroundBorderless"
+    android:layout_margin="@dimen/spacing_tiny"
+    android:padding="@dimen/spacing_small">
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <ImageView
+            android:scaleType="centerCrop"
+            android:layout_width="60dp"
+            android:layout_height="100dp"
+            android:id="@+id/msg_user_photo"
+            tools:src="@drawable/fin" />
+
+        <LinearLayout
+            android:layout_toEndOf="@id/msg_user_photo"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginStart="@dimen/spacing_extra_small"
+            android:layout_marginEnd="@dimen/spacing_tiny"
+            android:orientation="vertical">
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+                <TextView
+                    android:id="@+id/msg_user_name"
+                    android:textSize="@dimen/font_small_heading"
+                    tools:text="Rahul Dev"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/brownish_grey"/>
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_toEndOf="@+id/msg_user_name"
+                    android:id="@+id/msg_timestamp"
+                    android:textAlignment="textEnd"
+                    android:textSize="@dimen/font_normal"
+                    tools:text="Yesterday"
+                    android:textColor="@color/pinkish_grey" />
+            </RelativeLayout>
+            <TextView
+                android:id="@+id/msg_last"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/arial_rounded_mt_bold"
+                android:textSize="@dimen/font_small"
+                android:textColor="@color/brownish_grey"
+                tools:text="Deal done.Will See you Later.Bye Bye.Ok see you after a lifetime." />
+        </LinearLayout>
+    </RelativeLayout>
+</android.support.design.widget.CoordinatorLayout>

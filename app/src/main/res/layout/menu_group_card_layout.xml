@@ -3,14 +3,11 @@
     android:id="@+id/card_view"
     android:layout_width="match_parent"
     android:layout_height="@dimen/menu_group_default_height"
-    android:layout_marginEnd="3dp"
-    android:layout_marginLeft="3dp"
-    android:layout_marginRight="3dp"
-    android:layout_marginStart="3dp"
-    android:layout_marginTop="3dp"
+    android:layout_margin="3dp"
     android:clickable="true"
     android:focusable="true"
-    android:background="@drawable/menu_group_card_box">
+    android:background="@drawable/menu_group_card_box"
+    android:foreground="?android:selectableItemBackground">
 
     <FrameLayout
         android:layout_width="match_parent"
@@ -33,7 +30,7 @@
             android:text="GROUP TITLE"
             android:textAlignment="center"
             android:textColor="@color/brownish_grey"
-            android:textSize="21.5sp" />
+            android:textSize="@dimen/font_larger" />
 
         <android.support.v7.widget.RecyclerView
             android:id="@+id/group_menu"

@@ -324,6 +324,7 @@ public class SessionUserActivity extends AppCompatActivity implements MenuUserFr
      * A {@link FragmentPagerAdapter} that returns a fragment corresponding to
      * one of the sections/tabs/pages.
      */
+
     public class SectionsPagerAdapter extends FragmentPagerAdapter {
         Fragment[] fragments;
         SectionsPagerAdapter(FragmentManager fm) {

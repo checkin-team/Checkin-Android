@@ -1,16 +1,43 @@
 <resources>
+    <!-- font sizes -->
+    <dimen name="font_largest">26sp</dimen>
+    <dimen name="font_larger">22sp</dimen>
+    <dimen name="font_large">18sp</dimen>
+    <dimen name="font_small_heading" format="float">16.5sp</dimen>
+    <dimen name="font_normal">15sp</dimen>
+    <dimen name="font_small">12sp</dimen>
+
+    <!-- typical spacing between two views -->
+    <dimen name="spacing_huge">40dp</dimen>
+    <dimen name="spacing_large">24dp</dimen>
+    <dimen name="spacing_normal">14dp</dimen>
+    <dimen name="spacing_small">10dp</dimen>
+    <dimen name="spacing_extra_small">7dp</dimen>
+    <dimen name="spacing_tiny">4dp</dimen>
+
+    <!-- typical sizes of views -->
+    <dimen name="button_height_tall">60dp</dimen>
+    <dimen name="button_height_normal">40dp</dimen>
+    <dimen name="button_height_short">32dp</dimen>
+
     <dimen name="app_bar_height">180dp</dimen>
-    <dimen name="fab_margin">16dp</dimen>
     <dimen name="text_margin">16dp</dimen>
     <!-- Default screen margins, per the Android Design guidelines. -->
     <dimen name="activity_horizontal_margin">16dp</dimen>
     <dimen name="activity_vertical_margin">16dp</dimen>
     <dimen name="appbar_padding_top">8dp</dimen>
     <dimen name="home_horizontal_rv_height">106dp</dimen>
-
-
+    <dimen name="standard_text">14sp</dimen>
     <!-- Menu dimensions -->
     <dimen name="menu_group_default_height">98dp</dimen>
     <dimen name="menu_group_expanded_height">325.5dp</dimen>
     <dimen name="menu_item_default_height">151.8dp</dimen>
+    <dimen name="nav_header_vertical_spacing">8dp</dimen>
+    <dimen name="nav_header_height">176dp</dimen>
+
+    <!-- Card dimensions -->
+    <dimen name="card_elevation">2dp</dimen>
+    <dimen name="card_corner_radius" format="float">10.5dp</dimen>
+    <dimen name="width_list_card">75dp</dimen>
+    <dimen name="height_list_card" format="float">110.5dp</dimen>
 </resources>

@@ -28,7 +28,7 @@
         <item name="android:background">#303F9F</item>
     </style>
 
-    <style name="AppBarOverlay" parent="AppTheme.AppBarOverlay" />
+    <style name="appbar_main" parent="AppTheme.AppBarOverlay" />
 
     <style name="PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
 
