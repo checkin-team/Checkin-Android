@@ -58,6 +58,7 @@ public class HomeActivity extends AppCompatActivity {
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        //setContentView(R.layout.activity_main_with_drawer);
         setContentView(R.layout.activity_main_with_drawer);
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
@@ -84,9 +85,11 @@ public class HomeActivity extends AppCompatActivity {
                     break;
 
                 case R.id.drawer_shop_profile:
-                    //Toast.makeText(HomeActivity.this, "", Toast.LENGTH_SHORT).show();
+
                     startActivity(new Intent(getApplicationContext(), ShopProfileActivity2.class));
+
                     break;
+
                     default:
                         Toast.makeText(HomeActivity.this, "yo whats up, default of switch case selected", Toast.LENGTH_SHORT).show();
                         break;
