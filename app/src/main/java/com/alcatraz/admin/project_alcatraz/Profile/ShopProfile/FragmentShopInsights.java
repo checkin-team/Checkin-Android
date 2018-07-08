@@ -18,6 +18,7 @@ import com.github.mikephil.charting.charts.LineChart;
 import com.github.mikephil.charting.charts.PieChart;
 import com.github.mikephil.charting.components.Description;
 import com.github.mikephil.charting.components.Legend;
+import com.github.mikephil.charting.components.XAxis;
 import com.github.mikephil.charting.data.Entry;
 import com.github.mikephil.charting.data.LineData;
 import com.github.mikephil.charting.data.LineDataSet;
@@ -28,6 +29,7 @@ import com.github.mikephil.charting.highlight.Highlight;
 import com.github.mikephil.charting.interfaces.datasets.ILineDataSet;
 import com.github.mikephil.charting.listener.OnChartValueSelectedListener;
 
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.Random;
 
@@ -47,7 +49,7 @@ public class FragmentShopInsights extends Fragment {
 
 
     PieChart pieChart;
-    LineChart lineChart;
+    LineChart lineChart,otherlinechart1,otherlinechart2,otherlinechart3,otherlinechart4,otherlinechart5;
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
@@ -59,15 +61,71 @@ public class FragmentShopInsights extends Fragment {
 
     private OnFragmentInteractionListener mListener;
 
-    //piechartdataadd
+
+//function to add any linechart details ...
+    private void adddatalinechart(LineChart chart,String xname,String yname,int ndatapoints,int xdata[],int ydata[])
+    {
+
+// linechart is the chart to be displayed(referece it with the id in xml before passing here, xname is the details on the xaxis...also yaxis.  ...y
+        //xdata,ydata is the data in arrays, datapoints is the length of the datapoints on xaxi
+
+        String xaxis[]=new String[ndatapoints];
+        for(int i=0;i<ndatapoints;i++)
+        {
+            xaxis[i]= Integer.toString(xdata[i]);
+        }
+        ArrayList<Entry> dataentry=new ArrayList<>();
+
+
+
+        for(int i=0;i<ndatapoints;i++)
+        {
+            dataentry.add(new Entry(xdata[i],ydata[i]));
+        }
+        ArrayList<ILineDataSet> iLineDataSets=new ArrayList<>();
+        LineDataSet dataset=new LineDataSet(dataentry,yname);
+        dataset.setDrawCircles(true);
+        dataset.setColor(Color.CYAN);
+        dataset.setLineWidth(3);
+dataset.setDrawValues(false);
+
+
+
+   chart.setData(new LineData(dataset));
+   chart.getDescription().setEnabled(false);
+
+
+
+
+       // lineChart.setVisibleXRangeMaximum(30f);
+        chart.getXAxis().setDrawGridLines(false);
+        chart.getAxisLeft().setDrawGridLines(false);
+        chart.getAxisRight().setDrawGridLines(false);
+
+
+        Legend legend=chart.getLegend();
+        //legend.setYOffset(40);
+        legend.setForm(Legend.LegendForm.CIRCLE);
+
+
+
+        chart.getXAxis().setPosition(XAxis.XAxisPosition.BOTTOM);
+        chart.getAxisRight().setEnabled(false);
+
+
+        chart.animateXY(3000,3000);
+        chart.invalidate();
+
+
+    }
+
     private void addatapie(PieChart pieChart) {
 
         Log.d(TAG,"add data function");
         float ydata[]={30,70};
         String xdata[]={"Organic","Iorganic"};
 
-//        ArrayList<PieEntry> yentry=new ArrayList<>();
-//        ArrayList<String> xentry= new ArrayList<>();
+
         ArrayList<PieEntry> entries=new ArrayList<>();
 
 
@@ -111,11 +169,7 @@ public class FragmentShopInsights extends Fragment {
 
     }
 
-    //linechartdata
-    private void linedata(LineChart lineChart)
-    {
 
-    }
 
 
     public FragmentShopInsights() {
@@ -263,6 +317,125 @@ public class FragmentShopInsights extends Fragment {
         lineChart.setVisibleXRangeMaximum(30f);
         lineChart.animateXY(3000,3000);
         lineChart.invalidate();
+
+        //making otherlinechart1 for no. of new customers
+        Random random1=new Random();
+
+        LineChart otherlinechart1=(LineChart)v.findViewById(R.id.otherlinechart1);
+        String yaxisother1="Distinct Customers";
+        String xaxisother1="last 30 days";
+        int datapointsother1=30;
+        int[] xdata1=new int[datapointsother1];
+        int[] ydata1 =new int[datapointsother1];
+
+
+
+        for (int i=0;i<datapointsother1;i++) {
+            ydata1[i]=random1.nextInt(250);
+        }
+        for (int i=0;i<datapointsother1;i++) {
+            xdata1[i]=i;
+        }
+
+        //msking otherlinechart2 for no. of profile views
+
+        LineChart otherlinechart2=(LineChart)v.findViewById(R.id.otherlinechart2);
+        String yaxisother2="No. of Profile Views";
+        String xaxisother2="last 30 days";
+        int datapointsother2=30;
+
+        int[] xdata2=new int[datapointsother2];
+        int[] ydata2 =new int[datapointsother2];
+
+
+
+        for (int i=0;i<datapointsother2;i++)
+        {
+            ydata2[i]=random1.nextInt(250);
+        }
+        for (int i=0;i<datapointsother2;i++)
+        {
+            xdata2[i]=i+1;
+        }
+
+
+
+        //making otherlinechart3 for no. of followers
+
+        LineChart otherlinechart3=(LineChart)v.findViewById(R.id.otherlinechart3);
+        String yaxisother3="No. of followers";
+        String xaxisother3="last 30 days";
+        int datapointsother3=30;
+        int[] xdata3=new int[datapointsother3];
+        int[] ydata3 =new int[datapointsother3];
+
+
+
+        for (int i=0;i<datapointsother3;i++)
+        {
+            ydata3[i]=random1.nextInt(250);
+        }
+        for (int i=0;i<datapointsother3;i++)
+        {
+            xdata3[i]=i+1;
+        }
+
+
+        //making of otherlinechart4 for totalcheckins
+
+        LineChart otherlinechart4=(LineChart)v.findViewById(R.id.otherlinechart4);
+        String yaxisother4="No. of total checkins";
+        String xaxisother4="last 30 days";
+        int datapointsother4=30;
+        int[] xdata4=new int[datapointsother4];
+        int[] ydata4 =new int[datapointsother4];
+
+
+
+        for (int i=0;i<datapointsother4;i++)
+        {
+            ydata4[i]=random1.nextInt(250);
+        }
+        for (int i=0;i<datapointsother4;i++)
+        {
+            xdata4[i]=i+1;
+        }
+
+        //making of otherlinehart5 for total cashback distributed
+
+        LineChart otherlinechart5=(LineChart)v.findViewById(R.id.otherlinechart5);
+        String yaxisother5="No. of total cashback distributed";
+        String xaxisother5="last 30 days";
+        int datapointsother5=30;
+
+        int[] xdata5=new int[datapointsother5];
+        int[] ydata5 =new int[datapointsother5];
+
+
+
+        for (int i=0;i<datapointsother5;i++)
+        {
+            ydata5[i]=random1.nextInt(250);
+        }
+        for (int i=0;i<datapointsother5;i++)
+        {
+            xdata5[i]=i+1;
+        }
+        //declaration of otherlinecharts finished
+
+        //adding data to otherlinecharts and displaying them
+        //the xaxis and yaxis string and no. of datapoints and xaxis and yaxis data can be customized accordingly when u input data from JSON
+
+        adddatalinechart(otherlinechart1,xaxisother1,yaxisother1,datapointsother1,xdata1,ydata1);
+        adddatalinechart(otherlinechart2,xaxisother2,yaxisother2,datapointsother2,xdata2,ydata2);
+        adddatalinechart(otherlinechart3,xaxisother3,yaxisother3,datapointsother3,xdata3,ydata3);
+        adddatalinechart(otherlinechart4,xaxisother4,yaxisother4,datapointsother4,xdata4,ydata4);
+        adddatalinechart(otherlinechart5,xaxisother5,yaxisother5,datapointsother5,xdata5,ydata5);
+
+
+
+
+
 
 
 
