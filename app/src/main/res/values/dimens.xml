@@ -40,4 +40,5 @@
     <dimen name="card_corner_radius" format="float">10.5dp</dimen>
     <dimen name="width_list_card">75dp</dimen>
     <dimen name="height_list_card" format="float">110.5dp</dimen>
+    <dimen name="square_card_dimen">100dp</dimen>
 </resources>

@@ -1,9 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.design.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<android.support.v7.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/card_view"
     android:layout_width="@dimen/width_list_card"
     android:layout_height="@dimen/height_list_card"
-    android:layout_marginEnd="@dimen/spacing_normal"
+    android:layout_marginEnd="@dimen/spacing_small"
+    app:cardCornerRadius="@dimen/card_corner_radius"
     android:background="@drawable/bordered_card">
 
     <LinearLayout
@@ -14,14 +17,15 @@
         <ImageView
             android:layout_width="match_parent"
             android:layout_height="65dp"
+            android:scaleType="centerCrop"
             android:id="@+id/shop_image"
-            android:src="@color/colorPrimaryRed" />
+            tools:src="@drawable/dummy_shop" />
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal|bottom"
-            android:text="DUMMY"
+            tools:text="DUMMY"
             android:id="@+id/shop_name"
             android:textColor="@color/colorPrimaryRed"
             android:textSize="13sp" />
@@ -31,10 +35,10 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal|bottom"
             android:id="@+id/shop_category"
-            android:text="DUMMY"
+            tools:text="DUMMY"
             android:textColor="@color/brownish_grey"
             android:textSize="12sp" />
 
     </LinearLayout>
 
-</android.support.design.widget.CoordinatorLayout>
+</android.support.v7.widget.CardView>

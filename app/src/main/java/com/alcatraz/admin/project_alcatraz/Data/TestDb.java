@@ -1,5 +1,6 @@
 package com.alcatraz.admin.project_alcatraz.Data;
 
+import com.alcatraz.admin.project_alcatraz.R;
 import com.alcatraz.admin.project_alcatraz.Social.Chat;
 import com.alcatraz.admin.project_alcatraz.Social.ChatDao;
 import com.alcatraz.admin.project_alcatraz.Social.Message;
@@ -18,11 +19,18 @@ public class TestDb {
 
     private static void populateUsers(UserDao userModel, ChatDao chatModel) {
         User user0 = new User(0, "You");
+//        user0.setImageUrl(R.drawable.profile);
         User user1 = new User(1, "Alex");
+//        user1.setImageUrl(R.drawable.dummy_alex);
         User user2 = new User(2, "Alice");
+//        user2.setImageUrl(R.drawable.flier);
+
         userModel.insertAll(user0, user1, user2);
-        User user3 = new User(3, "Bob");
+
+        User user3 = new User(3, "Monica");
+//        user3.setImageUrl(R.drawable.dummy_monica);
         User user4 = new User(4, "Jack");
+//        user4.setImageUrl(R.drawable.profile);
         userModel.insertAll(user3, user4);
         chatModel.insertAll(new Chat(1), new Chat(2), new Chat(3), new Chat(4));
     }

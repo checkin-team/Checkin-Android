@@ -13,7 +13,7 @@
         android:layout_marginEnd="5dp"
         android:layout_marginRight="5dp"
         app:label="DUMMY"
-        app:deleteIconColor="@color/light_red"
+        app:deleteIconColor="@color/colorPrimaryRed"
         app:deletable="true"
         app:backgroundColor="#bebebe"/>
 

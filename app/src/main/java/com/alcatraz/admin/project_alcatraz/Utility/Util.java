@@ -116,7 +116,6 @@ public class Util {
                 view.requestLayout();
             }
         });
-
         widthTick.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
             @Override
             public void onAnimationUpdate(ValueAnimator valueAnimator) {

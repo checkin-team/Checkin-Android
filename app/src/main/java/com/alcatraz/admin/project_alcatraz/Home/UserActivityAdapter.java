@@ -1,8 +1,8 @@
 package com.alcatraz.admin.project_alcatraz.Home;
 
+import android.content.Context;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -12,20 +12,19 @@ import android.widget.TextView;
 import com.alcatraz.admin.project_alcatraz.R;
 import com.alcatraz.admin.project_alcatraz.User.User;
 import com.bumptech.glide.Glide;
-import com.bumptech.glide.request.RequestOptions;
-import com.pchmn.materialchips.util.ViewUtil;
 
 import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
-import jp.wasabeef.glide.transformations.RoundedCornersTransformation;
 
 public class UserActivityAdapter extends RecyclerView.Adapter<UserActivityAdapter.ViewHolder> {
-    List<User> mUsers;
+    private List<User> mUsers;
+    private Context mContext;
 
-    UserActivityAdapter(List<User> users) {
+    UserActivityAdapter(List<User> users, Context context) {
         mUsers = users;
+        mContext = context;
     }
 
     @NonNull
@@ -66,9 +65,7 @@ public class UserActivityAdapter extends RecyclerView.Adapter<UserActivityAdapte
 
         void bindData(User user) {
             vUserName.setText(user.getUsername());
-            Glide.with(vUserImage.getContext()).load(R.drawable.some)
-                    .apply(RequestOptions.bitmapTransform(
-                            new RoundedCornersTransformation(ViewUtil.dpToPx(10), 0, RoundedCornersTransformation.CornerType.TOP)))
+            Glide.with(vUserImage.getContext()).load(R.drawable.dummy_alex)
                     .into(vUserImage);
         }
     }

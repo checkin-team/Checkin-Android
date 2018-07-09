@@ -10,16 +10,19 @@ import android.support.annotation.NonNull;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
+import android.support.v4.view.MotionEventCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.MenuItem;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.animation.AccelerateDecelerateInterpolator;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.alcatraz.admin.project_alcatraz.R;
@@ -31,8 +34,10 @@ import com.alcatraz.admin.project_alcatraz.Social.MessageViewModel;
 import com.alcatraz.admin.project_alcatraz.User.UserViewModel;
 import com.alcatraz.admin.project_alcatraz.Utility.ClipRevealFrame;
 import com.alcatraz.admin.project_alcatraz.Utility.Constants;
+import com.alcatraz.admin.project_alcatraz.Utility.DragTouchListener;
 import com.alcatraz.admin.project_alcatraz.Utility.EndDrawerToggle;
 import com.alcatraz.admin.project_alcatraz.Utility.ItemClickSupport;
+import com.alcatraz.admin.project_alcatraz.Utility.SwipeTouchListener;
 import com.alcatraz.admin.project_alcatraz.Utility.Util;
 import com.google.zxing.integration.android.IntentIntegrator;
 import com.google.zxing.integration.android.IntentResult;
@@ -60,12 +65,17 @@ public class HomeActivity extends AppCompatActivity
     RecyclerView rvUserActivities;
     @BindView(R.id.root_home)
     View vRoot;
+    @BindView(R.id.dark_back_mask)
+    View vClipRevealMask;
     @BindView(R.id.dark_back_reveal)
     ClipRevealFrame vClipRevealFrame;
+    @BindView(R.id.add_quarter_circle)
+    View vAddQuarterCircle;
     @BindView(R.id.fab_home_add)
     FloatingActionButton fabHomeAdd;
-    @BindView(R.id.btn_scanner)
-    View btnQrScanner;
+
+    @BindView(R.id.text_shops_category)
+    TextView tvShopsCategory;
 
     private UserViewModel mUserViewModel;
     private MessageViewModel mMessageViewModel;
@@ -108,7 +118,7 @@ public class HomeActivity extends AppCompatActivity
         NavigationView navigationView = findViewById(R.id.nav_main);
         navigationView.setNavigationItemSelectedListener(this);
 
-        vClipRevealFrame.setOnTouchListener(new View.OnTouchListener() {
+        vClipRevealMask.setOnTouchListener(new View.OnTouchListener() {
             @Override
             public boolean onTouch(View view, MotionEvent motionEvent) {
                 if (motionEvent.getAction() == MotionEvent.ACTION_DOWN)
@@ -116,7 +126,32 @@ public class HomeActivity extends AppCompatActivity
                 return true;
             }
         });
+        vAddQuarterCircle.setOnTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View v, MotionEvent event) {
+                return true;
+            }
+        });
 
+        /*rvTrendingShops.setOnTouchListener(new DragTouchListener() {
+            @Override
+            public boolean onDragX(float dx) {
+                if (dx < 0) {
+                    return true;
+                }
+                return false;
+            }
+
+            @Override
+            public boolean onDragY(float dy) {
+                return false;
+            }
+
+            @Override
+            public void onDragCancel() {
+
+            }
+        });*/
     }
 
     private void setupTrendingShops() {
@@ -136,7 +171,7 @@ public class HomeActivity extends AppCompatActivity
     private void setupUserActivities() {
         rvUserActivities.setLayoutManager(new LinearLayoutManager(
                 this, LinearLayoutManager.HORIZONTAL, false));
-        mUserActivityAdapter = new UserActivityAdapter(null);
+        mUserActivityAdapter = new UserActivityAdapter(null, this);
         rvUserActivities.setAdapter(mUserActivityAdapter);
 
         mUserViewModel.getAllUsers().observe(this, (users -> mUserActivityAdapter.setUsers(users)));
@@ -217,7 +252,7 @@ public class HomeActivity extends AppCompatActivity
         }
     }
 
-    @OnClick(R.id.btn_scanner)
+    @OnClick(R.id.appbar_title)
     public void onQrScannerClick(View v) {
         IntentIntegrator qrScan = new IntentIntegrator(this);
         qrScan.setPrompt("Scan the QR code, present on the table!");
@@ -225,13 +260,13 @@ public class HomeActivity extends AppCompatActivity
         qrScan.initiateScan();
     }
 
-    private float[] computeAddViewDetails() {
+    private float[] computeAddViewDetails(View v) {
         int x = (fabHomeAdd.getLeft() + fabHomeAdd.getRight()) / 2;
         int y = (fabHomeAdd.getTop() + fabHomeAdd.getBottom()) / 2;
         float radiusOfFab = fabHomeAdd.getWidth() / 2f;
         float radiusFromFabToRoot = (float) Math.hypot(
-                Math.max(x, vRoot.getWidth() - x),
-                Math.max(y, vRoot.getHeight() - y));
+                Math.max(x, v.getWidth() - x),
+                Math.max(y, v.getHeight() - y));
         return new float[]{x, y, radiusOfFab, radiusFromFabToRoot};
     }
 
@@ -245,12 +280,12 @@ public class HomeActivity extends AppCompatActivity
     }
 
     private void showAddMenu() {
-        float[] data = computeAddViewDetails();
+        float[] data = computeAddViewDetails(vRoot);
         List<Animator> animList = new ArrayList<>();
-
         vClipRevealFrame.setVisibility(View.VISIBLE);
+
+        vClipRevealMask.setVisibility(View.VISIBLE);
         Animator revealAnim = Util.createCircularRevealAnimator(vClipRevealFrame, (int) data[0], (int) data[1], data[2], data[3]);
-        revealAnim.setInterpolator(new AccelerateDecelerateInterpolator());
         animList.add(revealAnim);
 
         Animator rotateAnim = Util.createRotationAnimator(fabHomeAdd, -225);
@@ -268,18 +303,10 @@ public class HomeActivity extends AppCompatActivity
     }
 
     private void hideAddMenu() {
-        float[] data = computeAddViewDetails();
+        float[] data = computeAddViewDetails(vRoot);
         List<Animator> animList = new ArrayList<>();
 
         Animator revealAnim = Util.createCircularRevealAnimator(vClipRevealFrame, (int) data[0], (int) data[1], data[3], data[2]);
-        revealAnim.setInterpolator(new AccelerateDecelerateInterpolator());
-        revealAnim.addListener(new AnimatorListenerAdapter() {
-            @Override
-            public void onAnimationEnd(Animator animation) {
-                super.onAnimationEnd(animation);
-                vClipRevealFrame.setVisibility(View.INVISIBLE);
-            }
-        });
         animList.add(revealAnim);
 
         Animator rotateAnim = Util.createRotationAnimator(fabHomeAdd, 0);
@@ -291,6 +318,13 @@ public class HomeActivity extends AppCompatActivity
 
         AnimatorSet animatorSet = new AnimatorSet();
         animatorSet.playTogether(animList);
+        animatorSet.addListener(new AnimatorListenerAdapter() {
+            @Override
+            public void onAnimationEnd(Animator animation) {
+                super.onAnimationEnd(animation);
+                vClipRevealFrame.setVisibility(View.GONE);
+            }
+        });
         animatorSet.start();
 
         fabHomeAdd.setSelected(false);

@@ -50,6 +50,10 @@ public class User {
         return mImageUrl;
     }
 
+    public void setImageUrl(String imageUrl) {
+        mImageUrl = imageUrl;
+    }
+
     public String getProfileUrl() {
         Map<String, Integer> values = new HashMap<>();
         values.put(Constants.USER_ID, id);

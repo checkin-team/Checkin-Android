@@ -1,12 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.design.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<android.support.v7.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/card_view"
     android:layout_width="@dimen/width_list_card"
-    android:layout_height="match_parent"
-    android:layout_marginEnd="@dimen/spacing_normal"
-    android:background="@drawable/bordered_card">
-
+    android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    app:cardCornerRadius="@dimen/card_corner_radius"
+    android:layout_marginEnd="@dimen/spacing_small"
+    android:background="@drawable/bordered_card"
+    android:id="@+id/card_view">
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -15,19 +16,18 @@
         <ImageView
             android:layout_width="match_parent"
             android:layout_height="90dp"
+            android:scaleType="centerCrop"
             android:id="@+id/user_image"
-            android:src="@color/colorPrimaryRed" />
+            tools:src="@drawable/flier" />
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"
             tools:text="DUMMY"
-            android:height="40dp"
+            android:height="30dp"
             android:id="@+id/user_name"
             android:textColor="@color/brownish_grey"
             android:textSize="@dimen/font_normal" />
-
     </LinearLayout>
-
-</android.support.design.widget.CoordinatorLayout>
+</android.support.v7.widget.CardView>
