@@ -21,6 +21,7 @@
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
+
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
@@ -47,7 +48,10 @@
             android:label="@string/title_activity_session_user"
             android:theme="@style/SessionTheme" />
         <activity
-            android:name=".Social.ChatActivity"
+        android:name=".Social.ChatActivity"
+        android:screenOrientation="portrait" />
+        <activity
+            android:name=".Profile.ShopProfile.ShopProfileActivity2"
             android:screenOrientation="portrait" />
         <activity android:name=".Home.TransactionActivity" />
         <activity android:name=".Home.StoryActivity" />

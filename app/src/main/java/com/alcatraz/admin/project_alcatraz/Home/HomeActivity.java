@@ -10,21 +10,19 @@ import android.support.annotation.NonNull;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
-import android.support.v4.view.MotionEventCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.MenuItem;
 import android.view.MotionEvent;
 import android.view.View;
-import android.view.animation.AccelerateDecelerateInterpolator;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.alcatraz.admin.project_alcatraz.Profile.ShopProfile.ShopProfileActivity2;
 import com.alcatraz.admin.project_alcatraz.R;
 import com.alcatraz.admin.project_alcatraz.Session.SessionUserActivity;
 import com.alcatraz.admin.project_alcatraz.Shop.Shop;
@@ -34,10 +32,8 @@ import com.alcatraz.admin.project_alcatraz.Social.MessageViewModel;
 import com.alcatraz.admin.project_alcatraz.User.UserViewModel;
 import com.alcatraz.admin.project_alcatraz.Utility.ClipRevealFrame;
 import com.alcatraz.admin.project_alcatraz.Utility.Constants;
-import com.alcatraz.admin.project_alcatraz.Utility.DragTouchListener;
 import com.alcatraz.admin.project_alcatraz.Utility.EndDrawerToggle;
 import com.alcatraz.admin.project_alcatraz.Utility.ItemClickSupport;
-import com.alcatraz.admin.project_alcatraz.Utility.SwipeTouchListener;
 import com.alcatraz.admin.project_alcatraz.Utility.Util;
 import com.google.zxing.integration.android.IntentIntegrator;
 import com.google.zxing.integration.android.IntentResult;
@@ -223,7 +219,7 @@ public class HomeActivity extends AppCompatActivity
                 startActivity(intent);
                 break;
             case R.id.nav_privacy_settings:
-                intent = new Intent(getApplicationContext(), StoryActivity.class);
+                intent = new Intent(getApplicationContext(), ShopProfileActivity2.class);
                 startActivity(intent);
                 break;
         }

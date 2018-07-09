@@ -72,5 +72,11 @@ dependencies {
     implementation project(':library:MaterialSearchView')
     implementation project(':library:NiceSpinner')
     implementation project(':library:MaterialChipView')
+
+//    for graphs
+    implementation 'com.github.PhilJay:MPAndroidChart:v3.0.3'
+    //for bottomnavbar
+    implementation 'it.sephiroth.android.library.bottomnavigation:bottom-navigation:2.0.1-rc1'
+
     implementation 'com.jsibbold:zoomage:1.1.0'
 }
