@@ -7,7 +7,7 @@ public class OrderedItem extends MenuItem {
     private int typeIndex;
 
     OrderedItem(MenuItem menuItem) {
-        super(menuItem.title, menuItem.types, menuItem.costs);
+        super(menuItem.name, menuItem.types, menuItem.costs, menuItem.getGroupId(), menuItem.getMenuId());
     }
 
     static OrderedItem order(MenuItem menuItem, int quantity, int typeIndex) {
@@ -26,11 +26,11 @@ public class OrderedItem extends MenuItem {
     }
 
     public float getPrice() {
-        return costs[typeIndex] * quantity;
+        return costs.get(typeIndex) * quantity;
     }
 
     public String getType() {
-        return types[typeIndex];
+        return types.get(typeIndex);
     }
 
     public int getCount() {

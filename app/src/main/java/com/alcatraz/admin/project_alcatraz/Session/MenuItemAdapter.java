@@ -1,63 +1,63 @@
 package com.alcatraz.admin.project_alcatraz.Session;
 
+import android.annotation.SuppressLint;
 import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
-import android.support.v7.widget.GridLayoutManager;
+import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.alcatraz.admin.project_alcatraz.R;
-import com.alcatraz.admin.project_alcatraz.Utility.TextBaseAdapter;
+import com.alcatraz.admin.project_alcatraz.Utility.ItemClickSupport;
 import com.alcatraz.admin.project_alcatraz.Utility.Util;
-import com.yarolegovich.discretescrollview.DiscreteScrollView;
 
-import org.angmarch.views.NiceSpinnerArrowOnly;
-
-import java.util.ArrayList;
-import java.util.Arrays;
+import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
 public class MenuItemAdapter extends RecyclerView.Adapter<MenuItemAdapter.ItemViewHolder> {
-    private ArrayList<MenuItem> mItemsList;
-    private MenuGroupAdapter.GroupViewHolder mGroupViewHolder;
+    private final String TAG = MenuItemAdapter.class.getSimpleName();
+
+    private List<MenuItem> mItemsList;
     private RecyclerView mRecyclerView;
-    private static OnItemClickListener btnPriceClickListener;
+    private static OnItemInteractionListener mItemInteractionListener;
 
-    MenuItemAdapter(ArrayList<MenuItem> itemsList, MenuGroupAdapter.GroupViewHolder groupViewHolder) {
+    MenuItemAdapter(List<MenuItem> itemsList) {
         mItemsList = itemsList;
-        mGroupViewHolder = groupViewHolder;
     }
 
-    public interface OnItemClickListener {
-        void onItemOrdered(View view, OrderedItem item);
+    public interface OnItemInteractionListener {
+        boolean onItemAdded(View view, MenuItem item);
+        boolean onItemLongPress(View view, MenuItem item);
     }
 
-    public void setOnPriceClickListener(OnItemClickListener listener) {
-        btnPriceClickListener = listener;
+    public void setItemInteractionListener (OnItemInteractionListener listener) {
+        mItemInteractionListener = listener;
     }
 
+    @SuppressLint("ClickableViewAccessibility")
     @Override
     public void onAttachedToRecyclerView(@NonNull RecyclerView recyclerView) {
         super.onAttachedToRecyclerView(recyclerView);
         mRecyclerView = recyclerView;
-
-        GridLayoutManager gridLayoutManager = new GridLayoutManager(mRecyclerView.getContext(), 2, GridLayoutManager.VERTICAL, false);
-        mRecyclerView.setLayoutManager(gridLayoutManager);
-
+        mRecyclerView.setLayoutManager(new LinearLayoutManager(mRecyclerView.getContext(), LinearLayoutManager.VERTICAL, false));
+        mRecyclerView.setOnLongClickListener(new View.OnLongClickListener() {
+            @Override
+            public boolean onLongClick(View v) {
+                int pos = mRecyclerView.getChildViewHolder(v).getAdapterPosition();
+                return mItemInteractionListener.onItemLongPress(v, mItemsList.get(pos));
+            }
+        });
         mRecyclerView.setOnTouchListener(new View.OnTouchListener() {
             @Override
-            public boolean onTouch(View view, MotionEvent motionEvent) {
-                Log.e("ItemsList", "Touched");
-                view.getParent().requestDisallowInterceptTouchEvent(true);
+            public boolean onTouch(View v, MotionEvent event) {
+                v.getParent().requestDisallowInterceptTouchEvent(true);
                 return false;
             }
         });
@@ -82,16 +82,15 @@ public class MenuItemAdapter extends RecyclerView.Adapter<MenuItemAdapter.ItemVi
 
     @Override
     public int getItemCount() {
-        return mItemsList.size();
+        return mItemsList != null ? mItemsList.size() : 0;
     }
 
     class ItemViewHolder extends RecyclerView.ViewHolder {
         @BindView(R.id.item_title) TextView vTitle;
-        @BindView(R.id.spinner) NiceSpinnerArrowOnly vSpinner;
-        @BindView(R.id.quantity_picker) DiscreteScrollView vQuantityPicker;
-        @BindView(R.id.price_layout) View vPriceLayout;
-        @BindView(R.id.price_button) ImageView vPriceButton;
+//        @BindView(R.id.quantity_picker) DiscreteScrollView vQuantityPicker;
         @BindView(R.id.price_value) TextView vPriceValue;
+//        @BindView(R.id.item_type_slider) RangeBar vSliderBar;
+        @BindView(R.id.im_item_add) ImageView imItemAdd;
 
         ItemViewHolder(View itemView) {
             super(itemView);
@@ -99,45 +98,49 @@ public class MenuItemAdapter extends RecyclerView.Adapter<MenuItemAdapter.ItemVi
         }
 
         void bindData(MenuItem menuItem) {
-            vTitle.setText(menuItem.title);
-            vSpinner.attachDataSource(Arrays.asList(menuItem.types));
-            vPriceLayout.setOnClickListener(new View.OnClickListener() {
+            vTitle.setText(menuItem.getName());
+            /*boolean showSlider = menuItem.getCosts().size() > 1;
+            if (showSlider) {
+                vPriceValue.setVisibility(View.GONE);
+                vSliderBar.setVisibility(View.VISIBLE);
+                vSliderBar.setTickStart(0);
+                vSliderBar.setTickEnd(menuItem.getCosts().size() - 1);
+                vSliderBar.setFormatter(new IRangeBarFormatter() {
+                    @Override
+                    public String format(String value) {
+                        return String.valueOf(menuItem.getCosts().get(Integer.valueOf(value)));
+                    }
+                });
+                vSliderBar.setOnRangeBarChangeListener(new RangeBar.OnRangeBarChangeListener() {
+                    @Override
+                    public void onRangeChangeListener(RangeBar rangeBar, int leftPinIndex, int rightPinIndex, String leftPinValue, String rightPinValue) {
+                        Log.e(TAG, "left value: " + leftPinValue + ", right: " + rightPinValue);
+                        Log.e(TAG, "left index: " + leftPinIndex + ", right: " + rightPinIndex);
+                    }
+                });
+            } else {
+                vPriceValue.setText(String.valueOf(menuItem.getCosts().get(0)));
+            }*/
+            vPriceValue.setText(Util.joinCollection(menuItem.getCosts(), " | "));
+            imItemAdd.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    int quantity = vQuantityPicker.getCurrentItem();
-                    int typeIndex = vSpinner.getSelectedIndex();
-                    btnPriceClickListener.onItemOrdered(view, OrderedItem.order(menuItem, quantity, typeIndex));
+                    boolean res = mItemInteractionListener.onItemAdded(view, menuItem);
+                    if (!res) {
+                        Toast.makeText(vTitle.getContext(), "Cancelled!", Toast.LENGTH_SHORT).show();
+                    }
                 }
             });
-            vQuantityPicker.setAdapter(new TextBaseAdapter(
-                    Util.range(0, 30),
+            /*vQuantityPicker.setAdapter(new TextBaseAdapter(
+                    Util.range(1, 30),
                     itemView.getResources().getColor(R.color.pinkish_grey),
                     itemView.getResources().getColor(R.color.brownish_grey))
             );
             vQuantityPicker.addOnItemChangedListener(new DiscreteScrollView.OnItemChangedListener<RecyclerView.ViewHolder>() {
                 @Override
                 public void onCurrentItemChanged(@Nullable RecyclerView.ViewHolder viewHolder, int adapterPosition) {
-                    if (adapterPosition > 0) {
-                        vPriceButton.setImageResource(R.drawable.menu_selected_item_price);
-                        vPriceLayout.setClickable(true);
-                        vPriceValue.setText(String.valueOf(menuItem.costs[vSpinner.getSelectedIndex()] * adapterPosition));
-                    }
-                    else {
-                        vPriceButton.setImageResource(R.drawable.menu_item_price);
-                        vPriceLayout.setClickable(false);
-                        vPriceValue.setText(R.string.menu_item_default_price);
-                    }
                 }
-            });
-            vSpinner.addOnItemClickListener(new AdapterView.OnItemClickListener() {
-                @Override
-                public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-                    int quantity = vQuantityPicker.getCurrentItem();
-                    if (quantity > 0) {
-                        vPriceValue.setText(String.valueOf(menuItem.costs[vSpinner.getSelectedIndex()] * quantity));
-                    }
-                }
-            });
+            });*/
         }
     }
 }

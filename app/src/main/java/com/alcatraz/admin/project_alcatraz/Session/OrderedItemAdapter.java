@@ -100,7 +100,7 @@ public class OrderedItemAdapter extends HeaderFooterRecyclerViewAdapter {
         public void bindData(int position) {
             OrderedItem item = mOrderedItems.get(position);
             vItemNo.setText(String.valueOf(position + 1));
-            vItemInfo.setText(String.format(Locale.ENGLISH, "%s (%s) x %d", item.getTitle(), item.getType(), item.getCount()));
+            vItemInfo.setText(String.format(Locale.ENGLISH, "%s (%s) x %d", item.getName(), item.getType(), item.getCount()));
             vItemPrice.setText(String.valueOf(item.getPrice()));
             vItemStatus.setText(item.getRemainingSeconds() == 0 ? "DONE" : "WAIT");
         }

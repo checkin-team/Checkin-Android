@@ -2,44 +2,29 @@
 <android.support.design.widget.CoordinatorLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/main_content"
+    android:id="@+id/root_view"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.alcatraz.admin.project_alcatraz.Session.SessionUserActivity">
-
-    <com.alcatraz.admin.project_alcatraz.Utility.DynamicSwipableViewPager
-        android:id="@+id/container"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        app:layout_behavior="@string/appbar_scrolling_view_behavior" />
+    android:orientation="vertical">
 
     <android.support.design.widget.AppBarLayout
         android:id="@+id/appbar_session"
-        app:elevation="0dp"
-        android:elevation="0dp"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="?android:attr/actionBarSize"
         android:theme="@style/appbar_main">
 
         <android.support.v7.widget.Toolbar
             android:id="@+id/session_toolbar"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
             android:layout_gravity="top"
             android:background="@color/colorPrimaryRed"
-            app:layout_scrollFlags="scroll|enterAlways"
+            app:layout_scrollFlags="snap"
             app:popupTheme="@style/PopupOverlay"
-            app:title=""
-            android:contentInsetEnd="0dp"
-            android:contentInsetLeft="0dp"
-            android:contentInsetRight="0dp"
-            android:contentInsetStart="0dp"
             app:contentInsetEnd="0dp"
             app:contentInsetLeft="0dp"
             app:contentInsetRight="0dp"
-            app:contentInsetStart="0dp"
-            android:elevation="0dp">
+            app:contentInsetStart="0dp">
 
             <FrameLayout
                 android:layout_width="match_parent"
@@ -53,39 +38,31 @@
                     android:id="@+id/search_view"
                     style="@style/MaterialSearchViewStyle"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content" />
+                    android:layout_height="match_parent" />
             </FrameLayout>
 
         </android.support.v7.widget.Toolbar>
 
-        <android.support.design.widget.TabLayout
-            android:id="@+id/tabs"
-            app:tabTextColor="@color/grey"
-            app:tabSelectedTextColor="@color/white"
-            app:tabIndicatorColor="@color/white"
-            android:background="@color/colorPrimaryRed"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            app:tabGravity="fill"
-            app:tabMode="fixed">
-
-            <android.support.design.widget.TabItem
-                android:id="@+id/tab_item1"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/tab_menu" />
-
-            <android.support.design.widget.TabItem
-                android:id="@+id/tab_item2"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/tab_session_detail" />
-
-        </android.support.design.widget.TabLayout>
-
     </android.support.design.widget.AppBarLayout>
 
-    <FrameLayout
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:layout_marginTop="?android:attr/actionBarSize">
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/chips_item_list"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+
+    <fragment
+        android:id="@+id/fragment_menu"
+        android:name="com.alcatraz.admin.project_alcatraz.Session.MenuUserFragment"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
+    </LinearLayout>
+
+    <com.alcatraz.admin.project_alcatraz.Utility.ClipRevealFrame
         android:id="@+id/dark_back"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -99,7 +76,6 @@
         android:layout_height="400dp"
         android:layout_gravity="bottom|center_horizontal"
         android:layout_marginBottom="10dp"
-        android:layout_marginLeft="1dp"
         android:layout_marginStart="1dp"
         android:background="@drawable/menu_filter_back"
         android:rotation="180"
@@ -111,6 +87,7 @@
         android:transformPivotY="374.25dp">
 
         <include layout="@layout/menu_filter" />
+
     </android.support.constraint.ConstraintLayout>
 
     <ImageButton

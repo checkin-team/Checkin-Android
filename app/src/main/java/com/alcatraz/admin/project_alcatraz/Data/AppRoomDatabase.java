@@ -9,6 +9,9 @@ import android.content.Context;
 import android.os.AsyncTask;
 import android.support.annotation.NonNull;
 
+import com.alcatraz.admin.project_alcatraz.Session.MenuDao;
+import com.alcatraz.admin.project_alcatraz.Session.MenuGroup;
+import com.alcatraz.admin.project_alcatraz.Session.MenuItem;
 import com.alcatraz.admin.project_alcatraz.Social.Chat;
 import com.alcatraz.admin.project_alcatraz.Social.ChatDao;
 import com.alcatraz.admin.project_alcatraz.Social.Message;
@@ -19,7 +22,7 @@ import com.alcatraz.admin.project_alcatraz.Utility.Constants;
 
 @Database(entities = {
         Message.class, Chat.class,
-        User.class
+        User.class, MenuGroup.class, MenuItem.class
 }, version = 1, exportSchema = false)
 @TypeConverters(value = Converters.class)
 public abstract class AppRoomDatabase extends RoomDatabase {
@@ -36,13 +39,14 @@ public abstract class AppRoomDatabase extends RoomDatabase {
     public abstract MessageDao messageModel();
     public abstract UserDao userModel();
     public abstract ChatDao chatModel();
+    public abstract MenuDao menuModel();
 
     public static AppRoomDatabase getDatabase(final Context context) {
         if (INSTANCE == null) {
             synchronized (AppRoomDatabase.class) {
                 if (INSTANCE == null) {
                     // TODO: Don't delete database in production!!!!!!!!!!
-//                    context.getApplicationContext().deleteDatabase(Constants.APP_DATABASE);
+                    context.getApplicationContext().deleteDatabase(Constants.APP_DATABASE);
                     // ---------------------------------------------------
                     INSTANCE = Room.databaseBuilder(context.getApplicationContext(),
                             AppRoomDatabase.class, Constants.APP_DATABASE)

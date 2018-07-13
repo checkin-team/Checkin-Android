@@ -8,19 +8,19 @@
 
             android:icon="@drawable/ic_message_black_24dp"
 
-            android:title="Message 1" />
+            android:name="Message 1" />
 
         <item
             android:id="@+id/m2"
             android:icon="@drawable/ic_message_black_24dp"
 
-            android:title="Message 2" />
+            android:name="Message 2" />
 
         <item
             android:id="@+id/m3"
             android:icon="@drawable/ic_message_black_24dp"
 
 
-            android:title="Message 3" />
+            android:name="Message 3" />
     </group>
 </menu>

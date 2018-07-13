@@ -3,8 +3,11 @@ package com.alcatraz.admin.project_alcatraz.Home;
 import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
 import android.animation.AnimatorSet;
+import android.animation.ValueAnimator;
+import android.annotation.SuppressLint;
 import android.arch.lifecycle.ViewModelProviders;
 import android.content.Intent;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.FloatingActionButton;
@@ -16,9 +19,13 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
+import android.util.DisplayMetrics;
+import android.util.Log;
 import android.view.MenuItem;
 import android.view.MotionEvent;
 import android.view.View;
+import android.view.animation.AccelerateDecelerateInterpolator;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -32,6 +39,7 @@ import com.alcatraz.admin.project_alcatraz.Social.MessageViewModel;
 import com.alcatraz.admin.project_alcatraz.User.UserViewModel;
 import com.alcatraz.admin.project_alcatraz.Utility.ClipRevealFrame;
 import com.alcatraz.admin.project_alcatraz.Utility.Constants;
+import com.alcatraz.admin.project_alcatraz.Utility.DragTouchListener;
 import com.alcatraz.admin.project_alcatraz.Utility.EndDrawerToggle;
 import com.alcatraz.admin.project_alcatraz.Utility.ItemClickSupport;
 import com.alcatraz.admin.project_alcatraz.Utility.Util;
@@ -68,16 +76,19 @@ public class HomeActivity extends AppCompatActivity
     @BindView(R.id.add_quarter_circle)
     View vAddQuarterCircle;
     @BindView(R.id.fab_home_add)
-    FloatingActionButton fabHomeAdd;
+    ImageView fabHomeAdd;
 
     @BindView(R.id.text_shops_category)
     TextView tvShopsCategory;
+    @BindView(R.id.im_shop_category_back)
+    ImageView imShopsCategoryBack;
 
     private UserViewModel mUserViewModel;
     private MessageViewModel mMessageViewModel;
     private ChatAdapter mChatAdapter;
     private TrendingShopAdapter mTrendingShopAdapter;
     private UserActivityAdapter mUserActivityAdapter;
+    private final float PERCENT_LEFT_SHIFTED = 30;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -95,6 +106,7 @@ public class HomeActivity extends AppCompatActivity
         setupMessages();
     }
 
+    @SuppressLint("ClickableViewAccessibility")
     private void setupUiStuff() {
         Toolbar toolbar = findViewById(R.id.toolbar_home);
         setSupportActionBar(toolbar);
@@ -129,12 +141,50 @@ public class HomeActivity extends AppCompatActivity
             }
         });
 
-        /*rvTrendingShops.setOnTouchListener(new DragTouchListener() {
-            @Override
-            public boolean onDragX(float dx) {
-                if (dx < 0) {
+        DisplayMetrics displayMetrics = new DisplayMetrics();
+        getWindowManager().getDefaultDisplay().getMetrics(displayMetrics);
+        final float maxTranslationX = PERCENT_LEFT_SHIFTED * displayMetrics.widthPixels / 100;
+        rvTrendingShops.setTranslationX(maxTranslationX);
+
+        rvTrendingShops.setOnTouchListener(new DragTouchListener() {
+            boolean drag(float dx) {
+                boolean shouldDrag = false;
+                if (rvTrendingShops.getTranslationX() > 0 && dx < 0) {
+                    shouldDrag = true;
+                } else if (hasMinTranslation() && dx > 0) {
+                    int position = ((LinearLayoutManager) rvTrendingShops.getLayoutManager()).findFirstCompletelyVisibleItemPosition();
+                    if (position == 0)
+                        shouldDrag = true;
+                } else if (!hasMaxTranslation() && !hasMinTranslation() && dx > 0) {
+                    shouldDrag = true;
+                } else if (hasMaxTranslation() && dx > 0) {
                     return true;
                 }
+                if (shouldDrag) {
+                    animateShopContainer(rvTrendingShops.getTranslationX() + dx, maxTranslationX);
+                }
+                return shouldDrag;
+            }
+
+            boolean hasMinTranslation() {
+                return rvTrendingShops.getTranslationX() <= 0f;
+            }
+
+            boolean hasMaxTranslation() {
+                return rvTrendingShops.getTranslationX() >= maxTranslationX;
+            }
+
+            @Override
+            public boolean onDragX(float dx) {
+                float currTranslationX = rvTrendingShops.getTranslationX();
+                if (currTranslationX < 0f && currTranslationX > maxTranslationX) {
+                    Log.e(TAG, "outsideLimits!");
+                    animateShopContainer(currTranslationX < 0 ? 0 : maxTranslationX, maxTranslationX);
+                    return false;
+                }
+                if (drag(dx))
+                    return true;
+                rvTrendingShops.scrollBy((int) -dx, 0);
                 return false;
             }
 
@@ -145,9 +195,32 @@ public class HomeActivity extends AppCompatActivity
 
             @Override
             public void onDragCancel() {
-
+                Log.e(TAG, "DragCancelled");
+                ValueAnimator animator;
+                float currTranslationX = rvTrendingShops.getTranslationX();
+                if (currTranslationX <= 0.5 * maxTranslationX) {
+                    animator = ValueAnimator.ofFloat(currTranslationX, 0f);
+                }
+                else {
+                    rvTrendingShops.setTranslationX(maxTranslationX);
+                    animator = ValueAnimator.ofFloat(currTranslationX, maxTranslationX);
+                }
+                animator.setInterpolator(new AccelerateDecelerateInterpolator());
+                animator.setDuration(Util.DEFAULT_DURATION);
+                animator.addUpdateListener(animation -> {
+                    float animatedValue = (float) animation.getAnimatedValue();
+                    animateShopContainer(animatedValue, maxTranslationX);
+                });
+                animator.start();
             }
-        });*/
+        });
+    }
+
+    void animateShopContainer(float currTranslateX, float maxTranslateX) {
+        float fractionTranslateX = currTranslateX / maxTranslateX;
+        imShopsCategoryBack.setAlpha(fractionTranslateX);
+        tvShopsCategory.setAlpha(fractionTranslateX);
+        rvTrendingShops.setTranslationX(currTranslateX);
     }
 
     private void setupTrendingShops() {
@@ -210,16 +283,16 @@ public class HomeActivity extends AppCompatActivity
                 intent = new Intent(getApplicationContext(), UserProfileActivity.class);
                 startActivity(intent);
                 break;
-            case R.id.nav_wallet:
-                intent = new Intent(getApplicationContext(), TransactionActivity.class);
-                startActivity(intent);
-                break;
             case R.id.nav_settings:
                 intent = new Intent(getApplicationContext(), SessionUserActivity.class);
                 startActivity(intent);
                 break;
             case R.id.nav_privacy_settings:
                 intent = new Intent(getApplicationContext(), ShopProfileActivity2.class);
+                startActivity(intent);
+                break;
+            case R.id.nav_faq:
+                intent = new Intent(getApplicationContext(), FaqActivity.class);
                 startActivity(intent);
                 break;
         }
@@ -293,6 +366,7 @@ public class HomeActivity extends AppCompatActivity
 
         AnimatorSet animatorSet = new AnimatorSet();
         animatorSet.playTogether(animList);
+        animatorSet.setDuration(450L);
         animatorSet.start();
 
         fabHomeAdd.setSelected(true);
@@ -321,6 +395,7 @@ public class HomeActivity extends AppCompatActivity
                 vClipRevealFrame.setVisibility(View.GONE);
             }
         });
+        animatorSet.setDuration(450L);
         animatorSet.start();
 
         fabHomeAdd.setSelected(false);

@@ -50,7 +50,7 @@
                 android:id="@+id/card_trending_shops"
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
-                android:layout_weight="1.2"
+                android:layout_weight=".375"
                 android:background="@drawable/bordered_card"
                 app:cardElevation="@dimen/card_elevation">
 
@@ -70,34 +70,42 @@
                         android:textColor="@color/brownish_grey"
                         android:textSize="@dimen/font_small_heading" />
 
-                    <android.support.constraint.ConstraintLayout
+                    <FrameLayout
                         android:layout_width="match_parent"
                         android:layout_height="150dp"
                         android:layout_marginBottom="@dimen/spacing_extra_small"
-                        android:layout_marginTop="@dimen/spacing_extra_small"
-                        android:background="@drawable/ic_home_trending_shops_back">
+                        android:layout_marginTop="@dimen/spacing_extra_small">
 
-                        <TextView
-                            android:id="@+id/text_shops_category"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_gravity="center_vertical"
-                            android:layout_marginStart="8dp"
-                            android:layout_marginTop="8dp"
-                            android:text="TRENDING"
-                            android:textColor="@color/white"
-                            android:textSize="@dimen/font_normal"
-                            app:layout_constraintStart_toStartOf="parent"
-                            app:layout_constraintTop_toTopOf="parent" />
-
-                        <android.support.v7.widget.RecyclerView
-                            android:id="@+id/rv_trending_shops"
+                        <ImageView
+                            android:id="@+id/im_shop_category_back"
                             android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            app:layout_constraintEnd_toEndOf="parent"
-                            app:layout_constraintTop_toBottomOf="@+id/text_shops_category" />
+                            android:layout_height="match_parent"
+                            android:background="@drawable/ic_home_trending_shops_back"
+                            android:src="@color/dark_back_filter" />
 
-                    </android.support.constraint.ConstraintLayout>
+                        <android.support.design.widget.CoordinatorLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:id="@+id/shop_category_container">
+
+                            <TextView
+                                android:id="@+id/text_shops_category"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_gravity="center_vertical|start"
+                                android:layout_marginStart="8dp"
+                                android:text="TRENDING"
+                                android:textColor="@color/white"
+                                android:textSize="@dimen/font_normal" />
+
+                            <android.support.v7.widget.RecyclerView
+                                android:id="@+id/rv_trending_shops"
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:layout_marginTop="@dimen/spacing_normal"
+                                android:layout_gravity="end"/>
+                        </android.support.design.widget.CoordinatorLayout>
+                    </FrameLayout>
                 </LinearLayout>
             </android.support.v7.widget.CardView>
 
@@ -108,7 +116,7 @@
                     android:layout_marginTop="@dimen/spacing_extra_small"
                     android:background="@drawable/bordered_card"
                     app:cardElevation="@dimen/card_elevation"
-                    android:layout_weight="1">
+                    android:layout_weight=".375">
 
                     <LinearLayout
                         android:layout_width="match_parent"
@@ -126,13 +134,18 @@
                             android:textColor="@color/brownish_grey"
                             android:textSize="@dimen/font_small_heading" />
 
-                        <android.support.v7.widget.RecyclerView
-                            android:id="@+id/rv_user_activities"
+                        <FrameLayout
                             android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
+                            android:layout_height="150dp"
                             android:layout_marginBottom="@dimen/spacing_extra_small"
-                            android:layout_marginTop="@dimen/spacing_extra_small"
-                            android:padding="@dimen/spacing_tiny"/>
+                            android:layout_marginTop="@dimen/spacing_extra_small">
+                            <android.support.v7.widget.RecyclerView
+                                android:id="@+id/rv_user_activities"
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:layout_marginTop="@dimen/spacing_normal"/>
+                        </FrameLayout>
+
                     </LinearLayout>
                 </android.support.v7.widget.CardView>
 
@@ -143,7 +156,7 @@
                     android:layout_marginTop="@dimen/spacing_extra_small"
                     android:background="@drawable/bordered_card"
                     app:cardElevation="@dimen/card_elevation"
-                    android:layout_weight="1">
+                    android:layout_weight=".25">
 
                     <android.support.constraint.ConstraintLayout
                         android:layout_width="match_parent"
@@ -153,35 +166,38 @@
                         android:showDividers="middle">
 
                         <TextView
-                            android:id="@+id/action_delivery"
-                            android:layout_width="@dimen/square_card_dimen"
-                            android:layout_height="@dimen/square_card_dimen"
+                            android:id="@+id/action_dine_in"
                             android:layout_gravity="center_vertical"
                             android:layout_marginStart="8dp"
-                            android:background="@drawable/bordered_card"
-                            android:drawableTop="@drawable/ic_delivery"
-                            android:padding="@dimen/spacing_small"
-                            android:text="@string/home_text_delivery"
-                            android:textAlignment="center"
-                            android:textColor="@color/brownish_grey"
-                            android:textSize="@dimen/font_small_heading"
+                            android:drawableTop="@drawable/ic_pre_dining"
+                            android:text="@string/home_text_dining"
                             app:layout_constraintBottom_toBottomOf="parent"
                             app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toTopOf="parent"
+                            style="@style/ActionTextView" />
+
+                        <TextView
+                            android:id="@+id/action_delivery"
+                            style="@style/ActionTextView"
+                            android:layout_gravity="center_vertical"
+                            android:layout_marginBottom="8dp"
+                            android:layout_marginEnd="8dp"
+                            android:layout_marginStart="8dp"
+                            android:layout_marginTop="8dp"
+                            android:drawableTop="@drawable/ic_delivery"
+                            android:text="@string/home_text_delivery"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            app:layout_constraintEnd_toStartOf="@+id/action_offers"
+                            app:layout_constraintStart_toEndOf="@+id/action_dine_in"
                             app:layout_constraintTop_toTopOf="parent" />
 
                         <TextView
                             android:id="@+id/action_offers"
-                            android:layout_width="@dimen/square_card_dimen"
-                            android:layout_height="@dimen/square_card_dimen"
+                            style="@style/ActionTextView"
                             android:layout_gravity="center_vertical"
                             android:layout_toEndOf="@id/action_delivery"
-                            android:background="@drawable/bordered_card"
                             android:drawableTop="@drawable/ic_offer"
-                            android:padding="@dimen/spacing_small"
                             android:text="@string/home_text_offers"
-                            android:textAlignment="center"
-                            android:textColor="@color/brownish_grey"
-                            android:textSize="@dimen/font_small_heading"
                             app:layout_constraintBottom_toBottomOf="parent"
                             app:layout_constraintEnd_toEndOf="parent"
                             app:layout_constraintTop_toTopOf="parent" />
@@ -218,36 +234,42 @@
                     android:src="@drawable/ic_home_add_notifications"
                     android:layout_marginTop="30dp"
                     android:layout_marginEnd="10dp"
-                    android:layout_gravity="end"/>
+                    android:layout_gravity="end"
+                    android:contentDescription="@string/text_add_notifications"
+                    android:tooltipText="@string/text_add_notifications"/>
 
                 <ImageView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:src="@drawable/ic_home_add_dining"
-                    android:layout_gravity="center"/>
+                    android:src="@drawable/ic_home_add_wallet"
+                    android:layout_gravity="center"
+                    android:contentDescription="@string/text_add_wallet"
+                    android:tooltipText="@string/text_add_wallet"/>
 
                 <ImageView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:src="@drawable/ic_home_add_post"
                     android:layout_gravity="bottom"
-                    android:layout_marginStart="30dp"
-                    android:layout_marginBottom="10dp"/>
+                    android:layout_marginStart="40dp"
+                    android:layout_marginBottom="10dp"
+                    android:contentDescription="@string/text_add_post"
+                    android:tooltipText="@string/text_add_post"/>
 
             </FrameLayout>
 
         </com.alcatraz.admin.project_alcatraz.Utility.ClipRevealFrame>
 
-        <android.support.design.widget.FloatingActionButton
+        <ImageView
             android:id="@+id/fab_home_add"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="60dp"
+            android:layout_height="60dp"
             android:layout_gravity="bottom|end"
             android:tint="@color/colorPrimaryRed"
-            app:rippleColor="@color/colorPrimaryRed"
-            android:layout_margin="8dp"
+            android:layout_margin="@dimen/spacing_small"
             android:src="@drawable/ic_plus_red"
-            app:backgroundTint="@color/pinkish_grey"
+            android:background="@drawable/ic_floating_oval"
+            android:padding="@dimen/spacing_normal"
             android:clickable="true"
             android:focusable="true"/>
 

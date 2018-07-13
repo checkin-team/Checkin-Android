@@ -12,21 +12,21 @@
         android:id="@+id/navigation_shop_profile"
         android:icon="@drawable/ic_home_black_24dp"
 
-        android:title="Profile" />
+        android:name="Profile" />
 
     <item
         android:id="@+id/navigation_shop_menu"
         android:icon="@drawable/ic_shop_menu"
-        android:title="Menu" />
+        android:name="Menu" />
 
     <item
         android:id="@+id/navigation_shop_insights"
         android:icon="@drawable/ic_shop_insights"
-        android:title="Insights" />
+        android:name="Insights" />
 
     <item
         android:id="@+id/navigation_shop_daily_activity"
         android:icon="@drawable/ic_shop_daili_activity"
-        android:title="Activity" />
+        android:name="Activity" />
 
 </menu>

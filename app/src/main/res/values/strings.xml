@@ -51,10 +51,13 @@
     <string name="nav_header_subtitle">Nav Header Subtitle</string>
     <string name="nav_header_desc">Navigation header</string>
     <string name="shop_status_check">Check Status</string>
-    <string name="nav_text_wallet">Wallet</string>
     <string name="home_text_qrscanner">Scan QR!</string>
     <string name="home_text_delivery">Delivery</string>
     <string name="home_text_offers">Offers</string>
     <string name="reset_my_password">Reset My Password</string>
     <string name="check_in_wallet">Check-In Wallet</string>
+    <string name="home_text_dining">Dine In</string>
+    <string name="text_add_notifications">Notifications</string>
+    <string name="text_add_wallet">Wallet</string>
+    <string name="text_add_post">Post</string>
 </resources>

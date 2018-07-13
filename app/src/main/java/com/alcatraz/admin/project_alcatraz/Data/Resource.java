@@ -44,4 +44,8 @@ public class Resource<T> {
         return new Resource<>(Status.LOADING, data, null);
     }
 
+    public static <X, T> Resource<X> cloneResource(Resource<T> resource, X data) {
+        return new Resource<>(resource.status, data, resource.message);
+    }
+
 }

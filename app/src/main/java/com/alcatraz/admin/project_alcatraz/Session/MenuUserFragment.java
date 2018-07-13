@@ -1,39 +1,38 @@
 package com.alcatraz.admin.project_alcatraz.Session;
 
+import android.arch.lifecycle.ViewModelProviders;
 import android.content.Context;
-import android.graphics.Bitmap;
-import android.graphics.drawable.BitmapDrawable;
-import android.graphics.drawable.Drawable;
+import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
-import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
-
+import com.alcatraz.admin.project_alcatraz.Data.Resource;
 import com.alcatraz.admin.project_alcatraz.R;
 import com.alcatraz.admin.project_alcatraz.Utility.StartSnapHelper;
-
-import java.util.ArrayList;
-import java.util.Locale;
+import com.alcatraz.admin.project_alcatraz.Utility.Util;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.Unbinder;
 
-public class MenuUserFragment extends Fragment implements MenuItemAdapter.OnItemClickListener {
+public class MenuUserFragment extends Fragment implements MenuItemAdapter.OnItemInteractionListener {
     private final String TAG = MenuUserFragment.class.getSimpleName();
 
-    @BindView(R.id.chips_item_list) RecyclerView chipsList;
-    @BindView(R.id.groups_list) RecyclerView groupsList;
-    private MenuChipAdapter mChipAdapter;
+    public static final String MENU_KEY = "menu_key";
+
+    @BindView(R.id.menu_groups_list) RecyclerView rvGroupsList;
     private MenuGroupAdapter groupAdapter;
     private OnMenuFragmentInteractionListener mMenuInteractionListener;
     private Unbinder unbinder;
+    private MenuViewModel mViewModel;
 
     public MenuUserFragment() {
         setHasOptionsMenu(true);
@@ -49,7 +48,8 @@ public class MenuUserFragment extends Fragment implements MenuItemAdapter.OnItem
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        Log.e(TAG, "onCreate");
+
+        mViewModel = ViewModelProviders.of(getActivity(), new MenuViewModel.Factory(getActivity().getApplication())).get(MenuViewModel.class);
     }
 
     @Override
@@ -61,48 +61,46 @@ public class MenuUserFragment extends Fragment implements MenuItemAdapter.OnItem
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         final View rootView = inflater.inflate(R.layout.fragment_menu_user, container, false);
         unbinder = ButterKnife.bind(this, rootView);
-        chipsList.setLayoutManager(new LinearLayoutManager(getActivity(), RecyclerView.HORIZONTAL, false));
-        mChipAdapter = new MenuChipAdapter(getContext(), true, mMenuInteractionListener);
-        chipsList.setAdapter(mChipAdapter);
 
-        groupsList.setHasFixedSize(true);
+        int menuId = 1;
+        if (getArguments() != null)
+            menuId = getArguments().getInt(MENU_KEY);
+
         LinearLayoutManager llm = new LinearLayoutManager(getActivity(), RecyclerView.VERTICAL, false);
-        groupsList.setLayoutManager(llm);
+        rvGroupsList.setLayoutManager(llm);
 
-        groupAdapter = new MenuGroupAdapter(createDummyData(30), getContext());
-        groupsList.setAdapter(groupAdapter);
-
-        groupAdapter.setPriceClickListener(this);
+        groupAdapter = new MenuGroupAdapter(null, getContext(), this);
+        rvGroupsList.setAdapter(groupAdapter);
 
         final StartSnapHelper snapHelper = new StartSnapHelper();
-        snapHelper.attachToRecyclerView(groupsList);
+        snapHelper.attachToRecyclerView(rvGroupsList);
+
+        mViewModel.getMenuGroups(menuId).observe(getActivity(), menuGroupResource -> {
+            if (menuGroupResource == null)
+                return;
+            if (menuGroupResource.status == Resource.Status.SUCCESS)
+                groupAdapter.setGroupList(Util.sparseArrayAsList(menuGroupResource.data));
+            else if (menuGroupResource.status == Resource.Status.LOADING) {
+                // TODO: DO some Loading magic!
+            } else {
+                Toast.makeText(
+                        MenuUserFragment.this.getContext(),
+                        "An error occurred: " + menuGroupResource.message,
+                        Toast.LENGTH_SHORT
+                ).show();
+            }
+        });
 
         return rootView;
     }
 
-    private ArrayList<MenuGroup> createDummyData(int count) {
-        ArrayList<MenuGroup> menuGroupList = new ArrayList<>();
-        Drawable imDrawable = getResources().getDrawable(R.drawable.ic_beer);
-        Bitmap imBitmap = ((BitmapDrawable) imDrawable).getBitmap();
-        for (int i = 1; i <= count; i++) {
-            ArrayList<MenuItem> menuItems = new ArrayList<>();
-            for (int j = 0; j <= i/2; j++) {
-                float[] costs = {300, 150, 100};
-                String[] types = {"Pint", "Bottle", "Can"};
-                menuItems.add(new MenuItem("Carlsburg #" + j, types, costs));
-            }
-            menuGroupList.add(new MenuGroup(String.format(Locale.US, "Beer #%d", i), menuItems, imBitmap));
-        }
-        return menuGroupList;
-    }
-
-    @Override
-    public void onItemOrdered(View view, OrderedItem item) {
+    /*@Override
+    public void onItemAdded(View view, OrderedItem item) {
         MenuChip menuChip = new MenuChip(item);
         Log.e("ItemOrdered", menuChip.getLabel() + " -> " + menuChip.getInfo());
         mChipAdapter.addChip(menuChip);
         Log.e(TAG, "ItemOrdered: " + areItemsPending());
-    }
+    }*/
 
     public void onBackPressed() {
         groupAdapter.contractView(groupAdapter.mPrevExpandedViewHolder);
@@ -125,31 +123,21 @@ public class MenuUserFragment extends Fragment implements MenuItemAdapter.OnItem
         }
     }
 
-    public OrderedItem[] getOrderedItems() {
-        if (areItemsPending())
-            return mChipAdapter.getItems();
-        return null;
-    }
-
-    public void clearPendingItems() {
-        if (areItemsPending())
-            mChipAdapter.clearItems();
-    }
-
-    public boolean areItemsPending() {
-        if (mChipAdapter == null) {
-            Log.e(TAG, "Chip Adapter is null?!");
-            return false;//mChipAdapter = (MenuChipAdapter) chipsList.getAdapter();
-        }
-        Log.e(TAG, "Pending items: " + mChipAdapter.getItemCount());
-        return mChipAdapter.getItemCount() > 0;
-    }
-
     @Override
     public void onDestroy() {
         super.onDestroy();
-        Log.e(TAG, "onDestroy");
         unbinder.unbind();
+    }
+
+    @Override
+    public boolean onItemAdded(View view, MenuItem item) {
+        return false;
+    }
+
+    @Override
+    public boolean onItemLongPress(View view, MenuItem item) {
+        Toast.makeText(getContext(), "Long pressed!", Toast.LENGTH_SHORT).show();
+        return true;
     }
 
     public interface OnMenuFragmentInteractionListener {

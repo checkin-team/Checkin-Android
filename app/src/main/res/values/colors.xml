@@ -27,6 +27,7 @@
     <color name="dot_light_screen3">#93c6fd</color>
     <color name="dot_light_screen4">#e4b5fc</color>
     <color name="light_red">#dc1010</color>
+    <color name="transparent">#00000000</color>
 
     <!-- Color Palette -->
     <color name="colorPrimaryRed">#af1014</color>

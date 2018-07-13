@@ -11,10 +11,13 @@ import android.content.Context;
 import android.content.res.ColorStateList;
 import android.graphics.Color;
 import android.graphics.Typeface;
+import android.graphics.drawable.ColorDrawable;
+import android.graphics.drawable.Drawable;
 import android.os.Build;
 import android.support.annotation.NonNull;
 import android.support.annotation.RequiresApi;
 import android.support.design.widget.TabLayout;
+import android.util.SparseArray;
 import android.view.View;
 import android.view.ViewAnimationUtils;
 import android.view.ViewGroup;
@@ -25,6 +28,9 @@ import android.widget.TextView;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.List;
 import java.util.Map;
 import java.util.regex.MatchResult;
 import java.util.regex.Matcher;
@@ -35,7 +41,7 @@ import java.util.regex.Matcher;
 
 public class Util {
     public static final int NO_CHANGE = -1;
-    private static final long DEFAULT_DURATION = 300L;
+    public static final long DEFAULT_DURATION = 300L;
 
     public static void setTabsFont(TabLayout tabLayout, Typeface tf) {
         ViewGroup vg = (ViewGroup) tabLayout.getChildAt(0);
@@ -169,15 +175,44 @@ public class Util {
     public static Animator createTintAnimator(final ImageView view, int initialColor, int finalColor) {
         ColorStateList tintList = view.getImageTintList();
         initialColor = (tintList != null) ? tintList.getDefaultColor() : initialColor;
-        final ObjectAnimator animator = ObjectAnimator.ofInt(view, "imageTint", initialColor, finalColor);
+        final ValueAnimator animator = ValueAnimator.ofObject(new ArgbEvaluator(), initialColor, finalColor);
         animator.setDuration(DEFAULT_DURATION);
-        animator.setEvaluator(new ArgbEvaluator());
         animator.setInterpolator(new AccelerateDecelerateInterpolator());
         animator.addUpdateListener(new ObjectAnimator.AnimatorUpdateListener() {
             @Override
             public void onAnimationUpdate(ValueAnimator animation) {
                 int animatedValue = (int) animation.getAnimatedValue();
                 view.setImageTintList(ColorStateList.valueOf(animatedValue));
+            }
+        });
+        return animator;
+    }
+
+    public static Animator createImageColorSourceAnimator(final ImageView view, int initialColor, int finalColor) {
+        Drawable drawable = view.getDrawable();
+        initialColor = drawable != null ? ((ColorDrawable) drawable).getColor() : initialColor;
+        final ValueAnimator animator = ValueAnimator.ofObject(new ArgbEvaluator(), initialColor, finalColor);
+        animator.setDuration(DEFAULT_DURATION);
+        animator.setInterpolator(new AccelerateDecelerateInterpolator());
+        animator.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
+            @Override
+            public void onAnimationUpdate(ValueAnimator animation) {
+                int animatedValue = (int) animation.getAnimatedValue();
+                view.setImageDrawable(new ColorDrawable(animatedValue));
+            }
+        });
+        return animator;
+    }
+
+    public static Animator createTextColorAnimator(final TextView view, int initialColor, int finalColor) {
+        initialColor = initialColor != 0 ? initialColor : view.getCurrentTextColor();
+        final ValueAnimator animator = ValueAnimator.ofObject(new ArgbEvaluator(), initialColor, finalColor);
+        animator.setDuration(DEFAULT_DURATION);
+        animator.setInterpolator(new AccelerateDecelerateInterpolator());
+        animator.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
+            @Override
+            public void onAnimationUpdate(ValueAnimator animation) {
+                view.setTextColor((int) animation.getAnimatedValue());
             }
         });
         return animator;
@@ -274,5 +309,21 @@ public class Util {
 
     public interface MatchResultFunction {
         String apply(MatchResult match);
+    }
+
+    public static <C> List<C> sparseArrayAsList(SparseArray<C> sparseArray) {
+        if (sparseArray == null) return null;
+        List<C> arrayList = new ArrayList<C>(sparseArray.size());
+        for (int i = 0; i < sparseArray.size(); i++)
+            arrayList.add(sparseArray.valueAt(i));
+        return arrayList;
+    }
+
+    public static String joinCollection(Collection<?> words, CharSequence delimiter) {
+        StringBuilder wordList = new StringBuilder();
+        for (Object word : words) {
+            wordList.append(word.toString() + delimiter);
+        }
+        return new String(wordList.delete(wordList.length() - delimiter.length(), wordList.length()));
     }
 }

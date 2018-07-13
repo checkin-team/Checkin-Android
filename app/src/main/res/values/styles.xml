@@ -3,8 +3,7 @@
     <!-- Base application theme. -->
     <style name="AppTheme" parent="Theme.AppCompat.Light.NoActionBar">
         <!-- Customize your theme here. -->
-        <item name="colorPrimary">@color/colorPrimary</item>
-        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
+        <item name="colorPrimary">@color/colorPrimaryRed</item>
         <item name="colorAccent">@color/colorAccent</item>
         <item name="actionBarStyle">@style/AppTheme.AppBarOverlay</item>
         <item name="android:fontFamily">@font/arial_rounded_mt_bold</item>
@@ -65,6 +64,15 @@
 
         <!-- Hint for edit text-->
         <item name="android:hint">@string/search_hint</item>
+    </style>
+
+    <style name="ActionTextView">
+        <item name="android:layout_width">@dimen/square_card_dimen</item>
+        <item name="android:layout_height">@dimen/square_card_dimen</item>
+        <item name="android:padding">@dimen/spacing_small</item>
+        <item name="android:textAlignment">center</item>
+        <item name="android:textColor">@color/brownish_grey</item>
+        <item name="android:textSize">@dimen/font_small_heading</item>
     </style>
 
 </resources>

@@ -5,20 +5,24 @@
         <item
             android:id="@+id/nav_profile"
             android:icon="@drawable/profile"
+            android:name="Profile"
             android:title="Profile" />
+
         <item
-            android:id="@+id/nav_wallet"
-            android:icon="@drawable/ic_wallet"
-            android:title="@string/nav_text_wallet" />
+            android:id="@+id/nav_faq"
+            android:icon="@android:drawable/ic_menu_help"
+            android:title="FAQ" />
     </group>
     <group>
         <item
             android:id="@+id/nav_settings"
             android:icon="@drawable/settings"
+            android:name="Settings"
             android:title="Settings" />
         <item
             android:id="@+id/nav_privacy_settings"
-            android:title="privacy settings"
-            android:icon="@drawable/privacy"/>
+            android:name="privacy settings"
+            android:icon="@drawable/privacy"
+            android:title="Privacy Settings" />
     </group>
 </menu>

@@ -2,6 +2,7 @@ package com.alcatraz.admin.project_alcatraz.Session;
 
 import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
+import android.arch.lifecycle.ViewModelProviders;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -11,6 +12,8 @@ import android.speech.RecognizerIntent;
 import android.support.design.widget.TabLayout;
 import android.support.v4.content.res.ResourcesCompat;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 
 import android.support.v4.app.Fragment;
@@ -44,17 +47,16 @@ public class SessionUserActivity extends AppCompatActivity implements MenuUserFr
      * The {@link android.support.v4.view.PagerAdapter} that will provide
      * fragments for each of the sections.
      */
-    private SectionsPagerAdapter mSectionsPagerAdapter;
-    @BindView(R.id.container) DynamicSwipableViewPager mViewPager;
-    private MaterialSearchView mSearchView;
+    @BindView(R.id.search_view) MaterialSearchView mSearchView;
     @BindView(R.id.action_filter_toggle) ImageButton mFilterToggle;
     @BindView(R.id.filter_container) View mFilterContainer;
     @BindView(R.id.dark_back) View mDarkBack;
-    @BindView(R.id.tabs) TabLayout mTabLayout;
     @BindView(R.id.action_finish) ImageButton mActionFinish;
     @BindView(R.id.action_search) ImageButton mActionSearch;
+    @BindView(R.id.chips_item_list) RecyclerView rvChipsList;
     private MenuUserFragment mMenuFragment;
-    private SessionDetailFragment mDetailsFragment;
+    private MenuChipAdapter mChipAdapter;
+    private MenuViewModel mViewModel;
 
     private int mSessionStatus;
 
@@ -96,8 +98,6 @@ public class SessionUserActivity extends AppCompatActivity implements MenuUserFr
             getSupportActionBar().setElevation(0);
         }
         ButterKnife.bind(this);
-        mSectionsPagerAdapter = new SectionsPagerAdapter(getSupportFragmentManager());
-        mViewPager.setAdapter(mSectionsPagerAdapter);
 
         mDarkBack.setOnTouchListener(new View.OnTouchListener() {
             @Override
@@ -117,36 +117,17 @@ public class SessionUserActivity extends AppCompatActivity implements MenuUserFr
             }
         });
 
-        mViewPager.addOnPageChangeListener(new TabLayout.TabLayoutOnPageChangeListener(mTabLayout));
-        final TabLayout.ViewPagerOnTabSelectedListener tabSelectedListener = new TabLayout.ViewPagerOnTabSelectedListener(mViewPager) {
-            @Override
-            public void onTabSelected(TabLayout.Tab tab) {
-                super.onTabSelected(tab);
-                switch (tab.getPosition()) {
-                    case 0:
-                        mActionFinish.setVisibility(View.VISIBLE);
-                        mActionSearch.setVisibility(View.VISIBLE);
-                        mFilterToggle.setVisibility(View.VISIBLE);
-                        break;
-                    case 1:
-                        mActionFinish.setVisibility(View.INVISIBLE);
-                        mActionSearch.setVisibility(View.INVISIBLE);
-                        mFilterToggle.setVisibility(View.GONE);
-                        break;
-                }
-            }
-        };
-        mTabLayout.addOnTabSelectedListener(tabSelectedListener);
-        Typeface tf = ResourcesCompat.getFont(this, R.font.arial_rounded_mt_bold);
-        Util.setTabsFont(mTabLayout, tf);
+        Bundle args = new Bundle();
+        args.putInt(MenuUserFragment.MENU_KEY, 1);
+
         setupSearch();
-        mMenuFragment = (MenuUserFragment) mSectionsPagerAdapter.getItem(MENU_TAB);
-        mDetailsFragment = (SessionDetailFragment) mSectionsPagerAdapter.getItem(DETAIL_TAB);
+
+        mMenuFragment = (MenuUserFragment) getSupportFragmentManager().findFragmentById(R.id.fragment_menu);
+        mMenuFragment.setArguments(args);
 
         mSessionStatus = getIntent().getIntExtra(SESSION_STATUS, SESSION_STARTED);
         switch (mSessionStatus) {
             case SESSION_STARTED: {
-                mViewPager.setCurrentItem(DETAIL_TAB, false);
                 break;
             }
 
@@ -154,6 +135,32 @@ public class SessionUserActivity extends AppCompatActivity implements MenuUserFr
                 break;
             }
         }
+
+        rvChipsList.setLayoutManager(new LinearLayoutManager(this, RecyclerView.HORIZONTAL, false));
+        mChipAdapter = new MenuChipAdapter(this, true, null);
+        rvChipsList.setAdapter(mChipAdapter);
+
+        mViewModel = ViewModelProviders.of(this, new MenuViewModel.Factory(this.getApplication())).get(MenuViewModel.class);
+    }
+
+    public OrderedItem[] getOrderedItems() {
+        if (areItemsPending())
+            return mChipAdapter.getItems();
+        return null;
+    }
+
+    public void clearPendingItems() {
+        if (areItemsPending())
+            mChipAdapter.clearItems();
+    }
+
+    public boolean areItemsPending() {
+        if (mChipAdapter == null) {
+            Log.e(TAG, "Chip Adapter is null?!");
+            return false;
+        }
+        Log.e(TAG, "Pending items: " + mChipAdapter.getItemCount());
+        return mChipAdapter.getItemCount() > 0;
     }
 
     private void showFilter() {
@@ -203,7 +210,6 @@ public class SessionUserActivity extends AppCompatActivity implements MenuUserFr
     }
 
     private void setupSearch() {
-        mSearchView = findViewById(R.id.search_view);
         mSearchView.setVoiceSearch(true);
         mSearchView.setStartFromRight(false);
         mSearchView.setCursorDrawable(R.drawable.color_cursor_white);
@@ -235,32 +241,12 @@ public class SessionUserActivity extends AppCompatActivity implements MenuUserFr
 
             @Override
             public void onSearchViewClosed() {
-                mTabLayout.animate()
-                        .alpha(1.0f)
-                        .setDuration(100)
-                        .setListener(new AnimatorListenerAdapter() {
-                            @Override
-                            public void onAnimationStart(Animator animation) {
-                                mTabLayout.setVisibility(View.VISIBLE);
-                            }
-                        });
-                mViewPager.setEnabled(true);
             }
         });
         ImageButton btn_search = findViewById(R.id.action_search);
         btn_search.setOnClickListener(new ImageButton.OnClickListener() {
             @Override
             public void onClick(View view) {
-                mTabLayout.animate()
-                        .alpha(0.0f)
-                        .setDuration(100)
-                        .setListener(new AnimatorListenerAdapter() {
-                            @Override
-                            public void onAnimationEnd(Animator animation) {
-                                mTabLayout.setVisibility(View.GONE);
-                            }
-                        });
-                mViewPager.setEnabled(false);
                 mSearchView.showSearch();
             }
         });
@@ -272,7 +258,7 @@ public class SessionUserActivity extends AppCompatActivity implements MenuUserFr
             mSearchView.closeSearch();
         else if (mDarkBack.getVisibility() == View.VISIBLE)
             hideFilter();
-        else if (mViewPager.getCurrentItem() == MENU_TAB && mMenuFragment.isGroupExpanded()) {
+        else if (mMenuFragment.isGroupExpanded()) {
             mMenuFragment.onBackPressed();
         }
         else
@@ -286,13 +272,11 @@ public class SessionUserActivity extends AppCompatActivity implements MenuUserFr
 
     @OnClick(R.id.action_finish)
     public void orderItems(View view) {
-        if (!mMenuFragment.areItemsPending()) {
+        if (!areItemsPending()) {
             Toast.makeText(this, "Add some items before ordering them.", Toast.LENGTH_SHORT).show();
             return;
         }
-        mDetailsFragment.orderAndGetDetails(mMenuFragment.getOrderedItems());
-        mMenuFragment.clearPendingItems();
-        mViewPager.setCurrentItem(DETAIL_TAB, true);
+        clearPendingItems();
     }
 
     @Override
@@ -313,39 +297,5 @@ public class SessionUserActivity extends AppCompatActivity implements MenuUserFr
     @Override
     public void onItemOrderInteraction(int count) {
         Log.e(TAG, "ItemOrderInteraction, count: " + count);
-        if (count > 0) {
-            mDetailsFragment.setCanCheckout(false);
-        } else {
-            mDetailsFragment.setCanCheckout(true);
-        }
     }
-
-    /**
-     * A {@link FragmentPagerAdapter} that returns a fragment corresponding to
-     * one of the sections/tabs/pages.
-     */
-
-    public class SectionsPagerAdapter extends FragmentPagerAdapter {
-        Fragment[] fragments;
-        SectionsPagerAdapter(FragmentManager fm) {
-            super(fm);
-            fragments = new Fragment[2];
-            fragments[MENU_TAB] = MenuUserFragment.newInstance();
-            fragments[DETAIL_TAB] = SessionDetailFragment.newInstance(mSessionStatus == SESSION_STARTED);
-        }
-
-        @Override
-        public Fragment getItem(int position) {
-            // getItem is called to instantiate the fragment for the given page.
-            if (position >= getCount())
-                return null;
-            return fragments[position];
-        }
-
-        @Override
-        public int getCount() {
-            return fragments.length;
-        }
-    }
-
 }

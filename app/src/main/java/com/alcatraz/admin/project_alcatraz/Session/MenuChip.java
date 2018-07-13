@@ -16,7 +16,7 @@ public class MenuChip extends MaterialChip {
         mOrderedItem = item;
         avatarUri = null;
         avatarDrawable = null;
-        label = item.title + " (" + item.getType() + ")";
+        label = item.name + " (" + item.getType() + ")";
         info = String.format(Locale.ENGLISH, "Count: %d | Price: %.2f", item.getCount(), item.getPrice());
     }
 
