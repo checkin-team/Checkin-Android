@@ -9,9 +9,13 @@ import android.arch.lifecycle.ViewModelProviders;
 import android.content.Intent;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.annotation.NonNull;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.NavigationView;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
@@ -21,9 +25,11 @@ import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.util.DisplayMetrics;
 import android.util.Log;
+import android.view.GestureDetector;
 import android.view.MenuItem;
 import android.view.MotionEvent;
 import android.view.View;
+import android.view.ViewConfiguration;
 import android.view.animation.AccelerateDecelerateInterpolator;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -145,8 +151,16 @@ public class HomeActivity extends AppCompatActivity
         getWindowManager().getDefaultDisplay().getMetrics(displayMetrics);
         final float maxTranslationX = PERCENT_LEFT_SHIFTED * displayMetrics.widthPixels / 100;
         rvTrendingShops.setTranslationX(maxTranslationX);
-
+        //((LinearLayoutManager) rvTrendingShops.getLayoutManager()).fin
         rvTrendingShops.setOnTouchListener(new DragTouchListener() {
+            @Override
+            public boolean shouldDrag() {
+                Log.e(TAG, "shouldDrag: "+(rvTrendingShops.getTranslationX()>0) );
+                if(rvTrendingShops.getTranslationX()>0)
+                    return true;
+                return false;
+            }
+
             boolean drag(float dx) {
                 boolean shouldDrag = false;
                 if (rvTrendingShops.getTranslationX() > 0 && dx < 0) {
@@ -184,7 +198,7 @@ public class HomeActivity extends AppCompatActivity
                 }
                 if (drag(dx))
                     return true;
-                rvTrendingShops.scrollBy((int) -dx, 0);
+                //rvTrendingShops.scrollBy((int) -dx, 0);
                 return false;
             }
 
@@ -201,10 +215,11 @@ public class HomeActivity extends AppCompatActivity
                 if (currTranslationX <= 0.5 * maxTranslationX) {
                     animator = ValueAnimator.ofFloat(currTranslationX, 0f);
                 }
-                else {
+                else  if(currTranslationX<maxTranslationX){
                     rvTrendingShops.setTranslationX(maxTranslationX);
                     animator = ValueAnimator.ofFloat(currTranslationX, maxTranslationX);
                 }
+                else return;
                 animator.setInterpolator(new AccelerateDecelerateInterpolator());
                 animator.setDuration(Util.DEFAULT_DURATION);
                 animator.addUpdateListener(animation -> {
@@ -212,6 +227,98 @@ public class HomeActivity extends AppCompatActivity
                     animateShopContainer(animatedValue, maxTranslationX);
                 });
                 animator.start();
+            }
+        });
+
+       // rvTrendingShops.setOnTouchListener();
+
+//        rvTrendingShops.addOnScrollListener(new RecyclerView.OnScrollListener() {
+//            /**
+//             * Callback method to be invoked when the RecyclerView has been scrolled. This will be
+//             * called after the scroll has completed.
+//             * <p>
+//             * This callback will also be called if visible item range changes after a layout
+//             * calculation. In that case, dx and dy will be 0.
+//             *
+//             * @param recyclerView The RecyclerView which scrolled.
+//             * @param dx           The amount of horizontal scroll.
+//             * @param dy           The amount of vertical scroll.
+//             */
+//            @Override
+//            public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
+//                if(false)
+//                {
+//                    super.onScrolled(recyclerView,dx,dy);
+//                    return;
+//                }
+//                Log.e(TAG, "onScrolled: CODE"+dx );
+//                //int position = ((LinearLayoutManager) rvTrendingShops.getLayoutManager()).findFirstCompletelyVisibleItemPosition();
+//                boolean shouldDrag = false;
+//                if (rvTrendingShops.getTranslationX() > 0 && dx > 0) {
+//                    shouldDrag = true;
+//                } else if (hasMinTranslation() && dx < 0) {
+//                    int position = ((LinearLayoutManager) rvTrendingShops.getLayoutManager()).findFirstCompletelyVisibleItemPosition();
+//                    if (position == 0)
+//                        shouldDrag = true;
+//                } else if (!hasMaxTranslation() && !hasMinTranslation() && dx < 0) {
+//                    shouldDrag = true;
+//                } else if (hasMaxTranslation() && dx < 0) {
+//                    return;
+//                }
+//                if (shouldDrag) {
+//                    animateShopContainer(rvTrendingShops.getTranslationX() - dx, maxTranslationX);
+//                    rvTrendingShops.scrollToPosition(0);
+//                }
+//                else
+//                    super.onScrolled(recyclerView, dx, dy);
+//            }
+//            boolean hasMinTranslation() {
+//                return rvTrendingShops.getTranslationX() <= 0f;
+//            }
+//
+//            boolean hasMaxTranslation() {
+//                return rvTrendingShops.getTranslationX() >= maxTranslationX;
+//            }
+//        });
+        final GestureDetector gestureDetector = new GestureDetector(this,new GestureDetector.SimpleOnGestureListener() {
+
+
+
+            @Override
+            public void onLongPress(MotionEvent e) {
+                Fragment fragment = getSupportFragmentManager().findFragmentByTag("RECENT_CHECKIN");
+                if(fragment != null)
+                    getSupportFragmentManager().beginTransaction().remove(fragment).commit();
+                FragmentManager fm = getSupportFragmentManager();
+                FragmentTransaction ft = fm.beginTransaction();
+                RecentCheckInFragment rcif=new RecentCheckInFragment();
+                ft.add(R.id.fragmentHolder,rcif,"RECENT_CHECKIN");
+                //ft.replace(R.id.card_user_activities,new RecentCheckInFragment(),"RECENT_CHECKIN");
+                ft.addToBackStack(null);
+                ft.commit();
+                Log.e(TAG, "Longpress detected");
+            }
+
+        });
+
+
+        rvTrendingShops.addOnItemTouchListener(new RecyclerView.OnItemTouchListener() {
+            @Override
+            public boolean onInterceptTouchEvent(RecyclerView rv, MotionEvent event) {
+                rv.requestDisallowInterceptTouchEvent(true);
+                Log.e(TAG, "LongGood till here" +event );
+                gestureDetector.onTouchEvent(event);
+                return false;
+                //return gestureDetector.onTouchEvent(e);
+            }
+
+            @Override
+            public void onTouchEvent(RecyclerView rv, MotionEvent e) {
+            }
+
+            @Override
+            public void onRequestDisallowInterceptTouchEvent(boolean disallowIntercept) {
+
             }
         });
     }
