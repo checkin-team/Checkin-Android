@@ -68,7 +68,7 @@ public abstract class DragTouchListener implements View.OnTouchListener {
                 break;
             }
         }
-        return shouldDrag();
+        return false;
     }
     public abstract  boolean shouldDrag();
     public abstract boolean onDragX(final float dx);

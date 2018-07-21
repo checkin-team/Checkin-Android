@@ -60,4 +60,5 @@
     <string name="text_add_notifications">Notifications</string>
     <string name="text_add_wallet">Wallet</string>
     <string name="text_add_post">Post</string>
+    <string name="active_session">Active Session</string>
 </resources>

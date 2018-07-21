@@ -13,6 +13,7 @@ import android.os.Handler;
 import android.support.annotation.NonNull;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.NavigationView;
+import android.support.transition.Slide;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
@@ -31,6 +32,7 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewConfiguration;
 import android.view.animation.AccelerateDecelerateInterpolator;
+import android.view.animation.DecelerateInterpolator;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -292,6 +294,10 @@ public class HomeActivity extends AppCompatActivity
                 FragmentManager fm = getSupportFragmentManager();
                 FragmentTransaction ft = fm.beginTransaction();
                 RecentCheckInFragment rcif=new RecentCheckInFragment();
+                Slide slide = new Slide();
+                slide.setDuration(500);
+                slide.setInterpolator(new DecelerateInterpolator());
+                rcif.setEnterTransition(slide);
                 ft.add(R.id.fragmentHolder,rcif,"RECENT_CHECKIN");
                 //ft.replace(R.id.card_user_activities,new RecentCheckInFragment(),"RECENT_CHECKIN");
                 ft.addToBackStack(null);
@@ -506,6 +512,10 @@ public class HomeActivity extends AppCompatActivity
         animatorSet.start();
 
         fabHomeAdd.setSelected(false);
+    }
+    @OnClick(R.id.action_dine_in)
+    public  void dine_in(View v){
+        startActivity(new Intent(this,ActiveSession.class));
     }
 
 }

@@ -1,5 +1,6 @@
 package com.alcatraz.admin.project_alcatraz.Home;
 
+import android.animation.ObjectAnimator;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
@@ -9,6 +10,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageButton;
+import android.widget.ImageView;
 
 import com.alcatraz.admin.project_alcatraz.Data.ApiClient;
 import com.alcatraz.admin.project_alcatraz.R;
@@ -26,6 +28,8 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
 
+
+
         ImageButton btnSignIn = findViewById(R.id.btn_signin);
         btnSignIn.setOnClickListener(this);
 
@@ -35,6 +39,20 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         if (mPrefs.getBoolean(Constants.SP_LOGGED_IN, false)) {
             launchHomeActivity();
         }
+    }
+
+    /**
+     * Dispatch onResume() to fragments.  Note that for better inter-operation
+     * with older versions of the platform, at the point of this call the
+     * fragments attached to the activity are <em>not</em> resumed.  This means
+     * that in some cases the previous state may still be saved, not allowing
+     * fragment transactions that modify the state.  To correctly interact
+     * with fragments in their proper state, you should instead override
+     * {@link #onResumeFragments()}.
+     */
+    @Override
+    protected void onResume() {
+        super.onResume();
     }
 
     @Override
@@ -69,8 +87,37 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
     }
 
     private void launchHomeActivity() {
-        startActivity(new Intent(this, HomeActivity.class));
+        ImageButton imageButton=findViewById(R.id.btn_signin);
+        int width=imageButton.getWidth();
+        /*imageButton.animate().scaleX(.5f).setDuration(5000).withEndAction(new Runnable() {
+            @Override
+            public void run() {
+                imageButton.setScaleX(1);
+                imageButton.setImageResource(R.drawable.sign_in_button);
+
+                int req = imageButton.getWidth();
+                //imageButton.getLayoutParams().width=(int)(width*.6);
+
+                imageButton.animate().translationYBy(-100).setDuration(100).withEndAction(() -> imageButton.animate().translationYBy(200).setDuration(200).withEndAction(() -> imageButton.animate().translationYBy(-200).setDuration(200).withEndAction(() -> imageButton.animate().translationYBy(200).setDuration(200).withEndAction(new Runnable() {
+                    @Override
+                    public void run() {
+                        startActivity(new Intent(LoginActivity.this, HomeActivity.class));
+                        finish();
+                    }
+                }).start()).start()).start()).start();
+            }
+        }).start();*/
+
+        startActivity(new Intent(LoginActivity.this, HomeActivity.class));
         finish();
+
+
+
+
+        //imageButton.animate().translationYBy(200).setDuration(2000).start();
+
+        //startActivity(new Intent(this, HomeActivity.class));
+        //finish();
     }
 
     private String login() {
