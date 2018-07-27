@@ -3,6 +3,7 @@ package com.alcatraz.admin.project_alcatraz.Utility;
 import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
+import android.view.ViewGroup;
 
 public abstract class DragTouchListener implements View.OnTouchListener {
     private static final String TAG= DragTouchListener.class.getSimpleName();
@@ -18,7 +19,6 @@ public abstract class DragTouchListener implements View.OnTouchListener {
         v.getLocationOnScreen(location);
         float x, y;
         final int actionIndex = action >> MotionEvent.ACTION_POINTER_INDEX_SHIFT;
-
         x = event.getX(actionIndex) + location[0];
         y = event.getY(actionIndex) + location[1];
         switch (action) {
@@ -68,9 +68,9 @@ public abstract class DragTouchListener implements View.OnTouchListener {
                 break;
             }
         }
-        return true;
+        return false;
     }
-
+    public abstract  boolean shouldDrag();
     public abstract boolean onDragX(final float dx);
 
     public abstract boolean onDragY(final float dy);
