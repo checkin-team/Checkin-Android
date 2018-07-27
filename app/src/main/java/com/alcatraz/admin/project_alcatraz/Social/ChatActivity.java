@@ -17,7 +17,6 @@ import com.alcatraz.admin.project_alcatraz.R;
 import com.alcatraz.admin.project_alcatraz.Utility.Constants;
 import com.alcatraz.admin.project_alcatraz.Utility.NamedFormatter;
 
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
@@ -76,9 +75,9 @@ public class ChatActivity extends AppCompatActivity{
     {
         Message msg = new Message(edChatText.getText().toString(), new Date(), 0, mUserId);
         Map<String, Integer> values = new HashMap<>();
-        values.put("sender", msg.getSenderId());
-        values.put("recipient", msg.getRecipientId());
-        values.put("chat", msg.getChatId());
+        values.put("sender", (int) msg.getSenderId());
+        values.put("recipient", (int) msg.getRecipientId());
+        values.put("chat", (int) msg.getChatId());
         Log.e(TAG, NamedFormatter.format("senderID: %(sender), recipientID: %(recipient) & chatID: %(chat)", values));
         mMessageViewModel.sendMessages(msg);
         edChatText.setText("");

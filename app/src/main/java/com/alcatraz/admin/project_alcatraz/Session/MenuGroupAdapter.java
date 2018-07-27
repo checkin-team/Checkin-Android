@@ -4,6 +4,7 @@ import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
 import android.animation.AnimatorSet;
 import android.content.Context;
+import android.os.Build;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.design.widget.TabLayout;
@@ -194,6 +195,9 @@ public class MenuGroupAdapter extends RecyclerView.Adapter<MenuGroupAdapter.Grou
         GroupViewHolder(View itemView) {
             super(itemView);
             ButterKnife.bind(this, itemView);
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+                Util.setTabsFont(vTabs, mContext.getResources().getFont(R.font.arial_rounded_mt_bold));
+            }
         }
 
         void bindData(final MenuGroup menuGroup) {

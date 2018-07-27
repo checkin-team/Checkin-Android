@@ -1,29 +1,39 @@
 package com.alcatraz.admin.project_alcatraz.Session;
 
-import android.arch.persistence.room.ColumnInfo;
-import android.arch.persistence.room.Entity;
-import android.arch.persistence.room.Ignore;
-import android.arch.persistence.room.PrimaryKey;
-import android.graphics.Bitmap;
 import android.support.annotation.NonNull;
 
+import com.alcatraz.admin.project_alcatraz.Data.Converters;
 import com.google.gson.annotations.SerializedName;
 
 import java.util.ArrayList;
-import java.util.List;
+
+import io.objectbox.annotation.Backlink;
+import io.objectbox.annotation.Convert;
+import io.objectbox.annotation.Entity;
+import io.objectbox.annotation.Id;
+import io.objectbox.annotation.Transient;
+import io.objectbox.relation.ToMany;
 
 /**
  * Created by shivanshs9 on 7/5/18.
  */
 
-@Entity(tableName = "menu_groups")
+@Entity
 public class MenuGroup {
-    @PrimaryKey(autoGenerate = true) private int id;
+    @Id private long id;
     private String title;
-    @SerializedName("sub_groups") @ColumnInfo(name = "sub_groups") private ArrayList<String> subGroups;
-    @ColumnInfo(name = "image_url") private String mImageUrl;
-    @ColumnInfo(name = "menu_id") private int menuId;
-    @Ignore private List<MenuItem> mItems;
+    @Convert(converter = Converters.ListConverter.class, dbType = String.class)
+    @SerializedName("sub_groups")
+    private ArrayList<String> subGroups;
+    @Transient private String mImageUrl;
+    private int menuId;
+    @Backlink(to = "group")
+    private ToMany<MenuItem> items;
+
+    MenuGroup() {
+        this.subGroups = new ArrayList<>(1);
+        this.subGroups.add("Default");
+    }
 
     public MenuGroup(@NonNull final String title, final ArrayList<String> subGroups, int menuId) {
         this.title = title;
@@ -34,16 +44,18 @@ public class MenuGroup {
             this.subGroups.add("Default");
         }
         this.menuId = menuId;
-        this.mItems = new ArrayList<>();
     }
 
-    @NonNull
     public String getTitle() {
         return title;
     }
 
-    public int getId() {
+    public long getId() {
         return id;
+    }
+
+    void setId(long id) {
+        this.id = id;
     }
 
     public int getSubGroupsCount() {
@@ -54,39 +66,15 @@ public class MenuGroup {
         return subGroups;
     }
 
-    public void setTitle(String title) {
-        this.title = title;
-    }
-
     public String getImageUrl() {
         return mImageUrl;
-    }
-
-    public void setImageUrl(String imageUrl) {
-        this.mImageUrl = imageUrl;
-    }
-
-    public void setId(int id) {
-        this.id = id;
     }
 
     public int getMenuId() {
         return menuId;
     }
 
-    public void setMenuId(int menuId) {
-        this.menuId = menuId;
-    }
-
-    public List<MenuItem> getItems() {
-        return mItems;
-    }
-
-    public void setItems(List<MenuItem> items) {
-        this.mItems = items;
-    }
-
-    public void addItem(MenuItem item) {
-        mItems.add(item);
+    public ToMany<MenuItem> getItems() {
+        return items;
     }
 }

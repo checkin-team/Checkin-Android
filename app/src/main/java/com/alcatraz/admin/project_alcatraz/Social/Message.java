@@ -1,59 +1,57 @@
 package com.alcatraz.admin.project_alcatraz.Social;
 
-import android.arch.persistence.room.ColumnInfo;
-import android.arch.persistence.room.Entity;
-import android.arch.persistence.room.ForeignKey;
-import android.arch.persistence.room.Ignore;
-import android.arch.persistence.room.Index;
-import android.arch.persistence.room.PrimaryKey;
 import android.text.format.DateFormat;
 
-
-import com.alcatraz.admin.project_alcatraz.Data.AppRoomDatabase;
 import com.alcatraz.admin.project_alcatraz.User.User;
 import com.google.gson.annotations.SerializedName;
 
 import java.util.Date;
 
+import io.objectbox.annotation.Entity;
+import io.objectbox.annotation.Id;
+import io.objectbox.annotation.Transient;
+import io.objectbox.relation.ToOne;
+
 /**
  * Created by TAIYAB on 14-06-2018.
  */
 
-@Entity(tableName = "messages",
-        indices = {@Index("chat_id"), @Index("read_at"), @Index("recipient_id"), @Index("sender_id")},
-        foreignKeys = {
-            @ForeignKey(entity = User.class, parentColumns = "id", childColumns = "sender_id"),
-            @ForeignKey(entity = User.class, parentColumns = "id", childColumns = "recipient_id"),
-            @ForeignKey(entity = Chat.class, parentColumns = "user_id", childColumns = "chat_id")
-})
+//@Entity(tableName = "messages",
+//        indices = {@Index("chat_id"), @Index("read_at"), @Index("recipient_id"), @Index("sender_id")},
+//        foreignKeys = {
+//            @ForeignKey(entity = User.class, parentColumns = "id", childColumns = "sender_id"),
+//            @ForeignKey(entity = User.class, parentColumns = "id", childColumns = "recipient_id"),
+//            @ForeignKey(entity = Chat.class, parentColumns = "user_id", childColumns = "chat_id")
+//})
+@Entity
 public class Message {
 
-    @PrimaryKey(autoGenerate = true) private int id;
+    @Id private long id;
     @SerializedName(value = "body") private String message;
-    @SerializedName(value = "sender") @ColumnInfo(name = "sender_id") private int senderId;
-    @SerializedName(value = "recipient") @ColumnInfo(name = "recipient_id") private int recipientId;
-    @SerializedName(value = "read_at") @ColumnInfo(name = "read_at") private Date readAt;
-    @SerializedName(value = "sent_at") @ColumnInfo(name = "sent_at") private Date sentAt;
-    @ColumnInfo(name = "chat_id") private int chatId;
-    @Ignore private final String timeFormat = "hh:mm a";
+    @SerializedName(value = "sender") private ToOne<User> sender;
+    @SerializedName(value = "recipient") private ToOne<User> recipient;
+    @SerializedName(value = "read_at") private Date readAt;
+    @SerializedName(value = "sent_at") private Date sentAt;
+    private ToOne<Chat> chat;
+    @Transient private static final String timeFormat = "hh:mm a";
 
-    public Message(String message, Date sentAt, int senderId, int recipientId) {
+    public Message(String message, Date sentAt, long senderId, long recipientId) {
         this.message = message;
         this.sentAt = sentAt;
-        this.senderId = senderId;
-        this.recipientId = recipientId;
-        this.chatId = (recipientId == 0 ? senderId : recipientId);
+        this.sender.setTargetId(senderId);
+        this.recipient.setTargetId(recipientId);
+        this.chat.setTargetId(recipientId == 0 ? senderId : recipientId);
     }
 
     public void setReadAt(Date readAt) {
         this.readAt = readAt;
     }
 
-    public int getId() {
+    public long getId() {
         return id;
     }
 
-    public void setId(int id) {
+    void setId(long id) {
         this.id = id;
     }
 
@@ -73,19 +71,28 @@ public class Message {
         return DateFormat.format(timeFormat, sentAt).toString();
     }
 
-    public int getSenderId() {
-        return senderId;
+    public long getSenderId() {
+        return sender.getTargetId();
     }
 
-    public int getRecipientId() {
-        return recipientId;
+    public long getRecipientId() {
+        return recipient.getTargetId();
     }
 
-    public int getChatId() {
-        return chatId;
+    public ToOne<Chat> getChat() {
+        return chat;
     }
 
-    public void setChatId(int chatId) {
-        this.chatId = chatId;
+    public ToOne<User> getRecipient() {
+        return recipient;
     }
+
+    public ToOne<User> getSender() {
+        return sender;
+    }
+
+    public long getChatId() {
+        return chat.getTargetId();
+    }
+
 }

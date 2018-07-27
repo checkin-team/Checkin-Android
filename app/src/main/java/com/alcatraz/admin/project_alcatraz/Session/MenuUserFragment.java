@@ -1,21 +1,25 @@
 package com.alcatraz.admin.project_alcatraz.Session;
 
+import android.arch.lifecycle.LiveData;
+import android.arch.lifecycle.Observer;
 import android.arch.lifecycle.ViewModelProviders;
 import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
+import android.util.LongSparseArray;
 import android.view.LayoutInflater;
-import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
 
 import com.alcatraz.admin.project_alcatraz.Data.Resource;
 import com.alcatraz.admin.project_alcatraz.R;
+import com.alcatraz.admin.project_alcatraz.Utility.Constants;
 import com.alcatraz.admin.project_alcatraz.Utility.StartSnapHelper;
 import com.alcatraz.admin.project_alcatraz.Utility.Util;
 
@@ -33,16 +37,16 @@ public class MenuUserFragment extends Fragment implements MenuItemAdapter.OnItem
     private OnMenuFragmentInteractionListener mMenuInteractionListener;
     private Unbinder unbinder;
     private MenuViewModel mViewModel;
+    private boolean mSessionActive = true;
+    private LongSparseArray<Integer> orderedItemsCount;
+
+    public static final String SESSION_STATUS = "status";
+    public enum STATUS_VALUES {
+        STARTED, RESUMED, INACTIVE
+    }
 
     public MenuUserFragment() {
         setHasOptionsMenu(true);
-    }
-
-    public static MenuUserFragment newInstance() {
-        MenuUserFragment fragment = new MenuUserFragment();
-        Bundle args = new Bundle();
-        fragment.setArguments(args);
-        return fragment;
     }
 
     @Override
@@ -50,6 +54,17 @@ public class MenuUserFragment extends Fragment implements MenuItemAdapter.OnItem
         super.onCreate(savedInstanceState);
 
         mViewModel = ViewModelProviders.of(getActivity(), new MenuViewModel.Factory(getActivity().getApplication())).get(MenuViewModel.class);
+        Bundle args = getArguments();
+        if (args == null) {
+            Log.e(TAG, "No Serializable arguments sent to " + MenuUserFragment.class.getSimpleName());
+            return;
+        }
+        STATUS_VALUES sessionStatus = (STATUS_VALUES) args.getSerializable(SESSION_STATUS);
+        int shopId = args.getInt(Constants.SHOP_ID);
+        int menuId = args.getInt(MENU_KEY);
+
+        if (sessionStatus == STATUS_VALUES.INACTIVE)
+            mSessionActive = false;
     }
 
     @Override
@@ -79,7 +94,7 @@ public class MenuUserFragment extends Fragment implements MenuItemAdapter.OnItem
             if (menuGroupResource == null)
                 return;
             if (menuGroupResource.status == Resource.Status.SUCCESS)
-                groupAdapter.setGroupList(Util.sparseArrayAsList(menuGroupResource.data));
+                groupAdapter.setGroupList(menuGroupResource.data);
             else if (menuGroupResource.status == Resource.Status.LOADING) {
                 // TODO: DO some Loading magic!
             } else {
@@ -90,17 +105,14 @@ public class MenuUserFragment extends Fragment implements MenuItemAdapter.OnItem
                 ).show();
             }
         });
+        mViewModel.getOrderedItemsCount().observe(getActivity(), data -> {
+            if (data == null)
+                return;
+            orderedItemsCount = data;
+        });
 
         return rootView;
     }
-
-    /*@Override
-    public void onItemAdded(View view, OrderedItem item) {
-        MenuChip menuChip = new MenuChip(item);
-        Log.e("ItemOrdered", menuChip.getLabel() + " -> " + menuChip.getInfo());
-        mChipAdapter.addChip(menuChip);
-        Log.e(TAG, "ItemOrdered: " + areItemsPending());
-    }*/
 
     public void onBackPressed() {
         groupAdapter.contractView(groupAdapter.mPrevExpandedViewHolder);
@@ -131,7 +143,10 @@ public class MenuUserFragment extends Fragment implements MenuItemAdapter.OnItem
 
     @Override
     public boolean onItemAdded(View view, MenuItem item) {
-        return false;
+        if (!mSessionActive)
+            return false;
+        mMenuInteractionListener.onItemOrderInteraction(item, 1);
+        return true;
     }
 
     @Override
@@ -140,7 +155,20 @@ public class MenuUserFragment extends Fragment implements MenuItemAdapter.OnItem
         return true;
     }
 
+    @Override
+    public boolean onItemChanged(MenuItem item, int count) {
+        if (!mSessionActive)
+            return false;
+        mMenuInteractionListener.onItemOrderInteraction(item, count);
+        return true;
+    }
+
+    @Override
+    public LongSparseArray<Integer> orderedItemsCount() {
+        return orderedItemsCount;
+    }
+
     public interface OnMenuFragmentInteractionListener {
-        void onItemOrderInteraction(int count);
+        void onItemOrderInteraction(MenuItem item, int count);
     }
 }

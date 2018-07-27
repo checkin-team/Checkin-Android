@@ -1,20 +1,17 @@
 package com.alcatraz.admin.project_alcatraz.Session;
 
-public class OrderedItem extends MenuItem {
-    private int id;
+import android.util.Log;
+
+public class OrderedItem {
+    private MenuItem item;
     private int quantity;
     private int remainingSeconds;
-    private int typeIndex;
+    private String type;
 
-    OrderedItem(MenuItem menuItem) {
-        super(menuItem.name, menuItem.types, menuItem.costs, menuItem.getGroupId(), menuItem.getMenuId());
-    }
-
-    static OrderedItem order(MenuItem menuItem, int quantity, int typeIndex) {
-        OrderedItem item = new OrderedItem(menuItem);
-        item.quantity = quantity;
-        item.typeIndex = typeIndex;
-        return item;
+    OrderedItem(MenuItem menuItem, int quantity, String type) {
+        this.item = menuItem;
+        this.quantity = quantity;
+        this.type = type;
     }
 
     public void setRemainingSeconds(int remainingSeconds) {
@@ -25,23 +22,30 @@ public class OrderedItem extends MenuItem {
         return remainingSeconds;
     }
 
-    public float getPrice() {
-        return costs.get(typeIndex) * quantity;
+    public double getPrice() {
+        double price = 0;
+        if (item.getTypeCost().containsKey(type)) {
+            price = item.getTypeCost().get(type);
+        } else {
+            Log.e("OrderedItem", "Key invalid");
+        }
+        return price * quantity;
     }
 
     public String getType() {
-        return types.get(typeIndex);
+        return type;
     }
 
     public int getCount() {
         return quantity;
     }
 
-    public void setId(int id) {
-        this.id = id;
+    public MenuItem getItem() {
+        return item;
     }
 
-    public int getId() {
-        return id;
+    @Override
+    public boolean equals(Object obj) {
+        return obj instanceof OrderedItem && ((OrderedItem) obj).getItem().getId() == this.getItem().getId();
     }
 }

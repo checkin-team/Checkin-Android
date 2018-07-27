@@ -1,6 +1,5 @@
 package com.alcatraz.admin.project_alcatraz.Utility;
 
-import android.os.Build;
 import android.support.annotation.NonNull;
 import android.support.v4.graphics.ColorUtils;
 import android.support.v7.widget.RecyclerView;
@@ -25,11 +24,7 @@ public class TextBaseAdapter extends RecyclerView.Adapter<TextBaseAdapter.TextVi
     }
 
     public TextBaseAdapter(int[] data, int textColor, int selectedColor) {
-//        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
-//            this.data = Arrays.stream(data).mapToObj(String::valueOf).toArray(String[]::new);
-//        } else {
-            this.data = Arrays.toString(data).split("[\\[\\]]")[1].split(", ");
-//        }
+        this.data = Arrays.toString(data).split("[\\[\\]]")[1].split(", ");
         this.textColor = textColor;
         this.selectedColor = selectedColor;
     }

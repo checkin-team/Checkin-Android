@@ -1,43 +1,46 @@
 package com.alcatraz.admin.project_alcatraz.Session;
 
-import android.arch.core.util.Function;
+import android.app.Application;
 import android.arch.lifecycle.LiveData;
 import android.arch.lifecycle.Transformations;
 import android.content.Context;
-import android.os.AsyncTask;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.util.Log;
 import android.util.SparseArray;
 
 import com.alcatraz.admin.project_alcatraz.Data.ApiClient;
 import com.alcatraz.admin.project_alcatraz.Data.ApiResponse;
-import com.alcatraz.admin.project_alcatraz.Data.AppRoomDatabase;
+import com.alcatraz.admin.project_alcatraz.Data.AppDatabase;
 import com.alcatraz.admin.project_alcatraz.Data.NetworkBoundResource;
 import com.alcatraz.admin.project_alcatraz.Data.Resource;
 import com.alcatraz.admin.project_alcatraz.Data.WebApiService;
 
-import java.util.HashMap;
 import java.util.List;
 
 import javax.inject.Singleton;
 
+import io.objectbox.Box;
+import io.objectbox.android.ObjectBoxLiveData;
+
 @Singleton
 public class MenuRepository {
     private static MenuRepository INSTANCE;
-
+    private Box<MenuItem> mMenuItemModel;
+    private Box<MenuGroup> mMenuGroupModel;
     private WebApiService mWebService;
-    private MenuDao mMenuModel;
 
-    private MenuRepository(MenuDao menuDao) {
-        mWebService = ApiClient.getApiService();
-        mMenuModel = menuDao;
+    private MenuRepository(Context context) {
+        mWebService = ApiClient.getApiService(context);
+        mMenuItemModel = AppDatabase.getMenuItemModel(context);
+        mMenuGroupModel = AppDatabase.getMenuGroupModel(context);
     }
-    public LiveData<Resource<List<MenuItem>>> getMenuItems(final int menuId) {
-        return new NetworkBoundResource<List<MenuItem>, List<MenuItem>>() {
+    public LiveData<List<MenuItem>> getMenuItems(final int menuId) {
+        /*return new NetworkBoundResource<List<MenuItem>, List<MenuItem>>() {
 
             @Override
             protected void saveCallResult(@NonNull List<MenuItem> item) {
-                mMenuModel.insertItems(item.toArray(new MenuItem[0]));
+                mMenuItemModel.put(item);
             }
 
             @Override
@@ -45,10 +48,15 @@ public class MenuRepository {
                 return false;
             }
 
+            @Override
+            protected boolean shouldUseLocalDb() {
+                return true;
+            }
+
             @NonNull
             @Override
             protected LiveData<List<MenuItem>> loadFromDb() {
-                return mMenuModel.getMenuItems(menuId);
+                return new ObjectBoxLiveData<>(mMenuItemModel.query().equal(MenuItem_.menuId, menuId).build());
             }
 
             @NonNull
@@ -57,35 +65,31 @@ public class MenuRepository {
                 // TODO: Network Fetching!!!!
                 return null;
             }
-        }.getAsLiveData();
+        }.getAsLiveData();*/
+        return new ObjectBoxLiveData<>(mMenuItemModel.query().equal(MenuItem_.menuId, menuId).build());
     }
 
-    public LiveData<Resource<SparseArray<MenuGroup>>> getMenuGroups(final int menuId) {
-        return new NetworkBoundResource<SparseArray<MenuGroup>, List<MenuGroup>>() {
+    public LiveData<Resource<List<MenuGroup>>> getMenuGroups(final int menuId) {
+        return new NetworkBoundResource<List<MenuGroup>, List<MenuGroup>>() {
 
             @Override
             protected void saveCallResult(@NonNull List<MenuGroup> item) {
-                mMenuModel.insertGroups(item.toArray(new MenuGroup[0]));
             }
 
             @Override
-            protected boolean shouldFetch(@Nullable SparseArray<MenuGroup> data) {
+            protected boolean shouldFetch(@Nullable List<MenuGroup> data) {
                 return false;
+            }
+
+            @Override
+            protected boolean shouldUseLocalDb() {
+                return true;
             }
 
             @NonNull
             @Override
-            protected LiveData<SparseArray<MenuGroup>> loadFromDb() {
-                return Transformations.map(mMenuModel.getMenuGroups(menuId), new Function<List<MenuGroup>, SparseArray<MenuGroup>>() {
-                    @Override
-                    public SparseArray<MenuGroup> apply(List<MenuGroup> input) {
-                        SparseArray<MenuGroup> result = new SparseArray<>(input.size());
-                        for (MenuGroup item : input) {
-                            result.put(item.getId(), item);
-                        }
-                        return result;
-                    }
-                });
+            protected LiveData<List<MenuGroup>> loadFromDb() {
+                return new ObjectBoxLiveData<>(mMenuGroupModel.query().equal(MenuGroup_.menuId, menuId).build());
             }
 
             @NonNull
@@ -96,12 +100,12 @@ public class MenuRepository {
         }.getAsLiveData();
     }
 
-    public static MenuRepository getInstance(Context context) {
+    public static MenuRepository getInstance(Application application) {
         if (INSTANCE == null) {
             synchronized (MenuRepository.class) {
                 if (INSTANCE == null) {
-                    AppRoomDatabase db = AppRoomDatabase.getDatabase(context);
-                    INSTANCE = new MenuRepository(db.menuModel());
+                    Context context = application.getApplicationContext();
+                    INSTANCE = new MenuRepository(context);
                 }
             }
         }

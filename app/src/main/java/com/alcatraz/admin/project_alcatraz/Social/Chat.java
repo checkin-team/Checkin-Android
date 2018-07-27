@@ -1,25 +1,38 @@
 package com.alcatraz.admin.project_alcatraz.Social;
 
-import android.arch.persistence.room.ColumnInfo;
-import android.arch.persistence.room.Entity;
-import android.arch.persistence.room.Index;
-import android.arch.persistence.room.PrimaryKey;
+import io.objectbox.annotation.Backlink;
+import io.objectbox.annotation.Entity;
+import io.objectbox.annotation.Id;
+import io.objectbox.annotation.Transient;
+import io.objectbox.relation.ToMany;
 
-@Entity(tableName = "chats", indices = {@Index("user_id")})
+@Entity
 public class Chat {
-    @PrimaryKey
-    @ColumnInfo(name = "user_id")
-    private int userId;
+    @Id private long userId;
+    @Backlink(to = "chat") private ToMany<Message> messages;
+    @Transient private Message lastMessage;
 
-    public Chat(int userId) {
+    public Chat(long userId) {
         this.userId = userId;
     }
 
-    public int getUserId() {
+    public long getUserId() {
         return userId;
     }
 
-    public void setUserId(int userId) {
+    public void setUserId(long userId) {
         this.userId = userId;
+    }
+
+    public ToMany<Message> getMessages() {
+        return messages;
+    }
+
+    public Message getLastMessage() {
+        return lastMessage;
+    }
+
+    public void setLastMessage(Message lastMessage) {
+        this.lastMessage = lastMessage;
     }
 }

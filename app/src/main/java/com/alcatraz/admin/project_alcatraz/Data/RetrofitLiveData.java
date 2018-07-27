@@ -2,6 +2,7 @@ package com.alcatraz.admin.project_alcatraz.Data;
 
 import android.arch.lifecycle.LiveData;
 import android.support.annotation.NonNull;
+import android.util.Log;
 
 import java.io.IOException;
 
@@ -15,11 +16,7 @@ public class RetrofitLiveData<T> extends LiveData<ApiResponse<T>> {
     private final Callback<T> mCallback = new Callback<T>() {
         @Override
         public void onResponse(@NonNull Call<T> call, @NonNull Response<T> response) {
-            try {
-                postValue(new ApiResponse<>(response));
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
+            postValue(new ApiResponse<>(response));
         }
 
         @Override
@@ -34,13 +31,24 @@ public class RetrofitLiveData<T> extends LiveData<ApiResponse<T>> {
 
     @Override
     protected void onActive() {
+        super.onActive();
         if (!mCall.isCanceled() && !mCall.isExecuted()) {
+            Log.e("Http calls", "Call enqueued");
             mCall.enqueue(mCallback);
+        }
+    }
+
+    @Override
+    protected void onInactive() {
+        super.onInactive();
+        if (!hasObservers()) {
+            cancel();
         }
     }
 
     public void cancel() {
         if (!mCall.isCanceled())
+            Log.e("Http Calls", "Call cancelled!");
             mCall.cancel();
     }
 }

@@ -2,13 +2,13 @@
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    xmlns:tools="http://schemas.android.com/tools"
     android:orientation="horizontal">
 
     <ImageButton
         android:id="@+id/action_search"
         android:background="@drawable/ic_search"
         android:layout_gravity="start"
-        android:layout_marginLeft="5dp"
         android:layout_marginStart="5dp"
         android:layout_marginTop="8dp"
         android:layout_width="35dp"
@@ -26,11 +26,16 @@
         android:textSize="@dimen/font_largest"
         android:textStyle="bold" />
 
-    <ImageButton
-        android:id="@+id/action_finish"
-        android:layout_width="44dp"
-        android:layout_height="40dp"
+    <TextView
+        android:id="@+id/count_order_items"
         android:layout_gravity="end"
-        android:layout_marginTop="7dp"
-        android:background="@drawable/ic_finish" />
+        android:layout_marginEnd="@dimen/spacing_huge"
+        android:layout_marginTop="@dimen/spacing_normal"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textColor="@color/white"
+        android:fontFamily="@font/arial_rounded_mt_bold"
+        android:textSize="@dimen/font_normal"
+        tools:text="10"/>
+
 </FrameLayout>

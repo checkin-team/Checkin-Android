@@ -1,24 +1,18 @@
 package com.alcatraz.admin.project_alcatraz.Home;
 
-import android.content.Intent;
 import android.graphics.Color;
+import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.text.SpannableString;
 import android.text.Spanned;
-import android.text.TextPaint;
 import android.text.method.LinkMovementMethod;
-import android.text.style.ClickableSpan;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
-
 
 import com.alcatraz.admin.project_alcatraz.R;
-
-import org.jetbrains.annotations.NotNull;
 
 import java.util.List;
 
@@ -62,7 +56,7 @@ public class TransactionAdapter extends RecyclerView.Adapter<TransactionAdapter.
     }
 
     @Override
-    public void onBindViewHolder(@NotNull final MyView holder, final int position) {
+    public void onBindViewHolder(@NonNull final MyView holder, final int position) {
         if(position==0)
             return;
         Transaction transaction = list.get(position);
@@ -74,7 +68,6 @@ public class TransactionAdapter extends RecyclerView.Adapter<TransactionAdapter.
             holder.date.setText(transaction.date);
         }
         if (transaction.cashback) {
-
             SpannableString ss = new SpannableString("CashBack received\nRestaurant "+transaction.hotel+" \nOrder no. "+transaction.Order);
             ss.setSpan(TransactionActivity.clickableSpan, 29, 29+transaction.hotel.length(), Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
             holder.debit.setText(ss);

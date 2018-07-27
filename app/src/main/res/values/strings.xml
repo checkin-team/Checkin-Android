@@ -60,4 +60,6 @@
     <string name="text_add_notifications">Notifications</string>
     <string name="text_add_wallet">Wallet</string>
     <string name="text_add_post">Post</string>
+    <string name="menu_drawer_open">Open Menu Cart drawer</string>
+    <string name="menu_drawer_close">Close Menu Cart drawer</string>
 </resources>

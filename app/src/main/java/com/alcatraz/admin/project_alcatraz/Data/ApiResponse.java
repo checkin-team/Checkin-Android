@@ -1,26 +1,42 @@
 package com.alcatraz.admin.project_alcatraz.Data;
 
+import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 
 import java.io.IOException;
 
 import retrofit2.Response;
 
-public class ApiResponse<T> {
-    public final int statusCode;
-    @Nullable public final T data;
-    @Nullable public final String errorMessage;
+import static java.net.HttpURLConnection.HTTP_CLIENT_TIMEOUT;
 
-    public ApiResponse(Throwable error) {
-        statusCode = 500;
+public class ApiResponse<T> {
+    private final int mStatusCode;
+    private Response<T> mResponse;
+    @Nullable private final T data;
+    @Nullable private final String errorMessage;
+    @Nullable private final Throwable errorThrowable;
+
+    ApiResponse(Throwable error) {
+        mResponse = null;
+        mStatusCode = HTTP_CLIENT_TIMEOUT;
         data = null;
         errorMessage = error.getMessage();
+        errorThrowable = error;
     }
 
-    public ApiResponse(Response<T> response) throws IOException {
-        statusCode = response.code();
+    ApiResponse(@NonNull Response<T> response) {
+        mResponse = response;
+        mStatusCode = response.code();
+        errorThrowable = null;
+        String str = null;
         if (response.errorBody() != null) {
-            errorMessage = response.errorBody().string();
+            try {
+                str = response.errorBody().string();
+            } catch (IOException e) {
+                e.printStackTrace();
+            } finally {
+                errorMessage = str;
+            }
         } else {
             errorMessage = null;
         }
@@ -28,6 +44,29 @@ public class ApiResponse<T> {
     }
 
     public boolean isSuccessful() {
-        return statusCode >= 200 && statusCode < 300;
+        return mResponse != null && mResponse.isSuccessful();
+    }
+
+    @Nullable
+    public T getData() {
+        return data;
+    }
+
+    @Nullable
+    public String getErrorMessage() {
+        return errorMessage;
+    }
+
+    public int getStatusCode() {
+        return mStatusCode;
+    }
+
+    public boolean hasStatus(int statusCode) {
+        return mStatusCode == statusCode;
+    }
+
+    @Nullable
+    public Throwable getErrorThrowable() {
+        return errorThrowable;
     }
 }

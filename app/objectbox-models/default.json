@@ -1,0 +1,160 @@
+{
+  "_note1": "KEEP THIS FILE! Check it into a version control system (VCS) like git.",
+  "_note2": "ObjectBox manages crucial IDs for your object model. See docs for details.",
+  "_note3": "If you have VCS merge conflicts, you must resolve them according to ObjectBox docs.",
+  "entities": [
+    {
+      "id": "1:2092922911264715731",
+      "lastPropertyId": "6:1962050362083928069",
+      "name": "MenuGroup",
+      "properties": [
+        {
+          "id": "1:2357008894183385413",
+          "name": "id"
+        },
+        {
+          "id": "2:891530261807949844",
+          "name": "title"
+        },
+        {
+          "id": "4:3603070033911640930",
+          "name": "menuId"
+        },
+        {
+          "id": "5:1796464210394084986",
+          "name": "subGroups"
+        }
+      ],
+      "relations": []
+    },
+    {
+      "id": "2:4751991434768962358",
+      "lastPropertyId": "10:2204426426945731667",
+      "name": "MenuItem",
+      "properties": [
+        {
+          "id": "1:1349798304948351482",
+          "name": "id"
+        },
+        {
+          "id": "2:6423194816000619007",
+          "name": "name"
+        },
+        {
+          "id": "3:4618499012400939291",
+          "name": "baseType"
+        },
+        {
+          "id": "4:2305650887837125402",
+          "name": "unit"
+        },
+        {
+          "id": "5:741571791694009597",
+          "name": "vegetarian"
+        },
+        {
+          "id": "6:5251713811585533795",
+          "name": "menuId"
+        },
+        {
+          "id": "7:5028484023166924229",
+          "name": "subGroupIndex"
+        },
+        {
+          "id": "9:31863598321411654",
+          "indexId": "2:2236275169801858660",
+          "name": "groupId"
+        },
+        {
+          "id": "10:2204426426945731667",
+          "name": "typeCost"
+        }
+      ],
+      "relations": []
+    },
+    {
+      "id": "3:1825520333352452730",
+      "lastPropertyId": "1:1076307376917742645",
+      "name": "Chat",
+      "properties": [
+        {
+          "id": "1:1076307376917742645",
+          "name": "userId"
+        }
+      ],
+      "relations": []
+    },
+    {
+      "id": "4:3056302557900436583",
+      "lastPropertyId": "7:2199832411623591563",
+      "name": "Message",
+      "properties": [
+        {
+          "id": "1:1695409509402018395",
+          "name": "id"
+        },
+        {
+          "id": "2:8336087098466931779",
+          "name": "message"
+        },
+        {
+          "id": "3:7994615164646139204",
+          "name": "readAt"
+        },
+        {
+          "id": "4:2488539093947571020",
+          "name": "sentAt"
+        },
+        {
+          "id": "5:5532540320742085313",
+          "indexId": "3:3733946287269321582",
+          "name": "senderId"
+        },
+        {
+          "id": "6:2729163387017546426",
+          "indexId": "4:7601049398434610089",
+          "name": "recipientId"
+        },
+        {
+          "id": "7:2199832411623591563",
+          "indexId": "5:8998894092831263298",
+          "name": "chatId"
+        }
+      ],
+      "relations": []
+    },
+    {
+      "id": "5:1489350037199516192",
+      "lastPropertyId": "2:8405806836410714238",
+      "name": "User",
+      "properties": [
+        {
+          "id": "1:5454480680900583983",
+          "name": "id"
+        },
+        {
+          "id": "2:8405806836410714238",
+          "name": "username"
+        }
+      ],
+      "relations": []
+    }
+  ],
+  "lastEntityId": "5:1489350037199516192",
+  "lastIndexId": "5:8998894092831263298",
+  "lastRelationId": "0:0",
+  "lastSequenceId": "0:0",
+  "modelVersion": 4,
+  "modelVersionParserMinimum": 4,
+  "retiredEntityUids": [],
+  "retiredIndexUids": [
+    1744039066905882396
+  ],
+  "retiredPropertyUids": [
+    2897744320311231101,
+    2436679017790023573,
+    1962050362083928069
+  ],
+  "retiredRelationUids": [],
+  "version": 1
+}

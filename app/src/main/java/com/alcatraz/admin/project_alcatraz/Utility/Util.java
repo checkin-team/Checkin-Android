@@ -6,10 +6,7 @@ import android.animation.AnimatorSet;
 import android.animation.ArgbEvaluator;
 import android.animation.ObjectAnimator;
 import android.animation.ValueAnimator;
-import android.annotation.TargetApi;
-import android.content.Context;
 import android.content.res.ColorStateList;
-import android.graphics.Color;
 import android.graphics.Typeface;
 import android.graphics.drawable.ColorDrawable;
 import android.graphics.drawable.Drawable;
@@ -17,6 +14,7 @@ import android.os.Build;
 import android.support.annotation.NonNull;
 import android.support.annotation.RequiresApi;
 import android.support.design.widget.TabLayout;
+import android.util.Log;
 import android.util.SparseArray;
 import android.view.View;
 import android.view.ViewAnimationUtils;
@@ -28,6 +26,7 @@ import android.widget.TextView;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.lang.reflect.Field;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
@@ -311,9 +310,9 @@ public class Util {
         String apply(MatchResult match);
     }
 
-    public static <C> List<C> sparseArrayAsList(SparseArray<C> sparseArray) {
+    public static <T> List<T> sparseArrayAsList(SparseArray<T> sparseArray) {
         if (sparseArray == null) return null;
-        List<C> arrayList = new ArrayList<C>(sparseArray.size());
+        List<T> arrayList = new ArrayList<T>(sparseArray.size());
         for (int i = 0; i < sparseArray.size(); i++)
             arrayList.add(sparseArray.valueAt(i));
         return arrayList;
@@ -325,5 +324,28 @@ public class Util {
             wordList.append(word.toString() + delimiter);
         }
         return new String(wordList.delete(wordList.length() - delimiter.length(), wordList.length()));
+    }
+
+    public static <T> boolean equalsObjectField(@NonNull Object obj, String field, @NonNull T value) {
+        try {
+            Field f = obj.getClass().getDeclaredField(field);
+            f.setAccessible(true);
+            return value.equals(f.get(obj));
+        } catch (NoSuchFieldException e) {
+            Log.e("Field '" + field + "' in " + obj.getClass().getSimpleName(), "Missing");
+        } catch (IllegalAccessException e) {
+            e.printStackTrace();
+        }
+        return false;
+    }
+
+    public static <T> T getFromCollection(@NonNull Collection<T> collection, T obj) {
+        T res = null;
+        for (T item: collection) {
+            if (obj.equals(item)) {
+                res = item;
+            }
+        }
+        return res;
     }
 }

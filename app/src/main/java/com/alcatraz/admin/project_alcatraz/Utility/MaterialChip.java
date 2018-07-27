@@ -5,7 +5,6 @@ import android.content.res.ColorStateList;
 import android.graphics.drawable.Drawable;
 import android.net.Uri;
 
-import com.alcatraz.admin.project_alcatraz.Session.MenuChip;
 import com.pchmn.materialchips.model.ChipInterface;
 import com.pchmn.materialchips.views.DetailedChipView;
 

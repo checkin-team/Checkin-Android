@@ -1,30 +1,28 @@
 package com.alcatraz.admin.project_alcatraz.Data;
 
-import com.alcatraz.admin.project_alcatraz.R;
-import com.alcatraz.admin.project_alcatraz.Session.MenuDao;
+import android.content.Context;
+import android.util.Log;
+
 import com.alcatraz.admin.project_alcatraz.Session.MenuGroup;
 import com.alcatraz.admin.project_alcatraz.Session.MenuItem;
-import com.alcatraz.admin.project_alcatraz.Social.Chat;
-import com.alcatraz.admin.project_alcatraz.Social.ChatDao;
-import com.alcatraz.admin.project_alcatraz.Social.Message;
-import com.alcatraz.admin.project_alcatraz.Social.MessageDao;
 import com.alcatraz.admin.project_alcatraz.User.User;
-import com.alcatraz.admin.project_alcatraz.User.UserDao;
 
 import java.util.ArrayList;
-import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
-import java.util.Locale;
+import java.util.Map;
+
+import io.objectbox.Box;
 
 public class TestDb {
     private static final int DELAY_MILLIS = 1000;
-    public static void populateWithTestData(AppRoomDatabase db) {
-        populateUsers(db.userModel(), db.chatModel());
-        populateMessages(db.messageModel(), db.chatModel());
-        populateMenu(db.menuModel());
+    public static void populateWithTestData(final Context context) {
+        Log.e("TestData", "Populating...");
+        populateUsers(AppDatabase.getUserModel(context));
+        populateMenu(AppDatabase.getMenuItemModel(context), AppDatabase.getMenuGroupModel(context));
     }
 
-    private static void populateMenu(MenuDao menuModel) {
+    private static void populateMenu(Box<MenuItem> menuItemModel, Box<MenuGroup> menuGroupModel) {
         List<MenuGroup> menuGroups = new ArrayList<>(30);
         List<MenuItem> menuItems = new ArrayList<>();
         for (int i = 1; i <= 30; i++) {
@@ -36,62 +34,35 @@ public class TestDb {
             }
             menuGroups.add(new MenuGroup( "Group #" + i, subGroups, 1));
             for (int j = 0; j <= i/2; j++) {
-                ArrayList<Float> costs;
-                ArrayList<String> types;
+                Map<String, Double> typeCost = new HashMap<>();
+                String baseType;
                 if (j % 2 == 0) {
-                    costs = new ArrayList<>(3);
-                    costs.add(300f);
-                    costs.add(500f);
-                    costs.add(750f);
-                    types = new ArrayList<>(3);
-                    types.add("Pint");
-                    types.add("Can");
-                    types.add("Beer");
+                    typeCost.put("Pint", 300.0);
+                    typeCost.put("Can", 400.0);
+                    typeCost.put("Beer", 750.0);
+                    baseType = "Pint";
                 } else {
-                    costs = new ArrayList<>(1);
-                    costs.add(460f);
-                    types = new ArrayList<>(1);
-                    types.add("Default");
+                    typeCost.put("Default", 460.0);
+                    baseType = "Default";
                 }
-                MenuItem menuItem = new MenuItem("Carlsburg #" + j, types, costs, i, 1);
+                MenuItem menuItem = new MenuItem("Carlsburg #" + j, typeCost, baseType, i, 1);
                 if (i % 2 == 0)
                     menuItem.setSubGroupIndex(j % 2);
                 menuItems.add(menuItem);
             }
         }
-        menuModel.insertGroups(menuGroups.toArray(new MenuGroup[0]));
-        menuModel.insertItems(menuItems.toArray(new MenuItem[0]));
+        menuGroupModel.put(menuGroups);
+        menuItemModel.put(menuItems);
     }
 
-    private static void populateUsers(UserDao userModel, ChatDao chatModel) {
-        User user0 = new User(0, "You");
-//        user0.setImageUrl(R.drawable.profile);
-        User user1 = new User(1, "Alex");
-//        user1.setImageUrl(R.drawable.dummy_alex);
-        User user2 = new User(2, "Alice");
-//        user2.setImageUrl(R.drawable.flier);
+    private static void populateUsers(Box<User> userModel) {
+        User user1 = new User("Alex");
+        User user2 = new User("Alice");
 
-        userModel.insertAll(user0, user1, user2);
+        userModel.put(user1, user2);
 
-        User user3 = new User(3, "Monica");
-//        user3.setImageUrl(R.drawable.dummy_monica);
-        User user4 = new User(4, "Jack");
-//        user4.setImageUrl(R.drawable.profile);
-        userModel.insertAll(user3, user4);
-        chatModel.insertAll(new Chat(1), new Chat(2), new Chat(3), new Chat(4));
-    }
-
-    private static void populateMessages(MessageDao messageModel, ChatDao chatModel) {
-        Message msg1 = new Message("Hiya!", new Date(), 0, 2);
-        Message msg2 = new Message("Hello to you too!", new Date(), 2, 0);
-        Message msg3 = new Message("There?", new Date(), 3, 0);
-        try {
-            Thread.sleep(DELAY_MILLIS);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
-        Message msg4 = new Message("Damn!", new Date(), 1, 0);
-        Message msg5 = new Message("I'm getting bored.", new Date(), 1, 0);
-        messageModel.insertAll(msg1, msg2, msg3, msg4, msg5);
+        User user3 = new User("Monica");
+        User user4 = new User("Jack");
+        userModel.put(user3, user4);
     }
 }

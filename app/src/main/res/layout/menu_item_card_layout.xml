@@ -62,6 +62,7 @@
         android:layout_marginBottom="8dp"
         android:layout_marginEnd="8dp"
         android:layout_marginTop="8dp"
+        android:background="@drawable/menu_quantity_selection_bar"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent">
@@ -72,12 +73,15 @@
             android:layout_height="match_parent"
             android:src="@drawable/ic_menu_item_add" />
 
-        <!--<com.yarolegovich.discretescrollview.DiscreteScrollView
+        <com.yarolegovich.discretescrollview.DiscreteScrollView
             android:id="@+id/quantity_picker"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
+            android:layout_marginEnd="@dimen/spacing_tiny"
+            android:layout_marginStart="@dimen/spacing_tiny"
             android:layout_gravity="center"
-            app:dsv_orientation="horizontal" />-->
+            app:dsv_orientation="horizontal"
+            android:visibility="gone"/>
 
     </FrameLayout>
 

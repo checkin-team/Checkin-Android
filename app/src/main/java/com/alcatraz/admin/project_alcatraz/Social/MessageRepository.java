@@ -1,41 +1,43 @@
 package com.alcatraz.admin.project_alcatraz.Social;
 
+import android.app.Application;
 import android.arch.lifecycle.LiveData;
 import android.content.Context;
-import android.os.AsyncTask;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 
 import com.alcatraz.admin.project_alcatraz.Data.ApiClient;
 import com.alcatraz.admin.project_alcatraz.Data.ApiResponse;
-import com.alcatraz.admin.project_alcatraz.Data.AppRoomDatabase;
+import com.alcatraz.admin.project_alcatraz.Data.AppDatabase;
+import com.alcatraz.admin.project_alcatraz.Data.BaseRepository;
 import com.alcatraz.admin.project_alcatraz.Data.NetworkBoundResource;
 import com.alcatraz.admin.project_alcatraz.Data.Resource;
 import com.alcatraz.admin.project_alcatraz.Data.RetrofitLiveData;
 import com.alcatraz.admin.project_alcatraz.Data.WebApiService;
-import com.alcatraz.admin.project_alcatraz.Social.ChatDao.BriefChat;
 
 import java.util.List;
 
 import javax.inject.Singleton;
 
-@Singleton
-public class MessageRepository {
-    private static final String TAG = MessageRepository.class.getSimpleName();
+import io.objectbox.Box;
+import io.objectbox.android.ObjectBoxLiveData;
 
-    private final MessageDao mMessageModel;
-    private final ChatDao mChatModel;
+@Singleton
+public class MessageRepository extends BaseRepository {
+    private static final String TAG = MessageRepository.class.getSimpleName();
+    private Box<Message> mMessageModel;
+    private Box<Chat> mChatModel;
     private final WebApiService mWebService;
     private static MessageRepository INSTANCE;
 
-    private MessageRepository(MessageDao messageDao, ChatDao chatDao) {
-        mWebService = ApiClient.getApiService();
-        mMessageModel = messageDao;
-        mChatModel = chatDao;
+    private MessageRepository(Context context) {
+        mWebService = ApiClient.getApiService(context);
+        mMessageModel = AppDatabase.getMessageModel(context);
+        mChatModel = AppDatabase.getChatModel(context);
     }
 
     LiveData<List<Message>> getAllMessages() {
-        return mMessageModel.getAll();
+        return new ObjectBoxLiveData<>(mMessageModel.query().build());
     }
 
     public LiveData<Resource<List<Message>>> getMessagesInConversation(int userId) {
@@ -43,7 +45,7 @@ public class MessageRepository {
 
             @Override
             protected void saveCallResult(@NonNull List<Message> messages) {
-                mMessageModel.insertAll(messages.toArray(new Message[0]));
+                mMessageModel.put(messages);
             }
 
             @Override
@@ -52,50 +54,42 @@ public class MessageRepository {
                 return data == null;
             }
 
+            @Override
+            protected boolean shouldUseLocalDb() {
+                return true;
+            }
+
             @NonNull
             @Override
             protected LiveData<List<Message>> loadFromDb() {
-                return mMessageModel.getMessagesOfChat(userId);
+                return new ObjectBoxLiveData<>(mMessageModel.query().equal(Message_.chatId, userId).build());
             }
 
             @NonNull
             @Override
             protected LiveData<ApiResponse<List<Message>>> createCall() {
-                return new RetrofitLiveData<List<Message>>(mWebService.getMessages(userId));
+                return new RetrofitLiveData<>(mWebService.getMessages(userId));
             }
         }.getAsLiveData();
     }
 
-    public LiveData<List<BriefChat>> getBriefChats() {
-        return mChatModel.getRecentBriefChats();
+    public LiveData<List<Chat>> getBriefChats() {
+        return null;
     }
 
-    public void insertMessages(Message... messages) {
-        new insertMessageAsyncTask(mMessageModel).execute(messages);
-    }
-
-    private static class insertMessageAsyncTask extends AsyncTask<Message, Void, Void> {
-        private MessageDao mAsyncTaskDao;
-        insertMessageAsyncTask(MessageDao dao) {
-            mAsyncTaskDao = dao;
-        }
-
-        @Override
-        protected Void doInBackground(Message... messages) {
-            mAsyncTaskDao.insertAll(messages);
-            return null;
-        }
-    }
-
-    public static MessageRepository getInstance(Context context) {
+    public static MessageRepository getInstance(Application application) {
         if (INSTANCE == null) {
             synchronized (MessageRepository.class) {
                 if (INSTANCE == null) {
-                    AppRoomDatabase db = AppRoomDatabase.getDatabase(context);
-                    INSTANCE = new MessageRepository(db.messageModel(), db.chatModel());
+                    Context context = application.getApplicationContext();
+                    INSTANCE = new MessageRepository(context);
                 }
             }
         }
         return INSTANCE;
+    }
+
+    public void insertMessages(Message... messages) {
+        mMessageModel.put(messages);
     }
 }

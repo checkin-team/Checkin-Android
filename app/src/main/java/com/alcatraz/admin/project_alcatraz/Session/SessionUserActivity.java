@@ -6,32 +6,28 @@ import android.arch.lifecycle.ViewModelProviders;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.graphics.Typeface;
+import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.speech.RecognizerIntent;
-import android.support.design.widget.TabLayout;
-import android.support.v4.content.res.ResourcesCompat;
+import android.support.v4.app.FragmentTransaction;
+import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
-
-import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentPagerAdapter;
-import android.os.Bundle;
 import android.text.TextUtils;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MotionEvent;
 import android.view.View;
+import android.widget.Button;
 import android.widget.ImageButton;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.alcatraz.admin.project_alcatraz.R;
+import com.alcatraz.admin.project_alcatraz.Session.MenuUserFragment.STATUS_VALUES;
 import com.alcatraz.admin.project_alcatraz.Utility.Constants;
-import com.alcatraz.admin.project_alcatraz.Utility.DynamicSwipableViewPager;
-import com.alcatraz.admin.project_alcatraz.Utility.Util;
+import com.alcatraz.admin.project_alcatraz.Utility.EndDrawerToggle;
 import com.miguelcatalan.materialsearchview.MaterialSearchView;
 
 import java.util.ArrayList;
@@ -41,37 +37,35 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 
-public class SessionUserActivity extends AppCompatActivity implements MenuUserFragment.OnMenuFragmentInteractionListener {
+import static com.alcatraz.admin.project_alcatraz.Session.MenuUserFragment.SESSION_STATUS;
+
+public class SessionUserActivity extends AppCompatActivity implements MenuUserFragment.OnMenuFragmentInteractionListener, MenuCartAdapter.OnCartInteractionListener {
     private final String TAG = SessionUserActivity.class.getSimpleName();
-    /**
-     * The {@link android.support.v4.view.PagerAdapter} that will provide
-     * fragments for each of the sections.
-     */
+
     @BindView(R.id.search_view) MaterialSearchView mSearchView;
     @BindView(R.id.action_filter_toggle) ImageButton mFilterToggle;
     @BindView(R.id.filter_container) View mFilterContainer;
     @BindView(R.id.dark_back) View mDarkBack;
-    @BindView(R.id.action_finish) ImageButton mActionFinish;
     @BindView(R.id.action_search) ImageButton mActionSearch;
-    @BindView(R.id.chips_item_list) RecyclerView rvChipsList;
+    @BindView(R.id.rv_menu_cart) RecyclerView rvCart;
+    @BindView(R.id.count_order_items) TextView tvCountItems;
     private MenuUserFragment mMenuFragment;
-    private MenuChipAdapter mChipAdapter;
-    private MenuViewModel mViewModel;
+    private MenuViewModel mMenuViewModel;
+    private MenuCartAdapter mCartAdapter;
 
-    private int mSessionStatus;
+    private STATUS_VALUES mSessionStatus;
+    private static final String SESSION_ARG = "session_arg";
 
-    private static final String SESSION_STATUS = "status";
-    private static final int SESSION_STARTED = 1;
-    private static final int SESSION_RESUMED = 2;
-    private static final int MENU_TAB = 0;
-    private static final int DETAIL_TAB = 1;
+
 
     public static void startSession(Context context, int shop_id, int qr_id) {
         Intent intent = new Intent(context, SessionUserActivity.class);
         //TODO: Start session by network request.
         int session_id = 1;
-        intent.putExtra(Constants.SHOP_ID, shop_id);
-        intent.putExtra(SESSION_STATUS, SESSION_STARTED);
+        Bundle args = new Bundle();
+        args.putInt(Constants.SHOP_ID, shop_id);
+        args.putSerializable(SESSION_STATUS, STATUS_VALUES.STARTED);
+        intent.putExtra(SESSION_ARG, args);
         SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(context);
         prefs.edit()
                 .putBoolean(Constants.SP_CHECKED_IN, true)
@@ -82,7 +76,7 @@ public class SessionUserActivity extends AppCompatActivity implements MenuUserFr
 
     public static void resumeSession(Context context) {
         Intent intent = new Intent(context, SessionUserActivity.class);
-        intent.putExtra(SESSION_STATUS, SESSION_RESUMED);
+        intent.putExtra(SESSION_STATUS, STATUS_VALUES.RESUMED);
         context.startActivity(intent);
     }
 
@@ -91,76 +85,85 @@ public class SessionUserActivity extends AppCompatActivity implements MenuUserFr
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_session_user);
 
+        ButterKnife.bind(this);
+
+        mSessionStatus = (STATUS_VALUES) getIntent().getBundleExtra(SESSION_ARG).getSerializable(SESSION_STATUS);
+        switch (mSessionStatus) {
+            case STARTED: {
+                break;
+            }
+
+            case RESUMED: {
+                break;
+            }
+        }
+
+        Bundle args = getIntent().getBundleExtra(SESSION_ARG);
+        args.putInt(MenuUserFragment.MENU_KEY, 1);
+        FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+        mMenuFragment = new MenuUserFragment();
+        mMenuFragment.setArguments(args);
+        transaction.replace(R.id.fragment_menu, mMenuFragment);
+        transaction.commit();
+
+        mMenuViewModel = ViewModelProviders.of(this, new MenuViewModel.Factory(this.getApplication())).get(MenuViewModel.class);
+
+        setupUiStuff();
+        setupSearch();
+    }
+
+    private void setupUiStuff() {
         Toolbar toolbar = findViewById(R.id.session_toolbar);
         setSupportActionBar(toolbar);
         if (getSupportActionBar() != null) {
             getSupportActionBar().setTitle("");
             getSupportActionBar().setElevation(0);
         }
-        ButterKnife.bind(this);
 
-        mDarkBack.setOnTouchListener(new View.OnTouchListener() {
-            @Override
-            public boolean onTouch(View view, MotionEvent motionEvent) {
-                if (motionEvent.getAction() == MotionEvent.ACTION_DOWN)
-                    hideFilter();
-                return true;
-            }
-        });
-        mFilterToggle.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                if (mDarkBack.getVisibility() == View.VISIBLE)
-                    hideFilter();
-                else
-                    showFilter();
-            }
-        });
-
-        Bundle args = new Bundle();
-        args.putInt(MenuUserFragment.MENU_KEY, 1);
-
-        setupSearch();
-
-        mMenuFragment = (MenuUserFragment) getSupportFragmentManager().findFragmentById(R.id.fragment_menu);
-        mMenuFragment.setArguments(args);
-
-        mSessionStatus = getIntent().getIntExtra(SESSION_STATUS, SESSION_STARTED);
-        switch (mSessionStatus) {
-            case SESSION_STARTED: {
-                break;
-            }
-
-            case SESSION_RESUMED: {
-                break;
-            }
+        if (mSessionStatus != STATUS_VALUES.INACTIVE) {
+            DrawerLayout drawerLayout = findViewById(R.id.drawer_menu);
+            EndDrawerToggle endToggle = new EndDrawerToggle(
+                    this, drawerLayout, toolbar, R.string.menu_drawer_open, R.string.menu_drawer_close, R.drawable.ic_cart);
+            drawerLayout.addDrawerListener(endToggle);
+            endToggle.syncState();
         }
 
-        rvChipsList.setLayoutManager(new LinearLayoutManager(this, RecyclerView.HORIZONTAL, false));
-        mChipAdapter = new MenuChipAdapter(this, true, null);
-        rvChipsList.setAdapter(mChipAdapter);
+        mDarkBack.setOnTouchListener((view, motionEvent) -> {
+            if (motionEvent.getAction() == MotionEvent.ACTION_DOWN)
+                hideFilter();
+            return true;
+        });
+        mFilterToggle.setOnClickListener(view -> {
+            if (mDarkBack.getVisibility() == View.VISIBLE)
+                hideFilter();
+            else
+                showFilter();
+        });
 
-        mViewModel = ViewModelProviders.of(this, new MenuViewModel.Factory(this.getApplication())).get(MenuViewModel.class);
+        rvCart.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false));
+        mCartAdapter = new MenuCartAdapter(this);
+        rvCart.setAdapter(mCartAdapter);
+
+        mMenuViewModel.getOrderedItems().observe(this, mCartAdapter::setOrderedItems);
+        mMenuViewModel.getTotalOrderedCount().observe(this, count -> {
+            if (count == null)
+                return;
+            if (count > 0)
+                tvCountItems.setText(String.valueOf(count));
+            else
+                tvCountItems.setText("");
+        });
     }
 
-    public OrderedItem[] getOrderedItems() {
-        if (areItemsPending())
-            return mChipAdapter.getItems();
-        return null;
+    public List<OrderedItem> getOrderedItems() {
+        return mCartAdapter.getOrderedItems();
     }
 
     public void clearPendingItems() {
-        if (areItemsPending())
-            mChipAdapter.clearItems();
     }
 
     public boolean areItemsPending() {
-        if (mChipAdapter == null) {
-            Log.e(TAG, "Chip Adapter is null?!");
-            return false;
-        }
-        Log.e(TAG, "Pending items: " + mChipAdapter.getItemCount());
-        return mChipAdapter.getItemCount() > 0;
+        return false;
     }
 
     private void showFilter() {
@@ -252,6 +255,11 @@ public class SessionUserActivity extends AppCompatActivity implements MenuUserFr
         });
     }
 
+    @OnClick(R.id.btn_proceed)
+    public void onProceedBtnClicked(View view) {
+        Toast.makeText(this, "Processing your order...", Toast.LENGTH_SHORT).show();
+    }
+
     @Override
     public void onBackPressed() {
         if (mSearchView.isSearchOpen())
@@ -270,15 +278,6 @@ public class SessionUserActivity extends AppCompatActivity implements MenuUserFr
         return false;
     }
 
-    @OnClick(R.id.action_finish)
-    public void orderItems(View view) {
-        if (!areItemsPending()) {
-            Toast.makeText(this, "Add some items before ordering them.", Toast.LENGTH_SHORT).show();
-            return;
-        }
-        clearPendingItems();
-    }
-
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         if (requestCode == MaterialSearchView.REQUEST_VOICE && resultCode == RESULT_OK) {
@@ -295,7 +294,17 @@ public class SessionUserActivity extends AppCompatActivity implements MenuUserFr
     }
 
     @Override
-    public void onItemOrderInteraction(int count) {
-        Log.e(TAG, "ItemOrderInteraction, count: " + count);
+    public void onItemOrderInteraction(MenuItem item, int count) {
+        mMenuViewModel.orderItem(item, count, item.getBaseType());
+    }
+
+    @Override
+    public void onItemRemoved(OrderedItem item) {
+        mMenuViewModel.removeItem(item);
+    }
+
+    @Override
+    public void onItemEdited(OrderedItem item) {
+
     }
 }

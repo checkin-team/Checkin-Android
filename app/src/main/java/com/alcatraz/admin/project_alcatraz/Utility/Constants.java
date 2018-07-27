@@ -1,9 +1,9 @@
 package com.alcatraz.admin.project_alcatraz.Utility;
 
 public class Constants {
-    public static final int API_VERSION = 1;
-    public static final String API_HOST = "checkout.com";
-    public static final int API_PORT = 8000;
+    public static final short API_VERSION = 1;
+    public static final String API_HOST = "172.17.37.59";
+    public static final short API_PORT = 8080;
 
     public static final String APP_DATABASE = "app_database";
 

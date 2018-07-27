@@ -1,46 +1,40 @@
 package com.alcatraz.admin.project_alcatraz.Data;
 
-import android.arch.persistence.room.TypeConverter;
-
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 
 import java.lang.reflect.Type;
-import java.util.ArrayList;
-import java.util.Date;
+import java.util.List;
+import java.util.Map;
+
+import io.objectbox.converter.PropertyConverter;
 
 public class Converters {
-    @TypeConverter
-    public static Date timestampToDate(Long timestamp) {
-        return timestamp == null ? null : new Date(timestamp);
+    public static class MapConverter<X, Y> implements PropertyConverter<Map<X, Y>, String> {
+
+        @Override
+        public Map<X, Y> convertToEntityProperty(String databaseValue) {
+            Type type = new TypeToken<Map<X, Y>>() {}.getType();
+            return new Gson().fromJson(databaseValue, type);
+        }
+
+        @Override
+        public String convertToDatabaseValue(Map<X, Y> entityProperty) {
+            return new Gson().toJson(entityProperty);
+        }
     }
 
-    @TypeConverter
-    public static Long dateToTimestamp(Date date) {
-        return date == null ? null : date.getTime();
-    }
+    public static class ListConverter<T> implements PropertyConverter<List<T>, String> {
 
-    @TypeConverter
-    public static ArrayList<String> JsonToStringArray(String value) {
-        Type listType = new TypeToken<ArrayList<String>>() {}.getType();
-        return new Gson().fromJson(value, listType);
-    }
+        @Override
+        public List<T> convertToEntityProperty(String databaseValue) {
+            Type type = new TypeToken<List<T>>() {}.getType();
+            return new Gson().fromJson(databaseValue, type);
+        }
 
-    @TypeConverter
-    public static String StringArrayToJson(ArrayList<String> list) {
-        Gson gson = new Gson();
-        return gson.toJson(list);
-    }
-
-    @TypeConverter
-    public static ArrayList<Float> JsonToFloatArray(String value) {
-        Type listType = new TypeToken<ArrayList<Float>>() {}.getType();
-        return new Gson().fromJson(value, listType);
-    }
-
-    @TypeConverter
-    public static String FloatArrayToJson(ArrayList<Float> list) {
-        Gson gson = new Gson();
-        return gson.toJson(list);
+        @Override
+        public String convertToDatabaseValue(List<T> entityProperty) {
+            return new Gson().toJson(entityProperty);
+        }
     }
 }

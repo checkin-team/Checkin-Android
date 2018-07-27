@@ -1,8 +1,5 @@
 apply plugin: 'com.android.application'
-
-apply plugin: 'kotlin-android'
-
-apply plugin: 'kotlin-android-extensions'
+apply plugin: 'io.objectbox'
 
 android {
     compileSdkVersion 27
@@ -13,6 +10,14 @@ android {
         versionCode 1
         versionName "1.0"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+
+        javaCompileOptions {
+            annotationProcessorOptions {
+                arguments = [
+                        "objectbox.myObjectBoxPackage": "com.alcatraz.admin.project_alcatraz"
+                ]
+            }
+        }
     }
     buildTypes {
         release {
@@ -28,7 +33,6 @@ android {
 
 dependencies {
     implementation fileTree(include: ['*.jar'], dir: 'libs')
-    implementation "org.jetbrains.kotlin:kotlin-stdlib-jre7:$kotlin_version"
     implementation 'com.android.support:appcompat-v7:27.1.1'
     implementation 'com.android.support.constraint:constraint-layout:1.1.2'
     implementation 'com.android.support:support-v4:27.1.1'
@@ -57,10 +61,9 @@ dependencies {
     implementation 'com.squareup.retrofit2:converter-gson:2.4.0'
     debugImplementation 'com.squareup.okhttp3:logging-interceptor:3.10.0'
 
-    // Room components
-    implementation "android.arch.persistence.room:runtime:1.1.1"
-    annotationProcessor "android.arch.persistence.room:compiler:1.1.1"
-    androidTestImplementation "android.arch.persistence.room:testing:1.1.1"
+    // ObjectBox components
+    implementation "io.objectbox:objectbox-android:$objectbox_version"
+    annotationProcessor "io.objectbox:objectbox-processor:$objectbox_version"
 
     // Lifecycle components
     implementation "android.arch.lifecycle:extensions:1.1.1"

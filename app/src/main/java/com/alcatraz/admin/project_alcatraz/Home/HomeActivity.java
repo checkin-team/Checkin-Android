@@ -252,12 +252,12 @@ public class HomeActivity extends AppCompatActivity
                 this, LinearLayoutManager.VERTICAL, false));
         rvNavMessages.setAdapter(mChatAdapter);
 
-        mMessageViewModel.getBriefChats().observe(this, briefChats -> mChatAdapter.setBriefChats(briefChats));
+//        mMessageViewModel.getBriefChats().observe(this, briefChats -> mChatAdapter.setBriefChats(briefChats));
         ItemClickSupport.addTo(rvNavMessages).setOnItemClickListener(new ItemClickSupport.OnItemClickListener() {
             @Override
             public void onItemClicked(RecyclerView recyclerView, int position, View v) {
                 Intent intent = new Intent(HomeActivity.this, ChatActivity.class);
-                intent.putExtra(Constants.EXTRA_SELECTED_USER_ID, mChatAdapter.getBriefChat(position).userId);
+                intent.putExtra(Constants.EXTRA_SELECTED_USER_ID, mChatAdapter.getBriefChat(position).getUserId());
                 startActivity(intent);
             }
         });
@@ -284,8 +284,7 @@ public class HomeActivity extends AppCompatActivity
                 startActivity(intent);
                 break;
             case R.id.nav_settings:
-                intent = new Intent(getApplicationContext(), SessionUserActivity.class);
-                startActivity(intent);
+                SessionUserActivity.startSession(this, 1, 1);
                 break;
             case R.id.nav_privacy_settings:
                 intent = new Intent(getApplicationContext(), ShopProfileActivity2.class);

@@ -10,7 +10,6 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.alcatraz.admin.project_alcatraz.R;
-import com.alcatraz.admin.project_alcatraz.Social.ChatDao.BriefChat;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.resource.bitmap.RoundedCorners;
 import com.bumptech.glide.request.RequestOptions;
@@ -27,18 +26,18 @@ import butterknife.ButterKnife;
 
 public class ChatAdapter extends RecyclerView.Adapter<ChatAdapter.ViewHolder> {
 
-    private List<BriefChat> mBriefChats;
+    private List<Chat> mBriefChats;
     
-    public ChatAdapter(List<BriefChat> briefChats) {
+    public ChatAdapter(List<Chat> briefChats) {
         mBriefChats = briefChats;
     }
 
-    public void setBriefChats(@NonNull List<BriefChat> briefChats) {
+    public void setBriefChats(@NonNull List<Chat> briefChats) {
         mBriefChats = briefChats;
         notifyDataSetChanged();
     }
 
-    public BriefChat getBriefChat(final int position) {
+    public Chat getBriefChat(final int position) {
         return mBriefChats.get(position);
     }
 
@@ -82,15 +81,15 @@ public class ChatAdapter extends RecyclerView.Adapter<ChatAdapter.ViewHolder> {
             ButterKnife.bind(this, view);
         }
 
-        void bindData(BriefChat briefChat) {
-            if (briefChat.lastMessage == null || briefChat.sentAt == null) {
+        void bindData(Chat briefChat) {
+            if (briefChat.getLastMessage() == null) {
                 tvLastMsg.setText("No message sent.");
                 tvTimestamp.setText("");
             } else {
-                tvLastMsg.setText(briefChat.lastMessage);
-                tvTimestamp.setText(DateFormat.format(dateFormat, briefChat.sentAt));
+                tvLastMsg.setText(briefChat.getLastMessage().getMessage());
+                tvTimestamp.setText(DateFormat.format(dateFormat, briefChat.getLastMessage().getSentAt()));
             }
-            tvUserName.setText(String.valueOf(briefChat.userName));
+            tvUserName.setText(String.valueOf(briefChat));
             Glide.with(imUserPhoto.getContext()).load(R.drawable.fin)
                     .apply(RequestOptions.bitmapTransform(new RoundedCorners(10)))
                     .into(imUserPhoto);

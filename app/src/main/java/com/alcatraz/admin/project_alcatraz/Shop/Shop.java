@@ -6,8 +6,6 @@ import com.alcatraz.admin.project_alcatraz.Utility.NamedFormatter;
 import java.util.HashMap;
 import java.util.Map;
 
-import kotlin.NotImplementedError;
-
 public class Shop {
     private int mId;
     private String mName, mCategory, mImageUrl;

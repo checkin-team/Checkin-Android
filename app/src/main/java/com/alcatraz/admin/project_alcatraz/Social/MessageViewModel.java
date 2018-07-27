@@ -10,22 +10,19 @@ import android.preference.PreferenceManager;
 import android.support.annotation.NonNull;
 
 import com.alcatraz.admin.project_alcatraz.Data.Resource;
-import com.alcatraz.admin.project_alcatraz.Social.ChatDao.BriefChat;
 
 import java.util.List;
-
-import javax.inject.Inject;
 
 public class MessageViewModel extends AndroidViewModel {
     private MessageRepository mRepository;
     private LiveData<List<Message>> mAllMessages;
     private LiveData<Resource<List<Message>>> mChatMessages;
-    private LiveData<List<BriefChat>> mBriefChats;
+    private LiveData<List<Chat>> mBriefChats;
     private SharedPreferences mPrefs;
 
-    public MessageViewModel(@NonNull Application application, MessageRepository messageRepository) {
+    public MessageViewModel(@NonNull Application application) {
         super(application);
-        mRepository = messageRepository;
+        mRepository = MessageRepository.getInstance(application);
         mPrefs = PreferenceManager.getDefaultSharedPreferences(application.getApplicationContext());
     }
 
@@ -41,7 +38,7 @@ public class MessageViewModel extends AndroidViewModel {
         return mAllMessages;
     }
 
-    public LiveData<List<BriefChat>> getBriefChats() {
+    public LiveData<List<Chat>> getBriefChats() {
         if (mBriefChats == null)
             mBriefChats = mRepository.getBriefChats();
         return mBriefChats;
@@ -58,17 +55,15 @@ public class MessageViewModel extends AndroidViewModel {
     public static class Factory extends ViewModelProvider.NewInstanceFactory {
         @NonNull
         private final Application mApplication;
-        private final MessageRepository mRepository;
 
         public Factory(@NonNull Application application) {
             mApplication = application;
-            mRepository = MessageRepository.getInstance(application.getApplicationContext());
         }
 
         @NonNull
         @Override
         public <T extends ViewModel> T create(@NonNull Class<T> modelClass) {
-            return (T) new MessageViewModel(mApplication, mRepository);
+            return (T) new MessageViewModel(mApplication);
         }
     }
 }

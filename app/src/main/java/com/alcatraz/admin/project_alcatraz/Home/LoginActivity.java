@@ -1,18 +1,30 @@
 package com.alcatraz.admin.project_alcatraz.Home;
 
+import android.arch.lifecycle.ViewModelProviders;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageButton;
 
+import com.alcatraz.admin.project_alcatraz.Auth.AuthViewModel;
 import com.alcatraz.admin.project_alcatraz.Data.ApiClient;
+import com.alcatraz.admin.project_alcatraz.Data.AppDatabase;
+import com.alcatraz.admin.project_alcatraz.Data.Resource;
+import com.alcatraz.admin.project_alcatraz.Data.TestDb;
 import com.alcatraz.admin.project_alcatraz.R;
 import com.alcatraz.admin.project_alcatraz.Utility.Constants;
+import com.google.gson.Gson;
+
+import java.util.HashMap;
+import java.util.Map;
+
+import proguard.annotation.BuildConfig;
 
 /**
  * Created by TAIYAB on 03-06-2018.
@@ -21,6 +33,8 @@ import com.alcatraz.admin.project_alcatraz.Utility.Constants;
 public class LoginActivity extends AppCompatActivity implements View.OnClickListener {
     private static final String TAG = LoginActivity.class.getSimpleName();
     private SharedPreferences mPrefs;
+    private AuthViewModel mAuthViewModel;
+    private static boolean populated = false;
 
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -29,7 +43,10 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         ImageButton btnSignIn = findViewById(R.id.btn_signin);
         btnSignIn.setOnClickListener(this);
 
-        ApiClient.getClient(this);
+        mAuthViewModel = ViewModelProviders.of(this, new AuthViewModel.Factory(getApplication())).get(AuthViewModel.class);
+        mAuthViewModel.getObservableData().observe(this, result -> {
+            if (result != null) login(result);
+        });
 
         mPrefs = PreferenceManager.getDefaultSharedPreferences(this);
         if (mPrefs.getBoolean(Constants.SP_LOGGED_IN, false)) {
@@ -50,17 +67,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                 else if (password.isEmpty())
                     et_password.setError("Password can't be empty.");
                 else {
-                    /* TODO: Implement login functionality and save userID
-                     * (or maybe let the logged-in-user ID remain 0?
-                     *  => Backend gets the user info from the Request Header Token.);
-                     */
-                    SharedPreferences.Editor editor = mPrefs.edit();
-                    editor.putString(Constants.SP_USERNAME, username);
-                    editor.putInt(Constants.SP_USER_ID, 0);
-                    editor.putBoolean(Constants.SP_LOGGED_IN, true);
-                    editor.putString(Constants.SP_LOGIN_TOKEN, login());
-                    editor.apply();
-                    launchHomeActivity();
+                    mAuthViewModel.login(username, password);
                 }
                 break;
             case R.id.text_forgot:
@@ -68,13 +75,36 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         }
     }
 
+    private void successLogin(Map<String, String> data) {
+        if (!populated)
+            TestDb.populateWithTestData(getApplicationContext());
+        populated = true;
+        Log.e(TAG, new Gson().toJson(data));
+        SharedPreferences.Editor editor = mPrefs.edit();
+        editor.putInt(Constants.SP_USER_ID, 0);
+        editor.putBoolean(Constants.SP_LOGGED_IN, true);
+        editor.apply();
+        launchHomeActivity();
+    }
+
     private void launchHomeActivity() {
         startActivity(new Intent(this, HomeActivity.class));
         finish();
     }
 
-    private String login() {
-        //TODO: Implement login and return login token.
-        return "a2342f2vvj6unhg:vf??12";
+    private void login(Resource<Map<String, String>> result) {
+        switch (result.status) {
+            case SUCCESS: {
+                successLogin(result.data);
+            }
+            case ERROR_INVALID_REQUEST: {
+                // Inform user of Invalid credentials!
+            }
+            default: {
+                // TODO: DEBUG mode
+                successLogin(new HashMap<>());
+                Log.e(result.status.name(), result.message == null ? "Null" : result.message);
+            }
+        }
     }
 }
