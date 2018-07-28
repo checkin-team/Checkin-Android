@@ -1,14 +1,53 @@
 <?xml version="1.0" encoding="utf-8"?>
 <android.support.constraint.ConstraintLayout
+    android:id="@+id/fullactivesession"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:background="@color/white"
+    android:animateLayoutChanges="true"
     xmlns:android="http://schemas.android.com/apk/res/android" android:layout_width="match_parent"
     android:layout_height="match_parent">
-<android.support.v7.widget.RecyclerView
 
-    android:background="@drawable/slideshow_inner_shadow"
+    <TextView
+        android:id="@+id/timer"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:text="Time left-: 10 mins"
+
+        android:textSize="18sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/button3"
+        />
+    <LinearLayout
+        android:focusable="true"
+        android:focusableInTouchMode="true"
+        android:layout_width="0dp"
+        android:layout_height="0dp"/>
+    <EditText
+        android:inputType="text"
+        android:maxEms="28"
+        android:lines="1"
+        android:maxLines="1"
+        android:layout_marginStart="16dp"
+        android:layout_marginEnd="16dp"
+        android:layout_marginTop="16dp"
+        android:id="@+id/tv1"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toBottomOf="@id/timer"
+        android:background="@drawable/rounded_rectangle_grey"
+        android:paddingTop="4dp"
+        android:paddingBottom="4dp"
+        android:hint="How may we assist you?"
+        android:textSize="18sp"
+        android:gravity="center_horizontal"
+        android:textColorHint="#bebebe"
+        />
+<android.support.v7.widget.RecyclerView
+    android:background="@drawable/border_recycler"
     android:id="@+id/food_with"
-    app:layout_constraintTop_toBottomOf="@id/button3"
+    app:layout_constraintTop_toBottomOf="@id/tv1"
     app:layout_constraintLeft_toLeftOf="parent"
     app:layout_constraintBottom_toTopOf="@id/refill"
     android:layout_marginTop="16dp"
@@ -45,44 +84,41 @@
         </android.support.v7.widget.Toolbar>
     </android.support.design.widget.AppBarLayout>
 
-    <android.support.v7.widget.CardView
+    <ImageButton
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginEnd="16dp"
         android:layout_marginTop="16dp"
+        android:src="@drawable/logout"
         android:background="@color/white"
-        app:cardCornerRadius="@dimen/card_corner_radius"
-        app:elevation="@dimen/card_elevation"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/appBarLayout">
-        <Button
+        app:layout_constraintTop_toBottomOf="@+id/appBarLayout"/>
 
-            android:shadowDx="2"
-            android:shadowDy="2"
-            android:paddingLeft="16dp"
-            android:paddingRight="16dp"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textAllCaps="false"
-            android:background="@color/transparent"
-            android:text="CheckOut"
-            android:textColor="@color/brownish_grey" />
-    </android.support.v7.widget.CardView>
+    <ImageButton
 
-    <Button
-        android:paddingRight="10dp"
-        android:textAlignment="textEnd"
         android:id="@+id/button3"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
         android:layout_marginTop="16dp"
-        android:textColor="@color/colorPrimaryRed"
-        android:textSize="18sp"
         android:background="@drawable/pricer_card"
-        android:text="4200"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/appBarLayout" />
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="0dp"
+        app:layout_constraintRight_toRightOf="@id/button3"
+        app:layout_constraintBottom_toBottomOf="@id/button3"
+        android:textSize="18sp"
+        android:text="₹4200"
+        android:textColor="@color/colorPrimaryRed"
+        android:layout_marginRight="10dp"
+        android:layout_marginBottom="10dp"
+        android:textAlignment="textEnd"
+
+
+
+        />
 
     <ImageButton
         android:id="@+id/imageView7"
@@ -117,27 +153,44 @@
         app:layout_constraintBottom_toBottomOf="@id/refill"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
-
-    <android.support.v7.widget.CardView
+    <TextView
+        android:id="@+id/textclean"
+        android:elevation="4dp"
         android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
-        android:background="@color/white"
-        app:cardCornerRadius="@dimen/card_corner_radius"
-        app:elevation="4dp"
-        app:layout_constraintEnd_toEndOf="@id/show_meeenu"
-        app:layout_constraintStart_toStartOf="@id/show_meeenu"
-        app:layout_constraintTop_toTopOf="@id/imageView7">
+        android:layout_height="0dp"
+        android:gravity="center"
+        app:layout_constraintBottom_toBottomOf="@id/clean"
+        app:layout_constraintTop_toTopOf="@id/clean"
+        app:layout_constraintStart_toStartOf="@id/clean"
+        app:layout_constraintEnd_toEndOf="@id/clean"
+        android:textColor="#6d6d6d"
+        android:textAlignment="center"
+        android:text="Clean the\n Table"
+        />
 
-        <Button
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="@color/white"
+    <ImageButton
+
+        android:background="@color/white"
+        android:id="@+id/clean"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/bkgrnd"
+        app:layout_constraintTop_toBottomOf="@+id/food_with"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
+        <!--<TextView
+            android:layout_width="0dp"
+            android:layout_height="80dp"
+            app:layout_constraintEnd_toEndOf="@id/show_meeenu"
+            app:layout_constraintStart_toStartOf="@id/show_meeenu"
+            app:layout_constraintTop_toTopOf="@id/imageView7"
+
+            android:background="@drawable/bkgrnd"
             android:text="Clean the\n Table"
             android:textAllCaps="false"
             android:textColor="@color/brownish_grey"
-            android:textSize="14sp" />
-    </android.support.v7.widget.CardView>
+            android:textSize="14sp" />-->
 
 
 </android.support.constraint.ConstraintLayout>

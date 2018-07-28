@@ -9,6 +9,6 @@ import retrofit2.http.GET;
 import retrofit2.http.Path;
 
 public interface WebApiService {
-    @GET("messages/{user_id}")
+    @GET("messages/{user_id}/")
     Call<List<Message>> getMessages(@Path("user_id") int userId);
 }

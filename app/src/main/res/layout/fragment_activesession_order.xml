@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:background="#80000000"
+    android:tag="Fragment"
+    android:onClick="closefragment"
+    android:elevation="10dp"
+    android:layout_height="match_parent">
+    <View
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias=".2"
+        android:id="@+id/v1"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"/>
+    <View
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias=".8"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:id="@+id/v2"/>
+    <android.support.constraint.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:alpha="1"
+        android:background="@drawable/oval_3"
+        app:layout_constraintTop_toBottomOf="@id/v1"
+        app:layout_constraintBottom_toTopOf="@id/v2"
+        >
+
+
+        <ListView
+            android:id="@+id/list"
+
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"/>
+
+    </android.support.constraint.ConstraintLayout>
+
+</android.support.constraint.ConstraintLayout>
