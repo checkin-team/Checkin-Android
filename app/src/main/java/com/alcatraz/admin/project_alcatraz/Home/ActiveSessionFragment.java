@@ -52,11 +52,13 @@ public class ActiveSessionFragment extends android.support.v4.app.Fragment {
             public void onItemClick(AdapterView<?> adapterView, View view, int position, long l) {
                 Log.e(TAG, "onItemClick: Idef you");
                 TextView tv=(TextView)(view.findViewById(R.id.text1));
+
                 Button cancel=view.findViewById(R.id.cancel_button);
                 if(tv.getText().equals(listItems.get(position))) {
                     swipedInt.add(position);
                     swiped=true;
                     Transition t=new Slide(Gravity.LEFT);
+                    //t.addTarget(view);
                     t.addListener(new Transition.TransitionListener(){
 
                         @Override
@@ -93,32 +95,32 @@ public class ActiveSessionFragment extends android.support.v4.app.Fragment {
 
                         @Override
                         public void onTransitionCancel(@NonNull Transition transition) {
-                            if(ActiveSession.canCancel)
-                            {
-                                //TransitionManager.beginDelayedTransition((ViewGroup)view);
-                                cancel.setVisibility(View.VISIBLE);
-                                ConstraintSet set=new ConstraintSet();
-                                set.clone((ConstraintLayout)view);
-                                set.setHorizontalBias(R.id.text1,.2f);
-                                set.applyTo((ConstraintLayout)view);
-                                tv.setVisibility(View.VISIBLE);
-                                view.setBackgroundColor(0x80000000);
-
-
-                            }
-                            else {
-                                tv.setText("Non Cancellable");
-                                //TransitionManager.beginDelayedTransition((ViewGroup) view, new Slide(Gravity.RIGHT));
-                                tv.setVisibility(View.VISIBLE);
-                                view.setBackgroundColor(0x80000000);
-
-                            }
+//                            if(ActiveSession.canCancel)
+//                            {
+//                                TransitionManager.beginDelayedTransition((ViewGroup)view);
+//                                cancel.setVisibility(View.VISIBLE);
+//                                ConstraintSet set=new ConstraintSet();
+//                                set.clone((ConstraintLayout)view);
+//                                set.setHorizontalBias(R.id.text1,.2f);
+//                                set.applyTo((ConstraintLayout)view);
+//                                tv.setVisibility(View.VISIBLE);
+//                                view.setBackgroundColor(0x80000000);
+//
+//
+//                            }
+//                            else {
+//                                tv.setText("Non Cancellable");
+//                                TransitionManager.beginDelayedTransition((ViewGroup) view, new Slide(Gravity.RIGHT));
+//                                tv.setVisibility(View.VISIBLE);
+//                                view.setBackgroundColor(0x80000000);
+//
+//                            }
                         }
 
 
                         @Override
                         public void onTransitionPause(@NonNull Transition transition) {
-
+                            Log.d(TAG, "onTransitionPause: naaaaaa");
                         }
 
 
@@ -137,6 +139,7 @@ public class ActiveSessionFragment extends android.support.v4.app.Fragment {
                     swiped=false;
                     swipedInt.remove(position);
                     Transition t=new Slide(Gravity.LEFT);
+                    //t.addTarget(view) ;
                     t.addListener(new Transition.TransitionListener(){
 
                         @Override
@@ -170,22 +173,22 @@ public class ActiveSessionFragment extends android.support.v4.app.Fragment {
                         @Override
                         public void onTransitionCancel(@NonNull Transition transition) {
 
-                            if(ActiveSession.canCancel)
-                            {
-                                //TransitionManager.beginDelayedTransition((ViewGroup)view);
-                                cancel.setVisibility(View.GONE);
-                                ConstraintSet set=new ConstraintSet();
-                                set.clone((ConstraintLayout)view);
-                                set.setHorizontalBias(R.id.text1,.5f);
-                                set.applyTo((ConstraintLayout)view);
-
-
-
-                            }
-                            tv.setText(listItems.get(position));
-                            //TransitionManager.beginDelayedTransition((ViewGroup)view,new Slide(Gravity.RIGHT));
-                            tv.setVisibility(View.VISIBLE);
-                            view.setBackgroundColor(0x000000);
+//                            if(ActiveSession.canCancel)
+//                            {
+//                                TransitionManager.beginDelayedTransition((ViewGroup)view);
+//                                cancel.setVisibility(View.GONE);
+//                                ConstraintSet set=new ConstraintSet();
+//                                set.clone((ConstraintLayout)view);
+//                                set.setHorizontalBias(R.id.text1,.5f);
+//                                set.applyTo((ConstraintLayout)view);
+//
+//
+//
+//                            }
+//                            tv.setText(listItems.get(position));
+//                            TransitionManager.beginDelayedTransition((ViewGroup)view,new Slide(Gravity.RIGHT));
+//                            tv.setVisibility(View.VISIBLE);
+//                            view.setBackgroundColor(0x000000);
 
 
 
@@ -194,6 +197,7 @@ public class ActiveSessionFragment extends android.support.v4.app.Fragment {
 
                         @Override
                         public void onTransitionPause(@NonNull Transition transition) {
+                            Log.d(TAG, "onTransitionPause: naaaaaaaa");
 
                         }
 
@@ -203,6 +207,7 @@ public class ActiveSessionFragment extends android.support.v4.app.Fragment {
 
                         }
                     });
+
                     TransitionManager.beginDelayedTransition((ViewGroup)view,t);
                     tv.setVisibility(View.INVISIBLE);
 

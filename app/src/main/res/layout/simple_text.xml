@@ -22,17 +22,35 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
 
+    <View
+        android:id="@+id/up1"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.1" />
+
+    <View
+        android:id="@+id/down1"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.9" />
+
     <Button
         android:focusable="false"
         android:layout_marginEnd="16dp"
         android:id="@+id/cancel_button"
         android:visibility="gone"
+        app:layout_constraintBottom_toTopOf="@id/down1"
+        app:layout_constraintTop_toBottomOf="@id/up1"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_height="0dp"
         android:background="@drawable/rounded_rectangle_rogue"
         android:text="Cancel"
         android:textColor="@color/white"
-        android:textSize="20sp"
+        android:textSize="16sp"
         android:shadowColor="@color/white"
         android:shadowRadius="6"
         android:paddingLeft="8dp"

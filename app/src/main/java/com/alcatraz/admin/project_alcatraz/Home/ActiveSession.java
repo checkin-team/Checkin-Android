@@ -16,6 +16,7 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.GridLayoutManager;
+import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.GestureDetector;
@@ -41,6 +42,7 @@ public class ActiveSession extends AppCompatActivity {
         setContentView(R.layout.layout_active_session);
         findViewById(R.id.textclean).bringToFront();
         RecyclerView recyclerView = findViewById(R.id.food_with);
+        //recyclerView.setLayoutManager(new LinearLayoutManager(this,LinearLayoutManager.HORIZONTAL,false));
         recyclerView.setLayoutManager(new GridLayoutManager(ActiveSession.this, 2));
         ArrayList<Integer> intlist = new ArrayList<>();
         ArrayList<String> names = new ArrayList<>();
@@ -56,14 +58,14 @@ public class ActiveSession extends AppCompatActivity {
 
                 long min=millisUntilFinished/1000/60;
                 if(min==0)
-                mTextField.setText("Time Left-: " + millisUntilFinished / 1000+" seconds");
+                mTextField.setText("Time Left: " + millisUntilFinished / 1000+" seconds");
                 else
-                    mTextField.setText("Time Left-: " + min+" minute"+(min==1?"":"s"));
+                    mTextField.setText("Time Left: " + min+" minute"+(min==1?"":"s"));
 
             }
 
             public void onFinish() {
-                mTextField.setTextColor(0x00cc00);
+                //mTextField.setTextColor(0x00cc00);
                 mTextField.setText("Your food will be delivered shortly");
             }
         }.start();
@@ -88,8 +90,7 @@ public class ActiveSession extends AppCompatActivity {
             }
 
             public void onFinish() {
-                if(!fragmentOpen)
-                    return;
+
                 canCancel=false;
                 ActiveSessionFragment asf=((ActiveSessionFragment)getSupportFragmentManager().findFragmentByTag("FragmentOrder"));
                 if(asf==null)

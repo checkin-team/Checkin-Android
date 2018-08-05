@@ -284,7 +284,29 @@ public class HomeActivity extends AppCompatActivity
 //        });
         final GestureDetector gestureDetector = new GestureDetector(this,new GestureDetector.SimpleOnGestureListener() {
 
+            @Override
+            public boolean onSingleTapConfirmed(MotionEvent e) {
+                Fragment fragment = getSupportFragmentManager().findFragmentByTag("RECENT_CHECKIN");
 
+                if(fragment == null)
+                    return false;
+                FragmentManager fm = getSupportFragmentManager();
+                fm.popBackStack();
+                FragmentTransaction ft = fm.beginTransaction();
+                ft.remove(fragment);
+
+                RecentCheckInFragment rcif=new RecentCheckInFragment();
+                Slide slide = new Slide();
+                slide.setDuration(500);
+                slide.setInterpolator(new DecelerateInterpolator());
+                rcif.setEnterTransition(slide);
+                ft.add(R.id.fragmentHolder,rcif,"RECENT_CHECKIN");
+                //ft.replace(R.id.card_user_activities,new RecentCheckInFragment(),"RECENT_CHECKIN");
+                ft.addToBackStack(null);
+                ft.commit();
+                Log.e(TAG, "onSingleTapConfirmed: " );
+                return  true;
+            }
 
             @Override
             public void onLongPress(MotionEvent e) {

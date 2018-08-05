@@ -1,5 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:android.support.v7.widget.CardViewandroid="http://schemas.android.com/tools"
     android:id="@+id/login"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -60,7 +62,7 @@
     <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="0dp"
-        android:layout_weight=".06"
+        android:layout_weight=".04"
         android:orientation="horizontal"
         android:layout_gravity="center_horizontal">
         <TextView
@@ -87,22 +89,53 @@
             android:background="?android:selectableItemBackground"
             android:text="Forgot Password?" />
     </LinearLayout>
-
-
-    <ImageButton
-        android:layout_gravity="center_horizontal"
-        android:layout_width="wrap_content"
+    <Space
+        android:id="@+id/rem"
+        android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_weight=".09"
-        android:scaleType="fitXY"
-        android:background="@color/white"
+        android:layout_weight=".03"/>
+
+<android.support.constraint.ConstraintLayout
+    android:id="@+id/constraintimage"
+    android:layout_gravity="center_horizontal"
+    android:layout_width="309dp"
+    android:layout_height="0dp"
+    android:layout_weight=".09"
+    >
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@drawable/curve1"
         android:id="@+id/btn_signin"
-        android:src="@drawable/btn_signin" />
+        android:backgroundTint="#af1014"/>
+    <!--<ImageButton-->
+        <!--android:layout_gravity="center_horizontal"-->
+        <!--app:layout_constraintLeft_toLeftOf="parent"-->
+        <!--app:layout_constraintRight_toRightOf="parent"-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="match_parent"-->
+        <!--android:scaleType="fitXY"-->
+        <!--android:background="@color/white"-->
+        <!--android:id="@+id/btn_signin"-->
+        <!--android:src="@drawable/red_round" />-->
+    <TextView
+        android:id="@+id/textsignIn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textColor="@color/white"
+        android:textSize="18.5sp"
+        app:layout_constraintLeft_toLeftOf="@id/btn_signin"
+        app:layout_constraintRight_toRightOf="@id/btn_signin"
+        app:layout_constraintTop_toTopOf="@id/btn_signin"
+        app:layout_constraintBottom_toBottomOf="@id/btn_signin"
+        android:text="Sign In"/>
+</android.support.constraint.ConstraintLayout>
 
 
     <Space
+        android:id="@+id/addspace"
         android:layout_width="match_parent"
-        android:layout_weight=".04"
+        android:layout_weight=".05"
         android:layout_height="0dp" />
 
     <LinearLayout
