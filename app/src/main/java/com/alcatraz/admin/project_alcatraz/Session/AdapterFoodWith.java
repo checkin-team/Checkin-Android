@@ -1,20 +1,23 @@
-package com.alcatraz.admin.project_alcatraz.Home;
+package com.alcatraz.admin.project_alcatraz.Session;
 
+import android.content.Context;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ListView;
 import android.widget.TextView;
 
 import com.alcatraz.admin.project_alcatraz.R;
+import com.alcatraz.admin.project_alcatraz.User.User;
+import com.bumptech.glide.Glide;
 
 import java.util.List;
 
 public class AdapterFoodWith extends RecyclerView.Adapter<AdapterFoodWith.MyView> {
-    List<Integer> image;List<String> names;
 
+    List<User> users;
+    Context context;
 
     @NonNull
     @Override
@@ -28,8 +31,13 @@ public class AdapterFoodWith extends RecyclerView.Adapter<AdapterFoodWith.MyView
 
     @Override
     public void onBindViewHolder(@NonNull MyView holder, int position) {
-        holder.textView.setText(names.get(position));
-        holder.img.setImageResource(image.get(position));
+        if (users != null){
+            holder.textView.setText(users.get(position).getUsername());
+            Glide.with(context.getApplicationContext()).load(users.get(position).getImageUrl()).into(holder.img);
+        }
+        else {
+            // Data not ready
+        }
     }
 
     /**
@@ -39,12 +47,19 @@ public class AdapterFoodWith extends RecyclerView.Adapter<AdapterFoodWith.MyView
      */
     @Override
     public int getItemCount() {
-        return names.size();
-    }
-    public  AdapterFoodWith(List<Integer> image,List<String> names){
-        this.image=image;
-        this.names=names;
+        if(users != null) return users.size();
+        else return 0;
 
+    }
+
+    public void setUsers(List<User> users) {
+        this.users = users;
+        notifyDataSetChanged();
+    }
+
+    public  AdapterFoodWith(Context context,List<User> users){
+        this.context = context;
+        this.users = users;
     }
 
     public  class MyView extends RecyclerView.ViewHolder {

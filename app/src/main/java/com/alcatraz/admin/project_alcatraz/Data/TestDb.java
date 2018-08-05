@@ -56,13 +56,13 @@ public class TestDb {
     }
 
     private static void populateUsers(Box<User> userModel) {
-        User user1 = new User("Alex");
-        User user2 = new User("Alice");
+        User user1 = new User("Alex", "");
+        User user2 = new User("Alice", "");
 
         userModel.put(user1, user2);
 
-        User user3 = new User("Monica");
-        User user4 = new User("Jack");
+        User user3 = new User("Monica", "");
+        User user4 = new User("Jack", "");
         userModel.put(user3, user4);
     }
 }
