@@ -1,16 +1,14 @@
 package com.alcatraz.admin.project_alcatraz.Session;
 
-import android.util.Log;
+import android.support.annotation.NonNull;
 
 import com.alcatraz.admin.project_alcatraz.Data.Converters;
-import com.google.gson.Gson;
 
-import java.util.Map;
+import java.util.List;
 
 import io.objectbox.annotation.Convert;
 import io.objectbox.annotation.Entity;
 import io.objectbox.annotation.Id;
-import io.objectbox.annotation.Transient;
 import io.objectbox.relation.ToOne;
 
 /**
@@ -21,34 +19,50 @@ import io.objectbox.relation.ToOne;
 public class MenuItem {
     @Id private long id;
     private String name;
-    @Convert(converter = Converters.MapConverter.class, dbType = String.class)
-    private Map<String, Double> typeCost;
-    private String baseType;
+    @Convert(converter = Converters.ListConverter.class, dbType = String.class)
+    private List<String> typeName;
+    @Convert(converter = Converters.ListConverter.class, dbType = String.class)
+    private List<Double> typeCost;
+    private int baseTypeIndex;
     private String unit;
     private boolean vegetarian;
     private ToOne<MenuGroup> group;
     private int menuId;
     private int subGroupIndex = 0;
+    @Convert(converter = Converters.ListConverter.class, dbType = String.class)
+    private List<ItemCustomizationGroup> customizationGroups;
 
     MenuItem() {
     }
 
-    public MenuItem(String name, Map<String, Double> typeCost, String baseType, long groupId, int menuId) {
+    public MenuItem(String name, List<String> typeName,List<Double> typeCost, int baseType, long groupId, int menuId,List<ItemCustomizationGroup> customizationGroups) {
         this.name = name;
+        this.typeName = typeName;
         this.typeCost = typeCost;
-        this.baseType = baseType;
+        this.baseTypeIndex = baseType;
         this.group.setTargetId(groupId);
         this.menuId = menuId;
+        if(customizationGroups !=null)this.customizationGroups = customizationGroups;
     }
 
     public MenuItem(MenuItem item) {
         this.name = item.getName();
-        this.typeCost = item.getTypeCost();
-        this.baseType = item.getBaseType();
+        this.typeName = item.typeName;
+        this.typeCost = item.typeCost;
+        this.baseTypeIndex = item.getBaseTypeIndex();
         this.unit = item.getUnit();
         this.vegetarian = item.isVegetarian();
         this.menuId = item.getMenuId();
         this.subGroupIndex = item.getSubGroupIndex();
+        this.customizationGroups = item.customizationGroups;
+    }
+
+    public List<ItemCustomizationGroup> getCustomizationGroups() {
+        return customizationGroups;
+    }
+
+    public void setCustomizationGroups(@NonNull List<ItemCustomizationGroup> customizationGroups) {
+        this.customizationGroups = customizationGroups;
     }
 
     public String getName() {
@@ -91,15 +105,31 @@ public class MenuItem {
         this.subGroupIndex = subGroupIndex;
     }
 
-    public Map<String, Double> getTypeCost() {
+    public List<String> getTypeName() {
+        return typeName;
+    }
+
+    public void setTypeName(List<String> typeName) {
+        this.typeName = typeName;
+    }
+
+    public List<Double> getTypeCost() {
         return typeCost;
     }
 
-    public String getBaseType() {
-        return baseType;
+    public void setTypeCost(List<Double> typeCost) {
+        this.typeCost = typeCost;
     }
 
-    public OrderedItem order(int quantity, String type) {
+    public int getBaseTypeIndex() {
+        return baseTypeIndex;
+    }
+
+    public void setBaseType(int baseType) {
+        this.baseTypeIndex = baseType;
+    }
+
+    public OrderedItem order(int quantity, int type) {
         OrderedItem item = new OrderedItem(this, quantity, type);
         return item;
     }

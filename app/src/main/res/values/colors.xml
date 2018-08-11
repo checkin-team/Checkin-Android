@@ -51,4 +51,10 @@
     </array>
 
     <color name="insightscardcolor">#59e9e4e4</color>
+
+    <!--MenuItemLayout-->
+    <color name="menuItemText">#af1216</color>
+    <color name="menuItemTypeCostText">#000000</color>
+    <color name="itemCustomizationGroupText">#ffffff</color>
+    <color name="itemCustomizationFieldText">#ffffff</color>
 </resources>
