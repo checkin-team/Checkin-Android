@@ -57,7 +57,9 @@
         <activity android:name=".Home.ForgotPassword" />
         <activity android:name=".Home.FilterTransactions" />
         <activity android:name=".Home.FaqActivity"></activity>
-        <activity android:name=".Home.ActiveSession" />
+        <activity android:name=".Home.ActiveSession"
+            android:windowSoftInputMode="adjustNothing"
+            />
     </application>
 
 </manifest>

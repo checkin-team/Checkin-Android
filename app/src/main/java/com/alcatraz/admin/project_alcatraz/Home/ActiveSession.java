@@ -40,12 +40,15 @@ public class ActiveSession extends AppCompatActivity {
 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.layout_active_session);
-        findViewById(R.id.textclean).bringToFront();
+        //findViewById(R.id.textclean).bringToFront();
         RecyclerView recyclerView = findViewById(R.id.food_with);
-        //recyclerView.setLayoutManager(new LinearLayoutManager(this,LinearLayoutManager.HORIZONTAL,false));
-        recyclerView.setLayoutManager(new GridLayoutManager(ActiveSession.this, 2));
+        recyclerView.setLayoutManager(new LinearLayoutManager(this,LinearLayoutManager.HORIZONTAL,false));
+        //recyclerView.setLayoutManager(new GridLayoutManager(ActiveSession.this, 2));
         ArrayList<Integer> intlist = new ArrayList<>();
         ArrayList<String> names = new ArrayList<>();
+
+        intlist.add(0);
+        names.add("");
         for (int i = 1; i < 20; i++) {
             intlist.add(R.drawable.flier);
             names.add("Laura");
@@ -99,9 +102,35 @@ public class ActiveSession extends AppCompatActivity {
                 asf.setText("Non Cancellable");
             }
         }.start();
-        intlist.add(0);
-        names.add("");
         recyclerView.setAdapter(new AdapterFoodWith(intlist, names));
+        findViewById(R.id.imageView13).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Rect r=new Rect();
+                //recyclerView.findChildViewUnder(e.getX(),e.getY()).getGlobalVisibleRect(r);
+                recyclerView.getGlobalVisibleRect(r);
+                FragmentManager fm = getSupportFragmentManager();
+                FragmentTransaction ft = fm.beginTransaction();
+                ActiveSessionFragment asf = new ActiveSessionFragment();
+                Explode explode=new Explode();
+                explode.setEpicenterCallback(new Transition.EpicenterCallback() {
+                    @Override
+                    public Rect onGetEpicenter(@NonNull Transition transition) {
+                        Log.e(TAG, "onGetEpicenter: "+r );
+                        return r;
+                    }
+                });
+                //TransitionManager.beginDelayedTransition(findViewById(R.id.fullactivesession), explode);
+                //findViewById(R.id.fullactivesession).setBackgroundColor(0x80000000);
+//                asf.setEnterTransition(new Fade());
+//                asf.setExitTransition(new Fade());
+
+                ft.addToBackStack(null);
+                ft.replace(R.id.fullactivesession, asf,"FragmentOrder");
+                ft.commit();
+                fragmentOpen=true;
+            }
+        });
         final GestureDetector gestureDetector = new GestureDetector(this, new GestureDetector.SimpleOnGestureListener() {
 
 
@@ -138,7 +167,7 @@ public class ActiveSession extends AppCompatActivity {
             @Override
             public boolean onInterceptTouchEvent(RecyclerView rv, MotionEvent e) {
 
-                gestureDetector.onTouchEvent(e);
+                //gestureDetector.onTouchEvent(e);
 
                 return false;
             }

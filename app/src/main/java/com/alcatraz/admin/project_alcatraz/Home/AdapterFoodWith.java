@@ -44,12 +44,12 @@ public class AdapterFoodWith extends RecyclerView.Adapter<AdapterFoodWith.MyView
      */
     @Override
     public int getItemViewType(int position) {
-        return position==names.size()-1?1:0;
+        return position==0?1:0;
     }
 
     @Override
     public void onBindViewHolder(@NonNull MyView holder, int position) {
-        if(position==image.size()-1)
+        if(position==0)
             return;
         holder.textView.setText(names.get(position));
         holder.img.setImageResource(image.get(position));

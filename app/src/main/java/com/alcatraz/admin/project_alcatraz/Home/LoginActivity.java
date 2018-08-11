@@ -49,8 +49,8 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         mPrefs = PreferenceManager.getDefaultSharedPreferences(this);
         if (mPrefs.getBoolean(Constants.SP_LOGGED_IN, false)) {
             startActivity(new Intent(LoginActivity.this, HomeActivity.class));
-            finish();
-            //launchHomeActivity();
+            //finish();
+            launchHomeActivity();
         }
     }
 
@@ -92,9 +92,9 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                     editor.putBoolean(Constants.SP_LOGGED_IN, true);
                     editor.putString(Constants.SP_LOGIN_TOKEN, login());
                     editor.apply();
-                    startActivity(new Intent(LoginActivity.this, HomeActivity.class));
-                    finish();
-                    //launchHomeActivity();
+//                    startActivity(new Intent(LoginActivity.this, HomeActivity.class));
+//                    finish();
+                    launchHomeActivity();
                 }
                 break;
             case R.id.text_forgot:
@@ -107,7 +107,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         getWindowManager().getDefaultDisplay().getMetrics(displayMetrics);
         int height = displayMetrics.heightPixels;
         int widths = displayMetrics.widthPixels;
-        CountDownTimer countDownTimer=new CountDownTimer(4*1000,1000) {
+        CountDownTimer countDownTimer=new CountDownTimer(2*1000,1000) {
             @Override
             public void onTick(long l) {
 
@@ -120,7 +120,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                 TransitionManager.beginDelayedTransition((ViewGroup)findViewById(R.id.login),new AutoTransition());
                 LinearLayout.LayoutParams p=(LinearLayout.LayoutParams)constraintLayout.getLayoutParams();
                 constraintLayout.setBackgroundResource(R.color.colorPrimaryRed);
-                ((TextView)findViewById(R.id.textsignIn)).setText("");
+                ((TextView)findViewById(R.id.textsignIn)).setText("LOGIN Succesful");
                 p.width=widths;
                 p.height=height;
                 findViewById(R.id.constraintimage).setLayoutParams(p);
