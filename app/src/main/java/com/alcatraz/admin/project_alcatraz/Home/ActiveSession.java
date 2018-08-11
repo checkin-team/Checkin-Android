@@ -1,6 +1,7 @@
 package com.alcatraz.admin.project_alcatraz.Home;
 
 import android.annotation.SuppressLint;
+import android.content.DialogInterface;
 import android.graphics.Rect;
 import android.os.Bundle;
 import android.os.CountDownTimer;
@@ -14,18 +15,22 @@ import android.support.transition.TransitionManager;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.text.Html;
 import android.util.Log;
 import android.view.GestureDetector;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.animation.DecelerateInterpolator;
+import android.widget.EditText;
 import android.widget.TextView;
 
 import com.alcatraz.admin.project_alcatraz.R;
+import com.alcatraz.admin.project_alcatraz.Utility.ItemClickSupport;
 
 import java.util.ArrayList;
 
@@ -103,6 +108,38 @@ public class ActiveSession extends AppCompatActivity {
             }
         }.start();
         recyclerView.setAdapter(new AdapterFoodWith(intlist, names));
+        ItemClickSupport.addTo(recyclerView).setOnItemClickListener(new ItemClickSupport.OnItemClickListener() {
+            @Override
+            public void onItemClicked(RecyclerView recyclerView, int position, View v) {
+                if(position!=0)
+                    return;
+                AlertDialog.Builder alert = new AlertDialog.Builder(ActiveSession.this);
+                alert.setMessage(Html.fromHtml(getString(R.string.username)));
+
+                // Set an EditText view to get user input
+                final EditText input = new EditText(ActiveSession.this);
+                alert.setView(input);
+
+                alert.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int whichButton) {
+                        String value = input.getText().toString();
+                        Log.d("", "Pin Value : " + value);
+                        return;
+                    }
+                });
+
+                alert.setNegativeButton("Cancel",
+                        new DialogInterface.OnClickListener() {
+
+                            public void onClick(DialogInterface dialog, int which) {
+                                // TODO Auto-generated method stub
+                                return;
+                            }
+                        });
+                alert.show();
+
+            }
+        });
         findViewById(R.id.imageView13).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
