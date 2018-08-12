@@ -9,6 +9,7 @@
 
     <!-- typical spacing between two views -->
     <dimen name="spacing_huge">40dp</dimen>
+    <dimen name="spacing_extra_large">32dp</dimen>
     <dimen name="spacing_large">24dp</dimen>
     <dimen name="spacing_normal">14dp</dimen>
     <dimen name="spacing_small">10dp</dimen>
@@ -41,4 +42,5 @@
     <dimen name="width_list_card">75dp</dimen>
     <dimen name="height_list_card">120dp</dimen>
     <dimen name="square_card_dimen">100dp</dimen>
+    <dimen name="fab_margin">16dp</dimen>
 </resources>

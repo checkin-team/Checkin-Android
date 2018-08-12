@@ -18,7 +18,12 @@
         tools:replace="android:theme">
         <activity
             android:name=".Home.LoginActivity"
-            android:theme="@style/Theme.AppCompat.Light.NoActionBar">
+            android:theme="@style/Theme.AppCompat.Light.NoActionBar"
+            android:screenOrientation="portrait"/>
+        <activity
+            android:name=".Home.SignupActivity"
+            android:theme="@style/Theme.AppCompat.Light.NoActionBar"
+            android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -57,7 +62,7 @@
         <activity android:name=".Home.StoryActivity" />
         <activity android:name=".Home.ForgotPassword" />
         <activity android:name=".Home.FilterTransactions" />
-        <activity android:name=".Home.FaqActivity"></activity>
+        <activity android:name=".Home.FaqActivity" />
         <activity android:name=".Home.ActiveSession" />
     </application>
 

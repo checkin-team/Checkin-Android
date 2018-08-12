@@ -1,0 +1,113 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".Home.SignupUserInfoFragment">
+
+    <EditText
+        android:id="@+id/ed_firstname"
+        android:layout_width="150dp"
+        android:layout_height="40dp"
+        android:layout_marginStart="@dimen/spacing_normal"
+        android:layout_marginTop="@dimen/spacing_extra_large"
+        android:background="@drawable/login_textbox"
+        android:hint="First Name"
+        android:inputType="textPersonName"
+        android:textAlignment="center"
+        android:textColor="#aaaaaa"
+        android:textColorHint="#aaaaaa"
+        android:textSize="@dimen/font_normal"
+        android:paddingRight="@dimen/spacing_normal"
+        app:layout_constraintEnd_toStartOf="@+id/ed_lastname"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <EditText
+        android:id="@+id/ed_lastname"
+        android:layout_width="144dp"
+        android:layout_height="40dp"
+        android:layout_marginEnd="@dimen/spacing_normal"
+        android:layout_marginTop="@dimen/spacing_extra_large"
+        android:background="@drawable/login_textbox"
+        android:hint="Last Name"
+        android:inputType="textPersonName"
+        android:textAlignment="center"
+        android:textColor="#aaaaaa"
+        android:textColorHint="#aaaaaa"
+        android:textSize="@dimen/font_normal"
+        android:paddingRight="@dimen/spacing_normal"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toEndOf="@+id/ed_firstname"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <EditText
+        android:id="@+id/ed_password"
+        android:layout_width="253dp"
+        android:layout_height="40dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="@dimen/spacing_small"
+        android:background="@drawable/login_textbox"
+        android:hint="Password"
+        android:inputType="textPassword"
+        android:textAlignment="center"
+        android:textColor="#aaaaaa"
+        android:textColorHint="#aaaaaa"
+        android:textSize="@dimen/font_normal"
+        android:paddingRight="@dimen/spacing_normal"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/im_female" />
+
+    <ImageView
+        android:id="@+id/im_male"
+        android:layout_width="80dp"
+        android:layout_height="80dp"
+        android:layout_marginStart="@dimen/spacing_normal"
+        android:layout_marginTop="@dimen/spacing_small"
+        android:src="@drawable/male"
+        android:focusable="true"
+        android:clickable="true"
+        android:foreground="@drawable/foreground_button_selector"
+        app:layout_constraintEnd_toStartOf="@+id/im_female"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/ed_lastname" />
+
+    <ImageView
+        android:id="@+id/im_female"
+        android:layout_width="80dp"
+        android:layout_height="80dp"
+        android:layout_marginEnd="@dimen/spacing_normal"
+        android:layout_marginTop="@dimen/spacing_small"
+        android:src="@drawable/female"
+        android:focusable="true"
+        android:clickable="true"
+        android:foreground="@drawable/foreground_button_selector"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toEndOf="@+id/im_male"
+        app:layout_constraintTop_toBottomOf="@+id/ed_lastname" />
+
+    <Button
+        android:id="@+id/btn_enter"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/spacing_small"
+        android:text="Enter"
+        android:textColor="@color/white"
+        android:textAlignment="center"
+        android:textSize="@dimen/font_large"
+        android:background="@drawable/background_button_red_shadow"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/ed_password" />
+
+
+</android.support.constraint.ConstraintLayout>

@@ -46,6 +46,8 @@ public class TestDb {
                     baseType = "Default";
                 }
                 MenuItem menuItem = new MenuItem("Carlsburg #" + j, typeCost, baseType, i, 1);
+                menuItem.setDescription("\"It is a 5% abv pilsner beer with a global distribution to 140 mark" +
+                        "ets. It was first brewed in 1904, and was created by Carl Jacobsen, son of Carlsberg's founder JC Jacobsen.");
                 if (i % 2 == 0)
                     menuItem.setSubGroupIndex(j % 2);
                 menuItems.add(menuItem);

@@ -138,4 +138,5 @@
             android:textColor="@color/white"
             android:fontFamily="@font/arial_rounded_mt_bold"/>
     </android.support.design.widget.NavigationView>
+
 </android.support.v4.widget.DrawerLayout>

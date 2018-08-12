@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".Home.OtpVerificationFragment">
+
+    <EditText
+        android:id="@+id/ed_otp"
+        android:layout_width="match_parent"
+        android:layout_height="38dp"
+        android:layout_marginEnd="@dimen/spacing_normal"
+        android:layout_marginStart="@dimen/spacing_normal"
+        android:layout_marginTop="@dimen/spacing_extra_large"
+        android:background="@drawable/login_textbox"
+        android:hint="Enter OTP"
+        android:textAlignment="center"
+        android:paddingRight="@dimen/spacing_normal"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <Button
+        android:id="@+id/btn_proceed"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/spacing_normal"
+        android:layout_marginTop="@dimen/spacing_small"
+        android:background="@drawable/background_button_red_shadow"
+        android:text="Proceed"
+        android:textAlignment="center"
+        android:textAllCaps="true"
+        android:textColor="@color/white"
+        android:textSize="@dimen/font_large"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/ed_otp" />
+
+    <FrameLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="@dimen/spacing_normal"
+        android:layout_marginTop="@dimen/spacing_small"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/ed_otp">
+
+        <TextView
+            android:id="@+id/editText3"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical|end"
+            android:text="Time Remaining 2:00"
+            android:textColor="#bebebe" />
+
+        <Button
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@drawable/background_button_red_shadow"
+            android:text="Resend otp"
+            android:textAlignment="center"
+            android:textAllCaps="true"
+            android:textColor="#ffffff"
+            android:textSize="@dimen/font_large"
+            android:visibility="invisible" />
+    </FrameLayout>
+</android.support.constraint.ConstraintLayout>

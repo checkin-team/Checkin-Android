@@ -8,6 +8,9 @@ import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.annotation.Nullable;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
@@ -34,6 +37,7 @@ import java.util.Map;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 
 /**
  * Created by TAIYAB on 03-06-2018.
@@ -154,6 +158,9 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
 
     private void launchHomeActivity() {
         startActivity(new Intent(LoginActivity.this, HomeActivity.class));
+        Intent intent = new Intent();
+        intent.putExtra(Constants.SP_LOGGED_IN, true);
+        setResult(RESULT_OK, intent);
         finish();
     }
 
@@ -171,5 +178,10 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                 Log.e(result.status.name(), result.message == null ? "Null" : result.message);
             }
         }
+    }
+
+    @OnClick(R.id.tv_register)
+    public void onRegisterClicked() {
+        finish();
     }
 }

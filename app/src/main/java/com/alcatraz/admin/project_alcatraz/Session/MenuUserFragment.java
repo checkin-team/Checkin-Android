@@ -151,7 +151,7 @@ public class MenuUserFragment extends Fragment implements MenuItemAdapter.OnItem
 
     @Override
     public boolean onItemLongPress(View view, MenuItem item) {
-        Toast.makeText(getContext(), "Long pressed!", Toast.LENGTH_SHORT).show();
+        mMenuInteractionListener.onItemShowInfo(item);
         return true;
     }
 
@@ -170,5 +170,6 @@ public class MenuUserFragment extends Fragment implements MenuItemAdapter.OnItem
 
     public interface OnMenuFragmentInteractionListener {
         void onItemOrderInteraction(MenuItem item, int count);
+        void onItemShowInfo(MenuItem item);
     }
 }

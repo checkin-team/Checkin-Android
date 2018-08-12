@@ -9,6 +9,8 @@ import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.speech.RecognizerIntent;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.AppCompatActivity;
@@ -55,6 +57,8 @@ public class SessionUserActivity extends AppCompatActivity implements MenuUserFr
 
     private STATUS_VALUES mSessionStatus;
     private static final String SESSION_ARG = "session_arg";
+    private FragmentManager fragmentManager;
+
 
 
 
@@ -296,6 +300,15 @@ public class SessionUserActivity extends AppCompatActivity implements MenuUserFr
     @Override
     public void onItemOrderInteraction(MenuItem item, int count) {
         mMenuViewModel.orderItem(item, count, item.getBaseType());
+    }
+
+    @Override
+    public void onItemShowInfo(MenuItem item) {
+        fragmentManager = getSupportFragmentManager();
+        FragmentTransaction transaction = fragmentManager.beginTransaction();
+        transaction.add(R.id.root_view, MenuInfoFragment.newInstance(item));
+        transaction.addToBackStack(null);
+        transaction.commit();
     }
 
     @Override

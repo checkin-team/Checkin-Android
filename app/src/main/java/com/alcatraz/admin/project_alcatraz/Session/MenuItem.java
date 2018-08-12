@@ -1,16 +1,12 @@
 package com.alcatraz.admin.project_alcatraz.Session;
 
-import android.util.Log;
-
 import com.alcatraz.admin.project_alcatraz.Data.Converters;
-import com.google.gson.Gson;
 
 import java.util.Map;
 
 import io.objectbox.annotation.Convert;
 import io.objectbox.annotation.Entity;
 import io.objectbox.annotation.Id;
-import io.objectbox.annotation.Transient;
 import io.objectbox.relation.ToOne;
 
 /**
@@ -25,6 +21,7 @@ public class MenuItem {
     private Map<String, Double> typeCost;
     private String baseType;
     private String unit;
+    private String description;
     private boolean vegetarian;
     private ToOne<MenuGroup> group;
     private int menuId;
@@ -39,6 +36,14 @@ public class MenuItem {
         this.baseType = baseType;
         this.group.setTargetId(groupId);
         this.menuId = menuId;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
     }
 
     public MenuItem(MenuItem item) {
