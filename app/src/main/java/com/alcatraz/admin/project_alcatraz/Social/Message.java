@@ -16,13 +16,6 @@ import io.objectbox.relation.ToOne;
  * Created by TAIYAB on 14-06-2018.
  */
 
-//@Entity(tableName = "messages",
-//        indices = {@Index("chat_id"), @Index("read_at"), @Index("recipient_id"), @Index("sender_id")},
-//        foreignKeys = {
-//            @ForeignKey(entity = User.class, parentColumns = "id", childColumns = "sender_id"),
-//            @ForeignKey(entity = User.class, parentColumns = "id", childColumns = "recipient_id"),
-//            @ForeignKey(entity = Chat.class, parentColumns = "user_id", childColumns = "chat_id")
-//})
 @Entity
 public class Message {
 

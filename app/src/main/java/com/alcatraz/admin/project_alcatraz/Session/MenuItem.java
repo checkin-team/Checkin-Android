@@ -1,16 +1,12 @@
 package com.alcatraz.admin.project_alcatraz.Session;
 
-import android.util.Log;
-
 import com.alcatraz.admin.project_alcatraz.Data.Converters;
-import com.google.gson.Gson;
 
 import java.util.Map;
 
 import io.objectbox.annotation.Convert;
 import io.objectbox.annotation.Entity;
 import io.objectbox.annotation.Id;
-import io.objectbox.annotation.Transient;
 import io.objectbox.relation.ToOne;
 
 /**

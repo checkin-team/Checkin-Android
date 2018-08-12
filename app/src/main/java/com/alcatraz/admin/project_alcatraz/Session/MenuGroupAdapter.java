@@ -11,10 +11,8 @@ import android.support.design.widget.TabLayout;
 import android.support.v4.view.PagerAdapter;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
-import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewConfiguration;
 import android.view.ViewGroup;
@@ -119,8 +117,8 @@ public class MenuGroupAdapter extends RecyclerView.Adapter<MenuGroupAdapter.Grou
     public void expandView(GroupViewHolder groupViewHolder) {
         if (groupViewHolder != null) {
             final int position = groupViewHolder.getAdapterPosition();
-            ((LinearLayoutManager) mRecyclerView.getLayoutManager()).scrollToPositionWithOffset(position, 0);
             groupViewHolder.showMenu(groupViewHolder.itemView);
+            ((LinearLayoutManager) mRecyclerView.getLayoutManager()).scrollToPositionWithOffset(position, 0);
             mPrevExpandedViewHolder = groupViewHolder;
         }
     }
@@ -201,7 +199,7 @@ public class MenuGroupAdapter extends RecyclerView.Adapter<MenuGroupAdapter.Grou
         }
 
         void bindData(final MenuGroup menuGroup) {
-            vTitle.setText(menuGroup.getTitle());
+            vTitle.setText(menuGroup.getName());
             vImage.setImageResource(R.drawable.ic_beer);
             pagerAdapter = new SubGroupPagerAdapter(menuGroup);
             if (menuGroup.getSubGroupsCount() > 1) {

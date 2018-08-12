@@ -9,6 +9,8 @@ import android.widget.ListView;
 import android.widget.TextView;
 
 import com.alcatraz.admin.project_alcatraz.R;
+import com.alcatraz.admin.project_alcatraz.User.User;
+import com.alcatraz.admin.project_alcatraz.Utility.GlideApp;
 
 import java.util.List;
 
@@ -29,7 +31,6 @@ public class AdapterFoodWith extends RecyclerView.Adapter<AdapterFoodWith.MyView
     @Override
     public void onBindViewHolder(@NonNull MyView holder, int position) {
         holder.textView.setText(names.get(position));
-        holder.img.setImageResource(image.get(position));
     }
 
     /**

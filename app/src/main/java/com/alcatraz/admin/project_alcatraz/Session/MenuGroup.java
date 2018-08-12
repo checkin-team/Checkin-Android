@@ -21,7 +21,7 @@ import io.objectbox.relation.ToMany;
 @Entity
 public class MenuGroup {
     @Id private long id;
-    private String title;
+    private String name;
     @Convert(converter = Converters.ListConverter.class, dbType = String.class)
     @SerializedName("sub_groups")
     private ArrayList<String> subGroups;
@@ -35,8 +35,8 @@ public class MenuGroup {
         this.subGroups.add("Default");
     }
 
-    public MenuGroup(@NonNull final String title, final ArrayList<String> subGroups, int menuId) {
-        this.title = title;
+    public MenuGroup(@NonNull final String name, final ArrayList<String> subGroups, int menuId) {
+        this.name = name;
         if (subGroups != null) {
             this.subGroups = subGroups;
         } else {
@@ -46,8 +46,8 @@ public class MenuGroup {
         this.menuId = menuId;
     }
 
-    public String getTitle() {
-        return title;
+    public String getName() {
+        return name;
     }
 
     public long getId() {

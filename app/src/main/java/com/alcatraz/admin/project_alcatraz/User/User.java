@@ -7,6 +7,7 @@ import io.objectbox.annotation.Id;
 public class User {
     @Id private long id;
     private String username;
+    private String imageUrl;
 
     User() {}
 

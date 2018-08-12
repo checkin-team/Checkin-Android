@@ -87,8 +87,8 @@ public class MenuUserFragment extends Fragment implements MenuItemAdapter.OnItem
         groupAdapter = new MenuGroupAdapter(null, getContext(), this);
         rvGroupsList.setAdapter(groupAdapter);
 
-        final StartSnapHelper snapHelper = new StartSnapHelper();
-        snapHelper.attachToRecyclerView(rvGroupsList);
+//        final StartSnapHelper snapHelper = new StartSnapHelper();
+//        snapHelper.attachToRecyclerView(rvGroupsList);
 
         mViewModel.getMenuGroups(menuId).observe(getActivity(), menuGroupResource -> {
             if (menuGroupResource == null)
