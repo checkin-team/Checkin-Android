@@ -24,6 +24,7 @@ public class RecentCheckInFragment extends Fragment {
         Log.e(TAG, "onCreateView: FRAGMENT" );
         View view = inflater.inflate(R.layout.layout_recent_checkin,
                 container, false);
+        view.bringToFront();
         RecyclerView recent=view.findViewById(R.id.recentrv);
         RecyclerView.LayoutManager layoutManager=new LinearLayoutManager(getContext(),LinearLayoutManager.VERTICAL,false);
         recent.setLayoutManager(layoutManager);

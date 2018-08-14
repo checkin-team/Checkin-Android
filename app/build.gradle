@@ -78,10 +78,12 @@ dependencies {
     implementation project(':library:NiceSpinner')
     implementation project(':library:MaterialChipView')
 
-//    for graphs
+    // Graphs
     implementation 'com.github.PhilJay:MPAndroidChart:v3.0.3'
-    //for bottomnavbar
+    // Bottom-navbar
     implementation 'it.sephiroth.android.library.bottomnavigation:bottom-navigation:2.0.1-rc1'
 
+    // Transition animations
+    implementation "com.andkulikov:transitionseverywhere:1.8.0"
     implementation 'com.jsibbold:zoomage:1.1.0'
 }

@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:id="@+id/login"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/login_root"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/white"
@@ -14,29 +15,33 @@
         android:layout_gravity="center_horizontal"
         android:src="@drawable/ic_login_logo" />
 
-        <EditText
-            android:layout_width="309dp"
-            android:layout_height="0dp"
-            android:id="@+id/login_username"
-            android:layout_weight=".09"
-            android:layout_gravity="center_horizontal"
-            android:background="@drawable/login_textbox"
-            android:gravity="center"
-            android:hint="Username"
-            android:inputType="text"/>
+    <EditText
+        android:layout_width="309dp"
+        android:layout_height="0dp"
+        android:id="@+id/login_username"
+        android:layout_weight=".09"
+        android:layout_gravity="center_horizontal"
+        android:background="@drawable/login_textbox"
+        android:gravity="center"
+        android:hint="Username"
+        android:inputType="text"/>
 
-        <EditText
-            android:layout_width="309dp"
-            android:layout_height="0dp"
-            android:layout_weight=".09"
-            android:layout_gravity="center_horizontal"
-            android:layout_marginTop="@dimen/spacing_normal"
-            android:background="@drawable/login_textbox"
-            android:id="@+id/login_password"
-            android:gravity="center"
-            android:hint="Password"
-            android:inputType="textPassword"
-            android:fontFamily="sans-serif"/>
+    <Space
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight=".015"/>
+
+    <EditText
+        android:layout_width="309dp"
+        android:layout_height="0dp"
+        android:layout_weight=".09"
+        android:layout_gravity="center_horizontal"
+        android:background="@drawable/login_textbox"
+        android:id="@+id/login_password"
+        android:gravity="center"
+        android:hint="Password"
+        android:inputType="textPassword"
+        android:fontFamily="sans-serif"/>
 
     <Space
         android:layout_width="match_parent"
@@ -46,7 +51,7 @@
     <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="0dp"
-        android:layout_weight=".06"
+        android:layout_weight=".04"
         android:orientation="horizontal"
         android:layout_gravity="center_horizontal">
         <TextView
@@ -74,35 +79,44 @@
             android:text="Forgot Password?" />
     </LinearLayout>
 
-    <FrameLayout
+    <Space
+        android:id="@+id/space_above"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight=".03"/>
+
+    <android.support.constraint.ConstraintLayout
         android:id="@+id/btn_signin"
         android:layout_width="309dp"
         android:layout_height="0dp"
-        android:layout_weight=".09"
-        android:layout_gravity="center_horizontal">
+        android:layout_gravity="center_horizontal"
+        android:layout_weight=".09">
 
-        <ImageView
+        <View
             android:id="@+id/im_signin"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:src="@drawable/rectangle_36"/>
+            android:background="@drawable/curved_rouge_shape" />
 
         <TextView
             android:id="@+id/tv_signin"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Sign in"
+            android:text="Sign In"
             android:textColor="@color/white"
-            android:layout_gravity="center"
-            android:fontFamily="@font/arial_rounded_mt_bold"
-            android:textSize="@dimen/font_large"/>
+            android:textSize="19sp"
+            app:layout_constraintBottom_toBottomOf="@id/btn_signin"
+            app:layout_constraintLeft_toLeftOf="@id/btn_signin"
+            app:layout_constraintRight_toRightOf="@id/btn_signin"
+            app:layout_constraintTop_toTopOf="@id/btn_signin" />
+    </android.support.constraint.ConstraintLayout>
 
-    </FrameLayout>
 
     <Space
+        android:id="@+id/space_below"
         android:layout_width="match_parent"
-        android:layout_weight=".04"
-        android:layout_height="0dp" />
+        android:layout_height="0dp"
+        android:layout_weight=".05" />
 
     <LinearLayout
         android:layout_width="wrap_content"

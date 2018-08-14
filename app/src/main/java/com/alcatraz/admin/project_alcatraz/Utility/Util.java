@@ -282,8 +282,10 @@ public class Util {
         return text;
     }
 
-    public static Object getOrDefault(Map<String, ?> map, Object key, Object defaultValue) {
-        Object v;
+    public static <T> T getOrDefault(Map<?, T> map, Object key, T defaultValue) {
+        if (map == null)
+            return defaultValue;
+        T v;
         return (((v = map.get(key)) != null) || map.containsKey(key))
                 ? v
                 : defaultValue;

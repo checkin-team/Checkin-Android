@@ -74,10 +74,10 @@ public class ChatActivity extends AppCompatActivity{
     public void send_message(View v)
     {
         Message msg = new Message(edChatText.getText().toString(), new Date(), 0, mUserId);
-        Map<String, Integer> values = new HashMap<>();
-        values.put("sender", (int) msg.getSenderId());
-        values.put("recipient", (int) msg.getRecipientId());
-        values.put("chat", (int) msg.getChatId());
+        Map<String, String> values = new HashMap<>();
+        values.put("sender", "" + msg.getSenderId());
+        values.put("recipient", "" + msg.getRecipientId());
+        values.put("chat", "" + msg.getChatId());
         Log.e(TAG, NamedFormatter.format("senderID: %(sender), recipientID: %(recipient) & chatID: %(chat)", values));
         mMessageViewModel.sendMessages(msg);
         edChatText.setText("");

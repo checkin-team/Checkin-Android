@@ -14,12 +14,12 @@ public class NamedFormatter {
     );
     NamedFormatter() {}
 
-    public static String format(String fmt, Map<String, ?> values) {
+    public static String format(String fmt, Map<String, String> values) {
         return replaceAll(fmt, RE.matcher(fmt), new Util.MatchResultFunction() {
             @Override
             public String apply(MatchResult matchResult) {
                 return matchResult.group(1) != null ?
-                        matchResult.group(1) : Util.getOrDefault(values, matchResult.group(3), matchResult.group(2)).toString();
+                        matchResult.group(1) : Util.getOrDefault(values, matchResult.group(3), matchResult.group(2));
             }
         });
     }

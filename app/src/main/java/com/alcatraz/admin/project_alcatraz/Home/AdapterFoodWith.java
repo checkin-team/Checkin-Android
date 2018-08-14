@@ -21,15 +21,38 @@ public class AdapterFoodWith extends RecyclerView.Adapter<AdapterFoodWith.MyView
     @NonNull
     @Override
     public MyView onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View view=LayoutInflater.from(parent.getContext())
+        View view;
+        if(viewType==0)
+         view=LayoutInflater.from(parent.getContext())
                 .inflate(R.layout.item_food_with, parent, false);
+        else
+            view=LayoutInflater.from(parent.getContext())
+                    .inflate(R.layout.item_food_add, parent, false);
 
         return new MyView(view,viewType);
     }
 
+    /**
+     * Return the view type of the item at <code>position</code> for the purposes
+     * of view recycling.
+     * <p>
+     * <p>The default implementation of this method returns 0, making the assumption of
+     * a single view type for the adapter. Unlike ListView adapters, types need not
+     * be contiguous. Consider using id resources to uniquely identify item view types.
+     *
+     * @param position position to query
+     * @return integer value identifying the type of the view needed to represent the item at
+     * <code>position</code>. Type codes need not be contiguous.
+     */
+    @Override
+    public int getItemViewType(int position) {
+        return position==0?1:0;
+    }
 
     @Override
     public void onBindViewHolder(@NonNull MyView holder, int position) {
+        if(position==0)
+            return;
         holder.textView.setText(names.get(position));
     }
 
@@ -48,11 +71,13 @@ public class AdapterFoodWith extends RecyclerView.Adapter<AdapterFoodWith.MyView
 
     }
 
-    public  class MyView extends RecyclerView.ViewHolder {
+    public  class MyView extends RecyclerView.ViewHolder{
         de.hdodenhof.circleimageview.CircleImageView img;
         TextView textView;
         public  MyView(View view,int viewtype){
             super(view);
+            if(viewtype==1)
+                return;
             img=view.findViewById(R.id.cicular);
             textView=view.findViewById(R.id.textView16);
 

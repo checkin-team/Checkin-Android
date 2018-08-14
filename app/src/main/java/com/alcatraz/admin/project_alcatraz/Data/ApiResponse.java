@@ -3,7 +3,11 @@ package com.alcatraz.admin.project_alcatraz.Data;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 
+import com.alcatraz.admin.project_alcatraz.Utility.Util;
+import com.google.gson.JsonObject;
+
 import java.io.IOException;
+import java.util.Map;
 
 import retrofit2.Response;
 
@@ -54,7 +58,15 @@ public class ApiResponse<T> {
 
     @Nullable
     public String getErrorMessage() {
-        return errorMessage;
+        JsonObject data = Converters.getJsonObject(errorMessage);
+        if (data == null)
+            return errorMessage;
+        if (data.has("detail"))
+            return data.get("detail").getAsString();
+        else if (data.has("errors"))
+            return data.get("errors").getAsString();
+        else
+            return errorMessage;
     }
 
     public int getStatusCode() {

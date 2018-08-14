@@ -21,6 +21,7 @@ public class Resource<T> {
     public enum Status {
         SUCCESS,
         LOADING,
+        ERROR_RESPONSE_INVALID,
         ERROR_DISCONNECTED,
         ERROR_NOT_FOUND,
         ERROR_INVALID_REQUEST,
@@ -66,8 +67,7 @@ public class Resource<T> {
             } else {
                 resource = error(Status.ERROR_UNKNOWN, apiResponse.getErrorMessage(), apiResponse.getData());
             }
-        }
-        else if (apiResponse.hasStatus(HTTP_NOT_FOUND)) {
+        } else if (apiResponse.hasStatus(HTTP_NOT_FOUND)) {
             resource = error(Status.ERROR_NOT_FOUND, apiResponse.getErrorMessage(), apiResponse.getData());
         } else if (apiResponse.hasStatus(HTTP_BAD_REQUEST)) {
             resource = error(Status.ERROR_INVALID_REQUEST, apiResponse.getErrorMessage(), apiResponse.getData());

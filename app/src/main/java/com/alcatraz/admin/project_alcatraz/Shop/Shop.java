@@ -36,8 +36,8 @@ public class Shop {
     }
 
     public String getProfileUrl() {
-        Map<String, Integer> values = new HashMap<>();
-        values.put(Constants.SHOP_ID, mId);
+        Map<String, String> values = new HashMap<>();
+        values.put(Constants.SHOP_ID, "" + mId);
         return NamedFormatter.format(Constants.API_URL_SHOP_PROFILE_URL, values);
     }
 }
