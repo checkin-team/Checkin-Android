@@ -69,7 +69,7 @@ public class MenuViewModel extends AndroidViewModel {
         });
     }
 
-    public void orderItem(MenuItem menuItem, int count, String type) {
+    public void orderItem(MenuItem menuItem, int count, int type) {
         OrderedItem item = menuItem.order(count, type);
         Log.e(TAG, "Item (" + menuItem.getId() + ") count: " + count);
         List<OrderedItem> orderedItems = mOrderedItems.getValue();

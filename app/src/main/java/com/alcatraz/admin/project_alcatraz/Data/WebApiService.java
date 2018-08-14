@@ -1,5 +1,6 @@
 package com.alcatraz.admin.project_alcatraz.Data;
 
+import com.alcatraz.admin.project_alcatraz.Session.ActiveSessionModel;
 import com.alcatraz.admin.project_alcatraz.Social.Message;
 
 import java.util.List;
@@ -17,4 +18,7 @@ public interface WebApiService {
 
     @POST("auth/login/")
     Call<Map<String, String>> postLogin(@Body Map<String, String> credentials);
+
+    @GET("activeSessionModel/{active_session_id}")
+    Call<ActiveSessionModel> getActiveSession(@Path("active_session_id") int activeSessionId);
 }

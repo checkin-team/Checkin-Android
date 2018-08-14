@@ -20,6 +20,7 @@ import java.util.List;
 import javax.inject.Singleton;
 
 import io.objectbox.Box;
+import io.objectbox.Property;
 import io.objectbox.android.ObjectBoxLiveData;
 
 @Singleton

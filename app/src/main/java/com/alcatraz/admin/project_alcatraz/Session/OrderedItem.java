@@ -2,16 +2,19 @@ package com.alcatraz.admin.project_alcatraz.Session;
 
 import android.util.Log;
 
+import java.util.List;
+
 public class OrderedItem {
     private MenuItem item;
     private int quantity;
     private int remainingSeconds;
-    private String type;
+    private int typeIndex;
+    private List<ItemCustomizationField> selectedFields;
 
-    OrderedItem(MenuItem menuItem, int quantity, String type) {
+    OrderedItem(MenuItem menuItem, int quantity, int type) {
         this.item = menuItem;
         this.quantity = quantity;
-        this.type = type;
+        this.typeIndex = type;
     }
 
     public void setRemainingSeconds(int remainingSeconds) {
@@ -24,16 +27,12 @@ public class OrderedItem {
 
     public double getPrice() {
         double price = 0;
-        if (item.getTypeCost().containsKey(type)) {
-            price = item.getTypeCost().get(type);
-        } else {
-            Log.e("OrderedItem", "Key invalid");
-        }
+        price = item.getTypeCost().get(typeIndex);
         return price * quantity;
     }
 
-    public String getType() {
-        return type;
+    public int getTypeIndex() {
+        return typeIndex;
     }
 
     public int getCount() {

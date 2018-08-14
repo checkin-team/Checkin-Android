@@ -41,4 +41,10 @@
     <dimen name="width_list_card">75dp</dimen>
     <dimen name="height_list_card">120dp</dimen>
     <dimen name="square_card_dimen">100dp</dimen>
+
+    <!--MenuItemLayout-->
+    <dimen name="menuItemText">24sp</dimen>
+    <dimen name="itemCustomizationGroupText">21sp</dimen>
+    <dimen name="itemCustomizationFieldText">18sp</dimen>
+
 </resources>

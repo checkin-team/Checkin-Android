@@ -16,10 +16,11 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.text.TextUtils;
+import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MotionEvent;
 import android.view.View;
-import android.widget.Button;
+import android.view.ViewGroup;
 import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -49,6 +50,7 @@ public class SessionUserActivity extends AppCompatActivity implements MenuUserFr
     @BindView(R.id.action_search) ImageButton mActionSearch;
     @BindView(R.id.rv_menu_cart) RecyclerView rvCart;
     @BindView(R.id.count_order_items) TextView tvCountItems;
+    @BindView(R.id.customizationRoot) ViewGroup customizationRoot;
     private MenuUserFragment mMenuFragment;
     private MenuViewModel mMenuViewModel;
     private MenuCartAdapter mCartAdapter;
@@ -295,7 +297,32 @@ public class SessionUserActivity extends AppCompatActivity implements MenuUserFr
 
     @Override
     public void onItemOrderInteraction(MenuItem item, int count) {
-        mMenuViewModel.orderItem(item, count, item.getBaseType());
+        if (item.getCustomizationGroups() != null) {
+            customizationRoot.setVisibility(View.VISIBLE);
+            MenuItemHolder menuItemHolder = new MenuItemHolder(customizationRoot,getFoodExtraHolderList(item.getCustomizationGroups()),item);
+        }
+        mMenuViewModel.orderItem(item, count, item.getBaseTypeIndex());
+    }
+
+    public List<ItemCustomizationGroupHolder> getFoodExtraHolderList(List<ItemCustomizationGroup> foodExtraList){
+        List<ItemCustomizationGroupHolder> foodExtraHolderList = new ArrayList<>();
+        for(ItemCustomizationGroup foodExtra : foodExtraList){
+            View view = LayoutInflater.from(getApplicationContext()).inflate(R.layout.item_customization_group,null,false);
+            ItemCustomizationGroupHolder foodExtraHolder = new ItemCustomizationGroupHolder(view,null,foodExtra);
+
+            foodExtraHolder.setItemCustomizationFieldHolderList(getExtraHolder(foodExtra.getItemCustomizationFieldList(),foodExtraHolder));
+            foodExtraHolderList.add(foodExtraHolder);
+        }
+        return foodExtraHolderList;
+    }
+    public List<ItemCustomizationFieldHolder> getExtraHolder(List<ItemCustomizationField> extraList, ItemCustomizationFieldHolder.SelectableExtraHolder selectableExtraHolder){
+        List<ItemCustomizationFieldHolder> extraHolderList = new ArrayList<>();
+        for(ItemCustomizationField extra : extraList){
+            View view = LayoutInflater.from(getApplicationContext()).inflate(R.layout.item_customization_field,null,false);
+            ItemCustomizationFieldHolder extraHolder = new ItemCustomizationFieldHolder(view, extra,selectableExtraHolder);
+            extraHolderList.add(extraHolder);
+        }
+        return extraHolderList;
     }
 
     @Override

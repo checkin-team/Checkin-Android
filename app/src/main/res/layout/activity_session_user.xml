@@ -103,6 +103,9 @@
             android:contentDescription="@string/action_filter"
             android:scaleType="fitCenter"
             android:src="@drawable/ic_filter" />
+
+        <include layout="@layout/layout_item_customization" />
+
     </FrameLayout>
 
     <android.support.design.widget.NavigationView

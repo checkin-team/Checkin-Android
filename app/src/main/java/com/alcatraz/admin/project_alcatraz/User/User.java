@@ -11,13 +11,15 @@ public class User {
 
     User() {}
 
-    public User(String username) {
+    public User(String username, String imageUrl) {
         this.username = username;
+        this.imageUrl = imageUrl;
     }
 
-    public User(int id, String username) {
+    public User(long id, String username, String imageUrl) {
         this.id = id;
         this.username = username;
+        this.imageUrl = imageUrl;
     }
 
     public long getId() {
@@ -34,10 +36,6 @@ public class User {
 
     public String getImageUrl() {
         return imageUrl;
-    }
-
-    public void setImageUrl(String imageUrl) {
-        this.imageUrl = imageUrl;
     }
 }
 
