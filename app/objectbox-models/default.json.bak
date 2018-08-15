@@ -150,30 +150,6 @@
         }
       ],
       "relations": []
-    },
-    {
-      "id": "6:2674876243860969811",
-      "lastPropertyId": "4:8893241717595293131",
-      "name": "ItemCustomizationField",
-      "properties": [
-        {
-          "id": "1:4466671269996896047",
-          "name": "vegetarian"
-        },
-        {
-          "id": "2:8673216267010325040",
-          "name": "name"
-        },
-        {
-          "id": "3:1952580681446290202",
-          "name": "price"
-        },
-        {
-          "id": "4:8893241717595293131",
-          "name": "isSelected"
-        }
-      ],
-      "relations": []
     }
   ],
   "lastEntityId": "6:2674876243860969811",
@@ -182,7 +158,9 @@
   "lastSequenceId": "0:0",
   "modelVersion": 4,
   "modelVersionParserMinimum": 4,
-  "retiredEntityUids": [],
+  "retiredEntityUids": [
+    2674876243860969811
+  ],
   "retiredIndexUids": [
     1744039066905882396
   ],
@@ -190,7 +168,11 @@
     2897744320311231101,
     2436679017790023573,
     1962050362083928069,
-    4618499012400939291
+    4618499012400939291,
+    4466671269996896047,
+    8673216267010325040,
+    1952580681446290202,
+    8893241717595293131
   ],
   "retiredRelationUids": [],
   "version": 1

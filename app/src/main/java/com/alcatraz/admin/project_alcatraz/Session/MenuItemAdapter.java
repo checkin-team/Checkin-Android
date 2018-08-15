@@ -102,7 +102,7 @@ public class MenuItemAdapter extends RecyclerView.Adapter<MenuItemAdapter.ItemVi
             this.menuItem = menuItem;
             vTitle.setText(menuItem.getName());
             vPriceValue.setText(Util.joinCollection(menuItem.getTypeCost(), " | "));
-            if (menuItem.getCustomizationGroups() != null) {
+            if (!menuItem.getCustomizationGroups().isEmpty()) {
                 imItemAdd.setImageResource(R.drawable.ic_menu_item_add_customize);
             }
             vQuantityPicker.setAdapter(new TextBaseAdapter(

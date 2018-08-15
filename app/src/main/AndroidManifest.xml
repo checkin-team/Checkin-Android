@@ -46,6 +46,7 @@
         <activity
             android:name=".Session.SessionUserActivity"
             android:label="@string/title_activity_session_user"
+            android:screenOrientation="portrait"
             android:theme="@style/SessionTheme" />
         <activity
             android:name=".Social.ChatActivity"

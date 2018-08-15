@@ -6,9 +6,11 @@ import com.alcatraz.admin.project_alcatraz.Data.Converters;
 
 import java.util.List;
 
+import io.objectbox.annotation.Backlink;
 import io.objectbox.annotation.Convert;
 import io.objectbox.annotation.Entity;
 import io.objectbox.annotation.Id;
+import io.objectbox.relation.ToMany;
 import io.objectbox.relation.ToOne;
 
 /**
@@ -29,20 +31,20 @@ public class MenuItem {
     private ToOne<MenuGroup> group;
     private int menuId;
     private int subGroupIndex = 0;
-    @Convert(converter = Converters.ListConverter.class, dbType = String.class)
-    private List<ItemCustomizationGroup> customizationGroups;
+
+    @Backlink(to = "menuItem")
+    private ToMany<ItemCustomizationGroup> customizationGroups;
 
     MenuItem() {
     }
 
-    public MenuItem(String name, List<String> typeName,List<Double> typeCost, int baseType, long groupId, int menuId,List<ItemCustomizationGroup> customizationGroups) {
+    public MenuItem(String name, List<String> typeName,List<Double> typeCost, int baseType, long groupId, int menuId) {
         this.name = name;
         this.typeName = typeName;
         this.typeCost = typeCost;
         this.baseTypeIndex = baseType;
         this.group.setTargetId(groupId);
         this.menuId = menuId;
-        if(customizationGroups !=null)this.customizationGroups = customizationGroups;
     }
 
     public MenuItem(MenuItem item) {
@@ -54,15 +56,10 @@ public class MenuItem {
         this.vegetarian = item.isVegetarian();
         this.menuId = item.getMenuId();
         this.subGroupIndex = item.getSubGroupIndex();
-        this.customizationGroups = item.customizationGroups;
     }
 
-    public List<ItemCustomizationGroup> getCustomizationGroups() {
+    public ToMany<ItemCustomizationGroup> getCustomizationGroups() {
         return customizationGroups;
-    }
-
-    public void setCustomizationGroups(@NonNull List<ItemCustomizationGroup> customizationGroups) {
-        this.customizationGroups = customizationGroups;
     }
 
     public String getName() {

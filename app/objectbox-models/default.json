@@ -72,10 +72,6 @@
         {
           "id": "12:6121280321059328500",
           "name": "baseTypeIndex"
-        },
-        {
-          "id": "13:6822020756816764379",
-          "name": "customizationGroups"
         }
       ],
       "relations": []
@@ -150,10 +146,71 @@
         }
       ],
       "relations": []
+    },
+    {
+      "id": "7:6235644151607206811",
+      "lastPropertyId": "6:3819518496719418849",
+      "name": "ItemCustomizationField",
+      "properties": [
+        {
+          "name": "id"
+        },
+        {
+          "id": "2:7485433332937252032",
+          "name": "vegetarian"
+        },
+        {
+          "id": "3:7530691846855437329",
+          "name": "name"
+        },
+        {
+          "id": "4:3086567839467397584",
+          "name": "price"
+        },
+        {
+          "id": "5:5184918765500510665",
+          "name": "isSelected"
+        },
+        {
+          "id": "6:3819518496719418849",
+          "indexId": "6:8728318395506730697",
+          "name": "customizationGroupId"
+        }
+      ],
+      "relations": []
+    },
+    {
+      "id": "8:2324997118161696194",
+      "lastPropertyId": "5:3531187045236627424",
+      "name": "ItemCustomizationGroup",
+      "properties": [
+        {
+          "id": "1:4161275492409161399",
+          "name": "id"
+        },
+        {
+          "id": "2:5386818669329705767",
+          "name": "minSelection"
+        },
+        {
+          "id": "3:3281289083572868925",
+          "name": "maxSelection"
+        },
+        {
+          "id": "4:1792887607526053053",
+          "name": "name"
+        },
+        {
+          "id": "5:3531187045236627424",
+          "indexId": "7:118228126993220315",
+          "name": "menuItemId"
+        }
+      ],
+      "relations": []
     }
   ],
-  "lastEntityId": "6:2674876243860969811",
-  "lastIndexId": "5:8998894092831263298",
+  "lastEntityId": "8:2324997118161696194",
+  "lastIndexId": "7:118228126993220315",
   "lastRelationId": "0:0",
   "lastSequenceId": "0:0",
   "modelVersion": 4,
@@ -172,7 +229,8 @@
     4466671269996896047,
     8673216267010325040,
     1952580681446290202,
-    8893241717595293131
+    8893241717595293131,
+    6822020756816764379
   ],
   "retiredRelationUids": [],
   "version": 1

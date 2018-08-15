@@ -57,4 +57,5 @@
     <color name="menuItemTypeCostText">#000000</color>
     <color name="itemCustomizationGroupText">#ffffff</color>
     <color name="itemCustomizationFieldText">#ffffff</color>
+    <color name="theme_dark">#af1216</color>
 </resources>

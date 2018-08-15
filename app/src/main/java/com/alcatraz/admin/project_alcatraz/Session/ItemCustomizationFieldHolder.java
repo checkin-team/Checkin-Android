@@ -18,25 +18,32 @@ public class ItemCustomizationFieldHolder {
     public static final int TYPE_VEG = R.drawable.vegetarian;
     public static final int TYPE_NONVEG = R.drawable.vegetarian; //todo change
 
-    ViewGroup viewGroup;
-    ImageView type;
-    TextView name;
-    TextView price;
-    CheckBox checkbox;
-    SelectableExtraHolder selectableExtraHolder;
+    private ViewGroup viewGroup;
+    private ImageView type;
+    private TextView name;
+    private TextView price;
+    private CheckBox checkbox;
+    private SelectableExtraHolder selectableExtraHolder;
 
-    ItemCustomizationField extra;
+    private ItemCustomizationField extra;
+    private ItemCustFieldHolderCompat itemCustFieldHolderCompat;
 
-    public ItemCustomizationFieldHolder(View view, SelectableExtraHolder selectableExtraHolder) {
+    /*public ItemCustomizationFieldHolder(View view, SelectableExtraHolder selectableExtraHolder) {
         this(view,null,selectableExtraHolder);
-    }
-    public ItemCustomizationFieldHolder(View view, ItemCustomizationField extra, final SelectableExtraHolder selectableExtraHolder) {
+    }*/
+    public ItemCustomizationFieldHolder(ItemCustFieldHolderCompat compat,View view, ItemCustomizationField extra, final SelectableExtraHolder selectableExtraHolder) {
         if (view != null){
             this.viewGroup = (ViewGroup) view;
             type = view.findViewById(R.id.type);
             name = view.findViewById(R.id.name);
             price = view.findViewById(R.id.price);
             checkbox = view.findViewById(R.id.checkbox);
+            viewGroup.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    checkbox.performClick();
+                }
+            });
             checkbox.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
@@ -45,8 +52,11 @@ public class ItemCustomizationFieldHolder {
             });
 
         }
-        setExtra(extra);
+        itemCustFieldHolderCompat = compat;
         if(selectableExtraHolder!=null)this.selectableExtraHolder = selectableExtraHolder;
+        setExtra(extra);
+
+
     }
 
     public void setExtra(ItemCustomizationField extra){
@@ -58,13 +68,8 @@ public class ItemCustomizationFieldHolder {
         checkbox.setChecked(extra.isSelected());
     }
     public void isSelected(boolean isSelected){
-        if(isSelected){
-            checkbox.setChecked(true);
-            extra.setSelected(true);
-        }else {
-            checkbox.setChecked(false);
-            extra.setSelected(false);
-        }
+        itemCustFieldHolderCompat.onClick(extra,isSelected);
+        checkbox.setChecked(isSelected);
     }
 
 
@@ -104,11 +109,19 @@ public class ItemCustomizationFieldHolder {
         return extra;
     }
 
+    public ViewGroup getViewGroup() {
+        return viewGroup;
+    }
+
     public interface SelectableExtraHolder{
         void onSelect(ItemCustomizationFieldHolder itemCustomizationFieldHolder);
         void onUnselect(ItemCustomizationFieldHolder itemCustomizationFieldHolder);
     }
 
+
+    public interface ItemCustFieldHolderCompat{
+        void onClick(ItemCustomizationField itemCustomizationField,boolean isSelected);
+    }
 
 
 }

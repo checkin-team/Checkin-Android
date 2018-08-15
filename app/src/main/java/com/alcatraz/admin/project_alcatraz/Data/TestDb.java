@@ -19,12 +19,41 @@ public class TestDb {
     public static void populateWithTestData(final Context context) {
         Log.e("TestData", "Populating...");
         populateUsers(AppDatabase.getUserModel(context));
-        populateMenu(AppDatabase.getMenuItemModel(context), AppDatabase.getMenuGroupModel(context));
+        populateMenu(AppDatabase.getMenuItemCustFieldModel(context),AppDatabase.getMenuItemCustGroupModel(context),AppDatabase.getMenuItemModel(context), AppDatabase.getMenuGroupModel(context));
     }
 
-    private static void populateMenu(Box<MenuItem> menuItemModel, Box<MenuGroup> menuGroupModel) {
+    private static void populateMenu(Box<ItemCustomizationField> itemCustomizationFieldModel,Box<ItemCustomizationGroup> itemCustomizationGroupModel,Box<MenuItem> menuItemModel, Box<MenuGroup> menuGroupModel) {
         List<MenuGroup> menuGroups = new ArrayList<>(30);
         List<MenuItem> menuItems = new ArrayList<>();
+        List<ItemCustomizationGroup> itemCustomizationGroups = new ArrayList<>();
+        List<ItemCustomizationField> itemCustomizationFields = new ArrayList<>();
+
+
+        /*ArrayList<String> subGroups = new ArrayList<>();
+        subGroups.add("Veg");
+        subGroups.add("Non-Veg");
+        menuGroups.add(new MenuGroup( "Group # 1", subGroups, 1));
+
+        List<String> typeName = new ArrayList<>();
+        List<Double> typeCost = new ArrayList<>();
+        typeName.add("Pint");
+        typeCost.add(300.0);
+        typeName.add("Can");
+        typeCost.add(400.0);
+        typeName.add("Beer");
+        typeCost.add(750.0);
+        int baseType = 0;
+        MenuItem menuItem = new MenuItem("Carlsburg # 1", typeName,typeCost, baseType, 1, 1);
+        menuItem.setSubGroupIndex(0);
+        menuItems.add(menuItem);
+        itemCustomizationGroups.add(new ItemCustomizationGroup(0,3,"Extra ",1));
+        itemCustomizationFields.add(new ItemCustomizationField(true,"Extra name 1", 23,1));
+        itemCustomizationFields.add(new ItemCustomizationField(true,"Extra name 2", 123,1));
+        itemCustomizationFields.add(new ItemCustomizationField(true,"Extra name 3", 223,1));
+        itemCustomizationFields.add(new ItemCustomizationField(true,"Extra name 4", 323,1));
+        itemCustomizationFields.add(new ItemCustomizationField(true,"Extra name 5", 423,1));
+        itemCustomizationFields.add(new ItemCustomizationField(true,"Extra name 6", 523,1));*/
+        int c1 = 1, c2 = 1;
         for (int i = 1; i <= 30; i++) {
             ArrayList<String> subGroups = null;
             if (i % 2 == 0) {
@@ -33,7 +62,7 @@ public class TestDb {
                 subGroups.add("Non-Veg");
             }
             menuGroups.add(new MenuGroup( "Group #" + i, subGroups, 1));
-            for (int j = 0; j <= i/2; j++) {
+            for (int j = 1; j <= i/2+1; j++) {
                 List<String> typeName = new ArrayList<>();
                 List<Double> typeCost = new ArrayList<>();
                 int baseType;
@@ -49,9 +78,21 @@ public class TestDb {
                     typeName.add("Default");
                     typeCost.add(460.0);
                     baseType = 0;
+
+                    for (int k = 1; k < 6; k++) {
+                        ItemCustomizationGroup itemCustomizationGroup = new ItemCustomizationGroup((k%2)*3,k+2,"Extra #" + k, c1);
+                        c2++;
+                        itemCustomizationGroups.add(itemCustomizationGroup);
+                        for(int l = 1; l <= 7; l++){
+                            ItemCustomizationField itemCustomizationField = new ItemCustomizationField((l&1) == 0,"Extra name #" + l, l * 20, c2);
+                            itemCustomizationFields.add(itemCustomizationField);
+                        }
+                    }
                 }
                 MenuItem menuItem = new MenuItem(
-                        "Carlsburg #" + j, typeName,typeCost, baseType, i, 1,getItemCustomizationGroup());
+                        "Carlsburg #" + j, typeName,typeCost, baseType, i, 1);
+                c1++;
+
                 if (i % 2 == 0)
                     menuItem.setSubGroupIndex(j % 2);
                 menuItems.add(menuItem);
@@ -59,30 +100,8 @@ public class TestDb {
         }
         menuGroupModel.put(menuGroups);
         menuItemModel.put(menuItems);
-    }
-
-    public static List<ItemCustomizationGroup> getItemCustomizationGroup(){
-        List<ItemCustomizationGroup> foodExtraList = new ArrayList<>();
-        foodExtraList.add(new ItemCustomizationGroup(0,3, getItemCustomizationField(),"Extra 1"));
-        foodExtraList.add(new ItemCustomizationGroup(3,5, getItemCustomizationField(),"Extra 2"));
-        foodExtraList.add(new ItemCustomizationGroup(0,1, getItemCustomizationField(),"Extra 3"));
-        foodExtraList.add(new ItemCustomizationGroup(1,1, getItemCustomizationField(),"Extra 4"));
-        foodExtraList.add(new ItemCustomizationGroup(3,3, getItemCustomizationField(),"Extra 5"));
-        return foodExtraList;
-    }
-    public static List<ItemCustomizationField> getItemCustomizationField(){
-        List<ItemCustomizationField> extraList = new ArrayList<>();
-        extraList.add(new ItemCustomizationField(true,"Extra name 1",45));
-        extraList.add(new ItemCustomizationField(true,"Extra name 2",44));
-        extraList.add(new ItemCustomizationField(true,"Extra name 3",455));
-        extraList.add(new ItemCustomizationField(true,"Extra name 4",456));
-        extraList.add(new ItemCustomizationField(true,"Extra name 5",455));
-        extraList.add(new ItemCustomizationField(true,"Extra name 6",5));
-        extraList.add(new ItemCustomizationField(true,"Extra name 7",345));
-        extraList.add(new ItemCustomizationField(true,"Extra name 8",465));
-        extraList.add(new ItemCustomizationField(true,"Extra name 9",4524));
-        extraList.add(new ItemCustomizationField(true,"Extra name 10",445));
-        return extraList;
+        itemCustomizationGroupModel.put(itemCustomizationGroups);
+        itemCustomizationFieldModel.put(itemCustomizationFields);
     }
 
     private static void populateUsers(Box<User> userModel) {

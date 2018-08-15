@@ -1,29 +1,38 @@
 package com.alcatraz.admin.project_alcatraz.Session;
 
-import com.alcatraz.admin.project_alcatraz.Data.Converters;
-
-import java.util.ArrayList;
 import java.util.List;
 
-import io.objectbox.annotation.Convert;
+import io.objectbox.annotation.Backlink;
+import io.objectbox.annotation.Entity;
+import io.objectbox.annotation.Id;
+import io.objectbox.relation.ToMany;
+import io.objectbox.relation.ToOne;
 
 /**
  * Created by Bhavik Patel on 11/08/2018.
  */
 
+
+@Entity
 public class ItemCustomizationGroup {
 
+    @Id private long id;
     private int minSelection = 0;
     private int maxSelection = 1;
     private String name;
-    @Convert(converter = Converters.ListConverter.class, dbType = String.class)
-    private List<ItemCustomizationField> itemCustomizationFieldList;
 
-    public ItemCustomizationGroup(int minSelection, int maxSelection,  List<ItemCustomizationField> itemCustomizationFieldList,String name) {
+    @Backlink (to = "customizationGroup")
+    private ToMany<ItemCustomizationField> itemCustomizationFieldList;
+    private ToOne<MenuItem> menuItem;
+
+    public ItemCustomizationGroup() {
+    }
+
+    public ItemCustomizationGroup(int minSelection, int maxSelection, String name, long menuId) {
         this.minSelection = minSelection;
         this.maxSelection = maxSelection;
         this.name = name;
-        this.itemCustomizationFieldList = itemCustomizationFieldList;
+        menuItem.setTargetId(menuId);
     }
 
     public int getMinSelection() {
@@ -50,11 +59,27 @@ public class ItemCustomizationGroup {
         this.name = name;
     }
 
-    public List<ItemCustomizationField> getItemCustomizationFieldList() {
+    public ToMany<ItemCustomizationField> getItemCustomizationFieldList() {
         return itemCustomizationFieldList;
     }
 
-    public void setItemCustomizationFieldList(List<ItemCustomizationField> itemCustomizationFieldList) {
+    public long getId() {
+        return id;
+    }
+
+    public void setId(long id) {
+        this.id = id;
+    }
+
+    /*public void setItemCustomizationFieldList(ToMany<ItemCustomizationField> itemCustomizationFieldList) {
         this.itemCustomizationFieldList = itemCustomizationFieldList;
+    }*/
+
+    public long getMenuItemId() {
+        return menuItem.getTargetId();
+    }
+
+    public ToOne<MenuItem> getMenuItem() {
+        return menuItem;
     }
 }

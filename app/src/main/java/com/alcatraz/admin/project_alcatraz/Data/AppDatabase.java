@@ -3,6 +3,8 @@ package com.alcatraz.admin.project_alcatraz.Data;
 import android.content.Context;
 
 import com.alcatraz.admin.project_alcatraz.MyObjectBox;
+import com.alcatraz.admin.project_alcatraz.Session.ItemCustomizationField;
+import com.alcatraz.admin.project_alcatraz.Session.ItemCustomizationGroup;
 import com.alcatraz.admin.project_alcatraz.Session.MenuGroup;
 import com.alcatraz.admin.project_alcatraz.Session.MenuItem;
 import com.alcatraz.admin.project_alcatraz.Social.Chat;
@@ -27,6 +29,17 @@ public class AppDatabase {
             }
         }
         return mBoxStore;
+    }
+
+    private AppDatabase() {
+    }
+
+    public static Box<ItemCustomizationField> getMenuItemCustFieldModel(final Context context) {
+        return getBoxStore(context).boxFor(ItemCustomizationField.class);
+    }
+
+    public static Box<ItemCustomizationGroup> getMenuItemCustGroupModel(final Context context) {
+        return getBoxStore(context).boxFor(ItemCustomizationGroup.class);
     }
 
     public static Box<MenuItem> getMenuItemModel(final Context context) {
