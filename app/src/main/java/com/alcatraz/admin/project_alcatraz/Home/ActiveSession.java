@@ -25,6 +25,7 @@ import android.util.Log;
 import android.view.GestureDetector;
 import android.view.MotionEvent;
 import android.view.View;
+import android.view.WindowManager;
 import android.view.animation.DecelerateInterpolator;
 import android.widget.EditText;
 import android.widget.TextView;
@@ -107,36 +108,24 @@ public class ActiveSession extends AppCompatActivity {
                 asf.setText("Non Cancellable");
             }
         }.start();
-        recyclerView.setAdapter(new AdapterFoodWith(intlist, names));
+        recyclerView.setAdapter(new AdapterFoodWith(intlist, names,getApplicationContext()));
         ItemClickSupport.addTo(recyclerView).setOnItemClickListener(new ItemClickSupport.OnItemClickListener() {
             @Override
             public void onItemClicked(RecyclerView recyclerView, int position, View v) {
                 if(position!=0)
                     return;
-                AlertDialog.Builder alert = new AlertDialog.Builder(ActiveSession.this);
-                alert.setMessage(Html.fromHtml(getString(R.string.username)));
+                FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
+                Fragment prev = getSupportFragmentManager().findFragmentByTag("dialog");
+                if (prev != null) {
+                    ft.remove(prev);
+                }
+                ft.addToBackStack(null);
 
-                // Set an EditText view to get user input
-                final EditText input = new EditText(ActiveSession.this);
-                alert.setView(input);
+                // Create and show the dialog.
+                DialogAddFriend newFragment = DialogAddFriend.newInstance();
 
-                alert.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
-                    public void onClick(DialogInterface dialog, int whichButton) {
-                        String value = input.getText().toString();
-                        Log.d("", "Pin Value : " + value);
-                        return;
-                    }
-                });
+                newFragment.show(ft, "dialog");
 
-                alert.setNegativeButton("Cancel",
-                        new DialogInterface.OnClickListener() {
-
-                            public void onClick(DialogInterface dialog, int which) {
-                                // TODO Auto-generated method stub
-                                return;
-                            }
-                        });
-                alert.show();
 
             }
         });
@@ -226,5 +215,10 @@ public class ActiveSession extends AppCompatActivity {
         getSupportFragmentManager().beginTransaction().remove(getSupportFragmentManager().findFragmentByTag("FragmentOrder")).commit();
         getSupportFragmentManager().popBackStack();
         fragmentOpen=false;
+    }
+    public void checkout(View v)
+    {
+        (new DialogCheckout()).show(getSupportFragmentManager(),"" );
+
     }
 }
