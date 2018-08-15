@@ -76,6 +76,8 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
 
         mPrefs = PreferenceManager.getDefaultSharedPreferences(this);
         if (mPrefs.getBoolean(Constants.SP_LOGGED_IN, false)) {
+            startActivity(new Intent(LoginActivity.this, HomeActivity.class));
+            //finish();
             launchHomeActivity();
         }
     }
