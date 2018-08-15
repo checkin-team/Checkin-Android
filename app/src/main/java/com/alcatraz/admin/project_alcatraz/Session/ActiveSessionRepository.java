@@ -40,7 +40,7 @@ public class ActiveSessionRepository extends BaseRepository {
     }
 
 
-    public LiveData<Resource<ActiveSessionModel>> getActiveSessionModel(int activeSessionId) {
+    public LiveData<Resource<ActiveSessionModel>> getActiveSessionDetail(int activeSessionId) {
         return new NetworkBoundResource<ActiveSessionModel, ActiveSessionModel>() {
 
             @Override

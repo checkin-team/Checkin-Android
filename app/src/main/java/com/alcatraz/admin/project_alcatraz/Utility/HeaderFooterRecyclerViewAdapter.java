@@ -94,15 +94,21 @@ public abstract class HeaderFooterRecyclerViewAdapter extends RecyclerView.Adapt
 
     public abstract boolean useHeader();
 
-    public abstract RecyclerView.ViewHolder onCreateHeaderViewHolder(ViewGroup parent, int viewType);
+    public RecyclerView.ViewHolder onCreateHeaderViewHolder(ViewGroup parent, int viewType) {
+        return null;
+    }
 
-    public abstract void onBindHeaderView(RecyclerView.ViewHolder holder, int position);
+    public void onBindHeaderView(RecyclerView.ViewHolder holder, int position) {
+    }
 
     public abstract boolean useFooter();
 
-    public abstract RecyclerView.ViewHolder onCreateFooterViewHolder(ViewGroup parent, int viewType);
+    public RecyclerView.ViewHolder onCreateFooterViewHolder(ViewGroup parent, int viewType) {
+        return null;
+    }
 
-    public abstract void onBindFooterView(RecyclerView.ViewHolder holder, int position);
+    public void onBindFooterView(RecyclerView.ViewHolder holder, int position) {
+    }
 
     public abstract RecyclerView.ViewHolder onCreateBasicItemViewHolder(ViewGroup parent, int viewType);
 

@@ -19,6 +19,6 @@ public interface WebApiService {
     @POST("auth/login/")
     Call<Map<String, String>> postLogin(@Body Map<String, String> credentials);
 
-    @GET("activeSessionModel/{active_session_id}")
-    Call<ActiveSessionModel> getActiveSession(@Path("active_session_id") int activeSessionId);
+    @GET("users/{user_id}/sessions/active/")
+    Call<ActiveSessionModel> getActiveSession(@Path("user_id") int userID);
 }

@@ -28,8 +28,8 @@ public class ActiveSessionViewModel extends AndroidViewModel {
         mPrefs = PreferenceManager.getDefaultSharedPreferences(application.getApplicationContext());
     }
 
-    public LiveData<Resource<ActiveSessionModel>> getActiveSessionModel() {
-        return mData = mRepository.getActiveSessionModel(mPrefs.getInt(Constants.SESSION_ID,0));
+    public LiveData<Resource<ActiveSessionModel>> getActiveSessionDetail() {
+        return mData = mRepository.getActiveSessionDetail(mPrefs.getInt(Constants.USER_ID,0));
     }
 
     public static class Factory extends ViewModelProvider.NewInstanceFactory {

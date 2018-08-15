@@ -58,7 +58,7 @@
         <activity android:name=".Home.ForgotPassword" />
         <activity android:name=".Home.FilterTransactions" />
         <activity android:name=".Home.FaqActivity"></activity>
-        <activity android:name=".Session.ActiveSession" />
+        <activity android:name=".Session.ActiveSessionActivity" />
     </application>
 
 </manifest>

@@ -10,24 +10,24 @@ import java.util.List;
 
 public class ActiveSessionModel {
     private int bill;
-    private List<OrderedItem> listItemsOrdered;
-    private List<User> listUsers;
+    private List<OrderedItem> orderedItems;
+    private List<User> users;
 
-    public ActiveSessionModel(int bill, List<OrderedItem> listItemsOrdered, List<User> listUsers) {
+    public ActiveSessionModel(int bill, List<OrderedItem> orderedItems, List<User> users) {
         this.bill = bill;
-        this.listItemsOrdered = listItemsOrdered;
-        this.listUsers = listUsers;
+        this.orderedItems = orderedItems;
+        this.users = users;
     }
 
     public int getBill() {
         return bill;
     }
 
-    public List<OrderedItem> getListItemsOrdered() {
-        return listItemsOrdered;
+    public List<OrderedItem> getOrderedItems() {
+        return orderedItems;
     }
 
-    public List<User> getListUsers() {
-        return listUsers;
+    public List<User> getUsers() {
+        return users;
     }
 }

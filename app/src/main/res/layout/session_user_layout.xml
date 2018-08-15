@@ -9,7 +9,7 @@
         android:layout_width="150dp"
         android:layout_height="150dp"
         android:scaleType="centerCrop"
-        android:id="@+id/cicular"
+        android:id="@+id/im_user"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintLeft_toLeftOf="parent"
         android:paddingLeft="8dp"
@@ -18,15 +18,15 @@
 
 
     <TextView
-        android:id="@+id/textView16"
+        android:id="@+id/tv_user"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Laura"
+        tools:text="Laura"
         android:textSize="18.5sp"
         android:textColor="@color/brownish_grey"
-        app:layout_constraintStart_toStartOf="@id/cicular"
-        app:layout_constraintTop_toBottomOf="@id/cicular"
-        app:layout_constraintEnd_toEndOf="@id/cicular"
+        app:layout_constraintStart_toStartOf="@id/im_user"
+        app:layout_constraintTop_toBottomOf="@id/im_user"
+        app:layout_constraintEnd_toEndOf="@id/im_user"
         tools:layout_editor_absoluteX="149dp"
         tools:layout_editor_absoluteY="426dp" />
 
