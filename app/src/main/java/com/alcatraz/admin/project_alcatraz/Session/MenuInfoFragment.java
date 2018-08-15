@@ -31,7 +31,7 @@ public class MenuInfoFragment extends Fragment {
 
 
     public MenuInfoFragment() {
-        // Required empty public constructor
+        // Required empty public_selected constructor
     }
 
     public static MenuInfoFragment newInstance(MenuItem item) {

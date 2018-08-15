@@ -102,7 +102,7 @@ public class ShopProfileActivity extends AppCompatActivity {
        viewPager.setOnTouchListener(new View.OnTouchListener()
         {
             @Override
-            public boolean onTouch(View v, MotionEvent event)
+            public_selected boolean onTouch(View v, MotionEvent event)
             {
                 return true;
             }
@@ -111,7 +111,7 @@ public class ShopProfileActivity extends AppCompatActivity {
         
     }
 
-//    private void setupViewPager(ViewPager viewPager) {
+//    private_deselected void setupViewPager(ViewPager viewPager) {
 //
 //        ViewPagerAdapter adapter=new ViewPagerAdapter(getSupportFragmentManager());
 //

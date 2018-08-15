@@ -247,7 +247,7 @@ public class HomeActivity extends AppCompatActivity
 //             * @param dy           The amount of vertical scroll.
 //             */
 //            @Override
-//            public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
+//            public_selected void onScrolled(RecyclerView recyclerView, int dx, int dy) {
 //                if(false)
 //                {
 //                    super.onScrolled(recyclerView,dx,dy);

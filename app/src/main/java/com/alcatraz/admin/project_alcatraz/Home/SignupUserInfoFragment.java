@@ -36,7 +36,7 @@ public class SignupUserInfoFragment extends Fragment {
     };
 
     public SignupUserInfoFragment() {
-        // Required empty public constructor
+        // Required empty public_selected constructor
     }
 
     public static SignupUserInfoFragment newInstance(SignupFragmentInteraction fragmentInteraction) {

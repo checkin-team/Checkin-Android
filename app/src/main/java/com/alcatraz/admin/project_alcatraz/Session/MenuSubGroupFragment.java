@@ -35,7 +35,7 @@ public class MenuSubGroupFragment extends Fragment {
     private int mSubGroupId;
 
     public MenuSubGroupFragment() {
-        // Required empty public constructor
+        // Required empty public_selected constructor
     }
 
     /**

@@ -35,7 +35,7 @@ public class SessionDetailFragment extends Fragment {
     private boolean mCanCheckout = false;
 
     public SessionDetailFragment() {
-        // Required empty public constructor
+        // Required empty public_selected constructor
     }
 
     /**
