@@ -1,7 +1,6 @@
 package com.alcatraz.admin.project_alcatraz.Session;
 
 import android.app.Application;
-import android.arch.core.util.Function;
 import android.arch.lifecycle.AndroidViewModel;
 import android.arch.lifecycle.LiveData;
 import android.arch.lifecycle.MutableLiveData;
@@ -11,21 +10,17 @@ import android.arch.lifecycle.ViewModelProvider;
 import android.support.annotation.NonNull;
 import android.util.Log;
 import android.util.LongSparseArray;
-import android.util.SparseArray;
 
 import com.alcatraz.admin.project_alcatraz.Data.Resource;
-import com.alcatraz.admin.project_alcatraz.Utility.Util;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 public class MenuViewModel extends AndroidViewModel {
     private final String TAG = MenuViewModel.class.getSimpleName();
     private MenuRepository mRepository;
     private int mMenuId;
-    private LiveData<List<MenuItem>> mMenuItems;
+    private LiveData<List<MenuItemModel>> mMenuItems;
     private LiveData<Resource<List<MenuGroup>>> mMenuGroups;
     private MutableLiveData<List<OrderedItem>> mOrderedItems = new MutableLiveData<>();
 
@@ -34,7 +29,7 @@ public class MenuViewModel extends AndroidViewModel {
         mRepository = MenuRepository.getInstance(application);
     }
 
-    public LiveData<List<MenuItem>> getMenuItems() {
+    public LiveData<List<MenuItemModel>> getMenuItems() {
         if (mMenuItems == null)
             mMenuItems = mRepository.getMenuItems(mMenuId);
         return mMenuItems;
@@ -69,7 +64,7 @@ public class MenuViewModel extends AndroidViewModel {
         });
     }
 
-    public void orderItem(MenuItem menuItem, int count, int type) {
+    public void orderItem(MenuItemModel menuItem, int count, int type) {
         OrderedItem item = menuItem.order(count, type);
         Log.e(TAG, "Item (" + menuItem.getId() + ") count: " + count);
         List<OrderedItem> orderedItems = mOrderedItems.getValue();
@@ -96,8 +91,8 @@ public class MenuViewModel extends AndroidViewModel {
         }
     }
 
-    private LiveData<List<MenuItem>> filterMenuItems() {
-        LiveData<List<MenuItem>> input = getMenuItems();
+    private LiveData<List<MenuItemModel>> filterMenuItems() {
+        LiveData<List<MenuItemModel>> input = getMenuItems();
         return input;
     }
 

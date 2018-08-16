@@ -133,7 +133,7 @@ public class MenuGroupAdapter extends RecyclerView.Adapter<MenuGroupAdapter.Grou
 
     public class SubGroupPagerAdapter extends PagerAdapter {
         private List<String> mPages;
-        private List<List<MenuItem>> mListItems;
+        private List<List<MenuItemModel>> mListItems;
         SubGroupPagerAdapter(MenuGroup menuGroup) {
             super();
             mPages = menuGroup.getSubGroups();
@@ -141,8 +141,8 @@ public class MenuGroupAdapter extends RecyclerView.Adapter<MenuGroupAdapter.Grou
             for (int i = 0; i < mPages.size(); i++) {
                 mListItems.add(new ArrayList<>());
             }
-            List<MenuItem> items = menuGroup.getItems();
-            for (MenuItem item: items) {
+            List<MenuItemModel> items = menuGroup.getItems();
+            for (MenuItemModel item: items) {
                 mListItems.get(item.getSubGroupIndex()).add(item);
             }
         }

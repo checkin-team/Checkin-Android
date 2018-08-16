@@ -4,7 +4,7 @@ import android.content.Context;
 
 import com.alcatraz.admin.project_alcatraz.MyObjectBox;
 import com.alcatraz.admin.project_alcatraz.Session.MenuGroup;
-import com.alcatraz.admin.project_alcatraz.Session.MenuItem;
+import com.alcatraz.admin.project_alcatraz.Session.MenuItemModel;
 import com.alcatraz.admin.project_alcatraz.Social.Chat;
 import com.alcatraz.admin.project_alcatraz.Social.Message;
 import com.alcatraz.admin.project_alcatraz.User.User;
@@ -29,8 +29,8 @@ public class AppDatabase {
         return mBoxStore;
     }
 
-    public static Box<MenuItem> getMenuItemModel(final Context context) {
-        return getBoxStore(context).boxFor(MenuItem.class);
+    public static Box<MenuItemModel> getMenuItemModel(final Context context) {
+        return getBoxStore(context).boxFor(MenuItemModel.class);
     }
 
     public static Box<MenuGroup> getMenuGroupModel(final Context context) {

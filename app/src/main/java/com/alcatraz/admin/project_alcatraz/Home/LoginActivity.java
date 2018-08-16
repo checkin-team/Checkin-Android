@@ -15,6 +15,9 @@ import android.support.transition.AutoTransition;
 import android.support.transition.Transition;
 import android.support.transition.TransitionListenerAdapter;
 import android.support.transition.TransitionManager;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.util.TypedValue;
@@ -38,6 +41,7 @@ import java.util.Map;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 
 /**
  * Created by TAIYAB on 03-06-2018.
@@ -181,6 +185,9 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
 
     private void launchHomeActivity() {
         startActivity(new Intent(LoginActivity.this, HomeActivity.class));
+        Intent intent = new Intent();
+        intent.putExtra(Constants.SP_LOGGED_IN, true);
+        setResult(RESULT_OK, intent);
         finish();
     }
 
@@ -248,5 +255,10 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
             spaceAbove.setLayoutParams(aboveParams);
             spaceBelow.setLayoutParams(belowParams);
         }, 1000);
+    }
+
+    @OnClick(R.id.tv_register)
+    public void onRegisterClicked() {
+        finish();
     }
 }

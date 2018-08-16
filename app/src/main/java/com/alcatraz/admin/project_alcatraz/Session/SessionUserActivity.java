@@ -4,13 +4,17 @@ import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
 import android.arch.lifecycle.ViewModelProviders;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.speech.RecognizerIntent;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.widget.DrawerLayout;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -40,7 +44,7 @@ import butterknife.OnClick;
 
 import static com.alcatraz.admin.project_alcatraz.Session.MenuUserFragment.SESSION_STATUS;
 
-public class SessionUserActivity extends AppCompatActivity implements MenuUserFragment.OnMenuFragmentInteractionListener, MenuCartAdapter.OnCartInteractionListener {
+public class SessionUserActivity extends AppCompatActivity implements MenuUserFragment.OnMenuFragmentInteractionListener, MenuCartAdapter.OnCartInteractionListener, PostSessionFragmentInteraction{
     private final String TAG = SessionUserActivity.class.getSimpleName();
 
     @BindView(R.id.search_view) MaterialSearchView mSearchView;
@@ -57,7 +61,19 @@ public class SessionUserActivity extends AppCompatActivity implements MenuUserFr
 
     private STATUS_VALUES mSessionStatus;
     private static final String SESSION_ARG = "session_arg";
+    private FragmentManager fragmentManager;
 
+    public void removeFragment(Fragment fragment){
+        FragmentManager fragmentManager = getSupportFragmentManager();
+        FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+        fragmentTransaction.remove(fragment);
+        fragmentTransaction.commit();
+    }
+
+    @Override
+    public void OnProceedClicked(PostSessionStartFragment fragment, String youAreWith, PostSessionStartFragment.MODESELECTED mode) {
+        removeFragment(fragment);
+    }
 
 
     public static void startSession(Context context, int shop_id, int qr_id) {
@@ -92,6 +108,11 @@ public class SessionUserActivity extends AppCompatActivity implements MenuUserFr
         mSessionStatus = (STATUS_VALUES) getIntent().getBundleExtra(SESSION_ARG).getSerializable(SESSION_STATUS);
         switch (mSessionStatus) {
             case STARTED: {
+               fragmentManager = getSupportFragmentManager();
+                FragmentTransaction transaction = fragmentManager.beginTransaction();
+                transaction.add(R.id.root_view, PostSessionStartFragment.newInstance(this));
+                transaction.addToBackStack(null);
+                transaction.commit();
                 break;
             }
 
@@ -271,8 +292,26 @@ public class SessionUserActivity extends AppCompatActivity implements MenuUserFr
         else if (mMenuFragment.isGroupExpanded()) {
             mMenuFragment.onBackPressed();
         }
-        else
-            super.onBackPressed();
+        else {
+            AlertDialog.Builder builder = new AlertDialog.Builder(this);
+            builder.setCancelable(false);
+            builder.setTitle("");
+            builder.setMessage("Do you want to exit");
+            builder.setPositiveButton("Exit", new DialogInterface.OnClickListener() {
+                public void onClick(DialogInterface dialog, int id) {
+                    dialog.dismiss();
+                    finish();
+                }
+            });
+            builder.setNegativeButton("Continue", new DialogInterface.OnClickListener() {
+                public void onClick(DialogInterface dialog, int id) {
+                    dialog.dismiss();
+
+                }
+            });
+            AlertDialog dialog = builder.create();
+            dialog.show();
+        }
     }
 
     @Override
@@ -296,7 +335,7 @@ public class SessionUserActivity extends AppCompatActivity implements MenuUserFr
     }
 
     @Override
-    public void onItemOrderInteraction(MenuItem item, int count) {
+    public void onItemOrderInteraction(MenuItemModel item, int count) {
         if (item.getCustomizationGroups() != null) {
             customizationRoot.setVisibility(View.VISIBLE);
             MenuItemHolder menuItemHolder = new MenuItemHolder(customizationRoot,getFoodExtraHolderList(item.getCustomizationGroups()),item);
@@ -323,6 +362,15 @@ public class SessionUserActivity extends AppCompatActivity implements MenuUserFr
             extraHolderList.add(extraHolder);
         }
         return extraHolderList;
+    }
+
+    @Override
+    public void onItemShowInfo(MenuItemModel item) {
+        fragmentManager = getSupportFragmentManager();
+        FragmentTransaction transaction = fragmentManager.beginTransaction();
+        transaction.add(R.id.root_view, MenuInfoFragment.newInstance(item));
+        transaction.addToBackStack(null);
+        transaction.commit();
     }
 
     @Override

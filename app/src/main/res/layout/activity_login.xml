@@ -57,7 +57,7 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
-            android:id="@+id/text_register"
+            android:id="@+id/tv_register"
             android:textColor="#aaaaaa"
             android:textSize="18sp"
             android:text="Register Now"/>

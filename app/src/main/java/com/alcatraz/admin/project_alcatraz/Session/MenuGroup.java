@@ -28,7 +28,7 @@ public class MenuGroup {
     @Transient private String mImageUrl;
     private int menuId;
     @Backlink(to = "group")
-    private ToMany<MenuItem> items;
+    private ToMany<MenuItemModel> items;
 
     MenuGroup() {
         this.subGroups = new ArrayList<>(1);
@@ -74,7 +74,7 @@ public class MenuGroup {
         return menuId;
     }
 
-    public ToMany<MenuItem> getItems() {
+    public ToMany<MenuItemModel> getItems() {
         return items;
     }
 }

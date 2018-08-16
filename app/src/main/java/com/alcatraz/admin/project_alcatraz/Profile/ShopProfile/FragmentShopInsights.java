@@ -173,7 +173,7 @@ dataset.setDrawValues(false);
 
 
     public FragmentShopInsights() {
-        // Required empty public constructor
+        // Required empty public_selected constructor
 
     }
 
@@ -452,7 +452,7 @@ dataset.setDrawValues(false);
         return v;
     }
 
-//    private void setupie(PieChart pieChart) {
+//    private_deselected void setupie(PieChart pieChart) {
 //
 //    }
 
@@ -464,7 +464,7 @@ dataset.setDrawValues(false);
     }
 
 //    @Override
-//    public void onAttach(Context context) {
+//    public_selected void onAttach(Context context) {
 //        super.onAttach(context);
 //        if (context instanceof OnFragmentInteractionListener) {
 //            mListener = (OnFragmentInteractionListener) context;
@@ -475,7 +475,7 @@ dataset.setDrawValues(false);
 //    }
 //
 //    @Override
-//    public void onDetach() {
+//    public_selected void onDetach() {
 //        super.onDetach();
 //        mListener = null;
 //    }

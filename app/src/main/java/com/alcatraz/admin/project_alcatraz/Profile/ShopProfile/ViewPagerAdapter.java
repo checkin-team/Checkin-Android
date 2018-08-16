@@ -48,15 +48,15 @@ public class ViewPagerAdapter extends FragmentPagerAdapter {
 
 //class ViewPagerAdapter extends FragmentPagerAdapter {
 //
-//    private final int mCount;
+//    private_deselected final int mCount;
 //
-//    public ViewPagerAdapter(final AppCompatActivity activity, int count) {
+//    public_selected ViewPagerAdapter(final AppCompatActivity activity, int count) {
 //        super(activity.getSupportFragmentManager());
 //        this.mCount = count;
 //    }
 //
 //    @Override
-//    public android.support.v4.app.Fragment getItem(final int position) {
+//    public_selected android.support.v4.app.Fragment getItem(final int position) {
 //        switch (position) {
 //
 //
@@ -84,7 +84,7 @@ public class ViewPagerAdapter extends FragmentPagerAdapter {
 //    }
 //
 //    @Override
-//    public int getCount() {
+//    public_selected int getCount() {
 //        return mCount;
 //    }
 //}

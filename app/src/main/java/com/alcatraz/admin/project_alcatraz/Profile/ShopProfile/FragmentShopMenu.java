@@ -31,7 +31,7 @@ public class FragmentShopMenu extends Fragment {
     private OnFragmentInteractionListener mListener;
 
     public FragmentShopMenu() {
-        // Required empty public constructor
+        // Required empty public_selected constructor
     }
 
     /**
@@ -76,7 +76,7 @@ public class FragmentShopMenu extends Fragment {
     }
 
 //    @Override
-//    public void onAttach(Context context) {
+//    public_selected void onAttach(Context context) {
 //        super.onAttach(context);
 //        if (context instanceof OnFragmentInteractionListener) {
 //            mListener = (OnFragmentInteractionListener) context;
@@ -87,7 +87,7 @@ public class FragmentShopMenu extends Fragment {
 //    }
 //
 //    @Override
-//    public void onDetach() {
+//    public_selected void onDetach() {
 //        super.onDetach();
 //        mListener = null;
 //    }

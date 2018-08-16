@@ -6,7 +6,7 @@ import android.util.Log;
 import com.alcatraz.admin.project_alcatraz.Session.ItemCustomizationField;
 import com.alcatraz.admin.project_alcatraz.Session.ItemCustomizationGroup;
 import com.alcatraz.admin.project_alcatraz.Session.MenuGroup;
-import com.alcatraz.admin.project_alcatraz.Session.MenuItem;
+import com.alcatraz.admin.project_alcatraz.Session.MenuItemModel;
 import com.alcatraz.admin.project_alcatraz.User.User;
 
 import java.util.ArrayList;
@@ -22,9 +22,9 @@ public class TestDb {
         populateMenu(AppDatabase.getMenuItemModel(context), AppDatabase.getMenuGroupModel(context));
     }
 
-    private static void populateMenu(Box<MenuItem> menuItemModel, Box<MenuGroup> menuGroupModel) {
+    private static void populateMenu(Box<MenuItemModel> menuItemModel, Box<MenuGroup> menuGroupModel) {
         List<MenuGroup> menuGroups = new ArrayList<>(30);
-        List<MenuItem> menuItems = new ArrayList<>();
+        List<MenuItemModel> menuItems = new ArrayList<>();
         for (int i = 1; i <= 30; i++) {
             ArrayList<String> subGroups = null;
             if (i % 2 == 0) {
@@ -50,8 +50,9 @@ public class TestDb {
                     typeCost.add(460.0);
                     baseType = 0;
                 }
-                MenuItem menuItem = new MenuItem(
-                        "Carlsburg #" + j, typeName,typeCost, baseType, i, 1,getItemCustomizationGroup());
+                MenuItemModel menuItem = new MenuItemModel("Carlsburg #" + j, typeName, typeCost, baseType, i, 1, null);
+                menuItem.setDescription("\"It is a 5% abv pilsner beer with a global distribution to 140 mark" +
+                        "ets. It was first brewed in 1904, and was created by Carl Jacobsen, son of Carlsberg's founder JC Jacobsen.");
                 if (i % 2 == 0)
                     menuItem.setSubGroupIndex(j % 2);
                 menuItems.add(menuItem);

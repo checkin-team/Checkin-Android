@@ -74,7 +74,7 @@ public class ShopProfileActivity2 extends AppCompatActivity implements BottomNav
        viewPager.setOnTouchListener(new View.OnTouchListener()
         {
             @Override
-            public boolean onTouch(View v, MotionEvent event)
+            public_selected boolean onTouch(View v, MotionEvent event)
             {
                 return true;
             }

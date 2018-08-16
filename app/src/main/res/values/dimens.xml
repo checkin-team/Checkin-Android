@@ -9,6 +9,7 @@
 
     <!-- typical spacing between two views -->
     <dimen name="spacing_huge">40dp</dimen>
+    <dimen name="spacing_extra_large">32dp</dimen>
     <dimen name="spacing_large">24dp</dimen>
     <dimen name="spacing_normal">14dp</dimen>
     <dimen name="spacing_small">10dp</dimen>
@@ -46,5 +47,4 @@
     <dimen name="menuItemText">24sp</dimen>
     <dimen name="itemCustomizationGroupText">21sp</dimen>
     <dimen name="itemCustomizationFieldText">18sp</dimen>
-
 </resources>

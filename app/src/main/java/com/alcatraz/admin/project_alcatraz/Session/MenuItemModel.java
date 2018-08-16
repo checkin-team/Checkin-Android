@@ -1,7 +1,6 @@
 package com.alcatraz.admin.project_alcatraz.Session;
 
 import android.support.annotation.NonNull;
-
 import com.alcatraz.admin.project_alcatraz.Data.Converters;
 
 import java.util.List;
@@ -16,7 +15,7 @@ import io.objectbox.relation.ToOne;
  */
 
 @Entity
-public class MenuItem {
+public class MenuItemModel {
     @Id private long id;
     private String name;
     @Convert(converter = Converters.ListConverter.class, dbType = String.class)
@@ -25,6 +24,7 @@ public class MenuItem {
     private List<Double> typeCost;
     private int baseTypeIndex;
     private String unit;
+    private String description;
     private boolean vegetarian;
     private ToOne<MenuGroup> group;
     private int menuId;
@@ -32,10 +32,10 @@ public class MenuItem {
     @Convert(converter = Converters.ListConverter.class, dbType = String.class)
     private List<ItemCustomizationGroup> customizationGroups;
 
-    MenuItem() {
+    MenuItemModel() {
     }
 
-    public MenuItem(String name, List<String> typeName,List<Double> typeCost, int baseType, long groupId, int menuId,List<ItemCustomizationGroup> customizationGroups) {
+    public MenuItemModel(String name, List<String> typeName, List<Double> typeCost, int baseType, long groupId, int menuId, List<ItemCustomizationGroup> customizationGroups) {
         this.name = name;
         this.typeName = typeName;
         this.typeCost = typeCost;
@@ -45,7 +45,15 @@ public class MenuItem {
         if(customizationGroups !=null)this.customizationGroups = customizationGroups;
     }
 
-    public MenuItem(MenuItem item) {
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
+    public MenuItemModel(MenuItemModel item) {
         this.name = item.getName();
         this.typeName = item.typeName;
         this.typeCost = item.typeCost;

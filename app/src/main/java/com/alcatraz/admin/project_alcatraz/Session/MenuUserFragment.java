@@ -1,12 +1,9 @@
 package com.alcatraz.admin.project_alcatraz.Session;
 
-import android.arch.lifecycle.LiveData;
-import android.arch.lifecycle.Observer;
 import android.arch.lifecycle.ViewModelProviders;
 import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -20,8 +17,6 @@ import android.widget.Toast;
 import com.alcatraz.admin.project_alcatraz.Data.Resource;
 import com.alcatraz.admin.project_alcatraz.R;
 import com.alcatraz.admin.project_alcatraz.Utility.Constants;
-import com.alcatraz.admin.project_alcatraz.Utility.StartSnapHelper;
-import com.alcatraz.admin.project_alcatraz.Utility.Util;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -142,7 +137,7 @@ public class MenuUserFragment extends Fragment implements MenuItemAdapter.OnItem
     }
 
     @Override
-    public boolean onItemAdded(View view, MenuItem item) {
+    public boolean onItemAdded(View view, MenuItemModel item) {
         if (!mSessionActive)
             return false;
         mMenuInteractionListener.onItemOrderInteraction(item, 1);
@@ -150,13 +145,13 @@ public class MenuUserFragment extends Fragment implements MenuItemAdapter.OnItem
     }
 
     @Override
-    public boolean onItemLongPress(View view, MenuItem item) {
-        Toast.makeText(getContext(), "Long pressed!", Toast.LENGTH_SHORT).show();
+    public boolean onItemLongPress(View view, MenuItemModel item) {
+        mMenuInteractionListener.onItemShowInfo(item);
         return true;
     }
 
     @Override
-    public boolean onItemChanged(MenuItem item, int count) {
+    public boolean onItemChanged(MenuItemModel item, int count) {
         if (!mSessionActive)
             return false;
         mMenuInteractionListener.onItemOrderInteraction(item, count);
@@ -169,6 +164,7 @@ public class MenuUserFragment extends Fragment implements MenuItemAdapter.OnItem
     }
 
     public interface OnMenuFragmentInteractionListener {
-        void onItemOrderInteraction(MenuItem item, int count);
+        void onItemOrderInteraction(MenuItemModel item, int count);
+        void onItemShowInfo(MenuItemModel item);
     }
 }

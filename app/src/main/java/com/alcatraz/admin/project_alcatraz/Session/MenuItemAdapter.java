@@ -1,12 +1,10 @@
 package com.alcatraz.admin.project_alcatraz.Session;
 
 import android.annotation.SuppressLint;
-import android.arch.lifecycle.LiveData;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.util.LongSparseArray;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -28,18 +26,18 @@ import butterknife.ButterKnife;
 public class MenuItemAdapter extends RecyclerView.Adapter<MenuItemAdapter.ItemViewHolder> {
     private final String TAG = MenuItemAdapter.class.getSimpleName();
 
-    private List<MenuItem> mItemsList;
+    private List<MenuItemModel> mItemsList;
     private RecyclerView mRecyclerView;
     private static OnItemInteractionListener mItemInteractionListener;
 
-    MenuItemAdapter(List<MenuItem> itemsList) {
+    MenuItemAdapter(List<MenuItemModel> itemsList) {
         mItemsList = itemsList;
     }
 
     public interface OnItemInteractionListener {
-        boolean onItemAdded(View view, MenuItem item);
-        boolean onItemLongPress(View view, MenuItem item);
-        boolean onItemChanged(MenuItem item, int count);
+        boolean onItemAdded(View view, MenuItemModel item);
+        boolean onItemLongPress(View view, MenuItemModel item);
+        boolean onItemChanged(MenuItemModel item, int count);
         LongSparseArray<Integer> orderedItemsCount();
     }
 
@@ -90,7 +88,7 @@ public class MenuItemAdapter extends RecyclerView.Adapter<MenuItemAdapter.ItemVi
         @BindView(R.id.quantity_picker) DiscreteScrollView vQuantityPicker;
         @BindView(R.id.price_value) TextView vPriceValue;
         @BindView(R.id.im_item_add) ImageView imItemAdd;
-        private MenuItem menuItem;
+        private MenuItemModel menuItem;
 
         ItemViewHolder(View itemView) {
             super(itemView);
@@ -98,7 +96,7 @@ public class MenuItemAdapter extends RecyclerView.Adapter<MenuItemAdapter.ItemVi
             itemView.setOnLongClickListener(v -> menuItem != null && mItemInteractionListener.onItemLongPress(v, menuItem));
         }
 
-        void bindData(MenuItem menuItem) {
+        void bindData(MenuItemModel menuItem) {
             this.menuItem = menuItem;
             vTitle.setText(menuItem.getName());
             vPriceValue.setText(Util.joinCollection(menuItem.getTypeCost(), " | "));

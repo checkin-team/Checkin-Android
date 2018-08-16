@@ -101,7 +101,7 @@ public class UserProfileActivity extends AppCompatActivity {
         //Touch Listener
         /*View.OnTouchListener touchListener = new View.OnTouchListener() {
             @Override
-            public boolean onTouch(View v, MotionEvent event) {
+            public_selected boolean onTouch(View v, MotionEvent event) {
 
                 // pass the events to the gesture detector
                 // a return value of true means the detector is handling it

@@ -1,17 +1,15 @@
 package com.alcatraz.admin.project_alcatraz.Session;
 
-import android.util.Log;
-
 import java.util.List;
 
 public class OrderedItem {
-    private MenuItem item;
+    private MenuItemModel item;
     private int quantity;
     private int remainingSeconds;
     private int typeIndex;
     private List<ItemCustomizationField> selectedFields;
 
-    OrderedItem(MenuItem menuItem, int quantity, int type) {
+    OrderedItem(MenuItemModel menuItem, int quantity, int type) {
         this.item = menuItem;
         this.quantity = quantity;
         this.typeIndex = type;
@@ -39,7 +37,7 @@ public class OrderedItem {
         return quantity;
     }
 
-    public MenuItem getItem() {
+    public MenuItemModel getItem() {
         return item;
     }
 

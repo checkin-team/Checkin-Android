@@ -30,18 +30,18 @@ public class MenuItemHolder implements View.OnClickListener{
     private TextView radioText3;
     private List<ItemCustomizationGroupHolder> itemCustomizationGroupHolderList = new ArrayList<>();
 
-    private MenuItem menuItem;
+    private MenuItemModel menuItem;
 
     public MenuItemHolder(View view){
         this(view,null,null);
     }
-    public MenuItemHolder(View view, MenuItem menuItem){
+    public MenuItemHolder(View view, MenuItemModel menuItem){
         this(view,null, menuItem);
     }
     public MenuItemHolder(View view, List<ItemCustomizationGroupHolder> itemCustomizationGroupHolderList) {
         this(view, itemCustomizationGroupHolderList,null);
     }
-    public MenuItemHolder(View view, List<ItemCustomizationGroupHolder> itemCustomizationGroupHolderList, MenuItem menuItem) {
+    public MenuItemHolder(View view, List<ItemCustomizationGroupHolder> itemCustomizationGroupHolderList, MenuItemModel menuItem) {
         if(view != null){
             this.viewGroup = (ViewGroup) view;
             foodExtraRoot = view.findViewById(R.id.foodExtrasLL);
@@ -96,7 +96,7 @@ public class MenuItemHolder implements View.OnClickListener{
 
     }
 
-    public void setMenuItem(MenuItem menuItem){
+    public void setMenuItem(MenuItemModel menuItem){
         if(menuItem == null) return;
         this.menuItem = menuItem;
         name.setText(menuItem.getName());
@@ -241,7 +241,7 @@ public class MenuItemHolder implements View.OnClickListener{
             this.itemCustomizationGroupHolderList = itemCustomizationGroupHolderList;
     }
 
-    public MenuItem getMenuItem() {
+    public MenuItemModel getMenuItem() {
         return menuItem;
     }
 }

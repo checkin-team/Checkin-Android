@@ -2,12 +2,9 @@ package com.alcatraz.admin.project_alcatraz.Session;
 
 import android.app.Application;
 import android.arch.lifecycle.LiveData;
-import android.arch.lifecycle.Transformations;
 import android.content.Context;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
-import android.util.Log;
-import android.util.SparseArray;
 
 import com.alcatraz.admin.project_alcatraz.Data.ApiClient;
 import com.alcatraz.admin.project_alcatraz.Data.ApiResponse;
@@ -26,7 +23,7 @@ import io.objectbox.android.ObjectBoxLiveData;
 @Singleton
 public class MenuRepository {
     private static MenuRepository INSTANCE;
-    private Box<MenuItem> mMenuItemModel;
+    private Box<MenuItemModel> mMenuItemModel;
     private Box<MenuGroup> mMenuGroupModel;
     private WebApiService mWebService;
 
@@ -35,16 +32,16 @@ public class MenuRepository {
         mMenuItemModel = AppDatabase.getMenuItemModel(context);
         mMenuGroupModel = AppDatabase.getMenuGroupModel(context);
     }
-    public LiveData<List<MenuItem>> getMenuItems(final int menuId) {
-        /*return new NetworkBoundResource<List<MenuItem>, List<MenuItem>>() {
+    public LiveData<List<MenuItemModel>> getMenuItems(final int menuId) {
+        /*return new NetworkBoundResource<List<MenuItemModel>, List<MenuItemModel>>() {
 
             @Override
-            protected void saveCallResult(@NonNull List<MenuItem> item) {
+            protected void saveCallResult(@NonNull List<MenuItemModel> item) {
                 mMenuItemModel.put(item);
             }
 
             @Override
-            protected boolean shouldFetch(@Nullable List<MenuItem> data) {
+            protected boolean shouldFetch(@Nullable List<MenuItemModel> data) {
                 return false;
             }
 
@@ -55,13 +52,13 @@ public class MenuRepository {
 
             @NonNull
             @Override
-            protected LiveData<List<MenuItem>> loadFromDb() {
+            protected LiveData<List<MenuItemModel>> loadFromDb() {
                 return new ObjectBoxLiveData<>(mMenuItemModel.query().equal(MenuItem_.menuId, menuId).build());
             }
 
             @NonNull
             @Override
-            protected LiveData<ApiResponse<List<MenuItem>>> createCall() {
+            protected LiveData<ApiResponse<List<MenuItemModel>>> createCall() {
                 // TODO: Network Fetching!!!!
                 return null;
             }
