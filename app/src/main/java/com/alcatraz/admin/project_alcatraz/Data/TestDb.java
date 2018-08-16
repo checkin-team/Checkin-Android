@@ -5,9 +5,9 @@ import android.util.Log;
 
 import com.alcatraz.admin.project_alcatraz.Session.ItemCustomizationField;
 import com.alcatraz.admin.project_alcatraz.Session.ItemCustomizationGroup;
-import com.alcatraz.admin.project_alcatraz.Session.MenuGroup;
+import com.alcatraz.admin.project_alcatraz.Session.MenuGroupModel;
 import com.alcatraz.admin.project_alcatraz.Session.MenuItemModel;
-import com.alcatraz.admin.project_alcatraz.User.User;
+import com.alcatraz.admin.project_alcatraz.User.UserModel;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -19,12 +19,26 @@ public class TestDb {
     public static void populateWithTestData(final Context context) {
         Log.e("TestData", "Populating...");
         populateUsers(AppDatabase.getUserModel(context));
-        populateMenu(AppDatabase.getMenuItemModel(context), AppDatabase.getMenuGroupModel(context));
+        populateMenu(
+                AppDatabase.getMenuItemModel(context),
+                AppDatabase.getMenuGroupModel(context),
+                AppDatabase.getItemCustomizationFieldModel(context),
+                AppDatabase.getItemCustomizationGroupModel(context)
+        );
     }
 
-    private static void populateMenu(Box<MenuItemModel> menuItemModel, Box<MenuGroup> menuGroupModel) {
-        List<MenuGroup> menuGroups = new ArrayList<>(30);
+    private static void populateMenu(
+            Box<MenuItemModel> menuItemModel,
+            Box<MenuGroupModel> menuGroupModel,
+            Box<ItemCustomizationField> itemCustomizationFieldModel,
+            Box<ItemCustomizationGroup> itemCustomizationGroupModel
+    ) {
+        List<MenuGroupModel> menuGroups = new ArrayList<>(30);
         List<MenuItemModel> menuItems = new ArrayList<>();
+        List<ItemCustomizationGroup> itemCustomizationGroups = new ArrayList<>();
+        List<ItemCustomizationField> itemCustomizationFields = new ArrayList<>();
+
+        int c1 = 1, c2 = 1;
         for (int i = 1; i <= 30; i++) {
             ArrayList<String> subGroups = null;
             if (i % 2 == 0) {
@@ -32,8 +46,8 @@ public class TestDb {
                 subGroups.add("Veg");
                 subGroups.add("Non-Veg");
             }
-            menuGroups.add(new MenuGroup( "Group #" + i, subGroups, 1));
-            for (int j = 0; j <= i/2; j++) {
+            menuGroups.add(new MenuGroupModel( "Group #" + i, subGroups, 1));
+            for (int j = 1; j <= i/2+1; j++) {
                 List<String> typeName = new ArrayList<>();
                 List<Double> typeCost = new ArrayList<>();
                 int baseType;
@@ -49,10 +63,22 @@ public class TestDb {
                     typeName.add("Default");
                     typeCost.add(460.0);
                     baseType = 0;
+
+                    for (int k = 1; k < 6; k++) {
+                        ItemCustomizationGroup itemCustomizationGroup = new ItemCustomizationGroup((k%2)*3,k+2,"Extra #" + k, c1);
+                        c2++;
+                        itemCustomizationGroups.add(itemCustomizationGroup);
+                        for(int l = 1; l <= 7; l++){
+                            ItemCustomizationField itemCustomizationField = new ItemCustomizationField((l&1) == 0,"Extra name #" + l, l * 20, c2);
+                            itemCustomizationFields.add(itemCustomizationField);
+                        }
+                    }
                 }
-                MenuItemModel menuItem = new MenuItemModel("Carlsburg #" + j, typeName, typeCost, baseType, i, 1, null);
+                MenuItemModel menuItem = new MenuItemModel("Carlsburg #" + j, typeName, typeCost, baseType, i, 1);
                 menuItem.setDescription("\"It is a 5% abv pilsner beer with a global distribution to 140 mark" +
                         "ets. It was first brewed in 1904, and was created by Carl Jacobsen, son of Carlsberg's founder JC Jacobsen.");
+                c1++;
+
                 if (i % 2 == 0)
                     menuItem.setSubGroupIndex(j % 2);
                 menuItems.add(menuItem);
@@ -60,40 +86,18 @@ public class TestDb {
         }
         menuGroupModel.put(menuGroups);
         menuItemModel.put(menuItems);
+        itemCustomizationGroupModel.put(itemCustomizationGroups);
+        itemCustomizationFieldModel.put(itemCustomizationFields);
     }
 
-    public static List<ItemCustomizationGroup> getItemCustomizationGroup(){
-        List<ItemCustomizationGroup> foodExtraList = new ArrayList<>();
-        foodExtraList.add(new ItemCustomizationGroup(0,3, getItemCustomizationField(),"Extra 1"));
-        foodExtraList.add(new ItemCustomizationGroup(3,5, getItemCustomizationField(),"Extra 2"));
-        foodExtraList.add(new ItemCustomizationGroup(0,1, getItemCustomizationField(),"Extra 3"));
-        foodExtraList.add(new ItemCustomizationGroup(1,1, getItemCustomizationField(),"Extra 4"));
-        foodExtraList.add(new ItemCustomizationGroup(3,3, getItemCustomizationField(),"Extra 5"));
-        return foodExtraList;
-    }
-    public static List<ItemCustomizationField> getItemCustomizationField(){
-        List<ItemCustomizationField> extraList = new ArrayList<>();
-        extraList.add(new ItemCustomizationField(true,"Extra name 1",45));
-        extraList.add(new ItemCustomizationField(true,"Extra name 2",44));
-        extraList.add(new ItemCustomizationField(true,"Extra name 3",455));
-        extraList.add(new ItemCustomizationField(true,"Extra name 4",456));
-        extraList.add(new ItemCustomizationField(true,"Extra name 5",455));
-        extraList.add(new ItemCustomizationField(true,"Extra name 6",5));
-        extraList.add(new ItemCustomizationField(true,"Extra name 7",345));
-        extraList.add(new ItemCustomizationField(true,"Extra name 8",465));
-        extraList.add(new ItemCustomizationField(true,"Extra name 9",4524));
-        extraList.add(new ItemCustomizationField(true,"Extra name 10",445));
-        return extraList;
-    }
-
-    private static void populateUsers(Box<User> userModel) {
-        User user1 = new User("Alex", "");
-        User user2 = new User("Alice", "");
+    private static void populateUsers(Box<UserModel> userModel) {
+        UserModel user1 = new UserModel("Alex", "");
+        UserModel user2 = new UserModel("Alice", "");
 
         userModel.put(user1, user2);
 
-        User user3 = new User("Monica", "");
-        User user4 = new User("Jack", "");
+        UserModel user3 = new UserModel("Monica", "");
+        UserModel user4 = new UserModel("Jack", "");
         userModel.put(user3, user4);
     }
 }

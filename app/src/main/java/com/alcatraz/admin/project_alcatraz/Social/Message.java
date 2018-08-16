@@ -2,7 +2,7 @@ package com.alcatraz.admin.project_alcatraz.Social;
 
 import android.text.format.DateFormat;
 
-import com.alcatraz.admin.project_alcatraz.User.User;
+import com.alcatraz.admin.project_alcatraz.User.UserModel;
 import com.google.gson.annotations.SerializedName;
 
 import java.util.Date;
@@ -21,8 +21,8 @@ public class Message {
 
     @Id private long id;
     @SerializedName(value = "body") private String message;
-    @SerializedName(value = "sender") private ToOne<User> sender;
-    @SerializedName(value = "recipient") private ToOne<User> recipient;
+    @SerializedName(value = "sender") private ToOne<UserModel> sender;
+    @SerializedName(value = "recipient") private ToOne<UserModel> recipient;
     @SerializedName(value = "read_at") private Date readAt;
     @SerializedName(value = "sent_at") private Date sentAt;
     private ToOne<Chat> chat;
@@ -76,11 +76,11 @@ public class Message {
         return chat;
     }
 
-    public ToOne<User> getRecipient() {
+    public ToOne<UserModel> getRecipient() {
         return recipient;
     }
 
-    public ToOne<User> getSender() {
+    public ToOne<UserModel> getSender() {
         return sender;
     }
 

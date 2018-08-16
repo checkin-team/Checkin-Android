@@ -37,19 +37,19 @@ import butterknife.ButterKnife;
 public class MenuGroupAdapter extends RecyclerView.Adapter<MenuGroupAdapter.GroupViewHolder> {
     private final String TAG = MenuGroupAdapter.class.getSimpleName();
 
-    private List<MenuGroup> groupList;
+    private List<MenuGroupModel> groupList;
     GroupViewHolder mPrevExpandedViewHolder = null;
     private RecyclerView mRecyclerView;
     private Context mContext;
     private MenuItemAdapter.OnItemInteractionListener mItemInteractionListener;
 
-    MenuGroupAdapter(List<MenuGroup> groupsList, Context context, MenuItemAdapter.OnItemInteractionListener itemInteractionListener) {
+    MenuGroupAdapter(List<MenuGroupModel> groupsList, Context context, MenuItemAdapter.OnItemInteractionListener itemInteractionListener) {
         this.groupList = groupsList;
         mContext = context;
         mItemInteractionListener = itemInteractionListener;
     }
 
-    public void setGroupList(List<MenuGroup> groupList) {
+    public void setGroupList(List<MenuGroupModel> groupList) {
         this.groupList = groupList;
         notifyDataSetChanged();
     }
@@ -134,7 +134,7 @@ public class MenuGroupAdapter extends RecyclerView.Adapter<MenuGroupAdapter.Grou
     public class SubGroupPagerAdapter extends PagerAdapter {
         private List<String> mPages;
         private List<List<MenuItemModel>> mListItems;
-        SubGroupPagerAdapter(MenuGroup menuGroup) {
+        SubGroupPagerAdapter(MenuGroupModel menuGroup) {
             super();
             mPages = menuGroup.getSubGroups();
             mListItems = new ArrayList<>(mPages.size());
@@ -198,7 +198,7 @@ public class MenuGroupAdapter extends RecyclerView.Adapter<MenuGroupAdapter.Grou
             }
         }
 
-        void bindData(final MenuGroup menuGroup) {
+        void bindData(final MenuGroupModel menuGroup) {
             vTitle.setText(menuGroup.getName());
             vImage.setImageResource(R.drawable.ic_beer);
             pagerAdapter = new SubGroupPagerAdapter(menuGroup);

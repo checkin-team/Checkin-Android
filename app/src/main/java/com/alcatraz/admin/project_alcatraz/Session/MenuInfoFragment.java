@@ -1,19 +1,17 @@
 package com.alcatraz.admin.project_alcatraz.Session;
 
-import android.content.Context;
-import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
-import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.alcatraz.admin.project_alcatraz.R;
-import com.alcatraz.admin.project_alcatraz.Utility.GlideApp;
+//import com.alcatraz.admin.project_alcatraz.Utility.GlideApp;
+import com.bumptech.glide.Glide;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -49,7 +47,7 @@ public class MenuInfoFragment extends Fragment {
         unbinder = ButterKnife.bind(this,view);
         tvMenuItemInfo.setText(item.getDescription());
         String url = "https://www.ebag.bg/en/product/3651/images/0/800";
-        GlideApp.with(this).load(url).into(imMenuItemInfo);
+        Glide.with(this).load(url).into(imMenuItemInfo);
         view.setOnTouchListener((v, event) -> true);
         return view;
 

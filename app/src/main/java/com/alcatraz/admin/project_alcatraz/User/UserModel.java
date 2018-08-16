@@ -4,19 +4,19 @@ import io.objectbox.annotation.Entity;
 import io.objectbox.annotation.Id;
 
 @Entity
-public class User {
+public class UserModel {
     @Id private long id;
     private String username;
     private String imageUrl;
 
-    User() {}
+    UserModel() {}
 
-    public User(String username, String imageUrl) {
+    public UserModel(String username, String imageUrl) {
         this.username = username;
         this.imageUrl = imageUrl;
     }
 
-    public User(long id, String username, String imageUrl) {
+    public UserModel(long id, String username, String imageUrl) {
         this.id = id;
         this.username = username;
         this.imageUrl = imageUrl;

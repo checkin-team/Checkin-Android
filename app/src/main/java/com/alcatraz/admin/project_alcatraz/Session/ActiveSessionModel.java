@@ -1,6 +1,6 @@
 package com.alcatraz.admin.project_alcatraz.Session;
 
-import com.alcatraz.admin.project_alcatraz.User.User;
+import com.alcatraz.admin.project_alcatraz.User.UserModel;
 
 import java.util.List;
 
@@ -10,10 +10,10 @@ import java.util.List;
 
 public class ActiveSessionModel {
     private int bill;
-    private List<OrderedItem> orderedItems;
-    private List<User> users;
+    private List<OrderedItemModel> orderedItems;
+    private List<UserModel> users;
 
-    public ActiveSessionModel(int bill, List<OrderedItem> orderedItems, List<User> users) {
+    public ActiveSessionModel(int bill, List<OrderedItemModel> orderedItems, List<UserModel> users) {
         this.bill = bill;
         this.orderedItems = orderedItems;
         this.users = users;
@@ -23,11 +23,11 @@ public class ActiveSessionModel {
         return bill;
     }
 
-    public List<OrderedItem> getOrderedItems() {
+    public List<OrderedItemModel> getOrderedItems() {
         return orderedItems;
     }
 
-    public List<User> getUsers() {
+    public List<UserModel> getUsers() {
         return users;
     }
 }

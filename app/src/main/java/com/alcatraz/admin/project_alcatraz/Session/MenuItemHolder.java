@@ -31,17 +31,8 @@ public class MenuItemHolder implements View.OnClickListener{
     private List<ItemCustomizationGroupHolder> itemCustomizationGroupHolderList = new ArrayList<>();
 
     private MenuItemModel menuItem;
-
-    public MenuItemHolder(View view){
-        this(view,null,null);
-    }
-    public MenuItemHolder(View view, MenuItemModel menuItem){
-        this(view,null, menuItem);
-    }
-    public MenuItemHolder(View view, List<ItemCustomizationGroupHolder> itemCustomizationGroupHolderList) {
-        this(view, itemCustomizationGroupHolderList,null);
-    }
-    public MenuItemHolder(View view, List<ItemCustomizationGroupHolder> itemCustomizationGroupHolderList, MenuItemModel menuItem) {
+    private MenuItemHolderCompat menuItemHolderCompat;
+    public MenuItemHolder(MenuItemHolderCompat compat,View view, List<ItemCustomizationGroupHolder> itemCustomizationGroupHolderList, MenuItemModel menuItem) {
         if(view != null){
             this.viewGroup = (ViewGroup) view;
             foodExtraRoot = view.findViewById(R.id.foodExtrasLL);
@@ -62,6 +53,9 @@ public class MenuItemHolder implements View.OnClickListener{
                 addFoodExtraHolder(itemCustomizationGroupHolder);
             }
         }
+
+        menuItemHolderCompat = compat;
+
         setMenuItem(menuItem);
     }
 
@@ -112,7 +106,7 @@ public class MenuItemHolder implements View.OnClickListener{
     }
 
     public void selectQuantity(int position){
-        menuItem.setBaseType(position);
+        menuItemHolderCompat.onSelectType(position);
         if(menuItem.getTypeCost().size() == 3){
             switch (position){
                 case 0:
@@ -243,5 +237,9 @@ public class MenuItemHolder implements View.OnClickListener{
 
     public MenuItemModel getMenuItem() {
         return menuItem;
+    }
+
+    interface MenuItemHolderCompat{
+        void onSelectType(int position);
     }
 }

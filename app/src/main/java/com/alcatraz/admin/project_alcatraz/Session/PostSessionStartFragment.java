@@ -119,4 +119,8 @@ public class PostSessionStartFragment extends Fragment {
         super.onDestroy();
         unbinder.unbind();
     }
+
+    public interface PostSessionFragmentInteraction {
+        void OnProceedClicked(PostSessionStartFragment  fragment, String youAreWith, PostSessionStartFragment.MODESELECTED mode);
+    }
 }

@@ -19,7 +19,7 @@ import io.objectbox.relation.ToMany;
  */
 
 @Entity
-public class MenuGroup {
+public class MenuGroupModel {
     @Id private long id;
     private String name;
     @Convert(converter = Converters.ListConverter.class, dbType = String.class)
@@ -30,12 +30,12 @@ public class MenuGroup {
     @Backlink(to = "group")
     private ToMany<MenuItemModel> items;
 
-    MenuGroup() {
+    MenuGroupModel() {
         this.subGroups = new ArrayList<>(1);
         this.subGroups.add("Default");
     }
 
-    public MenuGroup(@NonNull final String name, final ArrayList<String> subGroups, int menuId) {
+    public MenuGroupModel(@NonNull final String name, final ArrayList<String> subGroups, int menuId) {
         this.name = name;
         if (subGroups != null) {
             this.subGroups = subGroups;

@@ -79,14 +79,14 @@
             android:layout_gravity="bottom|center_horizontal"
             android:layout_marginBottom="10dp"
             android:layout_marginStart="1dp"
-            android:background="@drawable/menu_filter_back"
-            android:rotation="180"
             android:alpha="0.0"
-            android:visibility="gone"
+            android:background="@drawable/menu_filter_back"
             android:clickable="true"
             android:focusable="true"
+            android:rotation="180"
             android:transformPivotX="171dp"
-            android:transformPivotY="374.25dp">
+            android:transformPivotY="374.25dp"
+            android:visibility="gone">
 
             <include layout="@layout/menu_filter" />
 
@@ -104,7 +104,15 @@
             android:scaleType="fitCenter"
             android:src="@drawable/ic_filter" />
 
-        <include layout="@layout/layout_item_customization" />
+        <FrameLayout
+            android:id="@+id/customizationRoot"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="bottom"
+            android:translationY="400dp"
+            android:visibility="gone">
+
+        </FrameLayout>
 
     </FrameLayout>
 
@@ -140,6 +148,8 @@
             android:background="@color/colorPrimaryRed"
             android:textColor="@color/white"
             android:fontFamily="@font/arial_rounded_mt_bold"/>
+
+
     </android.support.design.widget.NavigationView>
 
 </android.support.v4.widget.DrawerLayout>

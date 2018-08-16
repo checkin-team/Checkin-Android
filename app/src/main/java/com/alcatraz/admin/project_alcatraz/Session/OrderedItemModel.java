@@ -2,14 +2,14 @@ package com.alcatraz.admin.project_alcatraz.Session;
 
 import java.util.List;
 
-public class OrderedItem {
+public class OrderedItemModel {
     private MenuItemModel item;
     private int quantity;
     private int remainingSeconds;
     private int typeIndex;
     private List<ItemCustomizationField> selectedFields;
 
-    OrderedItem(MenuItemModel menuItem, int quantity, int type) {
+    OrderedItemModel(MenuItemModel menuItem, int quantity, int type) {
         this.item = menuItem;
         this.quantity = quantity;
         this.typeIndex = type;
@@ -43,6 +43,6 @@ public class OrderedItem {
 
     @Override
     public boolean equals(Object obj) {
-        return obj instanceof OrderedItem && ((OrderedItem) obj).getItem().getId() == this.getItem().getId();
+        return obj instanceof OrderedItemModel && ((OrderedItemModel) obj).getItem().getId() == this.getItem().getId();
     }
 }

@@ -9,7 +9,7 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.alcatraz.admin.project_alcatraz.R;
-import com.alcatraz.admin.project_alcatraz.User.User;
+import com.alcatraz.admin.project_alcatraz.User.UserModel;
 import com.alcatraz.admin.project_alcatraz.Utility.HeaderFooterRecyclerViewAdapter;
 import com.bumptech.glide.Glide;
 
@@ -21,10 +21,10 @@ import de.hdodenhof.circleimageview.CircleImageView;
 
 public class ActiveSessionMemberAdapter extends HeaderFooterRecyclerViewAdapter {
 
-    private List<User> mUsers;
+    private List<UserModel> mUsers;
     private Context mContext;
 
-    ActiveSessionMemberAdapter(Context context, List<User> users){
+    ActiveSessionMemberAdapter(Context context, List<UserModel> users){
         this.mContext = context;
         this.mUsers = users;
     }
@@ -75,7 +75,7 @@ public class ActiveSessionMemberAdapter extends HeaderFooterRecyclerViewAdapter 
         return R.layout.session_user_layout;
     }
 
-    public void setUsers(List<User> users) {
+    public void setUsers(List<UserModel> users) {
         this.mUsers = users;
         notifyDataSetChanged();
     }
@@ -89,7 +89,7 @@ public class ActiveSessionMemberAdapter extends HeaderFooterRecyclerViewAdapter 
             ButterKnife.bind(this, view);
         }
 
-        void bindData(User user) {
+        void bindData(UserModel user) {
             tvUser.setText(user.getUsername());
             Glide.with(mContext.getApplicationContext()).load(user.getImageUrl()).into(imUser);
         }

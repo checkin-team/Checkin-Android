@@ -24,7 +24,7 @@ import io.objectbox.android.ObjectBoxLiveData;
 public class MenuRepository {
     private static MenuRepository INSTANCE;
     private Box<MenuItemModel> mMenuItemModel;
-    private Box<MenuGroup> mMenuGroupModel;
+    private Box<MenuGroupModel> mMenuGroupModel;
     private WebApiService mWebService;
 
     private MenuRepository(Context context) {
@@ -63,18 +63,18 @@ public class MenuRepository {
                 return null;
             }
         }.getAsLiveData();*/
-        return new ObjectBoxLiveData<>(mMenuItemModel.query().equal(MenuItem_.menuId, menuId).build());
+        return new ObjectBoxLiveData<>(mMenuItemModel.query().equal(MenuItemModel_.menuId, menuId).build());
     }
 
-    public LiveData<Resource<List<MenuGroup>>> getMenuGroups(final int menuId) {
-        return new NetworkBoundResource<List<MenuGroup>, List<MenuGroup>>() {
+    public LiveData<Resource<List<MenuGroupModel>>> getMenuGroups(final int menuId) {
+        return new NetworkBoundResource<List<MenuGroupModel>, List<MenuGroupModel>>() {
 
             @Override
-            protected void saveCallResult(@NonNull List<MenuGroup> item) {
+            protected void saveCallResult(@NonNull List<MenuGroupModel> item) {
             }
 
             @Override
-            protected boolean shouldFetch(@Nullable List<MenuGroup> data) {
+            protected boolean shouldFetch(@Nullable List<MenuGroupModel> data) {
                 return false;
             }
 
@@ -85,13 +85,13 @@ public class MenuRepository {
 
             @NonNull
             @Override
-            protected LiveData<List<MenuGroup>> loadFromDb() {
-                return new ObjectBoxLiveData<>(mMenuGroupModel.query().equal(MenuGroup_.menuId, menuId).build());
+            protected LiveData<List<MenuGroupModel>> loadFromDb() {
+                return new ObjectBoxLiveData<>(mMenuGroupModel.query().equal(MenuGroupModel_.menuId, menuId).build());
             }
 
             @NonNull
             @Override
-            protected LiveData<ApiResponse<List<MenuGroup>>> createCall() {
+            protected LiveData<ApiResponse<List<MenuGroupModel>>> createCall() {
                 return null;
             }
         }.getAsLiveData();

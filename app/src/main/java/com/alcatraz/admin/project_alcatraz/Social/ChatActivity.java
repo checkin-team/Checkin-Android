@@ -45,7 +45,7 @@ public class ChatActivity extends AppCompatActivity{
 
         mUserId = getIntent().getIntExtra(Constants.EXTRA_SELECTED_USER_ID, 0);
         if (mUserId == 0) {
-            Log.e(TAG, "Invalid User ID!");
+            Log.e(TAG, "Invalid UserModel ID!");
             finish();
         }
         messageAdapter = new MessageAdapter(null);

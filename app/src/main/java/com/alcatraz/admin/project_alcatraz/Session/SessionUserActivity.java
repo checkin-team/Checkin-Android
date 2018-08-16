@@ -20,7 +20,7 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.text.TextUtils;
-import android.view.LayoutInflater;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MotionEvent;
 import android.view.View;
@@ -34,6 +34,7 @@ import com.alcatraz.admin.project_alcatraz.Session.MenuUserFragment.STATUS_VALUE
 import com.alcatraz.admin.project_alcatraz.Utility.Constants;
 import com.alcatraz.admin.project_alcatraz.Utility.EndDrawerToggle;
 import com.miguelcatalan.materialsearchview.MaterialSearchView;
+import com.pchmn.materialchips.util.ViewUtil;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -44,7 +45,12 @@ import butterknife.OnClick;
 
 import static com.alcatraz.admin.project_alcatraz.Session.MenuUserFragment.SESSION_STATUS;
 
-public class SessionUserActivity extends AppCompatActivity implements MenuUserFragment.OnMenuFragmentInteractionListener, MenuCartAdapter.OnCartInteractionListener, PostSessionFragmentInteraction{
+public class SessionUserActivity extends AppCompatActivity implements
+        MenuUserFragment.OnMenuFragmentInteractionListener,
+        MenuCartAdapter.OnCartInteractionListener,
+        MenuItemCustomizationFragment.ItemCustFragCompat,
+        PostSessionStartFragment.PostSessionFragmentInteraction
+{
     private final String TAG = SessionUserActivity.class.getSimpleName();
 
     @BindView(R.id.search_view) MaterialSearchView mSearchView;
@@ -152,8 +158,9 @@ public class SessionUserActivity extends AppCompatActivity implements MenuUserFr
         }
 
         mDarkBack.setOnTouchListener((view, motionEvent) -> {
-            if (motionEvent.getAction() == MotionEvent.ACTION_DOWN)
-                hideFilter();
+            if (motionEvent.getAction() == MotionEvent.ACTION_DOWN )
+                if( mFilterContainer.getVisibility() == View.VISIBLE)
+                    hideFilter();
             return true;
         });
         mFilterToggle.setOnClickListener(view -> {
@@ -178,7 +185,7 @@ public class SessionUserActivity extends AppCompatActivity implements MenuUserFr
         });
     }
 
-    public List<OrderedItem> getOrderedItems() {
+    public List<OrderedItemModel> getOrderedItems() {
         return mCartAdapter.getOrderedItems();
     }
 
@@ -285,7 +292,9 @@ public class SessionUserActivity extends AppCompatActivity implements MenuUserFr
 
     @Override
     public void onBackPressed() {
-        if (mSearchView.isSearchOpen())
+        if(customizationRoot.getVisibility() == View.VISIBLE){
+            hideCustomization();
+        }else if (mSearchView.isSearchOpen())
             mSearchView.closeSearch();
         else if (mDarkBack.getVisibility() == View.VISIBLE)
             hideFilter();
@@ -336,33 +345,82 @@ public class SessionUserActivity extends AppCompatActivity implements MenuUserFr
 
     @Override
     public void onItemOrderInteraction(MenuItemModel item, int count) {
-        if (item.getCustomizationGroups() != null) {
-            customizationRoot.setVisibility(View.VISIBLE);
-            MenuItemHolder menuItemHolder = new MenuItemHolder(customizationRoot,getFoodExtraHolderList(item.getCustomizationGroups()),item);
+        if (!item.getCustomizationGroups().isEmpty()) {
+            /*Animation animationUp = AnimationUtils.loadAnimation(getApplicationContext(),R.anim.slide_up);
+            animationUp.setDuration(400);*/
+
+            getSupportFragmentManager().beginTransaction()
+                    .replace(customizationRoot.getId(),MenuItemCustomizationFragment.newInstance(item))
+                    .addToBackStack(MenuItemCustomizationFragment.TAG)
+                    .commit();
+            showCustomization();
         }
-        mMenuViewModel.orderItem(item, count, item.getBaseTypeIndex());
+        else mMenuViewModel.orderItem(item, count, item.getBaseTypeIndex());
     }
 
-    public List<ItemCustomizationGroupHolder> getFoodExtraHolderList(List<ItemCustomizationGroup> foodExtraList){
-        List<ItemCustomizationGroupHolder> foodExtraHolderList = new ArrayList<>();
-        for(ItemCustomizationGroup foodExtra : foodExtraList){
-            View view = LayoutInflater.from(getApplicationContext()).inflate(R.layout.item_customization_group,null,false);
-            ItemCustomizationGroupHolder foodExtraHolder = new ItemCustomizationGroupHolder(view,null,foodExtra);
+    @Override
+    public void onItemCustDone(int selectedType, List<ItemCustomizationField> selectedItemCustFields) {
+        Log.i("bhavik","selected type = " + selectedType + "\n");
+        int i = 1;
+        if(selectedItemCustFields!= null)
+        for(ItemCustomizationField itemCustomizationField : selectedItemCustFields){
+            Log.i("bhavik","itemCustomizationField " + i++ + " = " + itemCustomizationField.getName() + "\n");
+        }
 
-            foodExtraHolder.setItemCustomizationFieldHolderList(getExtraHolder(foodExtra.getItemCustomizationFieldList(),foodExtraHolder));
-            foodExtraHolderList.add(foodExtraHolder);
-        }
-        return foodExtraHolderList;
+        hideCustomization();
+
     }
-    public List<ItemCustomizationFieldHolder> getExtraHolder(List<ItemCustomizationField> extraList, ItemCustomizationFieldHolder.SelectableExtraHolder selectableExtraHolder){
-        List<ItemCustomizationFieldHolder> extraHolderList = new ArrayList<>();
-        for(ItemCustomizationField extra : extraList){
-            View view = LayoutInflater.from(getApplicationContext()).inflate(R.layout.item_customization_field,null,false);
-            ItemCustomizationFieldHolder extraHolder = new ItemCustomizationFieldHolder(view, extra,selectableExtraHolder);
-            extraHolderList.add(extraHolder);
-        }
-        return extraHolderList;
+
+    private void showCustomization(){
+        mDarkBack.animate()
+                .alpha(0.67f)
+                .setListener(new AnimatorListenerAdapter() {
+                    @Override
+                    public void onAnimationStart(Animator animation) {
+                        mDarkBack.setVisibility(View.VISIBLE);
+                    }
+                });
+        customizationRoot.animate()
+                .translationY(ViewUtil.dpToPx(0))
+                .setDuration(400)
+                .alpha(1.0f)
+                .setListener(new AnimatorListenerAdapter() {
+                    @Override
+                    public void onAnimationStart(Animator animation) {
+                        customizationRoot.setVisibility(View.VISIBLE);
+                        customizationRoot.setTranslationY(ViewUtil.dpToPx(400));
+                    }
+                    @Override
+                    public void onAnimationEnd(Animator animation) {
+                        customizationRoot.setTranslationY(0);
+                    }
+                });
     }
+
+    private void hideCustomization(){
+        mDarkBack.animate()
+                .alpha(0.0f)
+                .setListener(new AnimatorListenerAdapter() {
+                    @Override
+                    public void onAnimationEnd(Animator animation) {
+                        mDarkBack.setVisibility(View.GONE);
+                    }
+                });
+        customizationRoot.animate()
+                .translationY(ViewUtil.dpToPx(400))
+                .setDuration(400)
+                .alpha(0.0f)
+                .setListener(new AnimatorListenerAdapter() {
+                    @Override
+                    public void onAnimationEnd(Animator animation) {
+                        customizationRoot.setVisibility(View.GONE);
+                        customizationRoot.setTranslationY(ViewUtil.dpToPx(400));
+                        getSupportFragmentManager().popBackStack();
+                    }
+                });
+
+    }
+
 
     @Override
     public void onItemShowInfo(MenuItemModel item) {
@@ -374,12 +432,12 @@ public class SessionUserActivity extends AppCompatActivity implements MenuUserFr
     }
 
     @Override
-    public void onItemRemoved(OrderedItem item) {
+    public void onItemRemoved(OrderedItemModel item) {
         mMenuViewModel.removeItem(item);
     }
 
     @Override
-    public void onItemEdited(OrderedItem item) {
+    public void onItemEdited(OrderedItemModel item) {
 
     }
 }

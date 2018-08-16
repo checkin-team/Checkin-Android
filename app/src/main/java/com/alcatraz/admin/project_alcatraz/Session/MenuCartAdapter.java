@@ -19,13 +19,13 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 
 public class MenuCartAdapter extends RecyclerView.Adapter<MenuCartAdapter.ViewHolder> {
-    private List<OrderedItem> orderedItems;
+    private List<OrderedItemModel> orderedItems;
     private RecyclerView mRecyclerView;
     private OnCartInteractionListener mCartInteractionListener;
 
     public interface OnCartInteractionListener {
-        void onItemRemoved(OrderedItem item);
-        void onItemEdited(OrderedItem item);
+        void onItemRemoved(OrderedItemModel item);
+        void onItemEdited(OrderedItemModel item);
     }
 
     MenuCartAdapter(OnCartInteractionListener cartInteractionListener) {
@@ -61,11 +61,11 @@ public class MenuCartAdapter extends RecyclerView.Adapter<MenuCartAdapter.ViewHo
         return R.layout.menu_cart_item_layout;
     }
 
-    public List<OrderedItem> getOrderedItems() {
+    public List<OrderedItemModel> getOrderedItems() {
         return orderedItems;
     }
 
-    public void setOrderedItems(List<OrderedItem> orderedItems) {
+    public void setOrderedItems(List<OrderedItemModel> orderedItems) {
         this.orderedItems = orderedItems;
         notifyDataSetChanged();
     }
@@ -85,7 +85,7 @@ public class MenuCartAdapter extends RecyclerView.Adapter<MenuCartAdapter.ViewHo
             ButterKnife.bind(this, v);
         }
 
-        void bindData(final OrderedItem item) {
+        void bindData(final OrderedItemModel item) {
             tvItemName.setText(item.getItem().getName() + " x" + item.getCount());
             tvItemPrice.setText(String.valueOf(item.getPrice()));
             cardItem.setOnClickListener(v -> {

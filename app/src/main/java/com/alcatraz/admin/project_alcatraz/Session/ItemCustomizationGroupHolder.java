@@ -45,16 +45,13 @@ public class ItemCustomizationGroupHolder implements ItemCustomizationFieldHolde
 
     public void setItemCustomizationFieldHolderList(List<ItemCustomizationFieldHolder> itemCustomizationFieldHolderList) {
         if(itemCustomizationFieldHolderList != null){
+            this.itemCustomizationFieldHolderList = itemCustomizationFieldHolderList;
             for(ItemCustomizationFieldHolder itemCustomizationFieldHolder : itemCustomizationFieldHolderList){
-                addExtraHolder(itemCustomizationFieldHolder);
+                viewGroup.addView(itemCustomizationFieldHolder.getViewGroup());
             }
         }
     }
-    public void addExtraHolder(ItemCustomizationFieldHolder itemCustomizationFieldHolder){
-        itemCustomizationFieldHolder.selectableExtraHolder = this;
-        itemCustomizationFieldHolderList.add(itemCustomizationFieldHolder);
-        viewGroup.addView(itemCustomizationFieldHolder.viewGroup);
-    }
+
     public void setFoodExtra(ItemCustomizationGroup foodExtra){
         if(foodExtra == null) return;
         this.foodExtra = foodExtra;
@@ -90,25 +87,26 @@ public class ItemCustomizationGroupHolder implements ItemCustomizationFieldHolde
     @Override
     public void onSelect(ItemCustomizationFieldHolder itemCustomizationFieldHolder) {
         List<ItemCustomizationFieldHolder> selectedItemCustomizationFieldHolderList = getTotalSelectedExtra();
-        if(selectedItemCustomizationFieldHolderList.size() < foodExtra.getMaxSelection()) {
-            itemCustomizationFieldHolder.isSelected(true);
-        }else if(selectedItemCustomizationFieldHolderList.size() == foodExtra.getMaxSelection()){
+        if(selectedItemCustomizationFieldHolderList.size() > foodExtra.getMaxSelection()) {
             if(foodExtra.getMaxSelection() == 1){
                 for(ItemCustomizationFieldHolder selectedItemCustomizationFieldHolder : selectedItemCustomizationFieldHolderList){
                     selectedItemCustomizationFieldHolder.isSelected(false);
                 }
                 itemCustomizationFieldHolder.isSelected(true);
-            }else {
+            }
+            else {
                 itemCustomizationFieldHolder.isSelected(false);
                 Toast.makeText(viewGroup.getContext(),"Cannot select more than " + foodExtra.getMaxSelection(), Toast.LENGTH_SHORT).show();
             }
+        }else {
+            itemCustomizationFieldHolder.isSelected(true);
         }
     }
 
     @Override
     public void onUnselect(ItemCustomizationFieldHolder itemCustomizationFieldHolder) {
         List<ItemCustomizationFieldHolder> selectedItemCustomizationFieldHolderList = getTotalSelectedExtra();
-        if(selectedItemCustomizationFieldHolderList.size() > foodExtra.getMinSelection()){
+        if(selectedItemCustomizationFieldHolderList.size() >= foodExtra.getMinSelection()){
             itemCustomizationFieldHolder.isSelected(false);
         }else {
             itemCustomizationFieldHolder.isSelected(true);
@@ -119,7 +117,7 @@ public class ItemCustomizationGroupHolder implements ItemCustomizationFieldHolde
     public List<ItemCustomizationFieldHolder> getTotalSelectedExtra(){
         List<ItemCustomizationFieldHolder> selectedItemCustomizationFieldHolderList = new ArrayList<>();
         for(ItemCustomizationFieldHolder itemCustomizationFieldHolder : itemCustomizationFieldHolderList){
-            if(itemCustomizationFieldHolder.extra.isSelected()){
+            if(itemCustomizationFieldHolder.getCheckbox().isChecked()){
                 selectedItemCustomizationFieldHolderList.add(itemCustomizationFieldHolder);
 
             }

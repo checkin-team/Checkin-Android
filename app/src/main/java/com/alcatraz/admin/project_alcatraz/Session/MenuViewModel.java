@@ -21,8 +21,8 @@ public class MenuViewModel extends AndroidViewModel {
     private MenuRepository mRepository;
     private int mMenuId;
     private LiveData<List<MenuItemModel>> mMenuItems;
-    private LiveData<Resource<List<MenuGroup>>> mMenuGroups;
-    private MutableLiveData<List<OrderedItem>> mOrderedItems = new MutableLiveData<>();
+    private LiveData<Resource<List<MenuGroupModel>>> mMenuGroups;
+    private MutableLiveData<List<OrderedItemModel>> mOrderedItems = new MutableLiveData<>();
 
     MenuViewModel(@NonNull Application application) {
         super(application);
@@ -35,7 +35,7 @@ public class MenuViewModel extends AndroidViewModel {
         return mMenuItems;
     }
 
-    public LiveData<List<OrderedItem>> getOrderedItems() {
+    public LiveData<List<OrderedItemModel>> getOrderedItems() {
         if (mOrderedItems.getValue() == null)
             mOrderedItems.setValue(new ArrayList<>());
         return mOrderedItems;
@@ -45,7 +45,7 @@ public class MenuViewModel extends AndroidViewModel {
         return Transformations.switchMap(mOrderedItems, input -> {
             MutableLiveData<Integer> res = new MutableLiveData<>();
             int count = 0;
-            for (OrderedItem item: input)
+            for (OrderedItemModel item: input)
                 count += item.getCount();
             res.setValue(count);
             return res;
@@ -56,7 +56,7 @@ public class MenuViewModel extends AndroidViewModel {
         return Transformations.switchMap(getOrderedItems(), input -> {
             MutableLiveData<LongSparseArray<Integer>> res = new MutableLiveData<>();
             LongSparseArray<Integer> data = new LongSparseArray<>(input.size());
-            for (OrderedItem item: input) {
+            for (OrderedItemModel item: input) {
                 data.put(item.getItem().getId(), item.getCount());
             }
             res.setValue(data);
@@ -65,9 +65,9 @@ public class MenuViewModel extends AndroidViewModel {
     }
 
     public void orderItem(MenuItemModel menuItem, int count, int type) {
-        OrderedItem item = menuItem.order(count, type);
+        OrderedItemModel item = menuItem.order(count, type);
         Log.e(TAG, "Item (" + menuItem.getId() + ") count: " + count);
-        List<OrderedItem> orderedItems = mOrderedItems.getValue();
+        List<OrderedItemModel> orderedItems = mOrderedItems.getValue();
         int index;
         if (orderedItems == null) {
             orderedItems = new ArrayList<>();
@@ -83,8 +83,8 @@ public class MenuViewModel extends AndroidViewModel {
         mOrderedItems.setValue(orderedItems);
     }
 
-    public void removeItem(OrderedItem item) {
-        List<OrderedItem> orderedItems = mOrderedItems.getValue();
+    public void removeItem(OrderedItemModel item) {
+        List<OrderedItemModel> orderedItems = mOrderedItems.getValue();
         if (orderedItems != null) {
             orderedItems.remove(item);
             mOrderedItems.setValue(orderedItems);
@@ -96,7 +96,7 @@ public class MenuViewModel extends AndroidViewModel {
         return input;
     }
 
-    public LiveData<Resource<List<MenuGroup>>> getMenuGroups(int menuId) {
+    public LiveData<Resource<List<MenuGroupModel>>> getMenuGroups(int menuId) {
         mMenuId = menuId;
         if (mMenuGroups == null)
             mMenuGroups = mRepository.getMenuGroups(menuId);

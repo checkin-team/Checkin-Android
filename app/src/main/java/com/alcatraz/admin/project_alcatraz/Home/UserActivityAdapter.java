@@ -10,7 +10,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.alcatraz.admin.project_alcatraz.R;
-import com.alcatraz.admin.project_alcatraz.User.User;
+import com.alcatraz.admin.project_alcatraz.User.UserModel;
 import com.bumptech.glide.Glide;
 
 import java.util.List;
@@ -19,10 +19,10 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 
 public class UserActivityAdapter extends RecyclerView.Adapter<UserActivityAdapter.ViewHolder> {
-    private List<User> mUsers;
+    private List<UserModel> mUsers;
     private Context mContext;
 
-    UserActivityAdapter(List<User> users, Context context) {
+    UserActivityAdapter(List<UserModel> users, Context context) {
         mUsers = users;
         mContext = context;
     }
@@ -49,7 +49,7 @@ public class UserActivityAdapter extends RecyclerView.Adapter<UserActivityAdapte
         return R.layout.home_user_activities_item;
     }
 
-    public void setUsers(List<User> users) {
+    public void setUsers(List<UserModel> users) {
         this.mUsers = users;
         notifyDataSetChanged();
     }
@@ -63,7 +63,7 @@ public class UserActivityAdapter extends RecyclerView.Adapter<UserActivityAdapte
             ButterKnife.bind(this, v);
         }
 
-        void bindData(User user) {
+        void bindData(UserModel user) {
             vUserName.setText(user.getUsername());
             Glide.with(vUserImage.getContext()).load(R.drawable.dummy_alex)
                     .into(vUserImage);

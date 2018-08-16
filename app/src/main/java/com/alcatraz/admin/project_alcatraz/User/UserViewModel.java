@@ -11,14 +11,14 @@ import java.util.List;
 
 public class UserViewModel extends AndroidViewModel {
     private UserRepository mRepository;
-    private LiveData<List<User>> mAllUsers;
+    private LiveData<List<UserModel>> mAllUsers;
 
     public UserViewModel(@NonNull Application application) {
         super(application);
         mRepository = UserRepository.getInstance(application);
     }
 
-    public LiveData<List<User>> getAllUsers() {
+    public LiveData<List<UserModel>> getAllUsers() {
         if (mAllUsers == null)
             mAllUsers = mRepository.getAllUsers();
         return mAllUsers;

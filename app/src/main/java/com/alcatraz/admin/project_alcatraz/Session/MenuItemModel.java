@@ -1,13 +1,14 @@
 package com.alcatraz.admin.project_alcatraz.Session;
 
-import android.support.annotation.NonNull;
 import com.alcatraz.admin.project_alcatraz.Data.Converters;
 
 import java.util.List;
 
+import io.objectbox.annotation.Backlink;
 import io.objectbox.annotation.Convert;
 import io.objectbox.annotation.Entity;
 import io.objectbox.annotation.Id;
+import io.objectbox.relation.ToMany;
 import io.objectbox.relation.ToOne;
 
 /**
@@ -26,23 +27,23 @@ public class MenuItemModel {
     private String unit;
     private String description;
     private boolean vegetarian;
-    private ToOne<MenuGroup> group;
+    private ToOne<MenuGroupModel> group;
     private int menuId;
     private int subGroupIndex = 0;
-    @Convert(converter = Converters.ListConverter.class, dbType = String.class)
-    private List<ItemCustomizationGroup> customizationGroups;
+
+    @Backlink(to = "menuItem")
+    private ToMany<ItemCustomizationGroup> customizationGroups;
 
     MenuItemModel() {
     }
 
-    public MenuItemModel(String name, List<String> typeName, List<Double> typeCost, int baseType, long groupId, int menuId, List<ItemCustomizationGroup> customizationGroups) {
+    public MenuItemModel(String name, List<String> typeName,List<Double> typeCost, int baseType, long groupId, int menuId) {
         this.name = name;
         this.typeName = typeName;
         this.typeCost = typeCost;
         this.baseTypeIndex = baseType;
         this.group.setTargetId(groupId);
         this.menuId = menuId;
-        if(customizationGroups !=null)this.customizationGroups = customizationGroups;
     }
 
     public String getDescription() {
@@ -62,15 +63,10 @@ public class MenuItemModel {
         this.vegetarian = item.isVegetarian();
         this.menuId = item.getMenuId();
         this.subGroupIndex = item.getSubGroupIndex();
-        this.customizationGroups = item.customizationGroups;
     }
 
-    public List<ItemCustomizationGroup> getCustomizationGroups() {
+    public ToMany<ItemCustomizationGroup> getCustomizationGroups() {
         return customizationGroups;
-    }
-
-    public void setCustomizationGroups(@NonNull List<ItemCustomizationGroup> customizationGroups) {
-        this.customizationGroups = customizationGroups;
     }
 
     public String getName() {
@@ -89,7 +85,7 @@ public class MenuItemModel {
         return group.getTargetId();
     }
 
-    public ToOne<MenuGroup> getGroup() {
+    public ToOne<MenuGroupModel> getGroup() {
         return group;
     }
 
@@ -137,8 +133,8 @@ public class MenuItemModel {
         this.baseTypeIndex = baseType;
     }
 
-    public OrderedItem order(int quantity, int type) {
-        OrderedItem item = new OrderedItem(this, quantity, type);
+    public OrderedItemModel order(int quantity, int type) {
+        OrderedItemModel item = new OrderedItemModel(this, quantity, type);
         return item;
     }
 }
