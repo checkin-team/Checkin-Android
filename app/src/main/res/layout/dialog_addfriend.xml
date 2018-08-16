@@ -23,19 +23,12 @@
         android:id="@+id/flayoyut"
         android:layout_below="@id/adduser"
         >
-    <com.pchmn.materialchips.ChipsInput
-        android:id="@+id/chipinputforfriend"
-        android:layout_width="226dp"
-        android:layout_height="37.5dp"
+    <com.hootsuite.nachos.NachoTextView
+        android:paddingLeft="8dp"
         android:background="@drawable/what_would_you_have"
-
-        />
-    <MultiAutoCompleteTextView
-        android:visibility="gone"
-        android:background="@color/transparent"
         android:id="@+id/auto"
         android:layout_width="226dp"
-        android:layout_height="37.5dp"/>
+        android:layout_height="wrap_content"/>
     </FrameLayout>
     <ImageView
         android:id="@+id/confirm"
