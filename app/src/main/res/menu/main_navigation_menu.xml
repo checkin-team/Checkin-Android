@@ -24,5 +24,10 @@
             android:name="privacy settings"
             android:icon="@drawable/privacy"
             android:title="Privacy Settings" />
+        <item
+            android:id="@+id/nav_shop_activity"
+            android:name="privacy settings"
+            android:icon="@drawable/privacy"
+            android:title="Shop Activity" />
     </group>
 </menu>

@@ -84,4 +84,7 @@ dependencies {
     implementation 'it.sephiroth.android.library.bottomnavigation:bottom-navigation:2.0.1-rc1'
 
     implementation 'com.jsibbold:zoomage:1.1.0'
+
+    //page indication view
+    compile 'com.romandanylyk:pageindicatorview:1.0.1@aar'
 }

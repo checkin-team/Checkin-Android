@@ -33,6 +33,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.alcatraz.admin.project_alcatraz.Profile.ShopProfile.ShopActivity;
 import com.alcatraz.admin.project_alcatraz.Profile.ShopProfile.ShopProfileActivity2;
 import com.alcatraz.admin.project_alcatraz.R;
 import com.alcatraz.admin.project_alcatraz.Session.ActiveSession;
@@ -404,6 +405,11 @@ public class HomeActivity extends AppCompatActivity
                 intent = new Intent(getApplicationContext(), FaqActivity.class);
                 startActivity(intent);
                 break;
+            case R.id.nav_shop_activity:
+                intent = new Intent(getApplicationContext(), ShopActivity.class);
+                startActivity(intent);
+                break;
+
         }
         drawerLayout.closeDrawer(GravityCompat.START);
         return true;

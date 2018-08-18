@@ -3,6 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     package="com.alcatraz.admin.project_alcatraz">
 
+    <uses-permission android:name="android.permission.CALL_PHONE"/>
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
@@ -58,8 +59,9 @@
         <activity android:name=".Home.StoryActivity" />
         <activity android:name=".Home.ForgotPassword" />
         <activity android:name=".Home.FilterTransactions" />
-        <activity android:name=".Home.FaqActivity"></activity>
+        <activity android:name=".Home.FaqActivity" />
         <activity android:name=".Session.ActiveSession" />
+        <activity android:name=".Profile.ShopProfile.ShopActivity"/>
     </application>
 
 </manifest>

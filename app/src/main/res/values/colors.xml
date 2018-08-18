@@ -58,4 +58,10 @@
     <color name="itemCustomizationGroupText">#ffffff</color>
     <color name="itemCustomizationFieldText">#ffffff</color>
     <color name="theme_dark">#af1216</color>
+
+    <!--ShopProfile-->
+    <color name="shop_profile_about_heading">#af1014</color>
+    <color name="shop_profile_about_subheading">#797676</color>
+    <color name="shop_profile_about_side_buttons">#ffffff</color>
+    <color name="shop_profile_about_ratings">#ffffff</color>
 </resources>
