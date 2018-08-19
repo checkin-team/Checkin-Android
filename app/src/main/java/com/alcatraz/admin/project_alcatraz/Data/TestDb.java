@@ -3,6 +3,7 @@ package com.alcatraz.admin.project_alcatraz.Data;
 import android.content.Context;
 import android.util.Log;
 
+import com.alcatraz.admin.project_alcatraz.Profile.ShopProfile.ShopHomeModel;
 import com.alcatraz.admin.project_alcatraz.Session.ItemCustomizationField;
 import com.alcatraz.admin.project_alcatraz.Session.ItemCustomizationGroup;
 import com.alcatraz.admin.project_alcatraz.Session.MenuGroup;
@@ -19,14 +20,15 @@ public class TestDb {
     public static void populateWithTestData(final Context context) {
         Log.e("TestData", "Populating...");
         populateUsers(AppDatabase.getUserModel(context));
-        populateMenu(AppDatabase.getMenuItemCustFieldModel(context),AppDatabase.getMenuItemCustGroupModel(context),AppDatabase.getMenuItemModel(context), AppDatabase.getMenuGroupModel(context));
+        populateMenu(AppDatabase.getMenuItemCustFieldModel(context),AppDatabase.getMenuItemCustGroupModel(context),AppDatabase.getMenuItemModel(context), AppDatabase.getMenuGroupModel(context),AppDatabase.getShopHomeModel(context));
     }
 
-    private static void populateMenu(Box<ItemCustomizationField> itemCustomizationFieldModel,Box<ItemCustomizationGroup> itemCustomizationGroupModel,Box<MenuItem> menuItemModel, Box<MenuGroup> menuGroupModel) {
+    private static void populateMenu(Box<ItemCustomizationField> itemCustomizationFieldModel, Box<ItemCustomizationGroup> itemCustomizationGroupModel, Box<MenuItem> menuItemModel, Box<MenuGroup> menuGroupModel, Box<ShopHomeModel> shopProfileModel) {
         List<MenuGroup> menuGroups = new ArrayList<>(30);
         List<MenuItem> menuItems = new ArrayList<>();
         List<ItemCustomizationGroup> itemCustomizationGroups = new ArrayList<>();
         List<ItemCustomizationField> itemCustomizationFields = new ArrayList<>();
+        List<ShopHomeModel> shopProfiles = new ArrayList<>();
 
 
         /*ArrayList<String> subGroups = new ArrayList<>();
@@ -102,6 +104,11 @@ public class TestDb {
         menuItemModel.put(menuItems);
         itemCustomizationGroupModel.put(itemCustomizationGroups);
         itemCustomizationFieldModel.put(itemCustomizationFields);
+
+        //shopProfiles
+        ShopHomeModel shopProfile = new ShopHomeModel(0,"Lajjat Hotel","Bio",true,true,"address","city","+8687845140","email","website",true,4.7f);
+        shopProfiles.add(shopProfile);
+        shopProfileModel.put(shopProfiles);
     }
 
     private static void populateUsers(Box<User> userModel) {

@@ -1,5 +1,6 @@
 package com.alcatraz.admin.project_alcatraz.Profile.ShopProfile;
 
+import android.arch.lifecycle.ViewModelProviders;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
@@ -17,7 +18,13 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.alcatraz.admin.project_alcatraz.Data.Resource;
 import com.alcatraz.admin.project_alcatraz.R;
+
+import java.util.List;
+
+import butterknife.BindView;
+import butterknife.ButterKnife;
 
 /**
  * Created by Bhavik Patel on 17/08/2018.
@@ -25,10 +32,18 @@ import com.alcatraz.admin.project_alcatraz.R;
 
 public class ShopHomeFragment extends Fragment implements View.OnClickListener {
 
-    ViewPager imagePager;
-    RecyclerView grid;
-    View call,message,navigate,follow;
-    String mobNumber = "+9717477205";
+    private static final String TAG = ShopHomeFragment.class.getSimpleName();
+
+    private  ViewPager imagePager;
+    private RecyclerView grid;
+    private View call;
+    private View message;
+    private View navigate;
+    private View follow;
+    private  TextView hotel;
+    private String mobNumber = "+9717477205";
+    private ShopHomeViewModel mShopHomeViewModel;
+
 
     @Nullable
     @Override
@@ -40,7 +55,24 @@ public class ShopHomeFragment extends Fragment implements View.OnClickListener {
         call = view.findViewById(R.id.call);
         message = view.findViewById(R.id.message);
         navigate = view.findViewById(R.id.navigation);
+        hotel = view.findViewById(R.id.hotel);
         setUp();
+        mShopHomeViewModel = ViewModelProviders.of(this, new ShopHomeViewModel.Factory(getActivity().getApplication())).get(ShopHomeViewModel.class);
+        mShopHomeViewModel.getShopHomeModel(1).observe(this, shopHomeModel -> {
+            if(shopHomeModel == null) return;
+            if (shopHomeModel.status == Resource.Status.SUCCESS) {
+                List<ShopHomeModel> shopHomeModelList = shopHomeModel.data;
+                if(shopHomeModelList.size()>0){
+                    hotel.setText(shopHomeModelList.get(0).getName());
+                }
+                //TODO complete ordered items
+            } else if (shopHomeModel.status == Resource.Status.LOADING) {
+                // LOADING
+            } else{
+                Toast.makeText(getContext(), "Error fetching Shop Home! Status: " +
+                        shopHomeModel.status.toString() + "\nDetails: " + shopHomeModel.message, Toast.LENGTH_LONG).show();
+            }
+        });
         return view;
     }
 
@@ -53,6 +85,7 @@ public class ShopHomeFragment extends Fragment implements View.OnClickListener {
         call.setOnClickListener(this);
         message.setOnClickListener(this);
         navigate.setOnClickListener(this);
+
     }
 
     @Override

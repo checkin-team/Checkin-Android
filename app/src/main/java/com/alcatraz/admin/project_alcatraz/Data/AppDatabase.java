@@ -3,6 +3,7 @@ package com.alcatraz.admin.project_alcatraz.Data;
 import android.content.Context;
 
 import com.alcatraz.admin.project_alcatraz.MyObjectBox;
+import com.alcatraz.admin.project_alcatraz.Profile.ShopProfile.ShopHomeModel;
 import com.alcatraz.admin.project_alcatraz.Session.ItemCustomizationField;
 import com.alcatraz.admin.project_alcatraz.Session.ItemCustomizationGroup;
 import com.alcatraz.admin.project_alcatraz.Session.MenuGroup;
@@ -32,6 +33,10 @@ public class AppDatabase {
     }
 
     private AppDatabase() {
+    }
+
+    public static Box<ShopHomeModel> getShopHomeModel(final Context context) {
+        return getBoxStore(context).boxFor(ShopHomeModel.class);
     }
 
     public static Box<ItemCustomizationField> getMenuItemCustFieldModel(final Context context) {

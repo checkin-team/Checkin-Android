@@ -1,5 +1,6 @@
 package com.alcatraz.admin.project_alcatraz.Data;
 
+import com.alcatraz.admin.project_alcatraz.Profile.ShopProfile.ShopHomeModel;
 import com.alcatraz.admin.project_alcatraz.Session.ActiveSessionModel;
 import com.alcatraz.admin.project_alcatraz.Social.Message;
 
@@ -21,4 +22,7 @@ public interface WebApiService {
 
     @GET("activeSessionModel/{active_session_id}")
     Call<ActiveSessionModel> getActiveSession(@Path("active_session_id") int activeSessionId);
+
+    @GET("shopHomeModel/{shop_home_id}")
+    Call<ShopHomeModel> getShopHome(@Path("shop_home_id") int shopHomeId);
 }
