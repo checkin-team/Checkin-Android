@@ -64,7 +64,7 @@
             android:layout_marginEnd="8dp"
             android:layout_marginStart="8dp"
             android:layout_marginTop="75dp"
-            android:background="@drawable/login_textbox"
+            android:background="@drawable/background_textbox"
             android:textAlignment="center"
             android:paddingRight="@dimen/spacing_large"
             app:layout_constraintEnd_toEndOf="parent"

@@ -1,68 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/fullactivesession"
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:background="@color/white"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/root_view"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
     android:animateLayoutChanges="true"
-    xmlns:android="http://schemas.android.com/apk/res/android" android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:background="@color/white"
+    android:focusableInTouchMode="true"
+    android:focusable="true">
 
-    <TextView
-        android:id="@+id/timer"
-        android:visibility="gone"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
-        android:text="Time left-: 10 mins"
-
-        android:textSize="18sp"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/button3"
-        />
-    <LinearLayout
-        android:focusable="true"
-        android:focusableInTouchMode="true"
-        android:layout_width="0dp"
-        android:layout_height="0dp"/>
-    <EditText
-        android:inputType="text"
-        android:maxEms="28"
-        android:lines="1"
-        android:maxLines="1"
-        android:layout_marginStart="16dp"
-        android:layout_marginEnd="16dp"
-        android:layout_marginTop="16dp"
-        android:id="@+id/tv1"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        app:layout_constraintTop_toBottomOf="@id/timer"
-        android:background="@drawable/what_would_you_have"
-        android:paddingTop="4dp"
-        android:paddingBottom="6dp"
-
-        android:hint="How may we assist you?"
-        android:textSize="18sp"
-        android:gravity="center_horizontal|bottom"
-        android:textColorHint="#bebebe"
-        />
-
-    <android.support.v7.widget.RecyclerView
-        android:id="@+id/food_with"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
-        android:maxHeight="200dp"
-        android:minHeight="100dp"
-        android:layout_marginBottom="16dp"
-        android:paddingRight="4dp"
-        android:paddingLeft="4dp"
-        android:background="@drawable/inshadow"
-        app:layout_constraintBottom_toTopOf="@id/refill"
-        app:layout_constraintTop_toBottomOf="@id/clear"
-        app:layout_constraintLeft_toLeftOf="parent" />
     <android.support.design.widget.AppBarLayout
-        android:id="@+id/appBarLayout"
+        android:id="@+id/appbar_active_session"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:theme="@style/appbar_main"
@@ -70,12 +19,10 @@
         app:layout_constraintTop_toTopOf="parent">
 
         <android.support.v7.widget.Toolbar
-            android:id="@+id/toolbar_home"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_gravity="top"
             android:background="@color/colorPrimaryRed"
-            app:layout_scrollFlags="scroll|enterAlways"
             app:popupTheme="@style/PopupOverlay">
 
             <TextView
@@ -88,147 +35,130 @@
                 android:textAlignment="center"
                 android:textColor="@color/white"
                 android:textSize="@dimen/font_largest" />
-
         </android.support.v7.widget.Toolbar>
     </android.support.design.widget.AppBarLayout>
 
-    <ImageButton
+    <FrameLayout
+        android:id="@+id/bill_container"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginEnd="16dp"
-        android:layout_marginTop="16dp"
-        android:src="@drawable/logout"
-        android:background="@color/white"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/appBarLayout"/>
-
-    <ImageButton
-
-        android:id="@+id/button3"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="16dp"
-        android:background="@drawable/pricer_card"
+        android:layout_height="40dp"
+        android:layout_marginStart="@dimen/spacing_small"
+        android:layout_marginTop="@dimen/spacing_normal"
+        android:background="@drawable/menu_item_price"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/appBarLayout" />
+        app:layout_constraintTop_toBottomOf="@+id/appbar_active_session">
+
+        <TextView
+            android:id="@+id/tv_bill"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginBottom="@dimen/spacing_tiny"
+            android:layout_marginStart="@dimen/spacing_tiny"
+            android:textColor="@color/colorPrimaryRed"
+            android:textSize="@dimen/font_normal"
+            tools:text="4200" />
+    </FrameLayout>
+
+    <ImageButton
+        android:id="@+id/btn_checkout"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="@dimen/spacing_small"
+        android:layout_marginTop="@dimen/spacing_small"
+        android:background="@color/white"
+        android:src="@drawable/btn_checkout"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/appbar_active_session" />
+
+    <EditText
+        android:id="@+id/ed_ask_help"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="@dimen/spacing_small"
+        android:layout_marginStart="@dimen/spacing_small"
+        android:layout_marginTop="@dimen/spacing_small"
+        android:background="@drawable/background_textbox"
+        android:gravity="center_horizontal|bottom"
+        android:hint="How may we assist you?"
+        android:inputType="text"
+        android:paddingBottom="6dp"
+        android:paddingTop="4dp"
+        android:textColorHint="@color/pinkish_grey"
+        android:textSize="18sp"
+        app:layout_constraintTop_toBottomOf="@id/btn_checkout" />
 
     <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="0dp"
-        android:layout_marginBottom="10dp"
-        android:layout_marginRight="10dp"
-        android:text="4200"
-        android:textAlignment="textEnd"
-        android:textColor="@color/colorPrimaryRed"
-        android:textSize="18sp"
-        app:layout_constraintBottom_toBottomOf="@id/button3"
-        app:layout_constraintRight_toRightOf="@id/button3"
-
-
-        />
-
-    <ImageButton
-        android:id="@+id/imageView7"
+        android:id="@+id/btn_table_cleaning"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="8dp"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="16dp"
+        android:layout_marginStart="@dimen/spacing_small"
+        android:layout_marginTop="@dimen/spacing_small"
+        android:drawableTop="@drawable/ic_table_cleaning"
+        android:text="Clean Table"
+        android:textAlignment="center"
+        android:textSize="@dimen/font_normal"
+        app:layout_constraintEnd_toStartOf="@+id/btn_list_orders"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/ed_ask_help" />
+
+    <TextView
+        android:id="@+id/btn_list_orders"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="@dimen/spacing_small"
+        android:layout_marginTop="@dimen/spacing_small"
+        android:drawableTop="@drawable/ic_ordered_items"
+        android:text="Orders"
+        android:textAlignment="center"
+        android:textSize="@dimen/font_normal"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toEndOf="@+id/btn_table_cleaning"
+        app:layout_constraintTop_toBottomOf="@id/ed_ask_help" />
+
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/rv_session_members"
+        android:layout_width="match_parent"
+        android:layout_height="150dp"
+        android:layout_marginTop="@dimen/spacing_small"
+        android:background="@drawable/background_card_white_inner_shadow"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/btn_table_cleaning" />
+
+    <ImageButton
+        android:id="@+id/btn_call_waiter"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="@dimen/spacing_small"
+        android:layout_marginStart="@dimen/spacing_small"
         android:background="@color/white"
         android:contentDescription="Call the Waiter"
-        android:scaleType="fitXY"
-        android:src="@drawable/call_waiter"
+        android:src="@drawable/btn_call_waiter"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/food_with"
-        app:layout_constraintVertical_bias="1.0" />
+        app:layout_constraintStart_toStartOf="parent" />
 
     <ImageButton
-        android:id="@+id/refill"
+        android:id="@+id/btn_menu"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="8dp"
-        android:layout_marginEnd="16dp"
+        android:layout_marginBottom="@dimen/spacing_large"
         android:background="@color/white"
-        android:src="@drawable/refill_glass"
+        android:src="@drawable/btn_menu"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/btn_refill_glass"
+        app:layout_constraintStart_toEndOf="@+id/btn_call_waiter" />
+
+    <ImageButton
+        android:id="@+id/btn_refill_glass"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="@dimen/spacing_small"
+        android:layout_marginEnd="@dimen/spacing_small"
+        android:background="@color/white"
+        android:src="@drawable/btn_refill_glass"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent" />
-
-    <ImageButton
-        android:id="@+id/show_meeenu"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="8dp"
-        android:layout_marginTop="8dp"
-        android:background="@color/white"
-        android:src="@drawable/menu"
-        app:layout_constraintBottom_toBottomOf="@id/refill"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/imageView7" />
-
-
-    <ImageView
-        android:id="@+id/imageView12"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginEnd="8dp"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="8dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.24"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tv1"
-        android:src="@drawable/noun_table_557866" />
-    <TextView
-        android:id="@+id/clear"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
-        android:text="Table Cleaning"
-        android:textSize="12sp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.24"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/imageView12"
-        />
-    <ImageView
-        android:id="@+id/imageView13"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginEnd="8dp"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="8dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.76"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tv1"
-        android:src="@drawable/items" />
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
-        android:text="Orders"
-        android:textSize="12sp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.76"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/imageView12"
-        />
-
-    <!--<TextView
-            android:layout_width="0dp"
-            android:layout_height="80dp"
-            app:layout_constraintEnd_toEndOf="@id/show_meeenu"
-            app:layout_constraintStart_toStartOf="@id/show_meeenu"
-            app:layout_constraintTop_toTopOf="@id/imageView7"
-
-            android:background="@drawable/bkgrnd"
-            android:text="Clean the\n Table"
-            android:textAllCaps="false"
-            android:textColor="@color/brownish_grey"
-            android:textSize="14sp" />-->
-
 
 </android.support.constraint.ConstraintLayout>

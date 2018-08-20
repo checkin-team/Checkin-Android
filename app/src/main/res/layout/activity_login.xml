@@ -21,7 +21,7 @@
         android:id="@+id/login_username"
         android:layout_weight=".09"
         android:layout_gravity="center_horizontal"
-        android:background="@drawable/login_textbox"
+        android:background="@drawable/background_textbox"
         android:gravity="center"
         android:hint="Username"
         android:inputType="text"/>
@@ -36,7 +36,7 @@
         android:layout_height="0dp"
         android:layout_weight=".09"
         android:layout_gravity="center_horizontal"
-        android:background="@drawable/login_textbox"
+        android:background="@drawable/background_textbox"
         android:id="@+id/login_password"
         android:gravity="center"
         android:hint="Password"

@@ -13,7 +13,7 @@
         android:layout_marginEnd="@dimen/spacing_normal"
         android:layout_marginStart="@dimen/spacing_normal"
         android:layout_marginTop="@dimen/spacing_extra_large"
-        android:background="@drawable/login_textbox"
+        android:background="@drawable/background_textbox"
         android:hint="Enter OTP"
         android:textAlignment="center"
         android:paddingRight="@dimen/spacing_normal"

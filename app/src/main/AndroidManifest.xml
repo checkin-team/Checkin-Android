@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    package="com.alcatraz.admin.project_alcatraz">
+    package="com.checkin.app.checkin">
 
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
@@ -16,19 +16,21 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         tools:replace="android:theme">
-        <activity
-            android:name=".Home.LoginActivity"
-            android:theme="@style/Theme.AppCompat.Light.NoActionBar"
-            android:screenOrientation="portrait"/>
-        <activity
-            android:name=".Home.SignupActivity"
-            android:theme="@style/Theme.AppCompat.Light.NoActionBar"
-            android:screenOrientation="portrait">
+        <activity android:name=".Home.SplashActivity"
+            android:theme="@style/Theme.AppCompat.Light.NoActionBar" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
+        </activity>
+        <activity
+            android:name=".Home.LoginActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/Theme.AppCompat.Light.NoActionBar" />
+        <activity
+            android:name=".Home.SignupActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/Theme.AppCompat.Light.NoActionBar">
         </activity>
         <activity
             android:name=".Home.HomeActivity"
@@ -51,9 +53,9 @@
         <activity
             android:name=".Session.SessionUserActivity"
             android:label="@string/title_activity_session_user"
+            android:screenOrientation="portrait"
             android:theme="@style/SessionTheme"
-            android:windowSoftInputMode="adjustPan"
-            android:screenOrientation="portrait"/>
+            android:windowSoftInputMode="adjustPan" />
         <activity
             android:name=".Social.ChatActivity"
             android:screenOrientation="portrait" />
@@ -65,7 +67,9 @@
         <activity android:name=".Home.ForgotPassword" />
         <activity android:name=".Home.FilterTransactions" />
         <activity android:name=".Home.FaqActivity" />
-        <activity android:name=".Session.ActiveSessionActivity" android:windowSoftInputMode="adjustNothing" />
+        <activity
+            android:name=".Session.ActiveSessionActivity"
+            android:windowSoftInputMode="adjustNothing" />
     </application>
 
 </manifest>

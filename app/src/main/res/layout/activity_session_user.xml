@@ -59,12 +59,12 @@
 
             <fragment
                 android:id="@+id/fragment_menu"
-                android:name="com.alcatraz.admin.project_alcatraz.Session.MenuUserFragment"
+                android:name="com.checkin.app.checkin.Session.MenuUserFragment"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent" />
         </LinearLayout>
 
-        <com.alcatraz.admin.project_alcatraz.Utility.ClipRevealFrame
+        <com.checkin.app.checkin.Utility.ClipRevealFrame
             android:id="@+id/dark_back"
             android:layout_width="match_parent"
             android:layout_height="match_parent"

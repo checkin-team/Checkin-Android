@@ -21,7 +21,7 @@
         android:textColor="#aaaaaa"
         android:textAlignment="center"
         android:textSize="@dimen/font_normal"
-        android:background="@drawable/login_textbox"
+        android:background="@drawable/background_textbox"
         android:paddingRight="@dimen/spacing_normal"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
