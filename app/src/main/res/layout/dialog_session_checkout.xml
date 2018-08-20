@@ -1,0 +1,41 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="257dp"
+    android:background="@drawable/rectangle_7"
+
+    android:layout_height="156.5dp">
+    <TextView
+        android:id="@+id/adduser"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="24dp"
+        android:scaleType="center"
+        android:text="Request for bill?"
+        android:textSize="14sp"
+        android:textColor="#6d6d6d"
+        android:layout_centerHorizontal="true"
+        android:gravity="center"
+        android:contentDescription="@string/app_name" />
+<View
+    android:layout_width="1dp"
+    android:layout_height="1dp"
+    android:layout_centerInParent="true"
+    android:id="@+id/centerhere"/>
+    <ImageView
+        android:id="@+id/confirm"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/adduser"
+        android:layout_marginEnd="5dp"
+        android:layout_toStartOf="@id/centerhere"
+        android:layout_marginTop="32dp"
+        android:src="@drawable/confirm"/>
+    <ImageView
+        android:id="@+id/cancel"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/adduser"
+        android:layout_toEndOf="@id/centerhere"
+        android:layout_marginStart="5dp"
+        android:layout_marginTop="32dp"
+        android:src="@drawable/cancel"/>
+</RelativeLayout>

@@ -64,7 +64,7 @@
 
     <android.support.constraint.ConstraintLayout
         android:layout_width="0dp"
-        android:layout_height="100dp"
+        android:layout_height="80dp"
         android:layout_marginBottom="16dp"
         android:layout_marginStart="8dp"
         android:layout_marginTop="16dp"
@@ -79,10 +79,10 @@
             android:id="@+id/finland"
             android:layout_width="60dp"
             android:layout_height="60dp"
-            android:layout_marginStart="8dp"
+            android:layout_marginEnd="4dp"
             android:src="@drawable/fin"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
         <TextView
@@ -93,9 +93,11 @@
             android:layout_marginStart="8dp"
             android:layout_marginTop="8dp"
             android:text="TAIYAB"
+            android:textColor="#6d6d6d"
+
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toEndOf="@+id/finland"
+            app:layout_constraintEnd_toStartOf="@id/finland"
+            app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintVertical_bias="0.050000012" />
 
@@ -105,10 +107,12 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
             android:text="CheckIn@10:01"
-            android:textSize="8sp"
-            app:layout_constraintEnd_toEndOf="parent"
+            android:textSize="9sp"
+            android:textColor="#6d6d6d"
+
             app:layout_constraintHorizontal_bias="0.35"
-            app:layout_constraintStart_toEndOf="@+id/finland"
+            app:layout_constraintEnd_toStartOf="@id/finland"
+            app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/textView14" />
 
         <TextView
@@ -117,10 +121,11 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
             android:text="Active"
-            android:textSize="10sp"
+            android:textSize="12sp"
             android:textColor="@color/colorPrimaryRed"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toEndOf="@+id/finland"
+
+            app:layout_constraintEnd_toStartOf="@id/finland"
+            app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/textView13" />
     </android.support.constraint.ConstraintLayout>
 

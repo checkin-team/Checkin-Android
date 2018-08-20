@@ -65,7 +65,7 @@
 
             </android.support.design.widget.TabLayout>
 
-            <com.alcatraz.admin.project_alcatraz.Utility.DynamicSwipableViewPager
+            <com.checkin.app.checkin.Utility.DynamicSwipableViewPager
                 android:id="@+id/sub_group_container"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"

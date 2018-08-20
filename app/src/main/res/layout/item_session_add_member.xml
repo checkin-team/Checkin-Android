@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.design.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="wrap_content"
+    android:layout_height="150dp"
+    android:foreground="?android:attr/selectableItemBackground"
+    android:padding="@dimen/spacing_normal">
+
+    <ImageView
+        android:id="@+id/im_add_member"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/ic_member_add"
+        android:layout_gravity="center"/>
+</android.support.design.widget.CoordinatorLayout>
