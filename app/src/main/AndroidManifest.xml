@@ -3,7 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     package="com.checkin.app.checkin">
 
-    <uses-permission android:name="android.permission.CALL_PHONE"/>
+    <uses-permission android:name="android.permission.CALL_PHONE" />
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
@@ -17,10 +17,12 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         tools:replace="android:theme">
-        <activity android:name=".Home.SplashActivity"
-            android:theme="@style/Theme.AppCompat.Light.NoActionBar" >
+        <activity
+            android:name=".Home.SplashActivity"
+            android:theme="@style/Theme.AppCompat.Light.NoActionBar">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
+
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
@@ -31,8 +33,7 @@
         <activity
             android:name=".Home.SignupActivity"
             android:screenOrientation="portrait"
-            android:theme="@style/Theme.AppCompat.Light.NoActionBar">
-        </activity>
+            android:theme="@style/Theme.AppCompat.Light.NoActionBar"></activity>
         <activity
             android:name=".Home.HomeActivity"
             android:label="@string/title_activity_home"
@@ -68,10 +69,11 @@
         <activity android:name=".Home.ForgotPassword" />
         <activity android:name=".Home.FilterTransactions" />
         <activity android:name=".Home.FaqActivity" />
-        <activity android:name=".Profile.ShopProfile.ShopActivity"/>
+        <activity android:name=".Profile.ShopProfile.ShopActivity" />
         <activity
             android:name=".Session.ActiveSessionActivity"
             android:windowSoftInputMode="adjustNothing" />
+        <activity android:name=".Notif.NotifActivity"></activity>
     </application>
 
 </manifest>

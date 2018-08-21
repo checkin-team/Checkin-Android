@@ -7,8 +7,7 @@ import android.arch.lifecycle.ViewModel;
 import android.arch.lifecycle.ViewModelProvider;
 import android.support.annotation.NonNull;
 
-import com.alcatraz.admin.project_alcatraz.Data.Resource;
-import com.alcatraz.admin.project_alcatraz.Utility.Constants;
+import com.checkin.app.checkin.Data.Resource;
 
 import java.util.List;
 

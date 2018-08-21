@@ -1,5 +1,6 @@
 package com.checkin.app.checkin.Profile.ShopProfile;
 
+import android.arch.lifecycle.Observer;
 import android.arch.lifecycle.ViewModelProviders;
 import android.content.Intent;
 import android.net.Uri;
@@ -18,8 +19,8 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.alcatraz.admin.project_alcatraz.Data.Resource;
-import com.alcatraz.admin.project_alcatraz.R;
+import com.checkin.app.checkin.Data.Resource;
+import com.checkin.app.checkin.R;
 
 import java.util.List;
 
@@ -56,17 +57,17 @@ public class ShopHomeFragment extends Fragment implements View.OnClickListener {
         setUp();
         mShopHomeViewModel = ViewModelProviders.of(this, new ShopHomeViewModel.Factory(getActivity().getApplication())).get(ShopHomeViewModel.class);
         mShopHomeViewModel.getShopHomeModel(1).observe(this, shopHomeModel -> {
-            if(shopHomeModel == null) return;
+            if (shopHomeModel == null) return;
             if (shopHomeModel.status == Resource.Status.SUCCESS) {
                 List<ShopHomeModel> shopHomeModelList = shopHomeModel.data;
-                if(shopHomeModelList.size()>0){
+                if (shopHomeModelList.size() > 0) {
                     hotel.setText(shopHomeModelList.get(0).getName());
                 }
                 //TODO complete ordered items
             } else if (shopHomeModel.status == Resource.Status.LOADING) {
                 // LOADING
-            } else{
-                Toast.makeText(getContext(), "Error fetching Shop Home! Status: " +
+            } else {
+                Toast.makeText(ShopHomeFragment.this.getContext(), "Error fetching Shop Home! Status: " +
                         shopHomeModel.status.toString() + "\nDetails: " + shopHomeModel.message, Toast.LENGTH_LONG).show();
             }
         });

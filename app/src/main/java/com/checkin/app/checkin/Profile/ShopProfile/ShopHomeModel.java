@@ -1,10 +1,6 @@
 package com.checkin.app.checkin.Profile.ShopProfile;
 
-import com.google.gson.annotations.SerializedName;
-
-import java.util.Date;
-import java.util.List;
-import java.util.Map;
+import com.fasterxml.jackson.annotation.JsonProperty;
 
 import io.objectbox.annotation.Entity;
 import io.objectbox.annotation.Id;
@@ -20,7 +16,7 @@ public class ShopHomeModel {
     private String bio;
     private boolean active;
     //private List<String> categories;
-    @SerializedName(value = "only_vegetarian") private boolean onlyVegetarian;
+    @JsonProperty(value = "only_vegetarian") private boolean onlyVegetarian;
     private String address;
     //todo location
     private String city;

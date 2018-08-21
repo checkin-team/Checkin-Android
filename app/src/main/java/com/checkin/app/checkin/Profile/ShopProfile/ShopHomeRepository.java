@@ -5,13 +5,13 @@ import android.arch.lifecycle.LiveData;
 import android.content.Context;
 import android.support.annotation.NonNull;
 
-import com.alcatraz.admin.project_alcatraz.Data.ApiClient;
-import com.alcatraz.admin.project_alcatraz.Data.ApiResponse;
-import com.alcatraz.admin.project_alcatraz.Data.AppDatabase;
-import com.alcatraz.admin.project_alcatraz.Data.BaseRepository;
-import com.alcatraz.admin.project_alcatraz.Data.NetworkBoundResource;
-import com.alcatraz.admin.project_alcatraz.Data.Resource;
-import com.alcatraz.admin.project_alcatraz.Data.WebApiService;
+import com.checkin.app.checkin.Data.ApiClient;
+import com.checkin.app.checkin.Data.ApiResponse;
+import com.checkin.app.checkin.Data.AppDatabase;
+import com.checkin.app.checkin.Data.BaseRepository;
+import com.checkin.app.checkin.Data.NetworkBoundResource;
+import com.checkin.app.checkin.Data.Resource;
+import com.checkin.app.checkin.Data.WebApiService;
 
 import java.util.List;
 

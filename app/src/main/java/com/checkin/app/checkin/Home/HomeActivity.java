@@ -33,6 +33,8 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.checkin.app.checkin.Notif.NotifActivity;
+import com.checkin.app.checkin.Profile.ShopProfile.ShopActivity;
 import com.checkin.app.checkin.Profile.ShopProfile.ShopProfileActivity2;
 import com.checkin.app.checkin.R;
 import com.checkin.app.checkin.Session.ActiveSessionActivity;
@@ -420,6 +422,10 @@ public class HomeActivity extends AppCompatActivity
                 break;
             case R.id.nav_shop_activity:
                 intent = new Intent(getApplicationContext(), ShopActivity.class);
+                startActivity(intent);
+                break;
+            case R.id.notif_activity:
+                intent = new Intent(getApplicationContext(), NotifActivity.class);
                 startActivity(intent);
                 break;
 

@@ -30,5 +30,10 @@
             android:name="privacy settings"
             android:icon="@drawable/privacy"
             android:title="Shop Activity" />
+        <item
+            android:id="@+id/notif_activity"
+            android:name="privacy settings"
+            android:icon="@drawable/privacy"
+            android:title="Notif Activity" />
     </group>
 </menu>

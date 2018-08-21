@@ -2,7 +2,6 @@ package com.checkin.app.checkin.Data;
 
 import android.content.Context;
 
-//import com.alcatraz.admin.project_alcatraz.MyObjectBox;
 import com.checkin.app.checkin.Profile.ShopProfile.ShopHomeModel;
 import com.checkin.app.checkin.MyObjectBox;
 import com.checkin.app.checkin.Session.ItemCustomizationField;

@@ -48,4 +48,8 @@
     <dimen name="menuItemText">24sp</dimen>
     <dimen name="itemCustomizationGroupText">21sp</dimen>
     <dimen name="itemCustomizationFieldText">18sp</dimen>
+
+    <!--Notification-->
+    <dimen name="notif_heading_padding">10dp</dimen>
+    <dimen name="notif_heading_size">18sp</dimen>
 </resources>

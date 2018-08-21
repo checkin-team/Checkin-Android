@@ -1,15 +1,14 @@
 package com.checkin.app.checkin.Profile.ShopProfile;
 
+import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
 import android.widget.Toast;
 
-import com.alcatraz.admin.project_alcatraz.Data.Resource;
-import com.alcatraz.admin.project_alcatraz.R;
+import com.checkin.app.checkin.R;
 
 import java.util.ArrayList;
 import java.util.List;

@@ -72,5 +72,9 @@
     <string name="title_activity_signup">SignupActivity</string>
     <string name="btn_cancel">Cancel</string>
     <string name="item_non_cancelable">Non-Cancelable</string>
->>>>>>> master
+
+    <!--notification-->
+    <string name="notif_appbar_title">NOTIFICATIOS</string>
+    <string name="notif_heading_unseen">New</string>
+    <string name="notif_heading_seen">Seen</string>
 </resources>
