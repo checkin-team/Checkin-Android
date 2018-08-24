@@ -67,4 +67,6 @@
     <string name="title_activity_signup">SignupActivity</string>
     <string name="btn_cancel">Cancel</string>
     <string name="item_non_cancelable">Non-Cancelable</string>
+    <string name="title_activity_shop_login">ShopLogin</string>
+    <string name="title_activity_shop_create_account">ShopCreateAccount</string>
 </resources>

@@ -16,10 +16,12 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         tools:replace="android:theme">
-        <activity android:name=".Home.SplashActivity"
-            android:theme="@style/Theme.AppCompat.Light.NoActionBar" >
+        <activity
+            android:name=".Home.SplashActivity"
+            android:theme="@style/Theme.AppCompat.Light.NoActionBar">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
+
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
@@ -30,8 +32,7 @@
         <activity
             android:name=".Home.SignupActivity"
             android:screenOrientation="portrait"
-            android:theme="@style/Theme.AppCompat.Light.NoActionBar">
-        </activity>
+            android:theme="@style/Theme.AppCompat.Light.NoActionBar" />
         <activity
             android:name=".Home.HomeActivity"
             android:label="@string/title_activity_home"
@@ -70,6 +71,12 @@
         <activity
             android:name=".Session.ActiveSessionActivity"
             android:windowSoftInputMode="adjustNothing" />
+        <activity android:name=".Shop.SignUpIntro"
+            android:screenOrientation="portrait"
+            android:theme="@style/Theme.AppCompat.Light"
+          >
+
+        </activity>
     </application>
 
 </manifest>

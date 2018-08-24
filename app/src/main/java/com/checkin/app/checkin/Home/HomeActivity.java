@@ -38,6 +38,7 @@ import com.checkin.app.checkin.R;
 import com.checkin.app.checkin.Session.ActiveSessionActivity;
 import com.checkin.app.checkin.Session.SessionUserActivity;
 import com.checkin.app.checkin.Shop.Shop;
+import com.checkin.app.checkin.Shop.SignUpIntro;
 import com.checkin.app.checkin.Social.ChatActivity;
 import com.checkin.app.checkin.Social.ChatAdapter;
 import com.checkin.app.checkin.Social.MessageViewModel;
@@ -87,6 +88,9 @@ public class HomeActivity extends AppCompatActivity
     TextView tvShopsCategory;
     @BindView(R.id.im_shop_category_back)
     ImageView imShopsCategoryBack;
+
+    @BindView(R.id.action_delivery)
+    TextView testingViewPager;
 
     private UserViewModel mUserViewModel;
     private MessageViewModel mMessageViewModel;
@@ -526,6 +530,13 @@ public class HomeActivity extends AppCompatActivity
     @OnClick(R.id.action_dine_in)
     public  void dine_in(View v){
         startActivity(new Intent(this,ActiveSessionActivity.class));
+    }
+
+
+    @OnClick(R.id.action_delivery)
+            public void delivery(View v)
+    {
+        startActivity(new Intent(this, SignUpIntro.class));
     }
 
 }

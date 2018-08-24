@@ -48,4 +48,5 @@
     <dimen name="menuItemText">24sp</dimen>
     <dimen name="itemCustomizationGroupText">21sp</dimen>
     <dimen name="itemCustomizationFieldText">18sp</dimen>
+    <dimen name="fab_margin">16dp</dimen>
 </resources>
