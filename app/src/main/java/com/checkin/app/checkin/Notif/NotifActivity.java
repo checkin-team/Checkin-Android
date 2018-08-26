@@ -1,7 +1,12 @@
 package com.checkin.app.checkin.Notif;
 
+import android.app.NotificationManager;
+import android.content.BroadcastReceiver;
 import android.content.Context;
+import android.content.Intent;
+import android.content.IntentFilter;
 import android.support.annotation.NonNull;
+import android.support.v4.content.LocalBroadcastManager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
@@ -33,6 +38,7 @@ public class NotifActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_notif);
+        LocalBroadcastManager.getInstance(this).registerReceiver(mHandler,new IntentFilter("new notification"));
         ButterKnife.bind(this);
         notifRV.setLayoutManager(new LinearLayoutManager(getApplicationContext()));
         notifRV.setAdapter(new NotifAdapter(getNotifs()));
@@ -148,5 +154,26 @@ public class NotifActivity extends AppCompatActivity {
         notifsForDisplay.addAll(unseenNotifs);
         notifsForDisplay.addAll(seenNotifs);
         return notifsForDisplay;
+    }
+
+    private BroadcastReceiver mHandler=new BroadcastReceiver() {
+        @Override
+        public void onReceive(Context context, Intent intent) {
+
+            String actionCode=intent.getStringExtra("Action Code");
+
+            String message =intent.getStringExtra("message");
+            Toast.makeText(getApplicationContext(),message + ", ACTTIONCODE = " + actionCode,Toast.LENGTH_LONG).show();
+
+            NotificationManager notificationManager =(NotificationManager)getSystemService(Context.NOTIFICATION_SERVICE);
+            notificationManager.cancelAll();
+
+        }
+    };
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        LocalBroadcastManager.getInstance(this).unregisterReceiver(mHandler);
     }
 }

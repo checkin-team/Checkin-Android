@@ -15,6 +15,7 @@ public class Constants {
     public static final String SP_USER_ID = "user_id";
     public static final String SP_LOGIN_TOKEN = "token";
     public static final String SP_CHECKED_IN = "checked_in";
+    public static final String SP_DEVICE_TOKEN = "device_token";
 
     public static final String EXTRA_SELECTED_USER_ID = "extra_selected_user_id";
 
@@ -28,5 +29,10 @@ public class Constants {
 
     public static final long DEFAULT_ORDER_CANCEL_DURATION = MILLISECONDS.convert(3, MINUTES);
 
+    public static final String CHANNEL_ID="myChannelId";
+
+    public static final String CHANNEL_NAME="myChannelName";
+    public static final String CHANNEL_DESCRIPTION="my description";
+    public static final String FCM_ACTION_CODE = "ACTION_CODE";
     private Constants() {}
 }

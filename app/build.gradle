@@ -37,6 +37,7 @@ dependencies {
     implementation 'com.android.support:appcompat-v7:27.1.1'
     implementation 'com.android.support.constraint:constraint-layout:1.1.2'
     implementation 'com.android.support:support-v4:27.1.1'
+    //noinspection GradleCompatible
     implementation 'com.google.firebase:firebase-core:16.0.1'
     implementation 'com.google.firebase:firebase-messaging:17.3.0'
     testImplementation 'junit:junit:4.12'
@@ -97,7 +98,7 @@ dependencies {
     implementation 'com.jsibbold:zoomage:1.1.0'
 
     //page indication view
-    compile 'com.romandanylyk:pageindicatorview:1.0.1@aar'
+    implementation 'com.romandanylyk:pageindicatorview:1.0.1@aar'
 }
 
 apply plugin: 'com.google.gms.google-services'
