@@ -3,6 +3,7 @@ package com.alcatraz.admin.project_alcatraz.Data;
 import android.content.Context;
 
 import com.alcatraz.admin.project_alcatraz.MyObjectBox;
+import com.alcatraz.admin.project_alcatraz.Profile.ShopProfile.ReviewsItem;
 import com.alcatraz.admin.project_alcatraz.Session.ItemCustomizationField;
 import com.alcatraz.admin.project_alcatraz.Session.ItemCustomizationGroup;
 import com.alcatraz.admin.project_alcatraz.Session.MenuGroup;
@@ -60,5 +61,9 @@ public class AppDatabase {
 
     public static Box<Chat> getChatModel(final Context context) {
         return getBoxStore(context).boxFor(Chat.class);
+    }
+
+    public static Box<ReviewsItem> getReviewsModel(Context context){
+        return getBoxStore(context).boxFor(ReviewsItem.class);
     }
 }

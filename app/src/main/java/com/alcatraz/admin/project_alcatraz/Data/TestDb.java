@@ -3,6 +3,8 @@ package com.alcatraz.admin.project_alcatraz.Data;
 import android.content.Context;
 import android.util.Log;
 
+import com.alcatraz.admin.project_alcatraz.Profile.ShopProfile.ReviewsItem;
+import com.alcatraz.admin.project_alcatraz.R;
 import com.alcatraz.admin.project_alcatraz.Session.ItemCustomizationField;
 import com.alcatraz.admin.project_alcatraz.Session.ItemCustomizationGroup;
 import com.alcatraz.admin.project_alcatraz.Session.MenuGroup;
@@ -20,6 +22,7 @@ public class TestDb {
         Log.e("TestData", "Populating...");
         populateUsers(AppDatabase.getUserModel(context));
         populateMenu(AppDatabase.getMenuItemCustFieldModel(context),AppDatabase.getMenuItemCustGroupModel(context),AppDatabase.getMenuItemModel(context), AppDatabase.getMenuGroupModel(context));
+        populateReviews(AppDatabase.getReviewsModel(context));
     }
 
     private static void populateMenu(Box<ItemCustomizationField> itemCustomizationFieldModel,Box<ItemCustomizationGroup> itemCustomizationGroupModel,Box<MenuItem> menuItemModel, Box<MenuGroup> menuGroupModel) {
@@ -113,5 +116,11 @@ public class TestDb {
         User user3 = new User("Monica", "");
         User user4 = new User("Jack", "");
         userModel.put(user3, user4);
+    }
+    private static void populateReviews(Box<ReviewsItem> users){
+        String review="Hello I am awesome\nSoAwesome\nSo Awesome\nVery Awesome\nSee for yourself";
+        users.put(new ReviewsItem(0,"","","","",""));
+        for(int i=0;i<10;i++)
+            users.put(new ReviewsItem(R.drawable.water,"Ishu Dohare"+i,"86 Reviews,332 Folowers","5 days ago","5",review));
     }
 }

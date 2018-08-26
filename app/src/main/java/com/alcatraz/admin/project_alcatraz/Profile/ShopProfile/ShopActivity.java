@@ -1,22 +1,31 @@
 package com.alcatraz.admin.project_alcatraz.Profile.ShopProfile;
 
+import android.arch.lifecycle.Observer;
+import android.arch.lifecycle.ViewModelProvider;
+import android.arch.lifecycle.ViewModelProviders;
+import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.widget.Toast;
 
+import com.alcatraz.admin.project_alcatraz.Data.AppDatabase;
+import com.alcatraz.admin.project_alcatraz.Data.Resource;
+import com.alcatraz.admin.project_alcatraz.MyObjectBox;
 import com.alcatraz.admin.project_alcatraz.R;
 
 import java.util.ArrayList;
 import java.util.List;
 
+import io.objectbox.Box;
 import it.sephiroth.android.library.bottomnavigation.BottomNavigation;
 
 public class ShopActivity extends AppCompatActivity {
-
     ViewPager viewPager;
     BottomNavigation bottomNavigation;
 
@@ -56,8 +65,36 @@ public class ShopActivity extends AppCompatActivity {
 
             }
         });
+        setUpNavigation();
     }
+    void setUpNavigation()
+    {
 
+        RecyclerView rv=findViewById(R.id.reviews_recycler);
+        rv.setLayoutManager(new LinearLayoutManager(this,LinearLayoutManager.VERTICAL,false));
+        ReviewsViewModel model=ViewModelProviders.of(this).get(ReviewsViewModel.class);
+        model.getReviewsItemLiveData().observe(this,reviewsModel->{
+            if(reviewsModel == null) return;
+            if (reviewsModel.status == Resource.Status.SUCCESS) {
+                rv.setAdapter(new AdapterReview(reviewsModel.data));
+            } else
+                if (reviewsModel.status == Resource.Status.LOADING) {
+                // LOADING
+            } else{
+                Toast.makeText(this, "Error In getting Reviews", Toast.LENGTH_SHORT).show();
+            }
+
+                });
+        /*model.getReviewsItemLiveData().observe(this, new Observer<Resource<List<ReviewsItem>>>() {
+
+            @Override
+            public void onChanged(@Nullable Resource<List<ReviewsItem>> reviewsItems) {
+                rv.setAdapter(new AdapterReview(reviewsItems));
+                rv.getAdapter().notifyDataSetChanged();
+            }
+        });*/
+
+    }
     private class ShopViewPager extends FragmentPagerAdapter {
 
         List<Fragment> fragments;
@@ -80,4 +117,7 @@ public class ShopActivity extends AppCompatActivity {
             return fragments.size();
         }
     }
+
+    //Temporary Workthrough
+
 }

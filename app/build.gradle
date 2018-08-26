@@ -87,4 +87,8 @@ dependencies {
 
     //page indication view
     compile 'com.romandanylyk:pageindicatorview:1.0.1@aar'
+    //read more
+
+    compile 'com.borjabravo:readmoretextview:2.1.0'
+
 }

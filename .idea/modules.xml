@@ -6,7 +6,8 @@
       <module fileurl="file://$PROJECT_DIR$/library/MaterialChipView/MaterialChipView.iml" filepath="$PROJECT_DIR$/library/MaterialChipView/MaterialChipView.iml" />
       <module fileurl="file://$PROJECT_DIR$/library/MaterialSearchView/MaterialSearchView.iml" filepath="$PROJECT_DIR$/library/MaterialSearchView/MaterialSearchView.iml" />
       <module fileurl="file://$PROJECT_DIR$/library/NiceSpinner/NiceSpinner.iml" filepath="$PROJECT_DIR$/library/NiceSpinner/NiceSpinner.iml" />
-      <module fileurl="file://I:\Check-Out\Project_Alcatraz.iml" filepath="I:\Check-Out\Project_Alcatraz.iml" />
+      <module fileurl="file://$PROJECT_DIR$/Project_Alcatraz.iml" filepath="$PROJECT_DIR$/Project_Alcatraz.iml" />
+      <module fileurl="file://I:/Check-Out/Project_Alcatraz.iml" filepath="I:/Check-Out/Project_Alcatraz.iml" />
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
       <module fileurl="file://$PROJECT_DIR$/library/library.iml" filepath="$PROJECT_DIR$/library/library.iml" />
     </modules>
