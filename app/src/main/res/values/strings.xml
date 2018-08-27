@@ -12,8 +12,9 @@
     <string name="title_activity_shop">shop</string>
     <string name="menu_layout_title">Menu</string>
     <string name="menu_layout_items_count">Number of items:</string>
-    <string name="menu_layout_total_price">Total price:</string>
+    <string name="menu_layout_total_price">Total cost:</string>
     <string name="layout_button_done">Finish</string>
+    <string name="username"><font color="#af1014">Enter Username</font></string>
 
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="title_activity_session_user">SessionUserActivity</string>
@@ -31,10 +32,10 @@
 
     <!--for bottomnav bar-->
 
-    <!-- value for the phone mode menu -->
+    <!-- value for the phone mode btn_menu -->
     <string name="bbn_phone_view_behavior" translatable="false" tools:ignore="UnusedResources">it.sephiroth.android.library.bottomnavigation.BottomBehavior</string>
 
-    <!-- behavior for the tablet mode menu -->
+    <!-- behavior for the tablet mode btn_menu -->
     <string name="bbn_tablet_view_behavior" translatable="false" tools:ignore="UnusedResources">it.sephiroth.android.library.bottomnavigation.TabletBehavior</string>
 
     <!-- this is the default value -->
@@ -67,4 +68,13 @@
     <!--shopProfile-->
     <string name="shop_profile_about_cusine">"C\nU\nS\nI\nN\nE\n&gt;"</string>
     <string name="shop_profile_about_review">"R\nE\nV\nI\nE\nW\n&lt;"</string>
+
+    <string name="title_activity_signup">SignupActivity</string>
+    <string name="btn_cancel">Cancel</string>
+    <string name="item_non_cancelable">Non-Cancelable</string>
+
+    <!--notification-->
+    <string name="notif_appbar_title">NOTIFICATIOS</string>
+    <string name="notif_heading_unseen">New</string>
+    <string name="notif_heading_seen">Seen</string>
 </resources>

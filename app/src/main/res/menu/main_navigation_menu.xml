@@ -11,7 +11,8 @@
         <item
             android:id="@+id/nav_faq"
             android:icon="@android:drawable/ic_menu_help"
-            android:title="FAQ" />
+            android:name="FAQ"
+            android:title="FAQ"/>
     </group>
     <group>
         <item
@@ -29,5 +30,10 @@
             android:name="privacy settings"
             android:icon="@drawable/privacy"
             android:title="Shop Activity" />
+        <item
+            android:id="@+id/notif_activity"
+            android:name="privacy settings"
+            android:icon="@drawable/privacy"
+            android:title="Notif Activity" />
     </group>
 </menu>

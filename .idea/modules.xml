@@ -2,12 +2,15 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
+      <module fileurl="file://I:\Check-Out\Check-In.iml" filepath="I:\Check-Out\Check-In.iml" />
       <module fileurl="file://$PROJECT_DIR$/Check-Out.iml" filepath="$PROJECT_DIR$/Check-Out.iml" />
-      <module fileurl="file://$PROJECT_DIR$/library/MaterialChipView/MaterialChipView.iml" filepath="$PROJECT_DIR$/library/MaterialChipView/MaterialChipView.iml" />
       <module fileurl="file://$PROJECT_DIR$/library/MaterialSearchView/MaterialSearchView.iml" filepath="$PROJECT_DIR$/library/MaterialSearchView/MaterialSearchView.iml" />
       <module fileurl="file://$PROJECT_DIR$/library/NiceSpinner/NiceSpinner.iml" filepath="$PROJECT_DIR$/library/NiceSpinner/NiceSpinner.iml" />
+<<<<<<< HEAD
       <module fileurl="file://$PROJECT_DIR$/Project_Alcatraz.iml" filepath="$PROJECT_DIR$/Project_Alcatraz.iml" />
       <module fileurl="file://I:/Check-Out/Project_Alcatraz.iml" filepath="I:/Check-Out/Project_Alcatraz.iml" />
+=======
+>>>>>>> bhavik
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
       <module fileurl="file://$PROJECT_DIR$/library/library.iml" filepath="$PROJECT_DIR$/library/library.iml" />
     </modules>

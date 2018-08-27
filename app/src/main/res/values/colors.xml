@@ -34,7 +34,10 @@
     <color name="brownish_grey">#6d6d6d</color>
     <color name="pinkish_grey">#bebebe</color>
     <color name="translucent_pinkish_grey">#5ebebebe</color>
+    <color name="translucent_black">#aa000000</color>
     <color name="dark_back_filter">#ab000000</color>
+    <color name="shadow_gradient">#20000000</color>
+    <color name="translucent_half_black">#80000000</color>
 
     <array name="array_dot_active">
         <item>@color/dot_light_screen1</item>

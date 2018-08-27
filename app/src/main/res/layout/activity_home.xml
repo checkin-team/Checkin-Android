@@ -220,7 +220,7 @@
 
         </LinearLayout>
 
-        <com.alcatraz.admin.project_alcatraz.Utility.ClipRevealFrame
+        <com.checkin.app.checkin.Utility.ClipRevealFrame
             android:id="@+id/dark_back_reveal"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
@@ -269,7 +269,7 @@
 
             </FrameLayout>
 
-        </com.alcatraz.admin.project_alcatraz.Utility.ClipRevealFrame>
+        </com.checkin.app.checkin.Utility.ClipRevealFrame>
 
         <ImageView
             android:id="@+id/fab_home_add"
