@@ -67,4 +67,8 @@
     <string name="title_activity_signup">SignupActivity</string>
     <string name="btn_cancel">Cancel</string>
     <string name="item_non_cancelable">Non-Cancelable</string>
+    <string name="title_add_member">You are with?</string>
+    <string name="help">Help</string>
+    <string name="title_checkin_privacy">Mark Your Presence</string>
+    <string name="finish">done</string>
 </resources>

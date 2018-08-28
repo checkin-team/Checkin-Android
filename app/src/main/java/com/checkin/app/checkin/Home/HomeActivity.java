@@ -5,10 +5,12 @@ import android.animation.AnimatorListenerAdapter;
 import android.animation.AnimatorSet;
 import android.animation.ValueAnimator;
 import android.annotation.SuppressLint;
+import android.arch.lifecycle.Observer;
 import android.arch.lifecycle.ViewModelProviders;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import android.support.design.widget.NavigationView;
 import android.support.transition.Slide;
 import android.support.v4.app.Fragment;
@@ -33,14 +35,17 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.checkin.app.checkin.Data.Resource;
+import com.checkin.app.checkin.Menu.SessionUserActivity;
+import com.checkin.app.checkin.Misc.FaqActivity;
 import com.checkin.app.checkin.Profile.ShopProfile.ShopProfileActivity2;
 import com.checkin.app.checkin.R;
 import com.checkin.app.checkin.Session.ActiveSessionActivity;
-import com.checkin.app.checkin.Session.SessionUserActivity;
 import com.checkin.app.checkin.Shop.Shop;
 import com.checkin.app.checkin.Social.ChatActivity;
 import com.checkin.app.checkin.Social.ChatAdapter;
 import com.checkin.app.checkin.Social.MessageViewModel;
+import com.checkin.app.checkin.User.UserProfileActivity;
 import com.checkin.app.checkin.User.UserViewModel;
 import com.checkin.app.checkin.Utility.ClipRevealFrame;
 import com.checkin.app.checkin.Utility.Constants;
@@ -48,6 +53,8 @@ import com.checkin.app.checkin.Utility.DragTouchListener;
 import com.checkin.app.checkin.Utility.EndDrawerToggle;
 import com.checkin.app.checkin.Utility.ItemClickSupport;
 import com.checkin.app.checkin.Utility.Util;
+import com.fasterxml.jackson.databind.JsonNode;
+import com.fasterxml.jackson.databind.node.ObjectNode;
 import com.google.zxing.integration.android.IntentIntegrator;
 import com.google.zxing.integration.android.IntentResult;
 
@@ -90,6 +97,7 @@ public class HomeActivity extends AppCompatActivity
 
     private UserViewModel mUserViewModel;
     private MessageViewModel mMessageViewModel;
+    private HomeViewModel mHomeViewModel;
     private ChatAdapter mChatAdapter;
     private TrendingShopAdapter mTrendingShopAdapter;
     private UserActivityAdapter mUserActivityAdapter;
@@ -104,11 +112,28 @@ public class HomeActivity extends AppCompatActivity
 
         mUserViewModel = ViewModelProviders.of(this, new UserViewModel.Factory(getApplication())).get(UserViewModel.class);
         mMessageViewModel = ViewModelProviders.of(this, new MessageViewModel.Factory(getApplication())).get(MessageViewModel.class);
+        mHomeViewModel = ViewModelProviders.of(this, new HomeViewModel.Factory(getApplication())).get(HomeViewModel.class);
 
         setupUiStuff();
         setupTrendingShops();
         setupUserActivities();
         setupMessages();
+
+        mHomeViewModel.getObservableData().observe(this, resource -> {
+            if (resource == null)   return;
+            switch (resource.status) {
+                case SUCCESS: {
+                    ObjectNode data = resource.data;
+                    JsonNode detail = data.get("detail");
+                    SessionUserActivity.startSession(this, detail.get("shop_id").asLong(0), detail.get("qr_id").asInt(0));
+                    break;
+                }
+
+                default: {
+                    Log.e(TAG, "status: " + resource.status + ", message: " + resource.message);
+                }
+            }
+        });
     }
 
     @SuppressLint("ClickableViewAccessibility")
@@ -430,14 +455,7 @@ public class HomeActivity extends AppCompatActivity
             if (result.getContents() == null) {
                 // cancelled operation
             } else {
-                String requestJson = String.format("{\"data\": %s}", result.getContents());
-                String response = Util.postApi(Constants.API_URL_DECRYPT_QR, requestJson);
-                try {
-                    JSONObject object = new JSONObject(response);
-                    SessionUserActivity.startSession(this, object.getInt("shop_id"), object.getInt("qr_id"));
-                } catch (JSONException e) {
-                    Toast.makeText(this, "Invalid QR!", Toast.LENGTH_SHORT).show();
-                }
+                mHomeViewModel.decryptQr(result.getContents());
             }
         } else {
             super.onActivityResult(requestCode, resultCode, data);
@@ -482,10 +500,8 @@ public class HomeActivity extends AppCompatActivity
 
         Animator rotateAnim = Util.createRotationAnimator(fabHomeAdd, -225);
         animList.add(rotateAnim);
-        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.LOLLIPOP) {
-            Animator tintAnim = Util.createTintAnimator(fabHomeAdd, 0, getResources().getColor(R.color.white));
-            animList.add(tintAnim);
-        }
+        Animator tintAnim = Util.createTintAnimator(fabHomeAdd, 0, getResources().getColor(R.color.white));
+        animList.add(tintAnim);
 
         AnimatorSet animatorSet = new AnimatorSet();
         animatorSet.playTogether(animList);
@@ -505,7 +521,7 @@ public class HomeActivity extends AppCompatActivity
         Animator rotateAnim = Util.createRotationAnimator(fabHomeAdd, 0);
         animList.add(rotateAnim);
         if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.LOLLIPOP) {
-            Animator tintAnim = Util.createTintAnimator(fabHomeAdd, 0, getResources().getColor(R.color.colorPrimaryRed));
+            Animator tintAnim = Util.createTintAnimator(fabHomeAdd, 0, getResources().getColor(R.color.color_primary_red));
             animList.add(tintAnim);
         }
 

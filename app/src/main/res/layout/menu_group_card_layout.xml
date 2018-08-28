@@ -65,12 +65,10 @@
 
             </android.support.design.widget.TabLayout>
 
-            <com.checkin.app.checkin.Utility.DynamicSwipableViewPager
-                android:id="@+id/sub_group_container"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                app:layout_behavior="@string/appbar_scrolling_view_behavior" />
-
+                <com.checkin.app.checkin.Utility.DynamicSwipableViewPager
+                    android:id="@+id/sub_group_container"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content" />
         </LinearLayout>
 
     </FrameLayout>

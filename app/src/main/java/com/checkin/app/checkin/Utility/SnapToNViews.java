@@ -21,18 +21,15 @@ public class SnapToNViews extends StartSnapHelper {
     @Override
     public void attachToRecyclerView(@NonNull final RecyclerView recyclerView)
             throws IllegalStateException {
-        recyclerView.setOnTouchListener(new View.OnTouchListener() {
-            @Override
-            public boolean onTouch(View view, MotionEvent motionEvent) {
-                switch(motionEvent.getAction()) {
-                    case MotionEvent.ACTION_DOWN:
-                        setOrigPos((LinearLayoutManager) recyclerView.getLayoutManager());
-                        break;
-                    default:
-                        break;
-                }
-                return false;
+        recyclerView.setOnTouchListener((view, motionEvent) -> {
+            switch(motionEvent.getAction()) {
+                case MotionEvent.ACTION_DOWN:
+                    setOrigPos((LinearLayoutManager) recyclerView.getLayoutManager());
+                    break;
+                default:
+                    break;
             }
+            return false;
         });
         super.attachToRecyclerView(recyclerView);
     }

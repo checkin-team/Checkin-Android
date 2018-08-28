@@ -7,12 +7,12 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.checkin.app.checkin.Menu.OrderedItemModel;
 import com.checkin.app.checkin.R;
 
 import butterknife.BindView;
@@ -48,7 +48,7 @@ public class ActiveSessionOrdersFragment extends Fragment implements ActiveSessi
 
         view.setOnTouchListener((v, event) -> {
             if (event.getAction() == MotionEvent.ACTION_DOWN) {
-                getActivity().getSupportFragmentManager().beginTransaction().remove(this).commit();
+                getActivity().getSupportFragmentManager().popBackStack();
             }
             return true;
         });

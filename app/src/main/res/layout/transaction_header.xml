@@ -52,7 +52,7 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="24dp"
         android:layout_marginTop="16dp"
-        android:textColor="@color/colorPrimaryRed"
+        android:textColor="@color/color_primary_red"
         android:text="Add money to Check-In wallet"
         android:textSize="18sp"
         app:layout_constraintStart_toStartOf="parent"

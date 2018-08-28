@@ -46,7 +46,7 @@ public class SnapToBlock extends SnapHelper {
     // When snapping, used to determine direction of snap.
     private int mPriorFirstPosition = RecyclerView.NO_POSITION;
 
-    // Our private_deselected scroller
+    // Our btn_private_deselected scroller
     private Scroller mScroller;
 
     // Horizontal/vertical layout helper

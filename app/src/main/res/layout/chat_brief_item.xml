@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="100dp"
     android:id="@+id/root_view"
-    android:background="@drawable/bordered_card"
+    android:background="@drawable/bordered_card_white"
     android:elevation="@dimen/card_elevation"
     android:foreground="?android:selectableItemBackgroundBorderless"
     android:layout_margin="@dimen/spacing_tiny"

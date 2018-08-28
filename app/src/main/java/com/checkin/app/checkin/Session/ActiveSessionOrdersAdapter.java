@@ -11,6 +11,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
 
+import com.checkin.app.checkin.Menu.OrderedItemModel;
 import com.checkin.app.checkin.R;
 import com.transitionseverywhere.Slide;
 import com.transitionseverywhere.Transition;

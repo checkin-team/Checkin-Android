@@ -13,6 +13,7 @@ import android.util.Log;
 public abstract class NetworkBoundResource<ResultType, RequestType> {
     private final static String TAG = NetworkBoundResource.class.getSimpleName();
     private final MediatorLiveData<Resource<ResultType>> mResult = new MediatorLiveData<>();
+    private Object val;
 
     @MainThread
     public NetworkBoundResource() {
@@ -133,5 +134,13 @@ public abstract class NetworkBoundResource<ResultType, RequestType> {
     // in the base class.
     public LiveData<Resource<ResultType>> getAsLiveData() {
         return mResult;
+    }
+
+    public void setVal(Object val) {
+        this.val = val;
+    }
+
+    public Object getVal() {
+        return val;
     }
 }

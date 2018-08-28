@@ -6,7 +6,7 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:orientation="vertical"
-    tools:context=".Home.SignupPhoneFragment">
+    tools:context=".Auth.SignupPhoneFragment">
 
     <EditText
         android:id="@+id/ed_phone"

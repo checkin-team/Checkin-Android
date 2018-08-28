@@ -58,7 +58,7 @@ public class Resource<T> {
 
     public static <T> Resource<T> createResource(@NonNull ApiResponse<T> apiResponse) {
         Resource<T> resource;
-        if (apiResponse.isSuccessful()) {
+        if (apiResponse.isSuccessful() && apiResponse.getData() != null) {
             resource = success(apiResponse.getData());
         } else if (apiResponse.getErrorThrowable() != null) {
             if (apiResponse.getErrorThrowable() instanceof NoConnectivityException) {

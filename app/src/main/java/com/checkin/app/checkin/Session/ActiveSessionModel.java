@@ -1,5 +1,6 @@
 package com.checkin.app.checkin.Session;
 
+import com.checkin.app.checkin.Menu.OrderedItemModel;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 import java.util.List;

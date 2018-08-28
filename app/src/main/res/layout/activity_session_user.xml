@@ -28,7 +28,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:layout_gravity="top"
-                    android:background="@color/colorPrimaryRed"
+                    android:background="@color/color_primary_red"
                     app:layout_scrollFlags="snap"
                     app:popupTheme="@style/PopupOverlay"
                     app:contentInsetEnd="0dp"
@@ -52,17 +52,11 @@
         </android.support.design.widget.AppBarLayout>
 
         <LinearLayout
+            android:id="@+id/container_menu"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:orientation="vertical"
-            android:layout_marginTop="?android:attr/actionBarSize">
-
-            <fragment
-                android:id="@+id/fragment_menu"
-                android:name="com.checkin.app.checkin.Session.MenuUserFragment"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent" />
-        </LinearLayout>
+            android:layout_marginTop="?android:attr/actionBarSize" />
 
         <com.checkin.app.checkin.Utility.ClipRevealFrame
             android:id="@+id/dark_back"
@@ -105,14 +99,10 @@
             android:src="@drawable/ic_filter" />
 
         <FrameLayout
-            android:id="@+id/customizationRoot"
+            android:id="@+id/container_customization"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_gravity="bottom"
-            android:translationY="400dp"
-            android:visibility="gone">
-
-        </FrameLayout>
+            android:layout_height="400dp"
+            android:layout_gravity="bottom" />
 
     </FrameLayout>
 
@@ -145,7 +135,7 @@
             android:layout_gravity="bottom"
             android:text="Proceed"
             android:textSize="@dimen/font_large"
-            android:background="@color/colorPrimaryRed"
+            android:background="@color/color_primary_red"
             android:textColor="@color/white"
             android:fontFamily="@font/arial_rounded_mt_bold"/>
 

@@ -30,7 +30,7 @@
     <color name="transparent">#00000000</color>
 
     <!-- Color Palette -->
-    <color name="colorPrimaryRed">#af1014</color>
+    <color name="color_primary_red">#af1014</color>
     <color name="brownish_grey">#6d6d6d</color>
     <color name="pinkish_grey">#bebebe</color>
     <color name="translucent_pinkish_grey">#5ebebebe</color>
@@ -38,6 +38,7 @@
     <color name="dark_back_filter">#ab000000</color>
     <color name="shadow_gradient">#20000000</color>
     <color name="translucent_half_black">#80000000</color>
+    <color name="warm_grey">#979797</color>
 
     <array name="array_dot_active">
         <item>@color/dot_light_screen1</item>
@@ -54,11 +55,4 @@
     </array>
 
     <color name="insightscardcolor">#59e9e4e4</color>
-
-    <!--MenuItemLayout-->
-    <color name="menuItemText">#af1216</color>
-    <color name="menuItemTypeCostText">#000000</color>
-    <color name="itemCustomizationGroupText">#ffffff</color>
-    <color name="itemCustomizationFieldText">#ffffff</color>
-    <color name="theme_dark">#af1216</color>
 </resources>

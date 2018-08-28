@@ -7,7 +7,7 @@
     android:layout_height="@dimen/height_list_card"
     android:layout_marginEnd="@dimen/spacing_small"
     app:cardCornerRadius="@dimen/card_corner_radius"
-    android:background="@drawable/bordered_card">
+    android:background="@drawable/bordered_card_white">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -27,7 +27,7 @@
             android:layout_gravity="center_horizontal|bottom"
             tools:text="DUMMY"
             android:id="@+id/shop_name"
-            android:textColor="@color/colorPrimaryRed"
+            android:textColor="@color/color_primary_red"
             android:textSize="13sp" />
 
         <TextView

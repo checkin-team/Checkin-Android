@@ -1,46 +1,45 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:id="@+id/field"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    xmlns:tools="http://schemas.android.com/tools"
     android:gravity="center_vertical"
     android:orientation="horizontal"
-    android:padding="8dp">
+    android:padding="@dimen/spacing_small">
 
     <ImageView
-        android:id="@+id/type"
-        android:layout_width="20dp"
-        android:layout_height="20dp"
-        android:layout_weight="0"
-        app:srcCompat="@drawable/vegetarian" />
+        android:id="@+id/im_field_type"
+        android:layout_width="@dimen/size_small_icon"
+        android:layout_height="@dimen/size_small_icon"
+        android:src="@drawable/ic_veg" />
 
     <TextView
-        android:id="@+id/name"
+        android:id="@+id/tv_field_name"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="8dp"
         android:layout_weight="1"
-        android:text="Pizza crust blabla"
-        android:textColor="@color/itemCustomizationFieldText"
-        android:textSize="@dimen/itemCustomizationFieldText" />
+        android:layout_marginStart="@dimen/spacing_small"
+        tools:text="Pizza crust"
+        android:textColor="@color/white"
+        android:textSize="@dimen/font_normal" />
 
     <TextView
-        android:id="@+id/cost"
+        android:id="@+id/tv_field_cost"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="8dp"
+        android:layout_marginStart="@dimen/spacing_small"
         android:layout_weight="0"
-        android:text="Rs. 345"
-        android:textColor="@color/itemCustomizationFieldText"
-        android:textSize="@dimen/itemCustomizationFieldText" />
+        tools:text="345"
+        android:drawableStart="@drawable/ic_rupee"
+        android:textColor="@color/white"
+        android:textSize="@dimen/font_normal" />
 
     <CheckBox
         android:id="@+id/checkbox"
         android:layout_width="30dp"
         android:layout_height="30dp"
-        android:layout_marginLeft="8dp"
+        android:layout_marginStart="@dimen/spacing_small"
         android:layout_weight="0"
-        android:background="@drawable/checkbox"
-        android:button="@null" />
+        android:button="@drawable/checkbox_selector" />
 </LinearLayout>

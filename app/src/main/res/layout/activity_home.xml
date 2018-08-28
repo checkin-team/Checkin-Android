@@ -27,7 +27,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_gravity="top"
-                    android:background="@color/colorPrimaryRed"
+                    android:background="@color/color_primary_red"
                     app:layout_scrollFlags="scroll|enterAlways"
                     app:popupTheme="@style/PopupOverlay">
 
@@ -52,7 +52,7 @@
                 android:layout_height="0dp"
                 android:layout_weight=".375"
                 app:cardCornerRadius="@dimen/card_corner_radius"
-                android:background="@drawable/bordered_card"
+                android:background="@drawable/bordered_card_white"
                 app:cardElevation="@dimen/card_elevation">
 
                 <LinearLayout
@@ -121,7 +121,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="0dp"
                     android:layout_marginTop="@dimen/spacing_extra_small"
-                    android:background="@drawable/bordered_card"
+                    android:background="@drawable/bordered_card_white"
                     app:cardCornerRadius="@dimen/card_corner_radius"
                     app:cardElevation="@dimen/card_elevation"
                     android:layout_weight=".375">
@@ -164,7 +164,7 @@
                     android:layout_weight=".25"
                     android:layout_marginTop="@dimen/spacing_extra_small"
                     app:cardCornerRadius="@dimen/card_corner_radius"
-                    android:background="@drawable/bordered_card"
+                    android:background="@drawable/bordered_card_white"
                     app:cardElevation="@dimen/card_elevation"
                     >
 
@@ -276,7 +276,7 @@
             android:layout_width="60dp"
             android:layout_height="60dp"
             android:layout_gravity="bottom|end"
-            android:tint="@color/colorPrimaryRed"
+            android:tint="@color/color_primary_red"
             android:layout_margin="@dimen/spacing_small"
             android:src="@drawable/ic_plus_red"
             android:background="@drawable/ic_floating_oval"

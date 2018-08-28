@@ -56,7 +56,7 @@ public abstract class NiceSpinnerBaseAdapter<T> extends BaseAdapter {
         }
 
         if (selectedIndex == position) {
-            color = parent.getResources().getColor(R.color.colorPrimaryRed);
+            color = parent.getResources().getColor(R.color.color_primary_red);
             textView.setBackgroundColor(parent.getResources().getColor(R.color.light_gray));
         }
         else if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) {

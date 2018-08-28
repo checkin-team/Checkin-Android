@@ -24,7 +24,6 @@
         tools:text="ITEM TITLE" />
 
     <android.support.design.widget.CoordinatorLayout
-        android:id="@+id/frameLayout"
         android:layout_width="wrap_content"
         android:layout_height="match_parent"
         android:padding="@dimen/spacing_small"
@@ -43,25 +42,16 @@
             android:textSize="@dimen/font_normal"
             tools:text="789" />
 
-        <!--<com.appyvet.materialrangebar.RangeBar
-            android:id="@+id/item_type_slider"
-            android:layout_width="100dp"
-            android:layout_height="match_parent"
-            android:layout_gravity="center_horizontal|bottom"
-            app:mrb_rangeBar="false"
-            app:mrb_tickInterval="1"
-            android:visibility="gone"/>-->
-
     </android.support.design.widget.CoordinatorLayout>
 
     <FrameLayout
         android:id="@+id/quantity_picker_layout"
-        android:layout_width="118dp"
-        android:layout_height="53dp"
+        android:layout_width="@dimen/width_quantity_selection"
+        android:layout_height="@dimen/height_quantity_selection"
         android:layout_gravity="end|center_vertical"
-        android:layout_marginBottom="8dp"
-        android:layout_marginEnd="8dp"
-        android:layout_marginTop="8dp"
+        android:layout_marginBottom="@dimen/spacing_small"
+        android:layout_marginEnd="@dimen/spacing_small"
+        android:layout_marginTop="@dimen/spacing_small"
         android:background="@drawable/menu_quantity_selection_bar"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -82,7 +72,6 @@
             android:layout_gravity="center"
             app:dsv_orientation="horizontal"
             android:visibility="gone"/>
-
     </FrameLayout>
 
 </android.support.constraint.ConstraintLayout>

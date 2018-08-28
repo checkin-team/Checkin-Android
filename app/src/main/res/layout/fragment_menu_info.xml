@@ -5,7 +5,7 @@
     android:layout_height="match_parent"
     android:id="@+id/menu_info"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    tools:context=".Session.MenuInfoFragment"
+    tools:context=".Menu.MenuInfoFragment"
     android:background="@color/translucent_black"
     >
 

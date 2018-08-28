@@ -1,14 +1,17 @@
 apply plugin: 'com.android.application'
 apply plugin: 'io.objectbox'
+apply from: '../versions.gradle'
 
 android {
-    compileSdkVersion 27
+    compileSdkVersion versions.compileSdk
+    buildToolsVersion versions.buildTools
+
     defaultConfig {
         applicationId "com.checkin.app.checkin"
-        minSdkVersion 19
-        targetSdkVersion 27
-        versionCode 1
-        versionName "1.0"
+        minSdkVersion versions.minSdk
+        targetSdkVersion versions.compileSdk
+        versionCode versions.publishVersionCode
+        versionName versions.publishVersion
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
 
         javaCompileOptions {
@@ -32,24 +35,25 @@ android {
 }
 
 dependencies {
-    implementation "com.andkulikov:transitionseverywhere:1.8.0"
     implementation fileTree(include: ['*.jar'], dir: 'libs')
-    implementation 'com.android.support:appcompat-v7:27.1.1'
+    implementation 'com.android.support:appcompat-v7:' + versions.supportLib
     implementation 'com.android.support.constraint:constraint-layout:1.1.2'
-    implementation 'com.android.support:support-v4:27.1.1'
-    implementation 'com.google.firebase:firebase-core:16.0.1'
-    implementation 'com.google.firebase:firebase-messaging:17.3.0'
+    implementation 'com.android.support:support-v4:' + versions.supportLib
+    implementation 'com.android.support:cardview-v7:' + versions.supportLib
+    implementation 'com.android.support:design:' + versions.supportLib
+
     testImplementation 'junit:junit:4.12'
     androidTestImplementation 'com.android.support.test:runner:1.0.2'
     androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.2'
 
+    // Firebase libraries
+    implementation 'com.google.firebase:firebase-core:16.0.3'
+    implementation 'com.google.firebase:firebase-messaging:17.3.0'
+
     // Design Libraries
-    implementation 'com.android.support:design:27.1.1'
     implementation 'de.hdodenhof:circleimageview:2.2.0'
     implementation 'com.journeyapps:zxing-android-embedded:3.6.0'
-    implementation('com.android.support:cardview-v7:27.1.1') {
-        force = true
-    }
+    implementation 'com.andkulikov:transitionseverywhere:1.8.0'
     implementation 'com.github.bumptech.glide:glide:4.7.1'
     annotationProcessor 'com.github.bumptech.glide:compiler:4.7.1'
     implementation 'jp.wasabeef:glide-transformations:3.3.0'
@@ -58,28 +62,29 @@ dependencies {
     implementation 'com.yarolegovich:discrete-scrollview:1.4.7'
     implementation 'com.appyvet:materialrangebar:1.4.3'
     implementation 'com.github.javiersantos:MaterialStyledDialogs:2.1'
+    implementation 'com.github.antonygolovin:fluentsnackbar:1.0.0'
 
     // Network libraries and JSON <-> POJO
     implementation(
-            [group: 'com.fasterxml.jackson.core', name: 'jackson-core', version: "$jackson_version"],
-            [group: 'com.fasterxml.jackson.core', name: 'jackson-annotations', version: "$jackson_version"],
-            [group: 'com.fasterxml.jackson.core', name: 'jackson-databind', version: "$jackson_version"]
+            [group: 'com.fasterxml.jackson.core', name: 'jackson-core', version: versions.jackson],
+            [group: 'com.fasterxml.jackson.core', name: 'jackson-annotations', version: versions.jackson],
+            [group: 'com.fasterxml.jackson.core', name: 'jackson-databind', version: versions.jackson]
     )
     implementation 'com.squareup.retrofit2:retrofit:2.4.0'
     implementation 'com.squareup.retrofit2:converter-jackson:2.4.0'
     debugImplementation 'com.squareup.okhttp3:logging-interceptor:3.10.0'
 
     // ObjectBox components
-    implementation "io.objectbox:objectbox-android:$objectbox_version"
-    annotationProcessor "io.objectbox:objectbox-processor:$objectbox_version"
+    implementation 'io.objectbox:objectbox-android:' + versions.objectBox
+    annotationProcessor 'io.objectbox:objectbox-processor:' + versions.objectBox
 
     // Lifecycle components
     implementation "android.arch.lifecycle:extensions:1.1.1"
     annotationProcessor "android.arch.lifecycle:compiler:1.1.1"
 
     // Dagger components
-    implementation 'com.google.dagger:dagger:2.15'
-    annotationProcessor 'com.google.dagger:dagger-compiler:2.15'
+    implementation 'com.google.dagger:dagger:' + versions.dagger
+    annotationProcessor 'com.google.dagger:dagger-compiler:' + versions.dagger
 
     // Modified libraries
     implementation project(':library:MaterialSearchView')

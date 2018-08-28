@@ -8,7 +8,7 @@
     android:layout_width="match_parent"
     android:animateLayoutChanges="true"
     android:layout_height="match_parent"
-    tools:context=".Home.FilterTransactions">
+    tools:context=".Misc.FilterTransactions">
 
 
     <android.support.v7.widget.RecyclerView

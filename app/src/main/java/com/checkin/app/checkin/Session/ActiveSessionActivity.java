@@ -15,7 +15,6 @@ import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.checkin.app.checkin.Data.Resource;
 import com.checkin.app.checkin.R;
 import com.checkin.app.checkin.User.UserModel;
 import com.checkin.app.checkin.User.UserViewModel;
@@ -121,7 +120,7 @@ public class ActiveSessionActivity extends AppCompatActivity implements ActiveSe
             public void configureChip(@NonNull ChipSpan chip, @NonNull ChipConfiguration chipConfiguration) {
                 super.configureChip(chip, chipConfiguration);
                 chip.setShowIconOnLeft(false);
-                chip.setIconBackgroundColor(getResources().getColor(R.color.colorPrimaryRed));
+                chip.setIconBackgroundColor(getResources().getColor(R.color.color_primary_red));
             }
         }, ChipSpan.class));
         userSelect.setOnChipClickListener((chip, event) -> {

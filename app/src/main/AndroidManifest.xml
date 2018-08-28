@@ -24,11 +24,11 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".Home.LoginActivity"
+            android:name=".Auth.LoginActivity"
             android:screenOrientation="portrait"
             android:theme="@style/Theme.AppCompat.Light.NoActionBar" />
         <activity
-            android:name=".Home.SignupActivity"
+            android:name=".Auth.SignupActivity"
             android:screenOrientation="portrait"
             android:theme="@style/Theme.AppCompat.Light.NoActionBar">
         </activity>
@@ -39,19 +39,16 @@
             android:theme="@style/AppTheme"
             tools:replace="screenOrientation" />
         <activity
-            android:name=".User.ShopProfileActivity"
-            android:screenOrientation="portrait" />
-        <activity
             android:name=".User.EditProfile"
             android:screenOrientation="portrait" />
-        <activity android:name=".Home.UserProfileActivity" />
+        <activity android:name=".User.UserProfileActivity" />
 
         <meta-data
             android:name="preloaded_fonts"
             android:resource="@array/preloaded_fonts" />
 
         <activity
-            android:name=".Session.SessionUserActivity"
+            android:name=".Menu.SessionUserActivity"
             android:label="@string/title_activity_session_user"
             android:screenOrientation="portrait"
             android:theme="@style/SessionTheme"
@@ -62,11 +59,11 @@
         <activity
             android:name=".Profile.ShopProfile.ShopProfileActivity2"
             android:screenOrientation="portrait" />
-        <activity android:name=".Home.TransactionActivity" />
+        <activity android:name=".Misc.TransactionActivity" />
         <activity android:name=".Home.StoryActivity" />
-        <activity android:name=".Home.ForgotPassword" />
-        <activity android:name=".Home.FilterTransactions" />
-        <activity android:name=".Home.FaqActivity" />
+        <activity android:name=".Auth.ForgotPassword" />
+        <activity android:name=".Misc.FilterTransactions" />
+        <activity android:name=".Misc.FaqActivity" />
         <activity
             android:name=".Session.ActiveSessionActivity"
             android:windowSoftInputMode="adjustNothing" />

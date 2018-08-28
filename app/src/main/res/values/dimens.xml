@@ -1,4 +1,4 @@
-<resources>
+<resources xmlns:tools="http://schemas.android.com/tools">
     <!-- font sizes -->
     <dimen name="font_largest">26sp</dimen>
     <dimen name="font_larger">22sp</dimen>
@@ -8,6 +8,7 @@
     <dimen name="font_small">12sp</dimen>
 
     <!-- typical spacing between two views -->
+    <dimen name="spacing_gigantic">60dp</dimen>
     <dimen name="spacing_very_huge">50dp</dimen>
     <dimen name="spacing_huge">40dp</dimen>
     <dimen name="spacing_extra_large">32dp</dimen>
@@ -16,6 +17,9 @@
     <dimen name="spacing_small">10dp</dimen>
     <dimen name="spacing_extra_small">7dp</dimen>
     <dimen name="spacing_tiny">4dp</dimen>
+
+    <dimen name="size_small_icon">24dp</dimen>
+    <dimen name="size_large_button">80dp</dimen>
 
     <!-- typical sizes of views -->
     <dimen name="button_height_tall">60dp</dimen>
@@ -31,8 +35,8 @@
     <dimen name="home_horizontal_rv_height">106dp</dimen>
     <dimen name="standard_text">14sp</dimen>
     <!-- Menu dimensions -->
-    <dimen name="menu_group_default_height">98dp</dimen>
-    <dimen name="menu_group_expanded_height">325.5dp</dimen>
+    <dimen name="menu_group_default_height">100dp</dimen>
+    <dimen name="menu_group_expanded_height">350dp</dimen>
     <dimen name="menu_item_default_height">80dp</dimen>
     <dimen name="nav_header_vertical_spacing">8dp</dimen>
     <dimen name="nav_header_height">176dp</dimen>
@@ -43,9 +47,7 @@
     <dimen name="width_list_card">75dp</dimen>
     <dimen name="height_list_card">120dp</dimen>
     <dimen name="square_card_dimen">100dp</dimen>
+    <dimen name="width_quantity_selection">120dp</dimen>
+    <dimen name="height_quantity_selection">60dp</dimen>
 
-    <!--MenuItemLayout-->
-    <dimen name="menuItemText">24sp</dimen>
-    <dimen name="itemCustomizationGroupText">21sp</dimen>
-    <dimen name="itemCustomizationFieldText">18sp</dimen>
 </resources>

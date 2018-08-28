@@ -3,11 +3,12 @@ package com.checkin.app.checkin.Data;
 import android.content.Context;
 
 //import com.alcatraz.admin.project_alcatraz.MyObjectBox;
+import com.checkin.app.checkin.Menu.ItemCustomizationFieldModel;
+import com.checkin.app.checkin.Menu.MenuModel;
 import com.checkin.app.checkin.MyObjectBox;
-import com.checkin.app.checkin.Session.ItemCustomizationField;
-import com.checkin.app.checkin.Session.ItemCustomizationGroup;
-import com.checkin.app.checkin.Session.MenuGroupModel;
-import com.checkin.app.checkin.Session.MenuItemModel;
+import com.checkin.app.checkin.Menu.ItemCustomizationGroupModel;
+import com.checkin.app.checkin.Menu.MenuGroupModel;
+import com.checkin.app.checkin.Menu.MenuItemModel;
 import com.checkin.app.checkin.Social.Chat;
 import com.checkin.app.checkin.Social.Message;
 import com.checkin.app.checkin.User.UserModel;
@@ -35,12 +36,12 @@ public class AppDatabase {
     private AppDatabase() {
     }
 
-    public static Box<ItemCustomizationField> getItemCustomizationFieldModel(final Context context) {
-        return getBoxStore(context).boxFor(ItemCustomizationField.class);
+    public static Box<ItemCustomizationFieldModel> getItemCustomizationFieldModel(final Context context) {
+        return getBoxStore(context).boxFor(ItemCustomizationFieldModel.class);
     }
 
-    public static Box<ItemCustomizationGroup> getItemCustomizationGroupModel(final Context context) {
-        return getBoxStore(context).boxFor(ItemCustomizationGroup.class);
+    public static Box<ItemCustomizationGroupModel> getItemCustomizationGroupModel(final Context context) {
+        return getBoxStore(context).boxFor(ItemCustomizationGroupModel.class);
     }
 
     public static Box<MenuItemModel> getMenuItemModel(final Context context) {
@@ -49,6 +50,10 @@ public class AppDatabase {
 
     public static Box<MenuGroupModel> getMenuGroupModel(final Context context) {
         return getBoxStore(context).boxFor(MenuGroupModel.class);
+    }
+
+    public static Box<MenuModel> getMenuModel(final Context context) {
+        return getBoxStore(context).boxFor(MenuModel.class);
     }
 
     public static Box<UserModel> getUserModel(final Context context) {

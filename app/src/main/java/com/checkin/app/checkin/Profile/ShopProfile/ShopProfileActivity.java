@@ -111,7 +111,7 @@ public class ShopProfileActivity extends AppCompatActivity {
         
     }
 
-//    private_deselected void setupViewPager(ViewPager viewPager) {
+//    btn_private_deselected void setupViewPager(ViewPager viewPager) {
 //
 //        ViewPagerAdapter adapter=new ViewPagerAdapter(getSupportFragmentManager());
 //

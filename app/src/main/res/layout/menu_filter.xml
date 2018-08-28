@@ -23,7 +23,7 @@
                 android:drawableTop="@drawable/ic_menu_filter_breakfast"
                 android:text="Breakfast"
                 android:textAlignment="center"
-                android:textColor="@color/colorPrimaryRed"
+                android:textColor="@color/color_primary_red"
                 android:textSize="12sp"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
@@ -41,7 +41,7 @@
                 android:drawableTop="@drawable/ic_menu_filter_lunch"
                 android:text="Lunch"
                 android:textAlignment="center"
-                android:textColor="@color/colorPrimaryRed"
+                android:textColor="@color/color_primary_red"
                 android:textSize="12sp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
@@ -57,7 +57,7 @@
         android:drawableTop="@drawable/ic_menu_filter_dinner"
         android:text="Dinner"
         android:textAlignment="center"
-        android:textColor="@color/colorPrimaryRed"
+        android:textColor="@color/color_primary_red"
         android:textSize="12sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
@@ -85,7 +85,7 @@
             android:background="@drawable/ic_menu_filter_rectangle"
             android:text="Beverage"
             android:textAlignment="center"
-            android:textColor="@color/colorPrimaryRed"
+            android:textColor="@color/color_primary_red"
             app:layout_constraintStart_toStartOf="parent"
             android:paddingTop="3dp"/>
 
@@ -100,7 +100,7 @@
             android:background="@drawable/ic_menu_filter_rectangle"
             android:text="Bar"
             android:textAlignment="center"
-            android:textColor="@color/colorPrimaryRed"
+            android:textColor="@color/color_primary_red"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             android:paddingTop="3dp"/>
@@ -116,7 +116,7 @@
             android:background="@drawable/ic_menu_filter_rectangle"
             android:text="Starter"
             android:textAlignment="center"
-            android:textColor="@color/colorPrimaryRed"
+            android:textColor="@color/color_primary_red"
             app:layout_constraintEnd_toEndOf="parent"
             android:paddingTop="3dp"/>
 
@@ -130,7 +130,7 @@
             android:background="@drawable/ic_menu_filter_rectangle"
             android:text="Main Course"
             android:textAlignment="center"
-            android:textColor="@color/colorPrimaryRed"
+            android:textColor="@color/color_primary_red"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/filter_bar"
             android:paddingTop="3dp"/>
@@ -145,7 +145,7 @@
             android:background="@drawable/ic_menu_filter_rectangle"
             android:text="Dessert"
             android:textAlignment="center"
-            android:textColor="@color/colorPrimaryRed"
+            android:textColor="@color/color_primary_red"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/filter_bar"
             android:paddingTop="3dp"/>
@@ -182,7 +182,7 @@
                 android:layout_gravity="center"
                 android:text="Chef's Particular"
                 android:textAlignment="center"
-                android:textColor="@color/colorPrimaryRed"
+                android:textColor="@color/color_primary_red"
                 android:textSize="10sp" />
         </FrameLayout>
 
@@ -208,7 +208,7 @@
                 android:layout_gravity="center"
                 android:text="Mainstream"
                 android:textAlignment="center"
-                android:textColor="@color/colorPrimaryRed"
+                android:textColor="@color/color_primary_red"
                 android:textSize="11sp" />
         </FrameLayout>
 
@@ -231,7 +231,7 @@
                 android:layout_gravity="center"
                 android:text="New"
                 android:textAlignment="center"
-                android:textColor="@color/colorPrimaryRed"
+                android:textColor="@color/color_primary_red"
                 android:textSize="10sp" />
         </FrameLayout>
 
@@ -255,7 +255,7 @@
                 android:layout_gravity="center"
                 android:text="High \nTo \nLow"
                 android:textAlignment="center"
-                android:textColor="@color/colorPrimaryRed"
+                android:textColor="@color/color_primary_red"
                 android:textSize="11sp" />
         </FrameLayout>
 
@@ -279,7 +279,7 @@
                 android:layout_gravity="center"
                 android:text="Low \nTo \nHigh"
                 android:textAlignment="center"
-                android:textColor="@color/colorPrimaryRed"
+                android:textColor="@color/color_primary_red"
                 android:textSize="11sp" />
         </FrameLayout>
     </android.support.constraint.ConstraintLayout>

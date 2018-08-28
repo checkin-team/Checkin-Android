@@ -150,7 +150,7 @@ public class SwipeRevealLayout extends ViewGroup {
         // must be placed as the last statement
         mPrevX = ev.getX();
 
-        // return true => intercept, cannot trigger onClick event
+        // return true => intercept, cannot trigger onFieldClick event
 
         return !couldBecomeClick && (settling || idleAfterScrolled);
     }

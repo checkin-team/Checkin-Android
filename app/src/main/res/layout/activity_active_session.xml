@@ -22,7 +22,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_gravity="top"
-            android:background="@color/colorPrimaryRed"
+            android:background="@color/color_primary_red"
             app:popupTheme="@style/PopupOverlay">
 
             <TextView
@@ -44,7 +44,7 @@
         android:layout_height="40dp"
         android:layout_marginStart="@dimen/spacing_small"
         android:layout_marginTop="@dimen/spacing_normal"
-        android:background="@drawable/menu_item_price"
+        android:background="@drawable/menu_item_price_grey"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/appbar_active_session">
 
@@ -55,7 +55,7 @@
             android:layout_gravity="center"
             android:layout_marginBottom="@dimen/spacing_tiny"
             android:layout_marginStart="@dimen/spacing_tiny"
-            android:textColor="@color/colorPrimaryRed"
+            android:textColor="@color/color_primary_red"
             android:textSize="@dimen/font_normal"
             tools:text="4200" />
     </FrameLayout>

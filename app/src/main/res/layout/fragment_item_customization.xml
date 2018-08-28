@@ -1,0 +1,185 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@drawable/background_menu_customization"
+        android:layout_marginBottom="@dimen/spacing_huge"
+        android:layout_marginTop="@dimen/spacing_gigantic"
+        android:clipToPadding="false"
+        android:fillViewport="true">
+
+        <LinearLayout
+            android:id="@+id/list_customizations"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingTop="@dimen/spacing_small"
+            android:orientation="vertical"
+            android:showDividers="middle" />
+
+    </ScrollView>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/bg_rounded_corner"
+        android:gravity="center_vertical"
+        android:layout_gravity="top"
+        android:orientation="horizontal">
+
+        <TextView
+            android:id="@+id/tv_item_name"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            tools:text="Pizza"
+            android:layout_marginStart="@dimen/spacing_normal"
+            android:textColor="@color/color_primary_red"
+            android:textSize="@dimen/font_larger" />
+
+        <RadioGroup
+            android:id="@+id/container_radio"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:layout_marginEnd="@dimen/spacing_normal"
+            android:orientation="horizontal">
+
+            <android.support.constraint.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:paddingTop="@dimen/spacing_small"
+                android:paddingBottom="@dimen/spacing_small"
+                android:paddingEnd="@dimen/spacing_small"
+                android:paddingStart="@dimen/spacing_small">
+
+                <View
+                    android:id="@+id/line_horizontal"
+                    android:layout_width="0dp"
+                    android:layout_height="1dp"
+                    android:background="@color/warm_grey"
+                    app:layout_constraintBottom_toBottomOf="@+id/radio_3"
+                    app:layout_constraintEnd_toEndOf="@+id/radio_3"
+                    app:layout_constraintStart_toStartOf="@+id/radio_1"
+                    app:layout_constraintTop_toTopOf="@+id/radio_3" />
+
+                <RadioButton
+                    android:id="@+id/radio_1"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:button="@drawable/radiobutton_selector"
+                    app:layout_constraintEnd_toEndOf="@+id/tv_radio_1"
+                    app:layout_constraintStart_toStartOf="@+id/tv_radio_1"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <RadioButton
+                    android:id="@+id/radio_2"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:button="@drawable/radiobutton_selector"
+                    app:layout_constraintEnd_toEndOf="@+id/tv_radio_2"
+                    app:layout_constraintStart_toStartOf="@+id/tv_radio_2"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <RadioButton
+                    android:id="@+id/radio_3"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:button="@drawable/radiobutton_selector"
+                    app:layout_constraintEnd_toEndOf="@+id/tv_radio_3"
+                    app:layout_constraintStart_toStartOf="@+id/tv_radio_3"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <TextView
+                    android:id="@+id/tv_radio_1"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    tools:text="Small"
+                    android:textAlignment="center"
+                    android:textColor="@color/brownish_grey"
+                    android:textSize="@dimen/font_normal"
+                    app:layout_constraintTop_toBottomOf="@id/radio_1"
+                    app:layout_constraintStart_toStartOf="parent" />
+
+                <TextView
+                    android:id="@+id/tv_radio_2"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    tools:text="Medium"
+                    android:textAlignment="center"
+                    android:textColor="@color/brownish_grey"
+                    android:textSize="@dimen/font_normal"
+                    app:layout_constraintTop_toBottomOf="@id/radio_2"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"/>
+
+                <TextView
+                    android:id="@+id/tv_radio_3"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    tools:text="Large"
+                    android:textAlignment="center"
+                    android:textColor="@color/brownish_grey"
+                    android:textSize="@dimen/font_normal"
+                    app:layout_constraintTop_toBottomOf="@id/radio_3"
+                    app:layout_constraintEnd_toEndOf="parent"/>
+
+            </android.support.constraint.ConstraintLayout>
+
+        </RadioGroup>
+
+    </LinearLayout>
+
+    <android.support.constraint.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom"
+        android:background="@drawable/background_bottom_container"
+        android:paddingTop="@dimen/spacing_normal"
+        android:gravity="center_vertical">
+
+        <FrameLayout
+            android:id="@+id/bill_container"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@drawable/menu_item_price_white"
+            android:layout_marginStart="@dimen/spacing_large"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <TextView
+                android:id="@+id/tv_bill"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginBottom="@dimen/spacing_tiny"
+                android:layout_marginStart="@dimen/spacing_tiny"
+                android:textColor="@color/white"
+                android:textSize="@dimen/font_normal"
+                tools:text="4200" />
+        </FrameLayout>
+
+        <Button
+            android:id="@+id/btn_done"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@null"
+            android:text="@string/finish"
+            android:textColor="@color/white"
+            android:textSize="@dimen/font_large"
+            android:textStyle="bold"
+            android:layout_marginEnd="@dimen/spacing_large"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+    </android.support.constraint.ConstraintLayout>
+
+</FrameLayout>

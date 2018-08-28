@@ -48,7 +48,7 @@ public class ViewPagerAdapter extends FragmentPagerAdapter {
 
 //class ViewPagerAdapter extends FragmentPagerAdapter {
 //
-//    private_deselected final int mCount;
+//    btn_private_deselected final int mCount;
 //
 //    public_selected ViewPagerAdapter(final AppCompatActivity activity, int count) {
 //        super(activity.getSupportFragmentManager());

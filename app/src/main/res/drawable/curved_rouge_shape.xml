@@ -10,7 +10,7 @@
                 </item>
             <item>
                 <shape>
-                    <solid android:color="@color/colorPrimaryRed" />
+                    <solid android:color="@color/color_primary_red" />
                     <stroke
                         android:width="0dp"
                         android:color="#000" />

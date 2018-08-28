@@ -121,21 +121,15 @@ public class Util {
         heightTick = ValueAnimator.ofInt(view.getHeight(), newHeight).setDuration(duration);
         widthTick = ValueAnimator.ofInt(view.getWidth(), newWidth).setDuration(duration);
 
-        heightTick.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
-            @Override
-            public void onAnimationUpdate(ValueAnimator valueAnimator) {
-                view.getLayoutParams().height = (int) valueAnimator.getAnimatedValue();
+        heightTick.addUpdateListener(valueAnimator -> {
+            view.getLayoutParams().height = (int) valueAnimator.getAnimatedValue();
 
-                // Request force layout validation.
-                view.requestLayout();
-            }
+            // Request force layout validation.
+            view.requestLayout();
         });
-        widthTick.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
-            @Override
-            public void onAnimationUpdate(ValueAnimator valueAnimator) {
-                view.getLayoutParams().width = (int) valueAnimator.getAnimatedValue();
-                view.requestLayout();
-            }
+        widthTick.addUpdateListener(valueAnimator -> {
+            view.getLayoutParams().width = (int) valueAnimator.getAnimatedValue();
+            view.requestLayout();
         });
 
         AnimatorSet animatorSet = new AnimatorSet();

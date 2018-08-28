@@ -12,6 +12,6 @@
         android:paddingEnd="@dimen/spacing_extra_small"
         android:background="@drawable/background_textbox"
         android:id="@+id/select_text_view"
-        app:chipBackground="@color/pinkish_grey"/>
+        app:chipBackground="@color/pinkish_grey" />
 
 </FrameLayout>

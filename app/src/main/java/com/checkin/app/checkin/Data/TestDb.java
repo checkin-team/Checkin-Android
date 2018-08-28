@@ -3,10 +3,11 @@ package com.checkin.app.checkin.Data;
 import android.content.Context;
 import android.util.Log;
 
-import com.checkin.app.checkin.Session.ItemCustomizationField;
-import com.checkin.app.checkin.Session.ItemCustomizationGroup;
-import com.checkin.app.checkin.Session.MenuGroupModel;
-import com.checkin.app.checkin.Session.MenuItemModel;
+import com.checkin.app.checkin.Menu.ItemCustomizationFieldModel;
+import com.checkin.app.checkin.Menu.ItemCustomizationGroupModel;
+import com.checkin.app.checkin.Menu.MenuGroupModel;
+import com.checkin.app.checkin.Menu.MenuItemModel;
+import com.checkin.app.checkin.Menu.MenuModel;
 import com.checkin.app.checkin.User.UserModel;
 
 import java.util.ArrayList;
@@ -19,6 +20,7 @@ public class TestDb {
     private static final int DELAY_MILLIS = 1000;
     public static void populateWithTestData(final Context context) {
         Log.e("TestData", "Populating...");
+        AppDatabase.getMenuModel(context).put(new MenuModel(1, "Menu"));
         populateUsers(AppDatabase.getUserModel(context));
         populateMenu(
                 AppDatabase.getMenuItemModel(context),
@@ -31,13 +33,13 @@ public class TestDb {
     private static void populateMenu(
             Box<MenuItemModel> menuItemModel,
             Box<MenuGroupModel> menuGroupModel,
-            Box<ItemCustomizationField> itemCustomizationFieldModel,
-            Box<ItemCustomizationGroup> itemCustomizationGroupModel
+            Box<ItemCustomizationFieldModel> itemCustomizationFieldModel,
+            Box<ItemCustomizationGroupModel> itemCustomizationGroupModel
     ) {
         List<MenuGroupModel> menuGroups = new ArrayList<>(30);
         List<MenuItemModel> menuItems = new ArrayList<>();
-        List<ItemCustomizationGroup> itemCustomizationGroups = new ArrayList<>();
-        List<ItemCustomizationField> itemCustomizationFields = new ArrayList<>();
+        List<ItemCustomizationGroupModel> itemCustomizationGroups = new ArrayList<>();
+        List<ItemCustomizationFieldModel> itemCustomizationFields = new ArrayList<>();
 
         int c1 = 1, c2 = 1;
         for (int i = 1; i <= 30; i++) {
@@ -47,28 +49,36 @@ public class TestDb {
                 subGroups.add("Veg");
                 subGroups.add("Non-Veg");
             }
-            menuGroups.add(new MenuGroupModel( "Group #" + i, subGroups, 1));
+            MenuGroupModel menuGroup = new MenuGroupModel( "Group #" + i, subGroups);
+            menuGroup.setMenuId(1);
+            menuGroups.add(menuGroup);
             for (int j = 1; j <= i/2+1; j++) {
                 List<String> typeName = new ArrayList<>();
                 List<Double> typeCost = new ArrayList<>();
-                int baseType;
-                if (j % 2 == 0) {
+                if (j % 3 == 0) {
                     typeName.add("Pint");
                     typeCost.add(300.0);
                     typeName.add("Can");
                     typeCost.add(400.0);
                     typeName.add("Beer");
                     typeCost.add(750.0);
-                } else {
+                } else if (j % 3 == 1) {
+                    typeName.add("Pint");
+                    typeCost.add(300.0);
+                    typeName.add("Can");
+                    typeCost.add(400.0);
+                }
+                else {
                     typeName.add("Default");
                     typeCost.add(460.0);
-
+                }
+                if (j % 2 == 0) {
                     for (int k = 1; k < 6; k++) {
-                        ItemCustomizationGroup itemCustomizationGroup = new ItemCustomizationGroup((k%2)*3,k+2,"Extra #" + k, c1);
+                        ItemCustomizationGroupModel itemCustomizationGroup = new ItemCustomizationGroupModel((k % 2) * 3, k + 2, "Extra #" + k, c1);
                         c2++;
                         itemCustomizationGroups.add(itemCustomizationGroup);
-                        for(int l = 1; l <= 7; l++){
-                            ItemCustomizationField itemCustomizationField = new ItemCustomizationField((l&1) == 0,"Extra name #" + l, l * 20, c2);
+                        for (int l = 1; l <= 5; l++) {
+                            ItemCustomizationFieldModel itemCustomizationField = new ItemCustomizationFieldModel((l & 1) == 0, "Extra name #" + l, l * 20, c2);
                             itemCustomizationFields.add(itemCustomizationField);
                         }
                     }

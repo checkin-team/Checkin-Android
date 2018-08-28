@@ -14,6 +14,7 @@ import android.util.Log;
 import com.checkin.app.checkin.Data.BaseViewModel;
 import com.checkin.app.checkin.Data.Converters;
 import com.checkin.app.checkin.Data.Resource;
+import com.checkin.app.checkin.Menu.OrderedItemModel;
 import com.checkin.app.checkin.Utility.Constants;
 import com.fasterxml.jackson.databind.node.ArrayNode;
 import com.fasterxml.jackson.databind.node.ObjectNode;
