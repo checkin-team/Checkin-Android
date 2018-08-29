@@ -38,7 +38,7 @@ import com.checkin.app.checkin.R;
 import com.checkin.app.checkin.Session.ActiveSessionActivity;
 import com.checkin.app.checkin.Session.SessionUserActivity;
 import com.checkin.app.checkin.Shop.Shop;
-import com.checkin.app.checkin.Shop.SignUpIntro;
+import com.checkin.app.checkin.Shop.SignUpIntroActivity;
 import com.checkin.app.checkin.Social.ChatActivity;
 import com.checkin.app.checkin.Social.ChatAdapter;
 import com.checkin.app.checkin.Social.MessageViewModel;
@@ -536,7 +536,7 @@ public class HomeActivity extends AppCompatActivity
     @OnClick(R.id.action_delivery)
             public void delivery(View v)
     {
-        startActivity(new Intent(this, SignUpIntro.class));
+        startActivity(new Intent(this, SignUpIntroActivity.class));
     }
 
 }

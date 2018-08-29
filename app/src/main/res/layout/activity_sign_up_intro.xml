@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".Shop.SignUpIntro">
+    tools:context=".Shop.SignUpIntroActivity">
 
     <!--<android.support.design.widget.AppBarLayout-->
     <!--android:id="@+id/appBarLayout"-->
@@ -59,16 +59,15 @@
         android:layout_marginTop="8dp"
         android:background="#979797"
 
-        app:layout_constraintBottom_toTopOf="@+id/button3"
+        app:layout_constraintBottom_toTopOf="@+id/btn_create_account"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/pageIndicatorView"
         app:layout_constraintVertical_bias="1.0" />
 
-
     <Button
-        android:id="@+id/button3"
+        android:id="@+id/btn_create_account"
         android:layout_width="match_parent"
         android:layout_height="45dp"
         android:layout_marginBottom="32dp"

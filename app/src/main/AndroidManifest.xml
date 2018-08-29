@@ -71,10 +71,14 @@
         <activity
             android:name=".Session.ActiveSessionActivity"
             android:windowSoftInputMode="adjustNothing" />
-        <activity android:name=".Shop.SignUpIntro"
+        <activity
+            android:name=".Shop.SignUpIntroActivity"
             android:screenOrientation="portrait"
+            android:theme="@style/Theme.AppCompat.Light"></activity>
+        <activity android:name=".Shop.SignUpVerifyActivity"
             android:theme="@style/Theme.AppCompat.Light"
-          >
+            android:screenOrientation="portrait"
+            android:parentActivityName=".Home.HomeActivity">
 
         </activity>
     </application>
