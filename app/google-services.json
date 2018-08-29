@@ -49,50 +49,6 @@
           "status": 2
         }
       }
-    },
-    {
-      "client_info": {
-        "mobilesdk_app_id": "1:344881733916:android:1079bb0ed17fef79",
-        "android_client_info": {
-          "package_name": "com.checkin.app.checkin.Notif"
-        }
-      },
-      "oauth_client": [
-        {
-          "client_id": "344881733916-p5gfh83fhl4q2s1ectnocb2189m1pfp4.apps.googleusercontent.com",
-          "client_type": 1,
-          "android_info": {
-            "package_name": "com.checkin.app.checkin.Notif",
-            "certificate_hash": "89f5879095f1a7fa8b5dc714a2a1a553bc7d68b1"
-          }
-        },
-        {
-          "client_id": "344881733916-usv95e3vvr7da1esoq4gv4r09pps0la9.apps.googleusercontent.com",
-          "client_type": 3
-        }
-      ],
-      "api_key": [
-        {
-          "current_key": "AIzaSyChKNnC7IIQyzdlN_uq2GrVwLDr9zASSEU"
-        }
-      ],
-      "services": {
-        "analytics_service": {
-          "status": 1
-        },
-        "appinvite_service": {
-          "status": 2,
-          "other_platform_oauth_client": [
-            {
-              "client_id": "344881733916-usv95e3vvr7da1esoq4gv4r09pps0la9.apps.googleusercontent.com",
-              "client_type": 3
-            }
-          ]
-        },
-        "ads_service": {
-          "status": 2
-        }
-      }
     }
   ],
   "configuration_version": "1"

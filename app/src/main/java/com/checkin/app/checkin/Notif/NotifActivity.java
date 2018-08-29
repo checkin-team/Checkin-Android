@@ -38,7 +38,7 @@ public class NotifActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_notif);
-        LocalBroadcastManager.getInstance(this).registerReceiver(mHandler,new IntentFilter("new notification"));
+        LocalBroadcastManager.getInstance(this).registerReceiver(mHandler,new IntentFilter("com.checkin.app.checkin.notifications"));
         ButterKnife.bind(this);
         notifRV.setLayoutManager(new LinearLayoutManager(getApplicationContext()));
         notifRV.setAdapter(new NotifAdapter(getNotifs()));
@@ -160,10 +160,9 @@ public class NotifActivity extends AppCompatActivity {
         @Override
         public void onReceive(Context context, Intent intent) {
 
-            String actionCode=intent.getStringExtra("Action Code");
 
             String message =intent.getStringExtra("message");
-            Toast.makeText(getApplicationContext(),message + ", ACTTIONCODE = " + actionCode,Toast.LENGTH_LONG).show();
+            Toast.makeText(getApplicationContext(),message,Toast.LENGTH_LONG).show();
 
             NotificationManager notificationManager =(NotificationManager)getSystemService(Context.NOTIFICATION_SERVICE);
             notificationManager.cancelAll();
