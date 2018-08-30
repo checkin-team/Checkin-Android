@@ -3,12 +3,12 @@ package com.checkin.app.checkin.Data;
 import android.content.Context;
 
 import com.checkin.app.checkin.Profile.ShopProfile.ReviewsItem;
-import com.checkin.app.checkin.Profile.ShopProfile.ShopHomeModel;
 import com.checkin.app.checkin.MyObjectBox;
 import com.checkin.app.checkin.Session.ItemCustomizationField;
 import com.checkin.app.checkin.Session.ItemCustomizationGroup;
 import com.checkin.app.checkin.Session.MenuGroupModel;
 import com.checkin.app.checkin.Session.MenuItemModel;
+import com.checkin.app.checkin.Shop.ShopModel;
 import com.checkin.app.checkin.Social.Chat;
 import com.checkin.app.checkin.Social.Message;
 import com.checkin.app.checkin.User.UserModel;
@@ -36,8 +36,8 @@ public class AppDatabase {
     private AppDatabase() {
     }
 
-    public static Box<ShopHomeModel> getShopHomeModel(final Context context) {
-        return getBoxStore(context).boxFor(ShopHomeModel.class);
+    public static Box<ShopModel> getShopModel(final Context context) {
+        return getBoxStore(context).boxFor(ShopModel.class);
     }
 
     public static Box<ItemCustomizationField> getItemCustomizationFieldModel(final Context context) {

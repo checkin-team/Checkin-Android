@@ -12,6 +12,8 @@ import com.checkin.app.checkin.Data.BaseRepository;
 import com.checkin.app.checkin.Data.NetworkBoundResource;
 import com.checkin.app.checkin.Data.Resource;
 import com.checkin.app.checkin.Data.WebApiService;
+import com.checkin.app.checkin.Shop.ShopModel;
+import com.checkin.app.checkin.Shop.ShopModel_;
 
 import java.util.List;
 
@@ -25,12 +27,12 @@ import io.objectbox.android.ObjectBoxLiveData;
 public class ShopHomeRepository extends BaseRepository {
 
     private final WebApiService mWebService;
-    private Box<ShopHomeModel> mShopHomeModel;
+    private Box<ShopModel> mShopHomeModel;
     private static ShopHomeRepository INSTANCE;
 
     private ShopHomeRepository(Context context) {
         mWebService = ApiClient.getApiService(context);
-        mShopHomeModel = AppDatabase.getShopHomeModel(context);
+        mShopHomeModel = AppDatabase.getShopModel(context);
     }
 
     public static ShopHomeRepository getInstance(Application application) {
@@ -44,8 +46,8 @@ public class ShopHomeRepository extends BaseRepository {
         return INSTANCE;
     }
 
-    public LiveData<Resource<List<ShopHomeModel>>> getShopHomeModel(int shopHomeId) {
-        return new NetworkBoundResource<List<ShopHomeModel>,List<ShopHomeModel>>(){
+    public LiveData<Resource<List<ShopModel>>> getShopHomeModel(int shopHomeId) {
+        return new NetworkBoundResource<List<ShopModel>,List<ShopModel>>(){
 
             @Override
             protected boolean shouldUseLocalDb() {
@@ -53,23 +55,23 @@ public class ShopHomeRepository extends BaseRepository {
             }
 
             @Override
-            protected LiveData<List<ShopHomeModel>> loadFromDb() {
-                return new ObjectBoxLiveData<>(mShopHomeModel.query().equal(ShopHomeModel_.id, shopHomeId).build());
+            protected LiveData<List<ShopModel>> loadFromDb() {
+                return new ObjectBoxLiveData<>(mShopHomeModel.query().equal(ShopModel_.id, shopHomeId).build());
             }
 
             @Override
-            protected boolean shouldFetch(List<ShopHomeModel> data) {
+            protected boolean shouldFetch(List<ShopModel> data) {
                 return false;
             }
 
             @NonNull
             @Override
-            protected LiveData<ApiResponse<List<ShopHomeModel>>> createCall() {
+            protected LiveData<ApiResponse<List<ShopModel>>> createCall() {
                 return null;
             }
 
             @Override
-            protected void saveCallResult(List<ShopHomeModel> data) {
+            protected void saveCallResult(List<ShopModel> data) {
 
             }
         }.getAsLiveData();

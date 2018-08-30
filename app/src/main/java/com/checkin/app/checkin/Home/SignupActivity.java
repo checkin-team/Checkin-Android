@@ -16,6 +16,7 @@ import android.util.Log;
 import android.view.Gravity;
 import android.view.View;
 
+import com.checkin.app.checkin.Data.TestDb;
 import com.checkin.app.checkin.Home.SignupUserInfoFragment.GENDER;
 import com.checkin.app.checkin.R;
 import com.checkin.app.checkin.Utility.Constants;
@@ -44,6 +45,7 @@ public class SignupActivity extends AppCompatActivity implements SignupFragmentI
             transaction.add(R.id.fragment_container, SignupPhoneFragment.newInstance(this));
             transaction.commit();
         }
+        TestDb.populateWithTestData(getApplicationContext());
     }
 
     private void replaceFragmentContainer(Fragment fragment) {

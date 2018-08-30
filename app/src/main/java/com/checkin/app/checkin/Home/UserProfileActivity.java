@@ -23,19 +23,30 @@ import android.support.annotation.Nullable;
     import android.support.v4.content.ContextCompat;
     import android.support.v4.view.MotionEventCompat;
     import android.support.v7.app.AppCompatActivity;
+    import  com.transitionseverywhere.*;
+    import android.util.DisplayMetrics;
     import android.util.Log;
     import android.view.GestureDetector;
     import android.view.MotionEvent;
 import android.view.View;
+    import android.view.ViewGroup;
     import android.widget.ImageView;
     import android.widget.LinearLayout;
     import android.widget.RelativeLayout;
+    import android.widget.TextView;
 
     import com.checkin.app.checkin.R;
 
 public class UserProfileActivity extends AppCompatActivity {
+    private float weightTop=70;
+    private float minweightTop=40;
+    private float weightBottom=35;
+    private  float minChangePercent=2f;
+    String state="down";
+    String mode="auto";
     private static final String TAG = "UserProfileActivity";
     protected void onCreate(@Nullable Bundle savedInstanceState) {
+        int screenHeight=getWindow().getAttributes().height;
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_user_profile);
         final WallpaperManager wallpaperManager = WallpaperManager.getInstance(this);
@@ -43,78 +54,24 @@ public class UserProfileActivity extends AppCompatActivity {
         Drawable imagetoshow = ContextCompat.getDrawable(getApplicationContext(),R.drawable.flier);
         final Drawable mod= new BitmapDrawable(getResources(),getRoundedCornerBitmap(((BitmapDrawable)imagetoshow).getBitmap(),getApplicationContext()));
         ImageView imageView=findViewById(R.id.imgg);
+        /*RelativeLayout v=findViewById(R.id.botomm);
+        LinearLayout.LayoutParams p=(LinearLayout.LayoutParams)v.getLayoutParams();
+        p.weight+=(dpToPx(20)/screenHeight);
+        weightBottom=p.weight;*/
+        Log.e(TAG, "onCreate: "+weightBottom );
         /*final Matrix matrix = imageView.getImageMatrix();
         final float imageWidth = imageView.getDrawable().getIntrinsicWidth();
         final int screenWidth = getResources().getDisplayMetrics().widthPixels;
         final float scaleRatio = screenWidth / imageWidth;
         matrix.postScale(scaleRatio, scaleRatio);
         imageView.setImageMatrix(matrix);*/
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) {
-          //  v.setBackground(wallpaperDrawable);
-            imageView.setImageResource(R.drawable.flier);
-           // v1.setBackground(wallpaperDrawable);
-        }
-
-
-        listen(getApplicationContext());
+        //  v.setBackground(wallpaperDrawable);
+        imageView.setImageResource(R.drawable.flier);
+        // v1.setBackground(wallpaperDrawable);
 
 
     }
-    protected void listen(Context c)
-    {
-        View v=findViewById(R.id.upper);
 
-        final GestureDetector gestureDetector=new GestureDetector(c, new GestureDetector.OnGestureListener() {
-            @Override
-            public boolean onDown(MotionEvent motionEvent) {
-
-                return true;
-            }
-
-            @Override
-            public void onShowPress(MotionEvent motionEvent) {
-
-            }
-
-            @Override
-            public boolean onSingleTapUp(MotionEvent motionEvent) {
-                return false;
-            }
-
-            @Override
-            public boolean onScroll(MotionEvent motionEvent, MotionEvent motionEvent1, float x, float y) {
-                Log.e("COOL",x+","+y);
-
-                return false;
-            }
-
-            @Override
-            public void onLongPress(MotionEvent motionEvent) {
-
-            }
-
-            @Override
-            public boolean onFling(MotionEvent motionEvent, MotionEvent motionEvent1, float v, float v1) {
-                return false;
-            }
-        });
-        //Touch Listener
-        /*View.OnTouchListener touchListener = new View.OnTouchListener() {
-            @Override
-            public_selected boolean onTouch(View v, MotionEvent event) {
-
-                // pass the events to the gesture detector
-                // a return value of true means the detector is handling it
-                // a return value of false means the detector didn't
-                // recognize the event
-               // return gestureDetector.onTouchEvent(event);
-                return false;
-
-            }
-        };*/
-        //Touch off
-        //v.setOnTouchListener(touchListener);
-    }
     public static Bitmap getRoundedCornerBitmap(Bitmap bitmap, Context context) {
         Bitmap output = Bitmap.createBitmap(bitmap.getWidth(),
                 bitmap.getHeight(), Bitmap.Config.ARGB_8888);
@@ -154,6 +111,7 @@ public class UserProfileActivity extends AppCompatActivity {
                 down=true;
                 return true;
             case (MotionEvent.ACTION_MOVE) :
+                mode="auto";
                 Log.d(TAG,"Action was MOVE");
 
                     RelativeLayout v=(RelativeLayout)findViewById(R.id.top);
@@ -164,19 +122,25 @@ public class UserProfileActivity extends AppCompatActivity {
                 Log.e(TAG, "onTouchEvent: "+p.weight+" ~~ "+p1.weight );
 
 
-                if(p.weight+(event.getY() - y)*2*100.0/screen>70) {
-                    p.weight = (int) 70;
-                    p1.weight = (int) 35;
+                if(p.weight+(event.getY() - y)*100.0/screen>weightTop) {
+                    p.weight = weightTop;
+                    p1.weight = weightBottom;
+                    mode="manual";
+                    state="down";
                 }
                 else
             {
-                p.weight += (event.getY() - y)*2*100.0/screen;
-                p1.weight -= (event.getY() - y)*2*100.0/screen;
+                p.weight += (event.getY() - y)*100.0/screen;
+                p1.weight -= (event.getY() - y)*100.0/screen;
             }
 
-
-                if(p.weight<dpToPx(20)*100.0/screen)p.weight=dpToPx(20)*100f/screen;
-                findViewById(R.id.lin).setAlpha(p.weight-35<=0?0:(p.weight-35)/35);
+                float con=(float)dpToPx(20)*100.0f/screen+minweightTop;
+                if(p.weight<dpToPx(20)*100.0/screen+minweightTop){
+                    p.weight=dpToPx(20)*100f/screen+minweightTop;
+                    state="up";
+                    mode="manual";
+                }
+                findViewById(R.id.third).setAlpha(p.weight-con<=0?0:(p.weight-con)/(weightTop-con));
 
                 v.setLayoutParams(p);
                     v1.setLayoutParams(p1);
@@ -185,9 +149,49 @@ public class UserProfileActivity extends AppCompatActivity {
 
                 return true;
             case (MotionEvent.ACTION_UP) :
+                con=(float)dpToPx(20)*100.0f/screen+minweightTop;
+                v=(RelativeLayout)findViewById(R.id.top);
+                v1=(RelativeLayout)findViewById(R.id.botomm);
+                p=(LinearLayout.LayoutParams)v.getLayoutParams();
+                p1=(LinearLayout.LayoutParams)v1.getLayoutParams();
                 Log.d(TAG,"Action was UP");
                 x=0;y=0;
                 down=false;
+                if(mode.equals("manual"))
+                    return true;
+                TransitionManager.beginDelayedTransition((ViewGroup)findViewById(R.id.upper),new AutoTransition());
+
+                if(state.equals("up"))
+                {
+                    float changePercent=100f*(p.weight-minweightTop)/(weightTop-minweightTop);
+                    if(changePercent>minChangePercent){
+                    state="down";
+                    p.weight = weightTop;
+                    p1.weight = weightBottom;
+                    }
+                    else{
+                        state="up";
+                        p.weight=dpToPx(20)*100f/screen+minweightTop;
+                        p1.weight=weightBottom+weightTop-p.weight;
+                    }
+
+                }
+                else{
+                    float changePercent=100f*(weightTop-p.weight)/(weightTop-minweightTop);
+                    if(changePercent>minChangePercent) {
+                        state = "up";
+                        p.weight = dpToPx(20) * 100f / screen + minweightTop;
+                        p1.weight = weightBottom + weightTop - p.weight;
+                    }
+                    else {
+                        state="down";
+                        p.weight = weightTop;
+                        p1.weight = weightBottom;
+                    }
+                }
+                findViewById(R.id.third).setAlpha(p.weight-con<=0?0:(p.weight-con)/(weightTop-con));
+                v.setLayoutParams(p);
+                v1.setLayoutParams(p1);
                 return true;
             case (MotionEvent.ACTION_CANCEL) :
                 Log.d(TAG,"Action was CANCEL");
@@ -205,15 +209,31 @@ public class UserProfileActivity extends AppCompatActivity {
         // the height will be set at this point
         screen = findViewById(R.id.linear).getHeight();
         Log.e(TAG, "onWindowFocusChanged: "+screen );
-        maxy=screen*.7f;
-        miny=screen*.35f;
+        maxy=screen*weightTop*.01f;
+        miny=screen*weightBottom*.01f;
+    }
+    public void follow(View v){
+        if(following) {
+            //start message
+            return;
+        }
+        following=true;
+        TransitionManager.beginDelayedTransition((ViewGroup)findViewById(R.id.sec));
+        TextView tv=findViewById(R.id.follow_button);
+        tv.setText("MESSAGE");
+        tv.setTranslationX(-dpToPx(40)*1f);
+        findViewById(R.id.following).setVisibility(View.VISIBLE);
+
     }
     public static int dpToPx(int dp)
     {
         return (int) (dp * Resources.getSystem().getDisplayMetrics().density);
     }
+    public void goback(View v){
+        onBackPressed();
+    }
     int screen;
     boolean state_up=true;
-    boolean down=false;
+    boolean down=false,following=false;
     float x=0,y=0,maxy=0,miny=0;
 }

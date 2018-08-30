@@ -5,6 +5,7 @@ import android.arch.lifecycle.LiveData;
 import android.content.Context;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.util.Log;
 
 import com.checkin.app.checkin.Data.ApiClient;
 import com.checkin.app.checkin.Data.ApiResponse;
@@ -35,6 +36,8 @@ public class ReviewsRepository extends BaseRepository {
             protected void saveCallResult(@NonNull List<ReviewsItem> item) {
             }
 
+
+
             @Override
             protected boolean shouldFetch(@Nullable List<ReviewsItem> data) {
                 return false;
@@ -48,7 +51,8 @@ public class ReviewsRepository extends BaseRepository {
             @NonNull
             @Override
             protected LiveData<List<ReviewsItem>> loadFromDb() {
-                return new ObjectBoxLiveData<>(reviews.query().order(ReviewsItem_.name).build());
+                Log.e("reviews List", "Size: " + ReviewsItem_.shopId);
+                return new ObjectBoxLiveData<>(reviews.query().equal(ReviewsItem_.shopId,reviewId ).build());
             }
 
             @NonNull

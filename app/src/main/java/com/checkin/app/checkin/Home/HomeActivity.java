@@ -39,7 +39,7 @@ import com.checkin.app.checkin.Profile.ShopProfile.ShopProfileActivity2;
 import com.checkin.app.checkin.R;
 import com.checkin.app.checkin.Session.ActiveSessionActivity;
 import com.checkin.app.checkin.Session.SessionUserActivity;
-import com.checkin.app.checkin.Shop.Shop;
+import com.checkin.app.checkin.Shop.ShopModel;
 import com.checkin.app.checkin.Social.ChatActivity;
 import com.checkin.app.checkin.Social.ChatAdapter;
 import com.checkin.app.checkin.Social.MessageViewModel;
@@ -350,12 +350,12 @@ public class HomeActivity extends AppCompatActivity
     }
 
     private void setupTrendingShops() {
-        List<Shop> shops = new ArrayList<>();
+        List<ShopModel> shops = new ArrayList<>();
         for (int i = 1; i <= 15; i++) {
             if (i % 2 == 0)
-                shops.add(new Shop(i, "Socials", "Bar"));
+                shops.add(new ShopModel(i, "Socials", "Bio",true,true,"address","city","+8687845140","email","website",true,4.7f));
             else
-                shops.add(new Shop(i, "Family First", "Restaurant"));
+                shops.add(new ShopModel(i, "Family First", "Bio",true,true,"address","city","+8687845140","email","website",true,4.7f));
         }
         rvTrendingShops.setLayoutManager(new LinearLayoutManager(
                 this, LinearLayoutManager.HORIZONTAL, false));

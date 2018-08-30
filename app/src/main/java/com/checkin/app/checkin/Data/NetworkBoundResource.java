@@ -20,6 +20,7 @@ public abstract class NetworkBoundResource<ResultType, RequestType> {
         if (shouldUseLocalDb()) {
             final LiveData<ResultType> dbSource = loadFromDb();
             mResult.addSource(dbSource, data -> {
+
                 mResult.removeSource(dbSource);
                 if (shouldFetch(data)) {
                     fetchFromNetwork(dbSource);

@@ -1,6 +1,6 @@
 package com.checkin.app.checkin.Data;
 
-import com.checkin.app.checkin.Profile.ShopProfile.ShopHomeModel;
+import com.checkin.app.checkin.Shop.ShopModel;
 import com.checkin.app.checkin.Session.ActiveSessionModel;
 import com.checkin.app.checkin.Social.Message;
 import com.fasterxml.jackson.databind.node.ObjectNode;
@@ -31,5 +31,5 @@ public interface WebApiService {
     Call<ObjectNode> postSessionAddMember(@Path("session_id") String sessionID, @Body ObjectNode data);
 
     @GET("shopHomeModel/{shop_home_id}")
-    Call<ShopHomeModel> getShopHome(@Path("shop_home_id") int shopHomeId);
+    Call<ShopModel> getShopHome(@Path("shop_home_id") int shopHomeId);
 }

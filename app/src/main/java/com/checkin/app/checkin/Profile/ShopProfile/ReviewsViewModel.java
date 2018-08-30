@@ -13,15 +13,14 @@ import java.util.List;
 
 public class ReviewsViewModel extends AndroidViewModel {
     ReviewsRepository repository;
-    private int shopId;
     private LiveData<Resource<List<ReviewsItem>>> reviews;
 
     ReviewsViewModel(@NonNull Application application) {
         super(application);
         repository = ReviewsRepository.getInstance(application);
     }
-    public LiveData<Resource<List<ReviewsItem>>> getReviewsItemLiveData() {
-        reviews=repository.getLiveData(0L);
+    public LiveData<Resource<List<ReviewsItem>>> getReviewsItemLiveData(long shopid) {
+        reviews=repository.getLiveData(shopid);
         return reviews;
     }
     public static class Factory extends ViewModelProvider.NewInstanceFactory {

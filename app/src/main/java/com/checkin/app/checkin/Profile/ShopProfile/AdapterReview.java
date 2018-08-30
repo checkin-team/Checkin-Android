@@ -8,7 +8,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
-import com.alcatraz.admin.project_alcatraz.R;
+
+import com.checkin.app.checkin.R;
 
 import java.util.ArrayList;
 import java.util.List;

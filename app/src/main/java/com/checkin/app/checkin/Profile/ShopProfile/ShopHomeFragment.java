@@ -12,6 +12,7 @@ import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -21,6 +22,7 @@ import android.widget.Toast;
 
 import com.checkin.app.checkin.Data.Resource;
 import com.checkin.app.checkin.R;
+import com.checkin.app.checkin.Shop.ShopModel;
 
 import java.util.List;
 
@@ -59,7 +61,8 @@ public class ShopHomeFragment extends Fragment implements View.OnClickListener {
         mShopHomeViewModel.getShopHomeModel(1).observe(this, shopHomeModel -> {
             if (shopHomeModel == null) return;
             if (shopHomeModel.status == Resource.Status.SUCCESS) {
-                List<ShopHomeModel> shopHomeModelList = shopHomeModel.data;
+                Log.e(TAG, "It works" );
+                List<ShopModel> shopHomeModelList = shopHomeModel.data;
                 if (shopHomeModelList.size() > 0) {
                     hotel.setText(shopHomeModelList.get(0).getName());
                 }

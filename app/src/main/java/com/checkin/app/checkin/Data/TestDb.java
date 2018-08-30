@@ -4,11 +4,13 @@ import android.content.Context;
 import android.util.Log;
 
 import com.checkin.app.checkin.Profile.ShopProfile.ReviewsItem;
-import com.checkin.app.checkin.Profile.ShopProfile.ShopHomeModel;
+import com.checkin.app.checkin.Shop.ShopModel;
+import com.checkin.app.checkin.R;
 import com.checkin.app.checkin.Session.ItemCustomizationField;
 import com.checkin.app.checkin.Session.ItemCustomizationGroup;
 import com.checkin.app.checkin.Session.MenuGroupModel;
 import com.checkin.app.checkin.Session.MenuItemModel;
+import com.checkin.app.checkin.Shop.ShopModel;
 import com.checkin.app.checkin.User.UserModel;
 
 import java.util.ArrayList;
@@ -16,6 +18,8 @@ import java.util.Arrays;
 import java.util.List;
 
 import io.objectbox.Box;
+
+import static android.support.constraint.Constraints.TAG;
 
 public class TestDb {
     private static final int DELAY_MILLIS = 1000;
@@ -27,7 +31,7 @@ public class TestDb {
                 AppDatabase.getMenuGroupModel(context),
                 AppDatabase.getItemCustomizationFieldModel(context),
                 AppDatabase.getItemCustomizationGroupModel(context),
-                AppDatabase.getShopHomeModel(context)
+                AppDatabase.getShopModel(context)
         );
         populateReviews(AppDatabase.getReviewsModel(context));
     }
@@ -37,13 +41,13 @@ public class TestDb {
             Box<MenuGroupModel> menuGroupModel,
             Box<ItemCustomizationField> itemCustomizationFieldModel,
             Box<ItemCustomizationGroup> itemCustomizationGroupModel,
-            Box<ShopHomeModel> shopProfileModel
+            Box<ShopModel> shopProfileModel
     ) {
         List<MenuGroupModel> menuGroups = new ArrayList<>(30);
         List<MenuItemModel> menuItems = new ArrayList<>();
         List<ItemCustomizationGroup> itemCustomizationGroups = new ArrayList<>();
         List<ItemCustomizationField> itemCustomizationFields = new ArrayList<>();
-        List<ShopHomeModel> shopProfiles = new ArrayList<>();
+        List<ShopModel> shopProfiles = new ArrayList<>();
 
         int c1 = 1, c2 = 1;
         for (int i = 1; i <= 30; i++) {
@@ -97,7 +101,7 @@ public class TestDb {
         itemCustomizationFieldModel.put(itemCustomizationFields);
 
         //shopProfiles
-        ShopHomeModel shopProfile = new ShopHomeModel(0,"Lajjat Hotel","Bio",true,true,"address","city","+8687845140","email","website",true,4.7f);
+        ShopModel shopProfile = new ShopModel(0L,"Lajjat Hotel","Bio",true,true,"address","city","+8687845140","email","website",true,4.7f);
         shopProfiles.add(shopProfile);
         shopProfileModel.put(shopProfiles);
     }
@@ -114,9 +118,10 @@ public class TestDb {
     }
 
     private static void populateReviews(Box<ReviewsItem> users){
+        Log.e(TAG, "populateReviews: Populated");
         String review="Hello I am awesome\nSoAwesome\nSo Awesome\nVery Awesome\nSee for yourself";
-        users.put(new ReviewsItem(0,"","","","",""));
+        users.put(new ReviewsItem(0,"","","","","",1));
         for(int i=0;i<10;i++)
-            users.put(new ReviewsItem(R.drawable.water,"Ishu Dohare"+i,"86 Reviews,332 Folowers","5 days ago","5",review));
+            users.put(new ReviewsItem(R.drawable.water,"Ishu Darshan"+i,"86 Reviews,332 Folowers","5 days ago","5",review,1));
     }
 }
