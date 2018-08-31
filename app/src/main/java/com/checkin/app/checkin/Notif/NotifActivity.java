@@ -1,17 +1,20 @@
 package com.checkin.app.checkin.Notif;
 
+import android.app.NotificationManager;
 import android.arch.lifecycle.Observer;
 import android.arch.lifecycle.ViewModelProviders;
+import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
+import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.v4.content.LocalBroadcastManager;
 import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.format.DateUtils;
-import android.util.TimeUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -19,7 +22,6 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.bumptech.glide.Glide;
 import com.checkin.app.checkin.Data.Resource;
 import com.checkin.app.checkin.R;
 import com.checkin.app.checkin.Utility.Constants;
@@ -27,12 +29,10 @@ import com.checkin.app.checkin.Utility.Constants;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
-import java.util.concurrent.TimeUnit;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
-import static java.util.Calendar.MILLISECOND;
 import static java.util.concurrent.TimeUnit.DAYS;
 import static java.util.concurrent.TimeUnit.MILLISECONDS;
 
@@ -47,6 +47,7 @@ public class NotifActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_notif);
+        LocalBroadcastManager.getInstance(this).registerReceiver(mHandler,new IntentFilter("com.checkin.app.checkin.notifications"));
         ButterKnife.bind(this);
         notifViewModel = ViewModelProviders.of(this,new NotifViewModel.Factory(getApplication())).get(NotifViewModel.class);
         notifRV.setLayoutManager(new LinearLayoutManager(getApplicationContext()));
@@ -176,5 +177,25 @@ public class NotifActivity extends AppCompatActivity {
             else notifs.add(new NotifModel("Message " + i,new Date(),"profile url","action url",true ,i));
         }
         return notifs;
+    }
+
+    private BroadcastReceiver mHandler=new BroadcastReceiver() {
+        @Override
+        public void onReceive(Context context, Intent intent) {
+
+
+            String message =intent.getStringExtra("message");
+            Toast.makeText(getApplicationContext(),message,Toast.LENGTH_LONG).show();
+
+            NotificationManager notificationManager =(NotificationManager)getSystemService(Context.NOTIFICATION_SERVICE);
+            notificationManager.cancelAll();
+
+        }
+    };
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        LocalBroadcastManager.getInstance(this).unregisterReceiver(mHandler);
     }
 }
