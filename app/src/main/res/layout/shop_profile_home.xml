@@ -6,25 +6,6 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <!--<include layout="@layout/image_shop"
-        android:id="@+id/pager"
-        android:layout_width="0dp"
-        android:layout_height="220dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"/>-->
-
-    <!--<ImageView
-        android:id="@+id/imageView2"
-        android:layout_width="0dp"
-        android:layout_height="220dp"
-        android:scaleType="centerCrop"
-        android:src="@drawable/dummy_shop"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/dummy_shop" />-->
-
     <ScrollView
         android:id="@+id/scroll"
         android:layout_width="0dp"
@@ -105,6 +86,7 @@
                         android:orientation="vertical">
 
                         <TextView
+                            android:id="@+id/followers"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:text="2.2k"
@@ -126,6 +108,7 @@
                         android:orientation="vertical">
 
                         <TextView
+                            android:id="@+id/checkIn"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:text="2.2k"
@@ -135,7 +118,7 @@
                         <TextView
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:text="Followers"
+                            android:text="Check In"
                             android:textAlignment="center"
                             android:textColor="@color/shop_profile_about_ratings" />
                     </LinearLayout>
@@ -147,6 +130,7 @@
                         android:orientation="vertical">
 
                         <TextView
+                            android:id="@+id/rating"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:text="2.2k"
@@ -156,7 +140,7 @@
                         <TextView
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:text="Followers"
+                            android:text="Rating"
                             android:textAlignment="center"
                             android:textColor="@color/shop_profile_about_ratings" />
                     </LinearLayout>

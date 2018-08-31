@@ -2,6 +2,7 @@ package com.checkin.app.checkin.Data;
 
 import android.content.Context;
 
+import com.checkin.app.checkin.Notif.NotifModel;
 import com.checkin.app.checkin.Profile.ShopProfile.ShopHomeModel;
 import com.checkin.app.checkin.MyObjectBox;
 import com.checkin.app.checkin.Session.ItemCustomizationField;
@@ -33,6 +34,10 @@ public class AppDatabase {
     }
 
     private AppDatabase() {
+    }
+
+    public static Box<NotifModel> getNotifModel(final Context context) {
+        return getBoxStore(context).boxFor(NotifModel.class);
     }
 
     public static Box<ShopHomeModel> getShopHomeModel(final Context context) {

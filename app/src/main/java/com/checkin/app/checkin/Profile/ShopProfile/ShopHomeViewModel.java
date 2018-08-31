@@ -7,6 +7,7 @@ import android.arch.lifecycle.ViewModel;
 import android.arch.lifecycle.ViewModelProvider;
 import android.support.annotation.NonNull;
 
+import com.checkin.app.checkin.Data.BaseViewModel;
 import com.checkin.app.checkin.Data.Resource;
 
 import java.util.List;
@@ -15,7 +16,7 @@ import java.util.List;
  * Created by Bhavik Patel on 19/08/2018.
  */
 
-public class ShopHomeViewModel extends AndroidViewModel {
+public class ShopHomeViewModel extends BaseViewModel {
 
     private final ShopHomeRepository mRepository;
     //private LiveData<Resource<ShopHomeModel>> mData;
@@ -42,5 +43,10 @@ public class ShopHomeViewModel extends AndroidViewModel {
         public <T extends ViewModel> T create(@NonNull Class<T> modelClass) {
             return (T) new ShopHomeViewModel(mApplication);
         }
+    }
+
+    @Override
+    public void updateResults() {
+
     }
 }

@@ -1,8 +1,10 @@
 package com.checkin.app.checkin.Session;
 
 import android.app.Application;
+import android.arch.core.util.Function;
 import android.arch.lifecycle.AndroidViewModel;
 import android.arch.lifecycle.LiveData;
+import android.arch.lifecycle.MediatorLiveData;
 import android.arch.lifecycle.MutableLiveData;
 import android.arch.lifecycle.Transformations;
 import android.arch.lifecycle.ViewModel;
@@ -14,12 +16,14 @@ import android.util.LongSparseArray;
 import com.checkin.app.checkin.Data.Resource;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 public class MenuViewModel extends AndroidViewModel {
     private final String TAG = MenuViewModel.class.getSimpleName();
     private MenuRepository mRepository;
     private int mMenuId;
+    private LiveData<List<String>> mCategories;
     private LiveData<List<MenuItemModel>> mMenuItems;
     private LiveData<Resource<List<MenuGroupModel>>> mMenuGroups;
     private MutableLiveData<List<OrderedItemModel>> mOrderedItems = new MutableLiveData<>();
@@ -27,12 +31,6 @@ public class MenuViewModel extends AndroidViewModel {
     MenuViewModel(@NonNull Application application) {
         super(application);
         mRepository = MenuRepository.getInstance(application);
-    }
-
-    public LiveData<List<MenuItemModel>> getMenuItems() {
-        if (mMenuItems == null)
-            mMenuItems = mRepository.getMenuItems(mMenuId);
-        return mMenuItems;
     }
 
     public LiveData<List<OrderedItemModel>> getOrderedItems() {
@@ -92,7 +90,7 @@ public class MenuViewModel extends AndroidViewModel {
     }
 
     private LiveData<List<MenuItemModel>> filterMenuItems() {
-        LiveData<List<MenuItemModel>> input = getMenuItems();
+        LiveData<List<MenuItemModel>> input = null;//getMenuItems();
         return input;
     }
 
@@ -101,6 +99,29 @@ public class MenuViewModel extends AndroidViewModel {
         if (mMenuGroups == null)
             mMenuGroups = mRepository.getMenuGroups(menuId);
         return mMenuGroups;
+    }
+
+    public LiveData<List<String>> getCategories(int menuId){
+        if(mCategories == null)
+            if(mMenuGroups == null) getMenuGroups(menuId);
+            mCategories = Transformations.switchMap(mMenuGroups, new Function<Resource<List<MenuGroupModel>>, LiveData<List<String>>>() {
+                @Override
+                public LiveData<List<String>> apply(Resource<List<MenuGroupModel>> input) {
+                    MediatorLiveData<List<String>> catListLive = new MediatorLiveData();
+                    List<String> categoryList = new ArrayList<>();
+                    String category = "";
+                    if(input.data != null)
+                        for(MenuGroupModel menuGroupModel : input.data){
+                            if(!category.contentEquals(menuGroupModel.getCategory())){
+                                category = menuGroupModel.getCategory();
+                                categoryList.add(category);
+                            }
+                        }
+                    catListLive.setValue(categoryList);
+                    return catListLive;
+                }
+            });
+        return mCategories;
     }
 
     public static class Factory extends ViewModelProvider.NewInstanceFactory {

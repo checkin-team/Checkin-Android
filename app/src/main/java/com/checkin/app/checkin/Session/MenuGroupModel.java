@@ -15,6 +15,7 @@ import io.objectbox.annotation.Entity;
 import io.objectbox.annotation.Id;
 import io.objectbox.annotation.Transient;
 import io.objectbox.relation.ToMany;
+import io.objectbox.relation.ToOne;
 
 /**
  * Created by shivanshs9 on 7/5/18.
@@ -32,13 +33,14 @@ public class MenuGroupModel {
     private int menuId;
     @Backlink(to = "group")
     @JsonIgnore private ToMany<MenuItemModel> items;
+    private String category;
 
     MenuGroupModel() {
         this.subGroups = new ArrayList<>(1);
         this.subGroups.add("Default");
     }
 
-    public MenuGroupModel(@NonNull final String name, final ArrayList<String> subGroups, int menuId) {
+    public MenuGroupModel(@NonNull final String name, final ArrayList<String> subGroups, int menuId,String category) {
         this.name = name;
         if (subGroups != null) {
             this.subGroups = subGroups;
@@ -46,6 +48,7 @@ public class MenuGroupModel {
             this.subGroups = new ArrayList<>(1);
             this.subGroups.add("Default");
         }
+        this.category = category;
         this.menuId = menuId;
     }
 
@@ -79,5 +82,13 @@ public class MenuGroupModel {
 
     public ToMany<MenuItemModel> getItems() {
         return items;
+    }
+
+    public String getCategory() {
+        return category;
+    }
+
+    public void setCategory(String category) {
+        this.category = category;
     }
 }

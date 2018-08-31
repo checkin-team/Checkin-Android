@@ -1,5 +1,6 @@
 package com.checkin.app.checkin.Data;
 
+import com.checkin.app.checkin.Notif.NotifModel;
 import com.checkin.app.checkin.Profile.ShopProfile.ShopHomeModel;
 import com.checkin.app.checkin.Session.ActiveSessionModel;
 import com.checkin.app.checkin.Social.Message;
@@ -13,6 +14,7 @@ import retrofit2.http.Body;
 import retrofit2.http.GET;
 import retrofit2.http.POST;
 import retrofit2.http.Path;
+import retrofit2.http.Query;
 
 public interface WebApiService {
     @GET("messages/{user_id}/")
@@ -32,4 +34,7 @@ public interface WebApiService {
 
     @GET("shopHomeModel/{shop_home_id}")
     Call<ShopHomeModel> getShopHome(@Path("shop_home_id") int shopHomeId);
+
+    @GET("notification")
+    Call<List<NotifModel>> getNotif(@Query("last_notif_id") int lastNotifId);
 }

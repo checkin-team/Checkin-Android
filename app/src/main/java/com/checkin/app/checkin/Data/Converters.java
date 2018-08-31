@@ -3,6 +3,7 @@ package com.checkin.app.checkin.Data;
 import android.support.annotation.Nullable;
 import android.util.Log;
 
+import com.checkin.app.checkin.Notif.NotifModel;
 import com.fasterxml.jackson.core.JsonFactory;
 import com.fasterxml.jackson.core.JsonParser;
 import com.fasterxml.jackson.core.JsonProcessingException;
@@ -55,6 +56,26 @@ public class Converters {
                 e.printStackTrace();
             }
             return "";
+        }
+    }
+
+    public static class ActionConverter implements PropertyConverter<NotifModel.ACTION, Integer> {
+        @Override
+        public NotifModel.ACTION convertToEntityProperty(Integer databaseValue) {
+            if (databaseValue == null) {
+                return null;
+            }
+            for (NotifModel.ACTION action : NotifModel.ACTION.values()) {
+                if (action.id == databaseValue) {
+                    return action;
+                }
+            }
+            return NotifModel.ACTION.NULL;
+        }
+
+        @Override
+        public Integer convertToDatabaseValue(NotifModel.ACTION entityProperty) {
+            return entityProperty == null ? null : entityProperty.id;
         }
     }
 

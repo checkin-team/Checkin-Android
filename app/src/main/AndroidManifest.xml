@@ -33,7 +33,7 @@
         <activity
             android:name=".Home.SignupActivity"
             android:screenOrientation="portrait"
-            android:theme="@style/Theme.AppCompat.Light.NoActionBar"></activity>
+            android:theme="@style/Theme.AppCompat.Light.NoActionBar" />
         <activity
             android:name=".Home.HomeActivity"
             android:label="@string/title_activity_home"
@@ -73,7 +73,10 @@
         <activity
             android:name=".Session.ActiveSessionActivity"
             android:windowSoftInputMode="adjustNothing" />
-        <activity android:name=".Notif.NotifActivity"></activity>
+        <activity android:name=".Notif.NotifActivity" />
+        <activity android:name=".Profile.ShopProfile.ShopProfile" />
+        <activity android:name=".User.MutualCheckInActivityDemo" />
+        <activity android:name=".User.UserShopProfileActivity"></activity>
     </application>
 
 </manifest>

@@ -6,11 +6,25 @@
     android:layout_height="match_parent"
     android:orientation="vertical">
 
+
+    <TextView
+        android:id="@+id/currentCategory"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="8dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="8dp"
+        android:lineSpacingExtra="14sp"
+        android:text="TextView"
+        android:textColor="#000"
+        android:textSize="14sp" />
+
+
     <android.support.v7.widget.RecyclerView
         android:id="@+id/menu_groups_list"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_marginTop="@dimen/spacing_small"
         app:layout_behavior="@string/appbar_scrolling_view_behavior"/>
+
 
 </LinearLayout >

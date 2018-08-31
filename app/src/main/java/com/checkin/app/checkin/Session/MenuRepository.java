@@ -32,39 +32,6 @@ public class MenuRepository {
         mMenuItemModel = AppDatabase.getMenuItemModel(context);
         mMenuGroupModel = AppDatabase.getMenuGroupModel(context);
     }
-    public LiveData<List<MenuItemModel>> getMenuItems(final int menuId) {
-        /*return new NetworkBoundResource<List<MenuItemModel>, List<MenuItemModel>>() {
-
-            @Override
-            protected void saveCallResult(@NonNull List<MenuItemModel> item) {
-                mMenuItemModel.put(item);
-            }
-
-            @Override
-            protected boolean shouldFetch(@Nullable List<MenuItemModel> data) {
-                return false;
-            }
-
-            @Override
-            protected boolean shouldUseLocalDb() {
-                return true;
-            }
-
-            @NonNull
-            @Override
-            protected LiveData<List<MenuItemModel>> loadFromDb() {
-                return new ObjectBoxLiveData<>(mMenuItemModel.query().equal(MenuItem_.menuId, menuId).build());
-            }
-
-            @NonNull
-            @Override
-            protected LiveData<ApiResponse<List<MenuItemModel>>> createCall() {
-                // TODO: Network Fetching!!!!
-                return null;
-            }
-        }.getAsLiveData();*/
-        return new ObjectBoxLiveData<>(mMenuItemModel.query().equal(MenuItemModel_.menuId, menuId).build());
-    }
 
     public LiveData<Resource<List<MenuGroupModel>>> getMenuGroups(final int menuId) {
         return new NetworkBoundResource<List<MenuGroupModel>, List<MenuGroupModel>>() {
@@ -86,7 +53,7 @@ public class MenuRepository {
             @NonNull
             @Override
             protected LiveData<List<MenuGroupModel>> loadFromDb() {
-                return new ObjectBoxLiveData<>(mMenuGroupModel.query().equal(MenuGroupModel_.menuId, menuId).build());
+                return new ObjectBoxLiveData<>(mMenuGroupModel.query().equal(MenuGroupModel_.menuId, menuId).order(MenuGroupModel_.category).build());
             }
 
             @NonNull

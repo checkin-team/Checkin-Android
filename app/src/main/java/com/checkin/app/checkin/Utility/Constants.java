@@ -21,6 +21,9 @@ public class Constants {
     public static final String SHOP_ID = "shop_id";
     public static final String USER_ID = "user_id";
     public static final String SESSION_ID = "session_id";
+    public static final String TARGET_ID = "target_id";
+    public static final String LAST_NOTIF_ID = "last_notif_id";
+    public static final int NEW_NOTIF_RANGE = 2;//number of days
 
     public static final String API_URL_DECRYPT_QR = "/qr/decrypt/";
     public static final String API_URL_SHOP_PROFILE_URL = "/shops/%(" + SHOP_ID + ")/";

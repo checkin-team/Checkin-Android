@@ -1,0 +1,344 @@
+{
+  "_note1": "KEEP THIS FILE! Check it into a version control system (VCS) like git.",
+  "_note2": "ObjectBox manages crucial IDs for your object model. See docs for details.",
+  "_note3": "If you have VCS merge conflicts, you must resolve them according to ObjectBox docs.",
+  "entities": [
+    {
+      "id": "1:7700866262869541340",
+      "lastPropertyId": "12:2160517245621933807",
+      "name": "ShopHomeModel",
+      "properties": [
+        {
+          "id": "1:8599773332874456249",
+          "name": "id"
+        },
+        {
+          "id": "2:9203826356151836317",
+          "name": "name"
+        },
+        {
+          "id": "3:233343720059840556",
+          "name": "bio"
+        },
+        {
+          "id": "4:5343411623853954723",
+          "name": "active"
+        },
+        {
+          "id": "5:8884975039374342758",
+          "name": "onlyVegetarian"
+        },
+        {
+          "id": "6:6903967852388362716",
+          "name": "address"
+        },
+        {
+          "id": "7:7032679538524570748",
+          "name": "city"
+        },
+        {
+          "id": "8:1209921655438577797",
+          "name": "phone"
+        },
+        {
+          "id": "9:7536918426604599304",
+          "name": "email"
+        },
+        {
+          "id": "10:1765327451906882738",
+          "name": "website"
+        },
+        {
+          "id": "11:7265644792886979826",
+          "name": "verified"
+        },
+        {
+          "id": "12:2160517245621933807",
+          "name": "rating"
+        }
+      ],
+      "relations": []
+    },
+    {
+      "id": "2:9013148229868931390",
+      "lastPropertyId": "5:2040394102776182789",
+      "name": "ItemCustomizationField",
+      "properties": [
+        {
+          "id": "1:6041963093733385119",
+          "name": "id"
+        },
+        {
+          "id": "2:2139826106997343937",
+          "name": "vegetarian"
+        },
+        {
+          "id": "3:5558937555415494072",
+          "name": "name"
+        },
+        {
+          "id": "4:3088010793783188838",
+          "name": "cost"
+        },
+        {
+          "id": "5:2040394102776182789",
+          "indexId": "1:5295232855124945403",
+          "name": "groupId"
+        }
+      ],
+      "relations": []
+    },
+    {
+      "id": "3:8886937349592006134",
+      "lastPropertyId": "5:7509815388783845926",
+      "name": "ItemCustomizationGroup",
+      "properties": [
+        {
+          "id": "1:8487790832590624193",
+          "name": "id"
+        },
+        {
+          "id": "2:3891390968657781395",
+          "name": "minSelection"
+        },
+        {
+          "id": "3:1875650934690784675",
+          "name": "maxSelection"
+        },
+        {
+          "id": "4:6302564343572013697",
+          "name": "name"
+        },
+        {
+          "id": "5:7509815388783845926",
+          "indexId": "2:3914422290501822513",
+          "name": "itemId"
+        }
+      ],
+      "relations": []
+    },
+    {
+      "id": "4:1402722537507184870",
+      "lastPropertyId": "4:4387250209655941268",
+      "name": "MenuGroupModel",
+      "properties": [
+        {
+          "id": "1:7421181033953019300",
+          "name": "id"
+        },
+        {
+          "id": "2:2437797734842939558",
+          "name": "name"
+        },
+        {
+          "id": "3:3101322312642575402",
+          "name": "subGroups"
+        },
+        {
+          "id": "4:4387250209655941268",
+          "name": "menuId"
+        }
+      ],
+      "relations": []
+    },
+    {
+      "id": "5:8248846936820548599",
+      "lastPropertyId": "17:5049930060903688095",
+      "name": "MenuItemModel",
+      "properties": [
+        {
+          "id": "1:6919816790542913576",
+          "name": "id"
+        },
+        {
+          "id": "2:7337993800965083706",
+          "name": "name"
+        },
+        {
+          "id": "3:4343415554400939057",
+          "name": "shop"
+        },
+        {
+          "id": "4:1203314394646478871",
+          "name": "typeName"
+        },
+        {
+          "id": "5:5464779940710408984",
+          "name": "typeCost"
+        },
+        {
+          "id": "6:2505651955045558476",
+          "name": "description"
+        },
+        {
+          "id": "7:846219254602735524",
+          "name": "vegetarian"
+        },
+        {
+          "id": "8:8209973243686417933",
+          "name": "available"
+        },
+        {
+          "id": "9:7886370123910222512",
+          "name": "menuId"
+        },
+        {
+          "id": "10:769358240820595060",
+          "name": "subGroupIndex"
+        },
+        {
+          "id": "11:5004644711405867028",
+          "name": "image"
+        },
+        {
+          "id": "12:306008471196860527",
+          "name": "video"
+        },
+        {
+          "id": "13:1707943432955701551",
+          "name": "remarks"
+        },
+        {
+          "id": "14:8639069019769726396",
+          "name": "availableMeals"
+        },
+        {
+          "id": "15:112749131598266890",
+          "name": "recipe"
+        },
+        {
+          "id": "16:5481915345177824599",
+          "name": "ingredients"
+        },
+        {
+          "id": "17:5049930060903688095",
+          "indexId": "3:7158133374734032371",
+          "name": "groupId"
+        }
+      ],
+      "relations": []
+    },
+    {
+      "id": "6:3985857568957166712",
+      "lastPropertyId": "1:4205318279255697946",
+      "name": "Chat",
+      "properties": [
+        {
+          "id": "1:4205318279255697946",
+          "name": "userId"
+        }
+      ],
+      "relations": []
+    },
+    {
+      "id": "7:3010500513851047057",
+      "lastPropertyId": "7:1469454368499064485",
+      "name": "Message",
+      "properties": [
+        {
+          "id": "1:5178021509384600994",
+          "name": "id"
+        },
+        {
+          "id": "2:1728904523276887851",
+          "name": "message"
+        },
+        {
+          "id": "3:5070866937376924117",
+          "name": "readAt"
+        },
+        {
+          "id": "4:6252434824526234636",
+          "name": "sentAt"
+        },
+        {
+          "id": "5:9179551216201293656",
+          "indexId": "4:3868479869989036065",
+          "name": "senderId"
+        },
+        {
+          "id": "6:1902808569362145552",
+          "indexId": "5:5324121001772522372",
+          "name": "recipientId"
+        },
+        {
+          "id": "7:1469454368499064485",
+          "indexId": "6:4880572516930420619",
+          "name": "chatId"
+        }
+      ],
+      "relations": []
+    },
+    {
+      "id": "8:5350937631427200878",
+      "lastPropertyId": "3:4639523411727620533",
+      "name": "UserModel",
+      "properties": [
+        {
+          "id": "1:7552362886642903141",
+          "name": "id"
+        },
+        {
+          "id": "2:3199153770943332731",
+          "name": "username"
+        },
+        {
+          "id": "3:4639523411727620533",
+          "name": "profilePic"
+        }
+      ],
+      "relations": []
+    },
+    {
+      "id": "9:3253507163749003384",
+      "lastPropertyId": "8:7189431860335569323",
+      "name": "NotifModel",
+      "properties": [
+        {
+          "id": "1:3760221806569031230",
+          "name": "id"
+        },
+        {
+          "id": "2:8911119307607164819",
+          "name": "message"
+        },
+        {
+          "id": "3:2457849217750104982",
+          "name": "time"
+        },
+        {
+          "id": "4:4691990232294011823",
+          "name": "profileUrl"
+        },
+        {
+          "id": "5:6549633351394277945",
+          "name": "actionUrl"
+        },
+        {
+          "id": "6:6249737334922039028",
+          "name": "targetId"
+        },
+        {
+          "id": "7:7222749548118661019",
+          "name": "seen"
+        },
+        {
+          "id": "8:7189431860335569323",
+          "name": "action"
+        }
+      ],
+      "relations": []
+    }
+  ],
+  "lastEntityId": "9:3253507163749003384",
+  "lastIndexId": "6:4880572516930420619",
+  "lastRelationId": "0:0",
+  "lastSequenceId": "0:0",
+  "modelVersion": 4,
+  "modelVersionParserMinimum": 4,
+  "retiredEntityUids": [],
+  "retiredIndexUids": [],
+  "retiredPropertyUids": [],
+  "retiredRelationUids": [],
+  "version": 1
+}

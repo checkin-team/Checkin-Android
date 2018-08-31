@@ -42,6 +42,8 @@ public class ShopHomeFragment extends Fragment implements View.OnClickListener {
     private String mobNumber = "+9717477205";
     private ShopHomeViewModel mShopHomeViewModel;
 
+    private int targetId;
+
 
     @Nullable
     @Override
@@ -56,10 +58,10 @@ public class ShopHomeFragment extends Fragment implements View.OnClickListener {
         hotel = view.findViewById(R.id.hotel);
         setUp();
         mShopHomeViewModel = ViewModelProviders.of(this, new ShopHomeViewModel.Factory(getActivity().getApplication())).get(ShopHomeViewModel.class);
-        mShopHomeViewModel.getShopHomeModel(1).observe(this, shopHomeModel -> {
+        mShopHomeViewModel.getShopHomeModel(targetId).observe(this, shopHomeModel -> {
             if (shopHomeModel == null) return;
             if (shopHomeModel.status == Resource.Status.SUCCESS) {
-                List<ShopHomeModel> shopHomeModelList = shopHomeModel.data;
+                List<ShopHomeModel> shopHomeModelList = shopHomeModel.data;//list size will be 1 only because we have only 1 target
                 if (shopHomeModelList.size() > 0) {
                     hotel.setText(shopHomeModelList.get(0).getName());
                 }
@@ -72,6 +74,12 @@ public class ShopHomeFragment extends Fragment implements View.OnClickListener {
             }
         });
         return view;
+    }
+
+    public static ShopHomeFragment getInstance(int targetId){
+        ShopHomeFragment fragment = new ShopHomeFragment();
+        fragment.targetId = targetId;
+        return fragment;
     }
 
     private void setUp(){

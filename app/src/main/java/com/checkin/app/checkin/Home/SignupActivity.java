@@ -16,6 +16,7 @@ import android.util.Log;
 import android.view.Gravity;
 import android.view.View;
 
+import com.checkin.app.checkin.Data.TestDb;
 import com.checkin.app.checkin.Home.SignupUserInfoFragment.GENDER;
 import com.checkin.app.checkin.R;
 import com.checkin.app.checkin.Utility.Constants;
@@ -86,6 +87,7 @@ public class SignupActivity extends AppCompatActivity implements SignupFragmentI
         editor.putInt(Constants.SP_USER_ID, 0);
         editor.putBoolean(Constants.SP_LOGGED_IN, true);
         editor.apply();
+        TestDb.populateWithTestData(this);
         startActivity(new Intent(this, HomeActivity.class));
         finish();
     }

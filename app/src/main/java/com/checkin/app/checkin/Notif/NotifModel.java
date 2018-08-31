@@ -1,31 +1,50 @@
 package com.checkin.app.checkin.Notif;
 
+import android.app.Activity;
+import android.os.Bundle;
 import android.util.Log;
 
+import com.checkin.app.checkin.Data.Converters;
+import com.checkin.app.checkin.User.ShopProfileActivity;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 import java.lang.annotation.Target;
 import java.util.Date;
 
+import io.objectbox.annotation.Convert;
+import io.objectbox.annotation.Entity;
+import io.objectbox.annotation.Id;
+
 /**
  * Created by Bhavik Patel on 20/08/2018.
  */
 
+@Entity
 public class NotifModel {
-
+    @Id private long id;
     private String message;
     private Date time;
     private String profileUrl;
     private String actionUrl;
     private int targetId;
-    private boolean seen;
+    @JsonIgnore private boolean seen;
+    @Convert(converter = Converters.ActionConverter.class, dbType = Integer.class)
     private ACTION action;
 
 
-    private enum ACTION {
-        NULL,FOLLOWED_YOU,FOLLOW_ACCEPTED      //static action images
-        ,ADDED_TO_SESSION,RECOMMENDED_YOU    //non static action images
+    public static enum ACTION {
+        NULL(0),FOLLOWED_YOU(1),FOLLOW_ACCEPTED (2)     //static action images
+        ,ADDED_TO_SESSION(3),RECOMMENDED_YOU(4) ;   //non static action images
+
+        public final int id;
+
+        ACTION(int id) {
+            this.id = id;
+        }
     }
+
+
 
     public NotifModel(String message, Date time, String profileUrl, String actionUrl, boolean seen, int targetId) {
         this.message = message;
@@ -34,6 +53,24 @@ public class NotifModel {
         this.actionUrl = actionUrl;
         this.seen = seen;
         this.targetId = targetId;
+    }
+
+    public Class getActionClass(){
+        switch (action){
+            case FOLLOWED_YOU:return ShopProfileActivity.class;
+            case FOLLOW_ACCEPTED:return ShopProfileActivity.class;
+            case ADDED_TO_SESSION:return ShopProfileActivity.class;
+            case RECOMMENDED_YOU:return ShopProfileActivity.class;
+            default:return ShopProfileActivity.class;
+        }
+    }
+
+    public long getId() {
+        return id;
+    }
+
+    public void setId(long id) {
+        this.id = id;
     }
 
     public String getMessage() {
@@ -91,7 +128,11 @@ public class NotifModel {
     @JsonProperty("action")
     public void setAction(int actionCode) {
         switch (actionCode){
-            case 0: action = ACTION.NULL;break;
+            case 1: action = ACTION.FOLLOWED_YOU;break;
+            case 2: action = ACTION.FOLLOW_ACCEPTED;break;
+            case 3: action = ACTION.ADDED_TO_SESSION;break;
+            case 4: action = ACTION.RECOMMENDED_YOU;break;
+            default: action = ACTION.NULL;
         }
     }
 }

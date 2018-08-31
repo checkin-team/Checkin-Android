@@ -35,6 +35,7 @@ import android.widget.Toast;
 
 import com.checkin.app.checkin.Notif.NotifActivity;
 import com.checkin.app.checkin.Profile.ShopProfile.ShopActivity;
+import com.checkin.app.checkin.Profile.ShopProfile.ShopProfile;
 import com.checkin.app.checkin.Profile.ShopProfile.ShopProfileActivity2;
 import com.checkin.app.checkin.R;
 import com.checkin.app.checkin.Session.ActiveSessionActivity;
@@ -43,6 +44,8 @@ import com.checkin.app.checkin.Shop.Shop;
 import com.checkin.app.checkin.Social.ChatActivity;
 import com.checkin.app.checkin.Social.ChatAdapter;
 import com.checkin.app.checkin.Social.MessageViewModel;
+import com.checkin.app.checkin.User.MutualCheckInActivityDemo;
+import com.checkin.app.checkin.User.UserShopProfileActivity;
 import com.checkin.app.checkin.User.UserViewModel;
 import com.checkin.app.checkin.Utility.ClipRevealFrame;
 import com.checkin.app.checkin.Utility.Constants;
@@ -426,6 +429,18 @@ public class HomeActivity extends AppCompatActivity
                 break;
             case R.id.notif_activity:
                 intent = new Intent(getApplicationContext(), NotifActivity.class);
+                startActivity(intent);
+                break;
+            case R.id.shop_profile:
+                intent = new Intent(getApplicationContext(), ShopProfile.class);
+                startActivity(intent);
+                break;
+            case R.id.mutual_checkin:
+                intent = new Intent(getApplicationContext(), MutualCheckInActivityDemo.class);
+                startActivity(intent);
+                break;
+            case R.id.user_shop_porfile:
+                intent = new Intent(getApplicationContext(), UserShopProfileActivity.class);
                 startActivity(intent);
                 break;
 
