@@ -165,7 +165,7 @@ public class NotifActivity extends AppCompatActivity {
             Toast.makeText(getApplicationContext(),message,Toast.LENGTH_LONG).show();
 
             NotificationManager notificationManager =(NotificationManager)getSystemService(Context.NOTIFICATION_SERVICE);
-            notificationManager.cancelAll();
+
 
         }
     };

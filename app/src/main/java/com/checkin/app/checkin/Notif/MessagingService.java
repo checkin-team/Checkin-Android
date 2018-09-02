@@ -3,6 +3,7 @@ package com.checkin.app.checkin.Notif;
 import android.app.NotificationChannel;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
+import android.content.ActivityNotFoundException;
 import android.content.Context;
 import android.content.Intent;
 import android.preference.PreferenceManager;
@@ -27,14 +28,17 @@ public class MessagingService extends FirebaseMessagingService {
         String actionCode = remoteMessage.getData().get(Constants.FCM_ACTION_CODE);
         Log.e(TAG, "Action code: " + actionCode);
 
-        Intent intent = new Intent(actionCode);
+        Intent intent = new Intent(this,NotifActivity.class);
         intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-        PendingIntent pendingIntent = PendingIntent.getActivity(this, 0, intent, PendingIntent.FLAG_ONE_SHOT);
+        PendingIntent pendingIntent = PendingIntent.getActivity(this, 0, intent, PendingIntent.FLAG_UPDATE_CURRENT);
         createNotification(remoteMessage, pendingIntent);
         String message = remoteMessage.getData().get("message");
         intent.putExtra("message", message);
+        intent.setAction(actionCode);
         LocalBroadcastManager localBroadcastManager = LocalBroadcastManager.getInstance(this);
         localBroadcastManager.sendBroadcast(intent);
+
+
 
 
     }
@@ -54,12 +58,16 @@ public class MessagingService extends FirebaseMessagingService {
     }
 
     @Override
-    public void onNewToken(String s) {
-        Log.d("MyFirebaseToken", "Refreshed token: " + s);
+    public void onNewToken(String token) {
+        Log.d("MyFirebaseToken", "Refreshed token: " + token);
+        saveDeviceToken(token);
+        super.onNewToken(token);
+    }
+
+    private void saveDeviceToken(String token) {
         PreferenceManager.getDefaultSharedPreferences(getApplicationContext()).edit()
-                .putString(Constants.SP_DEVICE_TOKEN, s)
+                .putString(Constants.SP_DEVICE_TOKEN, token)
                 .apply();
-        super.onNewToken(s);
     }
 
     private void createNotificationChannel()

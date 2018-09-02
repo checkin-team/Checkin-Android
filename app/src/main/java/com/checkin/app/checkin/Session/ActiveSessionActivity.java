@@ -1,11 +1,16 @@
 package com.checkin.app.checkin.Session;
 
+import android.app.NotificationManager;
 import android.arch.lifecycle.ViewModelProviders;
+import android.content.BroadcastReceiver;
 import android.content.Context;
+import android.content.Intent;
+import android.content.IntentFilter;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.FragmentTransaction;
+import android.support.v4.content.LocalBroadcastManager;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -52,6 +57,7 @@ public class ActiveSessionActivity extends AppCompatActivity implements ActiveSe
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        LocalBroadcastManager.getInstance(this).registerReceiver(mHandler,new IntentFilter("com.checkin.app.checkin.active.session"));
         setContentView(R.layout.activity_active_session);
         ButterKnife.bind(this);
 
@@ -171,5 +177,25 @@ public class ActiveSessionActivity extends AppCompatActivity implements ActiveSe
     @Override
     public void onAddMemberClicked() {
         mAddMemberDialog.show();
+    }
+
+    private BroadcastReceiver mHandler=new BroadcastReceiver() {
+        @Override
+        public void onReceive(Context context, Intent intent) {
+
+
+            String message =intent.getStringExtra("message");
+            Toast.makeText(getApplicationContext(),message,Toast.LENGTH_LONG).show();
+
+            NotificationManager notificationManager =(NotificationManager)getSystemService(Context.NOTIFICATION_SERVICE);
+
+
+        }
+    };
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        LocalBroadcastManager.getInstance(this).unregisterReceiver(mHandler);
     }
 }

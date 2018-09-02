@@ -150,7 +150,7 @@ public class SignupActivity extends AppCompatActivity implements SignupFragmentI
     public void onUserInfoProcess(String firstName, String lastName, String password, GENDER gender) {
         Log.e(TAG, "First name: " + firstName + " | Last name: " + lastName + " | Password: " + password + " | Gender: " + gender.name());
         SharedPreferences.Editor editor = mPrefs.edit();
-        editor.putInt(Constants.SP_USER_ID, 0);
+        editor.putString(Constants.SP_USER_ID, "1");
         editor.putBoolean(Constants.SP_LOGGED_IN, true);
         editor.apply();
         startActivity(new Intent(this, HomeActivity.class));

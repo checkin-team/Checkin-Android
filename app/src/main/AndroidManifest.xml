@@ -72,7 +72,11 @@
         <activity android:name=".Profile.ShopProfile.ShopActivity" />
         <activity
             android:name=".Session.ActiveSessionActivity"
-            android:windowSoftInputMode="adjustNothing" />
+            android:windowSoftInputMode="adjustNothing" >
+            <intent-filter>
+                <action android:name="com.checkin.app.checkin.active.session"/>
+            </intent-filter>
+        </activity>
         <activity android:name=".Notif.NotifActivity"
             android:launchMode="singleTop">
             <intent-filter>
