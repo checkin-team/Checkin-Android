@@ -59,7 +59,7 @@ dependencies {
     implementation 'jp.wasabeef:glide-transformations:3.3.0'
     implementation 'com.jakewharton:butterknife:8.8.1'
     annotationProcessor 'com.jakewharton:butterknife-compiler:8.8.1'
-    implementation 'com.yarolegovich:discrete-scrollview:1.4.7'
+    implementation 'com.yarolegovich:discrete-scrollview:1.4.9'
     implementation 'com.appyvet:materialrangebar:1.4.3'
     implementation 'com.github.javiersantos:MaterialStyledDialogs:2.1'
     implementation 'com.github.antonygolovin:fluentsnackbar:1.0.0'

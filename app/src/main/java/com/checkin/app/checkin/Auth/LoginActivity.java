@@ -1,5 +1,7 @@
 package com.checkin.app.checkin.Auth;
 
+import android.accounts.Account;
+import android.accounts.AccountManager;
 import android.arch.lifecycle.ViewModelProviders;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -106,6 +108,13 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                 TestDb.populateWithTestData(getApplicationContext());
             populated = true;
 
+            if (data != null) {
+                Account account = new Account(data.get("user_id").asText(), Constants.ACCOUNT_TYPE);
+                AccountManager accountManager = AccountManager.get(this);
+
+                accountManager.addAccountExplicitly(account, null, null);
+                accountManager.setAuthToken(account, AccountManager.KEY_AUTHTOKEN, data.get("token").asText());
+            }
             SharedPreferences.Editor editor = mPrefs.edit();
             editor.putString(Constants.SP_USER_ID, data != null ? data.get("user_id").asText() : "0");
             editor.putString(Constants.SP_LOGIN_TOKEN, data != null ? data.get("token").asText() : "false");

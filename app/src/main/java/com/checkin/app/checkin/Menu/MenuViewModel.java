@@ -40,14 +40,11 @@ public class MenuViewModel extends AndroidViewModel {
     }
 
     public void setCurrentItem(OrderedItemModel item) {
-        mCurrentItem.setValue(item);
-    }
-
-    public void setItemHolder(MenuItemAdapter.ItemViewHolder holder) {
-        OrderedItemModel item = mCurrentItem.getValue();
-        if (item == null)   return;
-        item.setHolder(holder);
-        mCurrentItem.setValue(item);
+        try {
+            mCurrentItem.setValue(item.clone());
+        } catch (CloneNotSupportedException e) {
+            Log.e(TAG, "Couldn't clone OrderedItem!");
+        }
     }
 
     public void setRemarks(String remarks) {
@@ -74,25 +71,33 @@ public class MenuViewModel extends AndroidViewModel {
     public void setQuantity(int quantity) {
         OrderedItemModel item = mCurrentItem.getValue();
         if (item == null)   return;
-        item.setQuantity(quantity);
-        mCurrentItem.setValue(item);
+        if (quantity != item.getQuantity()) {
+            item.setQuantity(quantity);
+            mCurrentItem.setValue(item);
+        }
         if (quantity == 0) {
             removeItem(item);
         }
     }
 
+    public void changeQuantity(int diff) {
+        OrderedItemModel item = mCurrentItem.getValue();
+        if (item == null)   return;
+        if (diff != 0)
+            setQuantity(item.getQuantity() + diff);
+    }
+
     public boolean canOrder() {
         OrderedItemModel item = mCurrentItem.getValue();
-        if (item == null) return false;
-        return item.canOrder();
+        return item != null && item.canOrder();
     }
 
     public LiveData<Double> getItemCost() {
-        return Transformations.map(mCurrentItem, orderedItem -> (orderedItem != null) ? orderedItem.getCost() : 0);
+        return Transformations.map(mCurrentItem, orderedItem -> (orderedItem != null) ? orderedItem.getCost() / orderedItem.getQuantity() : 0);
     }
 
     public LiveData<Integer> getQuantity() {
-        return Transformations.map(mCurrentItem, orderedItem -> (orderedItem != null) ? orderedItem.getCount() : 0);
+        return Transformations.map(mCurrentItem, orderedItem -> (orderedItem != null) ? orderedItem.getQuantity() : 0);
     }
 
     public void orderItem() {
@@ -115,18 +120,41 @@ public class MenuViewModel extends AndroidViewModel {
         mCurrentItem.setValue(orderedItem);
     }
 
-    public void updateOrderedItem(@NonNull MenuItemModel item, int count) {
+    public boolean updateOrderedItem(@NonNull MenuItemModel item, int count) {
         List<OrderedItemModel> items = mOrderedItems.getValue();
+        boolean result = false;
         if (items == null) {
             Log.e(TAG, "updateOrderedItem - No items in Cart!!!");
-            return;
+            return result;
         }
-        if (!item.isComplexItem()) {
-            OrderedItemModel orderedItem = item.order(count);
-            mCurrentItem.setValue(orderedItem);
-        } else {
-            newOrderedItem(item);
+        OrderedItemModel orderedItem = null;
+        if (item.isComplexItem()) {
+            orderedItem = item.order(1);
+            setCurrentItem(orderedItem);
+            result = true;
         }
+        else {
+            for (OrderedItemModel listItem : items) {
+                if (listItem.getItem() == item) {
+                    try {
+                        orderedItem = listItem.clone();
+                    } catch (CloneNotSupportedException e) {
+                        Log.e(TAG, "Couldn't clone OrderedItem!");
+                    }
+                    break;
+                }
+            }
+        }
+        if (orderedItem == null) {
+            Log.e(TAG, "Didn't find item in cart!!");
+            return result;
+        }
+        if (!result && orderedItem.getQuantity() != count) {
+            orderedItem.setQuantity(count);
+            setCurrentItem(orderedItem);
+            result = true;
+        }
+        return result;
     }
 
     private void updateCart() {
@@ -135,25 +163,39 @@ public class MenuViewModel extends AndroidViewModel {
             Log.e(TAG, "Current Item is NULL!");
             return;
         }
-        int index;
         List<OrderedItemModel> orderedItems = mOrderedItems.getValue();
+        int index;
         if (orderedItems == null) {
             orderedItems = new ArrayList<>();
             orderedItems.add(item);
         } else if ((index = orderedItems.indexOf(item)) != -1) {
-            if (item.getCount() > 0) {
-                if (!item.getItem().isComplexItem())    orderedItems.set(index, item);
-                else {
-                    item.setQuantity(orderedItems.get(index).getCount() + item.getCount());
-                    orderedItems.set(index, item);
-                }
+            if (item.getQuantity() > 0) {
+                item.setQuantity(orderedItems.get(index).getQuantity() + item.getChangeCount());
+                orderedItems.set(index, item);
             }
             else
                 orderedItems.remove(index);
         } else {
+            if (item.getItem().isComplexItem())
+                item.setQuantity(item.getChangeCount());
             orderedItems.add(item);
         }
         mOrderedItems.setValue(orderedItems);
+    }
+
+    public int getOrderedCount(MenuItemModel item) {
+        int count = 0;
+        List<OrderedItemModel> orderedItems = getOrderedItems().getValue();
+        if (orderedItems != null) {
+            for (OrderedItemModel orderedItem: orderedItems) {
+                if (orderedItem.getItem().getId() == item.getId()) {
+                    count += orderedItem.getQuantity();
+                    if (!item.isComplexItem())
+                        break;
+                }
+            }
+        }
+        return count;
     }
 
     public void removeItem(OrderedItemModel item) {
@@ -189,12 +231,11 @@ public class MenuViewModel extends AndroidViewModel {
             MutableLiveData<Integer> res = new MutableLiveData<>();
             int count = 0;
             for (OrderedItemModel item: input)
-                count += item.getCount();
+                count += item.getQuantity();
             res.setValue(count);
             return res;
         });
     }
-
 
     public static class Factory extends ViewModelProvider.NewInstanceFactory {
         @NonNull

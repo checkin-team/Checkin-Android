@@ -124,6 +124,10 @@ public class MenuGroupAdapter extends RecyclerView.Adapter<MenuGroupAdapter.Grou
         contractView(mPrevExpandedViewHolder);
     }
 
+    public void expandView() {
+        expandView(mPrevExpandedViewHolder);
+    }
+
     private void contractView(GroupViewHolder groupViewHolder) {
         if (groupViewHolder != null) {
             groupViewHolder.hideMenu(groupViewHolder.itemView);
@@ -166,7 +170,7 @@ public class MenuGroupAdapter extends RecyclerView.Adapter<MenuGroupAdapter.Grou
         @NonNull
         @Override
         public Object instantiateItem(@NonNull ViewGroup container, int position) {
-            ViewGroup layout = (ViewGroup) LayoutInflater.from(mContext).inflate(R.layout.menu_sub_group_layout, container, false);
+            ViewGroup layout = (ViewGroup) LayoutInflater.from(mContext).inflate(R.layout.menu_sub_group_layout, null, false);
             container.addView(layout);
             RecyclerView itemsList = layout.findViewById(R.id.sub_group_items);
             MenuItemAdapter itemAdapter = new MenuItemAdapter(mListItems.get(position));

@@ -4,7 +4,6 @@ import android.arch.lifecycle.ViewModelProviders;
 import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
-import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -18,9 +17,6 @@ import android.widget.Toast;
 import com.checkin.app.checkin.Data.Resource;
 import com.checkin.app.checkin.R;
 import com.checkin.app.checkin.Utility.Constants;
-import com.golovin.fluentstackbar.FluentSnackbar;
-
-import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -64,14 +60,11 @@ public class MenuUserFragment extends Fragment implements MenuItemAdapter.OnItem
     }
 
     @Override
-    public void onResume() {
-        super.onResume();
-    }
-
-    @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         final View rootView = inflater.inflate(R.layout.fragment_menu_user, container, false);
         unbinder = ButterKnife.bind(this, rootView);
+        if (getActivity() == null || getArguments() == null)
+            return null;
 
         LinearLayoutManager llm = new LinearLayoutManager(getActivity(), RecyclerView.VERTICAL, false);
         rvGroupsList.setLayoutManager(llm);
@@ -96,10 +89,11 @@ public class MenuUserFragment extends Fragment implements MenuItemAdapter.OnItem
         });
         mViewModel.getCurrentItem().observe(getActivity(), orderedItem -> {
             if (orderedItem == null)    return;
-            MenuItemAdapter.ItemViewHolder holder = orderedItem.getHolder();
+            MenuItemAdapter.ItemViewHolder holder = orderedItem.getItem().getItemHolder();
             if (holder != null && holder.getMenuItem() == orderedItem.getItem()) {
-                holder.vQuantityPicker.scrollToPosition(orderedItem.getCount());
-                if (orderedItem.getCount() == 0)
+                Log.e(TAG, "holder: " + holder.vQuantityPicker.getCurrentItem() + ", item: " + orderedItem.getQuantity());
+                holder.vQuantityPicker.scrollToPosition(mViewModel.getOrderedCount(orderedItem.getItem()) + orderedItem.getChangeCount());
+                if (holder.vQuantityPicker.getCurrentItem() <= 0)
                     holder.hideQuantitySelection();
             }
         });
@@ -139,7 +133,6 @@ public class MenuUserFragment extends Fragment implements MenuItemAdapter.OnItem
             return false;
         MenuItemModel item = holder.getMenuItem();
         mViewModel.newOrderedItem(item);
-        mViewModel.setItemHolder(holder);
         mMenuInteractionListener.onItemInteraction(item, 1);
         return true;
     }
@@ -151,42 +144,19 @@ public class MenuUserFragment extends Fragment implements MenuItemAdapter.OnItem
     }
 
     @Override
-    public boolean onItemChanged(MenuItemAdapter.ItemViewHolder holder, int count, boolean increased) {
+    public boolean onItemChanged(MenuItemAdapter.ItemViewHolder holder, int count) {
         if (!mSessionActive)
             return false;
         MenuItemModel item = holder.getMenuItem();
-        mViewModel.updateOrderedItem(item, count);
-        mViewModel.setItemHolder(holder);
-        if (increased)
+        if (mViewModel.updateOrderedItem(item, count)) {
             mMenuInteractionListener.onItemInteraction(item, count);
-        else {
-            if (item.isComplexItem()) {
-                FluentSnackbar.create(getView())
-                        .create("Cannot decrease count of a complex item from here, use cart.")
-                        .warningBackgroundColor()
-                        .textColorRes(R.color.brownish_grey)
-                        .duration(Snackbar.LENGTH_SHORT)
-                        .show();
-                mViewModel.resetItem();
-                return false;
-            }
-            else mViewModel.orderItem();
         }
         return true;
     }
 
     @Override
     public int orderedItemCount(MenuItemModel item) {
-        int count = 0;
-        List<OrderedItemModel> orderedItems = mViewModel.getOrderedItems().getValue();
-        if (orderedItems != null) {
-            for (OrderedItemModel orderedItem: orderedItems) {
-                if (orderedItem.getItem().getId() == item.getId()) {
-                    count += orderedItem.getCount();
-                }
-            }
-        }
-        return count;
+        return mViewModel.getOrderedCount(item);
     }
 
     public interface MenuInteractionListener {

@@ -19,10 +19,6 @@ public class TextBaseAdapter extends RecyclerView.Adapter<TextBaseAdapter.TextVi
     private DiscreteScrollView recyclerView;
     private int textColor, selectedColor;
 
-    public TextBaseAdapter(int[] data) {
-        this.data = Arrays.toString(data).split("[\\[\\]]")[1].split(", ");
-    }
-
     public TextBaseAdapter(int[] data, int textColor, int selectedColor) {
         this.data = Arrays.toString(data).split("[\\[\\]]")[1].split(", ");
         this.textColor = textColor;
@@ -67,26 +63,17 @@ public class TextBaseAdapter extends RecyclerView.Adapter<TextBaseAdapter.TextVi
         return data.length;
     }
 
-    public class TextViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
+    public class TextViewHolder extends RecyclerView.ViewHolder {
         TextView vText;
 
         TextViewHolder(View view) {
             super(view);
             vText = view.findViewById(R.id.item_text);
-            vText.setOnClickListener(this);
         }
 
         void bindData(String value, boolean selected) {
             vText.setText(value);
-            if (selected)
-                vText.setTextColor(selectedColor);
-            else
-                vText.setTextColor(textColor);
-        }
-
-        @Override
-        public void onClick(View v) {
-            recyclerView.smoothScrollToPosition(getAdapterPosition());
+            vText.setTextColor(selected ? selectedColor : textColor);
         }
     }
 }

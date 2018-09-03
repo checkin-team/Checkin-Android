@@ -55,15 +55,18 @@
         android:background="@drawable/menu_quantity_selection_bar"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
+        app:layout_constraintTop_toTopOf="parent"
+        android:clickable="true"
+        android:focusable="true">
 
         <ImageView
             android:id="@+id/im_item_add"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:src="@drawable/ic_menu_item_add" />
+            android:src="@drawable/ic_menu_item_add"
+            android:visibility="gone"/>
 
-        <com.yarolegovich.discretescrollview.DiscreteScrollView
+        <com.checkin.app.checkin.Utility.QuantityPickerView
             android:id="@+id/quantity_picker"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
@@ -71,7 +74,8 @@
             android:layout_marginStart="@dimen/spacing_tiny"
             android:layout_gravity="center"
             app:dsv_orientation="horizontal"
-            android:visibility="gone"/>
+            android:clickable="false"
+            android:focusable="false"/>
     </FrameLayout>
 
 </android.support.constraint.ConstraintLayout>

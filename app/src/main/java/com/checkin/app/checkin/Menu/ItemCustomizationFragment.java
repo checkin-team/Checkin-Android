@@ -119,7 +119,7 @@ public class ItemCustomizationFragment extends Fragment implements ItemCustomiza
 
     @OnClick(R.id.btn_done)
     public void onDoneClick() {
-        if (!mViewModel.canOrder()) {
+        if (!mViewModel.canOrder() && getView() != null) {
             FluentSnackbar.create(getView())
                     .create("Not all required customizations are selected.")
                     .warningBackgroundColor()

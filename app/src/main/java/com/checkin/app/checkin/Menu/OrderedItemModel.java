@@ -12,7 +12,7 @@ import java.util.Date;
 import java.util.List;
 
 @JsonAutoDetect(fieldVisibility = JsonAutoDetect.Visibility.ANY)
-public class OrderedItemModel {
+public class OrderedItemModel implements Cloneable {
     @JsonIgnore private static final String TAG = OrderedItemModel.class.getSimpleName();
     private long id;
     private MenuItemModel item;
@@ -23,8 +23,7 @@ public class OrderedItemModel {
     @JsonProperty("user_id") private int userId;
     @JsonProperty("session_id") private int sessionId;
     private String remarks;
-
-    @JsonIgnore private MenuItemAdapter.ItemViewHolder holder;
+    @JsonIgnore private int changeCount;
 
     OrderedItemModel() {}
 
@@ -39,8 +38,10 @@ public class OrderedItemModel {
         this.quantity = quantity;
         this.typeIndex = 0;
         this.id = 0;
+        this.changeCount = 1;
     }
 
+    @JsonProperty("cost")
     public double getCost() {
         double base = item.getTypeCost().get(typeIndex);
         double extra = 0;
@@ -84,12 +85,13 @@ public class OrderedItemModel {
         this.typeIndex = typeIndex;
     }
 
-    public int getCount() {
+    public int getQuantity() {
         return quantity;
     }
 
     public void setQuantity(int quantity) {
-        this.quantity = quantity;
+        setChangeCount(quantity);
+        this.quantity = Math.abs(quantity);
     }
 
     public MenuItemModel getItem() {
@@ -142,19 +144,24 @@ public class OrderedItemModel {
         return true;
     }
 
-    public void setHolder(MenuItemAdapter.ItemViewHolder holder) {
-        this.holder = holder;
-    }
-
-    public MenuItemAdapter.ItemViewHolder getHolder() {
-        return holder;
-    }
-
     public void setRemarks(String remarks) {
         this.remarks = remarks;
     }
 
     public String getRemarks() {
         return remarks;
+    }
+
+    public int getChangeCount() {
+        return changeCount;
+    }
+
+    private void setChangeCount(int quantity) {
+        this.changeCount = quantity - this.quantity;
+    }
+
+    @Override
+    protected OrderedItemModel clone() throws CloneNotSupportedException {
+        return ((OrderedItemModel) super.clone());
     }
 }

@@ -1,10 +1,13 @@
 package com.checkin.app.checkin.Data;
 
+import android.accounts.Account;
+import android.accounts.AccountManager;
+import android.accounts.AuthenticatorException;
+import android.accounts.OperationCanceledException;
 import android.content.Context;
-import android.content.SharedPreferences;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
-import android.preference.PreferenceManager;
+import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.util.Log;
 
@@ -30,7 +33,7 @@ import static com.checkin.app.checkin.Utility.Constants.API_PORT;
 
 @Module
 public class ApiClient {
-    public static String getBaseUrl() {
+    private static String getBaseUrl() {
         return "http://" + API_HOST + ":" + API_PORT + "/"; //+ "/v" + API_VERSION + "/";
     }
 
@@ -39,12 +42,18 @@ public class ApiClient {
     private OkHttpClient provideClient(final Context context) {
         OkHttpClient.Builder httpClientBuilder = new OkHttpClient.Builder();
         httpClientBuilder.addInterceptor(chain -> {
-            SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(context);
+            AccountManager accountManager = AccountManager.get(context);
+            Account[] accounts = accountManager.getAccountsByType(Constants.ACCOUNT_TYPE);
             Request request = chain.request();
-            if (prefs.getBoolean(Constants.SP_LOGGED_IN, false)) {
-                String authToken = "Token " + prefs.getString(Constants.SP_LOGIN_TOKEN, "");
-                request = request.newBuilder()
-                        .addHeader("Authorization", authToken).build();
+            if (accounts.length > 0) {
+                try {
+                    Bundle result = accountManager.getAuthToken(accounts[0], AccountManager.KEY_AUTHTOKEN, null, true, null, null).getResult();
+                    String authToken = "Token " + result.getString(AccountManager.KEY_AUTHTOKEN);
+                    request = request.newBuilder()
+                            .addHeader("Authorization", authToken).build();
+                } catch (AuthenticatorException | OperationCanceledException e) {
+                    e.printStackTrace();
+                }
             }
             return chain.proceed(request);
         });

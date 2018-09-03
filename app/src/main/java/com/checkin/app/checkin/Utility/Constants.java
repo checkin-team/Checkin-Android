@@ -8,7 +8,7 @@ public class Constants {
     public static final String API_HOST = "172.17.37.59";
     public static final short API_PORT = 8000;
 
-    public static final String APP_DATABASE = "app_database";
+    public static final String ACCOUNT_TYPE = "com.checkin.accounts";
 
     public static final String SP_LOGGED_IN = "logged_in";
     public static final String SP_USERNAME = "username";

@@ -12,6 +12,7 @@ import io.objectbox.annotation.Backlink;
 import io.objectbox.annotation.Convert;
 import io.objectbox.annotation.Entity;
 import io.objectbox.annotation.Id;
+import io.objectbox.annotation.Transient;
 import io.objectbox.relation.ToMany;
 import io.objectbox.relation.ToOne;
 
@@ -44,6 +45,7 @@ public class MenuItemModel {
     private List<String> ingredients;
     @Backlink(to = "item")
     @JsonIgnore private ToMany<ItemCustomizationGroupModel> customizationGroups;
+    @JsonIgnore @Transient private MenuItemAdapter.ItemViewHolder holder;
 
     MenuItemModel() {
     }
@@ -188,5 +190,13 @@ public class MenuItemModel {
 
     public OrderedItemModel order(int quantity, int type) {
         return new OrderedItemModel(this, quantity, type);
+    }
+
+    public MenuItemAdapter.ItemViewHolder getItemHolder() {
+        return holder;
+    }
+
+    public void setItemHolder(MenuItemAdapter.ItemViewHolder holder) {
+        this.holder = holder;
     }
 }

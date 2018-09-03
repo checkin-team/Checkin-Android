@@ -181,8 +181,8 @@ public class SessionUserActivity extends AppCompatActivity implements
         rvCart.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false));
         mCartAdapter = new MenuCartAdapter(this);
         rvCart.setAdapter(mCartAdapter);
-
         mMenuViewModel.getOrderedItems().observe(this, mCartAdapter::setOrderedItems);
+
         mMenuViewModel.getTotalOrderedCount().observe(this, count -> {
             if (count == null)
                 return;
@@ -364,6 +364,7 @@ public class SessionUserActivity extends AppCompatActivity implements
     @Override
     public void onItemInteraction(MenuItemModel item, int count) {
         if (item.isComplexItem()) {
+            Log.e(TAG, "SHOW customizationFragment");
             canGoBack = true;
             showDarkBack();
             getSupportFragmentManager().beginTransaction()
@@ -372,16 +373,22 @@ public class SessionUserActivity extends AppCompatActivity implements
                         @Override
                         public void onCustomizationDone() {
                             mMenuViewModel.orderItem();
+                            canGoBack = false;
                             hideDarkBack();
                             getSupportFragmentManager().popBackStack();
                         }
 
                         @Override
                         public void onCustomizationCancel() {
-                            OrderedItemModel item = mMenuViewModel.getCurrentItem().getValue();
-                            if (item == null)   return;
-                            mMenuViewModel.setQuantity(item.getCount() - 1);
+//                            OrderedItemModel item = mMenuViewModel.getCurrentItem().getValue();
+//                            if (item == null)   return;
+//                            MenuItemAdapter.ItemViewHolder holder = mMenuViewModel.getCurrentItem().getValue().getHolder();
+//                            holder.vQuantityPicker.scrollToPosition(item.getQuantity() - 1);
+//                            if (holder.vQuantityPicker.getCurrentItem() == 0)
+//                                holder.hideQuantitySelection();
+                            mMenuViewModel.changeQuantity(-1);
                             mMenuViewModel.resetItem();
+                            canGoBack = false;
                             hideDarkBack();
                             getSupportFragmentManager().popBackStack();
                         }
@@ -409,8 +416,8 @@ public class SessionUserActivity extends AppCompatActivity implements
 
     @Override
     public void onItemChanged(OrderedItemModel item, int count) {
+        item.setQuantity(count);
         mMenuViewModel.setCurrentItem(item);
-        mMenuViewModel.setQuantity(count);
         mMenuViewModel.orderItem();
     }
 

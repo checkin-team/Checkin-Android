@@ -3,10 +3,9 @@ package com.checkin.app.checkin.Menu;
 import android.annotation.SuppressLint;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.design.widget.Snackbar;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
-import android.util.LongSparseArray;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -15,9 +14,12 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.checkin.app.checkin.R;
-import com.checkin.app.checkin.Utility.SnapToNViews;
+import com.checkin.app.checkin.Utility.ItemClickSupport;
+import com.checkin.app.checkin.Utility.QuantityPickerView;
+import com.checkin.app.checkin.Utility.QuantityPickerView.Direction;
 import com.checkin.app.checkin.Utility.TextBaseAdapter;
 import com.checkin.app.checkin.Utility.Util;
+import com.golovin.fluentstackbar.FluentSnackbar;
 import com.yarolegovich.discretescrollview.DiscreteScrollView;
 
 import java.util.List;
@@ -70,12 +72,13 @@ public class MenuItemAdapter extends RecyclerView.Adapter<MenuItemAdapter.ItemVi
         return mItemsList != null ? mItemsList.size() : 0;
     }
 
-    class ItemViewHolder extends RecyclerView.ViewHolder implements DiscreteScrollView.ScrollListener<TextBaseAdapter.TextViewHolder> {
+    class ItemViewHolder extends RecyclerView.ViewHolder implements DiscreteScrollView.ScrollStateChangeListener<TextBaseAdapter.TextViewHolder> {
         @BindView(R.id.item_title) TextView vTitle;
-        @BindView(R.id.quantity_picker) DiscreteScrollView vQuantityPicker;
+        @BindView(R.id.quantity_picker) QuantityPickerView vQuantityPicker;
         @BindView(R.id.price_value) TextView vPriceValue;
         @BindView(R.id.im_item_add) ImageView imItemAdd;
         private MenuItemModel menuItem;
+        private int scrollPos = 1;
 
         ItemViewHolder(View itemView) {
             super(itemView);
@@ -83,8 +86,10 @@ public class MenuItemAdapter extends RecyclerView.Adapter<MenuItemAdapter.ItemVi
             itemView.setOnLongClickListener(v -> menuItem != null && mItemInteractionListener.onItemLongPress(menuItem));
         }
 
+        @SuppressLint("ClickableViewAccessibility")
         void bindData(MenuItemModel menuItem) {
             this.menuItem = menuItem;
+            this.menuItem.setItemHolder(this);
             vTitle.setText(menuItem.getName());
             vPriceValue.setText(Util.joinCollection(menuItem.getTypeCost(), " | "));
             if (!menuItem.getCustomizationGroups().isEmpty()) {
@@ -95,14 +100,21 @@ public class MenuItemAdapter extends RecyclerView.Adapter<MenuItemAdapter.ItemVi
                 showQuantitySelection(count);
             else
                 hideQuantitySelection();
-//            if (menuItem.isComplexItem())
-                vQuantityPicker.setSlideOnFling(true);
-            vQuantityPicker.setAdapter(new TextBaseAdapter(
-                    Util.range(0, 30),
-                    itemView.getResources().getColor(R.color.pinkish_grey),
-                    itemView.getResources().getColor(R.color.brownish_grey))
-            );
-            vQuantityPicker.addScrollListener(this);
+            if (menuItem.isComplexItem()) {
+                vQuantityPicker.setDisabledDirection(Direction.START);
+                vQuantityPicker.setCallable(() -> {
+                    disallowDecreaseCount();
+                    return null;
+                });
+            }
+            vQuantityPicker.setSlideOnFling(!menuItem.isComplexItem());
+            ItemClickSupport.addTo(vQuantityPicker).setOnItemClickListener((recyclerView, position, v) -> {
+                if (position < vQuantityPicker.getCurrentItem() && menuItem.isComplexItem())
+                    disallowDecreaseCount();
+                else
+                    vQuantityPicker.smoothScrollToPosition(position);
+            });
+            vQuantityPicker.addScrollStateChangeListener(this);
             imItemAdd.setOnClickListener(view -> {
                 if (!mItemInteractionListener.onItemAdded(this)) {
                     Toast.makeText(vTitle.getContext(), "Cancelled!", Toast.LENGTH_SHORT).show();
@@ -124,25 +136,31 @@ public class MenuItemAdapter extends RecyclerView.Adapter<MenuItemAdapter.ItemVi
         }
 
         @Override
-        public void onScroll(float scrollPosition, int currentPosition, int newPosition, @Nullable TextBaseAdapter.TextViewHolder currentHolder, @Nullable TextBaseAdapter.TextViewHolder newCurrent) {
-            if (Math.abs(scrollPosition) < 1f)
+        public void onScrollStart(@NonNull TextBaseAdapter.TextViewHolder currentItemHolder, int adapterPosition) {
+
+        }
+
+        @Override
+        public void onScrollEnd(@NonNull TextBaseAdapter.TextViewHolder currentItemHolder, int adapterPosition) {
+            if (adapterPosition < scrollPos && menuItem.isComplexItem()) {
+                disallowDecreaseCount();
+                scrollPos = Math.min(scrollPos, adapterPosition + 1);
+                vQuantityPicker.smoothScrollToPosition(scrollPos);
                 return;
-            if (newPosition == 0) {
+            }
+            int quantity = adapterPosition;
+            if (!mItemInteractionListener.onItemChanged(this, quantity)) {
+                vQuantityPicker.scrollToPosition(0);
                 hideQuantitySelection();
+                return;
             }
-            boolean increased = newPosition - currentPosition > 0;
-            if (menuItem.isComplexItem()) {
-                if (Math.abs(newPosition - currentPosition) > 1) {
-                    Log.e(TAG, "Overscroll: " + (newPosition - currentPosition));
-                    newPosition = currentPosition + (increased ? 1 : -1);
-                    vQuantityPicker.smoothScrollToPosition(newPosition);
-                    return;
-                }
-            }
-            if (!mItemInteractionListener.onItemChanged(this, newPosition, increased)) {
-                Log.e(TAG, "Curr: " + currentPosition + ", new: " + newPosition);
-                vQuantityPicker.scrollToPosition(currentPosition);
-            }
+            if (quantity == 0)
+                hideQuantitySelection();
+            scrollPos = vQuantityPicker.getCurrentItem();
+        }
+
+        @Override
+        public void onScroll(float scrollPosition, int currentPosition, int newPosition, @Nullable TextBaseAdapter.TextViewHolder currentHolder, @Nullable TextBaseAdapter.TextViewHolder newCurrent) {
         }
 
         public MenuItemModel getMenuItem() {
@@ -150,10 +168,19 @@ public class MenuItemAdapter extends RecyclerView.Adapter<MenuItemAdapter.ItemVi
         }
     }
 
+    private void disallowDecreaseCount() {
+        FluentSnackbar.create(mRecyclerView)
+            .create("Cannot decrease count of a complex item from here, use cart.")
+            .warningBackgroundColor()
+            .textColorRes(R.color.brownish_grey)
+            .duration(Snackbar.LENGTH_SHORT)
+            .show();
+    }
+
     public interface OnItemInteractionListener {
         boolean onItemAdded(ItemViewHolder holder);
         boolean onItemLongPress(MenuItemModel item);
-        boolean onItemChanged(ItemViewHolder holder, int count, boolean increased);
+        boolean onItemChanged(ItemViewHolder holder, int count);
         int orderedItemCount(MenuItemModel item);
     }
 }

@@ -3,6 +3,7 @@ package com.checkin.app.checkin.Utility;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.RecyclerView.LayoutManager;
 import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
@@ -35,7 +36,7 @@ public class SnapToNViews extends StartSnapHelper {
     }
 
     @Override
-    public int findTargetSnapPosition(RecyclerView.LayoutManager layoutManager, int velocityX, int velocityY) {
+    public int findTargetSnapPosition(LayoutManager layoutManager, int velocityX, int velocityY) {
         setItemDimension(layoutManager);
         Log.e("TargetSnapPosition", "origPos: " + mOrigPos);
         if (velocityX > 0 || velocityY > 0)
@@ -43,7 +44,7 @@ public class SnapToNViews extends StartSnapHelper {
         return mOrigPos - mViewsToSnap;
     }
 
-    private void setItemDimension(final RecyclerView.LayoutManager layoutManager) {
+    private void setItemDimension(final LayoutManager layoutManager) {
         View child;
         if (mItemDimension != 0 || (child = layoutManager.getChildAt(0)) == null)
             return;
