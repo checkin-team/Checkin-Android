@@ -385,9 +385,53 @@
         }
       ],
       "relations": []
+    },
+    {
+      "id": "11:483319931199456470",
+      "lastPropertyId": "9:4536054642499948665",
+      "name": "UserProfileEntity",
+      "properties": [
+        {
+          "id": "1:1218139682358637520",
+          "name": "id"
+        },
+        {
+          "id": "2:8987915417637652239",
+          "name": "name"
+        },
+        {
+          "id": "3:3926933498372338572",
+          "name": "profession"
+        },
+        {
+          "id": "4:795836030968562395",
+          "name": "bio"
+        },
+        {
+          "id": "5:1131987067010879901",
+          "name": "profilepicurl"
+        },
+        {
+          "id": "6:7998226007780212430",
+          "name": "place"
+        },
+        {
+          "id": "7:2201597826696538866",
+          "name": "nFollowers"
+        },
+        {
+          "id": "8:4484517422290514832",
+          "name": "ncheckins"
+        },
+        {
+          "id": "9:4536054642499948665",
+          "name": "rating"
+        }
+      ],
+      "relations": []
     }
   ],
-  "lastEntityId": "10:5669297226540048850",
+  "lastEntityId": "11:483319931199456470",
   "lastIndexId": "8:172194791550153951",
   "lastRelationId": "0:0",
   "lastSequenceId": "0:0",

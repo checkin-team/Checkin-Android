@@ -5,7 +5,7 @@
   "entities": [
     {
       "id": "1:5476446224159582388",
-      "lastPropertyId": "8:6439115120765031287",
+      "lastPropertyId": "9:3228012437947314612",
       "name": "ReviewsItem",
       "properties": [
         {
@@ -35,6 +35,11 @@
         {
           "id": "7:6841724227445865013",
           "name": "review"
+        },
+        {
+          "id": "9:3228012437947314612",
+          "indexId": "8:172194791550153951",
+          "name": "shopId"
         }
       ],
       "relations": []
@@ -383,7 +388,7 @@
     }
   ],
   "lastEntityId": "10:5669297226540048850",
-  "lastIndexId": "7:5729755885960101690",
+  "lastIndexId": "8:172194791550153951",
   "lastRelationId": "0:0",
   "lastSequenceId": "0:0",
   "modelVersion": 4,

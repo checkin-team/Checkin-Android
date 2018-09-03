@@ -60,6 +60,7 @@
                 android:src="@drawable/rectangle_52" />
 
             <TextView
+                android:id="@+id/nfollowers"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignParentBottom="true"
@@ -82,7 +83,7 @@
                 android:layout_alignParentBottom="true"
                 android:layout_centerHorizontal="true"
                 android:layout_marginBottom="35dp"
-
+                android:id="@+id/ncheckins"
                 android:fontFamily="@font/amiri"
                 android:paddingRight="5dp"
                 android:shadowColor="#000"
@@ -95,14 +96,13 @@
                 android:textStyle="bold" />
 
             <TextView
+                android:id="@+id/rating"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignParentBottom="true"
                 android:layout_alignParentRight="true"
                 android:layout_marginBottom="35dp"
                 android:layout_marginRight="18dp"
-
-
                 android:fontFamily="@font/amiri"
                 android:paddingRight="5dp"
                 android:shadowColor="#000"
@@ -118,8 +118,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignParentBottom="true"
-
-                android:text="Following"
+                android:text="Follwers"
                 android:fontFamily="sans-serif-light"
                 android:layout_marginBottom="20dp"
                 android:shadowColor="#000"
@@ -140,29 +139,29 @@
                 android:layout_marginBottom="20dp"
                 android:fontFamily="sans-serif-light"
                 android:paddingRight="5dp"
-                android:shadowColor="#000"
-                android:shadowDx="5"
-                android:shadowDy="5"
-                android:shadowRadius="7"
-                android:text="Posts"
-
-                android:textColor="@color/white"
-                android:textSize="15sp" />
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignParentBottom="true"
-                android:layout_alignParentRight="true"
-                android:layout_marginBottom="20dp"
-                android:fontFamily="sans-serif-light"
-                android:paddingRight="5dp"
-                android:layout_marginRight="18dp"
                 android:shadowColor="#000"
                 android:shadowDx="5"
                 android:shadowDy="5"
                 android:shadowRadius="7"
                 android:text="CheckIns"
+
+                android:textColor="@color/white"
+                android:textSize="15sp" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentBottom="true"
+                android:layout_alignParentRight="true"
+                android:layout_marginBottom="20dp"
+                android:fontFamily="sans-serif-light"
+                android:paddingRight="5dp"
+                android:layout_marginRight="18dp"
+                android:shadowColor="#000"
+                android:shadowDx="5"
+                android:shadowDy="5"
+                android:shadowRadius="7"
+                android:text="Rating"
                 android:textColor="@color/white"
                 android:textSize="15sp" />
 
@@ -267,7 +266,6 @@
                 android:layout_centerHorizontal="true"
                 android:text="Blogger"
                 android:paddingTop="4dp"
-
                 android:id="@+id/profession"
                 android:textColor="#bebebe"
                 />
@@ -279,6 +277,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:textAlignment="textStart"
+                android:id="@+id/bio"
                 android:paddingStart="8dp"
                 android:textColor="#6d6d6d"
                 android:text="Follow our Food and Travel Journey 🍔🍕✈️⛵️\n🎥: Content Creators\n📍: MIA / NYC / LA 🌎"

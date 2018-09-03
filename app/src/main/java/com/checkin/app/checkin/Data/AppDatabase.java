@@ -2,6 +2,8 @@ package com.checkin.app.checkin.Data;
 
 import android.content.Context;
 
+import com.checkin.app.checkin.Home.UserProfileEntity;
+import com.checkin.app.checkin.Home.UserProfileRepository;
 import com.checkin.app.checkin.Profile.ShopProfile.ReviewsItem;
 import com.checkin.app.checkin.MyObjectBox;
 import com.checkin.app.checkin.Session.ItemCustomizationField;
@@ -70,5 +72,9 @@ public class AppDatabase {
 
     public static Box<ReviewsItem> getReviewsModel(Context context){
         return getBoxStore(context).boxFor(ReviewsItem.class);
+    }
+
+    public static Box<UserProfileEntity> getUserProfileModel(Context context){
+        return getBoxStore(context).boxFor(UserProfileEntity.class);
     }
 }

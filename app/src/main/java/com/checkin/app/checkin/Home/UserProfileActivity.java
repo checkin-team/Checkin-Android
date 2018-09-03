@@ -5,7 +5,9 @@ package com.checkin.app.checkin.Home;
  */
 
 
+    import android.annotation.SuppressLint;
     import android.app.WallpaperManager;
+    import android.arch.lifecycle.ViewModelProviders;
     import android.content.Context;
     import android.content.res.Resources;
     import android.graphics.Bitmap;
@@ -23,6 +25,10 @@ import android.support.annotation.Nullable;
     import android.support.v4.content.ContextCompat;
     import android.support.v4.view.MotionEventCompat;
     import android.support.v7.app.AppCompatActivity;
+
+    import com.checkin.app.checkin.Data.Resource;
+    import com.checkin.app.checkin.Profile.ShopProfile.AdapterReview;
+    import com.checkin.app.checkin.Utility.GlideApp;
     import  com.transitionseverywhere.*;
     import android.util.DisplayMetrics;
     import android.util.Log;
@@ -34,8 +40,12 @@ import android.view.View;
     import android.widget.LinearLayout;
     import android.widget.RelativeLayout;
     import android.widget.TextView;
+    import android.widget.Toast;
 
     import com.checkin.app.checkin.R;
+
+    import java.util.ArrayList;
+    import java.util.List;
 
 public class UserProfileActivity extends AppCompatActivity {
     private float weightTop=70;
@@ -49,11 +59,11 @@ public class UserProfileActivity extends AppCompatActivity {
         int screenHeight=getWindow().getAttributes().height;
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_user_profile);
-        final WallpaperManager wallpaperManager = WallpaperManager.getInstance(this);
+        //final WallpaperManager wallpaperManager = WallpaperManager.getInstance(this);
         //final Drawable wallpaperDrawable = wallpaperManager.getDrawable();
-        Drawable imagetoshow = ContextCompat.getDrawable(getApplicationContext(),R.drawable.flier);
-        final Drawable mod= new BitmapDrawable(getResources(),getRoundedCornerBitmap(((BitmapDrawable)imagetoshow).getBitmap(),getApplicationContext()));
-        ImageView imageView=findViewById(R.id.imgg);
+//        Drawable imagetoshow = ContextCompat.getDrawable(getApplicationContext(),R.drawable.flier);
+//        final Drawable mod= new BitmapDrawable(getResources(),getRoundedCornerBitmap(((BitmapDrawable)imagetoshow).getBitmap(),getApplicationContext()));
+//        ImageView imageView=findViewById(R.id.imgg);
         /*RelativeLayout v=findViewById(R.id.botomm);
         LinearLayout.LayoutParams p=(LinearLayout.LayoutParams)v.getLayoutParams();
         p.weight+=(dpToPx(20)/screenHeight);
@@ -66,10 +76,42 @@ public class UserProfileActivity extends AppCompatActivity {
         matrix.postScale(scaleRatio, scaleRatio);
         imageView.setImageMatrix(matrix);*/
         //  v.setBackground(wallpaperDrawable);
-        imageView.setImageResource(R.drawable.flier);
+        //imageView.setImageResource(R.drawable.flier);
         // v1.setBackground(wallpaperDrawable);
 
+        UserProfileViewModel model= ViewModelProviders.of(this).get(UserProfileViewModel.class);
 
+        model.getAllUsers(1L).observe(this, (Resource<List<UserProfileEntity>> userModel) ->{
+            if(userModel == null) return;
+            if (userModel.status == Resource.Status.SUCCESS) {
+                if(userModel.data!=null)
+                {
+                    UserProfileEntity person=userModel.data.get(0);
+                    setUI(person);
+                }
+            } else
+            if (userModel.status == Resource.Status.LOADING) {
+                //rv.setAdapter(new AdapterReview(reviewsModel.data));
+                // LOADING
+            } else{
+                Toast.makeText(this, "Error In getting Reviews", Toast.LENGTH_SHORT).show();
+            }
+
+        });
+
+
+    }
+    @SuppressLint("SetTextI18n")
+    public  void setUI(UserProfileEntity person){
+        ImageView imageView=findViewById(R.id.imgg);
+        GlideApp.with(this).load(person.profilepicurl).into(imageView);
+        TextView nfollowers=findViewById(R.id.nfollowers),ncheckins=findViewById(R.id.ncheckins),nRating=findViewById(R.id.rating);
+        nfollowers.setText(""+person.nFollowers);ncheckins.setText(""+person.ncheckins);nRating.setText(""+person.rating);
+        TextView bio=findViewById(R.id.bio),username=findViewById(R.id.username),city=findViewById(R.id.city_user),profession=findViewById(R.id.profession);
+        bio.setText(""+person.bio);
+        username.setText(""+person.name);
+        city.setText(""+person.place);
+        profession.setText(""+person.profession);
     }
 
     public static Bitmap getRoundedCornerBitmap(Bitmap bitmap, Context context) {
