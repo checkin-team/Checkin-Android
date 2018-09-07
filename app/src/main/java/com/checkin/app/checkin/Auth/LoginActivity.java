@@ -109,7 +109,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
             populated = true;
 
             if (data != null) {
-                Account account = new Account(data.get("user_id").asText(), Constants.ACCOUNT_TYPE);
+                Account account = new Account(getResources().getString(R.string.app_name), Constants.ACCOUNT_TYPE);
                 AccountManager accountManager = AccountManager.get(this);
 
                 accountManager.addAccountExplicitly(account, null, null);

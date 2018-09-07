@@ -136,11 +136,11 @@ public abstract class NetworkBoundResource<ResultType, RequestType> {
         return mResult;
     }
 
-    public void setVal(Object val) {
+    protected void setVal(Object val) {
         this.val = val;
     }
 
-    public Object getVal() {
+    protected Object getVal() {
         return val;
     }
 }

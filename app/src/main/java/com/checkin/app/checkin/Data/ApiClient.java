@@ -5,18 +5,22 @@ import android.accounts.AccountManager;
 import android.accounts.AuthenticatorException;
 import android.accounts.OperationCanceledException;
 import android.content.Context;
+import android.content.Intent;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.util.Log;
 
+import com.checkin.app.checkin.Auth.LoginActivity;
 import com.checkin.app.checkin.BuildConfig;
 import com.checkin.app.checkin.Utility.Constants;
 import com.checkin.app.checkin.Utility.NoConnectivityException;
 
 import java.io.IOException;
 import java.util.concurrent.TimeUnit;
+
+import javax.net.ssl.HttpsURLConnection;
 
 import dagger.Module;
 import dagger.Provides;
@@ -40,22 +44,29 @@ public class ApiClient {
     private static WebApiService mApiService;
 
     private OkHttpClient provideClient(final Context context) {
-        OkHttpClient.Builder httpClientBuilder = new OkHttpClient.Builder();
+        final OkHttpClient.Builder httpClientBuilder = new OkHttpClient.Builder();
+        final AccountManager accountManager = AccountManager.get(context);
+        Account[] accounts = accountManager.getAccountsByType(Constants.ACCOUNT_TYPE);
         httpClientBuilder.addInterceptor(chain -> {
-            AccountManager accountManager = AccountManager.get(context);
-            Account[] accounts = accountManager.getAccountsByType(Constants.ACCOUNT_TYPE);
             Request request = chain.request();
+            String authToken = null;
             if (accounts.length > 0) {
                 try {
                     Bundle result = accountManager.getAuthToken(accounts[0], AccountManager.KEY_AUTHTOKEN, null, true, null, null).getResult();
-                    String authToken = "Token " + result.getString(AccountManager.KEY_AUTHTOKEN);
-                    request = request.newBuilder()
-                            .addHeader("Authorization", authToken).build();
+                    authToken = result.getString(AccountManager.KEY_AUTHTOKEN);
+                    if (authToken != null)
+                        request = request.newBuilder()
+                                .addHeader("Authorization", "Token " + authToken).build();
                 } catch (AuthenticatorException | OperationCanceledException e) {
                     e.printStackTrace();
                 }
             }
-            return chain.proceed(request);
+            Response response = chain.proceed(request);
+            if (authToken != null && response.code() == HttpsURLConnection.HTTP_UNAUTHORIZED) {
+                accountManager.invalidateAuthToken(Constants.ACCOUNT_TYPE, authToken);
+//                context.startActivity(new Intent(context, LoginActivity.class));
+            }
+            return response;
         });
         httpClientBuilder
                 .connectTimeout(15, TimeUnit.SECONDS)

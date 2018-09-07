@@ -107,8 +107,8 @@ public class MenuCartAdapter extends RecyclerView.Adapter<MenuCartAdapter.ViewHo
                 (item.getTypeName() != null ? item.getTypeName() : "") +
                 (item.isCustomized() ? " (Customized)" : "")
             );
-            btnItemRemove.setOnClickListener(v -> mCartInteractionListener.onItemRemoved(item));
-            btnItemEdit.setOnClickListener(v -> mCartInteractionListener.onItemRemark(item));
+            btnItemRemove.setOnClickListener(v -> mCartInteractionListener.onItemRemoved(mItem));
+            btnItemEdit.setOnClickListener(v -> mCartInteractionListener.onItemRemark(mItem));
             vQuantityPicker.setSlideOnFling(true);
             vQuantityPicker.addScrollStateChangeListener(this);
             ItemClickSupport.addTo(vQuantityPicker).setOnItemClickListener((rv, position, v) -> vQuantityPicker.smoothScrollToPosition(position));

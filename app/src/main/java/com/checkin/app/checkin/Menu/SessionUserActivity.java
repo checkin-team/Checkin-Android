@@ -380,14 +380,7 @@ public class SessionUserActivity extends AppCompatActivity implements
 
                         @Override
                         public void onCustomizationCancel() {
-//                            OrderedItemModel item = mMenuViewModel.getCurrentItem().getValue();
-//                            if (item == null)   return;
-//                            MenuItemAdapter.ItemViewHolder holder = mMenuViewModel.getCurrentItem().getValue().getHolder();
-//                            holder.vQuantityPicker.scrollToPosition(item.getQuantity() - 1);
-//                            if (holder.vQuantityPicker.getCurrentItem() == 0)
-//                                holder.hideQuantitySelection();
-                            mMenuViewModel.changeQuantity(-1);
-                            mMenuViewModel.resetItem();
+                            mMenuViewModel.cancelItem();
                             canGoBack = false;
                             hideDarkBack();
                             getSupportFragmentManager().popBackStack();

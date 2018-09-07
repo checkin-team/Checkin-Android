@@ -92,9 +92,7 @@ public class MenuUserFragment extends Fragment implements MenuItemAdapter.OnItem
             MenuItemAdapter.ItemViewHolder holder = orderedItem.getItem().getItemHolder();
             if (holder != null && holder.getMenuItem() == orderedItem.getItem()) {
                 Log.e(TAG, "holder: " + holder.vQuantityPicker.getCurrentItem() + ", item: " + orderedItem.getQuantity());
-                holder.vQuantityPicker.scrollToPosition(mViewModel.getOrderedCount(orderedItem.getItem()) + orderedItem.getChangeCount());
-                if (holder.vQuantityPicker.getCurrentItem() <= 0)
-                    holder.hideQuantitySelection();
+                holder.changeQuantity(mViewModel.getOrderedCount(orderedItem.getItem()) + orderedItem.getChangeCount());
             }
         });
         return rootView;

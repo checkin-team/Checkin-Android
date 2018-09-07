@@ -125,7 +125,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:nestedScrollingEnabled="false"
-                    tools:targetApi="LOLLIPOP" />
+                    android:paddingTop="@dimen/spacing_small" />
             </LinearLayout>
         </android.support.v4.widget.NestedScrollView>
         <Button

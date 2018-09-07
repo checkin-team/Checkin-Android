@@ -87,6 +87,15 @@ public class MenuViewModel extends AndroidViewModel {
             setQuantity(item.getQuantity() + diff);
     }
 
+    public void cancelItem() {
+        OrderedItemModel item = mCurrentItem.getValue();
+        if (item == null)   return;
+        item.setQuantity(0);
+        item.setChangeCount(0);
+        mCurrentItem.setValue(item);
+        resetItem();
+    }
+
     public boolean canOrder() {
         OrderedItemModel item = mCurrentItem.getValue();
         return item != null && item.canOrder();
@@ -128,14 +137,11 @@ public class MenuViewModel extends AndroidViewModel {
             return result;
         }
         OrderedItemModel orderedItem = null;
-        if (item.isComplexItem()) {
-            orderedItem = item.order(1);
-            setCurrentItem(orderedItem);
-            result = true;
-        }
-        else {
-            for (OrderedItemModel listItem : items) {
-                if (listItem.getItem() == item) {
+        int cartCount = 0;
+        for (OrderedItemModel listItem : items) {
+            if (item.equals(listItem.getItem())) {
+                cartCount += listItem.getQuantity();
+                if (!item.isComplexItem()) {
                     try {
                         orderedItem = listItem.clone();
                     } catch (CloneNotSupportedException e) {
@@ -145,11 +151,16 @@ public class MenuViewModel extends AndroidViewModel {
                 }
             }
         }
-        if (orderedItem == null) {
+        if (cartCount == 0) {
             Log.e(TAG, "Didn't find item in cart!!");
             return result;
         }
-        if (!result && orderedItem.getQuantity() != count) {
+        if (item.isComplexItem() && cartCount != count) {
+            orderedItem = item.order(1);
+            setCurrentItem(orderedItem);
+            result = true;
+        }
+        else if (orderedItem != null && orderedItem.getQuantity() != count) {
             orderedItem.setQuantity(count);
             setCurrentItem(orderedItem);
             result = true;

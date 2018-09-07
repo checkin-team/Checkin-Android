@@ -90,7 +90,7 @@ public class OrderedItemModel implements Cloneable {
     }
 
     public void setQuantity(int quantity) {
-        setChangeCount(quantity);
+        setChangeCount(quantity - this.quantity);
         this.quantity = Math.abs(quantity);
     }
 
@@ -156,8 +156,8 @@ public class OrderedItemModel implements Cloneable {
         return changeCount;
     }
 
-    private void setChangeCount(int quantity) {
-        this.changeCount = quantity - this.quantity;
+    public void setChangeCount(int changeCount) {
+        this.changeCount = changeCount;
     }
 
     @Override

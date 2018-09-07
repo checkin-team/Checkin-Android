@@ -166,6 +166,17 @@ public class MenuItemAdapter extends RecyclerView.Adapter<MenuItemAdapter.ItemVi
         public MenuItemModel getMenuItem() {
             return menuItem;
         }
+
+        public void changeQuantity(int count) {
+            scrollPos = count;
+            try {
+                vQuantityPicker.smoothScrollToPosition(count);
+            } catch (IllegalArgumentException exc) {
+                vQuantityPicker.scrollToPosition(count);
+            }
+            if (count <= 0)
+                hideQuantitySelection();
+        }
     }
 
     private void disallowDecreaseCount() {

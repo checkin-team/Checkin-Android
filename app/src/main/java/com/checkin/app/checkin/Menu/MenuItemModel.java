@@ -1,5 +1,7 @@
 package com.checkin.app.checkin.Menu;
 
+import android.support.annotation.NonNull;
+
 import com.checkin.app.checkin.Data.AppDatabase;
 import com.checkin.app.checkin.Data.Converters;
 import com.fasterxml.jackson.annotation.JsonAutoDetect;
@@ -184,6 +186,7 @@ public class MenuItemModel {
         return !customizationGroups.isEmpty() || typeCost.size() > 1;
     }
 
+    @NonNull
     public OrderedItemModel order(int quantity) {
         return new OrderedItemModel(this, quantity);
     }
@@ -198,5 +201,10 @@ public class MenuItemModel {
 
     public void setItemHolder(MenuItemAdapter.ItemViewHolder holder) {
         this.holder = holder;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        return obj instanceof MenuItemModel && this.id == ((MenuItemModel) obj).id;
     }
 }

@@ -42,6 +42,7 @@ public class MenuRepository {
 
             @Override
             protected boolean shouldFetch(List<MenuGroupModel> data) {
+                // TODO: DEBUG mode for Menu
                 return false;
             }
 
@@ -53,7 +54,8 @@ public class MenuRepository {
 
             @Override
             protected LiveData<List<MenuGroupModel>> loadFromDb() {
-                return new ObjectBoxLiveData<>(mMenuGroupModel.query().equal(MenuGroupModel_.menuId, 1).order(MenuGroupModel_.category).build());
+                long id = ((long) (getVal() != null ? getVal() : 0L));
+                return new ObjectBoxLiveData<>(mMenuGroupModel.query().equal(MenuGroupModel_.menuId, id).order(MenuGroupModel_.category).build());
             }
 
             @Override
