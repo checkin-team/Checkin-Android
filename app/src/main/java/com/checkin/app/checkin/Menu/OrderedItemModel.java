@@ -53,6 +53,10 @@ public class OrderedItemModel implements Cloneable {
         return (base + extra) * quantity;
     }
 
+    public void setCost(double cost) {
+        Log.e(TAG, "Cost: " + cost);
+    }
+
     public int getTypeIndex() {
         return typeIndex;
     }

@@ -5,12 +5,10 @@ import android.animation.AnimatorListenerAdapter;
 import android.animation.AnimatorSet;
 import android.animation.ValueAnimator;
 import android.annotation.SuppressLint;
-import android.arch.lifecycle.Observer;
 import android.arch.lifecycle.ViewModelProviders;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
 import android.support.design.widget.NavigationView;
 import android.support.transition.Slide;
 import android.support.v4.app.Fragment;
@@ -33,15 +31,14 @@ import android.view.animation.AccelerateDecelerateInterpolator;
 import android.view.animation.DecelerateInterpolator;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
-import com.checkin.app.checkin.Data.Resource;
 import com.checkin.app.checkin.Menu.SessionUserActivity;
 import com.checkin.app.checkin.Misc.FaqActivity;
 import com.checkin.app.checkin.Profile.ShopProfile.ShopProfileActivity2;
 import com.checkin.app.checkin.R;
 import com.checkin.app.checkin.Session.ActiveSessionActivity;
 import com.checkin.app.checkin.Shop.Shop;
+import com.checkin.app.checkin.Shop.BusinessFeaturesActivity;
 import com.checkin.app.checkin.Social.ChatActivity;
 import com.checkin.app.checkin.Social.ChatAdapter;
 import com.checkin.app.checkin.Social.MessageViewModel;
@@ -57,9 +54,6 @@ import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 import com.google.zxing.integration.android.IntentIntegrator;
 import com.google.zxing.integration.android.IntentResult;
-
-import org.json.JSONException;
-import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -94,6 +88,9 @@ public class HomeActivity extends AppCompatActivity
     TextView tvShopsCategory;
     @BindView(R.id.im_shop_category_back)
     ImageView imShopsCategoryBack;
+
+    @BindView(R.id.action_delivery)
+    TextView testingViewPager;
 
     private UserViewModel mUserViewModel;
     private MessageViewModel mMessageViewModel;
@@ -542,6 +539,13 @@ public class HomeActivity extends AppCompatActivity
     @OnClick(R.id.action_dine_in)
     public  void dine_in(View v){
         startActivity(new Intent(this,ActiveSessionActivity.class));
+    }
+
+
+    @OnClick(R.id.action_delivery)
+            public void delivery(View v)
+    {
+        startActivity(new Intent(this, BusinessFeaturesActivity.class));
     }
 
 }

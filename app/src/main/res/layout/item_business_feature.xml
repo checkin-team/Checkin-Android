@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <ImageView
+        android:id="@+id/im_feature"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        tools:src="@drawable/ic_business_profile"
+        android:layout_marginTop="@dimen/spacing_normal"
+        android:layout_gravity="center_horizontal"/>
+
+    <TextView
+        android:id="@+id/tv_feature_title"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/spacing_normal"
+        android:textAlignment="center"
+        android:textSize="@dimen/font_largest"
+        tools:text="ABC"/>
+
+    <TextView
+        android:id="@+id/tv_feature_subtitle"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/spacing_normal"
+        android:paddingStart="@dimen/spacing_gigantic"
+        android:paddingEnd="@dimen/spacing_gigantic"
+        android:textAlignment="center"
+        android:textSize="@dimen/font_normal"
+        tools:text="ABCfndkj djvds vds  sdn sn iosn iosn soin osn onso"/>
+</LinearLayout>

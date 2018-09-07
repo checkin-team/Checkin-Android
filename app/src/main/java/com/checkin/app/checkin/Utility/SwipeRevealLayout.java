@@ -56,22 +56,22 @@ public class SwipeRevealLayout extends ViewGroup {
     private View mSecondaryView;
 
     /**
-     * The rectangle position of the main view when the layout is closed.
+     * The appbar_shop_login position of the main view when the layout is closed.
      */
     private Rect mRectMainClose = new Rect();
 
     /**
-     * The rectangle position of the main view when the layout is opened.
+     * The appbar_shop_login position of the main view when the layout is opened.
      */
     private Rect mRectMainOpen  = new Rect();
 
     /**
-     * The rectangle position of the secondary view when the layout is closed.
+     * The appbar_shop_login position of the secondary view when the layout is closed.
      */
     private Rect mRectSecClose  = new Rect();
 
     /**
-     * The rectangle position of the secondary view when the layout is opened.
+     * The appbar_shop_login position of the secondary view when the layout is opened.
      */
     private Rect mRectSecOpen   = new Rect();
 

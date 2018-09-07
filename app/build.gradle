@@ -48,7 +48,7 @@ dependencies {
 
     // Firebase libraries
     implementation 'com.google.firebase:firebase-core:16.0.3'
-    implementation 'com.google.firebase:firebase-messaging:17.3.0'
+    implementation 'com.google.firebase:firebase-messaging:17.3.1'
 
     // Design Libraries
     implementation 'de.hdodenhof:circleimageview:2.2.0'
@@ -63,6 +63,7 @@ dependencies {
     implementation 'com.appyvet:materialrangebar:1.4.3'
     implementation 'com.github.javiersantos:MaterialStyledDialogs:2.1'
     implementation 'com.github.antonygolovin:fluentsnackbar:1.0.0'
+    implementation 'com.romandanylyk:pageindicatorview:1.0.1'
 
     // Network libraries and JSON <-> POJO
     implementation(

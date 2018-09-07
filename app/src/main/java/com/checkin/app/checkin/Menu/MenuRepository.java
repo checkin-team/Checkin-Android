@@ -54,7 +54,7 @@ public class MenuRepository {
 
             @Override
             protected LiveData<List<MenuGroupModel>> loadFromDb() {
-                long id = ((long) (getVal() != null ? getVal() : 0L));
+                long id = ((long) (getVal() != null ? getVal() : 1L));
                 return new ObjectBoxLiveData<>(mMenuGroupModel.query().equal(MenuGroupModel_.menuId, id).order(MenuGroupModel_.category).build());
             }
 
