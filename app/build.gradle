@@ -5,7 +5,7 @@ android {
     compileSdkVersion 27
     defaultConfig {
         applicationId "com.checkin.app.checkin"
-        minSdkVersion 19
+        minSdkVersion 21
         targetSdkVersion 27
         versionCode 1
         versionName "1.0"
@@ -32,6 +32,10 @@ android {
 }
 
 dependencies {
+    implementation 'com.twitter.sdk.android:twitter-core:3.1.1'
+    implementation 'com.google.firebase:firebase-auth:16.0.3'
+    implementation 'com.facebook.android:facebook-android-sdk:[4,5)'
+    implementation 'com.google.android.gms:play-services-auth:15.0.1'
     implementation "com.andkulikov:transitionseverywhere:1.8.0"
     implementation fileTree(include: ['*.jar'], dir: 'libs')
     implementation 'com.android.support:appcompat-v7:27.1.1'

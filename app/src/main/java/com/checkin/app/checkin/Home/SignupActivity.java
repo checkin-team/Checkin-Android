@@ -15,11 +15,32 @@ import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.View;
+import android.widget.Toast;
 
 import com.checkin.app.checkin.Data.TestDb;
 import com.checkin.app.checkin.Home.SignupUserInfoFragment.GENDER;
 import com.checkin.app.checkin.R;
 import com.checkin.app.checkin.Utility.Constants;
+import com.facebook.CallbackManager;
+import com.facebook.FacebookCallback;
+import com.facebook.FacebookException;
+import com.facebook.login.LoginManager;
+import com.facebook.login.LoginResult;
+import com.google.android.gms.auth.api.signin.GoogleSignIn;
+import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
+import com.google.android.gms.auth.api.signin.GoogleSignInClient;
+import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
+import com.google.android.gms.common.api.ApiException;
+import com.google.android.gms.tasks.Task;
+import com.twitter.sdk.android.core.Callback;
+import com.twitter.sdk.android.core.Result;
+import com.twitter.sdk.android.core.Twitter;
+import com.twitter.sdk.android.core.TwitterCore;
+import com.twitter.sdk.android.core.TwitterException;
+import com.twitter.sdk.android.core.TwitterSession;
+import com.twitter.sdk.android.core.identity.TwitterAuthClient;
+
+import java.util.Arrays;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -37,6 +58,7 @@ public class SignupActivity extends AppCompatActivity implements SignupFragmentI
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_signup);
+        initiateSignUp();
         ButterKnife.bind(this);
         fragmentManager = getSupportFragmentManager();
         mPrefs = PreferenceManager.getDefaultSharedPreferences(this);
@@ -46,6 +68,35 @@ public class SignupActivity extends AppCompatActivity implements SignupFragmentI
             transaction.commit();
         }
         TestDb.populateWithTestData(getApplicationContext());
+
+        //fb login
+        callbackManager = CallbackManager.Factory.create();
+        LoginManager.getInstance().registerCallback(callbackManager,
+                new FacebookCallback<LoginResult>() {
+                    @Override
+                    public void onSuccess(LoginResult loginResult) {
+                        startActivity(new Intent(SignupActivity.this,HomeActivity.class));
+                        finish();
+                        // App code
+                    }
+
+                    @Override
+                    public void onCancel() {
+                        Toast.makeText(SignupActivity.this, "Facebook Login Cancelled", Toast.LENGTH_SHORT).show();
+                        // App code
+                    }
+
+                    @Override
+                    public void onError(FacebookException exception) {
+                        Toast.makeText(SignupActivity.this, "Facebook Login Error", Toast.LENGTH_LONG).show();
+                        // App code
+                    }
+                });
+
+        //twitter login
+        client = new TwitterAuthClient();
+
+
     }
 
     private void replaceFragmentContainer(Fragment fragment) {
@@ -91,12 +142,54 @@ public class SignupActivity extends AppCompatActivity implements SignupFragmentI
         startActivity(new Intent(this, HomeActivity.class));
         finish();
     }
+    public void initiateSignUp()
+    {
+        GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
+                .requestEmail()
+                .build();
+        mGoogleSignInClient = GoogleSignIn.getClient(this, gso);
+        Twitter.initialize(this);
+
+    }
 
     @Override
     public void onSigninClicked() {
         startActivityForResult(new Intent(this, LoginActivity.class), PHONE_LOGIN_REQUEST_CODE);
     }
+    public void socialSignIn(View v){
+        switch (v.getId())
+        {
+            case R.id.btn_connect_google:
+                Intent signInIntent = mGoogleSignInClient.getSignInIntent();
+                startActivityForResult(signInIntent, RC_SIGN_IN);
+                break;
+            case R.id.btn_connect_facebook:
+                Log.e(TAG, "socialSignIn: " );
+                LoginManager.getInstance().logInWithReadPermissions(this, Arrays.asList("email","public_profile", "user_friends"));
+                 fbsignup=true;
+                 break;
+            case R.id.btn_connect_twitter:
 
+                Log.e(TAG, "socialSignIn: " );
+                //make the call to login
+                client.authorize(this, new Callback<TwitterSession>() {
+                    @Override
+                    public void success(Result<TwitterSession> result) {
+                        startActivity(new Intent(SignupActivity.this,HomeActivity.class));
+                        finish();
+                    }
+
+                    @Override
+                    public void failure(TwitterException e) {
+                        //feedback
+                        Toast.makeText(getApplicationContext(), "Login failed", Toast.LENGTH_LONG).show();
+                    }
+                });
+                break;
+
+
+        }
+    }
     @Override
     public void onBackPressed() {
         if (goBack) {
@@ -120,10 +213,39 @@ public class SignupActivity extends AppCompatActivity implements SignupFragmentI
                     finish();
                 }
                 break;
+            case RC_SIGN_IN:
+                Task<GoogleSignInAccount> task = GoogleSignIn.getSignedInAccountFromIntent(data);
+                handleSignInResult(task);
+                break;
             default:
                 break;
         }
+        callbackManager.onActivityResult(requestCode, resultCode, data);
+        client.onActivityResult(requestCode, resultCode, data);
         super.onActivityResult(requestCode, resultCode, data);
     }
+
+    private void handleSignInResult(Task<GoogleSignInAccount> completedTask) {
+        try {
+            GoogleSignInAccount account = completedTask.getResult(ApiException.class);
+            Toast.makeText(this, "Sign up Successful.You still need to enter your phone number.", Toast.LENGTH_SHORT).show();
+            // Signed in successfully, show authenticated UI.
+            //updateUI(account);
+            //Give data to server
+            //startActivity(new Intent(this,HomeActivity.class));
+            //finish();
+
+        } catch (ApiException e) {
+            // The ApiException status code indicates the detailed failure reason.
+            // Please refer to the GoogleSignInStatusCodes class reference for more information.
+            Toast.makeText(this, "Sign In by Google Failed", Toast.LENGTH_SHORT).show();
+            Log.w(TAG, "signInResult:failed code=" + e.getStatusCode());
+        }
+    }
+    private  CallbackManager callbackManager;
+    private GoogleSignInClient mGoogleSignInClient;
+    private TwitterAuthClient client;
+    private final int RC_SIGN_IN=3;
+    private boolean fbsignup=false;
 
 }
