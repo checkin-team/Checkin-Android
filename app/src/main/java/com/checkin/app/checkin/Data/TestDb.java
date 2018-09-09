@@ -129,7 +129,7 @@ public class TestDb {
     }
     private static void populateUserProfile(Box<UserProfileEntity> users){
         users.put(new UserProfileEntity("Ishu Darshan","FootBaller","I am an awesome footballer",
-                "https://404store.com/2017/07/18/beauty-girl-image-35.jpg",
+                "https://i.ytimg.com/vi/t1mwQ2rTW_A/maxresdefault.jpg",
                 "France",155,32,4.9));
 
     }

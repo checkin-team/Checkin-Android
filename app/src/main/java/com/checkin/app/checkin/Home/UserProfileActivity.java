@@ -26,6 +26,7 @@ import android.support.annotation.Nullable;
     import android.support.v4.view.MotionEventCompat;
     import android.support.v7.app.AppCompatActivity;
 
+    import com.bumptech.glide.Glide;
     import com.checkin.app.checkin.Data.Resource;
     import com.checkin.app.checkin.Profile.ShopProfile.AdapterReview;
     import com.checkin.app.checkin.Utility.GlideApp;
@@ -104,7 +105,7 @@ public class UserProfileActivity extends AppCompatActivity {
     @SuppressLint("SetTextI18n")
     public  void setUI(UserProfileEntity person){
         ImageView imageView=findViewById(R.id.imgg);
-        GlideApp.with(this).load(person.profilepicurl).into(imageView);
+        Glide.with(UserProfileActivity.this).load(person.profilepicurl).into(imageView);
         TextView nfollowers=findViewById(R.id.nfollowers),ncheckins=findViewById(R.id.ncheckins),nRating=findViewById(R.id.rating);
         nfollowers.setText(""+person.nFollowers);ncheckins.setText(""+person.ncheckins);nRating.setText(""+person.rating);
         TextView bio=findViewById(R.id.bio),username=findViewById(R.id.username),city=findViewById(R.id.city_user),profession=findViewById(R.id.profession);

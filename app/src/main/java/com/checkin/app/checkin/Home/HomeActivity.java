@@ -43,6 +43,7 @@ import com.checkin.app.checkin.Shop.ShopModel;
 import com.checkin.app.checkin.Social.ChatActivity;
 import com.checkin.app.checkin.Social.ChatAdapter;
 import com.checkin.app.checkin.Social.MessageViewModel;
+import com.checkin.app.checkin.User.EditProfile;
 import com.checkin.app.checkin.User.UserViewModel;
 import com.checkin.app.checkin.Utility.ClipRevealFrame;
 import com.checkin.app.checkin.Utility.Constants;
@@ -426,6 +427,10 @@ public class HomeActivity extends AppCompatActivity
                 break;
             case R.id.notif_activity:
                 intent = new Intent(getApplicationContext(), NotifActivity.class);
+                startActivity(intent);
+                break;
+            case R.id.editProfile:
+                intent = new Intent(getApplicationContext(), EditProfile.class);
                 startActivity(intent);
                 break;
 
