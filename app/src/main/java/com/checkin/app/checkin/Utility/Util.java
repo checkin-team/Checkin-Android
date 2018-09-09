@@ -6,12 +6,15 @@ import android.animation.AnimatorSet;
 import android.animation.ArgbEvaluator;
 import android.animation.ObjectAnimator;
 import android.animation.ValueAnimator;
+import android.content.Context;
 import android.content.res.ColorStateList;
 import android.content.res.Resources;
+import android.database.Cursor;
 import android.graphics.Typeface;
 import android.graphics.drawable.ColorDrawable;
 import android.graphics.drawable.Drawable;
 import android.os.Build;
+import android.provider.MediaStore;
 import android.support.annotation.NonNull;
 import android.support.annotation.RequiresApi;
 import android.support.design.widget.TabLayout;
@@ -358,5 +361,38 @@ public class Util {
             }
         }
         return res;
+    }
+
+    public static List<MediaImage> getImagesList(Context context) {
+        List<MediaImage> imageList = null;
+        final String[] projection = new String[] {
+                MediaStore.Images.Media.TITLE,
+                MediaStore.Images.Media.DATA,
+                MediaStore.Images.Media.DATE_MODIFIED,
+        };
+        final String sortOrder = MediaStore.Images.Media.DATE_MODIFIED + " DESC";
+        Cursor cursor = context.getContentResolver().query(
+                MediaStore.Images.Media.EXTERNAL_CONTENT_URI,
+                projection,
+                null,
+                null,
+                sortOrder
+        );
+        assert cursor != null;
+        int column_data = cursor.getColumnIndex(MediaStore.Images.Media.DATA);
+        int column_title = cursor.getColumnIndex(MediaStore.Images.Media.TITLE);
+        String imagePath, imageTitle;
+        imageList = new ArrayList<>();
+        while (cursor.moveToNext()) {
+            imagePath = cursor.getString(column_data);
+            imageTitle = cursor.getString(column_title);
+            imageList.add(new MediaImage(imageTitle, imagePath));
+        }
+        cursor.close();
+        return imageList;
+    }
+
+    public static String getActivityIntentFilter(Context context, String identifier) {
+        return context.getPackageName() + "." + identifier;
     }
 }

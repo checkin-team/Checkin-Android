@@ -1,17 +1,14 @@
-package com.checkin.app.checkin.Notif;
-
-import android.util.Log;
+package com.checkin.app.checkin.Notifications;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 
-import java.lang.annotation.Target;
 import java.util.Date;
 
 /**
  * Created by Bhavik Patel on 20/08/2018.
  */
 
-public class NotifModel {
+public class NotificationModel {
 
     private String message;
     private Date time;
@@ -27,7 +24,7 @@ public class NotifModel {
         ,ADDED_TO_SESSION,RECOMMENDED_YOU    //non static action images
     }
 
-    public NotifModel(String message, Date time, String profileUrl, String actionUrl, boolean seen, int targetId) {
+    public NotificationModel(String message, Date time, String profileUrl, String actionUrl, boolean seen, int targetId) {
         this.message = message;
         this.time = time;
         this.profileUrl = profileUrl;

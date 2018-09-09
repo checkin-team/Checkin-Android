@@ -1,9 +1,8 @@
-package com.checkin.app.checkin.Notif;
+package com.checkin.app.checkin.Data;
 
 import android.app.NotificationChannel;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
-import android.content.ActivityNotFoundException;
 import android.content.Context;
 import android.content.Intent;
 import android.preference.PreferenceManager;
@@ -11,7 +10,10 @@ import android.support.v4.app.NotificationCompat;
 import android.support.v4.content.LocalBroadcastManager;
 import android.util.Log;
 
+import com.checkin.app.checkin.Notifications.NotificationActivity;
+import com.checkin.app.checkin.Session.ActiveSessionActivity;
 import com.checkin.app.checkin.Utility.Constants;
+import com.checkin.app.checkin.Utility.Util;
 import com.google.firebase.messaging.FirebaseMessagingService;
 import com.google.firebase.messaging.RemoteMessage;
 
@@ -28,19 +30,23 @@ public class MessagingService extends FirebaseMessagingService {
         String actionCode = remoteMessage.getData().get(Constants.FCM_ACTION_CODE);
         Log.e(TAG, "Action code: " + actionCode);
 
-        Intent intent = new Intent(this,NotifActivity.class);
+        Intent intent = getTargetIntent(actionCode);
         intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-        PendingIntent pendingIntent = PendingIntent.getActivity(this, 0, intent, PendingIntent.FLAG_UPDATE_CURRENT);
-        createNotification(remoteMessage, pendingIntent);
         String message = remoteMessage.getData().get("message");
         intent.putExtra("message", message);
-        intent.setAction(actionCode);
+        intent.setAction(Util.getActivityIntentFilter(getApplicationContext(), actionCode));
         LocalBroadcastManager localBroadcastManager = LocalBroadcastManager.getInstance(this);
-        localBroadcastManager.sendBroadcast(intent);
+        if (!localBroadcastManager.sendBroadcast(intent)) {
+            PendingIntent pendingIntent = PendingIntent.getActivity(this, 0, intent, PendingIntent.FLAG_UPDATE_CURRENT);
+            createNotification(remoteMessage, pendingIntent);
+        }
+    }
 
-
-
-
+    private Intent getTargetIntent(String actionCode) {
+        if (ActiveSessionActivity.IDENTIFIER.equals(actionCode)) {
+            return new Intent(this,ActiveSessionActivity.class);
+        }
+        else return new Intent(this, NotificationActivity.class);
     }
 
     private  void createNotification(RemoteMessage remoteMessage,PendingIntent pendingIntent)

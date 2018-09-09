@@ -1,4 +1,4 @@
-package com.checkin.app.checkin.Notif;
+package com.checkin.app.checkin.Notifications;
 
 import android.app.NotificationManager;
 import android.content.BroadcastReceiver;
@@ -19,8 +19,8 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.bumptech.glide.Glide;
 import com.checkin.app.checkin.R;
+import com.checkin.app.checkin.Utility.Util;
 
 import java.util.ArrayList;
 import java.util.Date;
@@ -29,7 +29,8 @@ import java.util.List;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
-public class NotifActivity extends AppCompatActivity {
+public class NotificationActivity extends AppCompatActivity {
+    public static final String IDENTIFIER = "notifications";
 
     @BindView(R.id.notifRV) RecyclerView notifRV;
     @BindView(R.id.back) ImageView back;
@@ -38,16 +39,12 @@ public class NotifActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_notif);
-        LocalBroadcastManager.getInstance(this).registerReceiver(mHandler,new IntentFilter("com.checkin.app.checkin.notifications"));
+        LocalBroadcastManager.getInstance(this)
+                .registerReceiver(mHandler, new IntentFilter(Util.getActivityIntentFilter(getApplicationContext(), IDENTIFIER)));
         ButterKnife.bind(this);
         notifRV.setLayoutManager(new LinearLayoutManager(getApplicationContext()));
         notifRV.setAdapter(new NotifAdapter(getNotifs()));
-        back.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                onBackPressed();
-            }
-        });
+        back.setOnClickListener(v -> onBackPressed());
     }
 
     class NotifAdapter extends RecyclerView.Adapter{
@@ -72,16 +69,16 @@ public class NotifActivity extends AppCompatActivity {
                 ButterKnife.bind(this,itemView);
                 view = itemView;
             }
-            public void bind(NotifModel notifModel){
-                //Glide.with(getApplicationContext()).load(notifModel.getProfileUrl()).into(profile);
-                //Glide.with(getApplicationContext()).load(notifModel.getActionUrl()).into(action);
-                if(notifModel.getTargetId()%6 == 0)action.setImageResource(R.drawable.noun_question_322256);
-                message.setText(notifModel.getMessage());
-                time.setText(DateUtils.getRelativeTimeSpanString(notifModel.getTime().getTime()));
+            public void bind(NotificationModel notificationModel){
+                //Glide.with(getApplicationContext()).load(notificationModel.getProfileUrl()).into(profile);
+                //Glide.with(getApplicationContext()).load(notificationModel.getActionUrl()).into(action);
+                if(notificationModel.getTargetId()%6 == 0)action.setImageResource(R.drawable.noun_question_322256);
+                message.setText(notificationModel.getMessage());
+                time.setText(DateUtils.getRelativeTimeSpanString(notificationModel.getTime().getTime()));
                 view.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        Toast.makeText(getApplicationContext(),"targetId = " + notifModel.getTargetId(),Toast.LENGTH_SHORT).show();
+                        Toast.makeText(getApplicationContext(),"targetId = " + notificationModel.getTargetId(),Toast.LENGTH_SHORT).show();
                     }
                 });
             }
@@ -113,7 +110,7 @@ public class NotifActivity extends AppCompatActivity {
         @Override
         public void onBindViewHolder(@NonNull RecyclerView.ViewHolder holder, int position) {
             if(holder.getItemViewType() == TYPE_NOTIF_MODEL){
-                ((NotifModelViewHolder) holder).bind((NotifModel) notifs.get(position));
+                ((NotifModelViewHolder) holder).bind((NotificationModel) notifs.get(position));
             }else {
                 ((NotifHeaderViewHolder) holder).bind((String) notifs.get(position));
             }
@@ -126,28 +123,28 @@ public class NotifActivity extends AppCompatActivity {
 
         @Override
         public int getItemViewType(int position) {
-            if(notifs.get(position) instanceof NotifModel) return TYPE_NOTIF_MODEL;
+            if(notifs.get(position) instanceof NotificationModel) return TYPE_NOTIF_MODEL;
             else return TYPE_HEADING;
         }
     }
 
     private List<Object> getNotifs(){
-        List<NotifModel> notifs = new ArrayList<>();
+        List<NotificationModel> notifs = new ArrayList<>();
         for(int i = 0; i < 20; i++){
             if(i%5==0)
-                notifs.add(new NotifModel("Message " + i,new Date(),"profile url","action url",false ,i));
-            else notifs.add(new NotifModel("Message " + i,new Date(),"profile url","action url",true ,i));
+                notifs.add(new NotificationModel("Message " + i,new Date(),"profile url","action url",false ,i));
+            else notifs.add(new NotificationModel("Message " + i,new Date(),"profile url","action url",true ,i));
         }
         return setForNotif(notifs);
     }
 
-    private List<Object> setForNotif(List<NotifModel> notifs){
+    private List<Object> setForNotif(List<NotificationModel> notifs){
         List<Object> notifsForDisplay = new ArrayList<>();
         List<Object> seenNotifs = new ArrayList<>();
         List<Object> unseenNotifs = new ArrayList<>();
-        for(NotifModel notifModel:notifs){
-            if(notifModel.isSeen()) seenNotifs.add(notifModel);
-            else unseenNotifs.add(notifModel);
+        for(NotificationModel notificationModel :notifs){
+            if(notificationModel.isSeen()) seenNotifs.add(notificationModel);
+            else unseenNotifs.add(notificationModel);
         }
         if(unseenNotifs.size()>0)unseenNotifs.add(0,"New");
         if(seenNotifs.size()>0)seenNotifs.add(0,"Seen");

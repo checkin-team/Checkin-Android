@@ -26,6 +26,7 @@ import com.checkin.app.checkin.User.UserModel;
 import com.checkin.app.checkin.User.UserViewModel;
 import com.checkin.app.checkin.Utility.SelectListItem;
 import com.checkin.app.checkin.Utility.SelectListViewAdapter;
+import com.checkin.app.checkin.Utility.Util;
 import com.github.javiersantos.materialstyleddialogs.MaterialStyledDialog;
 import com.github.javiersantos.materialstyleddialogs.enums.Style;
 import com.hootsuite.nachos.ChipConfiguration;
@@ -48,16 +49,18 @@ public class ActiveSessionActivity extends AppCompatActivity implements ActiveSe
     private ActiveSessionViewModel mActiveSessionViewModel;
     private UserViewModel mUserViewModel;
     private ActiveSessionMemberAdapter mSessionMembersAdapter;
+    public static final String IDENTIFIER = "active_session";
     @BindView(R.id.rv_session_members) RecyclerView rvMembers;
     @BindView(R.id.tv_bill) TextView tvBill;
 
     private MaterialStyledDialog mAddMemberDialog;
     private MaterialStyledDialog mCheckoutDialog;
+    private Receiver mHandler;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        LocalBroadcastManager.getInstance(this).registerReceiver(mHandler,new IntentFilter("com.checkin.app.checkin.active.session"));
+
         setContentView(R.layout.activity_active_session);
         ButterKnife.bind(this);
 
@@ -98,6 +101,9 @@ public class ActiveSessionActivity extends AppCompatActivity implements ActiveSe
         });
         setupAddMember();
         setupCheckoutDialog();
+        mHandler = new Receiver(mActiveSessionViewModel);
+        LocalBroadcastManager.getInstance(this)
+                .registerReceiver(mHandler, new IntentFilter(Util.getActivityIntentFilter(getApplicationContext(),IDENTIFIER)));
     }
 
     private void setupCheckoutDialog() {
@@ -179,23 +185,14 @@ public class ActiveSessionActivity extends AppCompatActivity implements ActiveSe
         mAddMemberDialog.show();
     }
 
-    private BroadcastReceiver mHandler=new BroadcastReceiver() {
+    private static class Receiver extends BroadcastReceiver {
+        ActiveSessionViewModel mSessionViewModel;
+        Receiver(ActiveSessionViewModel viewModel) {
+            mSessionViewModel = viewModel;
+        }
         @Override
         public void onReceive(Context context, Intent intent) {
-
-
-            String message =intent.getStringExtra("message");
-            Toast.makeText(getApplicationContext(),message,Toast.LENGTH_LONG).show();
-
-            NotificationManager notificationManager =(NotificationManager)getSystemService(Context.NOTIFICATION_SERVICE);
-
-
+            mSessionViewModel.updateResults();
         }
-    };
-
-    @Override
-    protected void onPause() {
-        super.onPause();
-        LocalBroadcastManager.getInstance(this).unregisterReceiver(mHandler);
     }
 }

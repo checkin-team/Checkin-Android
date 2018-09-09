@@ -33,7 +33,7 @@
         <activity
             android:name=".Home.SignupActivity"
             android:screenOrientation="portrait"
-            android:theme="@style/Theme.AppCompat.Light.NoActionBar"></activity>
+            android:theme="@style/Theme.AppCompat.Light.NoActionBar" />
         <activity
             android:name=".Home.HomeActivity"
             android:label="@string/title_activity_home"
@@ -72,23 +72,26 @@
         <activity android:name=".Profile.ShopProfile.ShopActivity" />
         <activity
             android:name=".Session.ActiveSessionActivity"
-            android:windowSoftInputMode="adjustNothing" >
+            android:windowSoftInputMode="adjustNothing">
             <intent-filter>
-                <action android:name="com.checkin.app.checkin.active.session"/>
+                <action android:name="com.checkin.app.checkin.active_session" />
             </intent-filter>
         </activity>
-        <activity android:name=".Notif.NotifActivity"
+        <activity
+            android:name=".Notifications.NotificationActivity"
             android:launchMode="singleTop">
             <intent-filter>
                 <action android:name="com.checkin.app.checkin.notifications" />
             </intent-filter>
         </activity>
-        <service
-            android:name=".Notif.MessagingService">
+
+        <service android:name=".Data.MessagingService">
             <intent-filter>
-                <action android:name="com.google.firebase.MESSAGING_EVENT"/>
+                <action android:name="com.google.firebase.MESSAGING_EVENT" />
             </intent-filter>
         </service>
+
+        <activity android:name=".Utility.EditProfileImage"></activity>
     </application>
 
 </manifest>
