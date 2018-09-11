@@ -120,7 +120,7 @@ public class ActiveSessionActivity extends AppCompatActivity implements ActiveSe
             public void configureChip(@NonNull ChipSpan chip, @NonNull ChipConfiguration chipConfiguration) {
                 super.configureChip(chip, chipConfiguration);
                 chip.setShowIconOnLeft(false);
-                chip.setIconBackgroundColor(getResources().getColor(R.color.color_primary_red));
+                chip.setIconBackgroundColor(getResources().getColor(R.color.primary_red));
             }
         }, ChipSpan.class));
         userSelect.setOnChipClickListener((chip, event) -> {

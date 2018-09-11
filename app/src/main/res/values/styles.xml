@@ -3,7 +3,7 @@
     <!-- Base application theme. -->
     <style name="AppTheme" parent="Theme.AppCompat.Light.NoActionBar">
         <!-- Customize your theme here. -->
-        <item name="colorPrimary">@color/color_primary_red</item>
+        <item name="colorPrimary">@color/primary_red</item>
         <item name="colorAccent">@color/colorAccent</item>
         <item name="actionBarStyle">@style/AppTheme.AppBarOverlay</item>
         <item name="android:fontFamily">@font/arial_rounded_mt_bold</item>

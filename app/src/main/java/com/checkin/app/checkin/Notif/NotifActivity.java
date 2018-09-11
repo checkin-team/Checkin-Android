@@ -89,7 +89,7 @@ public class NotifActivity extends AppCompatActivity {
             public void bind(NotifModel notifModel){
                 //Glide.with(getApplicationContext()).load(notifModel.getProfileUrl()).into(profile);
                 //Glide.with(getApplicationContext()).load(notifModel.getActionUrl()).into(action);
-                if(notifModel.getTargetId()%6 == 0)action.setImageResource(R.drawable.noun_question_322256);
+                if(notifModel.getTargetId()%6 == 0)action.setImageResource(R.drawable.ic_question);
                 message.setText(notifModel.getMessage());
                 time.setText(DateUtils.getRelativeTimeSpanString(notifModel.getTime().getTime()));
                 view.setOnClickListener(new View.OnClickListener() {

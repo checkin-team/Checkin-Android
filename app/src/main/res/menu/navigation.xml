@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:background="@color/color_primary_red"
+    android:background="@color/primary_red"
 
     app:bbn_badgeColor="@color/black"
     app:bbn_itemColorActive="#FFFFFFFF"

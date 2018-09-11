@@ -6,7 +6,6 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.LinearSmoothScroller;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.util.LongSparseArray;
@@ -28,10 +27,11 @@ public class MenuUserFragment extends Fragment implements MenuItemAdapter.OnItem
     private final String TAG = MenuUserFragment.class.getSimpleName();
 
     @BindView(R.id.menu_groups_list) RecyclerView rvGroupsList;
-    @BindView(R.id.currentCategory) TextView currentCategory;
+    @BindView(R.id.tv_current_category) TextView tvCurrentCategory;
     private MenuInteractionListener mMenuInteractionListener;
     private Unbinder unbinder;
     private MenuViewModel mViewModel;
+    private MenuGroupAdapter mGroupAdapter;
     private boolean mSessionActive = true;
     private LongSparseArray<Integer> orderedItemsCount;
 
@@ -72,19 +72,14 @@ public class MenuUserFragment extends Fragment implements MenuItemAdapter.OnItem
         LinearLayoutManager llm = new LinearLayoutManager(getActivity(), RecyclerView.VERTICAL, false);
         rvGroupsList.setLayoutManager(llm);
 
-        rvGroupsList.setAdapter(new MenuGroupAdapter(null, getContext(), this));
+        mGroupAdapter = new MenuGroupAdapter(null, getContext(), this);
+        rvGroupsList.setAdapter(mGroupAdapter);
 
         rvGroupsList.addOnScrollListener(new RecyclerView.OnScrollListener() {
             @Override
             public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
                 super.onScrolled(recyclerView, dx, dy);
-                LinearLayoutManager layoutManager = ((LinearLayoutManager)recyclerView.getLayoutManager());
-                int firstVisiblePosition = layoutManager.findFirstVisibleItemPosition();
-                if(groupAdapter.getItemViewType(firstVisiblePosition) == MenuGroupFilterAdapter.VIEW_TYPE_CATEGORY){
-                    currentCategory.setText((String) groupAdapter.getItem(firstVisiblePosition));
-                }else if(groupAdapter.getItemViewType(firstVisiblePosition) == MenuGroupFilterAdapter.VIEW_TYPE_GROUP){
-                    currentCategory.setText(((MenuGroupModel) groupAdapter.getItem(firstVisiblePosition)).getCategory());
-                }
+                tvCurrentCategory.setText(mGroupAdapter.getCurrentCategory());
             }
         });
 
@@ -93,7 +88,7 @@ public class MenuUserFragment extends Fragment implements MenuItemAdapter.OnItem
             if (menuGroupResource == null)
                 return;
             if (menuGroupResource.status == Resource.Status.SUCCESS)
-                ((MenuGroupAdapter) rvGroupsList.getAdapter()).setGroupList(menuGroupResource.data);
+                mGroupAdapter.setGroupList(menuGroupResource.data);
             else if (menuGroupResource.status == Resource.Status.LOADING) {
                 // TODO: DO some Loading magic!
             } else {
@@ -117,27 +112,15 @@ public class MenuUserFragment extends Fragment implements MenuItemAdapter.OnItem
     }
 
     public void onBackPressed() {
-        ((MenuGroupAdapter) rvGroupsList.getAdapter()).contractView();
+        mGroupAdapter.contractView();
     }
 
     public boolean isGroupExpanded() {
-        return ((MenuGroupAdapter) rvGroupsList.getAdapter()).isGroupExpanded();
+        return mGroupAdapter.isGroupExpanded();
     }
 
     public void scrollToCategory(String title){
-        RecyclerView.SmoothScroller smoothScroller = new
-                LinearSmoothScroller(getContext()) {
-                    @Override protected int getVerticalSnapPreference() {
-                        return LinearSmoothScroller.SNAP_TO_START;
-                    }
-                };
-        int catePosi = getCategoryPosition(title);
-        smoothScroller.setTargetPosition(catePosi == 0 ? 0 : catePosi + 1);
-        rvGroupsList.getLayoutManager().startSmoothScroll(smoothScroller);
-    }
-
-    public int getCategoryPosition(String title){
-        return groupAdapter.getCategoryPosition(title);
+        rvGroupsList.smoothScrollToPosition(mGroupAdapter.getCategoryPosition(title));
     }
 
     @Override

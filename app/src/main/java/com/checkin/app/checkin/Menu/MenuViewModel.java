@@ -3,6 +3,7 @@ package com.checkin.app.checkin.Menu;
 import android.app.Application;
 import android.arch.lifecycle.AndroidViewModel;
 import android.arch.lifecycle.LiveData;
+import android.arch.lifecycle.MediatorLiveData;
 import android.arch.lifecycle.MutableLiveData;
 import android.arch.lifecycle.Transformations;
 import android.arch.lifecycle.ViewModel;
@@ -19,6 +20,7 @@ public class MenuViewModel extends AndroidViewModel {
     private final String TAG = MenuViewModel.class.getSimpleName();
     private MenuRepository mRepository;
 //    private LiveData<List<MenuItemModel>> mMenuItems;
+    private LiveData<List<String>> mCategories;
     private LiveData<Resource<List<MenuGroupModel>>> mMenuGroups;
     private MutableLiveData<List<OrderedItemModel>> mOrderedItems = new MutableLiveData<>();
     private MutableLiveData<OrderedItemModel> mCurrentItem = new MutableLiveData<>();
@@ -246,6 +248,26 @@ public class MenuViewModel extends AndroidViewModel {
             res.setValue(count);
             return res;
         });
+    }
+
+    public LiveData<List<String>> getCategories(int menuId){
+        if (mCategories == null) {
+            if (mMenuGroups == null) getMenuGroups(menuId);
+            mCategories = Transformations.map(mMenuGroups, input -> {
+                List<String> categories = new ArrayList<>();
+                String category = "";
+                if (input.data != null) {
+                    for (MenuGroupModel menuGroupModel : input.data) {
+                        if (!category.contentEquals(menuGroupModel.getCategory())) {
+                            category = menuGroupModel.getCategory();
+                            categories.add(category);
+                        }
+                    }
+                }
+                return categories;
+            });
+        }
+        return mCategories;
     }
 
     public static class Factory extends ViewModelProvider.NewInstanceFactory {

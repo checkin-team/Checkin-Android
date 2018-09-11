@@ -101,10 +101,6 @@ public class MenuGroupModel {
         menu.setTargetId(menuId);
     }
 
-    public String getCategory() {
-        return category;
-    }
-
     public void setCategory(String category) {
         this.category = category;
     }

@@ -1,20 +1,17 @@
 package com.checkin.app.checkin.Notif;
 
-import android.app.Activity;
-import android.os.Bundle;
-import android.util.Log;
-
 import com.checkin.app.checkin.Data.Converters;
-import com.checkin.app.checkin.User.ShopProfileActivity;
+import com.checkin.app.checkin.User.UserShopProfileActivity;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
-import java.lang.annotation.Target;
 import java.util.Date;
 
 import io.objectbox.annotation.Convert;
 import io.objectbox.annotation.Entity;
 import io.objectbox.annotation.Id;
+
+//import com.checkin.app.checkin.Profile.ShopProfile.ShopProfileActivity;
 
 /**
  * Created by Bhavik Patel on 20/08/2018.
@@ -56,13 +53,19 @@ public class NotifModel {
     }
 
     public Class getActionClass(){
-        switch (action){
-            case FOLLOWED_YOU:return ShopProfileActivity.class;
-            case FOLLOW_ACCEPTED:return ShopProfileActivity.class;
-            case ADDED_TO_SESSION:return ShopProfileActivity.class;
-            case RECOMMENDED_YOU:return ShopProfileActivity.class;
-            default:return ShopProfileActivity.class;
-        }
+//        switch (action){
+//            case FOLLOWED_YOU:
+//                return ShopProfileActivity.class;
+//            case FOLLOW_ACCEPTED:
+//                return ShopProfileActivity.class;
+//            case ADDED_TO_SESSION:
+//                return ShopProfileActivity.class;
+//            case RECOMMENDED_YOU:
+//                return ShopProfileActivity.class;
+//            default:
+//                return ShopProfileActivity.class;
+//        }
+        return UserShopProfileActivity.class;
     }
 
     public long getId() {

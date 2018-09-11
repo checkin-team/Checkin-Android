@@ -61,14 +61,12 @@ public class SessionUserActivity extends AppCompatActivity implements
     @BindView(R.id.filter_container) View mFilterContainer;
     @BindView(R.id.filter_categories) RecyclerView mFilterCategories;
     @BindView(R.id.dark_back) View mDarkBack;
-    @BindView(R.id.action_search) ImageButton mActionSearch;
     @BindView(R.id.rv_menu_cart) RecyclerView rvCart;
     @BindView(R.id.count_order_items) TextView tvCountItems;
     @BindView(R.id.container_customization) ViewGroup containerCustomization;
     private MenuUserFragment mMenuFragment;
     private MenuViewModel mMenuViewModel;
     private MenuCartAdapter mCartAdapter;
-    private FilterCategoryAdapter mFilterCategoryAdapter;
 
     private MaterialStyledDialog mRemarksDialog;
     private boolean canGoBack = false;
@@ -127,18 +125,13 @@ public class SessionUserActivity extends AppCompatActivity implements
 
         mMenuViewModel = ViewModelProviders.of(this, new MenuViewModel.Factory(this.getApplication())).get(MenuViewModel.class);
 
-        mFilterCategoryAdapter = new FilterCategoryAdapter(null);
+        FilterCategoryAdapter filterCategoryAdapter = new FilterCategoryAdapter(null);
         mFilterCategories.setLayoutManager(new GridLayoutManager(this,3));
-        mFilterCategories.setAdapter(mFilterCategoryAdapter);
-        mMenuViewModel.getCategories(1).observe(this, new Observer<List<String>>() {
-            @Override
-            public void onChanged(@Nullable List<String> strings) {
-                if(strings == null) return;
-                mFilterCategoryAdapter.setCategories(strings);
-            }
+        mFilterCategories.setAdapter(filterCategoryAdapter);
+        mMenuViewModel.getCategories(1).observe(this, strings -> {
+            if(strings == null) return;
+            filterCategoryAdapter.setCategories(strings);
         });
-
-
 
         setupUiStuff();
         setupSearch();
@@ -310,13 +303,11 @@ public class SessionUserActivity extends AppCompatActivity implements
             public void onSearchViewClosed() {
             }
         });
-        ImageButton btn_search = findViewById(R.id.action_search);
-        btn_search.setOnClickListener(new ImageButton.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                mSearchView.showSearch();
-            }
-        });
+    }
+
+    @OnClick(R.id.action_search)
+    public void onSearchClicked(View view) {
+        mSearchView.showSearch();
     }
 
     @OnClick(R.id.btn_proceed)
@@ -440,39 +431,16 @@ public class SessionUserActivity extends AppCompatActivity implements
 
 
     public class FilterCategoryAdapter extends RecyclerView.Adapter<FilterCategoryAdapter.ViewHolder>{
-
         private List<String> categories;
 
-        public FilterCategoryAdapter(List<String> categories) {
+        FilterCategoryAdapter(List<String> categories) {
             this.categories = categories;
-            if(this.categories == null) this.categories = new ArrayList<>();
-        }
-
-        public class ViewHolder extends RecyclerView.ViewHolder{
-            @BindView(R.id.category_title) TextView categoryTitle;
-            View container;
-            public ViewHolder(View itemView) {
-                super(itemView);
-                ButterKnife.bind(this,itemView);
-                container = itemView;
-            }
-            public void bind(String title){
-                categoryTitle.setText(title);
-                container.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        mFilterToggle.performClick();
-                        mMenuFragment.scrollToCategory(title);
-                        //mMenuFragment.rvGroupsList.scrollToPosition(mMenuFragment.getCategoryPosition(title));
-                    }
-                });
-            }
         }
 
         @NonNull
         @Override
         public FilterCategoryAdapter.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-            View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.filter_category_item,parent,false);
+            View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.filter_category_item, parent, false);
             return new ViewHolder(view);
         }
 
@@ -483,12 +451,28 @@ public class SessionUserActivity extends AppCompatActivity implements
 
         @Override
         public int getItemCount() {
-            return categories.size();
+            return categories == null ? 0 : categories.size();
         }
 
         public void setCategories(List<String> categories){
             this.categories = categories;
             notifyDataSetChanged();
+        }
+
+        public class ViewHolder extends RecyclerView.ViewHolder{
+            @BindView(R.id.tv_category_title) TextView categoryTitle;
+
+            public ViewHolder(View itemView) {
+                super(itemView);
+                ButterKnife.bind(this,itemView);
+            }
+            public void bind(String title){
+                categoryTitle.setText(title);
+                itemView.setOnClickListener(v -> {
+                    mFilterToggle.performClick();
+                    mMenuFragment.scrollToCategory(title);
+                });
+            }
         }
     }
 }

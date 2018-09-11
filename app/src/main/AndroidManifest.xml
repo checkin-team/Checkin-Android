@@ -72,8 +72,6 @@
             android:name=".Session.ActiveSessionActivity"
             android:windowSoftInputMode="adjustNothing" />
         <activity android:name=".Profile.ShopProfile.ShopActivity" />
-        <activity android:name=".Profile.ShopProfile.ShopProfile" />
-        <activity android:name=".User.MutualCheckInActivityDemo" />
         <activity android:name=".User.UserShopProfileActivity"></activity>
         <activity android:name=".Notif.NotifActivity"
             android:launchMode="singleTop">

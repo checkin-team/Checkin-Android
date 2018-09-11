@@ -1,22 +1,20 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    xmlns:tools="http://schemas.android.com/tools"
     android:gravity="center">
 
     <TextView
-        android:id="@+id/category_title"
+        android:id="@+id/tv_category_title"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_margin="10dp"
+        android:layout_margin="@dimen/spacing_small"
         android:background="@drawable/ic_menu_filter_rectangle"
-        android:paddingTop="3dp"
-        android:text="Beverage"
+        android:layout_gravity="center"
+        android:paddingTop="@dimen/spacing_tiny"
+        tools:text="Beverage"
         android:textAlignment="center"
-        android:textColor="@color/colorPrimaryRed"
-        app:layout_constraintStart_toStartOf="parent">
-
-    </TextView>
-</LinearLayout>
+        android:textColor="@color/primary_red" />
+</FrameLayout>
 

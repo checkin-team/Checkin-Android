@@ -42,7 +42,7 @@
                 android:layout_width="84dp"
                 android:layout_height="2dp"
                 android:layout_gravity="center_vertical"
-                android:background="@color/color_primary_red" />
+                android:background="@color/primary_red" />
 
             <TextView
                 android:layout_width="wrap_content"
@@ -56,7 +56,7 @@
                 android:layout_width="84dp"
                 android:layout_height="2dp"
                 android:layout_gravity="center_vertical"
-                android:background="@color/color_primary_red" />
+                android:background="@color/primary_red" />
 
         </LinearLayout>
 

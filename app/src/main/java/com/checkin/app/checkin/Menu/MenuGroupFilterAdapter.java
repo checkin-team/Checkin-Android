@@ -1,4 +1,4 @@
-package com.checkin.app.checkin.Session;
+package com.checkin.app.checkin.Menu;
 
 import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;

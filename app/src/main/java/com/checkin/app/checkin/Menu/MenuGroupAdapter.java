@@ -12,7 +12,6 @@ import android.support.design.widget.TabLayout;
 import android.support.v4.view.PagerAdapter;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
@@ -40,20 +39,20 @@ import butterknife.ButterKnife;
 public class MenuGroupAdapter extends RecyclerView.Adapter<MenuGroupAdapter.GroupViewHolder> {
     private final String TAG = MenuGroupAdapter.class.getSimpleName();
 
-    private List<MenuGroupModel> groupList;
+    private List<MenuGroupModel> mGroupList;
     private GroupViewHolder mPrevExpandedViewHolder;
     private RecyclerView mRecyclerView;
     private Context mContext;
     private MenuItemAdapter.OnItemInteractionListener mItemInteractionListener;
 
     MenuGroupAdapter(List<MenuGroupModel> groupsList, Context context, MenuItemAdapter.OnItemInteractionListener itemInteractionListener) {
-        this.groupList = groupsList;
+        this.mGroupList = groupsList;
         mContext = context;
         mItemInteractionListener = itemInteractionListener;
     }
 
-    public void setGroupList(List<MenuGroupModel> groupList) {
-        this.groupList = groupList;
+    public void setGroupList(List<MenuGroupModel> mGroupList) {
+        this.mGroupList = mGroupList;
         notifyDataSetChanged();
     }
 
@@ -89,7 +88,7 @@ public class MenuGroupAdapter extends RecyclerView.Adapter<MenuGroupAdapter.Grou
 
     @Override
     public int getItemCount() {
-        return groupList != null ? groupList.size() : 0;
+        return mGroupList != null ? mGroupList.size() : 0;
     }
 
     @Override
@@ -120,6 +119,23 @@ public class MenuGroupAdapter extends RecyclerView.Adapter<MenuGroupAdapter.Grou
         return holder;
     }
 
+    public String getCurrentCategory() {
+        int position = ((LinearLayoutManager) mRecyclerView.getLayoutManager()).findFirstVisibleItemPosition();
+        return mGroupList.get(position).getCategory();
+    }
+
+    public int getCategoryPosition(@NonNull String category) {
+        int i = 0;
+        if (mGroupList != null) {
+            for (MenuGroupModel groupModel : mGroupList) {
+                if (category.contentEquals(groupModel.getCategory()))
+                    break;
+                i++;
+            }
+        }
+        return i;
+    }
+
     public void contractView() {
         contractView(mPrevExpandedViewHolder);
     }
@@ -145,7 +161,7 @@ public class MenuGroupAdapter extends RecyclerView.Adapter<MenuGroupAdapter.Grou
 
     @Override
     public void onBindViewHolder(@NonNull final GroupViewHolder groupViewHolder, final int position) {
-        groupViewHolder.bindData(groupList.get(position));
+        groupViewHolder.bindData(mGroupList.get(position));
         if (groupViewHolder.isExpanded) {
             contractView(groupViewHolder);
         }

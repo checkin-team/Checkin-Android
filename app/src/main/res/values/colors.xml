@@ -30,7 +30,7 @@
     <color name="transparent">#00000000</color>
 
     <!-- Color Palette -->
-    <color name="color_primary_red">#af1014</color>
+    <color name="primary_red">#af1014</color>
     <color name="brownish_grey">#6d6d6d</color>
     <color name="pinkish_grey">#bebebe</color>
     <color name="translucent_pinkish_grey">#5ebebebe</color>

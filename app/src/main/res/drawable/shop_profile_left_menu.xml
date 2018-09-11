@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <shape xmlns:android="http://schemas.android.com/apk/res/android" >
 
-    <solid android:color="@color/shop_profile_about_subheading" />
+    <solid android:color="@color/brownish_grey" />
 
     <padding
         android:bottom="10dp"

@@ -36,16 +36,14 @@ import com.checkin.app.checkin.Menu.SessionUserActivity;
 import com.checkin.app.checkin.Misc.FaqActivity;
 import com.checkin.app.checkin.Notif.NotifActivity;
 import com.checkin.app.checkin.Profile.ShopProfile.ShopActivity;
-import com.checkin.app.checkin.Profile.ShopProfile.ShopProfile;
 import com.checkin.app.checkin.Profile.ShopProfile.ShopProfileActivity2;
 import com.checkin.app.checkin.R;
 import com.checkin.app.checkin.Session.ActiveSessionActivity;
-import com.checkin.app.checkin.Shop.Shop;
 import com.checkin.app.checkin.Shop.BusinessFeaturesActivity;
+import com.checkin.app.checkin.Shop.Shop;
 import com.checkin.app.checkin.Social.ChatActivity;
 import com.checkin.app.checkin.Social.ChatAdapter;
 import com.checkin.app.checkin.Social.MessageViewModel;
-import com.checkin.app.checkin.User.MutualCheckInActivityDemo;
 import com.checkin.app.checkin.User.UserProfileActivity;
 import com.checkin.app.checkin.User.UserShopProfileActivity;
 import com.checkin.app.checkin.User.UserViewModel;
@@ -453,14 +451,6 @@ public class HomeActivity extends AppCompatActivity
                 intent = new Intent(getApplicationContext(), NotifActivity.class);
                 startActivity(intent);
                 break;
-            case R.id.shop_profile:
-                intent = new Intent(getApplicationContext(), ShopProfile.class);
-                startActivity(intent);
-                break;
-            case R.id.mutual_checkin:
-                intent = new Intent(getApplicationContext(), MutualCheckInActivityDemo.class);
-                startActivity(intent);
-                break;
             case R.id.user_shop_porfile:
                 intent = new Intent(getApplicationContext(), UserShopProfileActivity.class);
                 startActivity(intent);
@@ -544,7 +534,7 @@ public class HomeActivity extends AppCompatActivity
         Animator rotateAnim = Util.createRotationAnimator(fabHomeAdd, 0);
         animList.add(rotateAnim);
         if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.LOLLIPOP) {
-            Animator tintAnim = Util.createTintAnimator(fabHomeAdd, 0, getResources().getColor(R.color.color_primary_red));
+            Animator tintAnim = Util.createTintAnimator(fabHomeAdd, 0, getResources().getColor(R.color.primary_red));
             animList.add(tintAnim);
         }
 

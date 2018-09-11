@@ -222,7 +222,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
             doTransition = false;
             TransitionManager.endTransitions(rootView);
             TransitionManager.beginDelayedTransition(rootView, new AutoTransition());
-            btnSignIn.setBackgroundResource(R.color.color_primary_red);
+            btnSignIn.setBackgroundResource(R.color.primary_red);
             tvSignIn.setText("Login Successful!");
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
                 tvSignIn.setLetterSpacing(0f);

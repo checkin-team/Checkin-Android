@@ -69,7 +69,7 @@ public class TestDb {
                 subGroups.add("Veg");
                 subGroups.add("Non-Veg");
             }
-            MenuGroupModel menuGroup = new MenuGroupModel( "Group #" + i, subGroups);
+            MenuGroupModel menuGroup = new MenuGroupModel( "Group #" + i, subGroups, "Category #" + i%6);
             menuGroup.setMenuId(1);
             menuGroups.add(menuGroup);
             for (int j = 1; j <= i/2+1; j++) {

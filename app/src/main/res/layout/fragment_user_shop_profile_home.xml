@@ -100,14 +100,14 @@
                             android:layout_height="wrap_content"
                             android:text="2.2k"
                             android:textAlignment="center"
-                            android:textColor="@color/shop_profile_about_ratings" />
+                            android:textColor="@color/white" />
 
                         <TextView
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:text="Followers"
                             android:textAlignment="center"
-                            android:textColor="@color/shop_profile_about_ratings" />
+                            android:textColor="@color/white" />
                     </LinearLayout>
 
                     <LinearLayout
@@ -122,14 +122,14 @@
                             android:layout_height="wrap_content"
                             android:text="2.2k"
                             android:textAlignment="center"
-                            android:textColor="@color/shop_profile_about_ratings" />
+                            android:textColor="@color/white" />
 
                         <TextView
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:text="Check In"
                             android:textAlignment="center"
-                            android:textColor="@color/shop_profile_about_ratings" />
+                            android:textColor="@color/white" />
                     </LinearLayout>
 
                     <LinearLayout
@@ -144,14 +144,14 @@
                             android:layout_height="wrap_content"
                             android:text="2.2k"
                             android:textAlignment="center"
-                            android:textColor="@color/shop_profile_about_ratings" />
+                            android:textColor="@color/white" />
 
                         <TextView
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:text="Rating"
                             android:textAlignment="center"
-                            android:textColor="@color/shop_profile_about_ratings" />
+                            android:textColor="@color/white" />
                     </LinearLayout>
                 </LinearLayout>
 
@@ -170,7 +170,7 @@
                         android:gravity="center"
                         android:text="@string/shop_profile_about_cusine"
                         android:textAlignment="center"
-                        android:textColor="@color/shop_profile_about_side_buttons"
+                        android:textColor="@color/white"
                         android:textSize="14sp" />
 
                     <LinearLayout
@@ -205,7 +205,7 @@
                                     android:paddingTop="10dp"
                                     android:text="CHEESY DOES IT"
                                     android:textAlignment="center"
-                                    android:textColor="@color/shop_profile_about_heading"
+                                    android:textColor="@color/primary_red"
                                     android:textSize="24sp"
                                     android:textStyle="bold" />
 
@@ -217,7 +217,7 @@
                                     android:padding="5dp"
                                     android:text="Mexican, Chelsea"
                                     android:textAlignment="center"
-                                    android:textColor="@color/shop_profile_about_subheading"
+                                    android:textColor="@color/brownish_grey"
                                     android:textStyle="bold" />
 
                             </LinearLayout>
@@ -252,7 +252,7 @@
                         android:gravity="center"
                         android:text="@string/shop_profile_about_review"
                         android:textAlignment="center"
-                        android:textColor="@color/shop_profile_about_side_buttons"
+                        android:textColor="@color/white"
                         android:textSize="14sp" />
 
                 </LinearLayout>
