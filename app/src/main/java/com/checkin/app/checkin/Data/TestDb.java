@@ -8,11 +8,15 @@ import com.checkin.app.checkin.Menu.ItemCustomizationGroupModel;
 import com.checkin.app.checkin.Menu.MenuGroupModel;
 import com.checkin.app.checkin.Menu.MenuItemModel;
 import com.checkin.app.checkin.Menu.MenuModel;
+import com.checkin.app.checkin.Notif.NotifModel;
+import com.checkin.app.checkin.Profile.ShopProfile.ShopHomeModel;
 import com.checkin.app.checkin.User.UserModel;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Date;
 import java.util.List;
+import java.util.concurrent.TimeUnit;
 
 import io.objectbox.Box;
 
@@ -28,8 +32,24 @@ public class TestDb {
                 AppDatabase.getItemCustomizationFieldModel(context),
                 AppDatabase.getItemCustomizationGroupModel(context)
         );
+        populateShopHome(AppDatabase.getShopHomeModel(context));
+        //populateNotif(AppDatabase.getNotifModel(context));
     }
 
+    private static void populateNotif(Box<NotifModel> notifMode){
+        List<NotifModel> notifs = new ArrayList<>();
+        for(int i = 0; i < 20; i++){
+            notifs.add(new NotifModel("Message " + i,new Date(System.currentTimeMillis()- TimeUnit.MILLISECONDS.convert(1*7,TimeUnit.HOURS)),"profile url","action url",i%5==0 ,i));
+        }
+        notifMode.put(notifs);
+    }
+    private static void populateShopHome(Box<ShopHomeModel> shopProfileModel){
+        List<ShopHomeModel> shopProfiles = new ArrayList<>();
+        //shopProfiles
+        ShopHomeModel shopProfile = new ShopHomeModel(0,"Lajjat Hotel","Bio",true,true,"address","city","+8687845140","email","website",true,4.7f);
+        shopProfiles.add(shopProfile);
+        shopProfileModel.put(shopProfiles);
+    }
     private static void populateMenu(
             Box<MenuItemModel> menuItemModel,
             Box<MenuGroupModel> menuGroupModel,

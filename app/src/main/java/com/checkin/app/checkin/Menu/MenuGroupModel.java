@@ -42,7 +42,7 @@ public class MenuGroupModel {
         this.subGroups.add("Default");
     }
 
-    public MenuGroupModel(@NonNull final String name, final ArrayList<String> subGroups) {
+    public MenuGroupModel(@NonNull final String name, final ArrayList<String> subGroups, String category) {
         this.name = name;
         if (subGroups != null) {
             this.subGroups = subGroups;
@@ -50,6 +50,7 @@ public class MenuGroupModel {
             this.subGroups = new ArrayList<>(1);
             this.subGroups.add("Default");
         }
+        this.category = category;
     }
 
     @JsonProperty("items")
@@ -98,5 +99,13 @@ public class MenuGroupModel {
 
     public void setMenuId(long menuId) {
         menu.setTargetId(menuId);
+    }
+
+    public String getCategory() {
+        return category;
+    }
+
+    public void setCategory(String category) {
+        this.category = category;
     }
 }

@@ -9,6 +9,7 @@
     <uses-permission
         android:name="android.permission.GET_ACCOUNTS"
         android:maxSdkVersion="22" />
+    <uses-permission android:name="android.permission.CALL_PHONE" />
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <uses-permission
@@ -70,6 +71,16 @@
         <activity
             android:name=".Session.ActiveSessionActivity"
             android:windowSoftInputMode="adjustNothing" />
+        <activity android:name=".Profile.ShopProfile.ShopActivity" />
+        <activity android:name=".Profile.ShopProfile.ShopProfile" />
+        <activity android:name=".User.MutualCheckInActivityDemo" />
+        <activity android:name=".User.UserShopProfileActivity"></activity>
+        <activity android:name=".Notif.NotifActivity"
+            android:launchMode="singleTop">
+            <intent-filter>
+                <action android:name="com.checkin.app.checkin.notifications" />
+            </intent-filter>
+        </activity>
 
         <activity
             android:name=".Shop.BusinessFeaturesActivity"
@@ -92,6 +103,12 @@
             <meta-data
                 android:name="android.accounts.AccountAuthenticator"
                 android:resource="@xml/authenticator" />
+        </service>
+        <service
+            android:name=".Notif.MessagingService">
+            <intent-filter>
+                <action android:name="com.google.firebase.MESSAGING_EVENT"/>
+            </intent-filter>
         </service>
 
         <meta-data

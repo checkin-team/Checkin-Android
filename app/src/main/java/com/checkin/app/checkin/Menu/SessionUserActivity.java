@@ -2,6 +2,7 @@ package com.checkin.app.checkin.Menu;
 
 import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
+import android.arch.lifecycle.Observer;
 import android.arch.lifecycle.ViewModelProviders;
 import android.content.Context;
 import android.content.Intent;
@@ -9,11 +10,14 @@ import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.speech.RecognizerIntent;
+import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
@@ -55,6 +59,7 @@ public class SessionUserActivity extends AppCompatActivity implements
     @BindView(R.id.search_view) MaterialSearchView mSearchView;
     @BindView(R.id.action_filter_toggle) ImageButton mFilterToggle;
     @BindView(R.id.filter_container) View mFilterContainer;
+    @BindView(R.id.filter_categories) RecyclerView mFilterCategories;
     @BindView(R.id.dark_back) View mDarkBack;
     @BindView(R.id.action_search) ImageButton mActionSearch;
     @BindView(R.id.rv_menu_cart) RecyclerView rvCart;
@@ -63,6 +68,7 @@ public class SessionUserActivity extends AppCompatActivity implements
     private MenuUserFragment mMenuFragment;
     private MenuViewModel mMenuViewModel;
     private MenuCartAdapter mCartAdapter;
+    private FilterCategoryAdapter mFilterCategoryAdapter;
 
     private MaterialStyledDialog mRemarksDialog;
     private boolean canGoBack = false;
@@ -120,6 +126,19 @@ public class SessionUserActivity extends AppCompatActivity implements
                 .commit();
 
         mMenuViewModel = ViewModelProviders.of(this, new MenuViewModel.Factory(this.getApplication())).get(MenuViewModel.class);
+
+        mFilterCategoryAdapter = new FilterCategoryAdapter(null);
+        mFilterCategories.setLayoutManager(new GridLayoutManager(this,3));
+        mFilterCategories.setAdapter(mFilterCategoryAdapter);
+        mMenuViewModel.getCategories(1).observe(this, new Observer<List<String>>() {
+            @Override
+            public void onChanged(@Nullable List<String> strings) {
+                if(strings == null) return;
+                mFilterCategoryAdapter.setCategories(strings);
+            }
+        });
+
+
 
         setupUiStuff();
         setupSearch();
@@ -417,5 +436,59 @@ public class SessionUserActivity extends AppCompatActivity implements
     @Override
     public void onItemRemark(OrderedItemModel item) {
         mRemarksDialog.show();
+    }
+
+
+    public class FilterCategoryAdapter extends RecyclerView.Adapter<FilterCategoryAdapter.ViewHolder>{
+
+        private List<String> categories;
+
+        public FilterCategoryAdapter(List<String> categories) {
+            this.categories = categories;
+            if(this.categories == null) this.categories = new ArrayList<>();
+        }
+
+        public class ViewHolder extends RecyclerView.ViewHolder{
+            @BindView(R.id.category_title) TextView categoryTitle;
+            View container;
+            public ViewHolder(View itemView) {
+                super(itemView);
+                ButterKnife.bind(this,itemView);
+                container = itemView;
+            }
+            public void bind(String title){
+                categoryTitle.setText(title);
+                container.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        mFilterToggle.performClick();
+                        mMenuFragment.scrollToCategory(title);
+                        //mMenuFragment.rvGroupsList.scrollToPosition(mMenuFragment.getCategoryPosition(title));
+                    }
+                });
+            }
+        }
+
+        @NonNull
+        @Override
+        public FilterCategoryAdapter.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+            View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.filter_category_item,parent,false);
+            return new ViewHolder(view);
+        }
+
+        @Override
+        public void onBindViewHolder(@NonNull FilterCategoryAdapter.ViewHolder holder, int position) {
+            holder.bind(categories.get(position));
+        }
+
+        @Override
+        public int getItemCount() {
+            return categories.size();
+        }
+
+        public void setCategories(List<String> categories){
+            this.categories = categories;
+            notifyDataSetChanged();
+        }
     }
 }

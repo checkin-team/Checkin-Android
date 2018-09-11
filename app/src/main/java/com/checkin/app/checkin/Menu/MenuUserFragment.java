@@ -6,12 +6,14 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.LinearSmoothScroller;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.util.LongSparseArray;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.checkin.app.checkin.Data.Resource;
@@ -26,6 +28,7 @@ public class MenuUserFragment extends Fragment implements MenuItemAdapter.OnItem
     private final String TAG = MenuUserFragment.class.getSimpleName();
 
     @BindView(R.id.menu_groups_list) RecyclerView rvGroupsList;
+    @BindView(R.id.currentCategory) TextView currentCategory;
     private MenuInteractionListener mMenuInteractionListener;
     private Unbinder unbinder;
     private MenuViewModel mViewModel;
@@ -71,6 +74,20 @@ public class MenuUserFragment extends Fragment implements MenuItemAdapter.OnItem
 
         rvGroupsList.setAdapter(new MenuGroupAdapter(null, getContext(), this));
 
+        rvGroupsList.addOnScrollListener(new RecyclerView.OnScrollListener() {
+            @Override
+            public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
+                super.onScrolled(recyclerView, dx, dy);
+                LinearLayoutManager layoutManager = ((LinearLayoutManager)recyclerView.getLayoutManager());
+                int firstVisiblePosition = layoutManager.findFirstVisibleItemPosition();
+                if(groupAdapter.getItemViewType(firstVisiblePosition) == MenuGroupFilterAdapter.VIEW_TYPE_CATEGORY){
+                    currentCategory.setText((String) groupAdapter.getItem(firstVisiblePosition));
+                }else if(groupAdapter.getItemViewType(firstVisiblePosition) == MenuGroupFilterAdapter.VIEW_TYPE_GROUP){
+                    currentCategory.setText(((MenuGroupModel) groupAdapter.getItem(firstVisiblePosition)).getCategory());
+                }
+            }
+        });
+
         long shopId = getArguments().getLong(Constants.SHOP_ID);
         mViewModel.getMenuGroups(shopId).observe(getActivity(), menuGroupResource -> {
             if (menuGroupResource == null)
@@ -95,6 +112,7 @@ public class MenuUserFragment extends Fragment implements MenuItemAdapter.OnItem
                 holder.changeQuantity(mViewModel.getOrderedCount(orderedItem.getItem()) + orderedItem.getChangeCount());
             }
         });
+
         return rootView;
     }
 
@@ -104,6 +122,22 @@ public class MenuUserFragment extends Fragment implements MenuItemAdapter.OnItem
 
     public boolean isGroupExpanded() {
         return ((MenuGroupAdapter) rvGroupsList.getAdapter()).isGroupExpanded();
+    }
+
+    public void scrollToCategory(String title){
+        RecyclerView.SmoothScroller smoothScroller = new
+                LinearSmoothScroller(getContext()) {
+                    @Override protected int getVerticalSnapPreference() {
+                        return LinearSmoothScroller.SNAP_TO_START;
+                    }
+                };
+        int catePosi = getCategoryPosition(title);
+        smoothScroller.setTargetPosition(catePosi == 0 ? 0 : catePosi + 1);
+        rvGroupsList.getLayoutManager().startSmoothScroll(smoothScroller);
+    }
+
+    public int getCategoryPosition(String title){
+        return groupAdapter.getCategoryPosition(title);
     }
 
     @Override

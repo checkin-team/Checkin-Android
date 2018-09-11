@@ -34,6 +34,9 @@ import android.widget.TextView;
 
 import com.checkin.app.checkin.Menu.SessionUserActivity;
 import com.checkin.app.checkin.Misc.FaqActivity;
+import com.checkin.app.checkin.Notif.NotifActivity;
+import com.checkin.app.checkin.Profile.ShopProfile.ShopActivity;
+import com.checkin.app.checkin.Profile.ShopProfile.ShopProfile;
 import com.checkin.app.checkin.Profile.ShopProfile.ShopProfileActivity2;
 import com.checkin.app.checkin.R;
 import com.checkin.app.checkin.Session.ActiveSessionActivity;
@@ -42,7 +45,9 @@ import com.checkin.app.checkin.Shop.BusinessFeaturesActivity;
 import com.checkin.app.checkin.Social.ChatActivity;
 import com.checkin.app.checkin.Social.ChatAdapter;
 import com.checkin.app.checkin.Social.MessageViewModel;
+import com.checkin.app.checkin.User.MutualCheckInActivityDemo;
 import com.checkin.app.checkin.User.UserProfileActivity;
+import com.checkin.app.checkin.User.UserShopProfileActivity;
 import com.checkin.app.checkin.User.UserViewModel;
 import com.checkin.app.checkin.Utility.ClipRevealFrame;
 import com.checkin.app.checkin.Utility.Constants;
@@ -440,6 +445,27 @@ public class HomeActivity extends AppCompatActivity
                 intent = new Intent(getApplicationContext(), FaqActivity.class);
                 startActivity(intent);
                 break;
+            case R.id.nav_shop_activity:
+                intent = new Intent(getApplicationContext(), ShopActivity.class);
+                startActivity(intent);
+                break;
+            case R.id.notif_activity:
+                intent = new Intent(getApplicationContext(), NotifActivity.class);
+                startActivity(intent);
+                break;
+            case R.id.shop_profile:
+                intent = new Intent(getApplicationContext(), ShopProfile.class);
+                startActivity(intent);
+                break;
+            case R.id.mutual_checkin:
+                intent = new Intent(getApplicationContext(), MutualCheckInActivityDemo.class);
+                startActivity(intent);
+                break;
+            case R.id.user_shop_porfile:
+                intent = new Intent(getApplicationContext(), UserShopProfileActivity.class);
+                startActivity(intent);
+                break;
+
         }
         drawerLayout.closeDrawer(GravityCompat.START);
         return true;
@@ -536,15 +562,14 @@ public class HomeActivity extends AppCompatActivity
 
         fabHomeAdd.setSelected(false);
     }
+
     @OnClick(R.id.action_dine_in)
     public  void dine_in(View v){
         startActivity(new Intent(this,ActiveSessionActivity.class));
     }
 
-
     @OnClick(R.id.action_delivery)
-            public void delivery(View v)
-    {
+    public void delivery(View v) {
         startActivity(new Intent(this, BusinessFeaturesActivity.class));
     }
 

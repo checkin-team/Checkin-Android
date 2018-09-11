@@ -66,6 +66,11 @@
     <string name="menu_drawer_open">Open Menu Cart drawer</string>
     <string name="menu_drawer_close">Close Menu Cart drawer</string>
     <string name="active_session">Active Session</string>
+
+    <!--shopProfile-->
+    <string name="shop_profile_about_cusine">"C\nU\nS\nI\nN\nE\n&gt;"</string>
+    <string name="shop_profile_about_review">"R\nE\nV\nI\nE\nW\n&lt;"</string>
+
     <string name="title_activity_signup">SignupActivity</string>
     <string name="btn_cancel">Cancel</string>
     <string name="item_non_cancelable">Non-Cancelable</string>
@@ -77,4 +82,9 @@
     <string name="finish">done</string>
     <string name="title_create_business_account">Create Business Account</string>
     <string name="prefix_country_code">+91-</string>
+
+    <!--notification-->
+    <string name="notif_appbar_title">NOTIFICATIONS</string>
+    <string name="notif_heading_unseen">New</string>
+    <string name="notif_heading_seen">Seen</string>
 </resources>

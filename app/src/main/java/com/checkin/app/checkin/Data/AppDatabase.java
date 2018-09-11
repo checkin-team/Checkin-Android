@@ -2,13 +2,14 @@ package com.checkin.app.checkin.Data;
 
 import android.content.Context;
 
-//import com.alcatraz.admin.project_alcatraz.MyObjectBox;
-import com.checkin.app.checkin.Menu.ItemCustomizationFieldModel;
-import com.checkin.app.checkin.Menu.MenuModel;
-import com.checkin.app.checkin.MyObjectBox;
 import com.checkin.app.checkin.Menu.ItemCustomizationGroupModel;
 import com.checkin.app.checkin.Menu.MenuGroupModel;
 import com.checkin.app.checkin.Menu.MenuItemModel;
+import com.checkin.app.checkin.Notif.NotifModel;
+import com.checkin.app.checkin.Profile.ShopProfile.ShopHomeModel;
+import com.checkin.app.checkin.Menu.ItemCustomizationFieldModel;
+import com.checkin.app.checkin.Menu.MenuModel;
+import com.checkin.app.checkin.MyObjectBox;
 import com.checkin.app.checkin.Social.Chat;
 import com.checkin.app.checkin.Social.Message;
 import com.checkin.app.checkin.User.UserModel;
@@ -34,6 +35,14 @@ public class AppDatabase {
     }
 
     private AppDatabase() {
+    }
+
+    public static Box<NotifModel> getNotifModel(final Context context) {
+        return getBoxStore(context).boxFor(NotifModel.class);
+    }
+
+    public static Box<ShopHomeModel> getShopHomeModel(final Context context) {
+        return getBoxStore(context).boxFor(ShopHomeModel.class);
     }
 
     public static Box<ItemCustomizationFieldModel> getItemCustomizationFieldModel(final Context context) {

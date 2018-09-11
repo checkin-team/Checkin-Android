@@ -8,6 +8,7 @@ import android.view.ViewGroup;
 import android.widget.EditText;
 
 import com.checkin.app.checkin.R;
+import com.google.firebase.auth.PhoneAuthProvider;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -21,9 +22,9 @@ public class OtpVerificationFragment extends Fragment {
     //@BindView(R.id.dark_back) View mDarkBack;
     public OtpVerificationFragment() {}
 
-    public static OtpVerificationFragment newInstance(SignupFragmentInteraction fragmentInteraction) {
+    public static OtpVerificationFragment newInstance(SignupActivity fragmentInteraction) {
         OtpVerificationFragment fragment = new OtpVerificationFragment();
-        fragment.fragmentInteraction = fragmentInteraction;
+        fragment.fragmentInteraction = (SignupFragmentInteraction) fragmentInteraction;
         return fragment;
     }
 
