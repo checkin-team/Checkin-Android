@@ -113,27 +113,26 @@ public class BusinessFeaturesActivity extends AppCompatActivity {
                 switch (position) {
                     case 0:
                         tvTitle.setText("Business Profile");
-                        tvSubTitle.setText("Add phone number, edEmail or location so" +
+                        tvSubTitle.setText("Add phone number, email or location so " +
                                 "that Checkin help you grow your business.");
                         imFeature.setImageResource(R.drawable.ic_business_profile);
                         break;
                     case 1:
                         tvTitle.setText("Dynamic Menu");
-                        tvSubTitle.setText("Upload your regular menu and have a" +
-                                " real time control of managing the inventory.");
+                        tvSubTitle.setText("Upload your regular menu and have a " +
+                                "real time control of managing the inventory.");
                         imFeature.setImageResource(R.drawable.ic_business_menu);
                         break;
                     case 2:
                         tvTitle.setText("Insights");
-                        tvSubTitle.setText("Learn about the followers and see" +
+                        tvSubTitle.setText("Learn about the followers and see " +
                                 "how your business is performing.");
                         imFeature.setImageResource(R.drawable.ic_business_insight);
                         break;
                     case 3:
                         tvTitle.setText("Activity");
                         tvSubTitle.setText("Track your in-store traffic, live orders " +
-                                "and expand the reach of your business " +
-                                "among consumers.");
+                                "and expand the reach of your business among consumers.");
                         imFeature.setImageResource(R.drawable.ic_business_activity);
                         break;
                 }
