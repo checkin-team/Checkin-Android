@@ -12,7 +12,6 @@ import com.checkin.app.checkin.Data.BaseRepository;
 import com.checkin.app.checkin.Data.NetworkBoundResource;
 import com.checkin.app.checkin.Data.Resource;
 import com.checkin.app.checkin.Data.WebApiService;
-import com.checkin.app.checkin.Profile.ShopProfile.ShopHomeModel_;
 
 import java.util.List;
 
