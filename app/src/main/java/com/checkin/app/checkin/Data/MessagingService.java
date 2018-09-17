@@ -1,4 +1,4 @@
-package com.checkin.app.checkin.Notif;
+package com.checkin.app.checkin.Data;
 
 import android.app.NotificationChannel;
 import android.app.NotificationManager;
@@ -10,7 +10,10 @@ import android.support.v4.app.NotificationCompat;
 import android.support.v4.content.LocalBroadcastManager;
 import android.util.Log;
 
+import com.checkin.app.checkin.Notifications.NotificationActivity;
+import com.checkin.app.checkin.Session.ActiveSessionActivity;
 import com.checkin.app.checkin.Utility.Constants;
+import com.checkin.app.checkin.Utility.Util;
 import com.google.firebase.messaging.FirebaseMessagingService;
 import com.google.firebase.messaging.RemoteMessage;
 
@@ -27,16 +30,23 @@ public class MessagingService extends FirebaseMessagingService {
         String actionCode = remoteMessage.getData().get(Constants.FCM_ACTION_CODE);
         Log.e(TAG, "Action code: " + actionCode);
 
-        Intent intent = new Intent(actionCode);
+        Intent intent = getTargetIntent(actionCode);
         intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-        PendingIntent pendingIntent = PendingIntent.getActivity(this, 0, intent, PendingIntent.FLAG_ONE_SHOT);
-        createNotification(remoteMessage, pendingIntent);
         String message = remoteMessage.getData().get("message");
         intent.putExtra("message", message);
+        intent.setAction(Util.getActivityIntentFilter(getApplicationContext(), actionCode));
         LocalBroadcastManager localBroadcastManager = LocalBroadcastManager.getInstance(this);
-        localBroadcastManager.sendBroadcast(intent);
+        if (!localBroadcastManager.sendBroadcast(intent)) {
+            PendingIntent pendingIntent = PendingIntent.getActivity(this, 0, intent, PendingIntent.FLAG_UPDATE_CURRENT);
+            createNotification(remoteMessage, pendingIntent);
+        }
+    }
 
-
+    private Intent getTargetIntent(String actionCode) {
+        if (ActiveSessionActivity.IDENTIFIER.equals(actionCode)) {
+            return new Intent(this,ActiveSessionActivity.class);
+        }
+        else return new Intent(this, NotificationActivity.class);
     }
 
     private  void createNotification(RemoteMessage remoteMessage,PendingIntent pendingIntent)
@@ -54,12 +64,16 @@ public class MessagingService extends FirebaseMessagingService {
     }
 
     @Override
-    public void onNewToken(String s) {
-        Log.d("MyFirebaseToken", "Refreshed token: " + s);
+    public void onNewToken(String token) {
+        Log.d("MyFirebaseToken", "Refreshed token: " + token);
+        saveDeviceToken(token);
+        super.onNewToken(token);
+    }
+
+    private void saveDeviceToken(String token) {
         PreferenceManager.getDefaultSharedPreferences(getApplicationContext()).edit()
-                .putString(Constants.SP_DEVICE_TOKEN, s)
+                .putString(Constants.SP_DEVICE_TOKEN, token)
                 .apply();
-        super.onNewToken(s);
     }
 
     private void createNotificationChannel()

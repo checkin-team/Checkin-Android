@@ -1,11 +1,16 @@
 package com.checkin.app.checkin.Session;
 
+import android.app.NotificationManager;
 import android.arch.lifecycle.ViewModelProviders;
+import android.content.BroadcastReceiver;
 import android.content.Context;
+import android.content.Intent;
+import android.content.IntentFilter;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.FragmentTransaction;
+import android.support.v4.content.LocalBroadcastManager;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -20,6 +25,7 @@ import com.checkin.app.checkin.User.UserModel;
 import com.checkin.app.checkin.User.UserViewModel;
 import com.checkin.app.checkin.Utility.SelectListItem;
 import com.checkin.app.checkin.Utility.SelectListViewAdapter;
+import com.checkin.app.checkin.Utility.Util;
 import com.github.javiersantos.materialstyleddialogs.MaterialStyledDialog;
 import com.github.javiersantos.materialstyleddialogs.enums.Style;
 import com.hootsuite.nachos.ChipConfiguration;
@@ -42,15 +48,18 @@ public class ActiveSessionActivity extends AppCompatActivity implements ActiveSe
     private ActiveSessionViewModel mActiveSessionViewModel;
     private UserViewModel mUserViewModel;
     private ActiveSessionMemberAdapter mSessionMembersAdapter;
+    public static final String IDENTIFIER = "active_session";
     @BindView(R.id.rv_session_members) RecyclerView rvMembers;
     @BindView(R.id.tv_bill) TextView tvBill;
 
     private MaterialStyledDialog mAddMemberDialog;
     private MaterialStyledDialog mCheckoutDialog;
+    private Receiver mHandler;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
         setContentView(R.layout.activity_active_session);
         ButterKnife.bind(this);
 
@@ -91,6 +100,9 @@ public class ActiveSessionActivity extends AppCompatActivity implements ActiveSe
         });
         setupAddMember();
         setupCheckoutDialog();
+        mHandler = new Receiver(mActiveSessionViewModel);
+        LocalBroadcastManager.getInstance(this)
+                .registerReceiver(mHandler, new IntentFilter(Util.getActivityIntentFilter(getApplicationContext(),IDENTIFIER)));
     }
 
     private void setupCheckoutDialog() {
@@ -170,5 +182,16 @@ public class ActiveSessionActivity extends AppCompatActivity implements ActiveSe
     @Override
     public void onAddMemberClicked() {
         mAddMemberDialog.show();
+    }
+
+    private static class Receiver extends BroadcastReceiver {
+        ActiveSessionViewModel mSessionViewModel;
+        Receiver(ActiveSessionViewModel viewModel) {
+            mSessionViewModel = viewModel;
+        }
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            mSessionViewModel.updateResults();
+        }
     }
 }

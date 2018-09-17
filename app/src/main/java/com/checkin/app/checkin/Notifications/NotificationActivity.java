@@ -1,4 +1,4 @@
-package com.checkin.app.checkin.Notif;
+package com.checkin.app.checkin.Notifications;
 
 import android.app.NotificationManager;
 import android.arch.lifecycle.Observer;
@@ -23,7 +23,9 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.checkin.app.checkin.Data.Resource;
+import com.checkin.app.checkin.Notif.NotifViewModel;
 import com.checkin.app.checkin.R;
+import com.checkin.app.checkin.Utility.Util;
 import com.checkin.app.checkin.Utility.Constants;
 
 import java.util.ArrayList;
@@ -36,7 +38,8 @@ import butterknife.ButterKnife;
 import static java.util.concurrent.TimeUnit.DAYS;
 import static java.util.concurrent.TimeUnit.MILLISECONDS;
 
-public class NotifActivity extends AppCompatActivity {
+public class NotificationActivity extends AppCompatActivity {
+    public static final String IDENTIFIER = "notifications";
 
     @BindView(R.id.notifRV) RecyclerView notifRV;
     @BindView(R.id.back) ImageView back;
@@ -47,7 +50,8 @@ public class NotifActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_notif);
-        LocalBroadcastManager.getInstance(this).registerReceiver(mHandler,new IntentFilter("com.checkin.app.checkin.notifications"));
+        LocalBroadcastManager.getInstance(this)
+                .registerReceiver(mHandler, new IntentFilter(Util.getActivityIntentFilter(getApplicationContext(), IDENTIFIER)));
         ButterKnife.bind(this);
         notifViewModel = ViewModelProviders.of(this,new NotifViewModel.Factory(getApplication())).get(NotifViewModel.class);
         notifRV.setLayoutManager(new LinearLayoutManager(getApplicationContext()));
@@ -56,16 +60,11 @@ public class NotifActivity extends AppCompatActivity {
         //notifAdapter.setNotifs(getNotifs());
         notifViewModel.getNotifModel().observe(this, new Observer<Resource<List<NotifModel>>>() {
             @Override
-            public void onChanged(@Nullable Resource<List<NotifModel>> listResource) {
+            public void onChanged(@Nullable Resource<List<NotificationModel>> listResource) {
                 notifAdapter.setNotifs(listResource.data);
             }
         });
-        back.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                onBackPressed();
-            }
-        });
+        back.setOnClickListener(v -> onBackPressed());
     }
 
     class NotifAdapter extends RecyclerView.Adapter{
@@ -86,19 +85,21 @@ public class NotifActivity extends AppCompatActivity {
                 ButterKnife.bind(this,itemView);
                 view = itemView;
             }
-            public void bind(NotifModel notifModel){
-                //Glide.with(getApplicationContext()).load(notifModel.getProfileUrl()).into(profile);
-                //Glide.with(getApplicationContext()).load(notifModel.getActionUrl()).into(action);
-                if(notifModel.getTargetId()%6 == 0)action.setImageResource(R.drawable.ic_question);
-                message.setText(notifModel.getMessage());
-                time.setText(DateUtils.getRelativeTimeSpanString(notifModel.getTime().getTime()));
+
+            public void bind(NotificationModel notificationModel){
+                //Glide.with(getApplicationContext()).load(notificationModel.getProfileUrl()).into(profile);
+                //Glide.with(getApplicationContext()).load(notificationModel.getActionUrl()).into(action);
+                if(notificationModel.getTargetId()%6 == 0)
+                    action.setImageResource(R.drawable.ic_question);
+                message.setText(notificationModel.getMessage());
+                time.setText(DateUtils.getRelativeTimeSpanString(notificationModel.getTime().getTime()));
                 view.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        Intent intent = new Intent(getApplicationContext(),notifModel.getActionClass());
-                        intent.putExtra(Constants.TARGET_ID,notifModel.getTargetId());
+                        Intent intent = new Intent(getApplicationContext(),notificationModel.getActionClass());
+                        intent.putExtra(Constants.TARGET_ID,notificationModel.getTargetId());
 //                        startActivity(intent);
-                        Toast.makeText(getApplicationContext(),"targetId = " + notifModel.getTargetId(),Toast.LENGTH_SHORT).show();
+                        Toast.makeText(getApplicationContext(),"targetId = " + notificationModel.getTargetId(),Toast.LENGTH_SHORT).show();
                     }
                 });
             }
@@ -130,7 +131,7 @@ public class NotifActivity extends AppCompatActivity {
         @Override
         public void onBindViewHolder(@NonNull RecyclerView.ViewHolder holder, int position) {
             if(holder.getItemViewType() == TYPE_NOTIF_MODEL){
-                ((NotifModelViewHolder) holder).bind((NotifModel) notifs.get(position));
+                ((NotifModelViewHolder) holder).bind((NotificationModel) notifs.get(position));
             }else {
                 ((NotifHeaderViewHolder) holder).bind((String) notifs.get(position));
             }
@@ -143,11 +144,11 @@ public class NotifActivity extends AppCompatActivity {
 
         @Override
         public int getItemViewType(int position) {
-            if(notifs.get(position) instanceof NotifModel) return TYPE_NOTIF_MODEL;
+            if(notifs.get(position) instanceof NotificationModel) return TYPE_NOTIF_MODEL;
             else return TYPE_HEADING;
         }
 
-        public void setNotifs(List<NotifModel> notifs){
+        public void setNotifs(List<NotificationModel> notifs){
             if(notifs==null) return;
             List<Object> notifsForDisplay = new ArrayList<>();
             notifsForDisplay.add(0,"New");
@@ -157,24 +158,25 @@ public class NotifActivity extends AppCompatActivity {
             }
             long range = MILLISECONDS.convert(Constants.NEW_NOTIF_RANGE,DAYS);
             boolean isLaterAdded = false;
-            for(NotifModel notifModel:notifs){
+            for(NotificationModel notifModel:notifs){
                 if(recentNotifTime - notifModel.getTime().getTime() < range) notifsForDisplay.add(notifModel);
                 else if(!isLaterAdded){
                     notifsForDisplay.add("Later");
                     isLaterAdded = true;
-                }else notifsForDisplay.add(notifModel);
+                }
+                else notifsForDisplay.add(notifModel);
             }
             this.notifs =  notifsForDisplay;
             notifyDataSetChanged();
         }
     }
 
-    private List<NotifModel> getNotifs(){
-        List<NotifModel> notifs = new ArrayList<>();
+    private List<NotificationModel> getNotifs(){
+        List<NotificationModel> notifs = new ArrayList<>();
         for(int i = 0; i < 20; i++){
             if(i%5==0)
-                notifs.add(new NotifModel("Message " + i,new Date(),"profile url","action url",false ,i));
-            else notifs.add(new NotifModel("Message " + i,new Date(),"profile url","action url",true ,i));
+                notifs.add(new NotificationModel("Message " + i,new Date(),"profile url","action url",false ,i));
+            else notifs.add(new NotificationModel("Message " + i,new Date(),"profile url","action url",true ,i));
         }
         return notifs;
     }
@@ -188,8 +190,6 @@ public class NotifActivity extends AppCompatActivity {
             Toast.makeText(getApplicationContext(),message,Toast.LENGTH_LONG).show();
 
             NotificationManager notificationManager =(NotificationManager)getSystemService(Context.NOTIFICATION_SERVICE);
-            notificationManager.cancelAll();
-
         }
     };
 

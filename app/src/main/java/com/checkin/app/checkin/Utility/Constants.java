@@ -37,5 +37,6 @@ public class Constants {
     public static final String CHANNEL_NAME="myChannelName";
     public static final String CHANNEL_DESCRIPTION="my description";
     public static final String FCM_ACTION_CODE = "ACTION_CODE";
+
     private Constants() {}
 }

@@ -1,4 +1,4 @@
-package com.checkin.app.checkin.Notif;
+package com.checkin.app.checkin.Notifications;
 
 import com.checkin.app.checkin.Data.Converters;
 import com.checkin.app.checkin.User.UserShopProfileActivity;
@@ -18,7 +18,7 @@ import io.objectbox.annotation.Id;
  */
 
 @Entity
-public class NotifModel {
+public class NotificationModel {
     @Id private long id;
     private String message;
     private Date time;
@@ -43,7 +43,7 @@ public class NotifModel {
 
 
 
-    public NotifModel(String message, Date time, String profileUrl, String actionUrl, boolean seen, int targetId) {
+    public NotificationModel(String message, Date time, String profileUrl, String actionUrl, boolean seen, int targetId) {
         this.message = message;
         this.time = time;
         this.profileUrl = profileUrl;

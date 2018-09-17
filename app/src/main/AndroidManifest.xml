@@ -73,7 +73,8 @@
             android:windowSoftInputMode="adjustNothing" />
         <activity android:name=".Profile.ShopProfile.ShopActivity" />
         <activity android:name=".User.UserShopProfileActivity"></activity>
-        <activity android:name=".Notif.NotifActivity"
+        <activity
+            android:name=".Notifications.NotificationActivity"
             android:launchMode="singleTop">
             <intent-filter>
                 <action android:name="com.checkin.app.checkin.notifications" />
@@ -103,11 +104,13 @@
                 android:resource="@xml/authenticator" />
         </service>
         <service
-            android:name=".Notif.MessagingService">
+            android:name=".Data.MessagingService">
             <intent-filter>
-                <action android:name="com.google.firebase.MESSAGING_EVENT"/>
+                <action android:name="com.google.firebase.MESSAGING_EVENT" />
             </intent-filter>
         </service>
+
+        <activity android:name=".Utility.EditProfileImage"></activity>
 
         <meta-data
             android:name="preloaded_fonts"

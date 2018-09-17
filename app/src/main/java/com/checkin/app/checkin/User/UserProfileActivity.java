@@ -7,6 +7,7 @@ package com.checkin.app.checkin.User;
 
     import android.app.WallpaperManager;
     import android.content.Context;
+    import android.content.Intent;
     import android.content.res.Resources;
     import android.graphics.Bitmap;
     import android.graphics.Canvas;
@@ -27,11 +28,13 @@ import android.support.annotation.Nullable;
     import android.view.GestureDetector;
     import android.view.MotionEvent;
 import android.view.View;
+    import android.widget.Button;
     import android.widget.ImageView;
     import android.widget.LinearLayout;
     import android.widget.RelativeLayout;
 
     import com.checkin.app.checkin.R;
+    import com.checkin.app.checkin.Utility.EditProfileImage;
 
 public class UserProfileActivity extends AppCompatActivity {
     private static final String TAG = "UserProfileActivity";
@@ -43,6 +46,12 @@ public class UserProfileActivity extends AppCompatActivity {
         Drawable imagetoshow = ContextCompat.getDrawable(getApplicationContext(),R.drawable.flier);
         final Drawable mod= new BitmapDrawable(getResources(),getRoundedCornerBitmap(((BitmapDrawable)imagetoshow).getBitmap(),getApplicationContext()));
         ImageView imageView=findViewById(R.id.imgg);
+        Button editImage=findViewById(R.id.editImage);
+        editImage.setOnClickListener(v -> {
+            Intent intent;
+                intent = new Intent(this , EditProfileImage.class);
+            startActivityForResult(intent,1);
+        });
         /*final Matrix matrix = imageView.getImageMatrix();
         final float imageWidth = imageView.getDrawable().getIntrinsicWidth();
         final int screenWidth = getResources().getDisplayMetrics().widthPixels;
