@@ -1,8 +1,8 @@
 package com.checkin.app.checkin.Data;
 
 import com.checkin.app.checkin.Menu.MenuModel;
-import com.checkin.app.checkin.Notif.NotifModel;
-import com.checkin.app.checkin.Profile.ShopProfile.ShopHomeModel;
+import com.checkin.app.checkin.Notifications.NotificationModel;
+import com.checkin.app.checkin.Shop.ShopHomeModel;
 import com.checkin.app.checkin.Session.ActiveSessionModel;
 import com.checkin.app.checkin.Social.Message;
 import com.fasterxml.jackson.databind.node.ObjectNode;
@@ -42,5 +42,5 @@ public interface WebApiService {
     Call<ShopHomeModel> getShopHome(@Path("shop_home_id") int shopHomeId);
 
     @GET("notification")
-    Call<List<NotifModel>> getNotif(@Query("last_notif_id") int lastNotifId);
+    Call<List<NotificationModel>> getNotif(@Query("last_notif_id") int lastNotifId);
 }

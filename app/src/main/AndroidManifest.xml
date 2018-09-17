@@ -71,7 +71,7 @@
         <activity
             android:name=".Session.ActiveSessionActivity"
             android:windowSoftInputMode="adjustNothing" />
-        <activity android:name=".Profile.ShopProfile.ShopActivity" />
+        <activity android:name=".Shop.ShopActivity" />
         <activity android:name=".User.UserShopProfileActivity"></activity>
         <activity
             android:name=".Notifications.NotificationActivity"

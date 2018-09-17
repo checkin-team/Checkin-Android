@@ -34,8 +34,8 @@ import android.widget.TextView;
 
 import com.checkin.app.checkin.Menu.SessionUserActivity;
 import com.checkin.app.checkin.Misc.FaqActivity;
-import com.checkin.app.checkin.Notifications.NotifActivity;
-import com.checkin.app.checkin.Profile.ShopProfile.ShopActivity;
+import com.checkin.app.checkin.Notifications.NotificationActivity;
+import com.checkin.app.checkin.Shop.ShopActivity;
 import com.checkin.app.checkin.Profile.ShopProfile.ShopProfileActivity2;
 import com.checkin.app.checkin.R;
 import com.checkin.app.checkin.Session.ActiveSessionActivity;
@@ -448,7 +448,7 @@ public class HomeActivity extends AppCompatActivity
                 startActivity(intent);
                 break;
             case R.id.notif_activity:
-                intent = new Intent(getApplicationContext(), NotifActivity.NotificationActivity.class);
+                intent = new Intent(getApplicationContext(), NotificationActivity.class);
                 startActivity(intent);
                 break;
             case R.id.user_shop_porfile:

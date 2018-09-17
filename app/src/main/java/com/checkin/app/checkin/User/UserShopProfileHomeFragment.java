@@ -2,7 +2,6 @@ package com.checkin.app.checkin.User;
 
 import android.arch.lifecycle.ViewModelProviders;
 import android.content.Intent;
-import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -19,7 +18,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.checkin.app.checkin.Data.Resource;
-import com.checkin.app.checkin.Profile.ShopProfile.ShopHomeModel;
+import com.checkin.app.checkin.Shop.ShopHomeModel;
 import com.checkin.app.checkin.R;
 
 import java.util.ArrayList;
@@ -66,7 +65,7 @@ public class UserShopProfileHomeFragment extends Fragment implements View.OnClic
             } else if (shopHomeModel.status == Resource.Status.LOADING) {
                 // LOADING
             } else {
-                Toast.makeText(UserShopProfileHomeFragment.this.getContext(), "Error fetching Shop Home! Status: " +
+                Toast.makeText(UserShopProfileHomeFragment.this.getContext(), "Error fetching ShopModel Home! Status: " +
                         shopHomeModel.status.toString() + "\nDetails: " + shopHomeModel.message, Toast.LENGTH_LONG).show();
             }
         });

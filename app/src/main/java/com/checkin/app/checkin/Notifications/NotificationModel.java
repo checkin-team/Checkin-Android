@@ -39,6 +39,12 @@ public class NotificationModel {
         ACTION(int id) {
             this.id = id;
         }
+
+        public static ACTION getById(int id, ACTION defaultAction) {
+            for (ACTION action : ACTION.values())
+                if (action.id == id)    return action;
+            return defaultAction;
+        }
     }
 
 
@@ -130,12 +136,6 @@ public class NotificationModel {
 
     @JsonProperty("action")
     public void setAction(int actionCode) {
-        switch (actionCode){
-            case 1: action = ACTION.FOLLOWED_YOU;break;
-            case 2: action = ACTION.FOLLOW_ACCEPTED;break;
-            case 3: action = ACTION.ADDED_TO_SESSION;break;
-            case 4: action = ACTION.RECOMMENDED_YOU;break;
-            default: action = ACTION.NULL;
-        }
+        this.action = ACTION.getById(actionCode, ACTION.NULL);
     }
 }

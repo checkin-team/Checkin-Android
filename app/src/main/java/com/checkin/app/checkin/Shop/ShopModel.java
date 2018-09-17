@@ -6,17 +6,17 @@ import com.checkin.app.checkin.Utility.NamedFormatter;
 import java.util.HashMap;
 import java.util.Map;
 
-public class Shop {
+public class ShopModel {
     private int mId;
     private String mName, mCategory, mImageUrl;
 
-    public Shop(int id, String name, String category) {
+    public ShopModel(int id, String name, String category) {
         mId = id;
         mName = name;
         mCategory = category;
     }
 
-    public Shop(int id, String name, String category, String imageUrl) {
+    public ShopModel(int id, String name, String category, String imageUrl) {
         mId = id;
         mName = name;
         mCategory = category;

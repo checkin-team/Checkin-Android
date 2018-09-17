@@ -23,10 +23,9 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.checkin.app.checkin.Data.Resource;
-import com.checkin.app.checkin.Notif.NotifViewModel;
 import com.checkin.app.checkin.R;
-import com.checkin.app.checkin.Utility.Util;
 import com.checkin.app.checkin.Utility.Constants;
+import com.checkin.app.checkin.Utility.Util;
 
 import java.util.ArrayList;
 import java.util.Date;
@@ -58,7 +57,7 @@ public class NotificationActivity extends AppCompatActivity {
         NotifAdapter notifAdapter = new NotifAdapter();
         notifRV.setAdapter(notifAdapter);
         //notifAdapter.setNotifs(getNotifs());
-        notifViewModel.getNotifModel().observe(this, new Observer<Resource<List<NotifModel>>>() {
+        notifViewModel.getNotifModel().observe(this, new Observer<Resource<List<NotificationModel>>>() {
             @Override
             public void onChanged(@Nullable Resource<List<NotificationModel>> listResource) {
                 notifAdapter.setNotifs(listResource.data);

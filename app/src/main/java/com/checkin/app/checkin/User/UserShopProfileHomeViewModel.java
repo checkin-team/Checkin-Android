@@ -8,7 +8,7 @@ import android.support.annotation.NonNull;
 
 import com.checkin.app.checkin.Data.BaseViewModel;
 import com.checkin.app.checkin.Data.Resource;
-import com.checkin.app.checkin.Profile.ShopProfile.ShopHomeModel;
+import com.checkin.app.checkin.Shop.ShopHomeModel;
 
 import java.util.List;
 

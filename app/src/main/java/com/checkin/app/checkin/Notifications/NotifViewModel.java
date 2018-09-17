@@ -1,18 +1,13 @@
-package com.checkin.app.checkin.Notif;
+package com.checkin.app.checkin.Notifications;
 
 import android.app.Application;
-import android.arch.core.util.Function;
-import android.arch.lifecycle.AndroidViewModel;
 import android.arch.lifecycle.LiveData;
 import android.arch.lifecycle.MediatorLiveData;
-import android.arch.lifecycle.Observer;
-import android.arch.lifecycle.Transformations;
 import android.arch.lifecycle.ViewModel;
 import android.arch.lifecycle.ViewModelProvider;
 import android.content.SharedPreferences;
 import android.preference.PreferenceManager;
 import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
 
 import com.checkin.app.checkin.Data.BaseViewModel;
 import com.checkin.app.checkin.Data.Resource;
@@ -27,7 +22,7 @@ import java.util.List;
 public class NotifViewModel extends BaseViewModel {
 
     private final NotifRepository mRepository;
-    private MediatorLiveData<Resource<List<NotifModel>>> mSessionData = new MediatorLiveData<>();
+    private MediatorLiveData<Resource<List<NotificationModel>>> mSessionData = new MediatorLiveData<>();
     private SharedPreferences mPrefs;
 
     public NotifViewModel(@NonNull Application application) {
@@ -36,7 +31,7 @@ public class NotifViewModel extends BaseViewModel {
         mPrefs = PreferenceManager.getDefaultSharedPreferences(application.getApplicationContext());
     }
 
-    public LiveData<Resource<List<NotifModel>>> getNotifModel() {
+    public LiveData<Resource<List<NotificationModel>>> getNotifModel() {
         mSessionData.addSource(mRepository.getNotifModel(mPrefs.getInt(Constants.LAST_NOTIF_ID, 0)), mSessionData::setValue);
         return mSessionData;
     }

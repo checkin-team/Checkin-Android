@@ -1,4 +1,4 @@
-package com.checkin.app.checkin.Notif;
+package com.checkin.app.checkin.Notifications;
 
 import android.app.Application;
 import android.arch.lifecycle.LiveData;
@@ -27,7 +27,7 @@ import io.objectbox.query.QueryBuilder;
 public class NotifRepository extends BaseRepository {
 
     private final WebApiService mWebService;
-    private Box<NotifModel> mNotifModel;
+    private Box<NotificationModel> mNotifModel;
     private static NotifRepository INSTANCE;
 
     private NotifRepository(Context context) {
@@ -46,8 +46,8 @@ public class NotifRepository extends BaseRepository {
         return INSTANCE;
     }
 
-    public LiveData<Resource<List<NotifModel>>> getNotifModel(int notifId) {
-        return new NetworkBoundResource<List<NotifModel>,List<NotifModel>>(){
+    public LiveData<Resource<List<NotificationModel>>> getNotifModel(int notifId) {
+        return new NetworkBoundResource<List<NotificationModel>,List<NotificationModel>>(){
 
             @Override
             protected boolean shouldUseLocalDb() {
@@ -55,23 +55,23 @@ public class NotifRepository extends BaseRepository {
             }
 
             @Override
-            protected LiveData<List<NotifModel>> loadFromDb() {
-                return new ObjectBoxLiveData<>(mNotifModel.query().order(NotifModel_.time, QueryBuilder.DESCENDING).build());
+            protected LiveData<List<NotificationModel>> loadFromDb() {
+                return new ObjectBoxLiveData<>(mNotifModel.query().order(NotificationModel_.time, QueryBuilder.DESCENDING).build());
             }
 
             @Override
-            protected boolean shouldFetch(List<NotifModel> data) {
+            protected boolean shouldFetch(List<NotificationModel> data) {
                 return false;
             }
 
             @NonNull
             @Override
-            protected LiveData<ApiResponse<List<NotifModel>>> createCall() {
+            protected LiveData<ApiResponse<List<NotificationModel>>> createCall() {
                 return new RetrofitLiveData<>(mWebService.getNotif(notifId));
             }
 
             @Override
-            protected void saveCallResult(List<NotifModel> data) {
+            protected void saveCallResult(List<NotificationModel> data) {
 
             }
         }.getAsLiveData();

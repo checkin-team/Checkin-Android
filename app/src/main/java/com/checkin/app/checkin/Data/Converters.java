@@ -3,14 +3,11 @@ package com.checkin.app.checkin.Data;
 import android.support.annotation.Nullable;
 import android.util.Log;
 
-import com.checkin.app.checkin.Notif.NotifModel;
-import com.fasterxml.jackson.core.JsonFactory;
-import com.fasterxml.jackson.core.JsonParser;
+import com.checkin.app.checkin.Notifications.NotificationModel.ACTION;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fasterxml.jackson.databind.node.ObjectNode;
 
 import java.io.IOException;
 import java.util.List;
@@ -59,22 +56,16 @@ public class Converters {
         }
     }
 
-    public static class ActionConverter implements PropertyConverter<NotifModel.ACTION, Integer> {
+    public static class ActionConverter implements PropertyConverter<ACTION, Integer> {
         @Override
-        public NotifModel.ACTION convertToEntityProperty(Integer databaseValue) {
-            if (databaseValue == null) {
+        public ACTION convertToEntityProperty(Integer databaseValue) {
+            if (databaseValue == null)
                 return null;
-            }
-            for (NotifModel.ACTION action : NotifModel.ACTION.values()) {
-                if (action.id == databaseValue) {
-                    return action;
-                }
-            }
-            return NotifModel.ACTION.NULL;
+            return ACTION.getById(databaseValue, ACTION.NULL);
         }
 
         @Override
-        public Integer convertToDatabaseValue(NotifModel.ACTION entityProperty) {
+        public Integer convertToDatabaseValue(ACTION entityProperty) {
             return entityProperty == null ? null : entityProperty.id;
         }
     }

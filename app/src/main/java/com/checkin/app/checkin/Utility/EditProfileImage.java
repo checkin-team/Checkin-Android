@@ -62,8 +62,6 @@ public class EditProfileImage extends AppCompatActivity {
             }
 
             void bindData() {
-                ImageList=
-
             }
         }
     }

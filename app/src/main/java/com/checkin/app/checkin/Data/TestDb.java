@@ -8,8 +8,8 @@ import com.checkin.app.checkin.Menu.ItemCustomizationGroupModel;
 import com.checkin.app.checkin.Menu.MenuGroupModel;
 import com.checkin.app.checkin.Menu.MenuItemModel;
 import com.checkin.app.checkin.Menu.MenuModel;
-import com.checkin.app.checkin.Notif.NotifModel;
-import com.checkin.app.checkin.Profile.ShopProfile.ShopHomeModel;
+import com.checkin.app.checkin.Notifications.NotificationModel;
+import com.checkin.app.checkin.Shop.ShopHomeModel;
 import com.checkin.app.checkin.User.UserModel;
 
 import java.util.ArrayList;
@@ -36,10 +36,10 @@ public class TestDb {
         //populateNotif(AppDatabase.getNotifModel(context));
     }
 
-    private static void populateNotif(Box<NotifModel> notifMode){
-        List<NotifModel> notifs = new ArrayList<>();
+    private static void populateNotif(Box<NotificationModel> notifMode){
+        List<NotificationModel> notifs = new ArrayList<>();
         for(int i = 0; i < 20; i++){
-            notifs.add(new NotifModel("Message " + i,new Date(System.currentTimeMillis()- TimeUnit.MILLISECONDS.convert(1*7,TimeUnit.HOURS)),"profile url","action url",i%5==0 ,i));
+            notifs.add(new NotificationModel("Message " + i,new Date(System.currentTimeMillis()- TimeUnit.MILLISECONDS.convert(1*7,TimeUnit.HOURS)),"profile url","action url",i%5==0 ,i));
         }
         notifMode.put(notifs);
     }
