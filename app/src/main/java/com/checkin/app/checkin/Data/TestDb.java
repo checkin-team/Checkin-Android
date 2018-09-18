@@ -32,6 +32,9 @@ public class TestDb {
                 AppDatabase.getItemCustomizationFieldModel(context),
                 AppDatabase.getItemCustomizationGroupModel(context)
         );
+        populateReviews(AppDatabase.getReviewsModel(context));
+        populateUserProfile(AppDatabase.getUserProfileModel(context));
+
         populateShopHome(AppDatabase.getShopHomeModel(context));
         //populateNotif(AppDatabase.getNotifModel(context));
     }
@@ -130,5 +133,19 @@ public class TestDb {
         UserModel user3 = new UserModel("Monica", "https://vignette.wikia.nocookie.net/typemoon/images/c/c1/Archer_EMIYA.jpeg/revision/latest?cb=20150630040614");
         UserModel user4 = new UserModel("Jack", "https://78.media.tumblr.com/fc66ed1ceef891684aae8eb2acb152a3/tumblr_oyg8f1Qc1n1vy2tgqo1_400.jpg");
         userModel.put(user3, user4);
+    }
+
+    private static void populateReviews(Box<ReviewsItem> users){
+        Log.e(TAG, "populateReviews: Populated");
+        String review="Hello I am awesome\nSoAwesome\nSo Awesome\nVery Awesome\nSee for yourself";
+        users.put(new ReviewsItem(0,"","","","","",1));
+        for(int i=0;i<10;i++)
+            users.put(new ReviewsItem(R.drawable.water,"Ishu Darshan"+i,"86 Reviews,332 Folowers","5 days ago","5",review,1));
+    }
+    private static void populateUserProfile(Box<UserProfileEntity> users){
+        users.put(new UserProfileEntity("Ishu Darshan","FootBaller","I am an awesome footballer",
+                "https://i.ytimg.com/vi/t1mwQ2rTW_A/maxresdefault.jpg",
+                "France",155,32,4.9));
+
     }
 }

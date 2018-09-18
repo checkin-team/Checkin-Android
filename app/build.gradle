@@ -59,10 +59,15 @@ dependencies {
     testImplementation 'junit:junit:4.12'
     androidTestImplementation 'com.android.support.test:runner:1.0.2'
     androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.2'
-    // Firebase libraries
+    implementation 'com.google.android.gms:play-services-auth:15.0.1'
+    // FireBase libraries
     implementation 'com.google.firebase:firebase-core:16.0.3'
     implementation 'com.google.firebase:firebase-auth:16.0.3'
     implementation 'com.google.firebase:firebase-messaging:17.3.1'
+    // Facebook SDK
+    implementation 'com.facebook.android:facebook-android-sdk:[4,5)'
+    // Twitter SDK
+    implementation 'com.twitter.sdk.android:twitter-core:3.1.1'
     // Design Libraries
     implementation 'de.hdodenhof:circleimageview:2.2.0'
     implementation 'com.journeyapps:zxing-android-embedded:3.6.0'
@@ -77,6 +82,7 @@ dependencies {
     implementation 'com.github.javiersantos:MaterialStyledDialogs:2.1'
     implementation 'com.github.antonygolovin:fluentsnackbar:1.0.0'
     implementation 'com.romandanylyk:pageindicatorview:1.0.1'
+    implementation 'com.borjabravo:readmoretextview:2.1.0'
     // Network libraries and JSON <-> POJO
     implementation(
             [group: 'com.fasterxml.jackson.core', name: 'jackson-core', version: versions.jackson],

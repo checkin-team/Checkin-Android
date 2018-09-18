@@ -1,13 +1,18 @@
 package com.checkin.app.checkin.Shop;
 
+import android.arch.lifecycle.ViewModelProviders;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.widget.Toast;
 
+import com.checkin.app.checkin.Data.Resource;
 import com.checkin.app.checkin.R;
 
 import java.util.ArrayList;
@@ -19,12 +24,13 @@ public class ShopActivity extends AppCompatActivity {
 
     ViewPager viewPager;
     BottomNavigation bottomNavigation;
-
+    private static final String TAG = "ShopActivity";
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_shop);
         viewPager = findViewById(R.id.pager);
+
         viewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
             @Override
             public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
@@ -56,8 +62,41 @@ public class ShopActivity extends AppCompatActivity {
 
             }
         });
-    }
 
+        setUpNavigation();
+    }
+    void setUpNavigation()
+    {
+        RecyclerView rv=findViewById(R.id.reviews_recycler);
+        rv.setLayoutManager(new LinearLayoutManager(this,LinearLayoutManager.VERTICAL,false));
+        ReviewsViewModel model=ViewModelProviders.of(this).get(ReviewsViewModel.class);
+
+        model.getReviewsItemLiveData(1L).observe(this, reviewsModel ->{
+            if(reviewsModel == null) return;
+            if (reviewsModel.status == Resource.Status.SUCCESS) {
+                if(reviewsModel.data==null)
+                    rv.setAdapter(new AdapterReview(new ArrayList<>()));
+                else
+                    rv.setAdapter(new AdapterReview(reviewsModel.data));
+            } else
+                if (reviewsModel.status == Resource.Status.LOADING) {
+                    //rv.setAdapter(new AdapterReview(reviewsModel.data));
+                    // LOADING
+            } else{
+                Toast.makeText(this, "Error In getting Reviews", Toast.LENGTH_SHORT).show();
+            }
+
+                });
+        /*model.getReviewsItemLiveData().observe(this, new Observer<Resource<List<ReviewsItem>>>() {
+
+            @Override
+            public void onChanged(@Nullable Resource<List<ReviewsItem>> reviewsItems) {
+                rv.setAdapter(new AdapterReview(reviewsItems));
+                rv.getAdapter().notifyDataSetChanged();
+            }
+        });*/
+
+    }
     private class ShopViewPager extends FragmentPagerAdapter {
 
         List<Fragment> fragments;
@@ -80,4 +119,7 @@ public class ShopActivity extends AppCompatActivity {
             return fragments.size();
         }
     }
+
+    //Temporary Workthrough
+
 }

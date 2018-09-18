@@ -11,6 +11,7 @@ import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -20,6 +21,7 @@ import android.widget.Toast;
 
 import com.checkin.app.checkin.Data.Resource;
 import com.checkin.app.checkin.R;
+import com.checkin.app.checkin.Shop.ShopModel;
 
 import java.util.List;
 
@@ -68,7 +70,7 @@ public class ShopHomeFragment extends Fragment implements View.OnClickListener {
             } else if (shopHomeModel.status == Resource.Status.LOADING) {
                 // LOADING
             } else {
-                Toast.makeText(ShopHomeFragment.this.getContext(), "Error fetching ShopModel Home! Status: " +
+                Toast.makeText(ShopHomeFragment.this.getContext(), "Error fetching Shop Home! Status: " +
                         shopHomeModel.status.toString() + "\nDetails: " + shopHomeModel.message, Toast.LENGTH_LONG).show();
             }
         });

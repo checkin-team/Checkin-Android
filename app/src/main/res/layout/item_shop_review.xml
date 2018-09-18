@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+    <de.hdodenhof.circleimageview.CircleImageView
+        android:layout_marginTop="8dp"
+        android:layout_marginStart="8dp"
+        android:id="@+id/photo_review"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        tools:src="@drawable/water"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        />
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toTopOf="@id/photo_review"
+        app:layout_constraintLeft_toLeftOf="@id/photo_review"
+        app:layout_constraintRight_toRightOf="parent"
+        android:id="@+id/review_profile_name"
+        tools:text="Ishu Darshan"
+        android:textColor="#6d6d6d"
+        android:textStyle="bold"
+        />
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toBottomOf="@id/review_profile_name"
+        app:layout_constraintLeft_toLeftOf="@id/photo_review"
+        app:layout_constraintRight_toRightOf="parent"
+        android:id="@+id/reviews_follwers"
+        tools:text="86 Reviews,232 followers"
+        android:textColor="#bebebe"
+        android:textSize="10sp"
+        />
+
+    <TextView
+        android:id="@+id/time"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        tools:text="14 hours ago"
+        android:textColor="#bebebe"
+        android:textSize="12sp"
+        app:layout_constraintBottom_toBottomOf="@id/photo_review"
+        app:layout_constraintLeft_toLeftOf="@id/photo_review"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/reviews_follwers"
+        app:layout_constraintVertical_bias="1.0" />
+    <TextView
+        android:id="@+id/rating"
+        android:layout_marginTop="8dp"
+        android:paddingLeft= "12dp"
+        android:paddingRight="12dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        tools:text="RATED   5"
+        app:layout_constraintLeft_toLeftOf="parent"
+        android:layout_marginLeft="8dp"
+        android:background="@drawable/curve3"
+        android:textColor="@color/colorPrimaryRed"
+        android:drawableEnd="@drawable/star_empty"
+        app:layout_constraintTop_toBottomOf="@id/photo_review"/>
+    <TextView
+        android:layout_marginTop="8dp"
+        android:paddingLeft= "12dp"
+        android:paddingRight="12dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="FOLLOW"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_marginEnd="8dp"
+        android:background="@drawable/curve3"
+        android:textColor="@color/colorPrimaryRed"
+        android:id="@+id/follow_review"
+        app:layout_constraintTop_toBottomOf="@id/photo_review"/>
+    <TextView
+        android:id="@+id/the_review"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginTop="8dp"
+        app:layout_constraintTop_toBottomOf="@id/follow_review"
+        tools:text="Hello I am awesome\nSoAwesome\nSo Awesome\nVery Awesome"
+
+
+        />
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        app:layout_constraintTop_toBottomOf="@id/the_review"
+        android:background="#e7e7e7"
+        android:layout_marginTop="8dp"/>
+
+
+</android.support.constraint.ConstraintLayout>

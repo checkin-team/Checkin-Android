@@ -58,7 +58,7 @@ public class TrendingShopAdapter extends RecyclerView.Adapter<TrendingShopAdapte
 
         void bindData(ShopModel shop) {
             vShopName.setText(shop.getName());
-            vShopCategory.setText(shop.getCategory());
+            //vShopCategory.setText(shop.getCategory());
             Glide.with(vShopName.getContext()).load(R.drawable.dummy_shop)
                     .into(vShopImage);
         }

@@ -8,6 +8,7 @@ import android.support.annotation.NonNull;
 
 import com.checkin.app.checkin.Data.BaseViewModel;
 import com.checkin.app.checkin.Data.Resource;
+import com.checkin.app.checkin.Shop.ShopModel;
 
 import java.util.List;
 
@@ -25,7 +26,7 @@ public class ShopHomeViewModel extends BaseViewModel {
         mRepository = ShopHomeRepository.getInstance(application);
     }
 
-    public LiveData<Resource<List<ShopHomeModel>>> getShopHomeModel(int shopHomeId) {
+    public LiveData<Resource<List<ShopModel>>> getShopHomeModel(int shopHomeId) {
         return mRepository.getShopHomeModel(shopHomeId);
     }
 

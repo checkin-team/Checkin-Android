@@ -76,4 +76,12 @@ public class AppDatabase {
     public static Box<Chat> getChatModel(final Context context) {
         return getBoxStore(context).boxFor(Chat.class);
     }
+
+    public static Box<ReviewsItem> getReviewsModel(Context context){
+        return getBoxStore(context).boxFor(ReviewsItem.class);
+    }
+
+    public static Box<UserProfileEntity> getUserProfileModel(Context context){
+        return getBoxStore(context).boxFor(UserProfileEntity.class);
+    }
 }

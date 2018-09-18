@@ -46,6 +46,7 @@ import com.checkin.app.checkin.Social.ChatAdapter;
 import com.checkin.app.checkin.Social.MessageViewModel;
 import com.checkin.app.checkin.User.UserProfileActivity;
 import com.checkin.app.checkin.User.UserShopProfileActivity;
+import com.checkin.app.checkin.User.EditProfile;
 import com.checkin.app.checkin.User.UserViewModel;
 import com.checkin.app.checkin.Utility.ClipRevealFrame;
 import com.checkin.app.checkin.Utility.Constants;
@@ -376,9 +377,9 @@ public class HomeActivity extends AppCompatActivity
         List<ShopModel> shops = new ArrayList<>();
         for (int i = 1; i <= 15; i++) {
             if (i % 2 == 0)
-                shops.add(new ShopModel(i, "Socials", "Bar"));
+                shops.add(new ShopModel(i, "Socials", "Bio",true,true,"address","city","+8687845140","email","website",true,4.7f));
             else
-                shops.add(new ShopModel(i, "Family First", "Restaurant"));
+                shops.add(new ShopModel(i, "Family First", "Bio",true,true,"address","city","+8687845140","email","website",true,4.7f));
         }
         rvTrendingShops.setLayoutManager(new LinearLayoutManager(
                 this, LinearLayoutManager.HORIZONTAL, false));
@@ -453,6 +454,10 @@ public class HomeActivity extends AppCompatActivity
                 break;
             case R.id.user_shop_porfile:
                 intent = new Intent(getApplicationContext(), UserShopProfileActivity.class);
+                startActivity(intent);
+                break;
+            case R.id.editProfile:
+                intent = new Intent(getApplicationContext(), EditProfile.class);
                 startActivity(intent);
                 break;
 
