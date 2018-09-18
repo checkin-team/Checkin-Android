@@ -2,11 +2,11 @@ package com.checkin.app.checkin.Auth;
 
 import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
+import android.arch.lifecycle.ViewModelProviders;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
-import android.support.annotation.NonNull;
 import android.support.transition.Fade;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
@@ -16,20 +16,14 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Toast;
 
-import com.checkin.app.checkin.Auth.LoginActivity;
-import com.checkin.app.checkin.Auth.OtpVerificationFragment;
 import com.checkin.app.checkin.Auth.SignupUserInfoFragment.GENDER;
 import com.checkin.app.checkin.Data.TestDb;
 import com.checkin.app.checkin.Home.HomeActivity;
 import com.checkin.app.checkin.R;
 import com.checkin.app.checkin.Utility.Constants;
-import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.Task;
 import com.google.firebase.FirebaseException;
-import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseAuthInvalidCredentialsException;
-import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.auth.PhoneAuthCredential;
 import com.google.firebase.auth.PhoneAuthProvider;
 
@@ -38,16 +32,17 @@ import java.util.concurrent.TimeUnit;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
-public class SignupActivity extends AppCompatActivity implements SignupFragmentInteraction {
-    private String TAG = SignupActivity.class.getSimpleName();
+public class SignUpActivity extends AppCompatActivity implements SignUpFragmentInteraction {
+    private String TAG = SignUpActivity.class.getSimpleName();
     FragmentManager fragmentManager;
     private SharedPreferences mPrefs;
     private boolean goBack = true;
     private static final int PHONE_LOGIN_REQUEST_CODE = 100;
     private PhoneAuthProvider.OnVerificationStateChangedCallbacks mCallBack;
     private FirebaseAuth mAuth;
-    private String verificationId;
-    private PhoneAuthProvider.ForceResendingToken mResendToken;
+    private PhoneAuthProvider mPhoneAuth;
+    private String mVerificationId;
+    private AuthViewModel mAuthViewModel;
 
     @BindView(R.id.dark_back) View mDarkBack;
 
@@ -64,47 +59,60 @@ public class SignupActivity extends AppCompatActivity implements SignupFragmentI
             transaction.commit();
         }
 
-
-        mAuth =FirebaseAuth.getInstance();
+        mAuth = FirebaseAuth.getInstance();
+        mPhoneAuth = PhoneAuthProvider.getInstance(mAuth);
         mCallBack = new PhoneAuthProvider.OnVerificationStateChangedCallbacks() {
             @Override
             public void onVerificationCompleted(PhoneAuthCredential credential) {
                 signInWithPhoneAuthCredential(credential);
-
             }
 
             @Override
             public void onVerificationFailed(FirebaseException e) {
-
-                Toast.makeText(getApplicationContext(),"Verification Error",Toast.LENGTH_LONG).show();
+                Log.e(TAG, "onVerificationFailed", e);
+                Toast.makeText(getApplicationContext(),"Verification Error", Toast.LENGTH_LONG).show();
             }
 
             @Override
-            public void onCodeSent(String s, PhoneAuthProvider.ForceResendingToken forceResendingToken) {
-                super.onCodeSent(s, forceResendingToken);
-                verificationId=s;
-                mResendToken=forceResendingToken;
+            public void onCodeSent(String verificationId, PhoneAuthProvider.ForceResendingToken forceResendingToken) {
+                super.onCodeSent(verificationId, forceResendingToken);
+                SignUpActivity.this.mVerificationId = verificationId;
+            }
+
+            @Override
+            public void onCodeAutoRetrievalTimeOut(String verificationId) {
+                super.onCodeAutoRetrievalTimeOut(verificationId);
+                mAuthViewModel.setOtpTimeout(0);
             }
         };
+
+        mAuthViewModel = ViewModelProviders.of(this, new AuthViewModel.Factory(getApplication())).get(AuthViewModel.class);
+    }
+
+    private void verifyPhoneNumber() {
+        mAuthViewModel.setOtpTimeout(Constants.DEFAULT_OTP_AUTO_RETRIEVAL_TIMEOUT);
+        mPhoneAuth.verifyPhoneNumber(
+                mAuthViewModel.getPhoneNo(),
+                Constants.DEFAULT_OTP_AUTO_RETRIEVAL_TIMEOUT,
+                TimeUnit.MILLISECONDS,
+                this,
+                mCallBack
+        );
     }
 
     private void signInWithPhoneAuthCredential(PhoneAuthCredential credential) {
         mAuth.signInWithCredential(credential)
-                .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
-                    @Override
-                    public void onComplete(@NonNull Task<AuthResult> task) {
-                        if (task.isSuccessful()) {
-                            Toast.makeText(getApplicationContext(),"Sign In Successfull",Toast.LENGTH_LONG).show();
-                            goBack = false;
-                            replaceFragmentContainer(SignupUserInfoFragment.newInstance(SignupActivity.this));
-                            //FirebaseUser user = task.getResult().getUser();
+                .addOnCompleteListener(this, task -> {
+                    if (task.isSuccessful()) {
+                        Log.e(TAG, "Phone verified!");
+                        goBack = false;
+                        replaceFragmentContainer(SignupUserInfoFragment.newInstance(SignUpActivity.this));
 
-                        } else {
-                            // Sign in failed, display a message and update the UI
-                            Toast.makeText(getApplicationContext(),"Error in signing up",Toast.LENGTH_LONG).show();
-                            if (task.getException() instanceof FirebaseAuthInvalidCredentialsException) {
-                                Toast.makeText(getApplicationContext(),"Invalid Verification Code",Toast.LENGTH_LONG).show();
-                            }
+                    } else {
+                        // Sign in failed, display a message and update the UI
+                        Toast.makeText(getApplicationContext(),"Error in signing up!", Toast.LENGTH_LONG).show();
+                        if (task.getException() instanceof FirebaseAuthInvalidCredentialsException) {
+                            Toast.makeText(getApplicationContext(),"Invalid Verification Code", Toast.LENGTH_LONG).show();
                         }
                     }
                 });
@@ -119,8 +127,9 @@ public class SignupActivity extends AppCompatActivity implements SignupFragmentI
 
     @Override
     public void onPhoneNumberProcess(String phoneNo) {
-        PhoneAuthProvider.getInstance().verifyPhoneNumber(phoneNo, 60, TimeUnit.SECONDS, this, mCallBack);
-        // TODO: Process phone no.
+        Log.e(TAG, "Phone number: " + phoneNo);
+        mAuthViewModel.setPhoneNo(phoneNo);
+        verifyPhoneNumber();
         OtpVerificationFragment otpVerificationFragment = OtpVerificationFragment.newInstance(this);
         Fade fade = new Fade();
         fade.setDuration(5);
@@ -137,9 +146,14 @@ public class SignupActivity extends AppCompatActivity implements SignupFragmentI
     }
 
     @Override
+    public void onResendOtpRequest() {
+        verifyPhoneNumber();
+    }
+
+    @Override
     public void onOtpVerificationProcess(String otp) {
         Log.e(TAG, "OTP: " + otp);
-        PhoneAuthCredential credential =PhoneAuthProvider.getCredential(verificationId,otp);
+        PhoneAuthCredential credential = PhoneAuthProvider.getCredential(mVerificationId, otp);
         signInWithPhoneAuthCredential(credential);
     }
 
@@ -158,7 +172,7 @@ public class SignupActivity extends AppCompatActivity implements SignupFragmentI
     }
 
     @Override
-    public void onSigninClicked() {
+    public void onSignInClicked() {
         startActivityForResult(new Intent(this, LoginActivity.class), PHONE_LOGIN_REQUEST_CODE);
     }
 

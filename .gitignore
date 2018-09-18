@@ -18,6 +18,7 @@ Thumbs.db
 *.iml
 .gradle
 /local.properties
+/keystore.properties
 /.idea/workspace.xml
 /.idea/libraries
 /.idea/caches

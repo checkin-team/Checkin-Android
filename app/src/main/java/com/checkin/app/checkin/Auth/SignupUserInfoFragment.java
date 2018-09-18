@@ -19,7 +19,7 @@ import butterknife.Unbinder;
 
 
 public class SignupUserInfoFragment extends Fragment {
-    private SignupFragmentInteraction fragmentInteraction;
+    private SignUpFragmentInteraction fragmentInteraction;
     private Unbinder unbinder;
     private GENDER genderChosen = null;
 
@@ -36,7 +36,7 @@ public class SignupUserInfoFragment extends Fragment {
         // Required empty public_selected constructor
     }
 
-    public static SignupUserInfoFragment newInstance(SignupFragmentInteraction fragmentInteraction) {
+    public static SignupUserInfoFragment newInstance(SignUpFragmentInteraction fragmentInteraction) {
         SignupUserInfoFragment fragment = new SignupUserInfoFragment();
         fragment.fragmentInteraction = fragmentInteraction;
         return fragment;

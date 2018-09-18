@@ -34,6 +34,7 @@ import java.lang.reflect.Field;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 import java.util.regex.MatchResult;
 import java.util.regex.Matcher;
@@ -354,6 +355,15 @@ public class Util {
                 res = item;
             }
         }
+        return res;
+    }
+
+    public static String formatTime(long min, long sec) {
+        String res;
+        if (min == 0)
+            res = String.format(Locale.ENGLISH, "%02d seconds", sec);
+        else
+            res = String.format(Locale.ENGLISH, "%02d:%02d minutes", min, sec);
         return res;
     }
 

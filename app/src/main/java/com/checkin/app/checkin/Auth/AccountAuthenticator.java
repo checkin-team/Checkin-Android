@@ -46,7 +46,7 @@ public class AccountAuthenticator extends AbstractAccountAuthenticator {
             return result;
         }
 
-        final Intent intent = new Intent(mContext, SignupActivity.class);
+        final Intent intent = new Intent(mContext, SignUpActivity.class);
         intent.putExtra(Constants.ACCOUNT_TYPE, accountType);
         intent.putExtra(AccountManager.KEY_ACCOUNT_AUTHENTICATOR_RESPONSE, response);
 
@@ -73,7 +73,7 @@ public class AccountAuthenticator extends AbstractAccountAuthenticator {
             return result;
         }
 
-        final Intent intent = new Intent(mContext, SignupActivity.class);
+        final Intent intent = new Intent(mContext, SignUpActivity.class);
         intent.putExtra(AccountManager.KEY_ACCOUNT_AUTHENTICATOR_RESPONSE, response);
         intent.putExtra(Constants.ACCOUNT_TYPE, account.type);
 

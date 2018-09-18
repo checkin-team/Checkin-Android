@@ -81,7 +81,7 @@
     <string name="title_checkin_privacy">Mark Your Presence</string>
     <string name="finish">done</string>
     <string name="title_create_business_account">Create Business Account</string>
-    <string name="prefix_country_code">+91-</string>
+    <string name="prefix_country_code">+91</string>
 
     <!--notification-->
     <string name="notif_appbar_title">NOTIFICATIONS</string>

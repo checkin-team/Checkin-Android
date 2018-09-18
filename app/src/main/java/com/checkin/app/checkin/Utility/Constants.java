@@ -2,6 +2,7 @@ package com.checkin.app.checkin.Utility;
 
 import static java.util.concurrent.TimeUnit.MILLISECONDS;
 import static java.util.concurrent.TimeUnit.MINUTES;
+import static java.util.concurrent.TimeUnit.SECONDS;
 
 public class Constants {
     public static final short API_VERSION = 1;
@@ -31,6 +32,7 @@ public class Constants {
     public static final String API_URL_USER_PROFILE_URL = "/users/%(" + USER_ID + ")/";
 
     public static final long DEFAULT_ORDER_CANCEL_DURATION = MILLISECONDS.convert(3, MINUTES);
+    public static final long DEFAULT_OTP_AUTO_RETRIEVAL_TIMEOUT = MILLISECONDS.convert(1, MINUTES);
 
     public static final String CHANNEL_ID="myChannelId";
 

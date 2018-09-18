@@ -6,7 +6,7 @@ import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.v7.app.AppCompatActivity;
 
-import com.checkin.app.checkin.Auth.SignupActivity;
+import com.checkin.app.checkin.Auth.SignUpActivity;
 import com.checkin.app.checkin.Utility.Constants;
 
 public class SplashActivity extends AppCompatActivity {
@@ -19,7 +19,7 @@ public class SplashActivity extends AppCompatActivity {
             startActivity(new Intent(this, HomeActivity.class));
             finish();
         } else {
-            startActivity(new Intent(this, SignupActivity.class));
+            startActivity(new Intent(this, SignUpActivity.class));
             finish();
         }
     }

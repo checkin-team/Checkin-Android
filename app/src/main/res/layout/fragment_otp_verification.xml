@@ -45,21 +45,22 @@
         app:layout_constraintTop_toBottomOf="@+id/ed_otp">
 
         <TextView
-            android:id="@+id/editText3"
+            android:id="@+id/tv_remaining_time"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_gravity="center_vertical|end"
-            android:text="Time Remaining 2:00"
-            android:textColor="#bebebe" />
+            android:layout_gravity="center|end"
+            tools:text="Time Remaining 2:00"
+            android:textColor="@color/pinkish_grey" />
 
         <Button
+            android:id="@+id/btn_resend_otp"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:background="@drawable/background_button_red_shadow"
-            android:text="Resend otp"
+            tools:text="Resend otp"
             android:textAlignment="center"
             android:textAllCaps="true"
-            android:textColor="#ffffff"
+            android:textColor="@color/white"
             android:textSize="@dimen/font_large"
             android:visibility="invisible" />
     </FrameLayout>
