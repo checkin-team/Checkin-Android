@@ -22,7 +22,7 @@
             android:layout_marginStart="18dp"
             android:layout_alignParentStart="true"
             android:onClick="goback"
-            android:background="@drawable/noun_back_14464478"/>
+            android:background="@drawable/ic_appbar_back"/>
         <Button
             android:layout_width="36dp"
             android:layout_height="36dp"

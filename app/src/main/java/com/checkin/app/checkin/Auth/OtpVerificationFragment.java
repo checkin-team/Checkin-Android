@@ -28,7 +28,7 @@ public class OtpVerificationFragment extends Fragment {
     @BindView(R.id.btn_resend_otp) Button btnResendOtp;
     public OtpVerificationFragment() {}
 
-    public static OtpVerificationFragment newInstance(SignUpActivity fragmentInteraction) {
+    public static OtpVerificationFragment newInstance(SignUpFragmentInteraction fragmentInteraction) {
         OtpVerificationFragment fragment = new OtpVerificationFragment();
         fragment.fragmentInteraction = fragmentInteraction;
         return fragment;

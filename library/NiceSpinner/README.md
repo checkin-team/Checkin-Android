@@ -16,7 +16,7 @@ The usage is pretty straightforward. Add the tag into the XML layout:
    android:layout_height="wrap_content"
    android:layout_margin="16dp"/>
 ```
-* Note: change `layout_width` to at least the width of the largest item on the list to prevent resizing
+* Note: change `layout_width` to at least the width of the largest item on the shopReviews to prevent resizing
 
  Then use this snippet to populate with contents:
 ```java
@@ -34,8 +34,8 @@ You can add attributes to customize the view. Available attributes:
 | hideArrow                 | boolean   | set whether show or hide the drop-down arrow           |
 | arrowDrawable             | reference | set the drawable of the drop-down arrow                |
 | textTint                  | color     | set the text color                                     |
-| dropDownListPaddingBottom | dimension | set the bottom padding of the drop-down list           |
-| backgroundSelector        | integer   | set the background selector for the drop-down list rows  |
+| dropDownListPaddingBottom | dimension | set the bottom padding of the drop-down shopReviews           |
+| backgroundSelector        | integer   | set the background selector for the drop-down shopReviews rows  |
 
 How to include
 ---

@@ -17,7 +17,7 @@
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/noun_1126666_cc" />
+        app:srcCompat="@drawable/ic_shop_info_more" />
 
     <TextView
         android:id="@+id/text"

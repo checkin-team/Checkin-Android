@@ -7,18 +7,20 @@ import android.arch.lifecycle.ViewModel;
 import android.arch.lifecycle.ViewModelProvider;
 import android.support.annotation.NonNull;
 
+import com.checkin.app.checkin.Data.Resource;
+
 import java.util.List;
 
 public class UserViewModel extends AndroidViewModel {
     private UserRepository mRepository;
-    private LiveData<List<UserModel>> mAllUsers;
+    private LiveData<Resource<List<UserModel>>> mAllUsers;
 
     public UserViewModel(@NonNull Application application) {
         super(application);
         mRepository = UserRepository.getInstance(application);
     }
 
-    public LiveData<List<UserModel>> getAllUsers() {
+    public LiveData<Resource<List<UserModel>>> getAllUsers() {
         if (mAllUsers == null)
             mAllUsers = mRepository.getAllUsers();
         return mAllUsers;

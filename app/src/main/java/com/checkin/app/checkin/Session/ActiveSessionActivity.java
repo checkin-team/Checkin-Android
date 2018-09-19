@@ -20,6 +20,7 @@ import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.checkin.app.checkin.Data.Resource;
 import com.checkin.app.checkin.R;
 import com.checkin.app.checkin.User.UserModel;
 import com.checkin.app.checkin.User.UserViewModel;
@@ -140,9 +141,10 @@ public class ActiveSessionActivity extends AppCompatActivity implements ActiveSe
         });
 
         List<SelectListItem> items = new ArrayList<>();
-        mUserViewModel.getAllUsers().observe(this, userModels -> {
-            if (userModels != null) {
-                for (UserModel user: userModels) {
+        mUserViewModel.getAllUsers().observe(this, (Resource<List<UserModel>> userResource) -> {
+            if (userResource != null && userResource.status == Resource.Status.SUCCESS) {
+                List<UserModel> users = userResource.data;
+                for (UserModel user: users) {
                     items.add(new SelectListItem(user.getProfilePic(), user.getUsername(), "", user.getId()));
                 }
             }

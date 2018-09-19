@@ -11,6 +11,7 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.Toast;
 
+import com.checkin.app.checkin.Data.Resource;
 import com.checkin.app.checkin.R;
 import com.checkin.app.checkin.User.UserModel;
 import com.checkin.app.checkin.User.UserViewModel;
@@ -87,9 +88,10 @@ public class PostCheckinFragment extends Fragment {
         });
 
         List<SelectListItem> items = new ArrayList<>();
-        mUserViewModel.getAllUsers().observe(this, userModels -> {
-            if (userModels != null) {
-                for (UserModel user: userModels) {
+        mUserViewModel.getAllUsers().observe(this, userResource -> {
+            if (userResource != null && userResource.status == Resource.Status.SUCCESS) {
+                List<UserModel> users = userResource.data;
+                for (UserModel user: users) {
                     items.add(new SelectListItem(user.getProfilePic(), user.getUsername(), "", user.getId()));
                 }
             }

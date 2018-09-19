@@ -1,4 +1,5 @@
 package com.checkin.app.checkin.User;
+
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
@@ -8,20 +9,13 @@ import android.util.Patterns;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageView;
-import android.widget.Toast;
 
-import com.checkin.app.checkin.Data.AppDatabase;
-import com.checkin.app.checkin.Home.UserProfileEntity;
 import com.checkin.app.checkin.R;
 
 import java.util.List;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
 import butterknife.BindViews;
 import butterknife.ButterKnife;
-import io.objectbox.Box;
-import io.objectbox.BoxStore;
 
 /**
  * Created by TAIYAB on 22-02-2018.
@@ -44,7 +38,7 @@ public class EditProfile extends AppCompatActivity{
         return Patterns.EMAIL_ADDRESS.matcher(email).matches();
     }
     public void goback(View v){
-        if(v.getId()==R.id.check)
+        /*if(v.getId()==R.id.check)
         {
             if(!isEmailValid(bind.get(1).getText().toString()))
             {
@@ -59,7 +53,7 @@ public class EditProfile extends AppCompatActivity{
             user.setProfession(bind.get(3).getText().toString());
             users.put(user);
 
-        }
+        }*/
         finish();
     }
     public void changeImage(View v)

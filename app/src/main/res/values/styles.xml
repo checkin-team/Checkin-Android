@@ -55,7 +55,7 @@
         <!-- Change icon for the suggestions-->
         <item name="searchSuggestionIcon">@drawable/ic_suggestion</item>
 
-        <!-- Change background for the suggestions list view-->
+        <!-- Change background for the suggestions shopReviews view-->
         <item name="searchSuggestionBackground">@android:color/white</item>
 
         <!-- Change text color for edit text. This will also be the color of the cursor-->

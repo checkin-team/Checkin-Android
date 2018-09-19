@@ -11,6 +11,7 @@ import android.widget.ImageView;
 import android.widget.Toast;
 
 import com.checkin.app.checkin.R;
+import com.checkin.app.checkin.User.UserModel.GENDER;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -28,9 +29,6 @@ public class SignupUserInfoFragment extends Fragment {
     @BindView(R.id.im_male) ImageView imMale;
     @BindView(R.id.im_female) ImageView imFemale;
     @BindView(R.id.ed_password) EditText edPassword;
-    public enum GENDER {
-        MALE, FEMALE
-    };
 
     public SignupUserInfoFragment() {
         // Required empty public_selected constructor

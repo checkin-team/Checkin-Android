@@ -16,10 +16,10 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Toast;
 
-import com.checkin.app.checkin.Auth.SignupUserInfoFragment.GENDER;
 import com.checkin.app.checkin.Data.TestDb;
 import com.checkin.app.checkin.Home.HomeActivity;
 import com.checkin.app.checkin.R;
+import com.checkin.app.checkin.User.UserModel.GENDER;
 import com.checkin.app.checkin.Utility.Constants;
 import com.google.firebase.FirebaseException;
 import com.google.firebase.auth.FirebaseAuth;

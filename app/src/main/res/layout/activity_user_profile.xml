@@ -27,7 +27,7 @@
                 android:layout_marginStart="18dp"
                 android:layout_alignParentStart="true"
                 android:onClick="goback"
-                android:background="@drawable/noun_back_1446447"/>
+                android:background="@drawable/ic_back"/>
             <!--<Button
                 android:layout_marginRight="20dp"
                 android:layout_width="40dp"
@@ -228,7 +228,7 @@
             android:layout_marginEnd="20dp"
             android:background="@drawable/curve11"
             android:text="Follow"
-            android:textColor="@color/colorPrimaryRed"
+            android:textColor="@color/primary_red"
             android:paddingLeft="10dp"
             android:paddingRight="10dp"
             android:gravity="center_horizontal"

@@ -1,6 +1,7 @@
 package com.checkin.app.checkin.Auth;
 
-import com.checkin.app.checkin.Auth.SignupUserInfoFragment.GENDER;
+
+import com.checkin.app.checkin.User.UserModel.GENDER;
 
 public interface SignUpFragmentInteraction {
     void onPhoneNumberProcess(String phoneNo);

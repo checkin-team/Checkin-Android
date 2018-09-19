@@ -321,6 +321,15 @@ public class Util {
         return Constants.API_HOST + ":" + Constants.API_PORT + partialUrl;
     }
 
+    public static String formatCount(long count) {
+        String res;
+        if (count > 1000)
+            res = String.valueOf(count / 1000) + "k";
+        else
+            res = String.valueOf(count);
+        return res;
+    }
+
     public interface MatchResultFunction {
         String apply(MatchResult match);
     }

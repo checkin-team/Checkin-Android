@@ -5,51 +5,42 @@ package com.checkin.app.checkin.User;
  */
 
 
-    import android.annotation.SuppressLint;
-    import android.app.WallpaperManager;
-    import android.arch.lifecycle.ViewModelProviders;
-    import android.content.Context;
-    import android.content.Intent;
-    import android.content.res.Resources;
-    import android.graphics.Bitmap;
-    import android.graphics.Canvas;
-    import android.graphics.Paint;
-    import android.graphics.PorterDuff;
-    import android.graphics.PorterDuffXfermode;
-    import android.graphics.Rect;
-    import android.graphics.RectF;
-    import android.graphics.drawable.BitmapDrawable;
-    import android.graphics.drawable.Drawable;
-    import android.os.Build;
-    import android.os.Bundle;
+import android.annotation.SuppressLint;
+import android.arch.lifecycle.ViewModelProviders;
+import android.content.Context;
+import android.content.Intent;
+import android.content.res.Resources;
+import android.graphics.Bitmap;
+import android.graphics.Canvas;
+import android.graphics.Paint;
+import android.graphics.PorterDuff;
+import android.graphics.PorterDuffXfermode;
+import android.graphics.Rect;
+import android.graphics.RectF;
+import android.graphics.drawable.BitmapDrawable;
+import android.graphics.drawable.Drawable;
+import android.os.Bundle;
 import android.support.annotation.Nullable;
-    import android.support.v4.content.ContextCompat;
-    import android.support.v4.view.MotionEventCompat;
-    import android.support.v7.app.AppCompatActivity;
-
-    import com.bumptech.glide.Glide;
-    import com.checkin.app.checkin.Data.Resource;
-    import com.checkin.app.checkin.Profile.ShopProfile.AdapterReview;
-    import com.checkin.app.checkin.Utility.GlideApp;
-    import  com.transitionseverywhere.*;
-    import android.util.DisplayMetrics;
-    import android.util.Log;
-    import android.view.GestureDetector;
-    import android.view.MotionEvent;
+import android.support.v4.content.ContextCompat;
+import android.support.v4.view.MotionEventCompat;
+import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
+import android.view.MotionEvent;
 import android.view.View;
-    import android.widget.Button;
-    import android.view.ViewGroup;
-    import android.widget.ImageView;
-    import android.widget.LinearLayout;
-    import android.widget.RelativeLayout;
-    import android.widget.TextView;
-    import android.widget.Toast;
+import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.ImageView;
+import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
+import android.widget.TextView;
+import android.widget.Toast;
 
-    import com.checkin.app.checkin.R;
-    import com.checkin.app.checkin.Utility.EditProfileImage;
-
-    import java.util.ArrayList;
-    import java.util.List;
+import com.bumptech.glide.Glide;
+import com.checkin.app.checkin.Data.Resource;
+import com.checkin.app.checkin.R;
+import com.checkin.app.checkin.Utility.EditProfileImage;
+import com.transitionseverywhere.AutoTransition;
+import com.transitionseverywhere.TransitionManager;
 
 public class UserProfileActivity extends AppCompatActivity {
     private float weightTop=70;
@@ -92,39 +83,35 @@ public class UserProfileActivity extends AppCompatActivity {
         //imageView.setImageResource(R.drawable.flier);
         // v1.setBackground(wallpaperDrawable);
 
-        UserProfileViewModel model= ViewModelProviders.of(this).get(UserProfileViewModel.class);
+        UserViewModel model= ViewModelProviders.of(this).get(UserViewModel.class);
 
-        model.getAllUsers(1L).observe(this, (Resource<List<UserProfileEntity>> userModel) ->{
-            if(userModel == null) return;
+        model.getAllUsers().observe(this, userModel -> {
+            if (userModel == null) return;
             if (userModel.status == Resource.Status.SUCCESS) {
-                if(userModel.data!=null)
-                {
-                    UserProfileEntity person=userModel.data.get(0);
-                    setUI(person);
+                if (userModel.data != null) {
+                    UserModel person = userModel.data.get(0);
+                    UserProfileActivity.this.setUI(person);
                 }
-            } else
-            if (userModel.status == Resource.Status.LOADING) {
-                //rv.setAdapter(new AdapterReview(reviewsModel.data));
+            } else if (userModel.status == Resource.Status.LOADING) {
+                //rv.setAdapter(new ReviewsAdapter(reviewsModel.data));
                 // LOADING
-            } else{
-                Toast.makeText(this, "Error In getting Reviews", Toast.LENGTH_SHORT).show();
+            } else {
+                Toast.makeText(UserProfileActivity.this, "Error In getting Reviews", Toast.LENGTH_SHORT).show();
             }
 
         });
 
-
     }
     @SuppressLint("SetTextI18n")
-    public  void setUI(UserProfileEntity person){
+    public  void setUI(UserModel person){
         ImageView imageView=findViewById(R.id.imgg);
-        Glide.with(UserProfileActivity.this).load(person.profilepicurl).into(imageView);
-        TextView nfollowers=findViewById(R.id.nfollowers),ncheckins=findViewById(R.id.ncheckins),nRating=findViewById(R.id.rating);
-        nfollowers.setText(""+person.nFollowers);ncheckins.setText(""+person.ncheckins);nRating.setText(""+person.rating);
+        Glide.with(UserProfileActivity.this).load(person.getProfilePic()).into(imageView);
+        TextView nfollowers=findViewById(R.id.nfollowers),ncheckins=findViewById(R.id.ncheckins);
+        nfollowers.setText(person.formatFollowers());ncheckins.setText(person.formatCheckins());
         TextView bio=findViewById(R.id.bio),username=findViewById(R.id.username),city=findViewById(R.id.city_user),profession=findViewById(R.id.profession);
-        bio.setText(""+person.bio);
-        username.setText(""+person.name);
-        city.setText(""+person.place);
-        profession.setText(""+person.profession);
+        bio.setText(person.getBio());
+        username.setText(person.getUsername());
+        city.setText(person.getLocation());
     }
 
     public static Bitmap getRoundedCornerBitmap(Bitmap bitmap, Context context) {

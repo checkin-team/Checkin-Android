@@ -7,19 +7,22 @@ import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.transition.Fade;
-import android.support.transition.Slide;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
-import android.view.Gravity;
 import android.view.View;
 import android.widget.Toast;
 
+import com.checkin.app.checkin.Auth.LoginActivity;
+import com.checkin.app.checkin.Auth.OtpVerificationFragment;
+import com.checkin.app.checkin.Auth.SignUpFragmentInteraction;
+import com.checkin.app.checkin.Auth.SignupPhoneFragment;
+import com.checkin.app.checkin.Auth.SignupUserInfoFragment;
 import com.checkin.app.checkin.Data.TestDb;
-import com.checkin.app.checkin.Home.SignupUserInfoFragment.GENDER;
 import com.checkin.app.checkin.R;
+import com.checkin.app.checkin.User.UserModel;
 import com.checkin.app.checkin.Utility.Constants;
 import com.facebook.CallbackManager;
 import com.facebook.FacebookCallback;
@@ -35,7 +38,6 @@ import com.google.android.gms.tasks.Task;
 import com.twitter.sdk.android.core.Callback;
 import com.twitter.sdk.android.core.Result;
 import com.twitter.sdk.android.core.Twitter;
-import com.twitter.sdk.android.core.TwitterCore;
 import com.twitter.sdk.android.core.TwitterException;
 import com.twitter.sdk.android.core.TwitterSession;
 import com.twitter.sdk.android.core.identity.TwitterAuthClient;
@@ -45,7 +47,7 @@ import java.util.Arrays;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
-public class SignupActivity extends AppCompatActivity implements SignupFragmentInteraction {
+public class SignupActivity extends AppCompatActivity implements SignUpFragmentInteraction {
     private String TAG = SignupActivity.class.getSimpleName();
     FragmentManager fragmentManager;
     private SharedPreferences mPrefs;
@@ -110,7 +112,7 @@ public class SignupActivity extends AppCompatActivity implements SignupFragmentI
     public void onPhoneNumberProcess(String phoneNo) {
         // TODO: Process phone no.
         Log.e(TAG, "Phone No: " + phoneNo);
-        OtpVerificationFragment otpVerificationFragment=OtpVerificationFragment.newInstance(this);
+        OtpVerificationFragment otpVerificationFragment= OtpVerificationFragment.newInstance(this);
         Fade fade=new Fade();
         fade.setDuration(5);
         otpVerificationFragment.setEnterTransition(fade);
@@ -126,6 +128,11 @@ public class SignupActivity extends AppCompatActivity implements SignupFragmentI
     }
 
     @Override
+    public void onResendOtpRequest() {
+
+    }
+
+    @Override
     public void onOtpVerificationProcess(String otp) {
         Log.e(TAG, "OTP: " + otp);
         goBack = false;
@@ -133,7 +140,7 @@ public class SignupActivity extends AppCompatActivity implements SignupFragmentI
     }
 
     @Override
-    public void onUserInfoProcess(String firstName, String lastName, String password, GENDER gender) {
+    public void onUserInfoProcess(String firstName, String lastName, String password, UserModel.GENDER gender) {
         Log.e(TAG, "First name: " + firstName + " | Last name: " + lastName + " | Password: " + password + " | Gender: " + gender.name());
         SharedPreferences.Editor editor = mPrefs.edit();
         editor.putInt(Constants.SP_USER_ID, 0);
@@ -142,6 +149,13 @@ public class SignupActivity extends AppCompatActivity implements SignupFragmentI
         startActivity(new Intent(this, HomeActivity.class));
         finish();
     }
+
+    @Override
+    public void onSignInClicked() {
+        startActivityForResult(new Intent(this, LoginActivity.class), PHONE_LOGIN_REQUEST_CODE);
+
+    }
+
     public void initiateSignUp()
     {
         GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
@@ -152,10 +166,6 @@ public class SignupActivity extends AppCompatActivity implements SignupFragmentI
 
     }
 
-    @Override
-    public void onSigninClicked() {
-        startActivityForResult(new Intent(this, LoginActivity.class), PHONE_LOGIN_REQUEST_CODE);
-    }
     public void socialSignIn(View v){
         switch (v.getId())
         {
@@ -186,8 +196,6 @@ public class SignupActivity extends AppCompatActivity implements SignupFragmentI
                     }
                 });
                 break;
-
-
         }
     }
     @Override
