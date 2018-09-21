@@ -1,43 +1,114 @@
 package com.checkin.app.checkin.Shop;
 
-import com.checkin.app.checkin.Utility.Constants;
-import com.checkin.app.checkin.Utility.NamedFormatter;
+import com.checkin.app.checkin.Utility.Util;
+import com.fasterxml.jackson.annotation.JsonProperty;
 
-import java.util.HashMap;
-import java.util.Map;
+import io.objectbox.annotation.Entity;
+import io.objectbox.annotation.Id;
 
+/**
+ * Created by Bhavik Patel on 18/08/2018.
+ */
+
+@Entity
 public class ShopModel {
-    private int mId;
-    private String mName, mCategory, mImageUrl;
+    @Id(assignable = true) private long id;
+    private String name;
+    private String bio;
+    private boolean active;
+    @JsonProperty(value = "only_vegetarian") private boolean onlyVegetarian;
+    private String address;
+    private String city;
+    //todo location
+    private String phone;
+    private String email;
+    private String website;
+    private boolean verified;
+    private long followers;
+    private long checkins;
+    private float rating;
 
-    public ShopModel(int id, String name, String category) {
-        mId = id;
-        mName = name;
-        mCategory = category;
+    public ShopModel() {}
+
+
+    public ShopModel(String name, String bio, String city, String phone, float rating, long followers, long checkins) {
+        this.name = name;
+        this.bio = bio;
+        this.active = true;
+        this.onlyVegetarian = false;
+        this.city = city;
+        this.phone = phone;
+        this.verified = true;
+        this.rating = rating;
+        this.followers = followers;
+        this.checkins = checkins;
     }
 
-    public ShopModel(int id, String name, String category, String imageUrl) {
-        mId = id;
-        mName = name;
-        mCategory = category;
-        mImageUrl = imageUrl;
+    public long getId() {
+        return id;
+    }
+
+    public void setId(long id) {
+        this.id = id;
     }
 
     public String getName() {
-        return mName;
+        return name;
     }
 
-    public String getCategory() {
-        return mCategory;
+    public String getBio() {
+        return bio;
     }
 
-    public String getImageUrl() {
-        return mImageUrl;
+    public boolean isActive() {
+        return active;
     }
 
-    public String getProfileUrl() {
-        Map<String, String> values = new HashMap<>();
-        values.put(Constants.SHOP_ID, "" + mId);
-        return NamedFormatter.format(Constants.API_URL_SHOP_PROFILE_URL, values);
+    public boolean isOnlyVegetarian() {
+        return onlyVegetarian;
+    }
+
+    public String getAddress() {
+        return address;
+    }
+
+    public long getFollowers() {
+        return followers;
+    }
+
+    public long getCheckins() {
+        return checkins;
+    }
+
+    public String formatFollowers() {
+        return Util.formatCount(followers);
+    }
+
+    public String formatCheckins() {
+        return Util.formatCount(checkins);
+    }
+
+    public String getPhone() {
+        return phone;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public String getWebsite() {
+        return website;
+    }
+
+    public boolean isVerified() {
+        return verified;
+    }
+
+    public float getRating() {
+        return rating;
+    }
+
+    public String getCity() {
+        return city;
     }
 }

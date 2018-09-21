@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".Auth.SignupActivity"
+    tools:context=".Auth.SignUpActivity"
     android:orientation="vertical">
 
     <ImageView
@@ -71,6 +71,7 @@
                 android:layout_height="match_parent"
                 android:clickable="true"
                 android:focusable="true"
+                android:onClick="socialSignIn"
                 android:foreground="?android:selectableItemBackground"
                 android:src="@drawable/ic_connect_facebook"
                 app:layout_constraintBottom_toBottomOf="parent"
@@ -79,6 +80,19 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
 
+            <!--<com.facebook.login.widget.LoginButton-->
+                <!--android:id="@+id/btn_connect_facebook"-->
+                <!--app:layout_constraintBottom_toBottomOf="parent"-->
+                <!--app:layout_constraintEnd_toStartOf="@+id/btn_connect_twitter"-->
+                <!--app:layout_constraintHorizontal_bias="0.5"-->
+                <!--app:layout_constraintStart_toStartOf="parent"-->
+                <!--app:layout_constraintTop_toTopOf="parent"-->
+                <!--android:layout_width="wrap_content"-->
+                <!--android:layout_height="match_parent"-->
+                <!--android:layout_gravity="center_horizontal"-->
+                <!--android:layout_marginTop="30dp"-->
+                <!--android:layout_marginBottom="30dp" />-->
+
             <ImageView
                 android:id="@+id/btn_connect_twitter"
                 android:layout_width="wrap_content"
@@ -86,6 +100,7 @@
                 android:layout_centerInParent="true"
                 android:layout_marginTop="8dp"
                 android:clickable="true"
+                android:onClick="socialSignIn"
                 android:focusable="true"
                 android:foreground="?android:selectableItemBackground"
                 android:src="@drawable/ic_connect_twitter"
@@ -102,6 +117,7 @@
                 android:layout_alignParentRight="true"
                 android:clickable="true"
                 android:focusable="true"
+                android:onClick="socialSignIn"
                 android:foreground="?android:selectableItemBackground"
                 android:src="@drawable/ic_connect_google"
                 app:layout_constraintBottom_toBottomOf="@+id/btn_connect_twitter"

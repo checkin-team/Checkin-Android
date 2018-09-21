@@ -9,7 +9,7 @@ import com.checkin.app.checkin.Menu.MenuItemModel;
 import com.checkin.app.checkin.Menu.MenuModel;
 import com.checkin.app.checkin.MyObjectBox;
 import com.checkin.app.checkin.Notifications.NotificationModel;
-import com.checkin.app.checkin.Shop.ShopHomeModel;
+import com.checkin.app.checkin.Shop.ShopModel;
 import com.checkin.app.checkin.Social.Chat;
 import com.checkin.app.checkin.Social.Message;
 import com.checkin.app.checkin.User.UserModel;
@@ -41,8 +41,12 @@ public class AppDatabase {
         return getBoxStore(context).boxFor(NotificationModel.class);
     }
 
-    public static Box<ShopHomeModel> getShopHomeModel(final Context context) {
-        return getBoxStore(context).boxFor(ShopHomeModel.class);
+    public static Box<UserModel> getUserModel(final Context context) {
+        return getBoxStore(context).boxFor(UserModel.class);
+    }
+
+    public static Box<ShopModel> getShopModel(final Context context) {
+        return getBoxStore(context).boxFor(ShopModel.class);
     }
 
     public static Box<ItemCustomizationFieldModel> getItemCustomizationFieldModel(final Context context) {
@@ -63,10 +67,6 @@ public class AppDatabase {
 
     public static Box<MenuModel> getMenuModel(final Context context) {
         return getBoxStore(context).boxFor(MenuModel.class);
-    }
-
-    public static Box<UserModel> getUserModel(final Context context) {
-        return getBoxStore(context).boxFor(UserModel.class);
     }
 
     public static Box<Message> getMessageModel(final Context context) {

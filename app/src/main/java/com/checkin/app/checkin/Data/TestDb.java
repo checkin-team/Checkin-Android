@@ -9,7 +9,7 @@ import com.checkin.app.checkin.Menu.MenuGroupModel;
 import com.checkin.app.checkin.Menu.MenuItemModel;
 import com.checkin.app.checkin.Menu.MenuModel;
 import com.checkin.app.checkin.Notifications.NotificationModel;
-import com.checkin.app.checkin.Shop.ShopHomeModel;
+import com.checkin.app.checkin.Shop.ShopModel;
 import com.checkin.app.checkin.User.UserModel;
 
 import java.util.ArrayList;
@@ -32,7 +32,7 @@ public class TestDb {
                 AppDatabase.getItemCustomizationFieldModel(context),
                 AppDatabase.getItemCustomizationGroupModel(context)
         );
-        populateShopHome(AppDatabase.getShopHomeModel(context));
+        populateShops(AppDatabase.getShopModel(context));
         //populateNotif(AppDatabase.getNotifModel(context));
     }
 
@@ -43,12 +43,13 @@ public class TestDb {
         }
         notifMode.put(notifs);
     }
-    private static void populateShopHome(Box<ShopHomeModel> shopProfileModel){
-        List<ShopHomeModel> shopProfiles = new ArrayList<>();
-        //shopProfiles
-        ShopHomeModel shopProfile = new ShopHomeModel(0,"Lajjat Hotel","Bio",true,true,"address","city","+8687845140","email","website",true,4.7f);
-        shopProfiles.add(shopProfile);
-        shopProfileModel.put(shopProfiles);
+    private static void populateShops(Box<ShopModel> shopModel){
+        List<ShopModel> shops = new ArrayList<>();
+        for (int i = 1; i <= 15; i++) {
+            ShopModel shop = new ShopModel("shop name","Dip yourself in the rich taste of cheese","Mexican, Chelsea", "+8687845140", i/3, 450*i, 350*i);
+            shops.add(shop);
+        }
+        shopModel.put(shops);
     }
     private static void populateMenu(
             Box<MenuItemModel> menuItemModel,
@@ -122,13 +123,17 @@ public class TestDb {
     }
 
     private static void populateUsers(Box<UserModel> userModel) {
-        UserModel user1 = new UserModel("Alex", "https://78.media.tumblr.com/fc66ed1ceef891684aae8eb2acb152a3/tumblr_oyg8f1Qc1n1vy2tgqo1_400.jpg");
-        UserModel user2 = new UserModel("Alice", "https://vignette.wikia.nocookie.net/typemoon/images/c/c1/Archer_EMIYA.jpeg/revision/latest?cb=20150630040614");
+        UserModel user1 = new UserModel("Alex", "https://78.media.tumblr.com/fc66ed1ceef891684aae8eb2acb152a3/tumblr_oyg8f1Qc1n1vy2tgqo1_400.jpg", "Lyon, France", 100, 500);
+        user1.setGender('m');
+        UserModel user2 = new UserModel("Alice", "https://vignette.wikia.nocookie.net/typemoon/images/c/c1/Archer_EMIYA.jpeg/revision/latest?cb=20150630040614", "Delhi, India", 1300, 2000);
+        user2.setGender('f');
 
         userModel.put(user1, user2);
 
-        UserModel user3 = new UserModel("Monica", "https://vignette.wikia.nocookie.net/typemoon/images/c/c1/Archer_EMIYA.jpeg/revision/latest?cb=20150630040614");
-        UserModel user4 = new UserModel("Jack", "https://78.media.tumblr.com/fc66ed1ceef891684aae8eb2acb152a3/tumblr_oyg8f1Qc1n1vy2tgqo1_400.jpg");
+        UserModel user3 = new UserModel("Monica", "https://vignette.wikia.nocookie.net/typemoon/images/c/c1/Archer_EMIYA.jpeg/revision/latest?cb=20150630040614", "Somewhere", 981, 321);
+        user3.setGender('f');
+        UserModel user4 = new UserModel("Jack", "https://78.media.tumblr.com/fc66ed1ceef891684aae8eb2acb152a3/tumblr_oyg8f1Qc1n1vy2tgqo1_400.jpg", "LOCATION ZERO", 4921, 1876);
+        user4.setGender('m');
         userModel.put(user3, user4);
     }
 }

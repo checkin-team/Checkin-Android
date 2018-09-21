@@ -71,6 +71,9 @@
     <string name="shop_profile_about_cusine">"C\nU\nS\nI\nN\nE\n&gt;"</string>
     <string name="shop_profile_about_review">"R\nE\nV\nI\nE\nW\n&lt;"</string>
 
+    <string name="facebook_app_id">291656184950133</string>
+    <string name="fb_login_protocol_scheme">fb291656184950133</string>
+
     <string name="title_activity_signup">SignupActivity</string>
     <string name="btn_cancel">Cancel</string>
     <string name="item_non_cancelable">Non-Cancelable</string>
@@ -81,7 +84,12 @@
     <string name="title_checkin_privacy">Mark Your Presence</string>
     <string name="finish">done</string>
     <string name="title_create_business_account">Create Business Account</string>
-    <string name="prefix_country_code">+91-</string>
+    <string name="prefix_country_code">+91</string>
+
+
+    <string name="com.twitter.sdk.android.CONSUMER_KEY">vOWuRU7yx1Uf3xjaMIpSShUXX</string>
+    <string name="com.twitter.sdk.android.CONSUMER_SECRET">DESPxLsIghIAkFiDKN3ljZPzY0WLWgc1VcYAwAku1tq0NMxtr0
+</string>
 
     <!--notification-->
     <string name="notif_appbar_title">NOTIFICATIONS</string>

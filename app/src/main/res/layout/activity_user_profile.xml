@@ -6,6 +6,7 @@
     android:layout_width="fill_parent"
     android:layout_height="match_parent"
     android:orientation="vertical">
+
     <LinearLayout
         android:id="@+id/linear"
         android:layout_width="match_parent"
@@ -20,26 +21,27 @@
             android:layout_weight="70">
             <Button
                 android:id="@+id/editImage"
-                android:layout_width="40dp"
-                android:layout_height="40dp"
+                android:layout_width="26dp"
+                android:layout_height="46dp"
                 android:layout_marginTop="10dp"
-                android:layout_marginLeft="18dp"
-                android:layout_alignParentRight="false"
-                android:background="@drawable/whiteedit"/>
-            <Button
+                android:layout_marginStart="18dp"
+                android:layout_alignParentStart="true"
+                android:onClick="goback"
+                android:background="@drawable/ic_back"/>
+            <!--<Button
                 android:layout_marginRight="20dp"
                 android:layout_width="40dp"
                 android:layout_height="40dp"
                 android:layout_marginTop="10dp"
                 android:layout_alignParentRight="true"
-                android:background="@drawable/whitecross"/>
+                android:background="@drawable/whitecross"/>-->
 
             <ImageView
                 android:id="@+id/imgg"
                 android:scaleType="centerCrop"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:background="@drawable/flier"/>
+                tools:src="@drawable/flier"/>
 
             <ImageView
                 android:layout_width="match_parent"
@@ -49,23 +51,29 @@
                 android:layout_alignParentStart="true"
                 android:scaleType="fitXY"
                 android:src="@drawable/shadow_gradient" />
+            <ImageView
+                android:layout_width="match_parent"
+                android:layout_height="90dp"
+                android:layout_alignParentTop="true"
+                android:layout_alignParentLeft="true"
+                android:layout_alignParentStart="true"
+                android:scaleType="fitXY"
+                android:src="@drawable/rectangle_52" />
 
             <TextView
+                android:id="@+id/nfollowers"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignParentBottom="true"
-                android:layout_marginBottom="27dp"
+                android:layout_marginBottom="35dp"
                 android:layout_marginLeft="18dp"
                 android:fontFamily="@font/amiri"
                 android:paddingRight="5dp"
                 android:shadowColor="#000"
                 android:shadowDx="5"
                 android:shadowDy="5"
-
-
                 android:shadowRadius="7"
                 android:text="250"
-
                 android:textColor="@color/white"
                 android:textSize="17sp"
                 android:textStyle="bold" />
@@ -75,8 +83,8 @@
                 android:layout_height="wrap_content"
                 android:layout_alignParentBottom="true"
                 android:layout_centerHorizontal="true"
-                android:layout_marginBottom="27dp"
-
+                android:layout_marginBottom="35dp"
+                android:id="@+id/ncheckins"
                 android:fontFamily="@font/amiri"
                 android:paddingRight="5dp"
                 android:shadowColor="#000"
@@ -89,14 +97,13 @@
                 android:textStyle="bold" />
 
             <TextView
+                android:id="@+id/rating"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignParentBottom="true"
                 android:layout_alignParentRight="true"
-                android:layout_marginBottom="27dp"
+                android:layout_marginBottom="35dp"
                 android:layout_marginRight="18dp"
-
-
                 android:fontFamily="@font/amiri"
                 android:paddingRight="5dp"
                 android:shadowColor="#000"
@@ -112,8 +119,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignParentBottom="true"
-
-                android:text="Following"
+                android:text="Followers"
                 android:fontFamily="sans-serif-light"
                 android:layout_marginBottom="20dp"
                 android:shadowColor="#000"
@@ -134,29 +140,29 @@
                 android:layout_marginBottom="20dp"
                 android:fontFamily="sans-serif-light"
                 android:paddingRight="5dp"
-                android:shadowColor="#000"
-                android:shadowDx="5"
-                android:shadowDy="5"
-                android:shadowRadius="7"
-                android:text="Posts"
-
-                android:textColor="@color/white"
-                android:textSize="15sp" />
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignParentBottom="true"
-                android:layout_alignParentRight="true"
-                android:layout_marginBottom="20dp"
-                android:fontFamily="sans-serif-light"
-                android:paddingRight="5dp"
-                android:layout_marginRight="18dp"
                 android:shadowColor="#000"
                 android:shadowDx="5"
                 android:shadowDy="5"
                 android:shadowRadius="7"
                 android:text="CheckIns"
+
+                android:textColor="@color/white"
+                android:textSize="15sp" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentBottom="true"
+                android:layout_alignParentRight="true"
+                android:layout_marginBottom="20dp"
+                android:fontFamily="sans-serif-light"
+                android:paddingRight="5dp"
+                android:layout_marginRight="18dp"
+                android:shadowColor="#000"
+                android:shadowDx="5"
+                android:shadowDy="5"
+                android:shadowRadius="7"
+                android:text="Rating"
                 android:textColor="@color/white"
                 android:textSize="15sp" />
 
@@ -166,7 +172,6 @@
     android:id="@+id/botomm"
     android:background="@drawable/curve1"
     android:layout_width="match_parent"
-
     android:layout_height="0dp"
     android:layout_below="@id/top"
     android:layout_weight="35">
@@ -181,7 +186,6 @@
         android:orientation="vertical"
         android:weightSum="30">
     <RelativeLayout
-        android:background="@drawable/curve1"
         android:id="@+id/sec"
         android:layout_width="match_parent"
         android:layout_height="80dp"
@@ -190,26 +194,60 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="10dp"
-            android:layout_marginTop="10dp"
-            android:text="Coding_Genius"
-            android:textColor="@color/black"
+            android:layout_marginStart="15dp"
+            android:layout_marginTop="15dp"
+            android:shadowColor="@color/black"
+            android:text="Ishu Darshan"
+            android:textColor="#6d6d6d"
             android:textSize="25sp"
+            android:id="@+id/username"
             android:textStyle="bold" />
-
-        <Button
+        <TextView
+            android:id="@+id/city_user"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/username"
+            android:layout_alignLeft="@id/username"
+            android:layout_alignRight="@id/username"
+            android:gravity="center_horizontal"
+            android:text="Lyon,France"
+            android:textColor="#bebebe"
+            />
+<RelativeLayout
+    android:layout_width="wrap_content"
+    android:layout_alignTop="@id/username"
+    android:layout_alignBottom="@id/city_user"
+    android:layout_height="wrap_content">
+        <TextView
+            android:onClick="follow"
+            android:id="@+id/follow_button"
+            android:layout_centerInParent="true"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentEnd="true"
-            android:layout_alignParentRight="true"
-            android:layout_marginRight="10dp"
-            android:background="@android:color/transparent"
+            android:layout_marginEnd="20dp"
+            android:background="@drawable/curve11"
             android:text="Follow"
-            android:textStyle="italic"
-            android:textColor="@color/colorPrimaryDark"
-            android:gravity="bottom"
-            android:textAlignment="gravity"
-            android:textSize="25sp" />
+            android:textColor="@color/primary_red"
+            android:paddingLeft="10dp"
+            android:paddingRight="10dp"
+            android:gravity="center_horizontal"
+            android:textSize="18sp" />
+    <ImageView
+        android:id="@+id/following"
+        android:layout_width="38dp"
+        android:layout_height="26dp"
+        android:layout_marginTop="-4dp"
+        android:layout_marginBottom="-4dp"
+        android:layout_alignParentEnd="true"
+        android:src="@drawable/connection"
+        android:layout_alignTop="@id/follow_button"
+        android:layout_alignBottom="@id/follow_button"
+        android:scaleType="fitXY"
+        android:layout_marginEnd="20dp"
+        android:visibility="invisible"
+        />
+</RelativeLayout>
     </RelativeLayout>
 
 
@@ -218,18 +256,33 @@
             android:id="@+id/third"
             android:layout_marginLeft="10dp"
             android:layout_marginRight="10dp"
+            android:layout_marginTop="5dp"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="@drawable/curve2">
+            android:layout_height="match_parent"
+            android:layout_marginBottom="16dp"
+            android:background="@drawable/rectangle">
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerHorizontal="true"
+                android:text="Blogger"
+                android:paddingTop="4dp"
+                android:id="@+id/profession"
+                android:textColor="#bebebe"
+                />
 
             <TextView
+                android:paddingTop="4dp"
+                android:paddingBottom="4dp"
+                android:layout_below="@id/profession"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:textAlignment="center"
-                android:layout_alignParentTop="true"
-                android:text="It is an honor and privilige to meet you on the night of christmas!!!!\n\n"
-                android:textSize="20sp"
-                android:textStyle="bold" />
+                android:textAlignment="textStart"
+                android:id="@+id/bio"
+                android:paddingStart="8dp"
+                android:textColor="#6d6d6d"
+                android:text="Follow our Food and Travel Journey 🍔🍕✈️⛵️\n🎥: Content Creators\n📍: MIA / NYC / LA 🌎"
+                android:textSize="12sp" />
 
         </RelativeLayout>
     </LinearLayout>

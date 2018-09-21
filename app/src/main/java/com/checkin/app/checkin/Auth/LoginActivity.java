@@ -174,9 +174,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         spaceBelow.setLayoutParams(spaceBelowLayoutParams);
         btnSignInLayoutParams.width = (int) (btnSignIn.getWidth() * .18f);
         tvSignIn.setText("···");
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-            tvSignIn.setLetterSpacing(-.65f);
-        }
+        tvSignIn.setLetterSpacing(-.65f);
         tvSignIn.setTypeface(tvSignIn.getTypeface(), Typeface.BOLD);
         tvSignIn.setTextSize(TypedValue.COMPLEX_UNIT_SP, 30);
         btnSignIn.setLayoutParams(btnSignInLayoutParams);

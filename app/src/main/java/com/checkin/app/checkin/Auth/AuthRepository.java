@@ -43,7 +43,7 @@ public class AuthRepository extends BaseRepository {
             @Override
             protected void saveCallResult(ObjectNode data) {
             }
-        } .getAsLiveData();
+        }.getAsLiveData();
     }
 
     public static AuthRepository getInstance(Application application) {

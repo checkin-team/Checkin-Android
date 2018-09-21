@@ -1,7 +1,7 @@
 package com.checkin.app.checkin.Notifications;
 
 import com.checkin.app.checkin.Data.Converters;
-import com.checkin.app.checkin.User.UserShopProfileActivity;
+import com.checkin.app.checkin.Shop.ShopPrivateProfile.ShopActivity;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
@@ -30,7 +30,7 @@ public class NotificationModel {
     private ACTION action;
 
 
-    public static enum ACTION {
+    public enum ACTION {
         NULL(0),FOLLOWED_YOU(1),FOLLOW_ACCEPTED (2)     //static action images
         ,ADDED_TO_SESSION(3),RECOMMENDED_YOU(4) ;   //non static action images
 
@@ -71,7 +71,7 @@ public class NotificationModel {
 //            default:
 //                return ShopProfileActivity.class;
 //        }
-        return UserShopProfileActivity.class;
+        return ShopActivity.class;
     }
 
     public long getId() {

@@ -32,20 +32,21 @@ import android.view.animation.DecelerateInterpolator;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.checkin.app.checkin.Data.Resource;
 import com.checkin.app.checkin.Menu.SessionUserActivity;
 import com.checkin.app.checkin.Misc.FaqActivity;
 import com.checkin.app.checkin.Notifications.NotificationActivity;
-import com.checkin.app.checkin.Shop.ShopActivity;
 import com.checkin.app.checkin.Profile.ShopProfile.ShopProfileActivity2;
 import com.checkin.app.checkin.R;
 import com.checkin.app.checkin.Session.ActiveSessionActivity;
 import com.checkin.app.checkin.Shop.BusinessFeaturesActivity;
 import com.checkin.app.checkin.Shop.ShopModel;
+import com.checkin.app.checkin.Shop.ShopPrivateProfile.ShopActivity;
 import com.checkin.app.checkin.Social.ChatActivity;
 import com.checkin.app.checkin.Social.ChatAdapter;
 import com.checkin.app.checkin.Social.MessageViewModel;
+import com.checkin.app.checkin.User.EditProfile;
 import com.checkin.app.checkin.User.UserProfileActivity;
-import com.checkin.app.checkin.User.UserShopProfileActivity;
 import com.checkin.app.checkin.User.UserViewModel;
 import com.checkin.app.checkin.Utility.ClipRevealFrame;
 import com.checkin.app.checkin.Utility.Constants;
@@ -376,9 +377,9 @@ public class HomeActivity extends AppCompatActivity
         List<ShopModel> shops = new ArrayList<>();
         for (int i = 1; i <= 15; i++) {
             if (i % 2 == 0)
-                shops.add(new ShopModel(i, "Socials", "Bar"));
+                shops.add(new ShopModel( "Socials", "Bio","city","+8687845140", 300, 1000L,4700));
             else
-                shops.add(new ShopModel(i, "Family First", "Restaurant"));
+                shops.add(new ShopModel( "Restaurant", "Bio","city","+8687845140", 300, 1000L,4700));
         }
         rvTrendingShops.setLayoutManager(new LinearLayoutManager(
                 this, LinearLayoutManager.HORIZONTAL, false));
@@ -392,7 +393,10 @@ public class HomeActivity extends AppCompatActivity
         mUserActivityAdapter = new UserActivityAdapter(null, this);
         rvUserActivities.setAdapter(mUserActivityAdapter);
 
-        mUserViewModel.getAllUsers().observe(this, (users -> mUserActivityAdapter.setUsers(users)));
+        mUserViewModel.getAllUsers().observe(this, (userResource -> {
+            if (userResource != null && userResource.status == Resource.Status.SUCCESS)
+                mUserActivityAdapter.setUsers(userResource.data);
+        }));
     }
 
     private void setupMessages() {
@@ -444,7 +448,7 @@ public class HomeActivity extends AppCompatActivity
                 startActivity(intent);
                 break;
             case R.id.nav_shop_activity:
-                intent = new Intent(getApplicationContext(), ShopActivity.class);
+                intent = new Intent(getApplicationContext(), com.checkin.app.checkin.Shop.ShopPublicProfile.ShopActivity.class);
                 startActivity(intent);
                 break;
             case R.id.notif_activity:
@@ -452,7 +456,11 @@ public class HomeActivity extends AppCompatActivity
                 startActivity(intent);
                 break;
             case R.id.user_shop_porfile:
-                intent = new Intent(getApplicationContext(), UserShopProfileActivity.class);
+                intent = new Intent(getApplicationContext(), ShopActivity.class);
+                startActivity(intent);
+                break;
+            case R.id.editProfile:
+                intent = new Intent(getApplicationContext(), EditProfile.class);
                 startActivity(intent);
                 break;
 

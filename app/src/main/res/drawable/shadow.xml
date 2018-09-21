@@ -1,4 +1,4 @@
-<layer-list xmlns:android="http://schemas.android.com/apk/res/android">
+<layer-shopReviews xmlns:android="http://schemas.android.com/apk/res/android">
     <!-- Drop Shadow Stack -->
     <item>
         <shape>
@@ -57,4 +57,4 @@
             <corners android:radius="20.5dp" />
         </shape>
     </item>
-</layer-list>
+</layer-shopReviews>

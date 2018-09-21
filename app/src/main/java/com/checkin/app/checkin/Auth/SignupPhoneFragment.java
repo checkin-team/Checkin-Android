@@ -1,6 +1,7 @@
 package com.checkin.app.checkin.Auth;
 
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -20,18 +21,18 @@ public class SignupPhoneFragment extends Fragment {
     EditText edPhone;
 
     private Unbinder unbinder;
-    private SignupFragmentInteraction fragmentInteractionListener;
+    private SignUpFragmentInteraction fragmentInteractionListener;
 
     public SignupPhoneFragment() {}
 
-    public static SignupPhoneFragment newInstance(SignupFragmentInteraction fragmentInteraction) {
+    public static SignupPhoneFragment newInstance(SignUpFragmentInteraction fragmentInteraction) {
         SignupPhoneFragment instance = new SignupPhoneFragment();
         instance.fragmentInteractionListener = fragmentInteraction;
         return instance;
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+    public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         final View rootView = inflater.inflate(R.layout.fragment_signup_phone, container, false);
@@ -42,10 +43,14 @@ public class SignupPhoneFragment extends Fragment {
     }
 
     @OnClick(R.id.im_signup)
-    public void onSignupClicked(View v) {
+    public void onSignUpClicked() {
         String value = edPhone.getText().toString();
         if (value.isEmpty()) {
             edPhone.setError("This field cannot be empty");
+            return;
+        }
+        if (value.length() <= 12) {
+            edPhone.setError("Invalid phone number.");
             return;
         }
         fragmentInteractionListener.onPhoneNumberProcess(value);
@@ -53,7 +58,7 @@ public class SignupPhoneFragment extends Fragment {
 
     @OnClick(R.id.tv_signin)
     public void onSigninClicked(View v) {
-        fragmentInteractionListener.onSigninClicked();
+        fragmentInteractionListener.onSignInClicked();
     }
 
     @Override

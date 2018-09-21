@@ -4,6 +4,8 @@ import android.support.annotation.Nullable;
 import android.util.Log;
 
 import com.checkin.app.checkin.Notifications.NotificationModel.ACTION;
+import com.checkin.app.checkin.User.UserModel;
+import com.checkin.app.checkin.User.UserModel.GENDER;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.JsonNode;
@@ -67,6 +69,24 @@ public class Converters {
         @Override
         public Integer convertToDatabaseValue(ACTION entityProperty) {
             return entityProperty == null ? null : entityProperty.id;
+        }
+    }
+
+    public static class GenderConverter implements PropertyConverter<GENDER, Character> {
+        @Override
+        public GENDER convertToEntityProperty(Character databaseValue) {
+            return GENDER.getByTag(databaseValue);
+        }
+
+        @Override
+        public Character convertToDatabaseValue(GENDER entityProperty) {
+            switch (entityProperty) {
+                case MALE:
+                    return 'm';
+                case FEMALE:
+                    return 'f';
+            }
+            return null;
         }
     }
 

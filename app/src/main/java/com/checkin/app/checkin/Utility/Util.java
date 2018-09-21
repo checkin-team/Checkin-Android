@@ -18,11 +18,17 @@ import android.provider.MediaStore;
 import android.support.annotation.NonNull;
 import android.support.annotation.RequiresApi;
 import android.support.design.widget.TabLayout;
+import android.text.Html;
+import android.text.SpannableStringBuilder;
+import android.text.Spanned;
+import android.text.method.LinkMovementMethod;
+import android.text.style.ClickableSpan;
 import android.util.Log;
 import android.util.SparseArray;
 import android.view.View;
 import android.view.ViewAnimationUtils;
 import android.view.ViewGroup;
+import android.view.ViewTreeObserver;
 import android.view.animation.AccelerateDecelerateInterpolator;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -34,6 +40,7 @@ import java.lang.reflect.Field;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 import java.util.regex.MatchResult;
 import java.util.regex.Matcher;
@@ -314,6 +321,15 @@ public class Util {
         return Constants.API_HOST + ":" + Constants.API_PORT + partialUrl;
     }
 
+    public static String formatCount(long count) {
+        String res;
+        if (count > 1000)
+            res = String.valueOf(count / 1000) + "k";
+        else
+            res = String.valueOf(count);
+        return res;
+    }
+
     public interface MatchResultFunction {
         String apply(MatchResult match);
     }
@@ -354,6 +370,85 @@ public class Util {
                 res = item;
             }
         }
+        return res;
+    }
+    public static void doResizeTextView(final TextView tv, final int maxLine, final String expandText, final boolean viewMore) {
+
+        if (tv.getTag() == null) {
+            tv.setTag(tv.getText());
+        }
+        ViewTreeObserver vto = tv.getViewTreeObserver();
+        vto.addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
+            @Override
+            public void onGlobalLayout() {
+
+                ViewTreeObserver obs = tv.getViewTreeObserver();
+                obs.removeGlobalOnLayoutListener(this);
+                if (maxLine == 0) {
+                    int lineEndIndex = tv.getLayout().getLineEnd(0);
+                    String text = tv.getText().subSequence(0, lineEndIndex - expandText.length() + 1) + " " + expandText;
+                    tv.setText(text);
+                    tv.setMovementMethod(LinkMovementMethod.getInstance());
+                    tv.setText(
+                            addClickablePartTextViewResizable(Html.fromHtml(tv.getText().toString()), tv, maxLine, expandText,
+                                    viewMore), TextView.BufferType.SPANNABLE);
+                } else if (maxLine > 0 && tv.getLineCount() >= maxLine) {
+                    int lineEndIndex = tv.getLayout().getLineEnd(maxLine - 1);
+                    String text = tv.getText().subSequence(0, lineEndIndex - expandText.length() + 1) + " " + expandText;
+                    tv.setText(text);
+                    tv.setMovementMethod(LinkMovementMethod.getInstance());
+                    tv.setText(
+                            addClickablePartTextViewResizable(Html.fromHtml(tv.getText().toString()), tv, maxLine, expandText,
+                                    viewMore), TextView.BufferType.SPANNABLE);
+                } else {
+                    int lineEndIndex = tv.getLayout().getLineEnd(tv.getLayout().getLineCount() - 1);
+                    String text = tv.getText().subSequence(0, lineEndIndex) + " " + expandText;
+                    tv.setText(text);
+                    tv.setMovementMethod(LinkMovementMethod.getInstance());
+                    tv.setText(
+                            addClickablePartTextViewResizable(Html.fromHtml(tv.getText().toString()), tv, lineEndIndex, expandText,
+                                    viewMore), TextView.BufferType.SPANNABLE);
+                }
+            }
+        });
+    }
+    private static SpannableStringBuilder addClickablePartTextViewResizable(final Spanned strSpanned, final TextView tv,
+                                                                            final int maxLine, final String spanableText, final boolean viewMore) {
+        String str = strSpanned.toString();
+        SpannableStringBuilder ssb = new SpannableStringBuilder(strSpanned);
+
+        if (str.contains(spanableText)) {
+            ssb.setSpan(new ClickableSpan() {
+
+                @Override
+                public void onClick(View widget) {
+
+                    if (viewMore) {
+                        tv.setLayoutParams(tv.getLayoutParams());
+                        tv.setText(tv.getTag().toString(), TextView.BufferType.SPANNABLE);
+                        tv.invalidate();
+                        doResizeTextView(tv, -1, "View Less", false);
+                    } else {
+                        tv.setLayoutParams(tv.getLayoutParams());
+                        tv.setText(tv.getTag().toString(), TextView.BufferType.SPANNABLE);
+                        tv.invalidate();
+                        doResizeTextView(tv, 3, "View More", true);
+                    }
+
+                }
+            }, str.indexOf(spanableText), str.indexOf(spanableText) + spanableText.length(), 0);
+
+        }
+        return ssb;
+
+    }
+
+    public static String formatTime(long min, long sec) {
+        String res;
+        if (min == 0)
+            res = String.format(Locale.ENGLISH, "%02d seconds", sec);
+        else
+            res = String.format(Locale.ENGLISH, "%02d:%02d minutes", min, sec);
         return res;
     }
 
