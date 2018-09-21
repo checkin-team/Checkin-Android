@@ -9,6 +9,7 @@ import android.support.annotation.NonNull;
 
 import com.checkin.app.checkin.Data.Resource;
 
+import java.io.File;
 import java.util.List;
 
 public class UserViewModel extends AndroidViewModel {
@@ -24,6 +25,10 @@ public class UserViewModel extends AndroidViewModel {
         if (mAllUsers == null)
             mAllUsers = mRepository.getAllUsers();
         return mAllUsers;
+    }
+    public void postImages(File rectangleFile)
+    {
+//        mRepository.postImage(rectangleFile, 1L);
     }
 
     public static class Factory extends ViewModelProvider.NewInstanceFactory {

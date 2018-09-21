@@ -98,7 +98,7 @@
             android:screenOrientation="portrait" />
         <activity android:name=".Home.UserProfileActivity" />
 
-        <activity android:name=".Utility.EditProfileImage" />
+        <activity android:name=".Utility.SelectCropImageActivity" />
 
         <activity android:name="com.facebook.FacebookActivity"
             android:configChanges=

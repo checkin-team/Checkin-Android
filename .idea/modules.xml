@@ -2,9 +2,11 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/Check-In.iml" filepath="$PROJECT_DIR$/Check-In.iml" />
+      <module fileurl="file://C:\Users\Jogi Miglani\Documents\GitHub\Check-Out\Check-In.iml" filepath="C:\Users\Jogi Miglani\Documents\GitHub\Check-Out\Check-In.iml" />
+      <module fileurl="file://$PROJECT_DIR$/Check-Out.iml" filepath="$PROJECT_DIR$/Check-Out.iml" />
       <module fileurl="file://$PROJECT_DIR$/library/MaterialSearchView/MaterialSearchView.iml" filepath="$PROJECT_DIR$/library/MaterialSearchView/MaterialSearchView.iml" />
       <module fileurl="file://$PROJECT_DIR$/library/NiceSpinner/NiceSpinner.iml" filepath="$PROJECT_DIR$/library/NiceSpinner/NiceSpinner.iml" />
+      <module fileurl="file://$PROJECT_DIR$/library/Scissors/Scissors.iml" filepath="$PROJECT_DIR$/library/Scissors/Scissors.iml" />
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
       <module fileurl="file://$PROJECT_DIR$/library/library.iml" filepath="$PROJECT_DIR$/library/library.iml" />
     </modules>
