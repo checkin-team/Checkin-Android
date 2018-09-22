@@ -38,11 +38,9 @@ import android.widget.Toast;
 import com.bumptech.glide.Glide;
 import com.checkin.app.checkin.Data.Resource;
 import com.checkin.app.checkin.R;
-import com.checkin.app.checkin.Utility.SelectCropImageActivity;
+import com.checkin.app.checkin.Utility.EditProfileImage;
 import com.transitionseverywhere.AutoTransition;
 import com.transitionseverywhere.TransitionManager;
-
-import java.io.File;
 
 public class UserProfileActivity extends AppCompatActivity {
     private float weightTop=70;
@@ -52,10 +50,6 @@ public class UserProfileActivity extends AppCompatActivity {
     String state="down";
     String mode="auto";
     private static final String TAG = "UserProfileActivity";
-
-
-    private UserViewModel mViewModel;
-
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         int screenHeight=getWindow().getAttributes().height;
         super.onCreate(savedInstanceState);
@@ -76,8 +70,8 @@ public class UserProfileActivity extends AppCompatActivity {
         Button editImage=findViewById(R.id.editImage);
         editImage.setOnClickListener(v -> {
             Intent intent;
-                intent = new Intent(this , SelectCropImageActivity.class);
-            startActivityForResult(intent,SelectCropImageActivity.KEY_CROP_IMAGE_REQUEST_CODE);
+                intent = new Intent(this , EditProfileImage.class);
+            startActivityForResult(intent,1);
         });
         /*final Matrix matrix = imageView.getImageMatrix();
         final float imageWidth = imageView.getDrawable().getIntrinsicWidth();
@@ -89,9 +83,9 @@ public class UserProfileActivity extends AppCompatActivity {
         //imageView.setImageResource(R.drawable.flier);
         // v1.setBackground(wallpaperDrawable);
 
-        mViewModel= ViewModelProviders.of(this).get(UserViewModel.class);
+        UserViewModel model= ViewModelProviders.of(this).get(UserViewModel.class);
 
-        mViewModel.getAllUsers().observe(this, userModel -> {
+        model.getAllUsers().observe(this, userModel -> {
             if (userModel == null) return;
             if (userModel.status == Resource.Status.SUCCESS) {
                 if (userModel.data != null) {
@@ -284,16 +278,4 @@ public class UserProfileActivity extends AppCompatActivity {
     boolean state_up=true;
     boolean down=false,following=false;
     float x=0,y=0,maxy=0,miny=0;
-
-    @Override
-    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-        if(requestCode==SelectCropImageActivity.KEY_CROP_IMAGE_REQUEST_CODE&&resultCode==RESULT_OK)
-        {
-            /*byte byteArrayRectangle[]=data.getByteArrayExtra(SelectCropImageActivity.KEY_RECTANGLE_IMAGE);
-            byte byteArrayCircle[]=data.getByteArrayExtra(SelectCropImageActivity.KEY_CIRCLE_IMAGE);*/
-            File rectangleFile = data.getParcelableExtra(SelectCropImageActivity.KEY_RECTANGLE_IMAGE);
-            mViewModel.postImages(rectangleFile);
-        }
-    }
 }
