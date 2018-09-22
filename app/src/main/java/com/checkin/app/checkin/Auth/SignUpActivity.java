@@ -70,7 +70,7 @@ public class SignUpActivity extends AppCompatActivity implements SignUpFragmentI
             @Override
             public void onVerificationFailed(FirebaseException e) {
                 goBack = false;
-                replaceFragmentContainer(SignupUserInfoFragment.newInstance(SignupActivity.this));
+                replaceFragmentContainer(SignupUserInfoFragment.newInstance(SignUpActivity.this));
                 Toast.makeText(getApplicationContext(),"Verification Error",Toast.LENGTH_LONG).show();
             }
 
@@ -155,7 +155,7 @@ public class SignUpActivity extends AppCompatActivity implements SignUpFragmentI
     @Override
     public void onOtpVerificationProcess(String otp) {
         Log.e(TAG, "OTP: " + otp);
-        PhoneAuthCredential credential =PhoneAuthProvider.getCredential(verificationId,otp);
+        PhoneAuthCredential credential =PhoneAuthProvider.getCredential(mVerificationId,otp);
         signInWithPhoneAuthCredential(credential);
     }
 
