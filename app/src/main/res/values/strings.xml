@@ -71,8 +71,8 @@
     <string name="shop_profile_about_cusine">"C\nU\nS\nI\nN\nE\n&gt;"</string>
     <string name="shop_profile_about_review">"R\nE\nV\nI\nE\nW\n&lt;"</string>
 
-    <string name="facebook_app_id">291656184950133</string>
-    <string name="fb_login_protocol_scheme">fb291656184950133</string>
+    <string name="facebook_app_id">150714782397445</string>
+    <string name="fb_login_protocol_scheme">fb150714782397445</string>
 
     <string name="title_activity_signup">SignupActivity</string>
     <string name="btn_cancel">Cancel</string>

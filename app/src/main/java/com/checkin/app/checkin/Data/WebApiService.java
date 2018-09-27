@@ -24,6 +24,9 @@ public interface WebApiService {
     @POST("auth/login/")
     Call<ObjectNode> postLogin(@Body ObjectNode credentials);
 
+    @POST("auth/register/")
+    Call<ObjectNode> postRegister(@Body ObjectNode credentials);
+
     @POST("qr/decrypt/")
     Call<ObjectNode> postDecryptQr(@Body ObjectNode data);
 

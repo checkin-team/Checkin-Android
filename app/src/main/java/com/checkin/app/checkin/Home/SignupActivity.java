@@ -140,8 +140,8 @@ public class SignupActivity extends AppCompatActivity implements SignUpFragmentI
     }
 
     @Override
-    public void onUserInfoProcess(String firstName, String lastName, String password, UserModel.GENDER gender) {
-        Log.e(TAG, "First name: " + firstName + " | Last name: " + lastName + " | Password: " + password + " | Gender: " + gender.name());
+    public void onUserInfoProcess(String firstName, String lastName, String userName, UserModel.GENDER gender) {
+        Log.e(TAG, "Username: " +userName+"First name: " + firstName + " | Last name: " + lastName + " | Gender: " + gender.name());
         SharedPreferences.Editor editor = mPrefs.edit();
         editor.putInt(Constants.SP_USER_ID, 0);
         editor.putBoolean(Constants.SP_LOGGED_IN, true);

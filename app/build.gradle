@@ -66,6 +66,7 @@ dependencies {
     implementation 'com.google.firebase:firebase-messaging:17.3.1'
     // Facebook SDK
     implementation 'com.facebook.android:facebook-android-sdk:[4,5)'
+    implementation 'com.facebook.android:facebook-login:[4,5)'
     // Twitter SDK
     implementation 'com.twitter.sdk.android:twitter-core:3.1.1'
     // Design Libraries
@@ -112,6 +113,11 @@ dependencies {
     // Transition animations
     implementation 'com.andkulikov:transitionseverywhere:1.8.0'
     implementation 'com.jsibbold:zoomage:1.1.0'
+    implementation 'com.google.android.gms:play-services-auth:16.0.0'
+
 }
 
 apply plugin: 'com.google.gms.google-services'
+repositories {
+    mavenCentral()
+}

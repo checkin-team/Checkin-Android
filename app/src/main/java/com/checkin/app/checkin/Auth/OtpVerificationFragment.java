@@ -50,6 +50,7 @@ public class OtpVerificationFragment extends Fragment {
                 tvRemainingTime.setText(Util.formatTime(min, sec));
             } else {
                 tvRemainingTime.setVisibility(View.INVISIBLE);
+                btnResendOtp.setText("RESEND OTP");
                 btnResendOtp.setVisibility(View.VISIBLE);
             }
         });

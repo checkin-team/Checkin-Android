@@ -38,7 +38,7 @@ import static com.checkin.app.checkin.Utility.Constants.API_PORT;
 @Module
 public class ApiClient {
     private static String getBaseUrl() {
-        return "http://" + API_HOST + ":" + API_PORT + "/"; //+ "/v" + API_VERSION + "/";
+        return "https://" + API_HOST + ":" + API_PORT + "/"; //+ "/v" + API_VERSION + "/";
     }
 
     private static WebApiService mApiService;
