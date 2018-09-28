@@ -14,6 +14,7 @@ import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.checkin.app.checkin.Data.TestDb;
@@ -46,6 +47,8 @@ public class SignUpActivity extends AppCompatActivity implements SignUpFragmentI
 
     @BindView(R.id.dark_back) View mDarkBack;
 
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -58,6 +61,7 @@ public class SignUpActivity extends AppCompatActivity implements SignUpFragmentI
             transaction.add(R.id.fragment_container, SignupPhoneFragment.newInstance(this));
             transaction.commit();
         }
+
 
         mAuth = FirebaseAuth.getInstance();
         mPhoneAuth = PhoneAuthProvider.getInstance(mAuth);
@@ -85,8 +89,8 @@ public class SignUpActivity extends AppCompatActivity implements SignUpFragmentI
                 mAuthViewModel.setOtpTimeout(0);
             }
         };
-
         mAuthViewModel = ViewModelProviders.of(this, new AuthViewModel.Factory(getApplication())).get(AuthViewModel.class);
+
     }
 
     private void verifyPhoneNumber() {

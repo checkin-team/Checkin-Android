@@ -50,7 +50,7 @@
         app:layout_constraintTop_toBottomOf="@id/reviews_follwers"
         app:layout_constraintVertical_bias="1.0" />
     <TextView
-        android:id="@+id/rating"
+        android:id="@+id/tv_reviews"
         android:layout_marginTop="8dp"
         android:paddingLeft= "12dp"
         android:paddingRight="12dp"

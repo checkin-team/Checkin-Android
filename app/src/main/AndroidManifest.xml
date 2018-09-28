@@ -49,8 +49,7 @@
             android:screenOrientation="sensorPortrait"
             android:theme="@style/AppTheme"
             tools:replace="screenOrientation" />
-        <activity android:name=".User.UserProfileActivity" />
-
+        <activity android:name=".User.NonPersonalProfile.UserProfileActivity" />
         <activity
             android:name=".Menu.SessionUserActivity"
             android:label="@string/title_activity_session_user"
@@ -65,7 +64,9 @@
             android:screenOrientation="portrait" />
         <activity android:name=".Misc.TransactionActivity" />
         <activity android:name=".Home.StoryActivity" />
-        <activity android:name=".Auth.ForgotPassword" />
+        <activity
+            android:name=".Auth.ForgotPassword"
+            android:theme="@style/AppThemeWithBar" />
         <activity android:name=".Misc.FilterTransactions" />
         <activity android:name=".Misc.FaqActivity" />
         <activity
@@ -80,54 +81,50 @@
                 <action android:name="com.checkin.app.checkin.notifications" />
             </intent-filter>
         </activity>
-
         <activity
             android:name=".Shop.BusinessFeaturesActivity"
             android:screenOrientation="portrait"
             android:theme="@style/Theme.AppCompat.Light" />
-
         <activity
             android:name=".Shop.SignUpVerifyActivity"
-            android:theme="@style/Theme.AppCompat.Light"
+            android:parentActivityName=".Home.HomeActivity"
             android:screenOrientation="portrait"
-            android:parentActivityName=".Home.HomeActivity">
-        </activity>
-
+            android:theme="@style/Theme.AppCompat.Light" />
         <activity
-            android:name=".User.EditProfile"
+            android:name=".User.PersonalProfile.EditProfile"
             android:screenOrientation="portrait" />
         <activity android:name=".Home.UserProfileActivity" />
-
         <activity android:name=".Utility.SelectCropImageActivity" />
-
-        <activity android:name="com.facebook.FacebookActivity"
-            android:configChanges=
-                "keyboard|keyboardHidden|screenLayout|screenSize|orientation"
+        <activity
+            android:name="com.facebook.FacebookActivity"
+            android:configChanges="keyboard|keyboardHidden|screenLayout|screenSize|orientation"
             android:label="@string/app_name" />
         <activity
             android:name="com.facebook.CustomTabActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.VIEW" />
+
                 <category android:name="android.intent.category.DEFAULT" />
                 <category android:name="android.intent.category.BROWSABLE" />
+
                 <data android:scheme="@string/fb_login_protocol_scheme" />
             </intent-filter>
         </activity>
 
-
-        <service android:name=".Auth.AuthenticatorService"
+        <service
+            android:name=".Auth.AuthenticatorService"
             android:enabled="true"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.accounts.AccountAuthenticator" />
             </intent-filter>
+
             <meta-data
                 android:name="android.accounts.AccountAuthenticator"
                 android:resource="@xml/authenticator" />
         </service>
-        <service
-            android:name=".Data.MessagingService">
+        <service android:name=".Data.MessagingService">
             <intent-filter>
                 <action android:name="com.google.firebase.MESSAGING_EVENT" />
             </intent-filter>
@@ -136,11 +133,17 @@
         <meta-data
             android:name="preloaded_fonts"
             android:resource="@array/preloaded_fonts" />
-        <meta-data android:name="com.facebook.sdk.ApplicationId"
-            android:value="@string/facebook_app_id"/>
+        <meta-data
+            android:name="com.facebook.sdk.ApplicationId"
+            android:value="@string/facebook_app_id" />
         <meta-data
             android:name="preloaded_fonts"
             android:resource="@array/preloaded_fonts" />
+
+        <activity
+            android:name=".Auth.CreateNewPasswordActivity"
+            android:theme="@style/AppThemeWithBar" />
+        <activity android:name=".User.PersonalProfile.UserProfilePersonalActivity"></activity>
     </application>
 
 </manifest>

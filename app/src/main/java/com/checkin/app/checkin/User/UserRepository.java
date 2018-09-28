@@ -12,6 +12,7 @@ import com.checkin.app.checkin.Data.ApiResponse;
 import com.checkin.app.checkin.Data.AppDatabase;
 import com.checkin.app.checkin.Data.BaseRepository;
 import com.checkin.app.checkin.Data.NetworkBoundResource;
+import com.checkin.app.checkin.Data.ObjectBoxInstanceLiveData;
 import com.checkin.app.checkin.Data.Resource;
 import com.checkin.app.checkin.Data.WebApiService;
 
@@ -100,5 +101,35 @@ public class UserRepository extends BaseRepository {
             }
         }
         return INSTANCE;
+    }
+
+    public LiveData<Resource<UserModel>> getUser(long id) {
+        return new NetworkBoundResource<UserModel, UserModel>() {
+
+            @Override
+            protected boolean shouldUseLocalDb() {
+                return true;
+            }
+
+            @NonNull
+            @Override
+            protected LiveData<ApiResponse<UserModel>> createCall() {
+                return null;
+            }
+
+            @Override
+            protected void saveCallResult(UserModel data) {
+            }
+
+            @Override
+            protected LiveData<UserModel> loadFromDb() {
+                return new ObjectBoxInstanceLiveData<>(mUserModel.query().equal(UserModel_.id, id).build());
+            }
+
+            @Override
+            protected boolean shouldFetch(UserModel data) {
+                return false;
+            }
+        }.getAsLiveData();
     }
 }

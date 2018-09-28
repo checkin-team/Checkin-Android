@@ -56,6 +56,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
     @BindView(R.id.login_username) EditText etUsername;
     @BindView(R.id.login_password) EditText etPassword;
 
+
     private SharedPreferences mPrefs;
     private AuthViewModel mAuthViewModel;
     private static boolean populated = false;
@@ -76,6 +77,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         });
 
         mPrefs = PreferenceManager.getDefaultSharedPreferences(this);
+
     }
 
     @Override

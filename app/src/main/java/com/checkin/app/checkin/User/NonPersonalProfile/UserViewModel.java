@@ -1,4 +1,4 @@
-package com.checkin.app.checkin.User;
+package com.checkin.app.checkin.User.NonPersonalProfile;
 
 import android.app.Application;
 import android.arch.lifecycle.AndroidViewModel;
@@ -8,8 +8,9 @@ import android.arch.lifecycle.ViewModelProvider;
 import android.support.annotation.NonNull;
 
 import com.checkin.app.checkin.Data.Resource;
+import com.checkin.app.checkin.User.UserModel;
+import com.checkin.app.checkin.User.UserRepository;
 
-import java.io.File;
 import java.util.List;
 
 public class UserViewModel extends AndroidViewModel {
@@ -26,9 +27,9 @@ public class UserViewModel extends AndroidViewModel {
             mAllUsers = mRepository.getAllUsers();
         return mAllUsers;
     }
-    public void postImages(File rectangleFile)
-    {
-//        mRepository.postImage(rectangleFile, 1L);
+
+    public LiveData<Resource<UserModel>> getUser(long id) {
+        return mRepository.getUser(id);
     }
 
     public static class Factory extends ViewModelProvider.NewInstanceFactory {

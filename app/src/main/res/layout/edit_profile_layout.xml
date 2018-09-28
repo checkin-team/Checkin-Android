@@ -104,7 +104,7 @@
             android:layout_marginStart="16dp"
             android:layout_marginEnd="16dp"
             android:imeOptions="actionNext"
-            android:id="@+id/bio"
+            android:id="@+id/tv_bio"
             android:maxLines="3"
             />
 

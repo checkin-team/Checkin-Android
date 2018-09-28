@@ -7,8 +7,10 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.Toast;
 
 import com.checkin.app.checkin.R;
 import com.lyft.android.scissors2.CropView;
@@ -16,21 +18,19 @@ import com.lyft.android.scissors2.CropView;
 import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
 import java.io.IOException;
 
 public class SelectCropImageActivity extends AppCompatActivity {
+    private static final String TAG = SelectCropImageActivity.class.getSimpleName();
     public static final int KEY_CROP_IMAGE_REQUEST_CODE = 1000;
     private static final int PICK_IMAGE_REQUEST = 100;
     public static final String RECTANGLE_CROP_ASPECT_RATIO = "aspect_ratio";
     private File mRectangleFile;
 
     public static final String KEY_RECTANGLE_IMAGE="rectangle";
-
     CropView cropView;
-    boolean flag=false;
-
-
-    private Button mNextButton;
+    private int maxHeight=300, maxWidth=300;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -45,17 +45,23 @@ public class SelectCropImageActivity extends AppCompatActivity {
 
         cropView = findViewById(R.id.crop_view);
         cropView.setViewportRatio(viewportRatio);
-        mNextButton = findViewById(R.id.next_button);
-        mNextButton.setOnClickListener(new View.OnClickListener() {
-
-            @Override
-            public void onClick(View v) {
-                cropView.extensions()
-                        .crop()
-                        .into(mRectangleFile);
-                setResult(Activity.RESULT_OK, getImageIntent());
-                finish();
+        findViewById(R.id.next_button).setOnClickListener(v -> {
+            Bitmap bitmap = cropView.crop();
+            if (bitmap == null) {
+                Log.e(TAG, "Cropped bitmap is null!");
+                return;
             }
+            if (bitmap.getHeight() > maxHeight || bitmap.getWidth() > maxWidth) {
+                Toast.makeText(getApplicationContext(),"Image should be less than "+maxWidth+"*"+maxHeight,Toast.LENGTH_LONG).show();
+                requestImage();
+            }
+            try (FileOutputStream out = new FileOutputStream(mRectangleFile)) {
+                bitmap.compress(Bitmap.CompressFormat.PNG, 100, out);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+            setResult(Activity.RESULT_OK, getImageIntent());
+            finish();
         });
     }
 
@@ -73,25 +79,15 @@ public class SelectCropImageActivity extends AppCompatActivity {
         intent.putExtra(KEY_RECTANGLE_IMAGE, mRectangleFile);
         return intent;
     }
-    private byte[] getByteArray(Bitmap bitmap)
-    {
-        ByteArrayOutputStream stream =new ByteArrayOutputStream();
-        bitmap.compress(Bitmap.CompressFormat.PNG,100,stream);
-        return stream.toByteArray();
-    }
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        if(requestCode == PICK_IMAGE_REQUEST) {
+        if (requestCode == PICK_IMAGE_REQUEST) {
             Uri uri=data.getData();
-            try
-            {
+            try {
                 Bitmap bitmap= MediaStore.Images.Media.getBitmap(getContentResolver(),uri);
                 cropView.setImageBitmap(bitmap);
-            }
-            catch (FileNotFoundException e) {
-                e.printStackTrace();
             } catch (IOException e) {
                 e.printStackTrace();
             }
