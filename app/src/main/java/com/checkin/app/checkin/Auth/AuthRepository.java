@@ -46,6 +46,25 @@ public class AuthRepository extends BaseRepository {
         }.getAsLiveData();
     }
 
+    public LiveData<Resource<ObjectNode>> register(final ObjectNode credentials) {
+        return new NetworkBoundResource<ObjectNode, ObjectNode>() {
+            @Override
+            protected boolean shouldUseLocalDb() {
+                return false;
+            }
+
+            @NonNull
+            @Override
+            protected LiveData<ApiResponse<ObjectNode>> createCall() {
+                return new RetrofitLiveData<>(mWebService.postRegister(credentials));
+            }
+
+            @Override
+            protected void saveCallResult(ObjectNode data) {
+            }
+        }.getAsLiveData();
+    }
+
     public static AuthRepository getInstance(Application application) {
         if (INSTANCE == null) {
             synchronized (AuthRepository.class) {

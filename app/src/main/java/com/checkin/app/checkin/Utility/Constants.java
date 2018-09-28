@@ -6,7 +6,7 @@ import static java.util.concurrent.TimeUnit.SECONDS;
 
 public class Constants {
     public static final short API_VERSION = 1;
-    public static final String API_HOST = "172.17.37.59";
+    public static final String API_HOST = "api.check-in.in";
     public static final short API_PORT = 8000;
 
     public static final String ACCOUNT_TYPE = "com.checkin.accounts";

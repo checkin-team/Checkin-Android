@@ -3,6 +3,7 @@ package com.checkin.app.checkin.Auth;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -18,6 +19,8 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 import butterknife.Unbinder;
 
+import static android.content.ContentValues.TAG;
+
 
 public class SignupUserInfoFragment extends Fragment {
     private SignUpFragmentInteraction fragmentInteraction;
@@ -28,7 +31,7 @@ public class SignupUserInfoFragment extends Fragment {
     @BindView(R.id.ed_lastname) EditText edLastname;
     @BindView(R.id.im_male) ImageView imMale;
     @BindView(R.id.im_female) ImageView imFemale;
-    @BindView(R.id.ed_password) EditText edPassword;
+    @BindView(R.id.ed_Username) EditText edUsername;
 
     public SignupUserInfoFragment() {
         // Required empty public_selected constructor
@@ -44,6 +47,17 @@ public class SignupUserInfoFragment extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
          final View view =  inflater.inflate(R.layout.fragment_signup_user_info, container, false);
         unbinder = ButterKnife.bind(this,view);
+        Log.e(TAG, "View Created");
+        //SignUpActivity signUpActivity=(SignUpActivity) getActivity();
+        if(getArguments()!=null)
+        { String name=getArguments().getString("name");
+
+            edFirstname.setText(name.substring(0,name.indexOf(" ")));
+            edLastname.setText(name.substring(name.lastIndexOf(" ")));
+           // edPassword.setVisibility(View.INVISIBLE);
+
+        }
+
         return view;
     }
     @Override
@@ -62,13 +76,18 @@ public class SignupUserInfoFragment extends Fragment {
 
     @OnClick(R.id.btn_enter)
     public void onProceedClicked(View view){
+   // String username = edusername.getText().toString();
     String firstname = edFirstname.getText().toString();
     String lastname = edLastname.getText().toString();
-    String password = edPassword.getText().toString();
+    String username = edUsername.getText().toString();
    /* if((firstname.isEmpty()) || (lastname.isEmpty()) || (password.isEmpty()) || (genderChosen == null)){
         edFirstname.setError("This field cannot be empty");
         return;
     }*/
+        if (username.isEmpty()){
+            edUsername.setError("This field cannot be empty");
+            return;
+        }
    if (firstname.isEmpty()){
        edFirstname.setError("This field cannot be empty");
        return;
@@ -77,15 +96,15 @@ public class SignupUserInfoFragment extends Fragment {
         edLastname.setError("This field cannot be empty");
         return;
     }
-    if(password.isEmpty()){
-        edPassword.setError("This field cannot be empty");
-        return;
-    }
+    //if(password.isEmpty()){
+     //   edPassword.setError("This field cannot be empty");
+       // return;
+    //}
     if(genderChosen == null){
         Toast.makeText(getActivity().getApplicationContext(),"Please select gender",Toast.LENGTH_SHORT).show();
         return;
     }
-    fragmentInteraction.onUserInfoProcess(firstname, lastname, password, genderChosen);
+    fragmentInteraction.onUserInfoProcess(firstname, lastname, username, genderChosen);
 
     }
 }
