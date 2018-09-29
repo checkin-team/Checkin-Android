@@ -2,13 +2,20 @@ package com.checkin.app.checkin.User.PersonalProfile;
 
 import android.app.Application;
 import android.arch.lifecycle.AndroidViewModel;
+import android.arch.lifecycle.LiveData;
 import android.arch.lifecycle.ViewModel;
 import android.arch.lifecycle.ViewModelProvider;
+import android.preference.PreferenceManager;
 import android.support.annotation.NonNull;
 
+import com.checkin.app.checkin.Data.Resource;
+import com.checkin.app.checkin.User.UserModel;
 import com.checkin.app.checkin.User.UserRepository;
+import com.checkin.app.checkin.Utility.Constants;
 
 import java.io.File;
+
+import static com.facebook.FacebookSdk.getApplicationContext;
 
 /**
  * Created by Jogi Miglani on 29-09-2018.
@@ -24,6 +31,15 @@ public class UserViewModel extends AndroidViewModel {
 
     public void postImages(File rectangleFile) {
         mRepository.postImage(rectangleFile, 1L);
+    }
+
+    public LiveData<Resource<UserModel>> getCurrentUser() {
+        return mRepository.getUser(getUserId());
+    }
+
+    private long getUserId() {
+        return PreferenceManager.getDefaultSharedPreferences(getApplicationContext())
+                .getLong(Constants.SP_USER_ID,1L);
     }
 
     public static class Factory extends ViewModelProvider.NewInstanceFactory {

@@ -19,6 +19,7 @@
         <item name="actionBarStyle">@style/CustomActionBarTheme</item>
     </style>
 
+
     <style name="CustomActionBarTheme" parent="Widget.AppCompat.ActionBar">
         <item name="titleTextStyle">@style/TitleTextStyle</item>
         <item name="background">@color/primary_red</item>

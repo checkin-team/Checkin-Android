@@ -31,7 +31,7 @@
             android:onClick="goback"
             android:id="@+id/check"
             android:layout_gravity="end"
-            android:background="@drawable/noun_1482833_cc"/>
+            android:background="@drawable/im_check"/>
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"

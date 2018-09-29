@@ -46,6 +46,7 @@ import com.checkin.app.checkin.Social.ChatActivity;
 import com.checkin.app.checkin.Social.ChatAdapter;
 import com.checkin.app.checkin.Social.MessageViewModel;
 import com.checkin.app.checkin.User.NonPersonalProfile.UserProfileActivity;
+import com.checkin.app.checkin.User.PersonalProfile.EditPersonalProfile;
 import com.checkin.app.checkin.User.PersonalProfile.EditProfile;
 import com.checkin.app.checkin.User.NonPersonalProfile.UserViewModel;
 import com.checkin.app.checkin.User.PersonalProfile.UserProfilePersonalActivity;
@@ -472,7 +473,7 @@ public class HomeActivity extends AppCompatActivity
                 startActivity(intent);
                 break;
             case R.id.editProfile:
-                intent = new Intent(getApplicationContext(), EditProfile.class);
+                intent = new Intent(getApplicationContext(), EditPersonalProfile.class);
                 startActivity(intent);
                 break;
 

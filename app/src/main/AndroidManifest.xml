@@ -143,7 +143,8 @@
         <activity
             android:name=".Auth.CreateNewPasswordActivity"
             android:theme="@style/AppThemeWithBar" />
-        <activity android:name=".User.PersonalProfile.UserProfilePersonalActivity"></activity>
+        <activity android:name=".User.PersonalProfile.UserProfilePersonalActivity" />
+        <activity android:name=".User.PersonalProfile.EditPersonalProfile"></activity>
     </application>
 
 </manifest>
