@@ -1,12 +1,13 @@
 package com.checkin.app.checkin.Auth;
 
-
 import com.checkin.app.checkin.User.UserModel.GENDER;
+import com.facebook.login.LoginResult;
 
-public interface SignUpFragmentInteraction {
-    void onPhoneNumberProcess(String phoneNo);
+public interface AuthFragmentInteraction {
     void onResendOtpRequest();
     void onOtpVerificationProcess(String otp);
     void onUserInfoProcess(String firstName, String lastName, String username, GENDER gender);
-    void onSignInClicked();
+    void onGoogleAuth();
+    void onFacebookAuth(LoginResult loginResult);
+    void onPhoneAuth(String phoneNo);
 }

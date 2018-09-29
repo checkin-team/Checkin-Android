@@ -19,6 +19,7 @@ public class Resource<T> {
     @Nullable public final String message;
 
     public enum Status {
+        NO_REQUEST,
         SUCCESS,
         LOADING,
         ERROR_RESPONSE_INVALID,
@@ -54,6 +55,10 @@ public class Resource<T> {
     @NonNull
     public static <T> Resource<T> loading(@Nullable T data) {
         return new Resource<>(Status.LOADING, data, null);
+    }
+
+    public static <T> Resource<T> noRequest() {
+        return new Resource<>(Status.NO_REQUEST, null, null);
     }
 
     public static <T> Resource<T> createResource(@NonNull ApiResponse<T> apiResponse) {

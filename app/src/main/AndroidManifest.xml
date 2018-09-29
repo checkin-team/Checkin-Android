@@ -43,11 +43,7 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".Auth.LoginActivity"
-            android:screenOrientation="portrait"
-            android:theme="@style/Theme.AppCompat.Light.NoActionBar" />
-        <activity
-            android:name=".Auth.SignUpActivity"
+            android:name=".Auth.AuthActivity"
             android:screenOrientation="portrait"
             android:theme="@style/Theme.AppCompat.Light.NoActionBar" />
         <activity
@@ -71,7 +67,6 @@
             android:screenOrientation="portrait" />
         <activity android:name=".Misc.TransactionActivity" />
         <activity android:name=".Home.StoryActivity" />
-        <activity android:name=".Auth.ForgotPassword" />
         <activity android:name=".Misc.FilterTransactions" />
         <activity android:name=".Misc.FaqActivity" />
         <activity

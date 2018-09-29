@@ -23,21 +23,23 @@ import static android.content.ContentValues.TAG;
 
 
 public class SignupUserInfoFragment extends Fragment {
-    private SignUpFragmentInteraction fragmentInteraction;
+    private AuthFragmentInteraction fragmentInteraction;
     private Unbinder unbinder;
     private GENDER genderChosen = null;
 
-    @BindView(R.id.ed_firstname) EditText edFirstname;
-    @BindView(R.id.ed_lastname) EditText edLastname;
+    @BindView(R.id.ed_firstname) EditText edFirstName;
+    @BindView(R.id.ed_lastname) EditText edLastName;
     @BindView(R.id.im_male) ImageView imMale;
     @BindView(R.id.im_female) ImageView imFemale;
     @BindView(R.id.ed_Username) EditText edUsername;
+
+    public static final String KEY_NAME = "name";
 
     public SignupUserInfoFragment() {
         // Required empty public_selected constructor
     }
 
-    public static SignupUserInfoFragment newInstance(SignUpFragmentInteraction fragmentInteraction) {
+    public static SignupUserInfoFragment newInstance(AuthFragmentInteraction fragmentInteraction) {
         SignupUserInfoFragment fragment = new SignupUserInfoFragment();
         fragment.fragmentInteraction = fragmentInteraction;
         return fragment;
@@ -48,14 +50,11 @@ public class SignupUserInfoFragment extends Fragment {
          final View view =  inflater.inflate(R.layout.fragment_signup_user_info, container, false);
         unbinder = ButterKnife.bind(this,view);
         Log.e(TAG, "View Created");
-        //SignUpActivity signUpActivity=(SignUpActivity) getActivity();
-        if(getArguments()!=null)
-        { String name=getArguments().getString("name");
-
-            edFirstname.setText(name.substring(0,name.indexOf(" ")));
-            edLastname.setText(name.substring(name.lastIndexOf(" ")));
-           // edPassword.setVisibility(View.INVISIBLE);
-
+        if (getArguments() != null)
+        {
+            String name=getArguments().getString(KEY_NAME);
+            edFirstName.setText(name.substring(0,name.indexOf(" ")));
+            edLastName.setText(name.substring(name.lastIndexOf(" ")));
         }
 
         return view;
@@ -76,32 +75,19 @@ public class SignupUserInfoFragment extends Fragment {
 
     @OnClick(R.id.btn_enter)
     public void onProceedClicked(View view){
-   // String username = edusername.getText().toString();
-    String firstname = edFirstname.getText().toString();
-    String lastname = edLastname.getText().toString();
+    String firstname = edFirstName.getText().toString();
+    String lastname = edLastName.getText().toString();
     String username = edUsername.getText().toString();
-   /* if((firstname.isEmpty()) || (lastname.isEmpty()) || (password.isEmpty()) || (genderChosen == null)){
-        edFirstname.setError("This field cannot be empty");
-        return;
-    }*/
-        if (username.isEmpty()){
-            edUsername.setError("This field cannot be empty");
-            return;
-        }
-   if (firstname.isEmpty()){
-       edFirstname.setError("This field cannot be empty");
-       return;
-   }
-    if (lastname.isEmpty()){
-        edLastname.setError("This field cannot be empty");
+    if (username.isEmpty()){
+        edUsername.setError("This field cannot be empty");
         return;
     }
-    //if(password.isEmpty()){
-     //   edPassword.setError("This field cannot be empty");
-       // return;
-    //}
-    if(genderChosen == null){
-        Toast.makeText(getActivity().getApplicationContext(),"Please select gender",Toast.LENGTH_SHORT).show();
+    if (firstname.isEmpty()){
+       edFirstName.setError("This field cannot be empty");
+       return;
+    }
+    if (genderChosen == null){
+        Toast.makeText(getContext(),"Please select gender",Toast.LENGTH_SHORT).show();
         return;
     }
     fragmentInteraction.onUserInfoProcess(firstname, lastname, username, genderChosen);

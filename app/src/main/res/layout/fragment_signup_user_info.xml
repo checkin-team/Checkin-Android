@@ -8,7 +8,6 @@
     tools:context=".Auth.SignupUserInfoFragment">
 
 
-
     <EditText
         android:id="@+id/ed_firstname"
         android:layout_width="150dp"
