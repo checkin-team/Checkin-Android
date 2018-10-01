@@ -7,15 +7,22 @@ import android.arch.lifecycle.ViewModel;
 import android.arch.lifecycle.ViewModelProvider;
 import android.os.CountDownTimer;
 import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
+import android.util.Log;
 
 import com.checkin.app.checkin.Data.BaseViewModel;
 import com.checkin.app.checkin.Data.Converters;
+import com.checkin.app.checkin.User.UserModel;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 
 public class AuthViewModel extends BaseViewModel{
+    private static final String TAG = AuthViewModel.class.getSimpleName();
+
     private final AuthRepository mRepository;
     private MutableLiveData<Long> mOtpTimeOut = new MutableLiveData<>();
     private String phoneNo;
+    private String firebaseIdToken;
+    private String providerIdToken;
 
     AuthViewModel(@NonNull Application application) {
         super(application);
@@ -56,11 +63,36 @@ public class AuthViewModel extends BaseViewModel{
         return phoneNo;
     }
 
-    public void login(String username, String password) {
+    public void setFireBaseIdToken(String idToken) {
+        firebaseIdToken = idToken;
+    }
+
+    public void setProviderIdToken(String idToken) {
+        providerIdToken = idToken;
+    }
+
+    public void login() {
+        if (firebaseIdToken == null)
+            Log.e(TAG, "FireBase ID Token is NULL");
+        ObjectNode data = Converters.objectMapper.createObjectNode();
+        data.put("id_token", firebaseIdToken);
+        if (providerIdToken != null)
+            data.put("provider_token", providerIdToken);
+        mData.addSource(mRepository.login(data), mData::setValue);
+    }
+
+    public void register(@NonNull String firstName, @Nullable String lastName, @NonNull UserModel.GENDER gender, @NonNull String username) {
+        if (firebaseIdToken == null)
+            Log.e(TAG, "FireBase ID Token is NULL");
         ObjectNode data = Converters.objectMapper.createObjectNode();
         data.put("username", username);
-        data.put("password", password);
-        mData.addSource(mRepository.login(data), mData::setValue);
+        data.put("id_token", firebaseIdToken);
+        if (providerIdToken != null)
+            data.put("provider_token", providerIdToken);
+        data.put("first_name", firstName);
+        data.put("gender", gender == UserModel.GENDER.MALE ? "m" : "f");
+        data.put("last_name", lastName == null ? "" : lastName);
+        mData.addSource(mRepository.register(data), mData::setValue);
     }
 
     public static class Factory extends ViewModelProvider.NewInstanceFactory {

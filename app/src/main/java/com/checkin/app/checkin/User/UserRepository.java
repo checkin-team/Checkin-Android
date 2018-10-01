@@ -3,9 +3,7 @@ package com.checkin.app.checkin.User;
 import android.app.Application;
 import android.arch.lifecycle.LiveData;
 import android.content.Context;
-import android.graphics.Bitmap;
 import android.support.annotation.NonNull;
-import android.util.Log;
 
 import com.checkin.app.checkin.Data.ApiClient;
 import com.checkin.app.checkin.Data.ApiResponse;
@@ -14,21 +12,15 @@ import com.checkin.app.checkin.Data.BaseRepository;
 import com.checkin.app.checkin.Data.NetworkBoundResource;
 import com.checkin.app.checkin.Data.ObjectBoxInstanceLiveData;
 import com.checkin.app.checkin.Data.Resource;
+import com.checkin.app.checkin.Data.RetrofitLiveData;
 import com.checkin.app.checkin.Data.WebApiService;
+import com.fasterxml.jackson.databind.node.ObjectNode;
 
 import java.io.File;
-import java.io.IOException;
 import java.util.List;
 
 import io.objectbox.Box;
 import io.objectbox.android.ObjectBoxLiveData;
-import okhttp3.MediaType;
-import okhttp3.MultipartBody;
-import okhttp3.RequestBody;
-import okhttp3.Response;
-import okhttp3.ResponseBody;
-import retrofit2.Call;
-import retrofit2.Callback;
 
 public class UserRepository extends BaseRepository {
     private final WebApiService mWebService;
@@ -71,27 +63,6 @@ public class UserRepository extends BaseRepository {
         }.getAsLiveData();
     }
 
-    public void postImage(File rectangleFile,long userId)
-    {
-        RequestBody request = RequestBody.create(MediaType.parse("image/jpeg"), rectangleFile);
-
-        MultipartBody.Part body =MultipartBody.Part.createFormData("picture", "Rectangle Image", request);
-        Call<ResponseBody> call = mWebService.postProfileImage(body);
-
-        call.enqueue(new Callback<ResponseBody>() {
-            @Override
-            public void onResponse(Call<ResponseBody> call, retrofit2.Response<ResponseBody> response) {
-                Log.v("Upload", "success");
-            }
-
-            @Override
-            public void onFailure(Call<ResponseBody> call, Throwable t) {
-                Log.e("Upload error:", t.getMessage());
-            }
-        });
-
-    }
-
     public static UserRepository getInstance(Application application) {
         if (INSTANCE == null) {
             synchronized (UserRepository.class) {
@@ -129,6 +100,29 @@ public class UserRepository extends BaseRepository {
             @Override
             protected boolean shouldFetch(UserModel data) {
                 return false;
+            }
+        }.getAsLiveData();
+    }
+
+    public void postPhoneNumber(ObjectNode objectNode) {
+        mWebService.postUserData(objectNode);
+    }
+
+    public LiveData<Resource<ObjectNode>> postUserData(ObjectNode objectNode) {
+        return new NetworkBoundResource<ObjectNode, ObjectNode>() {
+            @Override
+            protected boolean shouldUseLocalDb() {
+                return false;
+            }
+
+            @NonNull
+            @Override
+            protected LiveData<ApiResponse<ObjectNode>> createCall() {
+                return new RetrofitLiveData<>(mWebService.postUserData(objectNode));
+            }
+
+            @Override
+            protected void saveCallResult(ObjectNode data) {
             }
         }.getAsLiveData();
     }

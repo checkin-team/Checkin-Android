@@ -10,14 +10,11 @@ import com.fasterxml.jackson.databind.node.ObjectNode;
 
 import java.util.List;
 
-import okhttp3.MultipartBody;
-import okhttp3.ResponseBody;
 import retrofit2.Call;
 import retrofit2.http.Body;
 import retrofit2.http.GET;
-import retrofit2.http.Multipart;
+import retrofit2.http.PATCH;
 import retrofit2.http.POST;
-import retrofit2.http.Part;
 import retrofit2.http.Path;
 import retrofit2.http.Query;
 
@@ -27,6 +24,9 @@ public interface WebApiService {
 
     @POST("auth/login/")
     Call<ObjectNode> postLogin(@Body ObjectNode credentials);
+
+    @POST("auth/register/")
+    Call<ObjectNode> postRegister(@Body ObjectNode credentials);
 
     @POST("qr/decrypt/")
     Call<ObjectNode> postDecryptQr(@Body ObjectNode data);
@@ -52,7 +52,9 @@ public interface WebApiService {
     @GET("notification")
     Call<List<NotificationModel>> getNotif(@Query("last_notif_id") int lastNotifId);
 
-    @Multipart
-    @POST("upload/")
-    Call<ResponseBody> postProfileImage(@Part MultipartBody.Part file);
+    @PATCH("users/self/")
+    Call<ObjectNode> postUserData(@Body ObjectNode objectNode);
+
+    @PATCH("blah/blah/blah")
+    Call<ObjectNode> postPhoneNumber(@Body ObjectNode objectNode);
 }

@@ -26,7 +26,7 @@ public class ShopActivity extends ShopBaseActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_shop_public);
         setupPagers(new ShopPagerAdapter(getSupportFragmentManager()), R.menu.menu_shop_profile_public);
-        setUpNavigation();
+//        setUpNavigation();
     }
 
     void setUpNavigation()
