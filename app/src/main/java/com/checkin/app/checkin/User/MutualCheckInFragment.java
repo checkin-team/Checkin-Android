@@ -12,7 +12,6 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.bumptech.glide.Glide;
 import com.checkin.app.checkin.R;
 
 import java.util.ArrayList;
@@ -53,7 +52,7 @@ public class MutualCheckInFragment extends Fragment {
 
 
         class ViewHolder extends RecyclerView.ViewHolder{
-            @BindView(R.id.profile) ImageView profileImage;
+            @BindView(R.id.im_profile) ImageView profileImage;
             @BindView(R.id.action) ImageView actionImage;
             @BindView(R.id.profileName) TextView profileName;
             @BindView(R.id.actionName) TextView actionName;

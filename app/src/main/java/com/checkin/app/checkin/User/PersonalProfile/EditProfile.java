@@ -1,4 +1,4 @@
-package com.checkin.app.checkin.User;
+package com.checkin.app.checkin.User.PersonalProfile;
 
 import android.content.Intent;
 import android.net.Uri;
@@ -23,7 +23,7 @@ import butterknife.ButterKnife;
 
 public class EditProfile extends AppCompatActivity{
 
- @BindViews({R.id.phoneNumber,R.id.email,R.id.bio,R.id.website,R.id.user_name})
+ @BindViews({R.id.phoneNumber,R.id.email,R.id.tv_bio,R.id.website,R.id.user_name})
  List<EditText> bind;
     public static final int PICK_IMAGE = 1;
     @Override

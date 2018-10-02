@@ -85,12 +85,12 @@ public class AuthActivity extends AppCompatActivity implements AuthFragmentInter
 
         mPhoneAuth = new PhoneAuth(mAuth) {
             @Override
-            void onVerificationSuccess(PhoneAuthCredential credential) {
+            protected void onVerificationSuccess(PhoneAuthCredential credential) {
                 authenticateWithCredential(credential);
             }
 
             @Override
-            void onVerificationError(FirebaseException e) {
+            protected void onVerificationError(FirebaseException e) {
                 Log.e(TAG, "PhoneAuth - Verification Failed: ", e);
                 if (e instanceof FirebaseNetworkException) {
                     Toast.makeText(getApplicationContext(), R.string.error_unavailable_network, Toast.LENGTH_SHORT).show();
@@ -100,7 +100,7 @@ public class AuthActivity extends AppCompatActivity implements AuthFragmentInter
             }
 
             @Override
-            void onOtpRetrievalTimedOut() {
+            protected void onOtpRetrievalTimedOut() {
                 mAuthViewModel.setOtpTimeout(0L);
             }
         };
@@ -275,6 +275,8 @@ public class AuthActivity extends AppCompatActivity implements AuthFragmentInter
 
     private void successAuth(@NonNull ObjectNode data) {
         new Handler().post(() -> {
+            TestDb.populateWithTestData(getApplicationContext());
+
             if (!data.has("token")) {
                 Log.e(TAG, "'token' field missing from the response!");
                 Toast.makeText(getApplicationContext(), R.string.error_api_invalid_response, Toast.LENGTH_SHORT).show();

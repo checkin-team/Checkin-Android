@@ -14,7 +14,7 @@ import android.widget.Toast;
 import com.checkin.app.checkin.Data.Resource;
 import com.checkin.app.checkin.R;
 import com.checkin.app.checkin.User.UserModel;
-import com.checkin.app.checkin.User.UserViewModel;
+import com.checkin.app.checkin.User.NonPersonalProfile.UserViewModel;
 import com.checkin.app.checkin.Utility.SelectListItem;
 import com.checkin.app.checkin.Utility.SelectListViewAdapter;
 import com.hootsuite.nachos.ChipConfiguration;

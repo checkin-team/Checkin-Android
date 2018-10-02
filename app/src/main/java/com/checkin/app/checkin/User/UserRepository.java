@@ -11,10 +11,13 @@ import com.checkin.app.checkin.Data.ApiResponse;
 import com.checkin.app.checkin.Data.AppDatabase;
 import com.checkin.app.checkin.Data.BaseRepository;
 import com.checkin.app.checkin.Data.NetworkBoundResource;
+import com.checkin.app.checkin.Data.ObjectBoxInstanceLiveData;
 import com.checkin.app.checkin.Data.Resource;
 import com.checkin.app.checkin.Data.RetrofitLiveData;
 import com.checkin.app.checkin.Data.WebApiService;
+import com.fasterxml.jackson.databind.node.ObjectNode;
 
+import java.io.File;
 import java.util.List;
 
 import io.objectbox.Box;
@@ -75,5 +78,58 @@ public class UserRepository extends BaseRepository {
             }
         }
         return INSTANCE;
+    }
+
+    public LiveData<Resource<UserModel>> getUser(long id) {
+        return new NetworkBoundResource<UserModel, UserModel>() {
+
+            @Override
+            protected boolean shouldUseLocalDb() {
+                return true;
+            }
+
+            @NonNull
+            @Override
+            protected LiveData<ApiResponse<UserModel>> createCall() {
+                return null;
+            }
+
+            @Override
+            protected void saveCallResult(UserModel data) {
+            }
+
+            @Override
+            protected LiveData<UserModel> loadFromDb() {
+                return new ObjectBoxInstanceLiveData<>(mUserModel.query().equal(UserModel_.id, id).build());
+            }
+
+            @Override
+            protected boolean shouldFetch(UserModel data) {
+                return false;
+            }
+        }.getAsLiveData();
+    }
+
+    public void postPhoneNumber(ObjectNode objectNode) {
+        mWebService.postUserData(objectNode);
+    }
+
+    public LiveData<Resource<ObjectNode>> postUserData(ObjectNode objectNode) {
+        return new NetworkBoundResource<ObjectNode, ObjectNode>() {
+            @Override
+            protected boolean shouldUseLocalDb() {
+                return false;
+            }
+
+            @NonNull
+            @Override
+            protected LiveData<ApiResponse<ObjectNode>> createCall() {
+                return new RetrofitLiveData<>(mWebService.postUserData(objectNode));
+            }
+
+            @Override
+            protected void saveCallResult(ObjectNode data) {
+            }
+        }.getAsLiveData();
     }
 }

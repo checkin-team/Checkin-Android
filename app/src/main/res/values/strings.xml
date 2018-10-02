@@ -31,6 +31,10 @@
     <string name="action_filter">Filter Items</string>
     <string name="menu_item_default_price">-</string>
     <string name="title_activity_login">LoginActivity</string>
+    <string name="title_login_help">Locate your account</string>
+    <string name="bottom_text_need_help">Need help?</string>
+    <string name="subtitle_login_help">Enter your CheckIn phone number linked to your account</string>
+    <string name="create_new_password">Create a new password</string>
 
     <!--for bottomnav bar-->
 

@@ -68,7 +68,7 @@
         android:layout_marginBottom="16dp"
         android:layout_marginStart="8dp"
         android:layout_marginTop="16dp"
-        android:background="@drawable/curve1"
+        android:background="@drawable/curved_white_shape"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toStartOf="@id/linee"
         app:layout_constraintHorizontal_bias="100.0"

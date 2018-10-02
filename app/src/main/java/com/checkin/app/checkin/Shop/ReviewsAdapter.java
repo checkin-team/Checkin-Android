@@ -62,7 +62,7 @@ public class ReviewsAdapter extends RecyclerView.Adapter<ReviewsAdapter.MyView> 
                 return;
             name = (TextView) view.findViewById(R.id.review_profile_name);
             followers = view.findViewById(R.id.reviews_follwers);
-            rating = view.findViewById(R.id.rating);
+            rating = view.findViewById(R.id.tv_reviews);
             time=view.findViewById(R.id.time);
             profile=view.findViewById(R.id.photo_review);
             review=view.findViewById(R.id.the_review);
