@@ -5,6 +5,10 @@ import android.support.annotation.Nullable;
 import android.util.Log;
 
 import com.checkin.app.checkin.Utility.NoConnectivityException;
+import com.fasterxml.jackson.databind.JsonNode;
+import com.fasterxml.jackson.databind.node.ObjectNode;
+
+import java.io.IOException;
 
 import static java.net.HttpURLConnection.HTTP_BAD_REQUEST;
 import static java.net.HttpURLConnection.HTTP_FORBIDDEN;
@@ -35,6 +39,15 @@ public class Resource<T> {
         this.status = status;
         this.data = data;
         this.message = message;
+    }
+
+    public JsonNode getErrorBody() {
+        try {
+            return Converters.objectMapper.readTree(message);
+        } catch (IOException e) {
+            Log.e(TAG, "message not a valid JSON data.");
+        }
+        return null;
     }
 
     @NonNull

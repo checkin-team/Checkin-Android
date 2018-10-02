@@ -111,7 +111,7 @@ public class UserProfileActivity extends AppCompatActivity {
         TextView bio=findViewById(R.id.bio),username=findViewById(R.id.username),city=findViewById(R.id.city_user),profession=findViewById(R.id.profession);
         bio.setText(person.getBio());
         username.setText(person.getUsername());
-        city.setText(person.getLocation());
+        city.setText(person.getAddress());
     }
 
     public static Bitmap getRoundedCornerBitmap(Bitmap bitmap, Context context) {

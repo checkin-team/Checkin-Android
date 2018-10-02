@@ -6,6 +6,7 @@ import com.checkin.app.checkin.Session.ActiveSessionModel;
 import com.checkin.app.checkin.Shop.ShopModel;
 import com.checkin.app.checkin.Shop.ShopReview;
 import com.checkin.app.checkin.Social.Message;
+import com.checkin.app.checkin.User.UserModel;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 
 import java.util.List;
@@ -14,18 +15,22 @@ import retrofit2.Call;
 import retrofit2.http.Body;
 import retrofit2.http.GET;
 import retrofit2.http.POST;
+import retrofit2.http.PUT;
 import retrofit2.http.Path;
 import retrofit2.http.Query;
 
 public interface WebApiService {
-    @GET("messages/{user_id}/")
-    Call<List<Message>> getMessages(@Path("user_id") String userId);
-
     @POST("auth/login/")
     Call<ObjectNode> postLogin(@Body ObjectNode credentials);
 
     @POST("auth/register/")
     Call<ObjectNode> postRegister(@Body ObjectNode credentials);
+
+    @PUT("auth/devices/self/update/")
+    Call<ObjectNode> postFCMToken(@Body ObjectNode tokenData);
+
+    @GET("users/")
+    Call<List<UserModel>> getUsers();
 
     @POST("qr/decrypt/")
     Call<ObjectNode> postDecryptQr(@Body ObjectNode data);
@@ -50,4 +55,7 @@ public interface WebApiService {
 
     @GET("notification")
     Call<List<NotificationModel>> getNotif(@Query("last_notif_id") int lastNotifId);
+
+    @GET("messages/{user_id}/")
+    Call<List<Message>> getMessages(@Path("user_id") String userId);
 }

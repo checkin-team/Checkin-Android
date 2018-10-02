@@ -13,6 +13,7 @@ import android.util.Log;
 import com.checkin.app.checkin.Data.BaseViewModel;
 import com.checkin.app.checkin.Data.Converters;
 import com.checkin.app.checkin.User.UserModel;
+import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 
 public class AuthViewModel extends BaseViewModel{
@@ -23,6 +24,7 @@ public class AuthViewModel extends BaseViewModel{
     private String phoneNo;
     private String firebaseIdToken;
     private String providerIdToken;
+    private MutableLiveData<JsonNode> mErrors = new MutableLiveData<>();
 
     AuthViewModel(@NonNull Application application) {
         super(application);
@@ -93,6 +95,14 @@ public class AuthViewModel extends BaseViewModel{
         data.put("gender", gender == UserModel.GENDER.MALE ? "m" : "f");
         data.put("last_name", lastName == null ? "" : lastName);
         mData.addSource(mRepository.register(data), mData::setValue);
+    }
+
+    public void showError(JsonNode data) {
+        mErrors.setValue(data);
+    }
+
+    public LiveData<JsonNode> getErrors() {
+        return mErrors;
     }
 
     public static class Factory extends ViewModelProvider.NewInstanceFactory {

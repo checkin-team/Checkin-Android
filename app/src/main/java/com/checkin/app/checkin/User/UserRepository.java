@@ -4,6 +4,7 @@ import android.app.Application;
 import android.arch.lifecycle.LiveData;
 import android.content.Context;
 import android.support.annotation.NonNull;
+import android.util.Log;
 
 import com.checkin.app.checkin.Data.ApiClient;
 import com.checkin.app.checkin.Data.ApiResponse;
@@ -11,12 +12,14 @@ import com.checkin.app.checkin.Data.AppDatabase;
 import com.checkin.app.checkin.Data.BaseRepository;
 import com.checkin.app.checkin.Data.NetworkBoundResource;
 import com.checkin.app.checkin.Data.Resource;
+import com.checkin.app.checkin.Data.RetrofitLiveData;
 import com.checkin.app.checkin.Data.WebApiService;
 
 import java.util.List;
 
 import io.objectbox.Box;
 import io.objectbox.android.ObjectBoxLiveData;
+import io.objectbox.exception.UniqueViolationException;
 
 public class UserRepository extends BaseRepository {
     private final WebApiService mWebService;
@@ -39,17 +42,21 @@ public class UserRepository extends BaseRepository {
             @NonNull
             @Override
             protected LiveData<ApiResponse<List<UserModel>>> createCall() {
-                return null;
+                return new RetrofitLiveData<>(mWebService.getUsers());
             }
 
             @Override
             protected void saveCallResult(List<UserModel> data) {
-
+                try {
+                    mUserModel.put(data);
+                } catch (UniqueViolationException e) {
+                    Log.e("UserRepo", "User ID conflict!!!");
+                }
             }
 
             @Override
             protected boolean shouldFetch(List<UserModel> data) {
-                return false;
+                return true;
             }
 
             @Override

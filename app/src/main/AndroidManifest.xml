@@ -162,6 +162,8 @@
             android:label="@string/title_activity_maps"
             android:theme="@style/Theme.AppCompat.Light" />
         <service android:name=".Maps.FetchAddressIntentService"/>
+        <service android:name=".Auth.DeviceTokenService" />
+
         <activity android:name=".Shop.ShopInfoActivity"></activity>
     </application>
 

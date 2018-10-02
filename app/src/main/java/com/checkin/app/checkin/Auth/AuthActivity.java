@@ -30,6 +30,7 @@ import com.checkin.app.checkin.Utility.Util;
 import com.facebook.AccessToken;
 import com.facebook.CallbackManager;
 import com.facebook.login.LoginResult;
+import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
@@ -76,6 +77,12 @@ public class AuthActivity extends AppCompatActivity implements AuthFragmentInter
 
         mAuth = FirebaseAuth.getInstance();
 
+        FirebaseUser user = mAuth.getCurrentUser();
+        if (user != null) {
+            Log.e(TAG, "User already exists.");
+            user.delete();
+        }
+
         mPhoneAuth = new PhoneAuth(mAuth) {
             @Override
             void onVerificationSuccess(PhoneAuthCredential credential) {
@@ -107,7 +114,12 @@ public class AuthActivity extends AppCompatActivity implements AuthFragmentInter
                 hideProgress();
                 successAuth(resource.data);
             } else if (resource.status == Resource.Status.ERROR_INVALID_REQUEST) {
-                Toast.makeText(getApplicationContext(), resource.message, Toast.LENGTH_SHORT).show();
+                JsonNode error = resource.getErrorBody();
+                if (error != null) {
+                    mAuthViewModel.showError(error);
+                } else {
+                    Toast.makeText(getApplicationContext(), resource.message, Toast.LENGTH_SHORT).show();
+                }
                 hideProgress();
             } else if (resource.status == Resource.Status.LOADING) {
                 showProgress();
@@ -272,13 +284,14 @@ public class AuthActivity extends AppCompatActivity implements AuthFragmentInter
             Account account = new Account(getResources().getString(R.string.app_name), Constants.ACCOUNT_TYPE);
             AccountManager accountManager = AccountManager.get(this);
 
-            accountManager.addAccountExplicitly(account, null, null);
+            Bundle userData = new Bundle();
+            if (data.has("account_pk"))
+                userData.putString(Constants.ACCOUNT_UID, data.get("account_pk").asText());
+            accountManager.addAccountExplicitly(account, null, userData);
             accountManager.setAuthToken(account, AccountManager.KEY_AUTHTOKEN, authToken);
-            SharedPreferences.Editor editor = PreferenceManager.getDefaultSharedPreferences(getApplicationContext()).edit();
-            editor.putString(Constants.SP_LOGIN_TOKEN, authToken);
-            editor.putBoolean(Constants.SP_LOGGED_IN, true);
-            editor.apply();
-            
+
+            startService(new Intent(getApplicationContext(), DeviceTokenService.class));
+
             startActivity(new Intent(this, HomeActivity.class));
             finish();
         });

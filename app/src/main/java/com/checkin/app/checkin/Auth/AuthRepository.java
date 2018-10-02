@@ -8,15 +8,16 @@ import android.support.annotation.NonNull;
 import com.checkin.app.checkin.Data.ApiClient;
 import com.checkin.app.checkin.Data.ApiResponse;
 import com.checkin.app.checkin.Data.BaseRepository;
+import com.checkin.app.checkin.Data.Converters;
 import com.checkin.app.checkin.Data.NetworkBoundResource;
 import com.checkin.app.checkin.Data.Resource;
 import com.checkin.app.checkin.Data.RetrofitLiveData;
 import com.checkin.app.checkin.Data.WebApiService;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 
-import java.util.Map;
-
 import javax.inject.Singleton;
+
+import retrofit2.Call;
 
 @Singleton
 public class AuthRepository extends BaseRepository {
@@ -63,6 +64,12 @@ public class AuthRepository extends BaseRepository {
             protected void saveCallResult(ObjectNode data) {
             }
         }.getAsLiveData();
+    }
+
+    public Call<ObjectNode> postDeviceToken(String token) {
+        ObjectNode data = Converters.objectMapper.createObjectNode();
+        data.put("device_token", token);
+        return mWebService.postFCMToken(data);
     }
 
     public static AuthRepository getInstance(Application application) {
