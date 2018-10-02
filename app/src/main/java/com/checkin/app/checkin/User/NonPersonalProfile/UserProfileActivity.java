@@ -73,8 +73,6 @@ public class UserProfileActivity extends AppCompatActivity {
             if (userModel.status == Resource.Status.SUCCESS) {
                 if (userModel.data != null) {
                     person = userModel.data;
-                    person.setConnected(false);
-                    person.setPublic(false);
                     UserProfileActivity.this.setUI(person);
                 }
             } else if (userModel.status == Resource.Status.LOADING) {
@@ -93,7 +91,7 @@ public class UserProfileActivity extends AppCompatActivity {
         tvReviews.setText(person.formatReviews());
         tvBio.setText(person.getBio());
         tvDisplayName.setText(person.getUsername());
-        tvCity.setText(person.getLocation());
+        tvCity.setText(person.getAddress());
         if (person.isConnected()) {
             setMessageButton();
         } else if (person.isPublic()) {

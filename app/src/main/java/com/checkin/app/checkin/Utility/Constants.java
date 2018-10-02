@@ -7,7 +7,7 @@ import static java.util.concurrent.TimeUnit.SECONDS;
 public class Constants {
     public static final String API_VERSION = "v0.1";
     public static final String API_PROTOCOL = "http://";
-    public static final String API_HOST = "172.17.37.59:8000";
+    public static final String API_HOST = "172.17.37.59:80";
 
     public static final String ACCOUNT_TYPE = "com.checkin.accounts";
     public static final String ACCOUNT_UID = "account_uid";

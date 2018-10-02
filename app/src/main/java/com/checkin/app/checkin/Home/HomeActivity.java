@@ -400,7 +400,7 @@ public class HomeActivity extends AppCompatActivity
             @Override
             public void onItemClicked(RecyclerView recyclerView, int position, View v) {
                 Intent intent =new Intent(getApplicationContext(),UserProfileActivity.class);
-                intent.putExtra(UserProfileActivity.KEY_PROFILE_USER_ID, (long) position);
+                intent.putExtra(UserProfileActivity.KEY_PROFILE_USER_ID, mUserActivityAdapter.getUserByPosition(position).getId());
                 startActivity(intent);
             }
         });

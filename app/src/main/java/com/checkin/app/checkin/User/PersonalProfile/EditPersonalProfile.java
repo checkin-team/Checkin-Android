@@ -206,7 +206,7 @@ public class EditPersonalProfile extends AppCompatActivity implements AuthFragme
 
     private void setUi(UserModel mUserModel) {
         etName.setText(mUserModel.getUsername());
-        etLocation.setText(mUserModel.getLocation());
+        etLocation.setText(mUserModel.getAddress());
         etBio.setText(mUserModel.getBio());
         //etPhone.setText(mUserModel.getPhoneNumber);
         //etEmail.setText(mUserModel.getEmail);

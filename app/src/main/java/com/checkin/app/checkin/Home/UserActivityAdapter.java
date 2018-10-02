@@ -34,6 +34,10 @@ public class UserActivityAdapter extends RecyclerView.Adapter<UserActivityAdapte
         return new ViewHolder(view);
     }
 
+    public UserModel getUserByPosition(int position) {
+        return mUsers.get(position);
+    }
+
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         holder.bindData(mUsers.get(position));

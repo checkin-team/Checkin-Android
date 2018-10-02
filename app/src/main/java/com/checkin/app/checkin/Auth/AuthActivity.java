@@ -78,7 +78,7 @@ public class AuthActivity extends AppCompatActivity implements AuthFragmentInter
         mAuth = FirebaseAuth.getInstance();
 
         FirebaseUser user = mAuth.getCurrentUser();
-        if (user != null) {
+        if (user != null && !PreferenceManager.getDefaultSharedPreferences(getApplicationContext()).getBoolean(Constants.SP_SYNC_DEVICE_TOKEN, false)) {
             Log.e(TAG, "User already exists.");
             user.delete();
         }
