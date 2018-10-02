@@ -13,6 +13,7 @@ import java.util.List;
 import retrofit2.Call;
 import retrofit2.http.Body;
 import retrofit2.http.GET;
+import retrofit2.http.PATCH;
 import retrofit2.http.POST;
 import retrofit2.http.Path;
 import retrofit2.http.Query;
@@ -50,4 +51,10 @@ public interface WebApiService {
 
     @GET("notification")
     Call<List<NotificationModel>> getNotif(@Query("last_notif_id") int lastNotifId);
+
+    @PATCH("users/self/")
+    Call<ObjectNode> postUserData(@Body ObjectNode objectNode);
+
+    @PATCH("blah/blah/blah")
+    Call<ObjectNode> postPhoneNumber(@Body ObjectNode objectNode);
 }

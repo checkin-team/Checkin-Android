@@ -21,6 +21,9 @@ public class UserModel {
     private String location;
     private long followers;
     private long checkins;
+    private long reviews;
+    @JsonProperty("is_public") private boolean isPublic;
+    @JsonProperty("is_connected") private boolean isConnected;
 
     public enum GENDER {
         MALE('m'), FEMALE('f');
@@ -60,6 +63,10 @@ public class UserModel {
         this.gender = GENDER.getByTag(tag);
     }
 
+    public boolean isConnected() {
+        return isConnected;
+    }
+
     public String getBio() {
         return bio;
     }
@@ -78,6 +85,14 @@ public class UserModel {
 
     public long getCheckins() {
         return checkins;
+    }
+
+    public long getReviews() {
+        return reviews;
+    }
+
+    public String formatReviews() {
+        return Util.formatCount(reviews);
     }
 
     public String formatFollowers() {
@@ -102,6 +117,18 @@ public class UserModel {
 
     public String getProfilePic() {
         return profilePic;
+    }
+
+    public boolean isPublic() {
+        return isPublic;
+    }
+
+    public void setConnected(boolean connected) {
+        isConnected = connected;
+    }
+
+    public void setPublic(boolean aPublic) {
+        isPublic = aPublic;
     }
 }
 

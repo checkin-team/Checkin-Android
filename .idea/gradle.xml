@@ -12,6 +12,7 @@
             <option value="$PROJECT_DIR$/library" />
             <option value="$PROJECT_DIR$/library/MaterialSearchView" />
             <option value="$PROJECT_DIR$/library/NiceSpinner" />
+            <option value="$PROJECT_DIR$/library/Scissors" />
           </set>
         </option>
         <option name="resolveModulePerSourceSet" value="false" />

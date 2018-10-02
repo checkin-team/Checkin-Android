@@ -52,24 +52,28 @@ public class AuthOptionsFragment extends Fragment {
 
         unbinder = ButterKnife.bind(this, rootView);
 
-        btnLoginFb.setReadPermissions(Arrays.asList("email", "user_friends"));
-        btnLoginFb.registerCallback(mFacebookCallbackManager, new FacebookCallback<LoginResult>() {
-            @Override
-            public void onSuccess(LoginResult loginResult) {
-                mInteractionListener.onFacebookAuth(loginResult);
-            }
+        if (mFacebookCallbackManager != null) {
+            btnLoginFb.setReadPermissions(Arrays.asList("email", "user_friends"));
+            btnLoginFb.registerCallback(mFacebookCallbackManager, new FacebookCallback<LoginResult>() {
+                @Override
+                public void onSuccess(LoginResult loginResult) {
+                    mInteractionListener.onFacebookAuth(loginResult);
+                }
 
-            @Override
-            public void onCancel() {
-                Log.v(TAG, "Facebook login cancelled.");
-            }
+                @Override
+                public void onCancel() {
+                    Log.v(TAG, "Facebook login cancelled.");
+                }
 
-            @Override
-            public void onError(FacebookException error) {
-                Log.e(TAG, "FacebookAuth - Verification Failed: ", error);
-                Toast.makeText(getContext(), R.string.error_authentication_facebook, Toast.LENGTH_SHORT).show();
-            }
-        });
+                @Override
+                public void onError(FacebookException error) {
+                    Log.e(TAG, "FacebookAuth - Verification Failed: ", error);
+                    Toast.makeText(getContext(), R.string.error_authentication_facebook, Toast.LENGTH_SHORT).show();
+                }
+            });
+        } else {
+            rootView.findViewById(R.id.container_alternative_options).setVisibility(View.GONE);
+        }
 
         return rootView;
     }

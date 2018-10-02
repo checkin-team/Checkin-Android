@@ -30,7 +30,11 @@ public class AuthPreferences {
 
         AccountManager accountManager = AccountManager.get(context);
         Account[] accounts = accountManager.getAccountsByType(Constants.ACCOUNT_TYPE);
-        accountManager.getAuthToken(accounts[0], AccountManager.KEY_AUTHTOKEN, null, true, accountManagerCallback, new Handler());
+        if(accounts.length>0)
+        {
+            accountManager.getAuthToken(accounts[0], AccountManager.KEY_AUTHTOKEN, null, true, accountManagerCallback, new Handler());
+        }
+
     }
 
     public interface AuthPreferencesInteraction {

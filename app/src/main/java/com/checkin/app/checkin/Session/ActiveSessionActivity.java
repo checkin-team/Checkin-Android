@@ -1,6 +1,5 @@
 package com.checkin.app.checkin.Session;
 
-import android.app.NotificationManager;
 import android.arch.lifecycle.ViewModelProviders;
 import android.content.BroadcastReceiver;
 import android.content.Context;
@@ -23,7 +22,7 @@ import android.widget.Toast;
 import com.checkin.app.checkin.Data.Resource;
 import com.checkin.app.checkin.R;
 import com.checkin.app.checkin.User.UserModel;
-import com.checkin.app.checkin.User.UserViewModel;
+import com.checkin.app.checkin.User.NonPersonalProfile.UserViewModel;
 import com.checkin.app.checkin.Utility.SelectListItem;
 import com.checkin.app.checkin.Utility.SelectListViewAdapter;
 import com.checkin.app.checkin.Utility.Util;
