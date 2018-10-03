@@ -39,8 +39,12 @@ public class MenuItemAdapter extends RecyclerView.Adapter<MenuItemAdapter.ItemVi
     }
 
     public void setItemInteractionListener (OnItemInteractionListener listener) {
-        mItemInteractionListener = listener;
+        mItemInteractionListener= listener;
     }
+    public void setItemInteractionListener1 (OnItemInteractionListener listener) {
+        mItemInteractionListener= listener;
+    }
+
 
     @SuppressLint("ClickableViewAccessibility")
     @Override
@@ -95,7 +99,9 @@ public class MenuItemAdapter extends RecyclerView.Adapter<MenuItemAdapter.ItemVi
             if (!menuItem.getCustomizationGroups().isEmpty()) {
                 imItemAdd.setImageResource(R.drawable.ic_menu_item_add_customize);
             }
-            int count = mItemInteractionListener.orderedItemCount(menuItem);
+            int count=0;
+            if(mItemInteractionListener!=null)
+            count = mItemInteractionListener.orderedItemCount(menuItem);
             if (count > 0)
                 showQuantitySelection(count);
             else

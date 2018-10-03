@@ -1,20 +1,28 @@
 package com.checkin.app.checkin.Menu;
 
 import android.app.Application;
+import android.arch.core.util.Function;
 import android.arch.lifecycle.AndroidViewModel;
 import android.arch.lifecycle.LiveData;
 import android.arch.lifecycle.MediatorLiveData;
 import android.arch.lifecycle.MutableLiveData;
+import android.arch.lifecycle.Observer;
 import android.arch.lifecycle.Transformations;
 import android.arch.lifecycle.ViewModel;
 import android.arch.lifecycle.ViewModelProvider;
+import android.nfc.Tag;
 import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import android.util.Log;
+import android.view.MenuItem;
 
 import com.checkin.app.checkin.Data.Resource;
 
 import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Iterator;
 import java.util.List;
+import java.util.ListIterator;
 
 public class MenuViewModel extends AndroidViewModel {
     private final String TAG = MenuViewModel.class.getSimpleName();
@@ -24,6 +32,7 @@ public class MenuViewModel extends AndroidViewModel {
     private LiveData<Resource<List<MenuGroupModel>>> mMenuGroups;
     private MutableLiveData<List<OrderedItemModel>> mOrderedItems = new MutableLiveData<>();
     private MutableLiveData<OrderedItemModel> mCurrentItem = new MutableLiveData<>();
+    private MediatorLiveData<List<MenuItemModel>> var=new MediatorLiveData<>();
 
     MenuViewModel(@NonNull Application application) {
         super(application);
@@ -232,6 +241,81 @@ public class MenuViewModel extends AndroidViewModel {
         LiveData<List<MenuItemModel>> input = getMenuItems();
         return input;
     }*/
+
+    public void search(String s) {
+
+
+
+        Log.e(TAG,"AAo function mei");
+        var.addSource(mMenuGroups, new Observer<Resource<List<MenuGroupModel>>>() {
+            @Override
+            public void onChanged(@Nullable Resource<List<MenuGroupModel>> listResource) {
+
+                Log.e(TAG,"Mai yha bhi hun");
+
+                LiveData<List<MenuItemModel>> list= Transformations.map(mMenuGroups, new Function<Resource<List<MenuGroupModel>>, List<MenuItemModel>>() {
+                    @Override
+                    public List<MenuItemModel> apply(Resource<List<MenuGroupModel>> input) {
+                            Log.e(TAG, String.valueOf("Mai Andar aa gya"));
+                        List<MenuItemModel> items =new ArrayList<>();
+
+                        if (input != null && input.status == Resource.Status.SUCCESS) {
+                            List<MenuGroupModel> groups = input.data;
+                            Log.e(TAG,"Input pyaara hai");
+                            for(int i=0;i<groups.size();i++)
+                            {
+                                Log.e(TAG,"Bada Loop");
+                                int size =groups.get(i).getItems().size();
+                                for(int j=0;j<size;j++)
+                                {   Log.e(TAG,"Chota Loop");
+                                    if(groups.get(i).getItems().get(j).getName().toLowerCase().contains(s.toLowerCase()))
+                                    {
+                                        Log.e(TAG,"Kuch Mila");
+                                        items.add(groups.get(i).getItems().get(j));
+                                        var.setValue(items);
+                                        Log.e(TAG,groups.get(i).getItems().get(j).getName());
+                                    }
+                                }
+                            }
+
+                        }
+                        Log.e(TAG,"LOOP se Baharr");
+                        Log.e(TAG, String.valueOf(items.size()));
+                        var.setValue(items);
+                        return items;
+
+                    }
+
+//            @Override
+//            public List<MenuItemModel> apply(Resource<List<MenuGroupModel>> input) {
+//                if (input != null && input.status == Resource.Status.SUCCESS) {
+//                    List<MenuGroupModel> groups = input.data;
+
+                });
+                list.observeForever(new Observer<List<MenuItemModel>>() {
+                    @Override
+                    public void onChanged(@Nullable List<MenuItemModel> menuItemModels) {
+
+                    }
+                });
+                var.removeSource(mMenuGroups);
+            }
+
+
+        });
+
+
+
+    }
+
+    public LiveData<List<MenuItemModel>> getMenuItems() {
+        Log.e(TAG,"Maine kuch bheja");
+        return var;
+//
+//                }
+//            }
+//        });
+    }
 
     public LiveData<Resource<List<MenuGroupModel>>> getMenuGroups(long shopId) {
         if (mMenuGroups == null)

@@ -153,6 +153,7 @@ public class AuthActivity extends AppCompatActivity implements AuthFragmentInter
     private void onVerifiedExistingUser() {
         if (mAuth.getCurrentUser() != null && mAuth.getCurrentUser().getDisplayName() != null) {
             Toast.makeText(getApplicationContext(), "Welcome back,  " + mAuth.getCurrentUser().getDisplayName(), Toast.LENGTH_LONG).show();
+
         } else {
             Toast.makeText(getApplicationContext(), "Welcome back!", Toast.LENGTH_LONG).show();
         }
@@ -263,6 +264,7 @@ public class AuthActivity extends AppCompatActivity implements AuthFragmentInter
 
     private void successAuth(@NonNull ObjectNode data) {
         new Handler().post(() -> {
+            TestDb.populateWithTestData(getApplicationContext());
             if (!data.has("token")) {
                 Log.e(TAG, "'token' field missing from the response!");
                 Toast.makeText(getApplicationContext(), R.string.error_api_invalid_response, Toast.LENGTH_SHORT).show();
@@ -278,7 +280,7 @@ public class AuthActivity extends AppCompatActivity implements AuthFragmentInter
             editor.putString(Constants.SP_LOGIN_TOKEN, authToken);
             editor.putBoolean(Constants.SP_LOGGED_IN, true);
             editor.apply();
-            
+         //   TestDb.populateWithTestData(getApplicationContext());
             startActivity(new Intent(this, HomeActivity.class));
             finish();
         });

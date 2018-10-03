@@ -32,7 +32,7 @@ import static com.checkin.app.checkin.Utility.Util.isNetworkConnected;
 @Module
 public class ApiClient {
     private static String getBaseUrl() {
-        return "https://" + API_HOST + "/";
+        return "http://" + API_HOST + "/";
     }
 
     private static String getUserAgentHeader() {
