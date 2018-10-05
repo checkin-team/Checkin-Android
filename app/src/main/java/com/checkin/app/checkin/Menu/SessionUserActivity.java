@@ -71,6 +71,7 @@ public class SessionUserActivity extends AppCompatActivity implements
     @BindView(R.id.container_customization) ViewGroup containerCustomization;
     private MenuUserFragment mMenuFragment;
     private MenuSearchFragment menuSearchFragment;
+
     private MenuViewModel mMenuViewModel;
     private MenuCartAdapter mCartAdapter;
     private static long shopid;
@@ -154,10 +155,61 @@ public class SessionUserActivity extends AppCompatActivity implements
 
                 Log.e(TAG,"Mai yha toh aaya tha");
                 mSearchView.closeSearch();
-                getSupportFragmentManager().popBackStack();
+                getSupportFragmentManager().popBackStackImmediate("search",FragmentManager.POP_BACK_STACK_INCLUSIVE);
             }
 
         });
+        mFilterContainer.findViewById(R.id.btn_breakfast).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                getSupportFragmentManager().popBackStack();
+                Bundle bundle= new Bundle();
+                bundle.putString("query","breakfast");
+                menuSearchFragment=new MenuSearchFragment();
+                menuSearchFragment.setArguments(bundle);
+                getSupportFragmentManager().beginTransaction()
+                        .replace(R.id.container_menu,menuSearchFragment)
+                        .addToBackStack("filter")
+                        .commit();
+                mFilterToggle.performClick();
+            }
+        });
+        mFilterContainer.findViewById(R.id.btn_lunch).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                getSupportFragmentManager().popBackStack();
+                Bundle bundle= new Bundle();
+                bundle.putString("query","lunch");
+                bundle.putBoolean("Session_Status", mSessionStatus != STATUS_VALUES.INACTIVE);
+
+                menuSearchFragment=new MenuSearchFragment();
+                menuSearchFragment.setArguments(bundle);
+                getSupportFragmentManager().beginTransaction()
+                        .replace(R.id.container_menu,menuSearchFragment)
+                        .addToBackStack("filter")
+                        .commit();
+                mFilterToggle.performClick();
+            }
+        });
+
+        mFilterContainer.findViewById(R.id.btn_dinner).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                getSupportFragmentManager().popBackStack();
+                Bundle bundle= new Bundle();
+                bundle.putString("query","dinner");
+                menuSearchFragment=new MenuSearchFragment();
+                menuSearchFragment.setArguments(bundle);
+                getSupportFragmentManager().beginTransaction()
+                        .replace(R.id.container_menu,menuSearchFragment)
+                        .addToBackStack("filter")
+                        .commit();
+                mFilterToggle.performClick();
+            }
+        });
+
+
+
 
     }
 
@@ -372,6 +424,8 @@ public class SessionUserActivity extends AppCompatActivity implements
         } else if (itemCustomizationFragment != null) {
             itemCustomizationFragment.onBackPressed();
         }
+        if (getSupportFragmentManager().popBackStackImmediate("filter", FragmentManager.POP_BACK_STACK_INCLUSIVE)) {
+        }
 
         else if (mFilterContainer.getVisibility() == View.VISIBLE)
             hideFilter();
@@ -534,6 +588,7 @@ public class SessionUserActivity extends AppCompatActivity implements
         @Override
         public FilterCategoryAdapter.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
             View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.filter_category_item, parent, false);
+
             return new ViewHolder(view);
         }
 
@@ -568,10 +623,6 @@ public class SessionUserActivity extends AppCompatActivity implements
             }
         }
     }
-    @Override
-    public void onSaveInstanceState(Bundle outState) {
 
-
-    }
 
 }

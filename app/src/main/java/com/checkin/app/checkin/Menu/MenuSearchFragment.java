@@ -84,6 +84,7 @@ public class MenuSearchFragment extends Fragment implements MenuItemAdapter.OnIt
         queryG=getArguments().getString("query");
         Log.e(TAG,queryG);
         mViewModel.search(queryG);
+        boolean mSessionStatus=getArguments().getBoolean("SessionStatus");
 
         mViewModel.getMenuItems().observe(getActivity(),menuItemModels -> {
             if(menuItemModels==null)
@@ -98,6 +99,7 @@ public class MenuSearchFragment extends Fragment implements MenuItemAdapter.OnIt
         });
 
         rvGroupsList.setAdapter(mItemAdapter);
+        mItemAdapter.setActivate(mSessionStatus);
         mItemAdapter.setItemInteractionListener(this);
 
         mViewModel.getCurrentItem().observe(getActivity(), orderedItem -> {

@@ -267,7 +267,36 @@ public class MenuViewModel extends AndroidViewModel {
                                 Log.e(TAG,"Bada Loop");
                                 int size =groups.get(i).getItems().size();
                                 for(int j=0;j<size;j++)
+
                                 {   Log.e(TAG,"Chota Loop");
+                                switch (s) {
+                                    case "breakfast":
+                                        if (groups.get(i).getItems().get(j).isBreakfast()) {
+                                            Log.e(TAG, "Kuch Mila");
+                                            items.add(groups.get(i).getItems().get(j));
+                                            var.setValue(items);
+                                            Log.e(TAG, groups.get(i).getItems().get(j).getName());
+                                        }
+                                        break;
+                                    case "lunch":
+                                        if (groups.get(i).getItems().get(j).isLunch()) {
+                                            Log.e(TAG, "Kuch Mila");
+                                            items.add(groups.get(i).getItems().get(j));
+                                            var.setValue(items);
+                                            Log.e(TAG, groups.get(i).getItems().get(j).getName());
+                                        }
+                                        break;
+                                    case "dinner":
+                                        if (groups.get(i).getItems().get(j).isDinner()) {
+                                            Log.e(TAG, "Kuch Mila");
+                                            items.add(groups.get(i).getItems().get(j));
+                                            var.setValue(items);
+                                            Log.e(TAG, groups.get(i).getItems().get(j).getName());
+                                        }
+                                        break;
+                                }
+
+
                                     if(groups.get(i).getItems().get(j).getName().toLowerCase().contains(s.toLowerCase()))
                                     {
                                         Log.e(TAG,"Kuch Mila");
@@ -276,9 +305,10 @@ public class MenuViewModel extends AndroidViewModel {
                                         Log.e(TAG,groups.get(i).getItems().get(j).getName());
                                     }
                                 }
+                                }
                             }
 
-                        }
+
                         Log.e(TAG,"LOOP se Baharr");
                         Log.e(TAG, String.valueOf(items.size()));
                         var.setValue(items);
@@ -316,6 +346,7 @@ public class MenuViewModel extends AndroidViewModel {
 //            }
 //        });
     }
+
 
     public LiveData<Resource<List<MenuGroupModel>>> getMenuGroups(long shopId) {
         if (mMenuGroups == null)

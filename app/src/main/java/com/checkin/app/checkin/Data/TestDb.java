@@ -104,7 +104,7 @@ public class TestDb {
                         }
                     }
                 }
-                MenuItemModel menuItem = new MenuItemModel(j%2 == 0 ? "Carlsburg #" + c1 : "White Bread #" + c1, typeName, typeCost, i, 1);
+                MenuItemModel menuItem = new MenuItemModel(j%2 == 0 ? "Carlsburg #" + c1 : "White Bread #" + c1, typeName, typeCost, i, 1, j % 3 == 0, j%2==0,true );
                 menuItem.setDescription("\"It is a 5% abv pilsner beer with a global distribution to 140 mark" +
                         "ets. It was first brewed in 1904, and was created by Carl Jacobsen, son of Carlsberg's founder JC Jacobsen.");
                 menuItem.setAvailableMeals(Arrays.asList("brkfst", "lunch", "dinner"));

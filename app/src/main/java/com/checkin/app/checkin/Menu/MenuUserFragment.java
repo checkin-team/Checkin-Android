@@ -60,6 +60,10 @@ public class MenuUserFragment extends Fragment implements MenuItemAdapter.OnItem
 
         if (sessionStatus == STATUS_VALUES.INACTIVE)
             mSessionActive = false;
+
+
+
+
     }
 
     @Override
@@ -72,7 +76,7 @@ public class MenuUserFragment extends Fragment implements MenuItemAdapter.OnItem
         LinearLayoutManager llm = new LinearLayoutManager(getActivity(), RecyclerView.VERTICAL, false);
         rvGroupsList.setLayoutManager(llm);
 
-        mGroupAdapter = new MenuGroupAdapter(null, getContext(), this);
+        mGroupAdapter = new MenuGroupAdapter(null, getContext(), this,mSessionActive);
         rvGroupsList.setAdapter(mGroupAdapter);
 
         rvGroupsList.addOnScrollListener(new RecyclerView.OnScrollListener() {
@@ -102,6 +106,7 @@ public class MenuUserFragment extends Fragment implements MenuItemAdapter.OnItem
         mViewModel.getCurrentItem().observe(getActivity(), orderedItem -> {
             if (orderedItem == null)    return;
             MenuItemAdapter.ItemViewHolder holder = orderedItem.getItem().getItemHolder();
+
             if (holder != null && holder.getMenuItem() == orderedItem.getItem()) {
                 Log.e(TAG, "holder: " + holder.vQuantityPicker.getCurrentItem() + ", item: " + orderedItem.getQuantity());
                 holder.changeQuantity(mViewModel.getOrderedCount(orderedItem.getItem()) + orderedItem.getChangeCount());
@@ -145,7 +150,8 @@ public class MenuUserFragment extends Fragment implements MenuItemAdapter.OnItem
     @Override
     public boolean onItemAdded(MenuItemAdapter.ItemViewHolder holder) {
         if (!mSessionActive)
-            return false;
+        {
+            return false;}
         MenuItemModel item = holder.getMenuItem();
         mViewModel.newOrderedItem(item);
         mMenuInteractionListener.onItemInteraction(item, 1);
@@ -161,7 +167,8 @@ public class MenuUserFragment extends Fragment implements MenuItemAdapter.OnItem
     @Override
     public boolean onItemChanged(MenuItemAdapter.ItemViewHolder holder, int count) {
         if (!mSessionActive)
-            return false;
+        {
+            return false;}
         MenuItemModel item = holder.getMenuItem();
         if (mViewModel.updateOrderedItem(item, count)) {
             mMenuInteractionListener.onItemInteraction(item, count);

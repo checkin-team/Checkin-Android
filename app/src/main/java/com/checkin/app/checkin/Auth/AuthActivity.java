@@ -67,6 +67,7 @@ public class AuthActivity extends AppCompatActivity implements AuthFragmentInter
         setContentView(R.layout.activity_auth);
         ButterKnife.bind(this);
 
+
         if (savedInstanceState == null) {
             mFacebookCallbackManager = CallbackManager.Factory.create();
             FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
@@ -157,6 +158,7 @@ public class AuthActivity extends AppCompatActivity implements AuthFragmentInter
         } else {
             Toast.makeText(getApplicationContext(), "Welcome back!", Toast.LENGTH_LONG).show();
         }
+
         mAuthViewModel.login();
     }
 
