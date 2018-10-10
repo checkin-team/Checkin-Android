@@ -60,6 +60,7 @@ public interface WebApiService {
     @PATCH("users/self/")
     Call<ObjectNode> postUserData(@Body ObjectNode objectNode);
 
+    @POST("")
     @PATCH("blah/blah/blah")
     Call<ObjectNode> postPhoneNumber(@Body ObjectNode objectNode);
 

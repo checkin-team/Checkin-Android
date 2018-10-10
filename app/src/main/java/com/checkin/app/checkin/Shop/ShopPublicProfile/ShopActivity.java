@@ -62,11 +62,6 @@ public class ShopActivity extends ShopBaseActivity {
 
     }
 
-    @Override
-    protected int isDrawerEnabled(int position) {
-        return position == 0 ? DrawerLayout.LOCK_MODE_UNLOCKED : DrawerLayout.LOCK_MODE_LOCKED_CLOSED;
-    }
-
     private class ShopPagerAdapter extends FragmentPagerAdapter {
 
         public ShopPagerAdapter(FragmentManager fm) {

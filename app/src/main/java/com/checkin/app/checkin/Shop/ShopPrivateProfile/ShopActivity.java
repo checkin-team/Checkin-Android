@@ -21,11 +21,6 @@ public class ShopActivity extends ShopBaseActivity {
         setupPagers(new ShopPagerAdapter(getSupportFragmentManager()), R.menu.menu_shop_profile_private);
     }
 
-    @Override
-    protected int isDrawerEnabled(int position) {
-        return position == 0 ? DrawerLayout.LOCK_MODE_UNLOCKED : DrawerLayout.LOCK_MODE_LOCKED_CLOSED;
-    }
-
     private class ShopPagerAdapter extends FragmentPagerAdapter {
 
         public ShopPagerAdapter(FragmentManager fm) {

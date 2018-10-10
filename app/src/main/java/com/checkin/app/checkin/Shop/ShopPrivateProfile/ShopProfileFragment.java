@@ -49,7 +49,7 @@ public class ShopProfileFragment extends Fragment implements View.OnClickListene
         grid = view.findViewById(R.id.grid);
         members = view.findViewById(R.id.members);
         insights = view.findViewById(R.id.insights);
-        message = view.findViewById(R.id.message);
+        message = view.findViewById(R.id.review);
         notification = view.findViewById(R.id.notification);
         hotel = view.findViewById(R.id.hotel);
         setUp();
@@ -91,7 +91,7 @@ public class ShopProfileFragment extends Fragment implements View.OnClickListene
                 break;
             case R.id.insights:
                 break;
-            case R.id.message:
+            case R.id.review:
                 break;
         }
     }
