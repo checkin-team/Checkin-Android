@@ -38,6 +38,7 @@ import android.widget.Toast;
 import com.bumptech.glide.Glide;
 import com.checkin.app.checkin.Data.Resource;
 import com.checkin.app.checkin.R;
+import com.checkin.app.checkin.User.PrivateProfile.FollowersActivity;
 import com.checkin.app.checkin.Utility.EditProfileImage;
 import com.transitionseverywhere.AutoTransition;
 import com.transitionseverywhere.TransitionManager;
@@ -112,6 +113,12 @@ public class UserProfileActivity extends AppCompatActivity {
         bio.setText(person.getBio());
         username.setText(person.getUsername());
         city.setText(person.getLocation());
+        nfollowers.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(getApplicationContext(), FollowersActivity.class));
+            }
+        });
     }
 
     public static Bitmap getRoundedCornerBitmap(Bitmap bitmap, Context context) {

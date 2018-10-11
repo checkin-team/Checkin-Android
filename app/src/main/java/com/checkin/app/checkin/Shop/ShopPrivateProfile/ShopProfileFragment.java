@@ -28,7 +28,7 @@ import java.util.List;
  * Created by Bhavik Patel on 25/08/2018.
  */
 
-class ShopProfileFragment extends Fragment implements View.OnClickListener {
+public class ShopProfileFragment extends Fragment implements View.OnClickListener {
     private static final String TAG = ShopProfileFragment.class.getSimpleName();
 
     private ViewPager imagePager;

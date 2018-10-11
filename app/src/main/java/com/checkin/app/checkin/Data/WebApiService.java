@@ -6,6 +6,7 @@ import com.checkin.app.checkin.Session.ActiveSessionModel;
 import com.checkin.app.checkin.Shop.ShopModel;
 import com.checkin.app.checkin.Shop.ShopReview;
 import com.checkin.app.checkin.Social.Message;
+import com.checkin.app.checkin.User.UserModel;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 
 import java.util.List;
@@ -47,4 +48,7 @@ public interface WebApiService {
 
     @GET("notification")
     Call<List<NotificationModel>> getNotif(@Query("last_notif_id") int lastNotifId);
+
+    @GET("users/{user_id}/connections/")
+    Call<List<UserModel>> getConnections(@Path("user_id") String userId);
 }

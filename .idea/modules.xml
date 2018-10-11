@@ -2,7 +2,6 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/Check-In.iml" filepath="$PROJECT_DIR$/Check-In.iml" />
       <module fileurl="file://$PROJECT_DIR$/Check-Out.iml" filepath="$PROJECT_DIR$/Check-Out.iml" />
       <module fileurl="file://$PROJECT_DIR$/library/MaterialSearchView/MaterialSearchView.iml" filepath="$PROJECT_DIR$/library/MaterialSearchView/MaterialSearchView.iml" />
       <module fileurl="file://$PROJECT_DIR$/library/NiceSpinner/NiceSpinner.iml" filepath="$PROJECT_DIR$/library/NiceSpinner/NiceSpinner.iml" />

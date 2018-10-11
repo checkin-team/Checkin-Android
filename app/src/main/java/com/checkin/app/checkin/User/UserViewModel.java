@@ -26,6 +26,10 @@ public class UserViewModel extends AndroidViewModel {
         return mAllUsers;
     }
 
+    public void unfollowUser(long id){
+
+    }
+
     public static class Factory extends ViewModelProvider.NewInstanceFactory {
         @NonNull private final Application mApplication;
 
