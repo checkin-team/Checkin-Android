@@ -3,24 +3,50 @@ package com.checkin.app.checkin.User;
 import com.checkin.app.checkin.Data.Converters;
 import com.checkin.app.checkin.Utility.Util;
 import com.fasterxml.jackson.annotation.JsonAutoDetect;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 import io.objectbox.annotation.Convert;
 import io.objectbox.annotation.Entity;
 import io.objectbox.annotation.Id;
+import io.objectbox.annotation.Index;
+import io.objectbox.annotation.Unique;
 
 @Entity
 @JsonAutoDetect(fieldVisibility = JsonAutoDetect.Visibility.ANY)
 public class UserModel {
-    @Id private long id;
+    @JsonIgnore
+    @Id
+    private long id;
+
+    @JsonProperty("pk")
+    @Unique
+    @Index
+    private String uid;
+
     private String username;
+
+    @JsonProperty("first_name")
+    private String firstName;
+
+    @JsonProperty("last_name")
+    private String lastName;
+
+    @JsonProperty("address")
+    private String address;
+
     @Convert(converter = Converters.GenderConverter.class, dbType = Character.class)
     private GENDER gender;
+
+    @JsonProperty("profile_pic")
+    private String profilePic;
+
     private String bio;
-    @JsonProperty("profile_pic") private String profilePic;
-    private String location;
     private long followers;
     private long checkins;
+    private long reviews;
+    @JsonProperty("is_public") private boolean isPublic;
+    @JsonProperty("is_connected") private boolean isConnected;
 
     public enum GENDER {
         MALE('m'), FEMALE('f');
@@ -43,12 +69,20 @@ public class UserModel {
 
     public UserModel() {}
 
-    public UserModel(String username, String profilePic, String location, long followers, long checkins) {
-        this.username = username;
-        this.profilePic = profilePic;
-        this.location = location;
-        this.followers = followers;
-        this.checkins = checkins;
+    public String getUid() {
+        return uid;
+    }
+
+    public String getUsername() {
+        return username;
+    }
+
+    public String getFirstName() {
+        return firstName;
+    }
+
+    public String getLastName() {
+        return lastName;
     }
 
     public GENDER getGender() {
@@ -60,24 +94,28 @@ public class UserModel {
         this.gender = GENDER.getByTag(tag);
     }
 
-    public String getBio() {
-        return bio;
+    public boolean isConnected() {
+        return isConnected;
     }
 
-    public void setBio(String bio) {
-        this.bio = bio;
+    public String getBio() {
+        return bio;
     }
 
     public long getFollowers() {
         return followers;
     }
 
-    public String getLocation() {
-        return location;
-    }
-
     public long getCheckins() {
         return checkins;
+    }
+
+    public long getReviews() {
+        return reviews;
+    }
+
+    public String formatReviews() {
+        return Util.formatCount(reviews);
     }
 
     public String formatFollowers() {
@@ -88,20 +126,31 @@ public class UserModel {
         return Util.formatCount(checkins);
     }
 
-    public long getId() {
-        return id;
-    }
-
-    void setId(long id) {
-        this.id = id;
-    }
-
-    public String getUsername() {
-        return username;
+    public String getAddress() {
+        return address;
     }
 
     public String getProfilePic() {
         return profilePic;
+    }
+
+    public long getId() {
+        return id;
+    }
+    void setId(long id) {
+        this.id = id;
+    }
+
+    public boolean isPublic() {
+        return isPublic;
+    }
+
+    public void setConnected(boolean connected) {
+        isConnected = connected;
+    }
+
+    public void setPublic(boolean aPublic) {
+        isPublic = aPublic;
     }
 }
 

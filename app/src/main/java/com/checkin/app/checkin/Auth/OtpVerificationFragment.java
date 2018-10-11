@@ -20,7 +20,7 @@ import butterknife.OnClick;
 import butterknife.Unbinder;
 
 public class OtpVerificationFragment extends Fragment {
-    private SignUpFragmentInteraction fragmentInteraction;
+    private AuthFragmentInteraction fragmentInteraction;
     private Unbinder unbinder;
     private AuthViewModel mAuthViewModel;
     @BindView(R.id.ed_otp) EditText edOtp;
@@ -28,7 +28,7 @@ public class OtpVerificationFragment extends Fragment {
     @BindView(R.id.btn_resend_otp) Button btnResendOtp;
     public OtpVerificationFragment() {}
 
-    public static OtpVerificationFragment newInstance(SignUpFragmentInteraction fragmentInteraction) {
+    public static OtpVerificationFragment newInstance(AuthFragmentInteraction fragmentInteraction) {
         OtpVerificationFragment fragment = new OtpVerificationFragment();
         fragment.fragmentInteraction = fragmentInteraction;
         return fragment;
@@ -50,6 +50,7 @@ public class OtpVerificationFragment extends Fragment {
                 tvRemainingTime.setText(Util.formatTime(min, sec));
             } else {
                 tvRemainingTime.setVisibility(View.INVISIBLE);
+                btnResendOtp.setText("RESEND OTP");
                 btnResendOtp.setVisibility(View.VISIBLE);
             }
         });

@@ -45,9 +45,11 @@ import com.checkin.app.checkin.Shop.ShopPrivateProfile.ShopActivity;
 import com.checkin.app.checkin.Social.ChatActivity;
 import com.checkin.app.checkin.Social.ChatAdapter;
 import com.checkin.app.checkin.Social.MessageViewModel;
-import com.checkin.app.checkin.User.EditProfile;
-import com.checkin.app.checkin.User.UserProfileActivity;
-import com.checkin.app.checkin.User.UserViewModel;
+import com.checkin.app.checkin.User.NonPersonalProfile.UserProfileActivity;
+import com.checkin.app.checkin.User.PersonalProfile.EditPersonalProfile;
+import com.checkin.app.checkin.User.PersonalProfile.EditProfile;
+import com.checkin.app.checkin.User.NonPersonalProfile.UserViewModel;
+import com.checkin.app.checkin.User.PersonalProfile.UserProfilePersonalActivity;
 import com.checkin.app.checkin.Utility.ClipRevealFrame;
 import com.checkin.app.checkin.Utility.Constants;
 import com.checkin.app.checkin.Utility.DragTouchListener;
@@ -68,6 +70,7 @@ import butterknife.OnClick;
 
 public class HomeActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
+    public static final String USERUID="UserId";
     private final String TAG = HomeActivity.class.getSimpleName();
     @BindView(R.id.drawer_home)
     DrawerLayout drawerLayout;
@@ -393,11 +396,21 @@ public class HomeActivity extends AppCompatActivity
         mUserActivityAdapter = new UserActivityAdapter(null, this);
         rvUserActivities.setAdapter(mUserActivityAdapter);
 
+        ItemClickSupport.addTo(rvUserActivities).setOnItemClickListener(new ItemClickSupport.OnItemClickListener() {
+            @Override
+            public void onItemClicked(RecyclerView recyclerView, int position, View v) {
+                Intent intent =new Intent(getApplicationContext(),UserProfileActivity.class);
+                intent.putExtra(UserProfileActivity.KEY_PROFILE_USER_ID, mUserActivityAdapter.getUserByPosition(position).getId());
+                startActivity(intent);
+            }
+        });
+
         mUserViewModel.getAllUsers().observe(this, (userResource -> {
             if (userResource != null && userResource.status == Resource.Status.SUCCESS)
                 mUserActivityAdapter.setUsers(userResource.data);
         }));
     }
+
 
     private void setupMessages() {
         mChatAdapter = new ChatAdapter(null);
@@ -433,7 +446,7 @@ public class HomeActivity extends AppCompatActivity
         Intent intent;
         switch (id) {
             case R.id.nav_profile:
-                intent = new Intent(getApplicationContext(), UserProfileActivity.class);
+                intent = new Intent(getApplicationContext(), UserProfilePersonalActivity.class);
                 startActivity(intent);
                 break;
             case R.id.nav_settings:
@@ -460,7 +473,7 @@ public class HomeActivity extends AppCompatActivity
                 startActivity(intent);
                 break;
             case R.id.editProfile:
-                intent = new Intent(getApplicationContext(), EditProfile.class);
+                intent = new Intent(getApplicationContext(), EditPersonalProfile.class);
                 startActivity(intent);
                 break;
 

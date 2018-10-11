@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<selector xmlns:android="http://schemas.android.com/apk/res/android">
+    <item>
+        <layer-list>
+            <item android:right="0dp" android:top="6dp">
+                <shape>
+                    <corners android:radius="@dimen/card_corner_radius" />
+                    <solid android:color="#D6D6D6" />
+                </shape>
+            </item>
+            <item>
+                <shape>
+                    <solid android:color="@color/white" />
+                    <stroke
+                        android:width="0dp"
+                        android:color="#000" />
+                    <corners android:radius="@dimen/card_corner_radius" />
+                </shape>
+            </item>
+        </layer-list>
+    </item>
+</selector>

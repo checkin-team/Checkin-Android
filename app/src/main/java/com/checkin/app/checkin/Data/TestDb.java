@@ -25,7 +25,7 @@ public class TestDb {
     public static void populateWithTestData(final Context context) {
         Log.e("TestData", "Populating...");
         AppDatabase.getMenuModel(context).put(new MenuModel(1, "Menu"));
-        populateUsers(AppDatabase.getUserModel(context));
+//        populateUsers(AppDatabase.getUserModel(context));
         populateMenu(
                 AppDatabase.getMenuItemModel(context),
                 AppDatabase.getMenuGroupModel(context),
@@ -123,17 +123,17 @@ public class TestDb {
     }
 
     private static void populateUsers(Box<UserModel> userModel) {
-        UserModel user1 = new UserModel("Alex", "https://78.media.tumblr.com/fc66ed1ceef891684aae8eb2acb152a3/tumblr_oyg8f1Qc1n1vy2tgqo1_400.jpg", "Lyon, France", 100, 500);
-        user1.setGender('m');
-        UserModel user2 = new UserModel("Alice", "https://vignette.wikia.nocookie.net/typemoon/images/c/c1/Archer_EMIYA.jpeg/revision/latest?cb=20150630040614", "Delhi, India", 1300, 2000);
-        user2.setGender('f');
-
-        userModel.put(user1, user2);
-
-        UserModel user3 = new UserModel("Monica", "https://vignette.wikia.nocookie.net/typemoon/images/c/c1/Archer_EMIYA.jpeg/revision/latest?cb=20150630040614", "Somewhere", 981, 321);
-        user3.setGender('f');
-        UserModel user4 = new UserModel("Jack", "https://78.media.tumblr.com/fc66ed1ceef891684aae8eb2acb152a3/tumblr_oyg8f1Qc1n1vy2tgqo1_400.jpg", "LOCATION ZERO", 4921, 1876);
-        user4.setGender('m');
-        userModel.put(user3, user4);
+//        UserModel user1 = new UserModel("Alex", "https://78.media.tumblr.com/fc66ed1ceef891684aae8eb2acb152a3/tumblr_oyg8f1Qc1n1vy2tgqo1_400.jpg", "Lyon, France", 100, 500);
+//        user1.setGender('m');
+//        UserModel user2 = new UserModel("Alice", "https://vignette.wikia.nocookie.net/typemoon/images/c/c1/Archer_EMIYA.jpeg/revision/latest?cb=20150630040614", "Delhi, India", 1300, 2000);
+//        user2.setGender('f');
+//
+//        userModel.put(user1, user2);
+//
+//        UserModel user3 = new UserModel("Monica", "https://vignette.wikia.nocookie.net/typemoon/images/c/c1/Archer_EMIYA.jpeg/revision/latest?cb=20150630040614", "Somewhere", 981, 321);
+//        user3.setGender('f');
+//        UserModel user4 = new UserModel("Jack", "https://78.media.tumblr.com/fc66ed1ceef891684aae8eb2acb152a3/tumblr_oyg8f1Qc1n1vy2tgqo1_400.jpg", "LOCATION ZERO", 4921, 1876);
+//        user4.setGender('m');
+//        userModel.put(user3, user4);
     }
 }

@@ -5,18 +5,19 @@ import static java.util.concurrent.TimeUnit.MINUTES;
 import static java.util.concurrent.TimeUnit.SECONDS;
 
 public class Constants {
-    public static final short API_VERSION = 1;
-    public static final String API_HOST = "172.17.37.59";
-    public static final short API_PORT = 8000;
+    public static final String API_VERSION = "v0.1";
+    public static final String API_PROTOCOL = "http://";
+    public static final String API_HOST = "172.17.37.59:80";
 
     public static final String ACCOUNT_TYPE = "com.checkin.accounts";
+    public static final String ACCOUNT_UID = "account_uid";
 
     public static final String SP_LOGGED_IN = "logged_in";
     public static final String SP_USERNAME = "username";
     public static final String SP_USER_ID = "user_id";
     public static final String SP_LOGIN_TOKEN = "token";
     public static final String SP_CHECKED_IN = "checked_in";
-    public static final String SP_DEVICE_TOKEN = "device_token";
+    public static final String SP_SYNC_DEVICE_TOKEN = "device_token";
 
     public static final String EXTRA_SELECTED_USER_ID = "extra_selected_user_id";
 

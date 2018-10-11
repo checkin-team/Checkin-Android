@@ -21,7 +21,7 @@ public class ApiResponse<T> {
     @Nullable private final String errorMessage;
     @Nullable private final Throwable errorThrowable;
 
-    ApiResponse(Throwable error) {
+    public ApiResponse(Throwable error) {
         mResponse = null;
         mStatusCode = HTTP_CLIENT_TIMEOUT;
         data = null;
@@ -29,7 +29,7 @@ public class ApiResponse<T> {
         errorThrowable = error;
     }
 
-    ApiResponse(@NonNull Response<T> response) {
+    public ApiResponse(@NonNull Response<T> response) {
         mResponse = response;
         mStatusCode = response.code();
         errorThrowable = null;

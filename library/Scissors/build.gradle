@@ -1,0 +1,37 @@
+apply plugin: 'com.android.library'
+
+android {
+    compileSdkVersion 24
+    buildToolsVersion '27.0.3'
+
+    defaultConfig {
+        minSdkVersion 14
+        consumerProguardFiles 'proguard-rules.txt'
+    }
+
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_7
+        targetCompatibility JavaVersion.VERSION_1_7
+    }
+
+    dexOptions {
+        preDexLibraries = false
+    }
+}
+
+dependencies {
+    // Test
+    testImplementation 'junit:junit:4.12'
+    testImplementation 'org.mockito:mockito-core:1.10.19'
+    testImplementation 'org.robolectric:robolectric:3.0'
+    testImplementation 'org.assertj:assertj-core:1.7.1'
+    // Support Annotations
+    implementation 'com.android.support:support-annotations:24.2.1'
+    // Optional dependencies for extensions
+    // Picasso
+    provided 'com.squareup.picasso:picasso:[2.4.0, 2.5.2)'
+    // Glide
+    provided 'com.github.bumptech.glide:glide:4.1.1'
+    provided 'com.nostra13.universalimageloader:universal-image-loader:[1.9.2, 1.9.5)'
+    provided 'com.android.support:support-v4:24.2.1'
+}

@@ -14,16 +14,24 @@ import java.util.List;
 import retrofit2.Call;
 import retrofit2.http.Body;
 import retrofit2.http.GET;
+import retrofit2.http.PATCH;
 import retrofit2.http.POST;
+import retrofit2.http.PUT;
 import retrofit2.http.Path;
 import retrofit2.http.Query;
 
 public interface WebApiService {
-    @GET("messages/{user_id}/")
-    Call<List<Message>> getMessages(@Path("user_id") String userId);
-
     @POST("auth/login/")
     Call<ObjectNode> postLogin(@Body ObjectNode credentials);
+
+    @POST("auth/register/")
+    Call<ObjectNode> postRegister(@Body ObjectNode credentials);
+
+    @PUT("auth/devices/self/update/")
+    Call<ObjectNode> postFCMToken(@Body ObjectNode tokenData);
+
+    @GET("users/")
+    Call<List<UserModel>> getUsers();
 
     @POST("qr/decrypt/")
     Call<ObjectNode> postDecryptQr(@Body ObjectNode data);
@@ -49,6 +57,12 @@ public interface WebApiService {
     @GET("notification")
     Call<List<NotificationModel>> getNotif(@Query("last_notif_id") int lastNotifId);
 
-    @GET("users/{user_id}/connections/")
-    Call<List<UserModel>> getConnections(@Path("user_id") String userId);
+    @PATCH("users/self/")
+    Call<ObjectNode> postUserData(@Body ObjectNode objectNode);
+
+    @PATCH("blah/blah/blah")
+    Call<ObjectNode> postPhoneNumber(@Body ObjectNode objectNode);
+
+    @GET("messages/{user_id}/")
+    Call<List<Message>> getMessages(@Path("user_id") String userId);
 }
