@@ -35,6 +35,7 @@
     <string name="bottom_text_need_help">Need help?</string>
     <string name="subtitle_login_help">Enter your CheckIn phone number linked to your account</string>
     <string name="create_new_password">Create a new password</string>
+    <string name="expand_text">read more</string>
 
     <!--for bottomnav bar-->
 

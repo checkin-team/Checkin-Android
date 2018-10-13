@@ -41,5 +41,7 @@ public class Constants {
     public static final String CHANNEL_DESCRIPTION="my description";
     public static final String FCM_ACTION_CODE = "ACTION_CODE";
 
+    public final static String EXPAND_TEXT ="....";
+
     private Constants() {}
 }

@@ -29,7 +29,7 @@ import com.checkin.app.checkin.Shop.ShopReviewsActivity;
 public class ShopProfileFragment extends Fragment implements View.OnClickListener {
 
     private static final String TAG = ShopProfileFragment.class.getSimpleName();
-
+    public static final String SHOP_ID="shop id";
     private  ViewPager imagePager;
     private RecyclerView grid;
     private View call;
@@ -60,7 +60,9 @@ public class ShopProfileFragment extends Fragment implements View.OnClickListene
         review.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(getContext(), ShopReviewsActivity.class));
+                Intent intent=new Intent(getContext(), ShopReviewsActivity.class);
+                intent.putExtra(SHOP_ID,1L);
+                startActivity(intent);
             }
         });
 

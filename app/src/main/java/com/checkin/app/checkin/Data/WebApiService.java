@@ -5,6 +5,7 @@ import com.checkin.app.checkin.Notifications.NotificationModel;
 import com.checkin.app.checkin.Session.ActiveSessionModel;
 import com.checkin.app.checkin.Shop.ShopModel;
 import com.checkin.app.checkin.Shop.ShopReview;
+import com.checkin.app.checkin.Shop.ShopReviewPOJO;
 import com.checkin.app.checkin.Social.Message;
 import com.checkin.app.checkin.User.UserModel;
 import com.fasterxml.jackson.databind.node.ObjectNode;
@@ -46,7 +47,7 @@ public interface WebApiService {
     Call<MenuModel> getAvailableMenu(@Path("shop_id") String shopID);
 
     @GET("shops/{shop_id}/reviews/")
-    Call<List<ShopReview>> getShopReviews(@Path("shop_id") String shopID);
+    Call<List<ShopReviewPOJO>> getShopReviews(@Path("shop_id") String shopID);
 
     @POST("sessions/{session_id}/orders/cancel/")
     Call<ObjectNode> postCancelOrder(@Path("session_id") String sessionID, @Body ObjectNode data);
