@@ -43,9 +43,7 @@ public class MenuItemAdapter extends RecyclerView.Adapter<MenuItemAdapter.ItemVi
     public void setItemInteractionListener (OnItemInteractionListener listener) {
         mItemInteractionListener= listener;
     }
-    public void setItemInteractionListener1 (OnItemInteractionListener listener) {
-        mItemInteractionListener= listener;
-    }
+
     public void setActivate(boolean activate){
         this.activate=activate;
     }

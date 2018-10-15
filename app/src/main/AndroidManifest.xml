@@ -69,6 +69,11 @@
         <activity android:name=".Home.StoryActivity" />
         <activity android:name=".Misc.FilterTransactions" />
         <activity android:name=".Misc.FaqActivity" />
+        <activity android:name=".Misc.WaitorWork"
+            android:label="WaitorWorkActivity"
+            android:screenOrientation="sensorPortrait"
+            android:theme="@style/AppTheme"
+            tools:replace="screenOrientation" />
         <activity
             android:name=".Session.ActiveSessionActivity"
             android:windowSoftInputMode="adjustNothing" />

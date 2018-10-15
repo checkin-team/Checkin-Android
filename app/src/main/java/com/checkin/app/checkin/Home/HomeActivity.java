@@ -35,6 +35,7 @@ import android.widget.TextView;
 import com.checkin.app.checkin.Data.Resource;
 import com.checkin.app.checkin.Menu.SessionUserActivity;
 import com.checkin.app.checkin.Misc.FaqActivity;
+import com.checkin.app.checkin.Misc.WaitorWork;
 import com.checkin.app.checkin.Notifications.NotificationActivity;
 import com.checkin.app.checkin.Profile.ShopProfile.ShopProfileActivity2;
 import com.checkin.app.checkin.R;
@@ -461,6 +462,10 @@ public class HomeActivity extends AppCompatActivity
                 break;
             case R.id.editProfile:
                 intent = new Intent(getApplicationContext(), EditProfile.class);
+                startActivity(intent);
+                break;
+            case R.id.waiter_work_activity:
+                intent = new Intent(getApplicationContext(), WaitorWork.class);
                 startActivity(intent);
                 break;
 

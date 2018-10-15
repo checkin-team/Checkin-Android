@@ -159,6 +159,8 @@ public class AuthActivity extends AppCompatActivity implements AuthFragmentInter
             Toast.makeText(getApplicationContext(), "Welcome back!", Toast.LENGTH_LONG).show();
         }
 
+      //  TestDb.populateWithTestData(getApplicationContext());
+        startActivity(new Intent(this, HomeActivity.class));
         mAuthViewModel.login();
     }
 
