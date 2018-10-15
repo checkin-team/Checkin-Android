@@ -28,8 +28,9 @@ public class UserViewModel extends AndroidViewModel {
         return mAllUsers;
     }
 
-    public void unfollowUser(long id){
 
+    public LiveData<Resource<UserModel>> getUser(long userId) {
+        return mRepository.getUser(userId);
     }
 
     public static class Factory extends ViewModelProvider.NewInstanceFactory {

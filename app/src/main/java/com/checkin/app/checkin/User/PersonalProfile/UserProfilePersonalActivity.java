@@ -6,6 +6,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 
 import com.checkin.app.checkin.R;
+import com.checkin.app.checkin.User.PrivateProfile.FollowersActivity;
 import com.checkin.app.checkin.Utility.SelectCropImageActivity;
 
 import java.io.File;
@@ -31,6 +32,10 @@ public class UserProfilePersonalActivity extends AppCompatActivity {
         Intent intent;
         intent = new Intent(this , SelectCropImageActivity.class);
         startActivityForResult(intent,SelectCropImageActivity.KEY_CROP_IMAGE_REQUEST_CODE);
+    }
+    @OnClick({R.id.tv_followers, R.id.tv_label_followers})
+    public void followers(){
+        startActivity(new Intent(getApplicationContext(), FollowersActivity.class));
     }
 
     @Override

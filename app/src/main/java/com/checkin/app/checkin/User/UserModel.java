@@ -54,7 +54,7 @@ public class UserModel {
         final char tag;
         GENDER(char tag) {
             this.tag = tag;
-        }
+        }//constructor of enum
 
         public static GENDER getByTag(char tag) {
             switch (tag) {

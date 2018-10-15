@@ -6,6 +6,7 @@ package com.checkin.app.checkin.User.NonPersonalProfile;
 
 
 import android.arch.lifecycle.ViewModelProviders;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.constraint.ConstraintLayout;
@@ -22,6 +23,7 @@ import com.bumptech.glide.Glide;
 import com.checkin.app.checkin.Data.Resource;
 import com.checkin.app.checkin.Home.HomeActivity;
 import com.checkin.app.checkin.R;
+import com.checkin.app.checkin.User.PrivateProfile.FollowersActivity;
 import com.checkin.app.checkin.User.UserModel;
 import com.checkin.app.checkin.Utility.Util;
 import com.transitionseverywhere.TransitionManager;

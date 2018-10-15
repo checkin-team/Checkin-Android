@@ -59,6 +59,8 @@ public class ApiResponse<T> {
 
     @Nullable
     public String getErrorMessage() {
+        if (errorMessage == null)
+            return null;
         JsonNode data = Converters.getJsonNode(errorMessage);
         if (data == null)
             return errorMessage;

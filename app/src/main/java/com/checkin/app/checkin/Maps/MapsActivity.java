@@ -249,7 +249,7 @@ public class MapsActivity extends AppCompatActivity implements
         Intent data = new Intent();
         data.putExtra(KEY_MAPS_LATITUDE, latLng.latitude);
         data.putExtra(KEY_MAPS_LONGITUDE, latLng.longitude);
-        data.putExtra(KEY_MAPS_ADDRESS,  mStreetOutput + " "+ mAddressOutput +" "+ mAreaOutput + " "  + mCityOutput);
+        data.putExtra(KEY_MAPS_ADDRESS, mAreaOutput );
         setResult(RESULT_OK, data);
         finish();
     }

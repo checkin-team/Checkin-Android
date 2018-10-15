@@ -1,35 +1,28 @@
 package com.checkin.app.checkin.User.PrivateProfile;
 
-import android.arch.lifecycle.Observer;
 import android.arch.lifecycle.ViewModelProvider;
-import android.support.annotation.Nullable;
+import android.os.Bundle;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
-import android.support.v7.widget.DefaultItemAnimator;
-import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 
 import com.checkin.app.checkin.Data.Resource;
 import com.checkin.app.checkin.R;
-import com.checkin.app.checkin.User.UserModel;
-import com.checkin.app.checkin.User.UserRepository;
-import com.checkin.app.checkin.User.UserViewModel;
 
-import java.util.ArrayList;
-import java.util.List;
-
-public class FollowersActivity extends AppCompatActivity implements CustomFollowersAdapter.ConnectionsUnfollow{
+public class FollowersActivity extends AppCompatActivity implements CustomFollowersAdapter.FriendsInteraction{
     private RecyclerView mRecyclerView;
     private CustomFollowersAdapter mAdapter;
-    private UserViewModel mViewModel;
+    private FriendsViewModel mViewModel;
+    public final static String KEY_USER_PK = "userPk";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_followers);
+
+        Long userPk = getIntent().getLongExtra(KEY_USER_PK,0);
 
         mRecyclerView = findViewById(R.id.recycler_view);
 
@@ -45,24 +38,37 @@ public class FollowersActivity extends AppCompatActivity implements CustomFollow
         actionBar.setElevation(10);
         actionBar.setTitle("Connections");
 
-        mViewModel = new ViewModelProvider(this, new UserViewModel.Factory(getApplication())).get(UserViewModel.class);
-        mViewModel.getAllUsers().observe(this, listResource -> {
+        mViewModel = new ViewModelProvider(this, new FriendsViewModel.Factory(getApplication())).get(FriendsViewModel.class);
+        mViewModel.setUserPk(userPk);
+        mViewModel.getUserFriends().observe(this, listResource -> {
            if (listResource != null && listResource.status == Resource.Status.SUCCESS)
                mAdapter.setData(listResource.data);
         });
+
+        mViewModel.getObservableData().observe(this, resource -> {
+            if (resource != null && resource.status == Resource.Status.SUCCESS) {
+                mViewModel.updateResults();
+            }
+        });
+
     }
 
     @Override
-    public void onUnfollowConnection(UserModel userModel) {
+    public void onUnfollowConnection(FriendshipModel friend) {
         new AlertDialog.Builder(this)
                 .setCancelable(false)
                 .setTitle("")
                 .setMessage("Do you want to remove connection ")
                 .setPositiveButton("Remove", (dialog, which) -> {
                     dialog.dismiss();
-                    mViewModel.unfollowUser(userModel.getId());
+                    mViewModel.removeFriend(friend.getUserPk());
                 })
                 .setNegativeButton("Cancel", (dialog, which) -> dialog.dismiss())
                 .show();
+    }
+
+    @Override
+    public void onRequestAccepted(FriendshipModel friend) {
+        mViewModel.postNewFriends(friend.getUserPk());
     }
 }

@@ -79,6 +79,7 @@ public class Resource<T> {
         if (apiResponse.isSuccessful() && apiResponse.getData() != null) {
             resource = success(apiResponse.getData());
         } else if (apiResponse.getErrorThrowable() != null) {
+            Log.e(TAG, apiResponse.getErrorThrowable().getMessage());
             if (apiResponse.getErrorThrowable() instanceof NoConnectivityException) {
                 Log.e(TAG, apiResponse.getErrorMessage());
                 resource = error(Status.ERROR_DISCONNECTED, apiResponse.getErrorMessage(), apiResponse.getData());

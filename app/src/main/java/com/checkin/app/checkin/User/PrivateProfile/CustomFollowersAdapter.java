@@ -23,16 +23,16 @@ import de.hdodenhof.circleimageview.CircleImageView;
 
 public class CustomFollowersAdapter extends RecyclerView.Adapter<CustomFollowersAdapter.MyViewHolder>  {
     // declaring some fields.
-    private List<UserModel> arrayList;
-    private ConnectionsUnfollow interactionListener;
+    private List<FriendshipModel> mFriends;
+    private FriendsInteraction interactionListener;
     // A constructor.
-    public CustomFollowersAdapter(List<UserModel> arrayList, ConnectionsUnfollow listener) {
-        this.arrayList = arrayList;
+    public CustomFollowersAdapter(List<FriendshipModel> arrayList, FriendsInteraction listener) {
+        this.mFriends = arrayList;
         interactionListener = listener;
     }
 
-    public void setData(List<UserModel> data) {
-        this.arrayList = data;
+    public void setData(List<FriendshipModel> data) {
+        this.mFriends = data;
         notifyDataSetChanged();
     }
 
@@ -47,14 +47,48 @@ public class CustomFollowersAdapter extends RecyclerView.Adapter<CustomFollowers
             ButterKnife.bind(this, itemView);
         }
 
-        void bindData(UserModel user) {
-            GlideApp.with(itemView.getContext()).load(user.getProfilePic()).into(imProfilePic);
-            tvName.setText(user.getUsername());
-            tvCheckins.setText("Checkins "+user.formatCheckins());
+        void bindData(FriendshipModel friendshipModel) {
+            GlideApp.with(itemView.getContext()).load(friendshipModel.getUserPic()).into(imProfilePic);
+            tvName.setText(friendshipModel.getUserName());
+            tvCheckins.setText("Checkins "+friendshipModel.formatCheckins());
             btnUnfollow.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    interactionListener.onUnfollowConnection(user);
+                    interactionListener.onUnfollowConnection(friendshipModel);
+                }
+            });
+        }
+        public void iconChanged(FriendshipModel.FRIEND_STATUS status){
+            if (status == FriendshipModel.FRIEND_STATUS.FRIEND)
+                btnUnfollow.setImageResource(R.drawable.btn_unfriend);
+            btnUnfollow.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+//                    TODO
+                }
+            });
+            if (status == FriendshipModel.FRIEND_STATUS.BLOCKED)
+                btnUnfollow.setImageResource(R.drawable.btn_unfriend);
+            btnUnfollow.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+//                    TODO
+                }
+            });
+            if (status == FriendshipModel.FRIEND_STATUS.REQUESTED)
+                btnUnfollow.setImageResource(R.drawable.btn_unfriend);
+            btnUnfollow.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+//                    TODO
+                }
+            });
+            if (status == FriendshipModel.FRIEND_STATUS.NONE)
+                btnUnfollow.setImageResource(R.drawable.btn_unfriend);
+            btnUnfollow.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+//                    TODO
                 }
             });
         }
@@ -70,14 +104,16 @@ public class CustomFollowersAdapter extends RecyclerView.Adapter<CustomFollowers
 
     @Override
     public void onBindViewHolder(MyViewHolder holder, final int  position) {
-        holder.bindData(arrayList.get(position));
+        holder.bindData(mFriends.get(position));
     }
 
     @Override
     public int getItemCount() {
-        return arrayList == null ? 0 : arrayList.size();
+        return mFriends == null ? 0 : mFriends.size();
     }
-    public interface ConnectionsUnfollow{
-       void onUnfollowConnection(UserModel userModel);
+    public interface FriendsInteraction{
+       void onUnfollowConnection(FriendshipModel userModel);
+       void onRequestAccepted(FriendshipModel userModel);
     }
+
 }

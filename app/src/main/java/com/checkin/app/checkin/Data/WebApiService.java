@@ -6,6 +6,7 @@ import com.checkin.app.checkin.Session.ActiveSessionModel;
 import com.checkin.app.checkin.Shop.ShopModel;
 import com.checkin.app.checkin.Shop.ShopReview;
 import com.checkin.app.checkin.Social.Message;
+import com.checkin.app.checkin.User.PrivateProfile.FriendshipModel;
 import com.checkin.app.checkin.User.UserModel;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 
@@ -13,6 +14,7 @@ import java.util.List;
 
 import retrofit2.Call;
 import retrofit2.http.Body;
+import retrofit2.http.DELETE;
 import retrofit2.http.GET;
 import retrofit2.http.PATCH;
 import retrofit2.http.POST;
@@ -65,4 +67,16 @@ public interface WebApiService {
 
     @GET("messages/{user_id}/")
     Call<List<Message>> getMessages(@Path("user_id") String userId);
+
+    @GET("friends/self/")
+    Call<List<FriendshipModel>> getSelfFriends();
+
+    @GET("friends/{user_pk}")
+    Call<List<FriendshipModel>> getUserFriends(@Path("user_pk") Long userPk);
+
+    @DELETE("friends/remove/{user_pk}/")
+    Call<ObjectNode> removeFriend(@Path("user_pk") Long userPk);
+
+    @POST("friends/requests/{request_pk}/accept/")
+    Call<ObjectNode> postNewFriends(@Path("request_pk") Long userPk);
 }
