@@ -50,11 +50,7 @@ public class UserRepository extends BaseRepository {
 
             @Override
             protected void saveCallResult(List<UserModel> data) {
-                try {
-                    mUserModel.put(data);
-                } catch (UniqueViolationException e) {
-                    Log.e("UserRepo", "User ID conflict!!!");
-                }
+                mUserModel.put(data);
             }
 
             @Override

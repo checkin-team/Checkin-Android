@@ -24,14 +24,14 @@ public class ReviewsRepository extends BaseRepository {
         mWebService = ApiClient.getApiService(context);
     }
 
-    public LiveData<Resource<List<ShopReview>>> getShopReviews(String shopId){
-        return new NetworkBoundResource<List<ShopReview>, List<ShopReview>>() {
+    public LiveData<Resource<List<ShopReviewPOJO>>> getShopReviews(String shopId){
+        return new NetworkBoundResource<List<ShopReviewPOJO>, List<ShopReviewPOJO>>() {
             @Override
-            protected void saveCallResult(@NonNull List<ShopReview> item) {
+            protected void saveCallResult(@NonNull List<ShopReviewPOJO> item) {
             }
 
             @Override
-            protected boolean shouldFetch(@Nullable List<ShopReview> data) {
+            protected boolean shouldFetch(@Nullable List<ShopReviewPOJO> data) {
                 return true;
             }
 
@@ -42,7 +42,7 @@ public class ReviewsRepository extends BaseRepository {
 
             @NonNull
             @Override
-            protected LiveData<ApiResponse<List<ShopReview>>> createCall() {
+            protected LiveData<ApiResponse<List<ShopReviewPOJO>>> createCall() {
                 return new RetrofitLiveData<>(mWebService.getShopReviews(shopId));
             }
         }.getAsLiveData();
