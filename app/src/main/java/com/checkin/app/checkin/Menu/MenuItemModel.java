@@ -33,6 +33,10 @@ public class MenuItemModel {
     @JsonProperty("costs") private List<Double> typeCost;
     private String description;
     private boolean vegetarian;
+    private boolean breakfast;
+    private boolean dinner;
+    private boolean lunch;
+
     @JsonIgnore private ToOne<MenuGroupModel> group;
     private boolean available;
     @JsonProperty("menu_id") private int menuId;
@@ -52,12 +56,16 @@ public class MenuItemModel {
     MenuItemModel() {
     }
 
-    public MenuItemModel(String name, List<String> typeName,List<Double> typeCost, long groupId, int menuId) {
+    public MenuItemModel(String name, List<String> typeName,List<Double> typeCost, long groupId, int menuId,boolean breakfast,boolean lunch,boolean dinner) {
         this.name = name;
         this.typeName = typeName;
         this.typeCost = typeCost;
         this.group.setTargetId(groupId);
         this.menuId = menuId;
+        this.breakfast=breakfast;
+        this.lunch=lunch;
+        this.dinner=dinner;
+
     }
 
     public String getDescription() {
@@ -75,6 +83,9 @@ public class MenuItemModel {
         this.vegetarian = item.isVegetarian();
         this.menuId = item.getMenuId();
         this.subGroupIndex = item.getSubGroupIndex();
+        this.breakfast=item.isBreakfast();
+        this.dinner=item.isDinner();
+        this.lunch=item.isLunch();
     }
 
     public ToMany<ItemCustomizationGroupModel> getCustomizationGroups() {
@@ -117,6 +128,18 @@ public class MenuItemModel {
     public boolean isVegetarian() {
         return vegetarian;
     }
+    public boolean isBreakfast() {
+        return breakfast;
+    }
+    public boolean isLunch() {
+        return lunch;
+    }
+
+    public boolean isDinner() {
+        return dinner;
+    }
+
+
 
     public int getMenuId() {
         return menuId;
@@ -207,4 +230,5 @@ public class MenuItemModel {
     public boolean equals(Object obj) {
         return obj instanceof MenuItemModel && this.id == ((MenuItemModel) obj).id;
     }
+
 }

@@ -13,6 +13,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.checkin.app.checkin.Data.Resource;
 import com.checkin.app.checkin.R;
 import com.checkin.app.checkin.Utility.ItemClickSupport;
 import com.checkin.app.checkin.Utility.QuantityPickerView;
@@ -33,14 +34,25 @@ public class MenuItemAdapter extends RecyclerView.Adapter<MenuItemAdapter.ItemVi
     private List<MenuItemModel> mItemsList;
     private RecyclerView mRecyclerView;
     private static OnItemInteractionListener mItemInteractionListener;
+    private boolean activate=true;
 
     MenuItemAdapter(List<MenuItemModel> itemsList) {
         mItemsList = itemsList;
     }
 
     public void setItemInteractionListener (OnItemInteractionListener listener) {
-        mItemInteractionListener = listener;
+        mItemInteractionListener= listener;
     }
+    public void setItemInteractionListener1 (OnItemInteractionListener listener) {
+        mItemInteractionListener= listener;
+    }
+    public void setActivate(boolean activate){
+        this.activate=activate;
+    }
+    public boolean getActivate(){
+        return activate;
+    }
+
 
     @SuppressLint("ClickableViewAccessibility")
     @Override
@@ -59,13 +71,19 @@ public class MenuItemAdapter extends RecyclerView.Adapter<MenuItemAdapter.ItemVi
     @Override
     public ItemViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         final View view = LayoutInflater.from(parent.getContext()).inflate(viewType, parent, false);
+
+        if(!getActivate())
+        {  view.findViewById(R.id.quantity_picker_layout).setVisibility(View.GONE);}
         return new ItemViewHolder(view);
     }
 
     @Override
     public void onBindViewHolder(@NonNull ItemViewHolder holder, int position) {
         holder.bindData(mItemsList.get(position));
+
+
     }
+
 
     @Override
     public int getItemCount() {
@@ -82,7 +100,9 @@ public class MenuItemAdapter extends RecyclerView.Adapter<MenuItemAdapter.ItemVi
 
         ItemViewHolder(View itemView) {
             super(itemView);
+
             ButterKnife.bind(this, itemView);
+
             itemView.setOnLongClickListener(v -> menuItem != null && mItemInteractionListener.onItemLongPress(menuItem));
         }
 
@@ -90,12 +110,15 @@ public class MenuItemAdapter extends RecyclerView.Adapter<MenuItemAdapter.ItemVi
         void bindData(MenuItemModel menuItem) {
             this.menuItem = menuItem;
             this.menuItem.setItemHolder(this);
+
             vTitle.setText(menuItem.getName());
             vPriceValue.setText(Util.joinCollection(menuItem.getTypeCost(), " | "));
             if (!menuItem.getCustomizationGroups().isEmpty()) {
                 imItemAdd.setImageResource(R.drawable.ic_menu_item_add_customize);
             }
-            int count = mItemInteractionListener.orderedItemCount(menuItem);
+            int count=0;
+            if(mItemInteractionListener!=null)
+            count = mItemInteractionListener.orderedItemCount(menuItem);
             if (count > 0)
                 showQuantitySelection(count);
             else
@@ -134,6 +157,8 @@ public class MenuItemAdapter extends RecyclerView.Adapter<MenuItemAdapter.ItemVi
             vQuantityPicker.setVisibility(View.VISIBLE);
             vQuantityPicker.scrollToPosition(count);
         }
+
+
 
         @Override
         public void onScrollStart(@NonNull TextBaseAdapter.TextViewHolder currentItemHolder, int adapterPosition) {

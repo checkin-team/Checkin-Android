@@ -2,7 +2,9 @@ package com.checkin.app.checkin.Menu;
 
 import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
+import android.arch.lifecycle.LiveData;
 import android.arch.lifecycle.Observer;
+import android.arch.lifecycle.Transformations;
 import android.arch.lifecycle.ViewModelProviders;
 import android.content.Context;
 import android.content.Intent;
@@ -25,6 +27,7 @@ import android.text.TextUtils;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
+import android.view.MenuItem;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
@@ -33,6 +36,7 @@ import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.checkin.app.checkin.Data.Resource;
 import com.checkin.app.checkin.Menu.MenuUserFragment.STATUS_VALUES;
 import com.checkin.app.checkin.R;
 import com.checkin.app.checkin.Utility.Constants;
@@ -52,6 +56,7 @@ import static com.checkin.app.checkin.Menu.MenuUserFragment.SESSION_STATUS;
 
 public class SessionUserActivity extends AppCompatActivity implements
         MenuUserFragment.MenuInteractionListener,
+        MenuSearchFragment.MenuInteractionListener,
         MenuCartAdapter.OnCartInteractionListener
 {
     private final String TAG = SessionUserActivity.class.getSimpleName();
@@ -65,16 +70,21 @@ public class SessionUserActivity extends AppCompatActivity implements
     @BindView(R.id.count_order_items) TextView tvCountItems;
     @BindView(R.id.container_customization) ViewGroup containerCustomization;
     private MenuUserFragment mMenuFragment;
+    private MenuSearchFragment menuSearchFragment;
+
     private MenuViewModel mMenuViewModel;
     private MenuCartAdapter mCartAdapter;
+    private static long shopid;
 
     private MaterialStyledDialog mRemarksDialog;
     private boolean canGoBack = false;
+
     private STATUS_VALUES mSessionStatus;
     private static final String SESSION_ARG = "session_arg";
 
     public static void startSession(Context context, long shop_id, int qr_id) {
         Intent intent = new Intent(context, SessionUserActivity.class);
+        shopid=shop_id;
         //TODO: Start session by network request.
         int session_id = 1;
         Bundle args = new Bundle();
@@ -100,6 +110,7 @@ public class SessionUserActivity extends AppCompatActivity implements
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_session_user);
 
+
         ButterKnife.bind(this);
 
         mSessionStatus = (STATUS_VALUES) getIntent().getBundleExtra(SESSION_ARG).getSerializable(SESSION_STATUS);
@@ -119,6 +130,7 @@ public class SessionUserActivity extends AppCompatActivity implements
         Bundle args = getIntent().getBundleExtra(SESSION_ARG);
         mMenuFragment = new MenuUserFragment();
         mMenuFragment.setArguments(args);
+
         getSupportFragmentManager().beginTransaction()
                 .add(R.id.container_menu, mMenuFragment)
                 .commit();
@@ -136,6 +148,69 @@ public class SessionUserActivity extends AppCompatActivity implements
         setupUiStuff();
         setupSearch();
         setupRemarksDialog();
+
+        findViewById(com.miguelcatalan.materialsearchview.R.id.action_up_btn).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                Log.e(TAG,"Mai yha toh aaya tha");
+                mSearchView.closeSearch();
+                getSupportFragmentManager().popBackStackImmediate("search",FragmentManager.POP_BACK_STACK_INCLUSIVE);
+            }
+
+        });
+        mFilterContainer.findViewById(R.id.btn_breakfast).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                getSupportFragmentManager().popBackStack();
+                Bundle bundle= new Bundle();
+                bundle.putString("query","breakfast");
+                menuSearchFragment=new MenuSearchFragment();
+                menuSearchFragment.setArguments(bundle);
+                getSupportFragmentManager().beginTransaction()
+                        .replace(R.id.container_menu,menuSearchFragment)
+                        .addToBackStack("filter")
+                        .commit();
+                mFilterToggle.performClick();
+            }
+        });
+        mFilterContainer.findViewById(R.id.btn_lunch).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                getSupportFragmentManager().popBackStack();
+                Bundle bundle= new Bundle();
+                bundle.putString("query","lunch");
+                bundle.putBoolean("Session_Status", mSessionStatus != STATUS_VALUES.INACTIVE);
+
+                menuSearchFragment=new MenuSearchFragment();
+                menuSearchFragment.setArguments(bundle);
+                getSupportFragmentManager().beginTransaction()
+                        .replace(R.id.container_menu,menuSearchFragment)
+                        .addToBackStack("filter")
+                        .commit();
+                mFilterToggle.performClick();
+            }
+        });
+
+        mFilterContainer.findViewById(R.id.btn_dinner).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                getSupportFragmentManager().popBackStack();
+                Bundle bundle= new Bundle();
+                bundle.putString("query","dinner");
+                menuSearchFragment=new MenuSearchFragment();
+                menuSearchFragment.setArguments(bundle);
+                getSupportFragmentManager().beginTransaction()
+                        .replace(R.id.container_menu,menuSearchFragment)
+                        .addToBackStack("filter")
+                        .commit();
+                mFilterToggle.performClick();
+            }
+        });
+
+
+
+
     }
 
     private void setupRemarksDialog() {
@@ -267,6 +342,7 @@ public class SessionUserActivity extends AppCompatActivity implements
                         mFilterContainer.setRotation(180);
                     }
                 });
+
     }
 
     private void setupSearch() {
@@ -275,16 +351,42 @@ public class SessionUserActivity extends AppCompatActivity implements
         mSearchView.setCursorDrawable(R.drawable.color_cursor_white);
         mSearchView.setSuggestions(getResources().getStringArray(R.array.menu_items));
 
+
         mSearchView.setOnQueryTextListener(new MaterialSearchView.OnQueryTextListener() {
             @Override
             public boolean onQueryTextSubmit(String query) {
+
+
+
+
                 Toast.makeText(getApplicationContext(), "Query: " + query, Toast.LENGTH_SHORT).show();
+                if(getSupportFragmentManager().getBackStackEntryCount()!=0)
+                {
+                getSupportFragmentManager().popBackStack();}
+
+                Bundle bundle= new Bundle();
+                bundle.putString("query",query);
+                menuSearchFragment = new MenuSearchFragment();
+                menuSearchFragment.setArguments(bundle);
+
+
+                        getSupportFragmentManager().beginTransaction()
+                                .replace(R.id.container_menu, menuSearchFragment)
+                                .addToBackStack("search")
+                                .commit();
+
+                //}
+                //catch (IllegalStateException e) {
+                  //  Toast.makeText(getApplicationContext(), "Wait for some time then try again", Toast.LENGTH_SHORT).show();
+                //}
+
                 return false;
             }
 
             @Override
             public boolean onQueryTextChange(String newText) {
                 // TODO: Do some magic!
+
                 return false;
             }
 
@@ -322,10 +424,13 @@ public class SessionUserActivity extends AppCompatActivity implements
         } else if (itemCustomizationFragment != null) {
             itemCustomizationFragment.onBackPressed();
         }
+        if (getSupportFragmentManager().popBackStackImmediate("filter", FragmentManager.POP_BACK_STACK_INCLUSIVE)) {
+        }
+
         else if (mFilterContainer.getVisibility() == View.VISIBLE)
             hideFilter();
         else if (mSearchView.isSearchOpen())
-            mSearchView.closeSearch();
+        { mSearchView.closeSearch(); getSupportFragmentManager().popBackStack();}
         else if (mDarkBack.getVisibility() == View.VISIBLE) {
             hideDarkBack();
             getSupportFragmentManager().popBackStack();
@@ -363,7 +468,8 @@ public class SessionUserActivity extends AppCompatActivity implements
             if (matches != null && matches.size() > 0) {
                 String searchWrd = matches.get(0);
                 if (!TextUtils.isEmpty(searchWrd)) {
-                    mSearchView.setQuery(searchWrd, false);
+                    mSearchView.setQuery(searchWrd, true);
+
                 }
             }
             return;
@@ -429,6 +535,47 @@ public class SessionUserActivity extends AppCompatActivity implements
         mRemarksDialog.show();
     }
 
+    @Override
+    public void onItemInteraction1(MenuItemModel item, int count) {
+        if (item.isComplexItem()) {
+            Log.e(TAG, "SHOW customizationFragment");
+            canGoBack = true;
+            showDarkBack();
+            getSupportFragmentManager().beginTransaction()
+                    .setCustomAnimations(R.anim.slide_up, 0, 0, R.anim.slide_down)
+                    .replace(containerCustomization.getId(), ItemCustomizationFragment.newInstance(item, new ItemCustomizationFragment.ItemCustomizationInteraction() {
+                        @Override
+                        public void onCustomizationDone() {
+                            mMenuViewModel.orderItem();
+                            canGoBack = false;
+                            hideDarkBack();
+                            getSupportFragmentManager().popBackStack();
+                        }
+
+                        @Override
+                        public void onCustomizationCancel() {
+                            mMenuViewModel.cancelItem();
+                            canGoBack = false;
+                            hideDarkBack();
+                            getSupportFragmentManager().popBackStack();
+                        }
+                    }))
+                    .addToBackStack(null)
+                    .commit();
+        } else {
+            mMenuViewModel.orderItem();
+        }
+    }
+
+    @Override
+    public void onItemShowInfo1(MenuItemModel item) {
+        canGoBack = true;
+        getSupportFragmentManager().beginTransaction()
+                .replace(R.id.root_view, MenuInfoFragment.newInstance(item))
+                .addToBackStack("info")
+                .commit();
+    }
+
 
     public class FilterCategoryAdapter extends RecyclerView.Adapter<FilterCategoryAdapter.ViewHolder>{
         private List<String> categories;
@@ -441,6 +588,7 @@ public class SessionUserActivity extends AppCompatActivity implements
         @Override
         public FilterCategoryAdapter.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
             View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.filter_category_item, parent, false);
+
             return new ViewHolder(view);
         }
 
@@ -475,4 +623,6 @@ public class SessionUserActivity extends AppCompatActivity implements
             }
         }
     }
+
+
 }

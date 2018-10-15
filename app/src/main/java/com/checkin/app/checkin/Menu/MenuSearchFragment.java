@@ -2,6 +2,7 @@ package com.checkin.app.checkin.Menu;
 
 import android.arch.lifecycle.ViewModelProviders;
 import android.content.Context;
+import android.nfc.Tag;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
@@ -12,35 +13,35 @@ import android.util.LongSparseArray;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import com.checkin.app.checkin.Data.Resource;
 import com.checkin.app.checkin.R;
 import com.checkin.app.checkin.Utility.Constants;
 
+import java.util.List;
+
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.Unbinder;
 
-public class MenuUserFragment extends Fragment implements MenuItemAdapter.OnItemInteractionListener {
-    private final String TAG = MenuUserFragment.class.getSimpleName();
+import static com.checkin.app.checkin.Menu.ItemCustomizationGroupModel_.item;
 
-    @BindView(R.id.menu_groups_list) RecyclerView rvGroupsList;
-    @BindView(R.id.tv_current_category) TextView tvCurrentCategory;
+public class MenuSearchFragment extends Fragment implements MenuItemAdapter.OnItemInteractionListener  {
+    private final String TAG = MenuSearchFragment.class.getSimpleName();
+
+    @BindView(R.id.menu_groups_list)
+    RecyclerView rvGroupsList;
     private MenuInteractionListener mMenuInteractionListener;
     private Unbinder unbinder;
     private MenuViewModel mViewModel;
-    private MenuGroupAdapter mGroupAdapter;
+    private MenuItemAdapter.OnItemInteractionListener itemInteractionListener;
+    String queryG;
+    private MenuItemAdapter mItemAdapter;
     private boolean mSessionActive = true;
     private LongSparseArray<Integer> orderedItemsCount;
 
-    public static final String SESSION_STATUS = "status";
-    public enum STATUS_VALUES {
-        STARTED, RESUMED, INACTIVE
-    }
-
-    public MenuUserFragment() {
+    public MenuSearchFragment() {
         setHasOptionsMenu(true);
     }
 
@@ -50,63 +51,60 @@ public class MenuUserFragment extends Fragment implements MenuItemAdapter.OnItem
 
         if (getActivity() == null)
             return;
-        mViewModel = ViewModelProviders.of(getActivity(), new MenuViewModel.Factory(getActivity().getApplication())).get(MenuViewModel.class);
         Bundle args = getArguments();
         if (args == null) {
-            Log.e(TAG, "No Serializable arguments sent to " + MenuUserFragment.class.getSimpleName());
+            Log.e(TAG, "No Serializable arguments sent to " + MenuSearchFragment.class.getSimpleName());
             return;
         }
-        STATUS_VALUES sessionStatus = (STATUS_VALUES) args.getSerializable(SESSION_STATUS);
-
-        if (sessionStatus == STATUS_VALUES.INACTIVE)
-            mSessionActive = false;
-
-
 
 
     }
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        final View rootView = inflater.inflate(R.layout.fragment_menu_user, container, false);
+        final View rootView = inflater.inflate(R.layout.fragment_search_item, container, false);
         unbinder = ButterKnife.bind(this, rootView);
-        if (getActivity() == null || getArguments() == null)
+        if (getActivity() == null||getArguments() == null)
             return null;
 
         LinearLayoutManager llm = new LinearLayoutManager(getActivity(), RecyclerView.VERTICAL, false);
         rvGroupsList.setLayoutManager(llm);
+        mViewModel = ViewModelProviders.of(getActivity(), new MenuViewModel.Factory(getActivity().getApplication())).get(MenuViewModel.class);
 
-        mGroupAdapter = new MenuGroupAdapter(null, getContext(), this,mSessionActive);
-        rvGroupsList.setAdapter(mGroupAdapter);
+
+        rvGroupsList.setAdapter(mItemAdapter);
 
         rvGroupsList.addOnScrollListener(new RecyclerView.OnScrollListener() {
             @Override
             public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
                 super.onScrolled(recyclerView, dx, dy);
-                tvCurrentCategory.setText(mGroupAdapter.getCurrentCategory());
+
+            }
+        });
+        queryG=getArguments().getString("query");
+        Log.e(TAG,queryG);
+        mViewModel.search(queryG);
+        boolean mSessionStatus=getArguments().getBoolean("SessionStatus");
+
+        mViewModel.getMenuItems().observe(getActivity(),menuItemModels -> {
+            if(menuItemModels==null)
+            {
+                Log.e(TAG,"Kuch nhi mila");
+                return;
+            }
+            else
+            {   Log.e(TAG,"Itna mila"+ menuItemModels.size());
+                mItemAdapter = new MenuItemAdapter(menuItemModels);
             }
         });
 
-        long shopId = getArguments().getLong(Constants.SHOP_ID);
-        mViewModel.getMenuGroups(shopId).observe(getActivity(), menuGroupResource -> {
-            if (menuGroupResource == null)
-                return;
-            if (menuGroupResource.status == Resource.Status.SUCCESS)
-                mGroupAdapter.setGroupList(menuGroupResource.data);
-            else if (menuGroupResource.status == Resource.Status.LOADING) {
-                // TODO: DO some Loading magic!
-            } else {
-                Toast.makeText(
-                        MenuUserFragment.this.getContext(),
-                        "An error occurred: " + menuGroupResource.message,
-                        Toast.LENGTH_SHORT
-                ).show();
-            }
-        });
+        rvGroupsList.setAdapter(mItemAdapter);
+        mItemAdapter.setActivate(mSessionStatus);
+        mItemAdapter.setItemInteractionListener(this);
+
         mViewModel.getCurrentItem().observe(getActivity(), orderedItem -> {
             if (orderedItem == null)    return;
             MenuItemAdapter.ItemViewHolder holder = orderedItem.getItem().getItemHolder();
-
             if (holder != null && holder.getMenuItem() == orderedItem.getItem()) {
                 Log.e(TAG, "holder: " + holder.vQuantityPicker.getCurrentItem() + ", item: " + orderedItem.getQuantity());
                 holder.changeQuantity(mViewModel.getOrderedCount(orderedItem.getItem()) + orderedItem.getChangeCount());
@@ -116,17 +114,7 @@ public class MenuUserFragment extends Fragment implements MenuItemAdapter.OnItem
         return rootView;
     }
 
-    public void onBackPressed() {
-        mGroupAdapter.contractView();
-    }
 
-    public boolean isGroupExpanded() {
-        return mGroupAdapter.isGroupExpanded();
-    }
-
-    public void scrollToCategory(String title){
-        rvGroupsList.smoothScrollToPosition(mGroupAdapter.getCategoryPosition(title));
-    }
 
     @Override
     public void onAttach(Context context) {
@@ -135,6 +123,7 @@ public class MenuUserFragment extends Fragment implements MenuItemAdapter.OnItem
         // the callback interface. If not, it throws an exception
         try {
             mMenuInteractionListener = (MenuInteractionListener) context;
+
         } catch (ClassCastException e) {
             throw new ClassCastException(context.toString()
                     + " must implement MenuInteractionListener");
@@ -150,28 +139,26 @@ public class MenuUserFragment extends Fragment implements MenuItemAdapter.OnItem
     @Override
     public boolean onItemAdded(MenuItemAdapter.ItemViewHolder holder) {
         if (!mSessionActive)
-        {
-            return false;}
+            return false;
         MenuItemModel item = holder.getMenuItem();
         mViewModel.newOrderedItem(item);
-        mMenuInteractionListener.onItemInteraction(item, 1);
+        mMenuInteractionListener.onItemInteraction1(item, 1);
         return true;
     }
 
     @Override
     public boolean onItemLongPress(MenuItemModel item) {
-        mMenuInteractionListener.onItemShowInfo(item);
+        mMenuInteractionListener.onItemShowInfo1(item);
         return true;
     }
 
     @Override
     public boolean onItemChanged(MenuItemAdapter.ItemViewHolder holder, int count) {
         if (!mSessionActive)
-        {
-            return false;}
+            return false;
         MenuItemModel item = holder.getMenuItem();
         if (mViewModel.updateOrderedItem(item, count)) {
-            mMenuInteractionListener.onItemInteraction(item, count);
+            mMenuInteractionListener.onItemInteraction1(item, count);
         }
         return true;
     }
@@ -181,8 +168,21 @@ public class MenuUserFragment extends Fragment implements MenuItemAdapter.OnItem
         return mViewModel.getOrderedCount(item);
     }
 
-    public interface MenuInteractionListener {
-        void onItemInteraction(MenuItemModel item, int count);
-        void onItemShowInfo(MenuItemModel item);
+
+    public interface MenuInteractionListener
+
+    {
+
+
+        void onItemInteraction1 (MenuItemModel item,int count);
+
+        void onItemShowInfo1 (MenuItemModel item);
     }
+
+    @Override
+    public void onSaveInstanceState(@NonNull Bundle outState) {
+
+
+    }
+
 }
