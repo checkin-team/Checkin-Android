@@ -12,6 +12,7 @@ import com.checkin.app.checkin.Data.NetworkBoundResource;
 import com.checkin.app.checkin.Data.Resource;
 import com.checkin.app.checkin.Data.RetrofitLiveData;
 import com.checkin.app.checkin.Data.WebApiService;
+import com.checkin.app.checkin.User.PrivateProfile.FriendshipModel;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 
 import java.io.File;
@@ -29,6 +30,86 @@ public class UserRepository extends BaseRepository {
         mWebService = ApiClient.getApiService(context);
     }
 
+    public LiveData<Resource<List<FriendshipModel>>> getSelfFriends(){
+        return new NetworkBoundResource<List<FriendshipModel>, List<FriendshipModel>>(){
+
+            @Override
+            protected boolean shouldUseLocalDb() {
+                return false;
+            }
+
+            @NonNull
+            @Override
+            protected LiveData<ApiResponse<List<FriendshipModel>>> createCall() {
+                return new RetrofitLiveData<>(mWebService.getSelfFriends());
+            }
+
+            @Override
+            protected void saveCallResult(List<FriendshipModel> data) {
+
+            }
+        }.getAsLiveData();
+    }
+
+    public LiveData<Resource<List<FriendshipModel>>> getUserFriends(long userPk){
+        return new NetworkBoundResource<List<FriendshipModel>, List<FriendshipModel>>() {
+            @Override
+            protected boolean shouldUseLocalDb() {
+                return false;
+            }
+
+            @NonNull
+            @Override
+            protected LiveData<ApiResponse<List<FriendshipModel>>> createCall() {
+                return new RetrofitLiveData<>(mWebService.getUserFriends(userPk));
+            }
+
+            @Override
+            protected void saveCallResult(List<FriendshipModel> data) {
+
+            }
+        }.getAsLiveData();
+    }
+    public LiveData<Resource<ObjectNode>> removeFriend(long userPk){
+        return new NetworkBoundResource<ObjectNode, ObjectNode>(){
+
+            @Override
+            protected boolean shouldUseLocalDb() {
+                return false;
+            }
+
+            @NonNull
+            @Override
+            protected LiveData<ApiResponse<ObjectNode>> createCall() {
+                return new RetrofitLiveData<>(mWebService.removeFriend(userPk));
+            }
+
+            @Override
+            protected void saveCallResult(ObjectNode data) {
+
+            }
+        }.getAsLiveData();
+    }
+
+    public LiveData<Resource<ObjectNode>> postNewFriends(long userPk){
+        return new NetworkBoundResource<ObjectNode, ObjectNode>() {
+            @Override
+            protected boolean shouldUseLocalDb() {
+                return false;
+            }
+
+            @NonNull
+            @Override
+            protected LiveData<ApiResponse<ObjectNode>> createCall() {
+                return new RetrofitLiveData<>(mWebService.postNewFriends(userPk));
+            }
+
+            @Override
+            protected void saveCallResult(ObjectNode data) {
+
+            }
+        }.getAsLiveData();
+    }
     public LiveData<Resource<List<UserModel>>> getAllUsers() {
         return new NetworkBoundResource<List<UserModel>, List<UserModel>>() {
 

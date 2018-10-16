@@ -5,6 +5,7 @@ import com.checkin.app.checkin.Notifications.NotificationModel;
 import com.checkin.app.checkin.Session.ActiveSessionModel;
 import com.checkin.app.checkin.Shop.ShopModel;
 import com.checkin.app.checkin.Shop.ShopReviewPOJO;
+import com.checkin.app.checkin.User.PrivateProfile.FriendshipModel;
 import com.checkin.app.checkin.User.UserModel;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 
@@ -13,6 +14,7 @@ import java.util.List;
 import okhttp3.MultipartBody;
 import retrofit2.Call;
 import retrofit2.http.Body;
+import retrofit2.http.DELETE;
 import retrofit2.http.GET;
 import retrofit2.http.Multipart;
 import retrofit2.http.PATCH;
@@ -51,6 +53,18 @@ public interface WebApiService {
     @POST("users/self/picture/")
     Call<ObjectNode> postUserProfilePic(@Part MultipartBody.Part pic);
     // endregion
+
+    @GET("friends/self/")
+    Call<List<FriendshipModel>> getSelfFriends();
+
+    @GET("friends/{user_pk}")
+    Call<List<FriendshipModel>> getUserFriends(@Path("user_pk") Long userPk);
+
+    @DELETE("friends/remove/{user_pk}/")
+    Call<ObjectNode> removeFriend(@Path("user_pk") Long userPk);
+
+    @POST("friends/requests/{request_pk}/accept/")
+    Call<ObjectNode> postNewFriends(@Path("request_pk") Long userPk);
 
     @POST("qr/decrypt/")
     Call<ObjectNode> postDecryptQr(@Body ObjectNode data);

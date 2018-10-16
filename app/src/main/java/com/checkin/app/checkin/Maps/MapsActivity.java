@@ -36,6 +36,7 @@ import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.CameraPosition;
 import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.MarkerOptions;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -227,7 +228,6 @@ public class MapsActivity extends AppCompatActivity implements
             Double lat = location.getLatitude();
             Double lng = location.getLongitude();
             LatLng latLong = new LatLng(lat, lng);
-            String mAddress = mAreaOutput;
             CameraPosition cameraPosition = new CameraPosition.Builder()
                     .target(latLong)
                     .zoom(19f)
@@ -249,7 +249,7 @@ public class MapsActivity extends AppCompatActivity implements
         Intent data = new Intent();
         data.putExtra(KEY_MAPS_LATITUDE, latLng.latitude);
         data.putExtra(KEY_MAPS_LONGITUDE, latLng.longitude);
-        data.putExtra(KEY_MAPS_ADDRESS, mAreaOutput);
+        data.putExtra(KEY_MAPS_ADDRESS, mAreaOutput );
         setResult(RESULT_OK, data);
         finish();
     }
