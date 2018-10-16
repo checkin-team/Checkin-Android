@@ -2,7 +2,6 @@ package com.checkin.app.checkin.User.PersonalProfile;
 
 import android.arch.lifecycle.ViewModelProviders;
 import android.content.Intent;
-import android.support.annotation.Nullable;
 import android.support.constraint.ConstraintLayout;
 import android.support.constraint.Guideline;
 import android.support.v7.app.AppCompatActivity;
@@ -15,13 +14,11 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
-import com.checkin.app.checkin.Data.Resource;
 import com.checkin.app.checkin.R;
-import com.checkin.app.checkin.User.NonPersonalProfile.UserProfileActivity;
+import com.checkin.app.checkin.User.NonPersonalProfile.UserCheckinsActivity;
 import com.checkin.app.checkin.User.UserModel;
 import com.checkin.app.checkin.User.PrivateProfile.FollowersActivity;
 import com.checkin.app.checkin.Utility.SelectCropImageActivity;
-import com.checkin.app.checkin.Utility.Util;
 import com.transitionseverywhere.TransitionManager;
 
 import java.io.File;
@@ -98,6 +95,10 @@ public class UserProfilePersonalActivity extends AppCompatActivity {
     @OnClick({R.id.tv_followers, R.id.tv_label_followers})
     public void followers(){
         startActivity(new Intent(getApplicationContext(), FollowersActivity.class));
+    }
+    @OnClick(R.id.tv_user_checkins)
+    public void checkins(){
+        startActivity(new Intent(getApplicationContext(),UserCheckinsActivity.class));
     }
 
     @Override

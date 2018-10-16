@@ -115,5 +115,4 @@ public class CustomFollowersAdapter extends RecyclerView.Adapter<CustomFollowers
        void onUnfollowConnection(FriendshipModel userModel);
        void onRequestAccepted(FriendshipModel userModel);
     }
-
 }

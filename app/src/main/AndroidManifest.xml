@@ -115,12 +115,10 @@
         <activity android:name=".Shop.ShopInfoActivity" />
         <activity android:name=".User.PersonalProfile.UserProfilePersonalActivity" />
         <activity android:name=".User.PersonalProfile.EditPersonalProfile" />
-        <activity android:name=".User.PrivateProfile.FollowersActivity"
-            android:theme="@style/Theme.AppCompat.Light"
-            android:parentActivityName=".User.UserProfileActivity"
-            >
-
-        </activity>
+        <activity
+            android:name=".User.PrivateProfile.FollowersActivity"
+            android:parentActivityName=".User.PrivateProfile.FollowersActivity"
+            android:theme="@style/Theme.AppCompat.Light"></activity>
         <activity
             android:name=".Maps.MapsActivity"
             android:label="@string/title_activity_maps"
@@ -169,7 +167,11 @@
         <service android:name=".Maps.FetchAddressIntentService" />
         <service android:name=".Auth.DeviceTokenService" />
 
-        <activity android:name=".Shop.ShopReviewsActivity"></activity>
+        <activity android:name=".Shop.ShopReviewsActivity" />
+        <activity android:name=".User.NonPersonalProfile.UserCheckinsActivity"
+            android:theme="@style/Theme.AppCompat.Light"
+            android:parentActivityName=".User.NonPersonalProfile.UserProfileActivity">
+        </activity>
     </application>
 
 </manifest>
