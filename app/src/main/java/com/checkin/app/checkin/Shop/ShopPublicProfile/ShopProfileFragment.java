@@ -20,6 +20,7 @@ import android.widget.Toast;
 import com.checkin.app.checkin.Data.Resource;
 import com.checkin.app.checkin.R;
 import com.checkin.app.checkin.Shop.ShopModel;
+import com.checkin.app.checkin.Shop.ShopReviewsActivity;
 
 /**
  * Created by Bhavik Patel on 17/08/2018.
@@ -28,14 +29,16 @@ import com.checkin.app.checkin.Shop.ShopModel;
 public class ShopProfileFragment extends Fragment implements View.OnClickListener {
 
     private static final String TAG = ShopProfileFragment.class.getSimpleName();
-
+    public static final String SHOP_ID="shop id";
     private  ViewPager imagePager;
     private RecyclerView grid;
     private View call;
-    private View message;
+    private View review;
     private View navigate;
     private View follow;
     private  TextView hotel;
+    private TextView reviews;
+
 
     private int targetId;
 
@@ -49,11 +52,19 @@ public class ShopProfileFragment extends Fragment implements View.OnClickListene
         grid = view.findViewById(R.id.grid);
         follow = view.findViewById(R.id.follow);
         call = view.findViewById(R.id.call);
-        message = view.findViewById(R.id.message);
+        review = view.findViewById(R.id.review);
         navigate = view.findViewById(R.id.navigation);
         hotel = view.findViewById(R.id.hotel);
         setUp();
 
+        review.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent=new Intent(getContext(), ShopReviewsActivity.class);
+                intent.putExtra(SHOP_ID,1L);
+                startActivity(intent);
+            }
+        });
 
         mViewModel = ViewModelProviders.of(this, new ShopProfileViewModel.Factory(getActivity().getApplication())).get(ShopProfileViewModel.class);
         mViewModel.getShopModel(targetId).observe(this, shopModelResource -> {
@@ -83,7 +94,7 @@ public class ShopProfileFragment extends Fragment implements View.OnClickListene
 
         follow.setOnClickListener(this);
         call.setOnClickListener(this);
-        message.setOnClickListener(this);
+        review.setOnClickListener(this);
         navigate.setOnClickListener(this);
 
     }
@@ -100,7 +111,7 @@ public class ShopProfileFragment extends Fragment implements View.OnClickListene
                 break;
             case R.id.navigation:
                 break;
-            case R.id.message:
+            case R.id.review:
                 break;
         }
     }
@@ -112,7 +123,7 @@ public class ShopProfileFragment extends Fragment implements View.OnClickListene
             LayoutInflater inflater = LayoutInflater.from(collection.getContext());
             ImageView imageView = new ImageView(collection.getContext());
             imageView.setLayoutParams(new ViewGroup.LayoutParams(ViewPager.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT));
-            imageView.setImageResource(R.drawable.dummy_shop);
+//            imageView.setImageResource(R.drawable.restaurant_profile);
             imageView.setScaleType(ImageView.ScaleType.CENTER_CROP);
             collection.addView(imageView);
             return imageView;

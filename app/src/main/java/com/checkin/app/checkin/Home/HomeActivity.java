@@ -396,13 +396,10 @@ public class HomeActivity extends AppCompatActivity
         mUserActivityAdapter = new UserActivityAdapter(null, this);
         rvUserActivities.setAdapter(mUserActivityAdapter);
 
-        ItemClickSupport.addTo(rvUserActivities).setOnItemClickListener(new ItemClickSupport.OnItemClickListener() {
-            @Override
-            public void onItemClicked(RecyclerView recyclerView, int position, View v) {
-                Intent intent =new Intent(getApplicationContext(),UserProfileActivity.class);
-                intent.putExtra(UserProfileActivity.KEY_PROFILE_USER_ID, mUserActivityAdapter.getUserByPosition(position).getId());
-                startActivity(intent);
-            }
+        ItemClickSupport.addTo(rvUserActivities).setOnItemClickListener((recyclerView, position, v) -> {
+            Intent intent =new Intent(getApplicationContext(),UserProfileActivity.class);
+            intent.putExtra(UserProfileActivity.KEY_PROFILE_USER_ID, mUserActivityAdapter.getUserByPosition(position).getId());
+            startActivity(intent);
         });
 
         mUserViewModel.getAllUsers().observe(this, (userResource -> {

@@ -5,6 +5,7 @@ import com.checkin.app.checkin.Notifications.NotificationModel;
 import com.checkin.app.checkin.Session.ActiveSessionModel;
 import com.checkin.app.checkin.Shop.ShopModel;
 import com.checkin.app.checkin.Shop.ShopReview;
+import com.checkin.app.checkin.Shop.ShopReviewPOJO;
 import com.checkin.app.checkin.Social.Message;
 import com.checkin.app.checkin.User.PrivateProfile.FriendshipModel;
 import com.checkin.app.checkin.User.UserModel;
@@ -48,7 +49,7 @@ public interface WebApiService {
     Call<MenuModel> getAvailableMenu(@Path("shop_id") String shopID);
 
     @GET("shops/{shop_id}/reviews/")
-    Call<List<ShopReview>> getShopReviews(@Path("shop_id") String shopID);
+    Call<List<ShopReviewPOJO>> getShopReviews(@Path("shop_id") String shopID);
 
     @POST("sessions/{session_id}/orders/cancel/")
     Call<ObjectNode> postCancelOrder(@Path("session_id") String sessionID, @Body ObjectNode data);
@@ -61,9 +62,6 @@ public interface WebApiService {
 
     @PATCH("users/self/")
     Call<ObjectNode> postUserData(@Body ObjectNode objectNode);
-
-    @PATCH("blah/blah/blah")
-    Call<ObjectNode> postPhoneNumber(@Body ObjectNode objectNode);
 
     @GET("messages/{user_id}/")
     Call<List<Message>> getMessages(@Path("user_id") String userId);

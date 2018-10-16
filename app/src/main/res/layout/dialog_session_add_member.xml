@@ -1,7 +1,7 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="257dp"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:background="@drawable/rectangle_8"
+    android:background="@drawable/background_dialog_large_white"
     android:layout_height="192dp">
     <TextView
         android:id="@+id/adduser"

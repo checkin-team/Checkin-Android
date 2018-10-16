@@ -18,7 +18,7 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:scaleType="centerCrop"
-            tools:src="@drawable/flier" />
+            tools:src="@drawable/cover_unknown_male" />
 
         <ImageView
             android:id="@+id/im_shadow_upper"
@@ -26,16 +26,15 @@
             android:layout_height="@dimen/spacing_gigantic"
             android:scaleType="fitXY"
             android:src="@drawable/shadow_top"
-            app:layout_constraintTop_toTopOf="parent"
-            android:visibility="visible"
-            />
+            app:layout_constraintTop_toTopOf="parent" />
+
         <ImageView
             android:id="@+id/btn_back"
             android:layout_width="@dimen/button_height_normal"
             android:layout_height="@dimen/button_height_normal"
             android:layout_alignParentStart="true"
-            android:layout_marginStart="@dimen/spacing_small"
-            android:layout_marginTop="@dimen/spacing_extra_small"
+            android:layout_marginStart="@dimen/spacing_extra_small"
+            android:layout_marginTop="@dimen/spacing_small"
             android:clickable="true"
             android:focusable="true"
             android:src="@drawable/ic_back"
@@ -43,124 +42,87 @@
             app:layout_constraintTop_toTopOf="parent"/>
 
         <ImageView
-            android:id="@+id/im_shadow_gradient"
+            android:id="@+id/im_shadow_lower"
             android:layout_width="match_parent"
             android:layout_height="200dp"
             android:scaleType="fitXY"
             android:src="@drawable/shadow_gradient"
-            app:layout_constraintBottom_toBottomOf="parent"
-            />
+            app:layout_constraintBottom_toBottomOf="parent" />
 
-
-
-        <TextView
-            android:id="@+id/tv_followers"
+        <RelativeLayout
+            android:id="@+id/container_followers"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignParentBottom="true"
-            android:layout_marginBottom="@dimen/spacing_huge"
-            android:layout_marginLeft="@dimen/spacing_normal"
-            android:fontFamily="@font/amiri"
-            android:paddingRight="@dimen/spacing_extra_small"
-            android:shadowColor="#fff"
-            android:shadowRadius="7"
-            tools:text="250"
-            android:textColor="@color/white"
-            android:textSize="@dimen/font_small_heading"
-            android:textStyle="bold"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintStart_toStartOf="parent"/>
-
-        <TextView
-            android:id="@+id/tv_checkins"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentBottom="true"
-            android:layout_centerHorizontal="true"
-            android:layout_marginBottom="@dimen/spacing_huge"
-            android:fontFamily="@font/amiri"
-            android:paddingRight="@dimen/spacing_extra_small"
-            android:shadowColor="#fff"
-            android:shadowRadius="7"
-            tools:text="250"
-            android:textColor="@color/white"
-            android:textSize="@dimen/font_small_heading"
-            android:textStyle="bold"
-            app:layout_constraintBottom_toBottomOf="parent"
+            android:layout_marginStart="@dimen/spacing_small"
+            android:layout_marginBottom="@dimen/spacing_large"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"/>
-
-        <TextView
-            android:id="@+id/tv_reviews"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentBottom="true"
-            android:layout_alignParentRight="true"
-            android:layout_marginBottom="@dimen/spacing_huge"
-            android:layout_marginRight="@dimen/spacing_normal"
-            android:fontFamily="@font/amiri"
-            android:paddingRight="@dimen/spacing_extra_small"
-            android:shadowColor="#fff"
-            android:shadowRadius="7"
-            tools:text="250"
-            android:textColor="@color/white"
-            android:textSize="@dimen/font_small_heading"
-            android:textStyle="bold"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"/>
+            android:orientation="vertical">
+            <TextView
+                android:id="@+id/tv_followers"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                tools:text="250"
+                style="@style/TextShadowCover"
+                android:layout_centerHorizontal="true"/>
 
-        <TextView
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/label_followers"
+                style="@style/TextShadowCover"
+                android:layout_below="@id/tv_followers" />
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:id="@+id/container_checkins"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignParentBottom="true"
             android:layout_marginBottom="@dimen/spacing_large"
-            android:layout_marginLeft="@dimen/spacing_normal"
-            android:fontFamily="sans-serif-light"
-            android:paddingRight="@dimen/spacing_tiny"
-            android:shadowColor="#000"
-            android:shadowRadius="7"
-            android:text="Followers"
-            android:textColor="@color/white"
-            android:textSize="@dimen/font_normal"
-            android:id="@+id/tv_label_followers"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintStart_toStartOf="parent"/>
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentBottom="true"
-            android:layout_centerHorizontal="true"
-            android:layout_marginBottom="@dimen/spacing_large"
-            android:fontFamily="sans-serif-light"
-            android:paddingRight="@dimen/spacing_tiny"
-            android:shadowColor="#000"
-            android:shadowRadius="7"
-            android:text="CheckIns"
-            android:textColor="@color/white"
-            android:textSize="@dimen/font_normal"
-            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            />
+            app:layout_constraintBottom_toBottomOf="parent"
+            android:orientation="vertical">
+            <TextView
+                android:id="@+id/tv_checkins"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                tools:text="250"
+                style="@style/TextShadowCover"
+                android:layout_centerHorizontal="true"/>
 
-        <TextView
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/label_checkins"
+                style="@style/TextShadowCover"
+                android:layout_below="@id/tv_checkins" />
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:id="@+id/container_reviews"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignParentBottom="true"
-            android:layout_alignParentRight="true"
+            android:layout_marginEnd="@dimen/spacing_small"
             android:layout_marginBottom="@dimen/spacing_large"
-            android:layout_marginRight="@dimen/spacing_normal"
-            android:fontFamily="sans-serif-light"
-            android:paddingRight="@dimen/spacing_tiny"
-            android:shadowColor="#000"
-            android:shadowRadius="7"
-            android:text="Reviews"
-            android:textColor="@color/white"
-            android:textSize="@dimen/font_normal"
-            android:id="@+id/textView"
+            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"/>
+            android:orientation="vertical">
+            <TextView
+                android:id="@+id/tv_reviews"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                tools:text="250"
+                style="@style/TextShadowCover"
+                android:layout_centerHorizontal="true"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/label_reviews"
+                style="@style/TextShadowCover"
+                android:layout_below="@id/tv_reviews" />
+        </RelativeLayout>
 
     </android.support.constraint.ConstraintLayout>
 
@@ -187,6 +149,7 @@
         android:background="@drawable/curved_white_shape"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintTop_toBottomOf="@id/guideline_above">
+
         <android.support.constraint.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent">
@@ -202,7 +165,6 @@
                     android:layout_height="wrap_content"
                     android:layout_marginStart="@dimen/spacing_large"
                     android:layout_marginTop="@dimen/spacing_normal"
-                    android:shadowColor="@color/black"
                     tools:text="Ishu Darshan"
                     android:textColor="@color/brownish_grey"
                     android:textSize="@dimen/font_larger"
@@ -212,21 +174,71 @@
                     android:id="@+id/tv_city"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/spacing_tiny"
                     android:layout_alignStart="@id/tv_display_name"
+                    android:layout_alignEnd="@id/tv_display_name"
                     android:layout_below="@id/tv_display_name"
                     android:gravity="center_horizontal"
                     android:textSize="@dimen/font_normal"
                     tools:text="Lyon,France"
                     android:textColor="@color/pinkish_grey" />
 
-                <RelativeLayout
+                <FrameLayout
+                    android:id="@+id/container_user_actions"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_marginEnd="@dimen/spacing_normal"
                     android:layout_alignBottom="@id/tv_city"
-                    android:layout_alignTop="@id/tv_display_name">
+                    android:layout_alignTop="@id/tv_display_name"
+                    android:layout_alignParentEnd="true">
 
-                    <TextView
+                    <FrameLayout
+                        android:id="@+id/container_status_none"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:visibility="gone">
+                        <Button
+                            android:layout_width="wrap_content"
+                            android:layout_height="@dimen/button_height_short"
+                            android:background="@drawable/btn_small_background_rouge"
+                            android:text="Follow"
+                            android:textColor="@color/primary_red"
+                            android:fontFamily="@font/lucida_grande"/>
+                    </FrameLayout>
+
+                    <FrameLayout
+                        android:id="@+id/container_status_request"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:visibility="visible">
+                        <Button
+                            android:layout_width="wrap_content"
+                            android:layout_height="@dimen/button_height_short"
+                            android:background="@drawable/btn_background_small_grey"
+                            android:text="Requested"
+                            android:textColor="@color/pinkish_grey"
+                            android:fontFamily="@font/lucida_grande"/>
+                    </FrameLayout>
+
+                    <LinearLayout
+                        android:id="@+id/container_status_friend"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:orientation="horizontal"
+                        android:visibility="gone">
+                        <Button
+                            android:layout_width="wrap_content"
+                            android:layout_height="@dimen/button_height_short"
+                            android:background="@drawable/btn_background_small_grey"
+                            android:text="Message"
+                            android:textColor="@color/primary_red"
+                            android:fontFamily="@font/lucida_grande"/>
+                        <ImageView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:src="@drawable/btn_following"/>
+                    </LinearLayout>
+
+                    <!--<TextView
                         android:id="@+id/btn_follow"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
@@ -242,7 +254,6 @@
                         android:clickable="true"
                         android:focusable="true"
                         android:textSize="@dimen/font_normal"
-                        android:visibility="invisible"
                         />
 
                     <TextView
@@ -261,7 +272,7 @@
                         android:clickable="true"
                         android:focusable="true"
                         android:textSize="@dimen/font_normal"
-                        android:visibility="invisible"/>
+                        />
 
                     <TextView
                         android:id="@+id/btn_request_sent"
@@ -279,7 +290,7 @@
                         android:clickable="true"
                         android:focusable="true"
                         android:textSize="@dimen/font_normal"
-                        android:visibility="invisible"/>
+                        />
                     <ImageView
                         android:id="@+id/im_btn_following"
                         android:layout_width="@dimen/spacing_huge"
@@ -291,12 +302,12 @@
                         android:layout_marginEnd="@dimen/spacing_large"
                         android:layout_marginTop="-4dp"
                         android:scaleType="fitXY"
-                        android:src="@drawable/btn_unfriend"
-                        android:visibility="invisible" />
-                </RelativeLayout>
+                        android:src="@drawable/connection"
+                         />-->
+                </FrameLayout>
             </RelativeLayout>
 
-            <RelativeLayout
+            <FrameLayout
                 android:id="@+id/container_description"
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
@@ -309,31 +320,18 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/container_header">
-
-                <TextView
-                    android:id="@+id/tv_hobby"
-                    android:layout_marginTop="@dimen/spacing_tiny"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_centerHorizontal="true"
-                    android:text="Blogger"
-                    android:textColor="@color/pinkish_grey"
-                    android:textSize="@dimen/font_small_heading"/>
-
                 <TextView
                     android:id="@+id/tv_bio"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_below="@id/tv_hobby"
-                    android:paddingBottom="@dimen/spacing_extra_small"
-                    android:paddingStart="@dimen/spacing_normal"
-                    android:paddingEnd="@dimen/spacing_normal"
-                    android:text="Follow our Food and Travel Journey 🍔🍕✈️⛵️\n🎥: Content Creators\n📍: MIA / NYC / LA 🌎"
-                    android:textAlignment="textStart"
-                    android:textColor="@color/brownish_grey"
-                     />
-
-            </RelativeLayout>
+                    android:layout_gravity="center"
+                    android:paddingBottom="@dimen/spacing_small"
+                    android:paddingStart="@dimen/spacing_small"
+                    android:paddingEnd="@dimen/spacing_small"
+                    tools:text="Follow our Food and Travel Journey 🍔🍕✈️⛵️\n🎥: Content Creators\n📍: MIA / NYC / LA 🌎"
+                    android:textColor="@color/brownish_grey" />
+            </FrameLayout>
         </android.support.constraint.ConstraintLayout>
+
     </FrameLayout>
 </android.support.constraint.ConstraintLayout>

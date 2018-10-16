@@ -181,7 +181,7 @@ public class SnapToBlock extends SnapHelper {
             snapPos = roundDownToBlockSize(firstVisiblePos);
             // Check to see if target view exists. If it doesn't, force a smooth scroll.
             // SnapHelper only snaps to existing views and will not scroll to a non-existant one.
-            // If limiting fling to single block, then the following is not needed since the
+            // If limiting fling to single block, then the btn_requested is not needed since the
             // views are likely to be in the RecyclerView pool.
             if (layoutManager.findViewByPosition(snapPos) == null) {
                 int[] toScroll = mLayoutDirectionHelper.calculateDistanceToScroll(layoutManager, snapPos);

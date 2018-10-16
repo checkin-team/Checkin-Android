@@ -84,7 +84,7 @@
         android:layout_marginTop="8dp"
         app:layout_constraintLeft_toLeftOf="@id/imageView9"
         app:layout_constraintTop_toTopOf="@id/imageView9"
-        app:srcCompat="@drawable/noun_avatar_1089489" />
+        app:srcCompat="@drawable/fore_male_grey" />
 
     <ImageView
         android:id="@+id/imageView11"
@@ -94,7 +94,7 @@
         android:layout_marginTop="8dp"
         app:layout_constraintRight_toRightOf="@id/imageView9"
         app:layout_constraintTop_toTopOf="@id/imageView9"
-        app:srcCompat="@drawable/noun_avatar_1089458" />
+        app:srcCompat="@drawable/fore_female_grey" />
 
     <TextView
         android:id="@+id/textView18"

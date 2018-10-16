@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layer-list xmlns:android="http://schemas.android.com/apk/res/android" >
+    <item android:drawable="@color/brownish_grey" />
+    <item
+        android:top="@dimen/spacing_gigantic"
+        android:bottom="@dimen/spacing_gigantic"
+        android:left="@dimen/spacing_gigantic"
+        android:right="@dimen/spacing_gigantic">
+        <bitmap
+            android:src="@drawable/fore_female_white"
+            android:gravity="center"/>
+    </item>
+</layer-list>

@@ -30,7 +30,7 @@ public class SelectCropImageActivity extends AppCompatActivity {
 
     public static final String KEY_RECTANGLE_IMAGE="rectangle";
     CropView cropView;
-    private int maxHeight=300, maxWidth=300;
+    private int maxHeight=600, maxWidth=600;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -51,10 +51,11 @@ public class SelectCropImageActivity extends AppCompatActivity {
                 Log.e(TAG, "Cropped bitmap is null!");
                 return;
             }
-            if (bitmap.getHeight() > maxHeight || bitmap.getWidth() > maxWidth) {
-                Toast.makeText(getApplicationContext(),"Image should be less than "+maxWidth+"*"+maxHeight,Toast.LENGTH_LONG).show();
-                requestImage();
-            }
+//            if (bitmap.getHeight() > maxHeight || bitmap.getWidth() > maxWidth) {
+//                Log.e(TAG,+bitmap.getHeight()+" "+bitmap.getWidth()+ " ");
+//                Toast.makeText(getApplicationContext(),"Image should be less than "+maxWidth+"*"+maxHeight,Toast.LENGTH_LONG).show();
+//                requestImage();
+//            }
             try (FileOutputStream out = new FileOutputStream(mRectangleFile)) {
                 bitmap.compress(Bitmap.CompressFormat.PNG, 100, out);
             } catch (IOException e) {

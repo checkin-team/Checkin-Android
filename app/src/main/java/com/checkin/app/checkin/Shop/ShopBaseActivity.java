@@ -15,18 +15,10 @@ import butterknife.ButterKnife;
 import it.sephiroth.android.library.bottomnavigation.BottomNavigation;
 
 public abstract class ShopBaseActivity extends AppCompatActivity {
-    @BindView(R.id.drawer_shop)
-    protected DrawerLayout mDrawerLayout;
-    @BindView(R.id.nav_reviews_shop)
-    protected NavigationView mShopReviews;
     @BindView(R.id.view_pager)
     protected DynamicSwipableViewPager mViewPager;
     @BindView(R.id.bottom_navigation)
     protected BottomNavigation mBottomNavigation;
-
-    protected void onCreateDrawer() {
-
-    }
 
     protected void setupPagers(FragmentPagerAdapter pagerAdapter, @MenuRes int menuId) {
         mViewPager.setEnabled(false);
@@ -35,7 +27,6 @@ public abstract class ShopBaseActivity extends AppCompatActivity {
         mBottomNavigation.setOnMenuItemClickListener(new BottomNavigation.OnMenuItemSelectionListener() {
             @Override
             public void onMenuItemSelect(@IdRes final int itemId, final int position, final boolean fromUser) {
-                mDrawerLayout.setDrawerLockMode(isDrawerEnabled(position));
                 mViewPager.setCurrentItem(position, true);
             }
 
@@ -49,8 +40,5 @@ public abstract class ShopBaseActivity extends AppCompatActivity {
     public void setContentView(int layoutResID) {
         super.setContentView(layoutResID);
         ButterKnife.bind(this);
-        onCreateDrawer();
     }
-
-    protected abstract int isDrawerEnabled(int position);
 }

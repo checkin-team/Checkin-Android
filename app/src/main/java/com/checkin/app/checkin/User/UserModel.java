@@ -6,6 +6,8 @@ import com.fasterxml.jackson.annotation.JsonAutoDetect;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
+import java.util.Date;
+
 import io.objectbox.annotation.Convert;
 import io.objectbox.annotation.Entity;
 import io.objectbox.annotation.Id;
@@ -15,22 +17,14 @@ import io.objectbox.annotation.Unique;
 @Entity
 @JsonAutoDetect(fieldVisibility = JsonAutoDetect.Visibility.ANY)
 public class UserModel {
-    @JsonIgnore
-    @Id
-    private long id;
-
     @JsonProperty("pk")
-    @Unique
-    @Index
-    private String uid;
+    @Id(assignable = true)
+    private long id;
 
     private String username;
 
-    @JsonProperty("first_name")
-    private String firstName;
-
-    @JsonProperty("last_name")
-    private String lastName;
+    @JsonProperty("full_name")
+    private String fullName;
 
     @JsonProperty("address")
     private String address;
@@ -42,11 +36,11 @@ public class UserModel {
     private String profilePic;
 
     private String bio;
+
     private long followers;
     private long checkins;
     private long reviews;
     @JsonProperty("is_public") private boolean isPublic;
-    @JsonProperty("is_connected") private boolean isConnected;
 
     public enum GENDER {
         MALE('m'), FEMALE('f');
@@ -69,20 +63,12 @@ public class UserModel {
 
     public UserModel() {}
 
-    public String getUid() {
-        return uid;
-    }
-
     public String getUsername() {
         return username;
     }
 
-    public String getFirstName() {
-        return firstName;
-    }
-
-    public String getLastName() {
-        return lastName;
+    public String getFullName() {
+        return fullName;
     }
 
     public GENDER getGender() {
@@ -92,10 +78,6 @@ public class UserModel {
     @JsonProperty("gender")
     public void setGender(char tag) {
         this.gender = GENDER.getByTag(tag);
-    }
-
-    public boolean isConnected() {
-        return isConnected;
     }
 
     public String getBio() {
@@ -137,16 +119,13 @@ public class UserModel {
     public long getId() {
         return id;
     }
+
     void setId(long id) {
         this.id = id;
     }
 
     public boolean isPublic() {
         return isPublic;
-    }
-
-    public void setConnected(boolean connected) {
-        isConnected = connected;
     }
 
     public void setPublic(boolean aPublic) {
