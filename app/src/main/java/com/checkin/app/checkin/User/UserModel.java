@@ -1,5 +1,9 @@
 package com.checkin.app.checkin.User;
 
+import android.support.annotation.Nullable;
+
+import com.checkin.app.checkin.User.Friendship.FriendshipModel.FRIEND_STATUS;
+import com.checkin.app.checkin.User.Friendship.FriendshipRequestModel;
 import com.checkin.app.checkin.Utility.Util;
 import com.fasterxml.jackson.annotation.JsonAutoDetect;
 import com.fasterxml.jackson.annotation.JsonProperty;
@@ -30,10 +34,14 @@ public class UserModel {
     @JsonProperty("phone_no")
     private String phoneNo;
 
-    private long followers;
+    @JsonProperty("friend_count") private long followers;
     private long checkins;
     private long reviews;
     @JsonProperty("is_public") private boolean isPublic;
+
+    @Nullable
+    @JsonProperty("friendship_request")
+    private FriendshipRequestModel friendshipRequest;
 
     private FRIEND_STATUS friendStatus;
 
@@ -57,23 +65,7 @@ public class UserModel {
     }
 
     // TODO: Move from here.
-    public enum FRIEND_STATUS {
-        NONE("none"), FRIENDS("frnd"), PENDING_REQUEST("rqst"), BLOCKED("blkd");
 
-        private String tag;
-        FRIEND_STATUS(String tag) {
-            this.tag = tag;
-        }
-
-        public static FRIEND_STATUS getByTag(String tag) {
-            for (FRIEND_STATUS status: FRIEND_STATUS.values()) {
-                if (status.tag.equals(tag)) {
-                    return status;
-                }
-            }
-            return NONE;
-        }
-    }
 
     public UserModel() {}
 
@@ -150,8 +142,9 @@ public class UserModel {
         return isPublic;
     }
 
-    public void setPublic(boolean aPublic) {
-        isPublic = aPublic;
+    @Nullable
+    public FriendshipRequestModel getFriendshipRequest() {
+        return friendshipRequest;
     }
 
     @JsonProperty("friend_status")

@@ -170,7 +170,7 @@
                         android:layout_marginTop="@dimen/spacing_normal"
                         tools:text="Ishu Darshan"
                         android:textColor="@color/brownish_grey"
-                        android:textSize="@dimen/font_larger"
+                        android:textSize="@dimen/font_large"
                         android:textStyle="bold" />
 
                     <TextView
@@ -181,7 +181,7 @@
                         android:layout_alignEnd="@id/tv_display_name"
                         android:layout_below="@id/tv_display_name"
                         android:gravity="center_horizontal"
-                        android:textSize="@dimen/font_normal"
+                        android:textSize="@dimen/font_small"
                         tools:text="Lyon,France"
                         android:textColor="@color/pinkish_grey" />
 
@@ -214,12 +214,44 @@
                             android:layout_height="@dimen/button_height_short"
                             android:layout_gravity="center"
                             android:visibility="gone">
-                            <TextView
-                                android:id="@+id/tv_requested"
+                            <LinearLayout
+                                android:id="@+id/container_request_sender"
                                 android:layout_width="match_parent"
                                 android:layout_height="match_parent"
-                                android:text="@string/info_requested"
-                                style="@style/ButtonNeutralAction" />
+                                android:orientation="horizontal"
+                                android:visibility="gone">
+                                <Button
+                                    android:id="@+id/btn_cancel"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="match_parent"
+                                    android:text="@string/info_requested"
+                                    android:layout_marginStart="@dimen/spacing_tiny"
+                                    style="@style/ButtonNeutralAction" />
+                            </LinearLayout>
+                            <LinearLayout
+                                android:id="@+id/container_request_recepient"
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:orientation="horizontal"
+                                android:visibility="gone">
+                                <Button
+                                    android:id="@+id/btn_accept"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="match_parent"
+                                    android:text="@string/action_accept"
+                                    android:paddingStart="0dp"
+                                    android:paddingEnd="0dp"
+                                    style="@style/ButtonPositiveAction"/>
+                                <Button
+                                    android:id="@+id/btn_reject"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="match_parent"
+                                    android:text="@string/action_reject"
+                                    android:paddingStart="0dp"
+                                    android:paddingEnd="0dp"
+                                    android:layout_marginStart="@dimen/spacing_tiny"
+                                    style="@style/ButtonNeutralAction" />
+                            </LinearLayout>
                         </FrameLayout>
 
                         <LinearLayout

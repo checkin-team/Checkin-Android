@@ -5,10 +5,8 @@ import android.support.annotation.Nullable;
 import android.util.Log;
 
 import com.fasterxml.jackson.databind.JsonNode;
-import com.fasterxml.jackson.databind.node.ObjectNode;
 
 import java.io.IOException;
-import java.util.Objects;
 
 import retrofit2.Response;
 
@@ -65,17 +63,19 @@ public class ApiResponse<T> {
         if (data == null)
             return errorMessage;
         Log.e("APIResponse", "Error data: " + data.toString());
-
-        if (data.has("detail")) {
-            Log.e("APIResponse", "Detail");
-            return data.get("detail").asText();
+        if (data.isObject()) {
+            if (data.has("detail")) {
+                Log.e("APIResponse", "Detail");
+                return data.get("detail").asText();
+            } else if (data.has("errors")) {
+                Log.e("APIResponse", "Errors");
+                return data.get("errors").get(0).asText();
+            }
+        } else if (data.isArray()) {
+            Log.e("APIResponse", "Array");
+            return data.get(0).asText();
         }
-        else if (data.has("errors")) {
-            Log.e("APIResponse", "Errors");
-            return data.get("errors").get(0).asText();
-        }
-        else
-            return errorMessage;
+        return errorMessage;
     }
 
     public int getStatusCode() {

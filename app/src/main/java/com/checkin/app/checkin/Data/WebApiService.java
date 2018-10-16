@@ -5,7 +5,7 @@ import com.checkin.app.checkin.Notifications.NotificationModel;
 import com.checkin.app.checkin.Session.ActiveSessionModel;
 import com.checkin.app.checkin.Shop.ShopModel;
 import com.checkin.app.checkin.Shop.ShopReviewPOJO;
-import com.checkin.app.checkin.User.PrivateProfile.FriendshipModel;
+import com.checkin.app.checkin.User.Friendship.FriendshipModel;
 import com.checkin.app.checkin.User.UserModel;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 
@@ -54,17 +54,28 @@ public interface WebApiService {
     Call<ObjectNode> postUserProfilePic(@Part MultipartBody.Part pic);
     // endregion
 
+    // region FRIENDSHIP
     @GET("friends/self/")
     Call<List<FriendshipModel>> getSelfFriends();
 
-    @GET("friends/{user_pk}")
-    Call<List<FriendshipModel>> getUserFriends(@Path("user_pk") Long userPk);
+    @GET("friends/{user_pk}/")
+    Call<List<FriendshipModel>> getUserFriends(@Path("user_pk") long userPk);
+
+    @POST("friends/add/")
+    Call<ObjectNode> addFriend(@Body ObjectNode data);
 
     @DELETE("friends/remove/{user_pk}/")
-    Call<ObjectNode> removeFriend(@Path("user_pk") Long userPk);
+    Call<ObjectNode> removeFriend(@Path("user_pk") long userPk);
 
     @POST("friends/requests/{request_pk}/accept/")
-    Call<ObjectNode> postNewFriends(@Path("request_pk") Long userPk);
+    Call<ObjectNode> acceptFriendRequest(@Path("request_pk") String requestPk);
+
+    @POST("friends/requests/{request_pk}/cancel/")
+    Call<ObjectNode> cancelFriendRequest(@Path("request_pk") String requestPk);
+
+    @POST("friends/requests/{request_pk}/reject/")
+    Call<ObjectNode> rejectFriendRequest(@Path("request_pk") String requestPk);
+    // endregion
 
     @POST("qr/decrypt/")
     Call<ObjectNode> postDecryptQr(@Body ObjectNode data);

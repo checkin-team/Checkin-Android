@@ -130,4 +130,7 @@
     <string name="action_message">Message</string>
     <string name="status_loading">Working hard to fetch your data...</string>
     <string name="action_profile_edit">Edit Profile</string>
+    <string name="info_following">Following</string>
+    <string name="action_reject">Reject</string>
+    <string name="action_accept">Accept</string>
 </resources>

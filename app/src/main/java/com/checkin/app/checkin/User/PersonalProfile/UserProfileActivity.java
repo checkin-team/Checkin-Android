@@ -12,6 +12,7 @@ import com.checkin.app.checkin.Data.Resource;
 import com.checkin.app.checkin.Misc.BaseActivity;
 import com.checkin.app.checkin.Misc.SelectCropImageActivity;
 import com.checkin.app.checkin.R;
+import com.checkin.app.checkin.User.Friendship.FriendsListActivity;
 import com.checkin.app.checkin.User.UserModel;
 import com.checkin.app.checkin.Utility.GlideApp;
 
@@ -91,6 +92,13 @@ public class UserProfileActivity extends BaseActivity {
         Intent intent;
         intent = new Intent(this , SelectCropImageActivity.class);
         startActivityForResult(intent, SelectCropImageActivity.RC_CROP_IMAGE);
+    }
+
+    @OnClick(R.id.container_followers)
+    public void onShowFriends() {
+        Intent intent = new Intent(getApplicationContext(), FriendsListActivity.class);
+        intent.putExtra(FriendsListActivity.KEY_USER_PK, 0);
+        startActivity(intent);
     }
 
     @Override

@@ -117,8 +117,9 @@
         <activity android:name=".User.PersonalProfile.ProfileEditActivity"
             android:label="Edit Profile"
             android:theme="@style/AppThemeWhiteActionBar"/>
-        <activity android:name=".User.PrivateProfile.FollowersActivity"
-            android:theme="@style/Theme.AppCompat.Light" />
+        <activity android:name=".User.Friendship.FriendsListActivity"
+            android:label="Friends"
+            android:theme="@style/AppThemeWhiteActionBar" />
         <activity
             android:name=".Maps.MapsActivity"
             android:label="@string/title_activity_maps"

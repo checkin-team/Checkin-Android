@@ -1,38 +1,33 @@
-package com.checkin.app.checkin.User.PrivateProfile;
+package com.checkin.app.checkin.User.Friendship;
 
-import com.checkin.app.checkin.User.UserModel;
 import com.checkin.app.checkin.Utility.Util;
 import com.fasterxml.jackson.annotation.JsonProperty;
-
-import io.objectbox.annotation.Convert;
 
 public class FriendshipModel {
     @JsonProperty("user_name") private String mUserName;
     @JsonProperty("no_checkins") private long mCheckins;
     @JsonProperty("user_pk") private Long mUserPk;
     @JsonProperty("user_pic") private String mUserPic;
-    @JsonProperty("friend_status") private String mUserStatus;
-    private FRIEND_STATUS status;
+    private FRIEND_STATUS mStatus;
 
     public enum FRIEND_STATUS {
-        NONE("none"), BLOCKED("blkd"), REQUESTED("rqst"), FRIEND("frnd");
+        NONE("none"), FRIENDS("frnd"), PENDING_REQUEST("rqst"), BLOCKED("blkd");
 
-        final String tag;
-        FRIEND_STATUS(String tag){this.tag = tag;}
+        private String tag;
+        FRIEND_STATUS(String tag) {
+            this.tag = tag;
+        }
+
         public static FRIEND_STATUS getByTag(String tag) {
-            switch (tag) {
-                case "none":
-                    return NONE;
-                case "blkd":
-                    return BLOCKED;
-                case "rqst":
-                    return REQUESTED;
-                case "frnd":
-                    return FRIEND;
+            for (FRIEND_STATUS status: FRIEND_STATUS.values()) {
+                if (status.tag.equals(tag)) {
+                    return status;
+                }
             }
-            return FRIEND_STATUS.NONE;
+            return NONE;
         }
     }
+
     public FriendshipModel() {} //default constructor
 
     public String getUserName() {
@@ -51,7 +46,12 @@ public class FriendshipModel {
 
     public String getUserPic(){return mUserPic; }
 
+    public FRIEND_STATUS getStatus() {
+        return mStatus;
+    }
+
+    @JsonProperty("friend_status")
     public void setUserStatus(String tag){
-        this.status = FRIEND_STATUS.getByTag(tag);
+        this.mStatus = FRIEND_STATUS.getByTag(tag);
     }
 }

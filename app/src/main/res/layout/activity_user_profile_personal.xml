@@ -182,7 +182,7 @@
                         android:layout_marginTop="@dimen/spacing_normal"
                         tools:text="Ishu Darshan"
                         android:textColor="@color/brownish_grey"
-                        android:textSize="@dimen/font_larger"
+                        android:textSize="@dimen/font_large"
                         android:textStyle="bold" />
 
                     <TextView
@@ -193,7 +193,7 @@
                         android:layout_alignEnd="@id/tv_display_name"
                         android:layout_below="@id/tv_display_name"
                         android:gravity="center_horizontal"
-                        android:textSize="@dimen/font_normal"
+                        android:textSize="@dimen/font_small"
                         tools:text="Lyon,France"
                         android:textColor="@color/pinkish_grey" />
 

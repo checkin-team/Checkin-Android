@@ -9,7 +9,11 @@ import android.arch.lifecycle.ViewModelProviders;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.v7.app.AlertDialog;
+import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -17,10 +21,13 @@ import android.widget.Toast;
 import com.checkin.app.checkin.Data.Resource;
 import com.checkin.app.checkin.Misc.BaseActivity;
 import com.checkin.app.checkin.R;
-import com.checkin.app.checkin.User.PrivateProfile.FollowersActivity;
+import com.checkin.app.checkin.User.Friendship.FriendsListActivity;
+import com.checkin.app.checkin.User.Friendship.FriendshipModel.FRIEND_STATUS;
+import com.checkin.app.checkin.User.Friendship.FriendshipRequestModel;
 import com.checkin.app.checkin.User.UserModel;
-import com.checkin.app.checkin.User.UserModel.FRIEND_STATUS;
 import com.checkin.app.checkin.Utility.GlideApp;
+import com.github.javiersantos.materialstyleddialogs.MaterialStyledDialog;
+import com.github.javiersantos.materialstyleddialogs.enums.Style;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -42,6 +49,7 @@ public class UserProfileActivity extends BaseActivity {
 //    @BindView(R.id.guideline_below) Guideline vGuidelineBelow;
 
     private UserViewModel mViewModel;
+    private MaterialStyledDialog mMessageDialog;
 //    float currY,  maxPercentDiff = 0.1f;
 //    float origAbovePercent = .67f, currAbovePercent = .67f;
 
@@ -72,10 +80,14 @@ public class UserProfileActivity extends BaseActivity {
             assert resource != null;
             if (resource.status == Resource.Status.SUCCESS)
                 mViewModel.updateResults();
+            else if (resource.status != Resource.Status.LOADING) {
+                Toast.makeText(getApplicationContext(), resource.message, Toast.LENGTH_SHORT).show();
+            }
         });
     }
 
     private void setUI(UserModel person) {
+        setupMessageDialog();
         if (person.getGender() == UserModel.GENDER.MALE)
             imProfile.setImageResource(R.drawable.cover_unknown_male);
         else
@@ -88,23 +100,53 @@ public class UserProfileActivity extends BaseActivity {
         tvBio.setText(person.getBio());
         tvDisplayName.setText(person.getFullName());
         tvCity.setText(person.getAddress());
-        setFriendshipAction(person.getFriendStatus());
+        findViewById(R.id.container_status_none).setVisibility(View.GONE);
+        findViewById(R.id.container_status_request).setVisibility(View.GONE);
+        findViewById(R.id.container_status_friend).setVisibility(View.GONE);
+        setFriendshipAction(person);
     }
 
-    private void setFriendshipAction(FRIEND_STATUS friendStatus) {
+    private void setFriendshipAction(UserModel person) {
+        FRIEND_STATUS friendStatus = person.getFriendStatus();
+        FriendshipRequestModel requestModel = person.getFriendshipRequest();
         if (friendStatus == FRIEND_STATUS.NONE) {
             findViewById(R.id.container_status_none).setVisibility(View.VISIBLE);
         } else if (friendStatus == FRIEND_STATUS.PENDING_REQUEST) {
             findViewById(R.id.container_status_request).setVisibility(View.VISIBLE);
+            if (requestModel == null) {
+                Log.e(TAG, "Request Model is null!!!");
+                return;
+            }
+            updateRequestActions(requestModel.getToUser() == person.getId());
         } else if (friendStatus == FRIEND_STATUS.FRIENDS) {
             findViewById(R.id.container_status_friend).setVisibility(View.VISIBLE);
         }
     }
 
+    private void updateRequestActions(boolean isCurrentUserTheSenderOfRequest) {
+        findViewById(R.id.container_request_sender).setVisibility(isCurrentUserTheSenderOfRequest ? View.VISIBLE : View.GONE);
+        findViewById(R.id.container_request_recepient).setVisibility(isCurrentUserTheSenderOfRequest ? View.GONE : View.VISIBLE);
+    }
+
+    private void setupMessageDialog() {
+        final View view = LayoutInflater.from(this).inflate(R.layout.view_input_text, null);
+        EditText edMessage = view.findViewById(R.id.ed_input);
+        mMessageDialog = new MaterialStyledDialog.Builder(this)
+                .setStyle(Style.HEADER_WITH_TITLE)
+                .setTitle("Enter message")
+                .setPositiveText("Request")
+                .setNegativeText("Cancel")
+                .onPositive((dialog, which) -> {
+                    String message = edMessage.getText().toString();
+                    mViewModel.addFriend(message);
+                })
+                .setCustomView(view)
+                .build();
+    }
+
     @OnClick(R.id.btn_follow)
     public void onFollow() {
-        Toast.makeText(getApplicationContext(), "Currently unsupported action!", Toast.LENGTH_SHORT).show();
-        // TODO: With friendship model.
+        mMessageDialog.show();
     }
 
     @OnClick(R.id.btn_message)
@@ -114,8 +156,56 @@ public class UserProfileActivity extends BaseActivity {
 
     @OnClick(R.id.im_btn_following)
     public void onUnfollow() {
-        Toast.makeText(getApplicationContext(), "Currently unsupported action!", Toast.LENGTH_SHORT).show();
-        // TODO: With friendship model.
+        new AlertDialog.Builder(this)
+                .setCancelable(false)
+                .setTitle("")
+                .setMessage("Do you want to remove connection?")
+                .setPositiveButton("Remove", (dialog, which) -> {
+                    dialog.dismiss();
+                    mViewModel.removeFriend();
+                })
+                .setNegativeButton("Cancel", (dialog, which) -> dialog.dismiss())
+                .show();
+    }
+
+    @OnClick(R.id.btn_accept)
+    public void onAcceptRequest() {
+        mViewModel.acceptFriendRequest();
+    }
+
+    @OnClick(R.id.btn_reject)
+    public void onRejectRequest() {
+        new AlertDialog.Builder(this)
+                .setCancelable(false)
+                .setTitle("")
+                .setMessage("Do you want to reject pending request?")
+                .setPositiveButton("Reject", (dialog, which) -> {
+                    dialog.dismiss();
+                    mViewModel.rejectFriendRequest();
+                })
+                .setNegativeButton("Cancel", (dialog, which) -> dialog.dismiss())
+                .show();
+    }
+
+    @OnClick(R.id.btn_cancel)
+    public void onCancelRequest() {
+        new AlertDialog.Builder(this)
+                .setCancelable(false)
+                .setTitle("")
+                .setMessage("Do you want to cancel pending request?")
+                .setPositiveButton("Cancel", (dialog, which) -> {
+                    dialog.dismiss();
+                    mViewModel.cancelFriendRequest();
+                })
+                .setNegativeButton("Cancel", (dialog, which) -> dialog.dismiss())
+                .show();
+    }
+
+    @OnClick(R.id.container_followers)
+    public void onShowFriends() {
+        Intent intent = new Intent(getApplicationContext(), FriendsListActivity.class);
+        intent.putExtra(FriendsListActivity.KEY_USER_PK, mViewModel.getPk());
+        startActivity(intent);
     }
 
 //    @Override
