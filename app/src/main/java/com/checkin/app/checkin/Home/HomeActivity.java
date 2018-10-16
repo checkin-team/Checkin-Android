@@ -42,18 +42,10 @@ import com.checkin.app.checkin.Session.ActiveSessionActivity;
 import com.checkin.app.checkin.Shop.BusinessFeaturesActivity;
 import com.checkin.app.checkin.Shop.ShopModel;
 import com.checkin.app.checkin.Shop.ShopPrivateProfile.ShopActivity;
-import com.checkin.app.checkin.Social.ChatActivity;
-import com.checkin.app.checkin.Social.ChatAdapter;
-import com.checkin.app.checkin.Social.MessageViewModel;
-import com.checkin.app.checkin.User.NonPersonalProfile.UserProfileActivity;
-import com.checkin.app.checkin.User.PersonalProfile.EditPersonalProfile;
-import com.checkin.app.checkin.User.PersonalProfile.EditProfile;
 import com.checkin.app.checkin.User.NonPersonalProfile.UserViewModel;
-import com.checkin.app.checkin.User.PersonalProfile.UserProfilePersonalActivity;
+import com.checkin.app.checkin.User.PersonalProfile.UserProfileActivity;
 import com.checkin.app.checkin.Utility.ClipRevealFrame;
-import com.checkin.app.checkin.Utility.Constants;
 import com.checkin.app.checkin.Utility.DragTouchListener;
-import com.checkin.app.checkin.Utility.EndDrawerToggle;
 import com.checkin.app.checkin.Utility.ItemClickSupport;
 import com.checkin.app.checkin.Utility.Util;
 import com.fasterxml.jackson.databind.JsonNode;
@@ -74,8 +66,6 @@ public class HomeActivity extends AppCompatActivity
     private final String TAG = HomeActivity.class.getSimpleName();
     @BindView(R.id.drawer_home)
     DrawerLayout drawerLayout;
-    @BindView(R.id.rv_nav_messages)
-    RecyclerView rvNavMessages;
     @BindView(R.id.rv_trending_shops)
     RecyclerView rvTrendingShops;
     @BindView(R.id.rv_user_activities)
@@ -100,9 +90,7 @@ public class HomeActivity extends AppCompatActivity
     TextView testingViewPager;
 
     private UserViewModel mUserViewModel;
-    private MessageViewModel mMessageViewModel;
     private HomeViewModel mHomeViewModel;
-    private ChatAdapter mChatAdapter;
     private TrendingShopAdapter mTrendingShopAdapter;
     private UserActivityAdapter mUserActivityAdapter;
     private final float PERCENT_LEFT_SHIFTED = 30;
@@ -115,13 +103,11 @@ public class HomeActivity extends AppCompatActivity
         ButterKnife.bind(this);
 
         mUserViewModel = ViewModelProviders.of(this, new UserViewModel.Factory(getApplication())).get(UserViewModel.class);
-        mMessageViewModel = ViewModelProviders.of(this, new MessageViewModel.Factory(getApplication())).get(MessageViewModel.class);
         mHomeViewModel = ViewModelProviders.of(this, new HomeViewModel.Factory(getApplication())).get(HomeViewModel.class);
 
         setupUiStuff();
         setupTrendingShops();
         setupUserActivities();
-        setupMessages();
 
         mHomeViewModel.getObservableData().observe(this, resource -> {
             if (resource == null)   return;
@@ -152,10 +138,10 @@ public class HomeActivity extends AppCompatActivity
         drawerLayout.addDrawerListener(startToggle);
         startToggle.syncState();
 
-        EndDrawerToggle endToggle = new EndDrawerToggle(
+        /*EndDrawerToggle endToggle = new EndDrawerToggle(
                 this, drawerLayout, toolbar, R.string.messages_drawer_open, R.string.messages_drawer_close, R.drawable.ic_message_appbar);
         drawerLayout.addDrawerListener(endToggle);
-        endToggle.syncState();
+        endToggle.syncState();*/
 
         NavigationView navigationView = findViewById(R.id.nav_main);
         navigationView.setNavigationItemSelectedListener(this);
@@ -397,8 +383,8 @@ public class HomeActivity extends AppCompatActivity
         rvUserActivities.setAdapter(mUserActivityAdapter);
 
         ItemClickSupport.addTo(rvUserActivities).setOnItemClickListener((recyclerView, position, v) -> {
-            Intent intent =new Intent(getApplicationContext(),UserProfileActivity.class);
-            intent.putExtra(UserProfileActivity.KEY_PROFILE_USER_ID, mUserActivityAdapter.getUserByPosition(position).getId());
+            Intent intent =new Intent(getApplicationContext(), com.checkin.app.checkin.User.NonPersonalProfile.UserProfileActivity.class);
+            intent.putExtra(com.checkin.app.checkin.User.NonPersonalProfile.UserProfileActivity.KEY_PROFILE_USER_ID, mUserActivityAdapter.getUserByPosition(position).getId());
             startActivity(intent);
         });
 
@@ -406,24 +392,6 @@ public class HomeActivity extends AppCompatActivity
             if (userResource != null && userResource.status == Resource.Status.SUCCESS)
                 mUserActivityAdapter.setUsers(userResource.data);
         }));
-    }
-
-
-    private void setupMessages() {
-        mChatAdapter = new ChatAdapter(null);
-        rvNavMessages.setLayoutManager(new LinearLayoutManager(
-                this, LinearLayoutManager.VERTICAL, false));
-        rvNavMessages.setAdapter(mChatAdapter);
-
-//        mMessageViewModel.getBriefChats().observe(this, briefChats -> mChatAdapter.setBriefChats(briefChats));
-        ItemClickSupport.addTo(rvNavMessages).setOnItemClickListener(new ItemClickSupport.OnItemClickListener() {
-            @Override
-            public void onItemClicked(RecyclerView recyclerView, int position, View v) {
-                Intent intent = new Intent(HomeActivity.this, ChatActivity.class);
-                intent.putExtra(Constants.EXTRA_SELECTED_USER_ID, mChatAdapter.getBriefChat(position).getUserId());
-                startActivity(intent);
-            }
-        });
     }
 
     @Override
@@ -443,7 +411,7 @@ public class HomeActivity extends AppCompatActivity
         Intent intent;
         switch (id) {
             case R.id.nav_profile:
-                intent = new Intent(getApplicationContext(), UserProfilePersonalActivity.class);
+                intent = new Intent(getApplicationContext(), UserProfileActivity.class);
                 startActivity(intent);
                 break;
             case R.id.nav_settings:
@@ -469,11 +437,6 @@ public class HomeActivity extends AppCompatActivity
                 intent = new Intent(getApplicationContext(), ShopActivity.class);
                 startActivity(intent);
                 break;
-            case R.id.editProfile:
-                intent = new Intent(getApplicationContext(), EditPersonalProfile.class);
-                startActivity(intent);
-                break;
-
         }
         drawerLayout.closeDrawer(GravityCompat.START);
         return true;

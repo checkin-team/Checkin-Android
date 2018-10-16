@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.checkin.app.checkin.Utility.SelectCropImageActivity"
+    tools:context="com.checkin.app.checkin.Misc.SelectCropImageActivity"
     android:orientation="vertical"
     >
          <com.lyft.android.scissors2.CropView

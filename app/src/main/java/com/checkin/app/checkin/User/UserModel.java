@@ -1,24 +1,14 @@
 package com.checkin.app.checkin.User;
 
-import com.checkin.app.checkin.Data.Converters;
 import com.checkin.app.checkin.Utility.Util;
 import com.fasterxml.jackson.annotation.JsonAutoDetect;
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
-import java.util.Date;
-
-import io.objectbox.annotation.Convert;
-import io.objectbox.annotation.Entity;
-import io.objectbox.annotation.Id;
-import io.objectbox.annotation.Index;
-import io.objectbox.annotation.Unique;
-
-@Entity
+//@Entity
 @JsonAutoDetect(fieldVisibility = JsonAutoDetect.Visibility.ANY)
 public class UserModel {
     @JsonProperty("pk")
-    @Id(assignable = true)
+//    @Id(assignable = true)
     private long id;
 
     private String username;
@@ -29,7 +19,7 @@ public class UserModel {
     @JsonProperty("address")
     private String address;
 
-    @Convert(converter = Converters.GenderConverter.class, dbType = Character.class)
+//    @Convert(converter = Converters.GenderConverter.class, dbType = Character.class)
     private GENDER gender;
 
     @JsonProperty("profile_pic")
@@ -37,10 +27,15 @@ public class UserModel {
 
     private String bio;
 
+    @JsonProperty("phone_no")
+    private String phoneNo;
+
     private long followers;
     private long checkins;
     private long reviews;
     @JsonProperty("is_public") private boolean isPublic;
+
+    private FRIEND_STATUS friendStatus;
 
     public enum GENDER {
         MALE('m'), FEMALE('f');
@@ -58,6 +53,25 @@ public class UserModel {
                     return FEMALE;
             }
             return GENDER.MALE;
+        }
+    }
+
+    // TODO: Move from here.
+    public enum FRIEND_STATUS {
+        NONE("none"), FRIENDS("frnd"), PENDING_REQUEST("rqst"), BLOCKED("blkd");
+
+        private String tag;
+        FRIEND_STATUS(String tag) {
+            this.tag = tag;
+        }
+
+        public static FRIEND_STATUS getByTag(String tag) {
+            for (FRIEND_STATUS status: FRIEND_STATUS.values()) {
+                if (status.tag.equals(tag)) {
+                    return status;
+                }
+            }
+            return NONE;
         }
     }
 
@@ -96,6 +110,14 @@ public class UserModel {
         return reviews;
     }
 
+    public String getPhoneNumber() {
+        return phoneNo;
+    }
+
+    public FRIEND_STATUS getFriendStatus() {
+        return friendStatus;
+    }
+
     public String formatReviews() {
         return Util.formatCount(reviews);
     }
@@ -130,6 +152,11 @@ public class UserModel {
 
     public void setPublic(boolean aPublic) {
         isPublic = aPublic;
+    }
+
+    @JsonProperty("friend_status")
+    public void setFriendStatus(String friendStatusTag) {
+        this.friendStatus = FRIEND_STATUS.getByTag(friendStatusTag);
     }
 }
 

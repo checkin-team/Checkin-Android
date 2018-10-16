@@ -1,13 +1,8 @@
-package com.checkin.app.checkin.User.NonPersonalProfile;
-
-/**
- * Created by Jogi Miglani on 29-09-2018.
- */
-
+package com.checkin.app.checkin.User.PersonalProfile;
 
 import android.arch.lifecycle.ViewModelProviders;
+import android.content.Intent;
 import android.os.Bundle;
-import android.support.annotation.Nullable;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -15,10 +10,12 @@ import android.widget.Toast;
 
 import com.checkin.app.checkin.Data.Resource;
 import com.checkin.app.checkin.Misc.BaseActivity;
+import com.checkin.app.checkin.Misc.SelectCropImageActivity;
 import com.checkin.app.checkin.R;
 import com.checkin.app.checkin.User.UserModel;
-import com.checkin.app.checkin.User.UserModel.FRIEND_STATUS;
 import com.checkin.app.checkin.Utility.GlideApp;
+
+import java.io.File;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -27,10 +24,8 @@ import butterknife.OnClick;
 public class UserProfileActivity extends BaseActivity {
     private static final String TAG = UserProfileActivity.class.getSimpleName();
 
-    public static final String KEY_PROFILE_USER_ID = "profile_user_id";
-
     @BindView(R.id.im_profile) ImageView imProfile;
-    @BindView(R.id.tv_checkins)TextView tvCheckins;
+    @BindView(R.id.tv_checkins) TextView tvCheckins;
     @BindView(R.id.tv_reviews) TextView tvReviews;
     @BindView(R.id.tv_followers)TextView tvFollowers;
     @BindView(R.id.tv_bio) TextView tvBio;
@@ -43,18 +38,15 @@ public class UserProfileActivity extends BaseActivity {
 //    float currY,  maxPercentDiff = 0.1f;
 //    float origAbovePercent = .67f, currAbovePercent = .67f;
 
-    protected void onCreate(@Nullable Bundle savedInstanceState) {
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_user_profile_non_personal);
+        setContentView(R.layout.activity_user_profile_personal);
         ButterKnife.bind(this);
 
-        if (getIntent().getExtras() == null)
-            return;
+        mViewModel = ViewModelProviders.of(this, new UserViewModel.Factory(getApplication())).get(UserViewModel.class);
 
         init(R.id.root_view, true);
-
-        mViewModel = ViewModelProviders.of(this).get(UserViewModel.class);
-        mViewModel.setUserPk(getIntent().getExtras().getLong(KEY_PROFILE_USER_ID));
         mViewModel.getUser().observe(this, userModelResource -> {
             if (userModelResource == null) return;
             if (userModelResource.status == Resource.Status.SUCCESS && userModelResource.data != null) {
@@ -67,13 +59,14 @@ public class UserProfileActivity extends BaseActivity {
             }
         });
         mViewModel.getObservableData().observe(this, resource -> {
-            assert resource != null;
-            if (resource.status == Resource.Status.SUCCESS)
+            if (resource.status == Resource.Status.SUCCESS && resource.data != null) {
+                Toast.makeText(getApplicationContext(), resource.data.get("detail").asText(), Toast.LENGTH_SHORT).show();
                 mViewModel.updateResults();
+            }
         });
     }
 
-    private void setUI(UserModel person) {
+    private void setUI(UserModel person){
         if (person.getGender() == UserModel.GENDER.MALE)
             imProfile.setImageResource(R.drawable.cover_unknown_male);
         else
@@ -86,35 +79,31 @@ public class UserProfileActivity extends BaseActivity {
         tvBio.setText(person.getBio());
         tvDisplayName.setText(person.getFullName());
         tvCity.setText(person.getAddress());
-        setFriendshipAction(person.getFriendStatus());
     }
 
-    private void setFriendshipAction(FRIEND_STATUS friendStatus) {
-        if (friendStatus == FRIEND_STATUS.NONE) {
-            findViewById(R.id.container_status_none).setVisibility(View.VISIBLE);
-        } else if (friendStatus == FRIEND_STATUS.PENDING_REQUEST) {
-            findViewById(R.id.container_status_request).setVisibility(View.VISIBLE);
-        } else if (friendStatus == FRIEND_STATUS.FRIENDS) {
-            findViewById(R.id.container_status_friend).setVisibility(View.VISIBLE);
+    @OnClick(R.id.btn_profile_edit)
+    public void editProfile() {
+        startActivity(new Intent(getApplicationContext(), ProfileEditActivity.class));
+    }
+
+    @OnClick(R.id.im_edit_profile_pic)
+    public void editProfilePic() {
+        Intent intent;
+        intent = new Intent(this , SelectCropImageActivity.class);
+        startActivityForResult(intent, SelectCropImageActivity.RC_CROP_IMAGE);
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == SelectCropImageActivity.RC_CROP_IMAGE && resultCode == RESULT_OK) {
+            if (data.getExtras() != null) {
+                File image = (File) data.getExtras().get(SelectCropImageActivity.KEY_IMAGE);
+                mViewModel.updateProfilePic(image);
+            }
         }
     }
 
-    @OnClick(R.id.btn_follow)
-    public void onFollow() {
-        Toast.makeText(getApplicationContext(), "Currently unsupported action!", Toast.LENGTH_SHORT).show();
-        // TODO: With friendship model.
-    }
-
-    @OnClick(R.id.btn_message)
-    public void onMessage() {
-        Toast.makeText(getApplicationContext(), "Currently unsupported action!", Toast.LENGTH_SHORT).show();
-    }
-
-    @OnClick(R.id.im_btn_following)
-    public void onUnfollow() {
-        Toast.makeText(getApplicationContext(), "Currently unsupported action!", Toast.LENGTH_SHORT).show();
-        // TODO: With friendship model.
-    }
 
 //    @Override
 //    public boolean onTouchEvent(MotionEvent event){

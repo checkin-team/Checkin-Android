@@ -87,7 +87,7 @@
         android:layout_height="47dp"
         android:layout_marginStart="4dp"
         android:layout_marginTop="16dp"
-        android:src="@drawable/ic_back"
+        android:src="@drawable/ic_back_white"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 

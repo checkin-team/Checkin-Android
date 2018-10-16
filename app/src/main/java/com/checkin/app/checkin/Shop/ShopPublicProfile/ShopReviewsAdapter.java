@@ -35,10 +35,9 @@ public class ShopReviewsAdapter extends RecyclerView.Adapter<ShopReviewsAdapter.
 
     @Override
     public ShopReviewViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-//        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_review_recycler_view,parent,false);
-//        ShopReviewViewHolder viewHolder=new ShopReviewViewHolder(view);
-//        return viewHolder;
-        return null;
+        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_review_recycler_view,parent,false);
+        ShopReviewViewHolder viewHolder=new ShopReviewViewHolder(view);
+        return viewHolder;
     }
 
     @Override
@@ -70,11 +69,11 @@ public class ShopReviewsAdapter extends RecyclerView.Adapter<ShopReviewsAdapter.
             super(itemView);
             itemView.setOnClickListener(this);
             name=(TextView)itemView.findViewById(R.id.tv_name);
-//            reviewAndFollowers=(TextView)itemView.findViewById(R.id.tv_reviews_followers);
-//            totalVisits=(TextView)itemView.findViewById(R.id.tv_visits);
-//            tv=(TextView)itemView.findViewById(R.id.tv_full_review);
-//            time=(TextView)itemView.findViewById(R.id.tv_review_time);
-//            rating=(TextView)itemView.findViewById(R.id.rating_number);
+            reviewAndFollowers=(TextView)itemView.findViewById(R.id.tv_reviews_followers);
+            totalVisits=(TextView)itemView.findViewById(R.id.tv_visits);
+            tv=(TextView)itemView.findViewById(R.id.tv_full_review);
+            time=(TextView)itemView.findViewById(R.id.tv_review_time);
+            rating=(TextView)itemView.findViewById(R.id.rating_number);
         }
         @Override
         public void onClick(View v) {

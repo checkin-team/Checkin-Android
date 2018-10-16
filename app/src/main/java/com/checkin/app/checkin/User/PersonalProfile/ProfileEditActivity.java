@@ -1,42 +1,30 @@
 package com.checkin.app.checkin.User.PersonalProfile;
 
-import android.accounts.Account;
-import android.accounts.AccountManager;
 import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
 import android.arch.lifecycle.ViewModelProviders;
-import android.content.Intent;
-import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.os.Handler;
-import android.preference.PreferenceManager;
-import android.support.annotation.NonNull;
 import android.support.transition.Fade;
-import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentTransaction;
+import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
-import android.view.MotionEvent;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
-import android.widget.Button;
 import android.widget.EditText;
 import android.widget.FrameLayout;
-import android.widget.ProgressBar;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.checkin.app.checkin.Auth.AuthFragmentInteraction;
-import com.checkin.app.checkin.Auth.AuthOptionsFragment;
 import com.checkin.app.checkin.Auth.AuthViewModel;
 import com.checkin.app.checkin.Auth.OtpVerificationFragment;
 import com.checkin.app.checkin.Auth.PhoneAuth;
 import com.checkin.app.checkin.Data.Resource;
-import com.checkin.app.checkin.Home.HomeActivity;
 import com.checkin.app.checkin.R;
 import com.checkin.app.checkin.User.UserModel;
 import com.checkin.app.checkin.Utility.Constants;
-import com.checkin.app.checkin.Utility.Util;
 import com.facebook.login.LoginResult;
-import com.fasterxml.jackson.databind.node.ObjectNode;
 import com.google.firebase.FirebaseException;
 import com.google.firebase.FirebaseNetworkException;
 import com.google.firebase.auth.FirebaseAuth;
@@ -46,57 +34,57 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 
-import static com.checkin.app.checkin.R.string.error_unavailable_network;
-import static java.security.AccessController.getContext;
+public class ProfileEditActivity extends AppCompatActivity implements AuthFragmentInteraction {
+    private static final String TAG = ProfileEditActivity.class.getSimpleName();
 
-public class EditPersonalProfile extends AppCompatActivity implements AuthFragmentInteraction {
-
-    @BindView(R.id.btn_back)Button btnBack;
-    @BindView(R.id.btn_done)Button btnDone;
-    @BindView(R.id.et_name)EditText etName;
-    @BindView(R.id.et_location)EditText etLocation;
-    @BindView(R.id.et_bio)EditText etBio;
-    @BindView(R.id.et_phoneNumber)EditText etPhone;
-    @BindView(R.id.et_email)EditText etEmail;
+    @BindView(R.id.et_name) EditText etName;
+    @BindView(R.id.et_location) EditText etLocation;
+    @BindView(R.id.et_bio) EditText etBio;
+    @BindView(R.id.et_phone) EditText etPhone;
+    @BindView(R.id.tv_username) TextView tvUsername;
     @BindView(R.id.dark_back) FrameLayout mDarkBack;
+
     private PhoneAuth mPhoneAuth;
-    private FirebaseAuth mAuth;
     private AuthViewModel mAuthViewModel;
-    UserViewModel mUserViewModel;
-    private AuthFragmentInteraction mInteractionListener;
-    FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
-    Fragment phoneChangeFragment=AuthOptionsFragment.newInstance(this, null);
-    private String TAG="TAG";
+    private UserViewModel mUserViewModel;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_edit_personal_profile);
+        setContentView(R.layout.activity_user_profile_edit);
         ButterKnife.bind(this);
 
-        mDarkBack.setOnTouchListener(new View.OnTouchListener() {
-            @Override
-            public boolean onTouch(View v, MotionEvent event) {
-                getSupportFragmentManager().popBackStack();
-                hideDarkBack();
-                findViewById(R.id.fragment_container).setVisibility(View.GONE);
-                return true;
-            }
-        });
+//        mDarkBack.setOnTouchListener((v, event) -> {
+//            getSupportFragmentManager().popBackStack();
+//            hideDarkBack();
+//            findViewById(R.id.fragment_container).setVisibility(View.GONE);
+//            return true;
+//        });
+
+        ActionBar actionBar = getSupportActionBar();
+        actionBar.setDisplayHomeAsUpEnabled(true);
+        actionBar.setHomeAsUpIndicator(R.drawable.ic_appbar_back);
+        actionBar.setElevation(10);
 
         mUserViewModel = ViewModelProviders.of(this, new UserViewModel.Factory(getApplication())).get(UserViewModel.class);
-        mUserViewModel.getCurrentUser().observe(this, userModelResource -> {
-            if (userModelResource != null && userModelResource.status == Resource.Status.SUCCESS) {
+        mAuthViewModel = ViewModelProviders.of(this, new AuthViewModel.Factory(getApplication())).get(AuthViewModel.class);
+
+        mUserViewModel.getUser().observe(this, userModelResource -> {
+            if (userModelResource.status == Resource.Status.SUCCESS && userModelResource.data != null) {
                 setUi(userModelResource.data);
             }
         });
+        mUserViewModel.getObservableData().observe(this, resource -> {
+            if (resource.status == Resource.Status.SUCCESS) {
+                finish();
+            }
+        });
 
-        mAuth = FirebaseAuth.getInstance();
-
+        FirebaseAuth mAuth = FirebaseAuth.getInstance();
         mPhoneAuth = new PhoneAuth(mAuth) {
             @Override
             protected void onVerificationSuccess(PhoneAuthCredential credential) {
-                mUserViewModel.postPhoneNumber(mAuthViewModel.getPhoneNo());
+//                mUserViewModel.postPhoneNumber(mAuthViewModel.getPhoneNo());
             }
 
             @Override
@@ -115,7 +103,6 @@ public class EditPersonalProfile extends AppCompatActivity implements AuthFragme
             }
         };
 
-        mAuthViewModel = ViewModelProviders.of(this, new AuthViewModel.Factory(getApplication())).get(AuthViewModel.class);
     }
 
     @Override
@@ -125,7 +112,7 @@ public class EditPersonalProfile extends AppCompatActivity implements AuthFragme
 
     @Override
     public void onOtpVerificationProcess(String otp) {
-
+        mPhoneAuth.verifyOtp(otp);
     }
 
     @Override
@@ -182,40 +169,50 @@ public class EditPersonalProfile extends AppCompatActivity implements AuthFragme
                 });
     }
 
-    @OnClick(R.id.btn_done)
-    public void updatingInfo()
-    {
-        mUserViewModel.postUserData(etName.toString(),etLocation.toString(),etBio.toString());
-    }
-
-    @OnClick(R.id.et_phoneNumber)
+    @OnClick(R.id.et_phone)
     public void changePhoneNumber()
     {
         findViewById(R.id.fragment_container).setVisibility(View.VISIBLE);
-        transaction.add(R.id.fragment_container,phoneChangeFragment );
-        transaction.addToBackStack(null);
-        transaction.commit();
+//        transaction.add(R.id.fragment_container,phoneChangeFragment );
+//        transaction.addToBackStack(null);
+//        transaction.commit();
         showDarkBack();
     }
 
-    @OnClick(R.id.et_email)
-    public void changeEmailId()
-    {
 
-    }
-
-    private void setUi(UserModel mUserModel) {
-        etName.setText(mUserModel.getUsername());
-        etLocation.setText(mUserModel.getAddress());
-        etBio.setText(mUserModel.getBio());
-        //etPhone.setText(mUserModel.getPhoneNumber);
+    private void setUi(UserModel user) {
+        etName.setText(user.getFullName());
+        etLocation.setText(user.getAddress());
+        etBio.setText(user.getBio());
+        etPhone.setText(user.getPhoneNumber());
+        tvUsername.setText("Username: " + user.getUsername());
         //etEmail.setText(mUserModel.getEmail);
-
     }
-    @OnClick(R.id.btn_back)
-    public void goBack()
-    {
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.menu_appbar_done, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.menu_item_done: {
+                Toast.makeText(this, "Done", Toast.LENGTH_SHORT).show();
+                String name = etName.getText().toString();
+                String location = etLocation.getText().toString();
+                String bio = etBio.getText().toString();
+                mUserViewModel.postUserData(name, location, bio);
+                return true;
+            }
+        }
+        return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    public boolean onSupportNavigateUp() {
         finish();
+        return true;
     }
-
 }

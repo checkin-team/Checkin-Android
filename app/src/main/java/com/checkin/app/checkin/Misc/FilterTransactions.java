@@ -1,12 +1,11 @@
 package com.checkin.app.checkin.Misc;
 
 import android.content.Intent;
+import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.support.v7.widget.StaggeredGridLayoutManager;
 import android.util.Log;
 import android.util.TypedValue;
 import android.view.View;
@@ -14,8 +13,6 @@ import android.widget.CalendarView;
 import android.widget.TextView;
 
 import com.checkin.app.checkin.R;
-import com.checkin.app.checkin.Social.ChatActivity;
-import com.checkin.app.checkin.Utility.Constants;
 import com.checkin.app.checkin.Utility.ItemClickSupport;
 import com.checkin.app.checkin.Utility.WalletFilterAdapter;
 

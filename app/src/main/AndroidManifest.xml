@@ -90,7 +90,7 @@
             android:parentActivityName=".Home.HomeActivity"
             android:screenOrientation="portrait"
             android:theme="@style/Theme.AppCompat.Light" />
-        <activity android:name=".Utility.SelectCropImageActivity" />
+        <activity android:name=".Misc.SelectCropImageActivity" />
 
         <meta-data
             android:name="com.facebook.sdk.ApplicationId"
@@ -113,13 +113,15 @@
             </intent-filter>
         </activity>
         <activity android:name=".Shop.ShopInfoActivity" />
-        <activity android:name=".User.PersonalProfile.UserProfilePersonalActivity" />
-        <activity android:name=".User.PersonalProfile.EditPersonalProfile" />
+        <activity android:name=".User.PersonalProfile.UserProfileActivity" />
+        <activity android:name=".User.PersonalProfile.ProfileEditActivity"
+            android:label="Edit Profile"
+            android:theme="@style/AppThemeWhiteActionBar"/>
         <activity
             android:name=".Maps.MapsActivity"
             android:label="@string/title_activity_maps"
             android:theme="@style/Theme.AppCompat.Light" />
-        <activity android:name=".Shop.ShopInfoActivity" />
+        <activity android:name=".Shop.ShopReviewsActivity"></activity>
 
         <service
             android:name=".Auth.AuthenticatorService"
@@ -162,8 +164,6 @@
 
         <service android:name=".Maps.FetchAddressIntentService" />
         <service android:name=".Auth.DeviceTokenService" />
-
-        <activity android:name=".Shop.ShopReviewsActivity"></activity>
     </application>
 
 </manifest>

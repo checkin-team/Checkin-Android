@@ -125,4 +125,9 @@
     <string name="label_followers">Followers</string>
     <string name="label_checkins">Check Ins</string>
     <string name="label_reviews">Reviews</string>
+    <string name="action_follow">Follow</string>
+    <string name="info_requested">Requested</string>
+    <string name="action_message">Message</string>
+    <string name="status_loading">Working hard to fetch your data...</string>
+    <string name="action_profile_edit">Edit Profile</string>
 </resources>

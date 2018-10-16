@@ -6,7 +6,6 @@ import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
 import android.arch.lifecycle.ViewModelProviders;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.os.Handler;
 import android.preference.PreferenceManager;
@@ -26,7 +25,6 @@ import com.checkin.app.checkin.Home.HomeActivity;
 import com.checkin.app.checkin.R;
 import com.checkin.app.checkin.User.UserModel.GENDER;
 import com.checkin.app.checkin.Utility.Constants;
-import com.checkin.app.checkin.Utility.Util;
 import com.facebook.AccessToken;
 import com.facebook.CallbackManager;
 import com.facebook.login.LoginResult;
@@ -168,7 +166,6 @@ public class AuthActivity extends AppCompatActivity implements AuthFragmentInter
         } else {
             Toast.makeText(getApplicationContext(), "Welcome back!", Toast.LENGTH_LONG).show();
         }
-        startActivity(new Intent(this, HomeActivity.class));
         mAuthViewModel.login();
     }
 
@@ -189,7 +186,6 @@ public class AuthActivity extends AppCompatActivity implements AuthFragmentInter
         showDarkBack();
         hideProgress();
         replaceFragmentContainer(fragment);
-        startActivity(new Intent(this, HomeActivity.class));
     }
 
     private void replaceFragmentContainer(Fragment fragment) {
