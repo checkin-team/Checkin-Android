@@ -35,6 +35,7 @@ import android.widget.TextView;
 import com.checkin.app.checkin.Data.Resource;
 import com.checkin.app.checkin.Menu.SessionUserActivity;
 import com.checkin.app.checkin.Misc.FaqActivity;
+import com.checkin.app.checkin.Misc.WaitorWork;
 import com.checkin.app.checkin.Notifications.NotificationActivity;
 import com.checkin.app.checkin.Profile.ShopProfile.ShopProfileActivity2;
 import com.checkin.app.checkin.R;
@@ -437,6 +438,7 @@ public class HomeActivity extends AppCompatActivity
                 intent = new Intent(getApplicationContext(), ShopActivity.class);
                 startActivity(intent);
                 break;
+
         }
         drawerLayout.closeDrawer(GravityCompat.START);
         return true;

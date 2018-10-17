@@ -133,4 +133,13 @@
         <item name="android:textSize">@dimen/font_small_heading</item>
     </style>
 
+    <style name="ActionPeopleView">
+        <item name="android:layout_width">@dimen/square_card_dimen</item>
+        <item name="android:layout_height">@dimen/square_card_dimen</item>
+        <item name="android:padding">@dimen/spacing_small</item>
+
+        <item name="android:textColor">@color/brownish_grey</item>
+        <item name="android:textSize">@dimen/font_small_heading</item>
+    </style>
+
 </resources>
