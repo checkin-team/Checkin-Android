@@ -67,7 +67,6 @@
             android:windowSoftInputMode="adjustPan" />
 
         <activity android:name=".Misc.TransactionActivity" />
-        <activity android:name=".Home.StoryActivity" />
         <activity android:name=".Misc.FilterTransactions" />
         <activity android:name=".Misc.FaqActivity" />
         <activity

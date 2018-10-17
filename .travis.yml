@@ -4,14 +4,15 @@ sudo: false
 android:
   components:
     - tools
-    - tools
     - platform-tools
     - build-tools-28.0.2
-    - android-27
+    - android-28
 
     # Additional components
     - extra-google-google_play_services
     - extra-google-m2repository
+    - extra-android-m2repository
+    - extra-android-support
     - addon-google_apis-google-26
 
     # Specify at least one system image,
@@ -19,8 +20,15 @@ android:
     - sys-img-armeabi-v7a-android-26
     - sys-img-armeabi-v7a-android-21
 
+  licenses:
+    - 'android-sdk-preview-license-52d11cd2'
+    - 'android-sdk-license-.+'
+    - 'google-gdk-license-.+'
+
 before_install:
   - chmod +x gradlew
   - yes | sdkmanager "platforms;android-27"
 script:
+  - echo "Travis branch is $TRAVIS_BRANCH"
+  - echo "Travis branch is in pull request $TRAVIS_PULL+REQUEST"
   - ./gradlew build connectedCheck
