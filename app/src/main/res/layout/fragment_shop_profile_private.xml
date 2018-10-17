@@ -139,7 +139,7 @@
                         android:orientation="vertical">
 
                         <TextView
-                            android:id="@+id/rating"
+                            android:id="@+id/tv_reviews"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:text="2.2k"
@@ -339,7 +339,7 @@
                 </RelativeLayout>
 
                 <RelativeLayout
-                    android:id="@+id/message"
+                    android:id="@+id/review"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1">

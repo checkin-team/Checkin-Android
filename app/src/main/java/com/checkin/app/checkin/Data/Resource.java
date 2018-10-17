@@ -5,6 +5,10 @@ import android.support.annotation.Nullable;
 import android.util.Log;
 
 import com.checkin.app.checkin.Utility.NoConnectivityException;
+import com.fasterxml.jackson.databind.JsonNode;
+import com.fasterxml.jackson.databind.node.ObjectNode;
+
+import java.io.IOException;
 
 import static java.net.HttpURLConnection.HTTP_BAD_REQUEST;
 import static java.net.HttpURLConnection.HTTP_FORBIDDEN;
@@ -19,6 +23,7 @@ public class Resource<T> {
     @Nullable public final String message;
 
     public enum Status {
+        NO_REQUEST,
         SUCCESS,
         LOADING,
         ERROR_RESPONSE_INVALID,
@@ -34,6 +39,15 @@ public class Resource<T> {
         this.status = status;
         this.data = data;
         this.message = message;
+    }
+
+    public JsonNode getErrorBody() {
+        try {
+            return Converters.objectMapper.readTree(message);
+        } catch (IOException e) {
+            Log.e(TAG, "message not a valid JSON data.");
+        }
+        return null;
     }
 
     @NonNull
@@ -56,11 +70,16 @@ public class Resource<T> {
         return new Resource<>(Status.LOADING, data, null);
     }
 
+    public static <T> Resource<T> noRequest() {
+        return new Resource<>(Status.NO_REQUEST, null, null);
+    }
+
     public static <T> Resource<T> createResource(@NonNull ApiResponse<T> apiResponse) {
         Resource<T> resource;
         if (apiResponse.isSuccessful() && apiResponse.getData() != null) {
             resource = success(apiResponse.getData());
         } else if (apiResponse.getErrorThrowable() != null) {
+            Log.e(TAG, apiResponse.getErrorThrowable().getMessage());
             if (apiResponse.getErrorThrowable() instanceof NoConnectivityException) {
                 Log.e(TAG, apiResponse.getErrorMessage());
                 resource = error(Status.ERROR_DISCONNECTED, apiResponse.getErrorMessage(), apiResponse.getData());

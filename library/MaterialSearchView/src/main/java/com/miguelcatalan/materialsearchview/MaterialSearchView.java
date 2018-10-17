@@ -229,8 +229,10 @@ public class MaterialSearchView extends FrameLayout implements Filter.FilterList
                 if (mLastSearchTerm.length() == 0 ||
                     (TextUtils.equals(mSearchSrcTextView.getText(), mLastSearchTerm) && mSuggestionsListView.getVisibility() == GONE) ||
                     mAdapter == null) {
+
                     mSearchSrcTextView.setText(null);
                     closeSearch();
+
                 }
                 else {
                     mIgnoreTextChanged = true;
@@ -299,6 +301,7 @@ public class MaterialSearchView extends FrameLayout implements Filter.FilterList
         CharSequence query = mSearchSrcTextView.getText();
         if (query != null && TextUtils.getTrimmedLength(query) > 0) {
             mLastSearchTerm = query.toString();
+
             if (mOnQueryChangeListener == null || !mOnQueryChangeListener.onQueryTextSubmit(query.toString())) {
                 dismissSuggestions();
             }
@@ -723,13 +726,13 @@ public class MaterialSearchView extends FrameLayout implements Filter.FilterList
 
     @Override
     public Parcelable onSaveInstanceState() {
-        Parcelable superState = super.onSaveInstanceState();
+     Parcelable superState = super.onSaveInstanceState();
 
         mSavedState = new SavedState(superState);
         mSavedState.query = mUserQuery != null ? mUserQuery.toString() : null;
         mSavedState.isSearchOpen = this.mIsSearchOpen;
-
-        return mSavedState;
+        return null;
+      //  return mSavedState;
     }
 
     @Override

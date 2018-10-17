@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/root_view"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    tools:context=".Auth.AuthOptionsFragment">
+
+    <com.checkin.app.checkin.Utility.PrefixEditText
+        android:id="@+id/ed_phone"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/height_textbox_normal"
+        android:layout_marginEnd="@dimen/spacing_huge"
+        android:layout_marginStart="@dimen/spacing_huge"
+        android:layout_marginTop="@dimen/spacing_extra_large"
+        android:hint="Phone Number"
+        android:inputType="phone"
+        android:textColor="@color/greyish"
+        android:textAlignment="center"
+        android:textSize="@dimen/font_normal"
+        android:text="@string/prefix_country_code"
+        android:background="@drawable/background_textbox"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <Button
+        android:id="@+id/btn_enter"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="@dimen/spacing_huge"
+        android:layout_marginStart="@dimen/spacing_huge"
+        android:layout_marginTop="@dimen/spacing_large"
+        android:background="@drawable/curved_rouge_shape"
+        android:text="@string/text_app_join"
+        android:textColor="@color/white"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/ed_phone" />
+
+    <android.support.constraint.ConstraintLayout
+        android:id="@+id/container_alternative_options"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:layout_marginTop="@dimen/spacing_large"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/btn_enter">
+
+        <ImageView
+            android:id="@+id/im_connect_with"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="@dimen/spacing_normal"
+            android:layout_marginStart="@dimen/spacing_normal"
+            android:src="@drawable/title_enter_connect_with"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <com.facebook.login.widget.LoginButton
+            android:id="@+id/btn_login_fb"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/spacing_extra_large"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="@id/im_connect_with" />
+
+        <com.google.android.gms.common.SignInButton
+            android:id="@+id/btn_login_google"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:buttonSize="wide"
+            android:layout_marginTop="@dimen/spacing_normal"
+            app:layout_constraintTop_toBottomOf="@id/btn_login_fb"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent" />
+    </android.support.constraint.ConstraintLayout>
+</android.support.constraint.ConstraintLayout>

@@ -1,5 +1,6 @@
 package com.checkin.app.checkin.Shop;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
@@ -15,6 +16,7 @@ import com.checkin.app.checkin.R;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 import butterknife.Unbinder;
 
 public class TabPhoneFragment extends Fragment {
@@ -51,6 +53,11 @@ public class TabPhoneFragment extends Fragment {
             }
         });
         return view;
+    }
+    @OnClick(R.id.btn_next)
+    public void proceed(View view){
+        if(view.isActivated())
+            startActivity(new Intent(getContext(), ShopInfoActivity.class));
     }
 
     @Override

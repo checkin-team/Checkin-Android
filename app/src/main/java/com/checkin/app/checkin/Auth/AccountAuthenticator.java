@@ -31,7 +31,7 @@ public class AccountAuthenticator extends AbstractAccountAuthenticator {
     }
 
     @Override
-    public Bundle addAccount(AccountAuthenticatorResponse response, String accountType, String authTokenType, String[] requiredFeatures, Bundle options) throws NetworkErrorException {
+    public Bundle addAccount(AccountAuthenticatorResponse response, String accountType, String authTokenType, String[] requiredFeatures, Bundle options) {
         AccountManager accountManager = AccountManager.get(mContext);
 
         if (ActivityCompat.checkSelfPermission(mContext, Manifest.permission.GET_ACCOUNTS) != PackageManager.PERMISSION_GRANTED) {
@@ -46,7 +46,7 @@ public class AccountAuthenticator extends AbstractAccountAuthenticator {
             return result;
         }
 
-        final Intent intent = new Intent(mContext, SignUpActivity.class);
+        final Intent intent = new Intent(mContext, AuthActivity.class);
         intent.putExtra(Constants.ACCOUNT_TYPE, accountType);
         intent.putExtra(AccountManager.KEY_ACCOUNT_AUTHENTICATOR_RESPONSE, response);
 
@@ -55,12 +55,12 @@ public class AccountAuthenticator extends AbstractAccountAuthenticator {
     }
 
     @Override
-    public Bundle confirmCredentials(AccountAuthenticatorResponse accountAuthenticatorResponse, Account account, Bundle bundle) throws NetworkErrorException {
+    public Bundle confirmCredentials(AccountAuthenticatorResponse accountAuthenticatorResponse, Account account, Bundle bundle) {
         return null;
     }
 
     @Override
-    public Bundle getAuthToken(AccountAuthenticatorResponse response, Account account, String authTokenType, Bundle bundle) throws NetworkErrorException {
+    public Bundle getAuthToken(AccountAuthenticatorResponse response, Account account, String authTokenType, Bundle bundle) {
         AccountManager accountManager = AccountManager.get(mContext);
 
         String authToken = accountManager.peekAuthToken(account, authTokenType);
@@ -73,7 +73,7 @@ public class AccountAuthenticator extends AbstractAccountAuthenticator {
             return result;
         }
 
-        final Intent intent = new Intent(mContext, SignUpActivity.class);
+        final Intent intent = new Intent(mContext, AuthActivity.class);
         intent.putExtra(AccountManager.KEY_ACCOUNT_AUTHENTICATOR_RESPONSE, response);
         intent.putExtra(Constants.ACCOUNT_TYPE, account.type);
 

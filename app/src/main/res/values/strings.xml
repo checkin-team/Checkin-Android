@@ -31,6 +31,11 @@
     <string name="action_filter">Filter Items</string>
     <string name="menu_item_default_price">-</string>
     <string name="title_activity_login">LoginActivity</string>
+    <string name="title_login_help">Locate your account</string>
+    <string name="bottom_text_need_help">Need help?</string>
+    <string name="subtitle_login_help">Enter your CheckIn phone number linked to your account</string>
+    <string name="create_new_password">Create a new password</string>
+    <string name="expand_text">read more</string>
 
     <!--for bottomnav bar-->
 
@@ -71,8 +76,8 @@
     <string name="shop_profile_about_cusine">"C\nU\nS\nI\nN\nE\n&gt;"</string>
     <string name="shop_profile_about_review">"R\nE\nV\nI\nE\nW\n&lt;"</string>
 
-    <string name="facebook_app_id">291656184950133</string>
-    <string name="fb_login_protocol_scheme">fb291656184950133</string>
+    <string name="facebook_app_id">150714782397445</string>
+    <string name="fb_login_protocol_scheme">fb150714782397445</string>
 
     <string name="title_activity_signup">SignupActivity</string>
     <string name="btn_cancel">Cancel</string>
@@ -95,4 +100,37 @@
     <string name="notif_appbar_title">NOTIFICATIONS</string>
     <string name="notif_heading_unseen">New</string>
     <string name="notif_heading_seen">Seen</string>
+
+    <string name="error_unavailable_network">No network available, please check your WiFi or Data connection.</string>
+
+    <!--Fetch Address-->
+    <string name="no_geocoder_available">No geocoder available</string>
+
+    <string name="fetch_address">Fetch address</string>
+
+    <string name="address_found">Address found</string>
+
+    <string name="no_address_found">Sorry, no address found</string>
+    <string name="no_location_data_provided">No location data provided</string>
+    <string name="service_not_available">Sorry, the service is not available</string>
+    <string name="invalid_lat_long_used">Invalid latitude or longitude used</string>
+    <string name="title_activity_maps">Map</string>
+    <string name="text_app_join">Enter</string>
+    <string name="product_tag_line">When Ease meets Tech</string>
+    <string name="error_authentication_google">Google authentication failed.</string>
+    <string name="error_authentication_phone">Phone authentication failed.</string>
+    <string name="error_authentication_facebook">Facebook authentication failed.</string>
+    <string name="error_authentication">Unable to authenticate user.</string>
+    <string name="error_api_invalid_response">Server sent an invalid response.</string>
+    <string name="label_followers">Followers</string>
+    <string name="label_checkins">Check Ins</string>
+    <string name="label_reviews">Reviews</string>
+    <string name="action_follow">Follow</string>
+    <string name="info_requested">Requested</string>
+    <string name="action_message">Message</string>
+    <string name="status_loading">Working hard to fetch your data...</string>
+    <string name="action_profile_edit">Edit Profile</string>
+    <string name="info_following">Following</string>
+    <string name="action_reject">Reject</string>
+    <string name="action_accept">Accept</string>
 </resources>

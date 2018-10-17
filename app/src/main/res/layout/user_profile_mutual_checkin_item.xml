@@ -21,7 +21,7 @@
         app:layout_constraintVertical_chainStyle="packed">
 
         <de.hdodenhof.circleimageview.CircleImageView
-            android:id="@+id/profile"
+            android:id="@+id/im_profile"
             android:layout_width="50dp"
             android:layout_height="50dp"
             android:layout_marginBottom="8dp"

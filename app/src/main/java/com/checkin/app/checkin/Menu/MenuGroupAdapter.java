@@ -41,14 +41,16 @@ public class MenuGroupAdapter extends RecyclerView.Adapter<MenuGroupAdapter.Grou
 
     private List<MenuGroupModel> mGroupList;
     private GroupViewHolder mPrevExpandedViewHolder;
+    private boolean mSessionActive;
     private RecyclerView mRecyclerView;
     private Context mContext;
     private MenuItemAdapter.OnItemInteractionListener mItemInteractionListener;
 
-    MenuGroupAdapter(List<MenuGroupModel> groupsList, Context context, MenuItemAdapter.OnItemInteractionListener itemInteractionListener) {
+    MenuGroupAdapter(List<MenuGroupModel> groupsList, Context context, MenuItemAdapter.OnItemInteractionListener itemInteractionListener,boolean mSessionActive) {
         this.mGroupList = groupsList;
         mContext = context;
         mItemInteractionListener = itemInteractionListener;
+        this.mSessionActive=mSessionActive;
     }
 
     public void setGroupList(List<MenuGroupModel> mGroupList) {
@@ -190,6 +192,7 @@ public class MenuGroupAdapter extends RecyclerView.Adapter<MenuGroupAdapter.Grou
             container.addView(layout);
             RecyclerView itemsList = layout.findViewById(R.id.sub_group_items);
             MenuItemAdapter itemAdapter = new MenuItemAdapter(mListItems.get(position));
+            itemAdapter.setActivate(mSessionActive);
             itemAdapter.setItemInteractionListener(mItemInteractionListener);
             itemsList.setAdapter(itemAdapter);
             return layout;
