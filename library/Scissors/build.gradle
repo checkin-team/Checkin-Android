@@ -29,9 +29,9 @@ dependencies {
     implementation 'com.android.support:support-annotations:24.2.1'
     // Optional dependencies for extensions
     // Picasso
-    provided 'com.squareup.picasso:picasso:[2.4.0, 2.5.2)'
+    compileOnly 'com.squareup.picasso:picasso:[2.4.0, 2.5.2)'
     // Glide
-    provided 'com.github.bumptech.glide:glide:4.1.1'
-    provided 'com.nostra13.universalimageloader:universal-image-loader:[1.9.2, 1.9.5)'
-    provided 'com.android.support:support-v4:24.2.1'
+    compileOnly 'com.github.bumptech.glide:glide:4.1.1'
+    compileOnly 'com.nostra13.universalimageloader:universal-image-loader:[1.9.2, 1.9.5)'
+    compileOnly 'com.android.support:support-v4:24.2.1'
 }
