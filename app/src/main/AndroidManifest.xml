@@ -18,11 +18,6 @@
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
 
-    <!--
-         The ACCESS_COARSE/FINE_LOCATION permissions are not required to use
-         Google Maps Android API v2, but you must specify either coarse or fine
-         location permissions for the 'MyLocation' functionality.
-    -->
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
 
     <application
@@ -52,19 +47,25 @@
             android:screenOrientation="sensorPortrait"
             android:theme="@style/AppTheme"
             tools:replace="screenOrientation" />
+
         <activity android:name=".User.NonPersonalProfile.UserProfileActivity" />
+        <activity android:name=".User.PersonalProfile.UserProfileActivity" />
+        <activity android:name=".User.PersonalProfile.ProfileEditActivity"
+            android:label="Edit Profile"
+            android:theme="@style/AppThemeWhiteActionBar"/>
+        <activity android:name=".User.Friendship.FriendsListActivity"
+            android:label="Friends"
+            android:theme="@style/AppThemeWhiteActionBar" />
+
+        <activity android:name=".Shop.ShopPublicProfile.ShopActivity" />
+        <activity android:name=".Shop.ShopPrivateProfile.ShopActivity" />
         <activity
             android:name=".Menu.SessionUserActivity"
             android:label="@string/title_activity_session_user"
             android:screenOrientation="portrait"
             android:theme="@style/SessionTheme"
             android:windowSoftInputMode="adjustPan" />
-        <activity
-            android:name=".Social.ChatActivity"
-            android:screenOrientation="portrait" />
-        <activity
-            android:name=".Profile.ShopProfile.ShopProfileActivity2"
-            android:screenOrientation="portrait" />
+
         <activity android:name=".Misc.TransactionActivity" />
         <activity android:name=".Home.StoryActivity" />
         <activity android:name=".Misc.FilterTransactions" />
@@ -72,8 +73,23 @@
         <activity
             android:name=".Session.ActiveSessionActivity"
             android:windowSoftInputMode="adjustNothing" />
-        <activity android:name=".Shop.ShopPublicProfile.ShopActivity" />
-        <activity android:name=".Shop.ShopPrivateProfile.ShopActivity" />
+
+        <activity
+            android:name=".Shop.BusinessFeaturesActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppThemeWhiteActionBar" />
+        <activity
+            android:name=".Shop.SignUpVerifyActivity"
+            android:parentActivityName=".Home.HomeActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/Theme.AppCompat.Light" />
+        <activity android:name=".Shop.ShopInfoActivity" />
+        <activity android:name=".Shop.ShopReviewsActivity"></activity>
+
+        <activity
+            android:name=".Profile.ShopProfile.ShopProfileActivity2"
+            android:screenOrientation="portrait" />
+
         <activity
             android:name=".Notifications.NotificationActivity"
             android:launchMode="singleTop">
@@ -82,19 +98,10 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".Shop.BusinessFeaturesActivity"
-            android:screenOrientation="portrait"
-            android:theme="@style/Theme.AppCompat.Light" />
-        <activity
-            android:name=".Shop.SignUpVerifyActivity"
-            android:parentActivityName=".Home.HomeActivity"
-            android:screenOrientation="portrait"
+            android:name=".Maps.MapsActivity"
+            android:label="@string/title_activity_maps"
             android:theme="@style/Theme.AppCompat.Light" />
         <activity android:name=".Misc.SelectCropImageActivity" />
-
-        <meta-data
-            android:name="com.facebook.sdk.ApplicationId"
-            android:value="@string/facebook_app_id" />
 
         <activity
             android:name="com.facebook.FacebookActivity"
@@ -112,20 +119,6 @@
                 <data android:scheme="@string/fb_login_protocol_scheme" />
             </intent-filter>
         </activity>
-        <activity android:name=".Shop.ShopInfoActivity" />
-        <activity android:name=".User.PersonalProfile.UserProfileActivity" />
-        <activity android:name=".User.PersonalProfile.ProfileEditActivity"
-            android:label="Edit Profile"
-            android:theme="@style/AppThemeWhiteActionBar"/>
-        <activity android:name=".User.Friendship.FriendsListActivity"
-            android:label="Friends"
-            android:theme="@style/AppThemeWhiteActionBar" />
-        <activity
-            android:name=".Maps.MapsActivity"
-            android:label="@string/title_activity_maps"
-            android:theme="@style/Theme.AppCompat.Light" />
-        <activity android:name=".Shop.ShopReviewsActivity"></activity>
-
         <service
             android:name=".Auth.AuthenticatorService"
             android:enabled="true"
@@ -138,15 +131,16 @@
                 android:name="android.accounts.AccountAuthenticator"
                 android:resource="@xml/authenticator" />
         </service>
+
         <service android:name=".Data.MessagingService">
             <intent-filter>
                 <action android:name="com.google.firebase.MESSAGING_EVENT" />
             </intent-filter>
         </service>
 
-        <meta-data
-            android:name="preloaded_fonts"
-            android:resource="@array/preloaded_fonts" />
+        <service android:name=".Maps.FetchAddressIntentService" />
+        <service android:name=".Auth.DeviceTokenService" />
+
         <meta-data
             android:name="com.facebook.sdk.ApplicationId"
             android:value="@string/facebook_app_id" />
@@ -164,9 +158,6 @@
         <meta-data
             android:name="com.google.android.geo.API_KEY"
             android:value="@string/google_maps_key" />
-
-        <service android:name=".Maps.FetchAddressIntentService" />
-        <service android:name=".Auth.DeviceTokenService" />
     </application>
 
 </manifest>
