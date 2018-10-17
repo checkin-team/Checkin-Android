@@ -87,7 +87,8 @@ dependencies {
     implementation 'com.github.javiersantos:MaterialStyledDialogs:2.1'
     implementation 'com.github.antonygolovin:fluentsnackbar:1.0.0'
     implementation 'com.romandanylyk:pageindicatorview:1.0.1'
-    implementation 'com.borjabravo:readmoretextview:2.1.0'
+    implementation 'com.lyft:scissors:1.1.1'
+
     // Network libraries and JSON <-> POJO
     implementation(
             [group: 'com.fasterxml.jackson.core', name: 'jackson-core', version: versions.jackson],
@@ -108,7 +109,6 @@ dependencies {
     annotationProcessor 'com.google.dagger:dagger-compiler:' + versions.dagger
     // Modified libraries
     implementation project(':library:MaterialSearchView')
-    implementation project(path: ':library:Scissors')
 
     implementation 'com.hootsuite.android:nachos:1.1.1'
     // Graphs

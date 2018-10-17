@@ -10,7 +10,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 
 import com.checkin.app.checkin.R;
-import com.lyft.android.scissors2.CropView;
+import com.lyft.android.scissors.CropView;
 
 import java.io.File;
 import java.io.FileOutputStream;

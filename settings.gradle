@@ -1,1 +1,1 @@
-include ':app', ':library:MaterialSearchView', ':library:Scissors'
+include ':app', ':library:MaterialSearchView'
