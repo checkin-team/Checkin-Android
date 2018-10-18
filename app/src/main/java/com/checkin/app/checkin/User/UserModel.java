@@ -15,12 +15,12 @@ public class UserModel {
 //    @Id(assignable = true)
     private long id;
 
-    private String username;
+    @JsonProperty("username") private String username;
 
     @JsonProperty("full_name")
     private String fullName;
 
-    @JsonProperty("address")
+    @JsonProperty("locality")
     private String address;
 
 //    @Convert(converter = Converters.GenderConverter.class, dbType = Character.class)
@@ -29,14 +29,14 @@ public class UserModel {
     @JsonProperty("profile_pic")
     private String profilePic;
 
-    private String bio;
+    @JsonProperty("bio") private String bio;
 
     @JsonProperty("phone_no")
     private String phoneNo;
 
     @JsonProperty("friend_count") private long followers;
     private long checkins;
-    private long reviews;
+    @JsonProperty("no_reviews") private long reviews;
     @JsonProperty("is_public") private boolean isPublic;
 
     @Nullable

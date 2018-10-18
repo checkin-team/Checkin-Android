@@ -1,4 +1,4 @@
-# Check-Out!
+# Check-Out! [![Build Status](https://travis-ci.com/shivanshs9/Check-Out.svg?token=krgm6p5sHAL3i37CW8cZ&branch=master)](https://travis-ci.com/shivanshs9/Check-Out)
 A budding startup project, named **Check-Out**! This repository contains the android project.
 
 ## Things to do before starting:

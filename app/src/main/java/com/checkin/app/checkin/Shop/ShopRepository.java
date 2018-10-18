@@ -14,6 +14,8 @@ import com.checkin.app.checkin.Data.ObjectBoxInstanceLiveData;
 import com.checkin.app.checkin.Data.Resource;
 import com.checkin.app.checkin.Data.RetrofitLiveData;
 import com.checkin.app.checkin.Data.WebApiService;
+import com.checkin.app.checkin.Shop.ShopJoin.ShopJoinModel;
+import com.fasterxml.jackson.databind.node.ObjectNode;
 
 import io.objectbox.Box;
 
@@ -41,6 +43,26 @@ public class ShopRepository extends BaseRepository {
             }
         }
         return INSTANCE;
+    }
+
+    public LiveData<Resource<ObjectNode>> registerShop(ShopJoinModel model) {
+        return new NetworkBoundResource<ObjectNode, ObjectNode>() {
+            @Override
+            protected boolean shouldUseLocalDb() {
+                return false;
+            }
+
+            @NonNull
+            @Override
+            protected LiveData<ApiResponse<ObjectNode>> createCall() {
+                return new RetrofitLiveData<>(mWebService.postRegisterShop(model));
+            }
+
+            @Override
+            protected void saveCallResult(ObjectNode data) {
+
+            }
+        }.getAsLiveData();
     }
 
     public LiveData<Resource<ShopModel>> getShopModel(long shopId) {

@@ -51,6 +51,10 @@ public class DataStatusFragment extends Fragment{
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         final View view = inflater.inflate(R.layout.fragment_data_status, container, false);
+
+        // To prevent clicks behind the fragment
+        view.setOnTouchListener((v, event) -> true);
+
         unbinder = ButterKnife.bind(this, view);
 
         if (isNetworkRequired && !Util.isNetworkConnected(getActivity().getApplicationContext())) {

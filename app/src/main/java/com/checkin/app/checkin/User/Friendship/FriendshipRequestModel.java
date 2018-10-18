@@ -5,10 +5,10 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import java.util.Date;
 
 public class FriendshipRequestModel {
-    private String pk;
+    @JsonProperty("pk") private String pk;
     @JsonProperty("from_user") private long fromUser;
     @JsonProperty("to_user") private long toUser;
-    private String message;
+    @JsonProperty("message") private String message;
     @JsonProperty("created") private Date created;
     @JsonProperty("viewed") private Date viewed;
 

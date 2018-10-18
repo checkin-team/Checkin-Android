@@ -36,7 +36,6 @@ import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.CameraPosition;
 import com.google.android.gms.maps.model.LatLng;
-import com.google.android.gms.maps.model.MarkerOptions;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -73,6 +72,8 @@ public class MapsActivity extends AppCompatActivity implements
     protected String mStreetOutput;
     @BindView(R.id.btn_done)
     ImageView btnDone;
+
+    private boolean isSearchOpened = false;
 
     private LocationCallback mLocationCallback = new LocationCallback() {
         @Override
@@ -292,10 +293,11 @@ public class MapsActivity extends AppCompatActivity implements
 
     @OnClick(R.id.tv_search_location)
     public void openAutocompleteActivity() {
-        if (checkPlayServices()) {
+        if (checkPlayServices() && !isSearchOpened) {
             try {
-                Intent intent = new PlaceAutocomplete.IntentBuilder(PlaceAutocomplete.MODE_FULLSCREEN).build(this);
+                Intent intent = new PlaceAutocomplete.IntentBuilder(PlaceAutocomplete.MODE_OVERLAY).build(this);
                 startActivityForResult(intent, REQUEST_CODE_AUTOCOMPLETE);
+                isSearchOpened = true;
             } catch (Exception e) {
                 e.printStackTrace();
             }
@@ -319,6 +321,7 @@ public class MapsActivity extends AppCompatActivity implements
                 location.setLongitude(latLong.longitude);
                 changeMap(location);
             }
+            isSearchOpened = false;
         } else {
             Log.e(TAG, PlaceAutocomplete.getStatus(this, data).getStatusMessage());
         }

@@ -46,7 +46,7 @@ public class UserViewModel extends BaseViewModel {
     public void postUserData(String name,String location, String bio) {
         ObjectNode data = Converters.objectMapper.createObjectNode();
         data.put("full_name", name);
-        data.put("address", location);
+        data.put("locality", location);
         data.put("bio", bio);
         mData.addSource(mRepository.postUserData(data), mData::setValue);
     }

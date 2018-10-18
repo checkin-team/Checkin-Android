@@ -62,4 +62,5 @@
     <!--Notification-->
     <dimen name="notif_heading_padding">10dp</dimen>
     <dimen name="notif_heading_size">18sp</dimen>
+    <dimen name="fab_margin">16dp</dimen>
 </resources>

@@ -39,7 +39,7 @@ import com.checkin.app.checkin.Notifications.NotificationActivity;
 import com.checkin.app.checkin.Profile.ShopProfile.ShopProfileActivity2;
 import com.checkin.app.checkin.R;
 import com.checkin.app.checkin.Session.ActiveSessionActivity;
-import com.checkin.app.checkin.Shop.BusinessFeaturesActivity;
+import com.checkin.app.checkin.Shop.ShopJoin.BusinessFeaturesActivity;
 import com.checkin.app.checkin.Shop.ShopModel;
 import com.checkin.app.checkin.Shop.ShopPrivateProfile.ShopActivity;
 import com.checkin.app.checkin.User.NonPersonalProfile.UserViewModel;

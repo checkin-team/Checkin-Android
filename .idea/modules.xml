@@ -4,8 +4,6 @@
     <modules>
       <module fileurl="file://$PROJECT_DIR$/Check-Out.iml" filepath="$PROJECT_DIR$/Check-Out.iml" />
       <module fileurl="file://$PROJECT_DIR$/library/MaterialSearchView/MaterialSearchView.iml" filepath="$PROJECT_DIR$/library/MaterialSearchView/MaterialSearchView.iml" />
-      <module fileurl="file://$PROJECT_DIR$/library/NiceSpinner/NiceSpinner.iml" filepath="$PROJECT_DIR$/library/NiceSpinner/NiceSpinner.iml" />
-      <module fileurl="file://$PROJECT_DIR$/library/Scissors/Scissors.iml" filepath="$PROJECT_DIR$/library/Scissors/Scissors.iml" />
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
       <module fileurl="file://$PROJECT_DIR$/library/library.iml" filepath="$PROJECT_DIR$/library/library.iml" />
     </modules>

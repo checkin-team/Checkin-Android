@@ -11,22 +11,25 @@
     <item
         android:id="@+id/navigation_shop_profile"
         android:icon="@drawable/ic_home_black_24dp"
-
-        android:name="Profile" />
+        android:name="Profile"
+        android:title="Profile" />
 
     <item
         android:id="@+id/navigation_shop_menu"
         android:icon="@drawable/ic_shop_menu"
-        android:name="Menu" />
+        android:name="Menu"
+        android:title="Menu"/>
 
     <item
         android:id="@+id/navigation_shop_insights"
         android:icon="@drawable/ic_shop_insights"
-        android:name="Insights" />
+        android:name="Insights"
+        android:title="Insights"/>
 
     <item
         android:id="@+id/navigation_shop_daily_activity"
         android:icon="@drawable/ic_shop_daili_activity"
-        android:name="Activity" />
+        android:name="Activity"
+        android:title="Activity"/>
 
 </menu>

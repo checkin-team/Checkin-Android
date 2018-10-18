@@ -13,4 +13,118 @@
         <item>Bottle</item>
         <item>Can</item>
     </string-array>
+
+    <string-array name="cuisines_spinner_options">
+        <item>Restaurant Cuisines:</item>
+        <item>Afghani</item>
+        <item>Afghani</item>
+        <item>American</item>
+        <item>Assamese</item>
+        <item>Awadhi</item>
+        <item>Bakery</item>
+        <item>Bangladeshi</item>
+        <item>Barbeque</item>
+        <item>Bengali</item>
+        <item>Beverages</item>
+        <item>Bihari</item>
+        <item>Biryani</item>
+        <item>Brasserie</item>
+        <item>British</item>
+        <item>Burger</item>
+        <item>Cafe</item>
+        <item>Cake</item>
+        <item>Chinese</item>
+        <item>Coffee</item>
+        <item>Continental</item>
+        <item>Cuisine Varies</item>
+        <item>Desserts</item>
+        <item>Egyptian</item>
+        <item>European</item>
+        <item>Fast Food</item>
+        <item>Fijian</item>
+        <item>Filipino</item>
+        <item>Finger Food</item>
+        <item>French</item>
+        <item>Garhwali</item>
+        <item>German</item>
+        <item>Greek</item>
+        <item>Gujarati</item>
+        <item>Himachali</item>
+        <item>Hot Pot</item>
+        <item>Hyderabadi</item>
+        <item>Ice Cream</item>
+        <item>Indian</item>
+        <item>Indonesian</item>
+        <item>Iranian</item>
+        <item>Irish</item>
+        <item>Israeli</item>
+        <item>Italian</item>
+        <item>Japanese</item>
+        <item>Juices</item>
+        <item>Kashmiri</item>
+        <item>Kebab</item>
+        <item>Kerala</item>
+        <item>Konkan</item>
+        <item>Korean</item>
+        <item>Lebanese</item>
+        <item>Lucknowi</item>
+        <item>Maharashtrian</item>
+        <item>Malaysian</item>
+        <item>Mediterranean</item>
+        <item>Mexican</item>
+        <item>Middle Eastern</item>
+        <item>Mithai</item>
+        <item>Momos</item>
+        <item>Mongolian</item>
+        <item>Mughlai</item>
+        <item>Nepalese</item>
+        <item>North Eastern</item>
+        <item>North Indian</item>
+        <item>Oriya</item>
+        <item>Paan</item>
+        <item>Pakistani</item>
+        <item>Panini</item>
+        <item>Peruvian</item>
+        <item>Pizza</item>
+        <item>Poké</item>
+        <item>Portuguese</item>
+        <item>Rajasthani</item>
+        <item>Roast Chicken</item>
+        <item>Rolls</item>
+        <item>Russian</item>
+        <item>Salad</item>
+        <item>Sandwich</item>
+        <item>Seafood</item>
+        <item>Sindhi</item>
+        <item>Singaporean</item>
+        <item>South American</item>
+        <item>South Indian</item>
+        <item>Spanish</item>
+        <item>Sri Lankan</item>
+        <item>Steak</item>
+        <item>Street Food</item>
+        <item>Sushi</item>
+        <item>Tea</item>
+        <item>Thai</item>
+        <item>Tibetan</item>
+        <item>Wraps</item>
+    </string-array>
+
+
+    <string-array name="category_spinner_options">
+        <item>Restaurant categories:</item>
+        <item>Quick service</item>
+        <item>Casual dining</item>
+        <item>Fine dining</item>
+        <item>Café</item>
+        <item>Pub</item>
+        <item>Bar</item>
+        <item>Club</item>
+        <item>Lounge</item>
+        <item>Micro Brewerie</item>
+    </string-array>
+
+
+
+
 </resources>
