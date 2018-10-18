@@ -74,15 +74,15 @@
             android:windowSoftInputMode="adjustNothing" />
 
         <activity
-            android:name=".Shop.BusinessFeaturesActivity"
+            android:name=".Shop.ShopJoin.BusinessFeaturesActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppThemeWhiteActionBar" />
         <activity
-            android:name=".Shop.SignUpVerifyActivity"
-            android:parentActivityName=".Home.HomeActivity"
-            android:screenOrientation="portrait"
-            android:theme="@style/Theme.AppCompat.Light" />
-        <activity android:name=".Shop.ShopInfoActivity" />
+            android:name=".Shop.ShopJoin.ContactVerifyActivity"
+            android:parentActivityName=".Home.HomeActivity"/>
+        <activity android:name=".Shop.ShopJoin.ShopJoinActivity"
+            android:parentActivityName=".Shop.ShopJoin.ContactVerifyActivity"
+            android:theme="@style/AppThemeWhiteActionBar"/>
         <activity android:name=".Shop.ShopReviewsActivity"></activity>
 
         <activity
@@ -98,8 +98,7 @@
         </activity>
         <activity
             android:name=".Maps.MapsActivity"
-            android:label="@string/title_activity_maps"
-            android:theme="@style/Theme.AppCompat.Light" />
+            android:theme="@style/AppTheme" />
         <activity android:name=".Misc.SelectCropImageActivity" />
 
         <activity

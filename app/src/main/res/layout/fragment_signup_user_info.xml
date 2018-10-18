@@ -13,55 +13,34 @@
         android:layout_height="@dimen/height_textbox_normal"
         android:layout_marginStart="@dimen/spacing_normal"
         android:layout_marginTop="@dimen/spacing_huge"
-        android:background="@drawable/background_textbox"
         android:hint="First Name"
-        android:inputType="textPersonName"
-        android:paddingRight="@dimen/spacing_normal"
-        android:textAlignment="center"
-        android:textColor="#aaaaaa"
-        android:textColorHint="#aaaaaa"
-        android:textSize="@dimen/font_normal"
+        style="@style/InputTextStyle"
         app:layout_constraintEnd_toStartOf="@+id/ed_lastname"
-        app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
     <EditText
         android:id="@+id/ed_lastname"
-        android:layout_width="144dp"
+        android:layout_width="150dp"
         android:layout_height="@dimen/height_textbox_normal"
         android:layout_marginEnd="@dimen/spacing_normal"
         android:layout_marginTop="@dimen/spacing_huge"
-        android:background="@drawable/background_textbox"
         android:hint="Last Name"
-        android:inputType="textPersonName"
-        android:paddingRight="@dimen/spacing_normal"
-        android:textAlignment="center"
-        android:textColor="#aaaaaa"
-        android:textColorHint="#aaaaaa"
-        android:textSize="@dimen/font_normal"
+        style="@style/InputTextStyle"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toEndOf="@+id/ed_firstname"
         app:layout_constraintTop_toTopOf="parent" />
 
     <EditText
         android:id="@+id/ed_Username"
-        android:layout_width="253dp"
+        android:layout_width="match_parent"
         android:layout_height="@dimen/height_textbox_normal"
-        android:layout_marginEnd="8dp"
-        android:layout_marginStart="8dp"
+        android:layout_marginEnd="@dimen/spacing_extra_large"
+        android:layout_marginStart="@dimen/spacing_extra_large"
         android:layout_marginTop="@dimen/spacing_normal"
-        android:background="@drawable/background_textbox"
         android:hint="Username"
-        android:inputType="text"
-        android:paddingRight="@dimen/spacing_normal"
-        android:textAlignment="center"
-        android:textColor="#aaaaaa"
-        android:textColorHint="#aaaaaa"
-        android:textSize="@dimen/font_normal"
+        style="@style/InputTextStyle"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.504"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/im_female" />
 
@@ -91,7 +70,6 @@
         android:foreground="@drawable/foreground_button_selector"
         android:src="@drawable/ic_female"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toEndOf="@+id/im_male"
         app:layout_constraintTop_toBottomOf="@+id/ed_lastname" />
 
@@ -106,7 +84,6 @@
         android:textColor="@color/white"
         android:textSize="@dimen/font_normal"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.502"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/ed_Username" />
 

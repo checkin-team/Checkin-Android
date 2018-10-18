@@ -1,4 +1,4 @@
-package com.checkin.app.checkin.Shop;
+package com.checkin.app.checkin.Shop.ShopJoin;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -6,6 +6,7 @@ import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.util.Patterns;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -40,7 +41,6 @@ public class TabEmailFragment extends Fragment {
         edEmail.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-
             }
 
             @Override
@@ -49,15 +49,19 @@ public class TabEmailFragment extends Fragment {
 
             @Override
             public void afterTextChanged(Editable s) {
-                btnNext.setActivated(s.length() > 6);
+                btnNext.setActivated(s.length() > 6 && Patterns.EMAIL_ADDRESS.matcher(s).matches());
             }
         });
         return view;
     }
     @OnClick(R.id.btn_next)
     public void proceed(View view){
-        if(view.isActivated())
-        startActivity(new Intent(getContext(), ShopInfoActivity.class));
+        if (view.isActivated()) {
+            String email = edEmail.getText().toString();
+            Intent intent = new Intent(getContext(), ShopJoinActivity.class);
+            intent.putExtra(ShopJoinActivity.KEY_SHOP_EMAIL, email);
+            startActivity(intent);
+        }
     }
 
     @Override

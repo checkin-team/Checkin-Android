@@ -298,7 +298,7 @@
                         app:srcCompat="@drawable/ic_shop_navigation_checkins" />
 
                     <TextView
-                        android:id="@+id/textView22"
+                        android:id="@+id/tv_title"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_below="@+id/imageView33"

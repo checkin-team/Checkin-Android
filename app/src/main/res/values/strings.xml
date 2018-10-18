@@ -20,9 +20,8 @@
 
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="title_activity_session_user">SessionUserActivity</string>
-    <string name="tab_text_1">Tab 1</string>
-    <string name="tab_text_2">Tab 2</string>
-    <string name="tab_text_3">Tab 3</string>
+    <string name="tab_text_1">Basic Info</string>
+    <string name="tab_text_2">Aspect</string>
     <string name="section_format">Hello World from section: %1$d</string>
     <string name="tab_menu">Menu</string>
     <string name="tab_session_detail">Detail</string>
@@ -133,4 +132,7 @@
     <string name="info_following">Following</string>
     <string name="action_reject">Reject</string>
     <string name="action_accept">Accept</string>
+    <string name="title_shop_basic_info">Basic Info</string>
+    <string name="action_next">Next</string>
+    <string name="title_activity_edit_shop_profile">EditShopProfileActivity</string>
 </resources>

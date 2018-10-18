@@ -39,6 +39,7 @@ public class ShopProfileFragment extends Fragment implements View.OnClickListene
     private View notification;
     private TextView hotel;
     private ShopProfileViewModel mViewModel;
+    private TextView editShopProfile;
 
 
     @Nullable
@@ -52,6 +53,7 @@ public class ShopProfileFragment extends Fragment implements View.OnClickListene
         message = view.findViewById(R.id.review);
         notification = view.findViewById(R.id.notification);
         hotel = view.findViewById(R.id.hotel);
+        editShopProfile=view.findViewById(R.id.edit_shop_profile);
         setUp();
 
         mViewModel = ViewModelProviders.of(this, new ShopProfileViewModel.Factory(getActivity().getApplication())).get(ShopProfileViewModel.class);
@@ -78,6 +80,13 @@ public class ShopProfileFragment extends Fragment implements View.OnClickListene
         notification.setOnClickListener(this);
         message.setOnClickListener(this);
         members.setOnClickListener(this);
+
+        editShopProfile.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(getContext(),EditShopProfileActivity.class));
+            }
+        });
 
     }
 

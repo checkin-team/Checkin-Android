@@ -1,4 +1,4 @@
-package com.checkin.app.checkin.Shop;
+package com.checkin.app.checkin.Shop.ShopJoin;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -54,7 +54,7 @@ public class BusinessFeaturesActivity extends AppCompatActivity {
 
     @OnClick(R.id.btn_create_account)
     public void onClickCreateAccount() {
-        startActivity(new Intent(this, SignUpVerifyActivity.class));
+        startActivity(new Intent(this, ContactVerifyActivity.class));
     }
 
 

@@ -1,6 +1,5 @@
-package com.checkin.app.checkin.Shop;
+package com.checkin.app.checkin.Shop.ShopJoin;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
@@ -20,17 +19,20 @@ import butterknife.OnClick;
 import butterknife.Unbinder;
 
 public class TabPhoneFragment extends Fragment {
-    private Unbinder unbinder;
     @BindView(R.id.ed_phone) EditText edPhone;
     @BindView(R.id.btn_next) Button btnNext;
 
+    private Unbinder unbinder;
+    private PhoneInteraction mListener;
 
     public TabPhoneFragment() {
         // Required empty public constructor
     }
 
-    public static TabPhoneFragment newInstance() {
-        return new TabPhoneFragment();
+    public static TabPhoneFragment newInstance(PhoneInteraction listener) {
+        TabPhoneFragment fragment = new TabPhoneFragment();
+        fragment.mListener = listener;
+        return fragment;
     }
 
     @Override
@@ -56,14 +58,19 @@ public class TabPhoneFragment extends Fragment {
     }
     @OnClick(R.id.btn_next)
     public void proceed(View view){
-        if(view.isActivated())
-            startActivity(new Intent(getContext(), ShopInfoActivity.class));
+        if (view.isActivated()) {
+            mListener.onPhoneEntered(edPhone.getText().toString());
+        }
     }
 
     @Override
     public void onDestroy() {
         super.onDestroy();
         unbinder.unbind();
+    }
+
+    interface PhoneInteraction {
+        void onPhoneEntered(String phone);
     }
 }
 
