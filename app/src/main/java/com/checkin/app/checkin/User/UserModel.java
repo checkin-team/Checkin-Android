@@ -20,7 +20,7 @@ public class UserModel {
     @JsonProperty("full_name")
     private String fullName;
 
-    @JsonProperty("address")
+    @JsonProperty("locality")
     private String address;
 
 //    @Convert(converter = Converters.GenderConverter.class, dbType = Character.class)
