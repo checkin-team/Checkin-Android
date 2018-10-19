@@ -10,9 +10,6 @@ import com.checkin.app.checkin.Menu.MenuModel;
 import com.checkin.app.checkin.MyObjectBox;
 import com.checkin.app.checkin.Notifications.NotificationModel;
 import com.checkin.app.checkin.Shop.ShopModel;
-import com.checkin.app.checkin.Social.Chat;
-import com.checkin.app.checkin.Social.Message;
-import com.checkin.app.checkin.User.UserModel;
 
 import javax.inject.Singleton;
 
@@ -41,9 +38,9 @@ public class AppDatabase {
         return getBoxStore(context).boxFor(NotificationModel.class);
     }
 
-    public static Box<UserModel> getUserModel(final Context context) {
+    /*public static Box<UserModel> getUserModel(final Context context) {
         return getBoxStore(context).boxFor(UserModel.class);
-    }
+    }*/
 
     public static Box<ShopModel> getShopModel(final Context context) {
         return getBoxStore(context).boxFor(ShopModel.class);
@@ -67,13 +64,5 @@ public class AppDatabase {
 
     public static Box<MenuModel> getMenuModel(final Context context) {
         return getBoxStore(context).boxFor(MenuModel.class);
-    }
-
-    public static Box<Message> getMessageModel(final Context context) {
-        return getBoxStore(context).boxFor(Message.class);
-    }
-
-    public static Box<Chat> getChatModel(final Context context) {
-        return getBoxStore(context).boxFor(Chat.class);
     }
 }

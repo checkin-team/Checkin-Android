@@ -73,9 +73,9 @@ public class NotificationActivity extends AppCompatActivity {
         List<Object> notifs = new ArrayList<>();
 
         class NotifModelViewHolder extends RecyclerView.ViewHolder{
-            @BindView(R.id.profile)ImageView profile;
+            @BindView(R.id.im_profile)ImageView profile;
             @BindView(R.id.action)ImageView action;
-            @BindView(R.id.message)TextView message;
+            @BindView(R.id.review)TextView message;
             @BindView(R.id.time)TextView time;
             View view;
 

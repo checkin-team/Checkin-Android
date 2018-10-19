@@ -2,7 +2,6 @@ package com.checkin.app.checkin.Menu;
 
 import android.arch.lifecycle.ViewModelProviders;
 import android.content.Context;
-import android.nfc.Tag;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
@@ -13,19 +12,12 @@ import android.util.LongSparseArray;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Toast;
 
-import com.checkin.app.checkin.Data.Resource;
 import com.checkin.app.checkin.R;
-import com.checkin.app.checkin.Utility.Constants;
-
-import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.Unbinder;
-
-import static com.checkin.app.checkin.Menu.ItemCustomizationGroupModel_.item;
 
 public class MenuSearchFragment extends Fragment implements MenuItemAdapter.OnItemInteractionListener  {
     private final String TAG = MenuSearchFragment.class.getSimpleName();

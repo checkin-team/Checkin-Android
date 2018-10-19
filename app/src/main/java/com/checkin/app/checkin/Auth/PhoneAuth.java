@@ -14,7 +14,7 @@ public abstract class PhoneAuth extends PhoneAuthProvider.OnVerificationStateCha
     private PhoneAuthProvider mPhoneAuthProvider;
     private String mVerificationId;
 
-    PhoneAuth(FirebaseAuth firebaseAuth) {
+    protected PhoneAuth(FirebaseAuth firebaseAuth) {
         mPhoneAuthProvider = PhoneAuthProvider.getInstance(firebaseAuth);
     }
 
@@ -53,7 +53,7 @@ public abstract class PhoneAuth extends PhoneAuthProvider.OnVerificationStateCha
         onOtpRetrievalTimedOut();
     }
 
-    abstract void onVerificationSuccess(PhoneAuthCredential credential);
-    abstract void onVerificationError(FirebaseException e);
-    abstract void onOtpRetrievalTimedOut();
+    protected abstract void onVerificationSuccess(PhoneAuthCredential credential);
+    protected abstract void onVerificationError(FirebaseException e);
+    protected abstract void onOtpRetrievalTimedOut();
 }

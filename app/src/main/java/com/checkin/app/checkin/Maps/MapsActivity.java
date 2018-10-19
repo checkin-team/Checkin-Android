@@ -73,6 +73,8 @@ public class MapsActivity extends AppCompatActivity implements
     @BindView(R.id.btn_done)
     ImageView btnDone;
 
+    private boolean isSearchOpened = false;
+
     private LocationCallback mLocationCallback = new LocationCallback() {
         @Override
         public void onLocationResult(LocationResult locationResult) {
@@ -227,7 +229,6 @@ public class MapsActivity extends AppCompatActivity implements
             Double lat = location.getLatitude();
             Double lng = location.getLongitude();
             LatLng latLong = new LatLng(lat, lng);
-            String mAddress = mAreaOutput;
             CameraPosition cameraPosition = new CameraPosition.Builder()
                     .target(latLong)
                     .zoom(19f)
@@ -249,7 +250,7 @@ public class MapsActivity extends AppCompatActivity implements
         Intent data = new Intent();
         data.putExtra(KEY_MAPS_LATITUDE, latLng.latitude);
         data.putExtra(KEY_MAPS_LONGITUDE, latLng.longitude);
-        data.putExtra(KEY_MAPS_ADDRESS, mAreaOutput);
+        data.putExtra(KEY_MAPS_ADDRESS, mAreaOutput );
         setResult(RESULT_OK, data);
         finish();
     }
@@ -292,10 +293,11 @@ public class MapsActivity extends AppCompatActivity implements
 
     @OnClick(R.id.tv_search_location)
     public void openAutocompleteActivity() {
-        if (checkPlayServices()) {
+        if (checkPlayServices() && !isSearchOpened) {
             try {
-                Intent intent = new PlaceAutocomplete.IntentBuilder(PlaceAutocomplete.MODE_FULLSCREEN).build(this);
+                Intent intent = new PlaceAutocomplete.IntentBuilder(PlaceAutocomplete.MODE_OVERLAY).build(this);
                 startActivityForResult(intent, REQUEST_CODE_AUTOCOMPLETE);
+                isSearchOpened = true;
             } catch (Exception e) {
                 e.printStackTrace();
             }
@@ -319,6 +321,7 @@ public class MapsActivity extends AppCompatActivity implements
                 location.setLongitude(latLong.longitude);
                 changeMap(location);
             }
+            isSearchOpened = false;
         } else {
             Log.e(TAG, PlaceAutocomplete.getStatus(this, data).getStatusMessage());
         }

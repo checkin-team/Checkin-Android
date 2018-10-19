@@ -5,10 +5,8 @@ import android.support.annotation.Nullable;
 import android.util.Log;
 
 import com.fasterxml.jackson.databind.JsonNode;
-import com.fasterxml.jackson.databind.node.ObjectNode;
 
 import java.io.IOException;
-import java.util.Objects;
 
 import retrofit2.Response;
 
@@ -21,7 +19,7 @@ public class ApiResponse<T> {
     @Nullable private final String errorMessage;
     @Nullable private final Throwable errorThrowable;
 
-    ApiResponse(Throwable error) {
+    public ApiResponse(Throwable error) {
         mResponse = null;
         mStatusCode = HTTP_CLIENT_TIMEOUT;
         data = null;
@@ -29,7 +27,7 @@ public class ApiResponse<T> {
         errorThrowable = error;
     }
 
-    ApiResponse(@NonNull Response<T> response) {
+    public ApiResponse(@NonNull Response<T> response) {
         mResponse = response;
         mStatusCode = response.code();
         errorThrowable = null;
@@ -59,21 +57,25 @@ public class ApiResponse<T> {
 
     @Nullable
     public String getErrorMessage() {
+        if (errorMessage == null)
+            return null;
         JsonNode data = Converters.getJsonNode(errorMessage);
         if (data == null)
             return errorMessage;
         Log.e("APIResponse", "Error data: " + data.toString());
-
-        if (data.has("detail")) {
-            Log.e("APIResponse", "Detail");
-            return data.get("detail").asText();
+        if (data.isObject()) {
+            if (data.has("detail")) {
+                Log.e("APIResponse", "Detail");
+                return data.get("detail").asText();
+            } else if (data.has("errors")) {
+                Log.e("APIResponse", "Errors");
+                return data.get("errors").get(0).asText();
+            }
+        } else if (data.isArray()) {
+            Log.e("APIResponse", "Array");
+            return data.get(0).asText();
         }
-        else if (data.has("errors")) {
-            Log.e("APIResponse", "Errors");
-            return data.get("errors").get(0).asText();
-        }
-        else
-            return errorMessage;
+        return errorMessage;
     }
 
     public int getStatusCode() {

@@ -18,11 +18,6 @@
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
 
-    <!--
-         The ACCESS_COARSE/FINE_LOCATION permissions are not required to use
-         Google Maps Android API v2, but you must specify either coarse or fine
-         location permissions for the 'MyLocation' functionality.
-    -->
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
 
     <application
@@ -52,21 +47,26 @@
             android:screenOrientation="sensorPortrait"
             android:theme="@style/AppTheme"
             tools:replace="screenOrientation" />
-        <activity android:name=".User.UserProfileActivity" />
+
+        <activity android:name=".User.NonPersonalProfile.UserProfileActivity" />
+        <activity android:name=".User.PersonalProfile.UserProfileActivity" />
+        <activity android:name=".User.PersonalProfile.ProfileEditActivity"
+            android:label="Edit Profile"
+            android:theme="@style/AppThemeWhiteActionBar"/>
+        <activity android:name=".User.Friendship.FriendsListActivity"
+            android:label="Friends"
+            android:theme="@style/AppThemeWhiteActionBar" />
+
+        <activity android:name=".Shop.ShopPublicProfile.ShopActivity" />
+        <activity android:name=".Shop.ShopPrivateProfile.ShopActivity" />
         <activity
             android:name=".Menu.SessionUserActivity"
             android:label="@string/title_activity_session_user"
             android:screenOrientation="portrait"
             android:theme="@style/SessionTheme"
             android:windowSoftInputMode="adjustPan" />
-        <activity
-            android:name=".Social.ChatActivity"
-            android:screenOrientation="portrait" />
-        <activity
-            android:name=".Profile.ShopProfile.ShopProfileActivity2"
-            android:screenOrientation="portrait" />
+
         <activity android:name=".Misc.TransactionActivity" />
-        <activity android:name=".Home.StoryActivity" />
         <activity android:name=".Misc.FilterTransactions" />
         <activity android:name=".Misc.FaqActivity" />
         <activity android:name=".Misc.WaitorWork"
@@ -77,8 +77,23 @@
         <activity
             android:name=".Session.ActiveSessionActivity"
             android:windowSoftInputMode="adjustNothing" />
-        <activity android:name=".Shop.ShopPublicProfile.ShopActivity" />
-        <activity android:name=".Shop.ShopPrivateProfile.ShopActivity" />
+
+        <activity
+            android:name=".Shop.ShopJoin.BusinessFeaturesActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppThemeWhiteActionBar" />
+        <activity
+            android:name=".Shop.ShopJoin.ContactVerifyActivity"
+            android:parentActivityName=".Home.HomeActivity"/>
+        <activity android:name=".Shop.ShopJoin.ShopJoinActivity"
+            android:parentActivityName=".Shop.ShopJoin.ContactVerifyActivity"
+            android:theme="@style/AppThemeWhiteActionBar"/>
+        <activity android:name=".Shop.ShopReviewsActivity"></activity>
+
+        <activity
+            android:name=".Profile.ShopProfile.ShopProfileActivity2"
+            android:screenOrientation="portrait" />
+
         <activity
             android:name=".Notifications.NotificationActivity"
             android:launchMode="singleTop">
@@ -87,66 +102,51 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".Shop.BusinessFeaturesActivity"
-            android:screenOrientation="portrait"
-            android:theme="@style/Theme.AppCompat.Light" />
-        <activity
-            android:name=".Shop.SignUpVerifyActivity"
-            android:theme="@style/Theme.AppCompat.Light"
-            android:screenOrientation="portrait"
-            android:parentActivityName=".Home.HomeActivity">
-        </activity>
+            android:name=".Maps.MapsActivity"
+            android:theme="@style/AppTheme" />
+        <activity android:name=".Misc.SelectCropImageActivity" />
 
         <activity
-            android:name=".User.EditProfile"
-            android:screenOrientation="portrait" />
-        <activity android:name=".Home.UserProfileActivity" />
-
-        <activity android:name=".Utility.EditProfileImage" />
-
-        <meta-data android:name="com.facebook.sdk.ApplicationId"
-            android:value="@string/facebook_app_id"/>
-
-        <activity android:name="com.facebook.FacebookActivity"
-            android:configChanges=
-                "keyboard|keyboardHidden|screenLayout|screenSize|orientation"
+            android:name="com.facebook.FacebookActivity"
+            android:configChanges="keyboard|keyboardHidden|screenLayout|screenSize|orientation"
             android:label="@string/app_name" />
         <activity
             android:name="com.facebook.CustomTabActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.VIEW" />
+
                 <category android:name="android.intent.category.DEFAULT" />
                 <category android:name="android.intent.category.BROWSABLE" />
+
                 <data android:scheme="@string/fb_login_protocol_scheme" />
             </intent-filter>
         </activity>
-
-
-        <service android:name=".Auth.AuthenticatorService"
+        <service
+            android:name=".Auth.AuthenticatorService"
             android:enabled="true"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.accounts.AccountAuthenticator" />
             </intent-filter>
+
             <meta-data
                 android:name="android.accounts.AccountAuthenticator"
                 android:resource="@xml/authenticator" />
         </service>
-        <service
-            android:name=".Data.MessagingService">
+
+        <service android:name=".Data.MessagingService">
             <intent-filter>
                 <action android:name="com.google.firebase.MESSAGING_EVENT" />
             </intent-filter>
         </service>
 
-        <activity android:name=".Utility.EditProfileImage" />
+        <service android:name=".Maps.FetchAddressIntentService" />
+        <service android:name=".Auth.DeviceTokenService" />
 
         <meta-data
-            android:name="preloaded_fonts"
-            android:resource="@array/preloaded_fonts" />
-        <meta-data android:name="com.facebook.sdk.ApplicationId"
-            android:value="@string/facebook_app_id"/>
+            android:name="com.facebook.sdk.ApplicationId"
+            android:value="@string/facebook_app_id" />
         <meta-data
             android:name="preloaded_fonts"
             android:resource="@array/preloaded_fonts" />
@@ -161,13 +161,6 @@
         <meta-data
             android:name="com.google.android.geo.API_KEY"
             android:value="@string/google_maps_key" />
-
-        <activity
-            android:name=".Maps.MapsActivity"
-            android:label="@string/title_activity_maps"
-            android:theme="@style/Theme.AppCompat.Light" />
-        <service android:name=".Maps.FetchAddressIntentService"/>
-        <activity android:name=".Shop.ShopInfoActivity"></activity>
     </application>
 
 </manifest>

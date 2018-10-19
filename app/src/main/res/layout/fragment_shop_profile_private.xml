@@ -139,7 +139,7 @@
                         android:orientation="vertical">
 
                         <TextView
-                            android:id="@+id/rating"
+                            android:id="@+id/tv_reviews"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:text="2.2k"
@@ -223,6 +223,7 @@
                             </LinearLayout>
 
                             <TextView
+                                android:id="@+id/edit_shop_profile"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_margin="5dp"
@@ -330,7 +331,7 @@
                         app:srcCompat="@drawable/noun_857949_cc" />
 
                     <TextView
-                        android:id="@+id/textView22"
+                        android:id="@+id/tv_title"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_below="@+id/imageView33"
@@ -339,7 +340,7 @@
                 </RelativeLayout>
 
                 <RelativeLayout
-                    android:id="@+id/message"
+                    android:id="@+id/review"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1">

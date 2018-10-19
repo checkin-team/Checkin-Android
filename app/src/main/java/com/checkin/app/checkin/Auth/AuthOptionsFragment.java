@@ -1,7 +1,10 @@
 package com.checkin.app.checkin.Auth;
 
+import android.arch.lifecycle.Observer;
+import android.arch.lifecycle.ViewModelProviders;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -17,6 +20,8 @@ import com.facebook.FacebookCallback;
 import com.facebook.FacebookException;
 import com.facebook.login.LoginResult;
 import com.facebook.login.widget.LoginButton;
+import com.fasterxml.jackson.databind.JsonNode;
+import com.fasterxml.jackson.databind.node.ObjectNode;
 
 import java.util.Arrays;
 
@@ -52,24 +57,28 @@ public class AuthOptionsFragment extends Fragment {
 
         unbinder = ButterKnife.bind(this, rootView);
 
-        btnLoginFb.setReadPermissions(Arrays.asList("email", "user_friends"));
-        btnLoginFb.registerCallback(mFacebookCallbackManager, new FacebookCallback<LoginResult>() {
-            @Override
-            public void onSuccess(LoginResult loginResult) {
-                mInteractionListener.onFacebookAuth(loginResult);
-            }
+        if (mFacebookCallbackManager != null) {
+            btnLoginFb.setReadPermissions(Arrays.asList("email", "user_friends"));
+            btnLoginFb.registerCallback(mFacebookCallbackManager, new FacebookCallback<LoginResult>() {
+                @Override
+                public void onSuccess(LoginResult loginResult) {
+                    mInteractionListener.onFacebookAuth(loginResult);
+                }
 
-            @Override
-            public void onCancel() {
-                Log.v(TAG, "Facebook login cancelled.");
-            }
+                @Override
+                public void onCancel() {
+                    Log.v(TAG, "Facebook login cancelled.");
+                }
 
-            @Override
-            public void onError(FacebookException error) {
-                Log.e(TAG, "FacebookAuth - Verification Failed: ", error);
-                Toast.makeText(getContext(), R.string.error_authentication_facebook, Toast.LENGTH_SHORT).show();
-            }
-        });
+                @Override
+                public void onError(FacebookException error) {
+                    Log.e(TAG, "FacebookAuth - Verification Failed: ", error);
+                    Toast.makeText(getContext(), R.string.error_authentication_facebook, Toast.LENGTH_SHORT).show();
+                }
+            });
+        } else {
+            rootView.findViewById(R.id.container_alternative_options).setVisibility(View.GONE);
+        }
 
         return rootView;
     }

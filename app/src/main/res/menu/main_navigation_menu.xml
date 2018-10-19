@@ -46,10 +46,5 @@
             android:name="privacy settings"
             android:icon="@drawable/privacy"
             android:title="Waiter Work" />
-        <item
-            android:id="@+id/editProfile"
-            android:title="Edit Profile"
-            android:icon="@drawable/privacy"
-            tools:ignore="HardcodedText" />
     </group>
 </menu>

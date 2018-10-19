@@ -10,10 +10,13 @@ import android.support.v4.app.NotificationCompat;
 import android.support.v4.content.LocalBroadcastManager;
 import android.util.Log;
 
+import com.checkin.app.checkin.Auth.AuthRepository;
+import com.checkin.app.checkin.Auth.DeviceTokenService;
 import com.checkin.app.checkin.Notifications.NotificationActivity;
 import com.checkin.app.checkin.Session.ActiveSessionActivity;
 import com.checkin.app.checkin.Utility.Constants;
 import com.checkin.app.checkin.Utility.Util;
+import com.google.firebase.iid.FirebaseInstanceId;
 import com.google.firebase.messaging.FirebaseMessagingService;
 import com.google.firebase.messaging.RemoteMessage;
 
@@ -65,15 +68,10 @@ public class MessagingService extends FirebaseMessagingService {
 
     @Override
     public void onNewToken(String token) {
-        Log.d("MyFirebaseToken", "Refreshed token: " + token);
-        saveDeviceToken(token);
         super.onNewToken(token);
-    }
-
-    private void saveDeviceToken(String token) {
-        PreferenceManager.getDefaultSharedPreferences(getApplicationContext()).edit()
-                .putString(Constants.SP_DEVICE_TOKEN, token)
-                .apply();
+        Intent intent = new Intent(getApplicationContext(), DeviceTokenService.class);
+        intent.putExtra(DeviceTokenService.KEY_TOKEN, token);
+        startService(intent);
     }
 
     private void createNotificationChannel()
@@ -88,7 +86,6 @@ public class MessagingService extends FirebaseMessagingService {
             NotificationManager notificationManager =getSystemService(NotificationManager.class);
             notificationManager.createNotificationChannel(channel);
         }
-
 
 
     }

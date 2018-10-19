@@ -3,9 +3,11 @@ package com.checkin.app.checkin.Shop;
 import android.app.Application;
 import android.arch.lifecycle.AndroidViewModel;
 import android.arch.lifecycle.LiveData;
+import android.arch.lifecycle.Observer;
 import android.arch.lifecycle.ViewModel;
 import android.arch.lifecycle.ViewModelProvider;
 import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 
 import com.checkin.app.checkin.Data.BaseViewModel;
 import com.checkin.app.checkin.Data.Resource;
@@ -14,7 +16,7 @@ import java.util.List;
 
 public class ReviewsViewModel extends BaseViewModel {
     private ReviewsRepository mRepository;
-    private LiveData<Resource<List<ShopReview>>> mReviewsData;
+    private LiveData<Resource<List<ShopReviewPOJO>>> mReviewsData;
 
     ReviewsViewModel(@NonNull Application application) {
         super(application);
@@ -26,7 +28,7 @@ public class ReviewsViewModel extends BaseViewModel {
 
     }
 
-    public LiveData<Resource<List<ShopReview>>> getShopReviews(long shopId) {
+    public LiveData<Resource<List<ShopReviewPOJO>>> getShopReviews(long shopId) {
         if (mReviewsData == null)
             mReviewsData = mRepository.getShopReviews(String.valueOf(shopId));
         return mReviewsData;

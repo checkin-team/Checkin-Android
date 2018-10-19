@@ -27,12 +27,13 @@ import retrofit2.Retrofit;
 import retrofit2.converter.jackson.JacksonConverterFactory;
 
 import static com.checkin.app.checkin.Utility.Constants.API_HOST;
+import static com.checkin.app.checkin.Utility.Constants.API_PROTOCOL;
 import static com.checkin.app.checkin.Utility.Util.isNetworkConnected;
 
 @Module
 public class ApiClient {
     private static String getBaseUrl() {
-        return "http://" + API_HOST + "/";
+        return API_PROTOCOL + API_HOST + "/";
     }
 
     private static String getUserAgentHeader() {
@@ -44,14 +45,10 @@ public class ApiClient {
         return "application/json; version=" + Constants.API_VERSION;
     }
 
-    private String authToken;
-
     private static WebApiService sApiService;
 
     private OkHttpClient provideClient(final Context context) {
         final OkHttpClient.Builder httpClientBuilder = new OkHttpClient.Builder();
-        if (authToken == null)
-            handleAuthToken(context);
         handleNetworkInterceptor(httpClientBuilder, context);
         handleHeadersInterceptor(httpClientBuilder, context);
 
@@ -73,22 +70,20 @@ public class ApiClient {
             Request.Builder requestBuilder = chain.request().newBuilder()
                     .addHeader("Accept", getAcceptHeader())
                     .addHeader("User-Agent", getUserAgentHeader());
+            Log.e("ApiClient", "Starting request");
+            String authToken = AuthPreferences.getAuthToken(context);
+            Log.e("ApiClient", "Ending request");
             if (authToken != null)
                 requestBuilder.addHeader("Authorization", "Token " + authToken);
             Request request = requestBuilder.build();
             Response response = chain.proceed(request);
             if (authToken != null && response.code() == HttpsURLConnection.HTTP_UNAUTHORIZED) {
-                authToken = null;
                 AccountManager.get(context).invalidateAuthToken(Constants.ACCOUNT_TYPE, authToken);
             }
             return response;
         });
     }
 
-    private void handleAuthToken(Context context) {
-        Log.e("ApiClient", "Request for token");
-        AuthPreferences.getAuthToken(context, authToken -> this.authToken = authToken);
-    }
 
     private void handleNetworkInterceptor(OkHttpClient.Builder clientBuilder, Context context) {
         clientBuilder.addInterceptor(new NetworkConnectionInterceptor() {

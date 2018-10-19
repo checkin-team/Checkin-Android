@@ -20,9 +20,8 @@
 
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="title_activity_session_user">SessionUserActivity</string>
-    <string name="tab_text_1">Tab 1</string>
-    <string name="tab_text_2">Tab 2</string>
-    <string name="tab_text_3">Tab 3</string>
+    <string name="tab_text_1">Basic Info</string>
+    <string name="tab_text_2">Aspect</string>
     <string name="section_format">Hello World from section: %1$d</string>
     <string name="tab_menu">Menu</string>
     <string name="tab_session_detail">Detail</string>
@@ -31,6 +30,11 @@
     <string name="action_filter">Filter Items</string>
     <string name="menu_item_default_price">-</string>
     <string name="title_activity_login">LoginActivity</string>
+    <string name="title_login_help">Locate your account</string>
+    <string name="bottom_text_need_help">Need help?</string>
+    <string name="subtitle_login_help">Enter your CheckIn phone number linked to your account</string>
+    <string name="create_new_password">Create a new password</string>
+    <string name="expand_text">read more</string>
 
     <!--for bottomnav bar-->
 
@@ -117,4 +121,18 @@
     <string name="error_authentication_facebook">Facebook authentication failed.</string>
     <string name="error_authentication">Unable to authenticate user.</string>
     <string name="error_api_invalid_response">Server sent an invalid response.</string>
+    <string name="label_followers">Followers</string>
+    <string name="label_checkins">Check Ins</string>
+    <string name="label_reviews">Reviews</string>
+    <string name="action_follow">Follow</string>
+    <string name="info_requested">Requested</string>
+    <string name="action_message">Message</string>
+    <string name="status_loading">Working hard to fetch your data...</string>
+    <string name="action_profile_edit">Edit Profile</string>
+    <string name="info_following">Following</string>
+    <string name="action_reject">Reject</string>
+    <string name="action_accept">Accept</string>
+    <string name="title_shop_basic_info">Basic Info</string>
+    <string name="action_next">Next</string>
+    <string name="title_activity_edit_shop_profile">EditShopProfileActivity</string>
 </resources>

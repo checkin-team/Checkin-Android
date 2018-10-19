@@ -1,5 +1,6 @@
 package com.checkin.app.checkin.Data;
 
+import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.util.Log;
 
@@ -90,7 +91,7 @@ public class Converters {
         }
     }
 
-    public static JsonNode getJsonNode(String json) {
+    public static JsonNode getJsonNode(@NonNull String json) {
         try {
             return objectMapper.readTree(json);
         } catch (IOException e) {

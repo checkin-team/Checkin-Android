@@ -28,7 +28,7 @@ import java.util.List;
  * Created by Bhavik Patel on 25/08/2018.
  */
 
-class ShopProfileFragment extends Fragment implements View.OnClickListener {
+public class ShopProfileFragment extends Fragment implements View.OnClickListener {
     private static final String TAG = ShopProfileFragment.class.getSimpleName();
 
     private ViewPager imagePager;
@@ -39,6 +39,7 @@ class ShopProfileFragment extends Fragment implements View.OnClickListener {
     private View notification;
     private TextView hotel;
     private ShopProfileViewModel mViewModel;
+    private TextView editShopProfile;
 
 
     @Nullable
@@ -49,9 +50,10 @@ class ShopProfileFragment extends Fragment implements View.OnClickListener {
         grid = view.findViewById(R.id.grid);
         members = view.findViewById(R.id.members);
         insights = view.findViewById(R.id.insights);
-        message = view.findViewById(R.id.message);
+        message = view.findViewById(R.id.review);
         notification = view.findViewById(R.id.notification);
         hotel = view.findViewById(R.id.hotel);
+        editShopProfile=view.findViewById(R.id.edit_shop_profile);
         setUp();
 
         mViewModel = ViewModelProviders.of(this, new ShopProfileViewModel.Factory(getActivity().getApplication())).get(ShopProfileViewModel.class);
@@ -79,6 +81,13 @@ class ShopProfileFragment extends Fragment implements View.OnClickListener {
         message.setOnClickListener(this);
         members.setOnClickListener(this);
 
+        editShopProfile.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(getContext(),EditShopProfileActivity.class));
+            }
+        });
+
     }
 
     @Override
@@ -91,7 +100,7 @@ class ShopProfileFragment extends Fragment implements View.OnClickListener {
                 break;
             case R.id.insights:
                 break;
-            case R.id.message:
+            case R.id.review:
                 break;
         }
     }

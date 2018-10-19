@@ -5,6 +5,10 @@ import android.support.annotation.Nullable;
 import android.util.Log;
 
 import com.checkin.app.checkin.Utility.NoConnectivityException;
+import com.fasterxml.jackson.databind.JsonNode;
+import com.fasterxml.jackson.databind.node.ObjectNode;
+
+import java.io.IOException;
 
 import static java.net.HttpURLConnection.HTTP_BAD_REQUEST;
 import static java.net.HttpURLConnection.HTTP_FORBIDDEN;
@@ -37,6 +41,15 @@ public class Resource<T> {
         this.message = message;
     }
 
+    public JsonNode getErrorBody() {
+        try {
+            return Converters.objectMapper.readTree(message);
+        } catch (IOException e) {
+            Log.e(TAG, "message not a valid JSON data.");
+        }
+        return null;
+    }
+
     @NonNull
     public static <T> Resource<T> success(@NonNull T data) {
         return new Resource<>(Status.SUCCESS, data, null);
@@ -66,6 +79,7 @@ public class Resource<T> {
         if (apiResponse.isSuccessful() && apiResponse.getData() != null) {
             resource = success(apiResponse.getData());
         } else if (apiResponse.getErrorThrowable() != null) {
+            Log.e(TAG, apiResponse.getErrorThrowable().getMessage());
             if (apiResponse.getErrorThrowable() instanceof NoConnectivityException) {
                 Log.e(TAG, apiResponse.getErrorMessage());
                 resource = error(Status.ERROR_DISCONNECTED, apiResponse.getErrorMessage(), apiResponse.getData());

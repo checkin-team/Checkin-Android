@@ -6,7 +6,6 @@ import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
 import android.arch.lifecycle.ViewModelProviders;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.os.Handler;
 import android.preference.PreferenceManager;
@@ -26,10 +25,10 @@ import com.checkin.app.checkin.Home.HomeActivity;
 import com.checkin.app.checkin.R;
 import com.checkin.app.checkin.User.UserModel.GENDER;
 import com.checkin.app.checkin.Utility.Constants;
-import com.checkin.app.checkin.Utility.Util;
 import com.facebook.AccessToken;
 import com.facebook.CallbackManager;
 import com.facebook.login.LoginResult;
+import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
@@ -67,7 +66,6 @@ public class AuthActivity extends AppCompatActivity implements AuthFragmentInter
         setContentView(R.layout.activity_auth);
         ButterKnife.bind(this);
 
-
         if (savedInstanceState == null) {
             mFacebookCallbackManager = CallbackManager.Factory.create();
             FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
@@ -77,14 +75,20 @@ public class AuthActivity extends AppCompatActivity implements AuthFragmentInter
 
         mAuth = FirebaseAuth.getInstance();
 
+        FirebaseUser user = mAuth.getCurrentUser();
+        if (user != null && !PreferenceManager.getDefaultSharedPreferences(getApplicationContext()).getBoolean(Constants.SP_SYNC_DEVICE_TOKEN, false)) {
+            Log.e(TAG, "User already exists.");
+            user.delete();
+        }
+
         mPhoneAuth = new PhoneAuth(mAuth) {
             @Override
-            void onVerificationSuccess(PhoneAuthCredential credential) {
+            protected void onVerificationSuccess(PhoneAuthCredential credential) {
                 authenticateWithCredential(credential);
             }
 
             @Override
-            void onVerificationError(FirebaseException e) {
+            protected void onVerificationError(FirebaseException e) {
                 Log.e(TAG, "PhoneAuth - Verification Failed: ", e);
                 if (e instanceof FirebaseNetworkException) {
                     Toast.makeText(getApplicationContext(), R.string.error_unavailable_network, Toast.LENGTH_SHORT).show();
@@ -94,7 +98,7 @@ public class AuthActivity extends AppCompatActivity implements AuthFragmentInter
             }
 
             @Override
-            void onOtpRetrievalTimedOut() {
+            protected void onOtpRetrievalTimedOut() {
                 mAuthViewModel.setOtpTimeout(0L);
             }
         };
@@ -108,7 +112,12 @@ public class AuthActivity extends AppCompatActivity implements AuthFragmentInter
                 hideProgress();
                 successAuth(resource.data);
             } else if (resource.status == Resource.Status.ERROR_INVALID_REQUEST) {
-                Toast.makeText(getApplicationContext(), resource.message, Toast.LENGTH_SHORT).show();
+                JsonNode error = resource.getErrorBody();
+                if (error != null) {
+                    mAuthViewModel.showError(error);
+                } else {
+                    Toast.makeText(getApplicationContext(), resource.message, Toast.LENGTH_SHORT).show();
+                }
                 hideProgress();
             } else if (resource.status == Resource.Status.LOADING) {
                 showProgress();
@@ -154,13 +163,9 @@ public class AuthActivity extends AppCompatActivity implements AuthFragmentInter
     private void onVerifiedExistingUser() {
         if (mAuth.getCurrentUser() != null && mAuth.getCurrentUser().getDisplayName() != null) {
             Toast.makeText(getApplicationContext(), "Welcome back,  " + mAuth.getCurrentUser().getDisplayName(), Toast.LENGTH_LONG).show();
-
         } else {
             Toast.makeText(getApplicationContext(), "Welcome back!", Toast.LENGTH_LONG).show();
         }
-
-      //  TestDb.populateWithTestData(getApplicationContext());
-        startActivity(new Intent(this, HomeActivity.class));
         mAuthViewModel.login();
     }
 
@@ -269,6 +274,7 @@ public class AuthActivity extends AppCompatActivity implements AuthFragmentInter
     private void successAuth(@NonNull ObjectNode data) {
         new Handler().post(() -> {
             TestDb.populateWithTestData(getApplicationContext());
+
             if (!data.has("token")) {
                 Log.e(TAG, "'token' field missing from the response!");
                 Toast.makeText(getApplicationContext(), R.string.error_api_invalid_response, Toast.LENGTH_SHORT).show();
@@ -278,13 +284,14 @@ public class AuthActivity extends AppCompatActivity implements AuthFragmentInter
             Account account = new Account(getResources().getString(R.string.app_name), Constants.ACCOUNT_TYPE);
             AccountManager accountManager = AccountManager.get(this);
 
-            accountManager.addAccountExplicitly(account, null, null);
+            Bundle userData = new Bundle();
+            if (data.has("account_pk"))
+                userData.putString(Constants.ACCOUNT_UID, data.get("account_pk").asText());
+            accountManager.addAccountExplicitly(account, null, userData);
             accountManager.setAuthToken(account, AccountManager.KEY_AUTHTOKEN, authToken);
-            SharedPreferences.Editor editor = PreferenceManager.getDefaultSharedPreferences(getApplicationContext()).edit();
-            editor.putString(Constants.SP_LOGIN_TOKEN, authToken);
-            editor.putBoolean(Constants.SP_LOGGED_IN, true);
-            editor.apply();
-         //   TestDb.populateWithTestData(getApplicationContext());
+
+            startService(new Intent(getApplicationContext(), DeviceTokenService.class));
+
             startActivity(new Intent(this, HomeActivity.class));
             finish();
         });

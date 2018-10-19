@@ -12,7 +12,7 @@
         app:layout_constraintBottom_toBottomOf="parent"
         android:layout_marginStart="@dimen/spacing_normal"
         app:layout_constraintLeft_toLeftOf="parent"
-        tools:src="@drawable/water"/>
+        tools:src="@drawable/flier"/>
     <TextView
         android:id="@+id/tv_text"
         app:layout_constraintTop_toTopOf="parent"

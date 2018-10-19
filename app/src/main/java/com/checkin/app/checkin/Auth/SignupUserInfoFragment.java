@@ -1,5 +1,6 @@
 package com.checkin.app.checkin.Auth;
 
+import android.arch.lifecycle.ViewModelProviders;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
@@ -13,6 +14,7 @@ import android.widget.Toast;
 
 import com.checkin.app.checkin.R;
 import com.checkin.app.checkin.User.UserModel.GENDER;
+import com.fasterxml.jackson.databind.JsonNode;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -49,13 +51,23 @@ public class SignupUserInfoFragment extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
          final View view =  inflater.inflate(R.layout.fragment_signup_user_info, container, false);
         unbinder = ButterKnife.bind(this,view);
-        Log.e(TAG, "View Created");
         if (getArguments() != null)
         {
             String name=getArguments().getString(KEY_NAME);
-            edFirstName.setText(name.substring(0,name.indexOf(" ")));
+            edFirstName.setText(name.substring(0, name.indexOf(" ")));
             edLastName.setText(name.substring(name.lastIndexOf(" ")));
         }
+
+        AuthViewModel viewModel = ViewModelProviders.of(getActivity(), new AuthViewModel.Factory(getActivity().getApplication())).get(AuthViewModel.class);
+        viewModel.getErrors().observe(this, jsonNodes -> {
+            if (jsonNodes == null)
+                return;
+            if (jsonNodes.has("username")) {
+                JsonNode userNode = jsonNodes.get("username");
+                String msg = userNode.get(0).asText();
+                edUsername.setError(msg);
+            }
+        });
 
         return view;
     }
