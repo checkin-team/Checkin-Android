@@ -1,10 +1,277 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
+<ScrollView xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical">
+>
+    <LinearLayout
+    android:id="@+id/aspect_fragment"
+        android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+        >
 
+<LinearLayout
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:layout_gravity="center">
+        <FrameLayout
+            android:id="@+id/frameLayout"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="8dp"
+            android:background="@drawable/background_textbox"
+            >
 
+            <com.androidbuts.multispinnerfilter.MultiSpinnerSearch
+                android:id="@+id/cousines_search"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:hintText="Cuisines" />
+        </FrameLayout>
 
+        <FrameLayout
+            android:id="@+id/frameLayout2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="8dp"
+            android:background="@drawable/background_textbox"
+            >
+
+            <com.androidbuts.multispinnerfilter.MultiSpinnerSearch
+                android:id="@+id/spinner_categories"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:hintText="Categories" />
+        </FrameLayout>
 </LinearLayout>
+        <RadioGroup
+            android:id="@+id/radioGroup"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="8dp"
+            android:orientation="horizontal"
+            android:paddingEnd="@dimen/spacing_normal"
+            android:paddingStart="@dimen/spacing_normal"
+            android:layout_gravity="center">
+
+            <RadioButton
+                android:id="@+id/radio_veg"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/spacing_extra_large"
+                android:layout_marginRight="@dimen/spacing_extra_large"
+                android:text="VEG"
+                android:textColor="@color/brownish_grey" />
+
+            <RadioButton
+                android:id="@+id/radio_nonveg"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/spacing_extra_large"
+                android:layout_marginRight="@dimen/spacing_normal"
+                android:textColor="@color/brownish_grey"
+                android:text="NON-VEG" />
+    </RadioGroup>
+
+    <View
+        android:id="@+id/view2"
+        android:layout_width="match_parent"
+        android:layout_height="2dp"
+        android:layout_marginEnd="@dimen/spacing_gigantic"
+        android:layout_marginStart="@dimen/spacing_gigantic"
+        android:layout_marginTop="14dp"
+        android:src="@drawable/ic_line"
+        />
+
+    <TextView
+        android:id="@+id/textView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/spacing_extra_large"
+        android:text="Home Dilivery"
+        android:textColor="@color/brownish_grey"
+        android:textSize="@dimen/font_large"
+        android:layout_gravity="center"/>
+
+    <RadioGroup
+        android:id="@+id/radioGroup2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_marginTop="76dp"
+        android:orientation="horizontal">
+
+        <RadioButton
+            android:id="@+id/radio_homedelivery_yes"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginRight="@dimen/spacing_extra_large"
+            android:text="YES"
+            android:textColor="@color/brownish_grey" />
+
+        <RadioButton
+            android:id="@+id/radio_homedelivery_no"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/spacing_extra_large"
+            android:text="NO"
+            android:textColor="@color/brownish_grey" />
+    </RadioGroup>
+
+    <TextView
+        android:id="@+id/textView16"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="14dp"
+        android:text="Serves Alcohol"
+        android:textColor="@color/brownish_grey"
+        android:textSize="@dimen/font_large"
+        android:layout_gravity="center"
+        />
+
+    <RadioGroup
+        android:id="@+id/radioGroup3"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="24dp"
+        android:orientation="horizontal"
+        android:layout_gravity="center"
+        >
+
+        <RadioButton
+            android:id="@+id/radio_serves_alcohol_yes"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginRight="@dimen/spacing_extra_large"
+            android:text="YES"
+            android:textColor="@color/brownish_grey" />
+
+        <RadioButton
+            android:id="@+id/radio_serves_alcohol_no"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/spacing_extra_large"
+            android:text="NO"
+            android:textColor="@color/brownish_grey" />
+    </RadioGroup>
+
+    <TextView
+        android:id="@+id/textView20"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_marginTop="24dp"
+        android:text="Seating"
+        android:textColor="@color/brownish_grey"
+        android:textSize="@dimen/font_large" />
+<LinearLayout
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:layout_gravity="center">
+    <CheckBox
+        android:id="@+id/checkBox_indoor"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/spacing_extra_small"
+        android:text="Indoor"
+        android:textColor="@color/brownish_grey"
+        android:textSize="@dimen/font_large"
+        />
+
+    <CheckBox
+        android:id="@+id/checkBox_outdoor"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/spacing_extra_small"
+        android:text="Outdoor"
+        android:textColor="@color/brownish_grey"
+        android:textSize="@dimen/font_large" />
+</LinearLayout>
+    <TextView
+        android:id="@+id/textView22"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/spacing_small"
+        android:text="Payment"
+        android:layout_gravity="center"
+        android:textColor="@color/brownish_grey"
+        android:textSize="@dimen/font_large"
+       />
+<LinearLayout
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:layout_gravity="center">
+    <CheckBox
+        android:id="@+id/checkBox_card"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/spacing_extra_small"
+        android:text="Card"
+        android:textColor="@color/brownish_grey"
+        android:textSize="@dimen/font_large"
+       />
+
+    <CheckBox
+        android:id="@+id/checkBox_cash"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="@dimen/spacing_extra_small"
+        android:layout_marginStart="@dimen/spacing_extra_small"
+        android:layout_marginTop="0dp"
+        android:text="Cash"
+        android:textColor="@color/brownish_grey"
+        android:textSize="@dimen/font_large"
+    />
+
+    <CheckBox
+        android:id="@+id/checkBox_paytm"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="32dp"
+        android:text="Paytm"
+        android:textColor="@color/brownish_grey"
+        android:textSize="@dimen/font_large"
+         />
+</LinearLayout>
+
+    <TextView
+        android:id="@+id/textView21"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/spacing_extra_small"
+        android:text="Additional"
+        android:layout_gravity="center"
+        android:textColor="@color/brownish_grey"
+        android:textSize="@dimen/font_large"
+       />
+
+    <CheckBox
+        android:id="@+id/checkBox_home_delivery"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/spacing_extra_small"
+        android:text="Home Delivery"
+        android:textColor="@color/brownish_grey"
+        android:textSize="@dimen/font_large"
+       />
+
+    <CheckBox
+        android:id="@+id/checkBox_dine_in"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Dine in"
+        android:textColor="@color/brownish_grey"
+        android:textSize="@dimen/font_large"
+        />
+       <GridLayout
+           android:layout_width="wrap_content"
+           android:layout_height="wrap_content">
+
+       </GridLayout>
+</LinearLayout>
+</ScrollView>
