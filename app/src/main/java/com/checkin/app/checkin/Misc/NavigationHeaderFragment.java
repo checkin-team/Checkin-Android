@@ -1,11 +1,9 @@
 package com.checkin.app.checkin.Misc;
 
-import android.app.Fragment;
 import android.graphics.Bitmap;
-import android.media.Image;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
-import android.support.v4.app.FragmentManager;
+import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -15,9 +13,6 @@ import android.widget.ImageView;
 import android.widget.Spinner;
 import android.widget.TextView;
 
-import com.bumptech.glide.Glide;
-import com.checkin.app.checkin.Menu.MenuInfoFragment;
-import com.checkin.app.checkin.Menu.MenuItemModel;
 import com.checkin.app.checkin.R;
 
 import java.util.ArrayList;
@@ -29,11 +24,11 @@ import butterknife.ButterKnife;
 import butterknife.Unbinder;
 
 public class NavigationHeaderFragment extends Fragment {
-  @BindView(R.id.image_user)
+  @BindView(R.id.im_context)
   ImageView imageView;
   @BindView(R.id.user_name)
   TextView userName;
-  @BindView(R.id.account_type)
+  @BindView(R.id.tv_account_desc)
   TextView accountType;
   @BindView(R.id.account_selector)
     Spinner accountSelector;
@@ -69,7 +64,7 @@ public class NavigationHeaderFragment extends Fragment {
         public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
                                  Bundle savedInstanceState) {
             // Inflate the layout for this fragment
-            View view = inflater.inflate(R.layout.user_details_header, container, false);
+            View view = inflater.inflate(R.layout.layout_header_account, container, false);
             unbinder = ButterKnife.bind(this,view);
             String[] accountTypes=new String[]{"Social","Vivek Sharma"};
             List<String> accountsList = new ArrayList<>(Arrays.asList(accountTypes));

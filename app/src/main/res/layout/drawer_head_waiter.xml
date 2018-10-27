@@ -14,7 +14,7 @@
         android:layout_height="wrap_content"
         android:layout_gravity="center_vertical"
         android:id="@+id/menu_header"
-        layout="@layout/user_details_header" />
+        layout="@layout/layout_header_account" />
 
 
 

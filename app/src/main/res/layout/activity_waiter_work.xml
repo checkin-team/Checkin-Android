@@ -299,7 +299,7 @@
         android:layout_height="match_parent"
         android:layout_gravity="start"
         android:fitsSystemWindows="true"
-        app:headerLayout="@layout/user_details_header"
+        app:headerLayout="@layout/layout_header_account"
 
         app:menu="@menu/menu_waiter_work">
 
@@ -312,7 +312,7 @@
         android:layout_height="wrap_content"
         android:layout_gravity="center_vertical"
         android:id="@+id/menu_header"
-        layout="@layout/bottom_navigation_button" />
+        layout="@layout/layout_account_navigation_bottom" />
         </LinearLayout>
     </android.support.design.widget.NavigationView>
 

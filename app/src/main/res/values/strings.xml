@@ -135,4 +135,6 @@
     <string name="title_shop_basic_info">Basic Info</string>
     <string name="action_next">Next</string>
     <string name="title_activity_edit_shop_profile">EditShopProfileActivity</string>
+    <string name="action_logout">Logout</string>
+    <string name="data_unavailable">Loading...</string>
 </resources>

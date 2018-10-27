@@ -9,23 +9,16 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
-import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.ImageView;
-import android.widget.ListView;
 import android.widget.TextView;
 
-import com.checkin.app.checkin.Home.TrendingShopAdapter;
 import com.checkin.app.checkin.Menu.MenuItemModel;
 import com.checkin.app.checkin.Menu.OrderedItemModel;
 import com.checkin.app.checkin.R;
-import com.checkin.app.checkin.Shop.ShopModel;
-import com.checkin.app.checkin.Utility.EndDrawerToggle;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Objects;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -95,7 +88,7 @@ public class WaitorWork extends AppCompatActivity implements WaiterItemAdapter.O
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_waiter_profiles);
         NavigationHeaderFragment navigationHeaderFragment=new NavigationHeaderFragment();
         navigationHeaderFragment.setDetails("Vivek Sharma","Waiter's account");
-        getFragmentManager().beginTransaction().add(navigationView.getId(),navigationHeaderFragment).commit();
+        getSupportFragmentManager().beginTransaction().add(navigationView.getId(),navigationHeaderFragment).commit();
 
 
 

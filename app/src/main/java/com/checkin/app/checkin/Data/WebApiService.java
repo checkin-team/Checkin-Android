@@ -1,5 +1,6 @@
 package com.checkin.app.checkin.Data;
 
+import com.checkin.app.checkin.Account.AccountModel;
 import com.checkin.app.checkin.Menu.MenuModel;
 import com.checkin.app.checkin.Notifications.NotificationModel;
 import com.checkin.app.checkin.Session.ActiveSessionModel;
@@ -107,4 +108,7 @@ public interface WebApiService {
 
     @GET("notification")
     Call<List<NotificationModel>> getNotif(@Query("last_notif_id") int lastNotifId);
+
+    @GET("accounts/self/")
+    Call<List<AccountModel>> getSelfAccounts();
 }

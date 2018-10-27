@@ -17,7 +17,6 @@ import android.support.v4.app.FragmentTransaction;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
-import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
@@ -32,6 +31,8 @@ import android.view.animation.DecelerateInterpolator;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.checkin.app.checkin.Account.AccountModel.ACCOUNT_TYPE;
+import com.checkin.app.checkin.Account.BaseAccountActivity;
 import com.checkin.app.checkin.Data.Resource;
 import com.checkin.app.checkin.Menu.SessionUserActivity;
 import com.checkin.app.checkin.Misc.FaqActivity;
@@ -61,11 +62,11 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 
-public class HomeActivity extends AppCompatActivity
+public class HomeActivity extends BaseAccountActivity
         implements NavigationView.OnNavigationItemSelectedListener {
     public static final String USERUID="UserId";
     private final String TAG = HomeActivity.class.getSimpleName();
-    @BindView(R.id.drawer_home)
+    @BindView(R.id.drawer_root)
     DrawerLayout drawerLayout;
     @BindView(R.id.rv_trending_shops)
     RecyclerView rvTrendingShops;
@@ -133,7 +134,7 @@ public class HomeActivity extends AppCompatActivity
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayShowTitleEnabled(false);
 
-        drawerLayout = findViewById(R.id.drawer_home);
+        drawerLayout = findViewById(R.id.drawer_root);
         ActionBarDrawerToggle startToggle = new ActionBarDrawerToggle(
                 this, drawerLayout, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
         drawerLayout.addDrawerListener(startToggle);
@@ -144,8 +145,7 @@ public class HomeActivity extends AppCompatActivity
         drawerLayout.addDrawerListener(endToggle);
         endToggle.syncState();*/
 
-        NavigationView navigationView = findViewById(R.id.nav_main);
-        navigationView.setNavigationItemSelectedListener(this);
+        getNavAccount().setNavigationItemSelectedListener(this);
 
         vClipRevealMask.setOnTouchListener((view, motionEvent) -> {
             if (motionEvent.getAction() == MotionEvent.ACTION_DOWN)
@@ -550,4 +550,18 @@ public class HomeActivity extends AppCompatActivity
         startActivity(new Intent(this, BusinessFeaturesActivity.class));
     }
 
+    @Override
+    protected int getNavMenu() {
+        return R.menu.main_navigation_menu;
+    }
+
+    @Override
+    protected <T extends AccountHeaderViewHolder> T getHeaderViewHolder() {
+        return (T) new AccountHeaderViewHolder(this, R.layout.layout_header_account);
+    }
+
+    @Override
+    protected ACCOUNT_TYPE getAccountType() {
+        return ACCOUNT_TYPE.USER;
+    }
 }
