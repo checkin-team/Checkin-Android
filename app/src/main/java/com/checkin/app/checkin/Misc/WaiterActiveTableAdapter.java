@@ -1,23 +1,16 @@
 package com.checkin.app.checkin.Misc;
 
 import android.content.Context;
-import android.nfc.Tag;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
-import android.widget.ListView;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
-import com.checkin.app.checkin.Home.TrendingShopAdapter;
-import com.checkin.app.checkin.Menu.MenuItemModel;
 import com.checkin.app.checkin.R;
-import com.checkin.app.checkin.Shop.ShopModel;
-import com.google.android.gms.common.server.converter.StringToIntConverter;
 
 import java.util.List;
 
@@ -71,7 +64,7 @@ public class WaiterActiveTableAdapter extends RecyclerView.Adapter<WaiterActiveT
             }
             else
             {
-                holder.itemView.findViewById(R.id.table_oval).setBackgroundResource(R.drawable.combined_shape);
+                holder.itemView.findViewById(R.id.table_oval).setBackgroundResource(R.drawable.combined_shape1);
             }
 
     }

@@ -1,6 +1,7 @@
 package com.checkin.app.checkin.Data;
 
 import com.checkin.app.checkin.Menu.MenuModel;
+import com.checkin.app.checkin.Misc.EventModel;
 import com.checkin.app.checkin.Notifications.NotificationModel;
 import com.checkin.app.checkin.Session.ActiveSessionModel;
 import com.checkin.app.checkin.Shop.ShopJoin.ShopJoinModel;
@@ -107,4 +108,11 @@ public interface WebApiService {
 
     @GET("notification")
     Call<List<NotificationModel>> getNotif(@Query("last_notif_id") int lastNotifId);
+
+    //region Waiter Events
+    @GET("shops/{table_id}/orders")
+    Call<List<EventModel>> getItems(@Path("table_id") long tableId);
+
+    @POST("shops/{table_id}/orders/")
+    Call<ObjectNode> postItemCompleted(@Path("table_id") long tableId,@Body ObjectNode data);
 }

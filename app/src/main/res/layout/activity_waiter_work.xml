@@ -159,14 +159,14 @@
                     </android.support.v7.widget.CardView>
 
 
-                    <TextView
+                    <ImageView
                         android:id="@+id/action_menu"
-                        style="@style/ActionTextView"
-                        android:layout_width="40dp"
-                        android:layout_height="100dp"
 
-                        android:layout_gravity="center_vertical"
-                        android:drawableTop="@drawable/noun_1092662_cc"
+                        android:layout_width="40dp"
+                        android:layout_height="40dp"
+
+
+                        android:src="@drawable/noun_1092662_cc"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintTop_toTopOf="parent" />
 
@@ -174,93 +174,15 @@
                 <ScrollView
                     android:layout_width="match_parent"
                     android:id="@+id/scroll_container"
+                    android:layout_marginTop="@dimen/spacing_small"
                     android:layout_height="wrap_content">
-
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:orientation="vertical"
-                        android:layout_height="wrap_content">
                 <FrameLayout
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginBottom="@dimen/spacing_extra_small"
-                    android:layout_marginTop="@dimen/spacing_extra_small">
-
-
-                    <android.support.design.widget.CoordinatorLayout
-                        android:id="@+id/item_container"
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent">
-
-
-                        <android.support.v7.widget.RecyclerView
-                            android:id="@+id/rv_user_items"
-                            android:layout_width="match_parent"
-                            android:layout_height="match_parent"
-                            android:layout_gravity="end"
-                          />
-
-
-                    </android.support.design.widget.CoordinatorLayout>
+                    android:id="@+id/item_container"
+                    android:layout_height="wrap_content">
 
                 </FrameLayout>
 
-
-
-            <ImageView
-                android:id="@+id/Line"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-
-                android:src="@drawable/line"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/spacing_normal"
-                android:textSize="@dimen/font_large"
-                android:id="@+id/Deliver_text"
-                android:textColor="#ab1014"
-                android:letterSpacing="-0.01"
-                android:layout_gravity="center"
-                tools:text="Delivered "/>
-
-            <FrameLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="@dimen/spacing_extra_small"
-                android:layout_marginTop="@dimen/spacing_extra_small">
-
-                <View
-                    android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
-
-                    android:elevation="@dimen/card_elevation"
-                   >
-
-                </View>
-
-                <android.support.design.widget.CoordinatorLayout
-                    android:id="@+id/items_delivered_container"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent">
-
-
-                    <android.support.v7.widget.RecyclerView
-                        android:id="@+id/rv_delivered_items"
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:layout_gravity="end"
-                        />
-
-
-                </android.support.design.widget.CoordinatorLayout>
-
-            </FrameLayout>
-                    </LinearLayout>
                 </ScrollView>
             </LinearLayout>
 

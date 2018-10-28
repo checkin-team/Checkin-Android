@@ -34,8 +34,7 @@ public class ActiveTableFragment extends Fragment implements WaiterItemAdapter.O
     RecyclerView rvOngoingList;
     private List<TableModel> tables;
     private Unbinder unbinder;
-    private WaiterActiveTableAdapter waiterActiveTableAdapter;
-    private WaiterActiveTableAdapter waiterActiveTableAdapter2;
+    private WaiterEndNavigationTableAdapter waiterEndNavigationTableAdapter;
     public ActiveTableFragment() {
     }
 
@@ -55,13 +54,11 @@ public class ActiveTableFragment extends Fragment implements WaiterItemAdapter.O
         LinearLayoutManager llm = new LinearLayoutManager(getActivity(), RecyclerView.VERTICAL, false);
         rvTablesList.setLayoutManager(llm);
         Log.e("ActiveTable","Maine view toh create kra");
-        waiterActiveTableAdapter=new WaiterActiveTableAdapter(tables,this);
-        waiterActiveTableAdapter2=new WaiterActiveTableAdapter(tables,this);
+        waiterEndNavigationTableAdapter=new WaiterEndNavigationTableAdapter(tables);
 
-        rvTablesList.setAdapter(waiterActiveTableAdapter);
-        rvOngoingList.setAdapter(waiterActiveTableAdapter2);
+        rvTablesList.setAdapter(waiterEndNavigationTableAdapter);
+
         rvTablesList.setNestedScrollingEnabled(false);
-        rvOngoingList.setNestedScrollingEnabled(false);
         return rootView;
 
 
@@ -74,7 +71,7 @@ public class ActiveTableFragment extends Fragment implements WaiterItemAdapter.O
     }
 
     @Override
-    public void onClickCompleted(OrderedItemModel item, int position) {
+    public void onClickCompleted(EventModel item, int position) {
 
     }
 }

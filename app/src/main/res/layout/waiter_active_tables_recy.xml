@@ -20,7 +20,7 @@
             android:layout_alignParentEnd="true"
             android:id="@+id/table_oval"
             android:layout_centerInParent="true"
-            android:background="@drawable/combined_shape">
+            android:background="@drawable/combined_shape1">
 
 
 
