@@ -30,7 +30,7 @@ import java.util.Objects;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
-public class WaitorWork extends AppCompatActivity
+public class WaitorWork extends AppCompatActivity implements WaiterActiveTableAdapter.onTableInterActionListener
     {
     @BindView(R.id.rv_active_tables)
     RecyclerView rvActiveTables;
@@ -166,6 +166,7 @@ public class WaitorWork extends AppCompatActivity
                     this, LinearLayoutManager.HORIZONTAL, false));
         mWaiterTableAdapter = new WaiterActiveTableAdapter(tables);
         mWaiterTableAdapter.setNoItems(items.size());
+        mWaiterTableAdapter.setOnTableInterActionListener(this);
         rvActiveTables.setAdapter(mWaiterTableAdapter);
         activeTableFragment.setupActiveTables(tables);
         tables.add(new TableModel("Table" + 15 + "","PREMIUM", true, 4, 2));
@@ -174,7 +175,10 @@ public class WaitorWork extends AppCompatActivity
     }
 
 
-
-
+        @Override
+        public void selectedTableChanged(int position) {
+            mWaiterTableAdapter.setItem_position(position);
+            mWaiterTableAdapter.notifyDataSetChanged();
+        }
     }
 

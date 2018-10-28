@@ -21,7 +21,7 @@ public class WaiterActiveTableAdapter extends RecyclerView.Adapter<WaiterActiveT
     List<TableModel> mTables;
     private Context context;
     int noItemsInteger=12;
-
+    private onTableInterActionListener OnTableInterActionListener;
     int item_position=0;
 
 
@@ -47,6 +47,14 @@ public class WaiterActiveTableAdapter extends RecyclerView.Adapter<WaiterActiveT
 
     }
 
+    public void setItem_position(int item_position) {
+        this.item_position = item_position;
+    }
+
+    public void setOnTableInterActionListener(onTableInterActionListener onTableInterActionListener) {
+        OnTableInterActionListener = onTableInterActionListener;
+    }
+
     @Override
     public void onBindViewHolder(@NonNull WaiterActiveTableAdapter.ViewHolder holder, int position) {
             holder.bindData(mTables.get(position));
@@ -54,11 +62,10 @@ public class WaiterActiveTableAdapter extends RecyclerView.Adapter<WaiterActiveT
             holder.itemView.findViewById(R.id.table_oval).setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    item_position=position;
-                    notifyDataSetChanged();
+                    OnTableInterActionListener.selectedTableChanged(holder.getAdapterPosition());
                 }
             });
-            if(item_position==position)
+            if(item_position==holder.getAdapterPosition())
             {
                 holder.itemView.findViewById(R.id.table_oval).setBackgroundResource(R.drawable.table_shape);
             }
@@ -98,6 +105,10 @@ public class WaiterActiveTableAdapter extends RecyclerView.Adapter<WaiterActiveT
             Glide.with(tableLabel.getContext());
         }
 
+    }
+    public interface onTableInterActionListener
+    {
+        public void selectedTableChanged(int position);
     }
 
 }
