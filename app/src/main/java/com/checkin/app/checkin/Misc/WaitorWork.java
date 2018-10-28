@@ -30,7 +30,7 @@ import java.util.Objects;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
-public class WaitorWork extends AppCompatActivity implements WaiterItemAdapter.OnItemInteractionListener
+public class WaitorWork extends AppCompatActivity
     {
     @BindView(R.id.rv_active_tables)
     RecyclerView rvActiveTables;
@@ -164,7 +164,7 @@ public class WaitorWork extends AppCompatActivity implements WaiterItemAdapter.O
         }
             rvActiveTables.setLayoutManager(new LinearLayoutManager(
                     this, LinearLayoutManager.HORIZONTAL, false));
-        mWaiterTableAdapter = new WaiterActiveTableAdapter(tables,this);
+        mWaiterTableAdapter = new WaiterActiveTableAdapter(tables);
         mWaiterTableAdapter.setNoItems(items.size());
         rvActiveTables.setAdapter(mWaiterTableAdapter);
         activeTableFragment.setupActiveTables(tables);
@@ -173,23 +173,8 @@ public class WaitorWork extends AppCompatActivity implements WaiterItemAdapter.O
         return mWaiterTableAdapter;
     }
 
-    @Override
-    public void onClickCompleted(EventModel item,int position) {
-
-             /*   mWaiterItemAdapter.mItems.remove(position);
-                //items.remove(i);
 
 
-       // rvUserItems.setAdapter(mWaiterItemAdapter);
-        mWaiterItemAdapter2.mItems.add(item);
-        rvDelivered.setAdapter(mWaiterItemAdapter2);
-        rvDelivered.setNestedScrollingEnabled(false);
-        rvUserItems.setNestedScrollingEnabled(false);
-        mWaiterTableAdapter.setNoItems(mWaiterItemAdapter.mItems.size());
-        rvActiveTables.setAdapter(mWaiterTableAdapter);
-        mWaiterItemAdapter.setItemInteractionListener(this);*/
+
     }
-
-
-}
 

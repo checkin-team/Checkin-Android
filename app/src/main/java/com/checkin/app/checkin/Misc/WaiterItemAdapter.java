@@ -108,7 +108,7 @@ public class WaiterItemAdapter extends RecyclerView.Adapter<WaiterItemAdapter.Vi
         return mItems.size();
     }
     @Override
-    public int getItemViewType(final int position) {
+    public int getItemViewType(int position) {
         if(isOrderedItem(position))
         return R.layout.waiter_item_recy;
         else if(mItems.get(position).getType()== EventModel.TYPE.CUSTOM_MESSAGE)
@@ -177,11 +177,12 @@ public class WaiterItemAdapter extends RecyclerView.Adapter<WaiterItemAdapter.Vi
                 itemName.setText(itemModel.getItem().getName());
                 time_ago.setText("8 minutes Ago");
                 quantity.setText("QTY: " + itemModel.getQuantity());
-                addOnSignify.setText("Add On");
-                pizzaCrustSignify.setText("Pizza Crust");
-                addOn.setText("Extra Cheese");
-                pizzaCrust.setText("Plain Bread");
-                time_ago.setText(item.getTime().toString());
+                if(itemModel.getRemarks()!=null)
+                { addOnSignify.setText("Add On");
+                pizzaCrustSignify.setVisibility(View.GONE);
+                addOn.setText(itemModel.getRemarks());
+                pizzaCrust.setVisibility(View.GONE);
+                }
 //            int size=item.getSelectedFields().size();
                 StringBuilder stringBuilder = new StringBuilder();
                 //  for(int i=0;i<size;i++)

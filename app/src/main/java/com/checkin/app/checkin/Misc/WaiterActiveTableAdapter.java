@@ -21,16 +21,16 @@ public class WaiterActiveTableAdapter extends RecyclerView.Adapter<WaiterActiveT
     List<TableModel> mTables;
     private Context context;
     int noItemsInteger=12;
-    private WaiterItemAdapter.OnItemInteractionListener itemInteractionListener;
+
     int item_position=0;
 
 
 
 
 
-    WaiterActiveTableAdapter(List<TableModel> tables, WaiterItemAdapter.OnItemInteractionListener onItemInteractionListener) {
+    WaiterActiveTableAdapter(List<TableModel> tables) {
         mTables = tables;
-        itemInteractionListener= onItemInteractionListener;
+
     }
 
     @NonNull

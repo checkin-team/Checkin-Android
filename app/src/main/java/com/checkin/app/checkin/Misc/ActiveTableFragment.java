@@ -25,7 +25,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.Unbinder;
 
-public class ActiveTableFragment extends Fragment implements WaiterItemAdapter.OnItemInteractionListener {
+public class ActiveTableFragment extends Fragment {
     private final String TAG = MenuSearchFragment.class.getSimpleName();
 
     @BindView(R.id.active_table_list)
@@ -70,8 +70,5 @@ public class ActiveTableFragment extends Fragment implements WaiterItemAdapter.O
 
     }
 
-    @Override
-    public void onClickCompleted(EventModel item, int position) {
 
-    }
 }
