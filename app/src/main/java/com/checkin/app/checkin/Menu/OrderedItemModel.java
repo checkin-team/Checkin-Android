@@ -27,13 +27,13 @@ public class OrderedItemModel implements Cloneable {
 
     OrderedItemModel() {}
 
-    OrderedItemModel(MenuItemModel menuItem, int quantity, int type) {
+    public OrderedItemModel(MenuItemModel menuItem, int quantity, int type) {
         this.item = menuItem;
         this.quantity = quantity;
         this.typeIndex = type;
     }
 
-    OrderedItemModel(MenuItemModel item, int quantity) {
+    public OrderedItemModel(MenuItemModel item, int quantity) {
         this.item = item;
         this.quantity = quantity;
         this.typeIndex = 0;
@@ -159,6 +159,8 @@ public class OrderedItemModel implements Cloneable {
     public int getChangeCount() {
         return changeCount;
     }
+
+
 
     public void setChangeCount(int changeCount) {
         this.changeCount = changeCount;

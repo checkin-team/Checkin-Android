@@ -44,6 +44,17 @@
         <item name="android:textSize">@dimen/font_larger</item>
     </style>
 
+    <style name="GreyTextContainer">
+        <item name="android:textViewStyle">@style/GreyTextStyle</item>
+    </style>
+
+    <style name="GreySpinnerItem" parent="GreyTextStyle">
+    </style>
+
+    <style name="SpinnerStyle" parent="Widget.AppCompat.Spinner">
+        <item name="android:theme">@style/ThemeOverlay.AppCompat.Light</item>
+    </style>
+
     <style name="InputTextStyle" parent="Widget.AppCompat.EditText">
         <item name="android:background">@drawable/background_textbox</item>
         <item name="android:inputType">text</item>
@@ -71,8 +82,9 @@
         <item name="android:textColor">@color/white</item>
     </style>
 
-    <style name="GreyTextStyle" parent="TextAppearance.AppCompat.Widget.ActionBar.Title">
+    <style name="GreyTextStyle" parent="TextAppearance.AppCompat">
         <item name="android:textColor">@color/brownish_grey</item>
+        <item name="android:textSize">@dimen/font_normal</item>
     </style>
 
     <style name="TextShadowCover" parent="TextAppearance.AppCompat">
@@ -153,6 +165,15 @@
         <item name="android:layout_height">@dimen/square_card_dimen</item>
         <item name="android:padding">@dimen/spacing_small</item>
         <item name="android:textAlignment">center</item>
+        <item name="android:textColor">@color/brownish_grey</item>
+        <item name="android:textSize">@dimen/font_small_heading</item>
+    </style>
+
+    <style name="ActionPeopleView">
+        <item name="android:layout_width">@dimen/square_card_dimen</item>
+        <item name="android:layout_height">@dimen/square_card_dimen</item>
+        <item name="android:padding">@dimen/spacing_small</item>
+
         <item name="android:textColor">@color/brownish_grey</item>
         <item name="android:textSize">@dimen/font_small_heading</item>
     </style>
