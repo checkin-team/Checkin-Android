@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.design.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.checkin.app.checkin.Misc.SearchActivity">
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize"
+        android:background="@color/white">
+
+        <android.support.v7.widget.Toolbar
+            android:id="@+id/session_toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            app:layout_scrollFlags="snap" />
+            <include
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:id="@+id/menu_header"
+                layout="@layout/menu_appbar_search" />
+            <com.miguelcatalan.materialsearchview.MaterialSearchView
+                android:id="@+id/search_view"
+                style="@style/MaterialSearchViewStyle"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent" />
+
+    </FrameLayout>
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:id="@+id/root_view"
+        android:layout_marginTop="?attr/actionBarSize">
+
+        <android.support.design.widget.AppBarLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/white">
+
+            <android.support.design.widget.TabLayout
+                android:id="@+id/tabs"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:tabTextColor="@color/pinkish_grey"
+                app:tabSelectedTextColor="@color/primary_red"
+                app:tabGravity="fill"
+                app:tabMode="fixed"/>
+        </android.support.design.widget.AppBarLayout>
+
+        <android.support.v4.view.ViewPager
+            android:layout_marginTop="?attr/actionBarSize"
+            android:id="@+id/viewpager_on_click"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            app:layout_behavior="@string/appbar_scrolling_view_behavior"/>
+    </FrameLayout>
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginTop="?attr/actionBarSize"
+        android:id="@+id/search_fragment_placeholder">
+    </FrameLayout>
+
+</android.support.design.widget.CoordinatorLayout>

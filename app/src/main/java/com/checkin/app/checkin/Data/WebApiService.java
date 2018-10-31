@@ -1,6 +1,7 @@
 package com.checkin.app.checkin.Data;
 
 import com.checkin.app.checkin.Menu.MenuModel;
+import com.checkin.app.checkin.Misc.SearchRVPojo;
 import com.checkin.app.checkin.Notifications.NotificationModel;
 import com.checkin.app.checkin.Session.ActiveSessionModel;
 import com.checkin.app.checkin.Shop.ShopJoin.ShopJoinModel;
@@ -107,4 +108,7 @@ public interface WebApiService {
 
     @GET("notification")
     Call<List<NotificationModel>> getNotif(@Query("last_notif_id") int lastNotifId);
+
+    @GET("search/")
+    Call<List<SearchRVPojo>>getSearchResults(@Query("search") String query);
 }
