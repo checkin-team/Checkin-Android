@@ -18,7 +18,7 @@ public class BasicInfoFragment extends Fragment {
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View view=inflater.inflate(R.layout.basic_info_fragment,container,false);
+        View view=inflater.inflate(R.layout.fragment_shop_edit_basic_info,container,false);
         return view;
     }
 }

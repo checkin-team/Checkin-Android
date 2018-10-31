@@ -14,6 +14,9 @@ public class AccountModel {
     @JsonProperty("pk")
     private String id;
 
+    @JsonProperty("target_pk")
+    private String targetPk;
+
     private ACCOUNT_TYPE accountType;
 
     private String pic;
@@ -24,7 +27,8 @@ public class AccountModel {
 
     public enum ACCOUNT_TYPE {
         USER(201),
-        RESTAURANT_MANAGER(202), RESTAURANT_WAITER(203), RESTAURANT_COOK(204);
+        SHOP_OWNER(202), SHOP_ADMIN(203),
+        RESTAURANT_MANAGER(204), RESTAURANT_WAITER(205), RESTAURANT_COOK(206);
 
         public final int id;
         ACCOUNT_TYPE(int id) {
@@ -54,6 +58,24 @@ public class AccountModel {
         return accountType;
     }
 
+    public String formatAccountType() {
+        switch (accountType) {
+            case USER:
+                return  "User's account";
+            case SHOP_OWNER:
+                return "Owner's account";
+            case SHOP_ADMIN:
+                return "Admin's account";
+            case RESTAURANT_MANAGER:
+                return "Manager's account";
+            case RESTAURANT_WAITER:
+                return "Waiter's account";
+            case RESTAURANT_COOK:
+                return "Cook's account";
+        }
+        return "UNKNOWN ACCOUNT";
+    }
+
     public String getPic() {
         return pic;
     }
@@ -65,6 +87,10 @@ public class AccountModel {
     @JsonProperty("acc_type")
     public void setAccountType(int accType) {
         this.accountType = ACCOUNT_TYPE.getById(accType);
+    }
+
+    public String getTargetPk() {
+        return targetPk;
     }
 
     @Nullable

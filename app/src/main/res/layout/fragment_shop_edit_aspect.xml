@@ -1,0 +1,270 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.v4.widget.NestedScrollView xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <LinearLayout
+        android:id="@+id/root_view"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:paddingTop="@dimen/spacing_normal"
+        android:paddingBottom="@dimen/spacing_normal">
+
+        <RelativeLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center">
+            <FrameLayout
+                android:id="@+id/container_cuisines"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@drawable/background_textbox">
+
+                <com.checkin.app.checkin.Utility.MultiSpinner
+                    android:id="@+id/spinner_cuisines"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    app:hintText="Cuisines"
+                    app:entries="@array/restaurant_cuisines"/>
+            </FrameLayout>
+
+            <FrameLayout
+                android:id="@+id/container_categories"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@drawable/background_textbox"
+                android:layout_toEndOf="@id/container_cuisines"
+                android:layout_marginStart="@dimen/spacing_large">
+
+                <com.checkin.app.checkin.Utility.MultiSpinner
+                    android:id="@+id/spinner_categories"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    app:hintText="Categories"
+                    app:entries="@array/restaurant_categories" />
+            </FrameLayout>
+        </RelativeLayout>
+
+        <FrameLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="@dimen/spacing_normal">
+            <RadioGroup
+                android:id="@+id/rg_choice_veg"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <RadioButton
+                    android:id="@+id/rb_veg"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    style="@style/GreyTextStyle"
+                    android:text="VEG" />
+
+                <RadioButton
+                    android:id="@+id/rb_non_veg"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    style="@style/GreyTextStyle"
+                    android:text="NON-VEG"
+                    android:layout_marginStart="@dimen/spacing_large"/>
+            </RadioGroup>
+        </FrameLayout>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_marginTop="@dimen/spacing_small"
+            android:layout_marginStart="@dimen/spacing_extra_large"
+            android:layout_marginEnd="@dimen/spacing_extra_large"
+            android:background="@drawable/ic_line" />
+
+        <LinearLayout
+            android:id="@+id/container_delivery"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingStart="@dimen/spacing_extra_large"
+            android:paddingEnd="@dimen/spacing_extra_large"
+            android:layout_marginTop="@dimen/spacing_large"
+            android:orientation="vertical">
+            <TextView
+                android:id="@+id/tv_label_delivery"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Home Delivery"
+                style="@style/GreyTextStyle"
+                android:textSize="@dimen/font_large"/>
+            <RadioGroup
+                android:id="@+id/rg_choice_delivery"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:layout_marginTop="@dimen/spacing_small">
+                <RadioButton
+                    android:id="@+id/rb_delivery_yes"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/positive_yes"
+                    style="@style/GreyTextStyle"
+                    android:textAllCaps="true" />
+                <RadioButton
+                    android:id="@+id/rb_delivery_no"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/negative_no"
+                    android:textAllCaps="true"
+                    style="@style/GreyTextStyle"
+                    android:layout_marginStart="@dimen/spacing_large"/>
+            </RadioGroup>
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/container_alcohol"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingStart="@dimen/spacing_extra_large"
+            android:paddingEnd="@dimen/spacing_extra_large"
+            android:layout_marginTop="@dimen/spacing_normal"
+            android:orientation="vertical">
+            <TextView
+                android:id="@+id/tv_label_alcohol"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Serves Alcohol"
+                style="@style/GreyTextStyle"
+                android:textSize="@dimen/font_large"/>
+            <RadioGroup
+                android:id="@+id/rg_choice_alcohol"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:layout_marginTop="@dimen/spacing_small">
+                <RadioButton
+                    android:id="@+id/rb_alcohol_yes"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/positive_yes"
+                    style="@style/GreyTextStyle"
+                    android:textAllCaps="true" />
+                <RadioButton
+                    android:id="@+id/rb_alcohol_no"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/negative_no"
+                    android:textAllCaps="true"
+                    style="@style/GreyTextStyle"
+                    android:layout_marginStart="@dimen/spacing_large"/>
+            </RadioGroup>
+        </LinearLayout>
+
+        <!--<LinearLayout
+            android:id="@+id/container_seating"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingStart="@dimen/spacing_extra_large"
+            android:paddingEnd="@dimen/spacing_extra_large"
+            android:layout_marginTop="@dimen/spacing_normal"
+            android:orientation="vertical">
+            <TextView
+                android:id="@+id/tv_label_seating"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Seating"
+                style="@style/GreyTextStyle"
+                android:textSize="@dimen/font_large"/>
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginTop="@dimen/spacing_small">
+                <CheckBox
+                    android:id="@+id/cb_choice_indoor"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Indoor"
+                    style="@style/GreyTextStyle" />
+                <CheckBox
+                    android:id="@+id/cb_choice_outdoor"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Outdoor"
+                    style="@style/GreyTextStyle"
+                    android:layout_marginStart="@dimen/spacing_large"
+                    android:layout_toEndOf="@id/cb_choice_indoor"/>
+            </RelativeLayout>
+        </LinearLayout>-->
+
+        <LinearLayout
+            android:id="@+id/container_payment"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingStart="@dimen/spacing_extra_large"
+            android:paddingEnd="@dimen/spacing_extra_large"
+            android:layout_marginTop="@dimen/spacing_normal"
+            android:orientation="vertical">
+            <TextView
+                android:id="@+id/tv_label_payment"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Payment"
+                style="@style/GreyTextStyle"
+                android:textSize="@dimen/font_large"/>
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginTop="@dimen/spacing_small">
+                <CheckBox
+                    android:id="@+id/cb_choice_cash"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Cash"
+                    style="@style/GreyTextStyle" />
+                <CheckBox
+                    android:id="@+id/cb_choice_card"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Card"
+                    style="@style/GreyTextStyle"
+                    android:layout_marginStart="@dimen/spacing_large"
+                    android:layout_toEndOf="@id/cb_choice_cash"/>
+                <CheckBox
+                    android:id="@+id/cb_choice_paytm"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="PayTm"
+                    style="@style/GreyTextStyle"
+                    android:layout_marginStart="@dimen/spacing_large"
+                    android:layout_toEndOf="@id/cb_choice_card"/>
+            </RelativeLayout>
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/container_additional_data"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingStart="@dimen/spacing_extra_large"
+            android:paddingEnd="@dimen/spacing_extra_large"
+            android:layout_marginTop="@dimen/spacing_normal"
+            android:orientation="vertical">
+            <TextView
+                android:id="@+id/tv_label_additional_data"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Additional"
+                android:layout_gravity="center_horizontal"
+                style="@style/GreyTextStyle"
+                android:textSize="@dimen/font_large"/>
+
+            <android.support.v7.widget.RecyclerView
+                android:id="@+id/rv_additional_data"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/spacing_small"
+                android:orientation="vertical" />
+        </LinearLayout>
+
+    </LinearLayout>
+</android.support.v4.widget.NestedScrollView>

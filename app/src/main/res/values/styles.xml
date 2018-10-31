@@ -65,6 +65,7 @@
     </style>
 
     <style name="ButtonNextAction" parent="Widget.AppCompat.Button">
+        <item name="android:layout_height">@dimen/button_height_tall</item>
         <item name="android:background">@drawable/btn_next_selector</item>
         <item name="android:fontFamily">@font/lucida_grande</item>
         <item name="android:text">@string/action_next</item>

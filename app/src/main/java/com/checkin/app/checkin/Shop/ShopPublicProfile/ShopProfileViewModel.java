@@ -33,7 +33,7 @@ class ShopProfileViewModel extends BaseViewModel {
 
     public LiveData<Resource<ShopModel>> getShopModel(long shopId) {
         if (mShopData == null)
-            mShopData = mRepository.getShopModel(shopId);
+            mShopData = mRepository.getShopModel(String.valueOf(shopId));
         return mShopData;
     }
 

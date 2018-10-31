@@ -18,7 +18,6 @@
     <string name="layout_button_proceed">Next</string>
     <string name="username"><font color="#af1014">Enter Username</font></string>
 
-    <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="title_activity_session_user">SessionUserActivity</string>
     <string name="tab_text_1">Basic Info</string>
     <string name="tab_text_2">Aspect</string>
@@ -61,7 +60,6 @@
     <string name="home_text_qrscanner">Scan QR!</string>
     <string name="home_text_delivery">Delivery</string>
     <string name="home_text_offers">Offers</string>
-    <string name="reset_my_password">Reset My Password</string>
     <string name="check_in_wallet">Check-In Wallet</string>
     <string name="home_text_dining">Dine In</string>
     <string name="text_add_notifications">Notifications</string>
@@ -127,14 +125,16 @@
     <string name="action_follow">Follow</string>
     <string name="info_requested">Requested</string>
     <string name="action_message">Message</string>
-    <string name="status_loading">Working hard to fetch your data...</string>
+    <string name="status_loading">Working hard to fetch your data…</string>
     <string name="action_profile_edit">Edit Profile</string>
     <string name="info_following">Following</string>
     <string name="action_reject">Reject</string>
     <string name="action_accept">Accept</string>
     <string name="title_shop_basic_info">Basic Info</string>
     <string name="action_next">Next</string>
-    <string name="title_activity_edit_shop_profile">EditShopProfileActivity</string>
     <string name="action_logout">Logout</string>
-    <string name="data_unavailable">Loading...</string>
+    <string name="data_unavailable">Loading…</string>
+    <string name="positive_yes">Yes</string>
+    <string name="negative_no">No</string>
+    <string name="title_shop_aspects">Aspects</string>
 </resources>

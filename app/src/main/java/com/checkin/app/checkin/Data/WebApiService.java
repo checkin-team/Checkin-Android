@@ -2,6 +2,7 @@ package com.checkin.app.checkin.Data;
 
 import com.checkin.app.checkin.Account.AccountModel;
 import com.checkin.app.checkin.Menu.MenuModel;
+import com.checkin.app.checkin.Misc.GenericDetailModel;
 import com.checkin.app.checkin.Notifications.NotificationModel;
 import com.checkin.app.checkin.Session.ActiveSessionModel;
 import com.checkin.app.checkin.Shop.ShopJoin.ShopJoinModel;
@@ -87,11 +88,16 @@ public interface WebApiService {
 
     // region SHOP
     @POST("restaurants/create/")
-    Call<ObjectNode> postRegisterShop(@Body ShopJoinModel model);
+    Call<GenericDetailModel> postRegisterShop(@Body ShopJoinModel model);
 
     @GET("shops/{shop_id}/")
-    Call<ShopModel> getShopDetails(@Path("shop_id") long shopId);
+    Call<ShopModel> getShopDetails(@Path("shop_id") String shopId);
 
+    @GET("restaurants/{shop_id}/manage/")
+    Call<ShopModel> getShopManageDetails(@Path("shop_id") String shopId);
+
+    @PATCH("restaurants/{shop_id}/manage/")
+    Call<ObjectNode> postShopManageDetails(@Path("shop_id") String shopId, @Body ShopModel shopData);
     // endregion
 
     @GET("shops/{shop_id}/menus/available/")

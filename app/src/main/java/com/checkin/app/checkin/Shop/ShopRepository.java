@@ -7,17 +7,14 @@ import android.support.annotation.NonNull;
 
 import com.checkin.app.checkin.Data.ApiClient;
 import com.checkin.app.checkin.Data.ApiResponse;
-import com.checkin.app.checkin.Data.AppDatabase;
 import com.checkin.app.checkin.Data.BaseRepository;
 import com.checkin.app.checkin.Data.NetworkBoundResource;
-import com.checkin.app.checkin.Data.ObjectBoxInstanceLiveData;
 import com.checkin.app.checkin.Data.Resource;
 import com.checkin.app.checkin.Data.RetrofitLiveData;
 import com.checkin.app.checkin.Data.WebApiService;
+import com.checkin.app.checkin.Misc.GenericDetailModel;
 import com.checkin.app.checkin.Shop.ShopJoin.ShopJoinModel;
 import com.fasterxml.jackson.databind.node.ObjectNode;
-
-import io.objectbox.Box;
 
 /**
  * Created by Bhavik Patel on 24/08/2018.
@@ -26,12 +23,12 @@ import io.objectbox.Box;
 public class ShopRepository extends BaseRepository {
 
     private final WebApiService mWebService;
-    private Box<ShopModel> mShopModel;
+//    private Box<ShopModel> mShopModel;
     private static ShopRepository INSTANCE;
 
     private ShopRepository(Context context) {
         mWebService = ApiClient.getApiService(context);
-        mShopModel = AppDatabase.getShopModel(context);
+//        mShopModel = AppDatabase.getShopModel(context);
     }
 
     public static ShopRepository getInstance(Application application) {
@@ -45,7 +42,27 @@ public class ShopRepository extends BaseRepository {
         return INSTANCE;
     }
 
-    public LiveData<Resource<ObjectNode>> registerShop(ShopJoinModel model) {
+    public LiveData<Resource<GenericDetailModel>> registerShop(ShopJoinModel model) {
+        return new NetworkBoundResource<GenericDetailModel, GenericDetailModel>() {
+            @Override
+            protected boolean shouldUseLocalDb() {
+                return false;
+            }
+
+            @NonNull
+            @Override
+            protected LiveData<ApiResponse<GenericDetailModel>> createCall() {
+                return new RetrofitLiveData<>(mWebService.postRegisterShop(model));
+            }
+
+            @Override
+            protected void saveCallResult(GenericDetailModel data) {
+
+            }
+        }.getAsLiveData();
+    }
+
+    public LiveData<Resource<ObjectNode>> updateShopDetails(final ShopModel shopModel) {
         return new NetworkBoundResource<ObjectNode, ObjectNode>() {
             @Override
             protected boolean shouldUseLocalDb() {
@@ -55,7 +72,7 @@ public class ShopRepository extends BaseRepository {
             @NonNull
             @Override
             protected LiveData<ApiResponse<ObjectNode>> createCall() {
-                return new RetrofitLiveData<>(mWebService.postRegisterShop(model));
+                return new RetrofitLiveData<>(mWebService.postShopManageDetails(shopModel.getId(), shopModel));
             }
 
             @Override
@@ -65,22 +82,12 @@ public class ShopRepository extends BaseRepository {
         }.getAsLiveData();
     }
 
-    public LiveData<Resource<ShopModel>> getShopModel(long shopId) {
+    public LiveData<Resource<ShopModel>> getShopModel(String shopId) {
         return new NetworkBoundResource<ShopModel, ShopModel> () {
 
             @Override
             protected boolean shouldUseLocalDb() {
                 return true;
-            }
-
-            @Override
-            protected LiveData<ShopModel> loadFromDb() {
-                return new ObjectBoxInstanceLiveData<>(mShopModel.query().equal(ShopModel_.id, shopId).build());
-            }
-
-            @Override
-            protected boolean shouldFetch(ShopModel data) {
-                return false;
             }
 
             @NonNull
@@ -90,10 +97,7 @@ public class ShopRepository extends BaseRepository {
             }
 
             @Override
-            protected void saveCallResult(ShopModel data) {
-                mShopModel.put(data);
-            }
+            protected void saveCallResult(ShopModel data) {  }
         }.getAsLiveData();
-
     }
 }

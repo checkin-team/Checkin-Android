@@ -56,8 +56,8 @@ public class ShopProfileFragment extends Fragment implements View.OnClickListene
         editShopProfile=view.findViewById(R.id.edit_shop_profile);
         setUp();
 
-        mViewModel = ViewModelProviders.of(this, new ShopProfileViewModel.Factory(getActivity().getApplication())).get(ShopProfileViewModel.class);
-        mViewModel.getShopHomeModel(1).observe(this, shopResource -> {
+        mViewModel = ViewModelProviders.of(this).get(ShopProfileViewModel.class);
+        mViewModel.getShopData().observe(this, shopResource -> {
             if (shopResource == null) return;
             if (shopResource.status == Resource.Status.SUCCESS && shopResource.data != null) {
                 ShopModel shop = shopResource.data;

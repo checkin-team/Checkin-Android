@@ -365,12 +365,12 @@ public class HomeActivity extends BaseAccountActivity
 
     private void setupTrendingShops() {
         List<ShopModel> shops = new ArrayList<>();
-        for (int i = 1; i <= 15; i++) {
-            if (i % 2 == 0)
-                shops.add(new ShopModel( "Socials", "Bio","city","+8687845140", 300, 1000L,4700));
-            else
-                shops.add(new ShopModel( "Restaurant", "Bio","city","+8687845140", 300, 1000L,4700));
-        }
+//        for (int i = 1; i <= 15; i++) {
+//            if (i % 2 == 0)
+//                shops.add(new ShopModel( "Socials", "Bio","city","+8687845140", 300, 1000L,4700));
+//            else
+//                shops.add(new ShopModel( "Restaurant", "Bio","city","+8687845140", 300, 1000L,4700));
+//        }
         rvTrendingShops.setLayoutManager(new LinearLayoutManager(
                 this, LinearLayoutManager.HORIZONTAL, false));
         mTrendingShopAdapter = new TrendingShopAdapter(shops);

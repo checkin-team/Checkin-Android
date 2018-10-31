@@ -32,7 +32,7 @@ public class TestDb {
                 AppDatabase.getItemCustomizationFieldModel(context),
                 AppDatabase.getItemCustomizationGroupModel(context)
         );
-        populateShops(AppDatabase.getShopModel(context));
+//        populateShops(AppDatabase.getShopModel(context));
         //populateNotif(AppDatabase.getNotifModel(context));
     }
 
@@ -44,12 +44,12 @@ public class TestDb {
         notifMode.put(notifs);
     }
     private static void populateShops(Box<ShopModel> shopModel){
-        List<ShopModel> shops = new ArrayList<>();
-        for (int i = 1; i <= 15; i++) {
-            ShopModel shop = new ShopModel("shop name","Dip yourself in the rich taste of cheese","Mexican, Chelsea", "+8687845140", i/3, 450*i, 350*i);
-            shops.add(shop);
-        }
-        shopModel.put(shops);
+//        List<ShopModel> shops = new ArrayList<>();
+//        for (int i = 1; i <= 15; i++) {
+//            ShopModel shop = new ShopModel("shop name","Dip yourself in the rich taste of cheese","Mexican, Chelsea", "+8687845140", i/3, 450*i, 350*i);
+//            shops.add(shop);
+//        }
+//        shopModel.put(shops);
     }
     private static void populateMenu(
             Box<MenuItemModel> menuItemModel,

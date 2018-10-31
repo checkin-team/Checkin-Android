@@ -9,7 +9,6 @@ import com.checkin.app.checkin.Menu.MenuItemModel;
 import com.checkin.app.checkin.Menu.MenuModel;
 import com.checkin.app.checkin.MyObjectBox;
 import com.checkin.app.checkin.Notifications.NotificationModel;
-import com.checkin.app.checkin.Shop.ShopModel;
 
 import javax.inject.Singleton;
 
@@ -20,7 +19,7 @@ import io.objectbox.BoxStore;
 public class AppDatabase {
     private static BoxStore mBoxStore;
 
-    public static BoxStore getBoxStore(final Context context) {
+    private static BoxStore getBoxStore(final Context context) {
         if (mBoxStore == null) {
             synchronized (AppDatabase.class) {
                 if (mBoxStore == null) {
@@ -42,9 +41,9 @@ public class AppDatabase {
         return getBoxStore(context).boxFor(UserModel.class);
     }*/
 
-    public static Box<ShopModel> getShopModel(final Context context) {
+    /*public static Box<ShopModel> getShopModel(final Context context) {
         return getBoxStore(context).boxFor(ShopModel.class);
-    }
+    }*/
 
     public static Box<ItemCustomizationFieldModel> getItemCustomizationFieldModel(final Context context) {
         return getBoxStore(context).boxFor(ItemCustomizationFieldModel.class);

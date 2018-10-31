@@ -2,6 +2,7 @@ package com.checkin.app.checkin.Account;
 
 import android.arch.lifecycle.ViewModelProviders;
 import android.content.Context;
+import android.content.Intent;
 import android.support.annotation.LayoutRes;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -20,8 +21,10 @@ import android.widget.Toast;
 
 import com.checkin.app.checkin.Account.AccountModel.ACCOUNT_TYPE;
 import com.checkin.app.checkin.Data.Resource;
+import com.checkin.app.checkin.Home.HomeActivity;
 import com.checkin.app.checkin.Misc.BaseActivity;
 import com.checkin.app.checkin.R;
+import com.checkin.app.checkin.Shop.ShopPrivateProfile.ShopActivity;
 import com.checkin.app.checkin.Utility.GlideApp;
 
 import java.util.ArrayList;
@@ -82,25 +85,6 @@ public abstract class BaseAccountActivity extends BaseActivity {
         });
 
         mNavAccount.addHeaderView(mHeaderViewHolder.getHeaderView());
-    }
-
-    private void setupAccountDesc(ACCOUNT_TYPE accountType) {
-        String res = "";
-        switch (accountType) {
-            case USER:
-                res = "User's account";
-                break;
-            case RESTAURANT_MANAGER:
-                res = "Manager's account";
-                break;
-            case RESTAURANT_WAITER:
-                res = "Waiter's account";
-                break;
-            case RESTAURANT_COOK:
-                res = "Cook's account";
-                break;
-        }
-        mHeaderViewHolder.setAccountDesc(res);
     }
 
     protected abstract int getNavMenu();
@@ -173,7 +157,28 @@ public abstract class BaseAccountActivity extends BaseActivity {
 
         @Override
         public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-            mBaseActivity.mViewModel.setCurrentAccount(mBaseActivity.mAccountAdapter.getItem(position));
+            AccountModel account = mBaseActivity.mAccountAdapter.getItem(position);
+            mBaseActivity.mViewModel.setCurrentAccount(account);
+            switchAccount(mBaseActivity.getApplicationContext(), account);
+        }
+
+        protected void switchAccount(Context context, AccountModel account) {
+            switch (account.getAccountType()) {
+                case USER:
+                    if (mBaseActivity.getClass() != HomeActivity.class)
+                        context.startActivity(new Intent(context, HomeActivity.class));
+                    break;
+                case SHOP_OWNER:
+                case SHOP_ADMIN:
+                    Intent intent = new Intent(context, ShopActivity.class);
+                    intent.putExtra(ShopActivity.KEY_SHOP_PK, account.getTargetPk());
+                    context.startActivity(intent);
+                    break;
+                case RESTAURANT_MANAGER:
+                case RESTAURANT_WAITER:
+                case RESTAURANT_COOK:
+                    break;
+            }
         }
 
         @Override
@@ -184,7 +189,7 @@ public abstract class BaseAccountActivity extends BaseActivity {
         void setCurrentAccount(AccountModel account) {
             this.setDisplayName(account.getName());
             this.setDisplayPic(account.getPic());
-            mBaseActivity.setupAccountDesc(account.getAccountType());
+            this.setAccountDesc(account.formatAccountType());
             this.updateAccountSelector(account);
         }
     }

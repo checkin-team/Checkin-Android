@@ -6,7 +6,6 @@ import android.util.Log;
 
 import com.checkin.app.checkin.Utility.NoConnectivityException;
 import com.fasterxml.jackson.databind.JsonNode;
-import com.fasterxml.jackson.databind.node.ObjectNode;
 
 import java.io.IOException;
 
@@ -44,7 +43,7 @@ public class Resource<T> {
     public JsonNode getErrorBody() {
         try {
             return Converters.objectMapper.readTree(message);
-        } catch (IOException e) {
+        } catch (IOException | NullPointerException e) {
             Log.e(TAG, "message not a valid JSON data.");
         }
         return null;

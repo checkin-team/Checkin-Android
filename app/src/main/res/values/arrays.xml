@@ -14,9 +14,7 @@
         <item>Can</item>
     </string-array>
 
-    <string-array name="cuisines_spinner_options">
-        <item>Restaurant Cuisines:</item>
-        <item>Afghani</item>
+    <string-array name="restaurant_cuisines">
         <item>Afghani</item>
         <item>American</item>
         <item>Assamese</item>
@@ -111,8 +109,7 @@
     </string-array>
 
 
-    <string-array name="category_spinner_options">
-        <item>Restaurant categories:</item>
+    <string-array name="restaurant_categories">
         <item>Quick service</item>
         <item>Casual dining</item>
         <item>Fine dining</item>
