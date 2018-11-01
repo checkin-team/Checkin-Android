@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/root_view"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:animateLayoutChanges="true"
+    android:background="@color/white"
+    android:focusableInTouchMode="true"
+    android:focusable="true">
+  <View
+      android:layout_width="match_parent"
+      android:layout_height="match_parent"
+      android:elevation="@dimen/card_elevation"
+      android:id="@+id/dark_back_shop"
+      android:background="@drawable/rectangle"
+      android:visibility="gone"
+      android:alpha="0.3"
+      >
+
+  </View>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:orientation="vertical"
+        android:layout_height="match_parent">
+        <FrameLayout
+            android:layout_width="match_parent"
+            android:layout_marginTop="@dimen/spacing_normal"
+            android:layout_height="wrap_content">
+        <ImageView
+            android:layout_width="match_parent"
+            android:onClick="onClickAddMembers"
+            android:layout_height="50dp"
+            android:id="@+id/btn_add_member"
+            android:layout_marginStart="@dimen/spacing_normal"
+            android:layout_marginEnd="@dimen/spacing_normal"
+            android:src="@drawable/rectangle_20"/>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:shadowColor="#80ffffff"
+                android:shadowRadius="3"
+                android:id="@+id/addText"
+                android:textColor="@color/white"
+
+                android:letterSpacing="-0.03"
+                tools:text="ADD MEMBER"
+                android:layout_gravity="center"/>
+</FrameLayout>
+
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_marginTop="10dp"
+        android:layout_height="wrap_content">
+        <FrameLayout
+            android:layout_width="match_parent"
+            android:id="@+id/member_container"
+            android:layout_height="wrap_content">
+
+        </FrameLayout>
+
+
+    </ScrollView>
+
+
+    </LinearLayout>
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:elevation="@dimen/card_elevation"
+        android:id="@+id/change_role_container"
+        android:layout_gravity="center">
+    </FrameLayout>
+</FrameLayout>
