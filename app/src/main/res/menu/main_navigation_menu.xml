@@ -46,5 +46,10 @@
             android:name="privacy settings"
             android:icon="@drawable/privacy"
             android:title="Waiter Work" />
+        <item
+            android:id="@+id/search_activity"
+            android:name="privacy settings"
+            android:icon="@drawable/privacy"
+            android:title="Search Activity" />
     </group>
 </menu>

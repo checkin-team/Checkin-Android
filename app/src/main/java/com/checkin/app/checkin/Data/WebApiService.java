@@ -3,6 +3,7 @@ package com.checkin.app.checkin.Data;
 import com.checkin.app.checkin.Account.AccountModel;
 import com.checkin.app.checkin.Menu.MenuModel;
 import com.checkin.app.checkin.Misc.GenericDetailModel;
+import com.checkin.app.checkin.Misc.SearchRVPojo;
 import com.checkin.app.checkin.Notifications.NotificationModel;
 import com.checkin.app.checkin.Session.ActiveSessionModel;
 import com.checkin.app.checkin.Shop.ShopJoin.ShopJoinModel;
@@ -117,4 +118,7 @@ public interface WebApiService {
 
     @GET("accounts/self/")
     Call<List<AccountModel>> getSelfAccounts();
+
+    @GET("search/")
+    Call<List<SearchRVPojo>>getSearchResults(@Query("search") String query);
 }
