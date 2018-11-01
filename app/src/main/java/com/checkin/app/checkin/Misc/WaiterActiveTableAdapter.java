@@ -1,23 +1,16 @@
 package com.checkin.app.checkin.Misc;
 
 import android.content.Context;
-import android.nfc.Tag;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
-import android.widget.ListView;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
-import com.checkin.app.checkin.Home.TrendingShopAdapter;
-import com.checkin.app.checkin.Menu.MenuItemModel;
 import com.checkin.app.checkin.R;
-import com.checkin.app.checkin.Shop.ShopModel;
-import com.google.android.gms.common.server.converter.StringToIntConverter;
 
 import java.util.List;
 
@@ -28,16 +21,16 @@ public class WaiterActiveTableAdapter extends RecyclerView.Adapter<WaiterActiveT
     List<TableModel> mTables;
     private Context context;
     int noItemsInteger=12;
-    private WaiterItemAdapter.OnItemInteractionListener itemInteractionListener;
+    private onTableInterActionListener OnTableInterActionListener;
     int item_position=0;
 
 
 
 
 
-    WaiterActiveTableAdapter(List<TableModel> tables, WaiterItemAdapter.OnItemInteractionListener onItemInteractionListener) {
+    WaiterActiveTableAdapter(List<TableModel> tables) {
         mTables = tables;
-        itemInteractionListener= onItemInteractionListener;
+
     }
 
     @NonNull
@@ -54,6 +47,14 @@ public class WaiterActiveTableAdapter extends RecyclerView.Adapter<WaiterActiveT
 
     }
 
+    public void setItem_position(int item_position) {
+        this.item_position = item_position;
+    }
+
+    public void setOnTableInterActionListener(onTableInterActionListener onTableInterActionListener) {
+        OnTableInterActionListener = onTableInterActionListener;
+    }
+
     @Override
     public void onBindViewHolder(@NonNull WaiterActiveTableAdapter.ViewHolder holder, int position) {
             holder.bindData(mTables.get(position));
@@ -61,17 +62,16 @@ public class WaiterActiveTableAdapter extends RecyclerView.Adapter<WaiterActiveT
             holder.itemView.findViewById(R.id.table_oval).setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    item_position=position;
-                    notifyDataSetChanged();
+                    OnTableInterActionListener.selectedTableChanged(holder.getAdapterPosition());
                 }
             });
-            if(item_position==position)
+            if(item_position==holder.getAdapterPosition())
             {
                 holder.itemView.findViewById(R.id.table_oval).setBackgroundResource(R.drawable.table_shape);
             }
             else
             {
-                holder.itemView.findViewById(R.id.table_oval).setBackgroundResource(R.drawable.combined_shape);
+                holder.itemView.findViewById(R.id.table_oval).setBackgroundResource(R.drawable.combined_shape1);
             }
 
     }
@@ -105,6 +105,10 @@ public class WaiterActiveTableAdapter extends RecyclerView.Adapter<WaiterActiveT
             Glide.with(tableLabel.getContext());
         }
 
+    }
+    public interface onTableInterActionListener
+    {
+        public void selectedTableChanged(int position);
     }
 
 }

@@ -4,6 +4,7 @@ import com.checkin.app.checkin.Account.AccountModel;
 import com.checkin.app.checkin.Menu.MenuModel;
 import com.checkin.app.checkin.Misc.GenericDetailModel;
 import com.checkin.app.checkin.Misc.SearchRVPojo;
+import com.checkin.app.checkin.Misc.EventModel;
 import com.checkin.app.checkin.Notifications.NotificationModel;
 import com.checkin.app.checkin.Session.ActiveSessionModel;
 import com.checkin.app.checkin.Shop.ShopJoin.ShopJoinModel;
@@ -121,4 +122,11 @@ public interface WebApiService {
 
     @GET("search/")
     Call<List<SearchRVPojo>>getSearchResults(@Query("search") String query);
+
+    //region Waiter Events
+    @GET("shops/{table_id}/orders")
+    Call<List<EventModel>> getItems(@Path("table_id") long tableId);
+
+    @POST("shops/{table_id}/orders/")
+    Call<ObjectNode> postItemCompleted(@Path("table_id") long tableId,@Body ObjectNode data);
 }

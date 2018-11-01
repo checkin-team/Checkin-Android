@@ -23,7 +23,7 @@ import java.util.List;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
-public class WaitorWork extends AppCompatActivity implements WaiterItemAdapter.OnItemInteractionListener
+public class WaitorWork extends AppCompatActivity implements WaiterActiveTableAdapter.onTableInterActionListener
     {
     @BindView(R.id.rv_active_tables)
     RecyclerView rvActiveTables;
@@ -31,21 +31,18 @@ public class WaitorWork extends AppCompatActivity implements WaiterItemAdapter.O
         ImageView drawerToggle;
         @BindView(R.id.action_table)
         ImageView tableToggle;
-    @BindView(R.id.rv_user_items)
-    RecyclerView rvUserItems;
+    @BindView(R.id.item_container)
+    View itemContainer;
     @BindView(R.id.root_view)
     View vRoot;
-    @BindView(R.id.Deliver_text)
-    TextView delivered;
-    @BindView(R.id.rv_delivered_items)
-            RecyclerView rvDelivered;
-    List<OrderedItemModel> items,itemsDone;
+
+    List<EventModel> items,itemsDone;
         List<TableModel> tables;
     private WaiterActiveTableAdapter mWaiterTableAdapter;
     private WaiterItemAdapter mWaiterItemAdapter;
     private WaiterItemAdapter mWaiterItemAdapter2;
         ActiveTableFragment activeTableFragment;
-        ActiveTableFragment activeTableFragment2;
+        WaiterEndNavigationTableAdapter waiterEndNavigationTableAdapter;
 
 
 
@@ -56,10 +53,11 @@ public class WaitorWork extends AppCompatActivity implements WaiterItemAdapter.O
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_waiter_work);
         ButterKnife.bind(this);
-        delivered.setText("DELIVERED");
+
                 setupUI();
-        setupUserItem();
-        rvDelivered.setAlpha((float) 0.4);
+
+        setupUserItem(new ArrayList<>());
+
 
 
         tables = new ArrayList<>();
@@ -83,7 +81,7 @@ public class WaitorWork extends AppCompatActivity implements WaiterItemAdapter.O
         endToggle.syncState();
 
         activeTableFragment=new ActiveTableFragment();
-        activeTableFragment2=new ActiveTableFragment();
+
 
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_waiter_profiles);
         NavigationHeaderFragment navigationHeaderFragment=new NavigationHeaderFragment();
@@ -126,50 +124,28 @@ public class WaitorWork extends AppCompatActivity implements WaiterItemAdapter.O
 
         getFragmentManager().beginTransaction().add(
                 endNavigationView.getId(),activeTableFragment).commit();
-
-        getFragmentManager().beginTransaction().add(endNavigationView.getId(),activeTableFragment2).commit();
     }
 
-    private void setupUserItem() {
+    private void setupUserItem(List<EventModel> eventModels) {
+        TableItemFragment tableItemFragment =new TableItemFragment();
 
+        getFragmentManager().beginTransaction()
+                .replace(itemContainer.getId(), tableItemFragment)
+                .commit();
 
         List<String> list=new ArrayList<>();
         items = new ArrayList<>();
         itemsDone = new ArrayList<>();
 
-        List<Double> list1=new ArrayList<>();
-        list1.add(250.00);
-        for (int i = 1; i <= 3; i++) {
-            if (i % 2 == 1)
+        for(int i=0;i<eventModels.size();i++)
+        {
+            if(eventModels.get(i).getStatus()== EventModel.STATUS.INCOMPLETE)
             {
-                list.add("PIZZA");
-                list1.add(450.00);
-                items.add(new OrderedItemModel(new MenuItemModel("FarmHouse Pizza",list,list1,(long) 1,1,true,true,true),2));
+                items.add(eventModels.get(i));
             }
             else
-        {   list.add("Beverage");
-            list1.add(300.00);
-            items.add(new OrderedItemModel(new MenuItemModel("Carlsburg",list,list1,(long) 1,1,true,true,true),2));
+                itemsDone.add(eventModels.get(i));
         }
-
-        }
-
-        rvUserItems.setLayoutManager(new LinearLayoutManager(
-                this, LinearLayoutManager.VERTICAL, false));
-
-        mWaiterItemAdapter = new WaiterItemAdapter(items);
-        rvUserItems.setAdapter(mWaiterItemAdapter);
-        rvDelivered.setLayoutManager(new LinearLayoutManager(this,LinearLayoutManager.VERTICAL,false));
-        if(itemsDone.size()!=0)
-        {mWaiterItemAdapter2=new WaiterItemAdapter(itemsDone);
-        rvDelivered.setAdapter(mWaiterItemAdapter2);
-        mWaiterItemAdapter2.setStatusSymbol(false);
-        rvDelivered.setNestedScrollingEnabled(false);}
-        else
-            mWaiterItemAdapter2=new WaiterItemAdapter(null);
-        rvUserItems.setNestedScrollingEnabled(false);
-        mWaiterItemAdapter.setItemInteractionListener(this);
-
 
     }
 
@@ -177,36 +153,25 @@ public class WaitorWork extends AppCompatActivity implements WaiterItemAdapter.O
 
         for (int i = 1; i <= 15; i++) {
             if (i % 2 == 0)
-                tables.add(new TableModel("Table" + i + "", true, 4, 2));
+                tables.add(new TableModel("Table" + i + "","STANDARD", true, 4, 2));
         }
             rvActiveTables.setLayoutManager(new LinearLayoutManager(
                     this, LinearLayoutManager.HORIZONTAL, false));
-        mWaiterTableAdapter = new WaiterActiveTableAdapter(tables,this);
+        mWaiterTableAdapter = new WaiterActiveTableAdapter(tables);
         mWaiterTableAdapter.setNoItems(items.size());
+        mWaiterTableAdapter.setOnTableInterActionListener(this);
         rvActiveTables.setAdapter(mWaiterTableAdapter);
         activeTableFragment.setupActiveTables(tables);
-        tables.add(new TableModel("Table" + 15 + "", true, 4, 2));
-        activeTableFragment2.setupActiveTables(tables);
+        tables.add(new TableModel("Table" + 15 + "","PREMIUM", true, 4, 2));
+        waiterEndNavigationTableAdapter=new WaiterEndNavigationTableAdapter(tables);
         return mWaiterTableAdapter;
     }
 
-    @Override
-    public void onClickCompleted(OrderedItemModel item,int position) {
 
-                mWaiterItemAdapter.mItems.remove(position);
-                //items.remove(i);
-
-
-        rvUserItems.setAdapter(mWaiterItemAdapter);
-        mWaiterItemAdapter2.mItems.add(item);
-        rvDelivered.setAdapter(mWaiterItemAdapter2);
-        rvDelivered.setNestedScrollingEnabled(false);
-        rvUserItems.setNestedScrollingEnabled(false);
-        mWaiterTableAdapter.setNoItems(mWaiterItemAdapter.mItems.size());
-        rvActiveTables.setAdapter(mWaiterTableAdapter);
-        mWaiterItemAdapter.setItemInteractionListener(this);
+        @Override
+        public void selectedTableChanged(int position) {
+            mWaiterTableAdapter.setItem_position(position);
+            mWaiterTableAdapter.notifyDataSetChanged();
+        }
     }
-
-
-}
 

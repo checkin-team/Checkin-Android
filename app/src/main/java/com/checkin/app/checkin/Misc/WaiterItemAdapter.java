@@ -1,5 +1,6 @@
 package com.checkin.app.checkin.Misc;
 
+import android.app.usage.UsageEvents;
 import android.graphics.drawable.Drawable;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -29,11 +30,12 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 
 public class WaiterItemAdapter extends RecyclerView.Adapter<WaiterItemAdapter.ViewHolder>  {
-    List<OrderedItemModel> mItems;
+    List<EventModel> mItems;
     private static OnItemInteractionListener mItemInteractionListener;
     private boolean height_small=true;
     private int height;
-    WaiterItemAdapter(List<OrderedItemModel> items
+    String data;
+    WaiterItemAdapter(List<EventModel> items
     ) {
 
         if(items!=null)mItems = items;else mItems=new ArrayList<>();
@@ -41,18 +43,27 @@ public class WaiterItemAdapter extends RecyclerView.Adapter<WaiterItemAdapter.Vi
     boolean StatusShow=true;
 
 
+
     public void setItemInteractionListener (OnItemInteractionListener listener) {
         mItemInteractionListener= listener;
     }
 
+    public boolean isOrderedItem(int position){
+        return mItems.get(position).getType()== EventModel.TYPE.ORDERED_ITEM;
+    }
+
     public void setHeight_small(int position){
-        if(mItems.get(position).getItem().getName().contains("burg"))
-        {
-            height_small=true;
+        if(isOrderedItem(position)) {
+            OrderedItemModel itemModel= mItems.get(position).getOrderedItem();
+
+            if (itemModel.getRemarks()!=null) {
+                height_small = true;
+            } else {
+                height_small = false;
+            }
         }
-        else
-        {
-            height_small=false;
+        else {
+            height_small=true;
         }
     }
 
@@ -92,18 +103,32 @@ public class WaiterItemAdapter extends RecyclerView.Adapter<WaiterItemAdapter.Vi
         }
     }
 
-    public void setStatusSymbol(boolean show)
-    {
-        this.StatusShow=show;
-    }
-
     @Override
     public int getItemCount() {
         return mItems.size();
     }
     @Override
-    public int getItemViewType(final int position) {
+    public int getItemViewType(int position) {
+        if(isOrderedItem(position))
         return R.layout.waiter_item_recy;
+        else if(mItems.get(position).getType()== EventModel.TYPE.CUSTOM_MESSAGE)
+                    {   data=mItems.get(position).getCustomMessage();
+                        return R.layout.waiter_action_custom_recy;}
+        else if(mItems.get(position).getType()== EventModel.TYPE.REQUEST_FOR_WATER)
+             {  data="Refill Water";
+                 return R.layout.waiter_action_water_recy;}
+        else if(mItems.get(position).getType()== EventModel.TYPE.REQUEST_FOR_BILL)
+            {
+                data="Get The Bill";
+                return R.layout.waiter_action_bill_recy;}
+          else if(mItems.get(position).getType()== EventModel.TYPE.REQUEST_FOR_TABLE_CLEAN)
+         {   data="Clean The Table";
+             return R.layout.waiter_action_clean_recy;}
+        else if(mItems.get(position).getType()== EventModel.TYPE.REQUEST_FOR_CALL_WAITER)
+        {   data="Attend The Table";
+            return R.layout.waiter_action_custom_recy;}
+
+        return R.layout.waiter_action_custom_recy;
     }
 
 
@@ -111,28 +136,32 @@ public class WaiterItemAdapter extends RecyclerView.Adapter<WaiterItemAdapter.Vi
 
 
     class ViewHolder extends RecyclerView.ViewHolder {
-        @BindView(R.id.card_view)
+        @Nullable @BindView(R.id.card_view)
         CardView cardView;
-        @BindView(R.id.time)
+        @Nullable @BindView(R.id.time)
         TextView time_ago;
-        @BindView(R.id.item_name)
+        @Nullable @BindView(R.id.item_name)
         TextView itemName;
-        @BindView(R.id.quantity)
+        @Nullable @BindView(R.id.quantity)
         TextView quantity;
-        @BindView(R.id.add_on)
+        @Nullable @BindView(R.id.add_on)
         TextView addOn;
-        @BindView(R.id.pizza_crust)
+        @Nullable @BindView(R.id.pizza_crust)
         TextView pizzaCrust;
-        @BindView(R.id.add_on_signify)
+        @Nullable @BindView(R.id.add_on_signify)
         TextView addOnSignify;
-        @BindView(R.id.pizza_crust_signify)
+        @Nullable  @BindView(R.id.pizza_crust_signify)
         TextView pizzaCrustSignify;
-        @BindView(R.id.cancel)
+        @Nullable @BindView(R.id.cancel)
         ImageView cancel;
-        @BindView(R.id.current_status)
+        @Nullable  @BindView(R.id.current_status)
         ImageView status;
         @BindView(R.id.completed)
         ImageView completed;
+        @Nullable  @BindView(R.id.image_action)
+                ImageView actionImage;
+        @Nullable @BindView(R.id.action_text)
+                TextView actionText;
 
 
 
@@ -142,56 +171,69 @@ public class WaiterItemAdapter extends RecyclerView.Adapter<WaiterItemAdapter.Vi
             ButterKnife.bind(this, v);
         }
 
-        void bindData(OrderedItemModel item) {
-
-            itemName.setText(item.getItem().getName());
-            time_ago.setText("8 minutes Ago");
-            quantity.setText("QTY: "+item.getQuantity());
-            addOnSignify.setText("Add On");
-            pizzaCrustSignify.setText("Pizza Crust");
-            addOn.setText("Extra Cheese");
-            pizzaCrust.setText("Plain Bread");
+        void bindData(EventModel item) {
+            if(item.getType()== EventModel.TYPE.ORDERED_ITEM) {
+                OrderedItemModel itemModel = item.getOrderedItem();
+                itemName.setText(itemModel.getItem().getName());
+                time_ago.setText("8 minutes Ago");
+                quantity.setText("QTY: " + itemModel.getQuantity());
+                if(itemModel.getRemarks()!=null)
+                { addOnSignify.setText("Add On");
+                pizzaCrustSignify.setVisibility(View.GONE);
+                addOn.setText(itemModel.getRemarks());
+                pizzaCrust.setVisibility(View.GONE);
+                }
 //            int size=item.getSelectedFields().size();
-            StringBuilder stringBuilder=new StringBuilder();
-          //  for(int i=0;i<size;i++)
-           // {
-             //   stringBuilder.append(item.getSelectedFields().get(i).getName());
-            //}
+                StringBuilder stringBuilder = new StringBuilder();
+                //  for(int i=0;i<size;i++)
+                // {
+                //   stringBuilder.append(item.getSelectedFields().get(i).getName());
+                //}
 
-            //addOn.setText(stringBuilder.toString());
+                //addOn.setText(stringBuilder.toString());
 
-            if(StatusShow)
-            {
-                status.setVisibility(View.VISIBLE);
+                if (StatusShow) {
+                    status.setVisibility(View.VISIBLE);
+                } else {
+                    status.setVisibility(View.GONE);
+                }
+                if (itemModel.getRemarks()==null) {
+                    addOn.setVisibility(View.GONE);
+                    pizzaCrust.setVisibility(View.GONE);
+                    addOnSignify.setVisibility(View.GONE);
+                    pizzaCrustSignify.setVisibility(View.GONE);
+
+                }
             }
             else
             {
-                status.setVisibility(View.GONE);
-            }
-            if(item.getItem().getName().contains("burg"))
-            {
-                addOn.setVisibility(View.GONE);
-                pizzaCrust.setVisibility(View.GONE);
-                addOnSignify.setVisibility(View.GONE);
-                pizzaCrustSignify.setVisibility(View.GONE);
 
+                actionText.setText(data);
             }
 
 
+                completed.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        mItemInteractionListener.onClickCompleted(item, getAdapterPosition());
+                        if(status!=null)
+                        status.setVisibility(View.GONE);
 
-            completed.setOnClickListener(new View.OnClickListener() {
+                    }
+                });
+            cancel.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    mItemInteractionListener.onClickCompleted(item,getAdapterPosition());
-                    status.setVisibility(View.GONE);
-
+                    mItemInteractionListener.onClickCancelled(item,getAdapterPosition());
                 }
             });
+
 
         }
     }
     public interface OnItemInteractionListener{
-        public void onClickCompleted(OrderedItemModel item,int position);
+        public void onClickCompleted(EventModel item,int position);
+        public void onClickCancelled(EventModel item,int position);
     }
 }
 

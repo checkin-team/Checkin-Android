@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="241dp"
+    android:layout_height="54dp"
+
+    android:background="@drawable/right_navigation_table_bar"
+    android:layout_alignParentEnd="true"
+    android:id="@+id/table_oval"
+    android:layout_centerInParent="true"
+
+    >
+
+        <android.support.constraint.ConstraintLayout
+            android:layout_width="match_parent"
+            android:id="@+id/item_no_Container"
+            android:layout_height="match_parent">
+
+            <android.support.constraint.Guideline
+                android:id="@+id/guideline"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                app:layout_constraintGuide_begin="106dp" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                app:layout_constraintEnd_toStartOf="@id/guideline"
+                app:layout_constraintStart_toStartOf="parent"
+                android:id="@+id/table_label"
+                android:text="Table 1"
+                android:textColor="@color/white"
+                android:textSize="@dimen/font_normal"
+                android:letterSpacing="-0.02"
+                android:gravity="center"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:textColor="@color/brownish_grey"
+                app:layout_constraintStart_toEndOf="@id/guideline"
+                app:layout_constraintEnd_toEndOf="parent"
+                android:id="@+id/table_customer"
+                android:text="Standard"
+                android:textSize="15sp"
+                android:gravity="center"
+                android:layout_marginBottom="@dimen/spacing_small"
+                android:letterSpacing="-0.02"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="10sp"
+                android:text="2 minutes"
+                app:layout_constraintBottom_toBottomOf="parent"
+                android:layout_marginBottom="@dimen/spacing_extra_small"
+                android:layout_marginEnd="@dimen/spacing_extra_small"
+                android:textColor="@color/pinkish_grey"
+                android:letterSpacing="-0.03"
+                app:layout_constraintEnd_toEndOf="parent">
+
+            </TextView>
+
+        </android.support.constraint.ConstraintLayout>
+
+
+    </FrameLayout>
+
+
+
+
