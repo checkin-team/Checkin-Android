@@ -1,27 +1,18 @@
-package com.checkin.app.checkin.Misc;
+package com.checkin.app.checkin.RestaurantActivity.Waiter;
 
-import android.app.usage.UsageEvents;
-import android.graphics.drawable.Drawable;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
-import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.FrameLayout;
-import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.bumptech.glide.Glide;
-import com.checkin.app.checkin.Menu.MenuItemModel;
 import com.checkin.app.checkin.Menu.OrderedItemModel;
 import com.checkin.app.checkin.R;
-
-import org.xmlpull.v1.XmlPullParser;
 
 import java.util.ArrayList;
 import java.util.List;

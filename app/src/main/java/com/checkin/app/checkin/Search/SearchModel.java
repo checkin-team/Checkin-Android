@@ -1,4 +1,4 @@
-package com.checkin.app.checkin.Misc;
+package com.checkin.app.checkin.Search;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 
@@ -6,7 +6,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
  * Created by Jogi Miglani on 26-10-2018.
  */
 
-public class SearchRVPojo {
+public class SearchModel {
 
 
     @JsonProperty("pk") private String pk;

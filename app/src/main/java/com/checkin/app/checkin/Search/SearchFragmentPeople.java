@@ -1,4 +1,4 @@
-package com.checkin.app.checkin.Misc;
+package com.checkin.app.checkin.Search;
 
 import android.arch.lifecycle.ViewModelProviders;
 import android.os.Bundle;

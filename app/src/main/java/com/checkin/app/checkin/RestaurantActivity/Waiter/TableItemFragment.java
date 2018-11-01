@@ -1,4 +1,4 @@
-package com.checkin.app.checkin.Misc;
+package com.checkin.app.checkin.RestaurantActivity.Waiter;
 
 import android.app.Fragment;
 import android.os.Bundle;
@@ -16,7 +16,6 @@ import com.checkin.app.checkin.R;
 import java.util.ArrayList;
 import java.util.List;
 
-import butterknife.BindInt;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.Unbinder;

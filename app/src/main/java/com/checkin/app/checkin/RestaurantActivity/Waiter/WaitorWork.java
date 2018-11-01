@@ -1,4 +1,4 @@
-package com.checkin.app.checkin.Misc;
+package com.checkin.app.checkin.RestaurantActivity.Waiter;
 
 import android.os.Bundle;
 import android.support.design.widget.NavigationView;
@@ -11,10 +11,7 @@ import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.ImageView;
-import android.widget.TextView;
 
-import com.checkin.app.checkin.Menu.MenuItemModel;
-import com.checkin.app.checkin.Menu.OrderedItemModel;
 import com.checkin.app.checkin.R;
 
 import java.util.ArrayList;
@@ -81,14 +78,6 @@ public class WaitorWork extends AppCompatActivity implements WaiterActiveTableAd
         endToggle.syncState();
 
         activeTableFragment=new ActiveTableFragment();
-
-
-        NavigationView navigationView = (NavigationView) findViewById(R.id.nav_waiter_profiles);
-        NavigationHeaderFragment navigationHeaderFragment=new NavigationHeaderFragment();
-        navigationHeaderFragment.setDetails("Vivek Sharma","Waiter's account");
-        getSupportFragmentManager().beginTransaction().add(navigationView.getId(),navigationHeaderFragment).commit();
-
-
 
 
         drawerToggle.setOnClickListener(new View.OnClickListener() {

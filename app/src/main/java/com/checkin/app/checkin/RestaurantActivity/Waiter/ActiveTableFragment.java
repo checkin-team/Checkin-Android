@@ -1,22 +1,16 @@
-package com.checkin.app.checkin.Misc;
+package com.checkin.app.checkin.RestaurantActivity.Waiter;
 
 import android.app.Fragment;
-import android.arch.lifecycle.ViewModelProviders;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
-import android.util.LongSparseArray;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.LinearLayout;
 
-import com.checkin.app.checkin.Menu.MenuItemAdapter;
 import com.checkin.app.checkin.Menu.MenuSearchFragment;
-import com.checkin.app.checkin.Menu.MenuViewModel;
-import com.checkin.app.checkin.Menu.OrderedItemModel;
 import com.checkin.app.checkin.R;
 
 import java.util.List;

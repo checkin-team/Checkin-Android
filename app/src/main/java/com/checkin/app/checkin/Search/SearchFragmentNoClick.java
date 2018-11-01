@@ -1,7 +1,6 @@
-package com.checkin.app.checkin.Misc;
+package com.checkin.app.checkin.Search;
 
 import android.content.Context;
-import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -82,45 +81,45 @@ public class SearchFragmentNoClick extends Fragment {
     }
 
     private void populateRVRecent() {
-        List<SearchRVPojo> searchRVRecentList = new ArrayList<>();
+        List<SearchModel> searchRVRecentList = new ArrayList<>();
 
         for (int i=0;i<50;i++)
         {
-            SearchRVPojo searchRVPojo=new SearchRVPojo();
-            searchRVPojo.setName("Marie");
-            searchRVPojo.setImageUrl("https://storage.googleapis.com/checkin-app-18.appspot.com/images/users/ishudarshan/profile.jpg");
+            SearchModel searchModel =new SearchModel();
+            searchModel.setName("Marie");
+            searchModel.setImageUrl("https://storage.googleapis.com/checkin-app-18.appspot.com/images/users/ishudarshan/profile.jpg");
 
-            searchRVRecentList.add(searchRVPojo);
+            searchRVRecentList.add(searchModel);
         }
 
         searchRVAdapterRecent.setListContent(searchRVRecentList);
     }
 
     private void populateRVRestaurant() {
-        List<SearchRVPojo> searchRVRestaurantList = new ArrayList<>();
+        List<SearchModel> searchRVRestaurantList = new ArrayList<>();
 
         for (int i=0;i<50;i++)
         {
-            SearchRVPojo searchRVPojo=new SearchRVPojo();
-            searchRVPojo.setName("Romas Cafe");
-            searchRVPojo.setImageUrl("https://storage.googleapis.com/checkin-app-18.appspot.com/images/users/ishudarshan/profile.jpg");
+            SearchModel searchModel =new SearchModel();
+            searchModel.setName("Romas Cafe");
+            searchModel.setImageUrl("https://storage.googleapis.com/checkin-app-18.appspot.com/images/users/ishudarshan/profile.jpg");
 
-            searchRVRestaurantList.add(searchRVPojo);
+            searchRVRestaurantList.add(searchModel);
         }
 
         searchRVAdapterRestaurants.setListContent(searchRVRestaurantList);
     }
 
     private void populateRVpopular() {
-        List<SearchRVPojo> searchRVPopularList = new ArrayList<>();
+        List<SearchModel> searchRVPopularList = new ArrayList<>();
 
         for (int i=0;i<50;i++)
         {
-            SearchRVPojo searchRVPojo=new SearchRVPojo();
-            searchRVPojo.setName("Ishu Darshan");
-            searchRVPojo.setImageUrl("https://storage.googleapis.com/checkin-app-18.appspot.com/images/users/ishudarshan/profile.jpg");
+            SearchModel searchModel =new SearchModel();
+            searchModel.setName("Ishu Darshan");
+            searchModel.setImageUrl("https://storage.googleapis.com/checkin-app-18.appspot.com/images/users/ishudarshan/profile.jpg");
 
-            searchRVPopularList.add(searchRVPojo);
+            searchRVPopularList.add(searchModel);
         }
 
         searchRVAdapterPopular.setListContent(searchRVPopularList);
@@ -129,7 +128,7 @@ public class SearchFragmentNoClick extends Fragment {
     class SearchRVAdapter extends RecyclerView.Adapter<SearchRVAdapter.SearchViewHolder>
     {
         SearchViewHolder searchViewHolder;
-        private List<SearchRVPojo> searchItems=new ArrayList<>();
+        private List<SearchModel> searchItems=new ArrayList<>();
         private Context context;
         LayoutInflater inflater;
         View view;
@@ -150,9 +149,9 @@ public class SearchFragmentNoClick extends Fragment {
 
         @Override
         public void onBindViewHolder(@NonNull SearchViewHolder holder, int position) {
-            SearchRVPojo searchRVPojo=searchItems.get(position);
-            holder.userName.setText(searchRVPojo.getName());
-            GlideApp.with(getApplicationContext()).load(searchRVPojo.getImageUrl()).into(holder.imageView);
+            SearchModel searchModel =searchItems.get(position);
+            holder.userName.setText(searchModel.getName());
+            GlideApp.with(getApplicationContext()).load(searchModel.getImageUrl()).into(holder.imageView);
         }
 
         @Override
@@ -176,7 +175,7 @@ public class SearchFragmentNoClick extends Fragment {
             }
         }
 
-        public void setListContent(List<SearchRVPojo> list_members){
+        public void setListContent(List<SearchModel> list_members){
             this.searchItems=list_members;
             notifyDataSetChanged();
         }

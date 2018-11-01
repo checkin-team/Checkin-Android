@@ -76,8 +76,9 @@ public abstract class BaseAccountActivity extends BaseActivity {
 
         mViewModel.getCurrentAccount().observe(this, account -> {
             if (account == null) {
-                Toast.makeText(getApplicationContext(), "User doesn't have access to any accounts with the given account type.", Toast.LENGTH_SHORT).show();
-                finish();
+                // User doesn't have rights to access this account.
+//                Toast.makeText(getApplicationContext(), "User doesn't have access to any accounts with the given account type.", Toast.LENGTH_SHORT).show();
+//                finish();
                 return;
             }
 

@@ -1,4 +1,4 @@
-package com.checkin.app.checkin.Misc;
+package com.checkin.app.checkin.Search;
 
 import android.arch.lifecycle.LiveData;
 import android.content.Context;
@@ -11,7 +11,6 @@ import com.checkin.app.checkin.Data.NetworkBoundResource;
 import com.checkin.app.checkin.Data.Resource;
 import com.checkin.app.checkin.Data.RetrofitLiveData;
 import com.checkin.app.checkin.Data.WebApiService;
-import com.checkin.app.checkin.User.UserRepository;
 
 import java.util.List;
 
@@ -27,8 +26,8 @@ public class SearchRepository extends BaseRepository {
         mWebService = ApiClient.getApiService(context);
     }
 
-    public LiveData<Resource<List<SearchRVPojo>>> getSearchResults(String query){
-        return new NetworkBoundResource<List<SearchRVPojo>, List<SearchRVPojo>>(){
+    public LiveData<Resource<List<SearchModel>>> getSearchResults(String query){
+        return new NetworkBoundResource<List<SearchModel>, List<SearchModel>>(){
 
             @Override
             protected boolean shouldUseLocalDb() {
@@ -38,12 +37,12 @@ public class SearchRepository extends BaseRepository {
 
             @NonNull
             @Override
-            protected LiveData<ApiResponse<List<SearchRVPojo>>> createCall() {
+            protected LiveData<ApiResponse<List<SearchModel>>> createCall() {
                 return new RetrofitLiveData<>(mWebService.getSearchResults(query));
             }
 
             @Override
-            protected void saveCallResult(List<SearchRVPojo> data) {
+            protected void saveCallResult(List<SearchModel> data) {
 
             }
         }.getAsLiveData();

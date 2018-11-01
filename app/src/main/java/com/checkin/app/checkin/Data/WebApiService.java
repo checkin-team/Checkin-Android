@@ -3,8 +3,8 @@ package com.checkin.app.checkin.Data;
 import com.checkin.app.checkin.Account.AccountModel;
 import com.checkin.app.checkin.Menu.MenuModel;
 import com.checkin.app.checkin.Misc.GenericDetailModel;
-import com.checkin.app.checkin.Misc.SearchRVPojo;
-import com.checkin.app.checkin.Misc.EventModel;
+import com.checkin.app.checkin.Search.SearchModel;
+import com.checkin.app.checkin.RestaurantActivity.Waiter.EventModel;
 import com.checkin.app.checkin.Notifications.NotificationModel;
 import com.checkin.app.checkin.Session.ActiveSessionModel;
 import com.checkin.app.checkin.Shop.ShopJoin.ShopJoinModel;
@@ -121,7 +121,7 @@ public interface WebApiService {
     Call<List<AccountModel>> getSelfAccounts();
 
     @GET("search/")
-    Call<List<SearchRVPojo>>getSearchResults(@Query("search") String query);
+    Call<List<SearchModel>>getSearchResults(@Query("search") String query);
 
     //region Waiter Events
     @GET("shops/{table_id}/orders")

@@ -1,4 +1,4 @@
-package com.checkin.app.checkin.Misc;
+package com.checkin.app.checkin.Search;
 
 import android.app.Application;
 import android.arch.lifecycle.LiveData;
@@ -21,8 +21,8 @@ import java.util.List;
 
 public class SearchViewModel extends BaseViewModel {
     private SearchRepository mRepository;
-    private MediatorLiveData<Resource<List<SearchRVPojo>>> mResults = new MediatorLiveData<>();
-    private LiveData<Resource<List<SearchRVPojo>>> mPrevResults;
+    private MediatorLiveData<Resource<List<SearchModel>>> mResults = new MediatorLiveData<>();
+    private LiveData<Resource<List<SearchModel>>> mPrevResults;
     private final Handler mHandler =  new Handler();
     private Runnable mRunnable;
 
@@ -47,14 +47,14 @@ public class SearchViewModel extends BaseViewModel {
         mHandler.postDelayed(mRunnable, 500);
     }
 
-    public LiveData<Resource<List<SearchRVPojo>>> getPeople(){
+    public LiveData<Resource<List<SearchModel>>> getPeople(){
         return Transformations.map(mResults, input -> {
-            List<SearchRVPojo> data=new ArrayList<>();
+            List<SearchModel> data=new ArrayList<>();
             if(mResults.getValue().status.equals(Resource.Status.SUCCESS)&&(!mResults.getValue().data.isEmpty()))
             {
                 for(int i=0;i<mResults.getValue().data.size();i++)
                 {
-                    if(mResults.getValue().data.get(i).getType()== SearchRVPojo.RESULT_TYPE.PEOPLE)
+                    if(mResults.getValue().data.get(i).getType()== SearchModel.RESULT_TYPE.PEOPLE)
                     {
                         data.add(mResults.getValue().data.get(i));
                     }
@@ -62,32 +62,32 @@ public class SearchViewModel extends BaseViewModel {
 
             }
 
-            Resource<List<SearchRVPojo>> result = Resource.cloneResource(input, data);
+            Resource<List<SearchModel>> result = Resource.cloneResource(input, data);
             return result;
         });
     }
 
-    public LiveData<Resource<List<SearchRVPojo>>> getRestaurants(){
+    public LiveData<Resource<List<SearchModel>>> getRestaurants(){
         return Transformations.map(mResults, input -> {
-            List<SearchRVPojo> data=new ArrayList<>();
+            List<SearchModel> data=new ArrayList<>();
             if(mResults.getValue().status.equals(Resource.Status.SUCCESS)&&(!mResults.getValue().data.isEmpty()))
             {
                 for(int i=0;i<mResults.getValue().data.size();i++)
                 {
-                    if(mResults.getValue().data.get(i).getType()== SearchRVPojo.RESULT_TYPE.RESTAURANT)
+                    if(mResults.getValue().data.get(i).getType()== SearchModel.RESULT_TYPE.RESTAURANT)
                     {
                         data.add(mResults.getValue().data.get(i));
                     }
                 }
 
             }
-            Resource<List<SearchRVPojo>> result = Resource.cloneResource(input, data);
+            Resource<List<SearchModel>> result = Resource.cloneResource(input, data);
             return result;
         });
     }
-    public LiveData<Resource<List<SearchRVPojo>>> getAll(){
+    public LiveData<Resource<List<SearchModel>>> getAll(){
         return Transformations.map(mResults, input -> {
-            Resource<List<SearchRVPojo>> result = Resource.cloneResource(input, mResults.getValue().data);
+            Resource<List<SearchModel>> result = Resource.cloneResource(input, mResults.getValue().data);
             return result;
         });
     }

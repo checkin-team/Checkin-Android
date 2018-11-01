@@ -35,11 +35,11 @@ import com.checkin.app.checkin.Account.AccountModel.ACCOUNT_TYPE;
 import com.checkin.app.checkin.Account.BaseAccountActivity;
 import com.checkin.app.checkin.Data.Resource;
 import com.checkin.app.checkin.Menu.SessionUserActivity;
-import com.checkin.app.checkin.Misc.FaqActivity;
-import com.checkin.app.checkin.Misc.WaitorWork;
 import com.checkin.app.checkin.Notifications.NotificationActivity;
 import com.checkin.app.checkin.Profile.ShopProfile.ShopProfileActivity2;
 import com.checkin.app.checkin.R;
+import com.checkin.app.checkin.RestaurantActivity.Waiter.WaitorWork;
+import com.checkin.app.checkin.Search.SearchActivity;
 import com.checkin.app.checkin.Session.ActiveSessionActivity;
 import com.checkin.app.checkin.Shop.ShopJoin.BusinessFeaturesActivity;
 import com.checkin.app.checkin.Shop.ShopModel;
@@ -422,10 +422,6 @@ public class HomeActivity extends BaseAccountActivity
                 intent = new Intent(getApplicationContext(), ShopProfileActivity2.class);
                 startActivity(intent);
                 break;
-            case R.id.nav_faq:
-                intent = new Intent(getApplicationContext(), FaqActivity.class);
-                startActivity(intent);
-                break;
             case R.id.nav_shop_activity:
                 intent = new Intent(getApplicationContext(), com.checkin.app.checkin.Shop.ShopPublicProfile.ShopActivity.class);
                 startActivity(intent);
@@ -442,7 +438,10 @@ public class HomeActivity extends BaseAccountActivity
                 intent = new Intent(getApplicationContext(), WaitorWork.class);
                 startActivity(intent);
                 break;
-
+            case R.id.search_activity:
+                intent = new Intent(getApplicationContext(), SearchActivity.class);
+                startActivity(intent);
+                break;
         }
         drawerLayout.closeDrawer(GravityCompat.START);
         return true;

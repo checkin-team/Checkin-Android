@@ -1,6 +1,5 @@
-package com.checkin.app.checkin.Misc;
+package com.checkin.app.checkin.Search;
 
-import android.content.DialogInterface;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -23,7 +22,7 @@ import static com.facebook.FacebookSdk.getApplicationContext;
  */
 
 public class SearchTabsAdapter extends RecyclerView.Adapter<SearchTabsAdapter.SearchTabViewHolder> {
-    private List<SearchRVPojo> searchItems=new ArrayList<>();
+    private List<SearchModel> searchItems=new ArrayList<>();
 
     @NonNull
     @Override
@@ -34,9 +33,9 @@ public class SearchTabsAdapter extends RecyclerView.Adapter<SearchTabsAdapter.Se
 
     @Override
     public void onBindViewHolder(@NonNull SearchTabViewHolder holder, int position) {
-        SearchRVPojo searchRVPojo=searchItems.get(position);
-        holder.requiredTitle.setText(searchRVPojo.getName());
-        GlideApp.with(getApplicationContext()).load(searchRVPojo.getImageUrl()).into(holder.imageView);
+        SearchModel searchModel =searchItems.get(position);
+        holder.requiredTitle.setText(searchModel.getName());
+        GlideApp.with(getApplicationContext()).load(searchModel.getImageUrl()).into(holder.imageView);
 
     }
 
@@ -62,7 +61,7 @@ public class SearchTabsAdapter extends RecyclerView.Adapter<SearchTabsAdapter.Se
         }
     }
 
-    public void setListContent(List<SearchRVPojo> list_members){
+    public void setListContent(List<SearchModel> list_members){
         this.searchItems=list_members;
         notifyDataSetChanged();
     }

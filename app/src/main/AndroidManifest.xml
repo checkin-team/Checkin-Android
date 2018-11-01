@@ -69,7 +69,7 @@
         <activity android:name=".Misc.TransactionActivity" />
         <activity android:name=".Misc.FilterTransactions" />
         <activity android:name=".Misc.FaqActivity" />
-        <activity android:name=".Misc.WaitorWork"
+        <activity android:name=".RestaurantActivity.Waiter.WaitorWork"
             android:label="WaitorWorkActivity"
             android:screenOrientation="sensorPortrait"
             android:theme="@style/AppTheme"
@@ -162,7 +162,7 @@
             android:name="com.google.android.geo.API_KEY"
             android:value="@string/google_maps_key" />
 
-        <activity android:name=".Misc.SearchActivity"
+        <activity android:name=".Search.SearchActivity"
             android:theme="@style/AppTheme"></activity>
     </application>
 

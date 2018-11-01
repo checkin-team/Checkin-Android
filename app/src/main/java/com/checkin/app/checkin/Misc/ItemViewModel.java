@@ -10,6 +10,8 @@ import android.support.annotation.NonNull;
 import com.checkin.app.checkin.Data.BaseViewModel;
 import com.checkin.app.checkin.Data.Converters;
 import com.checkin.app.checkin.Data.Resource;
+import com.checkin.app.checkin.RestaurantActivity.Waiter.EventModel;
+import com.checkin.app.checkin.RestaurantActivity.Waiter.EventRepository;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 
 import java.util.List;
@@ -21,7 +23,7 @@ public class ItemViewModel extends BaseViewModel {
 
     public ItemViewModel(@NonNull Application application) {
         super(application);
-        mRepository=EventRepository.getInstance(application);
+        mRepository= EventRepository.getInstance(application);
     }
 
     public LiveData<Resource<List<EventModel>>> getItems(){

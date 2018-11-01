@@ -1,4 +1,4 @@
-package com.checkin.app.checkin.Misc;
+package com.checkin.app.checkin.Search;
 
 import android.arch.lifecycle.ViewModelProviders;
 import android.os.Bundle;
@@ -15,38 +15,42 @@ import android.widget.ProgressBar;
 import com.checkin.app.checkin.Data.Resource;
 import com.checkin.app.checkin.R;
 
-import java.util.List;
-
 /**
  * Created by Jogi Miglani on 26-10-2018.
  */
 
-public class SearchFragmentAll extends Fragment {
-
-    SearchViewModel mViewModel;
+public class SearchFragmentRestaurant extends Fragment {
     SearchTabsAdapter searchTabsAdapter;
-    RecyclerView searchRVAll;
+    RecyclerView searchRVRestaurants;
+    SearchViewModel mViewModel;
     private ProgressBar spinner;
+    View mView;
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.search_fragment_all,container,false);
+        return inflater.inflate(R.layout.search_fragment_restaurant,container,false);
     }
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        searchRVAll=view.findViewById(R.id.rv_search_all);
-        searchRVAll.setLayoutManager(new LinearLayoutManager(getContext(),LinearLayoutManager.VERTICAL,false));
+        searchRVRestaurants=view.findViewById(R.id.rv_search_restaurants);
+        searchRVRestaurants.setLayoutManager(new LinearLayoutManager(getContext(),LinearLayoutManager.VERTICAL,false));
         searchTabsAdapter=new SearchTabsAdapter();
-        searchRVAll.setAdapter(searchTabsAdapter);
+        searchRVRestaurants.setAdapter(searchTabsAdapter);
         spinner = (ProgressBar)view.findViewById(R.id.progress_load);
 
+        mView=view.findViewById(R.id.tv_status);
+
         mViewModel= ViewModelProviders.of(getActivity()).get(SearchViewModel.class);
-        mViewModel.getAll().observe(this, (Resource<List<SearchRVPojo>> resource) -> {
+        mViewModel.getRestaurants().observe(this,resource -> {
             if(resource.status.equals(Resource.Status.LOADING) )
             {
                 showLoading();
+            }
+            else if(resource.status == Resource.Status.ERROR_NOT_FOUND)
+            {
+                showNotFoundStatus();
             }
             else if (resource.status.equals(Resource.Status.SUCCESS)&&resource.data!=null)
             {
@@ -58,6 +62,11 @@ public class SearchFragmentAll extends Fragment {
 
     }
 
+    private void showNotFoundStatus() {
+        mView.setVisibility(View.VISIBLE);
+
+    }
+
     private void doneLoading() {
         spinner.setVisibility(View.GONE);
     }
@@ -65,7 +74,6 @@ public class SearchFragmentAll extends Fragment {
     private void showLoading() {
         spinner.setVisibility(View.VISIBLE);
     }
-
 
 
 }

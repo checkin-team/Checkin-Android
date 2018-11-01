@@ -7,6 +7,8 @@ import android.support.annotation.MenuRes;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
+import android.support.v4.widget.DrawerLayout;
+import android.support.v7.app.ActionBarDrawerToggle;
 
 import com.checkin.app.checkin.Account.AccountModel;
 import com.checkin.app.checkin.Account.BaseAccountActivity;
@@ -35,6 +37,11 @@ public class ShopActivity extends BaseAccountActivity {
         setContentView(R.layout.activity_shop_private);
         ButterKnife.bind(this);
 
+        DrawerLayout drawerLayout = findViewById(R.id.drawer_root);
+        ActionBarDrawerToggle startToggle = new ActionBarDrawerToggle(
+                this, drawerLayout, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
+        drawerLayout.addDrawerListener(startToggle);
+        startToggle.syncState();
 
         setupPagers(new ShopPagerAdapter(getSupportFragmentManager()), R.menu.menu_shop_profile_private);
 
@@ -61,12 +68,12 @@ public class ShopActivity extends BaseAccountActivity {
 
     @Override
     protected int getNavMenu() {
-        return 0;
+        return R.menu.main_navigation_menu;
     }
 
     @Override
     protected <T extends AccountHeaderViewHolder> T getHeaderViewHolder() {
-        return null;
+        return (T) new  AccountHeaderViewHolder(this, R.layout.layout_header_account);
     }
 
     @Override

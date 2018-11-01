@@ -1,10 +1,4 @@
-package com.checkin.app.checkin.Misc;
-
-import com.checkin.app.checkin.Utility.Util;
-import com.fasterxml.jackson.annotation.JsonProperty;
-
-import io.objectbox.annotation.Entity;
-import io.objectbox.annotation.Id;
+package com.checkin.app.checkin.RestaurantActivity.Waiter;
 
 public class TableModel {
         private long id;
