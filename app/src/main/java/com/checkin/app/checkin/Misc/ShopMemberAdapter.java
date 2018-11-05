@@ -1,6 +1,5 @@
 package com.checkin.app.checkin.Misc;
 
-import android.graphics.Color;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -48,6 +47,7 @@ public class ShopMemberAdapter extends RecyclerView.Adapter<ShopMemberAdapter.Vi
         return R.layout.shop_member_recy;
     }
 
+
     @Override
     public int getItemCount() {
         return mMembers.size();
@@ -75,7 +75,7 @@ public class ShopMemberAdapter extends RecyclerView.Adapter<ShopMemberAdapter.Vi
                 memberRole.setText(member.getRole());
             else
             memberRole.setText("Assign");
-            Glide.with(userName.getContext()).load(R.drawable.f_04_aade_1_f_2_a_011_bf_9_a_01_e_16524_bc_3972)
+            Glide.with(userName.getContext()).load(R.drawable.f_04_aade_1_f_2_a_011_bf_9_a_01_e_16524_bc_397)
                     .into(userPic);
 
             memberRole.setOnClickListener(new View.OnClickListener() {

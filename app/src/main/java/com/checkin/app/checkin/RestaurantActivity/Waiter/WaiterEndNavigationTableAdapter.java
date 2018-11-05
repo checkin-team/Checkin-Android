@@ -70,6 +70,7 @@ public class WaiterEndNavigationTableAdapter extends RecyclerView.Adapter<Waiter
                 tableCustomer.setTextColor(Color.parseColor("#af1014"));
             }
             tableCustomer.setText(table.getUserStandard());
+
         }
 
     }

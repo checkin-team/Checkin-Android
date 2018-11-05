@@ -5,6 +5,7 @@ import android.arch.lifecycle.LiveData;
 import android.arch.lifecycle.MediatorLiveData;
 import android.arch.lifecycle.MutableLiveData;
 import android.support.annotation.NonNull;
+import android.util.Log;
 
 import com.checkin.app.checkin.Data.BaseViewModel;
 import com.checkin.app.checkin.Data.Resource;
@@ -31,6 +32,8 @@ public class ShopProfileViewModel extends BaseViewModel{
     }
 
     public LiveData<Resource<ShopModel>> getShopData() {
+        Log.e("View Model","Maine data bheja"+mShopData.toString()
+        );
         return mShopData;
     }
 
@@ -73,7 +76,8 @@ public class ShopProfileViewModel extends BaseViewModel{
     }
 
     public void fetchShop(String shopPk) {
-        mShopData.addSource(mRepository.getShopModel(shopPk), mShopData::setValue);
+        mShopData.addSource(mRepository.getShopManageModel(shopPk), mShopData::setValue);
+        Log.e("ViewModel","Shop is fetched from server");
     }
 
     public void useShop(ShopModel shopModel) {

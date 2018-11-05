@@ -22,6 +22,9 @@ public class ShopModel {
     private String email;
     private String website;
 
+    @JsonProperty("gstin")
+    private String gstIn;
+
     @JsonProperty("has_nonveg")
     private boolean hasNonveg;
     @JsonProperty("has_home_delivery")

@@ -78,6 +78,7 @@ public class ChangeRoleFragment extends Fragment {
             public void onClick(View v) {
                String role= roleSpinner.getSelectedItem().toString();
                onInteractionListener.setRole(memberModel,positionF,role);
+
             }
         });
         if(removeButton!=null)

@@ -8,6 +8,7 @@
     android:paddingRight="10dp"
     android:paddingBottom="10dp"
     android:text="@string/role_prompt"
+
     android:textColor="@color/pinkish_grey"
     android:gravity="center_horizontal"
     />

@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:background="@drawable/rectangle_7"
+    android:background="@drawable/rectangle_10"
     android:layout_width="match_parent" android:layout_height="350dp">
 
     <LinearLayout
@@ -33,7 +33,7 @@
                     android:layout_gravity="start"
                     android:scaleType="fitXY"
                     android:id="@+id/user_image"
-                    android:src="@drawable/f_04_aade_1_f_2_a_011_bf_9_a_01_e_16524_bc_3972"
+                    android:src="@drawable/f_04_aade_1_f_2_a_011_bf_9_a_01_e_16524_bc_397"
                     android:layout_height="80dp" />
                 <TextView
                     android:layout_width="wrap_content"
@@ -66,7 +66,7 @@
 
                 <Spinner
                     android:layout_width="120dp"
-                    android:background="@drawable/edit_role"
+                    android:background="@drawable/edit_roles"
                     android:gravity="center"
                     android:id="@+id/role_spinner"
                     android:spinnerMode="dropdown"
@@ -97,7 +97,7 @@
                 android:layout_gravity="center"
                 android:id="@+id/save_button"
                 android:layout_marginStart="@dimen/spacing_gigantic"
-                android:background="@drawable/add_rect"
+                android:background="@drawable/add_rectangle"
                 android:gravity="center"
                 android:text="SAVE"/>
 
@@ -107,7 +107,7 @@
                 android:textColor="@color/brownish_grey"
                 android:layout_gravity="center"
                 android:layout_marginEnd="@dimen/spacing_gigantic"
-                android:background="@drawable/add_rect"
+                android:background="@drawable/add_rectangle"
                 android:gravity="center"
                 android:id="@+id/remove_button"
                 android:text="REMOVE"/>

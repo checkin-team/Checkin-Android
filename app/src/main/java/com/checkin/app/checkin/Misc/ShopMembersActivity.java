@@ -79,6 +79,7 @@ ChangeRoleFragment.onClickButtons{
        Log.e("ShopMembersActivity",member.getFullName()+String.valueOf(position));
        getFragmentManager().beginTransaction()
                .replace(changeContainer.getId(),changeRoleFragment)
+
                .addToBackStack("addRole")
                .commit();
 
@@ -96,5 +97,8 @@ ChangeRoleFragment.onClickButtons{
         getFragmentManager().popBackStackImmediate("addRole",FragmentManager.POP_BACK_STACK_INCLUSIVE);
         darkBack.setVisibility(View.GONE);
             membersShopFragment.getShopMemberAdapter().notifyDataSetChanged();
+    }
+
+    public void onClickAddMembers(View view) {
     }
 }

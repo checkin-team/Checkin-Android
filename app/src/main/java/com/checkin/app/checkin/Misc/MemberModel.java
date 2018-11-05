@@ -10,6 +10,7 @@ public class MemberModel {
         return fullName;
     }
 
+
     public String getRole() {
         return role;
     }

@@ -82,6 +82,7 @@ public class MembersShopFragment extends Fragment implements ShopMemberAdapter.O
                 shopMemberAdapter = new ShopMemberAdapter(memberModels);
                 shopMemberAdapter.setMemberInteractionListener(this);
                 rvShopMembers.setAdapter(shopMemberAdapter);
+
             }
     }
 
