@@ -1,0 +1,94 @@
+package com.checkin.app.checkin.Misc;
+
+import android.support.annotation.NonNull;
+import android.support.v7.widget.RecyclerView;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.ImageView;
+import android.widget.TextView;
+
+import com.bumptech.glide.Glide;
+import com.checkin.app.checkin.R;
+
+import java.util.List;
+
+
+import butterknife.BindView;
+import butterknife.ButterKnife;
+
+public class ShopMemberAdapter extends RecyclerView.Adapter<ShopMemberAdapter.ViewHolder> {
+    List<MemberModel> mMembers;
+    private static OnMemberInteractionListener mItemInteractionListener;
+   public ShopMemberAdapter(List<MemberModel> memberModels)
+   {
+       this.mMembers=memberModels;
+   }
+
+    public void setMemberInteractionListener(OnMemberInteractionListener mMemberInteractionListener) {
+        ShopMemberAdapter.mItemInteractionListener = mMemberInteractionListener;
+    }
+
+    @NonNull
+    @Override
+    public ShopMemberAdapter.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+        View view = LayoutInflater.from(parent.getContext()).inflate(viewType, parent, false);
+
+        return new ShopMemberAdapter.ViewHolder(view);
+    }
+
+    @Override
+    public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
+        holder.bindData(mMembers.get(position));
+    }
+
+    @Override
+    public int getItemViewType(final int position) {
+        return R.layout.shop_member_recy;
+    }
+
+
+    @Override
+    public int getItemCount() {
+        return mMembers.size();
+    }
+
+    class ViewHolder extends RecyclerView.ViewHolder{
+        @BindView(R.id.user_pic)
+        ImageView userPic;
+        @BindView(R.id.username)
+        TextView userName;
+        @BindView(R.id.roleMember)
+        TextView memberRole;
+
+
+
+        ViewHolder(View v) {
+            super(v);
+
+            ButterKnife.bind(this, v);
+        }
+
+        void bindData(MemberModel member) {
+            userName.setText(member.getFullName());
+            if(member.getRole()!=null)
+                memberRole.setText(member.getRole());
+            else
+            memberRole.setText("Assign");
+            Glide.with(userName.getContext()).load(R.drawable.f_04_aade_1_f_2_a_011_bf_9_a_01_e_16524_bc_397)
+                    .into(userPic);
+
+            memberRole.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    mItemInteractionListener.onClickAssign(member,getAdapterPosition());
+                }
+            });
+        }
+
+    }
+    public interface OnMemberInteractionListener{
+        public void onClickAssign(MemberModel member,int position);
+
+    }
+}

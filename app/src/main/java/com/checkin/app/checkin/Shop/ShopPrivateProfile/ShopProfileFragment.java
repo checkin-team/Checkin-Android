@@ -10,6 +10,7 @@ import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -18,10 +19,12 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.checkin.app.checkin.Data.Resource;
+import com.checkin.app.checkin.Misc.ShopMembersActivity;
 import com.checkin.app.checkin.R;
 import com.checkin.app.checkin.Shop.ShopModel;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 /**
@@ -30,6 +33,7 @@ import java.util.List;
 
 public class ShopProfileFragment extends Fragment implements View.OnClickListener {
     private static final String TAG = ShopProfileFragment.class.getSimpleName();
+
 
     private ViewPager imagePager;
     private RecyclerView grid;
@@ -40,6 +44,7 @@ public class ShopProfileFragment extends Fragment implements View.OnClickListene
     private TextView hotel;
     private ShopProfileViewModel mViewModel;
     private TextView editShopProfile;
+    private TextView cuisines;
 
 
     @Nullable
@@ -49,18 +54,37 @@ public class ShopProfileFragment extends Fragment implements View.OnClickListene
         imagePager = view.findViewById(R.id.imagePager);
         grid = view.findViewById(R.id.grid);
         members = view.findViewById(R.id.members);
+        cuisines=view.findViewById(R.id.textView8);
         insights = view.findViewById(R.id.insights);
         message = view.findViewById(R.id.review);
         notification = view.findViewById(R.id.notification);
         hotel = view.findViewById(R.id.hotel);
         editShopProfile=view.findViewById(R.id.edit_shop_profile);
+        Log.e(TAG,"aa gye fragment mei");
         setUp();
 
-        mViewModel = ViewModelProviders.of(this).get(ShopProfileViewModel.class);
-        mViewModel.getShopData().observe(this, shopResource -> {
+        mViewModel = ViewModelProviders.of(this.getActivity()) .get(ShopProfileViewModel.class);
+
+
+        mViewModel.getShopData().observe( this, shopResource -> {
+
             if (shopResource == null) return;
             if (shopResource.status == Resource.Status.SUCCESS && shopResource.data != null) {
                 ShopModel shop = shopResource.data;
+                hotel.setText(shop.getName());
+                List<String> extras= Arrays.asList(shop.getExtraData());
+                grid.setAdapter(new AboutPager(extras));
+                grid.setLayoutManager(new GridLayoutManager(getContext(),2, GridLayoutManager.VERTICAL,false));
+                StringBuilder cuisString=new StringBuilder();
+                int i=0;
+                for(CharSequence ch : shop.getCuisines()){
+
+                    cuisString.append(ch+", ");
+                }
+                cuisString.replace(cuisString.lastIndexOf(","),cuisString.length(),"");
+                Log.e(TAG,cuisString.toString());
+                cuisines.setText(cuisString.toString());
+
             } else if (shopResource.status == Resource.Status.LOADING) {
                 // LOADING
             } else {
@@ -73,18 +97,24 @@ public class ShopProfileFragment extends Fragment implements View.OnClickListene
 
     private void setUp(){
         imagePager.setAdapter(new ImagePager());
-        grid.setAdapter(new AboutPager());
-        grid.setLayoutManager(new GridLayoutManager(getContext(),2, GridLayoutManager.VERTICAL,false));
+//        grid.setAdapter(new AboutPager());
+//        grid.setLayoutManager(new GridLayoutManager(getContext(),2, GridLayoutManager.VERTICAL,false));
 
         insights.setOnClickListener(this);
         notification.setOnClickListener(this);
-        message.setOnClickListener(this);
+//        message.setOnClickListener(this);
         members.setOnClickListener(this);
 
         editShopProfile.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 startActivity(new Intent(getContext(),EditShopProfileActivity.class));
+            }
+        });
+        members.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(getContext(), ShopMembersActivity.class));
             }
         });
 
@@ -146,6 +176,9 @@ public class ShopProfileFragment extends Fragment implements View.OnClickListene
 
         public AboutPager() {
             aboutInfoList = getAboutInfo();
+        }
+        public AboutPager(List<String> Extras){
+        aboutInfoList=Extras;
         }
 
         public class InfoViewHolder extends RecyclerView.ViewHolder{

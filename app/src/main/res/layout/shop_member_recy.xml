@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout android:layout_height="100dp"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:background="@drawable/rectangle_7"
+    android:layout_marginTop="@dimen/spacing_normal"
+    android:layout_width="match_parent">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <FrameLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+        <ImageView
+            android:layout_width="80dp"
+            android:layout_height="80dp"
+            android:layout_gravity="start"
+            android:id="@+id/user_pic"
+            android:layout_marginStart="@dimen/spacing_normal"
+            android:layout_marginTop="@dimen/spacing_small"
+
+            android:src="@drawable/f_04_aade_1_f_2_a_011_bf_9_a_01_e_16524_bc_397"
+            android:scaleType="fitXY"/>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@color/brownish_grey"
+            android:gravity="center"
+            android:letterSpacing="-0.03"
+            android:id="@+id/username"
+            android:layout_marginStart="@dimen/spacing_normal"
+            android:textSize="@dimen/font_large"
+            android:layout_gravity="center"
+            android:text="Shivans"
+            />
+
+
+            <TextView
+                android:layout_width="80dp"
+                android:layout_height="@dimen/button_height_normal"
+                android:id="@+id/roleMember"
+                android:gravity="center"
+                android:background="@drawable/rectangle"
+                android:textSize="@dimen/font_normal"
+                android:layout_gravity="center|end"
+                android:layout_marginEnd="@dimen/spacing_normal"
+                android:text="Assign"/>
+
+        </FrameLayout>
+    </LinearLayout>
+
+
+
+</FrameLayout>

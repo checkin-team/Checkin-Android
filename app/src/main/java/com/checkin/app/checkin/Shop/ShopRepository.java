@@ -87,13 +87,31 @@ public class ShopRepository extends BaseRepository {
 
             @Override
             protected boolean shouldUseLocalDb() {
-                return true;
+                return false;
             }
 
             @NonNull
             @Override
             protected LiveData<ApiResponse<ShopModel>> createCall() {
                 return new RetrofitLiveData<>(mWebService.getShopDetails(shopId));
+            }
+
+            @Override
+            protected void saveCallResult(ShopModel data) {  }
+        }.getAsLiveData();
+    }
+    public LiveData<Resource<ShopModel>> getShopManageModel(String shopId) {
+        return new NetworkBoundResource<ShopModel, ShopModel> () {
+
+            @Override
+            protected boolean shouldUseLocalDb() {
+                return false;
+            }
+
+            @NonNull
+            @Override
+            protected LiveData<ApiResponse<ShopModel>> createCall() {
+                return new RetrofitLiveData<>(mWebService.getShopManageDetails(shopId));
             }
 
             @Override

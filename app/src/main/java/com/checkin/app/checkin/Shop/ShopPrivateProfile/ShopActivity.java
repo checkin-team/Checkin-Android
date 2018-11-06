@@ -9,6 +9,7 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
+import android.util.Log;
 
 import com.checkin.app.checkin.Account.AccountModel;
 import com.checkin.app.checkin.Account.BaseAccountActivity;
@@ -47,17 +48,18 @@ public class ShopActivity extends BaseAccountActivity {
 
         mViewModel = ViewModelProviders.of(this).get(ShopProfileViewModel.class);
         String shopPk = getIntent().getStringExtra(KEY_SHOP_PK);
+
         mViewModel.fetchShop(shopPk);
     }
 
     protected void setupPagers(FragmentPagerAdapter pagerAdapter, @MenuRes int menuId) {
-        mViewPager.setEnabled(false);
+        mViewPager.setEnabled(true);
         mViewPager.setAdapter(pagerAdapter);
         mBottomNavigation.inflateMenu(menuId);
         mBottomNavigation.setOnMenuItemClickListener(new BottomNavigation.OnMenuItemSelectionListener() {
             @Override
             public void onMenuItemSelect(@IdRes final int itemId, final int position, final boolean fromUser) {
-                mViewPager.setCurrentItem(position, true);
+            //    mViewPager.setCurrentItem(position, true);
             }
 
             @Override
@@ -78,7 +80,7 @@ public class ShopActivity extends BaseAccountActivity {
 
     @Override
     protected AccountModel.ACCOUNT_TYPE getAccountType() {
-        return null;
+        return AccountModel.ACCOUNT_TYPE.SHOP_OWNER;
     }
 
     private class ShopPagerAdapter extends FragmentPagerAdapter {
@@ -91,6 +93,7 @@ public class ShopActivity extends BaseAccountActivity {
         public Fragment getItem(int position) {
             switch (position) {
                 case 0:
+
                     return ShopProfileFragment.getInstance(1);
                 case 1:
                     return ShopProfileFragment.getInstance(1);

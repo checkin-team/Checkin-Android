@@ -137,4 +137,16 @@
     <string name="positive_yes">Yes</string>
     <string name="negative_no">No</string>
     <string name="title_shop_aspects">Aspects</string>
+    <string name="title_activity_edit_shop_profile">EditShopProfileActivity</string>
+
+    <string name="role_prompt">Choose a role</string>
+
+    <string-array name="role_array">
+        <item>Owner</item>
+        <item>Shop Admin</item>
+        <item>Restaurant Manager</item>
+        <item>Waiter</item>
+
+    </string-array>
+
 </resources>
