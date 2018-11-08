@@ -47,6 +47,10 @@
             tools:replace="screenOrientation" />
         <activity android:name=".User.NonPersonalProfile.UserProfileActivity" />
         <activity android:name=".User.PersonalProfile.UserProfileActivity" />
+        <activity android:name=".User.NonPersonalProfile.UserCheckinsActivity"
+            android:theme="@style/Theme.AppCompat.Light"
+            android:parentActivityName=".User.NonPersonalProfile.UserProfileActivity">
+        </activity>
         <activity
             android:name=".User.PersonalProfile.ProfileEditActivity"
             android:label="Edit Profile"
