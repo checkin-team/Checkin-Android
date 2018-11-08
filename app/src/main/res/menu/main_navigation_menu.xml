@@ -18,20 +18,10 @@
             android:icon="@drawable/privacy"
             android:title="Privacy Settings" />
         <item
-            android:id="@+id/nav_shop_activity"
-            android:name="privacy settings"
-            android:icon="@drawable/privacy"
-            android:title="Shop Activity" />
-        <item
             android:id="@+id/notif_activity"
             android:name="privacy settings"
             android:icon="@drawable/privacy"
             android:title="Notif Activity" />
-        <item
-            android:id="@+id/user_shop_porfile"
-            android:name="privacy settings"
-            android:icon="@drawable/privacy"
-            android:title="User Shop Profile" />
         <item
             android:id="@+id/waiter_work_activity"
             android:name="privacy settings"

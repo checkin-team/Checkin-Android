@@ -161,42 +161,6 @@
             </RadioGroup>
         </LinearLayout>
 
-        <!--<LinearLayout
-            android:id="@+id/container_seating"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:paddingStart="@dimen/spacing_extra_large"
-            android:paddingEnd="@dimen/spacing_extra_large"
-            android:layout_marginTop="@dimen/spacing_normal"
-            android:orientation="vertical">
-            <TextView
-                android:id="@+id/tv_label_seating"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Seating"
-                style="@style/GreyTextStyle"
-                android:textSize="@dimen/font_large"/>
-            <RelativeLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_marginTop="@dimen/spacing_small">
-                <CheckBox
-                    android:id="@+id/cb_choice_indoor"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Indoor"
-                    style="@style/GreyTextStyle" />
-                <CheckBox
-                    android:id="@+id/cb_choice_outdoor"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Outdoor"
-                    style="@style/GreyTextStyle"
-                    android:layout_marginStart="@dimen/spacing_large"
-                    android:layout_toEndOf="@id/cb_choice_indoor"/>
-            </RelativeLayout>
-        </LinearLayout>-->
-
         <LinearLayout
             android:id="@+id/container_payment"
             android:layout_width="match_parent"

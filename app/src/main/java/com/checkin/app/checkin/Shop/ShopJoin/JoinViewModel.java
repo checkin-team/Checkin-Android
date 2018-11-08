@@ -11,7 +11,7 @@ import android.util.Log;
 import com.checkin.app.checkin.Data.Resource;
 import com.checkin.app.checkin.Misc.GenericDetailModel;
 import com.checkin.app.checkin.Misc.LocationModel;
-import com.checkin.app.checkin.Shop.ShopModel;
+import com.checkin.app.checkin.Shop.RestaurantModel;
 import com.checkin.app.checkin.Shop.ShopRepository;
 
 public class JoinViewModel extends AndroidViewModel {
@@ -40,12 +40,12 @@ public class JoinViewModel extends AndroidViewModel {
         return mShopJoinData;
     }
 
-    public ShopModel getNewShop(String pk) {
+    public RestaurantModel getNewShop(String pk) {
         isRegistered = true;
-        ShopModel shopModel = new ShopModel(pk);
-        shopModel.setExtraData("Night Life", "Outdoor Seating", "Host Parties");
-        shopModel.setPaymentModes(ShopModel.PAYMENT_MODE.CASH);
-        return shopModel;
+        RestaurantModel restaurantModel = new RestaurantModel(pk);
+        restaurantModel.setExtraData("Night Life", "Outdoor Seating", "Host Parties");
+        restaurantModel.setPaymentModes(RestaurantModel.PAYMENT_MODE.CASH);
+        return restaurantModel;
     }
 
     public void newShopJoin(String email, String idToken) {

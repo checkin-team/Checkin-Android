@@ -14,7 +14,6 @@ import android.widget.TextView;
 
 import com.checkin.app.checkin.R;
 import com.checkin.app.checkin.Utility.ItemClickSupport;
-import com.checkin.app.checkin.Utility.WalletFilterAdapter;
 
 import java.util.ArrayList;
 import java.util.Scanner;

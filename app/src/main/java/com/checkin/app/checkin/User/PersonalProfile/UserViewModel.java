@@ -43,9 +43,10 @@ public class UserViewModel extends BaseViewModel {
         mData.addSource(mRepository.postUserProfilePic(pictureFile), mData::setValue);
     }
 
-    public void postUserData(String name,String location, String bio) {
+    public void postUserData(String firstName, String lastName, String location, String bio) {
         ObjectNode data = Converters.objectMapper.createObjectNode();
-        data.put("full_name", name);
+        data.put("first_name", firstName);
+        data.put("last_name", lastName);
         data.put("locality", location);
         data.put("bio", bio);
         mData.addSource(mRepository.postUserData(data), mData::setValue);

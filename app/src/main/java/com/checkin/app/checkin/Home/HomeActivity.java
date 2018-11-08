@@ -3,31 +3,22 @@ package com.checkin.app.checkin.Home;
 import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
 import android.animation.AnimatorSet;
-import android.animation.ValueAnimator;
 import android.annotation.SuppressLint;
 import android.arch.lifecycle.ViewModelProviders;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.NavigationView;
-import android.support.transition.Slide;
-import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentTransaction;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
-import android.util.DisplayMetrics;
 import android.util.Log;
-import android.view.GestureDetector;
 import android.view.MenuItem;
 import android.view.MotionEvent;
 import android.view.View;
-import android.view.animation.AccelerateDecelerateInterpolator;
-import android.view.animation.DecelerateInterpolator;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -42,12 +33,10 @@ import com.checkin.app.checkin.RestaurantActivity.Waiter.WaitorWork;
 import com.checkin.app.checkin.Search.SearchActivity;
 import com.checkin.app.checkin.Session.ActiveSessionActivity;
 import com.checkin.app.checkin.Shop.ShopJoin.BusinessFeaturesActivity;
-import com.checkin.app.checkin.Shop.ShopModel;
-import com.checkin.app.checkin.Shop.ShopPrivateProfile.ShopActivity;
+import com.checkin.app.checkin.Shop.ShopPublicProfile.ShopActivity;
 import com.checkin.app.checkin.User.NonPersonalProfile.UserViewModel;
 import com.checkin.app.checkin.User.PersonalProfile.UserProfileActivity;
 import com.checkin.app.checkin.Utility.ClipRevealFrame;
-import com.checkin.app.checkin.Utility.DragTouchListener;
 import com.checkin.app.checkin.Utility.ItemClickSupport;
 import com.checkin.app.checkin.Utility.Util;
 import com.fasterxml.jackson.databind.JsonNode;
@@ -64,8 +53,8 @@ import butterknife.OnClick;
 
 public class HomeActivity extends BaseAccountActivity
         implements NavigationView.OnNavigationItemSelectedListener {
-    public static final String USERUID="UserId";
     private final String TAG = HomeActivity.class.getSimpleName();
+
     @BindView(R.id.drawer_root)
     DrawerLayout drawerLayout;
     @BindView(R.id.rv_trending_shops)
@@ -140,11 +129,6 @@ public class HomeActivity extends BaseAccountActivity
         drawerLayout.addDrawerListener(startToggle);
         startToggle.syncState();
 
-        /*EndDrawerToggle endToggle = new EndDrawerToggle(
-                this, drawerLayout, toolbar, R.string.messages_drawer_open, R.string.messages_drawer_close, R.drawable.ic_message_appbar);
-        drawerLayout.addDrawerListener(endToggle);
-        endToggle.syncState();*/
-
         getNavAccount().setNavigationItemSelectedListener(this);
 
         vClipRevealMask.setOnTouchListener((view, motionEvent) -> {
@@ -154,131 +138,39 @@ public class HomeActivity extends BaseAccountActivity
         });
         vAddQuarterCircle.setOnTouchListener((v, event) -> true);
 
-        DisplayMetrics displayMetrics = new DisplayMetrics();
-        getWindowManager().getDefaultDisplay().getMetrics(displayMetrics);
-        final float maxTranslationX = PERCENT_LEFT_SHIFTED * displayMetrics.widthPixels / 100;
-        rvTrendingShops.setTranslationX(maxTranslationX);
-        //((LinearLayoutManager) rvTrendingShops.getLayoutManager()).fin
-        rvTrendingShops.setOnTouchListener(new DragTouchListener() {
-            @Override
-            public boolean shouldDrag() {
-                Log.e(TAG, "shouldDrag: "+(rvTrendingShops.getTranslationX()>0) );
-                if(rvTrendingShops.getTranslationX()>0)
-                    return true;
-                return false;
-            }
-
-            boolean drag(float dx) {
-                boolean shouldDrag = false;
-                if (rvTrendingShops.getTranslationX() > 0 && dx < 0) {
-                    shouldDrag = true;
-                } else if (hasMinTranslation() && dx > 0) {
-                    int position = ((LinearLayoutManager) rvTrendingShops.getLayoutManager()).findFirstCompletelyVisibleItemPosition();
-                    if (position == 0)
-                        shouldDrag = true;
-                } else if (!hasMaxTranslation() && !hasMinTranslation() && dx > 0) {
-                    shouldDrag = true;
-                } else if (hasMaxTranslation() && dx > 0) {
-                    return true;
-                }
-                if (shouldDrag) {
-                    animateShopContainer(rvTrendingShops.getTranslationX() + dx, maxTranslationX);
-                }
-                return shouldDrag;
-            }
-
-            boolean hasMinTranslation() {
-                return rvTrendingShops.getTranslationX() <= 0f;
-            }
-
-            boolean hasMaxTranslation() {
-                return rvTrendingShops.getTranslationX() >= maxTranslationX;
-            }
-
-            @Override
-            public boolean onDragX(float dx) {
-                float currTranslationX = rvTrendingShops.getTranslationX();
-                if (currTranslationX < 0f && currTranslationX > maxTranslationX) {
-                    Log.e(TAG, "outsideLimits!");
-                    animateShopContainer(currTranslationX < 0 ? 0 : maxTranslationX, maxTranslationX);
-                    return false;
-                }
-                if (drag(dx))
-                    return true;
-                //rvTrendingShops.scrollBy((int) -dx, 0);
-                return false;
-            }
-
-            @Override
-            public boolean onDragY(float dy) {
-                return false;
-            }
-
-            @Override
-            public void onDragCancel() {
-                Log.e(TAG, "DragCancelled");
-                ValueAnimator animator;
-                float currTranslationX = rvTrendingShops.getTranslationX();
-                if (currTranslationX <= 0.5 * maxTranslationX) {
-                    animator = ValueAnimator.ofFloat(currTranslationX, 0f);
-                }
-                else  if(currTranslationX<maxTranslationX){
-                    rvTrendingShops.setTranslationX(maxTranslationX);
-                    animator = ValueAnimator.ofFloat(currTranslationX, maxTranslationX);
-                }
-                else return;
-                animator.setInterpolator(new AccelerateDecelerateInterpolator());
-                animator.setDuration(Util.DEFAULT_DURATION);
-                animator.addUpdateListener(animation -> {
-                    float animatedValue = (float) animation.getAnimatedValue();
-                    animateShopContainer(animatedValue, maxTranslationX);
-                });
-                animator.start();
-            }
-        });
-
-       // rvTrendingShops.setOnTouchListener();
-
-//        rvTrendingShops.addOnScrollListener(new RecyclerView.OnScrollListener() {
-//            /**
-//             * Callback method to be invoked when the RecyclerView has been scrolled. This will be
-//             * called after the scroll has completed.
-//             * <p>
-//             * This callback will also be called if visible item range changes after a layout
-//             * calculation. In that case, dx and dy will be 0.
-//             *
-//             * @param recyclerView The RecyclerView which scrolled.
-//             * @param dx           The amount of horizontal scroll.
-//             * @param dy           The amount of vertical scroll.
-//             */
+//        DisplayMetrics displayMetrics = new DisplayMetrics();
+//        getWindowManager().getDefaultDisplay().getMetrics(displayMetrics);
+//        final float maxTranslationX = PERCENT_LEFT_SHIFTED * displayMetrics.widthPixels / 100;
+//        rvTrendingShops.setTranslationX(maxTranslationX);
+//        //((LinearLayoutManager) rvTrendingShops.getLayoutManager()).fin
+//        rvTrendingShops.setOnTouchListener(new DragTouchListener() {
 //            @Override
-//            public_selected void onScrolled(RecyclerView recyclerView, int dx, int dy) {
-//                if(false)
-//                {
-//                    super.onScrolled(recyclerView,dx,dy);
-//                    return;
-//                }
-//                Log.e(TAG, "onScrolled: CODE"+dx );
-//                //int position = ((LinearLayoutManager) rvTrendingShops.getLayoutManager()).findFirstCompletelyVisibleItemPosition();
+//            public boolean shouldDrag() {
+//                Log.e(TAG, "shouldDrag: "+(rvTrendingShops.getTranslationX()>0) );
+//                if(rvTrendingShops.getTranslationX()>0)
+//                    return true;
+//                return false;
+//            }
+//
+//            boolean drag(float dx) {
 //                boolean shouldDrag = false;
-//                if (rvTrendingShops.getTranslationX() > 0 && dx > 0) {
+//                if (rvTrendingShops.getTranslationX() > 0 && dx < 0) {
 //                    shouldDrag = true;
-//                } else if (hasMinTranslation() && dx < 0) {
+//                } else if (hasMinTranslation() && dx > 0) {
 //                    int position = ((LinearLayoutManager) rvTrendingShops.getLayoutManager()).findFirstCompletelyVisibleItemPosition();
 //                    if (position == 0)
 //                        shouldDrag = true;
-//                } else if (!hasMaxTranslation() && !hasMinTranslation() && dx < 0) {
+//                } else if (!hasMaxTranslation() && !hasMinTranslation() && dx > 0) {
 //                    shouldDrag = true;
-//                } else if (hasMaxTranslation() && dx < 0) {
-//                    return;
+//                } else if (hasMaxTranslation() && dx > 0) {
+//                    return true;
 //                }
 //                if (shouldDrag) {
-//                    animateShopContainer(rvTrendingShops.getTranslationX() - dx, maxTranslationX);
-//                    rvTrendingShops.scrollToPosition(0);
+//                    animateShopContainer(rvTrendingShops.getTranslationX() + dx, maxTranslationX);
 //                }
-//                else
-//                    super.onScrolled(recyclerView, dx, dy);
+//                return shouldDrag;
 //            }
+//
 //            boolean hasMinTranslation() {
 //                return rvTrendingShops.getTranslationX() <= 0f;
 //            }
@@ -286,74 +178,166 @@ public class HomeActivity extends BaseAccountActivity
 //            boolean hasMaxTranslation() {
 //                return rvTrendingShops.getTranslationX() >= maxTranslationX;
 //            }
+//
+//            @Override
+//            public boolean onDragX(float dx) {
+//                float currTranslationX = rvTrendingShops.getTranslationX();
+//                if (currTranslationX < 0f && currTranslationX > maxTranslationX) {
+//                    Log.e(TAG, "outsideLimits!");
+//                    animateShopContainer(currTranslationX < 0 ? 0 : maxTranslationX, maxTranslationX);
+//                    return false;
+//                }
+//                if (drag(dx))
+//                    return true;
+//                //rvTrendingShops.scrollBy((int) -dx, 0);
+//                return false;
+//            }
+//
+//            @Override
+//            public boolean onDragY(float dy) {
+//                return false;
+//            }
+//
+//            @Override
+//            public void onDragCancel() {
+//                Log.e(TAG, "DragCancelled");
+//                ValueAnimator animator;
+//                float currTranslationX = rvTrendingShops.getTranslationX();
+//                if (currTranslationX <= 0.5 * maxTranslationX) {
+//                    animator = ValueAnimator.ofFloat(currTranslationX, 0f);
+//                }
+//                else  if(currTranslationX<maxTranslationX){
+//                    rvTrendingShops.setTranslationX(maxTranslationX);
+//                    animator = ValueAnimator.ofFloat(currTranslationX, maxTranslationX);
+//                }
+//                else return;
+//                animator.setInterpolator(new AccelerateDecelerateInterpolator());
+//                animator.setDuration(Util.DEFAULT_DURATION);
+//                animator.addUpdateListener(animation -> {
+//                    float animatedValue = (float) animation.getAnimatedValue();
+//                    animateShopContainer(animatedValue, maxTranslationX);
+//                });
+//                animator.start();
+//            }
 //        });
-        final GestureDetector gestureDetector = new GestureDetector(this,new GestureDetector.SimpleOnGestureListener() {
-
-            @Override
-            public boolean onSingleTapConfirmed(MotionEvent e) {
-                Fragment fragment = getSupportFragmentManager().findFragmentByTag("RECENT_CHECKIN");
-
-                if(fragment == null)
-                    return false;
-                FragmentManager fm = getSupportFragmentManager();
-                fm.popBackStack();
-                FragmentTransaction ft = fm.beginTransaction();
-                ft.remove(fragment);
-
-                RecentCheckInFragment rcif=new RecentCheckInFragment();
-                Slide slide = new Slide();
-                slide.setDuration(500);
-                slide.setInterpolator(new DecelerateInterpolator());
-                rcif.setEnterTransition(slide);
-                ft.add(R.id.fragmentHolder,rcif,"RECENT_CHECKIN");
-                //ft.replace(R.id.card_user_activities,new RecentCheckInFragment(),"RECENT_CHECKIN");
-                ft.addToBackStack(null);
-                ft.commit();
-                Log.e(TAG, "onSingleTapConfirmed: " );
-                return  true;
-            }
-
-            @Override
-            public void onLongPress(MotionEvent e) {
-                Fragment fragment = getSupportFragmentManager().findFragmentByTag("RECENT_CHECKIN");
-                if(fragment != null)
-                    getSupportFragmentManager().beginTransaction().remove(fragment).commit();
-                FragmentManager fm = getSupportFragmentManager();
-                FragmentTransaction ft = fm.beginTransaction();
-                RecentCheckInFragment rcif=new RecentCheckInFragment();
-                Slide slide = new Slide();
-                slide.setDuration(500);
-                slide.setInterpolator(new DecelerateInterpolator());
-                rcif.setEnterTransition(slide);
-                ft.add(R.id.fragmentHolder,rcif,"RECENT_CHECKIN");
-                //ft.replace(R.id.card_user_activities,new RecentCheckInFragment(),"RECENT_CHECKIN");
-                ft.addToBackStack(null);
-                ft.commit();
-                Log.e(TAG, "Longpress detected");
-            }
-
-        });
-
-
-        rvTrendingShops.addOnItemTouchListener(new RecyclerView.OnItemTouchListener() {
-            @Override
-            public boolean onInterceptTouchEvent(RecyclerView rv, MotionEvent event) {
-                rv.requestDisallowInterceptTouchEvent(true);
-                Log.e(TAG, "LongGood till here" +event );
-                gestureDetector.onTouchEvent(event);
-                return false;
-                //return gestureDetector.onTouchEvent(e);
-            }
-
-            @Override
-            public void onTouchEvent(RecyclerView rv, MotionEvent e) {
-            }
-
-            @Override
-            public void onRequestDisallowInterceptTouchEvent(boolean disallowIntercept) {
-
-            }
-        });
+//
+//       // rvTrendingShops.setOnTouchListener();
+//
+////        rvTrendingShops.addOnScrollListener(new RecyclerView.OnScrollListener() {
+////            /**
+////             * Callback method to be invoked when the RecyclerView has been scrolled. This will be
+////             * called after the scroll has completed.
+////             * <p>
+////             * This callback will also be called if visible item range changes after a layout
+////             * calculation. In that case, dx and dy will be 0.
+////             *
+////             * @param recyclerView The RecyclerView which scrolled.
+////             * @param dx           The amount of horizontal scroll.
+////             * @param dy           The amount of vertical scroll.
+////             */
+////            @Override
+////            public_selected void onScrolled(RecyclerView recyclerView, int dx, int dy) {
+////                if(false)
+////                {
+////                    super.onScrolled(recyclerView,dx,dy);
+////                    return;
+////                }
+////                Log.e(TAG, "onScrolled: CODE"+dx );
+////                //int position = ((LinearLayoutManager) rvTrendingShops.getLayoutManager()).findFirstCompletelyVisibleItemPosition();
+////                boolean shouldDrag = false;
+////                if (rvTrendingShops.getTranslationX() > 0 && dx > 0) {
+////                    shouldDrag = true;
+////                } else if (hasMinTranslation() && dx < 0) {
+////                    int position = ((LinearLayoutManager) rvTrendingShops.getLayoutManager()).findFirstCompletelyVisibleItemPosition();
+////                    if (position == 0)
+////                        shouldDrag = true;
+////                } else if (!hasMaxTranslation() && !hasMinTranslation() && dx < 0) {
+////                    shouldDrag = true;
+////                } else if (hasMaxTranslation() && dx < 0) {
+////                    return;
+////                }
+////                if (shouldDrag) {
+////                    animateShopContainer(rvTrendingShops.getTranslationX() - dx, maxTranslationX);
+////                    rvTrendingShops.scrollToPosition(0);
+////                }
+////                else
+////                    super.onScrolled(recyclerView, dx, dy);
+////            }
+////            boolean hasMinTranslation() {
+////                return rvTrendingShops.getTranslationX() <= 0f;
+////            }
+////
+////            boolean hasMaxTranslation() {
+////                return rvTrendingShops.getTranslationX() >= maxTranslationX;
+////            }
+////        });
+//        final GestureDetector gestureDetector = new GestureDetector(this,new GestureDetector.SimpleOnGestureListener() {
+//
+//            @Override
+//            public boolean onSingleTapConfirmed(MotionEvent e) {
+//                Fragment fragment = getSupportFragmentManager().findFragmentByTag("RECENT_CHECKIN");
+//
+//                if(fragment == null)
+//                    return false;
+//                FragmentManager fm = getSupportFragmentManager();
+//                fm.popBackStack();
+//                FragmentTransaction ft = fm.beginTransaction();
+//                ft.remove(fragment);
+//
+//                RecentCheckInFragment rcif=new RecentCheckInFragment();
+//                Slide slide = new Slide();
+//                slide.setDuration(500);
+//                slide.setInterpolator(new DecelerateInterpolator());
+//                rcif.setEnterTransition(slide);
+//                ft.add(R.id.fragmentHolder,rcif,"RECENT_CHECKIN");
+//                //ft.replace(R.id.card_user_activities,new RecentCheckInFragment(),"RECENT_CHECKIN");
+//                ft.addToBackStack(null);
+//                ft.commit();
+//                Log.e(TAG, "onSingleTapConfirmed: " );
+//                return  true;
+//            }
+//
+//            @Override
+//            public void onLongPress(MotionEvent e) {
+//                Fragment fragment = getSupportFragmentManager().findFragmentByTag("RECENT_CHECKIN");
+//                if(fragment != null)
+//                    getSupportFragmentManager().beginTransaction().remove(fragment).commit();
+//                FragmentManager fm = getSupportFragmentManager();
+//                FragmentTransaction ft = fm.beginTransaction();
+//                RecentCheckInFragment rcif=new RecentCheckInFragment();
+//                Slide slide = new Slide();
+//                slide.setDuration(500);
+//                slide.setInterpolator(new DecelerateInterpolator());
+//                rcif.setEnterTransition(slide);
+//                ft.add(R.id.fragmentHolder,rcif,"RECENT_CHECKIN");
+//                //ft.replace(R.id.card_user_activities,new RecentCheckInFragment(),"RECENT_CHECKIN");
+//                ft.addToBackStack(null);
+//                ft.commit();
+//                Log.e(TAG, "Longpress detected");
+//            }
+//
+//        });
+//
+//
+//        rvTrendingShops.addOnItemTouchListener(new RecyclerView.OnItemTouchListener() {
+//            @Override
+//            public boolean onInterceptTouchEvent(RecyclerView rv, MotionEvent event) {
+//                rv.requestDisallowInterceptTouchEvent(true);
+//                Log.e(TAG, "LongGood till here" +event );
+//                gestureDetector.onTouchEvent(event);
+//                return false;
+//                //return gestureDetector.onTouchEvent(e);
+//            }
+//
+//            @Override
+//            public void onTouchEvent(RecyclerView rv, MotionEvent e) {
+//            }
+//
+//            @Override
+//            public void onRequestDisallowInterceptTouchEvent(boolean disallowIntercept) {
+//
+//            }
+//        });
     }
 
     void animateShopContainer(float currTranslateX, float maxTranslateX) {
@@ -364,17 +348,21 @@ public class HomeActivity extends BaseAccountActivity
     }
 
     private void setupTrendingShops() {
-        List<ShopModel> shops = new ArrayList<>();
-//        for (int i = 1; i <= 15; i++) {
-//            if (i % 2 == 0)
-//                shops.add(new ShopModel( "Socials", "Bio","city","+8687845140", 300, 1000L,4700));
-//            else
-//                shops.add(new ShopModel( "Restaurant", "Bio","city","+8687845140", 300, 1000L,4700));
-//        }
         rvTrendingShops.setLayoutManager(new LinearLayoutManager(
                 this, LinearLayoutManager.HORIZONTAL, false));
-        mTrendingShopAdapter = new TrendingShopAdapter(shops);
+        mTrendingShopAdapter = new TrendingShopAdapter(null);
         rvTrendingShops.setAdapter(mTrendingShopAdapter);
+
+        mHomeViewModel.getTrendingRestaurants().observe(this, listResource -> {
+            if (listResource != null && listResource.status == Resource.Status.SUCCESS)
+                mTrendingShopAdapter.setData(listResource.data);
+        });
+
+        ItemClickSupport.addTo(rvTrendingShops).setOnItemClickListener((recyclerView, position, v) -> {
+            Intent intent = new Intent(getApplicationContext(), ShopActivity.class);
+            intent.putExtra(ShopActivity.KEY_SHOP_PK, mTrendingShopAdapter.getByPosition(position).getId());
+            startActivity(intent);
+        });
     }
 
     private void setupUserActivities() {
@@ -422,16 +410,8 @@ public class HomeActivity extends BaseAccountActivity
                 intent = new Intent(getApplicationContext(), ShopProfileActivity2.class);
                 startActivity(intent);
                 break;
-            case R.id.nav_shop_activity:
-                intent = new Intent(getApplicationContext(), com.checkin.app.checkin.Shop.ShopPublicProfile.ShopActivity.class);
-                startActivity(intent);
-                break;
             case R.id.notif_activity:
                 intent = new Intent(getApplicationContext(), NotificationActivity.class);
-                startActivity(intent);
-                break;
-            case R.id.user_shop_porfile:
-                intent = new Intent(getApplicationContext(), ShopActivity.class);
                 startActivity(intent);
                 break;
             case R.id.waiter_work_activity:
@@ -454,6 +434,7 @@ public class HomeActivity extends BaseAccountActivity
             if (result.getContents() == null) {
                 // cancelled operation
             } else {
+                Log.e(TAG, "QR: " + result.getContents());
                 mHomeViewModel.decryptQr(result.getContents());
             }
         } else {
@@ -560,7 +541,7 @@ public class HomeActivity extends BaseAccountActivity
     }
 
     @Override
-    protected ACCOUNT_TYPE getAccountType() {
-        return ACCOUNT_TYPE.USER;
+    protected ACCOUNT_TYPE[] getAccountTypes() {
+        return new ACCOUNT_TYPE[] { ACCOUNT_TYPE.USER };
     }
 }

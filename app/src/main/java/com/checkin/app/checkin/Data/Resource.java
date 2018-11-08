@@ -44,7 +44,7 @@ public class Resource<T> {
         try {
             return Converters.objectMapper.readTree(message);
         } catch (IOException | NullPointerException e) {
-            Log.e(TAG, "message not a valid JSON data.");
+            Log.e(TAG, "message not a valid JSON data\n" + message);
         }
         return null;
     }

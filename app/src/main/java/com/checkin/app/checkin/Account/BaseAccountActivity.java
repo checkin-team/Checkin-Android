@@ -61,7 +61,7 @@ public abstract class BaseAccountActivity extends BaseActivity {
     private void setupHeader() {
         mHeaderViewHolder = getHeaderViewHolder();
 
-        ACCOUNT_TYPE accountType = getAccountType();
+        ACCOUNT_TYPE[] accountTypes = getAccountTypes();
 
         mViewModel = ViewModelProviders.of(this).get(AccountViewModel.class);
         mViewModel.getAccounts().observe(this, listResource -> {
@@ -69,16 +69,21 @@ public abstract class BaseAccountActivity extends BaseActivity {
                 List<AccountModel> accounts = listResource.data;
                 mAccountAdapter.setData(accounts);
 
-                AccountModel account = AccountModel.getByAccountType(accounts, accountType);
-                mViewModel.setCurrentAccount(account);
+                for (ACCOUNT_TYPE accountType: accountTypes) {
+                    AccountModel account = AccountModel.getByAccountType(accounts, accountType);
+                    if (account != null) {
+                        mViewModel.setCurrentAccount(account);
+                        break;
+                    }
+                }
             }
         });
 
         mViewModel.getCurrentAccount().observe(this, account -> {
             if (account == null) {
                 // User doesn't have rights to access this account.
-//                Toast.makeText(getApplicationContext(), "User doesn't have access to any accounts with the given account type.", Toast.LENGTH_SHORT).show();
-//                finish();
+                Toast.makeText(getApplicationContext(), "User doesn't have access to any accounts with the given account type.", Toast.LENGTH_SHORT).show();
+                finish();
                 return;
             }
 
@@ -92,7 +97,7 @@ public abstract class BaseAccountActivity extends BaseActivity {
 
     protected abstract <T extends AccountHeaderViewHolder> T getHeaderViewHolder();
 
-    protected abstract ACCOUNT_TYPE getAccountType();
+    protected abstract ACCOUNT_TYPE[] getAccountTypes();
 
     @Override
     public void setContentView(int layoutResID) {
@@ -171,9 +176,11 @@ public abstract class BaseAccountActivity extends BaseActivity {
                     break;
                 case SHOP_OWNER:
                 case SHOP_ADMIN:
-                    Intent intent = new Intent(context, ShopActivity.class);
-                    intent.putExtra(ShopActivity.KEY_SHOP_PK, account.getTargetPk());
-                    context.startActivity(intent);
+                    if (mBaseActivity.getClass() != ShopActivity.class) {
+                        Intent intent = new Intent(context, ShopActivity.class);
+                        intent.putExtra(ShopActivity.KEY_SHOP_PK, account.getTargetPk());
+                        context.startActivity(intent);
+                    }
                     break;
                 case RESTAURANT_MANAGER:
                 case RESTAURANT_WAITER:

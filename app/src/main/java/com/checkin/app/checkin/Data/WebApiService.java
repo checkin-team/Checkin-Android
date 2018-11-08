@@ -8,7 +8,7 @@ import com.checkin.app.checkin.RestaurantActivity.Waiter.EventModel;
 import com.checkin.app.checkin.Notifications.NotificationModel;
 import com.checkin.app.checkin.Session.ActiveSessionModel;
 import com.checkin.app.checkin.Shop.ShopJoin.ShopJoinModel;
-import com.checkin.app.checkin.Shop.ShopModel;
+import com.checkin.app.checkin.Shop.RestaurantModel;
 import com.checkin.app.checkin.Shop.ShopReviewPOJO;
 import com.checkin.app.checkin.User.Friendship.FriendshipModel;
 import com.checkin.app.checkin.User.UserModel;
@@ -92,14 +92,17 @@ public interface WebApiService {
     @POST("restaurants/create/")
     Call<GenericDetailModel> postRegisterShop(@Body ShopJoinModel model);
 
-    @GET("shops/{shop_id}/")
-    Call<ShopModel> getShopDetails(@Path("shop_id") String shopId);
+    @GET("restaurants/{shop_id}/")
+    Call<RestaurantModel> getRestaurantDetails(@Path("shop_id") String shopId);
+
+    @GET("restaurants/")
+    Call<List<RestaurantModel>> getRestaurants();
 
     @GET("restaurants/{shop_id}/manage/")
-    Call<ShopModel> getShopManageDetails(@Path("shop_id") String shopId);
+    Call<RestaurantModel> getRestaurantManageDetails(@Path("shop_id") String shopId);
 
     @PATCH("restaurants/{shop_id}/manage/")
-    Call<ObjectNode> postShopManageDetails(@Path("shop_id") String shopId, @Body ShopModel shopData);
+    Call<ObjectNode> postRestaurantManageDetails(@Path("shop_id") String shopId, @Body RestaurantModel shopData);
     // endregion
 
     @GET("shops/{shop_id}/menus/available/")

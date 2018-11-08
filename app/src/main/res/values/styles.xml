@@ -20,13 +20,21 @@
     </style>
 
     <style name="AppThemeWhiteActionBar" parent="AppThemeWithBar">
-        <item name="actionBarStyle">@style/WhiteActionBarTheme</item>
+        <item name="actionBarStyle">@style/AppThemeWhiteActionBar.ActionBar</item>
     </style>
 
-    <style name="WhiteActionBarTheme" parent="Widget.AppCompat.ActionBar">
+    <style name="AppThemeWhiteActionBar.ActionBar" parent="Widget.AppCompat.ActionBar">
         <item name="background">@color/white</item>
         <item name="titleTextStyle">@style/GreyTextStyle</item>
         <item name="android:homeAsUpIndicator">@drawable/ic_appbar_back</item>
+        <item name="android:tabWidgetStyle">@style/AppThemeWhiteActionBar.TabLayout</item>
+    </style>
+
+    <style name="AppThemeWhiteActionBar.TabLayout" parent="Widget.Design.TabLayout">
+        <item name="tabBackground">@color/white</item>
+        <item name="tabTextAppearance">@style/GreyTextStyle</item>
+        <item name="tabSelectedTextColor">@color/brownish_grey</item>
+        <item name="tabIndicatorColor">@color/brownish_grey</item>
     </style>
 
     <style name="AppThemeWithBar" parent="Theme.AppCompat.Light">
@@ -44,15 +52,23 @@
         <item name="android:textSize">@dimen/font_larger</item>
     </style>
 
+    <style name="RedTitleStyle" parent="GreyTitleStyle">
+        <item name="android:textColor">@color/primary_red</item>
+    </style>
+
     <style name="GreyTextContainer">
         <item name="android:textViewStyle">@style/GreyTextStyle</item>
     </style>
 
-    <style name="GreySpinnerItem" parent="GreyTextStyle">
-    </style>
+    <style name="GreySpinnerItem" parent="GreyTextStyle" />
 
     <style name="SpinnerStyle" parent="Widget.AppCompat.Spinner">
         <item name="android:theme">@style/ThemeOverlay.AppCompat.Light</item>
+    </style>
+
+    <style name="LogoImageStyle">
+        <item name="android:layout_width">@dimen/size_logo</item>
+        <item name="android:layout_height">@dimen/size_logo</item>
     </style>
 
     <style name="InputTextStyle" parent="Widget.AppCompat.EditText">
@@ -86,6 +102,12 @@
     <style name="GreyTextStyle" parent="TextAppearance.AppCompat">
         <item name="android:textColor">@color/brownish_grey</item>
         <item name="android:textSize">@dimen/font_normal</item>
+    </style>
+
+    <style name="GreyLinkStyle" parent="TextAppearance.AppCompat">
+        <item name="android:textColor">@color/brownish_grey</item>
+        <item name="android:textSize">@dimen/font_small</item>
+        <!--<item name="android:textAllCaps">true</item>-->
     </style>
 
     <style name="TextShadowCover" parent="TextAppearance.AppCompat">

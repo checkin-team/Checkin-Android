@@ -11,8 +11,8 @@ import android.widget.TextView;
 import com.checkin.app.checkin.Data.Resource;
 import com.checkin.app.checkin.Misc.GenericDetailModel;
 import com.checkin.app.checkin.R;
-import com.checkin.app.checkin.Shop.ShopModel;
-import com.checkin.app.checkin.Shop.ShopPrivateProfile.AspectFragment;
+import com.checkin.app.checkin.Shop.RestaurantModel;
+import com.checkin.app.checkin.Shop.ShopPrivateProfile.EditAspectFragment;
 import com.checkin.app.checkin.Shop.ShopPrivateProfile.ShopActivity;
 import com.checkin.app.checkin.Shop.ShopPrivateProfile.ShopProfileViewModel;
 
@@ -21,7 +21,7 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 
 public class ShopJoinActivity extends AppCompatActivity implements
-        BasicInfoFragment.BasicInfoFragmentInteraction, AspectFragment.AspectFragmentInteraction {
+        BasicInfoFragment.BasicInfoFragmentInteraction, EditAspectFragment.AspectFragmentInteraction {
     private static final String TAG = ShopJoinActivity.class.getSimpleName();
     public static final String KEY_SHOP_EMAIL = "shop_email";
     public static final String KEY_SHOP_PHONE_TOKEN = "shop_phone";
@@ -79,7 +79,7 @@ public class ShopJoinActivity extends AppCompatActivity implements
         btnNext.setActivated(false);
         tvTitle.setText(R.string.title_shop_aspects);
         getSupportFragmentManager().beginTransaction()
-                .replace(R.id.fragment_container, AspectFragment.newInstance(this))
+                .replace(R.id.fragment_container, EditAspectFragment.newInstance(this))
                 .commit();
     }
 
@@ -96,7 +96,7 @@ public class ShopJoinActivity extends AppCompatActivity implements
 
     @Override
     public void onShopRegistered(GenericDetailModel details) {
-        ShopModel shop = mJoinViewModel.getNewShop(details.getPk());
+        RestaurantModel shop = mJoinViewModel.getNewShop(details.getPk());
         mShopViewModel.useShop(shop);
         askAspectInfo();
     }
@@ -107,7 +107,7 @@ public class ShopJoinActivity extends AppCompatActivity implements
     }
 
     @Override
-    public void updateShopAspects(ShopModel shop) {
+    public void updateShopAspects(RestaurantModel shop) {
         mShopViewModel.updateShop(shop);
     }
 

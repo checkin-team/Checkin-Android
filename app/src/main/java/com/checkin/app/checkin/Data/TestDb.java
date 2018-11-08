@@ -9,7 +9,7 @@ import com.checkin.app.checkin.Menu.MenuGroupModel;
 import com.checkin.app.checkin.Menu.MenuItemModel;
 import com.checkin.app.checkin.Menu.MenuModel;
 import com.checkin.app.checkin.Notifications.NotificationModel;
-import com.checkin.app.checkin.Shop.ShopModel;
+import com.checkin.app.checkin.Shop.RestaurantModel;
 import com.checkin.app.checkin.User.UserModel;
 
 import java.util.ArrayList;
@@ -43,10 +43,10 @@ public class TestDb {
         }
         notifMode.put(notifs);
     }
-    private static void populateShops(Box<ShopModel> shopModel){
-//        List<ShopModel> shops = new ArrayList<>();
+    private static void populateShops(Box<RestaurantModel> shopModel){
+//        List<RestaurantModel> shops = new ArrayList<>();
 //        for (int i = 1; i <= 15; i++) {
-//            ShopModel shop = new ShopModel("shop name","Dip yourself in the rich taste of cheese","Mexican, Chelsea", "+8687845140", i/3, 450*i, 350*i);
+//            RestaurantModel shop = new RestaurantModel("shop name","Dip yourself in the rich taste of cheese","Mexican, Chelsea", "+8687845140", i/3, 450*i, 350*i);
 //            shops.add(shop);
 //        }
 //        shopModel.put(shops);

@@ -6,11 +6,10 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
-import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v7.widget.GridLayoutManager;
+import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -19,231 +18,133 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.checkin.app.checkin.Data.Resource;
-import com.checkin.app.checkin.Misc.ShopMembersActivity;
+import com.checkin.app.checkin.Misc.CoverPagerAdapter;
+import com.checkin.app.checkin.Misc.StatusTextAdapter;
 import com.checkin.app.checkin.R;
-import com.checkin.app.checkin.Shop.ShopModel;
+import com.checkin.app.checkin.Shop.RestaurantModel;
+import com.rd.PageIndicatorView;
+import com.rd.animation.type.AnimationType;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
+import butterknife.BindView;
+import butterknife.ButterKnife;
+import butterknife.OnClick;
+import butterknife.Unbinder;
 
 /**
  * Created by Bhavik Patel on 25/08/2018.
  */
 
-public class ShopProfileFragment extends Fragment implements View.OnClickListener {
+public class ShopProfileFragment extends Fragment {
     private static final String TAG = ShopProfileFragment.class.getSimpleName();
+    private Unbinder unbinder;
 
+    @BindView(R.id.tv_shop_name) TextView tvShopName;
+    @BindView(R.id.tv_locality) TextView tvLocality;
+    @BindView(R.id.tv_tag_line) TextView tvTagLine;
+    @BindView(R.id.im_status) ImageView imStatus;
+    @BindView(R.id.tv_followers) TextView tvFollowers;
+    @BindView(R.id.tv_reviews) TextView tvReviews;
+    @BindView(R.id.tv_checkins) TextView tvCheckins;
+    @BindView(R.id.rv_additional_data) RecyclerView rvAdditionalData;
+    @BindView(R.id.pager_cover) ViewPager vPagerCover;
+    @BindView(R.id.indicator_top_cover) PageIndicatorView vPivCover;
 
-    private ViewPager imagePager;
-    private RecyclerView grid;
-    private View members;
-    private View message;
-    private View insights;
-    private View notification;
-    private TextView hotel;
     private ShopProfileViewModel mViewModel;
-    private TextView editShopProfile;
-    private TextView cuisines;
+    private StatusTextAdapter mExtraDataAdapter;
+    private CoverPagerAdapter mCoverPagerAdapter;
 
+    public static ShopProfileFragment newInstance() {
+        ShopProfileFragment fragment = new ShopProfileFragment();
+        return fragment;
+    }
 
-    @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_shop_profile_private,container,false);
-        imagePager = view.findViewById(R.id.imagePager);
-        grid = view.findViewById(R.id.grid);
-        members = view.findViewById(R.id.members);
-        cuisines=view.findViewById(R.id.textView8);
-        insights = view.findViewById(R.id.insights);
-        message = view.findViewById(R.id.review);
-        notification = view.findViewById(R.id.notification);
-        hotel = view.findViewById(R.id.hotel);
-        editShopProfile=view.findViewById(R.id.edit_shop_profile);
-        Log.e(TAG,"aa gye fragment mei");
-        setUp();
-
-        mViewModel = ViewModelProviders.of(this.getActivity()) .get(ShopProfileViewModel.class);
-
-
-        mViewModel.getShopData().observe( this, shopResource -> {
-
-            if (shopResource == null) return;
-            if (shopResource.status == Resource.Status.SUCCESS && shopResource.data != null) {
-                ShopModel shop = shopResource.data;
-                hotel.setText(shop.getName());
-                List<String> extras= Arrays.asList(shop.getExtraData());
-                grid.setAdapter(new AboutPager(extras));
-                grid.setLayoutManager(new GridLayoutManager(getContext(),2, GridLayoutManager.VERTICAL,false));
-                StringBuilder cuisString=new StringBuilder();
-                int i=0;
-                for(CharSequence ch : shop.getCuisines()){
-
-                    cuisString.append(ch+", ");
-                }
-                cuisString.replace(cuisString.lastIndexOf(","),cuisString.length(),"");
-                Log.e(TAG,cuisString.toString());
-                cuisines.setText(cuisString.toString());
-
-            } else if (shopResource.status == Resource.Status.LOADING) {
-                // LOADING
-            } else {
-                Toast.makeText(ShopProfileFragment.this.getContext(), "Error fetching ShopModel Home! Status: " +
-                        shopResource.status.toString() + "\nDetails: " + shopResource.message, Toast.LENGTH_LONG).show();
-            }
-        });
+        final View view = inflater.inflate(R.layout.fragment_shop_profile_private, container, false);
+        unbinder = ButterKnife.bind(this, view);
         return view;
     }
 
-    private void setUp(){
-        imagePager.setAdapter(new ImagePager());
-//        grid.setAdapter(new AboutPager());
-//        grid.setLayoutManager(new GridLayoutManager(getContext(),2, GridLayoutManager.VERTICAL,false));
+    @Override
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
 
-        insights.setOnClickListener(this);
-        notification.setOnClickListener(this);
-//        message.setOnClickListener(this);
-        members.setOnClickListener(this);
+        mViewModel = ViewModelProviders.of(requireActivity()) .get(ShopProfileViewModel.class);
 
-        editShopProfile.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                startActivity(new Intent(getContext(),EditShopProfileActivity.class));
+        mCoverPagerAdapter = new CoverPagerAdapter();
+        vPagerCover.setAdapter(mCoverPagerAdapter);
+        vPivCover.setViewPager(vPagerCover);
+        vPivCover.setAnimationType(AnimationType.FILL);
+        vPivCover.setClickListener(position -> vPagerCover.setCurrentItem(position));
+
+        mExtraDataAdapter = new StatusTextAdapter(R.drawable.ic_check_small);
+        rvAdditionalData.setAdapter(mExtraDataAdapter);
+        rvAdditionalData.setLayoutManager(new GridLayoutManager(requireContext(), 2, LinearLayoutManager.VERTICAL, false));
+
+        mViewModel.getShopData().observe( this, shopResource -> {
+            if (shopResource == null) return;
+
+            if (shopResource.status == Resource.Status.SUCCESS && shopResource.data != null) {
+                this.setupData(shopResource.data);
+            } else if (shopResource.status == Resource.Status.LOADING) {
+                // LOADING
+            } else {
+                Toast.makeText(ShopProfileFragment.this.getContext(), "Error fetching RestaurantModel Home! Status: " +
+                        shopResource.status.toString() + "\nDetails: " + shopResource.message, Toast.LENGTH_LONG).show();
             }
         });
-        members.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                startActivity(new Intent(getContext(), ShopMembersActivity.class));
-            }
-        });
+    }
 
+    private void setupData(RestaurantModel shop) {
+        tvShopName.setText(shop.getName());
+        tvLocality.setText(shop.getLocality());
+        tvTagLine.setText(shop.getTagline());
+        mExtraDataAdapter.setData(shop.getExtraData());
+        mCoverPagerAdapter.setData(shop.getCovers());
+
+        tvCheckins.setText(shop.formatCheckins());
+        tvFollowers.setText(shop.formatFollowers());
+        tvReviews.setText(shop.formatReviews());
+
+        if (shop.isValidStatus())
+            imStatus.setVisibility(View.INVISIBLE);
+        imStatus.setTag(shop.getShopStatus());
+    }
+
+    @OnClick(R.id.im_status)
+    public void onStatusClick(View v) {
+        Toast.makeText(requireContext(), v.getTag().toString(), Toast.LENGTH_SHORT).show();
+    }
+
+    @OnClick(R.id.btn_profile_edit)
+    public void onEditProfile(View v) {
+        String shopPk = mViewModel.getShopPk();
+
+        Intent intent = new Intent(requireContext(), EditProfileActivity.class);
+        intent.putExtra(EditProfileActivity.KEY_SHOP_PK, shopPk);
+        startActivity(intent);
+    }
+
+    @OnClick({R.id.btn_members, R.id.btn_notifications, R.id.btn_insights, R.id.btn_cuisine})
+    public void onClick(View v) {
+        Intent intent;
+        switch (v.getId()) {
+            case R.id.btn_members:
+                intent = new Intent(requireContext(), ShopMembersActivity.class);
+                startActivity(intent);
+                break;
+            case R.id.btn_notifications:
+                break;
+            case R.id.btn_insights:
+                break;
+            case R.id.btn_cuisine:
+                break;
+        }
     }
 
     @Override
-    public void onClick(View v) {
-        Intent intent;
-        switch (v.getId()){
-            case R.id.members:
-                break;
-            case R.id.notification:
-                break;
-            case R.id.insights:
-                break;
-            case R.id.review:
-                break;
-        }
-    }
-
-    public static Fragment getInstance(int targetId) {
-        return new ShopProfileFragment();
-    }
-
-    private class ImagePager extends PagerAdapter {
-
-        @Override
-        public Object instantiateItem(ViewGroup collection, int position) {
-            LayoutInflater inflater = LayoutInflater.from(collection.getContext());
-            ImageView imageView = new ImageView(collection.getContext());
-            imageView.setLayoutParams(new ViewGroup.LayoutParams(ViewPager.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT));
-            imageView.setImageResource(R.drawable.dummy_shop);
-            imageView.setScaleType(ImageView.ScaleType.CENTER_CROP);
-            collection.addView(imageView);
-            return imageView;
-        }
-
-        @Override
-        public void destroyItem(ViewGroup collection, int position, Object view) {
-            collection.removeView((View) view);
-        }
-
-        @Override
-        public int getCount() {
-            return 5;
-        }
-
-        @Override
-        public boolean isViewFromObject(View view, Object object) {
-            return view == object;
-        }
-    }
-    private class AboutPager extends RecyclerView.Adapter{
-
-        private static final int TYPE_INFO = 0;
-        private static final int TYPE_ADD = 1;
-
-        private List<String> aboutInfoList;
-
-        public AboutPager() {
-            aboutInfoList = getAboutInfo();
-        }
-        public AboutPager(List<String> Extras){
-        aboutInfoList=Extras;
-        }
-
-        public class InfoViewHolder extends RecyclerView.ViewHolder{
-            TextView text;
-            public InfoViewHolder(View itemView) {
-                super(itemView);
-                text = itemView.findViewById(R.id.text);
-            }
-            public void bind(String info){
-                text.setText(info);
-            }
-        }
-        public class AddInfoViewHolder extends RecyclerView.ViewHolder{
-            View container;
-            public AddInfoViewHolder(View itemView) {
-                super(itemView);
-                container = itemView;
-                container.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        //todo
-                        Toast.makeText(getContext(),"ADD MORE",Toast.LENGTH_SHORT).show();
-                    }
-                });
-            }
-
-        }
-
-
-
-        @NonNull
-        @Override
-        public RecyclerView.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-            if(viewType == TYPE_INFO){
-                View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.info_shop_item,parent,false);
-                return new InfoViewHolder(view);
-            }else {
-                View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.add_info_shop_item,parent,false);
-                return new AddInfoViewHolder(view);
-            }
-
-        }
-
-        @Override
-        public void onBindViewHolder(@NonNull RecyclerView.ViewHolder holder, int position) {
-            if(holder.getItemViewType() == TYPE_INFO) ((InfoViewHolder) holder).bind(aboutInfoList.get(position));
-        }
-
-        @Override
-        public int getItemCount() {
-            return aboutInfoList.size() + 1;
-        }
-
-        @Override
-        public int getItemViewType(int position) {
-            if(position == aboutInfoList.size()) return TYPE_ADD;
-            else return TYPE_INFO;
-        }
-
-        private List<String> getAboutInfo(){
-            List<String> list = new ArrayList<>();
-            for(int i = 0;i < 11;i++){
-                list.add("Info at position " + i);
-            }
-            return list;
-        }
+    public void onDestroy() {
+        super.onDestroy();
+        unbinder.unbind();
     }
 }

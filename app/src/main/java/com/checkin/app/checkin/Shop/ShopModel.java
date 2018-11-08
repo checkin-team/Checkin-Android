@@ -1,57 +1,51 @@
 package com.checkin.app.checkin.Shop;
 
 import com.checkin.app.checkin.Misc.LocationModel;
-import com.checkin.app.checkin.Utility.Util;
-import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
-/**
- * Created by Bhavik Patel on 18/08/2018.
- */
-
-//@Entity
-@JsonInclude(value = JsonInclude.Include.NON_NULL)
 public class ShopModel {
     @JsonProperty("pk")
-//    @Id(assignable = true)
-    private String pk;
-    private String name;
-    private String tagline;
-    private String logo;
-    private String phone;
-    private String email;
-    private String website;
+    protected String pk;
+
+    @JsonProperty("name")
+    protected String name;
+
+    @JsonProperty("tagline")
+    protected String tagline;
+
+    @JsonProperty("logo")
+    protected String logo;
+
+    @JsonProperty("covers")
+    protected String[] covers;
+
+    @JsonProperty("phone")
+    protected String phone;
+
+    @JsonProperty("email")
+    protected String email;
+
+    @JsonProperty("website")
+    protected String website;
 
     @JsonProperty("gstin")
-    private String gstIn;
+    protected String gstIn;
 
-    @JsonProperty("has_nonveg")
-    private boolean hasNonveg;
-    @JsonProperty("has_home_delivery")
-    private boolean hasHomeDelivery;
-    @JsonProperty("has_alcohol")
-    private boolean hasAlcohol;
-
-    @JsonProperty("cuisines")
-    private CharSequence[] cuisines;
-    @JsonProperty("categories")
-    private CharSequence[] categories;
-
-    private PAYMENT_MODE[] paymentModes;
-
+    protected PAYMENT_MODE[] paymentModes;
 
     @JsonProperty("location")
-    private LocationModel location;
+    protected LocationModel location;
     @JsonProperty("locality")
-    private String locality;
+    protected String locality;
 
     @JsonProperty("extra_data")
-    private String[] extraData;
+    protected String[] extraData;
 
-    private boolean verified;
-    private long followers;
-    private long checkins;
-    private float rating;
+    @JsonProperty("is_verified")
+    protected boolean verified;
+
+    @JsonProperty("is_active")
+    protected boolean active;
 
     public enum PAYMENT_MODE {
         CASH("csh"), PAYTM("ptm"), CARD("crd");
@@ -105,44 +99,16 @@ public class ShopModel {
         return logo;
     }
 
-    public boolean servesNonveg() {
-        return hasNonveg;
+    public String[] getCovers() {
+        return covers;
     }
 
-    public void setHasNonveg(boolean hasNonveg) {
-        this.hasNonveg = hasNonveg;
+    public boolean isVerified() {
+        return verified;
     }
 
-    public boolean hasHomeDelivery() {
-        return hasHomeDelivery;
-    }
-
-    public void setHasHomeDelivery(boolean hasHomeDelivery) {
-        this.hasHomeDelivery = hasHomeDelivery;
-    }
-
-    public boolean servesAlcohol() {
-        return hasAlcohol;
-    }
-
-    public void setHasAlcohol(boolean hasAlcohol) {
-        this.hasAlcohol = hasAlcohol;
-    }
-
-    public CharSequence[] getCuisines() {
-        return cuisines;
-    }
-
-    public void setCuisines(CharSequence... cuisines) {
-        this.cuisines = cuisines;
-    }
-
-    public CharSequence[] getCategories() {
-        return categories;
-    }
-
-    public void setCategories(CharSequence... categories) {
-        this.categories = categories;
+    public boolean isActive() {
+        return active;
     }
 
     public PAYMENT_MODE[] getPaymentModes() {
@@ -156,6 +122,20 @@ public class ShopModel {
             modes[i] = paymentModes[i].tag;
         }
         return modes;
+    }
+
+    public boolean isValidStatus() {
+        return this.isVerified() && this.isActive();
+    }
+
+    public String getShopStatus() {
+        String msg = "Shop is properly working.";
+        if (!isVerified()) {
+            msg = "Shop isn't verified yet.\nContact our support for immediate on-site verification.";
+        } else if (!isActive()) {
+            msg = "Shop isn't currently serving customers.";
+        }
+        return msg;
     }
 
     @JsonProperty("payment_mode")
@@ -187,31 +167,4 @@ public class ShopModel {
     public void setExtraData(String... extraData) {
         this.extraData = extraData;
     }
-
-    // -------------------------------
-
-    public boolean isVerified() {
-        return verified;
-    }
-
-    public long getFollowers() {
-        return followers;
-    }
-
-    public long getCheckins() {
-        return checkins;
-    }
-
-    public String formatFollowers() {
-        return Util.formatCount(followers);
-    }
-
-    public String formatCheckins() {
-        return Util.formatCount(checkins);
-    }
-
-    public float getRating() {
-        return rating;
-    }
-
 }

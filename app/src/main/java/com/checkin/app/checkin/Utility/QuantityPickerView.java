@@ -6,6 +6,7 @@ import android.view.GestureDetector;
 import android.view.MotionEvent;
 import android.view.View;
 
+import com.checkin.app.checkin.Misc.TextBaseAdapter;
 import com.checkin.app.checkin.R;
 import com.yarolegovich.discretescrollview.DiscreteScrollView;
 

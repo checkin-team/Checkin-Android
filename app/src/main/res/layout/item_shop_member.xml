@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="@dimen/height_card_normal"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:background="@drawable/bordered_card_white"
+    android:layout_marginTop="@dimen/spacing_normal"
+    android:orientation="horizontal"
+    android:paddingStart="@dimen/spacing_normal"
+    android:paddingEnd="@dimen/spacing_normal"
+    android:paddingTop="@dimen/spacing_small"
+    android:paddingBottom="@dimen/spacing_small">
+
+    <de.hdodenhof.circleimageview.CircleImageView
+        android:id="@+id/im_display_pic"
+        style="@style/LogoImageStyle"
+        tools:src="@drawable/flier"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"/>
+
+    <TextView
+        android:id="@+id/tv_display_name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        style="@style/GreyTextStyle"
+        tools:text="ABCDEF"
+        android:layout_marginStart="@dimen/spacing_normal"
+        app:layout_constraintStart_toEndOf="@id/im_display_pic"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@id/btn_role_edit"/>
+
+    <Button
+        android:id="@+id/btn_role_edit"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        tools:text="ASSIGN"
+        android:drawableEnd="@drawable/ic_edit_pencil"
+        style="@style/ButtonNeutralAction"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"/>
+
+
+</android.support.constraint.ConstraintLayout>

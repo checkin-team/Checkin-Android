@@ -42,7 +42,6 @@
             android:theme="@style/Theme.AppCompat.Light.NoActionBar" />
         <activity
             android:name=".Home.HomeActivity"
-            android:label="@string/title_activity_home"
             android:screenOrientation="sensorPortrait"
             android:theme="@style/AppTheme"
             tools:replace="screenOrientation" />
@@ -56,18 +55,20 @@
             android:name=".User.Friendship.FriendsListActivity"
             android:label="Friends"
             android:theme="@style/AppThemeWhiteActionBar" />
-        <activity android:name=".Shop.ShopPublicProfile.ShopActivity" />
-        <activity android:name=".Shop.ShopPrivateProfile.ShopActivity" />
+        <activity android:name=".Shop.ShopPublicProfile.ShopActivity"
+            android:screenOrientation="portrait" />
+        <activity android:name=".Shop.ShopPrivateProfile.ShopActivity"
+            android:screenOrientation="portrait" />
         <activity
             android:name=".Menu.SessionUserActivity"
-            android:label="@string/title_activity_session_user"
             android:screenOrientation="portrait"
             android:theme="@style/SessionTheme"
             android:windowSoftInputMode="adjustPan" />
         <activity android:name=".Misc.TransactionActivity" />
         <activity android:name=".Misc.FilterTransactions" />
         <activity android:name=".Misc.FaqActivity" />
-        <activity android:name=".RestaurantActivity.Waiter.WaitorWork"
+        <activity
+            android:name=".RestaurantActivity.Waiter.WaitorWork"
             android:label="WaitorWorkActivity"
             android:screenOrientation="sensorPortrait"
             android:theme="@style/AppTheme"
@@ -90,6 +91,10 @@
         <activity
             android:name=".Profile.ShopProfile.ShopProfileActivity2"
             android:screenOrientation="portrait" />
+        <activity
+            android:name=".Shop.ShopPrivateProfile.EditProfileActivity"
+            android:label="Edit Profile"
+            android:theme="@style/AppThemeWhiteActionBar" />
         <activity
             android:name=".Notifications.NotificationActivity"
             android:launchMode="singleTop">
@@ -117,11 +122,13 @@
                 <data android:scheme="@string/fb_login_protocol_scheme" />
             </intent-filter>
         </activity>
-        <activity android:name=".Search.SearchActivity"
-            android:theme="@style/AppTheme"></activity>
-        <activity android:name=".Misc.ShopMembersActivity"
-            android:screenOrientation="portrait"
+        <activity
+            android:name=".Search.SearchActivity"
+            android:theme="@style/AppTheme" />
+        <activity
+            android:name=".Shop.ShopPrivateProfile.ShopMembersActivity"
             android:label="MEMBERS"
+            android:screenOrientation="portrait"
             android:theme="@style/AppThemeWhiteActionBar" />
 
         <service

@@ -16,6 +16,8 @@ import com.checkin.app.checkin.Misc.GenericDetailModel;
 import com.checkin.app.checkin.Shop.ShopJoin.ShopJoinModel;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 
+import java.util.List;
+
 /**
  * Created by Bhavik Patel on 24/08/2018.
  */
@@ -23,7 +25,7 @@ import com.fasterxml.jackson.databind.node.ObjectNode;
 public class ShopRepository extends BaseRepository {
 
     private final WebApiService mWebService;
-//    private Box<ShopModel> mShopModel;
+//    private Box<RestaurantModel> mShopModel;
     private static ShopRepository INSTANCE;
 
     private ShopRepository(Context context) {
@@ -62,7 +64,7 @@ public class ShopRepository extends BaseRepository {
         }.getAsLiveData();
     }
 
-    public LiveData<Resource<ObjectNode>> updateShopDetails(final ShopModel shopModel) {
+    public LiveData<Resource<ObjectNode>> updateShopDetails(final RestaurantModel restaurantModel) {
         return new NetworkBoundResource<ObjectNode, ObjectNode>() {
             @Override
             protected boolean shouldUseLocalDb() {
@@ -72,7 +74,7 @@ public class ShopRepository extends BaseRepository {
             @NonNull
             @Override
             protected LiveData<ApiResponse<ObjectNode>> createCall() {
-                return new RetrofitLiveData<>(mWebService.postShopManageDetails(shopModel.getId(), shopModel));
+                return new RetrofitLiveData<>(mWebService.postRestaurantManageDetails(restaurantModel.getId(), restaurantModel));
             }
 
             @Override
@@ -82,8 +84,8 @@ public class ShopRepository extends BaseRepository {
         }.getAsLiveData();
     }
 
-    public LiveData<Resource<ShopModel>> getShopModel(String shopId) {
-        return new NetworkBoundResource<ShopModel, ShopModel> () {
+    public LiveData<Resource<RestaurantModel>> getShopModel(String shopId) {
+        return new NetworkBoundResource<RestaurantModel, RestaurantModel> () {
 
             @Override
             protected boolean shouldUseLocalDb() {
@@ -92,16 +94,16 @@ public class ShopRepository extends BaseRepository {
 
             @NonNull
             @Override
-            protected LiveData<ApiResponse<ShopModel>> createCall() {
-                return new RetrofitLiveData<>(mWebService.getShopDetails(shopId));
+            protected LiveData<ApiResponse<RestaurantModel>> createCall() {
+                return new RetrofitLiveData<>(mWebService.getRestaurantDetails(shopId));
             }
 
             @Override
-            protected void saveCallResult(ShopModel data) {  }
+            protected void saveCallResult(RestaurantModel data) {  }
         }.getAsLiveData();
     }
-    public LiveData<Resource<ShopModel>> getShopManageModel(String shopId) {
-        return new NetworkBoundResource<ShopModel, ShopModel> () {
+    public LiveData<Resource<RestaurantModel>> getShopManageModel(String shopId) {
+        return new NetworkBoundResource<RestaurantModel, RestaurantModel> () {
 
             @Override
             protected boolean shouldUseLocalDb() {
@@ -110,12 +112,32 @@ public class ShopRepository extends BaseRepository {
 
             @NonNull
             @Override
-            protected LiveData<ApiResponse<ShopModel>> createCall() {
-                return new RetrofitLiveData<>(mWebService.getShopManageDetails(shopId));
+            protected LiveData<ApiResponse<RestaurantModel>> createCall() {
+                return new RetrofitLiveData<>(mWebService.getRestaurantManageDetails(shopId));
             }
 
             @Override
-            protected void saveCallResult(ShopModel data) {  }
+            protected void saveCallResult(RestaurantModel data) {  }
+        }.getAsLiveData();
+    }
+
+    public LiveData<Resource<List<RestaurantModel>>> getShops() {
+        return new NetworkBoundResource<List<RestaurantModel>, List<RestaurantModel>>() {
+            @Override
+            protected boolean shouldUseLocalDb() {
+                return false;
+            }
+
+            @NonNull
+            @Override
+            protected LiveData<ApiResponse<List<RestaurantModel>>> createCall() {
+                return new RetrofitLiveData<>(mWebService.getRestaurants());
+            }
+
+            @Override
+            protected void saveCallResult(List<RestaurantModel> data) {
+
+            }
         }.getAsLiveData();
     }
 }

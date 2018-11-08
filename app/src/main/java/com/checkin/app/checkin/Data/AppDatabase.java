@@ -41,8 +41,8 @@ public class AppDatabase {
         return getBoxStore(context).boxFor(UserModel.class);
     }*/
 
-    /*public static Box<ShopModel> getShopModel(final Context context) {
-        return getBoxStore(context).boxFor(ShopModel.class);
+    /*public static Box<RestaurantModel> getShopModel(final Context context) {
+        return getBoxStore(context).boxFor(RestaurantModel.class);
     }*/
 
     public static Box<ItemCustomizationFieldModel> getItemCustomizationFieldModel(final Context context) {

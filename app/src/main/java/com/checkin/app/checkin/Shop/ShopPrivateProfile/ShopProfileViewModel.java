@@ -5,11 +5,10 @@ import android.arch.lifecycle.LiveData;
 import android.arch.lifecycle.MediatorLiveData;
 import android.arch.lifecycle.MutableLiveData;
 import android.support.annotation.NonNull;
-import android.util.Log;
 
 import com.checkin.app.checkin.Data.BaseViewModel;
 import com.checkin.app.checkin.Data.Resource;
-import com.checkin.app.checkin.Shop.ShopModel;
+import com.checkin.app.checkin.Shop.RestaurantModel;
 import com.checkin.app.checkin.Shop.ShopRepository;
 import com.fasterxml.jackson.databind.JsonNode;
 
@@ -21,7 +20,8 @@ import java.util.List;
 
 public class ShopProfileViewModel extends BaseViewModel{
     private ShopRepository mRepository;
-    private MediatorLiveData<Resource<ShopModel>> mShopData = new MediatorLiveData<>();
+    private String mShopPk;
+    private MediatorLiveData<Resource<RestaurantModel>> mShopData = new MediatorLiveData<>();
     private MutableLiveData<Boolean> mCollectData = new MutableLiveData<>();
     private MutableLiveData<JsonNode> mErrors = new MutableLiveData<>();
 
@@ -31,18 +31,16 @@ public class ShopProfileViewModel extends BaseViewModel{
         mCollectData.setValue(false);
     }
 
-    public LiveData<Resource<ShopModel>> getShopData() {
-        Log.e("View Model","Maine data bheja"+mShopData.toString()
-        );
+    public LiveData<Resource<RestaurantModel>> getShopData() {
         return mShopData;
     }
 
-    public ShopModel updateAspectData(
-            CharSequence[] cuisines, CharSequence[] categories, ShopModel.PAYMENT_MODE[] paymentModes,
+    public RestaurantModel updateAspectData(
+            CharSequence[] cuisines, CharSequence[] categories, RestaurantModel.PAYMENT_MODE[] paymentModes,
             boolean hasNonVeg, boolean hasAlcohol, boolean hasHomeDelivery, List<String> extraData) {
-        Resource<ShopModel> resource = mShopData.getValue();
+        Resource<RestaurantModel> resource = mShopData.getValue();
         if (resource != null && resource.status == Resource.Status.SUCCESS && resource.data != null) {
-            ShopModel shop = resource.data;
+            RestaurantModel shop = resource.data;
             shop.setCuisines(cuisines);
             shop.setCategories(categories);
             shop.setPaymentModes(paymentModes);
@@ -59,7 +57,7 @@ public class ShopProfileViewModel extends BaseViewModel{
         return mCollectData;
     }
 
-    public void updateShop(ShopModel shop) {
+    public void updateShop(RestaurantModel shop) {
         mData.addSource(mRepository.updateShopDetails(shop), mData::setValue);
     }
 
@@ -76,12 +74,16 @@ public class ShopProfileViewModel extends BaseViewModel{
     }
 
     public void fetchShop(String shopPk) {
-        mShopData.addSource(mRepository.getShopManageModel(shopPk), mShopData::setValue);
-        Log.e("ViewModel","Shop is fetched from server");
+        mShopPk = shopPk;
+        mShopData.addSource(mRepository.getShopModel(shopPk), mShopData::setValue);
     }
 
-    public void useShop(ShopModel shopModel) {
-        mShopData.setValue(Resource.success(shopModel));
+    public String getShopPk() {
+        return mShopPk;
+    }
+
+    public void useShop(RestaurantModel restaurantModel) {
+        mShopData.setValue(Resource.success(restaurantModel));
     }
 
     @Override
