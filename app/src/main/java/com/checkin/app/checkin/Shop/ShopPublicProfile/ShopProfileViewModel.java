@@ -3,8 +3,7 @@ package com.checkin.app.checkin.Shop.ShopPublicProfile;
 import android.Manifest;
 import android.app.Application;
 import android.arch.lifecycle.LiveData;
-import android.arch.lifecycle.ViewModel;
-import android.arch.lifecycle.ViewModelProvider;
+import android.arch.lifecycle.MediatorLiveData;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
@@ -14,7 +13,7 @@ import android.support.v4.app.ActivityCompat;
 
 import com.checkin.app.checkin.Data.BaseViewModel;
 import com.checkin.app.checkin.Data.Resource;
-import com.checkin.app.checkin.Shop.ShopModel;
+import com.checkin.app.checkin.Shop.RestaurantModel;
 import com.checkin.app.checkin.Shop.ShopRepository;
 
 /**
@@ -24,21 +23,19 @@ import com.checkin.app.checkin.Shop.ShopRepository;
 class ShopProfileViewModel extends BaseViewModel {
 
     private final ShopRepository mRepository;
-    private LiveData<Resource<ShopModel>> mShopData;
+    private MediatorLiveData<Resource<RestaurantModel>> mShopData = new MediatorLiveData<>();
 
     ShopProfileViewModel(@NonNull Application application) {
         super(application);
         mRepository = ShopRepository.getInstance(application);
     }
 
-    public LiveData<Resource<ShopModel>> getShopModel(long shopId) {
-        if (mShopData == null)
-            mShopData = mRepository.getShopModel(shopId);
+    public LiveData<Resource<RestaurantModel>> getShopData() {
         return mShopData;
     }
 
     public void callShop(Context context) {
-        Resource<ShopModel> shopResource = mShopData.getValue();
+        Resource<RestaurantModel> shopResource = mShopData.getValue();
         if (shopResource == null || shopResource.data == null || shopResource.status != Resource.Status.SUCCESS)
             return;
         if (ActivityCompat.checkSelfPermission(context, Manifest.permission.CALL_PHONE) != PackageManager.PERMISSION_GRANTED)
@@ -49,19 +46,8 @@ class ShopProfileViewModel extends BaseViewModel {
         context.startActivity(intent);
     }
 
-    public static class Factory extends ViewModelProvider.NewInstanceFactory {
-        @NonNull
-        private final Application mApplication;
-
-        public Factory(@NonNull Application application) {
-            mApplication = application;
-        }
-
-        @NonNull
-        @Override
-        public <T extends ViewModel> T create(@NonNull Class<T> modelClass) {
-            return (T) new ShopProfileViewModel(mApplication);
-        }
+    public void fetchShop(String shopPk) {
+        mShopData.addSource(mRepository.getShopModel(shopPk), mShopData::setValue);
     }
 
     @Override

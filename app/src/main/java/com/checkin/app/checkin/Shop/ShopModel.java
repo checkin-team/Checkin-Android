@@ -1,91 +1,82 @@
 package com.checkin.app.checkin.Shop;
 
-import com.checkin.app.checkin.Utility.Util;
+import com.checkin.app.checkin.Misc.LocationModel;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
-import io.objectbox.annotation.Entity;
-import io.objectbox.annotation.Id;
-
-/**
- * Created by Bhavik Patel on 18/08/2018.
- */
-
-@Entity
 public class ShopModel {
-    @Id(assignable = true) private long id;
-    private String name;
-    private String bio;
-    private boolean active;
-    @JsonProperty(value = "only_vegetarian") private boolean onlyVegetarian;
-    private String address;
-    private String city;
-    //todo location
-    private String phone;
-    private String email;
-    private String website;
-    private boolean verified;
-    private long followers;
-    private long checkins;
-    private float rating;
+    @JsonProperty("pk")
+    protected String pk;
+
+    @JsonProperty("name")
+    protected String name;
+
+    @JsonProperty("tagline")
+    protected String tagline;
+
+    @JsonProperty("logo")
+    protected String logo;
+
+    @JsonProperty("covers")
+    protected String[] covers;
+
+    @JsonProperty("phone")
+    protected String phone;
+
+    @JsonProperty("email")
+    protected String email;
+
+    @JsonProperty("website")
+    protected String website;
+
+    @JsonProperty("gstin")
+    protected String gstIn;
+
+    protected PAYMENT_MODE[] paymentModes;
+
+    @JsonProperty("location")
+    protected LocationModel location;
+    @JsonProperty("locality")
+    protected String locality;
+
+    @JsonProperty("extra_data")
+    protected String[] extraData;
+
+    @JsonProperty("is_verified")
+    protected boolean verified;
+
+    @JsonProperty("is_active")
+    protected boolean active;
+
+    public enum PAYMENT_MODE {
+        CASH("csh"), PAYTM("ptm"), CARD("crd");
+
+        String tag;
+
+        PAYMENT_MODE(String tag) {
+            this.tag = tag;
+        }
+
+        public static PAYMENT_MODE getByTag(String tag) {
+            for (PAYMENT_MODE mode : PAYMENT_MODE.values()) {
+                if (mode.tag.contentEquals(tag))
+                    return mode;
+            }
+            return CASH;
+        }
+    }
 
     public ShopModel() {}
 
-
-    public ShopModel(String name, String bio, String city, String phone, float rating, long followers, long checkins) {
-        this.name = name;
-        this.bio = bio;
-        this.active = true;
-        this.onlyVegetarian = false;
-        this.city = city;
-        this.phone = phone;
-        this.verified = true;
-        this.rating = rating;
-        this.followers = followers;
-        this.checkins = checkins;
+    public ShopModel(String pk) {
+        this.pk = pk;
     }
 
-    public long getId() {
-        return id;
-    }
-
-    public void setId(long id) {
-        this.id = id;
+    public String getId() {
+        return pk;
     }
 
     public String getName() {
         return name;
-    }
-
-    public String getBio() {
-        return bio;
-    }
-
-    public boolean isActive() {
-        return active;
-    }
-
-    public boolean isOnlyVegetarian() {
-        return onlyVegetarian;
-    }
-
-    public String getAddress() {
-        return address;
-    }
-
-    public long getFollowers() {
-        return followers;
-    }
-
-    public long getCheckins() {
-        return checkins;
-    }
-
-    public String formatFollowers() {
-        return Util.formatCount(followers);
-    }
-
-    public String formatCheckins() {
-        return Util.formatCount(checkins);
     }
 
     public String getPhone() {
@@ -100,15 +91,80 @@ public class ShopModel {
         return website;
     }
 
+    public String getTagline() {
+        return tagline;
+    }
+
+    public String getLogoUrl() {
+        return logo;
+    }
+
+    public String[] getCovers() {
+        return covers;
+    }
+
     public boolean isVerified() {
         return verified;
     }
 
-    public float getRating() {
-        return rating;
+    public boolean isActive() {
+        return active;
     }
 
-    public String getCity() {
-        return city;
+    public PAYMENT_MODE[] getPaymentModes() {
+        return paymentModes;
+    }
+
+    @JsonProperty("payment_mode")
+    public String[] serializePaymentModes() {
+        String[] modes = new String[paymentModes.length];
+        for (int i = 0; i < paymentModes.length; i++) {
+            modes[i] = paymentModes[i].tag;
+        }
+        return modes;
+    }
+
+    public boolean isValidStatus() {
+        return this.isVerified() && this.isActive();
+    }
+
+    public String getShopStatus() {
+        String msg = "Shop is properly working.";
+        if (!isVerified()) {
+            msg = "Shop isn't verified yet.\nContact our support for immediate on-site verification.";
+        } else if (!isActive()) {
+            msg = "Shop isn't currently serving customers.";
+        }
+        return msg;
+    }
+
+    @JsonProperty("payment_mode")
+    public void setPaymentModes(String... paymentModes) {
+        this.paymentModes = new PAYMENT_MODE[paymentModes.length];
+        int i = 0;
+        for (String mode : paymentModes) {
+            this.paymentModes[i] = PAYMENT_MODE.getByTag(mode);
+            i++;
+        }
+    }
+
+    public void setPaymentModes(PAYMENT_MODE... paymentModes) {
+        this.paymentModes = paymentModes;
+    }
+
+    public LocationModel getLocation() {
+        return location;
+    }
+
+    public String getLocality() {
+        return locality;
+    }
+
+    public String[] getExtraData() {
+        return extraData;
+    }
+
+    public void setExtraData(String... extraData) {
+        this.extraData = extraData;
     }
 }

@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:background="@color/white"
+    android:orientation="vertical"
+    android:theme="@style/GreyTextContainer">
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/appbar_white_background"
+        android:orientation="horizontal">
+        <ImageView
+            android:id="@+id/btn_refresh"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@android:drawable/ic_menu_revert"
+            android:layout_gravity="center_vertical"/>
+        <Spinner
+            android:id="@+id/account_selector"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_gravity="center_vertical"
+            android:spinnerMode="dropdown"
+            android:tooltipText="Choose your account"
+            android:textAlignment="center"
+            style="@style/SpinnerStyle"/>
+    </LinearLayout>
+    <de.hdodenhof.circleimageview.CircleImageView
+        android:id="@+id/im_context"
+        android:layout_width="@dimen/size_logo"
+        android:layout_height="@dimen/size_logo"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="@dimen/spacing_normal"
+        android:src="@color/brownish_grey" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/spacing_normal"
+        android:text="@string/data_unavailable"
+        android:id="@+id/tv_context"
+        android:layout_gravity="center_horizontal"
+        style="@style/GreyTitleStyle"/>
+
+    <TextView
+        android:id="@+id/tv_account_desc"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        tools:text="Waiter's account"
+        android:layout_marginTop="@dimen/spacing_small" />
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_marginTop="@dimen/spacing_small"
+        android:background="@drawable/ic_line" />
+</LinearLayout>

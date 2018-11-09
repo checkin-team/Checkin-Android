@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.v7.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/card_view"
+    android:layout_width="98dp"
+    app:cardBackgroundColor="@color/cardview_shadow_end_color"
+    android:layout_height="49dp"
+    android:layout_marginTop="20dp"
+    app:cardElevation="0dp"
+    android:layout_marginEnd="@dimen/spacing_small"
+    >
+
+
+
+        <FrameLayout
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:layout_gravity="bottom"
+            android:layout_alignParentEnd="true"
+            android:id="@+id/table_oval"
+            android:layout_centerInParent="true"
+            android:background="@drawable/combined_shape1">
+
+
+
+            <TextView
+                android:id="@+id/table_label"
+                android:layout_width="wrap_content"
+
+                android:layout_height="20dp"
+
+                android:layout_gravity="center"
+                android:lines="1"
+                android:text="Dummy"
+                android:textColor="@color/white" />
+
+
+        </FrameLayout>
+    <android.support.constraint.ConstraintLayout
+        android:layout_width="match_parent"
+        android:id="@+id/item_no_Container"
+        android:layout_height="match_parent">
+        <android.support.constraint.Guideline
+            android:id="@+id/guideline"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            app:layout_constraintGuide_begin="73dp" />
+
+
+        <TextView
+            android:layout_width="17dp"
+            android:layout_height="17dp"
+            android:id="@+id/text_no_Items"
+            android:background="@drawable/oval_3"
+            android:layout_marginBottom="40dp"
+            android:text="3"
+            android:gravity="center"
+            app:layout_constraintStart_toEndOf="@id/guideline"
+            app:layout_constraintTop_toTopOf="parent"
+            >
+
+
+
+
+        </TextView>
+    </android.support.constraint.ConstraintLayout>
+</android.support.v7.widget.CardView>

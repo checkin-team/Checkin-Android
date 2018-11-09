@@ -37,7 +37,8 @@ import butterknife.OnClick;
 public class ProfileEditActivity extends AppCompatActivity implements AuthFragmentInteraction {
     private static final String TAG = ProfileEditActivity.class.getSimpleName();
 
-    @BindView(R.id.et_name) EditText etName;
+    @BindView(R.id.et_first_name) EditText etFirstName;
+    @BindView(R.id.et_last_name) EditText etLastName;
     @BindView(R.id.et_location) EditText etLocation;
     @BindView(R.id.et_bio) EditText etBio;
     @BindView(R.id.et_phone) EditText etPhone;
@@ -181,7 +182,8 @@ public class ProfileEditActivity extends AppCompatActivity implements AuthFragme
 
 
     private void setUi(UserModel user) {
-        etName.setText(user.getFullName());
+        etFirstName.setText(user.getFirstName());
+        etLastName.setText(user.getLastName());
         etLocation.setText(user.getAddress());
         etBio.setText(user.getBio());
         etPhone.setText(user.getPhoneNumber());
@@ -200,10 +202,11 @@ public class ProfileEditActivity extends AppCompatActivity implements AuthFragme
         switch (item.getItemId()) {
             case R.id.menu_item_done: {
                 Toast.makeText(this, "Done", Toast.LENGTH_SHORT).show();
-                String name = etName.getText().toString();
+                String firstName = etFirstName.getText().toString();
+                String lastName = etLastName.getText().toString();
                 String location = etLocation.getText().toString();
                 String bio = etBio.getText().toString();
-                mUserViewModel.postUserData(name, location, bio);
+                mUserViewModel.postUserData(firstName, lastName, location, bio);
                 return true;
             }
         }

@@ -1,7 +1,6 @@
 <resources xmlns:tools="http://schemas.android.com/tools">
     <string name="app_name">Check-In</string>
     <string name="account_type">com.checkin.accounts</string>
-    <string name="title_activity_check">check</string>
 
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
@@ -10,31 +9,12 @@
     <string name="appbar_scrolling_view_behavior" translatable="false">android.support.design.widget.AppBarLayout$ScrollingViewBehavior</string>
 
     <string name="action_settings">Settings</string>
-    <string name="title_activity_shop">shop</string>
-    <string name="menu_layout_title">Menu</string>
-    <string name="menu_layout_items_count">Number of items:</string>
-    <string name="menu_layout_total_price">Total cost:</string>
-    <string name="layout_button_done">Finish</string>
-    <string name="layout_button_proceed">Next</string>
-    <string name="username"><font color="#af1014">Enter Username</font></string>
 
-    <string name="hello_blank_fragment">Hello blank fragment</string>
-    <string name="title_activity_session_user">SessionUserActivity</string>
-    <string name="tab_text_1">Basic Info</string>
-    <string name="tab_text_2">Aspect</string>
-    <string name="section_format">Hello World from section: %1$d</string>
     <string name="tab_menu">Menu</string>
     <string name="tab_session_detail">Detail</string>
     <string name="action_search">Search</string>
     <string name="action_finish">Finish</string>
     <string name="action_filter">Filter Items</string>
-    <string name="menu_item_default_price">-</string>
-    <string name="title_activity_login">LoginActivity</string>
-    <string name="title_login_help">Locate your account</string>
-    <string name="bottom_text_need_help">Need help?</string>
-    <string name="subtitle_login_help">Enter your CheckIn phone number linked to your account</string>
-    <string name="create_new_password">Create a new password</string>
-    <string name="expand_text">read more</string>
 
     <!--for bottomnav bar-->
 
@@ -53,15 +33,10 @@
     <!-- default floating action button behavior -->
     <string name="bbn_fab_default_behavior" translatable="false" tools:ignore="UnusedResources">it.sephiroth.android.library.bottomnavigation.FloatingActionButtonBehavior</string>
 
-    <string name="title_activity_home">HomeActivity</string>
-    <string name="nav_header_title">Nav Header Title</string>
-    <string name="nav_header_subtitle">Nav Header Subtitle</string>
-    <string name="nav_header_desc">Navigation header</string>
     <string name="shop_status_check">Check Status</string>
     <string name="home_text_qrscanner">Scan QR!</string>
     <string name="home_text_delivery">Delivery</string>
     <string name="home_text_offers">Offers</string>
-    <string name="reset_my_password">Reset My Password</string>
     <string name="check_in_wallet">Check-In Wallet</string>
     <string name="home_text_dining">Dine In</string>
     <string name="text_add_notifications">Notifications</string>
@@ -71,14 +46,9 @@
     <string name="menu_drawer_close">Close Menu Cart drawer</string>
     <string name="active_session">Active Session</string>
 
-    <!--shopProfile-->
-    <string name="shop_profile_about_cusine">"C\nU\nS\nI\nN\nE\n&gt;"</string>
-    <string name="shop_profile_about_review">"R\nE\nV\nI\nE\nW\n&lt;"</string>
-
     <string name="facebook_app_id">150714782397445</string>
     <string name="fb_login_protocol_scheme">fb150714782397445</string>
 
-    <string name="title_activity_signup">SignupActivity</string>
     <string name="btn_cancel">Cancel</string>
     <string name="item_non_cancelable">Non-Cancelable</string>
     <string name="title_activity_shop_login">ShopLogin</string>
@@ -92,8 +62,7 @@
 
 
     <string name="com.twitter.sdk.android.CONSUMER_KEY">vOWuRU7yx1Uf3xjaMIpSShUXX</string>
-    <string name="com.twitter.sdk.android.CONSUMER_SECRET">DESPxLsIghIAkFiDKN3ljZPzY0WLWgc1VcYAwAku1tq0NMxtr0
-</string>
+    <string name="com.twitter.sdk.android.CONSUMER_SECRET">DESPxLsIghIAkFiDKN3ljZPzY0WLWgc1VcYAwAku1tq0NMxtr0</string>
 
     <!--notification-->
     <string name="notif_appbar_title">NOTIFICATIONS</string>
@@ -113,7 +82,6 @@
     <string name="no_location_data_provided">No location data provided</string>
     <string name="service_not_available">Sorry, the service is not available</string>
     <string name="invalid_lat_long_used">Invalid latitude or longitude used</string>
-    <string name="title_activity_maps">Map</string>
     <string name="text_app_join">Enter</string>
     <string name="product_tag_line">When Ease meets Tech</string>
     <string name="error_authentication_google">Google authentication failed.</string>
@@ -127,12 +95,33 @@
     <string name="action_follow">Follow</string>
     <string name="info_requested">Requested</string>
     <string name="action_message">Message</string>
-    <string name="status_loading">Working hard to fetch your data...</string>
+    <string name="status_loading">Working hard to fetch your data…</string>
     <string name="action_profile_edit">Edit Profile</string>
     <string name="info_following">Following</string>
     <string name="action_reject">Reject</string>
     <string name="action_accept">Accept</string>
     <string name="title_shop_basic_info">Basic Info</string>
     <string name="action_next">Next</string>
-    <string name="title_activity_edit_shop_profile">EditShopProfileActivity</string>
+    <string name="action_logout">Logout</string>
+    <string name="data_unavailable">Loading…</string>
+    <string name="positive_yes">Yes</string>
+    <string name="negative_no">No</string>
+    <string name="title_shop_aspects">Aspects</string>
+
+    <string name="role_prompt">Choose a role</string>
+    <string name="action_shop_members">Members</string>
+    <string name="action_shop_insights">Insights</string>
+    <string name="action_notification">Notification</string>
+    <string name="action_cuisine">Cuisines</string>
+    <string name="action_call">Call</string>
+    <string name="action_navigate">Navigate</string>
+
+    <string-array name="role_array">
+        <item>Owner</item>
+        <item>Shop Admin</item>
+        <item>Restaurant Manager</item>
+        <item>Waiter</item>
+
+    </string-array>
+
 </resources>

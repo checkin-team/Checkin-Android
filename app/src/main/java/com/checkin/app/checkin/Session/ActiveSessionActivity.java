@@ -23,8 +23,8 @@ import com.checkin.app.checkin.Data.Resource;
 import com.checkin.app.checkin.R;
 import com.checkin.app.checkin.User.UserModel;
 import com.checkin.app.checkin.User.NonPersonalProfile.UserViewModel;
-import com.checkin.app.checkin.Utility.SelectListItem;
-import com.checkin.app.checkin.Utility.SelectListViewAdapter;
+import com.checkin.app.checkin.Misc.SelectListItem;
+import com.checkin.app.checkin.Misc.SelectListViewAdapter;
 import com.checkin.app.checkin.Utility.Util;
 import com.github.javiersantos.materialstyleddialogs.MaterialStyledDialog;
 import com.github.javiersantos.materialstyleddialogs.enums.Style;
@@ -82,8 +82,6 @@ public class ActiveSessionActivity extends AppCompatActivity implements ActiveSe
                 }
                 default: {
                     Log.e(resource.status.name(), resource.message == null ? "Null" : resource.message);
-                    Toast.makeText(ActiveSessionActivity.this, "Error fetching active session! Status: " +
-                            resource.status.toString() + "\nDetails: " + resource.message, Toast.LENGTH_LONG).show();
                 }
             }
         });

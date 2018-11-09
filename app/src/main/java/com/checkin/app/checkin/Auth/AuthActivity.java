@@ -113,7 +113,15 @@ public class AuthActivity extends AppCompatActivity implements AuthFragmentInter
                 successAuth(resource.data);
             } else if (resource.status == Resource.Status.ERROR_INVALID_REQUEST) {
                 JsonNode error = resource.getErrorBody();
-                if (error != null) {
+                if (error == null)
+                    return;
+                if (error.has("errors")) {
+                    String msg = error.get("errors").get(0).asText();
+                    Toast.makeText(getApplicationContext(), msg + "\nTry again.", Toast.LENGTH_SHORT).show();
+                    if (user != null)
+                        user.delete();
+                }
+                else if (error.has("username")) {
                     mAuthViewModel.showError(error);
                 } else {
                     Toast.makeText(getApplicationContext(), resource.message, Toast.LENGTH_SHORT).show();

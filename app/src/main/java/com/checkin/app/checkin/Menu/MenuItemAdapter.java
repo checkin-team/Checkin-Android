@@ -13,12 +13,11 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.checkin.app.checkin.Data.Resource;
 import com.checkin.app.checkin.R;
 import com.checkin.app.checkin.Utility.ItemClickSupport;
 import com.checkin.app.checkin.Utility.QuantityPickerView;
 import com.checkin.app.checkin.Utility.QuantityPickerView.Direction;
-import com.checkin.app.checkin.Utility.TextBaseAdapter;
+import com.checkin.app.checkin.Misc.TextBaseAdapter;
 import com.checkin.app.checkin.Utility.Util;
 import com.golovin.fluentstackbar.FluentSnackbar;
 import com.yarolegovich.discretescrollview.DiscreteScrollView;
@@ -43,9 +42,7 @@ public class MenuItemAdapter extends RecyclerView.Adapter<MenuItemAdapter.ItemVi
     public void setItemInteractionListener (OnItemInteractionListener listener) {
         mItemInteractionListener= listener;
     }
-    public void setItemInteractionListener1 (OnItemInteractionListener listener) {
-        mItemInteractionListener= listener;
-    }
+
     public void setActivate(boolean activate){
         this.activate=activate;
     }

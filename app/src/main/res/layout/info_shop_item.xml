@@ -17,7 +17,7 @@
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/noun_check_1231595" />
+        app:srcCompat="@drawable/ic_check_small" />
 
     <TextView
         android:id="@+id/text"

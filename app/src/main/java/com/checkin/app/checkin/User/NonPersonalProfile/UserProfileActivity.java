@@ -208,6 +208,11 @@ public class UserProfileActivity extends BaseActivity {
         startActivity(intent);
     }
 
+    @OnClick(R.id.container_checkins)
+    public void onShowCheckins() {
+        startActivity(new Intent(getApplicationContext(), UserCheckinsActivity.class));
+    }
+
 //    @Override
 //    public boolean onTouchEvent(MotionEvent event){
 //        int screenHeight = vRoot.getHeight();

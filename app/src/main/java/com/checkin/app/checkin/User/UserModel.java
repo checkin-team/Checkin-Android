@@ -17,6 +17,12 @@ public class UserModel {
 
     @JsonProperty("username") private String username;
 
+    @JsonProperty("first_name")
+    private String firstName;
+
+    @JsonProperty("last_name")
+    private String lastName;
+
     @JsonProperty("full_name")
     private String fullName;
 
@@ -71,6 +77,14 @@ public class UserModel {
 
     public String getUsername() {
         return username;
+    }
+
+    public String getFirstName() {
+        return firstName;
+    }
+
+    public String getLastName() {
+        return lastName;
     }
 
     public String getFullName() {

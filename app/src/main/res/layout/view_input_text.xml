@@ -10,5 +10,5 @@
         android:layout_height="match_parent"
         android:paddingStart="@dimen/spacing_small"
         android:paddingEnd="@dimen/spacing_small"
-        android:background="@drawable/background_textbox"/>
+        style="@style/InputTextStyle"/>
 </FrameLayout>

@@ -10,87 +10,33 @@
         android:id="@+id/tv_title"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/spacing_large"
+        android:layout_marginTop="@dimen/spacing_normal"
         android:text="@string/title_shop_basic_info"
         style="@style/GreyTitleStyle"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <EditText
-        android:id="@+id/et_name"
-        android:layout_width="match_parent"
-        android:layout_height="@dimen/height_textbox_normal"
-        android:layout_marginEnd="@dimen/spacing_extra_large"
-        android:layout_marginStart="@dimen/spacing_extra_large"
-        android:layout_marginTop="@dimen/spacing_large"
-        android:hint="Business Name"
-        style="@style/InputTextStyle"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tv_title" />
-
-    <EditText
-        android:id="@+id/et_gstin"
-        android:layout_width="match_parent"
-        android:layout_height="@dimen/height_textbox_normal"
-        android:layout_marginEnd="@dimen/spacing_extra_large"
-        android:layout_marginStart="@dimen/spacing_extra_large"
-        android:layout_marginTop="@dimen/spacing_normal"
-        android:hint="GST Identification Number"
-        style="@style/InputTextStyle"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/et_name" />
-
     <FrameLayout
-        android:id="@+id/container_location"
+        android:id="@+id/fragment_container"
         android:layout_width="match_parent"
-        android:layout_height="@dimen/height_textbox_normal"
-        android:layout_marginEnd="@dimen/spacing_extra_large"
-        android:layout_marginStart="@dimen/spacing_extra_large"
+        android:layout_height="0dp"
         android:layout_marginTop="@dimen/spacing_normal"
-        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_marginBottom="@dimen/spacing_normal"
+        app:layout_constraintTop_toBottomOf="@id/tv_title"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/et_gstin">
-        <EditText
-            android:id="@+id/et_location"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:hint="Address"
-            style="@style/InputTextStyle" />
-        <ImageView
-            android:id="@+id/im_maps"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:src="@drawable/ic_maps"
-            android:layout_gravity="end"
-            android:layout_marginEnd="@dimen/spacing_tiny"
-            android:layout_marginTop="@dimen/spacing_tiny"
-            android:layout_marginBottom="@dimen/spacing_tiny"/>
-    </FrameLayout>
-
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/spacing_small"
-        android:text="Locate your business on Google Maps"
-        android:textColor="@color/pinkish_grey"
-        android:textSize="@dimen/font_small"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/container_location" />
+        app:layout_constraintBottom_toTopOf="@id/btn_next"/>
 
     <Button
         android:id="@+id/btn_next"
         android:layout_width="match_parent"
-        android:layout_height="@dimen/button_height_tall"
         android:layout_marginEnd="@dimen/spacing_extra_large"
         android:layout_marginStart="@dimen/spacing_extra_large"
-        android:layout_marginTop="@dimen/spacing_gigantic"
+        android:layout_marginBottom="@dimen/spacing_normal"
         style="@style/ButtonNextAction"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/container_location" />
+        app:layout_constraintBottom_toBottomOf="parent" />
 
 </android.support.constraint.ConstraintLayout>

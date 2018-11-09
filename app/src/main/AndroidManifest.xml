@@ -17,7 +17,6 @@
         android:maxSdkVersion="22" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
-
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
 
     <application
@@ -43,52 +42,63 @@
             android:theme="@style/Theme.AppCompat.Light.NoActionBar" />
         <activity
             android:name=".Home.HomeActivity"
-            android:label="@string/title_activity_home"
             android:screenOrientation="sensorPortrait"
             android:theme="@style/AppTheme"
             tools:replace="screenOrientation" />
-
         <activity android:name=".User.NonPersonalProfile.UserProfileActivity" />
         <activity android:name=".User.PersonalProfile.UserProfileActivity" />
-        <activity android:name=".User.PersonalProfile.ProfileEditActivity"
+        <activity android:name=".User.NonPersonalProfile.UserCheckinsActivity"
+            android:theme="@style/Theme.AppCompat.Light"
+            android:parentActivityName=".User.NonPersonalProfile.UserProfileActivity">
+        </activity>
+        <activity
+            android:name=".User.PersonalProfile.ProfileEditActivity"
             android:label="Edit Profile"
-            android:theme="@style/AppThemeWhiteActionBar"/>
-        <activity android:name=".User.Friendship.FriendsListActivity"
+            android:theme="@style/AppThemeWhiteActionBar" />
+        <activity
+            android:name=".User.Friendship.FriendsListActivity"
             android:label="Friends"
             android:theme="@style/AppThemeWhiteActionBar" />
-
-        <activity android:name=".Shop.ShopPublicProfile.ShopActivity" />
-        <activity android:name=".Shop.ShopPrivateProfile.ShopActivity" />
+        <activity android:name=".Shop.ShopPublicProfile.ShopActivity"
+            android:screenOrientation="portrait" />
+        <activity android:name=".Shop.ShopPrivateProfile.ShopActivity"
+            android:screenOrientation="portrait" />
         <activity
             android:name=".Menu.SessionUserActivity"
-            android:label="@string/title_activity_session_user"
             android:screenOrientation="portrait"
             android:theme="@style/SessionTheme"
             android:windowSoftInputMode="adjustPan" />
-
         <activity android:name=".Misc.TransactionActivity" />
         <activity android:name=".Misc.FilterTransactions" />
         <activity android:name=".Misc.FaqActivity" />
         <activity
+            android:name=".RestaurantActivity.Waiter.WaitorWork"
+            android:label="WaitorWorkActivity"
+            android:screenOrientation="sensorPortrait"
+            android:theme="@style/AppTheme"
+            tools:replace="screenOrientation" />
+        <activity
             android:name=".Session.ActiveSessionActivity"
             android:windowSoftInputMode="adjustNothing" />
-
         <activity
             android:name=".Shop.ShopJoin.BusinessFeaturesActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppThemeWhiteActionBar" />
         <activity
             android:name=".Shop.ShopJoin.ContactVerifyActivity"
-            android:parentActivityName=".Home.HomeActivity"/>
-        <activity android:name=".Shop.ShopJoin.ShopJoinActivity"
+            android:parentActivityName=".Home.HomeActivity" />
+        <activity
+            android:name=".Shop.ShopJoin.ShopJoinActivity"
             android:parentActivityName=".Shop.ShopJoin.ContactVerifyActivity"
-            android:theme="@style/AppThemeWhiteActionBar"/>
-        <activity android:name=".Shop.ShopReviewsActivity"></activity>
-
+            android:theme="@style/AppThemeWhiteActionBar" />
+        <activity android:name=".Shop.ShopReviewsActivity" />
         <activity
             android:name=".Profile.ShopProfile.ShopProfileActivity2"
             android:screenOrientation="portrait" />
-
+        <activity
+            android:name=".Shop.ShopPrivateProfile.EditProfileActivity"
+            android:label="Edit Profile"
+            android:theme="@style/AppThemeWhiteActionBar" />
         <activity
             android:name=".Notifications.NotificationActivity"
             android:launchMode="singleTop">
@@ -100,7 +110,6 @@
             android:name=".Maps.MapsActivity"
             android:theme="@style/AppTheme" />
         <activity android:name=".Misc.SelectCropImageActivity" />
-
         <activity
             android:name="com.facebook.FacebookActivity"
             android:configChanges="keyboard|keyboardHidden|screenLayout|screenSize|orientation"
@@ -117,6 +126,15 @@
                 <data android:scheme="@string/fb_login_protocol_scheme" />
             </intent-filter>
         </activity>
+        <activity
+            android:name=".Search.SearchActivity"
+            android:theme="@style/AppTheme" />
+        <activity
+            android:name=".Shop.ShopPrivateProfile.ShopMembersActivity"
+            android:label="MEMBERS"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppThemeWhiteActionBar" />
+
         <service
             android:name=".Auth.AuthenticatorService"
             android:enabled="true"
@@ -129,13 +147,11 @@
                 android:name="android.accounts.AccountAuthenticator"
                 android:resource="@xml/authenticator" />
         </service>
-
         <service android:name=".Data.MessagingService">
             <intent-filter>
                 <action android:name="com.google.firebase.MESSAGING_EVENT" />
             </intent-filter>
         </service>
-
         <service android:name=".Maps.FetchAddressIntentService" />
         <service android:name=".Auth.DeviceTokenService" />
 

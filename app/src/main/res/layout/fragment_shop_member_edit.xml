@@ -1,0 +1,118 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:background="@drawable/rectangle_10"
+    android:layout_width="match_parent" android:layout_height="350dp">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:orientation="vertical"
+        android:layout_height="match_parent">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/spacing_huge"
+            android:gravity="center"
+            android:letterSpacing="-0.03"
+            android:shadowColor="#80ffffff"
+            android:shadowRadius="3"
+            android:text="EDIT ROLE"
+            android:textColor="@color/brownish_grey"
+            android:textSize="@dimen/font_larger" />
+
+        <FrameLayout
+            android:layout_width="match_parent"
+            android:layout_marginStart="@dimen/spacing_large"
+            android:layout_marginTop="@dimen/spacing_huge"
+            android:layout_height="wrap_content">
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+                <ImageView
+                    android:layout_width="80dp"
+                    android:layout_gravity="start"
+                    android:scaleType="fitXY"
+                    android:id="@+id/user_image"
+                    android:src="@drawable/flier"
+                    android:layout_height="80dp" />
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/spacing_normal"
+                    android:textSize="@dimen/font_largest"
+                    style="@style/GreyTextStyle"
+                    android:layout_gravity="center"
+                    android:id="@+id/user_fullname"
+                    android:text="Shivnash Saini"/>
+            </LinearLayout>
+        </FrameLayout>
+
+        <FrameLayout
+            android:layout_width="match_parent"
+            android:layout_marginStart="@dimen/spacing_large"
+            android:layout_marginTop="@dimen/spacing_huge"
+            android:layout_height="wrap_content">
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+
+                    android:textSize="@dimen/font_largest"
+                    android:layout_gravity="start"
+                    android:textColor="#ab1014"
+                    android:text="Assign Role"/>
+
+                <Spinner
+                    android:layout_width="120dp"
+                    android:background="@drawable/edit_roles"
+                    android:gravity="center"
+                    android:id="@+id/role_spinner"
+                    android:spinnerMode="dropdown"
+                    android:layout_gravity="center"
+                    android:layout_marginStart="@dimen/spacing_large"
+                    android:entries="@array/role_array"
+                    android:prompt="@string/role_prompt"
+                    android:layout_height="@dimen/button_height_normal">
+
+                </Spinner>
+            </LinearLayout>
+        </FrameLayout>
+
+        <FrameLayout
+            android:layout_width="match_parent"
+
+            android:layout_marginTop="@dimen/spacing_normal"
+            android:gravity="center"
+
+
+
+            android:layout_height="@dimen/button_height_normal">
+
+            <TextView
+                android:layout_width="95dp"
+                android:layout_height="@dimen/button_height_normal"
+                android:layout_gravity="center"
+                android:id="@+id/save_button"
+                android:layout_marginStart="@dimen/spacing_gigantic"
+                android:gravity="center"
+                style="@style/ButtonPositiveAction"
+                android:text="SAVE"/>
+
+            <TextView
+                android:layout_width="95dp"
+                android:layout_height="@dimen/button_height_normal"
+                android:layout_gravity="center"
+                android:layout_marginEnd="@dimen/spacing_gigantic"
+                android:gravity="center"
+                android:id="@+id/remove_button"
+                style="@style/ButtonNeutralAction"
+                android:text="REMOVE"/>
+
+
+        </FrameLayout>
+
+    </LinearLayout>
+
+</FrameLayout>

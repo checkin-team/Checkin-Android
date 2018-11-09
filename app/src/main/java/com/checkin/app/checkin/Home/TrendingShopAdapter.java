@@ -10,7 +10,7 @@ import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.checkin.app.checkin.R;
-import com.checkin.app.checkin.Shop.ShopModel;
+import com.checkin.app.checkin.Shop.RestaurantModel;
 
 import java.util.List;
 
@@ -18,10 +18,19 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 
 public class TrendingShopAdapter extends RecyclerView.Adapter<TrendingShopAdapter.ViewHolder> {
-    List<ShopModel> mShops;
+    List<RestaurantModel> mShops;
 
-    TrendingShopAdapter(List<ShopModel> shops) {
+    TrendingShopAdapter(List<RestaurantModel> shops) {
         mShops = shops;
+    }
+
+    public void setData(List<RestaurantModel> data) {
+        this.mShops = data;
+        notifyDataSetChanged();
+    }
+
+    public RestaurantModel getByPosition(int pos) {
+        return mShops.get(pos);
     }
 
     @NonNull
@@ -38,7 +47,7 @@ public class TrendingShopAdapter extends RecyclerView.Adapter<TrendingShopAdapte
 
     @Override
     public int getItemCount() {
-        return mShops.size();
+        return mShops != null ? mShops.size() : 0;
     }
 
     @Override
@@ -56,10 +65,9 @@ public class TrendingShopAdapter extends RecyclerView.Adapter<TrendingShopAdapte
             ButterKnife.bind(this, v);
         }
 
-        void bindData(ShopModel shop) {
+        void bindData(RestaurantModel shop) {
             vShopName.setText(shop.getName());
-            //vShopCategory.setText(shop.getCategory());
-            Glide.with(vShopName.getContext()).load(R.drawable.dummy_shop)
+            Glide.with(vShopName.getContext()).load(shop.getLogoUrl())
                     .into(vShopImage);
         }
     }

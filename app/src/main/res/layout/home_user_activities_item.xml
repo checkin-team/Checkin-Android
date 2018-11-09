@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <android.support.v7.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="@dimen/width_list_card"
-    android:layout_height="@dimen/height_list_card"
+    android:layout_width="@dimen/width_card_tall"
+    android:layout_height="@dimen/height_card_tall"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     app:cardCornerRadius="@dimen/card_corner_radius"
     android:layout_marginEnd="@dimen/spacing_small"

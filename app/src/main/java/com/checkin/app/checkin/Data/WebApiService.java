@@ -1,10 +1,14 @@
 package com.checkin.app.checkin.Data;
 
+import com.checkin.app.checkin.Account.AccountModel;
 import com.checkin.app.checkin.Menu.MenuModel;
+import com.checkin.app.checkin.Misc.GenericDetailModel;
+import com.checkin.app.checkin.Search.SearchModel;
+import com.checkin.app.checkin.RestaurantActivity.Waiter.EventModel;
 import com.checkin.app.checkin.Notifications.NotificationModel;
 import com.checkin.app.checkin.Session.ActiveSessionModel;
 import com.checkin.app.checkin.Shop.ShopJoin.ShopJoinModel;
-import com.checkin.app.checkin.Shop.ShopModel;
+import com.checkin.app.checkin.Shop.RestaurantModel;
 import com.checkin.app.checkin.Shop.ShopReviewPOJO;
 import com.checkin.app.checkin.User.Friendship.FriendshipModel;
 import com.checkin.app.checkin.User.UserModel;
@@ -86,11 +90,19 @@ public interface WebApiService {
 
     // region SHOP
     @POST("restaurants/create/")
-    Call<ObjectNode> postRegisterShop(@Body ShopJoinModel model);
+    Call<GenericDetailModel> postRegisterShop(@Body ShopJoinModel model);
 
-    @GET("shops/{shop_id}/")
-    Call<ShopModel> getShopDetails(@Path("shop_id") long shopId);
+    @GET("restaurants/{shop_id}/")
+    Call<RestaurantModel> getRestaurantDetails(@Path("shop_id") String shopId);
 
+    @GET("restaurants/")
+    Call<List<RestaurantModel>> getRestaurants();
+
+    @GET("restaurants/{shop_id}/manage/")
+    Call<RestaurantModel> getRestaurantManageDetails(@Path("shop_id") String shopId);
+
+    @PATCH("restaurants/{shop_id}/manage/")
+    Call<ObjectNode> postRestaurantManageDetails(@Path("shop_id") String shopId, @Body RestaurantModel shopData);
     // endregion
 
     @GET("shops/{shop_id}/menus/available/")
@@ -107,4 +119,17 @@ public interface WebApiService {
 
     @GET("notification")
     Call<List<NotificationModel>> getNotif(@Query("last_notif_id") int lastNotifId);
+
+    @GET("accounts/self/")
+    Call<List<AccountModel>> getSelfAccounts();
+
+    @GET("search/")
+    Call<List<SearchModel>>getSearchResults(@Query("search") String query);
+
+    //region Waiter Events
+    @GET("shops/{table_id}/orders")
+    Call<List<EventModel>> getItems(@Path("table_id") long tableId);
+
+    @POST("shops/{table_id}/orders/")
+    Call<ObjectNode> postItemCompleted(@Path("table_id") long tableId,@Body ObjectNode data);
 }

@@ -19,12 +19,21 @@
     <dimen name="spacing_tiny">4dp</dimen>
 
     <dimen name="size_small_icon">24dp</dimen>
+    <dimen name="size_normal_icon">40dp</dimen>
     <dimen name="size_large_button">80dp</dimen>
+
+    <dimen name="size_logo">60dp</dimen>
+
+    <dimen name="height_card_normal">80dp</dimen>
+    <dimen name="height_card_tall">120dp</dimen>
+    <dimen name="width_card_tall">75dp</dimen>
 
     <!-- typical sizes of views -->
     <dimen name="button_height_tall">60dp</dimen>
     <dimen name="button_height_normal">40dp</dimen>
     <dimen name="button_height_short">32dp</dimen>
+
+    <dimen name="height_spinner_item">50dp</dimen>
 
     <dimen name="app_bar_height">180dp</dimen>
     <dimen name="text_margin">16dp</dimen>
@@ -44,8 +53,7 @@
     <!-- Card dimensions -->
     <dimen name="card_elevation">4dp</dimen>
     <dimen name="card_corner_radius" format="float">10.5dp</dimen>
-    <dimen name="width_list_card">75dp</dimen>
-    <dimen name="height_list_card">120dp</dimen>
+
     <dimen name="square_card_dimen">100dp</dimen>
     <dimen name="width_quantity_selection">120dp</dimen>
     <dimen name="height_quantity_selection">60dp</dimen>

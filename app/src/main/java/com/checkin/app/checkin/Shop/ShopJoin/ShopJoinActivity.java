@@ -4,35 +4,33 @@ import android.arch.lifecycle.ViewModelProviders;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
-import android.text.Editable;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
-import android.widget.EditText;
-import android.widget.Toast;
+import android.widget.TextView;
 
 import com.checkin.app.checkin.Data.Resource;
-import com.checkin.app.checkin.Maps.MapsActivity;
-import com.checkin.app.checkin.Misc.LocationModel;
+import com.checkin.app.checkin.Misc.GenericDetailModel;
 import com.checkin.app.checkin.R;
-import com.fasterxml.jackson.databind.JsonNode;
+import com.checkin.app.checkin.Shop.RestaurantModel;
+import com.checkin.app.checkin.Shop.ShopPrivateProfile.EditAspectFragment;
+import com.checkin.app.checkin.Shop.ShopPrivateProfile.ShopActivity;
+import com.checkin.app.checkin.Shop.ShopPrivateProfile.ShopProfileViewModel;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
-import butterknife.OnTextChanged;
 
-public class ShopJoinActivity extends AppCompatActivity {
+public class ShopJoinActivity extends AppCompatActivity implements
+        BasicInfoFragment.BasicInfoFragmentInteraction, EditAspectFragment.AspectFragmentInteraction {
     private static final String TAG = ShopJoinActivity.class.getSimpleName();
     public static final String KEY_SHOP_EMAIL = "shop_email";
     public static final String KEY_SHOP_PHONE_TOKEN = "shop_phone";
 
     @BindView(R.id.btn_next) Button btnNext;
-    @BindView(R.id.et_location) EditText etLocality;
-    @BindView(R.id.et_name) EditText etName;
-    @BindView(R.id.et_gstin) EditText etGstin;
+    @BindView(R.id.tv_title) TextView tvTitle;
 
-    private JoinViewModel mViewModel;
+    private JoinViewModel mJoinViewModel;
+    private ShopProfileViewModel mShopViewModel;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -40,76 +38,82 @@ public class ShopJoinActivity extends AppCompatActivity {
         setContentView(R.layout.activity_shop_join);
         ButterKnife.bind(this);
 
-        mViewModel = ViewModelProviders.of(this).get(JoinViewModel.class);
+        mJoinViewModel = ViewModelProviders.of(this).get(JoinViewModel.class);
+        mShopViewModel = ViewModelProviders.of(this).get(ShopProfileViewModel.class);
 
         String email = getIntent().getStringExtra(KEY_SHOP_EMAIL);
         String phoneToken = getIntent().getStringExtra(KEY_SHOP_PHONE_TOKEN);
 
-        mViewModel.newShop(email, phoneToken);
+        mJoinViewModel.newShopJoin(email, phoneToken);
 
-        mViewModel.getShopLiveModel().observe(this, model -> {
-            if (model == null) {
-                Log.e(TAG, "ShopJoinModel is NULL");
-                return;
-            }
-            if (model.isValidName() && model.isValidGstin() && model.isValidLocality()) {
-                btnNext.setActivated(true);
-            } else {
-                btnNext.setActivated(false);
-            }
-        });
-
-        mViewModel.getObservableData().observe(this, resource -> {
+        mShopViewModel.getObservableData().observe(this, resource -> {
             if (resource == null)
                 return;
             if (resource.status == Resource.Status.SUCCESS && resource.data != null) {
-                Toast.makeText(getApplicationContext(), "Success", Toast.LENGTH_SHORT).show();
-            } else if (resource.status == Resource.Status.ERROR_INVALID_REQUEST) {
-                JsonNode error = resource.getErrorBody();
-                if (error != null && error.has("gstin")) {
-                    JsonNode gstinNode = error.get("gstin");
-                    String msg = gstinNode.get(0).asText();
-                    etGstin.setError(msg);
-                } else {
-                    Toast.makeText(getApplicationContext(), "Error!", Toast.LENGTH_SHORT).show();
-                }
-                Log.e(TAG, "Error: " + resource.message + ", data: " + resource.data);
+                String pk = resource.data.get("pk").textValue();
+                finishSignup(pk);
+            } else {
+                mShopViewModel.showError(resource.getErrorBody());
             }
         });
+
+        askBasicInfo();
     }
 
-    @OnTextChanged(value = {R.id.et_name, R.id.et_gstin, R.id.et_location}, callback = OnTextChanged.Callback.AFTER_TEXT_CHANGED)
-    public void onValueChanged(Editable editable) {
-        String name = etName.getText().toString();
-        String gstin = etGstin.getText().toString();
-        String locality = etLocality.getText().toString();
-        mViewModel.updateShop(name, gstin, locality);
+    private void finishSignup(String pk) {
+        Intent intent = new Intent(this, ShopActivity.class);
+        intent.putExtra(ShopActivity.KEY_SHOP_PK, pk);
+        startActivity(intent);
+        finish();
     }
 
+    private void askBasicInfo() {
+        btnNext.setActivated(false);
+        tvTitle.setText(R.string.title_shop_basic_info);
+        getSupportFragmentManager().beginTransaction()
+                .add(R.id.fragment_container, BasicInfoFragment.newInstance(this))
+                .commit();
+    }
 
-    @OnClick(R.id.im_maps)
-    public void onMapsClick() {
-        Intent intent = new Intent(this, MapsActivity.class);
-        startActivityForResult(intent, MapsActivity.REQUEST_MAP_CODE);
+    private void askAspectInfo() {
+        btnNext.setActivated(false);
+        tvTitle.setText(R.string.title_shop_aspects);
+        getSupportFragmentManager().beginTransaction()
+                .replace(R.id.fragment_container, EditAspectFragment.newInstance(this))
+                .commit();
     }
 
     @OnClick(R.id.btn_next)
     public void onNextClick(View view) {
-        if (view.isActivated()) {
-            mViewModel.registerNewBusiness();
+        if (!view.isActivated())
+            return;
+        if (mJoinViewModel.isRegistered()) {
+            mShopViewModel.collectData();
         }
+        else
+            mJoinViewModel.registerNewBusiness();
     }
 
     @Override
-    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-        if (requestCode == MapsActivity.REQUEST_MAP_CODE && resultCode == RESULT_OK) {
-            double latitude = data.getDoubleExtra(MapsActivity.KEY_MAPS_LATITUDE,0);
-            double longitude = data.getDoubleExtra(MapsActivity.KEY_MAPS_LONGITUDE, 0);
-            mViewModel.setLocation(new LocationModel(latitude, longitude));
-            String address = data.getStringExtra(MapsActivity.KEY_MAPS_ADDRESS);
-            etLocality.setText(address);
-        }
+    public void onShopRegistered(GenericDetailModel details) {
+        RestaurantModel shop = mJoinViewModel.getNewShop(details.getPk());
+        mShopViewModel.useShop(shop);
+        askAspectInfo();
+    }
+
+    @Override
+    public void onBasicDataValidStatus(boolean isValid) {
+        btnNext.setActivated(isValid);
+    }
+
+    @Override
+    public void updateShopAspects(RestaurantModel shop) {
+        mShopViewModel.updateShop(shop);
+    }
+
+    @Override
+    public void onAspectDataValidStatus(boolean isValid) {
+        btnNext.setActivated(isValid);
     }
 
     @Override

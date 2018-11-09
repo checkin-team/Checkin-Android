@@ -1,20 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:tools="http://schemas.android.com/tools"
     xmlns:android="http://schemas.android.com/apk/res/android">
-
-    <group>
         <item
             android:id="@+id/nav_profile"
             android:icon="@drawable/profile"
             android:name="Profile"
             android:title="Profile" />
-
-        <item
-            android:id="@+id/nav_faq"
-            android:icon="@android:drawable/ic_menu_help"
-            android:name="FAQ"
-            android:title="FAQ"/>
-    </group>
     <group>
         <item
             android:id="@+id/nav_settings"
@@ -27,19 +18,19 @@
             android:icon="@drawable/privacy"
             android:title="Privacy Settings" />
         <item
-            android:id="@+id/nav_shop_activity"
-            android:name="privacy settings"
-            android:icon="@drawable/privacy"
-            android:title="Shop Activity" />
-        <item
             android:id="@+id/notif_activity"
             android:name="privacy settings"
             android:icon="@drawable/privacy"
             android:title="Notif Activity" />
         <item
-            android:id="@+id/user_shop_porfile"
+            android:id="@+id/waiter_work_activity"
             android:name="privacy settings"
             android:icon="@drawable/privacy"
-            android:title="User Shop Profile" />
+            android:title="Waiter Work" />
+        <item
+            android:id="@+id/search_activity"
+            android:name="privacy settings"
+            android:icon="@drawable/privacy"
+            android:title="Search Activity" />
     </group>
 </menu>
