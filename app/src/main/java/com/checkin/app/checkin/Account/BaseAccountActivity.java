@@ -179,6 +179,7 @@ public abstract class BaseAccountActivity extends BaseActivity {
                     if (mBaseActivity.getClass() != ShopActivity.class) {
                         Intent intent = new Intent(context, ShopActivity.class);
                         intent.putExtra(ShopActivity.KEY_SHOP_PK, account.getTargetPk());
+                        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                         context.startActivity(intent);
                     }
                     break;

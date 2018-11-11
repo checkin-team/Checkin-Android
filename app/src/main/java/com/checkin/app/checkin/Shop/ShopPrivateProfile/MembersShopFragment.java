@@ -21,6 +21,8 @@ import butterknife.Unbinder;
 public class MembersShopFragment extends Fragment implements ShopMemberAdapter.OnMemberInteractionListener {
    private List<MemberModel> memberModels;
    private ShopMemberAdapter shopMemberAdapter;
+    private MemberViewModel mViewModel;
+
    private ShopMemberAdd interActionListener;
     Unbinder unbinder;
 

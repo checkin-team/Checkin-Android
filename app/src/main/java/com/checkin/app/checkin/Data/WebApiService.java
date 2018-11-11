@@ -9,6 +9,7 @@ import com.checkin.app.checkin.Notifications.NotificationModel;
 import com.checkin.app.checkin.Session.ActiveSessionModel;
 import com.checkin.app.checkin.Shop.ShopJoin.ShopJoinModel;
 import com.checkin.app.checkin.Shop.RestaurantModel;
+import com.checkin.app.checkin.Shop.ShopPrivateProfile.MemberModel;
 import com.checkin.app.checkin.Shop.ShopReviewPOJO;
 import com.checkin.app.checkin.User.Friendship.FriendshipModel;
 import com.checkin.app.checkin.User.UserModel;
@@ -103,6 +104,14 @@ public interface WebApiService {
 
     @PATCH("restaurants/{shop_id}/manage/")
     Call<ObjectNode> postRestaurantManageDetails(@Path("shop_id") String shopId, @Body RestaurantModel shopData);
+
+    @GET("restaurants/{shop_id}/members/")
+    Call<List<MemberModel>> getRestaurantMembers(@Path("shop_id") String shopId);
+
+    @POST("restaurants/{shop_id}/members/")
+    Call<ObjectNode> setRestaurantMembers(@Path("shop_id") String shopId, @Body List<MemberModel> shopMembers);
+
+
     // endregion
 
     @GET("shops/{shop_id}/menus/available/")

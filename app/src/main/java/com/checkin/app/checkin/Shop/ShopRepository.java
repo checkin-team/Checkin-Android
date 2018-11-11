@@ -14,6 +14,7 @@ import com.checkin.app.checkin.Data.RetrofitLiveData;
 import com.checkin.app.checkin.Data.WebApiService;
 import com.checkin.app.checkin.Misc.GenericDetailModel;
 import com.checkin.app.checkin.Shop.ShopJoin.ShopJoinModel;
+import com.checkin.app.checkin.Shop.ShopPrivateProfile.MemberModel;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 
 import java.util.List;
@@ -136,6 +137,46 @@ public class ShopRepository extends BaseRepository {
 
             @Override
             protected void saveCallResult(List<RestaurantModel> data) {
+
+            }
+        }.getAsLiveData();
+    }
+
+    public LiveData<Resource<List<MemberModel>>> getRestaurantMembers(String shopId) {
+        return new NetworkBoundResource<List<MemberModel>, List<MemberModel>>() {
+            @Override
+            protected boolean shouldUseLocalDb() {
+                return false;
+            }
+
+            @NonNull
+            @Override
+            protected LiveData<ApiResponse<List<MemberModel>>> createCall() {
+                return new RetrofitLiveData<>(mWebService.getRestaurantMembers(shopId));
+            }
+
+            @Override
+            protected void saveCallResult(List<MemberModel> data) {
+
+            }
+        }.getAsLiveData();
+    }
+
+    public LiveData<Resource<ObjectNode>> postRestaurantMembers(String shopId,List<MemberModel> shopMembers) {
+        return new NetworkBoundResource<ObjectNode, ObjectNode>() {
+            @Override
+            protected boolean shouldUseLocalDb() {
+                return false;
+            }
+
+            @NonNull
+            @Override
+            protected LiveData<ApiResponse<ObjectNode>> createCall() {
+                return new RetrofitLiveData<>(mWebService.setRestaurantMembers(shopId,shopMembers));
+            }
+
+            @Override
+            protected void saveCallResult(ObjectNode data) {
 
             }
         }.getAsLiveData();

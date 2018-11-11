@@ -8,22 +8,22 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
-import android.widget.Spinner;
 import android.widget.TextView;
 
 import com.checkin.app.checkin.R;
+import com.checkin.app.checkin.Utility.MultiSpinner;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.Unbinder;
 
-public class ChangeRoleFragment extends Fragment {
+public class ChangeRoleFragment extends Fragment implements MultiSpinner.MultiSpinnerListener {
     @BindView(R.id.user_image)
     ImageView view;
     @BindView(R.id.user_fullname)
     TextView fullName;
-    @BindView(R.id.role_spinner)
-    Spinner roleSpinner;
+    @BindView(R.id.spinner_roles)
+    MultiSpinner vRoles;
     @BindView(R.id.save_button)
     TextView saveButton;
 
@@ -38,9 +38,15 @@ public class ChangeRoleFragment extends Fragment {
     public void ChangeRoleFragment(){
 
     }
+
+    @Override
+    public void onItemsSelected(boolean[] selected) {
+
+    }
+
     public interface onClickButtons
     {
-        public void setRole(MemberModel memberModel,int position,String role);
+        public void setRole(MemberModel memberModel, int position, CharSequence[] roles);
 
     }
 
@@ -70,11 +76,13 @@ public class ChangeRoleFragment extends Fragment {
         }
         unbinder = ButterKnife.bind(this, rootView);
 
+        vRoles.setListener(this);
+
         saveButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-               String role= roleSpinner.getSelectedItem().toString();
-               onInteractionListener.setRole(memberModel,positionF,role);
+               CharSequence[] roles=vRoles.getSelectedItems();
+               onInteractionListener.setRole(memberModel,positionF,roles);
 
             }
         });

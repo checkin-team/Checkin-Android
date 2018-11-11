@@ -10,6 +10,9 @@ import android.widget.TextView;
 
 import com.checkin.app.checkin.R;
 
+import java.nio.file.Path;
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 import butterknife.BindView;
@@ -34,7 +37,7 @@ ChangeRoleFragment.onClickButtons{
 
    private List<MemberModel> memberModels;
    private MembersShopFragment membersShopFragment;
-   private ShopMemberAdapter shopMemberAdapter;
+
    private ChangeRoleFragment changeRoleFragment;
    Unbinder unbinder;
 
@@ -46,7 +49,6 @@ ChangeRoleFragment.onClickButtons{
         addMemberText.setText("ADD MEMBER");
         membersShopFragment=new MembersShopFragment();
         membersShopFragment.setInterActionListener(this);
-       shopMemberAdapter=membersShopFragment.getShopMemberAdapter();
         getFragmentManager().beginTransaction()
                 .replace(MemberContainer.getId(),membersShopFragment)
                 .commit();
@@ -80,21 +82,39 @@ ChangeRoleFragment.onClickButtons{
                .commit();
 
         darkBack.setVisibility(View.VISIBLE);
-//        ArrayAdapter<String> sm=new ArrayAdapter<String>(this,R.layout.role_spinner_item);
-//        sm.setDropDownViewResource(R.layout.role_spinner_item);
+
     }
 
     @Override
-    public void setRole(MemberModel memberModel, int position, String role) {
+    public void setRole(MemberModel memberModel, int position, CharSequence[] role) {
 //            memberModel.setRole(role);
-            List<MemberModel> models=membersShopFragment.getMemberModels();
-            if(role==null)
+        List<MemberModel> models = membersShopFragment.getMemberModels();
+        if (role == null)
             models.remove(position);
-        getFragmentManager().popBackStackImmediate("addRole",FragmentManager.POP_BACK_STACK_INCLUSIVE);
-        darkBack.setVisibility(View.GONE);
-            membersShopFragment.getShopMemberAdapter().notifyDataSetChanged();
-    }
+        else {
+            for(CharSequence ch:role)
+            {
+                if(ch.toString().contains("Owner"))
+                    memberModel.setOwner(true);
+                if(ch.toString().contains("Admin"))
+                    memberModel.setAdmin(true);
+                if(ch.toString().contains("Manager"))
+                    memberModel.setManager(true);
+                if(ch.toString().contains("Waiter"))
+                    memberModel.setWaiter(true);
+                if(ch.toString().contains("Cook"))
+                    memberModel.setCook(true);
 
+            }
+
+
+
+            getFragmentManager().popBackStackImmediate("addRole", FragmentManager.POP_BACK_STACK_INCLUSIVE);
+            darkBack.setVisibility(View.GONE);
+            membersShopFragment.getShopMemberAdapter().notifyDataSetChanged();
+
+        }
+    }
     public void onClickAddMembers(View view) {
     }
 }

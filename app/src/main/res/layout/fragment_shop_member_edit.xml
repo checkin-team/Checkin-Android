@@ -1,7 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:background="@drawable/rectangle_10"
-    android:layout_width="match_parent" android:layout_height="350dp">
+    android:layout_width="match_parent"
+    android:layout_height="350dp">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -64,19 +66,21 @@
                     android:textColor="#ab1014"
                     android:text="Assign Role"/>
 
-                <Spinner
-                    android:layout_width="120dp"
-                    android:background="@drawable/edit_roles"
-                    android:gravity="center"
-                    android:id="@+id/role_spinner"
-                    android:spinnerMode="dropdown"
+                <FrameLayout
+                    android:id="@+id/container_roles"
+                    android:layout_width="wrap_content"
                     android:layout_gravity="center"
                     android:layout_marginStart="@dimen/spacing_large"
-                    android:entries="@array/role_array"
-                    android:prompt="@string/role_prompt"
-                    android:layout_height="@dimen/button_height_normal">
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/background_textbox">
 
-                </Spinner>
+                    <com.checkin.app.checkin.Utility.MultiSpinner
+                        android:id="@+id/spinner_roles"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        app:hintText="Roles"
+                        app:entries="@array/roles"/>
+                </FrameLayout>
             </LinearLayout>
         </FrameLayout>
 

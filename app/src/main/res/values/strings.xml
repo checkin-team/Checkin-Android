@@ -116,12 +116,6 @@
     <string name="action_call">Call</string>
     <string name="action_navigate">Navigate</string>
 
-    <string-array name="role_array">
-        <item>Owner</item>
-        <item>Shop Admin</item>
-        <item>Restaurant Manager</item>
-        <item>Waiter</item>
 
-    </string-array>
 
 </resources>

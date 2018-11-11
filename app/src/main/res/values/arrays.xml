@@ -121,6 +121,14 @@
         <item>Micro Brewerie</item>
     </string-array>
 
+    <string-array name="roles">
+        <item>Owner</item>
+        <item>Shop Admin</item>
+        <item>Restaurant Manager</item>
+        <item>Waiter</item>
+        <item>Cook</item>
+
+    </string-array>
 
 
 
