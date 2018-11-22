@@ -115,6 +115,7 @@
     <string name="action_cuisine">Cuisines</string>
     <string name="action_call">Call</string>
     <string name="action_navigate">Navigate</string>
+    <string name="scan_checkin_qr">Scan Checkin QR</string>
 
     <string-array name="role_array">
         <item>Owner</item>

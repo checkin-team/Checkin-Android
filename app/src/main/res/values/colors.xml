@@ -56,4 +56,16 @@
 
     <color name="insightscardcolor">#59e9e4e4</color>
     <color name="greyish">#aaaaaa</color>
+
+    <!--Scaneer Color -->
+    <color name="viewfinder_mask">#60000000</color>
+    <color name="viewfinder_laser">#ffcc0000</color>
+    <color name="viewfinder_border">#af1014</color>
+
+    <!--ToolBar Color for Scanner Activity Class -->
+    <color name="colorPrimary_scanner">#FFFFFF</color>
+    <color name="colorPrimaryDark_scanner">#FFFFFF</color>
+    <color name="colorAccent_scanner">#D81B60</color>
+    <color name="actionbar_opacity">#FFFFFF</color>
+    <color name="textColor"> #424242</color>
 </resources>

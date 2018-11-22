@@ -201,4 +201,17 @@
         <item name="android:textSize">@dimen/font_small_heading</item>
     </style>
 
+    <!-- Scanner ToolBar Customize  START -->
+    <style name="ParentTheme" parent="Theme.AppCompat.Light.NoActionBar">
+        <!-- Customize your theme here. -->
+        <item name="colorPrimary">@color/colorPrimary_scanner</item>
+        <item name="colorPrimaryDark">@color/colorPrimaryDark_scanner</item>
+        <item name="colorAccent">@color/colorAccent_scanner</item>
+    </style>
+    <style name="TransparentToolbar" parent="@style/ThemeOverlay.AppCompat.Dark.ActionBar">
+        <item name="android:windowActionBarOverlay">true</item>
+        <!-- Support Library compability -->
+        <item name="windowActionBarOverlay">true</item>
+    </style>
+                         <!--Close-->
 </resources>

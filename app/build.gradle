@@ -74,7 +74,9 @@ dependencies {
     // Twitter SDK
     implementation 'com.twitter.sdk.android:twitter-core:3.1.1'
     // Design Libraries
+    implementation 'com.mikhaellopez:circularimageview:3.2.0'
     implementation 'de.hdodenhof:circleimageview:2.2.0'
+    implementation 'me.dm7.barcodescanner:zxing:1.9'
     implementation 'com.journeyapps:zxing-android-embedded:3.6.0'
     implementation 'com.andkulikov:transitionseverywhere:1.8.0'
     implementation 'com.github.bumptech.glide:glide:4.7.1'

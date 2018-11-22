@@ -47,10 +47,10 @@
             tools:replace="screenOrientation" />
         <activity android:name=".User.NonPersonalProfile.UserProfileActivity" />
         <activity android:name=".User.PersonalProfile.UserProfileActivity" />
-        <activity android:name=".User.NonPersonalProfile.UserCheckinsActivity"
-            android:theme="@style/Theme.AppCompat.Light"
-            android:parentActivityName=".User.NonPersonalProfile.UserProfileActivity">
-        </activity>
+        <activity
+            android:name=".User.NonPersonalProfile.UserCheckinsActivity"
+            android:parentActivityName=".User.NonPersonalProfile.UserProfileActivity"
+            android:theme="@style/Theme.AppCompat.Light"></activity>
         <activity
             android:name=".User.PersonalProfile.ProfileEditActivity"
             android:label="Edit Profile"
@@ -59,9 +59,11 @@
             android:name=".User.Friendship.FriendsListActivity"
             android:label="Friends"
             android:theme="@style/AppThemeWhiteActionBar" />
-        <activity android:name=".Shop.ShopPublicProfile.ShopActivity"
+        <activity
+            android:name=".Shop.ShopPublicProfile.ShopActivity"
             android:screenOrientation="portrait" />
-        <activity android:name=".Shop.ShopPrivateProfile.ShopActivity"
+        <activity
+            android:name=".Shop.ShopPrivateProfile.ShopActivity"
             android:screenOrientation="portrait" />
         <activity
             android:name=".Menu.SessionUserActivity"
@@ -172,6 +174,8 @@
         <meta-data
             android:name="com.google.android.geo.API_KEY"
             android:value="@string/google_maps_key" />
+
+        <activity android:name=".QRScanner"></activity>
     </application>
 
 </manifest>
