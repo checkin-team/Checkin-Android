@@ -98,25 +98,29 @@ ChangeRoleFragment.onClickButtons{
     @Override
     public void setRole(MemberModel memberModel, int position, int roles[]) {
 //            memberModel.setRole(role);
-        if (roles == null)
+
+        if (roles == null) {
             mViewModel.deleteShopMember(memberModel.getUser().getPk());
+            getFragmentManager().popBackStackImmediate("addRole", FragmentManager.POP_BACK_STACK_INCLUSIVE);
+            darkBack.setVisibility(View.GONE);
+        }
         else {
             for(int i=0;i<roles.length;i++)
             {
                 switch (roles[i]){
-                    case 1:
+                    case 0:
                         memberModel.setOwner(true);
                         break;
-                    case 2:
+                    case 1:
                         memberModel.setAdmin(true);
                         break;
-                    case 3:
+                    case 2:
                         memberModel.setManager(true);
                         break;
-                    case 4:
+                    case 3:
                         memberModel.setWaiter(true);
                         break;
-                    case 5:
+                    case 4:
                         memberModel.setCook(true);
                         break;
 
@@ -124,8 +128,7 @@ ChangeRoleFragment.onClickButtons{
             }
 
 
-            getFragmentManager().popBackStackImmediate("addRole", FragmentManager.POP_BACK_STACK_INCLUSIVE);
-            darkBack.setVisibility(View.GONE);
+
             mViewModel.fetchShopMembers();
             mViewModel.getShopMembers().observe(this,shopMembers->{
                 if(shopMembers!=null&&shopMembers.status== Resource.Status.SUCCESS)
@@ -136,25 +139,36 @@ ChangeRoleFragment.onClickButtons{
                         if(mShopMembers.get(i).getUser().getPk().equals(memberModel.getUser().getPk()))
                         {
                             flag=1;
+
                             break;
                         }
                     }
+                    if(flag==1)
+                    {
+                        mViewModel.updateShopMember(memberModel);
+                    }
+                    else
+                        mViewModel.addShopMember(memberModel);
+
                 }
             });
-            if(flag==1)
-            {
-                mViewModel.updateShopMember(memberModel);
-            }
-            else
-                mViewModel.addShopMember(memberModel);
+            getFragmentManager().popBackStackImmediate("addRole", FragmentManager.POP_BACK_STACK_INCLUSIVE);
+            darkBack.setVisibility(View.GONE);
 
-            membersShopFragment=new MembersShopFragment();
-            membersShopFragment.setInterActionListener(this);
-            getFragmentManager().beginTransaction()
-                    .replace(MemberContainer.getId(),membersShopFragment)
-                    .commit();
 
         }
+        mViewModel.getShopMemberLiveData().observe(this,objectNodeResource ->
+        {
+            if(objectNodeResource!=null)
+            if(objectNodeResource.status== Resource.Status.SUCCESS)
+            {
+                membersShopFragment=new MembersShopFragment();
+                membersShopFragment.setInterActionListener(this);
+                getFragmentManager().beginTransaction()
+                        .replace(MemberContainer.getId(),membersShopFragment)
+                        .commit();
+            }
+        });
     }
     public void onClickAddMembers(View view) {
     }

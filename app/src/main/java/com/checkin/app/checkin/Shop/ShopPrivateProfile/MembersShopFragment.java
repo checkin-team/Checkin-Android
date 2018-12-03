@@ -10,6 +10,7 @@ import android.support.annotation.NonNull;
 import android.support.v4.app.FragmentActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -88,17 +89,18 @@ public class MembersShopFragment extends Fragment implements ShopMemberAdapter.O
         mViewModel=ViewModelProviders.of((FragmentActivity) getActivity()).get(MemberViewModel.class);
         shopPk=mViewModel.getShopPk();
         mViewModel.fetchShopMembers();
-        mViewModel.getShopMembers().observe((LifecycleOwner) getActivity(), shopMembers->{
-            if(shopMembers!=null)
-                memberModels=shopMembers.data;
+        mViewModel.getShopMembers().observeForever( shopMembers->{
+
+            if(shopMembers.data!=null)
+            { memberModels=shopMembers.data;
+
+            rvShopMembers.setLayoutManager(llm);
+
+            shopMemberAdapter = new ShopMemberAdapter(memberModels);
+            shopMemberAdapter.setMemberInteractionListener(this);
+            rvShopMembers.setAdapter(shopMemberAdapter);}
         });
-        rvShopMembers.setLayoutManager(llm);
-            if(memberModels==null) {
-                memberModels=new ArrayList<>();
-            }
-        shopMemberAdapter = new ShopMemberAdapter(memberModels);
-        shopMemberAdapter.setMemberInteractionListener(this);
-        rvShopMembers.setAdapter(shopMemberAdapter);
+
     }
 
     @Override

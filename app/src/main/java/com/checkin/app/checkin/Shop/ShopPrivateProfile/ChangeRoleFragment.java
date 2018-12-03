@@ -4,12 +4,14 @@ import android.app.Fragment;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
 import com.checkin.app.checkin.R;
 import com.checkin.app.checkin.Utility.MultiSpinner;
 
@@ -19,7 +21,7 @@ import butterknife.Unbinder;
 
 public class ChangeRoleFragment extends Fragment implements MultiSpinner.MultiSpinnerListener {
     @BindView(R.id.user_image)
-    ImageView view;
+    ImageView displayPic;
     @BindView(R.id.user_fullname)
     TextView fullName;
     @BindView(R.id.spinner_roles)
@@ -67,6 +69,7 @@ public class ChangeRoleFragment extends Fragment implements MultiSpinner.MultiSp
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View rootView;
+
         if(memberModel.isAdmin()||memberModel.isOwner()||memberModel.isManager()||memberModel.isWaiter()||memberModel.isCook())
         {rootView = inflater.inflate(R.layout.fragment_shop_member_edit, container, false);
             }
@@ -75,7 +78,8 @@ public class ChangeRoleFragment extends Fragment implements MultiSpinner.MultiSp
 
         }
         unbinder = ButterKnife.bind(this, rootView);
-
+        Glide.with(fullName.getContext()).load(memberModel.getUser().getDisplayPic()).into(displayPic);
+        fullName.setText(memberModel.getUser().getDisplayName());
         vRoles.setListener(this);
         saveButton.setOnClickListener(new View.OnClickListener() {
             @Override

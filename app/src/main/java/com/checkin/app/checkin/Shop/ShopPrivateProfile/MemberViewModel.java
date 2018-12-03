@@ -4,6 +4,7 @@ import android.app.Application;
 import android.arch.lifecycle.LiveData;
 import android.arch.lifecycle.MediatorLiveData;
 import android.support.annotation.NonNull;
+import android.util.Log;
 
 import com.checkin.app.checkin.Data.BaseViewModel;
 import com.checkin.app.checkin.Data.Converters;
@@ -58,6 +59,10 @@ public class MemberViewModel extends BaseViewModel {
 
     public LiveData<Resource<List<MemberModel>>> getShopMembers() {
         return mShopMembers;
+    }
+    public LiveData<Resource<ObjectNode>> getShopMemberLiveData()
+    {
+        return mData;
     }
 
 
