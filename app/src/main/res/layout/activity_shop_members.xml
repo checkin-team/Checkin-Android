@@ -40,12 +40,9 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:shadowColor="#80ffffff"
-                android:shadowRadius="3"
+                style="@style/TextShadowCover"
                 android:id="@+id/addText"
                 android:textColor="@color/white"
-
-                android:letterSpacing="-0.03"
                 tools:text="ADD MEMBER"
                 android:layout_gravity="center"/>
 </FrameLayout>

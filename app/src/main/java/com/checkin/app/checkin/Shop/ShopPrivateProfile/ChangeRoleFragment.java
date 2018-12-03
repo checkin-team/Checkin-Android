@@ -46,7 +46,7 @@ public class ChangeRoleFragment extends Fragment implements MultiSpinner.MultiSp
 
     public interface onClickButtons
     {
-        public void setRole(MemberModel memberModel, int position, CharSequence[] roles);
+        public void setRole(MemberModel memberModel, int position, int roles[]);
 
     }
 
@@ -67,21 +67,20 @@ public class ChangeRoleFragment extends Fragment implements MultiSpinner.MultiSp
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View rootView;
-//        if(memberModel.getRole()==null)
-//        {rootView = inflater.inflate(R.layout.fragment_shop_member_add, container, false);
-//            }
-//        else
-        {            rootView = inflater.inflate(R.layout.fragment_shop_member_edit, container, false);
+        if(memberModel.isAdmin()||memberModel.isOwner()||memberModel.isManager()||memberModel.isWaiter()||memberModel.isCook())
+        {rootView = inflater.inflate(R.layout.fragment_shop_member_edit, container, false);
+            }
+        else
+        {            rootView = inflater.inflate(R.layout.fragment_shop_member_add, container, false);
 
         }
         unbinder = ButterKnife.bind(this, rootView);
 
         vRoles.setListener(this);
-
         saveButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-               CharSequence[] roles=vRoles.getSelectedItems();
+               int roles[]=vRoles.getSelectedItemsPosition();
                onInteractionListener.setRole(memberModel,positionF,roles);
 
             }

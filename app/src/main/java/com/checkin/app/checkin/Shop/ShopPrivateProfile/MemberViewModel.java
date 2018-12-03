@@ -25,19 +25,36 @@ public class MemberViewModel extends BaseViewModel {
 
     }
 
-    public void fetchShopMembers(String shopPk) {
-        mShopPk = shopPk;
-        mShopMembers.addSource(mRepository.getRestaurantMembers(shopPk), mShopMembers::setValue);
+    public void fetchShopMembers() {
+
+        mShopMembers.addSource(mRepository.getRestaurantMembers(mShopPk), mShopMembers::setValue);
+    }
+
+    public void setShopPk(String mShopPk) {
+        this.mShopPk = mShopPk;
     }
 
     public String getShopPk() {
         return mShopPk;
     }
 
-    public void setShopMembers(List<MemberModel> shopMembers)
+    public void addShopMember(MemberModel shopMember)
     {
-        mData.addSource(mRepository.postRestaurantMembers(getShopPk(),shopMembers), mData::setValue);
+        mData.addSource(mRepository.postRestaurantMember(getShopPk(),shopMember), mData::setValue);
     }
+    public void updateShopMember(MemberModel shopMember)
+    {
+        mData.addSource(mRepository.updateRestaurantMember(getShopPk(),shopMember.getUser().getPk(),shopMember), mData::setValue);
+    }
+    public void updateShopMemberPartially(MemberModel shopMember)
+    {
+        mData.addSource(mRepository.updateRestaurantMemberPartial(getShopPk(),shopMember.getUser().getPk(),shopMember), mData::setValue);
+    }
+    public void deleteShopMember(String userId)
+    {
+        mData.addSource(mRepository.deleteRestaurantMember(getShopPk(),userId), mData::setValue);
+    }
+
 
     public LiveData<Resource<List<MemberModel>>> getShopMembers() {
         return mShopMembers;

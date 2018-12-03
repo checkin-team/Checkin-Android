@@ -109,7 +109,19 @@ public interface WebApiService {
     Call<List<MemberModel>> getRestaurantMembers(@Path("shop_id") String shopId);
 
     @POST("restaurants/{shop_id}/members/")
-    Call<ObjectNode> setRestaurantMembers(@Path("shop_id") String shopId, @Body List<MemberModel> shopMembers);
+    Call<ObjectNode> addRestaurantMember(@Path("shop_id") String shopId, @Body MemberModel shopMember);
+
+    @PUT("restaurants/{shop_id}/members/{user_id}/")
+    Call<ObjectNode> updateRestaurantMember(@Path("shop_id") String shopId,@Path("user_id") String userId,@Body MemberModel shopMember);
+
+    @PATCH("restaurants/{shop_id}/members/{user_id}/")
+    Call<ObjectNode> updateRestaurantMemberPartial(@Path("shop_id") String shopId,@Path("user_id") String userId,@Body MemberModel shopMember);
+
+    @DELETE("restaurants/{shop_id}/members/{user_id}/")
+    Call<ObjectNode> deleteRestaurantMember(@Path("shop_id") String shopId,@Path("user_id") String userId);
+
+
+
 
 
     // endregion

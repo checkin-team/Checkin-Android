@@ -56,6 +56,16 @@ public class MultiSpinner extends AppCompatSpinner implements
                 selectedList.add(items[i]);
         return selectedList.toArray(new CharSequence[] {});
     }
+    public int[] getSelectedItemsPosition() {
+        int selectedItems[] = new int[5];
+        int j=0;
+        for (int i = 0; i < items.length; i++)
+            if (selected[i]) {
+                selectedItems[j] = i;
+                j++;
+            }
+        return selectedItems;
+    }
 
     public void selectEntries(CharSequence[] selectedEntries) {
         if (selectedEntries == null)

@@ -1,8 +1,13 @@
 package com.checkin.app.checkin.Shop.ShopPrivateProfile;
 
 import android.app.Fragment;
+import android.arch.lifecycle.Lifecycle;
+import android.arch.lifecycle.LifecycleOwner;
+import android.arch.lifecycle.ViewModel;
+import android.arch.lifecycle.ViewModelProviders;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
+import android.support.v4.app.FragmentActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -18,16 +23,20 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.Unbinder;
 
-public class MembersShopFragment extends Fragment implements ShopMemberAdapter.OnMemberInteractionListener {
+public class MembersShopFragment extends Fragment implements ShopMemberAdapter.OnMemberInteractionListener{
    private List<MemberModel> memberModels;
    private ShopMemberAdapter shopMemberAdapter;
     private MemberViewModel mViewModel;
+    String shopPk;
 
    private ShopMemberAdd interActionListener;
     Unbinder unbinder;
 
     @BindView(R.id.shop_member)
     RecyclerView rvShopMembers;
+
+
+
     public interface ShopMemberAdd
     {
         public void shopMemberAddition(MemberModel member,int position);
@@ -63,6 +72,7 @@ public class MembersShopFragment extends Fragment implements ShopMemberAdapter.O
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         final View rootView = inflater.inflate(R.layout.fragment_shop_members, container, false);
+
         unbinder = ButterKnife.bind(this, rootView);
 
         setupUI();
@@ -75,14 +85,20 @@ public class MembersShopFragment extends Fragment implements ShopMemberAdapter.O
     public void setupUI()
     {
         LinearLayoutManager llm = new LinearLayoutManager(getActivity(), RecyclerView.VERTICAL, false);
+        mViewModel=ViewModelProviders.of((FragmentActivity) getActivity()).get(MemberViewModel.class);
+        shopPk=mViewModel.getShopPk();
+        mViewModel.fetchShopMembers();
+        mViewModel.getShopMembers().observe((LifecycleOwner) getActivity(), shopMembers->{
+            if(shopMembers!=null)
+                memberModels=shopMembers.data;
+        });
         rvShopMembers.setLayoutManager(llm);
             if(memberModels==null) {
                 memberModels=new ArrayList<>();
-                shopMemberAdapter = new ShopMemberAdapter(memberModels);
-                shopMemberAdapter.setMemberInteractionListener(this);
-                rvShopMembers.setAdapter(shopMemberAdapter);
-
             }
+        shopMemberAdapter = new ShopMemberAdapter(memberModels);
+        shopMemberAdapter.setMemberInteractionListener(this);
+        rvShopMembers.setAdapter(shopMemberAdapter);
     }
 
     @Override
