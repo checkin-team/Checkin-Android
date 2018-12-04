@@ -1,160 +1,138 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:paddingStart="@dimen/spacing_normal"
+    android:paddingEnd="@dimen/spacing_normal">
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="vertical"
-        android:paddingStart="@dimen/spacing_normal"
-        android:paddingEnd="@dimen/spacing_normal">
-
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
         <LinearLayout
-            android:layout_width="match_parent"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:orientation="horizontal">
-            <LinearLayout
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:orientation="vertical">
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:textColor="@color/pinkish_grey"
-                    android:textSize="@dimen/font_large"
-                    android:layout_marginTop="@dimen/spacing_normal"
-                    android:text="First Name"/>
-                <EditText
-                    android:id="@+id/et_first_name"
-                    android:textColor="@color/brownish_grey"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:inputType="textPersonName" />
-            </LinearLayout>
-
-            <LinearLayout
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:orientation="vertical">
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:textColor="@color/pinkish_grey"
-                    android:textSize="@dimen/font_large"
-                    android:layout_marginTop="@dimen/spacing_normal"
-                    android:text="Last Name"/>
-                <EditText
-                    android:id="@+id/et_last_name"
-                    android:textColor="@color/brownish_grey"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:inputType="textPersonName" />
-            </LinearLayout>
-        </LinearLayout>
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textColor="@color/pinkish_grey"
-            android:textSize="@dimen/font_large"
-            android:layout_marginTop="@dimen/spacing_normal"
-            android:text="Location"/>
-        <EditText
-            android:id="@+id/et_location"
-            android:textColor="@color/brownish_grey"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:inputType="text" />
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textColor="@color/pinkish_grey"
-            android:textSize="@dimen/font_large"
-            android:layout_marginTop="@dimen/spacing_normal"
-            android:text="Bio"/>
-        <EditText
-            android:textColor="@color/brownish_grey"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:imeOptions="actionNext"
-            android:id="@+id/et_bio"
-            android:maxLines="3" />
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/spacing_large"
-            android:orientation="vertical"
-            android:background="@drawable/bordered_card_brownish_grey">
-
+            android:layout_weight="1"
+            android:orientation="vertical">
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="@dimen/spacing_normal"
-                android:textColor="@color/white"
-                android:textSize="@dimen/font_larger"
-                android:layout_marginTop="@dimen/spacing_small"
-                android:text="Personal Information"
-                android:layout_gravity="center"
-                android:textAlignment="center"/>
-
-            <TextView
-                android:id="@+id/tv_username"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Username: "
-                android:textColor="@color/white"
-                android:textSize="@dimen/font_small"
-                android:layout_gravity="center"/>
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="@dimen/spacing_normal"
-                android:textColor="@color/white"
+                android:textColor="@color/pinkish_grey"
                 android:textSize="@dimen/font_large"
                 android:layout_marginTop="@dimen/spacing_normal"
-                android:text="Phone Number"/>
-            <EditText android:textColor="@color/white"
+                android:text="First Name"/>
+            <EditText
+                android:id="@+id/et_first_name"
+                android:textColor="@color/brownish_grey"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="@dimen/spacing_normal"
-                android:layout_marginEnd="@dimen/spacing_normal"
-                android:inputType="phone"
-                android:id="@+id/et_phone" />
+                android:inputType="textPersonName" />
+        </LinearLayout>
 
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:orientation="vertical">
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textColor="@color/white"
-                android:textSize="@dimen/font_small"
-                android:layout_marginTop="@dimen/spacing_small"
-                android:text="This information won't be shared on your profile."
-                android:layout_gravity="center"
-                android:textAlignment="center"
-                android:layout_marginBottom="@dimen/spacing_small"/>
-
+                android:textColor="@color/pinkish_grey"
+                android:textSize="@dimen/font_large"
+                android:layout_marginTop="@dimen/spacing_normal"
+                android:text="Last Name"/>
+            <EditText
+                android:id="@+id/et_last_name"
+                android:textColor="@color/brownish_grey"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:inputType="textPersonName" />
         </LinearLayout>
     </LinearLayout>
 
-    <com.checkin.app.checkin.Utility.ClipRevealFrame
-        android:id="@+id/dark_back"
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textColor="@color/pinkish_grey"
+        android:textSize="@dimen/font_large"
+        android:layout_marginTop="@dimen/spacing_normal"
+        android:text="Location"/>
+    <EditText
+        android:id="@+id/et_location"
+        android:textColor="@color/brownish_grey"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:alpha="0.0"
-        android:visibility="gone"
-        android:background="@color/black" />
+        android:layout_height="wrap_content"
+        android:inputType="text" />
 
-    <FrameLayout
-        android:id="@+id/fragment_container"
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textColor="@color/pinkish_grey"
+        android:textSize="@dimen/font_large"
+        android:layout_marginTop="@dimen/spacing_normal"
+        android:text="Bio"/>
+    <EditText
+        android:textColor="@color/brownish_grey"
         android:layout_width="match_parent"
-        android:layout_height="350dp"
-        android:layout_gravity="center_vertical"
+        android:layout_height="wrap_content"
+        android:imeOptions="actionNext"
+        android:id="@+id/et_bio"
+        android:maxLines="3" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/spacing_large"
-        android:background="@drawable/background_card_white_shadow"
-        android:visibility="gone"/>
-</FrameLayout>
+        android:orientation="vertical"
+        android:background="@drawable/bordered_card_brownish_grey">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/spacing_normal"
+            android:textColor="@color/white"
+            android:textSize="@dimen/font_larger"
+            android:layout_marginTop="@dimen/spacing_small"
+            android:text="Personal Information"
+            android:layout_gravity="center"
+            android:textAlignment="center"/>
+
+        <TextView
+            android:id="@+id/tv_username"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Username: "
+            android:textColor="@color/white"
+            android:textSize="@dimen/font_small"
+            android:layout_gravity="center"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/spacing_normal"
+            android:textColor="@color/white"
+            android:textSize="@dimen/font_large"
+            android:layout_marginTop="@dimen/spacing_normal"
+            android:text="Phone Number"/>
+        <EditText android:textColor="@color/white"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/spacing_normal"
+            android:layout_marginEnd="@dimen/spacing_normal"
+            android:inputType="phone"
+            android:id="@+id/et_phone" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@color/white"
+            android:textSize="@dimen/font_small"
+            android:layout_marginTop="@dimen/spacing_small"
+            android:text="This information won't be shared on your profile."
+            android:layout_gravity="center"
+            android:textAlignment="center"
+            android:layout_marginBottom="@dimen/spacing_small"/>
+
+    </LinearLayout>
+</LinearLayout>

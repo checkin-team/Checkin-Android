@@ -49,7 +49,7 @@ public class ShopActivity extends BaseAccountActivity {
         mViewModel = ViewModelProviders.of(this).get(ShopProfileViewModel.class);
         String shopPk = getIntent().getStringExtra(KEY_SHOP_PK);
 
-        mViewModel.fetchShop(shopPk);
+        mViewModel.fetchShopDetails(shopPk);
     }
 
     protected void setupPagers(FragmentPagerAdapter pagerAdapter, @MenuRes int menuId) {
@@ -85,7 +85,7 @@ public class ShopActivity extends BaseAccountActivity {
 
     private class ShopPagerAdapter extends FragmentPagerAdapter {
 
-        public ShopPagerAdapter(FragmentManager fm) {
+        ShopPagerAdapter(FragmentManager fm) {
             super(fm);
         }
 
