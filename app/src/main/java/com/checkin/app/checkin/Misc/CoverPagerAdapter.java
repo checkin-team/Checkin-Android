@@ -6,6 +6,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 
+import com.checkin.app.checkin.R;
 import com.checkin.app.checkin.Utility.GlideApp;
 
 import java.util.ArrayList;
@@ -38,12 +39,18 @@ public class CoverPagerAdapter extends PagerAdapter {
 
         if (mViews.size() <= position) {
             view = new ImageView(container.getContext());
+            view.setScaleType(ImageView.ScaleType.CENTER_CROP);
             view.setLayoutParams(new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));
             mViews.add(view);
         } else {
             view = mViews.get(position);
         }
-        GlideApp.with(container).load(mData.get(position)).into(view);
+        String uri = mData.get(position);
+        if (uri != null) {
+            GlideApp.with(container).load(uri).into(view);
+        } else {
+            view.setImageResource(R.drawable.cover_restaurant_unknown);
+        }
         container.addView(view);
         return view;
     }

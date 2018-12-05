@@ -9,6 +9,7 @@
 
     <declare-styleable name="MultiSpinner">
         <attr name="entries" format="reference" />
+        <attr name="values" format="reference" />
         <attr name="hintText" format="string" />
     </declare-styleable>
 </resources>

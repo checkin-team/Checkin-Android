@@ -75,7 +75,27 @@ public class ShopRepository extends BaseRepository {
             @NonNull
             @Override
             protected LiveData<ApiResponse<ObjectNode>> createCall() {
-                return new RetrofitLiveData<>(mWebService.postRestaurantManageDetails(restaurantModel.getId(), restaurantModel));
+                return new RetrofitLiveData<>(mWebService.putRestaurantManageDetails(restaurantModel.getId(), restaurantModel));
+            }
+
+            @Override
+            protected void saveCallResult(ObjectNode data) {
+
+            }
+        }.getAsLiveData();
+    }
+
+    public LiveData<Resource<ObjectNode>> updateShopContact(final String shopId, final ObjectNode data) {
+        return new NetworkBoundResource<ObjectNode, ObjectNode>() {
+            @Override
+            protected boolean shouldUseLocalDb() {
+                return false;
+            }
+
+            @NonNull
+            @Override
+            protected LiveData<ApiResponse<ObjectNode>> createCall() {
+                return new RetrofitLiveData<>(mWebService.putRestaurantContactVerify(shopId, data));
             }
 
             @Override
@@ -103,6 +123,7 @@ public class ShopRepository extends BaseRepository {
             protected void saveCallResult(RestaurantModel data) {  }
         }.getAsLiveData();
     }
+
     public LiveData<Resource<RestaurantModel>> getShopManageModel(String shopId) {
         return new NetworkBoundResource<RestaurantModel, RestaurantModel> () {
 

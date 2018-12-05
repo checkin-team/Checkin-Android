@@ -18,6 +18,7 @@ public class MultiSpinner extends AppCompatSpinner implements
         DialogInterface.OnMultiChoiceClickListener, DialogInterface.OnCancelListener {
 
     private CharSequence[] items;
+    private Object[] values;
     private boolean[] selected;
     private boolean hasHintText;
     private String defaultText;
@@ -36,10 +37,13 @@ public class MultiSpinner extends AppCompatSpinner implements
 
         TypedArray a = context.obtainStyledAttributes(attrs, R.styleable.MultiSpinner);
         items = a.getTextArray(R.styleable.MultiSpinner_entries);
+        values = a.getTextArray(R.styleable.MultiSpinner_values);
+        if (values == null)
+            values = items;
         defaultText = a.getString(R.styleable.MultiSpinner_hintText);
         a.recycle();
-        if (items != null) {
-            selected = new boolean[items.length]; // false-filled by default
+        if (values != null) {
+            selected = new boolean[values.length]; // false-filled by default
         }
         if (defaultText != null) {
             hasHintText = true;
@@ -51,9 +55,9 @@ public class MultiSpinner extends AppCompatSpinner implements
 
     public CharSequence[] getSelectedItems() {
         List<CharSequence> selectedList = new ArrayList<>();
-        for (int i = 0; i < items.length; i++)
+        for (int i = 0; i < values.length; i++)
             if (selected[i])
-                selectedList.add(items[i]);
+                selectedList.add(values[i].toString());
         return selectedList.toArray(new CharSequence[] {});
     }
     public int[] getSelectedItemsPosition() {
@@ -70,10 +74,10 @@ public class MultiSpinner extends AppCompatSpinner implements
     public void selectEntries(CharSequence[] selectedEntries) {
         if (selectedEntries == null)
             return;
-        for (int i = 0; i < items.length; i++) {
+        for (int i = 0; i < values.length; i++) {
             selected[i] = false;
             for (CharSequence selectEntry: selectedEntries) {
-                if (selectEntry == items[i]) {
+                if (selectEntry.toString().equals(values[i].toString())) {
                     selected[i] = true;
                     break;
                 }

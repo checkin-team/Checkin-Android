@@ -1,6 +1,203 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout
-    xmlns:android="http://schemas.android.com/apk/res/android" android:layout_width="match_parent"
-    android:layout_height="match_parent">
+<android.support.v4.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <android.support.constraint.ConstraintLayout
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:paddingStart="@dimen/spacing_extra_large"
+    android:paddingEnd="@dimen/spacing_extra_large">
+
+    <EditText
+        android:id="@+id/et_name"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/height_textbox_normal"
+        style="@style/InputTextStyle"
+        android:layout_marginTop="@dimen/spacing_large"
+        android:hint="Business Name"
+        android:inputType="text"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"/>
+
+    <FrameLayout
+        android:id="@+id/container_phone"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/height_textbox_normal"
+        android:layout_marginTop="@dimen/spacing_normal"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/et_name">
+
+        <com.checkin.app.checkin.Utility.PrefixEditText
+            android:id="@+id/et_phone"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:inputType="phone"
+            android:text="@string/prefix_country_code"
+            android:hint="Phone Number"
+            style="@style/InputTextStyle" />
+
+        <ImageButton
+            android:id="@+id/btn_verify_phone"
+            android:layout_width="@dimen/button_height_short"
+            android:layout_height="@dimen/button_height_short"
+            style="@style/ButtonNegativeAction"
+            android:src="@drawable/tick"
+            android:tint="@color/white"
+            android:visibility="gone"
+            android:layout_gravity="end|center_vertical"
+            android:layout_marginEnd="@dimen/spacing_tiny"
+            android:layout_marginTop="@dimen/spacing_tiny"
+            android:layout_marginBottom="@dimen/spacing_tiny"/>
+    </FrameLayout>
+
+    <FrameLayout
+        android:id="@+id/container_email"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/height_textbox_normal"
+        android:layout_marginTop="@dimen/spacing_normal"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/container_phone">
+
+        <EditText
+            android:id="@+id/et_email"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:inputType="textEmailAddress"
+            android:hint="Email"
+            style="@style/InputTextStyle" />
+        <ImageButton
+            android:id="@+id/btn_verify_email"
+            android:layout_width="@dimen/button_height_short"
+            android:layout_height="@dimen/button_height_short"
+            style="@style/ButtonNegativeAction"
+            android:src="@drawable/tick"
+            android:tint="@color/white"
+            android:visibility="gone"
+            android:layout_gravity="end|center_vertical"
+            android:layout_marginEnd="@dimen/spacing_tiny"
+            android:layout_marginTop="@dimen/spacing_tiny"
+            android:layout_marginBottom="@dimen/spacing_tiny"/>
+    </FrameLayout>
+
+    <FrameLayout
+        android:id="@+id/container_days"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/height_textbox_normal"
+        android:layout_marginTop="@dimen/spacing_normal"
+        android:background="@drawable/background_textbox"
+        app:layout_constraintTop_toBottomOf="@id/container_email"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent">
+
+        <com.checkin.app.checkin.Utility.MultiSpinner
+            android:id="@+id/spinner_non_working_days"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            app:hintText="Non-Working days"
+            android:textAlignment="center"
+            app:entries="@array/weekdays"
+            app:values="@array/value_weekdays"/>
+    </FrameLayout>
+
+    <LinearLayout
+        android:id="@+id/container_opening_time"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:layout_marginTop="@dimen/spacing_normal"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toStartOf="@id/container_closing_time"
+        app:layout_constraintTop_toBottomOf="@id/container_days">
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            style="@style/InputLabelStyle"
+            android:text="Opening Time"/>
+        <com.checkin.app.checkin.Utility.TimeEditText
+            android:id="@+id/et_opening_time"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="00:00"
+            android:layout_gravity="center_horizontal"
+            android:padding="@dimen/spacing_small" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/container_closing_time"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:layout_marginTop="@dimen/spacing_normal"
+        app:layout_constraintStart_toEndOf="@id/container_opening_time"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/container_days">
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            style="@style/InputLabelStyle"
+            android:text="Closing Time"/>
+        <com.checkin.app.checkin.Utility.TimeEditText
+            android:id="@+id/et_closing_time"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="00:00"
+            android:layout_gravity="center_horizontal"
+            android:padding="@dimen/spacing_small" />
+    </LinearLayout>
+    <View
+        android:id="@+id/line"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_marginTop="@dimen/spacing_large"
+        android:background="@drawable/ic_line"
+        app:layout_constraintTop_toBottomOf="@id/container_opening_time"/>
+
+    <LinearLayout
+        android:id="@+id/container_website"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:layout_marginTop="@dimen/spacing_normal"
+        app:layout_constraintTop_toBottomOf="@id/line">
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            style="@style/InputLabelStyle"
+            android:text="Website"/>
+
+        <EditText
+            android:id="@+id/et_website"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:inputType="textUri|textWebEditText"
+            android:textColor="@color/brownish_grey" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/container_tag_line"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:layout_marginTop="@dimen/spacing_normal"
+        app:layout_constraintTop_toBottomOf="@id/container_website">
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            style="@style/InputLabelStyle"
+            android:text="Tag line"/>
+
+        <EditText
+            android:id="@+id/et_tag_line"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:inputType="text"
+            android:maxLines="3"
+            android:textColor="@color/brownish_grey" />
+    </LinearLayout>
 
 </android.support.constraint.ConstraintLayout>
+</android.support.v4.widget.NestedScrollView>

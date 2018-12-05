@@ -99,8 +99,9 @@ public interface WebApiService {
     @GET("restaurants/")
     Call<List<RestaurantModel>> getRestaurants();
 
-    @GET("restaurants/{shop_id}/manage/")
+    @GET("restaurants/{shop_id}/edit/")
     Call<RestaurantModel> getRestaurantManageDetails(@Path("shop_id") String shopId);
+
 
     @PATCH("restaurants/{shop_id}/manage/")
     Call<ObjectNode> postRestaurantManageDetails(@Path("shop_id") String shopId, @Body RestaurantModel shopData);
@@ -123,6 +124,13 @@ public interface WebApiService {
 
 
 
+
+
+    @PATCH("restaurants/{shop_id}/edit/")
+    Call<ObjectNode> putRestaurantManageDetails(@Path("shop_id") String shopId, @Body RestaurantModel shopData);
+
+    @PUT("restaurants/{shop_id}/verify/")
+    Call<ObjectNode> putRestaurantContactVerify(@Path("shop_id") String shopId, @Body ObjectNode data);
 
     // endregion
 
