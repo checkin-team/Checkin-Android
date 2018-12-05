@@ -28,6 +28,9 @@ public abstract class PhoneAuth extends PhoneAuthProvider.OnVerificationStateCha
     }
 
     public PhoneAuthCredential verifyOtp(String otp) {
+        if (mVerificationId == null) {
+            return null;
+        }
         return PhoneAuthProvider.getCredential(mVerificationId, otp);
     }
 

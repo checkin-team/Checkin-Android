@@ -80,6 +80,10 @@ public class SelectCropImageActivity extends AppCompatActivity {
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
+        if (data == null) {
+            finish();
+            return;
+        }
         if (requestCode == RC_PICK_IMAGE) {
             Uri uri = data.getData();
             try {

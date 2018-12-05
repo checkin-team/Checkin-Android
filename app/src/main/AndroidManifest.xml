@@ -98,6 +98,7 @@
         <activity
             android:name=".Shop.ShopPrivateProfile.EditProfileActivity"
             android:label="Edit Profile"
+            android:screenOrientation="portrait"
             android:theme="@style/AppThemeWhiteActionBar" />
         <activity
             android:name=".Notifications.NotificationActivity"

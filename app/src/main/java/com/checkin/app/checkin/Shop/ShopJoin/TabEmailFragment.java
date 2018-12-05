@@ -1,6 +1,5 @@
 package com.checkin.app.checkin.Shop.ShopJoin;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
@@ -26,12 +25,16 @@ public class TabEmailFragment extends Fragment {
     @BindView(R.id.ed_email) EditText edEmail;
     @BindView(R.id.btn_next) Button btnNext;
 
+    private EmailInteraction mListener;
+
     public TabEmailFragment() {
         // Required empty public constructor
     }
 
-    public static TabEmailFragment newInstance() {
-        return new TabEmailFragment();
+    public static TabEmailFragment newInstance(EmailInteraction listener) {
+        TabEmailFragment fragment = new TabEmailFragment();
+        fragment.mListener = listener;
+        return fragment;
     }
 
     @Override
@@ -57,10 +60,7 @@ public class TabEmailFragment extends Fragment {
     @OnClick(R.id.btn_next)
     public void proceed(View view){
         if (view.isActivated()) {
-            String email = edEmail.getText().toString();
-            Intent intent = new Intent(getContext(), ShopJoinActivity.class);
-            intent.putExtra(ShopJoinActivity.KEY_SHOP_EMAIL, email);
-            startActivity(intent);
+            mListener.onEmailEntered(edEmail.getText().toString());
         }
     }
 
@@ -68,5 +68,9 @@ public class TabEmailFragment extends Fragment {
     public void onDestroy() {
         super.onDestroy();
         unbinder.unbind();
+    }
+
+    interface EmailInteraction {
+        void onEmailEntered(String email);
     }
 }

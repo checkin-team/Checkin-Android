@@ -2,6 +2,7 @@ package com.checkin.app.checkin.Shop.ShopPrivateProfile;
 
 import android.arch.lifecycle.ViewModelProviders;
 import android.os.Bundle;
+import android.support.annotation.Nullable;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
@@ -13,13 +14,15 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.Toast;
 
+import com.checkin.app.checkin.Data.Resource;
 import com.checkin.app.checkin.R;
 import com.checkin.app.checkin.Shop.RestaurantModel;
+import com.checkin.app.checkin.Utility.Util;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
-public class EditProfileActivity extends AppCompatActivity implements EditAspectFragment.AspectFragmentInteraction {
+public class EditProfileActivity extends AppCompatActivity implements EditAspectFragment.AspectFragmentInteraction, EditBasicFragment.BasicFragmentInteraction {
     private static final String TAG = EditProfileActivity.class.getSimpleName();
 
     @BindView(R.id.container) ViewPager mViewPager;
@@ -28,7 +31,8 @@ public class EditProfileActivity extends AppCompatActivity implements EditAspect
     public static final String KEY_SHOP_PK = "shop_edit.pk";
 
     private ShopProfileViewModel mViewModel;
-    private SectionsPagerAdapter mSectionsPagerAdapter;
+    private boolean isBasicValid = true;
+    private boolean isAspectValid = true;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -39,16 +43,28 @@ public class EditProfileActivity extends AppCompatActivity implements EditAspect
 
         ActionBar actionBar = getSupportActionBar();
         actionBar.setHomeButtonEnabled(true);
+        actionBar.setDisplayHomeAsUpEnabled(true);
         actionBar.setElevation(0);
 
+        mViewPager.setAdapter(new SectionsPagerAdapter(getSupportFragmentManager()));
+        vTabs.setupWithViewPager(mViewPager);
+
+        String shopPk = getIntent().getStringExtra(KEY_SHOP_PK);
         mViewModel = ViewModelProviders.of(this).get(ShopProfileViewModel.class);
+        mViewModel.fetchShopManage(shopPk);
 
-        mSectionsPagerAdapter = new SectionsPagerAdapter(getSupportFragmentManager());
-        mViewPager.setAdapter(mSectionsPagerAdapter);
-        mViewPager.addOnPageChangeListener(new TabLayout.TabLayoutOnPageChangeListener(vTabs));
-        vTabs.addOnTabSelectedListener(new TabLayout.ViewPagerOnTabSelectedListener(mViewPager));
+        mViewModel.getObservableData().observe(this, resource -> {
+            if (resource == null)
+                return;
+            if (resource.status == Resource.Status.SUCCESS && resource.data != null) {
+                String msg = resource.data.get("detail").asText("Success!");
+                Util.toast(this, msg);
+            } else if (resource.status == Resource.Status.ERROR_INVALID_REQUEST) {
+                mViewModel.showError(resource.getErrorBody());
+                Util.toast(this, "Error in updating data.");
+            }
+        });
     }
-
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -61,20 +77,47 @@ public class EditProfileActivity extends AppCompatActivity implements EditAspect
         int id = item.getItemId();
         switch (id) {
             case R.id.menu_item_done:
-                Toast.makeText(this, "Done!", Toast.LENGTH_SHORT).show();
+                submitData();
                 return true;
         }
         return super.onOptionsItemSelected(item);
     }
 
+    private void submitData() {
+        if (!isBasicValid) {
+            Toast.makeText(getApplicationContext(), "Basic data is invalid!", Toast.LENGTH_SHORT).show();
+            return;
+        }
+        if (!isAspectValid) {
+            Toast.makeText(getApplicationContext(), "Aspect data is invalid!", Toast.LENGTH_SHORT).show();
+            return;
+        }
+        if (mViewPager.getCurrentItem() == 0)
+            mViewModel.collectBasicData();
+        else if (mViewPager.getCurrentItem() == 1)
+            mViewModel.collectAspectData();
+        else
+            mViewModel.collectData();
+    }
+
     @Override
     public void updateShopAspects(RestaurantModel shop) {
-
+        mViewModel.updateShop(shop);
     }
 
     @Override
     public void onAspectDataValidStatus(boolean isValid) {
+        isAspectValid = isValid;
+    }
 
+    @Override
+    public void updateShopBasics(RestaurantModel shop) {
+        mViewModel.updateShop(shop);
+    }
+
+    @Override
+    public void onBasicDataValidStatus(boolean isValid) {
+        isBasicValid = isValid;
     }
 
     @Override
@@ -93,11 +136,23 @@ public class EditProfileActivity extends AppCompatActivity implements EditAspect
         public Fragment getItem(int position) {
             switch (position) {
                 case 0:
-                    return EditBasicFragment.newInstance();
+                    return EditBasicFragment.newInstance(EditProfileActivity.this);
                 case 1:
                     return EditAspectFragment.newInstance(EditProfileActivity.this);
             }
             return null;
+        }
+
+        @Nullable
+        @Override
+        public CharSequence getPageTitle(int position) {
+            switch (position) {
+                case 0:
+                    return getResources().getString(R.string.title_shop_basic_info);
+                case 1:
+                    return getResources().getString(R.string.title_shop_aspects);
+            }
+            return "";
         }
 
         @Override
