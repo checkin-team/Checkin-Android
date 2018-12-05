@@ -1,5 +1,6 @@
 package com.checkin.app.checkin.Shop.ShopPrivateProfile;
 
+import android.annotation.SuppressLint;
 import android.app.Fragment;
 import android.arch.lifecycle.Lifecycle;
 import android.arch.lifecycle.LifecycleOwner;
@@ -14,7 +15,9 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
+import com.checkin.app.checkin.Data.Resource;
 import com.checkin.app.checkin.R;
 
 import java.util.ArrayList;
@@ -83,6 +86,7 @@ public class MembersShopFragment extends Fragment implements ShopMemberAdapter.O
 
     }
 
+    @SuppressLint("NewApi")
     public void setupUI()
     {
         LinearLayoutManager llm = new LinearLayoutManager(getActivity(), RecyclerView.VERTICAL, false);
@@ -91,7 +95,7 @@ public class MembersShopFragment extends Fragment implements ShopMemberAdapter.O
         mViewModel.fetchShopMembers();
         mViewModel.getShopMembers().observeForever( shopMembers->{
 
-            if(shopMembers.data!=null)
+            if(shopMembers.data!=null&&shopMembers.status== Resource.Status.SUCCESS)
             { memberModels=shopMembers.data;
 
             rvShopMembers.setLayoutManager(llm);
@@ -99,6 +103,12 @@ public class MembersShopFragment extends Fragment implements ShopMemberAdapter.O
             shopMemberAdapter = new ShopMemberAdapter(memberModels);
             shopMemberAdapter.setMemberInteractionListener(this);
             rvShopMembers.setAdapter(shopMemberAdapter);}
+            else if (shopMembers.status == Resource.Status.LOADING) {
+                // LOADING
+            } else {
+                Toast.makeText(this.getContext(), "Error fetching Shop Members, Status: " +
+                        shopMembers.status.toString() + "\nDetails: " + shopMembers.message, Toast.LENGTH_LONG).show();
+            }
         });
 
     }

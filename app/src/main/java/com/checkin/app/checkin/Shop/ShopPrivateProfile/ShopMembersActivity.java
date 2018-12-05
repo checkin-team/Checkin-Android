@@ -8,6 +8,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.checkin.app.checkin.Data.Resource;
 import com.checkin.app.checkin.R;
@@ -167,6 +168,12 @@ ChangeRoleFragment.onClickButtons{
                 getFragmentManager().beginTransaction()
                         .replace(MemberContainer.getId(),membersShopFragment)
                         .commit();
+            }
+            else if (objectNodeResource.status == Resource.Status.LOADING) {
+                // LOADING
+            } else {
+                Toast.makeText(getApplicationContext(), "Error Posting Shop Member Data, Status: " +
+                        objectNodeResource.status.toString() + "\nDetails: " + objectNodeResource.message, Toast.LENGTH_LONG).show();
             }
         });
     }

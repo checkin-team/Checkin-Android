@@ -78,25 +78,26 @@ public class ChangeRoleFragment extends Fragment implements MultiSpinner.MultiSp
 
         }
         unbinder = ButterKnife.bind(this, rootView);
-        Glide.with(fullName.getContext()).load(memberModel.getUser().getDisplayPic()).into(displayPic);
-        fullName.setText(memberModel.getUser().getDisplayName());
-        vRoles.setListener(this);
-        saveButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-               int roles[]=vRoles.getSelectedItemsPosition();
-               onInteractionListener.setRole(memberModel,positionF,roles);
+        if(memberModel!=null) {
+            Glide.with(fullName.getContext()).load(memberModel.getUser().getDisplayPic()).into(displayPic);
+            fullName.setText(memberModel.getUser().getDisplayName());
+            vRoles.setListener(this);
+            saveButton.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    int roles[] = vRoles.getSelectedItemsPosition();
+                    onInteractionListener.setRole(memberModel, positionF, roles);
 
-            }
-        });
-        if(removeButton!=null)
-        removeButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                onInteractionListener.setRole(memberModel,positionF,null);
-            }
-        });
-
+                }
+            });
+            if (removeButton != null)
+                removeButton.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        onInteractionListener.setRole(memberModel, positionF, null);
+                    }
+                });
+        }
         return rootView;
 
 
