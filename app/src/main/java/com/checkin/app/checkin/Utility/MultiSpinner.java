@@ -61,7 +61,10 @@ public class MultiSpinner extends AppCompatSpinner implements
         return selectedList.toArray(new CharSequence[] {});
     }
     public int[] getSelectedItemsPosition() {
-        int selectedItems[] = new int[5];
+        int selectedItems[] = new int[2];
+        selectedItems[1] =-1;
+        selectedItems[0] =-1;
+
         int j=0;
         for (int i = 0; i < items.length; i++)
             if (selected[i]) {

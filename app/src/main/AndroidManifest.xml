@@ -132,9 +132,10 @@
             android:theme="@style/AppTheme" />
         <activity
             android:name=".Shop.ShopPrivateProfile.ShopMembersActivity"
-            android:label="MEMBERS"
             android:screenOrientation="portrait"
-            android:theme="@style/AppThemeWhiteActionBar" />
+            android:label="MEMBERS"
+            android:theme="@style/AppThemeWhiteActionBar"
+             />
 
         <service
             android:name=".Auth.AuthenticatorService"

@@ -14,12 +14,10 @@
     android:layout_height="wrap_content"
     android:layout_marginTop="@dimen/spacing_huge"
     android:gravity="center"
-    android:shadowColor="#80ffffff"
-    android:shadowRadius="3"
-    android:textColor="@color/brownish_grey"
-    android:letterSpacing="-0.03"
+
     android:textSize="@dimen/font_larger"
-    android:text="ASSIGN ROLES"/>
+    style="@style/GreyTitleStyle"
+    android:text="Assign Roles"/>
 
         <FrameLayout
             android:layout_width="match_parent"
@@ -29,13 +27,15 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
-            <ImageView
-                android:layout_width="80dp"
+            <de.hdodenhof.circleimageview.CircleImageView
+
                 android:layout_gravity="start"
-                android:scaleType="fitXY"
+
+                android:layout_width="80dp"
+                android:layout_height="80dp"
                 android:id="@+id/user_image"
                 android:src="@drawable/flier"
-                android:layout_height="80dp" />
+                 />
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -67,7 +67,7 @@
 
                 <FrameLayout
                     android:id="@+id/container_roles"
-                    android:layout_width="wrap_content"
+                    android:layout_width="95dp"
                     android:layout_gravity="center"
                     android:layout_marginStart="@dimen/spacing_large"
                     android:layout_height="wrap_content"
@@ -77,8 +77,16 @@
                         android:id="@+id/spinner_roles"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        app:hintText="Roles"
-                        app:entries="@array/roles"/>
+                        android:layout_gravity="center"
+                        android:layout_marginStart="@dimen/spacing_huge"
+                        android:gravity="end"
+                        app:entries="@array/roles" />
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/prev_role"
+                        android:layout_gravity="center"
+                        android:text="Select" />
                 </FrameLayout>
 
             </LinearLayout>

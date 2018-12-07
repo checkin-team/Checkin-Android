@@ -7,6 +7,7 @@ import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -19,16 +20,21 @@ import com.checkin.app.checkin.R;
  * Created by Jogi Miglani on 26-10-2018.
  */
 
-public class SearchFragmentPeople extends Fragment {
+public class SearchFragmentPeople extends Fragment implements SearchTabsAdapter.OnSearchResultInteractionListener {
     SearchTabsAdapter searchTabsAdapter;
     RecyclerView searchRVPeople;
     SearchViewModel mViewModel;
     private ProgressBar spinner;
+    private onResultInteraction mResultInteraction;
 
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         return inflater.inflate(R.layout.search_fragment_people,container,false);
+    }
+
+    public void setResultInteraction(onResultInteraction mPeopleInteraction) {
+        this.mResultInteraction = mPeopleInteraction;
     }
 
     @Override
@@ -37,6 +43,7 @@ public class SearchFragmentPeople extends Fragment {
         searchRVPeople=view.findViewById(R.id.rv_search_people);
         searchRVPeople.setLayoutManager(new LinearLayoutManager(getContext(),LinearLayoutManager.VERTICAL,false));
         searchTabsAdapter=new SearchTabsAdapter();
+        searchTabsAdapter.setSearchItemInteractionListener(this);
         searchRVPeople.setAdapter(searchTabsAdapter);
         spinner = (ProgressBar)view.findViewById(R.id.progress_load);
 
@@ -53,7 +60,15 @@ public class SearchFragmentPeople extends Fragment {
             }
 
         });
+    }
 
+    @Override
+    public void onSelectResult(SearchModel selectedResult) {
+        mResultInteraction.onResultPressed(selectedResult);
+    }
+
+    public interface onResultInteraction{
+        public void onResultPressed(SearchModel result);
     }
 
 

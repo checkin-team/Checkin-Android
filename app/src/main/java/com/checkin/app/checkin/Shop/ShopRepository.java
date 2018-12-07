@@ -3,6 +3,7 @@ package com.checkin.app.checkin.Shop;
 import android.app.Application;
 import android.arch.lifecycle.LiveData;
 import android.content.Context;
+import android.os.Bundle;
 import android.support.annotation.NonNull;
 
 import com.checkin.app.checkin.Data.ApiClient;
@@ -17,6 +18,7 @@ import com.checkin.app.checkin.Shop.ShopJoin.ShopJoinModel;
 import com.checkin.app.checkin.Shop.ShopPrivateProfile.MemberModel;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -183,7 +185,7 @@ public class ShopRepository extends BaseRepository {
         }.getAsLiveData();
     }
 
-    public LiveData<Resource<ObjectNode>> postRestaurantMember(String shopId,MemberModel shopMember) {
+    public LiveData<Resource<ObjectNode>> postRestaurantMember(String shopId, ObjectNode objectNode) {
         return new NetworkBoundResource<ObjectNode, ObjectNode>() {
             @Override
             protected boolean shouldUseLocalDb() {
@@ -193,7 +195,7 @@ public class ShopRepository extends BaseRepository {
             @NonNull
             @Override
             protected LiveData<ApiResponse<ObjectNode>> createCall() {
-                return new RetrofitLiveData<>(mWebService.addRestaurantMember(shopId,shopMember));
+                return new RetrofitLiveData<>(mWebService.addRestaurantMember(shopId,objectNode));
             }
 
             @Override
@@ -203,7 +205,7 @@ public class ShopRepository extends BaseRepository {
         }.getAsLiveData();
     }
 
-    public LiveData<Resource<ObjectNode>> updateRestaurantMember(String shopId,String userId,MemberModel shopMember) {
+    public LiveData<Resource<ObjectNode>> updateRestaurantMember(String shopId,String userId,ObjectNode shopMember) {
         return new NetworkBoundResource<ObjectNode, ObjectNode>() {
             @Override
             protected boolean shouldUseLocalDb() {

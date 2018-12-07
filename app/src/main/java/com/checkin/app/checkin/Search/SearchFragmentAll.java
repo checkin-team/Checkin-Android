@@ -21,16 +21,21 @@ import java.util.List;
  * Created by Jogi Miglani on 26-10-2018.
  */
 
-public class SearchFragmentAll extends Fragment {
+public class SearchFragmentAll extends Fragment implements SearchTabsAdapter.OnSearchResultInteractionListener {
 
     SearchViewModel mViewModel;
     SearchTabsAdapter searchTabsAdapter;
     RecyclerView searchRVAll;
+    private onResultInteraction mResultInteraction;
     private ProgressBar spinner;
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         return inflater.inflate(R.layout.search_fragment_all,container,false);
+    }
+
+    public void setmResultInteraction(onResultInteraction mResultInteraction) {
+        this.mResultInteraction = mResultInteraction;
     }
 
     @Override
@@ -39,6 +44,7 @@ public class SearchFragmentAll extends Fragment {
         searchRVAll=view.findViewById(R.id.rv_search_all);
         searchRVAll.setLayoutManager(new LinearLayoutManager(getContext(),LinearLayoutManager.VERTICAL,false));
         searchTabsAdapter=new SearchTabsAdapter();
+        searchTabsAdapter.setSearchItemInteractionListener(this);
         searchRVAll.setAdapter(searchTabsAdapter);
         spinner = (ProgressBar)view.findViewById(R.id.progress_load);
 
@@ -57,6 +63,15 @@ public class SearchFragmentAll extends Fragment {
         });
 
     }
+    @Override
+    public void onSelectResult(SearchModel selectedResult) {
+        mResultInteraction.onResultPressed(selectedResult);
+    }
+
+    public interface onResultInteraction{
+        public void onResultPressed(SearchModel result);
+    }
+
 
     private void doneLoading() {
         spinner.setVisibility(View.GONE);

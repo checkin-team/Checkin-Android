@@ -18,6 +18,18 @@ public class BriefModel {
         return pk;
     }
 
+    public void setPk(String pk) {
+        this.pk = pk;
+    }
+
+    public void setDisplayPic(String displayPic) {
+        this.displayPic = displayPic;
+    }
+
+    public void setDisplayName(String displayName) {
+        this.displayName = displayName;
+    }
+
     public String getDisplayName() {
         return displayName;
     }

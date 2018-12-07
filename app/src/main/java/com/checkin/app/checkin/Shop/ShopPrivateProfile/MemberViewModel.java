@@ -3,6 +3,7 @@ package com.checkin.app.checkin.Shop.ShopPrivateProfile;
 import android.app.Application;
 import android.arch.lifecycle.LiveData;
 import android.arch.lifecycle.MediatorLiveData;
+import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.util.Log;
 
@@ -12,6 +13,7 @@ import com.checkin.app.checkin.Data.Resource;
 import com.checkin.app.checkin.Shop.ShopRepository;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class MemberViewModel extends BaseViewModel {
@@ -39,13 +41,18 @@ public class MemberViewModel extends BaseViewModel {
         return mShopPk;
     }
 
-    public void addShopMember(MemberModel shopMember)
+    public void addShopMember(ObjectNode objectNode)
     {
-        mData.addSource(mRepository.postRestaurantMember(getShopPk(),shopMember), mData::setValue);
+        mData.addSource(mRepository.postRestaurantMember(getShopPk(),objectNode), mData::setValue);
+        mData.removeSource(mRepository.postRestaurantMember(getShopPk(),objectNode));
+
     }
-    public void updateShopMember(MemberModel shopMember)
+    public void updateShopMember(String userPk,ObjectNode shopMember)
     {
-        mData.addSource(mRepository.updateRestaurantMember(getShopPk(),shopMember.getUser().getPk(),shopMember), mData::setValue);
+
+        mData.addSource(mRepository.updateRestaurantMember(getShopPk(),userPk,shopMember), mData::setValue);
+        mData.removeSource(mRepository.updateRestaurantMember(getShopPk(),userPk,shopMember));
+
     }
     public void updateShopMemberPartially(MemberModel shopMember)
     {
@@ -54,6 +61,7 @@ public class MemberViewModel extends BaseViewModel {
     public void deleteShopMember(String userId)
     {
         mData.addSource(mRepository.deleteRestaurantMember(getShopPk(),userId), mData::setValue);
+        mData.removeSource(mRepository.deleteRestaurantMember(getShopPk(),userId));
     }
 
 
@@ -62,6 +70,7 @@ public class MemberViewModel extends BaseViewModel {
     }
     public LiveData<Resource<ObjectNode>> getShopMemberLiveData()
     {
+
         return mData;
     }
 

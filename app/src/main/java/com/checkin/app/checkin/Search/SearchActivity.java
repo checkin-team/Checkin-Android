@@ -1,6 +1,7 @@
 package com.checkin.app.checkin.Search;
 
 import android.arch.lifecycle.ViewModelProviders;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.TabLayout;
@@ -9,19 +10,22 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.Button;
 import android.widget.TextView;
 
 import com.checkin.app.checkin.R;
+import com.checkin.app.checkin.Utility.Constants;
 import com.miguelcatalan.materialsearchview.MaterialSearchView;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class SearchActivity extends AppCompatActivity {
-
+public class SearchActivity extends AppCompatActivity implements SearchFragmentAll.onResultInteraction,SearchFragmentNoClick.OnSearchResultInteractionListener,SearchFragmentPeople.onResultInteraction,SearchFragmentRestaurant.onResultInteraction
+{
 
     private SectionPageAdapter mSectionPageAdapter;
     private SearchViewModel searchViewModel;
@@ -40,6 +44,7 @@ public class SearchActivity extends AppCompatActivity {
 
         mSectionPageAdapter=new SectionPageAdapter(getSupportFragmentManager());
         viewPager=findViewById(R.id.viewpager_on_click);
+        setupUi();
         setupViewPager(viewPager);
 
         TabLayout tabLayout =findViewById(R.id.tabs);
@@ -48,7 +53,7 @@ public class SearchActivity extends AppCompatActivity {
         searchViewModel=ViewModelProviders.of(this).get(SearchViewModel.class);
 
 
-        setupUi();
+
         setupSearch();
     }
 
@@ -118,9 +123,35 @@ public class SearchActivity extends AppCompatActivity {
 
     private void setupViewPager(ViewPager viewpager) {
         SectionPageAdapter adapter =new SectionPageAdapter(getSupportFragmentManager());
-        adapter.addFragment(new SearchFragmentAll(),"ALL");
-        adapter.addFragment(new SearchFragmentPeople(),"PEOPLE");
-        adapter.addFragment(new SearchFragmentRestaurant(),"RESTAURANT");
+        if(getIntent().hasExtra(Constants.ACCOUNT_TYPE)) {
+            if (getIntent().getStringExtra(Constants.ACCOUNT_TYPE).equals("People")  ) {
+                setupFragments();
+                SearchFragmentPeople searchFragmentPeople=new SearchFragmentPeople();
+                searchFragmentPeople.setResultInteraction(this);
+                adapter.addFragment(searchFragmentPeople, "PEOPLE");
+            }
+            else
+            {
+                setupFragments();
+                SearchFragmentRestaurant searchFragmentRestaurant=new SearchFragmentRestaurant();
+                searchFragmentRestaurant.setmResultInteraction(this);
+                adapter.addFragment(searchFragmentRestaurant, "RESTAURANT");
+            }
+        }
+        else{
+
+            SearchFragmentAll searchFragmentAll=new SearchFragmentAll();
+            searchFragmentAll.setmResultInteraction(this);
+        adapter.addFragment(searchFragmentAll,"ALL");
+
+            SearchFragmentPeople searchFragmentPeople=new SearchFragmentPeople();
+            searchFragmentPeople.setResultInteraction(this);
+            adapter.addFragment(searchFragmentPeople, "PEOPLE");
+
+
+            SearchFragmentRestaurant searchFragmentRestaurant=new SearchFragmentRestaurant();
+            searchFragmentPeople.setResultInteraction(this);
+            adapter.addFragment(searchFragmentRestaurant,"RESTAURANT");}
         viewpager.setAdapter(adapter);
     }
 
@@ -141,6 +172,16 @@ public class SearchActivity extends AppCompatActivity {
         } else {
             super.onBackPressed();
         }
+    }
+
+    @Override
+    public void onResultPressed(SearchModel result) {
+        Intent intent=getIntent();
+        intent.putExtra(Constants.ACCOUNT_UID,result.getPk());
+        intent.putExtra("userName",result.getName());
+        intent.putExtra("userPic",result.getImageUrl());
+        setResult(RESULT_OK,intent);
+        finish();
     }
 
     public static class SectionPageAdapter extends FragmentPagerAdapter {

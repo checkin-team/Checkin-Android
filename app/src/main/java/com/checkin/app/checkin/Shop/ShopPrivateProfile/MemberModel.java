@@ -67,4 +67,8 @@ public class MemberModel {
     public void setOwner(boolean owner) {
         isOwner = owner;
     }
+
+    public void setUser(BriefModel user) {
+        this.user = user;
+    }
 }

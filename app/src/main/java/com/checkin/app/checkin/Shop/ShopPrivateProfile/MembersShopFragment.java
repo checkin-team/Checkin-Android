@@ -96,7 +96,7 @@ public class MembersShopFragment extends Fragment implements ShopMemberAdapter.O
         mViewModel.getShopMembers().observeForever( shopMembers->{
 
             if(shopMembers.data!=null&&shopMembers.status== Resource.Status.SUCCESS)
-            { memberModels=shopMembers.data;
+            { memberModels=shopMembers.data.subList(0,shopMembers.data.size());
 
             rvShopMembers.setLayoutManager(llm);
 

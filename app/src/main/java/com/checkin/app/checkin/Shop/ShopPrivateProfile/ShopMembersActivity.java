@@ -2,6 +2,9 @@ package com.checkin.app.checkin.Shop.ShopPrivateProfile;
 
 import android.app.FragmentManager;
 import android.arch.lifecycle.ViewModelProviders;
+import android.content.Intent;
+import android.net.Uri;
+import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -10,8 +13,14 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.checkin.app.checkin.Data.Converters;
 import com.checkin.app.checkin.Data.Resource;
+import com.checkin.app.checkin.Misc.BriefModel;
 import com.checkin.app.checkin.R;
+import com.checkin.app.checkin.Search.SearchActivity;
+import com.checkin.app.checkin.Utility.Constants;
+import com.fasterxml.jackson.databind.node.ObjectNode;
+import com.google.android.gms.common.util.DataUtils;
 
 import java.nio.file.Path;
 import java.util.ArrayList;
@@ -20,6 +29,7 @@ import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 import butterknife.Unbinder;
 
 public class ShopMembersActivity extends AppCompatActivity implements MembersShopFragment.ShopMemberAdd,
@@ -42,6 +52,7 @@ ChangeRoleFragment.onClickButtons{
    private MembersShopFragment membersShopFragment;
    private MemberViewModel mViewModel;
     public static final String KEY_SHOP_PK = "shop_private.pk";
+    public static final int PICK_USER= 10;
     String shopPk;
     int flag=0;
 
@@ -55,6 +66,10 @@ ChangeRoleFragment.onClickButtons{
         ButterKnife.bind(this);
         addMemberText.setText("ADD MEMBER");
         membersShopFragment=new MembersShopFragment();
+       ActionBar actionBar = getSupportActionBar();
+       actionBar.setHomeButtonEnabled(true);
+       actionBar.setDisplayHomeAsUpEnabled(true);
+       actionBar.setElevation(0);
         shopPk=getIntent().getStringExtra(KEY_SHOP_PK);
        membersShopFragment=new MembersShopFragment();
         membersShopFragment.setInterActionListener(this);
@@ -67,11 +82,19 @@ ChangeRoleFragment.onClickButtons{
 
 
     }
+
+    @OnClick(R.id.btn_add_member)
+    public void onClickAddMembers(View view) {
+        Intent pickUserIntent=new Intent(this, SearchActivity.class);
+        pickUserIntent.putExtra(Constants.ACCOUNT_TYPE,"People");
+        startActivityForResult(pickUserIntent,PICK_USER);
+    }
+
+
     @Override
     public void onBackPressed(){
        if(getFragmentManager().popBackStackImmediate("addRole",FragmentManager.POP_BACK_STACK_INCLUSIVE))
        {
-            Log.e("ShopMembers","Pop kra");
             darkBack.setVisibility(View.GONE);
        }
        else
@@ -79,6 +102,12 @@ ChangeRoleFragment.onClickButtons{
            super.onBackPressed();
 
        }
+    }
+
+    @Override
+    public boolean onSupportNavigateUp() {
+        finish();
+        return true;
     }
 
     @Override
@@ -91,7 +120,6 @@ ChangeRoleFragment.onClickButtons{
 
                .addToBackStack("addRole")
                .commit();
-
         darkBack.setVisibility(View.VISIBLE);
 
     }
@@ -100,12 +128,15 @@ ChangeRoleFragment.onClickButtons{
     public void setRole(MemberModel memberModel, int position, int roles[]) {
 //            memberModel.setRole(role);
 
-        if (roles == null) {
+        if (roles == null||roles[0]==-1) {
             mViewModel.deleteShopMember(memberModel.getUser().getPk());
+               observeLiveData();
             getFragmentManager().popBackStackImmediate("addRole", FragmentManager.POP_BACK_STACK_INCLUSIVE);
             darkBack.setVisibility(View.GONE);
+
         }
         else {
+            memberModel.setOwner(false);memberModel.setAdmin(false);memberModel.setManager(false);memberModel.setWaiter(false);memberModel.setCook(false);
             for(int i=0;i<roles.length;i++)
             {
                 switch (roles[i]){
@@ -125,58 +156,119 @@ ChangeRoleFragment.onClickButtons{
                         memberModel.setCook(true);
                         break;
 
+
                 }
             }
 
 
 
+            flag=2;
             mViewModel.fetchShopMembers();
-            mViewModel.getShopMembers().observe(this,shopMembers->{
-                if(shopMembers!=null&&shopMembers.status== Resource.Status.SUCCESS)
-                {
-                    List<MemberModel> mShopMembers=shopMembers.data;
-                    for(int i=0;i<mShopMembers.size();i++)
-                    {
-                        if(mShopMembers.get(i).getUser().getPk().equals(memberModel.getUser().getPk()))
-                        {
-                            flag=1;
 
-                            break;
+                mViewModel.getShopMembers().observe(this, shopMembers -> {
+                    if (shopMembers != null && shopMembers.status == Resource.Status.SUCCESS) {
+                        List<MemberModel> mShopMembers = shopMembers.data;
+                        for (int i = 0; i < mShopMembers.size(); i++) {
+                            if (mShopMembers.get(i).getUser().getPk().equals(memberModel.getUser().getPk())) {
+                                flag = 1;
+                                if (flag == 1) {
+                                    ObjectNode data = Converters.objectMapper.createObjectNode();
+                                    data.put("is_owner", (memberModel.isOwner()));
+                                    data.put("is_admin", (memberModel.isAdmin()));
+                                    data.put("is_manager", (memberModel.isManager()));
+
+                                    data.put("is_waiter", (memberModel.isWaiter()));
+                                    data.put("is_cook", (memberModel.isCook()));
+                                    mViewModel.updateShopMember(memberModel.getUser().getPk(), data);
+                                    observeLiveData();
+                                }
+                                break;
+                            }
+
+                        }
+                        if (flag == 2) {
+                            ObjectNode data = Converters.objectMapper.createObjectNode();
+                            data.put("user", Integer.parseInt(memberModel.getUser().getPk()));
+                            data.put("is_owner", (memberModel.isOwner()));
+                            data.put("is_admin", (memberModel.isAdmin()));
+                            data.put("is_manager", (memberModel.isManager()));
+
+                            data.put("is_waiter", (memberModel.isWaiter()));
+                            data.put("is_cook", (memberModel.isCook()));
+                            mViewModel.addShopMember(data);
+                            observeLiveData();
+
                         }
                     }
-                    if(flag==1)
-                    {
-                        mViewModel.updateShopMember(memberModel);
-                    }
-                    else
-                        mViewModel.addShopMember(memberModel);
+                });
 
-                }
-            });
+
             getFragmentManager().popBackStackImmediate("addRole", FragmentManager.POP_BACK_STACK_INCLUSIVE);
             darkBack.setVisibility(View.GONE);
 
 
         }
-        mViewModel.getShopMemberLiveData().observe(this,objectNodeResource ->
+
+    }
+
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if(requestCode==PICK_USER&&resultCode==RESULT_OK)
         {
-            if(objectNodeResource!=null)
-            if(objectNodeResource.status== Resource.Status.SUCCESS)
-            {
-                membersShopFragment=new MembersShopFragment();
-                membersShopFragment.setInterActionListener(this);
-                getFragmentManager().beginTransaction()
-                        .replace(MemberContainer.getId(),membersShopFragment)
-                        .commit();
-            }
-            else if (objectNodeResource.status == Resource.Status.LOADING) {
-                // LOADING
-            } else {
-                Toast.makeText(getApplicationContext(), "Error Posting Shop Member Data, Status: " +
-                        objectNodeResource.status.toString() + "\nDetails: " + objectNodeResource.message, Toast.LENGTH_LONG).show();
-            }
-        });
+            MemberModel memberModel=new MemberModel();
+            BriefModel briefModel=new BriefModel();
+            briefModel.setPk(data.getStringExtra(Constants.ACCOUNT_UID));
+            briefModel.setDisplayName(data.getStringExtra("userName"));
+            briefModel.setDisplayPic(data.getStringExtra("userPic"));
+            memberModel.setUser(briefModel);
+            shopMemberAddition(memberModel,2);
+        }
     }
-    public void onClickAddMembers(View view) {
+
+    public void observeLiveData(){
+                mViewModel.getShopMemberLiveData().observe(this,objectNodeResource ->
+                {
+                    if(objectNodeResource!=null)
+                        if(objectNodeResource.status== Resource.Status.SUCCESS)
+                        {
+                            membersShopFragment=new MembersShopFragment();
+                            membersShopFragment.setInterActionListener(this);
+                            getFragmentManager().beginTransaction()
+                                    .replace(MemberContainer.getId(),membersShopFragment)
+                                    .commit();
+                            mViewModel.getShopMembers().removeObservers(this);
+                            mViewModel.getShopMemberLiveData().removeObservers(this);
+                        }
+                        else if (objectNodeResource.status == Resource.Status.LOADING) {
+                            // LOADING
+                        } else {
+                            if(objectNodeResource.message==null)
+                            {
+                                membersShopFragment=new MembersShopFragment();
+                                membersShopFragment.setInterActionListener(this);
+                                getFragmentManager().beginTransaction()
+                                        .replace(MemberContainer.getId(),membersShopFragment)
+                                        .commit();
+                                mViewModel.getShopMembers().removeObservers(this);
+                                mViewModel.getShopMemberLiveData().removeObservers(this);
+
+                            }
+                            else
+                                Toast.makeText(getApplicationContext(), "Error Posting Shop Member Data, Status: " +
+                                        objectNodeResource.status.toString() + "\nDetails: " + objectNodeResource.message, Toast.LENGTH_LONG).show();
+
+                        }
+
+
+                });
+
+
+
+
+
+
     }
+
 }

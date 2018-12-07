@@ -12,6 +12,7 @@ import android.widget.TextView;
 import com.bumptech.glide.Glide;
 import com.checkin.app.checkin.R;
 
+import java.security.acl.Owner;
 import java.util.List;
 
 
@@ -70,6 +71,13 @@ public class ShopMemberAdapter extends RecyclerView.Adapter<ShopMemberAdapter.Vi
         void bindData(MemberModel member) {
             userName.setText(member.getUser().getDisplayName());
             Glide.with(userName.getContext()).load(member.getUser().getDisplayPic()).into(userPic);
+            if(member.isOwner()) memberRole.setText("Owner");
+            else if(member.isAdmin()) memberRole.setText("Admin");
+            else if(member.isManager()) memberRole.setText("Manager");
+
+            else if(member.isWaiter()) memberRole.setText("Waiter");
+
+            else if(member.isCook()) memberRole.setText("Cook");
 
             memberRole.setOnClickListener(new View.OnClickListener() {
                 @Override

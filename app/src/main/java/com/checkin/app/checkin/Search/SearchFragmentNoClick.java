@@ -33,6 +33,7 @@ public class SearchFragmentNoClick extends Fragment {
     SearchRVAdapter searchRVAdapterRecent;
     RecyclerView searchRVPopular;
     RecyclerView searchRVRestaurant;
+    private OnSearchResultInteractionListener mSearchItemInteractionListener;
     RecyclerView searchRVRecent;
 
     public static SearchFragmentNoClick newInstance() {
@@ -43,7 +44,13 @@ public class SearchFragmentNoClick extends Fragment {
         fragment.setArguments(args);
         return fragment;
     }
+    public interface OnSearchResultInteractionListener{
+        public void onResultPressed(SearchModel selectedResult);
+    }
 
+    public void setSearchItemInteractionListener(OnSearchResultInteractionListener mSearchItemInteractionListener) {
+        this.mSearchItemInteractionListener = mSearchItemInteractionListener;
+    }
 
 
     @Nullable
@@ -125,19 +132,22 @@ public class SearchFragmentNoClick extends Fragment {
         searchRVAdapterPopular.setListContent(searchRVPopularList);
     }
 
-    class SearchRVAdapter extends RecyclerView.Adapter<SearchRVAdapter.SearchViewHolder>
+      class SearchRVAdapter extends RecyclerView.Adapter<SearchRVAdapter.SearchViewHolder>
     {
         SearchViewHolder searchViewHolder;
         private List<SearchModel> searchItems=new ArrayList<>();
         private Context context;
         LayoutInflater inflater;
         View view;
+        private OnSearchResultInteractionListener mSearchItemInteractionListener;
 
         public SearchRVAdapter(Context context)
         {
             this.context=context;
             inflater= LayoutInflater.from(context);
         }
+
+
 
         @NonNull
         @Override
@@ -167,12 +177,15 @@ public class SearchFragmentNoClick extends Fragment {
                 super(itemView);
                 userName=itemView.findViewById(R.id.search_item_username);
                 imageView=itemView.findViewById(R.id.im_search_item);
+
             }
 
             @Override
             public void onClick(View v) {
-
+                mSearchItemInteractionListener.onResultPressed(searchItems.get(getAdapterPosition()));
             }
+
+
         }
 
         public void setListContent(List<SearchModel> list_members){

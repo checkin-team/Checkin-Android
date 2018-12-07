@@ -19,10 +19,11 @@ import com.checkin.app.checkin.R;
  * Created by Jogi Miglani on 26-10-2018.
  */
 
-public class SearchFragmentRestaurant extends Fragment {
+public class SearchFragmentRestaurant extends Fragment implements SearchTabsAdapter.OnSearchResultInteractionListener {
     SearchTabsAdapter searchTabsAdapter;
     RecyclerView searchRVRestaurants;
     SearchViewModel mViewModel;
+    private onResultInteraction mResultInteraction;
     private ProgressBar spinner;
     View mView;
     @Nullable
@@ -31,12 +32,17 @@ public class SearchFragmentRestaurant extends Fragment {
         return inflater.inflate(R.layout.search_fragment_restaurant,container,false);
     }
 
+    public void setmResultInteraction(onResultInteraction mResultInteraction) {
+        this.mResultInteraction = mResultInteraction;
+    }
+
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         searchRVRestaurants=view.findViewById(R.id.rv_search_restaurants);
         searchRVRestaurants.setLayoutManager(new LinearLayoutManager(getContext(),LinearLayoutManager.VERTICAL,false));
         searchTabsAdapter=new SearchTabsAdapter();
+        searchTabsAdapter.setSearchItemInteractionListener(this);
         searchRVRestaurants.setAdapter(searchTabsAdapter);
         spinner = (ProgressBar)view.findViewById(R.id.progress_load);
 
@@ -61,6 +67,15 @@ public class SearchFragmentRestaurant extends Fragment {
         });
 
     }
+    @Override
+    public void onSelectResult(SearchModel selectedResult) {
+        mResultInteraction.onResultPressed(selectedResult);
+    }
+
+    public interface onResultInteraction{
+        public void onResultPressed(SearchModel result);
+    }
+
 
     private void showNotFoundStatus() {
         mView.setVisibility(View.VISIBLE);
