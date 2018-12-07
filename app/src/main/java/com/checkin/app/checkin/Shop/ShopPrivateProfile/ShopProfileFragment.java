@@ -13,6 +13,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -30,7 +31,7 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 import butterknife.Unbinder;
 
-/**
+/*
  * Created by Bhavik Patel on 25/08/2018.
  */
 
@@ -124,6 +125,8 @@ public class ShopProfileFragment extends Fragment {
         intent.putExtra(EditProfileActivity.KEY_SHOP_PK, shopPk);
         startActivity(intent);
     }
+
+
 
     @OnClick({R.id.btn_members, R.id.btn_notifications, R.id.btn_insights, R.id.btn_cuisine})
     public void onClick(View v) {

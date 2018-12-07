@@ -130,7 +130,7 @@
             android:name=".Search.SearchActivity"
             android:theme="@style/AppTheme" />
         <activity
-            android:name=".Shop.ShopPrivateProfile.ShopMembersActivity"
+            android:name=".Shop.ShopPrivateProfile.ShopMemRbersActivity"
             android:label="MEMBERS"
             android:screenOrientation="portrait"
             android:theme="@style/AppThemeWhiteActionBar" />
