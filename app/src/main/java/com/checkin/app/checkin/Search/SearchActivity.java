@@ -167,6 +167,8 @@ public class SearchActivity extends AppCompatActivity implements SearchFragmentA
 
     @Override
     public void onBackPressed() {
+        if(!getIntent().getStringExtra(Constants.ACCOUNT_TYPE).isEmpty())
+            finish();
         if (searchView.isSearchOpen()) {
             searchView.closeSearch();
         } else {
@@ -178,8 +180,8 @@ public class SearchActivity extends AppCompatActivity implements SearchFragmentA
     public void onResultPressed(SearchModel result) {
         Intent intent=getIntent();
         intent.putExtra(Constants.ACCOUNT_UID,result.getPk());
-        intent.putExtra("userName",result.getName());
-        intent.putExtra("userPic",result.getImageUrl());
+        intent.putExtra(Constants.ACCOUNT_NAME,result.getName());
+        intent.putExtra(Constants.ACCOUNT_PIC,result.getImageUrl());
         setResult(RESULT_OK,intent);
         finish();
     }

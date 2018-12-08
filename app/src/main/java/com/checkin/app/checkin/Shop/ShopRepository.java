@@ -185,7 +185,7 @@ public class ShopRepository extends BaseRepository {
         }.getAsLiveData();
     }
 
-    public LiveData<Resource<ObjectNode>> postRestaurantMember(String shopId, ObjectNode objectNode) {
+    public LiveData<Resource<ObjectNode>> postRestaurantMember(String shopId, MemberModel memberModel) {
         return new NetworkBoundResource<ObjectNode, ObjectNode>() {
             @Override
             protected boolean shouldUseLocalDb() {
@@ -195,7 +195,7 @@ public class ShopRepository extends BaseRepository {
             @NonNull
             @Override
             protected LiveData<ApiResponse<ObjectNode>> createCall() {
-                return new RetrofitLiveData<>(mWebService.addRestaurantMember(shopId,objectNode));
+                return new RetrofitLiveData<>(mWebService.addRestaurantMember(shopId,memberModel));
             }
 
             @Override
@@ -205,7 +205,7 @@ public class ShopRepository extends BaseRepository {
         }.getAsLiveData();
     }
 
-    public LiveData<Resource<ObjectNode>> updateRestaurantMember(String shopId,String userId,ObjectNode shopMember) {
+    public LiveData<Resource<ObjectNode>> updateRestaurantMember(String shopId,String userId,MemberModel shopMember) {
         return new NetworkBoundResource<ObjectNode, ObjectNode>() {
             @Override
             protected boolean shouldUseLocalDb() {

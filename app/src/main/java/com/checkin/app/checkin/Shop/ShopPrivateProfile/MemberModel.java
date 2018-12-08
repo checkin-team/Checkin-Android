@@ -67,8 +67,13 @@ public class MemberModel {
     public void setOwner(boolean owner) {
         isOwner = owner;
     }
-
+    @JsonProperty("user")
     public void setUser(BriefModel user) {
         this.user = user;
+    }
+    @JsonProperty("user")
+    public String getUserId()
+    {
+        return user.getPk();
     }
 }

@@ -54,7 +54,7 @@ ChangeRoleFragment.onClickButtons{
     public static final String KEY_SHOP_PK = "shop_private.pk";
     public static final int PICK_USER= 10;
     String shopPk;
-    int flag=0;
+    boolean isMemberOld=false;
 
    private ChangeRoleFragment changeRoleFragment;
    Unbinder unbinder;
@@ -162,7 +162,7 @@ ChangeRoleFragment.onClickButtons{
 
 
 
-            flag=2;
+
             mViewModel.fetchShopMembers();
 
                 mViewModel.getShopMembers().observe(this, shopMembers -> {
@@ -170,32 +170,20 @@ ChangeRoleFragment.onClickButtons{
                         List<MemberModel> mShopMembers = shopMembers.data;
                         for (int i = 0; i < mShopMembers.size(); i++) {
                             if (mShopMembers.get(i).getUser().getPk().equals(memberModel.getUser().getPk())) {
-                                flag = 1;
-                                if (flag == 1) {
-                                    ObjectNode data = Converters.objectMapper.createObjectNode();
-                                    data.put("is_owner", (memberModel.isOwner()));
-                                    data.put("is_admin", (memberModel.isAdmin()));
-                                    data.put("is_manager", (memberModel.isManager()));
+                                isMemberOld=true;
 
-                                    data.put("is_waiter", (memberModel.isWaiter()));
-                                    data.put("is_cook", (memberModel.isCook()));
-                                    mViewModel.updateShopMember(memberModel.getUser().getPk(), data);
+
+                                    mViewModel.updateShopMember(memberModel.getUser().getPk(), memberModel);
                                     observeLiveData();
-                                }
+
                                 break;
                             }
 
                         }
-                        if (flag == 2) {
-                            ObjectNode data = Converters.objectMapper.createObjectNode();
-                            data.put("user", Integer.parseInt(memberModel.getUser().getPk()));
-                            data.put("is_owner", (memberModel.isOwner()));
-                            data.put("is_admin", (memberModel.isAdmin()));
-                            data.put("is_manager", (memberModel.isManager()));
+                        if (!isMemberOld) {
 
-                            data.put("is_waiter", (memberModel.isWaiter()));
-                            data.put("is_cook", (memberModel.isCook()));
-                            mViewModel.addShopMember(data);
+
+                            mViewModel.addShopMember(memberModel);
                             observeLiveData();
 
                         }
@@ -220,8 +208,8 @@ ChangeRoleFragment.onClickButtons{
             MemberModel memberModel=new MemberModel();
             BriefModel briefModel=new BriefModel();
             briefModel.setPk(data.getStringExtra(Constants.ACCOUNT_UID));
-            briefModel.setDisplayName(data.getStringExtra("userName"));
-            briefModel.setDisplayPic(data.getStringExtra("userPic"));
+            briefModel.setDisplayName(data.getStringExtra(Constants.ACCOUNT_NAME));
+            briefModel.setDisplayPic(data.getStringExtra(Constants.ACCOUNT_PIC));
             memberModel.setUser(briefModel);
             shopMemberAddition(memberModel,2);
         }

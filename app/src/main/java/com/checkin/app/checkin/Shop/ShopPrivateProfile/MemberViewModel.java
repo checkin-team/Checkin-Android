@@ -41,17 +41,15 @@ public class MemberViewModel extends BaseViewModel {
         return mShopPk;
     }
 
-    public void addShopMember(ObjectNode objectNode)
+    public void addShopMember(MemberModel memberModel)
     {
-        mData.addSource(mRepository.postRestaurantMember(getShopPk(),objectNode), mData::setValue);
-        mData.removeSource(mRepository.postRestaurantMember(getShopPk(),objectNode));
+        mData.addSource(mRepository.postRestaurantMember(getShopPk(),memberModel), mData::setValue);
 
     }
-    public void updateShopMember(String userPk,ObjectNode shopMember)
+    public void updateShopMember(String userPk,MemberModel shopMember)
     {
 
         mData.addSource(mRepository.updateRestaurantMember(getShopPk(),userPk,shopMember), mData::setValue);
-        mData.removeSource(mRepository.updateRestaurantMember(getShopPk(),userPk,shopMember));
 
     }
     public void updateShopMemberPartially(MemberModel shopMember)
@@ -61,7 +59,6 @@ public class MemberViewModel extends BaseViewModel {
     public void deleteShopMember(String userId)
     {
         mData.addSource(mRepository.deleteRestaurantMember(getShopPk(),userId), mData::setValue);
-        mData.removeSource(mRepository.deleteRestaurantMember(getShopPk(),userId));
     }
 
 

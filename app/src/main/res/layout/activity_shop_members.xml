@@ -14,7 +14,7 @@
       android:layout_height="match_parent"
       android:elevation="@dimen/card_elevation"
       android:id="@+id/dark_back_shop"
-      android:background="@drawable/rectangle0"
+      android:background="@drawable/rectangle_brownish_grey"
       android:visibility="gone"
       android:alpha="0.3"
       >

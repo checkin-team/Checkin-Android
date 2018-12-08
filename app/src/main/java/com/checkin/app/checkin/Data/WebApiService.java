@@ -113,10 +113,10 @@ public interface WebApiService {
     Call<List<MemberModel>> getRestaurantMembers(@Path("shop_id") String shopId);
 
     @POST("restaurants/{shop_id}/members/")
-    Call<ObjectNode> addRestaurantMember(@Path("shop_id") String shopId, @Body ObjectNode objectNode);
+    Call<ObjectNode> addRestaurantMember(@Path("shop_id") String shopId, @Body MemberModel objectNode);
 
     @PUT("restaurants/{shop_id}/members/{user_id}/")
-    Call<ObjectNode> updateRestaurantMember(@Path("shop_id") String shopId,@Path("user_id") String userId,@Body ObjectNode shopMember);
+    Call<ObjectNode> updateRestaurantMember(@Path("shop_id") String shopId,@Path("user_id") String userId,@Body MemberModel shopMember);
 
     @PATCH("restaurants/{shop_id}/members/{user_id}/")
     Call<ObjectNode> updateRestaurantMemberPartial(@Path("shop_id") String shopId,@Path("user_id") String userId,@Body MemberModel shopMember);
