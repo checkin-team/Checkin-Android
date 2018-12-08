@@ -115,6 +115,9 @@
     <string name="action_cuisine">Cuisines</string>
     <string name="action_call">Call</string>
     <string name="action_navigate">Navigate</string>
+    <string name="image">Image</string>
+    <string name="logo">Logo</string>
+    <string name="cover_image">Cover Image</string>
 
     <string-array name="role_array">
         <item>Owner</item>

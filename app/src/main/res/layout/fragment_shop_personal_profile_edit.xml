@@ -29,7 +29,7 @@
                 app:popupTheme="@style/PopupOverlay" />
 
             <ImageView
-                android:layout_width="28dp"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:id="@+id/drawer_open"
                 android:layout_marginStart="@dimen/spacing_normal"
@@ -38,17 +38,19 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textSize="22sp"
+                android:textSize="@dimen/menuItemText"
                 android:layout_marginTop="@dimen/appbar_padding_top"
-                android:layout_marginLeft="48dp"
+                android:layout_marginLeft="@dimen/spacing_very_huge"
                 android:textColor="@color/brownish_grey"
                 android:layout_gravity="left"
-                android:text="Image">
+                android:text="@string/image">
 
             </TextView>
         </FrameLayout>
 
     </android.support.design.widget.AppBarLayout>
+
+
 
 <android.support.v7.widget.CardView
     android:layout_width="match_parent"
@@ -72,16 +74,17 @@
         android:layout_height="wrap_content"
         android:layout_gravity="center|center_vertical"
         android:layout_marginTop="@dimen/appbar_padding_top"
-        android:text="Logo"
+        android:text="@string/logo"
         android:layout_centerHorizontal="true"
         android:textColor="@color/primary_red"
         android:textSize="@dimen/font_normal" />
-    />
+
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_below="@id/change_logo"
         android:layout_height="wrap_content">
-    <ImageButton
+
+        <ImageButton
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:src="@drawable/ic_delivery"
@@ -89,12 +92,13 @@
         android:layout_marginTop="@dimen/activity_horizontal_margin"
         />
 
-</RelativeLayout>
+        </RelativeLayout>
+
+
 
 </RelativeLayout>
 
-</android.support.v7.widget.CardView>
-
+    </android.support.v7.widget.CardView>
 
     <TextView
         android:id="@+id/change_cover"
@@ -102,11 +106,9 @@
         android:layout_height="wrap_content"
         android:layout_gravity="center|center_vertical"
         android:layout_marginTop="@dimen/button_height_short"
-        android:text="Cover Image"
-        android:layout_centerHorizontal="true"
+        android:text="@string/cover_image"
         android:textColor="@color/primary_red"
         android:textSize="@dimen/font_normal" />
-    />
 
 <LinearLayout
     android:orientation="horizontal"
@@ -121,6 +123,7 @@
         app:cardCornerRadius="@dimen/card_corner_radius"
         app:cardElevation="@dimen/card_elevation"
         android:padding="@dimen/spacing_normal"
+        android:layout_marginStart="@dimen/spacing_gigantic"
         android:background="@drawable/bordered_card_white"
         xmlns:android="http://schemas.android.com/apk/res/android">
 
@@ -130,7 +133,6 @@
         android:src="@drawable/ic_delivery"
         android:layout_centerHorizontal="true"
         android:scaleType="fitXY"
-        android:layout_marginLeft="60dp"
         android:layout_marginTop="@dimen/appbar_padding_top"
         />
 
@@ -144,6 +146,7 @@
         app:cardCornerRadius="@dimen/card_corner_radius"
         app:cardElevation="@dimen/card_elevation"
         android:padding="@dimen/spacing_normal"
+        android:layout_marginStart="@dimen/height_card_normal"
         android:background="@drawable/bordered_card_white"
         xmlns:android="http://schemas.android.com/apk/res/android">
 
@@ -151,16 +154,17 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:src="@drawable/ic_delivery"
-            android:layout_marginLeft="98dp"
-            android:layout_gravity="right"
             android:layout_centerHorizontal="true"
             android:scaleType="fitXY"
             android:layout_marginTop="@dimen/appbar_padding_top"
             />
 
     </android.support.v7.widget.CardView>
+
+
 </LinearLayout>
-    <LinearLayout
+
+<LinearLayout
         android:orientation="horizontal"
         android:layout_marginTop="@dimen/activity_horizontal_margin"
         android:layout_width="match_parent"
@@ -173,6 +177,7 @@
             app:cardCornerRadius="@dimen/card_corner_radius"
             app:cardElevation="@dimen/card_elevation"
             android:padding="@dimen/spacing_normal"
+            android:layout_marginStart="@dimen/spacing_gigantic"
             android:background="@drawable/bordered_card_white"
             xmlns:android="http://schemas.android.com/apk/res/android">
 
@@ -182,7 +187,6 @@
                 android:src="@drawable/ic_delivery"
                 android:layout_centerHorizontal="true"
                 android:scaleType="fitXY"
-                android:layout_marginLeft="60dp"
                 android:layout_marginTop="@dimen/appbar_padding_top"
                 />
 
@@ -191,11 +195,11 @@
         <android.support.v7.widget.CardView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_gravity="right"
             xmlns:app="http://schemas.android.com/apk/res-auto"
             app:cardCornerRadius="@dimen/card_corner_radius"
             app:cardElevation="@dimen/card_elevation"
             android:padding="@dimen/spacing_normal"
+            android:layout_marginStart="@dimen/height_card_normal"
             android:background="@drawable/bordered_card_white"
             xmlns:android="http://schemas.android.com/apk/res/android">
 
@@ -203,8 +207,6 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:src="@drawable/ic_delivery"
-                android:layout_marginLeft="98dp"
-                android:layout_gravity="right"
                 android:layout_centerHorizontal="true"
                 android:scaleType="fitXY"
                 android:layout_marginTop="@dimen/appbar_padding_top"
@@ -228,6 +230,7 @@
             app:cardCornerRadius="@dimen/card_corner_radius"
             app:cardElevation="@dimen/card_elevation"
             android:padding="@dimen/spacing_normal"
+            android:layout_marginStart="@dimen/spacing_gigantic"
             android:background="@drawable/bordered_card_white"
             xmlns:android="http://schemas.android.com/apk/res/android">
 
@@ -237,7 +240,6 @@
                 android:src="@drawable/ic_delivery"
                 android:layout_centerHorizontal="true"
                 android:scaleType="fitXY"
-                android:layout_marginLeft="60dp"
                 android:layout_marginTop="@dimen/appbar_padding_top"
                 />
 
@@ -246,11 +248,11 @@
         <android.support.v7.widget.CardView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_gravity="right"
             xmlns:app="http://schemas.android.com/apk/res-auto"
             app:cardCornerRadius="@dimen/card_corner_radius"
             app:cardElevation="@dimen/card_elevation"
             android:padding="@dimen/spacing_normal"
+            android:layout_marginStart="@dimen/height_card_normal"
             android:background="@drawable/bordered_card_white"
             xmlns:android="http://schemas.android.com/apk/res/android">
 
@@ -258,7 +260,6 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:src="@drawable/ic_delivery"
-                android:layout_marginLeft="98dp"
                 android:layout_gravity="right"
                 android:layout_centerHorizontal="true"
                 android:scaleType="fitXY"

@@ -130,10 +130,14 @@
             android:name=".Search.SearchActivity"
             android:theme="@style/AppTheme" />
         <activity
-            android:name=".Shop.ShopPrivateProfile.ShopMemRbersActivity"
+            android:name=".Shop.ShopPrivateProfile.ShopMembersActivity"
             android:label="MEMBERS"
             android:screenOrientation="portrait"
             android:theme="@style/AppThemeWhiteActionBar" />
+
+        <activity
+            android:name=".Shop.ShopPrivateProfile.ShopLogoEdit"
+            android:theme="@style/AppThemeWhiteActionBar"/>
 
         <service
             android:name=".Auth.AuthenticatorService"

@@ -49,6 +49,7 @@ public class ShopProfileFragment extends Fragment {
     @BindView(R.id.rv_additional_data) RecyclerView rvAdditionalData;
     @BindView(R.id.pager_cover) ViewPager vPagerCover;
     @BindView(R.id.indicator_top_cover) PageIndicatorView vPivCover;
+    @BindView(R.id.btn_add_image) ImageView btnAddImage;
 
     private ShopProfileViewModel mViewModel;
     private StatusTextAdapter mExtraDataAdapter;
@@ -144,6 +145,14 @@ public class ShopProfileFragment extends Fragment {
                 break;
         }
     }
+
+
+   @OnClick(R.id.btn_add_image)
+   public void onEditLogo(View v){
+
+        Intent intent = new Intent(requireContext(), ShopLogoEdit.class);
+        startActivity(intent);
+   }
 
     @Override
     public void onDestroy() {
