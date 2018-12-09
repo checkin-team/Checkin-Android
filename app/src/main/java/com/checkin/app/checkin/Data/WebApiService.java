@@ -6,8 +6,8 @@ import com.checkin.app.checkin.Misc.GenericDetailModel;
 import com.checkin.app.checkin.Notifications.NotificationModel;
 import com.checkin.app.checkin.RestaurantActivity.Waiter.EventModel;
 import com.checkin.app.checkin.Search.SearchResultModel;
-import com.checkin.app.checkin.Session.ActiveSessionModel;
 import com.checkin.app.checkin.Shop.RestaurantModel;
+import com.checkin.app.checkin.Session.ActiveSession.ActiveSessionModel;
 import com.checkin.app.checkin.Shop.ShopJoin.ShopJoinModel;
 import com.checkin.app.checkin.Shop.ShopPrivateProfile.MemberModel;
 import com.checkin.app.checkin.Shop.ShopReviewPOJO;
@@ -130,11 +130,16 @@ public interface WebApiService {
     @GET("shops/{shop_id}/reviews/")
     Call<List<ShopReviewPOJO>> getShopReviews(@Path("shop_id") String shopID);
 
+    // region Session
+    @POST("sessions/customer/new/")
+    Call<GenericDetailModel> postNewCustomerSession(@Body ObjectNode data);
+
     @POST("sessions/{session_id}/orders/cancel/")
     Call<ObjectNode> postCancelOrder(@Path("session_id") String sessionID, @Body ObjectNode data);
 
     @POST("sessions/{session_id}/customers/add/")
     Call<ObjectNode> postSessionAddMember(@Path("session_id") String sessionID, @Body ObjectNode data);
+    // endregion
 
     @GET("notification")
     Call<List<NotificationModel>> getNotif(@Query("last_notif_id") int lastNotifId);

@@ -1,4 +1,4 @@
-package com.checkin.app.checkin.Session;
+package com.checkin.app.checkin.Session.ActiveSession;
 
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;

@@ -1,4 +1,4 @@
-package com.checkin.app.checkin.Session;
+package com.checkin.app.checkin.Session.ActiveSession;
 
 import android.app.Application;
 import android.arch.lifecycle.LiveData;
@@ -13,8 +13,6 @@ import com.checkin.app.checkin.Data.Resource;
 import com.checkin.app.checkin.Data.RetrofitLiveData;
 import com.checkin.app.checkin.Data.WebApiService;
 import com.fasterxml.jackson.databind.node.ObjectNode;
-
-import io.objectbox.Box;
 
 /**
  * Created by Bhavik Patel on 04/08/2018.

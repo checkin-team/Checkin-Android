@@ -1,4 +1,4 @@
-package com.checkin.app.checkin.Session;
+package com.checkin.app.checkin.Session.ActiveSession;
 
 import android.app.Application;
 import android.arch.lifecycle.LiveData;

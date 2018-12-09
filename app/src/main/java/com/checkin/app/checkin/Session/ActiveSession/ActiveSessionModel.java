@@ -1,4 +1,4 @@
-package com.checkin.app.checkin.Session;
+package com.checkin.app.checkin.Session.ActiveSession;
 
 import com.checkin.app.checkin.Menu.OrderedItemModel;
 import com.fasterxml.jackson.annotation.JsonProperty;

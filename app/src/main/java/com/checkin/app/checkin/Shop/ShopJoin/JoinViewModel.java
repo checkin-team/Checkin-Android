@@ -52,7 +52,7 @@ public class JoinViewModel extends AndroidViewModel {
         Log.e(TAG, "EMAIL: " + email + "ID Token: " + idToken);
         ShopJoinModel shopJoinModel = new ShopJoinModel();
         shopJoinModel.setEmail(email);
-        shopJoinModel.setIdToken(idToken);
+        shopJoinModel.setPhoneToken(idToken);
         mShopJoinData.setValue(shopJoinModel);
     }
 

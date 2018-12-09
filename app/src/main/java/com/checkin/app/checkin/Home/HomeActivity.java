@@ -26,12 +26,13 @@ import com.checkin.app.checkin.Account.AccountModel.ACCOUNT_TYPE;
 import com.checkin.app.checkin.Account.BaseAccountActivity;
 import com.checkin.app.checkin.Data.Resource;
 import com.checkin.app.checkin.Menu.SessionUserActivity;
+import com.checkin.app.checkin.Misc.QRScannerActivity;
 import com.checkin.app.checkin.Notifications.NotificationActivity;
 import com.checkin.app.checkin.Profile.ShopProfile.ShopProfileActivity2;
 import com.checkin.app.checkin.R;
 import com.checkin.app.checkin.RestaurantActivity.Waiter.WaitorWork;
 import com.checkin.app.checkin.Search.SearchActivity;
-import com.checkin.app.checkin.Session.ActiveSessionActivity;
+import com.checkin.app.checkin.Session.ActiveSession.ActiveSessionActivity;
 import com.checkin.app.checkin.Shop.ShopJoin.BusinessFeaturesActivity;
 import com.checkin.app.checkin.Shop.ShopPublicProfile.ShopActivity;
 import com.checkin.app.checkin.User.NonPersonalProfile.UserViewModel;
@@ -39,10 +40,6 @@ import com.checkin.app.checkin.User.PersonalProfile.UserProfileActivity;
 import com.checkin.app.checkin.Utility.ClipRevealFrame;
 import com.checkin.app.checkin.Utility.ItemClickSupport;
 import com.checkin.app.checkin.Utility.Util;
-import com.fasterxml.jackson.databind.JsonNode;
-import com.fasterxml.jackson.databind.node.ObjectNode;
-import com.google.zxing.integration.android.IntentIntegrator;
-import com.google.zxing.integration.android.IntentResult;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -53,7 +50,8 @@ import butterknife.OnClick;
 
 public class HomeActivity extends BaseAccountActivity
         implements NavigationView.OnNavigationItemSelectedListener {
-    private final String TAG = HomeActivity.class.getSimpleName();
+    private static final String TAG = HomeActivity.class.getSimpleName();
+    private static final int REQUEST_QR_SCANNER = 202;
 
     @BindView(R.id.drawer_root)
     DrawerLayout drawerLayout;
@@ -77,14 +75,11 @@ public class HomeActivity extends BaseAccountActivity
     @BindView(R.id.im_shop_category_back)
     ImageView imShopsCategoryBack;
 
-    @BindView(R.id.action_delivery)
-    TextView testingViewPager;
-
     private UserViewModel mUserViewModel;
     private HomeViewModel mHomeViewModel;
     private TrendingShopAdapter mTrendingShopAdapter;
     private UserActivityAdapter mUserActivityAdapter;
-    private final float PERCENT_LEFT_SHIFTED = 30;
+//    private final float PERCENT_LEFT_SHIFTED = 30;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -100,13 +95,11 @@ public class HomeActivity extends BaseAccountActivity
         setupTrendingShops();
         setupUserActivities();
 
-        mHomeViewModel.getObservableData().observe(this, resource -> {
-            if (resource == null)   return;
+        mHomeViewModel.getQrResult().observe(this, resource -> {
+            if (resource == null || resource.data == null)   return;
             switch (resource.status) {
                 case SUCCESS: {
-                    ObjectNode data = resource.data;
-                    JsonNode detail = data.get("detail");
-                    SessionUserActivity.startSession(this, detail.get("shop_id").asLong(0), detail.get("qr_id").asInt(0));
+                    Util.toast(getApplicationContext(), resource.data.toString());
                     break;
                 }
 
@@ -429,25 +422,17 @@ public class HomeActivity extends BaseAccountActivity
 
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
-        IntentResult result = IntentIntegrator.parseActivityResult(requestCode, resultCode, data);
-        if (result != null) {
-            if (result.getContents() == null) {
-                // cancelled operation
-            } else {
-                Log.e(TAG, "QR: " + result.getContents());
-                mHomeViewModel.decryptQr(result.getContents());
-            }
-        } else {
-            super.onActivityResult(requestCode, resultCode, data);
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == REQUEST_QR_SCANNER && resultCode == RESULT_OK) {
+            String qrData = data.getStringExtra(QRScannerActivity.KEY_QR_RESULT);
+            mHomeViewModel.processQr(qrData);
         }
     }
 
     @OnClick(R.id.appbar_title)
     public void onQrScannerClick(View v) {
-        IntentIntegrator qrScan = new IntentIntegrator(this);
-        qrScan.setPrompt("Scan the QR code, present on the table!");
-        qrScan.setOrientationLocked(false);
-        qrScan.initiateScan();
+        Intent intent = new Intent(getApplicationContext(), QRScannerActivity.class);
+        startActivityForResult(intent, REQUEST_QR_SCANNER);
     }
 
     private float[] computeAddViewDetails(View v) {
