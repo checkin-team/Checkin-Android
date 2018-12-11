@@ -1,23 +1,20 @@
 package com.checkin.app.checkin.Data;
 
-import android.os.Bundle;
-
 import com.checkin.app.checkin.Account.AccountModel;
 import com.checkin.app.checkin.Menu.MenuModel;
 import com.checkin.app.checkin.Misc.GenericDetailModel;
-import com.checkin.app.checkin.Search.SearchModel;
-import com.checkin.app.checkin.RestaurantActivity.Waiter.EventModel;
 import com.checkin.app.checkin.Notifications.NotificationModel;
+import com.checkin.app.checkin.RestaurantActivity.Waiter.EventModel;
+import com.checkin.app.checkin.Search.SearchModel;
 import com.checkin.app.checkin.Session.ActiveSessionModel;
-import com.checkin.app.checkin.Shop.ShopJoin.ShopJoinModel;
 import com.checkin.app.checkin.Shop.RestaurantModel;
+import com.checkin.app.checkin.Shop.ShopJoin.ShopJoinModel;
 import com.checkin.app.checkin.Shop.ShopPrivateProfile.MemberModel;
 import com.checkin.app.checkin.Shop.ShopReviewPOJO;
 import com.checkin.app.checkin.User.Friendship.FriendshipModel;
 import com.checkin.app.checkin.User.UserModel;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import okhttp3.MultipartBody;
@@ -105,35 +102,25 @@ public interface WebApiService {
     @GET("restaurants/{shop_id}/edit/")
     Call<RestaurantModel> getRestaurantManageDetails(@Path("shop_id") String shopId);
 
-
-    @PATCH("restaurants/{shop_id}/manage/")
-    Call<ObjectNode> postRestaurantManageDetails(@Path("shop_id") String shopId, @Body RestaurantModel shopData);
-
-    @GET("restaurants/{shop_id}/members/")
-    Call<List<MemberModel>> getRestaurantMembers(@Path("shop_id") String shopId);
-
-    @POST("restaurants/{shop_id}/members/")
-    Call<ObjectNode> addRestaurantMember(@Path("shop_id") String shopId, @Body MemberModel objectNode);
-
-    @PUT("restaurants/{shop_id}/members/{user_id}/")
-    Call<ObjectNode> updateRestaurantMember(@Path("shop_id") String shopId,@Path("user_id") String userId,@Body MemberModel shopMember);
-
-    @PATCH("restaurants/{shop_id}/members/{user_id}/")
-    Call<ObjectNode> updateRestaurantMemberPartial(@Path("shop_id") String shopId,@Path("user_id") String userId,@Body MemberModel shopMember);
-
-    @DELETE("restaurants/{shop_id}/members/{user_id}/")
-    Call<ObjectNode> deleteRestaurantMember(@Path("shop_id") String shopId,@Path("user_id") String userId);
-
-
-
-
-
-
     @PATCH("restaurants/{shop_id}/edit/")
     Call<ObjectNode> putRestaurantManageDetails(@Path("shop_id") String shopId, @Body RestaurantModel shopData);
 
     @PUT("restaurants/{shop_id}/verify/")
     Call<ObjectNode> putRestaurantContactVerify(@Path("shop_id") String shopId, @Body ObjectNode data);
+
+    // region SHOP_MEMBERS
+    @GET("restaurants/{shop_id}/members/")
+    Call<List<MemberModel>> getRestaurantMembers(@Path("shop_id") String shopId);
+
+    @POST("restaurants/{shop_id}/members/")
+    Call<ObjectNode> postRestaurantMember(@Path("shop_id") String shopId, @Body MemberModel data);
+
+    @PUT("restaurants/{shop_id}/members/{user_id}/")
+    Call<ObjectNode> putRestaurantMember(@Path("shop_id") String shopId, @Path("user_id") String userId, @Body MemberModel data);
+
+    @DELETE("restaurants/{shop_id}/members/{user_id}/")
+    Call<ObjectNode> deleteRestaurantMember(@Path("shop_id") String shopId, @Path("user_id") String userId);
+    // endregion
 
     // endregion
 

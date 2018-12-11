@@ -18,7 +18,7 @@ import android.widget.Toast;
 
 import com.checkin.app.checkin.Data.Resource;
 import com.checkin.app.checkin.Misc.CoverPagerAdapter;
-import com.checkin.app.checkin.Shop.ShopPrivateProfile.ShopMembersActivity;
+import com.checkin.app.checkin.Shop.ShopPrivateProfile.MembersActivity;
 import com.checkin.app.checkin.Misc.StatusTextAdapter;
 import com.checkin.app.checkin.R;
 import com.checkin.app.checkin.Shop.RestaurantModel;
@@ -111,7 +111,7 @@ public class ShopProfileFragment extends Fragment implements View.OnClickListene
         Intent intent;
         switch (v.getId()) {
             case R.id.btn_follow:
-                intent = new Intent(requireContext(), ShopMembersActivity.class);
+                intent = new Intent(requireContext(), MembersActivity.class);
                 startActivity(intent);
                 break;
             case R.id.btn_call:

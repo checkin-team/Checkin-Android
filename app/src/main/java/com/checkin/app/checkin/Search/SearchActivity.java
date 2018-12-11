@@ -10,11 +10,9 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.Button;
 import android.widget.TextView;
 
 import com.checkin.app.checkin.R;
@@ -24,8 +22,7 @@ import com.miguelcatalan.materialsearchview.MaterialSearchView;
 import java.util.ArrayList;
 import java.util.List;
 
-public class SearchActivity extends AppCompatActivity implements SearchFragmentAll.onResultInteraction,SearchFragmentNoClick.OnSearchResultInteractionListener,SearchFragmentPeople.onResultInteraction,SearchFragmentRestaurant.onResultInteraction
-{
+public class SearchActivity extends AppCompatActivity implements SearchFragmentAll.onResultInteraction,SearchFragmentNoClick.OnSearchResultInteractionListener,SearchFragmentPeople.onResultInteraction,SearchFragmentRestaurant.onResultInteraction {
 
     private SectionPageAdapter mSectionPageAdapter;
     private SearchViewModel searchViewModel;

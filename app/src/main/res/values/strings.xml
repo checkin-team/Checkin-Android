@@ -50,6 +50,8 @@
     <string name="fb_login_protocol_scheme">fb150714782397445</string>
 
     <string name="btn_cancel">Cancel</string>
+    <string name="btn_save">Save</string>
+    <string name="btn_remove">Remove</string>
     <string name="item_non_cancelable">Non-Cancelable</string>
     <string name="title_activity_shop_login">ShopLogin</string>
     <string name="title_activity_shop_create_account">ShopCreateAccount</string>
@@ -115,7 +117,7 @@
     <string name="action_cuisine">Cuisines</string>
     <string name="action_call">Call</string>
     <string name="action_navigate">Navigate</string>
-
+    <string name="title_member_assign_role">Assign Role</string>
 
 
 </resources>

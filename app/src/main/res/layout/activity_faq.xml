@@ -63,8 +63,7 @@
             android:inputType="text"
             android:textColor="#bebebe"
             android:textSize="19sp"
-            android:padding="@dimen/spacing_small"
-            android:background="@drawable/shadow" />
+            android:padding="@dimen/spacing_small" />
 
         <Button
             android:id="@+id/btn_ask"

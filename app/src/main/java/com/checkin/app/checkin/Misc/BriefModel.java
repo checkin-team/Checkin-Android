@@ -14,6 +14,12 @@ public class BriefModel {
 
     public BriefModel() {}
 
+    public BriefModel(String pk, String displayName, String displayPic) {
+        this.pk = pk;
+        this.displayName = displayName;
+        this.displayPic = displayPic;
+    }
+
     public String getPk() {
         return pk;
     }

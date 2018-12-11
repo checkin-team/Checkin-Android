@@ -131,11 +131,10 @@
             android:name=".Search.SearchActivity"
             android:theme="@style/AppTheme" />
         <activity
-            android:name=".Shop.ShopPrivateProfile.ShopMembersActivity"
+            android:name=".Shop.ShopPrivateProfile.MembersActivity"
             android:screenOrientation="portrait"
-            android:label="MEMBERS"
-            android:theme="@style/AppThemeWhiteActionBar"
-             />
+            android:label="Members"
+            android:theme="@style/AppThemeWhiteActionBar" />
 
         <service
             android:name=".Auth.AuthenticatorService"
@@ -160,9 +159,6 @@
         <meta-data
             android:name="com.facebook.sdk.ApplicationId"
             android:value="@string/facebook_app_id" />
-        <meta-data
-            android:name="preloaded_fonts"
-            android:resource="@array/preloaded_fonts" />
         <!--
              The API key for Google Maps-based APIs is defined as a string resource.
              (See the file "res/values/google_maps_api.xml").

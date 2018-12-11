@@ -13,7 +13,7 @@
     <EditText
         android:id="@+id/ed_otp"
         android:layout_width="match_parent"
-        android:layout_height="@dimen/height_textbox_normal"
+        android:layout_height="@dimen/height_input_normal"
         style="@style/InputTextStyle"
         android:hint="Enter OTP"
         android:textAlignment="center"
@@ -25,7 +25,7 @@
         android:id="@+id/btn_proceed"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        style="@style/ButtonNegativeAction"
+        style="@style/ButtonSmallVerifyAction"
         android:text="Proceed"
         android:textSize="@dimen/font_normal"
         android:layout_marginTop="@dimen/spacing_large"
@@ -55,7 +55,7 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:text="Resend otp"
-            style="@style/ButtonNegativeAction"
+            style="@style/ButtonSmallVerifyAction"
             android:textSize="@dimen/font_normal"
             android:visibility="invisible"/>
     </FrameLayout>

@@ -137,8 +137,8 @@ public class ShopProfileFragment extends Fragment {
         Intent intent;
         switch (v.getId()) {
             case R.id.btn_members:
-                intent = new Intent(requireContext(), ShopMembersActivity.class);
-                intent.putExtra(KEY_SHOP_PK,shopPk);
+                intent = new Intent(requireContext(), MembersActivity.class);
+                intent.putExtra(MembersActivity.KEY_SHOP_PK, shopPk);
                 startActivity(intent);
                 break;
             case R.id.btn_notifications:

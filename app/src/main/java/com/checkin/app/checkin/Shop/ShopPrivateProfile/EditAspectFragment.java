@@ -107,8 +107,8 @@ public class EditAspectFragment extends Fragment implements MultiSpinner.MultiSp
 
         mViewModel.shouldCollectAspectData().observe(this, shouldCollectData -> {
             if (shouldCollectData != null && shouldCollectData) {
-                CharSequence[] cuisines = vCuisines.getSelectedItems();
-                CharSequence[] categories = vCategories.getSelectedItems();
+                CharSequence[] cuisines = vCuisines.getSelectedValues();
+                CharSequence[] categories = vCategories.getSelectedValues();
                 PAYMENT_MODE[] modes = this.getPaymentModes();
                 boolean hasNonVeg = rbChoiceNonVeg.isChecked();
                 boolean hasAlcohol = rbChoiceAlcoholYes.isChecked();
@@ -124,8 +124,8 @@ public class EditAspectFragment extends Fragment implements MultiSpinner.MultiSp
 
     private void setupValues(RestaurantModel shop) {
         mAdapter.setData(new ArrayList<>(Arrays.asList(shop.getExtraData())));
-        vCategories.selectEntries(shop.getCategories());
-        vCuisines.selectEntries(shop.getCuisines());
+        vCategories.selectValues(shop.getCategories());
+        vCuisines.selectValues(shop.getCuisines());
         setPaymentModes(shop.getPaymentModes());
 
         if (shop.servesAlcohol())
@@ -189,8 +189,8 @@ public class EditAspectFragment extends Fragment implements MultiSpinner.MultiSp
 
     private boolean isDataValid() {
         boolean validPaymentMode = cbChoiceCash.isChecked() || cbChoiceCard.isChecked() || cbChoicePaytm.isChecked();
-        boolean validCuisines = vCuisines.getSelectedItems().length > 0;
-        boolean validCategories = vCategories.getSelectedItems().length > 0;
+        boolean validCuisines = vCuisines.getSelectedValues().length > 0;
+        boolean validCategories = vCategories.getSelectedValues().length > 0;
         return validCategories && validCuisines && validPaymentMode;
     }
 

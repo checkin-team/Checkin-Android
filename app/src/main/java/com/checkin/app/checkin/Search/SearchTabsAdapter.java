@@ -1,9 +1,7 @@
 package com.checkin.app.checkin.Search;
 
-import android.arch.lifecycle.ViewModelProviders;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -35,7 +33,7 @@ public class SearchTabsAdapter extends RecyclerView.Adapter<SearchTabsAdapter.Se
         return new SearchTabViewHolder(itemView);
     }
     public interface OnSearchResultInteractionListener{
-        public void onSelectResult(SearchModel selectedResult);
+        void onSelectResult(SearchModel selectedResult);
     }
 
     public void setSearchItemInteractionListener(OnSearchResultInteractionListener mSearchItemInteractionListener) {

@@ -11,5 +11,6 @@
         <attr name="entries" format="reference" />
         <attr name="values" format="reference" />
         <attr name="hintText" format="string" />
+        <attr name="staticText" format="boolean" />
     </declare-styleable>
 </resources>

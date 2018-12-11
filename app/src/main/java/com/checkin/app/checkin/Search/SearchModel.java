@@ -8,10 +8,15 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 
 public class SearchModel {
 
+    @JsonProperty("pk")
+    private String pk;
 
-    @JsonProperty("pk") private String pk;
-    @JsonProperty("display_name") private String name;
-    @JsonProperty("display_pic") private String imageUrl;
+    @JsonProperty("display_name")
+    private String name;
+
+    @JsonProperty("display_pic")
+    private String imageUrl;
+
     private RESULT_TYPE type;
 
     public enum RESULT_TYPE {
@@ -31,11 +36,9 @@ public class SearchModel {
         }
     }
 
-
     public String getImageUrl() {
         return imageUrl;
     }
-
 
     public String getName() {
         return name;
@@ -59,7 +62,7 @@ public class SearchModel {
 
     @JsonProperty("result_type")
     public void setType(int type) {
-        this.type=RESULT_TYPE.getByType(type);
+        this.type = RESULT_TYPE.getByType(type);
     }
 
     public void setPk(String pk) {

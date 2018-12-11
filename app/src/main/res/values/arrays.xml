@@ -28,11 +28,20 @@
         <item>Sun</item>
     </string-array>
 
+    <string-array name="shop_member_roles">
+        <item>Owner</item>
+        <item>Admin</item>
+        <item>Manager</item>
+        <item>Waiter</item>
+        <item>Cook</item>
+    </string-array>
 
-    <string-array name="spinner_options">
-        <item>Pint</item>
-        <item>Bottle</item>
-        <item>Can</item>
+    <string-array name="value_shop_member_roles">
+        <item>o</item>
+        <item>a</item>
+        <item>m</item>
+        <item>w</item>
+        <item>c</item>
     </string-array>
 
     <string-array name="restaurant_cuisines">
@@ -129,7 +138,6 @@
         <item>Wraps</item>
     </string-array>
 
-
     <string-array name="restaurant_categories">
         <item>Quick service</item>
         <item>Casual dining</item>
@@ -141,16 +149,4 @@
         <item>Lounge</item>
         <item>Micro Brewerie</item>
     </string-array>
-
-    <string-array name="roles">
-        <item>Owner</item>
-        <item>Shop Admin</item>
-        <item>Restaurant Manager</item>
-        <item>Waiter</item>
-        <item>Cook</item>
-
-    </string-array>
-
-
-
 </resources>

@@ -92,7 +92,7 @@ public class EditBasicFragment extends Fragment implements OtpVerificationDialog
                 String name = etName.getText().toString();
                 String tagline = etTagLine.getText().toString();
                 String website = etWebsite.getText().toString();
-                CharSequence[] nonWorkingDays = vNonWorkingDays.getSelectedItems();
+                CharSequence[] nonWorkingDays = vNonWorkingDays.getSelectedValues();
                 long openingTime = etOpeningTime.getTotalTime();
                 long closingTime = etClosingTime.getTotalTime();
 
@@ -212,7 +212,7 @@ public class EditBasicFragment extends Fragment implements OtpVerificationDialog
         if (restaurant.isEmailUnconfirmed())
             etEmail.setError("Email not confirmed yet!");
 
-        vNonWorkingDays.selectEntries(restaurant.getNonWorkingDays());
+        vNonWorkingDays.selectValues(restaurant.getNonWorkingDays());
         etOpeningTime.setTotalTime(restaurant.getOpeningHour());
         etClosingTime.setTotalTime(restaurant.getClosingHour());
 
