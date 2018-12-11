@@ -26,8 +26,8 @@ public class SearchRepository extends BaseRepository {
         mWebService = ApiClient.getApiService(context);
     }
 
-    public LiveData<Resource<List<SearchModel>>> getSearchResults(String query){
-        return new NetworkBoundResource<List<SearchModel>, List<SearchModel>>(){
+    public LiveData<Resource<List<SearchResultModel>>> getSearchResults(String query){
+        return new NetworkBoundResource<List<SearchResultModel>, List<SearchResultModel>>(){
 
             @Override
             protected boolean shouldUseLocalDb() {
@@ -37,12 +37,12 @@ public class SearchRepository extends BaseRepository {
 
             @NonNull
             @Override
-            protected LiveData<ApiResponse<List<SearchModel>>> createCall() {
+            protected LiveData<ApiResponse<List<SearchResultModel>>> createCall() {
                 return new RetrofitLiveData<>(mWebService.getSearchResults(query));
             }
 
             @Override
-            protected void saveCallResult(List<SearchModel> data) {
+            protected void saveCallResult(List<SearchResultModel> data) {
 
             }
         }.getAsLiveData();

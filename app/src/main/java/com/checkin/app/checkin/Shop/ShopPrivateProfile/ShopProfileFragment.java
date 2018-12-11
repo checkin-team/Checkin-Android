@@ -37,6 +37,7 @@ import butterknife.Unbinder;
 public class ShopProfileFragment extends Fragment {
     private static final String TAG = ShopProfileFragment.class.getSimpleName();
     private Unbinder unbinder;
+    public static final String KEY_SHOP_PK = "shop_private.pk";
 
     @BindView(R.id.tv_shop_name) TextView tvShopName;
     @BindView(R.id.tv_locality) TextView tvLocality;
@@ -52,16 +53,22 @@ public class ShopProfileFragment extends Fragment {
     private ShopProfileViewModel mViewModel;
     private StatusTextAdapter mExtraDataAdapter;
     private CoverPagerAdapter mCoverPagerAdapter;
+    private String shopPk;
 
     public static ShopProfileFragment newInstance() {
         ShopProfileFragment fragment = new ShopProfileFragment();
         return fragment;
     }
 
+    public void setShopPk(String shopPk) {
+        this.shopPk = shopPk;
+    }
+
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         final View view = inflater.inflate(R.layout.fragment_shop_profile_private, container, false);
         unbinder = ButterKnife.bind(this, view);
+
         return view;
     }
 
@@ -130,7 +137,8 @@ public class ShopProfileFragment extends Fragment {
         Intent intent;
         switch (v.getId()) {
             case R.id.btn_members:
-                intent = new Intent(requireContext(), ShopMembersActivity.class);
+                intent = new Intent(requireContext(), MembersActivity.class);
+                intent.putExtra(MembersActivity.KEY_SHOP_PK, shopPk);
                 startActivity(intent);
                 break;
             case R.id.btn_notifications:

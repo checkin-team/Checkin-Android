@@ -18,7 +18,7 @@ public class MultiSpinner extends AppCompatSpinner implements
         DialogInterface.OnMultiChoiceClickListener, DialogInterface.OnCancelListener {
 
     private CharSequence[] items;
-    private Object[] values;
+    private CharSequence[] values;
     private boolean[] selected;
     private boolean hasHintText;
     private String defaultText;
@@ -41,38 +41,48 @@ public class MultiSpinner extends AppCompatSpinner implements
         if (values == null)
             values = items;
         defaultText = a.getString(R.styleable.MultiSpinner_hintText);
+        hasHintText = a.getBoolean(R.styleable.MultiSpinner_staticText, true);
         a.recycle();
         if (values != null) {
             selected = new boolean[values.length]; // false-filled by default
         }
         if (defaultText != null) {
-            hasHintText = true;
             ArrayAdapter<String> adapter = new ArrayAdapter<>(getContext(),
                     android.R.layout.simple_spinner_item, new String[]{defaultText});
             setAdapter(adapter);
         }
     }
 
-    public CharSequence[] getSelectedItems() {
+    private List<CharSequence> getSelectedValuesInternal() {
         List<CharSequence> selectedList = new ArrayList<>();
         for (int i = 0; i < values.length; i++)
             if (selected[i])
-                selectedList.add(values[i].toString());
-        return selectedList.toArray(new CharSequence[] {});
+                selectedList.add(values[i]);
+        return selectedList;
     }
 
-    public void selectEntries(CharSequence[] selectedEntries) {
-        if (selectedEntries == null)
+    public CharSequence[] getSelectedValues() {
+        return getSelectedValuesInternal().toArray(new CharSequence[] {});
+    }
+
+    public void selectValues(Object[] selectedValues) {
+        if (selectedValues == null)
             return;
-        for (int i = 0; i < values.length; i++) {
-            selected[i] = false;
-            for (CharSequence selectEntry: selectedEntries) {
-                if (selectEntry.toString().equals(values[i].toString())) {
-                    selected[i] = true;
+        resetSelection();
+        for (Object selectedValue : selectedValues) {
+            for (int j = 0; j < values.length; j++) {
+                if (selectedValue.toString().equals(values[j].toString())) {
+                    selected[j] = true;
                     break;
                 }
             }
         }
+        refreshSpinnerText();
+    }
+
+    public void resetSelection() {
+        for (int i = 0; i < selected.length; i++)
+            selected[i] = false;
     }
 
     public void setListener(MultiSpinnerListener listener) {
@@ -86,26 +96,16 @@ public class MultiSpinner extends AppCompatSpinner implements
 
     @Override
     public void onCancel(DialogInterface dialog) {
+        refreshSpinnerText();
+        if (listener != null)
+            listener.onItemsSelected(selected);
+    }
+
+    public void refreshSpinnerText() {
         String spinnerText;
         if (!hasHintText) {
             // refresh text on spinner
-            StringBuilder spinnerBuffer = new StringBuilder();
-            boolean someUnselected = false;
-            for (int i = 0; i < items.length; i++) {
-                if (selected[i]) {
-                    spinnerBuffer.append(items[i]);
-                    spinnerBuffer.append(", ");
-                } else {
-                    someUnselected = true;
-                }
-            }
-            if (someUnselected) {
-                spinnerText = spinnerBuffer.toString();
-                if (spinnerText.length() > 2)
-                    spinnerText = spinnerText.substring(0, spinnerText.length() - 2);
-            } else {
-                spinnerText = defaultText;
-            }
+            spinnerText = getSpinnerText();
         } else {
             // Keep hint Text
             spinnerText = defaultText;
@@ -114,8 +114,27 @@ public class MultiSpinner extends AppCompatSpinner implements
                 android.R.layout.simple_spinner_item,
                 new String[]{spinnerText});
         setAdapter(adapter);
-        if (listener != null)
-            listener.onItemsSelected(selected);
+    }
+
+    public String getSpinnerText() {
+        StringBuilder spinnerBuffer = new StringBuilder();
+        boolean someUnselected = false;
+        for (int i = 0; i < items.length; i++) {
+            if (selected[i]) {
+                spinnerBuffer.append(items[i]);
+                spinnerBuffer.append(", ");
+            } else {
+                someUnselected = true;
+            }
+        }
+        if (someUnselected) {
+            String spinnerText = spinnerBuffer.toString();
+            if (spinnerText.length() > 2)
+                spinnerText = spinnerText.substring(0, spinnerText.length() - 2);
+            return spinnerText;
+        } else {
+            return defaultText;
+        }
     }
 
     @Override
@@ -153,6 +172,6 @@ public class MultiSpinner extends AppCompatSpinner implements
     }
 
     public interface MultiSpinnerListener {
-        public void onItemsSelected(boolean[] selected);
+        void onItemsSelected(boolean[] selected);
     }
 }

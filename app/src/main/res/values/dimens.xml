@@ -57,8 +57,8 @@
     <dimen name="square_card_dimen">100dp</dimen>
     <dimen name="width_quantity_selection">120dp</dimen>
     <dimen name="height_quantity_selection">60dp</dimen>
-    <dimen name="height_textbox_normal">40dp</dimen>
-    <dimen name="height_textbox_small">25dp</dimen>
+    <dimen name="height_input_normal">40dp</dimen>
+    <dimen name="height_input_small">25dp</dimen>
 
     <dimen name="height_horizontal_line">1dp</dimen>
 

@@ -29,7 +29,7 @@ public class ShopActivity extends BaseAccountActivity {
     protected BottomNavigation mBottomNavigation;
 
     public static final String KEY_SHOP_PK = "shop_private.pk";
-
+    String shopPk;
     private ShopProfileViewModel mViewModel;
 
     @Override
@@ -47,7 +47,7 @@ public class ShopActivity extends BaseAccountActivity {
         setupPagers(new ShopPagerAdapter(getSupportFragmentManager()), R.menu.menu_shop_profile_private);
 
         mViewModel = ViewModelProviders.of(this).get(ShopProfileViewModel.class);
-        String shopPk = getIntent().getStringExtra(KEY_SHOP_PK);
+        shopPk = getIntent().getStringExtra(KEY_SHOP_PK);
 
         mViewModel.fetchShopDetails(shopPk);
     }
@@ -93,7 +93,9 @@ public class ShopActivity extends BaseAccountActivity {
         public Fragment getItem(int position) {
             switch (position) {
                 case 0:
-                    return ShopProfileFragment.newInstance();
+                    ShopProfileFragment shopProfileFragment= ShopProfileFragment.newInstance();
+                    shopProfileFragment.setShopPk(shopPk);
+                    return shopProfileFragment;
                 case 1:
                     return FragmentShopMenu.newInstance("1", "2");
                 case 2:

@@ -70,7 +70,6 @@
             android:windowSoftInputMode="adjustPan" />
         <activity android:name=".Misc.TransactionActivity" />
         <activity android:name=".Misc.FilterTransactions" />
-        <activity android:name=".Misc.FaqActivity" />
         <activity
             android:name=".RestaurantActivity.Waiter.WaitorWork"
             android:label="WaitorWorkActivity"
@@ -131,9 +130,9 @@
             android:name=".Search.SearchActivity"
             android:theme="@style/AppTheme" />
         <activity
-            android:name=".Shop.ShopPrivateProfile.ShopMembersActivity"
-            android:label="MEMBERS"
+            android:name=".Shop.ShopPrivateProfile.MembersActivity"
             android:screenOrientation="portrait"
+            android:label="Members"
             android:theme="@style/AppThemeWhiteActionBar" />
 
         <service
@@ -159,9 +158,6 @@
         <meta-data
             android:name="com.facebook.sdk.ApplicationId"
             android:value="@string/facebook_app_id" />
-        <meta-data
-            android:name="preloaded_fonts"
-            android:resource="@array/preloaded_fonts" />
         <!--
              The API key for Google Maps-based APIs is defined as a string resource.
              (See the file "res/values/google_maps_api.xml").
