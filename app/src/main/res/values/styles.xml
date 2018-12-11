@@ -21,6 +21,7 @@
 
     <style name="AppThemeWhiteActionBar" parent="AppThemeWithBar">
         <item name="actionBarStyle">@style/AppThemeWhiteActionBar.ActionBar</item>
+        <item name="android:actionBarStyle">@style/AppThemeWhiteActionBar.ActionBar</item>
     </style>
 
     <style name="AppThemeWhiteActionBar.ActionBar" parent="Widget.AppCompat.ActionBar">
@@ -46,6 +47,8 @@
     </style>
 
     <style name="CustomDialogTheme" parent="Theme.AppCompat.Light.Dialog">
+        <item name="colorPrimary">@color/primary_red</item>
+        <item name="colorAccent">@color/colorAccent</item>
         <!-- Define window properties as desired -->
         <item name="android:windowNoTitle">true</item>
         <item name="android:windowFullscreen">false</item>
@@ -92,7 +95,8 @@
         <item name="android:textSize">@dimen/font_normal</item>
     </style>
 
-    <style name="InputTextStyle" parent="Widget.AppCompat.EditText">
+    <style name="InputTextStyle">
+        <item name="android:layout_height">@dimen/height_input_normal</item>
         <item name="android:background">@drawable/background_textbox</item>
         <item name="android:inputType">text</item>
         <item name="android:textAlignment">center</item>
@@ -191,6 +195,7 @@
         <item name="android:textAlignment">center</item>
         <item name="android:textSize">@dimen/font_large</item>
         <item name="android:textAppearance">@style/TextShadowCover</item>
+        <item name="android:shadowRadius">5</item>
     </style>
 
     <style name="AppTheme.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar">

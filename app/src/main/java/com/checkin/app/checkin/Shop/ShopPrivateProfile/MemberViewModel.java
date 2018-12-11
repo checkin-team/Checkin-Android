@@ -53,11 +53,20 @@ public class MemberViewModel extends BaseViewModel {
         if (mCurrentMember == null)
             return;
         String userId = mCurrentMember.getUserId();
-        mRemovedMember.addSource(mRepository.removeRestaurantMember(mShopPk, userId), mData::setValue);
+        mRemovedMember.addSource(mRepository.removeRestaurantMember(mShopPk, userId), mRemovedMember::setValue);
     }
 
     public LiveData<Resource<ObjectNode>> getRemovedMemberData() {
         return mRemovedMember;
+    }
+
+    public void resetRemovedMemberData() {
+        mRemovedMember.setValue(null);
+    }
+
+    public void resetData() {
+        resetObservableData();
+        resetRemovedMemberData();
     }
 
     @Nullable

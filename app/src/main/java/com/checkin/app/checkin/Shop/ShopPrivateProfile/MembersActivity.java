@@ -9,7 +9,6 @@ import android.view.View;
 
 import com.checkin.app.checkin.R;
 import com.checkin.app.checkin.Search.SearchActivity;
-import com.checkin.app.checkin.Utility.Constants;
 
 import butterknife.ButterKnife;
 import butterknife.OnClick;
@@ -55,7 +54,8 @@ public class MembersActivity extends AppCompatActivity implements ShopMembersLis
     @OnClick(R.id.btn_add_member)
     public void onClickAddMembers(View view) {
         Intent pickUserIntent = new Intent(this, SearchActivity.class);
-        pickUserIntent.putExtra(Constants.ACCOUNT_TYPE,"People");
+        pickUserIntent.putExtra(SearchActivity.KEY_SEARCH_TYPE, SearchActivity.TYPE_PEOPLE);
+        pickUserIntent.putExtra(SearchActivity.KEY_SEARCH_MODE, SearchActivity.MODE_SELECT);
         startActivityForResult(pickUserIntent, REQUEST_PICK_USER);
     }
 
@@ -68,10 +68,10 @@ public class MembersActivity extends AppCompatActivity implements ShopMembersLis
     @Override
     public void changeMemberRole(MemberModel member, int position) {
         mViewModel.setCurrentMember(member);
+
         MemberAssignRoleFragment dialog = MemberAssignRoleFragment.newInstance(position, this);
         dialog.show(getSupportFragmentManager(), null);
     }
-
 
     @Override
     public void onNewMember(MemberModel member) {
@@ -93,12 +93,15 @@ public class MembersActivity extends AppCompatActivity implements ShopMembersLis
 
     }
 
-
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         if (requestCode == REQUEST_PICK_USER && resultCode == RESULT_OK) {
-            MemberModel member = new MemberModel();
+            String userName = data.getStringExtra(SearchActivity.KEY_RESULT_NAME);
+            String userPk = data.getStringExtra(SearchActivity.KEY_RESULT_PK);
+            String userPic = data.getStringExtra(SearchActivity.KEY_RESULT_IMAGE);
+            MemberModel member = new MemberModel(userPk, userName, userPic);
+
             changeMemberRole(member, MemberAssignRoleFragment.POSITION_NEW_MEMBER);
         }
     }

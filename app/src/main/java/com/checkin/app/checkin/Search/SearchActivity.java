@@ -10,87 +10,116 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
-import android.view.Menu;
-import android.view.MenuItem;
 import android.view.View;
-import android.widget.TextView;
 
 import com.checkin.app.checkin.R;
-import com.checkin.app.checkin.Utility.Constants;
+import com.checkin.app.checkin.Shop.ShopPublicProfile.ShopActivity;
+import com.checkin.app.checkin.User.NonPersonalProfile.UserProfileActivity;
 import com.miguelcatalan.materialsearchview.MaterialSearchView;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class SearchActivity extends AppCompatActivity implements SearchFragmentAll.onResultInteraction,SearchFragmentNoClick.OnSearchResultInteractionListener,SearchFragmentPeople.onResultInteraction,SearchFragmentRestaurant.onResultInteraction {
+import butterknife.BindView;
+import butterknife.ButterKnife;
+import butterknife.OnClick;
 
-    private SectionPageAdapter mSectionPageAdapter;
-    private SearchViewModel searchViewModel;
-    private ViewPager viewPager;
-    MaterialSearchView searchView;
-    TextView tvSearch;
-    Fragment searchFragment;
+public class SearchActivity extends AppCompatActivity implements SearchResultInteraction {
+    private static final String TAG = SearchActivity.class.getSimpleName();
+
+    public static final String KEY_RESULT_PK = "result.pk";
+    public static final String KEY_RESULT_NAME = "result.name";
+    public static final String KEY_RESULT_IMAGE = "result.image";
+    public static final String KEY_RESULT_TYPE = "result.type";
+
+    public static final String KEY_SEARCH_MODE = "search.mode";
+    public static final int MODE_SELECT = 1;
+    public static final int MODE_SEARCH = 2;
+
+    public static final String KEY_SEARCH_TYPE = "search.type";
+    public static final int TYPE_ALL = 0;
+    public static final int TYPE_PEOPLE = 1;
+    public static final int TYPE_RESTAURANT = 2;
+
+    @BindView(R.id.pager_search_type) ViewPager vPagerSearchType;
+    @BindView(R.id.search_view) MaterialSearchView vSearch;
+    @BindView(R.id.tabs_search) TabLayout vTabs;
+
+    private ResultTypePagerAdapter mResultTypeAdapter;
+    private SearchViewModel mViewModel;
+    private SuggestionsFragment mSuggestionsFragment;
+
+    private int mSearchMode = MODE_SEARCH;
+    private int mSearchType = TYPE_ALL;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_search);
 
+        ButterKnife.bind(this);
 
-        searchFragment = SearchFragmentNoClick.newInstance();
+        mSearchMode = getIntent().getIntExtra(KEY_SEARCH_MODE, MODE_SEARCH);
+        mSearchType = getIntent().getIntExtra(KEY_SEARCH_TYPE, TYPE_ALL);
 
-        mSectionPageAdapter=new SectionPageAdapter(getSupportFragmentManager());
-        viewPager=findViewById(R.id.viewpager_on_click);
-        setupUi();
-        setupViewPager(viewPager);
-
-        TabLayout tabLayout =findViewById(R.id.tabs);
-        tabLayout.setupWithViewPager(viewPager);
-
-        searchViewModel=ViewModelProviders.of(this).get(SearchViewModel.class);
-
-
+        mViewModel = ViewModelProviders.of(this).get(SearchViewModel.class);
 
         setupSearch();
+        setupUi();
     }
 
-
-
-
-
     private void setupUi() {
-        getSupportFragmentManager().beginTransaction()
-        .add(R.id.search_fragment_placeholder,searchFragment )
-        .commit();
+        if (shouldShowSuggestions()) {
+            mSuggestionsFragment = SuggestionsFragment.newInstance();
+            showSuggestions();
+        }
+        else {
+            vSearch.showSearch(false);
+        }
+        setupSearchTabs();
+        vPagerSearchType.setAdapter(mResultTypeAdapter);
+        vTabs.setupWithViewPager(vPagerSearchType);
+    }
+
+    private void setupSearchTabs() {
+        mResultTypeAdapter = new ResultTypePagerAdapter(getSupportFragmentManager());
+
+        PeopleResultFragment fragmentPeopleResult = null;
+        RestaurantResultFragment fragmentRestaurantResult = null;
+        AllResultFragment fragmentAllResult = null;
+
+        if (showPeopleResults()) {
+            fragmentPeopleResult = PeopleResultFragment.newInstance(this);
+        } else if (showRestaurantResults()) {
+            fragmentRestaurantResult = RestaurantResultFragment.newInstance(this);
+        } else if (showAllResults()) {
+            fragmentPeopleResult = PeopleResultFragment.newInstance(this);
+            fragmentRestaurantResult = RestaurantResultFragment.newInstance(this);
+            fragmentAllResult = AllResultFragment.newInstance(this);
+            showTabs();
+        }
+
+        if (fragmentAllResult != null)
+            mResultTypeAdapter.addFragment(fragmentAllResult, "All");
+        if (fragmentPeopleResult != null)
+            mResultTypeAdapter.addFragment(fragmentPeopleResult, "People");
+        if (fragmentRestaurantResult != null)
+            mResultTypeAdapter.addFragment(fragmentRestaurantResult, "Restaurant");
     }
 
     private void setupSearch() {
-        searchView =  findViewById(R.id.search_view);
-        tvSearch=findViewById(R.id.tv_search);
-
-        tvSearch.setOnClickListener(new View.OnClickListener() {
+        vSearch.setStartFromRight(false);
+        vSearch.setBackIcon(getDrawable(R.drawable.ic_appbar_back));
+        vSearch.setOnQueryTextListener(new MaterialSearchView.OnQueryTextListener() {
             @Override
-            public void onClick(View v) {
-                searchView.showSearch();
-                setupFragments();
-            }
-        });
-
-
-
-        searchView.setStartFromRight(false);
-        searchView.setCursorDrawable(R.drawable.color_cursor_white);
-        searchView.setOnQueryTextListener(new MaterialSearchView.OnQueryTextListener() {
-            @Override
-            public boolean onQueryTextSubmit(String query)
-            {
-                searchViewModel.getSearchResults(query);
+            public boolean onQueryTextSubmit(String query) {
+                mViewModel.getSearchResults(query);
                 return true;
             }
 
             @Override
             public boolean onQueryTextChange(String newText) {
-                searchViewModel.getSearchResults(newText);
+                mViewModel.getSearchResults(newText);
                 return true;
             }
 
@@ -100,119 +129,161 @@ public class SearchActivity extends AppCompatActivity implements SearchFragmentA
             }
         });
 
-        searchView.setOnSearchViewListener(new MaterialSearchView.SearchViewListener() {
+        vSearch.setOnSearchViewListener(new MaterialSearchView.SearchViewListener() {
             @Override
             public void onSearchViewShown() {
             }
 
             @Override
             public void onSearchViewClosed() {
-                setupUi();
+                resetUi();
             }
         });
     }
 
-    private void setupFragments() {
+    private void showSuggestions() {
         getSupportFragmentManager().beginTransaction()
-                .remove(searchFragment)
+                .add(R.id.container_search_suggestions, mSuggestionsFragment)
                 .commit();
     }
 
-    private void setupViewPager(ViewPager viewpager) {
-        SectionPageAdapter adapter =new SectionPageAdapter(getSupportFragmentManager());
-        if(getIntent().hasExtra(Constants.ACCOUNT_TYPE)) {
-            if (getIntent().getStringExtra(Constants.ACCOUNT_TYPE).equals("People")  ) {
-                setupFragments();
-                SearchFragmentPeople searchFragmentPeople=new SearchFragmentPeople();
-                searchFragmentPeople.setResultInteraction(this);
-                adapter.addFragment(searchFragmentPeople, "PEOPLE");
-            }
-            else
-            {
-                setupFragments();
-                SearchFragmentRestaurant searchFragmentRestaurant=new SearchFragmentRestaurant();
-                searchFragmentRestaurant.setmResultInteraction(this);
-                adapter.addFragment(searchFragmentRestaurant, "RESTAURANT");
-            }
-        }
-        else{
-
-            SearchFragmentAll searchFragmentAll=new SearchFragmentAll();
-            searchFragmentAll.setmResultInteraction(this);
-        adapter.addFragment(searchFragmentAll,"ALL");
-
-            SearchFragmentPeople searchFragmentPeople=new SearchFragmentPeople();
-            searchFragmentPeople.setResultInteraction(this);
-            adapter.addFragment(searchFragmentPeople, "PEOPLE");
-
-
-            SearchFragmentRestaurant searchFragmentRestaurant=new SearchFragmentRestaurant();
-            searchFragmentPeople.setResultInteraction(this);
-            adapter.addFragment(searchFragmentRestaurant,"RESTAURANT");}
-        viewpager.setAdapter(adapter);
+    private void removeSuggestions() {
+        getSupportFragmentManager().beginTransaction()
+                .remove(mSuggestionsFragment)
+                .commit();
     }
 
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.menu_search_activity, menu);
+    private void resetUi() {
+        if (shouldShowSuggestions()) {
+            showSuggestions();
+        } else {
+            onCancelSearch();
+        }
+    }
 
-        MenuItem item = menu.findItem(R.id.action_search);
-        searchView.setMenuItem(item);
+    @OnClick(R.id.tv_search)
+    public void onClickSearch(View v) {
+        if (shouldShowSuggestions()) {
+            removeSuggestions();
+        }
+        vSearch.showSearch(true);
+    }
 
-        return true;
+    @OnClick(R.id.btn_back)
+    public void onClickBack(View v) {
+        onBackPressed();
+    }
+
+    private void showTabs() {
+        vTabs.setVisibility(View.VISIBLE);
+    }
+
+    private boolean shouldShowSuggestions() {
+        return mSearchMode == MODE_SEARCH;
+    }
+
+    private boolean shouldReturnResult() {
+        return mSearchMode == MODE_SELECT;
+    }
+
+    private boolean showAllResults() {
+        return mSearchType == TYPE_ALL;
+    }
+
+    private boolean showPeopleResults() {
+        return mSearchType == TYPE_PEOPLE;
+    }
+
+    private boolean showRestaurantResults() {
+        return mSearchType == TYPE_RESTAURANT;
     }
 
     @Override
     public void onBackPressed() {
-        if(!getIntent().getStringExtra(Constants.ACCOUNT_TYPE).isEmpty())
-            finish();
-        if (searchView.isSearchOpen()) {
-            searchView.closeSearch();
+        if (vSearch.isSearchOpen()) {
+            vSearch.closeSearch();
+        } else if (shouldReturnResult()) {
+            onCancelSearch();
         } else {
             super.onBackPressed();
         }
     }
 
-    @Override
-    public void onResultPressed(SearchModel result) {
-        Intent intent=getIntent();
-        intent.putExtra(Constants.ACCOUNT_UID,result.getPk());
-        intent.putExtra(Constants.ACCOUNT_NAME,result.getName());
-        intent.putExtra(Constants.ACCOUNT_PIC,result.getImageUrl());
-        setResult(RESULT_OK,intent);
+    private void onCancelSearch() {
+        setResult(RESULT_CANCELED);
         finish();
     }
 
-    public static class SectionPageAdapter extends FragmentPagerAdapter {
+    @Override
+    public void onClickResult(SearchResultModel searchItem) {
+        if (shouldReturnResult()) {
+            Intent data = new Intent()
+                    .putExtra(KEY_RESULT_NAME, searchItem.getName())
+                    .putExtra(KEY_RESULT_IMAGE, searchItem.getImageUrl())
+                    .putExtra(KEY_RESULT_PK, searchItem.getPk())
+                    .putExtra(KEY_RESULT_TYPE, searchItem.getType().type);
+            setResult(RESULT_OK, data);
+            finish();
+        } else {
+            showInfo(searchItem);
+        }
+    }
 
-        private final List<Fragment> mFragmentList=new ArrayList<>();
-        private final List<String> mFragmentTitleList=new ArrayList<>();
+    @Override
+    public boolean onLongClickResult(SearchResultModel searchItem) {
+        if (shouldReturnResult()) {
+            showInfo(searchItem);
+            return true;
+        }
+        return false;
+    }
 
-        public void addFragment(Fragment fragment,String title)
-        {
-            mFragmentList.add(fragment);
-            mFragmentTitleList.add(title);
+    private void showInfo(SearchResultModel searchItem) {
+        if (searchItem.isTypeRestaurant())
+            showRestaurantInfo(searchItem.getPk());
+        else if (searchItem.isTypePeople())
+            showUserInfo(searchItem.getPk());
+    }
+
+    private void showUserInfo(String pk) {
+        Intent intent = new Intent(this, UserProfileActivity.class);
+        intent.putExtra(UserProfileActivity.KEY_PROFILE_USER_ID, Long.valueOf(pk));
+        startActivity(intent);
+    }
+
+    private void showRestaurantInfo(String pk) {
+        Intent intent = new Intent(this, ShopActivity.class);
+        intent.putExtra(ShopActivity.KEY_SHOP_PK, pk);
+        startActivity(intent);
+    }
+
+    private static class ResultTypePagerAdapter extends FragmentPagerAdapter {
+        private final List<Fragment> mFragments = new ArrayList<>();
+        private final List<String> mFragmentTitles = new ArrayList<>();
+
+        ResultTypePagerAdapter(FragmentManager fm) {
+            super(fm);
         }
 
-        public SectionPageAdapter(FragmentManager fm) {
-            super(fm);
+        void addFragment(Fragment fragment, String title) {
+            mFragments.add(fragment);
+            mFragmentTitles.add(title);
         }
 
         @Nullable
         @Override
         public CharSequence getPageTitle(int position) {
-            return mFragmentTitleList.get(position);
+            return mFragmentTitles.get(position);
         }
 
         @Override
         public Fragment getItem(int position) {
-            return mFragmentList.get(position);
+            return mFragments.get(position);
         }
 
         @Override
         public int getCount() {
-            return mFragmentList.size();
+            return mFragments.size();
         }
     }
-
 }

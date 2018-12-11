@@ -9,11 +9,10 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.bumptech.glide.Glide;
 import com.checkin.app.checkin.R;
+import com.checkin.app.checkin.Utility.GlideApp;
 
 import java.util.List;
-
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -86,7 +85,11 @@ public class MemberAdapter extends RecyclerView.Adapter<MemberAdapter.ViewHolder
 
         void bindData(MemberModel member) {
             tvDisplayName.setText(member.getUser().getDisplayName());
-            Glide.with(itemView).load(member.getUser().getDisplayPic()).into(imDisplayPic);
+
+            String picUrl = member.getUser().getDisplayPic();
+            GlideApp.with(itemView)
+                    .load(picUrl != null ? picUrl : R.drawable.cover_unknown_male)
+                    .into(imDisplayPic);
 
             String val = "Assign";
             if (member.isOwner()) val = "Owner";

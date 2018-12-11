@@ -2,8 +2,7 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:orientation="horizontal"
-    >
+    android:orientation="horizontal">
 
     <Button
         android:id="@+id/btn_back"
@@ -21,9 +20,5 @@
         android:layout_marginStart="@dimen/spacing_huge"
         android:text="Search"
         android:textColor="@color/pinkish_grey"
-        android:textSize="@dimen/font_large"
-
-        />
-
-
+        android:textSize="@dimen/font_large" />
 </LinearLayout>

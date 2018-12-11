@@ -80,6 +80,9 @@
 
     <string name="address_found">Address found</string>
 
+    <string name="status_searching">Searching…</string>
+    <string name="status_search_not_found">No results matched.</string>
+
     <string name="no_address_found">Sorry, no address found</string>
     <string name="no_location_data_provided">No location data provided</string>
     <string name="service_not_available">Sorry, the service is not available</string>

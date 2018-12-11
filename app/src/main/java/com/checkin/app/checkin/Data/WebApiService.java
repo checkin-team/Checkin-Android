@@ -5,7 +5,7 @@ import com.checkin.app.checkin.Menu.MenuModel;
 import com.checkin.app.checkin.Misc.GenericDetailModel;
 import com.checkin.app.checkin.Notifications.NotificationModel;
 import com.checkin.app.checkin.RestaurantActivity.Waiter.EventModel;
-import com.checkin.app.checkin.Search.SearchModel;
+import com.checkin.app.checkin.Search.SearchResultModel;
 import com.checkin.app.checkin.Session.ActiveSessionModel;
 import com.checkin.app.checkin.Shop.RestaurantModel;
 import com.checkin.app.checkin.Shop.ShopJoin.ShopJoinModel;
@@ -143,7 +143,7 @@ public interface WebApiService {
     Call<List<AccountModel>> getSelfAccounts();
 
     @GET("search/")
-    Call<List<SearchModel>>getSearchResults(@Query("search") String query);
+    Call<List<SearchResultModel>>getSearchResults(@Query("search") String query);
 
     //region Waiter Events
     @GET("shops/{table_id}/orders")

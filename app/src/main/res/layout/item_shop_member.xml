@@ -5,7 +5,9 @@
     android:layout_width="match_parent"
     android:layout_height="@dimen/height_card_normal"
     style="@style/WhiteCardStyle"
-    android:layout_marginBottom="@dimen/spacing_small">
+    android:layout_marginBottom="@dimen/spacing_small"
+    android:layout_marginStart="@dimen/spacing_extra_small"
+    android:layout_marginEnd="@dimen/spacing_extra_small">
 
     <android.support.constraint.ConstraintLayout
         android:layout_width="match_parent"

@@ -19,13 +19,12 @@
             <FrameLayout
                 android:id="@+id/container_cuisines"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:background="@drawable/background_textbox">
+                style="@style/InputTextStyle">
 
                 <com.checkin.app.checkin.Utility.MultiSpinner
                     android:id="@+id/spinner_cuisines"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
                     app:hintText="Cuisines"
                     app:entries="@array/restaurant_cuisines"/>
             </FrameLayout>
@@ -33,15 +32,14 @@
             <FrameLayout
                 android:id="@+id/container_categories"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:background="@drawable/background_textbox"
+                style="@style/InputTextStyle"
                 android:layout_toEndOf="@id/container_cuisines"
                 android:layout_marginStart="@dimen/spacing_large">
 
                 <com.checkin.app.checkin.Utility.MultiSpinner
                     android:id="@+id/spinner_categories"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
+                    android:layout_height="match_parent"
                     app:hintText="Categories"
                     app:entries="@array/restaurant_categories" />
             </FrameLayout>

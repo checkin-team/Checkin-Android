@@ -47,6 +47,10 @@ public class MemberAssignRoleFragment extends DialogFragment {
         return fragment;
     }
 
+    public void setPosition(int position) {
+        mPosition = position;
+    }
+
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         final View rootView = inflater.inflate(R.layout.fragment_shop_member_assign_role, container, false);
@@ -76,7 +80,6 @@ public class MemberAssignRoleFragment extends DialogFragment {
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
-
         setupViewModel();
 
         MemberModel member = mViewModel.getCurrentMember();
@@ -112,10 +115,11 @@ public class MemberAssignRoleFragment extends DialogFragment {
                } else {
                    mListener.onUpdateMember(mViewModel.getCurrentMember(), mPosition);
                }
-               dismiss();
-           } else {
+               this.finishDialog();
+           } else if (resource.message != null) {
                Util.toast(requireContext(), resource.message);
            }
+           mViewModel.resetObservableData();
         });
 
         mViewModel.getRemovedMemberData().observe(this, resource -> {
@@ -123,11 +127,16 @@ public class MemberAssignRoleFragment extends DialogFragment {
                 return;
             if (resource.status == Status.SUCCESS) {
                 mListener.onRemoveMember(mViewModel.getCurrentMember(), mPosition);
-                dismiss();
-            } else {
+                this.finishDialog();
+            } else if (resource.message != null){
                 Util.toast(requireContext(), resource.message);
             }
+            mViewModel.resetRemovedMemberData();
         });
+    }
+
+    public void finishDialog() {
+        dismiss();
     }
 
     public void onCancelClick(View v) {
