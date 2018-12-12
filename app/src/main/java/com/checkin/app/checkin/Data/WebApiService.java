@@ -6,8 +6,8 @@ import com.checkin.app.checkin.Misc.GenericDetailModel;
 import com.checkin.app.checkin.Notifications.NotificationModel;
 import com.checkin.app.checkin.RestaurantActivity.Waiter.EventModel;
 import com.checkin.app.checkin.Search.SearchResultModel;
-import com.checkin.app.checkin.Shop.RestaurantModel;
 import com.checkin.app.checkin.Session.ActiveSession.ActiveSessionModel;
+import com.checkin.app.checkin.Shop.RestaurantModel;
 import com.checkin.app.checkin.Shop.ShopJoin.ShopJoinModel;
 import com.checkin.app.checkin.Shop.ShopPrivateProfile.MemberModel;
 import com.checkin.app.checkin.Shop.ShopReviewPOJO;
@@ -83,12 +83,6 @@ public interface WebApiService {
     Call<ObjectNode> rejectFriendRequest(@Path("request_pk") String requestPk);
     // endregion
 
-    @POST("qr/decrypt/")
-    Call<ObjectNode> postDecryptQr(@Body ObjectNode data);
-
-    @GET("users/{user_id}/sessions/active/")
-    Call<ActiveSessionModel> getActiveSession(@Path("user_id") String userID);
-
     // region SHOP
     @POST("restaurants/create/")
     Call<GenericDetailModel> postRegisterShop(@Body ShopJoinModel model);
@@ -121,6 +115,19 @@ public interface WebApiService {
     @DELETE("restaurants/{shop_id}/members/{user_id}/")
     Call<ObjectNode> deleteRestaurantMember(@Path("shop_id") String shopId, @Path("user_id") String userId);
     // endregion
+
+    // endregion
+
+    // region SESSION
+
+    @GET("sessions/active/")
+    Call<ActiveSessionModel> getActiveSession();
+
+    @POST("sessions/active/customers/")
+    Call<ObjectNode> postActiveSessionCustomers(@Body ObjectNode data);
+
+    @DELETE("sessions/active/customers/{user_id}/")
+    Call<ObjectNode> deleteActiveSessionCustomer(@Path("user_id") String userId);
 
     // endregion
 

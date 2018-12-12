@@ -15,7 +15,6 @@ import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.MenuItem;
 import android.view.MotionEvent;
 import android.view.View;
@@ -24,7 +23,7 @@ import android.widget.TextView;
 
 import com.checkin.app.checkin.Account.AccountModel.ACCOUNT_TYPE;
 import com.checkin.app.checkin.Account.BaseAccountActivity;
-import com.checkin.app.checkin.Data.Resource;
+import com.checkin.app.checkin.Data.Resource.Status;
 import com.checkin.app.checkin.Menu.SessionUserActivity;
 import com.checkin.app.checkin.Misc.QRScannerActivity;
 import com.checkin.app.checkin.Notifications.NotificationActivity;
@@ -96,16 +95,11 @@ public class HomeActivity extends BaseAccountActivity
         setupUserActivities();
 
         mHomeViewModel.getQrResult().observe(this, resource -> {
-            if (resource == null || resource.data == null)   return;
-            switch (resource.status) {
-                case SUCCESS: {
-                    Util.toast(getApplicationContext(), resource.data.toString());
-                    break;
-                }
-
-                default: {
-                    Log.e(TAG, "status: " + resource.status + ", message: " + resource.message);
-                }
+            if (resource == null)   return;
+            if (resource.status == Status.SUCCESS && resource.data != null) {
+                Util.toast(this, resource.data.getDetail());
+            } else if (resource.status != Status.LOADING) {
+                Util.toast(this, resource.message);
             }
         });
     }
@@ -347,7 +341,7 @@ public class HomeActivity extends BaseAccountActivity
         rvTrendingShops.setAdapter(mTrendingShopAdapter);
 
         mHomeViewModel.getTrendingRestaurants().observe(this, listResource -> {
-            if (listResource != null && listResource.status == Resource.Status.SUCCESS)
+            if (listResource != null && listResource.status == Status.SUCCESS)
                 mTrendingShopAdapter.setData(listResource.data);
         });
 
@@ -371,7 +365,7 @@ public class HomeActivity extends BaseAccountActivity
         });
 
         mUserViewModel.getAllUsers().observe(this, (userResource -> {
-            if (userResource != null && userResource.status == Resource.Status.SUCCESS)
+            if (userResource != null && userResource.status == Status.SUCCESS)
                 mUserActivityAdapter.setUsers(userResource.data);
         }));
     }
