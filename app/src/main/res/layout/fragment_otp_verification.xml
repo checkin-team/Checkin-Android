@@ -4,69 +4,44 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".Auth.OtpVerificationFragment">
-
-    <android.support.constraint.Guideline
-        android:id="@+id/guideline_center"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        app:layout_constraintGuide_percent="0.5"
-        android:orientation="vertical"
-        app:layout_constraintGuide_end="16dp" />
+    tools:context=".Auth.OtpVerificationFragment"
+    android:paddingStart="@dimen/spacing_extra_large"
+    android:paddingEnd="@dimen/spacing_extra_large"
+    android:paddingTop="@dimen/spacing_gigantic"
+    android:paddingBottom="@dimen/spacing_gigantic">
 
     <EditText
         android:id="@+id/ed_otp"
         android:layout_width="match_parent"
-        android:layout_height="38dp"
-        android:layout_marginEnd="@dimen/spacing_normal"
-        android:layout_marginStart="@dimen/spacing_normal"
-        android:layout_marginTop="@dimen/spacing_extra_large"
-        android:background="@drawable/background_textbox"
+        android:layout_height="@dimen/height_input_normal"
+        style="@style/InputTextStyle"
         android:hint="Enter OTP"
         android:textAlignment="center"
-        android:paddingRight="@dimen/spacing_normal"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <LinearLayout
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/ed_otp">
-
     <Button
         android:id="@+id/btn_proceed"
-        android:layout_marginEnd="@dimen/spacing_normal"
-        android:layout_width="wrap_content"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginStart="@dimen/spacing_normal"
-        android:layout_marginTop="@dimen/spacing_small"
-        android:background="@drawable/background_button_red_shadow"
+        style="@style/ButtonSmallVerifyAction"
         android:text="Proceed"
-        android:layout_weight="1"
-        android:textAlignment="center"
-        android:textAllCaps="true"
-
-        android:textColor="@color/white"
-        android:textSize="@dimen/font_large"
-        app:layout_constraintEnd_toStartOf="@id/guideline_center"
+        android:textSize="@dimen/font_normal"
+        android:layout_marginTop="@dimen/spacing_large"
+        android:layout_marginEnd="@dimen/spacing_normal"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/ed_otp" />
+        app:layout_constraintEnd_toStartOf="@id/container_timeout"
+        app:layout_constraintTop_toBottomOf="@id/ed_otp"/>
 
     <FrameLayout
-        android:layout_width="wrap_content"
+        android:id="@+id/container_timeout"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginEnd="@dimen/spacing_normal"
         android:layout_marginStart="@dimen/spacing_normal"
-        android:layout_marginTop="@dimen/spacing_small"
-android:layout_weight="1"
-        app:layout_constraintStart_toEndOf="@id/guideline_center"
+        app:layout_constraintStart_toEndOf="@id/btn_proceed"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/ed_otp">
-
-
-
+        app:layout_constraintTop_toTopOf="@id/btn_proceed">
         <TextView
             android:id="@+id/tv_remaining_time"
             android:layout_width="wrap_content"
@@ -74,23 +49,14 @@ android:layout_weight="1"
             android:layout_gravity="center|end"
             tools:text="Time Remaining 2:00"
             android:textColor="@color/pinkish_grey"
-            android:visibility="visible"/>
-
-
+            android:visibility="visible" />
         <Button
             android:id="@+id/btn_resend_otp"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:background="@drawable/background_button_red_shadow"
-            tools:text="Resend otp"
-            android:textAlignment="center"
-            android:textAllCaps="true"
-
-            android:textColor="@color/white"
-            android:textSize="@dimen/font_large"
-            android:visibility="invisible"
-             />
-
+            android:text="Resend otp"
+            style="@style/ButtonSmallVerifyAction"
+            android:textSize="@dimen/font_normal"
+            android:visibility="invisible"/>
     </FrameLayout>
-    </LinearLayout>
 </android.support.constraint.ConstraintLayout>

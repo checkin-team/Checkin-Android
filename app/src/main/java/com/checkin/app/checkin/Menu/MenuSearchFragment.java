@@ -54,7 +54,7 @@ public class MenuSearchFragment extends Fragment implements MenuItemAdapter.OnIt
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        final View rootView = inflater.inflate(R.layout.fragment_search_item, container, false);
+        final View rootView = inflater.inflate(R.layout.fragment_menu_search_item, container, false);
         unbinder = ButterKnife.bind(this, rootView);
         if (getActivity() == null||getArguments() == null)
             return null;

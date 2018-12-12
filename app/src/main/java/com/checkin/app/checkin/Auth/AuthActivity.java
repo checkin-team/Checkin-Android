@@ -5,12 +5,12 @@ import android.accounts.AccountManager;
 import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
 import android.arch.lifecycle.ViewModelProviders;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.preference.PreferenceManager;
 import android.support.annotation.NonNull;
-import android.support.transition.Fade;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
@@ -36,7 +36,6 @@ import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
 import com.google.android.gms.common.api.ApiException;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.FirebaseException;
-import com.google.firebase.FirebaseNetworkException;
 import com.google.firebase.auth.AuthCredential;
 import com.google.firebase.auth.FacebookAuthProvider;
 import com.google.firebase.auth.FirebaseAuth;
@@ -47,7 +46,7 @@ import com.google.firebase.auth.PhoneAuthCredential;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
-public class AuthActivity extends AppCompatActivity implements AuthFragmentInteraction {
+public class AuthActivity extends AppCompatActivity implements AuthFragmentInteraction, OtpVerificationDialog.AuthCallback {
     private static final String TAG = AuthActivity.class.getSimpleName();
     private static final int RC_AUTH_GOOGLE = 1000;
 
@@ -80,28 +79,6 @@ public class AuthActivity extends AppCompatActivity implements AuthFragmentInter
             Log.e(TAG, "User already exists.");
             user.delete();
         }
-
-        mPhoneAuth = new PhoneAuth(mAuth) {
-            @Override
-            protected void onVerificationSuccess(PhoneAuthCredential credential) {
-                authenticateWithCredential(credential);
-            }
-
-            @Override
-            protected void onVerificationError(FirebaseException e) {
-                Log.e(TAG, "PhoneAuth - Verification Failed: ", e);
-                if (e instanceof FirebaseNetworkException) {
-                    Toast.makeText(getApplicationContext(), R.string.error_unavailable_network, Toast.LENGTH_SHORT).show();
-                } else {
-                    Toast.makeText(getApplicationContext(), R.string.error_authentication_phone, Toast.LENGTH_LONG).show();
-                }
-            }
-
-            @Override
-            protected void onOtpRetrievalTimedOut() {
-                mAuthViewModel.setOtpTimeout(0L);
-            }
-        };
 
         mAuthViewModel = ViewModelProviders.of(this, new AuthViewModel.Factory(getApplication())).get(AuthViewModel.class);
 
@@ -141,11 +118,6 @@ public class AuthActivity extends AppCompatActivity implements AuthFragmentInter
 
     private void hideProgress() {
         vCircleProgress.setVisibility(View.GONE);
-    }
-
-    private void verifyPhoneNumber() {
-        mAuthViewModel.setOtpTimeout(Constants.DEFAULT_OTP_AUTO_RETRIEVAL_TIMEOUT);
-        mPhoneAuth.verifyPhoneNo(mAuthViewModel.getPhoneNo(), this);
     }
 
     private void authenticateWithCredential(AuthCredential credential) {
@@ -226,17 +198,6 @@ public class AuthActivity extends AppCompatActivity implements AuthFragmentInter
     }
 
     @Override
-    public void onResendOtpRequest() {
-        verifyPhoneNumber();
-    }
-
-    @Override
-    public void onOtpVerificationProcess(String otp) {
-        Log.e(TAG, "OTP: " + otp);
-        authenticateWithCredential(mPhoneAuth.verifyOtp(otp));
-    }
-
-    @Override
     public void onUserInfoProcess(String firstName, String lastName, String userName, GENDER gender) {
         Log.e(TAG, "Username: "+ userName +"First name: " + firstName + " | Last name: " + lastName + " | Gender: " + gender.name());
         mAuthViewModel.register(firstName, lastName, gender, userName);
@@ -272,10 +233,11 @@ public class AuthActivity extends AppCompatActivity implements AuthFragmentInter
     public void onPhoneAuth(String phoneNo) {
         Log.e(TAG, "Phone number: " + phoneNo);
         mAuthViewModel.setPhoneNo(phoneNo);
-        verifyPhoneNumber();
-        OtpVerificationFragment otpVerificationFragment = OtpVerificationFragment.newInstance(this);
-        otpVerificationFragment.setEnterTransition(new Fade().setDuration(5));
-        replaceFragmentContainer(otpVerificationFragment);
+        OtpVerificationDialog dialog = OtpVerificationDialog.Builder.with(this)
+                .setAuthCallback(this)
+                .build();
+        dialog.verifyPhoneNumber(phoneNo);
+        dialog.show();
         showDarkBack();
     }
 
@@ -303,6 +265,22 @@ public class AuthActivity extends AppCompatActivity implements AuthFragmentInter
             startActivity(new Intent(this, HomeActivity.class));
             finish();
         });
+    }
+
+    @Override
+    public void onSuccessVerification(DialogInterface dialog, PhoneAuthCredential credential) {
+        authenticateWithCredential(credential);
+        dialog.dismiss();
+    }
+
+    @Override
+    public void onCancelVerification(DialogInterface dialog) {
+        hideDarkBack();
+    }
+
+    @Override
+    public void onFailedVerification(DialogInterface dialog, FirebaseException exception) {
+        dialog.dismiss();
     }
 
     @Override
