@@ -8,6 +8,7 @@ import android.content.IntentFilter;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.design.widget.BottomSheetBehavior;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.content.LocalBroadcastManager;
 import android.support.v7.app.AppCompatActivity;
@@ -16,6 +17,7 @@ import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -43,24 +45,33 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 
+import static java.lang.Double.NaN;
+
 public class ActiveSessionActivity extends AppCompatActivity implements ActiveSessionMemberAdapter.SessionMemberInteraction {
     private static final String TAG = ActiveSessionActivity.class.getSimpleName();
     private ActiveSessionViewModel mActiveSessionViewModel;
     private UserViewModel mUserViewModel;
     private ActiveSessionMemberAdapter mSessionMembersAdapter;
     public static final String IDENTIFIER = "active_session";
-    @BindView(R.id.rv_session_members) RecyclerView rvMembers;
-    @BindView(R.id.tv_bill) TextView tvBill;
+    @BindView(R.id.rv_session_members)
+    RecyclerView rvMembers;
+    @BindView(R.id.tv_bill)
+    TextView tvBill;
 
     private MaterialStyledDialog mAddMemberDialog;
     private MaterialStyledDialog mCheckoutDialog;
     private Receiver mHandler;
+    private BottomSheetBehavior sheetBehavior;
+    @BindView(R.id.bottom_sheet_active_session)
+    LinearLayout layoutBottomSheetActiveSession;
+    private BottomSheetExtrasAdapter bottomSheetExtrasAdapter;
+    private ArrayList<String> extrasList = new ArrayList<>();
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        setContentView(R.layout.activity_active_session);
+        setContentView(R.layout.activity_active_session1);
         ButterKnife.bind(this);
 
         rvMembers.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false));
@@ -100,7 +111,9 @@ public class ActiveSessionActivity extends AppCompatActivity implements ActiveSe
         setupCheckoutDialog();
         mHandler = new Receiver(mActiveSessionViewModel);
         LocalBroadcastManager.getInstance(this)
-                .registerReceiver(mHandler, new IntentFilter(Util.getActivityIntentFilter(getApplicationContext(),IDENTIFIER)));
+                .registerReceiver(mHandler, new IntentFilter(Util.getActivityIntentFilter(getApplicationContext(), IDENTIFIER)));
+
+        handlingBottomSheet();
     }
 
     private void setupCheckoutDialog() {
@@ -141,7 +154,7 @@ public class ActiveSessionActivity extends AppCompatActivity implements ActiveSe
         mUserViewModel.getAllUsers().observe(this, (Resource<List<UserModel>> userResource) -> {
             if (userResource != null && userResource.status == Resource.Status.SUCCESS) {
                 List<UserModel> users = userResource.data;
-                for (UserModel user: users) {
+                for (UserModel user : users) {
                     items.add(new SelectListItem(user.getProfilePic(), user.getUsername(), "", user.getId()));
                 }
             }
@@ -157,7 +170,7 @@ public class ActiveSessionActivity extends AppCompatActivity implements ActiveSe
                 .setCustomView(view, 10, 10, 10, 10)
                 .onPositive((dialog, which) -> {
                     List<Long> ids = new ArrayList<>();
-                    for (Chip chip: userSelect.getAllChips()) {
+                    for (Chip chip : userSelect.getAllChips()) {
                         ids.add(((Long) ((SelectListItem) Objects.requireNonNull(chip.getData())).getData()));
                     }
                     mActiveSessionViewModel.addMembers(ids);
@@ -184,13 +197,59 @@ public class ActiveSessionActivity extends AppCompatActivity implements ActiveSe
     }
 
     private static class Receiver extends BroadcastReceiver {
+
         ActiveSessionViewModel mSessionViewModel;
+
         Receiver(ActiveSessionViewModel viewModel) {
             mSessionViewModel = viewModel;
         }
+
         @Override
         public void onReceive(Context context, Intent intent) {
             mSessionViewModel.updateResults();
         }
+
     }
+
+    private void handlingBottomSheet() {
+        LinearLayout ll_bottom_sheet_variant1 = layoutBottomSheetActiveSession.findViewById(R.id.ll_bottom_sheet_variant1);
+        RecyclerView rv_active_session_bottom_sheet_extras = layoutBottomSheetActiveSession.findViewById(R.id.rv_active_session_bottom_sheet_extras);
+        setExtrasRecyclerView(rv_active_session_bottom_sheet_extras);
+        sheetBehavior = BottomSheetBehavior.from(layoutBottomSheetActiveSession);
+        sheetBehavior.setBottomSheetCallback(new BottomSheetBehavior.BottomSheetCallback() {
+            @Override
+            public void onStateChanged(@NonNull View bottomSheet, int newState) {
+                switch (newState) {
+                    case BottomSheetBehavior.STATE_EXPANDED: {
+                        ll_bottom_sheet_variant1.setVisibility(View.GONE);
+                        rv_active_session_bottom_sheet_extras.setVisibility(View.VISIBLE);
+                    }
+                    break;
+                    case BottomSheetBehavior.STATE_COLLAPSED: {
+                        layoutBottomSheetActiveSession.findViewById(R.id.rv_active_session_bottom_sheet_extras).setVisibility(View.GONE);
+                        ll_bottom_sheet_variant1.setVisibility(View.VISIBLE);
+                    }
+                    break;
+                }
+            }
+
+            @Override
+            public void onSlide(@NonNull View bottomSheet, float slideOffset) {
+            }
+        });
+    }
+
+    private void setExtrasRecyclerView(RecyclerView rv_extras_in_bottom_sheet) {
+        extrasList.clear();
+        extrasList.add("Napkin");
+        extrasList.add("Sauce");
+        extrasList.add("Salt");
+        extrasList.add("Extra Plates");
+        extrasList.add("Bill");
+        extrasList.add("Service1");
+        rv_extras_in_bottom_sheet.setLayoutManager(new LinearLayoutManager(ActiveSessionActivity.this));
+        bottomSheetExtrasAdapter = new BottomSheetExtrasAdapter(ActiveSessionActivity.this, extrasList);
+        rv_extras_in_bottom_sheet.setAdapter(bottomSheetExtrasAdapter);
+    }
+
 }
