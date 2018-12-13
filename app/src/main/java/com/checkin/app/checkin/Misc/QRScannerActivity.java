@@ -38,8 +38,9 @@ public class QRScannerActivity extends AppCompatActivity implements QRScannerFra
         ButterKnife.bind(this);
 
         ActionBar actionBar = getSupportActionBar();
-        if (actionBar != null)
-            actionBar.setDisplayHomeAsUpEnabled(true);
+        assert actionBar != null;
+        actionBar.setDisplayHomeAsUpEnabled(true);
+        actionBar.setHomeButtonEnabled(true);
 
         checkValidCamera();
         setupFragment();
@@ -80,7 +81,7 @@ public class QRScannerActivity extends AppCompatActivity implements QRScannerFra
     }
 
     @Override
-    public boolean onNavigateUp() {
+    public boolean onSupportNavigateUp() {
         setResult(RESULT_CANCELED);
         finish();
         return true;

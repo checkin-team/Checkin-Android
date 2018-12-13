@@ -1,8 +1,11 @@
 package com.checkin.app.checkin.Session.ActiveSession;
 
 import com.checkin.app.checkin.Menu.OrderedItemModel;
+import com.checkin.app.checkin.Misc.BriefModel;
+import com.checkin.app.checkin.Session.SessionCustomerModel;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -10,16 +13,33 @@ import java.util.List;
  */
 
 public class ActiveSessionModel {
+    @JsonProperty("pk")
+    private String pk;
+
+    @JsonProperty("bill")
     private double bill;
-    @JsonProperty("orders") private List<OrderedItemModel> orderedItems;
-    @JsonProperty("customers") private List<ActiveSessionMemberModel> members;
+
+    // TODO: Remove from here.
+    private List<OrderedItemModel> orderedItems;
+
+    @JsonProperty("customers")
+    private List<SessionCustomerModel> customers;
+
+    @JsonProperty("checked_in")
+    private Date checkedIn;
+
+    @JsonProperty("checked_out")
+    private Date checkedOut;
+
+    @JsonProperty("host")
+    private BriefModel host;
 
     public ActiveSessionModel() {}
 
-    public ActiveSessionModel(int bill, List<OrderedItemModel> orderedItems, List<ActiveSessionMemberModel> members) {
+    public ActiveSessionModel(int bill, List<OrderedItemModel> orderedItems, List<SessionCustomerModel> customers) {
         this.bill = bill;
         this.orderedItems = orderedItems;
-        this.members = members;
+        this.customers = customers;
     }
 
     public double getBill() {
@@ -30,7 +50,7 @@ public class ActiveSessionModel {
         return orderedItems;
     }
 
-    public List<ActiveSessionMemberModel> getMembers() {
-        return members;
+    public List<SessionCustomerModel> getCustomers() {
+        return customers;
     }
 }

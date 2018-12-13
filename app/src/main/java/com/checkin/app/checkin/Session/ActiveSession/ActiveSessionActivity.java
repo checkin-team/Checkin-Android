@@ -74,7 +74,7 @@ public class ActiveSessionActivity extends AppCompatActivity implements ActiveSe
             ActiveSessionModel data = resource.data;
             switch (resource.status) {
                 case SUCCESS: {
-                    mSessionMembersAdapter.setUsers(data != null ? data.getMembers() : null);
+                    mSessionMembersAdapter.setUsers(data != null ? data.getCustomers() : null);
                     tvBill.setText(String.valueOf(data != null ? data.getBill() : 0));
                 }
                 case LOADING: {
