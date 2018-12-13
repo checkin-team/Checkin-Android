@@ -73,9 +73,10 @@ dependencies {
     implementation 'com.facebook.android:facebook-login:4.37.0'
     // Twitter SDK
     implementation 'com.twitter.sdk.android:twitter-core:3.1.1'
+    // QR Scanner
+    implementation 'me.dm7.barcodescanner:zxing:1.9.8'
     // Design Libraries
     implementation 'de.hdodenhof:circleimageview:2.2.0'
-    implementation 'com.journeyapps:zxing-android-embedded:3.6.0'
     implementation 'com.andkulikov:transitionseverywhere:1.8.0'
     implementation 'com.github.bumptech.glide:glide:4.7.1'
     annotationProcessor 'com.github.bumptech.glide:compiler:4.7.1'
@@ -86,7 +87,8 @@ dependencies {
     implementation 'com.appyvet:materialrangebar:1.4.3'
     implementation 'com.github.javiersantos:MaterialStyledDialogs:2.1'
     implementation 'com.github.antonygolovin:fluentsnackbar:1.0.0'
-    implementation 'com.romandanylyk:pageindicatorview:1.0.1'
+    //noinspection GradleDependency    (Updated version uses AndroidX)
+    implementation 'com.romandanylyk:pageindicatorview:1.0.2'
     implementation 'com.lyft:scissors:1.1.1'
 
     // Network libraries and JSON <-> POJO

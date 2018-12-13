@@ -5,18 +5,15 @@ import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
-import android.preference.PreferenceManager;
 import android.support.v4.app.NotificationCompat;
 import android.support.v4.content.LocalBroadcastManager;
 import android.util.Log;
 
-import com.checkin.app.checkin.Auth.AuthRepository;
 import com.checkin.app.checkin.Auth.DeviceTokenService;
 import com.checkin.app.checkin.Notifications.NotificationActivity;
-import com.checkin.app.checkin.Session.ActiveSessionActivity;
+import com.checkin.app.checkin.Session.ActiveSession.ActiveSessionActivity;
 import com.checkin.app.checkin.Utility.Constants;
 import com.checkin.app.checkin.Utility.Util;
-import com.google.firebase.iid.FirebaseInstanceId;
 import com.google.firebase.messaging.FirebaseMessagingService;
 import com.google.firebase.messaging.RemoteMessage;
 

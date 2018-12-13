@@ -1,4 +1,4 @@
-package com.checkin.app.checkin.Session;
+package com.checkin.app.checkin.Session.ActiveSession;
 
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -6,10 +6,10 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
-import com.checkin.app.checkin.R;
-import com.checkin.app.checkin.User.UserModel;
-import com.checkin.app.checkin.Utility.HeaderFooterRecyclerViewAdapter;
 import com.bumptech.glide.Glide;
+import com.checkin.app.checkin.R;
+import com.checkin.app.checkin.Session.SessionCustomerModel;
+import com.checkin.app.checkin.Utility.HeaderFooterRecyclerViewAdapter;
 
 import java.util.List;
 
@@ -19,10 +19,10 @@ import de.hdodenhof.circleimageview.CircleImageView;
 
 public class ActiveSessionMemberAdapter extends HeaderFooterRecyclerViewAdapter {
 
-    private List<ActiveSessionMemberModel> mUsers;
+    private List<SessionCustomerModel> mUsers;
     private SessionMemberInteraction memberInterface;
 
-    ActiveSessionMemberAdapter(List<ActiveSessionMemberModel> users, SessionMemberInteraction memberInterface){
+    ActiveSessionMemberAdapter(List<SessionCustomerModel> users, SessionMemberInteraction memberInterface){
         this.mUsers = users;
         this.memberInterface = memberInterface;
     }
@@ -71,7 +71,7 @@ public class ActiveSessionMemberAdapter extends HeaderFooterRecyclerViewAdapter 
         return R.layout.item_session_member;
     }
 
-    public void setUsers(List<ActiveSessionMemberModel> users) {
+    public void setUsers(List<SessionCustomerModel> users) {
         this.mUsers = users;
         notifyDataSetChanged();
     }
@@ -85,9 +85,11 @@ public class ActiveSessionMemberAdapter extends HeaderFooterRecyclerViewAdapter 
             ButterKnife.bind(this, view);
         }
 
-        void bindData(UserModel user) {
-            tvUser.setText(user.getUsername());
-            Glide.with(tvUser.getContext()).load(user.getProfilePic()).into(imUser);
+        void bindData(SessionCustomerModel customer) {
+            tvUser.setText(customer.getUser().getDisplayName());
+            Glide.with(tvUser.getContext())
+                    .load(customer.getUser().getDisplayPic())
+                    .into(imUser);
         }
     }
 

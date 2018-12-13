@@ -15,9 +15,12 @@
     <uses-permission
         android:name="android.permission.USE_CREDENTIALS"
         android:maxSdkVersion="22" />
+    <uses-permission android:name="android.permission.CAMERA" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+
+    <uses-feature android:name="android.hardware.camera" />
 
     <application
         android:allowBackup="true"
@@ -47,10 +50,10 @@
             tools:replace="screenOrientation" />
         <activity android:name=".User.NonPersonalProfile.UserProfileActivity" />
         <activity android:name=".User.PersonalProfile.UserProfileActivity" />
-        <activity android:name=".User.NonPersonalProfile.UserCheckinsActivity"
-            android:theme="@style/Theme.AppCompat.Light"
-            android:parentActivityName=".User.NonPersonalProfile.UserProfileActivity">
-        </activity>
+        <activity
+            android:name=".User.NonPersonalProfile.UserCheckinsActivity"
+            android:parentActivityName=".User.NonPersonalProfile.UserProfileActivity"
+            android:theme="@style/Theme.AppCompat.Light"></activity>
         <activity
             android:name=".User.PersonalProfile.ProfileEditActivity"
             android:label="Edit Profile"
@@ -59,9 +62,11 @@
             android:name=".User.Friendship.FriendsListActivity"
             android:label="Friends"
             android:theme="@style/AppThemeWhiteActionBar" />
-        <activity android:name=".Shop.ShopPublicProfile.ShopActivity"
+        <activity
+            android:name=".Shop.ShopPublicProfile.ShopActivity"
             android:screenOrientation="portrait" />
-        <activity android:name=".Shop.ShopPrivateProfile.ShopActivity"
+        <activity
+            android:name=".Shop.ShopPrivateProfile.ShopActivity"
             android:screenOrientation="portrait" />
         <activity
             android:name=".Menu.SessionUserActivity"
@@ -77,7 +82,7 @@
             android:theme="@style/AppTheme"
             tools:replace="screenOrientation" />
         <activity
-            android:name=".Session.ActiveSessionActivity"
+            android:name=".Session.ActiveSession.ActiveSessionActivity"
             android:windowSoftInputMode="adjustNothing" />
         <activity
             android:name=".Shop.ShopJoin.BusinessFeaturesActivity"
@@ -134,6 +139,10 @@
             android:screenOrientation="portrait"
             android:label="Members"
             android:theme="@style/AppThemeWhiteActionBar" />
+
+        <activity android:name=".Misc.QRScannerActivity"
+            android:label="Scan CheckIn QR"
+            android:theme="@style/AppThemeWhiteActionBar"/>
 
         <service
             android:name=".Auth.AuthenticatorService"
