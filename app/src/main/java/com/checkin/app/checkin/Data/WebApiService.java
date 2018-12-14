@@ -6,7 +6,7 @@ import com.checkin.app.checkin.Misc.GenericDetailModel;
 import com.checkin.app.checkin.Notifications.NotificationModel;
 import com.checkin.app.checkin.RestaurantActivity.Waiter.EventModel;
 import com.checkin.app.checkin.Search.SearchResultModel;
-import com.checkin.app.checkin.Session.ActiveSessionModel;
+import com.checkin.app.checkin.Session.ActiveSession.ActiveSessionModel;
 import com.checkin.app.checkin.Shop.RestaurantModel;
 import com.checkin.app.checkin.Shop.ShopJoin.ShopJoinModel;
 import com.checkin.app.checkin.Shop.ShopPrivateProfile.MemberModel;
@@ -83,12 +83,6 @@ public interface WebApiService {
     Call<ObjectNode> rejectFriendRequest(@Path("request_pk") String requestPk);
     // endregion
 
-    @POST("qr/decrypt/")
-    Call<ObjectNode> postDecryptQr(@Body ObjectNode data);
-
-    @GET("users/{user_id}/sessions/active/")
-    Call<ActiveSessionModel> getActiveSession(@Path("user_id") String userID);
-
     // region SHOP
     @POST("restaurants/create/")
     Call<GenericDetailModel> postRegisterShop(@Body ShopJoinModel model);
@@ -124,17 +118,27 @@ public interface WebApiService {
 
     // endregion
 
+    // region SESSION
+
+    @POST("sessions/customer/new/")
+    Call<GenericDetailModel> postNewCustomerSession(@Body ObjectNode data);
+
+    @GET("sessions/active/")
+    Call<ActiveSessionModel> getActiveSession();
+
+    @POST("sessions/active/customers/")
+    Call<ObjectNode> postActiveSessionCustomers(@Body ObjectNode data);
+
+    @DELETE("sessions/active/customers/{user_id}/")
+    Call<ObjectNode> deleteActiveSessionCustomer(@Path("user_id") String userId);
+
+    // endregion
+
     @GET("shops/{shop_id}/menus/available/")
     Call<MenuModel> getAvailableMenu(@Path("shop_id") String shopID);
 
     @GET("shops/{shop_id}/reviews/")
     Call<List<ShopReviewPOJO>> getShopReviews(@Path("shop_id") String shopID);
-
-    @POST("sessions/{session_id}/orders/cancel/")
-    Call<ObjectNode> postCancelOrder(@Path("session_id") String sessionID, @Body ObjectNode data);
-
-    @POST("sessions/{session_id}/customers/add/")
-    Call<ObjectNode> postSessionAddMember(@Path("session_id") String sessionID, @Body ObjectNode data);
 
     @GET("notification")
     Call<List<NotificationModel>> getNotif(@Query("last_notif_id") int lastNotifId);

@@ -1,4 +1,4 @@
-package com.checkin.app.checkin.Session;
+package com.checkin.app.checkin.Session.ActiveSession;
 
 import android.os.CountDownTimer;
 import android.support.annotation.NonNull;
@@ -19,7 +19,6 @@ import com.transitionseverywhere.Transition;
 import com.transitionseverywhere.TransitionManager;
 
 import java.util.List;
-import java.util.Locale;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;

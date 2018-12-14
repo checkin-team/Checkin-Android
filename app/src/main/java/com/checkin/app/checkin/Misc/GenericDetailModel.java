@@ -3,6 +3,8 @@ package com.checkin.app.checkin.Misc;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 
+import java.util.Locale;
+
 public class GenericDetailModel {
     @JsonProperty("pk")
     private String pk;
@@ -23,5 +25,10 @@ public class GenericDetailModel {
 
     public String getPk() {
         return pk;
+    }
+
+    @Override
+    public String toString() {
+        return String.format(Locale.ENGLISH, "<%s: %s>", pk, detail);
     }
 }
