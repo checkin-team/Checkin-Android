@@ -54,7 +54,7 @@ public class UserModel {
     public enum GENDER {
         MALE('m'), FEMALE('f');
 
-        final char tag;
+        public final char tag;
         GENDER(char tag) {
             this.tag = tag;
         }//constructor of enum
