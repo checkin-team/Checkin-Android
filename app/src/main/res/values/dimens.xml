@@ -6,6 +6,7 @@
     <dimen name="font_small_heading" format="float">16.5sp</dimen>
     <dimen name="font_normal">15sp</dimen>
     <dimen name="font_small">12sp</dimen>
+    <dimen name="font_extra_small">8sp</dimen>
 
     <!-- typical spacing between two views -->
     <dimen name="spacing_gigantic">60dp</dimen>
