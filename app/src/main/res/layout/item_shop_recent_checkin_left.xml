@@ -17,12 +17,12 @@
         android:layout_marginEnd="0dp"
         android:layout_marginBottom="20dp"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toStartOf="@id/linee"
+        app:layout_constraintEnd_toStartOf="@id/horizontal_line"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintBottom_toBottomOf="parent"/>
 
     <View
-        android:id="@+id/view2"
+        android:id="@+id/vertical_line"
         android:layout_width="3dp"
         android:layout_height="120dp"
         android:background="#bebebe"
@@ -33,14 +33,14 @@
 
 
     <View
-        android:id="@+id/linee"
+        android:id="@+id/horizontal_line"
         android:layout_width="40dp"
         android:layout_height="3dp"
         android:layout_marginStart="0dp"
         android:background="#bebebe"
         android:minWidth="20dp"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toStartOf="@id/im_recent_checkin6"
+        app:layout_constraintEnd_toStartOf="@id/im_recent_checkin5"
         app:layout_constraintStart_toEndOf="@+id/cardView"
         app:layout_constraintTop_toTopOf="parent" />
 
@@ -50,7 +50,7 @@
         android:id="@+id/im_recent_checkin5"
         android:layout_width="12dp"
         android:layout_height="12dp"
-        android:src="@drawable/oval_selector"
+        android:src="@drawable/ring_oval_selector"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -59,17 +59,19 @@
 
         />
 
-    <ImageView
-        android:id="@+id/im_recent_checkin6"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:src="@drawable/ring_selector"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
+    <!--
+        <ImageView
+            android:id="@+id/im_recent_checkin6"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/ring_selector"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
 
-        />
+            />
+    -->
 
 
 

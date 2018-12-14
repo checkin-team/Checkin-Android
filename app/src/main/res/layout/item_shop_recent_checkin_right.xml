@@ -49,7 +49,7 @@
         android:id="@+id/im_recent_checkin6"
         android:layout_width="12dp"
         android:layout_height="12dp"
-        android:src="@drawable/oval_selector"
+        android:src="@drawable/ring_oval_selector"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -58,17 +58,6 @@
 
         />
 
-    <ImageView
-        android:id="@+id/im_recent_checkin7"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:src="@drawable/ring_selector"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-
-        />
 
 
 
