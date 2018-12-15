@@ -14,6 +14,8 @@ import javax.annotation.Nullable;
 
 @JsonAutoDetect(fieldVisibility = JsonAutoDetect.Visibility.NONE)
 public class UserCheckinModel {
+    // This model represent user info name, user pics  and represent in the card
+
     @JsonProperty("checkin_date")
     private Date checkinTime;
 
@@ -30,10 +32,10 @@ public class UserCheckinModel {
     }
 
     public UserCheckinModel(Date checkinDate, UserModel.GENDER gender, Boolean isActive, BriefModel userInfo) {
-        checkinTime = checkinTime;
+        this.checkinTime = checkinDate;
         this.gender = gender;
-        isActive = isActive;
-        userInfo = userInfo;
+        this.isActive = isActive;
+        this.userInfo = userInfo;
     }
 
     public Date getCheckinTime() {

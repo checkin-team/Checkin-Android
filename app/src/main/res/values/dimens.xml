@@ -19,15 +19,19 @@
     <dimen name="spacing_extra_small">7dp</dimen>
     <dimen name="spacing_tiny">4dp</dimen>
 
+    <dimen name="size_tiny_icon">12dp</dimen>
     <dimen name="size_small_icon">24dp</dimen>
     <dimen name="size_normal_icon">40dp</dimen>
     <dimen name="size_large_button">80dp</dimen>
 
     <dimen name="size_logo">60dp</dimen>
+    <dimen name="size_small_image">40dp</dimen>
 
     <dimen name="height_card_normal">80dp</dimen>
     <dimen name="height_card_tall">120dp</dimen>
     <dimen name="width_card_tall">75dp</dimen>
+
+    <dimen name="thickness_line">3dp</dimen>
 
     <!-- typical sizes of views -->
     <dimen name="button_height_tall">60dp</dimen>

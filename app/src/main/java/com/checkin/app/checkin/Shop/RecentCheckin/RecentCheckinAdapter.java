@@ -49,20 +49,20 @@ public class RecentCheckinAdapter extends RecyclerView.Adapter<RecentCheckinAdap
     @Override
     public int getItemViewType(int position) {
         if (position % 2 == 0)
-            return R.layout.item_left_recent;
+            return R.layout.item_shop_recent_checkin_left;
         else
-            return R.layout.item_right_recent;
+            return R.layout.item_shop_recent_checkin_right;
     }
 
     class ViewHolder extends RecyclerView.ViewHolder {
-        @BindView(R.id.im_display_pic)
+        @BindView(R.id.im_rc_user_pic)
         ImageView imProfilePic;
-//        @BindView(R.id.ring)
-        ImageView imring;
-//        @BindView(R.id.recent_name)
+        @BindView(R.id.im_checkin_status)
+        ImageView imStatus;
+        @BindView(R.id.tv_rc_user_name)
         TextView tvUserName;
-//        @BindView(R.id.recent_time)
-        TextView recent_time;
+        @BindView(R.id.tv_rc_checkin_time)
+        TextView tvCheckinTime;
 
         public ViewHolder(View view) {
             super(view);
@@ -70,11 +70,11 @@ public class RecentCheckinAdapter extends RecyclerView.Adapter<RecentCheckinAdap
         }
 
         void bindData(UserCheckinModel usermodel) {
-            recent_time.setText(usermodel.formatCheckinTime());
+            tvCheckinTime.setText(usermodel.formatCheckinTime());
             tvUserName.setText(usermodel.getUserInfo().getDisplayName());
             String picurl = usermodel.getUserInfo().getDisplayPic();
             GlideApp.with(itemView).load(picurl != null ? picurl : R.drawable.cover_unknown_male).into(imProfilePic);
-            imring.setActivated(usermodel.isActive());
+            imStatus.setActivated(usermodel.isActive());
         }
     }
 }

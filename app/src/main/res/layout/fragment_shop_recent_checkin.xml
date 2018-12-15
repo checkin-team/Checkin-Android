@@ -1,170 +1,157 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.v7.widget.LinearLayoutCompat xmlns:android="http://schemas.android.com/apk/res/android"
+<android.support.v4.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
-    <android.support.constraint.ConstraintLayout
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="match_parent"
+        android:orientation="vertical">
 
         <TextView
-            android:id="@+id/tv_recent_checkin_title"
+            android:id="@+id/tv_rc_title"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="8dp"
-            android:text="Recent CheckIn"
-            android:textSize="@dimen/font_larger"
-            app:layout_constraintEnd_toEndOf="parent"
+            android:layout_marginTop="@dimen/spacing_normal"
+            android:text="Recent Check-In"
+            style="@style/GreyTitleStyle"
+            android:layout_gravity="center_horizontal" />
 
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
-
-        <android.support.v7.widget.CardView
-
-
-            android:layout_width="0dp"
-            android:layout_height="@dimen/height_card_normal"
-
-
-            android:layout_marginStart="16dp"
-            android:layout_marginTop="8dp"
-
-            android:layout_marginEnd="@dimen/spacing_large"
-            app:cardCornerRadius="@dimen/card_corner_radius"
-            app:cardElevation="@dimen/card_elevation"
-            app:layout_constraintEnd_toStartOf="@+id/im_recent_checkin3"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/tv_recent_checkin_title">
+        <FrameLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
 
             <android.support.constraint.ConstraintLayout
                 android:layout_width="match_parent"
-                android:layout_height="match_parent">
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:layout_marginTop="@dimen/spacing_small"
+                app:layout_constraintTop_toBottomOf="@id/tv_rc_title"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent">
 
-                <ImageView
-                    android:id="@+id/im_recent_checkin_male_profile"
-                    android:layout_width="45dp"
-                    android:layout_height="50dp"
-
-                    android:layout_marginStart="@dimen/spacing_tiny"
-                    android:layout_marginTop="@dimen/spacing_extra_small"
-                    android:src="@drawable/fore_male_grey"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent" />
-
-                <ImageView
-                    android:id="@+id/im_recent_checkin_female_profile"
-                    android:layout_width="45dp"
-                    android:layout_height="50dp"
-                    android:layout_marginTop="@dimen/spacing_extra_small"
-                    android:layout_marginEnd="@dimen/spacing_tiny"
-                    android:src="@drawable/fore_female_grey"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintTop_toTopOf="parent" />
-
-                <TextView
-                    android:id="@+id/tv_recent_checkin_male_count"
+                <android.support.v7.widget.CardView
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="15dp"
-                    android:layout_marginTop="51dp"
-                    android:text="20"
-                    android:textSize="@dimen/notif_heading_size"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent" />
-
-                <TextView
-                    android:id="@+id/tv_recent_checkin_female_count"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="34dp"
-                    android:layout_marginTop="51dp"
-                    android:text="80"
-                    android:textSize="@dimen/notif_heading_size"
-                    app:layout_constraintStart_toEndOf="@+id/im_recent_checkin_male_profile"
-                    app:layout_constraintTop_toTopOf="parent" />
-            </android.support.constraint.ConstraintLayout>
-
-
-        </android.support.v7.widget.CardView>
-
-        <android.support.v7.widget.CardView
-            android:layout_width="0dp"
-            android:layout_height="60dp"
-            android:layout_marginStart="@dimen/spacing_large"
-
-
-            android:layout_marginTop="8dp"
-            android:layout_marginEnd="16dp"
-            app:cardCornerRadius="@dimen/card_corner_radius"
-            app:cardElevation="@dimen/card_elevation"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toEndOf="@+id/im_recent_checkin3"
-            app:layout_constraintTop_toBottomOf="@+id/tv_recent_checkin_title">
-
-            <android.support.constraint.ConstraintLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent">
-
-                <TextView
-                    android:id="@+id/tv_recent_checkin_capacity"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-
-                    android:layout_marginTop="8dp"
-                    android:layout_marginBottom="8dp"
-                    tools:text="CAPACITY :88 "
-
-                    app:layout_constraintEnd_toEndOf="parent"
+                    android:layout_height="match_parent"
+                    android:layout_marginStart="@dimen/spacing_normal"
+                    android:layout_marginBottom="@dimen/spacing_extra_small"
+                    style="@style/WhiteCardStyle"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent"
-                    app:layout_constraintVertical_bias="0.0" />
+                    app:layout_constraintBottom_toBottomOf="parent">
 
-                <TextView
-                    android:id="@+id/tv_recent_checkin_capacity_count"
+                    <android.support.constraint.ConstraintLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:padding="@dimen/spacing_extra_small">
+
+                        <ImageView
+                            android:id="@+id/im_rc_profile_male"
+                            android:layout_width="@dimen/size_small_image"
+                            android:layout_height="@dimen/size_small_image"
+                            android:src="@drawable/fore_male_grey"
+                            android:layout_marginEnd="@dimen/spacing_small"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toTopOf="parent" />
+
+                        <ImageView
+                            android:id="@+id/im_rc_profile_female"
+                            android:layout_width="@dimen/size_small_image"
+                            android:layout_height="@dimen/size_small_image"
+                            android:src="@drawable/fore_female_grey"
+                            android:layout_marginStart="@dimen/spacing_small"
+                            app:layout_constraintStart_toEndOf="@id/im_rc_profile_male"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintTop_toTopOf="parent" />
+
+                        <TextView
+                            android:id="@+id/tv_rc_count_male"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            tools:text="20"
+                            style="@style/GreyTextStyle"
+                            android:textSize="@dimen/font_small"
+                            android:layout_marginTop="@dimen/spacing_tiny"
+                            app:layout_constraintStart_toStartOf="@id/im_rc_profile_male"
+                            app:layout_constraintTop_toBottomOf="@id/im_rc_profile_male"
+                            app:layout_constraintEnd_toEndOf="@id/im_rc_profile_male" />
+
+                        <TextView
+                            android:id="@+id/tv_rc_count_female"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            tools:text="80"
+                            style="@style/GreyTextStyle"
+                            android:textSize="@dimen/font_small"
+                            android:layout_marginTop="@dimen/spacing_tiny"
+                            app:layout_constraintStart_toStartOf="@id/im_rc_profile_female"
+                            app:layout_constraintEnd_toEndOf="@id/im_rc_profile_female"
+                            app:layout_constraintTop_toBottomOf="@id/im_rc_profile_female" />
+                    </android.support.constraint.ConstraintLayout>
+
+                </android.support.v7.widget.CardView>
+
+                <android.support.v7.widget.CardView
                     android:layout_width="wrap_content"
-                    android:layout_height="21dp"
-
-                    android:layout_marginBottom="8dp"
-                    android:text="LIVE : 60"
-                    app:layout_constraintBottom_toBottomOf="parent"
+                    android:layout_height="match_parent"
+                    android:layout_marginEnd="@dimen/spacing_normal"
+                    style="@style/WhiteCardStyle"
                     app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent" />
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintBottom_toBottomOf="parent">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:orientation="vertical"
+                        android:padding="@dimen/spacing_extra_small">
+                        <TextView
+                            android:id="@+id/tv_rc_capacity"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center_horizontal"
+                            tools:text="CAPACITY: 88"
+                            style="@style/GreyTextStyle"/>
+
+                        <TextView
+                            android:id="@+id/tv_rc_live"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center_horizontal"
+                            android:layout_marginTop="@dimen/spacing_small"
+                            tools:text="LIVE: 10"
+                            style="@style/GreyTextStyle" />
+                    </LinearLayout>
+
+                </android.support.v7.widget.CardView>
             </android.support.constraint.ConstraintLayout>
 
-        </android.support.v7.widget.CardView>
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:layout_gravity="center_horizontal|bottom">
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/ic_recent_checkin_head" />
 
-        <ImageView
-            android:id="@+id/im_recent_checkin3"
-            style="@style/LogoImageStyle"
-            android:layout_marginTop="8dp"
-            android:src="@drawable/new_location"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.498"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/tv_recent_checkin_title" />
+                <View
+                    android:layout_width="@dimen/thickness_line"
+                    android:layout_height="20dp"
+                    android:layout_gravity="center_horizontal"
+                    android:background="@color/pinkish_grey" />
+            </LinearLayout>
 
-        <View
-            android:layout_width="3dp"
-            android:layout_height="0dp"
-            android:layout_marginTop="0dp"
-            android:layout_marginBottom="0dp"
-            android:background="#bebebe"
+        </FrameLayout>
 
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/im_recent_checkin3"></View>
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/rv_recent_checkins"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
 
-    </android.support.constraint.ConstraintLayout>
-
-    <android.support.v7.widget.RecyclerView
-
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content">
-
-    </android.support.v7.widget.RecyclerView>
-
-</android.support.v7.widget.LinearLayoutCompat>
+    </LinearLayout>
+</android.support.v4.widget.NestedScrollView>

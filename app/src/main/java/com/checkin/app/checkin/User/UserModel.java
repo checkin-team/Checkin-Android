@@ -73,7 +73,11 @@ public class UserModel {
     // TODO: Move from here.
 
 
-    public UserModel() {}
+
+
+    public UserModel(GENDER gender) {
+        this.gender = gender;
+    }
 
     public String getUsername() {
         return username;

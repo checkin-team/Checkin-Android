@@ -13,6 +13,7 @@ import com.checkin.app.checkin.Data.Resource;
 import com.checkin.app.checkin.Data.RetrofitLiveData;
 import com.checkin.app.checkin.Data.WebApiService;
 import com.checkin.app.checkin.Misc.GenericDetailModel;
+import com.checkin.app.checkin.Shop.RecentCheckin.Model.RecentCheckinModel;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 
 public class SessionRepository extends BaseRepository {
@@ -42,6 +43,9 @@ public class SessionRepository extends BaseRepository {
         }.getAsLiveData();
     }
 
+    public LiveData<Resource<RecentCheckinModel>> getRecentCheckins(String shopId) {
+        return null;
+    }
 
     public static SessionRepository getInstance(Application application) {
         if (INSTANCE == null) {
