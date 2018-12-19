@@ -2,8 +2,9 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/Check-Out.iml" filepath="$PROJECT_DIR$/Check-Out.iml" />
+      <module fileurl="file://C:\Users\ACER\Documents\android\Check-Out.iml" filepath="C:\Users\ACER\Documents\android\Check-Out.iml" />
       <module fileurl="file://$PROJECT_DIR$/library/MaterialSearchView/MaterialSearchView.iml" filepath="$PROJECT_DIR$/library/MaterialSearchView/MaterialSearchView.iml" />
+      <module fileurl="file://$PROJECT_DIR$/android.iml" filepath="$PROJECT_DIR$/android.iml" />
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
       <module fileurl="file://$PROJECT_DIR$/library/library.iml" filepath="$PROJECT_DIR$/library/library.iml" />
     </modules>

@@ -5,21 +5,19 @@
     android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="vertical">
+
        <LinearLayout
            android:orientation="horizontal"
            android:layout_width="match_parent"
-           android:layout_height="match_parent"
+           android:layout_height="wrap_content"
            android:weightSum="6">
 
            <de.hdodenhof.circleimageview.CircleImageView
+               android:id="@+id/im_ur_profile"
                style="@style/LogoImageStyle"
                android:layout_width="wrap_content"
-               android:layout_height="62dp"
-               android:layout_marginHorizontal="10dp"
+               android:layout_height="wrap_content"
+               android:layout_marginLeft="@dimen/spacing_small"
                android:layout_weight="1"
                android:src="@drawable/dummy_monica" />
            <LinearLayout
@@ -28,34 +26,38 @@
                android:layout_weight="5"
                android:orientation="vertical">
                <TextView
+                   android:id="@+id/tv_ur_name"
                    android:layout_width="wrap_content"
                    android:layout_height="wrap_content"
                    android:text="Ishu Darshan"
                    android:layout_marginTop="@dimen/spacing_tiny"
                     android:textSize="@dimen/font_normal"
+                   style="@style/GreyTitleStyle"
                    android:layout_gravity="center"
                    />
                <TextView
+                   android:id="@+id/tv_ur_review_nd_follower"
                    android:layout_width="wrap_content"
                    android:layout_height="wrap_content"
+                   android:textColor="@color/pinkish_grey"
+                   android:textSize="@dimen/font_extra_small"
                    android:text="86reviviews, 215 followes"
-                   android:layout_gravity="center"
-                   android:textSize="@dimen/font_extra_small"/>
+                   android:layout_gravity="center" />
                 <LinearLayout
                     android:layout_width="wrap_content"
-                    android:layout_centerHorizontal="true"
                     android:layout_gravity="center_horizontal"
                     android:layout_height="wrap_content">
 
                     <android.support.v7.widget.CardView
-                        android:layout_marginRight="@dimen/spacing_tiny"
-                        android:layout_marginVertical="2dp"
+                        android:scaleY="0.7"
                         android:elevation="@dimen/card_elevation"
                         app:cardCornerRadius="@dimen/card_corner_radius"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        tools:layout_editor_absoluteX="55dp"
-                        tools:layout_editor_absoluteY="0dp">
+                        style="@style/WhiteCardStyle"
+                        android:layout_marginRight="@dimen/spacing_small"
+
+                        >
                         <LinearLayout
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
@@ -64,13 +66,18 @@
                                 android:layout_marginLeft="@dimen/spacing_tiny"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:text="RATED" />
+                                android:text="RATED"
+                                style="@style/GreyTextStyle"/>
                             <TextView
+                                android:id="@+id/tv_ur_rating"
                                 android:layout_marginLeft="@dimen/spacing_small"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:text="5"/>
+                                android:text="5"
+                                style="@style/GreyTextStyle"/>
                             <ImageView
+                                android:scaleY="0.8"
+                                android:scaleX="0.8"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:src="@drawable/ic_star"/>
@@ -91,6 +98,7 @@
 
 
                         <TextView
+                            android:id="@+id/tv_ur_follow_btn"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginHorizontal="@dimen/spacing_small"
@@ -106,12 +114,58 @@
            </LinearLayout>
 
        </LinearLayout>
-    </LinearLayout>
+
 
 
     <TextView
-        android:layout_marginHorizontal="@dimen/spacing_small"
+        android:paddingLeft="@dimen/spacing_small"
+        android:id="@+id/tv_ur_descriptive_review"
+        android:layout_marginLeft="@dimen/spacing_small"
+        android:layout_marginRight="@dimen/spacing_small"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="We had a great time @Cheesy Does It. I visited this restaurant by seeing the ratings and profile on Checkin. The Hospitality really amazed….read more"/>
+
+    <LinearLayout
+        android:layout_marginTop="@dimen/spacing_small"
+        android:paddingLeft="@dimen/spacing_small"
+        android:layout_width="match_parent"
+        android:orientation="horizontal"
+        android:layout_height="wrap_content"
+        >
+        <RelativeLayout
+            android:layout_marginLeft="@dimen/spacing_tiny"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <ImageView
+                android:id="@+id/im_ur_like_heart"
+                android:layout_alignParentLeft="true"
+                android:layout_marginLeft="@dimen/spacing_tiny"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/selector_like_heart"/>
+
+            <TextView
+                android:id="@+id/tv_ur_NoOfLikes"
+                style="@style/GreyTitleStyle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/spacing_tiny"
+                android:layout_alignRight="@id/im_ur_like_heart"
+                tools:text="5" />
+            <TextView
+                android:id="@+id/tv_ur_time"
+                android:layout_alignParentRight="true"
+                android:layout_gravity="right"
+                android:textColor="@color/pinkish_grey"
+                android:textSize="@dimen/font_extra_small"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="@dimen/spacing_small"
+                tools:text="14 hours ago"/>
+
+        </RelativeLayout>
+
+
+    </LinearLayout>
 </LinearLayout>
