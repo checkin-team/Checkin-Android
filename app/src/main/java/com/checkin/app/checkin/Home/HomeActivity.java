@@ -9,6 +9,8 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.NavigationView;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
@@ -34,6 +36,7 @@ import com.checkin.app.checkin.Search.SearchActivity;
 import com.checkin.app.checkin.Session.ActiveSession.ActiveSessionActivity;
 import com.checkin.app.checkin.Shop.ShopJoin.BusinessFeaturesActivity;
 import com.checkin.app.checkin.Shop.ShopPublicProfile.ShopActivity;
+import com.checkin.app.checkin.Shop.ShopReview.ShopReviewFragment;
 import com.checkin.app.checkin.User.NonPersonalProfile.UserViewModel;
 import com.checkin.app.checkin.User.PersonalProfile.UserProfileActivity;
 import com.checkin.app.checkin.Utility.ClipRevealFrame;
@@ -506,7 +509,13 @@ public class HomeActivity extends BaseAccountActivity
 
     @OnClick(R.id.action_delivery)
     public void delivery(View v) {
-        startActivity(new Intent(this, BusinessFeaturesActivity.class));
+        /*startActivity(new Intent(this, BusinessFeaturesActivity.class));*/
+        ShopReviewFragment fragment = new ShopReviewFragment();
+        FragmentManager fragmentManager = getSupportFragmentManager();
+        FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+        fragmentTransaction.add(R.id.fragmentHolder,fragment);
+        fragmentTransaction.commit();
+
     }
 
     @Override
