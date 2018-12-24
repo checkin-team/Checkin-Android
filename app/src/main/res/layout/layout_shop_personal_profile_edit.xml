@@ -62,7 +62,7 @@
     android:layout_height="wrap_content">
 
     <TextView
-        android:id="@+id/change_logo"
+        android:id="@+id/tvChange_logo"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center|center_vertical"
@@ -74,16 +74,21 @@
 
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_below="@id/change_logo"
+        android:layout_below="@id/tvChange_logo"
         android:layout_height="wrap_content">
 
-        <ImageButton
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:src="@drawable/ic_delivery"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="@dimen/activity_horizontal_margin"
-        />
+
+        <de.hdodenhof.circleimageview.CircleImageView
+            android:id="@+id/change_logo"
+            android:layout_width="wrap_content"
+            android:layout_height="90dp"
+            android:scaleType="centerCrop"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintLeft_toLeftOf="parent"
+            android:padding="@dimen/spacing_small"
+            android:src="@drawable/flier"/>
+
+
 
     </RelativeLayout>
 

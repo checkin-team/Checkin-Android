@@ -136,7 +136,7 @@
             android:theme="@style/AppThemeWhiteActionBar" />
 
         <activity
-            android:name=".Shop.ShopPrivateProfile.ShopLogoEdit"
+            android:name=".Shop.ShopPrivateProfile.ShopLogoEditActivity"
             android:theme="@style/AppThemeWhiteActionBar"/>
 
         <service

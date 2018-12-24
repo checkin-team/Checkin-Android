@@ -103,6 +103,12 @@ public interface WebApiService {
 
     @PATCH("restaurants/{shop_id}/manage/")
     Call<ObjectNode> postRestaurantManageDetails(@Path("shop_id") String shopId, @Body RestaurantModel shopData);
+
+    @Multipart
+    @POST("/restaurants/{restaurant_id}/logo/")
+    Call<ObjectNode> postShopLogo(@Part MultipartBody.Part pic);
+
+
     // endregion
 
     @GET("shops/{shop_id}/menus/available/")

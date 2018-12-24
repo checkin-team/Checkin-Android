@@ -62,7 +62,7 @@ public class UserActivityAdapter extends RecyclerView.Adapter<UserActivityAdapte
         @BindView(R.id.user_image) ImageView vUserImage;
         @BindView(R.id.user_name) TextView vUserName;
 
-        ViewHolder(View v) {
+            ViewHolder(View v) {
             super(v);
             ButterKnife.bind(this, v);
         }

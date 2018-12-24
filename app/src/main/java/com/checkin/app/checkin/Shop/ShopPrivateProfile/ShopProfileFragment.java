@@ -150,7 +150,7 @@ public class ShopProfileFragment extends Fragment {
    @OnClick(R.id.btn_add_image)
    public void onEditLogo(View v){
 
-        Intent intent = new Intent(requireContext(), ShopLogoEdit.class);
+        Intent intent = new Intent(requireContext(), ShopLogoEditActivity.class);
         startActivity(intent);
    }
 

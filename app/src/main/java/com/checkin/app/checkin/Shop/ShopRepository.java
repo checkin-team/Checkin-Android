@@ -16,7 +16,12 @@ import com.checkin.app.checkin.Misc.GenericDetailModel;
 import com.checkin.app.checkin.Shop.ShopJoin.ShopJoinModel;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 
+import java.io.File;
 import java.util.List;
+
+import okhttp3.MediaType;
+import okhttp3.MultipartBody;
+import okhttp3.RequestBody;
 
 /**
  * Created by Bhavik Patel on 24/08/2018.
@@ -136,6 +141,28 @@ public class ShopRepository extends BaseRepository {
 
             @Override
             protected void saveCallResult(List<RestaurantModel> data) {
+
+            }
+        }.getAsLiveData();
+    }
+
+    public LiveData<Resource<ObjectNode>> postShopLogo(File pic) {
+        RequestBody requestFile = RequestBody.create(MediaType.parse("image/jpeg"), pic);
+        final MultipartBody.Part body = MultipartBody.Part.createFormData("profile_pic", "profile.jpg", requestFile);
+        return new NetworkBoundResource<ObjectNode, ObjectNode>() {
+            @Override
+            protected boolean shouldUseLocalDb() {
+                return false;
+            }
+
+            @NonNull
+            @Override
+            protected LiveData<ApiResponse<ObjectNode>> createCall() {
+                return new RetrofitLiveData<>(mWebService.postShopLogo(body));
+            }
+
+            @Override
+            protected void saveCallResult(ObjectNode data) {
 
             }
         }.getAsLiveData();

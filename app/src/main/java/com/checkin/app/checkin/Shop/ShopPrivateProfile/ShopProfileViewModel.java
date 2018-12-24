@@ -4,6 +4,8 @@ import android.app.Application;
 import android.arch.lifecycle.LiveData;
 import android.arch.lifecycle.MediatorLiveData;
 import android.arch.lifecycle.MutableLiveData;
+import android.arch.lifecycle.ViewModel;
+import android.arch.lifecycle.ViewModelProvider;
 import android.support.annotation.NonNull;
 
 import com.checkin.app.checkin.Data.BaseViewModel;
@@ -12,6 +14,7 @@ import com.checkin.app.checkin.Shop.RestaurantModel;
 import com.checkin.app.checkin.Shop.ShopRepository;
 import com.fasterxml.jackson.databind.JsonNode;
 
+import java.io.File;
 import java.util.List;
 
 /**
@@ -84,6 +87,24 @@ public class ShopProfileViewModel extends BaseViewModel{
 
     public void useShop(RestaurantModel restaurantModel) {
         mShopData.setValue(Resource.success(restaurantModel));
+    }
+
+    public void postShopLogo(File logoFile){
+       mData.addSource(mRepository.postShopLogo(logoFile), mData :: setValue);
+    }
+
+    public static class Factory extends ViewModelProvider.NewInstanceFactory {
+        @NonNull private final Application mApplication;
+
+        public Factory(@NonNull Application application) {
+            mApplication = application;
+        }
+
+        @NonNull
+        @Override
+        public <T extends ViewModel> T create(@NonNull Class<T> modelClass) {
+            return (T) new ShopProfileViewModel(mApplication);
+        }
     }
 
     @Override
