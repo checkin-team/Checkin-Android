@@ -514,9 +514,9 @@ public class HomeActivity extends BaseAccountActivity
         FragmentManager fragmentManager = getSupportFragmentManager();
         FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
         fragmentTransaction.add(R.id.fragmentHolder,fragment);
+        fragmentTransaction.addToBackStack(null);
         fragmentTransaction.commit();
-
-    }
+        }
 
     @Override
     protected int getNavMenu() {

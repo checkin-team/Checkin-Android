@@ -16,11 +16,14 @@ import butterknife.ButterKnife;
 public class ShopReviewAdapter extends RecyclerView.Adapter<ShopReviewAdapter.ViewHolder> {
     private List<ShopReviewModel> shopReviewModel;
 
+    public ShopReviewAdapter() {
+    }
+
     public ShopReviewAdapter(List<ShopReviewModel> shopReviewModel) {
         this.shopReviewModel = shopReviewModel;
     }
-    public void updateShopReview(List<ShopReviewModel> shopReview)
-    {
+
+    public void updateShopReview(List<ShopReviewModel> shopReview) {
         this.shopReviewModel = shopReview;
         notifyDataSetChanged();
     }
@@ -29,7 +32,7 @@ public class ShopReviewAdapter extends RecyclerView.Adapter<ShopReviewAdapter.Vi
     @NonNull
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        final View view = LayoutInflater.from(parent.getContext()).inflate(viewType,parent,false);
+        final View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_user_review,parent,false);
         return new ViewHolder(view);
     }
 
@@ -38,14 +41,16 @@ public class ShopReviewAdapter extends RecyclerView.Adapter<ShopReviewAdapter.Vi
         holder.bindData(shopReviewModel.get(position));
 
     }
-
-
     @Override
     public int getItemCount() {
-        return shopReviewModel != null ? shopReviewModel.size():0;}
+        return shopReviewModel != null ? shopReviewModel.size():0;
+    }
+   /* public int getItemViewType(int position)
+    {
+        return R.layout.item_user_review;
+    }*/
 
-
-    public class ViewHolder extends RecyclerView.ViewHolder {
+        public class ViewHolder extends RecyclerView.ViewHolder {
         @BindView(R.id.im_ur_profile)
         ImageView imProfilePic;
         @BindView(R.id.tv_ur_name)
@@ -58,7 +63,6 @@ public class ShopReviewAdapter extends RecyclerView.Adapter<ShopReviewAdapter.Vi
         TextView tvDescriptiveReview;
         @BindView(R.id.tv_ur_NoOfLikes)
         TextView tvNoOfLikes;
-
         @BindView(R.id.tv_ur_time)
         TextView tvLastActiveTime;
 
@@ -74,10 +78,11 @@ public class ShopReviewAdapter extends RecyclerView.Adapter<ShopReviewAdapter.Vi
             GlideApp.with(itemView).load(picurl != null ? picurl : R.drawable.cover_unknown_male).into(imProfilePic);
             int reviews = shopReviewModel.getNoOfReviews();
             int followers = shopReviewModel.getNoOfFollowers();
-            tvCountReviewFollowers.setText(Integer.toString(reviews)+"reviews"+","+" "+"followers"+Integer.toString(followers));
-            tvCountRating.setText(shopReviewModel.getRatingCount());
+            tvCountReviewFollowers.setText(Integer.toString(reviews)+" reviews"+","+" "+Integer.toString(followers)+" followers");
+            tvCountRating.setText(Integer.toString(shopReviewModel.getRatingCount()));
             tvDescriptiveReview.setText(shopReviewModel.getdescriptionBody());
             tvNoOfLikes.setText(Integer.toString(shopReviewModel.getNoOfLikes()));
+            tvLastActiveTime.setText(Integer.toString(shopReviewModel.getTime())+" HOURS AGO");
         }
     }
 }

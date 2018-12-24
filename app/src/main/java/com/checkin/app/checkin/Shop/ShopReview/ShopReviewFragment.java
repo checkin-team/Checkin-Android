@@ -7,8 +7,10 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.NavUtils;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -27,7 +29,9 @@ public class ShopReviewFragment extends Fragment {
     private ShopReviewViewModel mViewModel;
     private ShopReviewAdapter mAdapter;
 
+
     public ShopReviewFragment() {
+
     }
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         final View view = inflater.inflate(R.layout.fragment_user_review, container, false);
@@ -41,20 +45,13 @@ public class ShopReviewFragment extends Fragment {
         rvShopReview.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false));
         rvShopReview.setAdapter(mAdapter);
         mViewModel = ViewModelProviders.of(this).get(ShopReviewViewModel.class);
-       /* mViewModel.getReviewData().observe(this, new Observer<Resource<ShopReviewViewModel>>() {
-            @Override
-            public void onChanged(@Nullable Resource<ShopReviewViewModel> shopReviewViewModelResource) {
-                if (shopReviewViewModelResource == null)
-                {
-                    return;
-                }
-                if (shopReviewViewModelResource.status == Resource.Status.SUCCESS && shopReviewViewModelResource != null)
-                {
-                    ShopReviewViewModel data = shopReviewViewModelResource.data;
-                    mAdapter.updateShopReview(data.);
-                }
+        mViewModel.getReviewData().observe(this, shopReviewModelResource -> {
+            if (shopReviewModelResource == null)
+                return;
+            if (shopReviewModelResource.status == Resource.Status.SUCCESS && shopReviewModelResource.data != null) {
+                mAdapter.updateShopReview(shopReviewModelResource.data);
             }
         });
-       */ mViewModel.setDummyData();
+        mViewModel.setDummyData();
     }
 }

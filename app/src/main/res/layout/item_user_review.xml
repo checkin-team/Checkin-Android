@@ -4,7 +4,8 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:id="@+id/item_userReview">
 
        <LinearLayout
            android:orientation="horizontal"
@@ -15,8 +16,7 @@
            <de.hdodenhof.circleimageview.CircleImageView
                android:id="@+id/im_ur_profile"
                style="@style/LogoImageStyle"
-               android:layout_width="wrap_content"
-               android:layout_height="wrap_content"
+
                android:layout_marginLeft="@dimen/spacing_small"
                android:layout_weight="1"
                android:src="@drawable/dummy_monica" />
@@ -59,6 +59,7 @@
 
                         >
                         <LinearLayout
+                            android:paddingTop="@dimen/spacing_extra_tiny"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:orientation="horizontal">
@@ -98,6 +99,7 @@
 
 
                         <TextView
+                            android:paddingTop="@dimen/spacing_extra_tiny"
                             android:id="@+id/tv_ur_follow_btn"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
@@ -105,12 +107,7 @@
                             android:text="FOLLOW"
                             android:textColor="@color/primary_red" />
                     </LinearLayout>
-
-
                 </LinearLayout>
-
-
-
            </LinearLayout>
 
        </LinearLayout>
@@ -133,13 +130,14 @@
         android:orientation="horizontal"
         android:layout_height="wrap_content"
         >
-        <RelativeLayout
+        <LinearLayout
             android:layout_marginLeft="@dimen/spacing_tiny"
+            android:orientation="horizontal"
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
             <ImageView
+                android:layout_marginTop="@dimen/spacing_extra_tiny"
                 android:id="@+id/im_ur_like_heart"
-                android:layout_alignParentLeft="true"
                 android:layout_marginLeft="@dimen/spacing_tiny"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -151,11 +149,15 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="@dimen/spacing_tiny"
-                android:layout_alignRight="@id/im_ur_like_heart"
+
                 tools:text="5" />
+
+            <View
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:layout_weight="1"/>
             <TextView
                 android:id="@+id/tv_ur_time"
-                android:layout_alignParentRight="true"
                 android:layout_gravity="right"
                 android:textColor="@color/pinkish_grey"
                 android:textSize="@dimen/font_extra_small"
@@ -164,7 +166,7 @@
                 android:layout_marginRight="@dimen/spacing_small"
                 tools:text="14 hours ago"/>
 
-        </RelativeLayout>
+        </LinearLayout>
 
 
     </LinearLayout>
