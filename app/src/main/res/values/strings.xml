@@ -50,6 +50,8 @@
     <string name="fb_login_protocol_scheme">fb150714782397445</string>
 
     <string name="btn_cancel">Cancel</string>
+    <string name="btn_save">Save</string>
+    <string name="btn_remove">Remove</string>
     <string name="item_non_cancelable">Non-Cancelable</string>
     <string name="title_activity_shop_login">ShopLogin</string>
     <string name="title_activity_shop_create_account">ShopCreateAccount</string>
@@ -77,6 +79,9 @@
     <string name="fetch_address">Fetch address</string>
 
     <string name="address_found">Address found</string>
+
+    <string name="status_searching">Searching…</string>
+    <string name="status_search_not_found">No results matched.</string>
 
     <string name="no_address_found">Sorry, no address found</string>
     <string name="no_location_data_provided">No location data provided</string>
@@ -115,16 +120,13 @@
     <string name="action_cuisine">Cuisines</string>
     <string name="action_call">Call</string>
     <string name="action_navigate">Navigate</string>
+
     <string name="image">Image</string>
     <string name="logo">Logo</string>
     <string name="cover_image">Cover Image</string>
 
-    <string-array name="role_array">
-        <item>Owner</item>
-        <item>Shop Admin</item>
-        <item>Restaurant Manager</item>
-        <item>Waiter</item>
+    <string name="title_member_assign_role">Assign Role</string>
 
-    </string-array>
+
 
 </resources>

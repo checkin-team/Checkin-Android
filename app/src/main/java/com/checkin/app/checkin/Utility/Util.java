@@ -1,9 +1,5 @@
 package com.checkin.app.checkin.Utility;
 
-import android.accounts.Account;
-import android.accounts.AccountManager;
-import android.accounts.AuthenticatorException;
-import android.accounts.OperationCanceledException;
 import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
 import android.animation.AnimatorSet;
@@ -20,30 +16,21 @@ import android.graphics.drawable.Drawable;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.Build;
-import android.os.Bundle;
 import android.provider.MediaStore;
 import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
 import android.support.annotation.RequiresApi;
+import android.support.annotation.StringRes;
 import android.support.design.widget.TabLayout;
-import android.text.Html;
-import android.text.SpannableStringBuilder;
-import android.text.Spanned;
-import android.text.format.DateUtils;
-import android.text.method.LinkMovementMethod;
-import android.text.style.ClickableSpan;
 import android.util.Log;
 import android.util.SparseArray;
-import android.util.TimeUtils;
 import android.view.View;
 import android.view.ViewAnimationUtils;
 import android.view.ViewGroup;
-import android.view.ViewTreeObserver;
 import android.view.animation.AccelerateDecelerateInterpolator;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
-import java.io.IOException;
 import java.lang.reflect.Field;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -323,6 +310,13 @@ public class Util {
         return res;
     }
 
+    public static String formatTime(long time) {
+        long hour = time / 60;
+        long min = time % 60;
+
+        return String.format(Locale.ENGLISH, "%02d:%02d", hour, min);
+    }
+
     public interface MatchResultFunction {
         String apply(MatchResult match);
     }
@@ -374,6 +368,15 @@ public class Util {
             res = String.format(Locale.ENGLISH, "%02d:%02d minutes", min, sec);
         return res;
     }
+
+    public static void toast(@NonNull Context context, String msg) {
+        Toast.makeText(context.getApplicationContext(), msg, Toast.LENGTH_SHORT).show();
+    }
+
+    public static void toast(@NonNull Context context, @StringRes int msgRes) {
+        Toast.makeText(context.getApplicationContext(), msgRes, Toast.LENGTH_SHORT).show();
+    }
+
 
     public static List<MediaImage> getImagesList(Context context) {
         List<MediaImage> imageList = null;

@@ -10,7 +10,7 @@ public class ShopJoinModel {
     @JsonProperty("gstin") private String gstin;
     @JsonProperty("location") private LocationModel location;
     @JsonProperty("locality") private String locality;
-    @JsonProperty("id_token") private String idToken;
+    @JsonProperty("phone_token") private String phoneToken;
     @JsonProperty("email") private String email;
 
     ShopJoinModel() {}
@@ -31,8 +31,8 @@ public class ShopJoinModel {
         this.locality = locality;
     }
 
-    public void setIdToken(String idToken) {
-        this.idToken = idToken;
+    public void setPhoneToken(String phoneToken) {
+        this.phoneToken = phoneToken;
     }
 
     public void setEmail(String email) {

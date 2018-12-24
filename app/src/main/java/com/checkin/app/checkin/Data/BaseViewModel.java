@@ -19,5 +19,9 @@ public abstract class BaseViewModel extends AndroidViewModel{
         return mData;
     }
 
+    public void resetObservableData() {
+        mData.setValue(null);
+    }
+
     public abstract void updateResults();
 }

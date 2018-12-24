@@ -50,7 +50,7 @@ public class Resource<T> {
     }
 
     @NonNull
-    public static <T> Resource<T> success(@NonNull T data) {
+    public static <T> Resource<T> success(@Nullable T data) {
         return new Resource<>(Status.SUCCESS, data, null);
     }
 
@@ -75,10 +75,10 @@ public class Resource<T> {
 
     public static <T> Resource<T> createResource(@NonNull ApiResponse<T> apiResponse) {
         Resource<T> resource;
-        if (apiResponse.isSuccessful() && apiResponse.getData() != null) {
+        if (apiResponse.isSuccessful()) {
             resource = success(apiResponse.getData());
         } else if (apiResponse.getErrorThrowable() != null) {
-            Log.e(TAG, apiResponse.getErrorThrowable().getMessage());
+            Log.e(TAG, apiResponse.getErrorThrowable().getMessage(), apiResponse.getErrorThrowable());
             if (apiResponse.getErrorThrowable() instanceof NoConnectivityException) {
                 Log.e(TAG, apiResponse.getErrorMessage());
                 resource = error(Status.ERROR_DISCONNECTED, apiResponse.getErrorMessage(), apiResponse.getData());

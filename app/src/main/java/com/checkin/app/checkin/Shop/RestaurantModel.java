@@ -1,6 +1,8 @@
 package com.checkin.app.checkin.Shop;
 
 import com.checkin.app.checkin.Utility.Util;
+import com.fasterxml.jackson.annotation.JsonAutoDetect;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
@@ -9,6 +11,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
  */
 
 @JsonInclude(value = JsonInclude.Include.NON_NULL)
+@JsonAutoDetect(fieldVisibility = JsonAutoDetect.Visibility.NONE, getterVisibility = JsonAutoDetect.Visibility.NONE, isGetterVisibility = JsonAutoDetect.Visibility.NONE)
 public class RestaurantModel extends ShopModel {
     @JsonProperty("has_nonveg")
     private boolean hasNonveg;
@@ -77,14 +80,17 @@ public class RestaurantModel extends ShopModel {
 
     // -------------------------------
 
+    @JsonIgnore
     public long getFollowers() {
         return followers;
     }
 
+    @JsonIgnore
     public long getCheckins() {
         return checkins;
     }
 
+    @JsonIgnore
     public long getReviews() { return reviews; }
 
     public String formatFollowers() {

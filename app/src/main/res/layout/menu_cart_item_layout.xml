@@ -99,7 +99,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginEnd="@dimen/spacing_tiny"
                     android:layout_marginBottom="@dimen/spacing_small"
-                    android:src="@drawable/whiteedit"
+                    android:src="@drawable/ic_edit_pencil_white"
                     android:clickable="true"
                     android:focusable="true"
                     android:contentDescription="Edit"
