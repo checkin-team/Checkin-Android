@@ -11,6 +11,7 @@ import com.checkin.app.checkin.Misc.BriefModel;
 import com.checkin.app.checkin.Session.SessionRepository;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 public class ShopReviewViewModel extends BaseViewModel {
@@ -34,10 +35,11 @@ public class ShopReviewViewModel extends BaseViewModel {
     public void setDummyData()
     {
         List<ShopReviewModel> list_userReview = new ArrayList<>();
+        Date d1 = new Date();
         BriefModel briefModel_one = new BriefModel("1","Shubhanshu",null);
-        ShopReviewModel model = new ShopReviewModel("Lorem Ipsum is simply dummy text of the printing",23,24,4,5, briefModel_one,3);
-        ShopReviewModel model_one = new ShopReviewModel("Lorem Ipsum is simply dummy text of the printing",23,24,4,5, briefModel_one,3);
-        ShopReviewModel model_two = new ShopReviewModel("Lorem Ipsum is simply dummy text of the printing",23,24,4,5, briefModel_one,3);
+        ShopReviewModel model = new ShopReviewModel("Lorem Ipsum is simply dummy text of the printing",23,24,4,d1, briefModel_one,3,true);
+        ShopReviewModel model_one = new ShopReviewModel("Lorem Ipsum is simply dummy text of the printing",23,24,4,d1, briefModel_one,3,true);
+        ShopReviewModel model_two = new ShopReviewModel("Lorem Ipsum is simply dummy text of the printing",23,24,4,d1, briefModel_one,3,true);
 
         list_userReview.add(model);
         list_userReview.add(model_one);

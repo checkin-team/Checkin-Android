@@ -2,56 +2,73 @@ package com.checkin.app.checkin.Shop.ShopReview;
 
 import com.checkin.app.checkin.Misc.BriefModel;
 
+import com.checkin.app.checkin.Utility.Util;
 import com.fasterxml.jackson.annotation.JsonAutoDetect;
 import com.fasterxml.jackson.annotation.JsonProperty;
+
+import java.util.Date;
+import java.util.List;
 
 @JsonAutoDetect(fieldVisibility = JsonAutoDetect.Visibility.NONE)
 
 public class ShopReviewModel {
 
-    @JsonProperty("description_body")
-    private String descriptionBody;
-    @JsonProperty("no_of_followers")
-    private int noOfFollowers;
+    @JsonProperty("body")
+    private String textBody;
+
+    @JsonProperty("count_followers")
+    private int countFollowers;
+
     @JsonProperty("no_of_reviews")
     private int noOfReviews;
+
     @JsonProperty("rating_count")
     private int ratingCount;
-    @JsonProperty("time")
-    private int time;
+
+    @JsonProperty("created")
+    private Date created;
+
     @JsonProperty("user")
     private BriefModel userInfo;
 
-    @JsonProperty("no_of_likes")
-    private int noOfLikes;
+    @JsonProperty("likes")
+    private long countlikes;
+
+    @JsonProperty("is_liked")
+    private boolean isLiked;
+
+    @JsonProperty("thumbnails")
+    private List<String> thumbnails;
 
     public ShopReviewModel() {
     }
 
-    public ShopReviewModel(String descriptionBody, int noOfFollowers, int noOfReviews, int ratingCount, int time, BriefModel userInfo,int noOfLikes) {
-        this.descriptionBody = descriptionBody;
-        this.noOfFollowers = noOfFollowers;
+    public ShopReviewModel(String textBody, int countFollowers, int noOfReviews, int ratingCount, Date created, BriefModel userInfo, long countlikes,boolean isLiked) {
+        this.textBody = textBody;
+        this.countFollowers = countFollowers;
         this.noOfReviews = noOfReviews;
         this.ratingCount = ratingCount;
-        this.time = time;
+        this.created = created;
         this.userInfo = userInfo;
-        this.noOfLikes = noOfLikes;
+        this.countlikes = countlikes;
+        this.isLiked = isLiked;
     }
 
     public String getdescriptionBody() {
-        return descriptionBody;
+        return textBody;
     }
 
     public void setdescriptionBody(String descriptionBody) {
-        this.descriptionBody = descriptionBody;
+        this.textBody = descriptionBody;
     }
 
-    public int getNoOfFollowers() {
-        return noOfFollowers;
+
+    public int getCountFollowers() {
+        return countFollowers;
     }
 
-    public void setNoOfFollowers(int noOfFollowers) {
-        this.noOfFollowers = noOfFollowers;
+    public void setCountFollowers(int countFollowers) {
+        this.countFollowers = countFollowers;
     }
 
     public int getNoOfReviews() {
@@ -70,12 +87,12 @@ public class ShopReviewModel {
         this.ratingCount = ratingCount;
     }
 
-    public int getTime() {
-        return time;
+    public Date getTime() {
+        return created;
     }
 
     public void setTime(int time) {
-        this.time = time;
+        this.created = created;
     }
 
     public BriefModel getUserInfo() {
@@ -86,11 +103,21 @@ public class ShopReviewModel {
         this.userInfo = userInfo;
     }
 
-    public int getNoOfLikes() {
-        return noOfLikes;
+    public long getNoOfLikes() {
+        return countlikes;
     }
 
     public void setNoOfLikes(int noOfLikes) {
-        this.noOfLikes = noOfLikes;
+        this.countlikes = countlikes;
+    }
+    public boolean isLiked() {
+        return isLiked;
+    }
+    public String formatReviewTime(){
+        return Util.formatDateToHoursTime(created);
+    }
+    public String formatCountLikes()
+    {
+        return Util.formatCount(countlikes);
     }
 }

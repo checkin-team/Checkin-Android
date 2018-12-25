@@ -32,6 +32,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import java.lang.reflect.Field;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Collection;
@@ -417,7 +418,9 @@ public class Util {
         return (networkInfo != null && networkInfo.isConnected());
     }
 
-
+    public static String formatDateToHoursTime(Date dateTime) {
+        return new SimpleDateFormat("HH", Locale.ENGLISH).format(dateTime);
+    }
 
     public static String timePassed(Date timeEvent){
         Date date;

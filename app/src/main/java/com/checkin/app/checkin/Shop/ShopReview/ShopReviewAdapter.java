@@ -5,6 +5,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 import com.checkin.app.checkin.Utility.GlideApp;
@@ -57,15 +58,18 @@ public class ShopReviewAdapter extends RecyclerView.Adapter<ShopReviewAdapter.Vi
         TextView tvUserName;
         @BindView(R.id.tv_ur_review_nd_follower)
         TextView tvCountReviewFollowers;
-        @BindView(R.id.tv_ur_rating)
-        TextView tvCountRating;
+        @BindView(R.id.btn_ur_rating)
+        Button btnCountRating;
+        @BindView(R.id.btn_ur_follow)
+        Button btnFollow;
         @BindView(R.id.tv_ur_descriptive_review)
         TextView tvDescriptiveReview;
         @BindView(R.id.tv_ur_NoOfLikes)
         TextView tvNoOfLikes;
         @BindView(R.id.tv_ur_time)
         TextView tvLastActiveTime;
-
+        @BindView(R.id.im_ur_like_heart)
+        ImageView imLikeBtn;
 
         public ViewHolder(View itemView) {
             super(itemView);
@@ -76,13 +80,14 @@ public class ShopReviewAdapter extends RecyclerView.Adapter<ShopReviewAdapter.Vi
             tvUserName.setText(shopReviewModel.getUserInfo().getDisplayName());
             String picurl = shopReviewModel.getUserInfo().getDisplayPic();
             GlideApp.with(itemView).load(picurl != null ? picurl : R.drawable.cover_unknown_male).into(imProfilePic);
-            int reviews = shopReviewModel.getNoOfReviews();
-            int followers = shopReviewModel.getNoOfFollowers();
-            tvCountReviewFollowers.setText(Integer.toString(reviews)+" reviews"+","+" "+Integer.toString(followers)+" followers");
-            tvCountRating.setText(Integer.toString(shopReviewModel.getRatingCount()));
+
+            tvCountReviewFollowers.setText(String.format("%s reviews, ",Integer.toString(shopReviewModel.getNoOfReviews()))+String.format("%s followers",Integer.toString(shopReviewModel.getCountFollowers())));
+            btnCountRating.setText(String.format("RATED   %s",shopReviewModel.getRatingCount()));
             tvDescriptiveReview.setText(shopReviewModel.getdescriptionBody());
-            tvNoOfLikes.setText(Integer.toString(shopReviewModel.getNoOfLikes()));
-            tvLastActiveTime.setText(Integer.toString(shopReviewModel.getTime())+" HOURS AGO");
+            tvNoOfLikes.setText(shopReviewModel.formatCountLikes());
+            String txtTime = String.format("%s HOURS AGO",shopReviewModel.formatReviewTime());
+            tvLastActiveTime.setText(String.format("%s HOURS AGO",shopReviewModel.formatReviewTime()));
+            imLikeBtn.setActivated(shopReviewModel.isLiked());
         }
     }
 }
