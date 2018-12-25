@@ -43,8 +43,25 @@ public class SessionRepository extends BaseRepository {
         }.getAsLiveData();
     }
 
-    public LiveData<Resource<RecentCheckinModel>> getRecentCheckins(String shopId) {
-        return null;
+    public LiveData<Resource<RecentCheckinModel>> getRecentCheckins(final String shopId) {
+        return new NetworkBoundResource<RecentCheckinModel, RecentCheckinModel>() {
+
+            @Override
+            protected boolean shouldUseLocalDb() {
+                return false;
+            }
+
+            @NonNull
+            @Override
+            protected LiveData<ApiResponse<RecentCheckinModel>> createCall() {
+                return new RetrofitLiveData<>(mWebService.getRecentCheckins(shopId));
+            }
+
+            @Override
+            protected void saveCallResult(RecentCheckinModel data) {
+
+            }
+        }.getAsLiveData();
     }
 
     public static SessionRepository getInstance(Application application) {

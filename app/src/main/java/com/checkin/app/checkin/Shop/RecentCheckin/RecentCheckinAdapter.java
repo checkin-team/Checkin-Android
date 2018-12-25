@@ -10,18 +10,22 @@ import android.widget.TextView;
 
 import com.checkin.app.checkin.R;
 import com.checkin.app.checkin.Shop.RecentCheckin.Model.UserCheckinModel;
+import com.checkin.app.checkin.User.UserModel;
 import com.checkin.app.checkin.Utility.GlideApp;
 
 import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 
 public class RecentCheckinAdapter extends RecyclerView.Adapter<RecentCheckinAdapter.ViewHolder> {
     private List<UserCheckinModel> userCheckins;
+    private RecentCheckinInteraction mListener;
 
-    public RecentCheckinAdapter(List<UserCheckinModel> userCheckinModel) {
+    RecentCheckinAdapter(List<UserCheckinModel> userCheckinModel, RecentCheckinInteraction listener) {
         this.userCheckins = userCheckinModel;
+        this.mListener = listener;
     }
 
     public void updateUserCheckins(List<UserCheckinModel> userCheckinModels) {
@@ -64,17 +68,37 @@ public class RecentCheckinAdapter extends RecyclerView.Adapter<RecentCheckinAdap
         @BindView(R.id.tv_rc_checkin_time)
         TextView tvCheckinTime;
 
+        private UserCheckinModel userCheckinModel;
+
         public ViewHolder(View view) {
             super(view);
             ButterKnife.bind(this, view);
         }
 
         void bindData(UserCheckinModel usermodel) {
+            this.userCheckinModel = usermodel;
+
             tvCheckinTime.setText(usermodel.formatCheckinTime());
             tvUserName.setText(usermodel.getUserInfo().getDisplayName());
             String picurl = usermodel.getUserInfo().getDisplayPic();
-            GlideApp.with(itemView).load(picurl != null ? picurl : R.drawable.cover_unknown_male).into(imProfilePic);
+            if (picurl == null) {
+                GlideApp.with(itemView)
+                        .load((usermodel.getGender() == UserModel.GENDER.MALE)
+                                ? R.drawable.cover_unknown_male : R.drawable.cover_unknown_female)
+                        .into(imProfilePic);
+            } else {
+                GlideApp.with(itemView).load(picurl).into(imProfilePic);
+            }
             imStatus.setActivated(usermodel.isActive());
         }
+
+        @OnClick(R.id.incl_checkin_card)
+        void onClickCard() {
+            mListener.onClickUserCheckin(this.userCheckinModel);
+        }
+    }
+
+    public interface RecentCheckinInteraction {
+        void onClickUserCheckin(UserCheckinModel userCheckinModel);
     }
 }

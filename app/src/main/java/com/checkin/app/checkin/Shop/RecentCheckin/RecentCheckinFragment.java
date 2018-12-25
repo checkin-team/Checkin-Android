@@ -1,7 +1,7 @@
 package com.checkin.app.checkin.Shop.RecentCheckin;
 
-import android.arch.lifecycle.Observer;
 import android.arch.lifecycle.ViewModelProviders;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -13,9 +13,10 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
-import com.checkin.app.checkin.Data.Resource;
 import com.checkin.app.checkin.R;
 import com.checkin.app.checkin.Shop.RecentCheckin.Model.RecentCheckinModel;
+import com.checkin.app.checkin.Shop.RecentCheckin.Model.UserCheckinModel;
+import com.checkin.app.checkin.User.NonPersonalProfile.UserProfileActivity;
 
 import java.util.Locale;
 
@@ -23,9 +24,9 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.Unbinder;
 
-import static com.checkin.app.checkin.Data.Resource.*;
+import static com.checkin.app.checkin.Data.Resource.Status;
 
-public class RecentCheckinFragment extends Fragment {
+public class RecentCheckinFragment extends Fragment implements RecentCheckinAdapter.RecentCheckinInteraction {
     private Unbinder unbinder;
 
     @BindView(R.id.tv_rc_capacity) TextView tvCapacity;
@@ -56,25 +57,22 @@ public class RecentCheckinFragment extends Fragment {
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
-        mAdapter = new RecentCheckinAdapter(null);
+        mAdapter = new RecentCheckinAdapter(null, this);
 
         rvUserCheckins.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false));
         rvUserCheckins.setAdapter(mAdapter);
 
         mViewModel = ViewModelProviders.of(this).get(RecentCheckinViewModel.class);
-        mViewModel.getRecentCheckinData().observe(this, new Observer<Resource<RecentCheckinModel>>() {
-            @Override
-            public void onChanged(@Nullable Resource<RecentCheckinModel> recentCheckinModelResource) {
-                if (recentCheckinModelResource == null)
-                    return;
-                if (recentCheckinModelResource.status == Status.SUCCESS && recentCheckinModelResource.data != null) {
-                    RecentCheckinModel data = recentCheckinModelResource.data;
-                    tvCapacity.setText(String.format(Locale.ENGLISH, "Capacity: %s", data.formatCapacity()));
-                    tvCountLive.setText(String.format(Locale.ENGLISH, "Live: %s", data.formatLiveCount()));
-                    tvCountFemale.setText(data.formatLiveFemale());
-                    tvCountMale.setText(data.formatLiveMale());
-                    mAdapter.updateUserCheckins(data.getCheckins());
-                }
+        mViewModel.getRecentCheckinData().observe(this, recentCheckinModelResource -> {
+            if (recentCheckinModelResource == null)
+                return;
+            if (recentCheckinModelResource.status == Status.SUCCESS && recentCheckinModelResource.data != null) {
+                RecentCheckinModel data = recentCheckinModelResource.data;
+                tvCapacity.setText(String.format(Locale.ENGLISH, "Capacity: %s", data.formatCapacity()));
+                tvCountLive.setText(String.format(Locale.ENGLISH, "Live: %s", data.formatLiveCount()));
+                tvCountFemale.setText(data.formatLiveFemale());
+                tvCountMale.setText(data.formatLiveMale());
+                mAdapter.updateUserCheckins(data.getCheckins());
             }
         });
         mViewModel.setDummyData();
@@ -85,5 +83,12 @@ public class RecentCheckinFragment extends Fragment {
     public void onDestroyView() {
         super.onDestroyView();
         unbinder.unbind();
+    }
+
+    @Override
+    public void onClickUserCheckin(UserCheckinModel userCheckinModel) {
+        Intent intent = new Intent(requireContext(), UserProfileActivity.class);
+        intent.putExtra(UserProfileActivity.KEY_PROFILE_USER_ID, Long.valueOf(userCheckinModel.getUserInfo().getPk()));
+        startActivity(intent);
     }
 }

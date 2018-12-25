@@ -3,9 +3,7 @@ package com.checkin.app.checkin.Shop.RecentCheckin;
 import android.app.Application;
 import android.arch.lifecycle.LiveData;
 import android.arch.lifecycle.MediatorLiveData;
-import android.arch.lifecycle.Observer;
 import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
 
 import com.checkin.app.checkin.Data.BaseViewModel;
 import com.checkin.app.checkin.Data.Resource;
@@ -42,26 +40,13 @@ public class RecentCheckinViewModel extends BaseViewModel {
     }
 
     public void setDummyData() {
-
-
-
-        Date d1 = new Date();
-
-        List<UserCheckinModel> list_userdetail = new ArrayList<>();
-
-        BriefModel briefModel = new BriefModel("12","abc", null);
-
-        BriefModel briefModel_two = new BriefModel("1","Ale", null);
-        UserCheckinModel userdetail = new UserCheckinModel(d1,UserModel.GENDER.MALE,true,briefModel);
-        UserCheckinModel userdetail_one = new UserCheckinModel(d1,UserModel.GENDER.FEMALE,false,briefModel_two);
-         list_userdetail.add(userdetail);
-         list_userdetail.add(userdetail_one);
-
-
-        RecentCheckinModel model = new RecentCheckinModel(24,12,12,list_userdetail);
-
+        List<UserCheckinModel> userCheckinModels = new ArrayList<>();
+        userCheckinModels.add(new UserCheckinModel(new Date(), UserModel.GENDER.MALE, true, new BriefModel("1", "Alex", null)));
+        userCheckinModels.add(new UserCheckinModel(new Date(), UserModel.GENDER.FEMALE, true, new BriefModel("2", "Alice", null)));
+        userCheckinModels.add(new UserCheckinModel(new Date(), UserModel.GENDER.MALE, true, new BriefModel("3", "Bob", "https://storage.googleapis.com/checkin-app-18.appspot.com/images/users/amide/profile_a825.jpg")));
+        userCheckinModels.add(new UserCheckinModel(new Date(), UserModel.GENDER.MALE, false, new BriefModel("4", "Carlos", null)));
+        userCheckinModels.add(new UserCheckinModel(new Date(), UserModel.GENDER.FEMALE, false, new BriefModel("5", "Cath", null)));
+        RecentCheckinModel model = new RecentCheckinModel(24,12,12, userCheckinModels);
         mRecentCheckinData.setValue(Resource.success(model));
-
-
     }
 }

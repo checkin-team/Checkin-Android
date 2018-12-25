@@ -1,7 +1,5 @@
 package com.checkin.app.checkin.Shop.RecentCheckin.Model;
 
-import android.text.format.Time;
-
 import com.checkin.app.checkin.Misc.BriefModel;
 import com.checkin.app.checkin.User.UserModel;
 import com.checkin.app.checkin.Utility.Util;
@@ -10,12 +8,8 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 
 import java.util.Date;
 
-import javax.annotation.Nullable;
-
 @JsonAutoDetect(fieldVisibility = JsonAutoDetect.Visibility.NONE)
 public class UserCheckinModel {
-    // This model represent user info name, user pics  and represent in the card
-
     @JsonProperty("checkin_date")
     private Date checkinTime;
 
@@ -28,8 +22,7 @@ public class UserCheckinModel {
     @JsonProperty("user")
     private BriefModel userInfo;
 
-    public UserCheckinModel() {
-    }
+    public UserCheckinModel() {}
 
     public UserCheckinModel(Date checkinDate, UserModel.GENDER gender, Boolean isActive, BriefModel userInfo) {
         this.checkinTime = checkinDate;

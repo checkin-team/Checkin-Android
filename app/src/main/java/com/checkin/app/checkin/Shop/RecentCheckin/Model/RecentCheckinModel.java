@@ -7,8 +7,6 @@ import java.util.List;
 
 @JsonAutoDetect(fieldVisibility = JsonAutoDetect.Visibility.NONE)
 public class RecentCheckinModel {
-    // this represents the live checkin data of a particular shop.
-
     @JsonProperty("capacity")
     private int capacity;
 
