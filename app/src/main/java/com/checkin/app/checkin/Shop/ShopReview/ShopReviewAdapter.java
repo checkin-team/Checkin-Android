@@ -52,23 +52,23 @@ public class ShopReviewAdapter extends RecyclerView.Adapter<ShopReviewAdapter.Vi
     }*/
 
         public class ViewHolder extends RecyclerView.ViewHolder {
-        @BindView(R.id.im_ur_profile)
+        @BindView(R.id.im_sr_user_pic)
         ImageView imProfilePic;
-        @BindView(R.id.tv_ur_name)
+        @BindView(R.id.tv_sr_user_name)
         TextView tvUserName;
-        @BindView(R.id.tv_ur_review_nd_follower)
+        @BindView(R.id.tv_sr_user_stats)
         TextView tvCountReviewFollowers;
-        @BindView(R.id.btn_ur_rating)
+        @BindView(R.id.btn_sr_review_ratings)
         Button btnCountRating;
-        @BindView(R.id.btn_ur_follow)
+        @BindView(R.id.btn_sr_user_follow)
         Button btnFollow;
-        @BindView(R.id.tv_ur_descriptive_review)
+        @BindView(R.id.tv_sr_description)
         TextView tvDescriptiveReview;
-        @BindView(R.id.tv_ur_NoOfLikes)
+        @BindView(R.id.tv_sr_count_likes)
         TextView tvNoOfLikes;
-        @BindView(R.id.tv_ur_time)
+        @BindView(R.id.tv_sr_count_likes)
         TextView tvLastActiveTime;
-        @BindView(R.id.im_ur_like_heart)
+        @BindView(R.id.im_sr_like)
         ImageView imLikeBtn;
 
         public ViewHolder(View itemView) {

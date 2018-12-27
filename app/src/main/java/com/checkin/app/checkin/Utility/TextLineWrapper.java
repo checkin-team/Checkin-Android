@@ -26,7 +26,7 @@ public class TextLineWrapper {
         /**
          * Constructor
          */
-        public MySpannable(boolean isUnderline) {
+        MySpannable(boolean isUnderline) {
             this.isUnderline = isUnderline;
         }
 
@@ -45,8 +45,7 @@ public class TextLineWrapper {
     }
 
 
-    public static void makeTextViewResizable(final TextView tv, final int maxLine,final boolean viewMore) {
-
+    public static void makeTextViewResizable(final TextView tv, final int maxLine, final boolean viewMore) {
         if (tv.getTag() == null) {
             tv.setTag(tv.getText());
         }
@@ -80,7 +79,7 @@ public class TextLineWrapper {
 
     }
 
-    public static SpannableStringBuilder addClickablePartTextViewResizable(final Spanned strSpanned, final TextView tv,
+    private static SpannableStringBuilder addClickablePartTextViewResizable(final Spanned strSpanned, final TextView tv,
                                                                             final int maxLine, final String spanableText, final boolean viewMore) {
         String str = strSpanned.toString();
         SpannableStringBuilder ssb = new SpannableStringBuilder(strSpanned);

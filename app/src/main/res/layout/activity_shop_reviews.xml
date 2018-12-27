@@ -6,48 +6,9 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     tools:context="com.checkin.app.checkin.Shop.ShopReviewsActivity">
-
-    <android.support.design.widget.AppBarLayout
+    <fragment
+        android:id="@+id/fragment_shop_reviews"
         android:layout_width="match_parent"
-        android:background="@color/white"
-        android:id="@+id/edit_profile_app_bar"
-        android:elevation="@dimen/spacing_normal"
-        android:layout_height="wrap_content">
-
-        <android.support.v7.widget.Toolbar
-            android:elevation="@dimen/spacing_normal"
-            android:id="@+id/reviews_toolbar"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent">
-            <Button
-                android:id="@+id/btn_back"
-                android:layout_width="@dimen/notif_heading_size"
-                android:layout_height="@dimen/spacing_large"
-                android:layout_marginTop="@dimen/spacing_small"
-                android:layout_marginStart="@dimen/spacing_normal"
-                android:layout_alignParentStart="true"
-                android:background="@drawable/ic_appbar_back"/>
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center_vertical"
-                android:layout_marginStart="@dimen/spacing_normal"
-                android:layout_marginTop="@dimen/spacing_small"
-                android:text="Reviews"
-                android:textColor="@color/primary_red"
-                android:textSize="@dimen/spacing_large"
-                />
-
-        </android.support.v7.widget.Toolbar>
-    </android.support.design.widget.AppBarLayout>
-
-    <android.support.v7.widget.RecyclerView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:scrollbars="vertical"
-        android:id="@+id/reviews_recycler_view">
-
-
-    </android.support.v7.widget.RecyclerView>
+        android:layout_height="match_parent"
+        class="com.checkin.app.checkin.Shop.ShopReview.ShopReviewFragment" />
 </LinearLayout>

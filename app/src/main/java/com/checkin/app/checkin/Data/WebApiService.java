@@ -10,7 +10,6 @@ import com.checkin.app.checkin.Session.ActiveSession.ActiveSessionModel;
 import com.checkin.app.checkin.Shop.RestaurantModel;
 import com.checkin.app.checkin.Shop.ShopJoin.ShopJoinModel;
 import com.checkin.app.checkin.Shop.ShopPrivateProfile.MemberModel;
-import com.checkin.app.checkin.Shop.ShopReviewPOJO;
 import com.checkin.app.checkin.User.Friendship.FriendshipModel;
 import com.checkin.app.checkin.User.UserModel;
 import com.fasterxml.jackson.databind.node.ObjectNode;

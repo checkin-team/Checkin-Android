@@ -1,99 +1,152 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools">
-    <de.hdodenhof.circleimageview.CircleImageView
-        android:layout_marginTop="8dp"
-        android:layout_marginStart="8dp"
-        android:id="@+id/photo_review"
-        android:layout_width="50dp"
-        android:layout_height="50dp"
-        tools:src="@drawable/water"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        />
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        app:layout_constraintTop_toTopOf="@id/photo_review"
-        app:layout_constraintLeft_toLeftOf="@id/photo_review"
-        app:layout_constraintRight_toRightOf="parent"
-        android:id="@+id/review_profile_name"
-        tools:text="Ishu Darshan"
-        android:textColor="#6d6d6d"
-        android:textStyle="bold"
-        />
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        app:layout_constraintTop_toBottomOf="@id/review_profile_name"
-        app:layout_constraintLeft_toLeftOf="@id/photo_review"
-        app:layout_constraintRight_toRightOf="parent"
-        android:id="@+id/reviews_follwers"
-        tools:text="86 Reviews,232 followers"
-        android:textColor="#bebebe"
-        android:textSize="10sp"
-        />
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/item_userReview"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layout_marginTop="@dimen/spacing_small"
+    android:orientation="vertical">
 
-    <TextView
-        android:id="@+id/time"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        tools:text="14 hours ago"
-        android:textColor="#bebebe"
-        android:textSize="12sp"
-        app:layout_constraintBottom_toBottomOf="@id/photo_review"
-        app:layout_constraintLeft_toLeftOf="@id/photo_review"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/reviews_follwers"
-        app:layout_constraintVertical_bias="1.0" />
-    <TextView
-        android:id="@+id/rating"
-        android:layout_marginTop="8dp"
-        android:paddingLeft= "12dp"
-        android:paddingRight="12dp"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        tools:text="RATED   5"
-        app:layout_constraintLeft_toLeftOf="parent"
-        android:layout_marginLeft="8dp"
-        android:background="@drawable/curve3"
-        android:textColor="@color/primary_red"
-        android:drawableEnd="@drawable/star_empty"
-        app:layout_constraintTop_toBottomOf="@id/photo_review"/>
-    <TextView
-        android:layout_marginTop="8dp"
-        android:paddingLeft= "12dp"
-        android:paddingRight="12dp"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="FOLLOW"
-        app:layout_constraintEnd_toEndOf="parent"
-        android:layout_marginEnd="8dp"
-        android:background="@drawable/curve3"
-        android:textColor="@color/primary_red"
-        android:id="@+id/follow_review"
-        app:layout_constraintTop_toBottomOf="@id/photo_review"/>
-    <TextView
-        android:id="@+id/the_review"
+    <LinearLayout
+        android:layout_marginStart="@dimen/spacing_small"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
-        android:layout_marginEnd="8dp"
-        android:layout_marginTop="8dp"
-        app:layout_constraintTop_toBottomOf="@id/follow_review"
-        tools:text="Hello I am awesome\nSoAwesome\nSo Awesome\nVery Awesome"
+        android:layout_marginBottom="@dimen/spacing_large"
+        android:orientation="horizontal"
+        android:weightSum="6">
+
+        <de.hdodenhof.circleimageview.CircleImageView
+            android:id="@+id/im_sr_user_pic"
+            style="@style/LogoImageStyle"
+            android:layout_marginBottom="@dimen/spacing_small"
+            android:layout_marginTop="@dimen/spacing_small"
+            android:layout_marginStart="@dimen/spacing_small"
+            android:layout_weight="1"
+            android:src="@drawable/dummy_monica" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="5"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/tv_sr_user_name"
+                style="@style/GreyTitleStyle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginTop="@dimen/spacing_tiny"
+                android:text="Ishu Darshan"
+                android:textSize="@dimen/font_normal" />
+
+            <TextView
+                android:id="@+id/tv_sr_user_stats"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                tools:text="86reviviews, 215 followes"
+                android:textColor="@color/pinkish_grey"
+                android:textSize="@dimen/font_extra_small" />
+
+            <LinearLayout
+                android:layout_marginTop="@dimen/spacing_small"
+                android:layout_marginBottom="@dimen/spacing_tiny"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:orientation="horizontal">
+
+                <Button
+                    android:id="@+id/btn_sr_review_ratings"
+                    style="@style/ButtonNeutralAction"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="@dimen/spacing_tiny"
+                    android:drawableEnd="@drawable/ic_star_grey"
+                    android:drawablePadding="0dp"
+                    android:text="RATED  5" />
 
 
-        />
+                <Button
+                    android:id="@+id/btn_sr_user_follow"
+                    style="@style/ButtonPositiveAction"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/spacing_tiny"
+                    android:text="FOLLOW"
+                    android:textAppearance="@style/RedTitleStyle" />
+            </LinearLayout>
+        </LinearLayout>
+
+    </LinearLayout>
+
+    <TextView
+        android:id="@+id/tv_sr_description"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/spacing_small"
+        android:layout_marginEnd="@dimen/spacing_small"
+        android:paddingStart="@dimen/spacing_small"
+        tools:text="We had a great time @Cheesy Does It. I visited this restaurant by seeing the ratings and profile on Checkin. The Hospitality really amazed…" />
+
+
+    <android.support.constraint.ConstraintLayout
+        android:layout_marginStart="@dimen/spacing_normal"
+        android:layout_marginTop="@dimen/spacing_large"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/size_normal_icon">
+
+        <ImageView
+            android:id="@+id/im_sr_like"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/spacing_small"
+            android:layout_marginTop="@dimen/spacing_small"
+            android:clickable="true"
+            android:src="@drawable/ic_heart_toggle"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/tv_sr_count_likes"
+            style="@style/GreyTitleStyle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/spacing_extra_small"
+            android:layout_marginTop="@dimen/spacing_extra_small"
+            app:layout_constraintStart_toEndOf="@+id/im_sr_like"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:text="5" />
+
+        <include
+            layout="@layout/incl_image_thumbnails"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_marginStart="@dimen/spacing_normal"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/tv_sr_count_likes"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/tv_sr_time"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="@dimen/spacing_tiny"
+            android:layout_marginEnd="@dimen/spacing_small"
+            android:textColor="@color/pinkish_grey"
+            android:textSize="@dimen/font_extra_small"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            tools:text="14 hours ago" />
+
+    </android.support.constraint.ConstraintLayout>
+
     <View
+        android:layout_marginTop="@dimen/spacing_small"
         android:layout_width="match_parent"
-        android:layout_height="1dp"
-        app:layout_constraintTop_toBottomOf="@id/the_review"
-        android:background="#e7e7e7"
-        android:layout_marginTop="8dp"/>
-
-
-</android.support.constraint.ConstraintLayout>
+        android:layout_height="@dimen/height_horizontal_line"
+        android:layout_marginBottom="@dimen/spacing_small"
+        android:background="@drawable/ic_line" />
+</LinearLayout>
