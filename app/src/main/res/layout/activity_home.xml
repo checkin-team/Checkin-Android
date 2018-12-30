@@ -197,7 +197,7 @@
                             android:drawableTop="@drawable/ic_delivery"
                             android:text="@string/home_text_delivery"
                             app:layout_constraintBottom_toBottomOf="parent"
-                            app:layout_constraintEnd_toStartOf="@+id/action_offers"
+                            app:layout_constraintEnd_toStartOf="@id/action_offers"
                             app:layout_constraintStart_toEndOf="@+id/action_dine_in"
                             app:layout_constraintTop_toTopOf="parent" />
 

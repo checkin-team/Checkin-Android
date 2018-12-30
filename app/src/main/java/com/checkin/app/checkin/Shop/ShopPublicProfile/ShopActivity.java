@@ -11,6 +11,7 @@ import android.support.v4.app.FragmentPagerAdapter;
 import com.checkin.app.checkin.Misc.BaseActivity;
 import com.checkin.app.checkin.Profile.ShopProfile.FragmentShopMenu;
 import com.checkin.app.checkin.R;
+import com.checkin.app.checkin.Shop.RecentCheckin.RecentCheckinFragment;
 import com.checkin.app.checkin.Utility.DynamicSwipableViewPager;
 
 import butterknife.BindView;
@@ -27,6 +28,7 @@ public class ShopActivity extends BaseActivity {
 
     public static final String KEY_SHOP_PK = "shop_public.pk";
 
+    private String mShopPk;
     private ShopProfileViewModel mViewModel;
 
     @Override
@@ -40,8 +42,8 @@ public class ShopActivity extends BaseActivity {
 
         mViewModel = ViewModelProviders.of(this).get(ShopProfileViewModel.class);
 
-        String shopPk = getIntent().getStringExtra(KEY_SHOP_PK);
-        mViewModel.fetchShop(shopPk);
+        mShopPk = getIntent().getStringExtra(KEY_SHOP_PK);
+        mViewModel.fetchShop(mShopPk);
     }
 
     protected void setupPagers(FragmentPagerAdapter pagerAdapter, @MenuRes int menuId) {
@@ -72,7 +74,7 @@ public class ShopActivity extends BaseActivity {
                 case 0:
                     return ShopProfileFragment.newInstance();
                 case 1:
-                    return FragmentShopMenu.newInstance("1", "2");
+                    return RecentCheckinFragment.newInstance(mShopPk);
                 case 2:
                     return FragmentShopMenu.newInstance("1", "2");
             }
