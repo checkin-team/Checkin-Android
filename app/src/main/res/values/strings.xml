@@ -122,5 +122,5 @@
     <string name="action_navigate">Navigate</string>
     <string name="title_member_assign_role">Assign Role</string>
 
-
+    <string name="currency_rupee">&#x20B9; %s</string>
 </resources>

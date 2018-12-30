@@ -12,7 +12,6 @@ import com.checkin.app.checkin.Data.NetworkBoundResource;
 import com.checkin.app.checkin.Data.Resource;
 import com.checkin.app.checkin.Data.RetrofitLiveData;
 import com.checkin.app.checkin.Data.WebApiService;
-import com.checkin.app.checkin.Misc.GenericDetailModel;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 
 public class SessionRepository extends BaseRepository {
@@ -23,8 +22,8 @@ public class SessionRepository extends BaseRepository {
         mWebService = ApiClient.getApiService(context);
     }
 
-    public LiveData<Resource<GenericDetailModel>> newCustomerSession(final ObjectNode data) {
-        return new NetworkBoundResource<GenericDetailModel, GenericDetailModel>() {
+    public LiveData<Resource<ObjectNode>> newCustomerSession(final ObjectNode data) {
+        return new NetworkBoundResource<ObjectNode, ObjectNode>() {
 
             @Override
             protected boolean shouldUseLocalDb() {
@@ -33,12 +32,12 @@ public class SessionRepository extends BaseRepository {
 
             @NonNull
             @Override
-            protected LiveData<ApiResponse<GenericDetailModel>> createCall() {
+            protected LiveData<ApiResponse<ObjectNode>> createCall() {
                 return new RetrofitLiveData<>(mWebService.postNewCustomerSession(data));
             }
 
             @Override
-            protected void saveCallResult(GenericDetailModel data) {}
+            protected void saveCallResult(ObjectNode data) {}
         }.getAsLiveData();
     }
 

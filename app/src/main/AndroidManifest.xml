@@ -69,7 +69,7 @@
             android:name=".Shop.ShopPrivateProfile.ShopActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".Menu.SessionUserActivity"
+            android:name=".Menu.SessionMenuActivity"
             android:screenOrientation="portrait"
             android:theme="@style/SessionTheme"
             android:windowSoftInputMode="adjustPan" />

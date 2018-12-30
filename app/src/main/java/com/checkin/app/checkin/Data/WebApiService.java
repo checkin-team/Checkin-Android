@@ -1,7 +1,8 @@
 package com.checkin.app.checkin.Data;
 
 import com.checkin.app.checkin.Account.AccountModel;
-import com.checkin.app.checkin.Menu.MenuModel;
+import com.checkin.app.checkin.Menu.Model.MenuModel;
+import com.checkin.app.checkin.Menu.Model.OrderedItemModel;
 import com.checkin.app.checkin.Misc.GenericDetailModel;
 import com.checkin.app.checkin.Notifications.NotificationModel;
 import com.checkin.app.checkin.RestaurantActivity.Waiter.EventModel;
@@ -13,6 +14,7 @@ import com.checkin.app.checkin.Shop.ShopPrivateProfile.MemberModel;
 import com.checkin.app.checkin.Shop.ShopReviewPOJO;
 import com.checkin.app.checkin.User.Friendship.FriendshipModel;
 import com.checkin.app.checkin.User.UserModel;
+import com.fasterxml.jackson.databind.node.ArrayNode;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 
 import java.util.List;
@@ -121,7 +123,7 @@ public interface WebApiService {
     // region SESSION
 
     @POST("sessions/customer/new/")
-    Call<GenericDetailModel> postNewCustomerSession(@Body ObjectNode data);
+    Call<ObjectNode> postNewCustomerSession(@Body ObjectNode data);
 
     @GET("sessions/active/")
     Call<ActiveSessionModel> getActiveSession();
@@ -134,8 +136,17 @@ public interface WebApiService {
 
     // endregion
 
-    @GET("shops/{shop_id}/menus/available/")
-    Call<MenuModel> getAvailableMenu(@Path("shop_id") String shopID);
+    // region MENU
+    @GET("menus/restaurants/{shop_id}/available/")
+    Call<MenuModel> getAvailableMenu(@Path("shop_id") String shopId);
+
+    @POST("sessions/active/order/")
+    Call<ArrayNode> postSessionOrders(@Body List<OrderedItemModel> orderedItemModels);
+
+    @GET("sessions/active/orders/")
+    Call<List<OrderedItemModel>> getSessionOrders();
+
+    // endregion
 
     @GET("shops/{shop_id}/reviews/")
     Call<List<ShopReviewPOJO>> getShopReviews(@Path("shop_id") String shopID);

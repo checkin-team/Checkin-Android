@@ -5,16 +5,14 @@ import android.os.Bundle;
 import android.support.annotation.LayoutRes;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
-import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ProgressBar;
-import android.widget.TextView;
 
 import com.checkin.app.checkin.Data.Resource;
+import com.checkin.app.checkin.Misc.BaseSearchFragment;
 import com.checkin.app.checkin.R;
 import com.checkin.app.checkin.Utility.ItemClickSupport;
 
@@ -24,13 +22,10 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.Unbinder;
 
-public abstract class BaseResultFragment extends Fragment implements ItemClickSupport.OnItemClickListener, ItemClickSupport.OnItemLongClickListener {
+public abstract class BaseResultFragment extends BaseSearchFragment implements ItemClickSupport.OnItemClickListener, ItemClickSupport.OnItemLongClickListener {
     private Unbinder unbinder;
 
-    @BindView(R.id.container_progress) ViewGroup vContainerProgress;
     @BindView(R.id.rv_results) RecyclerView rvResults;
-    @BindView(R.id.tv_status) TextView tvResultStatus;
-    @BindView(R.id.load_progress) ProgressBar vLoadProgress;
 
     protected SearchResultAdapter mAdapter;
     protected SearchViewModel mViewModel;
@@ -65,24 +60,8 @@ public abstract class BaseResultFragment extends Fragment implements ItemClickSu
         unbinder.unbind();
     }
 
-    protected void showLoadProgress() {
-        tvResultStatus.setText(R.string.status_searching);
-        vLoadProgress.setVisibility(View.VISIBLE);
-        vContainerProgress.setVisibility(View.VISIBLE);
-    }
-
     protected void resetResults() {
         mAdapter.setData(null);
-    }
-
-    protected void hideLoadProgress() {
-        vContainerProgress.setVisibility(View.GONE);
-    }
-
-    protected void noResultFound() {
-        tvResultStatus.setText(R.string.status_search_not_found);
-        vLoadProgress.setVisibility(View.GONE);
-        vContainerProgress.setVisibility(View.VISIBLE);
     }
 
     protected void updateResults(List<SearchResultModel> results) {

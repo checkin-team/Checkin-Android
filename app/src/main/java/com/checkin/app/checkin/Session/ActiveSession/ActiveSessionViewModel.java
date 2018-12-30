@@ -12,7 +12,7 @@ import android.util.Log;
 import com.checkin.app.checkin.Data.BaseViewModel;
 import com.checkin.app.checkin.Data.Converters;
 import com.checkin.app.checkin.Data.Resource;
-import com.checkin.app.checkin.Menu.OrderedItemModel;
+import com.checkin.app.checkin.Menu.Model.OrderedItemModel;
 import com.fasterxml.jackson.databind.node.ArrayNode;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 
@@ -52,7 +52,7 @@ public class ActiveSessionViewModel extends BaseViewModel {
         });
     }
 
-    public void cancelOrders(long... ids) { }
+    public void cancelOrders(String pk) { }
 
     public void checkoutSession() {
         Log.e("Session", "Checked out");

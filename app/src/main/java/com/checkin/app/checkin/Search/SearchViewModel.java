@@ -28,7 +28,7 @@ public class SearchViewModel extends BaseViewModel {
 
     public SearchViewModel(@NonNull Application application) {
         super(application);
-        mRepository=new SearchRepository(application.getApplicationContext());
+        mRepository = new SearchRepository(application.getApplicationContext());
     }
 
     @Override

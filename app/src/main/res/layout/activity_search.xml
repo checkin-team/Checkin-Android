@@ -8,22 +8,40 @@
 
     <FrameLayout
         android:layout_width="match_parent"
-        android:layout_height="?attr/actionBarSize"
+        android:layout_height="?android:attr/actionBarSize"
         android:background="@color/white">
 
         <android.support.v7.widget.Toolbar
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             app:layout_scrollFlags="snap" />
-            <include
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="horizontal">
+
+            <Button
+                android:id="@+id/btn_back"
+                android:layout_width="@dimen/size_extra_small_button"
+                android:layout_height="@dimen/size_small_button"
+                android:layout_marginStart="@dimen/spacing_normal"
+                android:layout_gravity="center_vertical"
+                android:background="@drawable/ic_appbar_back"/>
+
+            <TextView
+                android:id="@+id/tv_search"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                layout="@layout/menu_appbar_search" />
+                android:gravity="center_vertical"
+                android:layout_marginStart="@dimen/spacing_huge"
+                android:text="Search"
+                android:textColor="@color/pinkish_grey"
+                android:textSize="@dimen/font_large" />
+        </LinearLayout>
             <com.miguelcatalan.materialsearchview.MaterialSearchView
                 android:id="@+id/search_view"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent" />
-
     </FrameLayout>
 
     <LinearLayout

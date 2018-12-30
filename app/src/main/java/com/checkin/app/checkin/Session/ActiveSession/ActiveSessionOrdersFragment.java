@@ -12,7 +12,7 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.checkin.app.checkin.Menu.OrderedItemModel;
+import com.checkin.app.checkin.Menu.Model.OrderedItemModel;
 import com.checkin.app.checkin.R;
 
 import butterknife.BindView;
@@ -73,6 +73,6 @@ public class ActiveSessionOrdersFragment extends Fragment implements ActiveSessi
 
     @Override
     public void onCancelOrder(OrderedItemModel orderedItem) {
-        mActiveSessionViewModel.cancelOrders(orderedItem.getId());
+        mActiveSessionViewModel.cancelOrders(orderedItem.getPk());
     }
 }

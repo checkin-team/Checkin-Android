@@ -31,6 +31,8 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.checkin.app.checkin.R;
+
 import java.lang.reflect.Field;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -332,7 +334,7 @@ public class Util {
     public static String joinCollection(Collection<?> words, CharSequence delimiter) {
         StringBuilder wordList = new StringBuilder();
         for (Object word : words) {
-            wordList.append(word.toString() + delimiter);
+            wordList.append(word.toString()).append(delimiter);
         }
         return new String(wordList.delete(wordList.length() - delimiter.length(), wordList.length()));
     }
@@ -415,6 +417,10 @@ public class Util {
         ConnectivityManager connectivityManager = (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
         NetworkInfo networkInfo = connectivityManager.getActiveNetworkInfo();
         return (networkInfo != null && networkInfo.isConnected());
+    }
+
+    public static String getCurrencyFormat(Context context) {
+        return context.getResources().getString(R.string.currency_rupee);
     }
 
 

@@ -65,10 +65,16 @@ public class Resource<T> {
     }
 
     @NonNull
+    public static <T> Resource<T> errorNotFound(String msg) {
+        return error(Status.ERROR_NOT_FOUND, msg, null);
+    }
+
+    @NonNull
     public static <T> Resource<T> loading(@Nullable T data) {
         return new Resource<>(Status.LOADING, data, null);
     }
 
+    @NonNull
     public static <T> Resource<T> noRequest() {
         return new Resource<>(Status.NO_REQUEST, null, null);
     }

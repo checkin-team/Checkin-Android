@@ -6,7 +6,9 @@ import android.animation.AnimatorSet;
 import android.annotation.SuppressLint;
 import android.arch.lifecycle.ViewModelProviders;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.support.annotation.NonNull;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
@@ -24,7 +26,7 @@ import android.widget.TextView;
 import com.checkin.app.checkin.Account.AccountModel.ACCOUNT_TYPE;
 import com.checkin.app.checkin.Account.BaseAccountActivity;
 import com.checkin.app.checkin.Data.Resource.Status;
-import com.checkin.app.checkin.Menu.SessionUserActivity;
+import com.checkin.app.checkin.Menu.SessionMenuActivity;
 import com.checkin.app.checkin.Misc.QRScannerActivity;
 import com.checkin.app.checkin.Notifications.NotificationActivity;
 import com.checkin.app.checkin.Profile.ShopProfile.ShopProfileActivity2;
@@ -37,6 +39,7 @@ import com.checkin.app.checkin.Shop.ShopPublicProfile.ShopActivity;
 import com.checkin.app.checkin.User.NonPersonalProfile.UserViewModel;
 import com.checkin.app.checkin.User.PersonalProfile.UserProfileActivity;
 import com.checkin.app.checkin.Utility.ClipRevealFrame;
+import com.checkin.app.checkin.Utility.Constants;
 import com.checkin.app.checkin.Utility.ItemClickSupport;
 import com.checkin.app.checkin.Utility.Util;
 
@@ -97,7 +100,11 @@ public class HomeActivity extends BaseAccountActivity
         mHomeViewModel.getQrResult().observe(this, resource -> {
             if (resource == null)   return;
             if (resource.status == Status.SUCCESS && resource.data != null) {
-                Util.toast(this, resource.data.getDetail());
+                PreferenceManager.getDefaultSharedPreferences(this).edit()
+                        .putString(Constants.SP_SESSION_RESTAURANT_PK, resource.data.get("restaurant_pk").asText())
+                        .putString(Constants.SP_SESSION_ACTIVE_PK, resource.data.get("session_pk").asText())
+                        .apply();
+                Util.toast(this, resource.data.get("detail").asText());
             } else if (resource.status != Status.LOADING) {
                 Util.toast(this, resource.message);
             }
@@ -390,8 +397,11 @@ public class HomeActivity extends BaseAccountActivity
                 intent = new Intent(getApplicationContext(), UserProfileActivity.class);
                 startActivity(intent);
                 break;
-            case R.id.nav_settings:
-                SessionUserActivity.startSession(this, 1, 1);
+            case R.id.nav_menu:
+                SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
+                String restaurantPk = prefs.getString(Constants.SP_SESSION_RESTAURANT_PK, "");
+                String sessionPk = prefs.getString(Constants.SP_SESSION_ACTIVE_PK, "");
+                SessionMenuActivity.withSession(this, sessionPk, restaurantPk);
                 break;
             case R.id.nav_privacy_settings:
                 intent = new Intent(getApplicationContext(), ShopProfileActivity2.class);

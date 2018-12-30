@@ -11,7 +11,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
 
-import com.checkin.app.checkin.Menu.OrderedItemModel;
+import com.checkin.app.checkin.Menu.Model.OrderedItemModel;
 import com.checkin.app.checkin.R;
 import com.checkin.app.checkin.Utility.Util;
 import com.transitionseverywhere.Slide;
@@ -101,7 +101,7 @@ public class ActiveSessionOrdersAdapter extends RecyclerView.Adapter<ActiveSessi
 
         public void bindData(OrderedItemModel orderedItem) {
             mOrderedItem = orderedItem;
-            tvItemName.setText(orderedItem.getItem().getName());
+            tvItemName.setText(orderedItem.getItemModel().getName());
         }
 
         @OnClick(R.id.btn_cancel_order)
@@ -114,7 +114,7 @@ public class ActiveSessionOrdersAdapter extends RecyclerView.Adapter<ActiveSessi
         void showDetails() {
             isDetailShown = true;
             if (mOrderedItem.canCancel()) {
-                Log.e(TAG, "Can cancel " + mOrderedItem.getItem().getName());
+                Log.e(TAG, "Can cancel " + mOrderedItem.getItemModel().getName());
                 new CountDownTimer(mOrderedItem.getRemainingCancelTime(), 1000) {
                     @Override
                     public void onTick(long millisUntilFinished) {
@@ -137,7 +137,7 @@ public class ActiveSessionOrdersAdapter extends RecyclerView.Adapter<ActiveSessi
 
                 @Override
                 public void onTransitionStart(@NonNull Transition transition) {
-                    tvItemName.setText(mOrderedItem.getItem().getName());
+                    tvItemName.setText(mOrderedItem.getItemModel().getName());
                     tvCancelTime.setVisibility(View.GONE);
                     btnCancel.setVisibility(View.GONE);
                     itemView.setBackgroundColor(0x000000);
@@ -178,7 +178,7 @@ public class ActiveSessionOrdersAdapter extends RecyclerView.Adapter<ActiveSessi
                     tvCancelTime.setVisibility(View.GONE);
                     tvItemName.setVisibility(View.VISIBLE);
                     btnCancel.setVisibility(View.GONE);
-                    tvItemName.setText(mOrderedItem.getItem().getName());
+                    tvItemName.setText(mOrderedItem.getItemModel().getName());
                     itemView.setBackgroundColor(0x000000);
                     mPrevDetailedViewHolder = null;
                 }

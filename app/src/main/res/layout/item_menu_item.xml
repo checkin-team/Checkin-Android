@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/card_view"
+    android:layout_width="match_parent"
+    android:layout_height="@dimen/height_menu_item">
+
+    <TextView
+        android:id="@+id/tv_menu_item_name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/spacing_small"
+        android:layout_marginTop="@dimen/spacing_small"
+        style="@style/GreyHeadingStyle"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:text="ITEM TITLE" />
+
+    <TextView
+        android:id="@+id/tv_menu_item_price"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textColor="@color/pinkish_grey"
+        android:textSize="@dimen/font_normal"
+        android:layout_marginStart="@dimen/spacing_small"
+        android:layout_marginBottom="@dimen/spacing_small"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        tools:text="@string/currency_rupee" />
+
+    <FrameLayout
+        android:id="@+id/container_menu_quantity_picker"
+        android:layout_width="@dimen/width_quantity_selection"
+        android:layout_height="@dimen/height_quantity_selection"
+        android:layout_marginBottom="@dimen/spacing_small"
+        android:layout_marginEnd="@dimen/spacing_small"
+        android:layout_marginTop="@dimen/spacing_small"
+        android:background="@drawable/background_menu_quantity_selection"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        android:clickable="true"
+        android:focusable="true">
+
+        <Button
+            android:id="@+id/btn_menu_item_add"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@drawable/btn_menu_item_add"
+            android:visibility="gone" />
+
+        <com.checkin.app.checkin.Utility.QuantityPickerView
+            android:id="@+id/qp_menu_item_quantity"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginEnd="@dimen/spacing_tiny"
+            android:layout_marginStart="@dimen/spacing_tiny"
+            android:layout_gravity="center"
+            app:dsv_orientation="horizontal"
+            android:clickable="false"
+            android:focusable="false"/>
+    </FrameLayout>
+
+</android.support.constraint.ConstraintLayout>

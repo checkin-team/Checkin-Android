@@ -10,7 +10,6 @@ import android.support.annotation.NonNull;
 import com.checkin.app.checkin.Data.BaseViewModel;
 import com.checkin.app.checkin.Data.Converters;
 import com.checkin.app.checkin.Data.Resource;
-import com.checkin.app.checkin.Misc.GenericDetailModel;
 import com.checkin.app.checkin.Session.SessionRepository;
 import com.checkin.app.checkin.Shop.RestaurantModel;
 import com.checkin.app.checkin.Shop.ShopRepository;
@@ -21,7 +20,7 @@ import java.util.List;
 public class HomeViewModel extends BaseViewModel {
     private ShopRepository mShopRepository;
     private SessionRepository mSessionRepository;
-    private MediatorLiveData<Resource<GenericDetailModel>> mQrResult = new MediatorLiveData<>();
+    private MediatorLiveData<Resource<ObjectNode>> mQrResult = new MediatorLiveData<>();
 
     HomeViewModel(Application application) {
         super(application);
@@ -40,7 +39,7 @@ public class HomeViewModel extends BaseViewModel {
         mQrResult.addSource(mSessionRepository.newCustomerSession(requestJson), mQrResult::setValue);
     }
 
-    public LiveData<Resource<GenericDetailModel>> getQrResult() {
+    public LiveData<Resource<ObjectNode>> getQrResult() {
         return mQrResult;
     }
 

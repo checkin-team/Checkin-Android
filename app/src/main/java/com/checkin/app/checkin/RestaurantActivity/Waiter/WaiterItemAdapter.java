@@ -11,7 +11,7 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.checkin.app.checkin.Menu.OrderedItemModel;
+import com.checkin.app.checkin.Menu.Model.OrderedItemModel;
 import com.checkin.app.checkin.R;
 
 import java.util.ArrayList;
@@ -165,7 +165,7 @@ public class WaiterItemAdapter extends RecyclerView.Adapter<WaiterItemAdapter.Vi
         void bindData(EventModel item) {
             if(item.getType()== EventModel.TYPE.ORDERED_ITEM) {
                 OrderedItemModel itemModel = item.getOrderedItem();
-                itemName.setText(itemModel.getItem().getName());
+                itemName.setText(itemModel.getItemModel().getName());
                 time_ago.setText("8 minutes Ago");
                 quantity.setText("QTY: " + itemModel.getQuantity());
                 if(itemModel.getRemarks()!=null)

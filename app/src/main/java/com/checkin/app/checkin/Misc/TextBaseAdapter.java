@@ -36,14 +36,14 @@ public class TextBaseAdapter extends RecyclerView.Adapter<TextBaseAdapter.TextVi
             public void transformItem(View item, float position) {
                 float closenessToCenter = 1f - Math.abs(position);
                 super.transformItem(item, position);
-                ((TextView) item.findViewById(R.id.item_text)).setTextColor(ColorUtils.blendARGB(textColor, selectedColor, closenessToCenter));
+                ((TextView) item.findViewById(R.id.tv_value)).setTextColor(ColorUtils.blendARGB(textColor, selectedColor, closenessToCenter));
             }
         });
     }
 
     @Override
     public int getItemViewType(final int position) {
-        return R.layout.list_text_layout;
+        return R.layout.item_text;
     }
 
     @NonNull
@@ -68,7 +68,7 @@ public class TextBaseAdapter extends RecyclerView.Adapter<TextBaseAdapter.TextVi
 
         TextViewHolder(View view) {
             super(view);
-            vText = view.findViewById(R.id.item_text);
+            vText = view.findViewById(R.id.tv_value);
         }
 
         void bindData(String value, boolean selected) {

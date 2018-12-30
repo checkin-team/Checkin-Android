@@ -211,7 +211,7 @@
                             android:layout_height="@dimen/button_height_short"
                             android:text="@string/action_profile_edit"
                             android:layout_gravity="center"
-                            style="@style/ButtonPositiveAction"/>
+                            style="@style/ButtonPositiveAction" />
                     </FrameLayout>
                 </RelativeLayout>
 

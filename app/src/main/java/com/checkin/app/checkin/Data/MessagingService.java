@@ -38,7 +38,7 @@ public class MessagingService extends FirebaseMessagingService {
         LocalBroadcastManager localBroadcastManager = LocalBroadcastManager.getInstance(this);
         if (!localBroadcastManager.sendBroadcast(intent)) {
             PendingIntent pendingIntent = PendingIntent.getActivity(this, 0, intent, PendingIntent.FLAG_UPDATE_CURRENT);
-            createNotification(remoteMessage, pendingIntent);
+//            createNotification(remoteMessage, pendingIntent);
         }
     }
 
