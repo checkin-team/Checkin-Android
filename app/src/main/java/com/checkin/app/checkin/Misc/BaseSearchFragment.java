@@ -17,7 +17,7 @@ public class BaseSearchFragment extends Fragment {
     @BindView(R.id.tv_status) TextView tvResultStatus;
     @BindView(R.id.load_progress) ProgressBar vLoadProgress;
 
-    protected BaseSearchFragment() {}
+    public BaseSearchFragment() {}
 
     protected void showLoadProgress() {
         tvResultStatus.setText(R.string.status_searching);

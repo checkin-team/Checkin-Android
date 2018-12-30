@@ -135,6 +135,7 @@ public class SessionMenuActivity extends BaseActivity implements
                 .setView(input)
                 .setPositiveButton("OK", (dialog, which) -> {
                     item.setRemarks(input.getText().toString());
+                    item.setChangeCount(0);
                     mViewModel.setCurrentItem(item);
                     mViewModel.orderItem();
                 })
@@ -157,6 +158,8 @@ public class SessionMenuActivity extends BaseActivity implements
                     this, drawerLayout, toolbar, R.string.menu_drawer_open, R.string.menu_drawer_close, R.drawable.ic_cart);
             drawerLayout.addDrawerListener(endToggle);
             endToggle.syncState();
+        } else {
+            findViewById(R.id.nav_menu_cart).setVisibility(View.GONE);
         }
     }
 

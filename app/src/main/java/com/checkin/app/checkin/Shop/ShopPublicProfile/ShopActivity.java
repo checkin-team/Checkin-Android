@@ -8,6 +8,7 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 
+import com.checkin.app.checkin.Menu.SessionMenuActivity;
 import com.checkin.app.checkin.Misc.BaseActivity;
 import com.checkin.app.checkin.Profile.ShopProfile.FragmentShopMenu;
 import com.checkin.app.checkin.R;
@@ -51,6 +52,11 @@ public class ShopActivity extends BaseActivity {
         mBottomNavigation.setOnMenuItemClickListener(new BottomNavigation.OnMenuItemSelectionListener() {
             @Override
             public void onMenuItemSelect(@IdRes final int itemId, final int position, final boolean fromUser) {
+                if (position == 2) {
+                    mBottomNavigation.setSelectedIndex(0, false);
+                    SessionMenuActivity.withoutSession(getApplicationContext(), mViewModel.getShopPk());
+                    return;
+                }
                 mViewPager.setCurrentItem(position, true);
             }
 
@@ -73,15 +79,13 @@ public class ShopActivity extends BaseActivity {
                     return ShopProfileFragment.newInstance();
                 case 1:
                     return FragmentShopMenu.newInstance("1", "2");
-                case 2:
-                    return FragmentShopMenu.newInstance("1", "2");
             }
             return null;
         }
 
         @Override
         public int getCount() {
-            return 3;
+            return 2;
         }
     }
 }
