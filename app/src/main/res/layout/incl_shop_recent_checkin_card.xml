@@ -42,7 +42,7 @@
             android:layout_marginBottom="@dimen/spacing_extra_small"
             tools:text="10:30"
             android:textColor="@color/white"
-            android:textSize="@dimen/font_extra_small"
+            android:textSize="@dimen/font_tiny"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent" />
     </android.support.constraint.ConstraintLayout>

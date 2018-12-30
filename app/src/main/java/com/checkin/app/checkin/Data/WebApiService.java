@@ -11,7 +11,7 @@ import com.checkin.app.checkin.Shop.RecentCheckin.Model.RecentCheckinModel;
 import com.checkin.app.checkin.Shop.RestaurantModel;
 import com.checkin.app.checkin.Shop.ShopJoin.ShopJoinModel;
 import com.checkin.app.checkin.Shop.ShopPrivateProfile.MemberModel;
-import com.checkin.app.checkin.Shop.ShopReviewPOJO;
+import com.checkin.app.checkin.Shop.ShopReview.ShopReviewModel;
 import com.checkin.app.checkin.User.Friendship.FriendshipModel;
 import com.checkin.app.checkin.User.UserModel;
 import com.fasterxml.jackson.databind.node.ObjectNode;
@@ -142,7 +142,7 @@ public interface WebApiService {
     Call<MenuModel> getAvailableMenu(@Path("shop_id") String shopID);
 
     @GET("shops/{shop_id}/reviews/")
-    Call<List<ShopReviewPOJO>> getShopReviews(@Path("shop_id") String shopID);
+    Call<List<ShopReviewModel>> getShopReviews(@Path("shop_id") String shopID);
 
     @GET("notification")
     Call<List<NotificationModel>> getNotif(@Query("last_notif_id") int lastNotifId);

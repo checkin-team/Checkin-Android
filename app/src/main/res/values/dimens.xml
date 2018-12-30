@@ -1,4 +1,4 @@
-<resources xmlns:tools="http://schemas.android.com/tools">
+<resources>
     <!-- font sizes -->
     <dimen name="font_largest">26sp</dimen>
     <dimen name="font_larger">22sp</dimen>
@@ -6,7 +6,8 @@
     <dimen name="font_small_heading" format="float">16.5sp</dimen>
     <dimen name="font_normal">15sp</dimen>
     <dimen name="font_small">12sp</dimen>
-    <dimen name="font_extra_small">8sp</dimen>
+    <dimen name="font_extra_small">10sp</dimen>
+    <dimen name="font_tiny">8sp</dimen>
 
     <!-- typical spacing between two views -->
     <dimen name="spacing_gigantic">60dp</dimen>
@@ -18,6 +19,7 @@
     <dimen name="spacing_small">10dp</dimen>
     <dimen name="spacing_extra_small">7dp</dimen>
     <dimen name="spacing_tiny">4dp</dimen>
+    <dimen name="spacing_extra_tiny">2dp</dimen>
 
     <dimen name="size_tiny_icon">12dp</dimen>
     <dimen name="size_small_icon">24dp</dimen>
