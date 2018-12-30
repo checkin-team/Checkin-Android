@@ -6,7 +6,7 @@
 
     <include
         android:id="@+id/incl_checkin_card"
-        layout="@layout/include_shop_recent_checkin_card"
+        layout="@layout/incl_shop_recent_checkin_card"
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:layout_marginStart="@dimen/spacing_normal"

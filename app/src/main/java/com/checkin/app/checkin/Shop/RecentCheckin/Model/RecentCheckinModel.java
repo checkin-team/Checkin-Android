@@ -5,15 +5,12 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 
 import java.util.List;
 
-@JsonAutoDetect(fieldVisibility = JsonAutoDetect.Visibility.NONE)
+@JsonAutoDetect(fieldVisibility = JsonAutoDetect.Visibility.NONE, setterVisibility = JsonAutoDetect.Visibility.NONE)
 public class RecentCheckinModel {
-    @JsonProperty("capacity")
-    private int capacity;
-
-    @JsonProperty("live_male")
+    @JsonProperty("count_male")
     private int liveMale;
 
-    @JsonProperty("live_female")
+    @JsonProperty("count_female")
     private int liveFemale;
 
     @JsonProperty("checkins")
@@ -22,19 +19,10 @@ public class RecentCheckinModel {
     public RecentCheckinModel() {
     }
 
-    public RecentCheckinModel(int capacity, int liveMale, int liveFemale, List<UserCheckinModel> checkin) {
-        this.capacity = capacity;
+    public RecentCheckinModel(int liveMale, int liveFemale, List<UserCheckinModel> checkin) {
         this.liveMale = liveMale;
         this.liveFemale = liveFemale;
         this.checkins = checkin;
-    }
-
-    public int getCapacity() {
-        return capacity;
-    }
-
-    public String formatCapacity() {
-        return String.valueOf(capacity);
     }
 
     public String formatLiveMale()
@@ -60,10 +48,6 @@ public class RecentCheckinModel {
 
     public List<UserCheckinModel> getCheckins() {
         return checkins;
-    }
-
-    public void setCapacity(int capacity) {
-        this.capacity = capacity;
     }
 
     public void setLiveMale(int liveMale) {

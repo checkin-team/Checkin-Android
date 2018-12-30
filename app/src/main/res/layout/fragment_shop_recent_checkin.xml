@@ -96,7 +96,7 @@
                             app:layout_constraintEnd_toEndOf="@id/im_rc_profile_male"
                             app:layout_constraintStart_toStartOf="@id/im_rc_profile_male"
                             app:layout_constraintTop_toBottomOf="@id/im_rc_profile_male"
-                            tools:text="20" />
+                            android:text="0" />
 
                         <TextView
                             android:id="@+id/tv_rc_count_female"
@@ -108,7 +108,7 @@
                             app:layout_constraintEnd_toEndOf="@id/im_rc_profile_female"
                             app:layout_constraintStart_toStartOf="@id/im_rc_profile_female"
                             app:layout_constraintTop_toBottomOf="@id/im_rc_profile_female"
-                            tools:text="80" />
+                            android:text="0" />
                     </android.support.constraint.ConstraintLayout>
 
                 </android.support.v7.widget.CardView>
@@ -125,25 +125,22 @@
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
-                        android:orientation="vertical"
                         android:padding="@dimen/spacing_extra_small">
 
-                        <TextView
-                            android:id="@+id/tv_rc_capacity"
-                            style="@style/GreyTextStyle"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_gravity="center_horizontal"
-                            tools:text="CAPACITY: 88" />
+                        <ImageView
+                            android:layout_width="@dimen/size_small_icon"
+                            android:layout_height="@dimen/size_small_icon"
+                            android:src="@drawable/ic_person_outline_rouge"
+                            android:layout_gravity="center_vertical"/>
 
                         <TextView
                             android:id="@+id/tv_rc_live"
                             style="@style/GreyTextStyle"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_gravity="center_horizontal"
-                            android:layout_marginTop="@dimen/spacing_small"
-                            tools:text="LIVE: 10" />
+                            android:layout_marginStart="@dimen/spacing_extra_small"
+                            android:layout_gravity="center_vertical"
+                            android:text="0 LIVE" />
                     </LinearLayout>
 
                 </android.support.v7.widget.CardView>

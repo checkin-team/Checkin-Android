@@ -27,7 +27,6 @@ import com.checkin.app.checkin.Data.Resource.Status;
 import com.checkin.app.checkin.Menu.SessionUserActivity;
 import com.checkin.app.checkin.Misc.QRScannerActivity;
 import com.checkin.app.checkin.Notifications.NotificationActivity;
-import com.checkin.app.checkin.Profile.ShopProfile.ShopProfileActivity2;
 import com.checkin.app.checkin.R;
 import com.checkin.app.checkin.RestaurantActivity.Waiter.WaitorWork;
 import com.checkin.app.checkin.Search.SearchActivity;
@@ -394,8 +393,7 @@ public class HomeActivity extends BaseAccountActivity
                 SessionUserActivity.startSession(this, 1, 1);
                 break;
             case R.id.nav_privacy_settings:
-                intent = new Intent(getApplicationContext(), ShopProfileActivity2.class);
-                startActivity(intent);
+                startActivity(new Intent(this,ActiveSessionActivity.class));
                 break;
             case R.id.notif_activity:
                 intent = new Intent(getApplicationContext(), NotificationActivity.class);
@@ -501,7 +499,7 @@ public class HomeActivity extends BaseAccountActivity
 
     @OnClick(R.id.action_dine_in)
     public  void dine_in(View v){
-        startActivity(new Intent(this,ActiveSessionActivity.class));
+        return;
     }
 
     @OnClick(R.id.action_delivery)

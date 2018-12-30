@@ -9,7 +9,7 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 
 import com.checkin.app.checkin.Misc.BaseActivity;
-import com.checkin.app.checkin.Profile.ShopProfile.FragmentShopMenu;
+import com.checkin.app.checkin.Profile.ShopProfile.FragmentShopInsights;
 import com.checkin.app.checkin.R;
 import com.checkin.app.checkin.Shop.RecentCheckin.RecentCheckinFragment;
 import com.checkin.app.checkin.Utility.DynamicSwipableViewPager;
@@ -76,9 +76,8 @@ public class ShopActivity extends BaseActivity {
                 case 1:
                     return RecentCheckinFragment.newInstance(mShopPk);
                 case 2:
-                    return FragmentShopMenu.newInstance("1", "2");
             }
-            return null;
+            return FragmentShopInsights.newInstance("1", "2");
         }
 
         @Override

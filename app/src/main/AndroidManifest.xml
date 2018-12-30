@@ -97,9 +97,6 @@
             android:theme="@style/AppThemeWhiteActionBar" />
         <activity android:name=".Shop.ShopReviewsActivity" />
         <activity
-            android:name=".Profile.ShopProfile.ShopProfileActivity2"
-            android:screenOrientation="portrait" />
-        <activity
             android:name=".Shop.ShopPrivateProfile.EditProfileActivity"
             android:label="Edit Profile"
             android:screenOrientation="portrait"

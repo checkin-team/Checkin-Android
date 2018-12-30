@@ -422,25 +422,28 @@ public class Util {
         return new SimpleDateFormat("HH:mm", Locale.ENGLISH).format(dateTime);
     }
 
+    public static String formatElapsedTime(Date eventTime) {
+        return formatElapsedTime(eventTime, Calendar.getInstance().getTime());
+    }
 
-    public static String timePassed(Date timeEvent){
-        Date date;
-        date = Calendar.getInstance().getTime();
-        long different=date.getTime()-timeEvent.getTime();
+    public static String formatElapsedTime(Date eventTime, Date currentTime){
+        long diffTime = currentTime.getTime() - eventTime.getTime();
         long secondsInMilli = 1000;
         long minutesInMilli = secondsInMilli * 60;
         long hoursInMilli = minutesInMilli * 60;
         long daysInMilli = hoursInMilli * 24;
-        long elapsedDays = different / daysInMilli;
-        different = different % daysInMilli;
-
-        long elapsedHours = different / hoursInMilli;
-        different = different % hoursInMilli;
-
-        long elapsedMinutes = different / minutesInMilli;
-        different = different % minutesInMilli;
-
-       return (elapsedDays+" days, "+elapsedHours+" hours, "+ elapsedMinutes+"minutes ago");
-
+        long elapsedDays = diffTime / daysInMilli;
+        diffTime = diffTime % daysInMilli;
+        long elapsedHours = diffTime / hoursInMilli;
+        diffTime = diffTime % hoursInMilli;
+        long elapsedMinutes = diffTime / minutesInMilli;
+        diffTime = diffTime % minutesInMilli;
+        if (elapsedDays > 0)
+            return String.format(Locale.ENGLISH, "%d days ago", elapsedDays);
+        if (elapsedHours > 0)
+            return String.format(Locale.ENGLISH, "%d hours ago", elapsedHours);
+        if (elapsedMinutes > 0)
+            return String.format(Locale.ENGLISH, "%d minutes ago", elapsedMinutes);
+        return "Now";
     }
 }

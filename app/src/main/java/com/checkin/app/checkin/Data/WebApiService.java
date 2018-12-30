@@ -133,7 +133,7 @@ public interface WebApiService {
     @DELETE("sessions/active/customers/{user_id}/")
     Call<ObjectNode> deleteActiveSessionCustomer(@Path("user_id") String userId);
 
-    @GET("sessions/recent/shops/{shop_id}/")
+    @GET("sessions/recent/restaurants/{shop_id}/")
     Call<RecentCheckinModel> getRecentCheckins(@Path("shop_id") String shopId);
 
     // endregion

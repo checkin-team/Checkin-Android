@@ -29,7 +29,6 @@ import static com.checkin.app.checkin.Data.Resource.Status;
 public class RecentCheckinFragment extends Fragment implements RecentCheckinAdapter.RecentCheckinInteraction {
     private Unbinder unbinder;
 
-    @BindView(R.id.tv_rc_capacity) TextView tvCapacity;
     @BindView(R.id.tv_rc_live) TextView tvCountLive;
     @BindView(R.id.tv_rc_count_male) TextView tvCountMale;
     @BindView(R.id.tv_rc_count_female) TextView tvCountFemale;
@@ -68,15 +67,13 @@ public class RecentCheckinFragment extends Fragment implements RecentCheckinAdap
                 return;
             if (recentCheckinModelResource.status == Status.SUCCESS && recentCheckinModelResource.data != null) {
                 RecentCheckinModel data = recentCheckinModelResource.data;
-                tvCapacity.setText(String.format(Locale.ENGLISH, "Capacity: %s", data.formatCapacity()));
                 tvCountLive.setText(String.format(Locale.ENGLISH, "Live: %s", data.formatLiveCount()));
                 tvCountFemale.setText(data.formatLiveFemale());
                 tvCountMale.setText(data.formatLiveMale());
                 mAdapter.updateUserCheckins(data.getCheckins());
             }
         });
-        mViewModel.setDummyData();
-//        mViewModel.fetchRecentCheckins(mShopId);
+        mViewModel.fetchRecentCheckins(mShopId);
     }
 
     @Override

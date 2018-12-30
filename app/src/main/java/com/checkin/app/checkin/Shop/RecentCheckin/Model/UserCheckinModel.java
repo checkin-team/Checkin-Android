@@ -8,9 +8,9 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 
 import java.util.Date;
 
-@JsonAutoDetect(fieldVisibility = JsonAutoDetect.Visibility.NONE)
+@JsonAutoDetect(fieldVisibility = JsonAutoDetect.Visibility.NONE, setterVisibility = JsonAutoDetect.Visibility.NONE)
 public class UserCheckinModel {
-    @JsonProperty("checkin_date")
+    @JsonProperty("checked_in")
     private Date checkinTime;
 
     @JsonProperty("gender")
