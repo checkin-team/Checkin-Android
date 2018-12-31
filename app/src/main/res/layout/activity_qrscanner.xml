@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".Misc.QRScannerActivity">
+
+    <FrameLayout
+        android:id="@+id/fragment_scanner"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
+
+    <ImageView
+        android:id="@+id/btn_flash_toggle"
+        android:layout_width="@dimen/size_normal_icon"
+        android:layout_height="@dimen/size_normal_icon"
+        android:src="@drawable/ic_flash_toggle"
+        android:clickable="true"
+        android:focusable="true"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="80dp"/>
+
+</FrameLayout>

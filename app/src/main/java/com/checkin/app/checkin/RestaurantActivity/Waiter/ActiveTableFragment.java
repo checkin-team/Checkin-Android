@@ -10,7 +10,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.checkin.app.checkin.Menu.MenuSearchFragment;
+import com.checkin.app.checkin.Menu.Fragment.MenuItemSearchFragment;
 import com.checkin.app.checkin.R;
 
 import java.util.List;
@@ -20,7 +20,7 @@ import butterknife.ButterKnife;
 import butterknife.Unbinder;
 
 public class ActiveTableFragment extends Fragment {
-    private final String TAG = MenuSearchFragment.class.getSimpleName();
+    private final String TAG = MenuItemSearchFragment.class.getSimpleName();
 
     @BindView(R.id.active_table_list)
     RecyclerView rvTablesList;

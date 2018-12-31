@@ -9,7 +9,7 @@
     <EditText
         android:id="@+id/ed_email"
         android:layout_width="match_parent"
-        android:layout_height="@dimen/height_textbox_normal"
+        android:layout_height="@dimen/height_input_normal"
         android:layout_marginEnd="@dimen/spacing_normal"
         android:layout_marginStart="@dimen/spacing_normal"
         android:layout_marginTop="@dimen/spacing_extra_large"

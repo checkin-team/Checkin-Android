@@ -17,12 +17,12 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 import com.checkin.app.checkin.Data.Resource;
+import com.checkin.app.checkin.Misc.StatusTextViewHolder;
 import com.checkin.app.checkin.R;
 import com.checkin.app.checkin.Shop.RestaurantModel;
 import com.checkin.app.checkin.Shop.ShopModel.PAYMENT_MODE;
 import com.checkin.app.checkin.Utility.HeaderFooterRecyclerViewAdapter;
 import com.checkin.app.checkin.Utility.MultiSpinner;
-import com.checkin.app.checkin.Misc.StatusTextViewHolder;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -89,6 +89,9 @@ public class EditAspectFragment extends Fragment implements MultiSpinner.MultiSp
         mViewModel = ViewModelProviders.of(getActivity()).get(ShopProfileViewModel.class);
 
         mViewModel.getShopData().observe(this, resource -> {
+            if (resource == null)
+                return;
+
             if (resource.status == Resource.Status.SUCCESS && resource.data != null) {
                 this.setupValues(resource.data);
             }
@@ -102,10 +105,10 @@ public class EditAspectFragment extends Fragment implements MultiSpinner.MultiSp
             }
         });
 
-        mViewModel.shouldCollectData().observe(this, shouldCollectData -> {
+        mViewModel.shouldCollectAspectData().observe(this, shouldCollectData -> {
             if (shouldCollectData != null && shouldCollectData) {
-                CharSequence[] cuisines = vCuisines.getSelectedItems();
-                CharSequence[] categories = vCategories.getSelectedItems();
+                CharSequence[] cuisines = vCuisines.getSelectedValues();
+                CharSequence[] categories = vCategories.getSelectedValues();
                 PAYMENT_MODE[] modes = this.getPaymentModes();
                 boolean hasNonVeg = rbChoiceNonVeg.isChecked();
                 boolean hasAlcohol = rbChoiceAlcoholYes.isChecked();
@@ -121,8 +124,8 @@ public class EditAspectFragment extends Fragment implements MultiSpinner.MultiSp
 
     private void setupValues(RestaurantModel shop) {
         mAdapter.setData(new ArrayList<>(Arrays.asList(shop.getExtraData())));
-        vCategories.selectEntries(shop.getCategories());
-        vCuisines.selectEntries(shop.getCuisines());
+        vCategories.selectValues(shop.getCategories());
+        vCuisines.selectValues(shop.getCuisines());
         setPaymentModes(shop.getPaymentModes());
 
         if (shop.servesAlcohol())
@@ -186,8 +189,8 @@ public class EditAspectFragment extends Fragment implements MultiSpinner.MultiSp
 
     private boolean isDataValid() {
         boolean validPaymentMode = cbChoiceCash.isChecked() || cbChoiceCard.isChecked() || cbChoicePaytm.isChecked();
-        boolean validCuisines = vCuisines.getSelectedItems().length > 0;
-        boolean validCategories = vCategories.getSelectedItems().length > 0;
+        boolean validCuisines = vCuisines.getSelectedValues().length > 0;
+        boolean validCategories = vCategories.getSelectedValues().length > 0;
         return validCategories && validCuisines && validPaymentMode;
     }
 
@@ -267,14 +270,13 @@ public class EditAspectFragment extends Fragment implements MultiSpinner.MultiSp
         private void setupAddDialog() {
             final View view = LayoutInflater.from(getContext()).inflate(R.layout.view_input_text, null, false);
             EditText edText = view.findViewById(R.id.ed_input);
-            AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
-            builder.setTitle("Add detail");
-            builder.setView(view);
-            builder.setPositiveButton("Add", (dialog, which) -> {
-                this.addData(edText.getText().toString());
-            });
-            builder.setNegativeButton("Cancel", ((dialogInterface, i) -> dialogInterface.dismiss()));
-            mAddDialog = builder.create();
+            AlertDialog.Builder builder = new AlertDialog.Builder(requireContext());
+            mAddDialog = builder
+                    .setTitle("Add detail")
+                    .setView(view)
+                    .setPositiveButton("Add", (dialog, which) -> this.addData(edText.getText().toString()))
+                    .setNegativeButton("Cancel", ((dialogInterface, i) -> dialogInterface.dismiss()))
+                    .create();
         }
 
         @Override

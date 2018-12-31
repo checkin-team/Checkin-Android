@@ -15,9 +15,12 @@
     <uses-permission
         android:name="android.permission.USE_CREDENTIALS"
         android:maxSdkVersion="22" />
+    <uses-permission android:name="android.permission.CAMERA" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+
+    <uses-feature android:name="android.hardware.camera" />
 
     <application
         android:allowBackup="true"
@@ -47,10 +50,10 @@
             tools:replace="screenOrientation" />
         <activity android:name=".User.NonPersonalProfile.UserProfileActivity" />
         <activity android:name=".User.PersonalProfile.UserProfileActivity" />
-        <activity android:name=".User.NonPersonalProfile.UserCheckinsActivity"
-            android:theme="@style/Theme.AppCompat.Light"
-            android:parentActivityName=".User.NonPersonalProfile.UserProfileActivity">
-        </activity>
+        <activity
+            android:name=".User.NonPersonalProfile.UserCheckinsActivity"
+            android:parentActivityName=".User.NonPersonalProfile.UserProfileActivity"
+            android:theme="@style/Theme.AppCompat.Light"></activity>
         <activity
             android:name=".User.PersonalProfile.ProfileEditActivity"
             android:label="Edit Profile"
@@ -59,18 +62,19 @@
             android:name=".User.Friendship.FriendsListActivity"
             android:label="Friends"
             android:theme="@style/AppThemeWhiteActionBar" />
-        <activity android:name=".Shop.ShopPublicProfile.ShopActivity"
-            android:screenOrientation="portrait" />
-        <activity android:name=".Shop.ShopPrivateProfile.ShopActivity"
+        <activity
+            android:name=".Shop.ShopPublicProfile.ShopActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".Menu.SessionUserActivity"
+            android:name=".Shop.ShopPrivateProfile.ShopActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".Menu.SessionMenuActivity"
             android:screenOrientation="portrait"
             android:theme="@style/SessionTheme"
             android:windowSoftInputMode="adjustPan" />
         <activity android:name=".Misc.TransactionActivity" />
         <activity android:name=".Misc.FilterTransactions" />
-        <activity android:name=".Misc.FaqActivity" />
         <activity
             android:name=".RestaurantActivity.Waiter.WaitorWork"
             android:label="WaitorWorkActivity"
@@ -78,7 +82,7 @@
             android:theme="@style/AppTheme"
             tools:replace="screenOrientation" />
         <activity
-            android:name=".Session.ActiveSessionActivity"
+            android:name=".Session.ActiveSession.ActiveSessionActivity"
             android:windowSoftInputMode="adjustNothing" />
         <activity
             android:name=".Shop.ShopJoin.BusinessFeaturesActivity"
@@ -91,13 +95,10 @@
             android:name=".Shop.ShopJoin.ShopJoinActivity"
             android:parentActivityName=".Shop.ShopJoin.ContactVerifyActivity"
             android:theme="@style/AppThemeWhiteActionBar" />
-        <activity android:name=".Shop.ShopReviewsActivity" />
-        <activity
-            android:name=".Profile.ShopProfile.ShopProfileActivity2"
-            android:screenOrientation="portrait" />
         <activity
             android:name=".Shop.ShopPrivateProfile.EditProfileActivity"
             android:label="Edit Profile"
+            android:screenOrientation="portrait"
             android:theme="@style/AppThemeWhiteActionBar" />
         <activity
             android:name=".Notifications.NotificationActivity"
@@ -130,10 +131,20 @@
             android:name=".Search.SearchActivity"
             android:theme="@style/AppTheme" />
         <activity
-            android:name=".Shop.ShopPrivateProfile.ShopMembersActivity"
-            android:label="MEMBERS"
+            android:name=".Shop.ShopPrivateProfile.MembersActivity"
             android:screenOrientation="portrait"
+            android:label="Members"
             android:theme="@style/AppThemeWhiteActionBar" />
+        <activity android:name=".Review.ShopReview.ShopReviewFragment"
+            android:theme="@style/AppThemeWhiteActionBar"/>
+
+        <activity android:name=".Misc.QRScannerActivity"
+            android:label="Scan CheckIn QR"
+            android:theme="@style/AppThemeWhiteActionBar"/>
+
+        <activity android:name=".Review.ShopReview.ShopReviewsActivity"
+            android:label="Reviews"
+            android:theme="@style/AppThemeWhiteActionBar"/>
 
         <service
             android:name=".Auth.AuthenticatorService"
@@ -158,9 +169,6 @@
         <meta-data
             android:name="com.facebook.sdk.ApplicationId"
             android:value="@string/facebook_app_id" />
-        <meta-data
-            android:name="preloaded_fonts"
-            android:resource="@array/preloaded_fonts" />
         <!--
              The API key for Google Maps-based APIs is defined as a string resource.
              (See the file "res/values/google_maps_api.xml").

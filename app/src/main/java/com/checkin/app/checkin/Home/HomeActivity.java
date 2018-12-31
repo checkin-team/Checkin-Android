@@ -6,7 +6,9 @@ import android.animation.AnimatorSet;
 import android.annotation.SuppressLint;
 import android.arch.lifecycle.ViewModelProviders;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.support.annotation.NonNull;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
@@ -15,7 +17,6 @@ import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.MenuItem;
 import android.view.MotionEvent;
 import android.view.View;
@@ -24,25 +25,21 @@ import android.widget.TextView;
 
 import com.checkin.app.checkin.Account.AccountModel.ACCOUNT_TYPE;
 import com.checkin.app.checkin.Account.BaseAccountActivity;
-import com.checkin.app.checkin.Data.Resource;
-import com.checkin.app.checkin.Menu.SessionUserActivity;
+import com.checkin.app.checkin.Data.Resource.Status;
+import com.checkin.app.checkin.Menu.SessionMenuActivity;
+import com.checkin.app.checkin.Misc.QRScannerActivity;
 import com.checkin.app.checkin.Notifications.NotificationActivity;
-import com.checkin.app.checkin.Profile.ShopProfile.ShopProfileActivity2;
 import com.checkin.app.checkin.R;
 import com.checkin.app.checkin.RestaurantActivity.Waiter.WaitorWork;
 import com.checkin.app.checkin.Search.SearchActivity;
-import com.checkin.app.checkin.Session.ActiveSessionActivity;
-import com.checkin.app.checkin.Shop.ShopJoin.BusinessFeaturesActivity;
+import com.checkin.app.checkin.Session.ActiveSession.ActiveSessionActivity;
 import com.checkin.app.checkin.Shop.ShopPublicProfile.ShopActivity;
 import com.checkin.app.checkin.User.NonPersonalProfile.UserViewModel;
 import com.checkin.app.checkin.User.PersonalProfile.UserProfileActivity;
 import com.checkin.app.checkin.Utility.ClipRevealFrame;
+import com.checkin.app.checkin.Utility.Constants;
 import com.checkin.app.checkin.Utility.ItemClickSupport;
 import com.checkin.app.checkin.Utility.Util;
-import com.fasterxml.jackson.databind.JsonNode;
-import com.fasterxml.jackson.databind.node.ObjectNode;
-import com.google.zxing.integration.android.IntentIntegrator;
-import com.google.zxing.integration.android.IntentResult;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -53,7 +50,8 @@ import butterknife.OnClick;
 
 public class HomeActivity extends BaseAccountActivity
         implements NavigationView.OnNavigationItemSelectedListener {
-    private final String TAG = HomeActivity.class.getSimpleName();
+    private static final String TAG = HomeActivity.class.getSimpleName();
+    private static final int REQUEST_QR_SCANNER = 202;
 
     @BindView(R.id.drawer_root)
     DrawerLayout drawerLayout;
@@ -77,14 +75,11 @@ public class HomeActivity extends BaseAccountActivity
     @BindView(R.id.im_shop_category_back)
     ImageView imShopsCategoryBack;
 
-    @BindView(R.id.action_delivery)
-    TextView testingViewPager;
-
     private UserViewModel mUserViewModel;
     private HomeViewModel mHomeViewModel;
     private TrendingShopAdapter mTrendingShopAdapter;
     private UserActivityAdapter mUserActivityAdapter;
-    private final float PERCENT_LEFT_SHIFTED = 30;
+//    private final float PERCENT_LEFT_SHIFTED = 30;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -100,19 +95,16 @@ public class HomeActivity extends BaseAccountActivity
         setupTrendingShops();
         setupUserActivities();
 
-        mHomeViewModel.getObservableData().observe(this, resource -> {
+        mHomeViewModel.getQrResult().observe(this, resource -> {
             if (resource == null)   return;
-            switch (resource.status) {
-                case SUCCESS: {
-                    ObjectNode data = resource.data;
-                    JsonNode detail = data.get("detail");
-                    SessionUserActivity.startSession(this, detail.get("shop_id").asLong(0), detail.get("qr_id").asInt(0));
-                    break;
-                }
-
-                default: {
-                    Log.e(TAG, "status: " + resource.status + ", message: " + resource.message);
-                }
+            if (resource.status == Status.SUCCESS && resource.data != null) {
+                PreferenceManager.getDefaultSharedPreferences(this).edit()
+                        .putString(Constants.SP_SESSION_RESTAURANT_PK, resource.data.get("restaurant_pk").asText())
+                        .putString(Constants.SP_SESSION_ACTIVE_PK, resource.data.get("session_pk").asText())
+                        .apply();
+                Util.toast(this, resource.data.get("detail").asText());
+            } else if (resource.status != Status.LOADING) {
+                Util.toast(this, resource.message);
             }
         });
     }
@@ -354,7 +346,7 @@ public class HomeActivity extends BaseAccountActivity
         rvTrendingShops.setAdapter(mTrendingShopAdapter);
 
         mHomeViewModel.getTrendingRestaurants().observe(this, listResource -> {
-            if (listResource != null && listResource.status == Resource.Status.SUCCESS)
+            if (listResource != null && listResource.status == Status.SUCCESS)
                 mTrendingShopAdapter.setData(listResource.data);
         });
 
@@ -378,7 +370,7 @@ public class HomeActivity extends BaseAccountActivity
         });
 
         mUserViewModel.getAllUsers().observe(this, (userResource -> {
-            if (userResource != null && userResource.status == Resource.Status.SUCCESS)
+            if (userResource != null && userResource.status == Status.SUCCESS)
                 mUserActivityAdapter.setUsers(userResource.data);
         }));
     }
@@ -403,12 +395,14 @@ public class HomeActivity extends BaseAccountActivity
                 intent = new Intent(getApplicationContext(), UserProfileActivity.class);
                 startActivity(intent);
                 break;
-            case R.id.nav_settings:
-                SessionUserActivity.startSession(this, 1, 1);
+            case R.id.nav_menu:
+                SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
+                String restaurantPk = prefs.getString(Constants.SP_SESSION_RESTAURANT_PK, "");
+                String sessionPk = prefs.getString(Constants.SP_SESSION_ACTIVE_PK, "");
+                SessionMenuActivity.withSession(this, sessionPk, restaurantPk);
                 break;
             case R.id.nav_privacy_settings:
-                intent = new Intent(getApplicationContext(), ShopProfileActivity2.class);
-                startActivity(intent);
+                startActivity(new Intent(this,ActiveSessionActivity.class));
                 break;
             case R.id.notif_activity:
                 intent = new Intent(getApplicationContext(), NotificationActivity.class);
@@ -429,25 +423,17 @@ public class HomeActivity extends BaseAccountActivity
 
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
-        IntentResult result = IntentIntegrator.parseActivityResult(requestCode, resultCode, data);
-        if (result != null) {
-            if (result.getContents() == null) {
-                // cancelled operation
-            } else {
-                Log.e(TAG, "QR: " + result.getContents());
-                mHomeViewModel.decryptQr(result.getContents());
-            }
-        } else {
-            super.onActivityResult(requestCode, resultCode, data);
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == REQUEST_QR_SCANNER && resultCode == RESULT_OK) {
+            String qrData = data.getStringExtra(QRScannerActivity.KEY_QR_RESULT);
+            mHomeViewModel.processQr(qrData);
         }
     }
 
     @OnClick(R.id.appbar_title)
     public void onQrScannerClick(View v) {
-        IntentIntegrator qrScan = new IntentIntegrator(this);
-        qrScan.setPrompt("Scan the QR code, present on the table!");
-        qrScan.setOrientationLocked(false);
-        qrScan.initiateScan();
+        Intent intent = new Intent(getApplicationContext(), QRScannerActivity.class);
+        startActivityForResult(intent, REQUEST_QR_SCANNER);
     }
 
     private float[] computeAddViewDetails(View v) {
@@ -522,12 +508,10 @@ public class HomeActivity extends BaseAccountActivity
 
     @OnClick(R.id.action_dine_in)
     public  void dine_in(View v){
-        startActivity(new Intent(this,ActiveSessionActivity.class));
     }
 
     @OnClick(R.id.action_delivery)
     public void delivery(View v) {
-        startActivity(new Intent(this, BusinessFeaturesActivity.class));
     }
 
     @Override

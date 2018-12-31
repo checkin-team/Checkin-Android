@@ -1,8 +1,15 @@
 package com.checkin.app.checkin.Shop;
 
+import com.checkin.app.checkin.Data.Converters;
 import com.checkin.app.checkin.Misc.LocationModel;
+import com.fasterxml.jackson.annotation.JsonAutoDetect;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.databind.node.ObjectNode;
 
+@JsonInclude(value = JsonInclude.Include.NON_NULL)
+@JsonAutoDetect(fieldVisibility = JsonAutoDetect.Visibility.NONE, getterVisibility = JsonAutoDetect.Visibility.NONE, isGetterVisibility = JsonAutoDetect.Visibility.NONE)
 public class ShopModel {
     @JsonProperty("pk")
     protected String pk;
@@ -25,6 +32,9 @@ public class ShopModel {
     @JsonProperty("email")
     protected String email;
 
+    @JsonProperty("is_email_unconfirmed")
+    protected Boolean emailUnconfirmed;
+
     @JsonProperty("website")
     protected String website;
 
@@ -42,10 +52,16 @@ public class ShopModel {
     protected String[] extraData;
 
     @JsonProperty("is_verified")
-    protected boolean verified;
+    protected Boolean verified;
 
     @JsonProperty("is_active")
-    protected boolean active;
+    protected Boolean active;
+
+    @JsonProperty("non_working_days")
+    protected CharSequence[] nonWorkingDays;
+
+    protected long openingHour;
+    protected long closingHour;
 
     public enum PAYMENT_MODE {
         CASH("csh"), PAYTM("ptm"), CARD("crd");
@@ -79,10 +95,15 @@ public class ShopModel {
         return name;
     }
 
+    public void setName(String name) {
+        this.name = name;
+    }
+
     public String getPhone() {
         return phone;
     }
 
+    @JsonIgnore
     public String getEmail() {
         return email;
     }
@@ -91,8 +112,16 @@ public class ShopModel {
         return website;
     }
 
+    public void setWebsite(String website) {
+        this.website = website;
+    }
+
     public String getTagline() {
         return tagline;
+    }
+
+    public void setTagline(String tagline) {
+        this.tagline = tagline;
     }
 
     public String getLogoUrl() {
@@ -103,12 +132,18 @@ public class ShopModel {
         return covers;
     }
 
-    public boolean isVerified() {
+    @JsonIgnore
+    public Boolean isVerified() {
         return verified;
     }
 
-    public boolean isActive() {
+    public Boolean isActive() {
         return active;
+    }
+
+    @JsonIgnore
+    public Boolean isEmailUnconfirmed() {
+        return emailUnconfirmed;
     }
 
     public PAYMENT_MODE[] getPaymentModes() {
@@ -117,6 +152,8 @@ public class ShopModel {
 
     @JsonProperty("payment_mode")
     public String[] serializePaymentModes() {
+        if (paymentModes == null)
+            return null;
         String[] modes = new String[paymentModes.length];
         for (int i = 0; i < paymentModes.length; i++) {
             modes[i] = paymentModes[i].tag;
@@ -124,10 +161,12 @@ public class ShopModel {
         return modes;
     }
 
-    public boolean isValidStatus() {
+    @JsonIgnore
+    public Boolean isValidStatus() {
         return this.isVerified() && this.isActive();
     }
 
+    @JsonIgnore
     public String getShopStatus() {
         String msg = "Shop is properly working.";
         if (!isVerified()) {
@@ -166,5 +205,52 @@ public class ShopModel {
 
     public void setExtraData(String... extraData) {
         this.extraData = extraData;
+    }
+
+    public CharSequence[] getNonWorkingDays() {
+        return nonWorkingDays;
+    }
+
+    public void setNonWorkingDays(CharSequence[] nonWorkingDays) {
+        this.nonWorkingDays = nonWorkingDays;
+    }
+
+    public void setOpeningHour(long openingHour) {
+        this.openingHour = openingHour;
+    }
+
+    @JsonIgnore
+    public long getOpeningHour() {
+        return this.openingHour;
+    }
+
+    public void setClosingHour(long closingHour) {
+        this.closingHour = closingHour;
+    }
+
+    @JsonIgnore
+    public long getClosingHour() {
+        return this.closingHour;
+    }
+
+    @JsonProperty("working_timerange")
+    public ObjectNode serializeWorkingTimeRange() {
+        if (this.openingHour == this.closingHour)
+            return null;
+        ObjectNode data = Converters.objectMapper.createObjectNode();
+        data.put("lower", this.openingHour);
+        data.put("upper", this.closingHour);
+        return data;
+    }
+
+    @JsonProperty("working_timerange")
+    public void setWorkingTimerange(ObjectNode data) {
+        if (data == null || !data.has("lower") || !data.has("upper")) {
+            this.openingHour = 0L;
+            this.closingHour = 0L;
+            return;
+        }
+        this.openingHour = data.get("lower").asLong(0);
+        this.closingHour = data.get("upper").asLong(0);
     }
 }

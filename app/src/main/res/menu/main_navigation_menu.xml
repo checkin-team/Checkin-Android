@@ -8,15 +8,15 @@
             android:title="Profile" />
     <group>
         <item
-            android:id="@+id/nav_settings"
+            android:id="@+id/nav_menu"
             android:icon="@drawable/settings"
-            android:name="Settings"
-            android:title="Settings" />
+            android:name="Menu"
+            android:title="Menu" />
         <item
             android:id="@+id/nav_privacy_settings"
-            android:name="privacy settings"
+            android:name="Active  Session"
             android:icon="@drawable/privacy"
-            android:title="Privacy Settings" />
+            android:title="Active Session" />
         <item
             android:id="@+id/notif_activity"
             android:name="privacy settings"

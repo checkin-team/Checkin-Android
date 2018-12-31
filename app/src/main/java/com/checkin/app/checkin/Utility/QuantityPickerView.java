@@ -18,6 +18,7 @@ public class QuantityPickerView extends DiscreteScrollView {
     private static final int MAX_CLICK_DURATION = 200;
     private static final int MAX_CLICK_DISTANCE = 10;
     private long startClickTime;
+
     public enum Direction {
         NONE, START, END
     }

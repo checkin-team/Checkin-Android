@@ -1,42 +1,132 @@
 package com.checkin.app.checkin.Menu;
 
 import android.app.Application;
-import android.arch.core.util.Function;
-import android.arch.lifecycle.AndroidViewModel;
 import android.arch.lifecycle.LiveData;
 import android.arch.lifecycle.MediatorLiveData;
 import android.arch.lifecycle.MutableLiveData;
-import android.arch.lifecycle.Observer;
 import android.arch.lifecycle.Transformations;
-import android.arch.lifecycle.ViewModel;
-import android.arch.lifecycle.ViewModelProvider;
-import android.nfc.Tag;
+import android.os.Handler;
 import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
 import android.util.Log;
-import android.view.MenuItem;
 
+import com.checkin.app.checkin.Data.BaseViewModel;
 import com.checkin.app.checkin.Data.Resource;
+import com.checkin.app.checkin.Menu.Model.ItemCustomizationFieldModel;
+import com.checkin.app.checkin.Menu.Model.MenuGroupModel;
+import com.checkin.app.checkin.Menu.Model.MenuItemModel;
+import com.checkin.app.checkin.Menu.Model.MenuModel;
+import com.checkin.app.checkin.Menu.Model.OrderedItemModel;
+import com.fasterxml.jackson.databind.node.ArrayNode;
 
 import java.util.ArrayList;
-import java.util.Collection;
-import java.util.Iterator;
+import java.util.Collections;
 import java.util.List;
-import java.util.ListIterator;
 
-public class MenuViewModel extends AndroidViewModel {
+public class MenuViewModel extends BaseViewModel {
     private final String TAG = MenuViewModel.class.getSimpleName();
+
     private MenuRepository mRepository;
-//    private LiveData<List<MenuItemModel>> mMenuItems;
-    private LiveData<List<String>> mCategories;
-    private LiveData<Resource<List<MenuGroupModel>>> mMenuGroups;
+
+    private MediatorLiveData<Resource<MenuModel>> mMenuData = new MediatorLiveData<>();
+    private MediatorLiveData<Resource<List<MenuGroupModel>>> mOriginalMenuGroups = new MediatorLiveData<>();
+    private MediatorLiveData<Resource<List<MenuGroupModel>>> mMenuGroups = new MediatorLiveData<>();
+    private MediatorLiveData<Resource<List<MenuItemModel>>> mMenuItems = new MediatorLiveData<>();
+    private MediatorLiveData<Resource<ArrayNode>> mResultOrder = new MediatorLiveData<>();
+
     private MutableLiveData<List<OrderedItemModel>> mOrderedItems = new MutableLiveData<>();
     private MutableLiveData<OrderedItemModel> mCurrentItem = new MutableLiveData<>();
-    private MediatorLiveData<List<MenuItemModel>> var=new MediatorLiveData<>();
+
+    private final Handler mHandler =  new Handler();
+    private Runnable mRunnable;
 
     MenuViewModel(@NonNull Application application) {
         super(application);
         mRepository = MenuRepository.getInstance(application);
+    }
+
+    @Override
+    public void updateResults() {}
+
+    public void fetchAvailableMenu(String shopId) {
+        mMenuData.addSource(mRepository.getAvailableMenu(shopId), mMenuData::setValue);
+        resetMenuGroups();
+
+        LiveData<Resource<List<MenuGroupModel>>> resourceLiveData = Transformations.map(mMenuData, menuModelResource -> {
+            mOriginalMenuGroups.setValue(Resource.loading(null));
+            if (menuModelResource == null || menuModelResource.data == null)
+                return Resource.loading(null);
+            List<MenuGroupModel> groups = menuModelResource.data.getGroups();
+            Collections.sort(groups, (o1, o2) -> o1.getCategory().compareTo(o2.getCategory()));
+            return Resource.cloneResource(menuModelResource, groups);
+        });
+        mOriginalMenuGroups.addSource(resourceLiveData, listResource -> {
+            mOriginalMenuGroups.setValue(listResource);
+            resetMenuGroups();
+        });
+    }
+
+    public void resetMenuGroups() {
+        mMenuGroups.setValue(mOriginalMenuGroups.getValue());
+    }
+
+    public LiveData<Resource<List<MenuGroupModel>>> getMenuGroups() {
+        return mMenuGroups;
+    }
+
+    public void resetMenuItems() {
+        mMenuItems.setValue(Resource.noRequest());
+    }
+
+    public void searchMenuItems(final String query) {
+        if (query == null || query.isEmpty())
+            return;
+        mMenuItems.setValue(Resource.loading(null));
+        if (mRunnable != null)
+            mHandler.removeCallbacks(mRunnable);
+        mRunnable = () -> {
+            LiveData<Resource<List<MenuItemModel>>> resourceLiveData = Transformations.map(mMenuData, input -> {
+                if (input == null || input.data == null)
+                    return Resource.loading(null);
+                List<MenuItemModel> items = new ArrayList<>();
+                for (MenuGroupModel groupModel : input.data.getGroups()) {
+                    for (MenuItemModel itemModel : groupModel.getItems()) {
+                        if (itemModel.getName().toLowerCase().contains(query.toLowerCase()))
+                            items.add(itemModel);
+                    }
+                }
+                if (items.size() == 0)
+                    return Resource.errorNotFound(null);
+                return Resource.cloneResource(input, items);
+            });
+            mMenuItems.addSource(resourceLiveData, mMenuItems::setValue);
+        };
+        mHandler.postDelayed(mRunnable, 500);
+    }
+
+    public void filterMenuGroups(final MenuItemModel.AVAILABLE_MEAL availableMeal) {
+        LiveData<Resource<List<MenuGroupModel>>> resourceLiveData = Transformations.map(mOriginalMenuGroups, listResource -> {
+            if (listResource == null || listResource.data == null)
+                return null;
+            List<MenuGroupModel> result = new ArrayList<>();
+            for (MenuGroupModel menuGroupModel: listResource.data) {
+                List<MenuItemModel> items = new ArrayList<>();
+                for (MenuItemModel menuItemModel: menuGroupModel.getItems()) {
+                    if (menuItemModel.hasAvailableMeal(availableMeal)) {
+                        items.add(menuItemModel);
+                    }
+                }
+                if (items.size() > 0) {
+                    menuGroupModel.setItems(items);
+                    result.add(menuGroupModel);
+                }
+            }
+            return Resource.cloneResource(listResource, result);
+        });
+        mMenuGroups.addSource(resourceLiveData, mMenuGroups::setValue);
+    }
+
+    public LiveData<Resource<List<MenuItemModel>>> getFilteredMenuItems() {
+        return mMenuItems;
     }
 
     public void addItemCustomization(ItemCustomizationFieldModel customizationField) {
@@ -56,13 +146,6 @@ public class MenuViewModel extends AndroidViewModel {
         } catch (CloneNotSupportedException e) {
             Log.e(TAG, "Couldn't clone OrderedItem!");
         }
-    }
-
-    public void setRemarks(String remarks) {
-        OrderedItemModel item = mCurrentItem.getValue();
-        if (item == null)   return;
-        item.setRemarks(remarks);
-        mCurrentItem.setValue(item);
     }
 
     public void removeItemCustomization(ItemCustomizationFieldModel customizationField) {
@@ -150,7 +233,7 @@ public class MenuViewModel extends AndroidViewModel {
         OrderedItemModel orderedItem = null;
         int cartCount = 0;
         for (OrderedItemModel listItem : items) {
-            if (item.equals(listItem.getItem())) {
+            if (item.equals(listItem.getItemModel())) {
                 cartCount += listItem.getQuantity();
                 if (!item.isComplexItem()) {
                     try {
@@ -198,7 +281,7 @@ public class MenuViewModel extends AndroidViewModel {
             else
                 orderedItems.remove(index);
         } else {
-            if (item.getItem().isComplexItem())
+            if (item.getItemModel().isComplexItem())
                 item.setQuantity(item.getChangeCount());
             orderedItems.add(item);
         }
@@ -210,7 +293,7 @@ public class MenuViewModel extends AndroidViewModel {
         List<OrderedItemModel> orderedItems = getOrderedItems().getValue();
         if (orderedItems != null) {
             for (OrderedItemModel orderedItem: orderedItems) {
-                if (orderedItem.getItem().getId() == item.getId()) {
+                if (orderedItem.getItemModel().equals(item)) {
                     count += orderedItem.getQuantity();
                     if (!item.isComplexItem())
                         break;
@@ -231,172 +314,45 @@ public class MenuViewModel extends AndroidViewModel {
         mCurrentItem.setValue(null);
     }
 
-    /*private LiveData<List<MenuItemModel>> getMenuItems() {
-        if (mMenuItems == null)
-            mMenuItems = mRepository.getMenuItems(mMenuId);
-        return mMenuItems;
-    }
-
-    private LiveData<List<MenuItemModel>> filterMenuItems() {
-        LiveData<List<MenuItemModel>> input = getMenuItems();
-        return input;
-    }*/
-
-    public void search(String s) {
-
-
-
-        Log.e(TAG,"AAo function mei");
-        var.addSource(mMenuGroups, new Observer<Resource<List<MenuGroupModel>>>() {
-            @Override
-            public void onChanged(@Nullable Resource<List<MenuGroupModel>> listResource) {
-
-                Log.e(TAG,"Mai yha bhi hun");
-
-                LiveData<List<MenuItemModel>> list= Transformations.map(mMenuGroups, new Function<Resource<List<MenuGroupModel>>, List<MenuItemModel>>() {
-                    @Override
-                    public List<MenuItemModel> apply(Resource<List<MenuGroupModel>> input) {
-                            Log.e(TAG, String.valueOf("Mai Andar aa gya"));
-                        List<MenuItemModel> items =new ArrayList<>();
-
-                        if (input != null && input.status == Resource.Status.SUCCESS) {
-                            List<MenuGroupModel> groups = input.data;
-                            Log.e(TAG,"Input pyaara hai");
-                            for(int i=0;i<groups.size();i++)
-                            {
-                                Log.e(TAG,"Bada Loop");
-                                int size =groups.get(i).getItems().size();
-                                for(int j=0;j<size;j++)
-
-                                {   Log.e(TAG,"Chota Loop");
-                                switch (s) {
-                                    case "breakfast":
-                                        if (groups.get(i).getItems().get(j).isBreakfast()) {
-                                            Log.e(TAG, "Kuch Mila");
-                                            items.add(groups.get(i).getItems().get(j));
-                                            var.setValue(items);
-                                            Log.e(TAG, groups.get(i).getItems().get(j).getName());
-                                        }
-                                        break;
-                                    case "lunch":
-                                        if (groups.get(i).getItems().get(j).isLunch()) {
-                                            Log.e(TAG, "Kuch Mila");
-                                            items.add(groups.get(i).getItems().get(j));
-                                            var.setValue(items);
-                                            Log.e(TAG, groups.get(i).getItems().get(j).getName());
-                                        }
-                                        break;
-                                    case "dinner":
-                                        if (groups.get(i).getItems().get(j).isDinner()) {
-                                            Log.e(TAG, "Kuch Mila");
-                                            items.add(groups.get(i).getItems().get(j));
-                                            var.setValue(items);
-                                            Log.e(TAG, groups.get(i).getItems().get(j).getName());
-                                        }
-                                        break;
-                                }
-
-
-                                    if(groups.get(i).getItems().get(j).getName().toLowerCase().contains(s.toLowerCase()))
-                                    {
-                                        Log.e(TAG,"Kuch Mila");
-                                        items.add(groups.get(i).getItems().get(j));
-                                        var.setValue(items);
-                                        Log.e(TAG,groups.get(i).getItems().get(j).getName());
-                                    }
-                                }
-                                }
-                            }
-
-
-                        Log.e(TAG,"LOOP se Baharr");
-                        Log.e(TAG, String.valueOf(items.size()));
-                        var.setValue(items);
-                        return items;
-
-                    }
-
-//            @Override
-//            public List<MenuItemModel> apply(Resource<List<MenuGroupModel>> input) {
-//                if (input != null && input.status == Resource.Status.SUCCESS) {
-//                    List<MenuGroupModel> groups = input.data;
-
-                });
-                list.observeForever(new Observer<List<MenuItemModel>>() {
-                    @Override
-                    public void onChanged(@Nullable List<MenuItemModel> menuItemModels) {
-
-                    }
-                });
-                var.removeSource(mMenuGroups);
-            }
-
-
-        });
-
-
-
-    }
-
-    public LiveData<List<MenuItemModel>> getMenuItems() {
-        Log.e(TAG,"Maine kuch bheja");
-        return var;
-//
-//                }
-//            }
-//        });
-    }
-
-
-    public LiveData<Resource<List<MenuGroupModel>>> getMenuGroups(long shopId) {
-        if (mMenuGroups == null)
-            mMenuGroups = mRepository.getMenuGroups(String.valueOf(shopId));
-        return mMenuGroups;
-    }
-
     public LiveData<Integer> getTotalOrderedCount() {
-        return Transformations.switchMap(mOrderedItems, input -> {
-            MutableLiveData<Integer> res = new MutableLiveData<>();
-            int count = 0;
+        return Transformations.map(mOrderedItems, input -> {
+            int res = 0;
             for (OrderedItemModel item: input)
-                count += item.getQuantity();
-            res.setValue(count);
+                res += item.getQuantity();
             return res;
         });
     }
 
-    public LiveData<List<String>> getCategories(int menuId){
-        if (mCategories == null) {
-            if (mMenuGroups == null) getMenuGroups(menuId);
-            mCategories = Transformations.map(mMenuGroups, input -> {
-                List<String> categories = new ArrayList<>();
-                String category = "";
-                if (input.data != null) {
-                    for (MenuGroupModel menuGroupModel : input.data) {
-                        if (!category.contentEquals(menuGroupModel.getCategory())) {
-                            category = menuGroupModel.getCategory();
-                            categories.add(category);
-                        }
-                    }
-                }
-                return categories;
-            });
-        }
-        return mCategories;
+    public LiveData<Double> getOrderedSubTotal() {
+        return Transformations.map(mOrderedItems, input -> {
+            double res = 0.0;
+            for (OrderedItemModel item: input)
+                res += item.getCost();
+            return res;
+        });
     }
 
-    public static class Factory extends ViewModelProvider.NewInstanceFactory {
-        @NonNull
-        private final Application mApplication;
+    public LiveData<List<String>> getCategories() {
+        return Transformations.map(mOriginalMenuGroups, input -> {
+            if (input == null || input.data == null)
+                return null;
+            List<String> categories = new ArrayList<>();
+            String category = "";
+            for (MenuGroupModel menuGroupModel: input.data) {
+                if (!category.contentEquals(menuGroupModel.getCategory())) {
+                    category = menuGroupModel.getCategory();
+                    categories.add(category);
+                }
+            }
+            return categories;
+        });
+    }
 
-        public Factory(@NonNull Application application) {
-            mApplication = application;
-        }
+    public void confirmOrder() {
+        mResultOrder.addSource(mRepository.postMenuOrders(mOrderedItems.getValue()), mResultOrder::setValue);
+    }
 
-        @NonNull
-        @Override
-        public <T extends ViewModel> T create(@NonNull Class<T> modelClass) {
-            return (T) new MenuViewModel(mApplication);
-        }
+    public LiveData<Resource<ArrayNode>> getServerOrderedItems() {
+        return mResultOrder;
     }
 }

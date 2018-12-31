@@ -10,6 +10,8 @@ import android.view.ViewGroup;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.checkin.app.checkin.Menu.Model.ItemCustomizationFieldModel;
+import com.checkin.app.checkin.Menu.Model.ItemCustomizationGroupModel;
 import com.checkin.app.checkin.R;
 import com.golovin.fluentstackbar.FluentSnackbar;
 
@@ -25,16 +27,17 @@ import butterknife.ButterKnife;
  */
 
 public class ItemCustomizationGroupHolder implements ItemCustomizationFieldHolder.CustomizationFieldInteraction {
-    @BindView(R.id.tv_group_name) TextView tvGroupName;
-    @BindView(R.id.list_customization_fields) LinearLayout vListFields;
+    @BindView(R.id.tv_menu_customization_group_name) TextView tvGroupName;
+    @BindView(R.id.list_menu_customization_fields) LinearLayout vListFields;
+
     private ItemCustomizationGroupModel mGroup;
     private final ViewGroup mView;
     private List<ItemCustomizationFieldHolder> selectedFields = new ArrayList<>();
     private CustomizationGroupInteraction mInteractionListener;
 
-    ItemCustomizationGroupHolder(@NonNull ItemCustomizationGroupModel customizationGroup, Context context, CustomizationGroupInteraction interactionListener) {
+    public ItemCustomizationGroupHolder(@NonNull ItemCustomizationGroupModel customizationGroup, Context context, CustomizationGroupInteraction interactionListener) {
         mGroup = customizationGroup;
-        mView = ((ViewGroup) LayoutInflater.from(context).inflate(R.layout.item_customization_group, null, false));
+        mView = ((ViewGroup) LayoutInflater.from(context).inflate(R.layout.item_menu_customization_group, null, false));
         ButterKnife.bind(this, mView);
         mInteractionListener = interactionListener;
         tvGroupName.setText(String.format(Locale.ENGLISH, "%s (%d/%d)", mGroup.getName(), mGroup.getMinSelection(), mGroup.getMaxSelection()));

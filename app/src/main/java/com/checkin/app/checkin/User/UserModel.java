@@ -54,7 +54,7 @@ public class UserModel {
     public enum GENDER {
         MALE('m'), FEMALE('f');
 
-        final char tag;
+        public final char tag;
         GENDER(char tag) {
             this.tag = tag;
         }//constructor of enum
@@ -71,9 +71,11 @@ public class UserModel {
     }
 
     // TODO: Move from here.
-
-
     public UserModel() {}
+
+    public UserModel(GENDER gender) {
+        this.gender = gender;
+    }
 
     public String getUsername() {
         return username;

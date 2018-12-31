@@ -18,9 +18,9 @@ import android.widget.Toast;
 
 import com.checkin.app.checkin.Data.Resource;
 import com.checkin.app.checkin.Misc.CoverPagerAdapter;
-import com.checkin.app.checkin.Shop.ShopPrivateProfile.ShopMembersActivity;
 import com.checkin.app.checkin.Misc.StatusTextAdapter;
 import com.checkin.app.checkin.R;
+import com.checkin.app.checkin.Review.ShopReview.ShopReviewsActivity;
 import com.checkin.app.checkin.Shop.RestaurantModel;
 import com.rd.PageIndicatorView;
 import com.rd.animation.type.AnimationType;
@@ -111,8 +111,6 @@ public class ShopProfileFragment extends Fragment implements View.OnClickListene
         Intent intent;
         switch (v.getId()) {
             case R.id.btn_follow:
-                intent = new Intent(requireContext(), ShopMembersActivity.class);
-                startActivity(intent);
                 break;
             case R.id.btn_call:
                 mViewModel.callShop(requireContext());
@@ -122,6 +120,13 @@ public class ShopProfileFragment extends Fragment implements View.OnClickListene
             case R.id.btn_cuisine:
                 break;
         }
+    }
+
+    @OnClick(R.id.container_reviews)
+    public void onShowReviews() {
+        Intent intent = new Intent(requireContext(), ShopReviewsActivity.class);
+        intent.putExtra(ShopReviewsActivity.KEY_SHOP_PK, mViewModel.getShopPk());
+        startActivity(intent);
     }
 
     @Override

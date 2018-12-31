@@ -3,17 +3,9 @@ package com.checkin.app.checkin.Data;
 import android.content.Context;
 import android.util.Log;
 
-import com.checkin.app.checkin.Menu.ItemCustomizationFieldModel;
-import com.checkin.app.checkin.Menu.ItemCustomizationGroupModel;
-import com.checkin.app.checkin.Menu.MenuGroupModel;
-import com.checkin.app.checkin.Menu.MenuItemModel;
-import com.checkin.app.checkin.Menu.MenuModel;
 import com.checkin.app.checkin.Notifications.NotificationModel;
-import com.checkin.app.checkin.Shop.RestaurantModel;
-import com.checkin.app.checkin.User.UserModel;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
@@ -24,15 +16,13 @@ public class TestDb {
     private static final int DELAY_MILLIS = 1000;
     public static void populateWithTestData(final Context context) {
         Log.e("TestData", "Populating...");
-        AppDatabase.getMenuModel(context).put(new MenuModel(1, "Menu"));
-//        populateUsers(AppDatabase.getUserModel(context));
-        populateMenu(
-                AppDatabase.getMenuItemModel(context),
-                AppDatabase.getMenuGroupModel(context),
-                AppDatabase.getItemCustomizationFieldModel(context),
-                AppDatabase.getItemCustomizationGroupModel(context)
-        );
-//        populateShops(AppDatabase.getShopModel(context));
+//        AppDatabase.getMenuModel(context).put(new MenuModel(1, "Menu"));
+//        populateMenu(
+//                AppDatabase.getMenuItemModel(context),
+//                AppDatabase.getMenuGroupModel(context),
+//                AppDatabase.getItemCustomizationFieldModel(context),
+//                AppDatabase.getItemCustomizationGroupModel(context)
+//        );
         //populateNotif(AppDatabase.getNotifModel(context));
     }
 
@@ -43,15 +33,8 @@ public class TestDb {
         }
         notifMode.put(notifs);
     }
-    private static void populateShops(Box<RestaurantModel> shopModel){
-//        List<RestaurantModel> shops = new ArrayList<>();
-//        for (int i = 1; i <= 15; i++) {
-//            RestaurantModel shop = new RestaurantModel("shop name","Dip yourself in the rich taste of cheese","Mexican, Chelsea", "+8687845140", i/3, 450*i, 350*i);
-//            shops.add(shop);
-//        }
-//        shopModel.put(shops);
-    }
-    private static void populateMenu(
+
+/*    private static void populateMenu(
             Box<MenuItemModel> menuItemModel,
             Box<MenuGroupModel> menuGroupModel,
             Box<ItemCustomizationFieldModel> itemCustomizationFieldModel,
@@ -120,20 +103,5 @@ public class TestDb {
         menuItemModel.put(menuItems);
         itemCustomizationGroupModel.put(itemCustomizationGroups);
         itemCustomizationFieldModel.put(itemCustomizationFields);
-    }
-
-    private static void populateUsers(Box<UserModel> userModel) {
-//        UserModel user1 = new UserModel("Alex", "https://78.media.tumblr.com/fc66ed1ceef891684aae8eb2acb152a3/tumblr_oyg8f1Qc1n1vy2tgqo1_400.jpg", "Lyon, France", 100, 500);
-//        user1.setGender('m');
-//        UserModel user2 = new UserModel("Alice", "https://vignette.wikia.nocookie.net/typemoon/images/c/c1/Archer_EMIYA.jpeg/revision/latest?cb=20150630040614", "Delhi, India", 1300, 2000);
-//        user2.setGender('f');
-//
-//        userModel.put(user1, user2);
-//
-//        UserModel user3 = new UserModel("Monica", "https://vignette.wikia.nocookie.net/typemoon/images/c/c1/Archer_EMIYA.jpeg/revision/latest?cb=20150630040614", "Somewhere", 981, 321);
-//        user3.setGender('f');
-//        UserModel user4 = new UserModel("Jack", "https://78.media.tumblr.com/fc66ed1ceef891684aae8eb2acb152a3/tumblr_oyg8f1Qc1n1vy2tgqo1_400.jpg", "LOCATION ZERO", 4921, 1876);
-//        user4.setGender('m');
-//        userModel.put(user3, user4);
-    }
+    }*/
 }

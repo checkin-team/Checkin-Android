@@ -2,11 +2,6 @@ package com.checkin.app.checkin.Data;
 
 import android.content.Context;
 
-import com.checkin.app.checkin.Menu.ItemCustomizationFieldModel;
-import com.checkin.app.checkin.Menu.ItemCustomizationGroupModel;
-import com.checkin.app.checkin.Menu.MenuGroupModel;
-import com.checkin.app.checkin.Menu.MenuItemModel;
-import com.checkin.app.checkin.Menu.MenuModel;
 import com.checkin.app.checkin.MyObjectBox;
 import com.checkin.app.checkin.Notifications.NotificationModel;
 
@@ -45,7 +40,7 @@ public class AppDatabase {
         return getBoxStore(context).boxFor(RestaurantModel.class);
     }*/
 
-    public static Box<ItemCustomizationFieldModel> getItemCustomizationFieldModel(final Context context) {
+    /*public static Box<ItemCustomizationFieldModel> getItemCustomizationFieldModel(final Context context) {
         return getBoxStore(context).boxFor(ItemCustomizationFieldModel.class);
     }
 
@@ -63,5 +58,5 @@ public class AppDatabase {
 
     public static Box<MenuModel> getMenuModel(final Context context) {
         return getBoxStore(context).boxFor(MenuModel.class);
-    }
+    }*/
 }

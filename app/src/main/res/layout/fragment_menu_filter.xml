@@ -1,0 +1,150 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.design.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <FrameLayout
+        android:id="@+id/dark_back_menu_filter"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/translucent_black" />
+
+    <FrameLayout
+        android:id="@+id/container_filter"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/height_menu_filter"
+        android:layout_gravity="bottom|center_horizontal"
+        android:layout_marginBottom="@dimen/spacing_extra_small"
+        android:layout_marginEnd="@dimen/spacing_normal"
+        android:layout_marginStart="@dimen/spacing_normal"
+        android:alpha="1.0"
+        android:background="@drawable/menu_filter_back"
+        android:clickable="true"
+        android:focusable="true"
+        android:padding="2dp">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginBottom="@dimen/spacing_very_huge"
+            android:orientation="vertical">
+
+            <android.support.constraint.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="@dimen/spacing_small">
+
+                <TextView
+                    android:id="@+id/btn_filter_breakfast"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:drawableTop="@drawable/ic_menu_filter_breakfast"
+                    android:padding="@dimen/spacing_tiny"
+                    android:text="Breakfast"
+                    android:textAlignment="center"
+                    android:textSize="@dimen/font_small"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <TextView
+                    android:id="@+id/btn_filter_lunch"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:drawableTop="@drawable/ic_menu_filter_lunch"
+                    android:padding="@dimen/spacing_tiny"
+                    android:text="Lunch"
+                    android:textAlignment="center"
+                    android:textSize="@dimen/font_small"
+                    app:layout_constraintEnd_toStartOf="@id/btn_filter_dinner"
+                    app:layout_constraintStart_toEndOf="@id/btn_filter_breakfast"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <TextView
+                    android:id="@+id/btn_filter_dinner"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:drawableTop="@drawable/ic_menu_filter_dinner"
+                    android:padding="@dimen/spacing_tiny"
+                    android:text="Dinner"
+                    android:textAlignment="center"
+                    android:textSize="@dimen/font_small"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+            </android.support.constraint.ConstraintLayout>
+
+            <include layout="@layout/incl_horizontal_line" />
+
+            <android.support.v7.widget.RecyclerView
+                android:id="@+id/rv_menu_categories"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="@dimen/spacing_small"
+                android:orientation="horizontal"
+                app:layoutManager="android.support.v7.widget.GridLayoutManager"
+                app:spanCount="2" />
+
+            <include layout="@layout/incl_horizontal_line" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/spacing_tiny"
+                android:text="Sort By"
+                android:textAlignment="center"
+                android:textColor="@color/primary_red"
+                android:textSize="@dimen/font_small_heading" />
+
+            <android.support.constraint.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="@dimen/spacing_normal"
+                android:layout_marginStart="@dimen/spacing_normal">
+
+                <Button
+                    android:id="@+id/btn_sort_high2low"
+                    style="@style/ButtonOvalShape"
+                    android:layout_width="@dimen/button_oval_normal"
+                    android:layout_height="@dimen/button_oval_normal"
+                    android:text="High To Low"
+                    app:layout_constraintBottom_toBottomOf="@id/btn_sort_mainstream"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="@id/btn_sort_mainstream" />
+
+                <Button
+                    android:id="@+id/btn_sort_mainstream"
+                    style="@style/ButtonOvalShape"
+                    android:layout_width="@dimen/button_oval_normal"
+                    android:layout_height="@dimen/button_oval_normal"
+                    android:text="Main stream"
+                    app:layout_constraintEnd_toStartOf="@id/btn_sort_low2high"
+                    app:layout_constraintStart_toEndOf="@id/btn_sort_high2low"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <Button
+                    android:id="@+id/btn_sort_low2high"
+                    style="@style/ButtonOvalShape"
+                    android:layout_width="@dimen/button_oval_normal"
+                    android:layout_height="@dimen/button_oval_normal"
+                    android:text="Low To High"
+                    app:layout_constraintBottom_toBottomOf="@id/btn_sort_mainstream"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="@id/btn_sort_mainstream" />
+            </android.support.constraint.ConstraintLayout>
+
+        </LinearLayout>
+    </FrameLayout>
+
+    <ImageButton
+        android:id="@+id/btn_filter_toggle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom|center_horizontal"
+        android:layout_marginBottom="@dimen/spacing_small"
+        android:alpha="0.75"
+        android:background="@android:color/transparent"
+        android:contentDescription="@string/action_filter"
+        android:scaleType="fitCenter"
+        android:src="@drawable/ic_filter" />
+
+</android.support.design.widget.CoordinatorLayout>

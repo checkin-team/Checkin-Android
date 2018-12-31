@@ -14,15 +14,33 @@ public class BriefModel {
 
     public BriefModel() {}
 
+    public BriefModel(String pk, String displayName, String displayPic) {
+        this.pk = pk;
+        this.displayName = displayName;
+        this.displayPic = displayPic;
+    }
+
     public String getPk() {
         return pk;
+    }
+
+    public void setPk(String pk) {
+        this.pk = pk;
     }
 
     public String getDisplayName() {
         return displayName;
     }
 
+    public void setDisplayName(String displayName) {
+        this.displayName = displayName;
+    }
+
     public String getDisplayPic() {
         return displayPic;
+    }
+
+    public void setDisplayPic(String displayPic) {
+        this.displayPic = displayPic;
     }
 }

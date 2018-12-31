@@ -2,6 +2,7 @@ package com.checkin.app.checkin.Home;
 
 import android.app.Application;
 import android.arch.lifecycle.LiveData;
+import android.arch.lifecycle.MediatorLiveData;
 import android.arch.lifecycle.ViewModel;
 import android.arch.lifecycle.ViewModelProvider;
 import android.support.annotation.NonNull;
@@ -9,6 +10,7 @@ import android.support.annotation.NonNull;
 import com.checkin.app.checkin.Data.BaseViewModel;
 import com.checkin.app.checkin.Data.Converters;
 import com.checkin.app.checkin.Data.Resource;
+import com.checkin.app.checkin.Session.SessionRepository;
 import com.checkin.app.checkin.Shop.RestaurantModel;
 import com.checkin.app.checkin.Shop.ShopRepository;
 import com.fasterxml.jackson.databind.node.ObjectNode;
@@ -16,12 +18,13 @@ import com.fasterxml.jackson.databind.node.ObjectNode;
 import java.util.List;
 
 public class HomeViewModel extends BaseViewModel {
-    private HomeRepository mRepository;
     private ShopRepository mShopRepository;
+    private SessionRepository mSessionRepository;
+    private MediatorLiveData<Resource<ObjectNode>> mQrResult = new MediatorLiveData<>();
 
     HomeViewModel(Application application) {
         super(application);
-        mRepository = HomeRepository.getInstance(application);
+        mSessionRepository = SessionRepository.getInstance(application);
         mShopRepository = ShopRepository.getInstance(application);
     }
 
@@ -30,10 +33,14 @@ public class HomeViewModel extends BaseViewModel {
 
     }
 
-    public void decryptQr(String data) {
+    public void processQr(String data) {
         ObjectNode requestJson = Converters.objectMapper.createObjectNode();
         requestJson.put("data", data);
-        mData.addSource(mRepository.postDecryptQr(requestJson), mData::setValue);
+        mQrResult.addSource(mSessionRepository.newCustomerSession(requestJson), mQrResult::setValue);
+    }
+
+    public LiveData<Resource<ObjectNode>> getQrResult() {
+        return mQrResult;
     }
 
     public LiveData<Resource<List<RestaurantModel>>> getTrendingRestaurants() {

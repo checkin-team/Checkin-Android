@@ -6,11 +6,14 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.CheckBox;
-import android.widget.CompoundButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.checkin.app.checkin.Menu.Model.ItemCustomizationFieldModel;
 import com.checkin.app.checkin.R;
+import com.checkin.app.checkin.Utility.Util;
+
+import java.util.Locale;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -21,27 +24,26 @@ import butterknife.ButterKnife;
  */
 
 public class ItemCustomizationFieldHolder {
-
     private static final int TYPE_VEG = R.drawable.ic_veg;
-    private static final int TYPE_NONVEG = R.drawable.ic_veg; //todo change
+    private static final int TYPE_NON_VEG = R.drawable.ic_non_veg;
 
-    @BindView(R.id.im_field_type) ImageView imFieldType;
-    @BindView(R.id.tv_field_name) TextView tvFieldName;
-    @BindView(R.id.tv_field_cost) TextView tvFieldCost;
-    @BindView(R.id.checkbox) CheckBox checkBox;
+    @BindView(R.id.im_menu_customization_field_type) ImageView imFieldType;
+    @BindView(R.id.tv_menu_customization_field_name) TextView tvFieldName;
+    @BindView(R.id.tv_menu_customization_field_cost) TextView tvFieldCost;
+    @BindView(R.id.cb_menu_customization_field) CheckBox cbFieldSelect;
 
     private final ViewGroup mView;
     private final ItemCustomizationFieldModel mField;
 
     ItemCustomizationFieldHolder(@NonNull ItemCustomizationFieldModel customizationField, Context context, @NonNull CustomizationFieldInteraction interactionListener) {
         mField = customizationField;
-        mView = ((ViewGroup) LayoutInflater.from(context).inflate(R.layout.item_customization_field, null, false));
+        mView = ((ViewGroup) LayoutInflater.from(context).inflate(R.layout.item_menu_customization_field, null, false));
         ButterKnife.bind(this, mView);
-        tvFieldCost.setText(String.valueOf(mField.getCost()));
+        tvFieldCost.setText(String.format(Locale.ENGLISH, Util.getCurrencyFormat(context), mField.formatCost()));
         tvFieldName.setText(mField.getName());
-        imFieldType.setImageResource(mField.isVegetarian() ? TYPE_VEG : TYPE_NONVEG);
-        mView.setOnClickListener(v -> checkBox.performClick());
-        checkBox.setOnCheckedChangeListener((buttonView, isChecked) -> {
+        imFieldType.setImageResource(mField.isVegetarian() ? TYPE_VEG : TYPE_NON_VEG);
+        mView.setOnClickListener(v -> cbFieldSelect.performClick());
+        cbFieldSelect.setOnCheckedChangeListener((buttonView, isChecked) -> {
             if (isChecked) interactionListener.onSelect(this);
             else interactionListener.onDeselect(this);
         });
@@ -52,7 +54,7 @@ public class ItemCustomizationFieldHolder {
     }
 
     public void setChecked(boolean selected) {
-        checkBox.setChecked(selected);
+        cbFieldSelect.setChecked(selected);
     }
 
     public ItemCustomizationFieldModel getField() {

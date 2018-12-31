@@ -12,7 +12,7 @@ import android.support.v7.app.ActionBarDrawerToggle;
 
 import com.checkin.app.checkin.Account.AccountModel.ACCOUNT_TYPE;
 import com.checkin.app.checkin.Account.BaseAccountActivity;
-import com.checkin.app.checkin.Profile.ShopProfile.FragmentShopMenu;
+import com.checkin.app.checkin.Profile.ShopProfile.FragmentShopInsights;
 import com.checkin.app.checkin.R;
 import com.checkin.app.checkin.Utility.DynamicSwipableViewPager;
 
@@ -29,7 +29,7 @@ public class ShopActivity extends BaseAccountActivity {
     protected BottomNavigation mBottomNavigation;
 
     public static final String KEY_SHOP_PK = "shop_private.pk";
-
+    String shopPk;
     private ShopProfileViewModel mViewModel;
 
     @Override
@@ -47,9 +47,9 @@ public class ShopActivity extends BaseAccountActivity {
         setupPagers(new ShopPagerAdapter(getSupportFragmentManager()), R.menu.menu_shop_profile_private);
 
         mViewModel = ViewModelProviders.of(this).get(ShopProfileViewModel.class);
-        String shopPk = getIntent().getStringExtra(KEY_SHOP_PK);
+        shopPk = getIntent().getStringExtra(KEY_SHOP_PK);
 
-        mViewModel.fetchShop(shopPk);
+        mViewModel.fetchShopDetails(shopPk);
     }
 
     protected void setupPagers(FragmentPagerAdapter pagerAdapter, @MenuRes int menuId) {
@@ -85,7 +85,7 @@ public class ShopActivity extends BaseAccountActivity {
 
     private class ShopPagerAdapter extends FragmentPagerAdapter {
 
-        public ShopPagerAdapter(FragmentManager fm) {
+        ShopPagerAdapter(FragmentManager fm) {
             super(fm);
         }
 
@@ -93,13 +93,13 @@ public class ShopActivity extends BaseAccountActivity {
         public Fragment getItem(int position) {
             switch (position) {
                 case 0:
-                    return ShopProfileFragment.newInstance();
+                    ShopProfileFragment shopProfileFragment= ShopProfileFragment.newInstance();
+                    shopProfileFragment.setShopPk(shopPk);
+                    return shopProfileFragment;
                 case 1:
-                    return FragmentShopMenu.newInstance("1", "2");
                 case 2:
-                    return FragmentShopMenu.newInstance("1", "2");
             }
-            return null;
+            return FragmentShopInsights.newInstance("1", "2");
         }
 
         @Override

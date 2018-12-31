@@ -8,9 +8,11 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 
+import com.checkin.app.checkin.Menu.SessionMenuActivity;
 import com.checkin.app.checkin.Misc.BaseActivity;
-import com.checkin.app.checkin.Profile.ShopProfile.FragmentShopMenu;
+import com.checkin.app.checkin.Profile.ShopProfile.FragmentShopInsights;
 import com.checkin.app.checkin.R;
+import com.checkin.app.checkin.Shop.RecentCheckin.RecentCheckinFragment;
 import com.checkin.app.checkin.Utility.DynamicSwipableViewPager;
 
 import butterknife.BindView;
@@ -27,6 +29,7 @@ public class ShopActivity extends BaseActivity {
 
     public static final String KEY_SHOP_PK = "shop_public.pk";
 
+    private String mShopPk;
     private ShopProfileViewModel mViewModel;
 
     @Override
@@ -40,8 +43,8 @@ public class ShopActivity extends BaseActivity {
 
         mViewModel = ViewModelProviders.of(this).get(ShopProfileViewModel.class);
 
-        String shopPk = getIntent().getStringExtra(KEY_SHOP_PK);
-        mViewModel.fetchShop(shopPk);
+        mShopPk = getIntent().getStringExtra(KEY_SHOP_PK);
+        mViewModel.fetchShop(mShopPk);
     }
 
     protected void setupPagers(FragmentPagerAdapter pagerAdapter, @MenuRes int menuId) {
@@ -51,6 +54,11 @@ public class ShopActivity extends BaseActivity {
         mBottomNavigation.setOnMenuItemClickListener(new BottomNavigation.OnMenuItemSelectionListener() {
             @Override
             public void onMenuItemSelect(@IdRes final int itemId, final int position, final boolean fromUser) {
+                if (position == 2) {
+                    mBottomNavigation.setSelectedIndex(0, false);
+                    SessionMenuActivity.withoutSession(getApplicationContext(), mShopPk);
+                    return;
+                }
                 mViewPager.setCurrentItem(position, true);
             }
 
@@ -72,16 +80,14 @@ public class ShopActivity extends BaseActivity {
                 case 0:
                     return ShopProfileFragment.newInstance();
                 case 1:
-                    return FragmentShopMenu.newInstance("1", "2");
-                case 2:
-                    return FragmentShopMenu.newInstance("1", "2");
+                    return RecentCheckinFragment.newInstance(mShopPk);
             }
-            return null;
+            return FragmentShopInsights.newInstance("1", "2");
         }
 
         @Override
         public int getCount() {
-            return 3;
+            return 2;
         }
     }
 }
