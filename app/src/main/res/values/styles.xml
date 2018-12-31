@@ -256,7 +256,7 @@
         <item name="searchVoiceIcon">@drawable/ic_action_voice_search_inverted</item>
 
         <!-- Change clear text icon-->
-        <item name="searchCloseIcon">@drawable/ic_search_cancel</item>
+        <item name="searchCloseIcon">@drawable/ic_cancel</item>
 
         <!-- Change up icon-->
         <item name="searchBackIcon">@drawable/ic_appbar_back</item>
@@ -278,19 +278,10 @@
     </style>
 
     <style name="ActionTextView">
-        <item name="android:layout_width">@dimen/square_card_dimen</item>
-        <item name="android:layout_height">@dimen/square_card_dimen</item>
+        <item name="android:layout_width">@dimen/size_card_square</item>
+        <item name="android:layout_height">@dimen/size_card_square</item>
         <item name="android:padding">@dimen/spacing_small</item>
         <item name="android:textAlignment">center</item>
-        <item name="android:textColor">@color/brownish_grey</item>
-        <item name="android:textSize">@dimen/font_small_heading</item>
-    </style>
-
-    <style name="ActionPeopleView">
-        <item name="android:layout_width">@dimen/square_card_dimen</item>
-        <item name="android:layout_height">@dimen/square_card_dimen</item>
-        <item name="android:padding">@dimen/spacing_small</item>
-
         <item name="android:textColor">@color/brownish_grey</item>
         <item name="android:textSize">@dimen/font_small_heading</item>
     </style>

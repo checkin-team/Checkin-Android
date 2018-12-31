@@ -24,9 +24,8 @@ import butterknife.ButterKnife;
  */
 
 public class ItemCustomizationFieldHolder {
-
     private static final int TYPE_VEG = R.drawable.ic_veg;
-    private static final int TYPE_NONVEG = R.drawable.ic_veg; //todo change
+    private static final int TYPE_NON_VEG = R.drawable.ic_non_veg;
 
     @BindView(R.id.im_menu_customization_field_type) ImageView imFieldType;
     @BindView(R.id.tv_menu_customization_field_name) TextView tvFieldName;
@@ -42,7 +41,7 @@ public class ItemCustomizationFieldHolder {
         ButterKnife.bind(this, mView);
         tvFieldCost.setText(String.format(Locale.ENGLISH, Util.getCurrencyFormat(context), mField.formatCost()));
         tvFieldName.setText(mField.getName());
-        imFieldType.setImageResource(mField.isVegetarian() ? TYPE_VEG : TYPE_NONVEG);
+        imFieldType.setImageResource(mField.isVegetarian() ? TYPE_VEG : TYPE_NON_VEG);
         mView.setOnClickListener(v -> cbFieldSelect.performClick());
         cbFieldSelect.setOnCheckedChangeListener((buttonView, isChecked) -> {
             if (isChecked) interactionListener.onSelect(this);

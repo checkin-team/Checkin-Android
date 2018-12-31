@@ -22,7 +22,6 @@ import com.checkin.app.checkin.Misc.StatusTextAdapter;
 import com.checkin.app.checkin.R;
 import com.checkin.app.checkin.Review.ShopReview.ShopReviewsActivity;
 import com.checkin.app.checkin.Shop.RestaurantModel;
-import com.checkin.app.checkin.Shop.ShopPrivateProfile.MembersActivity;
 import com.rd.PageIndicatorView;
 import com.rd.animation.type.AnimationType;
 
@@ -112,8 +111,6 @@ public class ShopProfileFragment extends Fragment implements View.OnClickListene
         Intent intent;
         switch (v.getId()) {
             case R.id.btn_follow:
-                intent = new Intent(requireContext(), MembersActivity.class);
-                startActivity(intent);
                 break;
             case R.id.btn_call:
                 mViewModel.callShop(requireContext());

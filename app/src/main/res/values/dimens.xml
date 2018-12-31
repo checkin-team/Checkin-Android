@@ -39,6 +39,9 @@
     <dimen name="height_card_tall">120dp</dimen>
     <dimen name="width_card_tall">75dp</dimen>
 
+    <dimen name="height_card_wide">80dp</dimen>
+    <dimen name="width_card_wide">120dp</dimen>
+
     <dimen name="thickness_line">3dp</dimen>
 
     <!-- typical sizes of views -->
@@ -70,7 +73,7 @@
     <dimen name="card_elevation">4dp</dimen>
     <dimen name="card_corner_radius" format="float">10.5dp</dimen>
 
-    <dimen name="square_card_dimen">100dp</dimen>
+    <dimen name="size_card_square">100dp</dimen>
     <dimen name="height_input_normal">40dp</dimen>
     <dimen name="height_input_small">25dp</dimen>
 

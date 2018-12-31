@@ -36,6 +36,7 @@
                 android:layout_height="wrap_content"
                 android:orientation="vertical"
                 android:paddingTop="@dimen/spacing_small"
+                android:paddingBottom="@dimen/spacing_small"
                 android:showDividers="middle" />
 
         </ScrollView>

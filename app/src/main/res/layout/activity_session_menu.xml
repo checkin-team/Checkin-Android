@@ -109,11 +109,16 @@
             android:layout_gravity="bottom"
             android:orientation="vertical">
 
+            <include layout="@layout/incl_horizontal_line" />
+
             <TextView
                 android:id="@+id/tv_menu_subtotal"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                style="@style/GreyTextStyle"
+                style="@style/RedTitleStyle"
+                android:layout_marginTop="@dimen/spacing_extra_small"
+                android:layout_marginBottom="@dimen/spacing_extra_small"
+                android:textAlignment="center"
                 tools:text="Subtotal: 213" />
 
             <Button

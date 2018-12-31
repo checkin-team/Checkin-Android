@@ -43,7 +43,6 @@
                     android:padding="@dimen/spacing_tiny"
                     android:text="Breakfast"
                     android:textAlignment="center"
-                    android:textColor="@color/primary_red"
                     android:textSize="@dimen/font_small"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />
@@ -56,7 +55,6 @@
                     android:padding="@dimen/spacing_tiny"
                     android:text="Lunch"
                     android:textAlignment="center"
-                    android:textColor="@color/primary_red"
                     android:textSize="@dimen/font_small"
                     app:layout_constraintEnd_toStartOf="@id/btn_filter_dinner"
                     app:layout_constraintStart_toEndOf="@id/btn_filter_breakfast"
@@ -70,7 +68,6 @@
                     android:padding="@dimen/spacing_tiny"
                     android:text="Dinner"
                     android:textAlignment="center"
-                    android:textColor="@color/primary_red"
                     android:textSize="@dimen/font_small"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />
@@ -117,9 +114,9 @@
                 <Button
                     android:id="@+id/btn_sort_mainstream"
                     style="@style/ButtonOvalShape"
-                    android:layout_width="@dimen/button_oval_large"
-                    android:layout_height="@dimen/button_oval_large"
-                    android:text="Mainstream"
+                    android:layout_width="@dimen/button_oval_normal"
+                    android:layout_height="@dimen/button_oval_normal"
+                    android:text="Main stream"
                     app:layout_constraintEnd_toStartOf="@id/btn_sort_low2high"
                     app:layout_constraintStart_toEndOf="@id/btn_sort_high2low"
                     app:layout_constraintTop_toTopOf="parent" />
