@@ -122,5 +122,7 @@
     <string name="action_navigate">Navigate</string>
     <string name="title_member_assign_role">Assign Role</string>
 
+    <string name="view_orders">View Orders</string>
+
 
 </resources>
