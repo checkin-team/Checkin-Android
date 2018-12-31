@@ -135,14 +135,14 @@
             android:screenOrientation="portrait"
             android:label="Members"
             android:theme="@style/AppThemeWhiteActionBar" />
-        <activity android:name=".Shop.ShopReview.ShopReviewFragment"
+        <activity android:name=".Review.ShopReview.ShopReviewFragment"
             android:theme="@style/AppThemeWhiteActionBar"/>
 
         <activity android:name=".Misc.QRScannerActivity"
             android:label="Scan CheckIn QR"
             android:theme="@style/AppThemeWhiteActionBar"/>
 
-        <activity android:name=".Shop.ShopReview.ShopReviewsActivity"
+        <activity android:name=".Review.ShopReview.ShopReviewsActivity"
             android:label="Reviews"
             android:theme="@style/AppThemeWhiteActionBar"/>
 

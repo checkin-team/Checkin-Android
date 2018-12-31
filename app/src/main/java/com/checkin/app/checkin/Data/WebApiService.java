@@ -11,7 +11,7 @@ import com.checkin.app.checkin.Shop.RecentCheckin.Model.RecentCheckinModel;
 import com.checkin.app.checkin.Shop.RestaurantModel;
 import com.checkin.app.checkin.Shop.ShopJoin.ShopJoinModel;
 import com.checkin.app.checkin.Shop.ShopPrivateProfile.MemberModel;
-import com.checkin.app.checkin.Shop.ShopReview.ShopReviewModel;
+import com.checkin.app.checkin.Review.ShopReview.ShopReviewModel;
 import com.checkin.app.checkin.User.Friendship.FriendshipModel;
 import com.checkin.app.checkin.User.UserModel;
 import com.fasterxml.jackson.databind.node.ObjectNode;
@@ -141,8 +141,14 @@ public interface WebApiService {
     @GET("shops/{shop_id}/menus/available/")
     Call<MenuModel> getAvailableMenu(@Path("shop_id") String shopID);
 
-    @GET("shops/{shop_id}/reviews/")
-    Call<List<ShopReviewModel>> getShopReviews(@Path("shop_id") String shopID);
+    // region REVIEWS
+    @GET("reviews/restaurants/{shop_id}/")
+    Call<List<ShopReviewModel>> getRestaurantReviews(@Path("shop_id") String shopId);
+
+    @POST("reviews/{review_id}/react/")
+    Call<ObjectNode> postReviewReact(@Path("review_id") String reviewId);
+
+    // endregion
 
     @GET("notification")
     Call<List<NotificationModel>> getNotif(@Query("last_notif_id") int lastNotifId);

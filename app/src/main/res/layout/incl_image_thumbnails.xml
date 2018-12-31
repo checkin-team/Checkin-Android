@@ -21,6 +21,7 @@
         android:visibility="visible" />
 
     <FrameLayout
+        android:id="@+id/container_thumbnail_3"
         android:layout_width="@dimen/size_normal_icon"
         android:layout_height="@dimen/size_normal_icon"
         android:layout_marginStart="@dimen/spacing_small">
@@ -33,7 +34,7 @@
             android:visibility="visible" />
 
         <TextView
-            android:id="@+id/tv_ur_thumbnail_count"
+            android:id="@+id/tv_thumbnail_count"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             tools:text="320+"

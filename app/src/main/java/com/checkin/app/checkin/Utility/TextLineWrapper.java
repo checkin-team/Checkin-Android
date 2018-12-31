@@ -32,10 +32,8 @@ public class TextLineWrapper {
 
         @Override
         public void updateDrawState(TextPaint ds) {
-
             ds.setUnderlineText(isUnderline);
             ds.setColor(Color.parseColor("#343434"));
-
         }
 
         @Override

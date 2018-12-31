@@ -1,11 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/root_shop_review"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical">
-    <fragment
-        android:id="@+id/fragment_shop_reviews"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        class="com.checkin.app.checkin.Shop.ShopReview.ShopReviewFragment" />
 </LinearLayout>

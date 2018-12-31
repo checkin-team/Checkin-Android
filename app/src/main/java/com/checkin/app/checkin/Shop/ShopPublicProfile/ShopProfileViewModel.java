@@ -21,8 +21,9 @@ import com.checkin.app.checkin.Shop.ShopRepository;
  */
 
 class ShopProfileViewModel extends BaseViewModel {
-
     private final ShopRepository mRepository;
+
+    private String mShopPk;
     private MediatorLiveData<Resource<RestaurantModel>> mShopData = new MediatorLiveData<>();
 
     ShopProfileViewModel(@NonNull Application application) {
@@ -47,11 +48,16 @@ class ShopProfileViewModel extends BaseViewModel {
     }
 
     public void fetchShop(String shopPk) {
+        mShopPk = shopPk;
         mShopData.addSource(mRepository.getShopModel(shopPk), mShopData::setValue);
+    }
+
+    public String getShopPk() {
+        return mShopPk;
     }
 
     @Override
     public void updateResults() {
-
+        fetchShop(mShopPk);
     }
 }
