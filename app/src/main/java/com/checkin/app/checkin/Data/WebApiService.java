@@ -8,10 +8,11 @@ import com.checkin.app.checkin.Notifications.NotificationModel;
 import com.checkin.app.checkin.RestaurantActivity.Waiter.EventModel;
 import com.checkin.app.checkin.Search.SearchResultModel;
 import com.checkin.app.checkin.Session.ActiveSession.ActiveSessionModel;
+import com.checkin.app.checkin.Shop.RecentCheckin.Model.RecentCheckinModel;
 import com.checkin.app.checkin.Shop.RestaurantModel;
 import com.checkin.app.checkin.Shop.ShopJoin.ShopJoinModel;
 import com.checkin.app.checkin.Shop.ShopPrivateProfile.MemberModel;
-import com.checkin.app.checkin.Shop.ShopReviewPOJO;
+import com.checkin.app.checkin.Review.ShopReview.ShopReviewModel;
 import com.checkin.app.checkin.User.Friendship.FriendshipModel;
 import com.checkin.app.checkin.User.UserModel;
 import com.fasterxml.jackson.databind.node.ArrayNode;
@@ -134,6 +135,9 @@ public interface WebApiService {
     @DELETE("sessions/active/customers/{user_id}/")
     Call<ObjectNode> deleteActiveSessionCustomer(@Path("user_id") String userId);
 
+    @GET("sessions/recent/restaurants/{shop_id}/")
+    Call<RecentCheckinModel> getRecentCheckins(@Path("shop_id") String shopId);
+
     // endregion
 
     // region MENU
@@ -148,8 +152,14 @@ public interface WebApiService {
 
     // endregion
 
-    @GET("shops/{shop_id}/reviews/")
-    Call<List<ShopReviewPOJO>> getShopReviews(@Path("shop_id") String shopID);
+    // region REVIEWS
+    @GET("reviews/restaurants/{shop_id}/")
+    Call<List<ShopReviewModel>> getRestaurantReviews(@Path("shop_id") String shopId);
+
+    @POST("reviews/{review_id}/react/")
+    Call<ObjectNode> postReviewReact(@Path("review_id") String reviewId);
+
+    // endregion
 
     @GET("notification")
     Call<List<NotificationModel>> getNotif(@Query("last_notif_id") int lastNotifId);

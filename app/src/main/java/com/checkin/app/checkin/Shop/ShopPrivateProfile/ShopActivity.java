@@ -12,7 +12,7 @@ import android.support.v7.app.ActionBarDrawerToggle;
 
 import com.checkin.app.checkin.Account.AccountModel.ACCOUNT_TYPE;
 import com.checkin.app.checkin.Account.BaseAccountActivity;
-import com.checkin.app.checkin.Profile.ShopProfile.FragmentShopMenu;
+import com.checkin.app.checkin.Profile.ShopProfile.FragmentShopInsights;
 import com.checkin.app.checkin.R;
 import com.checkin.app.checkin.Utility.DynamicSwipableViewPager;
 
@@ -97,11 +97,9 @@ public class ShopActivity extends BaseAccountActivity {
                     shopProfileFragment.setShopPk(shopPk);
                     return shopProfileFragment;
                 case 1:
-                    return FragmentShopMenu.newInstance("1", "2");
                 case 2:
-                    return FragmentShopMenu.newInstance("1", "2");
             }
-            return null;
+            return FragmentShopInsights.newInstance("1", "2");
         }
 
         @Override

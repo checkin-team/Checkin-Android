@@ -2,7 +2,6 @@ package com.checkin.app.checkin.User.Friendship;
 
 import android.arch.lifecycle.ViewModelProviders;
 import android.os.Bundle;
-import android.support.v7.app.ActionBar;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -36,10 +35,7 @@ public class FriendsListActivity extends BaseActivity implements FriendshipAdapt
         rv.setLayoutManager(new LinearLayoutManager(getApplicationContext(), LinearLayoutManager.VERTICAL, false));
         rv.setAdapter(adapter);
 
-        ActionBar actionBar = getSupportActionBar();
-        actionBar.setDisplayHomeAsUpEnabled(true);
-        actionBar.setHomeAsUpIndicator(R.drawable.ic_appbar_back);
-        actionBar.setElevation(10);
+
 
         setupMessageDialog();
 

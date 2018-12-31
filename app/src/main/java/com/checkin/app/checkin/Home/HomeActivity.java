@@ -29,12 +29,10 @@ import com.checkin.app.checkin.Data.Resource.Status;
 import com.checkin.app.checkin.Menu.SessionMenuActivity;
 import com.checkin.app.checkin.Misc.QRScannerActivity;
 import com.checkin.app.checkin.Notifications.NotificationActivity;
-import com.checkin.app.checkin.Profile.ShopProfile.ShopProfileActivity2;
 import com.checkin.app.checkin.R;
 import com.checkin.app.checkin.RestaurantActivity.Waiter.WaitorWork;
 import com.checkin.app.checkin.Search.SearchActivity;
 import com.checkin.app.checkin.Session.ActiveSession.ActiveSessionActivity;
-import com.checkin.app.checkin.Shop.ShopJoin.BusinessFeaturesActivity;
 import com.checkin.app.checkin.Shop.ShopPublicProfile.ShopActivity;
 import com.checkin.app.checkin.User.NonPersonalProfile.UserViewModel;
 import com.checkin.app.checkin.User.PersonalProfile.UserProfileActivity;
@@ -404,8 +402,7 @@ public class HomeActivity extends BaseAccountActivity
                 SessionMenuActivity.withSession(this, sessionPk, restaurantPk);
                 break;
             case R.id.nav_privacy_settings:
-                intent = new Intent(getApplicationContext(), ShopProfileActivity2.class);
-                startActivity(intent);
+                startActivity(new Intent(this,ActiveSessionActivity.class));
                 break;
             case R.id.notif_activity:
                 intent = new Intent(getApplicationContext(), NotificationActivity.class);
@@ -511,12 +508,10 @@ public class HomeActivity extends BaseAccountActivity
 
     @OnClick(R.id.action_dine_in)
     public  void dine_in(View v){
-        startActivity(new Intent(this,ActiveSessionActivity.class));
     }
 
     @OnClick(R.id.action_delivery)
     public void delivery(View v) {
-        startActivity(new Intent(this, BusinessFeaturesActivity.class));
     }
 
     @Override

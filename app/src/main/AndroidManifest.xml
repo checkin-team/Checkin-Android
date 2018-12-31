@@ -95,10 +95,6 @@
             android:name=".Shop.ShopJoin.ShopJoinActivity"
             android:parentActivityName=".Shop.ShopJoin.ContactVerifyActivity"
             android:theme="@style/AppThemeWhiteActionBar" />
-        <activity android:name=".Shop.ShopReviewsActivity" />
-        <activity
-            android:name=".Profile.ShopProfile.ShopProfileActivity2"
-            android:screenOrientation="portrait" />
         <activity
             android:name=".Shop.ShopPrivateProfile.EditProfileActivity"
             android:label="Edit Profile"
@@ -139,9 +135,15 @@
             android:screenOrientation="portrait"
             android:label="Members"
             android:theme="@style/AppThemeWhiteActionBar" />
+        <activity android:name=".Review.ShopReview.ShopReviewFragment"
+            android:theme="@style/AppThemeWhiteActionBar"/>
 
         <activity android:name=".Misc.QRScannerActivity"
             android:label="Scan CheckIn QR"
+            android:theme="@style/AppThemeWhiteActionBar"/>
+
+        <activity android:name=".Review.ShopReview.ShopReviewsActivity"
+            android:label="Reviews"
             android:theme="@style/AppThemeWhiteActionBar"/>
 
         <service

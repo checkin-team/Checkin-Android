@@ -12,6 +12,7 @@ import com.checkin.app.checkin.Data.NetworkBoundResource;
 import com.checkin.app.checkin.Data.Resource;
 import com.checkin.app.checkin.Data.RetrofitLiveData;
 import com.checkin.app.checkin.Data.WebApiService;
+import com.checkin.app.checkin.Shop.RecentCheckin.Model.RecentCheckinModel;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 
 public class SessionRepository extends BaseRepository {
@@ -41,6 +42,26 @@ public class SessionRepository extends BaseRepository {
         }.getAsLiveData();
     }
 
+    public LiveData<Resource<RecentCheckinModel>> getRecentCheckins(final String shopId) {
+        return new NetworkBoundResource<RecentCheckinModel, RecentCheckinModel>() {
+
+            @Override
+            protected boolean shouldUseLocalDb() {
+                return false;
+            }
+
+            @NonNull
+            @Override
+            protected LiveData<ApiResponse<RecentCheckinModel>> createCall() {
+                return new RetrofitLiveData<>(mWebService.getRecentCheckins(shopId));
+            }
+
+            @Override
+            protected void saveCallResult(RecentCheckinModel data) {
+
+            }
+        }.getAsLiveData();
+    }
 
     public static SessionRepository getInstance(Application application) {
         if (INSTANCE == null) {

@@ -48,7 +48,7 @@ class ShopProfileViewModel extends BaseViewModel {
     }
 
     public void fetchShop(String shopPk) {
-        this.mShopPk = shopPk;
+        mShopPk = shopPk;
         mShopData.addSource(mRepository.getShopModel(shopPk), mShopData::setValue);
     }
 
@@ -58,6 +58,6 @@ class ShopProfileViewModel extends BaseViewModel {
 
     @Override
     public void updateResults() {
-
+        fetchShop(mShopPk);
     }
 }
