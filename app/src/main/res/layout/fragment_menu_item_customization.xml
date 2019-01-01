@@ -180,8 +180,7 @@
                     android:layout_gravity="center"
                     android:layout_marginBottom="@dimen/spacing_tiny"
                     android:layout_marginStart="@dimen/spacing_extra_small"
-                    android:textColor="@color/white"
-                    android:textSize="@dimen/font_normal"
+                    style="@style/WhiteTextStyle"
                     tools:text="4200" />
             </FrameLayout>
 

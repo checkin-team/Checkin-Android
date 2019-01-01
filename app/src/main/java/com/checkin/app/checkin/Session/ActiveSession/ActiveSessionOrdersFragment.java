@@ -1,10 +1,10 @@
 package com.checkin.app.checkin.Session.ActiveSession;
 
+import android.annotation.SuppressLint;
 import android.arch.lifecycle.ViewModelProviders;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -30,16 +30,15 @@ public class ActiveSessionOrdersFragment extends Fragment implements ActiveSessi
 
     private Unbinder unbinder;
     private ActiveSessionOrdersAdapter mOrdersAdapter;
-    private ActiveSessionViewModel mActiveSessionViewModel;
+    private ActiveSessionViewModel mViewModel;
 
     public ActiveSessionOrdersFragment() {}
 
-    public static ActiveSessionOrdersFragment newInstance(FragmentActivity activity) {
-        ActiveSessionOrdersFragment fragment = new ActiveSessionOrdersFragment();
-        fragment.mActiveSessionViewModel = ViewModelProviders.of(activity, new ActiveSessionViewModel.Factory(activity.getApplication())).get(ActiveSessionViewModel.class);
-        return fragment;
+    public static ActiveSessionOrdersFragment newInstance() {
+        return new ActiveSessionOrdersFragment();
     }
 
+    @SuppressLint("ClickableViewAccessibility")
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -48,7 +47,7 @@ public class ActiveSessionOrdersFragment extends Fragment implements ActiveSessi
 
         view.setOnTouchListener((v, event) -> {
             if (event.getAction() == MotionEvent.ACTION_DOWN) {
-                getActivity().getSupportFragmentManager().popBackStack();
+                getFragmentManager().popBackStack();
             }
             return true;
         });
@@ -57,10 +56,8 @@ public class ActiveSessionOrdersFragment extends Fragment implements ActiveSessi
         rvOrders.setAdapter(mOrdersAdapter);
         rvOrders.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false));
 
-        if (getActivity() != null) {
-            ActiveSessionViewModel sessionViewModel = ViewModelProviders.of(getActivity(), new ActiveSessionViewModel.Factory(getActivity().getApplication())).get(ActiveSessionViewModel.class);
-            sessionViewModel.getOrderedItems().observe(this, data -> mOrdersAdapter.setOrderedItems(data));
-        }
+        ActiveSessionViewModel sessionViewModel = ViewModelProviders.of(requireActivity()).get(ActiveSessionViewModel.class);
+        sessionViewModel.getOrderedItems().observe(this, data -> mOrdersAdapter.setOrderedItems(data));
 
         return view;
     }
@@ -73,6 +70,6 @@ public class ActiveSessionOrdersFragment extends Fragment implements ActiveSessi
 
     @Override
     public void onCancelOrder(OrderedItemModel orderedItem) {
-        mActiveSessionViewModel.cancelOrders(orderedItem.getPk());
+        mViewModel.cancelOrders(orderedItem.getPk());
     }
 }
