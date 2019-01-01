@@ -352,7 +352,7 @@ public class HomeActivity extends BaseAccountActivity
 
         ItemClickSupport.addTo(rvTrendingShops).setOnItemClickListener((recyclerView, position, v) -> {
             Intent intent = new Intent(getApplicationContext(), ShopActivity.class);
-            intent.putExtra(ShopActivity.KEY_SHOP_PK, mTrendingShopAdapter.getByPosition(position).getId());
+            intent.putExtra(ShopActivity.KEY_SHOP_PK, mTrendingShopAdapter.getByPosition(position).getPk());
             startActivity(intent);
         });
     }

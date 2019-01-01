@@ -10,13 +10,18 @@ import android.content.Context;
 import android.content.res.ColorStateList;
 import android.content.res.Resources;
 import android.database.Cursor;
+import android.graphics.Bitmap;
+import android.graphics.Canvas;
 import android.graphics.Typeface;
+import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.ColorDrawable;
 import android.graphics.drawable.Drawable;
+import android.graphics.drawable.LayerDrawable;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.Build;
 import android.provider.MediaStore;
+import android.support.annotation.DrawableRes;
 import android.support.annotation.NonNull;
 import android.support.annotation.RequiresApi;
 import android.support.annotation.StringRes;
@@ -79,14 +84,14 @@ public class Util {
     public static void animateShow(View view, float y) {
         // TODO: Have to remove / change this stupid method! (while working on HomeActivity)
         view.animate()
-            .translationY(y-y)
-            .alpha(1.0f)
-            .setListener(new AnimatorListenerAdapter() {
-                @Override
-                public void onAnimationEnd(Animator animation) {
-                    super.onAnimationEnd(animation);
-                }
-            });
+                .translationY(y - y)
+                .alpha(1.0f)
+                .setListener(new AnimatorListenerAdapter() {
+                    @Override
+                    public void onAnimationEnd(Animator animation) {
+                        super.onAnimationEnd(animation);
+                    }
+                });
     }
 
     public static void animateHide(final View view) {
@@ -103,21 +108,22 @@ public class Util {
 
     public static void animateHide(final View view, float y) {
         view.animate()
-            .translationY(y)
-            .alpha(0.0f)
-            .setListener(new AnimatorListenerAdapter() {
-                @Override
-                public void onAnimationEnd(Animator animation) {
-                    super.onAnimationEnd(animation);
-                    view.clearAnimation();
-                }
-            });
+                .translationY(y)
+                .alpha(0.0f)
+                .setListener(new AnimatorListenerAdapter() {
+                    @Override
+                    public void onAnimationEnd(Animator animation) {
+                        super.onAnimationEnd(animation);
+                        view.clearAnimation();
+                    }
+                });
     }
 
-    /** Helper method to animate the change of view dimensions.
+    /**
+     * Helper method to animate the change of view dimensions.
      *
-     * @param view View to animate.
-     * @param newWidth New width, the view should have. If width shouldn't change, pass Util.NO_CHANGE.
+     * @param view      View to animate.
+     * @param newWidth  New width, the view should have. If width shouldn't change, pass Util.NO_CHANGE.
      * @param newHeight New height, the view should have. If height shouldn't change, pass Util.NO_CHANGE.
      */
     public static Animator changeViewSize(@NonNull View view, int newWidth, int newHeight) {
@@ -148,8 +154,7 @@ public class Util {
                 animatorSet.playTogether(heightTick, widthTick);
             else
                 animatorSet.play(widthTick);
-        }
-        else animatorSet.play(heightTick);
+        } else animatorSet.play(heightTick);
         animatorSet.setInterpolator(new AccelerateDecelerateInterpolator());
 //        animatorSet.start();
         return animatorSet;
@@ -233,7 +238,7 @@ public class Util {
     public static Animator createCircularRevealAnimator(final ClipRevealFrame view, int x, int y, float startRadius, float endRadius) {
 
         final Animator reveal;
-        if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP){
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
             reveal = ViewAnimationUtils.createCircularReveal(view, x, y, startRadius, endRadius);
         } else {
             view.setClipOutLines(true);
@@ -355,7 +360,7 @@ public class Util {
 
     public static <T> T getFromCollection(@NonNull Collection<T> collection, T obj) {
         T res = null;
-        for (T item: collection) {
+        for (T item : collection) {
             if (obj.equals(item)) {
                 res = item;
             }
@@ -383,7 +388,7 @@ public class Util {
 
     public static List<MediaImage> getImagesList(Context context) {
         List<MediaImage> imageList = null;
-        final String[] projection = new String[] {
+        final String[] projection = new String[]{
                 MediaStore.Images.Media.TITLE,
                 MediaStore.Images.Media.DATA,
                 MediaStore.Images.Media.DATE_MODIFIED,
@@ -432,7 +437,7 @@ public class Util {
         return formatElapsedTime(eventTime, Calendar.getInstance().getTime());
     }
 
-    public static String formatElapsedTime(Date eventTime, Date currentTime){
+    public static String formatElapsedTime(Date eventTime, Date currentTime) {
         long diffTime = currentTime.getTime() - eventTime.getTime();
         long secondsInMilli = 1000;
         long minutesInMilli = secondsInMilli * 60;
@@ -451,5 +456,49 @@ public class Util {
         if (elapsedMinutes > 0)
             return String.format(Locale.ENGLISH, "%d minutes ago", elapsedMinutes);
         return "Now";
+    }
+
+    public static void loadImageOrDefault(ImageView imageView, String url, @DrawableRes int defaultDrawable) {
+        if (url != null) {
+            GlideApp.with(imageView.getContext())
+                    .load(url)
+                    .into(imageView);
+        } else if (defaultDrawable != 0) {
+            imageView.setImageResource(defaultDrawable);
+        }
+    }
+
+    public static void loadImageOrDefault(ImageView imageView, String url, Drawable defaultDrawable) {
+        if (url != null) {
+            GlideApp.with(imageView.getContext())
+                    .load(url)
+                    .into(imageView);
+        } else if (defaultDrawable != null) {
+            imageView.setImageDrawable(defaultDrawable);
+        }
+    }
+
+    public static Drawable getSingleDrawable(Context context, LayerDrawable layerDrawable) {
+        int resourceBitmapHeight = 136, resourceBitmapWidth = 153;
+
+        float widthInInches = 0.9f;
+
+        int widthInPixels = (int) (widthInInches * context.getResources().getDisplayMetrics().densityDpi);
+        int heightInPixels = widthInPixels * resourceBitmapHeight / resourceBitmapWidth;
+
+        int insetLeft = 10, insetTop = 10, insetRight = 10, insetBottom = 10;
+
+        layerDrawable.setLayerInset(1, insetLeft, insetTop, insetRight, insetBottom);
+
+        Bitmap bitmap = Bitmap.createBitmap(widthInPixels, heightInPixels, Bitmap.Config.ARGB_8888);
+
+        Canvas canvas = new Canvas(bitmap);
+        layerDrawable.setBounds(0, 0, widthInPixels, heightInPixels);
+        layerDrawable.draw(canvas);
+
+        BitmapDrawable bitmapDrawable = new BitmapDrawable(context.getResources(), bitmap);
+        bitmapDrawable.setBounds(0, 0, widthInPixels, heightInPixels);
+
+        return bitmapDrawable;
     }
 }

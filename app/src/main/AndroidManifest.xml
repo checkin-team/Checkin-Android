@@ -146,6 +146,10 @@
             android:label="Reviews"
             android:theme="@style/AppThemeWhiteActionBar"/>
 
+        <activity android:name=".Shop.ShopPrivateProfile.LogoCoverActivity"
+            android:label="Image"
+            android:theme="@style/AppThemeWhiteActionBar" />
+
         <service
             android:name=".Auth.AuthenticatorService"
             android:enabled="true"

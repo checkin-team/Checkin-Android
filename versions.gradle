@@ -10,7 +10,7 @@ ext.versions = [
 
         supportLib        : '27.1.1',
 
-        objectBox         : '2.1.0',
-        jackson           : '2.9.6',
+        objectBox         : '2.3.0',
+        jackson           : '2.9.7',
         dagger            : '2.15',
 ]

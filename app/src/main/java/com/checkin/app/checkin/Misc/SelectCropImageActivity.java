@@ -18,14 +18,15 @@ import java.io.IOException;
 
 public class SelectCropImageActivity extends AppCompatActivity {
     private static final String TAG = SelectCropImageActivity.class.getSimpleName();
+
+    public static final String KEY_IMAGE = "select_crop.image";
+    public static final String KEY_CROP_ASPECT_RATIO = "aspect_ratio";
+
     public static final int RC_CROP_IMAGE = 1000;
     private static final int RC_PICK_IMAGE = 100;
-    public static final String RECTANGLE_CROP_ASPECT_RATIO = "aspect_ratio";
     private File mRectangleFile;
 
-    public static final String KEY_IMAGE = "select_crop_image";
     CropView cropView;
-    private int maxHeight=600, maxWidth=600;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -34,7 +35,7 @@ public class SelectCropImageActivity extends AppCompatActivity {
 
         requestImage();
 
-        float viewportRatio = getIntent().getFloatExtra(RECTANGLE_CROP_ASPECT_RATIO, 0.81f);
+        float viewportRatio = getIntent().getFloatExtra(KEY_CROP_ASPECT_RATIO, 0.81f);
 
         mRectangleFile = new File(getCacheDir(), "profile.png");
 
@@ -47,11 +48,6 @@ public class SelectCropImageActivity extends AppCompatActivity {
                 Log.e(TAG, "Cropped bitmap is null!");
                 return;
             }
-//            if (bitmap.getHeight() > maxHeight || bitmap.getWidth() > maxWidth) {
-//                Log.e(TAG,+bitmap.getHeight()+" "+bitmap.getWidth()+ " ");
-//                Toast.makeText(getApplicationContext(),"Image should be less than "+maxWidth+"*"+maxHeight,Toast.LENGTH_LONG).show();
-//                requestImage();
-//            }
             try (FileOutputStream out = new FileOutputStream(mRectangleFile)) {
                 bitmap.compress(Bitmap.CompressFormat.PNG, 100, out);
             } catch (IOException e) {
@@ -64,15 +60,13 @@ public class SelectCropImageActivity extends AppCompatActivity {
 
     private void requestImage() {
         Intent intent = new Intent();
-        // Show only images, no videos or anything else
         intent.setType("image/*");
         intent.setAction(Intent.ACTION_GET_CONTENT);
-        // Always show the chooser (if there are multiple options available)
         startActivityForResult(Intent.createChooser(intent, "Select Picture"), RC_PICK_IMAGE);
     }
 
     private Intent getImageIntent() {
-        Intent intent =new Intent();
+        Intent intent = new Intent();
         intent.putExtra(KEY_IMAGE, mRectangleFile);
         return intent;
     }
@@ -87,7 +81,7 @@ public class SelectCropImageActivity extends AppCompatActivity {
         if (requestCode == RC_PICK_IMAGE) {
             Uri uri = data.getData();
             try {
-                Bitmap bitmap = MediaStore.Images.Media.getBitmap(getContentResolver(),uri);
+                Bitmap bitmap = MediaStore.Images.Media.getBitmap(getContentResolver(), uri);
                 cropView.setImageBitmap(bitmap);
             } catch (IOException e) {
                 e.printStackTrace();

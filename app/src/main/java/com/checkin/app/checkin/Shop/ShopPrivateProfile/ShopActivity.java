@@ -93,8 +93,7 @@ public class ShopActivity extends BaseAccountActivity {
         public Fragment getItem(int position) {
             switch (position) {
                 case 0:
-                    ShopProfileFragment shopProfileFragment= ShopProfileFragment.newInstance();
-                    shopProfileFragment.setShopPk(shopPk);
+                    ShopProfileFragment shopProfileFragment = ShopProfileFragment.newInstance();
                     return shopProfileFragment;
                 case 1:
                 case 2:

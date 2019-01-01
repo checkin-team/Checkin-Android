@@ -17,7 +17,12 @@ import com.checkin.app.checkin.Shop.ShopJoin.ShopJoinModel;
 import com.checkin.app.checkin.Shop.ShopPrivateProfile.MemberModel;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 
+import java.io.File;
 import java.util.List;
+
+import okhttp3.MediaType;
+import okhttp3.MultipartBody;
+import okhttp3.RequestBody;
 
 /**
  * Created by Bhavik Patel on 24/08/2018.
@@ -75,7 +80,7 @@ public class ShopRepository extends BaseRepository {
             @NonNull
             @Override
             protected LiveData<ApiResponse<ObjectNode>> createCall() {
-                return new RetrofitLiveData<>(mWebService.putRestaurantManageDetails(restaurantModel.getId(), restaurantModel));
+                return new RetrofitLiveData<>(mWebService.putRestaurantManageDetails(restaurantModel.getPk(), restaurantModel));
             }
 
             @Override
@@ -234,6 +239,70 @@ public class ShopRepository extends BaseRepository {
 
             @Override
             protected void saveCallResult(ObjectNode data) { }
+        }.getAsLiveData();
+    }
+
+    public LiveData<Resource<ObjectNode>> postRestaurantCover(String shopId, int index, File pic) {
+        RequestBody requestFile = RequestBody.create(MediaType.parse("image/jpeg"), pic);
+        final MultipartBody.Part body = MultipartBody.Part.createFormData("image", "cover.jpg", requestFile);
+        return new NetworkBoundResource<ObjectNode, ObjectNode>() {
+            @Override
+            protected boolean shouldUseLocalDb() {
+                return false;
+            }
+
+            @NonNull
+            @Override
+            protected LiveData<ApiResponse<ObjectNode>> createCall() {
+                return new RetrofitLiveData<>(mWebService.postRestaurantCover(shopId, index, body));
+            }
+
+            @Override
+            protected void saveCallResult(ObjectNode data) {
+
+            }
+        }.getAsLiveData();
+    }
+
+    public LiveData<Resource<ObjectNode>> deleteRestaurantCover(String shopId, int index) {
+        return new NetworkBoundResource<ObjectNode, ObjectNode>() {
+            @Override
+            protected boolean shouldUseLocalDb() {
+                return false;
+            }
+
+            @NonNull
+            @Override
+            protected LiveData<ApiResponse<ObjectNode>> createCall() {
+                return new RetrofitLiveData<>(mWebService.deleteRestaurantCover(shopId, index));
+            }
+
+            @Override
+            protected void saveCallResult(ObjectNode data) {
+
+            }
+        }.getAsLiveData();
+    }
+
+    public LiveData<Resource<ObjectNode>> postRestaurantLogo(String shopId, File pic) {
+        RequestBody requestFile = RequestBody.create(MediaType.parse("image/jpeg"), pic);
+        final MultipartBody.Part body = MultipartBody.Part.createFormData("logo", "cover.jpg", requestFile);
+        return new NetworkBoundResource<ObjectNode, ObjectNode>() {
+            @Override
+            protected boolean shouldUseLocalDb() {
+                return false;
+            }
+
+            @NonNull
+            @Override
+            protected LiveData<ApiResponse<ObjectNode>> createCall() {
+                return new RetrofitLiveData<>(mWebService.postRestaurantLogo(shopId, body));
+            }
+
+            @Override
+            protected void saveCallResult(ObjectNode data) {
+
+            }
         }.getAsLiveData();
     }
 
