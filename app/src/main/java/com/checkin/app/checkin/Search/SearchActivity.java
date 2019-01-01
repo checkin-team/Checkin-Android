@@ -41,6 +41,12 @@ public class SearchActivity extends AppCompatActivity implements SearchResultInt
     public static final int TYPE_PEOPLE = 1;
     public static final int TYPE_RESTAURANT = 2;
 
+    // TODO: Apply search filters!
+    public static final String KEY_SEARCH_FILTER = "search.filter";
+    public static final int FILTER_ALL = 0;
+    public static final int FILTER_CONNECTED = 1;
+    public static final int FILTER_NOT_CONNECTED = 2;
+
     @BindView(R.id.pager_search_type) ViewPager vPagerSearchType;
     @BindView(R.id.search_view) MaterialSearchView vSearch;
     @BindView(R.id.tabs_search) TabLayout vTabs;
@@ -51,6 +57,7 @@ public class SearchActivity extends AppCompatActivity implements SearchResultInt
 
     private int mSearchMode = MODE_SEARCH;
     private int mSearchType = TYPE_ALL;
+    private int mSearchFilter = FILTER_ALL;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -61,6 +68,7 @@ public class SearchActivity extends AppCompatActivity implements SearchResultInt
 
         mSearchMode = getIntent().getIntExtra(KEY_SEARCH_MODE, MODE_SEARCH);
         mSearchType = getIntent().getIntExtra(KEY_SEARCH_TYPE, TYPE_ALL);
+        mSearchFilter = getIntent().getIntExtra(KEY_SEARCH_FILTER, FILTER_ALL);
 
         mViewModel = ViewModelProviders.of(this).get(SearchViewModel.class);
 

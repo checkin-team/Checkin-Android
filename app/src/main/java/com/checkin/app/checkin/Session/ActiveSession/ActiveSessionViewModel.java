@@ -4,8 +4,6 @@ import android.app.Application;
 import android.arch.lifecycle.LiveData;
 import android.arch.lifecycle.MediatorLiveData;
 import android.arch.lifecycle.Transformations;
-import android.arch.lifecycle.ViewModel;
-import android.arch.lifecycle.ViewModelProvider;
 import android.support.annotation.NonNull;
 import android.util.Log;
 
@@ -23,9 +21,11 @@ import java.util.List;
  */
 
 public class ActiveSessionViewModel extends BaseViewModel {
-    private static final String TAG = ActiveSessionViewModel.class.getSimpleName();
     private final ActiveSessionRepository mRepository;
+
     private MediatorLiveData<Resource<ActiveSessionModel>> mSessionData = new MediatorLiveData<>();
+
+    private String mShopPk;
 
     ActiveSessionViewModel(@NonNull Application application) {
         super(application);
@@ -65,18 +65,11 @@ public class ActiveSessionViewModel extends BaseViewModel {
         mData.addSource(mRepository.postAddMembers(data), mData::setValue);
     }
 
-    public static class Factory extends ViewModelProvider.NewInstanceFactory {
-        @NonNull
-        private final Application mApplication;
+    public void setShopPk(String shopPk) {
+        mShopPk = shopPk;
+    }
 
-        public Factory(@NonNull Application application) {
-            mApplication = application;
-        }
-
-        @NonNull
-        @Override
-        public <T extends ViewModel> T create(@NonNull Class<T> modelClass) {
-            return (T) new ActiveSessionViewModel(mApplication);
-        }
+    public String getShopPk() {
+        return mShopPk;
     }
 }

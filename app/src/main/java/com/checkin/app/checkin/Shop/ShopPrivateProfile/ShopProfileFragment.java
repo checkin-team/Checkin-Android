@@ -22,6 +22,7 @@ import com.checkin.app.checkin.Misc.CoverPagerAdapter;
 import com.checkin.app.checkin.Misc.StatusTextAdapter;
 import com.checkin.app.checkin.R;
 import com.checkin.app.checkin.Shop.RestaurantModel;
+import com.checkin.app.checkin.Utility.Util;
 import com.rd.PageIndicatorView;
 import com.rd.animation.type.AnimationType;
 
@@ -53,15 +54,10 @@ public class ShopProfileFragment extends Fragment {
     private ShopProfileViewModel mViewModel;
     private StatusTextAdapter mExtraDataAdapter;
     private CoverPagerAdapter mCoverPagerAdapter;
-    private String shopPk;
+    private Intent mImageChangeIntent;
 
     public static ShopProfileFragment newInstance() {
-        ShopProfileFragment fragment = new ShopProfileFragment();
-        return fragment;
-    }
-
-    public void setShopPk(String shopPk) {
-        this.shopPk = shopPk;
+        return new ShopProfileFragment();
     }
 
     @Override
@@ -77,6 +73,7 @@ public class ShopProfileFragment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
 
         mViewModel = ViewModelProviders.of(requireActivity()) .get(ShopProfileViewModel.class);
+        mImageChangeIntent = new Intent(requireContext(), LogoCoverActivity.class);
 
         mCoverPagerAdapter = new CoverPagerAdapter();
         vPagerCover.setAdapter(mCoverPagerAdapter);
@@ -116,20 +113,27 @@ public class ShopProfileFragment extends Fragment {
         if (shop.isValidStatus())
             imStatus.setVisibility(View.INVISIBLE);
         imStatus.setTag(shop.getShopStatus());
+
+        mImageChangeIntent.putExtra(LogoCoverActivity.KEY_SHOP_PK, mViewModel.getShopPk());
+        mImageChangeIntent.putExtra(LogoCoverActivity.KEY_SHOP_LOGO, shop.getLogoUrl());
+        mImageChangeIntent.putExtra(LogoCoverActivity.KEY_SHOP_COVERS, shop.getCovers());
     }
 
     @OnClick(R.id.im_status)
     public void onStatusClick(View v) {
-        Toast.makeText(requireContext(), v.getTag().toString(), Toast.LENGTH_SHORT).show();
+        Util.toast(requireContext(), v.getTag().toString());
     }
 
     @OnClick(R.id.btn_profile_edit)
     public void onEditProfile(View v) {
-        String shopPk = mViewModel.getShopPk();
-
         Intent intent = new Intent(requireContext(), EditProfileActivity.class);
-        intent.putExtra(EditProfileActivity.KEY_SHOP_PK, shopPk);
+        intent.putExtra(EditProfileActivity.KEY_SHOP_PK, mViewModel.getShopPk());
         startActivity(intent);
+    }
+
+    @OnClick(R.id.btn_add_image)
+    public void onAddImage(View v) {
+        startActivity(mImageChangeIntent);
     }
 
     @OnClick({R.id.btn_members, R.id.btn_notifications, R.id.btn_insights, R.id.btn_cuisine})
@@ -138,7 +142,7 @@ public class ShopProfileFragment extends Fragment {
         switch (v.getId()) {
             case R.id.btn_members:
                 intent = new Intent(requireContext(), MembersActivity.class);
-                intent.putExtra(MembersActivity.KEY_SHOP_PK, shopPk);
+                intent.putExtra(MembersActivity.KEY_SHOP_PK, mViewModel.getShopPk());
                 startActivity(intent);
                 break;
             case R.id.btn_notifications:

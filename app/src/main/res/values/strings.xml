@@ -10,8 +10,6 @@
 
     <string name="action_settings">Settings</string>
 
-    <string name="tab_menu">Menu</string>
-    <string name="tab_session_detail">Detail</string>
     <string name="action_search">Search</string>
     <string name="action_finish">Finish</string>
     <string name="action_filter">Filter Items</string>
@@ -123,4 +121,10 @@
     <string name="title_member_assign_role">Assign Role</string>
 
     <string name="currency_rupee">&#x20B9; %s</string>
+
+    <!-- Active Session -->
+    <string name="action_list_orders">View Orders</string>
+    <string name="action_view_menu">Menu</string>
+    <string name="session_presence_private">Private</string>
+    <string name="session_presence_public">Public</string>
 </resources>

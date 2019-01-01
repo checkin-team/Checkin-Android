@@ -52,7 +52,7 @@
                 android:layout_marginTop="@dimen/spacing_normal"
                 android:clickable="true"
                 android:focusable="true"
-                android:src="@drawable/ic_image_add"
+                android:src="@drawable/ic_image_add_small"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toTopOf="parent"/>
 

@@ -96,6 +96,19 @@ public interface WebApiService {
     @GET("restaurants/")
     Call<List<RestaurantModel>> getRestaurants();
 
+    @Multipart
+    @POST("restaurants/{shop_id}/logo/")
+    Call<ObjectNode> postRestaurantLogo(
+            @Path("shop_id") String shopId, @Part MultipartBody.Part pic);
+
+    @Multipart
+    @POST("restaurants/{shop_id}/covers/{index}/")
+    Call<ObjectNode> postRestaurantCover(
+            @Path("shop_id") String shopId, @Path("index") int index, @Part MultipartBody.Part pic);
+
+    @DELETE("restaurants/{shop_id}/covers/{index}/")
+    Call<ObjectNode> deleteRestaurantCover(@Path("shop_id") String shopId, @Path("index") int index);
+
     @GET("restaurants/{shop_id}/edit/")
     Call<RestaurantModel> getRestaurantManageDetails(@Path("shop_id") String shopId);
 

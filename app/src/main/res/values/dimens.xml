@@ -31,16 +31,18 @@
     <dimen name="size_normal_button">40dp</dimen>
     <dimen name="size_small_button">30dp</dimen>
     <dimen name="size_extra_small_button">20dp</dimen>
+    <dimen name="size_tiny_button">10dp</dimen>
 
     <dimen name="size_logo">60dp</dimen>
+    <dimen name="size_logo_large">80dp</dimen>
     <dimen name="size_small_image">40dp</dimen>
 
     <dimen name="height_card_normal">80dp</dimen>
     <dimen name="height_card_tall">120dp</dimen>
     <dimen name="width_card_tall">75dp</dimen>
 
-    <dimen name="height_card_wide">80dp</dimen>
-    <dimen name="width_card_wide">120dp</dimen>
+    <dimen name="height_card_wide">100dp</dimen>
+    <dimen name="width_card_wide">125dp</dimen>
 
     <dimen name="thickness_line">3dp</dimen>
 

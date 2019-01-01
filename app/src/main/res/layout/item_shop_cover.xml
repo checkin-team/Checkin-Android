@@ -2,45 +2,51 @@
 <android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="wrap_content"
-    android:layout_height="wrap_content">
+    android:layout_width="@dimen/width_card_wide"
+    android:layout_height="@dimen/height_card_wide"
+    android:layout_gravity="center"
+    android:layout_margin="@dimen/spacing_small">
 
     <android.support.v7.widget.CardView
-        android:layout_width="@dimen/width_card_wide"
-        android:layout_height="@dimen/height_card_wide"
-        android:elevation="@dimen/card_elevation"
-        app:cardCornerRadius="@dimen/card_corner_radius">
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        app:cardElevation="@dimen/card_elevation"
+        app:cardCornerRadius="@dimen/card_corner_radius"
+        app:cardPreventCornerOverlap="true"
+        android:layout_margin="@dimen/spacing_small">
 
-        <ImageView
-            android:id="@+id/im_shop_cover"
+        <com.joooonho.SelectableRoundedImageView
+            android:id="@+id/im_sc_cover"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:src="@drawable/cover_restaurant_unknown"
             android:scaleType="centerCrop"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:sriv_left_bottom_corner_radius="@dimen/card_corner_radius"
+            app:sriv_left_top_corner_radius="@dimen/card_corner_radius"
+            app:sriv_right_bottom_corner_radius="@dimen/card_corner_radius"
+            app:sriv_right_top_corner_radius="@dimen/card_corner_radius" />
 
         <TextView
-            android:id="@+id/tv_shop_cover_SrNo"
+            android:id="@+id/tv_sc_index"
             style="@style/WhiteTextStyle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-
             android:layout_marginStart="@dimen/spacing_tiny"
             android:layout_marginTop="@dimen/spacing_tiny"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
+            android:textSize="@dimen/font_extra_small"
             tools:text="1" />
 
     </android.support.v7.widget.CardView>
 
-    <ImageButton
-        android:id="@+id/im_sl_remove"
-        android:layout_width="@dimen/size_small_button"
-        android:layout_height="@dimen/size_small_button"
+    <ImageView
+        android:id="@+id/btn_sc_remove"
+        android:layout_width="@dimen/size_extra_small_button"
+        android:layout_height="@dimen/size_extra_small_button"
         android:background="@color/transparent"
         android:src="@drawable/ic_cancel"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"/>
+        android:elevation="10dp"
+        android:clickable="true"
+        android:focusable="true"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
 </android.support.constraint.ConstraintLayout>

@@ -87,7 +87,7 @@ public class ShopModel {
         this.pk = pk;
     }
 
-    public String getId() {
+    public String getPk() {
         return pk;
     }
 

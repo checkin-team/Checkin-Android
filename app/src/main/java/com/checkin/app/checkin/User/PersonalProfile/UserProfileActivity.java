@@ -89,8 +89,7 @@ public class UserProfileActivity extends BaseActivity {
 
     @OnClick(R.id.im_edit_profile_pic)
     public void editProfilePic() {
-        Intent intent;
-        intent = new Intent(this , SelectCropImageActivity.class);
+        Intent intent = new Intent(this , SelectCropImageActivity.class);
         startActivityForResult(intent, SelectCropImageActivity.RC_CROP_IMAGE);
     }
 

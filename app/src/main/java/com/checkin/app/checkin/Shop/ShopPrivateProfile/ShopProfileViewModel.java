@@ -14,6 +14,7 @@ import com.checkin.app.checkin.Shop.ShopRepository;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 
+import java.io.File;
 import java.util.List;
 
 /**
@@ -140,8 +141,24 @@ public class ShopProfileViewModel extends BaseViewModel{
         mShopData.setValue(Resource.success(restaurantModel));
     }
 
+    public void uploadCoverImage(int index, File pic) {
+        mData.addSource(mRepository.postRestaurantCover(mShopPk, index, pic), mData::setValue);
+    }
+
+    public void uploadLogoImage(File pic) {
+        mData.addSource(mRepository.postRestaurantLogo(mShopPk, pic), mData::setValue);
+    }
+
+    public void removeCoverImage(int index) {
+        mData.addSource(mRepository.deleteRestaurantCover(mShopPk, index), mData::setValue);
+    }
+
+    public void setShopPk(String shopPk) {
+        mShopPk = shopPk;
+    }
+
     @Override
     public void updateResults() {
-
+        fetchShopDetails(mShopPk);
     }
 }
