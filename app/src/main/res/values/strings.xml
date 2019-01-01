@@ -123,4 +123,7 @@
     <string name="title_member_assign_role">Assign Role</string>
 
     <string name="currency_rupee">&#x20B9; %s</string>
+
+    <!-- Active Session -->
+    <string name="action_list_orders">View Orders</string>
 </resources>

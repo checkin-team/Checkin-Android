@@ -22,6 +22,7 @@
     <color name="shadow_gradient">#20000000</color>
     <color name="translucent_half_black">#80000000</color>
     <color name="warm_grey">#979797</color>
+    <color name="light_grey">#e2e2e2</color>
 
     <color name="insightscardcolor">#59e9e4e4</color>
     <color name="greyish">#aaaaaa</color>

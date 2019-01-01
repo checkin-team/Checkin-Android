@@ -1,0 +1,208 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/root_view"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:animateLayoutChanges="true"
+    android:background="@color/white"
+    android:focusable="true"
+    android:focusableInTouchMode="true">
+
+
+    <android.support.design.widget.AppBarLayout
+        android:id="@+id/appbar_active_session"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:fitsSystemWindows="true"
+        android:theme="@style/appbar_main"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <android.support.v7.widget.Toolbar
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="top"
+            android:background="@color/primary_red"
+            app:popupTheme="@style/PopupOverlay">
+
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+            <TextView
+                android:id="@+id/appbar_title"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/arial_rounded_mt_bold"
+                android:text="@string/active_session"
+                android:layout_weight="0.3"
+                android:layout_gravity="center|start"
+                android:textColor="@color/white"
+                android:textSize="@dimen/font_large"
+                app:layout_constraintStart_toStartOf="parent" />
+
+
+            <FrameLayout
+                android:id="@+id/bill_container"
+                android:layout_width="wrap_content"
+                android:layout_height="40dp"
+                android:layout_gravity="center"
+                android:layout_marginEnd="@dimen/spacing_normal"
+                android:layout_marginTop="@dimen/spacing_tiny"
+                android:layout_marginStart="@dimen/spacing_tiny"
+                android:background="@drawable/menu_item_price_white">
+
+                <TextView
+                    android:id="@+id/tv_bill"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:textColor="@color/white"
+                    android:textSize="@dimen/font_normal"
+                    android:layout_marginBottom="@dimen/spacing_tiny"
+                    android:layout_marginStart="@dimen/spacing_tiny"
+                    tools:text="4200" />
+            </FrameLayout>
+
+            <ImageView
+                android:id="@+id/btn_checkout"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/btn_checkout"
+                android:layout_marginEnd="@dimen/spacing_small"
+                app:layout_constraintEnd_toEndOf="@+id/appbar_active_session" />
+
+            </LinearLayout>
+        </android.support.v7.widget.Toolbar>
+    </android.support.design.widget.AppBarLayout>
+
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/rv_session_members"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:background="@drawable/background_card_white_inner_shadow"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintBottom_toTopOf="@id/container_second"
+        app:layout_constraintTop_toBottomOf="@+id/appbar_active_session"
+        app:layout_constraintVertical_weight="0.7"/>
+
+    <android.support.constraint.ConstraintLayout
+        android:id="@+id/container_second"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:drawableTop="@drawable/ic_ordered_items"
+        app:layout_constraintBottom_toTopOf="@id/rv_menu"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/rv_session_members"
+        app:layout_constraintVertical_weight="0.8" >
+
+        <Switch
+            android:id="@+id/switch_mark_presence"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/spacing_normal"
+            android:layout_marginEnd="28dp"
+            android:checked="true"
+            android:showText="true"
+            android:scaleX="1.5"
+            android:scaleY="1.5"
+            android:splitTrack="false"
+            android:switchTextAppearance="@style/SwitchTextAppearance"
+            android:textColor="@color/grey"
+            android:textOff="Private"
+            android:textOn="Public"
+            android:thumb="@drawable/ic_switch_toggle"
+            android:track="@drawable/rectangle_pinkish_grey"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/container_second" />
+
+
+        <TextView
+            android:id="@+id/mark_your_presence_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/spacing_tiny"
+            android:layout_marginEnd="@dimen/spacing_small"
+            android:fontFamily="@font/arial_rounded_mt_bold"
+            android:text="@string/title_checkin_privacy"
+            android:textColor="@color/pinkish_grey"
+            android:textSize="@dimen/font_smallest"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/switch_mark_presence" />
+
+        <TextView
+            android:id="@+id/btn_table_cleaning"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/spacing_small"
+            android:layout_marginTop="@dimen/spacing_extra_small"
+            android:drawableTop="@drawable/ic_ordered_items"
+            android:text="@string/view_orders"
+            android:textAlignment="center"
+            android:textSize="@dimen/font_normal"
+            android:drawablePadding="@dimen/spacing_extra_small"
+            app:layout_constraintEnd_toStartOf="@+id/btn_list_orders"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/mark_your_presence_title" />
+
+        <TextView
+            android:id="@+id/btn_list_orders"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="@dimen/spacing_small"
+            android:layout_marginTop="@dimen/spacing_extra_small"
+            android:drawableTop="@drawable/ic_table_cleaning"
+            android:text="@string/tab_menu"
+            android:textAlignment="center"
+            android:textSize="@dimen/font_normal"
+            android:drawablePadding="@dimen/spacing_extra_small"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toEndOf="@+id/btn_table_cleaning"
+            app:layout_constraintTop_toBottomOf="@id/mark_your_presence_title" />
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/height_horizontal_line"
+            android:layout_marginTop="@dimen/spacing_small"
+            android:background="@drawable/gradient_bottom_strip"
+            app:layout_constraintTop_toBottomOf="@id/btn_list_orders" />
+
+
+    </android.support.constraint.ConstraintLayout>
+
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/rv_menu"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:text="TextView 3"
+        app:layout_constraintBottom_toTopOf="@id/View4"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/container_second"
+        app:layout_constraintVertical_weight="0.9" />
+
+    <android.support.constraint.ConstraintLayout
+        android:id="@+id/View4"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/rv_menu"
+        app:layout_constraintVertical_weight="0.7" />
+
+
+
+
+
+
+
+
+</android.support.constraint.ConstraintLayout>
+

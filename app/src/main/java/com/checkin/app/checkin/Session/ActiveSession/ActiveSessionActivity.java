@@ -16,6 +16,8 @@ import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.widget.CompoundButton;
+import android.widget.Switch;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -50,7 +52,9 @@ public class ActiveSessionActivity extends AppCompatActivity implements ActiveSe
     private ActiveSessionMemberAdapter mSessionMembersAdapter;
     public static final String IDENTIFIER = "active_session";
     @BindView(R.id.rv_session_members) RecyclerView rvMembers;
-    @BindView(R.id.tv_bill) TextView tvBill;
+//    @BindView(R.id.tv_bill) TextView tvBill;
+    @BindView(R.id.switch_mark_presence)
+    Switch switch_mark_presence;
 
     private MaterialStyledDialog mAddMemberDialog;
     private MaterialStyledDialog mCheckoutDialog;
@@ -60,7 +64,7 @@ public class ActiveSessionActivity extends AppCompatActivity implements ActiveSe
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        setContentView(R.layout.activity_active_session);
+        setContentView(R.layout.activity_active_session_new);
         ButterKnife.bind(this);
 
         rvMembers.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false));
@@ -75,7 +79,7 @@ public class ActiveSessionActivity extends AppCompatActivity implements ActiveSe
             switch (resource.status) {
                 case SUCCESS: {
                     mSessionMembersAdapter.setUsers(data != null ? data.getCustomers() : null);
-                    tvBill.setText(String.valueOf(data != null ? data.getBill() : 0));
+//                    tvBill.setText(String.valueOf(data != null ? data.getBill() : 0));
                 }
                 case LOADING: {
                     break;
@@ -96,6 +100,17 @@ public class ActiveSessionActivity extends AppCompatActivity implements ActiveSe
                 }
             }
         });
+        switch_mark_presence.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                if (isChecked) {
+
+                } else {
+
+                }
+            }
+        });
+
         setupAddMember();
         setupCheckoutDialog();
         mHandler = new Receiver(mActiveSessionViewModel);
