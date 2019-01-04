@@ -94,6 +94,11 @@
         <item name="android:layout_height">@dimen/size_logo</item>
     </style>
 
+    <style name="LogoLargeImageStyle">
+        <item name="android:layout_width">@dimen/size_logo_large</item>
+        <item name="android:layout_height">@dimen/size_logo_large</item>
+    </style>
+
     <style name="InputLabelGreyLargeStyle" parent="TextAppearance.AppCompat">
         <item name="android:fontFamily">@font/arial_rounded_mt_bold</item>
         <item name="android:textColor">@color/pinkish_grey</item>

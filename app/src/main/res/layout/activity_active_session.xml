@@ -44,28 +44,30 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
-                    android:paddingTop="@dimen/spacing_extra_small"
-                    android:paddingBottom="@dimen/spacing_extra_small"
-                    android:layout_marginEnd="@dimen/spacing_normal"
                     android:layout_marginStart="@dimen/spacing_tiny"
                     android:layout_marginTop="@dimen/spacing_tiny"
-                    android:background="@drawable/menu_item_price_white">
+                    android:layout_marginEnd="@dimen/spacing_normal"
+                    android:background="@drawable/menu_item_price_white"
+                    android:paddingTop="@dimen/spacing_extra_small"
+                    android:paddingBottom="@dimen/spacing_extra_small">
 
                     <TextView
                         android:id="@+id/tv_active_session_bill"
+                        style="@style/WhiteTextStyle"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center"
+                        android:layout_marginStart="@dimen/spacing_large"
+                        android:layout_marginEnd="@dimen/spacing_normal"
                         android:layout_marginBottom="@dimen/spacing_tiny"
-                        android:layout_marginStart="@dimen/spacing_extra_small"
-                        style="@style/WhiteTextStyle"
-                        tools:text="4200" />
+                        tools:text="0000" />
                 </FrameLayout>
 
                 <ImageView
                     android:id="@+id/btn_active_session_checkout"
-                    android:layout_width="wrap_content"
+                    android:layout_width="100dp"
                     android:layout_height="wrap_content"
+                    android:maxWidth="40dp"
                     android:layout_marginEnd="@dimen/spacing_small"
                     android:src="@drawable/btn_checkout"
                     app:layout_constraintEnd_toEndOf="@+id/appbar_active_session" />
@@ -82,6 +84,7 @@
         app:layout_constraintBottom_toTopOf="@id/container_second"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/appbar_active_session"
+        app:layout_constraintVertical_chainStyle="spread_inside"
         app:layout_constraintVertical_weight="0.7" />
 
     <android.support.constraint.ConstraintLayout
@@ -98,8 +101,8 @@
             android:id="@+id/switch_session_presence"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginEnd="@dimen/spacing_extra_large"
             android:layout_marginTop="@dimen/spacing_normal"
+            android:layout_marginEnd="@dimen/spacing_extra_large"
             android:checked="true"
             android:scaleX="1.5"
             android:scaleY="1.5"
@@ -119,8 +122,8 @@
             android:id="@+id/tv_session_mark_presence"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginEnd="@dimen/spacing_normal"
             android:layout_marginTop="@dimen/spacing_tiny"
+            android:layout_marginEnd="@dimen/spacing_normal"
             android:fontFamily="@font/arial_rounded_mt_bold"
             android:text="@string/title_checkin_privacy"
             android:textColor="@color/pinkish_grey"
@@ -134,8 +137,8 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="@dimen/spacing_small"
             android:layout_marginTop="@dimen/spacing_extra_small"
-            android:drawablePadding="@dimen/spacing_extra_small"
             android:drawableTop="@drawable/ic_ordered_items"
+            android:drawablePadding="@dimen/spacing_extra_small"
             android:text="@string/action_list_orders"
             android:textAlignment="center"
             android:textSize="@dimen/font_normal"
@@ -148,10 +151,10 @@
             android:id="@+id/btn_active_session_menu"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginEnd="@dimen/spacing_small"
             android:layout_marginTop="@dimen/spacing_extra_small"
+            android:layout_marginEnd="@dimen/spacing_small"
+            android:drawableTop="@drawable/noun_menu"
             android:drawablePadding="@dimen/spacing_extra_small"
-            android:drawableTop="@drawable/ic_table_cleaning"
             android:text="@string/action_view_menu"
             android:textAlignment="center"
             android:textSize="@dimen/font_normal"
@@ -168,8 +171,8 @@
         android:layout_height="0dp"
         android:background="@drawable/background_card_white_inner_shadow"
         app:layout_constraintBottom_toTopOf="@id/container_session_actions"
-        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/container_second"
         app:layout_constraintVertical_weight="0.9" />
 
@@ -178,10 +181,131 @@
         android:layout_width="0dp"
         android:layout_height="0dp"
         app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toBottomOf="@id/rv_session_recommendations"
-        app:layout_constraintVertical_weight="0.7" />
+        app:layout_constraintVertical_weight="0.7">
+
+        <LinearLayout
+            android:id="@+id/ll_waiter_container"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@id/ll_call_waiter_container"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <de.hdodenhof.circleimageview.CircleImageView
+                android:id="@+id/im_waiter"
+                style="@style/LogoImageStyle"
+                android:src="@drawable/ic_waiter" />
+
+            <TextView
+                android:id="@+id/text_waiter"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/spacing_extra_small"
+                android:gravity="center"
+                android:text="@string/waiter"
+                android:textSize="@dimen/font_extra_small" />
+
+        </LinearLayout>
+
+        <TextView
+            android:id="@+id/tv_waiter_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="waiter name"
+            android:textSize="@dimen/font_small"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@id/ll_call_waiter_container"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/ll_waiter_container" />
+
+
+        <LinearLayout
+            android:id="@+id/ll_call_waiter_container"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@id/ll_table_cleaning_container"
+            app:layout_constraintStart_toEndOf="@id/ll_waiter_container"
+            app:layout_constraintTop_toTopOf="parent" >
+
+            <ImageView
+                android:id="@+id/im_call_waiter"
+                style="@style/LogoImageStyle"
+                android:src="@drawable/noun_location_delivery_grey" />
+
+            <TextView
+                android:id="@+id/text_call_waiter"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/spacing_extra_small"
+                android:gravity="center"
+                android:text="@string/call_waiter"
+                android:textSize="@dimen/font_small" />
+
+        </LinearLayout>
+
+
+        <LinearLayout
+            android:id="@+id/ll_table_cleaning_container"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@id/ll_refill_glass"
+            app:layout_constraintStart_toEndOf="@id/ll_call_waiter_container"
+            app:layout_constraintTop_toTopOf="parent" >
+
+            <ImageView
+                android:id="@+id/im_table_cleaning"
+                style="@style/LogoImageStyle"
+                android:src="@drawable/ic_table_cleaning" />
+
+            <TextView
+                android:id="@+id/text_table_cleaning"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/spacing_extra_small"
+                android:gravity="center"
+                android:text="@string/table_cleaning"
+                android:textSize="@dimen/font_small" />
+
+        </LinearLayout>
+
+
+        <LinearLayout
+            android:id="@+id/ll_refill_glass"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@id/ll_table_cleaning_container"
+            app:layout_constraintTop_toTopOf="parent"  >
+
+            <ImageView
+                android:id="@+id/im_refill_glass"
+                style="@style/LogoImageStyle"
+                android:src="@drawable/noun_glass_of_water_grey" />
+
+            <TextView
+                android:id="@+id/text_refill_glass"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/spacing_extra_small"
+                android:gravity="center"
+                android:text="@string/refill_glass"
+                android:textSize="@dimen/font_small" />
+
+        </LinearLayout>
+
+    </android.support.constraint.ConstraintLayout>
 
 
 </android.support.constraint.ConstraintLayout>

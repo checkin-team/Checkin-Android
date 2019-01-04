@@ -145,6 +145,9 @@ public interface WebApiService {
     @POST("sessions/active/customers/")
     Call<ObjectNode> postActiveSessionCustomers(@Body ObjectNode data);
 
+    @PUT("sessions/active/customers/self/")
+    Call<ObjectNode> putActiveSessionSelfCustomer(@Body ObjectNode data);
+
     @DELETE("sessions/active/customers/{user_id}/")
     Call<ObjectNode> deleteActiveSessionCustomer(@Path("user_id") String userId);
 

@@ -10,6 +10,7 @@ import com.bumptech.glide.Glide;
 import com.checkin.app.checkin.R;
 import com.checkin.app.checkin.Session.SessionCustomerModel;
 import com.checkin.app.checkin.Utility.HeaderFooterRecyclerViewAdapter;
+import com.checkin.app.checkin.Utility.Util;
 
 import java.util.List;
 
@@ -87,9 +88,7 @@ public class ActiveSessionMemberAdapter extends HeaderFooterRecyclerViewAdapter 
 
         void bindData(SessionCustomerModel customer) {
             tvUser.setText(customer.getUser().getDisplayName());
-            Glide.with(tvUser.getContext())
-                    .load(customer.getUser().getDisplayPic())
-                    .into(imUser);
+            Util.loadImageOrDefault(imUser,customer.getUser().getDisplayPic(),R.drawable.cover_unknown_male);
         }
     }
 

@@ -71,7 +71,6 @@ public class ActiveSessionRepository extends BaseRepository {
 
             @Override
             protected void saveCallResult(ObjectNode data) {
-
             }
         }.getAsLiveData();
     }

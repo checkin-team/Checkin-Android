@@ -127,4 +127,9 @@
     <string name="action_view_menu">Menu</string>
     <string name="session_presence_private">Private</string>
     <string name="session_presence_public">Public</string>
+    <string name="waiter">Waiter</string>
+    <string name="call_waiter">Call\nWaiter</string>
+    <string name="table_cleaning">Table\nCleaning</string>
+    <string name="refill_glass">Refill\nGlass</string>
+    <string name="rs">\u20B9</string>
 </resources>

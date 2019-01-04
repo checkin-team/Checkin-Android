@@ -11,7 +11,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        app:layout_constraintGuide_percent="0.15"
+        app:layout_constraintGuide_percent="0.25"
         app:layout_constraintTop_toTopOf="parent" />
 
     <android.support.constraint.ConstraintLayout
@@ -22,54 +22,6 @@
         app:layout_constraintTop_toTopOf="@+id/guideline_above">
 
         <TextView
-            android:id="@+id/tv_title_add_member"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/spacing_extra_large"
-            android:text="@string/title_add_member"
-            android:textColor="@color/brownish_grey"
-            android:textSize="@dimen/font_large"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
-
-        <ImageView
-            android:id="@+id/im_help_add_member"
-            android:layout_width="@dimen/size_small_icon"
-            android:layout_height="@dimen/size_small_icon"
-            android:layout_marginTop="@dimen/spacing_extra_large"
-            android:contentDescription="@string/help"
-            android:src="@drawable/ic_question"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.25"
-            app:layout_constraintStart_toEndOf="@+id/tv_title_add_member"
-            app:layout_constraintTop_toTopOf="parent" />
-
-        <include
-            android:id="@+id/select_container"
-            layout="@layout/view_select_list_multiple"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginEnd="@dimen/spacing_extra_large"
-            android:layout_marginStart="@dimen/spacing_extra_large"
-            android:layout_marginTop="@dimen/spacing_normal"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/tv_title_add_member" />
-
-        <View
-            android:id="@+id/line_horizontal"
-            android:layout_width="match_parent"
-            android:layout_height="@dimen/height_horizontal_line"
-            android:layout_marginEnd="@dimen/spacing_normal"
-            android:layout_marginStart="@dimen/spacing_normal"
-            android:layout_marginTop="@dimen/spacing_large"
-            android:background="@color/grey"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/select_container" />
-
-        <TextView
             android:id="@+id/tv_title_choose_privacy"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -77,10 +29,11 @@
             android:text="@string/title_checkin_privacy"
             android:textColor="@color/brownish_grey"
             android:textSize="@dimen/font_large"
+            android:fontFamily="@font/arial_rounded_mt_bold"
             app:layout_constraintBottom_toTopOf="@+id/btn_privacy_private"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/line_horizontal" />
+            app:layout_constraintTop_toTopOf="parent"  />
 
         <ImageView
             android:id="@+id/im_help_choose_privacy"
@@ -89,43 +42,39 @@
             android:src="@drawable/ic_question"
             app:layout_constraintBottom_toTopOf="@+id/btn_privacy_private"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.25"
             app:layout_constraintStart_toEndOf="@+id/tv_title_choose_privacy"
-            app:layout_constraintTop_toBottomOf="@id/line_horizontal" />
+            app:layout_constraintHorizontal_bias="0.25"
+            app:layout_constraintTop_toTopOf="parent"  />
 
         <ImageView
             android:id="@+id/btn_privacy_public"
-            android:layout_width="@dimen/size_large_button"
-            android:layout_height="@dimen/size_large_button"
-            android:layout_marginBottom="@dimen/spacing_normal"
-            android:clickable="true"
-            android:focusable="true"
+            style="@style/LogoLargeImageStyle"
             android:src="@drawable/btn_privacy_public_selector"
+            android:focusable="true"
             app:layout_constraintBottom_toTopOf="@+id/btn_proceed"
+            app:layout_constraintTop_toBottomOf="@+id/tv_title_choose_privacy"
             app:layout_constraintEnd_toStartOf="@+id/btn_privacy_private"
             app:layout_constraintHorizontal_bias="0.5"
             app:layout_constraintStart_toStartOf="parent" />
 
         <ImageView
             android:id="@+id/btn_privacy_private"
-            android:layout_width="@dimen/size_large_button"
-            android:layout_height="@dimen/size_large_button"
-            android:layout_marginBottom="@dimen/spacing_normal"
-            android:clickable="true"
-            android:focusable="true"
+            style="@style/LogoLargeImageStyle"
             android:src="@drawable/btn_privacy_private_selector"
+            android:focusable="true"
             app:layout_constraintBottom_toTopOf="@+id/btn_proceed"
+            app:layout_constraintTop_toBottomOf="@+id/tv_title_choose_privacy"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.5"
             app:layout_constraintStart_toEndOf="@+id/btn_privacy_public" />
 
         <ImageView
             android:id="@+id/btn_proceed"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
             android:src="@drawable/ic_proceed"
-            android:layout_marginBottom="@dimen/spacing_extra_large"
             app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/btn_privacy_private"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent" />
 
@@ -137,6 +86,6 @@
         android:layout_height="wrap_content"
         android:orientation="horizontal"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintGuide_percent="0.85" />
+        app:layout_constraintGuide_percent="0.75" />
 
 </android.support.constraint.ConstraintLayout>

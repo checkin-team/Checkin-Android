@@ -58,10 +58,16 @@ public class ActiveSessionViewModel extends BaseViewModel {
         Log.e("Session", "Checked out");
     }
 
-    public void addMembers(List<Long> ids) {
+    /*public void addMembers(List<Long> ids) {
         ArrayNode value = Converters.objectMapper.valueToTree(ids);
         ObjectNode data = Converters.objectMapper.createObjectNode();
         data.putArray("users").addAll(value);
+        mData.addSource(mRepository.postAddMembers(data), mData::setValue);
+    }*/
+
+    public void addMembers(String ids) {
+        ObjectNode data = Converters.objectMapper.createObjectNode();
+        data.put("user_id",ids);
         mData.addSource(mRepository.postAddMembers(data), mData::setValue);
     }
 

@@ -25,6 +25,9 @@ public class ActiveSessionModel {
     @JsonProperty("customers")
     private List<SessionCustomerModel> customers;
 
+    @JsonProperty("restaurant")
+    private BriefModel restaurant;
+
     @JsonProperty("checked_in")
     private Date checkedIn;
 
@@ -36,10 +39,12 @@ public class ActiveSessionModel {
 
     public ActiveSessionModel() {}
 
-    public ActiveSessionModel(int bill, List<OrderedItemModel> orderedItems, List<SessionCustomerModel> customers) {
+    public ActiveSessionModel(int bill, List<OrderedItemModel> orderedItems, List<SessionCustomerModel> customers, BriefModel restaurant, BriefModel host) {
         this.bill = bill;
         this.orderedItems = orderedItems;
         this.customers = customers;
+        this.restaurant = restaurant;
+        this.host = host;
     }
 
     public double getBill() {
@@ -52,5 +57,13 @@ public class ActiveSessionModel {
 
     public List<SessionCustomerModel> getCustomers() {
         return customers;
+    }
+
+    public BriefModel getRestaurant() {
+        return restaurant;
+    }
+
+    public BriefModel gethost() {
+        return host;
     }
 }
