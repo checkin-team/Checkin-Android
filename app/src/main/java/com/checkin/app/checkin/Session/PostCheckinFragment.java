@@ -23,6 +23,9 @@ import com.hootsuite.nachos.chip.Chip;
 import com.hootsuite.nachos.chip.ChipSpan;
 import com.hootsuite.nachos.chip.ChipSpanChipCreator;
 import com.hootsuite.nachos.tokenizer.SpanChipTokenizer;
+import com.nhaarman.supertooltips.ToolTip;
+import com.nhaarman.supertooltips.ToolTipRelativeLayout;
+import com.nhaarman.supertooltips.ToolTipView;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -38,7 +41,10 @@ public class PostCheckinFragment extends Fragment {
     @BindView(R.id.btn_privacy_private) ImageView btnPrivate;
     @BindView(R.id.btn_privacy_public) ImageView btnPublic;
     @BindView(R.id.select_text_view) NachoTextView selectMembers;
+    @BindView(R.id.im_help_choose_privacy) ImageView im_help_choose_privacy;
+    @BindView(R.id.tooltip_help_choose_privacy) ToolTipRelativeLayout tooltip_help_choose_privacy;
 
+    private ToolTipView mToolTipView;
     private Unbinder unbinder;
     private PostCheckinInteraction interactionListener;
     private UserViewModel mUserViewModel;
@@ -65,6 +71,13 @@ public class PostCheckinFragment extends Fragment {
 
         mUserViewModel = ViewModelProviders.of(getActivity(), new UserViewModel.Factory(getActivity().getApplication())).get(UserViewModel.class);
         setupAddMember();
+        im_help_choose_privacy.setOnClickListener(v -> {
+            if (mToolTipView == null) {
+                addToolTipView();
+            } else {
+                mToolTipView.remove();
+                mToolTipView = null;
+            }});
         return view;
     }
 
@@ -98,6 +111,19 @@ public class PostCheckinFragment extends Fragment {
         });
         SelectListViewAdapter adapter = new SelectListViewAdapter(getContext(), items);
         selectMembers.setAdapter(adapter);
+    }
+
+    private void addToolTipView() {
+        ToolTip toolTip = new ToolTip()
+                .withText("A tooltip button to show text.")
+                .withColor(getResources().getColor(R.color.primary_red))
+                .withTextColor(getResources().getColor(R.color.white))
+                .withShadow()
+                .withAnimationType(ToolTip.AnimationType.FROM_TOP);
+
+        mToolTipView = tooltip_help_choose_privacy.showToolTipForView(toolTip, im_help_choose_privacy);
+        mToolTipView.setOnToolTipViewClickedListener(toolTipView -> {
+            mToolTipView = null;});
     }
 
     @OnClick(R.id.btn_proceed)

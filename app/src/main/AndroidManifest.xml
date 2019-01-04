@@ -53,7 +53,7 @@
         <activity
             android:name=".User.NonPersonalProfile.UserCheckinsActivity"
             android:parentActivityName=".User.NonPersonalProfile.UserProfileActivity"
-            android:theme="@style/Theme.AppCompat.Light"></activity>
+            android:theme="@style/Theme.AppCompat.Light" />
         <activity
             android:name=".User.PersonalProfile.ProfileEditActivity"
             android:label="Edit Profile"
@@ -132,21 +132,22 @@
             android:theme="@style/AppTheme" />
         <activity
             android:name=".Shop.ShopPrivateProfile.MembersActivity"
-            android:screenOrientation="portrait"
             android:label="Members"
+            android:screenOrientation="portrait"
             android:theme="@style/AppThemeWhiteActionBar" />
-        <activity android:name=".Review.ShopReview.ShopReviewFragment"
-            android:theme="@style/AppThemeWhiteActionBar"/>
-
-        <activity android:name=".Misc.QRScannerActivity"
+        <activity
+            android:name=".Review.ShopReview.ShopReviewFragment"
+            android:theme="@style/AppThemeWhiteActionBar" />
+        <activity
+            android:name=".Misc.QRScannerActivity"
             android:label="Scan CheckIn QR"
-            android:theme="@style/AppThemeWhiteActionBar"/>
-
-        <activity android:name=".Review.ShopReview.ShopReviewsActivity"
+            android:theme="@style/AppThemeWhiteActionBar" />
+        <activity
+            android:name=".Review.ShopReview.ShopReviewsActivity"
             android:label="Reviews"
-            android:theme="@style/AppThemeWhiteActionBar"/>
-
-        <activity android:name=".Shop.ShopPrivateProfile.LogoCoverActivity"
+            android:theme="@style/AppThemeWhiteActionBar" />
+        <activity
+            android:name=".Shop.ShopPrivateProfile.LogoCoverActivity"
             android:label="Image"
             android:theme="@style/AppThemeWhiteActionBar" />
 
@@ -184,6 +185,7 @@
         <meta-data
             android:name="com.google.android.geo.API_KEY"
             android:value="@string/google_maps_key" />
+
     </application>
 
 </manifest>

@@ -142,7 +142,8 @@ public class ActiveSessionActivity extends AppCompatActivity implements ActiveSe
                     if(data.gethost()!=null) {
                         tv_waiter_name.setText(data.gethost().getDisplayName());
                         Util.loadImageOrDefault(im_waiter,data.gethost().getDisplayPic(),R.drawable.ic_waiter);
-                    }
+                    }else
+                        tv_waiter_name.setText("Unassigned");
                 }
                 case LOADING: {
                     break;
