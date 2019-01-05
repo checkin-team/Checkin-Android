@@ -9,10 +9,10 @@
         android:id="@+id/images"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="8dp"
-        android:layout_marginEnd="8dp"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="8dp"
+        android:layout_marginBottom="@dimen/spacing_extra_small"
+        android:layout_marginEnd="@dimen/spacing_extra_small"
+        android:layout_marginStart="@dimen/spacing_extra_small"
+        android:layout_marginTop="@dimen/spacing_extra_small"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toStartOf="@+id/guideline"
         app:layout_constraintStart_toStartOf="parent"
@@ -20,30 +20,30 @@
 
         <de.hdodenhof.circleimageview.CircleImageView
             android:id="@+id/im_profile"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:maxHeight="50dp"
-            android:maxWidth="50dp"
+           style="@style/LogoImageStyle"
             android:src="@drawable/ic_connect_facebook"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             app:srcCompat="@drawable/ic_connect_facebook" />
 
-        <de.hdodenhof.circleimageview.CircleImageView
-            android:id="@+id/action"
+        <Space
+            android:id="@+id/space"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="24dp"
-            android:layout_marginTop="24dp"
-            android:maxHeight="50dp"
-            android:maxWidth="50dp"
+            app:layout_constraintVertical_bias="0.38"
+            app:layout_constraintHorizontal_bias="0.3"
+            app:layout_constraintBottom_toBottomOf="@+id/im_profile"
+            app:layout_constraintEnd_toEndOf="@+id/im_profile"
+            app:layout_constraintStart_toStartOf="@+id/im_profile"
+            app:layout_constraintTop_toTopOf="@+id/im_profile"
+             />
+
+        <de.hdodenhof.circleimageview.CircleImageView
+            android:id="@+id/action"
+            style="@style/LogoImageStyle"
             android:src="@mipmap/ic_checkin_logo1_round"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="1.0"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="1.0"
+            app:layout_constraintStart_toEndOf="@id/space"
+            app:layout_constraintTop_toBottomOf="@id/space"
             app:srcCompat="@mipmap/ic_checkin_logo1_round" />
 
     </android.support.constraint.ConstraintLayout>
@@ -59,37 +59,38 @@
         android:id="@+id/text"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginEnd="8dp"
+        android:layout_marginEnd="@dimen/spacing_small"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="@+id/guideline"
         app:layout_constraintTop_toTopOf="parent">
 
         <TextView
-            android:id="@+id/review"
+            android:id="@+id/tv_notif_item_review"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginStart="8dp"
+            android:layout_marginStart="@dimen/spacing_tiny"
             android:text="Ritika Das accepted your follow request"
             android:textStyle="bold"
             app:layout_constraintBottom_toTopOf="@+id/time"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.5"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintVertical_chainStyle="packed" />
 
         <TextView
-            android:id="@+id/time"
+            android:id="@+id/tv_notif_item_time"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginStart="8dp"
+            android:layout_marginStart="@dimen/spacing_tiny"
             android:text="3 minutes ago"
+            android:textColor="@color/pinkish_grey"
+            android:textSize="@dimen/font_small"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.5"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/review" />
+
+            app:layout_constraintTop_toBottomOf="@+id/tv_notif_item_review" />
     </android.support.constraint.ConstraintLayout>
 
 </android.support.constraint.ConstraintLayout>
