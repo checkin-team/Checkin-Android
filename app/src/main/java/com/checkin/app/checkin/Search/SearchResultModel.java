@@ -6,7 +6,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
  * Created by Jogi Miglani on 26-10-2018.
  */
 
-public class SearchResultModel {
+public class SearchResultModel extends SearchDataModel {
 
     @JsonProperty("pk")
     private String pk;
@@ -18,6 +18,8 @@ public class SearchResultModel {
     private String imageUrl;
 
     private RESULT_TYPE type;
+
+
 
     public enum RESULT_TYPE {
         RESTAURANT(103), PEOPLE(101);
@@ -76,4 +78,6 @@ public class SearchResultModel {
     public boolean isTypeRestaurant() {
         return this.type == RESULT_TYPE.RESTAURANT;
     }
+
+
 }

@@ -57,6 +57,8 @@ public class SearchResultAdapter extends RecyclerView.Adapter<SearchResultAdapte
     class ViewHolder extends RecyclerView.ViewHolder  {
         @BindView(R.id.tv_result_name) TextView tvName;
         @BindView(R.id.im_result_pic) CircleImageView imPic;
+        @BindView(R.id.tvRating) TextView tvRating;
+        @BindView(R.id.tvCategory) TextView tvCategory;
 
         public ViewHolder(View itemView) {
             super(itemView);
@@ -65,6 +67,8 @@ public class SearchResultAdapter extends RecyclerView.Adapter<SearchResultAdapte
 
         public void bindData(final SearchResultModel searchResult) {
             tvName.setText(searchResult.getName());
+            tvRating.setText(searchResult.getRating());
+            tvCategory.setText(searchResult.getCategory());
             if (searchResult.getImageUrl() != null) {
                 GlideApp.with(itemView.getContext())
                         .load(searchResult.getImageUrl())
