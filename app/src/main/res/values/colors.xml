@@ -11,6 +11,8 @@
 
     <color name="light_red">#dc1010</color>
     <color name="transparent">#00000000</color>
+    <color name="ongoingLeftColor">#898989</color>
+    <color name="ongoingRightColor">#ffffff</color>
 
     <!-- Color Palette -->
     <color name="primary_red">#af1014</color>
@@ -27,4 +29,8 @@
     <color name="insightscardcolor">#59e9e4e4</color>
     <color name="greyish">#aaaaaa</color>
     <color name="apple_green">#7ed321</color>
+    <color name="assigned_waiter_table_color">#aaaaaa</color>
+    <color name="unassigned_waiter_table_color">#6d6d6d</color>
+    <color name="colorRed">#ab1014</color>
+    <color name="colorTint">#979797</color>
 </resources>

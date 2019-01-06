@@ -1,9 +1,8 @@
-package com.checkin.app.checkin.RestaurantActivity.Waiter;
+package com.checkin.app.checkin.Waiter;
 
 import android.content.Context;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -23,10 +22,6 @@ public class WaiterActiveTableAdapter extends RecyclerView.Adapter<WaiterActiveT
     int noItemsInteger=12;
     private onTableInterActionListener OnTableInterActionListener;
     int item_position=0;
-
-
-
-
 
     WaiterActiveTableAdapter(List<TableModel> tables) {
         mTables = tables;
@@ -101,7 +96,6 @@ public class WaiterActiveTableAdapter extends RecyclerView.Adapter<WaiterActiveT
         void bindData(TableModel table) {
             tableLabel.setText(table.getName());
             noItems.setText(String.valueOf(noItemsInteger));
-            Log.e("WaiterTableAdapter", String.valueOf(noItemsInteger));
             Glide.with(tableLabel.getContext());
         }
 
@@ -110,5 +104,4 @@ public class WaiterActiveTableAdapter extends RecyclerView.Adapter<WaiterActiveT
     {
         public void selectedTableChanged(int position);
     }
-
 }

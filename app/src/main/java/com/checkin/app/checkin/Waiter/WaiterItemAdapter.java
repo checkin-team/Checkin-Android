@@ -1,4 +1,4 @@
-package com.checkin.app.checkin.RestaurantActivity.Waiter;
+package com.checkin.app.checkin.Waiter;
 
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;

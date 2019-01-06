@@ -286,6 +286,6 @@
 
     </FrameLayout>
 
-    <include layout="@layout/layout_account_base" />
+    <include layout="@layout/incl_account_base" />
 
 </android.support.v4.widget.DrawerLayout>

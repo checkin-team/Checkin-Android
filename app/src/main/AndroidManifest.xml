@@ -76,7 +76,7 @@
         <activity android:name=".Misc.TransactionActivity" />
         <activity android:name=".Misc.FilterTransactions" />
         <activity
-            android:name=".RestaurantActivity.Waiter.WaitorWork"
+            android:name=".Waiter.WaiterWorkActivity"
             android:label="WaitorWorkActivity"
             android:screenOrientation="sensorPortrait"
             android:theme="@style/AppTheme"

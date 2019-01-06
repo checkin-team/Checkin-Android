@@ -1,4 +1,4 @@
-package com.checkin.app.checkin.RestaurantActivity.Waiter;
+package com.checkin.app.checkin.Waiter;
 
 
 import com.checkin.app.checkin.Menu.Model.OrderedItemModel;

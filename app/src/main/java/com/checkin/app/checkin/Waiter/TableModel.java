@@ -1,4 +1,4 @@
-package com.checkin.app.checkin.RestaurantActivity.Waiter;
+package com.checkin.app.checkin.Waiter;
 
 public class TableModel {
         private long id;

@@ -30,7 +30,7 @@ import com.checkin.app.checkin.Menu.SessionMenuActivity;
 import com.checkin.app.checkin.Misc.QRScannerActivity;
 import com.checkin.app.checkin.Notifications.NotificationActivity;
 import com.checkin.app.checkin.R;
-import com.checkin.app.checkin.RestaurantActivity.Waiter.WaitorWork;
+import com.checkin.app.checkin.Waiter.WaiterWorkActivity;
 import com.checkin.app.checkin.Search.SearchActivity;
 import com.checkin.app.checkin.Session.ActiveSession.ActiveSessionActivity;
 import com.checkin.app.checkin.Shop.ShopPublicProfile.ShopActivity;
@@ -409,7 +409,7 @@ public class HomeActivity extends BaseAccountActivity
                 startActivity(intent);
                 break;
             case R.id.waiter_work_activity:
-                intent = new Intent(getApplicationContext(), WaitorWork.class);
+                intent = new Intent(getApplicationContext(), WaiterWorkActivity.class);
                 startActivity(intent);
                 break;
             case R.id.search_activity:

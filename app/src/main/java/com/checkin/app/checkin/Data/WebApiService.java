@@ -5,7 +5,7 @@ import com.checkin.app.checkin.Menu.Model.MenuModel;
 import com.checkin.app.checkin.Menu.Model.OrderedItemModel;
 import com.checkin.app.checkin.Misc.GenericDetailModel;
 import com.checkin.app.checkin.Notifications.NotificationModel;
-import com.checkin.app.checkin.RestaurantActivity.Waiter.EventModel;
+import com.checkin.app.checkin.Waiter.EventModel;
 import com.checkin.app.checkin.Search.SearchResultModel;
 import com.checkin.app.checkin.Session.ActiveSession.ActiveSessionModel;
 import com.checkin.app.checkin.Shop.RecentCheckin.Model.RecentCheckinModel;

@@ -3,6 +3,7 @@
     <dimen name="font_largest">26sp</dimen>
     <dimen name="font_larger">22sp</dimen>
     <dimen name="font_large">18sp</dimen>
+    <dimen name="font_heading">16sp</dimen>
     <dimen name="font_small_heading" format="float">16.5sp</dimen>
     <dimen name="font_normal">15sp</dimen>
     <dimen name="font_small">12sp</dimen>
@@ -20,6 +21,7 @@
     <dimen name="spacing_extra_small">7dp</dimen>
     <dimen name="spacing_tiny">4dp</dimen>
     <dimen name="spacing_extra_tiny">2dp</dimen>
+    <dimen name="spacing_small_extra">15dp</dimen>
 
     <!-- icon sizes -->
     <dimen name="size_tiny_icon">12dp</dimen>
@@ -45,6 +47,8 @@
     <dimen name="width_card_wide">125dp</dimen>
 
     <dimen name="thickness_line">3dp</dimen>
+
+    <dimen name="textview_hight_title">60dp</dimen>
 
     <!-- typical sizes of views -->
     <dimen name="button_height_tall">60dp</dimen>
@@ -85,4 +89,37 @@
     <dimen name="notif_heading_padding">10dp</dimen>
     <dimen name="notif_heading_size">18sp</dimen>
     <dimen name="fab_margin">16dp</dimen>
+    <dimen name="table_view_width">241dp</dimen>
+    <dimen name="table_view_height">54dp</dimen>
+    <dimen name="textview_constraint_start">106dp</dimen>
+    <dimen name="text_size">15sp</dimen>
+    <dimen name="spacing_top">15dp</dimen>
+    <dimen name="spacing_bottom">9dp</dimen>
+    <dimen name="text_size_small">10sp</dimen>
+    <dimen name="nav_end_width">230dp</dimen>
+    <dimen name="card_view_small_elevation">2dp</dimen>
+    <dimen name="spacing_end_small">5dp</dimen>
+    <dimen name="car_view_corner_radius">10dp</dimen>
+    <dimen name="text_padding_large">15dp</dimen>
+    <dimen name="spacing_large_to_view">30dp</dimen>
+    <dimen name="spacing_large_end_text">30dp</dimen>
+    <dimen name="card_view_spacing_top">8dp</dimen>
+    <dimen name="card_radius_small_tiny">1dp</dimen>
+    <dimen name="spacing_normal_extra">8dp</dimen>
+    <dimen name="content_inset_spacing">0dp</dimen>
+    <dimen name="drawer_left_width">28dp</dimen>
+    <dimen name="drawer_left_hieght">25dp</dimen>
+    <dimen name="drawer_end_width">30dp</dimen>
+    <dimen name="drawer_end_hieght">30dp</dimen>
+    <dimen name="spacing_small_tiny">8dp</dimen>
+    <dimen name="spacing_normal_large">20dp</dimen>
+    <dimen name="spacing_layout_height">40dp</dimen>
+    <dimen name="dine_in_width">23dp</dimen>
+    <dimen name="text_size_dine_ine">26sp</dimen>
+    <dimen name="barcode_width">33dp</dimen>
+    <dimen name="barcode_height">30dp</dimen>
+    <dimen name="view_width">60dp</dimen>
+    <dimen name="view_height">54dp</dimen>
+    <dimen name="action_menu_width_size">40dp</dimen>
+    <dimen name="car_view_size_small_tiny">0dp</dimen>
 </resources>
