@@ -19,4 +19,18 @@
         tools:text="Name"
         android:layout_marginStart="@dimen/spacing_large"
         android:layout_gravity="center_vertical" />
+
+    <Button
+        android:id="@+id/status"
+        android:layout_width="wrap_content"
+        android:layout_gravity="end|center_vertical"
+        android:layout_height="@dimen/size_small_button"
+        android:layout_marginStart="120dp"
+        android:background="@drawable/btn_small_bordered_rouge"
+        android:textSize="@dimen/font_extra_small"
+        android:textColor="@color/primary_red"
+        android:padding="1dp"
+        android:text="Following"
+        />
+
 </LinearLayout>

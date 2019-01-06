@@ -1,0 +1,128 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:padding="@dimen/spacing_normal">
+
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content">
+
+        <de.hdodenhof.circleimageview.CircleImageView
+            android:id="@+id/im_result_pic"
+            style="@style/LogoImageStyle"
+            tools:src="@drawable/flier" />
+
+        <RelativeLayout
+            android:id="@+id/rl_name"
+            android:layout_gravity="center_vertical"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+
+            <TextView
+                android:id="@+id/tv_result_name"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                style="@style/GreyTextStyle"
+                tools:text="Name"
+                android:layout_marginStart="@dimen/spacing_large"
+                android:layout_gravity="center_vertical" />
+
+            <TextView
+                android:id="@+id/tv_cuisine"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                tools:text="Cuisine"
+                android:textSize="12sp"
+                android:textColor="@color/brownish_grey"
+                android:layout_marginTop="@dimen/size_extra_small_button"
+                android:layout_marginStart="@dimen/spacing_large"
+                android:layout_gravity="bottom" />
+
+            <Button
+                android:id="@+id/btn_status"
+                android:layout_width="wrap_content"
+                android:layout_toEndOf="@id/tv_result_name"
+                android:gravity="center"
+                android:layout_height="@dimen/size_small_button"
+                android:background="@drawable/btn_small_bordered_rouge"
+                android:textSize="@dimen/font_extra_small"
+                android:textColor="@color/primary_red"
+                android:padding="1dp"
+                android:text="Following"
+                android:layout_marginStart="@dimen/width_quantity_selection"
+                />
+
+        </RelativeLayout>
+
+    </LinearLayout>
+
+    <RelativeLayout
+        android:gravity="start|bottom"
+        android:layout_marginStart="@dimen/height_card_normal"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content">
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="@color/brownish_grey"
+            />
+
+        <ImageView
+            android:id="@+id/star"
+            android:layout_margin="5dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/ic_star"
+            />
+
+        <TextView
+            android:id="@+id/tv_rating"
+            android:layout_toRightOf="@+id/star"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            style="@style/GreyTextStyle"
+            tools:text="3.3"
+            android:textSize="15sp"
+            android:layout_margin="5dp"
+            android:layout_gravity="center_vertical" />
+        <TextView
+            android:id="@+id/tvOr"
+            android:layout_toRightOf="@+id/tv_rating"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            style="@style/GreyTextStyle"
+            android:textSize="15sp"
+            android:layout_margin="5dp"
+            tools:text="|"
+            android:layout_gravity="center_vertical" />
+
+        <TextView
+            android:id="@+id/tv_category"
+            android:layout_toRightOf="@+id/tvOr"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            style="@style/GreyTextStyle"
+            android:textSize="15sp"
+            android:layout_margin="5dp"
+            tools:text="Cafe"
+            android:layout_gravity="center_vertical" />
+
+        <TextView
+            android:id="@+id/tvOr2"
+            android:layout_toRightOf="@+id/tv_category"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            style="@style/GreyTextStyle"
+            android:textSize="15sp"
+            android:layout_margin="5dp"
+            tools:text="|"
+            android:layout_gravity="center_vertical" />
+
+    </RelativeLayout>
+
+</LinearLayout>
