@@ -15,7 +15,7 @@ import com.checkin.app.checkin.R;
 import com.checkin.app.checkin.Utility.ItemClickSupport;
 import com.checkin.app.checkin.Utility.QuantityPickerView;
 import com.checkin.app.checkin.Utility.QuantityPickerView.Direction;
-import com.checkin.app.checkin.Utility.Util;
+import com.checkin.app.checkin.Utility.Utils;
 import com.yarolegovich.discretescrollview.DiscreteScrollView;
 
 import java.util.List;
@@ -91,7 +91,7 @@ public class MenuItemAdapter extends RecyclerView.Adapter<MenuItemAdapter.ItemVi
             qpItemQuantity.addScrollStateChangeListener(this);
             btnItemAdd.setOnClickListener(view -> {
                 if (!mListener.onItemAdded(mItem)) {
-                    Util.toast(itemView.getContext(), "Not allowed!");
+                    Utils.toast(itemView.getContext(), "Not allowed!");
                     return;
                 }
                 showQuantitySelection(1);
@@ -104,8 +104,8 @@ public class MenuItemAdapter extends RecyclerView.Adapter<MenuItemAdapter.ItemVi
 
             tvItemName.setText(menuItem.getName());
             tvItemPrices.setText(String.format(
-                    Locale.ENGLISH, Util.getCurrencyFormat(itemView.getContext()),
-                    Util.joinCollection(menuItem.getTypeCosts(), " | ")));
+                    Locale.ENGLISH, Utils.getCurrencyFormat(itemView.getContext()),
+                    Utils.joinCollection(menuItem.getTypeCosts(), " | ")));
 
             int count = mListener.orderedItemCount(menuItem);
             if (count > 0)
@@ -178,7 +178,7 @@ public class MenuItemAdapter extends RecyclerView.Adapter<MenuItemAdapter.ItemVi
         }
 
         private void disallowDecreaseCount() {
-            Util.toast(itemView.getContext(), "Not allowed to change item count from here - use cart.");
+            Utils.toast(itemView.getContext(), "Not allowed to change item count from here - use cart.");
         }
     }
 

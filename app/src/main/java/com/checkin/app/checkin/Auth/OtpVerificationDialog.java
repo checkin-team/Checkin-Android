@@ -15,7 +15,7 @@ import android.widget.TextView;
 
 import com.checkin.app.checkin.R;
 import com.checkin.app.checkin.Utility.Constants;
-import com.checkin.app.checkin.Utility.Util;
+import com.checkin.app.checkin.Utility.Utils;
 import com.google.firebase.FirebaseException;
 import com.google.firebase.FirebaseNetworkException;
 import com.google.firebase.auth.FirebaseAuth;
@@ -91,9 +91,9 @@ public class OtpVerificationDialog extends AlertDialog {
             protected void onVerificationError(FirebaseException e) {
                 Log.e(TAG, "PhoneAuth - Verification Failed: ", e);
                 if (e instanceof FirebaseNetworkException) {
-                    Util.toast(mActivity, R.string.error_unavailable_network);
+                    Utils.toast(mActivity, R.string.error_unavailable_network);
                 } else {
-                    Util.toast(mActivity, R.string.error_authentication_phone);
+                    Utils.toast(mActivity, R.string.error_authentication_phone);
                 }
                 mListener.onFailedVerification(OtpVerificationDialog.this, e);
             }
@@ -124,7 +124,7 @@ public class OtpVerificationDialog extends AlertDialog {
     private void verifyOtp(String otp) {
         PhoneAuthCredential credential = mPhoneAuth.verifyOtp(otp);
         if (credential == null) {
-            Util.toast(getContext(), "Verification proof not received!");
+            Utils.toast(getContext(), "Verification proof not received!");
             return;
         }
         mListener.onSuccessVerification(this, credential);
@@ -168,7 +168,7 @@ public class OtpVerificationDialog extends AlertDialog {
         long min = time/1000/60;
         long sec = time/1000-min*60;
         if (time > 0L) {
-            tvRemainingTime.setText(Util.formatTime(min, sec));
+            tvRemainingTime.setText(Utils.formatTime(min, sec));
         } else {
             tvRemainingTime.setVisibility(View.INVISIBLE);
             btnResendOtp.setVisibility(View.VISIBLE);

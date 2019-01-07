@@ -13,7 +13,7 @@ import android.widget.TextView;
 
 import com.checkin.app.checkin.Data.Resource;
 import com.checkin.app.checkin.R;
-import com.checkin.app.checkin.Utility.Util;
+import com.checkin.app.checkin.Utility.Utils;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -57,7 +57,7 @@ public class DataStatusFragment extends Fragment{
 
         unbinder = ButterKnife.bind(this, view);
 
-        if (isNetworkRequired && !Util.isNetworkConnected(getActivity().getApplicationContext())) {
+        if (isNetworkRequired && !Utils.isNetworkConnected(getActivity().getApplicationContext())) {
             showErrorStatus(Resource.Status.ERROR_DISCONNECTED, getResources().getString(R.string.error_unavailable_network));
         } else {
             showLoadingStatus();

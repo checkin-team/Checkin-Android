@@ -21,7 +21,7 @@ import com.checkin.app.checkin.Menu.SessionMenuActivity;
 import com.checkin.app.checkin.R;
 import com.checkin.app.checkin.Search.SearchActivity;
 import com.checkin.app.checkin.Utility.Constants;
-import com.checkin.app.checkin.Utility.Util;
+import com.checkin.app.checkin.Utility.Utils;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -97,7 +97,7 @@ public class ActiveSessionActivity extends AppCompatActivity implements ActiveSe
 
         mHandler = new Receiver(mViewModel);
         LocalBroadcastManager.getInstance(this)
-                .registerReceiver(mHandler, new IntentFilter(Util.getActivityIntentFilter(getApplicationContext(), IDENTIFIER)));
+                .registerReceiver(mHandler, new IntentFilter(Utils.getActivityIntentFilter(getApplicationContext(), IDENTIFIER)));
     }
 
     @OnClick(R.id.btn_active_session_menu)

@@ -18,7 +18,7 @@ import com.checkin.app.checkin.Menu.Adapter.MenuItemAdapter;
 import com.checkin.app.checkin.Menu.MenuItemInteraction;
 import com.checkin.app.checkin.Menu.MenuViewModel;
 import com.checkin.app.checkin.R;
-import com.checkin.app.checkin.Utility.Util;
+import com.checkin.app.checkin.Utility.Utils;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -73,7 +73,7 @@ public class MenuGroupsFragment extends Fragment {
             else if (menuGroupResource.status == Resource.Status.LOADING) {
 
             } else {
-                Util.toast(requireContext(), menuGroupResource.message);
+                Utils.toast(requireContext(), menuGroupResource.message);
             }
         });
 

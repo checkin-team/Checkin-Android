@@ -33,13 +33,14 @@ import com.checkin.app.checkin.R;
 import com.checkin.app.checkin.RestaurantActivity.Waiter.WaitorWork;
 import com.checkin.app.checkin.Search.SearchActivity;
 import com.checkin.app.checkin.Session.ActiveSession.ActiveSessionActivity;
+import com.checkin.app.checkin.Shop.ShopJoin.BusinessFeaturesActivity;
 import com.checkin.app.checkin.Shop.ShopPublicProfile.ShopActivity;
 import com.checkin.app.checkin.User.NonPersonalProfile.UserViewModel;
 import com.checkin.app.checkin.User.PersonalProfile.UserProfileActivity;
 import com.checkin.app.checkin.Utility.ClipRevealFrame;
 import com.checkin.app.checkin.Utility.Constants;
 import com.checkin.app.checkin.Utility.ItemClickSupport;
-import com.checkin.app.checkin.Utility.Util;
+import com.checkin.app.checkin.Utility.Utils;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -102,9 +103,9 @@ public class HomeActivity extends BaseAccountActivity
                         .putString(Constants.SP_SESSION_RESTAURANT_PK, resource.data.get("restaurant_pk").asText())
                         .putString(Constants.SP_SESSION_ACTIVE_PK, resource.data.get("session_pk").asText())
                         .apply();
-                Util.toast(this, resource.data.get("detail").asText());
+                Utils.toast(this, resource.data.get("detail").asText());
             } else if (resource.status != Status.LOADING) {
-                Util.toast(this, resource.message);
+                Utils.toast(this, resource.message);
             }
         });
     }
@@ -204,7 +205,7 @@ public class HomeActivity extends BaseAccountActivity
 //                }
 //                else return;
 //                animator.setInterpolator(new AccelerateDecelerateInterpolator());
-//                animator.setDuration(Util.DEFAULT_DURATION);
+//                animator.setDuration(Utils.DEFAULT_DURATION);
 //                animator.addUpdateListener(animation -> {
 //                    float animatedValue = (float) animation.getAnimatedValue();
 //                    animateShopContainer(animatedValue, maxTranslationX);
@@ -461,12 +462,12 @@ public class HomeActivity extends BaseAccountActivity
         vClipRevealFrame.setVisibility(View.VISIBLE);
 
         vClipRevealMask.setVisibility(View.VISIBLE);
-        Animator revealAnim = Util.createCircularRevealAnimator(vClipRevealFrame, (int) data[0], (int) data[1], data[2], data[3]);
+        Animator revealAnim = Utils.createCircularRevealAnimator(vClipRevealFrame, (int) data[0], (int) data[1], data[2], data[3]);
         animList.add(revealAnim);
 
-        Animator rotateAnim = Util.createRotationAnimator(fabHomeAdd, -225);
+        Animator rotateAnim = Utils.createRotationAnimator(fabHomeAdd, -225);
         animList.add(rotateAnim);
-        Animator tintAnim = Util.createTintAnimator(fabHomeAdd, 0, getResources().getColor(R.color.white));
+        Animator tintAnim = Utils.createTintAnimator(fabHomeAdd, 0, getResources().getColor(R.color.white));
         animList.add(tintAnim);
 
         AnimatorSet animatorSet = new AnimatorSet();
@@ -481,13 +482,13 @@ public class HomeActivity extends BaseAccountActivity
         float[] data = computeAddViewDetails(vRoot);
         List<Animator> animList = new ArrayList<>();
 
-        Animator revealAnim = Util.createCircularRevealAnimator(vClipRevealFrame, (int) data[0], (int) data[1], data[3], data[2]);
+        Animator revealAnim = Utils.createCircularRevealAnimator(vClipRevealFrame, (int) data[0], (int) data[1], data[3], data[2]);
         animList.add(revealAnim);
 
-        Animator rotateAnim = Util.createRotationAnimator(fabHomeAdd, 0);
+        Animator rotateAnim = Utils.createRotationAnimator(fabHomeAdd, 0);
         animList.add(rotateAnim);
         if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.LOLLIPOP) {
-            Animator tintAnim = Util.createTintAnimator(fabHomeAdd, 0, getResources().getColor(R.color.primary_red));
+            Animator tintAnim = Utils.createTintAnimator(fabHomeAdd, 0, getResources().getColor(R.color.primary_red));
             animList.add(tintAnim);
         }
 
@@ -508,6 +509,7 @@ public class HomeActivity extends BaseAccountActivity
 
     @OnClick(R.id.action_dine_in)
     public  void dine_in(View v){
+        startActivity(new Intent(this, BusinessFeaturesActivity.class));
     }
 
     @OnClick(R.id.action_delivery)

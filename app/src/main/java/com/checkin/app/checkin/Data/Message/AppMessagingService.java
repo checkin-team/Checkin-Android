@@ -1,4 +1,4 @@
-package com.checkin.app.checkin.Data;
+package com.checkin.app.checkin.Data.Message;
 
 import android.app.NotificationChannel;
 import android.app.NotificationManager;
@@ -13,17 +13,13 @@ import com.checkin.app.checkin.Auth.DeviceTokenService;
 import com.checkin.app.checkin.Notifications.NotificationActivity;
 import com.checkin.app.checkin.Session.ActiveSession.ActiveSessionActivity;
 import com.checkin.app.checkin.Utility.Constants;
-import com.checkin.app.checkin.Utility.Util;
+import com.checkin.app.checkin.Utility.Utils;
 import com.google.firebase.messaging.FirebaseMessagingService;
 import com.google.firebase.messaging.RemoteMessage;
 
-/**
- * Created by Jogi Miglani on 23-08-2018.
- */
+public class AppMessagingService extends FirebaseMessagingService {
+    private static final String TAG = AppMessagingService.class.getSimpleName();
 
-public class MessagingService extends FirebaseMessagingService {
-
-    private static final String TAG = MessagingService.class.getSimpleName();
     @Override
     public void onMessageReceived(RemoteMessage remoteMessage) {
         super.onMessageReceived(remoteMessage);
@@ -34,7 +30,7 @@ public class MessagingService extends FirebaseMessagingService {
         intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
         String message = remoteMessage.getData().get("message");
         intent.putExtra("message", message);
-        intent.setAction(Util.getActivityIntentFilter(getApplicationContext(), actionCode));
+        intent.setAction(Utils.getActivityIntentFilter(getApplicationContext(), actionCode));
         LocalBroadcastManager localBroadcastManager = LocalBroadcastManager.getInstance(this);
         if (!localBroadcastManager.sendBroadcast(intent)) {
             PendingIntent pendingIntent = PendingIntent.getActivity(this, 0, intent, PendingIntent.FLAG_UPDATE_CURRENT);

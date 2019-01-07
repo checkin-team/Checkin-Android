@@ -1,9 +1,5 @@
 package com.checkin.app.checkin.Utility;
 
-/**
- * Created by Bhavik Patel on 28/08/2018.
- */
-
 import android.support.v7.widget.OrientationHelper;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;

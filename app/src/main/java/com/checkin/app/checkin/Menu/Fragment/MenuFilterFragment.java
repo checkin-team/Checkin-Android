@@ -20,7 +20,7 @@ import com.checkin.app.checkin.Menu.Adapter.FilterCategoryAdapter;
 import com.checkin.app.checkin.Menu.MenuViewModel;
 import com.checkin.app.checkin.Menu.Model.MenuItemModel.AVAILABLE_MEAL;
 import com.checkin.app.checkin.R;
-import com.checkin.app.checkin.Utility.Util;
+import com.checkin.app.checkin.Utility.Utils;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -92,7 +92,7 @@ public class MenuFilterFragment extends Fragment {
 
     private void resetFilterContainer() {
         containerFilter.measure(0, 0);
-        containerFilter.setPivotY(Util.dpToPx(374));
+        containerFilter.setPivotY(Utils.dpToPx(374));
         containerFilter.setPivotX(0.5f * containerFilter.getMeasuredWidth());
         containerFilter.setVisibility(View.GONE);
         containerFilter.setRotation(180);
@@ -116,7 +116,7 @@ public class MenuFilterFragment extends Fragment {
 
     @OnClick({R.id.btn_sort_high2low, R.id.btn_sort_mainstream, R.id.btn_sort_low2high})
     public void sortMenuItems(View v) {
-        Util.toast(requireContext(), "Unsupported operation.");
+        Utils.toast(requireContext(), "Unsupported operation.");
         hideFilter();
     }
 

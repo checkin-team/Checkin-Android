@@ -13,7 +13,7 @@ import android.widget.TextView;
 
 import com.checkin.app.checkin.Menu.Model.OrderedItemModel;
 import com.checkin.app.checkin.R;
-import com.checkin.app.checkin.Utility.Util;
+import com.checkin.app.checkin.Utility.Utils;
 import com.transitionseverywhere.Slide;
 import com.transitionseverywhere.Transition;
 import com.transitionseverywhere.TransitionManager;
@@ -120,7 +120,7 @@ public class ActiveSessionOrdersAdapter extends RecyclerView.Adapter<ActiveSessi
                     public void onTick(long millisUntilFinished) {
                         long min = millisUntilFinished/1000/60;
                         long sec = millisUntilFinished/1000-min*60;
-                        tvCancelTime.setText(Util.formatTime(min, sec));
+                        tvCancelTime.setText(Utils.formatTime(min, sec));
                     }
 
                     @Override

@@ -21,7 +21,7 @@ import com.checkin.app.checkin.Shop.RestaurantModel;
 import com.checkin.app.checkin.Utility.MultiSpinner;
 import com.checkin.app.checkin.Utility.PrefixEditText;
 import com.checkin.app.checkin.Utility.TimeEditText;
-import com.checkin.app.checkin.Utility.Util;
+import com.checkin.app.checkin.Utility.Utils;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.google.firebase.FirebaseException;
 import com.google.firebase.auth.FirebaseAuth;
@@ -147,7 +147,7 @@ public class EditBasicFragment extends Fragment implements OtpVerificationDialog
     public void onVerifyEmail(View v) {
         String email = etEmail.getText().toString();
         if (email.isEmpty()) {
-            Util.toast(requireContext(), "Email is required.");
+            Utils.toast(requireContext(), "Email is required.");
             return;
         }
         mViewModel.updateShopContact(null, email);
@@ -159,7 +159,7 @@ public class EditBasicFragment extends Fragment implements OtpVerificationDialog
     public void onVerifyPhone(View v) {
         String phone = etPhone.getText().toString();
         if (phone.isEmpty()) {
-            Util.toast(requireContext(), "Phone is required.");
+            Utils.toast(requireContext(), "Phone is required.");
             return;
         }
         verifyPhone(phone);
@@ -179,7 +179,7 @@ public class EditBasicFragment extends Fragment implements OtpVerificationDialog
         mAuth.signInWithCredential(credential).addOnCompleteListener(task -> {
             if (task.isSuccessful()) {
                 mAuth.getCurrentUser().getIdToken(false).addOnSuccessListener(result -> {
-                    Util.toast(requireContext(), "Phone verified!");
+                    Utils.toast(requireContext(), "Phone verified!");
 
                     mViewModel.updateShopContact(result.getToken(), null);
                     btnVerifyPhone.setVisibility(GONE);
@@ -187,7 +187,7 @@ public class EditBasicFragment extends Fragment implements OtpVerificationDialog
                 });
             } else {
                 Log.e(TAG, "Authentication failed", task.getException());
-                Util.toast(requireContext(), R.string.error_authentication);
+                Utils.toast(requireContext(), R.string.error_authentication);
             }
         });
         dialog.dismiss();

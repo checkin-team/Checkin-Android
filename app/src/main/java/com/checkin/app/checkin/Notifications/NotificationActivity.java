@@ -25,7 +25,7 @@ import android.widget.Toast;
 import com.checkin.app.checkin.Data.Resource;
 import com.checkin.app.checkin.R;
 import com.checkin.app.checkin.Utility.Constants;
-import com.checkin.app.checkin.Utility.Util;
+import com.checkin.app.checkin.Utility.Utils;
 
 import java.util.ArrayList;
 import java.util.Date;
@@ -50,7 +50,7 @@ public class NotificationActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_notif);
         LocalBroadcastManager.getInstance(this)
-                .registerReceiver(mHandler, new IntentFilter(Util.getActivityIntentFilter(getApplicationContext(), IDENTIFIER)));
+                .registerReceiver(mHandler, new IntentFilter(Utils.getActivityIntentFilter(getApplicationContext(), IDENTIFIER)));
         ButterKnife.bind(this);
         notifViewModel = ViewModelProviders.of(this,new NotifViewModel.Factory(getApplication())).get(NotifViewModel.class);
         notifRV.setLayoutManager(new LinearLayoutManager(getApplicationContext()));

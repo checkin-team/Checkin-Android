@@ -54,7 +54,7 @@ import java.util.regex.Matcher;
  * Created by shivanshs9 on 12/5/18.
  */
 
-public class Util {
+public class Utils {
     public static final int NO_CHANGE = -1;
     public static final long DEFAULT_DURATION = 300L;
 
@@ -123,8 +123,8 @@ public class Util {
      * Helper method to animate the change of view dimensions.
      *
      * @param view      View to animate.
-     * @param newWidth  New width, the view should have. If width shouldn't change, pass Util.NO_CHANGE.
-     * @param newHeight New height, the view should have. If height shouldn't change, pass Util.NO_CHANGE.
+     * @param newWidth  New width, the view should have. If width shouldn't change, pass Utils.NO_CHANGE.
+     * @param newHeight New height, the view should have. If height shouldn't change, pass Utils.NO_CHANGE.
      */
     public static Animator changeViewSize(@NonNull View view, int newWidth, int newHeight) {
         if (newWidth == NO_CHANGE && newHeight == NO_CHANGE)

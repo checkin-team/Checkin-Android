@@ -18,7 +18,7 @@ import com.checkin.app.checkin.Data.Resource.Status;
 import com.checkin.app.checkin.R;
 import com.checkin.app.checkin.Utility.GlideApp;
 import com.checkin.app.checkin.Utility.MultiSpinner;
-import com.checkin.app.checkin.Utility.Util;
+import com.checkin.app.checkin.Utility.Utils;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -117,7 +117,7 @@ public class MemberAssignRoleFragment extends DialogFragment {
                }
                this.finishDialog();
            } else if (resource.message != null) {
-               Util.toast(requireContext(), resource.message);
+               Utils.toast(requireContext(), resource.message);
            }
            mViewModel.resetObservableData();
         });
@@ -129,7 +129,7 @@ public class MemberAssignRoleFragment extends DialogFragment {
                 mListener.onRemoveMember(mViewModel.getCurrentMember(), mPosition);
                 this.finishDialog();
             } else if (resource.message != null){
-                Util.toast(requireContext(), resource.message);
+                Utils.toast(requireContext(), resource.message);
             }
             mViewModel.resetRemovedMemberData();
         });

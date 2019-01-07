@@ -1,6 +1,6 @@
 package com.checkin.app.checkin.Shop;
 
-import com.checkin.app.checkin.Utility.Util;
+import com.checkin.app.checkin.Utility.Utils;
 import com.fasterxml.jackson.annotation.JsonAutoDetect;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonInclude;
@@ -94,12 +94,12 @@ public class RestaurantModel extends ShopModel {
     public long getReviews() { return reviews; }
 
     public String formatFollowers() {
-        return Util.formatCount(followers);
+        return Utils.formatCount(followers);
     }
 
     public String formatCheckins() {
-        return Util.formatCount(checkins);
+        return Utils.formatCount(checkins);
     }
 
-    public String formatReviews() { return Util.formatCount(reviews); }
+    public String formatReviews() { return Utils.formatCount(reviews); }
 }

@@ -4,7 +4,7 @@ import android.support.annotation.Nullable;
 
 import com.checkin.app.checkin.User.Friendship.FriendshipModel.FRIEND_STATUS;
 import com.checkin.app.checkin.User.Friendship.FriendshipRequestModel;
-import com.checkin.app.checkin.Utility.Util;
+import com.checkin.app.checkin.Utility.Utils;
 import com.fasterxml.jackson.annotation.JsonAutoDetect;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
@@ -127,15 +127,15 @@ public class UserModel {
     }
 
     public String formatReviews() {
-        return Util.formatCount(reviews);
+        return Utils.formatCount(reviews);
     }
 
     public String formatFollowers() {
-        return Util.formatCount(followers);
+        return Utils.formatCount(followers);
     }
 
     public String formatCheckins() {
-        return Util.formatCount(checkins);
+        return Utils.formatCount(checkins);
     }
 
     public String getAddress() {
