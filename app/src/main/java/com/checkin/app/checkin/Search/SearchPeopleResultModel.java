@@ -4,7 +4,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 
 public class SearchPeopleResultModel extends SearchResultModel {
 
-    private FRIEND_STATUS mStatus;
+  /*  private FRIEND_STATUS mStatus;
 
     public enum FRIEND_STATUS {
         NONE("none"), FRIENDS("frnd"), PENDING_REQUEST("rqst");
@@ -32,4 +32,5 @@ public class SearchPeopleResultModel extends SearchResultModel {
     public void setUserStatus(String tag){
         this.mStatus = FRIEND_STATUS.getByTag(tag);
     }
+    */
 }

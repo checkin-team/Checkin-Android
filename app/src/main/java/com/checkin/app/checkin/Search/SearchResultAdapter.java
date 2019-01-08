@@ -45,7 +45,6 @@ public class SearchResultAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
             return TYPE_RESTAURANT;
         }else
         return R.layout.item_search_result;
-       // return  -1;
     }
 
 
@@ -76,8 +75,6 @@ public class SearchResultAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
 
     @Override
     public void onBindViewHolder(@NonNull RecyclerView.ViewHolder holder, int position) {
-
-     //   holder.bindData(mData.get(position));
 
         int viewtype = getItemViewType(position);
         switch (viewtype){
@@ -153,14 +150,14 @@ public class SearchResultAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
                 imPic.setImageResource(R.drawable.cover_unknown_male);
             }
 
-            SearchPeopleResultModel.FRIEND_STATUS friend_status = searchPeopleResultModel.getmStatus();
+        /*    SearchPeopleResultModel.FRIEND_STATUS friend_status = searchPeopleResultModel.getmStatus();
             if(friend_status == SearchPeopleResultModel.FRIEND_STATUS.NONE
                     || friend_status == SearchPeopleResultModel.FRIEND_STATUS.PENDING_REQUEST ){
                 status.setText("Follow");
             }else if(friend_status == SearchPeopleResultModel.FRIEND_STATUS.FRIENDS){
                 status.setText("Following");
             }
-
+*/
         }
     }
 
@@ -180,7 +177,7 @@ public class SearchResultAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
             ButterKnife.bind(this, itemView);
         }
 
-        public void bindData(final SearchRestaurantResultModel restaurantResultModel){
+        public void bindData(final SearchRestaurantResultModel restaurantResultModel) {
 
             tvRating.setText(restaurantResultModel.getRating());
             tvCategory.setText(restaurantResultModel.getCategory());
@@ -191,10 +188,10 @@ public class SearchResultAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
                         .load(restaurantResultModel.getImageUrl())
                         .into(imPic);
             } else {
-                    imPic.setImageResource(R.drawable.cover_restaurant_unknown);
+                imPic.setImageResource(R.drawable.cover_restaurant_unknown);
             }
 
-            SearchRestaurantResultModel.FRIEND_STATUS friend_status = restaurantResultModel.getmStatus();
+     /*       SearchRestaurantResultModel.FRIEND_STATUS friend_status = restaurantResultModel.getmStatus();
             if(friend_status == SearchRestaurantResultModel.FRIEND_STATUS.NONE
                     || friend_status == SearchRestaurantResultModel.FRIEND_STATUS.PENDING_REQUEST ){
                 status.setText("Follow");
@@ -202,6 +199,8 @@ public class SearchResultAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
                 status.setText("Following");
             }
 
+        }
+        */
         }
     }
 }

@@ -25,11 +25,11 @@
         android:layout_width="wrap_content"
         android:layout_gravity="end|center_vertical"
         android:layout_height="@dimen/size_small_button"
-        android:layout_marginStart="120dp"
+        android:layout_marginStart="@dimen/button_oval_large"
         android:background="@drawable/btn_small_bordered_rouge"
         android:textSize="@dimen/font_extra_small"
         android:textColor="@color/primary_red"
-        android:padding="1dp"
+        android:padding="@dimen/height_horizontal_line"
         android:text="Following"
         />
 

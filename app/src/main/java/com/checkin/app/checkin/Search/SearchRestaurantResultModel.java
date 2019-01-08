@@ -13,26 +13,8 @@ public class SearchRestaurantResultModel extends SearchResultModel{
     @JsonProperty("cuisine")
     private String cuisine;
 
-    private FRIEND_STATUS mStatus;
-
-    public enum FRIEND_STATUS {
-        NONE("none"), FRIENDS("frnd"), PENDING_REQUEST("rqst");
-
-        private String tag;
-        FRIEND_STATUS(String tag) {
-            this.tag = tag;
-        }
-
-        public static FRIEND_STATUS getByTag(String tag) {
-            for (FRIEND_STATUS status: FRIEND_STATUS.values()) {
-                if (status.tag.equals(tag)) {
-                    return status;
-                }
-            }
-            return NONE;
-        }
-    }
-
+    @JsonProperty("location")
+    private String location;
 
     public String getCuisine() {
         return cuisine;
@@ -59,13 +41,11 @@ public class SearchRestaurantResultModel extends SearchResultModel{
         this.rating = rating;
     }
 
-
-    public FRIEND_STATUS getmStatus() {
-        return mStatus;
+    public String getLocation() {
+        return location;
     }
 
-    @JsonProperty("friend_status")
-    public void setUserStatus(String tag){
-        this.mStatus = FRIEND_STATUS.getByTag(tag);
+    public void setLocation(String location) {
+        this.location = location;
     }
 }
