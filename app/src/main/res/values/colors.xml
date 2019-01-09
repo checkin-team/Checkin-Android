@@ -33,4 +33,6 @@
     <color name="unassigned_waiter_table_color">#6d6d6d</color>
     <color name="colorRed">#ab1014</color>
     <color name="colorTint">#979797</color>
+    <color name="tab_unselected_text_color">#bcbcbc</color>
+    <color name="colorLawGreen">#52e600</color>
 </resources>

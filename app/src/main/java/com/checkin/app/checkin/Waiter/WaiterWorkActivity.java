@@ -3,185 +3,145 @@ package com.checkin.app.checkin.Waiter;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.AppBarLayout;
-import android.support.design.widget.CoordinatorLayout;
 import android.support.design.widget.NavigationView;
+import android.support.design.widget.TabLayout;
 import android.support.v4.view.GravityCompat;
+import android.support.v4.view.ViewPager;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
-import android.support.v7.widget.CardView;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Button;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
-import android.widget.ScrollView;
 import android.widget.TextView;
 
 import com.checkin.app.checkin.Account.AccountModel;
 import com.checkin.app.checkin.Account.BaseAccountActivity;
 import com.checkin.app.checkin.Misc.QRScannerActivity;
 import com.checkin.app.checkin.R;
-
-import java.util.ArrayList;
-import java.util.List;
-
-import butterknife.BindView;
-import butterknife.ButterKnife;
+import com.checkin.app.checkin.Utility.EndDrawerToggle;
 
 public class WaiterWorkActivity extends BaseAccountActivity implements WaiterActiveTableAdapter.onTableInterActionListener {
 
-    List<EventModel> items, itemsDone;
-    List<TableModel> tables;
-
-    @BindView(R.id.session_toolbar)
-    Toolbar sessionToolbar;
-    @BindView(R.id.drawer_open)
+    Toolbar toolbarWaiterTable;
     ImageView drawerOpen;
-    @BindView(R.id.action_table_menu)
     ImageView actionTableMenu;
-    @BindView(R.id.appbar_session)
-    AppBarLayout appbarSession;
-    @BindView(R.id.rv_active_tables)
-    RecyclerView rvActiveTables;
-    @BindView(R.id.table_number_container)
-    CoordinatorLayout tableNumberContainer;
-    @BindView(R.id.image_dine_in)
-    ImageView imageDineIn;
-    @BindView(R.id.action_dine_in)
-    TextView actionDineIn;
-    @BindView(R.id.table_user_info)
-    CardView tableUserInfo;
-    @BindView(R.id.action_menu)
-    ImageView actionMenu;
-    @BindView(R.id.item_container)
-    FrameLayout itemContainer;
-    @BindView(R.id.scroll_container)
-    ScrollView scrollContainer;
-    @BindView(R.id.ivBarcodeScanner)
+    AppBarLayout appbarWaiterTable;
+    TabLayout tlWaiterTable;
+    ViewPager vpWaiterTable;
     ImageView ivBarcodeScanner;
-    @BindView(R.id.root_view)
-    FrameLayout rootView;
-    @BindView(R.id.btn_logout)
     Button btnLogout;
-    @BindView(R.id.nav_account)
     NavigationView navAccount;
-    @BindView(R.id.nav_table_view)
     NavigationView navTableView;
-    @BindView(R.id.drawer_waiter)
-    DrawerLayout drawerWaiter;
-
-    private WaiterActiveTableAdapter mWaiterTableAdapter;
-    private WaiterItemAdapter mWaiterItemAdapter;
-    private WaiterItemAdapter mWaiterItemAdapter2;
-
-    ActiveTableFragment activeTableFragment;
-    WaiterEndNavigationTableAdapter waiterEndNavigationTableAdapter;
+    DrawerLayout drawerWaiterTable;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_waiter_work);
-        ButterKnife.bind(this);
 
         setupUI();
-
-        setupUserItem(new ArrayList<>());
-
-        tables = new ArrayList<>();
-        setupActiveTables();
+        setupMyWaiterTableViewPager();
+        setMyClickListener();
     }
 
-    private void setupUI() {
-        Toolbar toolbar = findViewById(R.id.toolbar_home);
-        setSupportActionBar(toolbar);
-        //(getSupportActionBar()).setDisplayShowTitleEnabled(false);
-
-        DrawerLayout drawerLayout = findViewById(R.id.drawer_waiter);
-        ActionBarDrawerToggle startToggle = new ActionBarDrawerToggle(
-                this, drawerLayout, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
-        drawerLayout.addDrawerListener(startToggle);
-        startToggle.syncState();
-
-        ActionBarDrawerToggle endToggle = new ActionBarDrawerToggle(
-                this, drawerLayout, toolbar, R.string.messages_drawer_open, R.string.messages_drawer_close);
-        drawerLayout.addDrawerListener(endToggle);
-        endToggle.syncState();
-
-        activeTableFragment = new ActiveTableFragment();
-
-        drawerOpen.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (drawerLayout.isDrawerOpen(GravityCompat.START)) {
-                    drawerLayout.closeDrawer(GravityCompat.START);
-                } else {
-                    drawerLayout.openDrawer(GravityCompat.START);
-                }
-            }
-        });
+    private void setMyClickListener() {
 
         actionTableMenu.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View v) {
-                if (drawerLayout.isDrawerOpen(GravityCompat.END)) {
-                    drawerLayout.closeDrawer(GravityCompat.END);
-                } else {
-                    drawerLayout.openDrawer(GravityCompat.END);
-                }
+            public void onClick(View view) {
+                if (drawerWaiterTable.isDrawerOpen(GravityCompat.END))
+                    drawerWaiterTable.closeDrawer(GravityCompat.END);
+                else
+                    drawerWaiterTable.openDrawer(GravityCompat.END);
             }
         });
 
-        getSupportFragmentManager().beginTransaction().add(navTableView.getId(), activeTableFragment).commit();
-
-        ivBarcodeScanner.setOnClickListener(view -> {
-            Intent qrScannerIntent = new Intent(getBaseContext(),QRScannerActivity.class);
-            startActivity(qrScannerIntent);
+        ivBarcodeScanner.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent qrScannerIntent = new Intent(getBaseContext(), QRScannerActivity.class);
+                startActivity(qrScannerIntent);
+            }
         });
     }
 
-    private void setupUserItem(List<EventModel> eventModels) {
-        TableItemFragment tableItemFragment = new TableItemFragment();
+    private void setupMyWaiterTableViewPager() {
+        /*This is used to setup Tab for waiter table. this will be changed in future.*/
+        WaiterTablePagerAdapter mWaiterTablePagerAdapter = new WaiterTablePagerAdapter(getSupportFragmentManager());
 
-        getFragmentManager().beginTransaction()
-                .replace(itemContainer.getId(), tableItemFragment)
-                .commit();
+        for (int i = 0; i < 8; i++) {
+            WaiterTableFragment mWaiterTableFragment = new WaiterTableFragment();
+            mWaiterTablePagerAdapter.addWaiterTableFragment(mWaiterTableFragment);
+        }
 
-        List<String> list = new ArrayList<>();
+        vpWaiterTable.setAdapter(mWaiterTablePagerAdapter);
+        tlWaiterTable.setupWithViewPager(vpWaiterTable);
 
-        items = new ArrayList<>();
-        itemsDone = new ArrayList<>();
+        createTabIcon();
+    }
 
-        for (int i = 0; i < eventModels.size(); i++) {
-            if (eventModels.get(i).getStatus() == EventModel.STATUS.INCOMPLETE) {
-                items.add(eventModels.get(i));
-            } else
-                itemsDone.add(eventModels.get(i));
+    private void createTabIcon() {
+
+        for (int i = 0; i < 8; i++) {
+            View mView = LayoutInflater.from(this).inflate(R.layout.waiter_table_custom_tab, null);
+
+            FrameLayout fl_waiter_table_tab_active = (FrameLayout) mView.findViewById(R.id.fl_waiter_table_tab_active);
+
+            TextView mtv_waiter_table_tab_title = (TextView) mView.findViewById(R.id.tv_waiter_table_tab_title);
+            TextView mtv_waiter_table_tab_number = (TextView) mView.findViewById(R.id.tv_waiter_table_tab_number);
+            TextView mtv_waiter_table_tab_active = (TextView) mView.findViewById(R.id.tv_waiter_table_tab_active);
+
+            if(i == 0){
+                mtv_waiter_table_tab_active.setText((i+1)+"");
+                fl_waiter_table_tab_active.setVisibility(View.VISIBLE);
+            }else {
+                fl_waiter_table_tab_active.setVisibility(View.GONE);
+            }
+
+            mtv_waiter_table_tab_title.setText("TABLE");
+            mtv_waiter_table_tab_number.setText((i+1)+"");
+            TabLayout.Tab mTab = tlWaiterTable.getTabAt(i);
+
+            if (mTab != null){
+                mTab.setCustomView(mView);
+            }
         }
     }
 
-    public void setupActiveTables() {
+    private void setupUI() {
 
-        for (int i = 1; i <= 10; i++) {
-            if (i % 2 == 0)
-                tables.add(new TableModel("Table" + i + "", "Standard", true, 4, 2));
-        }
-        rvActiveTables.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false));
+        toolbarWaiterTable = (Toolbar) findViewById(R.id.toolbar_waiter_table);
+        drawerOpen = (ImageView) findViewById(R.id.drawer_open);
+        actionTableMenu = (ImageView) findViewById(R.id.action_table_menu);
+        appbarWaiterTable = (AppBarLayout) findViewById(R.id.appbar_waiter_table);
+        tlWaiterTable = (TabLayout) findViewById(R.id.tl_Waiter_Table);
+        vpWaiterTable = (ViewPager) findViewById(R.id.vp_waiter_table);
+        ivBarcodeScanner = (ImageView) findViewById(R.id.iv_waiter_table_barcode_scanner);
+        btnLogout = (Button) findViewById(R.id.btn_logout);
+        navAccount = (NavigationView) findViewById(R.id.nav_account);
+        navTableView = (NavigationView) findViewById(R.id.nav_table_view);
+        drawerWaiterTable = (DrawerLayout) findViewById(R.id.drawer_waiter_table);
 
-        mWaiterTableAdapter = new WaiterActiveTableAdapter(tables);
-        mWaiterTableAdapter.setNoItems(items.size());
-        mWaiterTableAdapter.setOnTableInterActionListener(this);
+        setSupportActionBar(toolbarWaiterTable);
 
-        rvActiveTables.setAdapter(mWaiterTableAdapter);
+        ActionBarDrawerToggle startToggle = new ActionBarDrawerToggle(this, drawerWaiterTable, toolbarWaiterTable, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
+        drawerWaiterTable.addDrawerListener(startToggle);
+        startToggle.syncState();
 
-        tables.add(new TableModel("Table" + 15 + "", "Premium", true, 4, 2));
+        EndDrawerToggle endToggle = new EndDrawerToggle(this, drawerWaiterTable, toolbarWaiterTable, R.string.messages_drawer_open, R.string.messages_drawer_close,R.drawable.ic_waiter_table_menu);
+        drawerWaiterTable.addDrawerListener(endToggle);
+        endToggle.syncState();
+
+        ActiveTableFragment activeTableFragment = new ActiveTableFragment();
+
+        getSupportFragmentManager().beginTransaction().add(navTableView.getId(), activeTableFragment).commit();
     }
 
     @Override
     public void selectedTableChanged(int position) {
-        mWaiterTableAdapter.setItem_position(position);
-        mWaiterTableAdapter.notifyDataSetChanged();
     }
 
     @Override

@@ -64,6 +64,10 @@ public class WaiterEndNavigationTableAdapter extends RecyclerView.Adapter<Waiter
         return navTableModelsList.size();
     }
 
+    public void setWaiterTableData(List<NavTableModel> navTableModels) {
+        this.navTableModelsList = navTableModels;
+    }
+
     class ViewHolder extends RecyclerView.ViewHolder {
 
         @BindView(R.id.tvTableNumber)

@@ -23,7 +23,8 @@
 
     </android.support.v7.widget.CardView>
 
-    <android.support.v4.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    <android.support.v4.widget.NestedScrollView
+        xmlns:android="http://schemas.android.com/apk/res/android"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         xmlns:app="http://schemas.android.com/apk/res-auto">
@@ -34,6 +35,7 @@
             android:orientation="vertical">
 
             <TextView
+                android:id="@+id/tv_waiter_table_recent_occupied"
                 android:layout_marginStart="@dimen/spacing_small_extra"
                 android:layout_marginEnd="@dimen/spacing_small_extra"
                 android:layout_width="wrap_content"
@@ -61,6 +63,7 @@
             </LinearLayout>
 
             <TextView
+                android:id="@+id/tv_waiter_table_ongoing_table"
                 android:layout_marginBottom="@dimen/spacing_small"
                 android:layout_marginTop="@dimen/spacing_small"
                 android:layout_marginStart="@dimen/spacing_small_extra"

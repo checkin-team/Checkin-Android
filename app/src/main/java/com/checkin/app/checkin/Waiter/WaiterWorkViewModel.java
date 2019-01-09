@@ -1,60 +1,34 @@
 package com.checkin.app.checkin.Waiter;
 
-import android.app.Application;
-import android.arch.lifecycle.LiveData;
 import android.arch.lifecycle.MutableLiveData;
-import android.arch.lifecycle.Transformations;
-import android.support.annotation.NonNull;
+import android.arch.lifecycle.ViewModel;
 
-import com.checkin.app.checkin.Data.BaseViewModel;
-import com.checkin.app.checkin.Data.Resource;
-
-import java.util.ArrayList;
 import java.util.List;
 
-public class WaiterWorkViewModel extends BaseViewModel {
-    private MutableLiveData<Resource<List<NavTableModel>>> mTables = new MutableLiveData<>();
+public class WaiterWorkViewModel extends ViewModel {
 
-    public WaiterWorkViewModel(@NonNull Application application) {
-        super(application);
+    private MutableLiveData<List<NavTableModel>> assignedTableList;
+    private MutableLiveData<List<NavTableModel>> unassignedTableList;
+    private WaiterWorkRepository waiterWorkRepository;
+
+    public WaiterWorkViewModel (){
+        this.waiterWorkRepository = new WaiterWorkRepository();
     }
 
-    LiveData<Resource<List<NavTableModel>>> getUnassignedTables() {
-        return Transformations.map(mTables, input -> {
-            if (input == null)
-                return null;
-            if (input.status == Resource.Status.SUCCESS && input.data != null) {
-                List<NavTableModel> allTables = input.data;
-                List<NavTableModel> unassignedTables = new ArrayList<>();
-                for (NavTableModel table: allTables) {
-                    if (table.getHost() == null)
-                        unassignedTables.add(table);
-                }
-                return Resource.cloneResource(input, unassignedTables);
-            }
-            return null;
-        });
+    public void init(){
+        if (this.assignedTableList != null && this.unassignedTableList != null){
+            return;
+        }
+
+        assignedTableList = waiterWorkRepository.getAssignedTable();
+        unassignedTableList = waiterWorkRepository.getUnassignedTable();
     }
 
-    LiveData<Resource<List<NavTableModel>>> getAssignedTables() {
-        return Transformations.map(mTables, input -> {
-            if (input == null)
-                return null;
-            if (input.status == Resource.Status.SUCCESS && input.data != null) {
-                List<NavTableModel> allTables = input.data;
-                List<NavTableModel> assignedTables = new ArrayList<>();
-                for (NavTableModel table: allTables) {
-                    if (table.getHost() != null)
-                        assignedTables.add(table);
-                }
-                return Resource.cloneResource(input, assignedTables);
-            }
-            return null;
-        });
+    MutableLiveData<List<NavTableModel>> findAssignedTableList(){
+        return this.assignedTableList;
     }
 
-    @Override
-    public void updateResults() {
-
+    MutableLiveData<List<NavTableModel>> findUnassignedTableList(){
+        return this.unassignedTableList;
     }
 }

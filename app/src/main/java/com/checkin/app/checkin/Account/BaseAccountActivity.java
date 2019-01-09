@@ -175,6 +175,7 @@ public abstract class BaseAccountActivity extends BaseActivity {
                 case USER:
                     if (mBaseActivity.getClass() != HomeActivity.class){
                         Intent intent = new Intent(context,HomeActivity.class);
+                        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                         context.startActivity(intent);
                     }
                     break;

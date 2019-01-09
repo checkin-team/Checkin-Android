@@ -115,11 +115,15 @@
     <dimen name="spacing_normal_large">20dp</dimen>
     <dimen name="spacing_layout_height">40dp</dimen>
     <dimen name="dine_in_width">23dp</dimen>
-    <dimen name="text_size_dine_ine">26sp</dimen>
+    <dimen name="text_size_dine_ine">23sp</dimen>
     <dimen name="barcode_width">33dp</dimen>
     <dimen name="barcode_height">30dp</dimen>
     <dimen name="view_width">60dp</dimen>
     <dimen name="view_height">54dp</dimen>
     <dimen name="action_menu_width_size">40dp</dimen>
     <dimen name="car_view_size_small_tiny">0dp</dimen>
+    <dimen name="text_checkin_waiter_size">22sp</dimen>
+    <dimen name="app_bar_elevation_size">5dp</dimen>
+    <dimen name="tab_layout_elevation_size">5dp</dimen>
+    <dimen name="spacing_waiter_table_number_user">13dp</dimen>
 </resources>
