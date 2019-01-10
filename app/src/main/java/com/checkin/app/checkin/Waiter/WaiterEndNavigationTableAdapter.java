@@ -19,11 +19,10 @@ public class WaiterEndNavigationTableAdapter extends RecyclerView.Adapter<Waiter
     private List<NavTableModel> navTableModelsList;
     private ActiveTableFragment activeTableFragment;
 
-    public WaiterEndNavigationTableAdapter(List<NavTableModel> navTableModelsList, ActiveTableFragment activeTableFragment) {
+    WaiterEndNavigationTableAdapter(List<NavTableModel> navTableModelsList, ActiveTableFragment activeTableFragment) {
         this.navTableModelsList = navTableModelsList;
         this.activeTableFragment = activeTableFragment;
     }
-
 
     @NonNull
     @Override
@@ -40,23 +39,24 @@ public class WaiterEndNavigationTableAdapter extends RecyclerView.Adapter<Waiter
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         NavTableModel navTableModel = navTableModelsList.get(position);
+        String tableNumber = navTableModel.getTableNumber();
 
-        if (navTableModel.getHost() == null) {
+        if (navTableModel.getHost() != null){
+            String userName = navTableModel.getHost().getDisplayName();
 
-        } else {
-            holder.tvTableNumber.setText(navTableModel.getHost().getTableNumber());
-            holder.tvName.setText(navTableModel.getHost().getCustomerName());
+            holder.tvTableNumber.setText(tableNumber);
+            holder.tvName.setText(userName);
+        }else {
+            holder.tvTableNumber.setText(tableNumber);
         }
     }
 
-
     @Override
     public int getItemViewType(final int position) {
-        if (navTableModelsList.get(position).getHost() != null) {
+        if (navTableModelsList.get(position).getHost() == null)
             return 0;
-        } else {
+        else
             return 1;
-        }
     }
 
     @Override

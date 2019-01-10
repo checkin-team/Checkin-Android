@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <android.support.v7.widget.CardView app:cardCornerRadius="10dp"
     app:cardElevation="@dimen/card_view_small_elevation"
-    android:layout_gravity="center_horizontal"
-    android:layout_width="wrap_content"
     android:layout_marginTop="@dimen/card_view_spacing_top"
     android:layout_marginBottom="@dimen/spacing_end_small"
+    android:layout_gravity="center_horizontal"
+    android:layout_width="wrap_content"
     android:layout_height="wrap_content"
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
@@ -18,7 +18,7 @@
             app:cardElevation="@dimen/card_view_small_elevation"
             android:layout_marginEnd="@dimen/spacing_end_small"
             app:cardCornerRadius="@dimen/car_view_corner_radius"
-            app:cardBackgroundColor="@color/assigned_waiter_table_color"
+            app:cardBackgroundColor="@color/unassigned_waiter_table_color"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content">
 
@@ -28,7 +28,6 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:gravity="center"
-                android:text="Table 1"
                 android:textColor="@color/white"
                 android:textSize="@dimen/font_normal" />
 
@@ -41,7 +40,7 @@
         <LinearLayout
             android:layout_gravity="center"
             android:orientation="vertical"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content">
 
             <TextView
@@ -49,14 +48,13 @@
                 android:layout_gravity="end"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:gravity="center"
+                android:gravity="end"
+                android:text="Standard"
                 android:id="@+id/tvName"
-                android:text="Ashish"
                 android:textColor="@color/black"
-                android:textSize="@dimen/font_normal" />
+                android:textSize="@dimen/font_small" />
 
             <TextView
-                android:visibility="gone"
                 android:layout_marginTop="@dimen/spacing_extra_tiny"
                 android:layout_marginEnd="@dimen/spacing_small_extra"
                 android:layout_gravity="end"

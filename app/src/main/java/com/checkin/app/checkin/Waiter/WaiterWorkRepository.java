@@ -2,50 +2,42 @@ package com.checkin.app.checkin.Waiter;
 
 import android.arch.lifecycle.MutableLiveData;
 
+import com.checkin.app.checkin.Misc.BriefModel;
+
 import java.util.ArrayList;
 import java.util.List;
 
 class WaiterWorkRepository {
 
+    private MutableLiveData<List<NavTableModel>> getTableLiveData = new MutableLiveData<>();
+    private List<NavTableModel> demoNavList = new ArrayList<>();
+
     WaiterWorkRepository(){
     }
 
-    MutableLiveData<List<NavTableModel>> getAssignedTable(){
-        final MutableLiveData<List<NavTableModel>> getAssignedTableLiveData = new MutableLiveData<>();
-        List<NavTableModel> demoNavList = new ArrayList<>();
+    MutableLiveData<List<NavTableModel>> getWaiterTable(){
 
         for (int i = 0; i < 5; i++){
             NavTableModel navTableModel = new NavTableModel();
-            navTableModel.setTable("Recent");
+            navTableModel.setTableNumber("Table " + (i+1));
             navTableModel.setHost(null);
 
             demoNavList.add(navTableModel);
         }
 
-        getAssignedTableLiveData.setValue(demoNavList);
-
-        return getAssignedTableLiveData;
-    }
-
-    MutableLiveData<List<NavTableModel>> getUnassignedTable(){
-        final MutableLiveData<List<NavTableModel>> getUnassignedTableLiveData = new MutableLiveData<>();
-        List<NavTableModel> demoNavList = new ArrayList<>();
-
         for (int i = 0; i < 5; i++){
-
-            NavTableModel.Host host = new NavTableModel.Host();
-            host.setCustomerName("Ashish");
-            host.setTableNumber("Table 4");
-
             NavTableModel navTableModel = new NavTableModel();
-            navTableModel.setTable("Ongoing");
+            navTableModel.setTableNumber("Table " + (i+1));
+
+            BriefModel host = new BriefModel("","Ashish Gupta","");
+
             navTableModel.setHost(host);
 
             demoNavList.add(navTableModel);
         }
 
-        getUnassignedTableLiveData.setValue(demoNavList);
+        getTableLiveData.setValue(demoNavList);
 
-        return getUnassignedTableLiveData;
+        return getTableLiveData;
     }
 }

@@ -1,34 +1,55 @@
 package com.checkin.app.checkin.Waiter;
 
+import android.arch.lifecycle.LiveData;
 import android.arch.lifecycle.MutableLiveData;
+import android.arch.lifecycle.Transformations;
 import android.arch.lifecycle.ViewModel;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class WaiterWorkViewModel extends ViewModel {
 
-    private MutableLiveData<List<NavTableModel>> assignedTableList;
-    private MutableLiveData<List<NavTableModel>> unassignedTableList;
+    private MutableLiveData<List<NavTableModel>> getWaiterTableList;
     private WaiterWorkRepository waiterWorkRepository;
 
-    public WaiterWorkViewModel (){
+    public WaiterWorkViewModel() {
         this.waiterWorkRepository = new WaiterWorkRepository();
     }
 
-    public void init(){
-        if (this.assignedTableList != null && this.unassignedTableList != null){
+    public void init() {
+        if (this.getWaiterTableList != null) {
             return;
         }
 
-        assignedTableList = waiterWorkRepository.getAssignedTable();
-        unassignedTableList = waiterWorkRepository.getUnassignedTable();
+        this.getWaiterTableList = waiterWorkRepository.getWaiterTable();
     }
 
-    MutableLiveData<List<NavTableModel>> findAssignedTableList(){
-        return this.assignedTableList;
+    LiveData<List<NavTableModel>> findUnassignedWaiterTable() {
+        return Transformations.map(getWaiterTableList, input -> {
+            List<NavTableModel> mUnassignedTableList = new ArrayList<>();
+            if (input != null && input.size() > 0) {
+                for (NavTableModel navTableModel : input) {
+                    if (navTableModel.getHost() != null) {
+                        mUnassignedTableList.add(navTableModel);
+                    }
+                }
+            }
+            return mUnassignedTableList;
+        });
     }
 
-    MutableLiveData<List<NavTableModel>> findUnassignedTableList(){
-        return this.unassignedTableList;
+    LiveData<List<NavTableModel>> findAssignedWaiterTable() {
+        return Transformations.map(getWaiterTableList, input -> {
+            List<NavTableModel> mAssignedTableList = new ArrayList<>();
+            if (input != null && input.size() > 0) {
+                for (NavTableModel navTableModel : input) {
+                    if (navTableModel.getHost() == null) {
+                        mAssignedTableList.add(navTableModel);
+                    }
+                }
+            }
+            return mAssignedTableList;
+        });
     }
 }

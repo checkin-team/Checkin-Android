@@ -1,12 +1,23 @@
 package com.checkin.app.checkin.Waiter;
 
+import com.checkin.app.checkin.Misc.BriefModel;
+
 import java.util.Date;
 
 class NavTableModel {
 
-    private String table;
-    private Host host;
+    private String tableNumber;
     private Date occupied;
+
+    public BriefModel getHost() {
+        return host;
+    }
+
+    public void setHost(BriefModel host) {
+        this.host = host;
+    }
+
+    private BriefModel host;
 
     public NavTableModel(){
     }
@@ -23,45 +34,12 @@ class NavTableModel {
         return "";
     }
 
-    public String getTable() {
-        return table;
+    public String getTableNumber() {
+        return tableNumber;
     }
 
-    public void setTable(String table) {
-        this.table = table;
+    public void setTableNumber(String table) {
+        this.tableNumber = table;
     }
 
-    public Host getHost() {
-        return host;
-    }
-
-    public void setHost(Host host) {
-        this.host = host;
-    }
-
-    static class Host{
-
-        public Host(){
-        }
-
-        private String tableNumber;
-
-        public String getTableNumber() {
-            return tableNumber;
-        }
-
-        public void setTableNumber(String tableNumber) {
-            this.tableNumber = tableNumber;
-        }
-
-        public String getCustomerName() {
-            return customerName;
-        }
-
-        public void setCustomerName(String customerName) {
-            this.customerName = customerName;
-        }
-
-        private String customerName;
-    }
 }

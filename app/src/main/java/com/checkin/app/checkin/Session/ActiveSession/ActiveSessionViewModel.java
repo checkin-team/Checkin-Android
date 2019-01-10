@@ -43,7 +43,7 @@ public class ActiveSessionViewModel extends BaseViewModel {
     }
 
     public LiveData<List<OrderedItemModel>> getOrderedItems() {
-        return Transformations.map(getActiveSessionDetail(), input -> {
+        return Transformations.map(getActiveSessionDetail(), (Resource<ActiveSessionModel> input) -> {
             List<OrderedItemModel> orderedItems = null;
             if (input != null && input.data != null) {
                 orderedItems = input.data.getOrderedItems();

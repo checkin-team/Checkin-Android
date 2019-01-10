@@ -101,7 +101,7 @@
     <dimen name="spacing_end_small">5dp</dimen>
     <dimen name="car_view_corner_radius">10dp</dimen>
     <dimen name="text_padding_large">15dp</dimen>
-    <dimen name="spacing_large_to_view">30dp</dimen>
+    <dimen name="spacing_large_to_view">20dp</dimen>
     <dimen name="spacing_large_end_text">30dp</dimen>
     <dimen name="card_view_spacing_top">8dp</dimen>
     <dimen name="card_radius_small_tiny">1dp</dimen>
