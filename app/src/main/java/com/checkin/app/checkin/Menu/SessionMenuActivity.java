@@ -181,7 +181,7 @@ public class SessionMenuActivity extends BaseActivity implements
             if (subtotal == null)
                 return;
             tvCartSubtotal.setText(String.format(
-                    Locale.ENGLISH, "Subtotal: " + Util.getCurrencyFormat(this), subtotal));
+                    Locale.ENGLISH, "Subtotal: " + Util.getCurrencyFormat(this) + " *", subtotal));
         });
 
         mViewModel.getServerOrderedItems().observe(this, resource -> {

@@ -118,7 +118,7 @@ public class NotificationActivity extends AppCompatActivity {
         @Override
         public RecyclerView.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
             if(viewType == TYPE_NOTIF_MODEL){
-                View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.notif_item,parent,false);
+                View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_notification_general,parent,false);
                 return new NotifModelViewHolder(view);
             }
             else {
