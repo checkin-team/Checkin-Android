@@ -4,8 +4,6 @@ import android.arch.lifecycle.LiveData;
 import android.support.annotation.NonNull;
 import android.util.Log;
 
-import java.io.IOException;
-
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -41,9 +39,9 @@ public class RetrofitLiveData<T> extends LiveData<ApiResponse<T>> {
     @Override
     protected void onInactive() {
         super.onInactive();
-        if (!hasObservers()) {
-            cancel();
-        }
+//        if (!hasObservers()) {
+//            cancel();
+//        }
     }
 
     public void cancel() {

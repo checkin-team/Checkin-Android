@@ -15,13 +15,15 @@ public class Constants {
     }
 
     public enum CHANNEL {
+        DEFAULT("channel.default", "Default"),
         // User group
         FRIEND_REQUEST("channel.friend_requests", "Friend Requests");
 
         String id, title;
 
         CHANNEL(String id, String title) {
-
+            this.id = id;
+            this.title = title;
         }
     }
 }

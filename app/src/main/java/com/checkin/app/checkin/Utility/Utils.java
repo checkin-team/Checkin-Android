@@ -415,10 +415,6 @@ public class Utils {
         return imageList;
     }
 
-    public static String getActivityIntentFilter(Context context, String identifier) {
-        return context.getPackageName() + "." + identifier;
-    }
-
     public static boolean isNetworkConnected(Context context) {
         ConnectivityManager connectivityManager = (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
         NetworkInfo networkInfo = connectivityManager.getActiveNetworkInfo();

@@ -169,6 +169,7 @@
         </service>
         <service android:name=".Maps.FetchAddressIntentService" />
         <service android:name=".Auth.DeviceTokenService" />
+        <receiver android:name=".User.Friendship.FriendshipBroadcastReceiver" />
 
         <meta-data
             android:name="com.facebook.sdk.ApplicationId"

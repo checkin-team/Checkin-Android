@@ -109,7 +109,7 @@ public class AuthActivity extends AppCompatActivity implements AuthFragmentInter
                 showProgress();
             } else {
                 hideProgress();
-                Utils.toast(this, "ERROR!\n" + resource.message);
+                Utils.toast(this, "ERROR!");
             }
         });
 

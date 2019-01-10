@@ -1,62 +1,69 @@
 package com.checkin.app.checkin.Data.Message;
 
-import android.app.NotificationChannel;
+import android.app.Notification;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
-import android.support.v4.app.NotificationCompat;
 import android.support.v4.content.LocalBroadcastManager;
 import android.util.Log;
 
 import com.checkin.app.checkin.Auth.DeviceTokenService;
-import com.checkin.app.checkin.Notifications.NotificationActivity;
-import com.checkin.app.checkin.Session.ActiveSession.ActiveSessionActivity;
-import com.checkin.app.checkin.Utility.Constants;
-import com.checkin.app.checkin.Utility.Utils;
+import com.checkin.app.checkin.Data.Converters;
 import com.google.firebase.messaging.FirebaseMessagingService;
 import com.google.firebase.messaging.RemoteMessage;
 
+import java.io.IOException;
+import java.util.Map;
+
 public class AppMessagingService extends FirebaseMessagingService {
     private static final String TAG = AppMessagingService.class.getSimpleName();
+    private LocalBroadcastManager mBroadcastManager;
+    private NotificationManager mNotificationManager;
+
+    @Override
+    public void onCreate() {
+        super.onCreate();
+        mBroadcastManager = LocalBroadcastManager.getInstance(this);
+        mNotificationManager = ((NotificationManager) this.getSystemService(Context.NOTIFICATION_SERVICE));
+        Utils.createDefaultChannels(mNotificationManager);
+    }
 
     @Override
     public void onMessageReceived(RemoteMessage remoteMessage) {
         super.onMessageReceived(remoteMessage);
-        String actionCode = remoteMessage.getData().get(Constants.FCM_ACTION_CODE);
-        Log.e(TAG, "Action code: " + actionCode);
+        Map<String, String> params = remoteMessage.getData();
 
-        Intent intent = getTargetIntent(actionCode);
-        intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-        String message = remoteMessage.getData().get("message");
-        intent.putExtra("message", message);
-        intent.setAction(Utils.getActivityIntentFilter(getApplicationContext(), actionCode));
-        LocalBroadcastManager localBroadcastManager = LocalBroadcastManager.getInstance(this);
-        if (!localBroadcastManager.sendBroadcast(intent)) {
+        if (params == null) {
+            return;
+        }
+        MessageModel data;
+        try {
+            String json = Converters.objectMapper.writeValueAsString(params);
+            data = Converters.objectMapper.readValue(json, MessageModel.class);
+            Log.e(TAG, data.toString());
+        } catch (IOException e) {
+            Log.e(TAG, "Couldn't parse FCM remote data.", e);
+            return;
+        }
+
+        boolean shouldShowNotification = data.shouldShowNotification();
+
+        Intent intent = new Intent(this, data.getTargetActivity());
+        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+
+        if (data.shouldTryUpdateUi()) {
+            shouldShowNotification = shouldShowNotification && !mBroadcastManager.sendBroadcast(intent);
+        }
+
+        if (shouldShowNotification) {
+            int notificationId = Utils.getNotificationId();
             PendingIntent pendingIntent = PendingIntent.getActivity(this, 0, intent, PendingIntent.FLAG_UPDATE_CURRENT);
-//            createNotification(remoteMessage, pendingIntent);
+            Notification notification = data.getNotificationBuilder(this, notificationId)
+                    .setContentIntent(pendingIntent)
+                    .build();
+            mNotificationManager.notify(notificationId, notification);
         }
-    }
-
-    private Intent getTargetIntent(String actionCode) {
-        if (ActiveSessionActivity.IDENTIFIER.equals(actionCode)) {
-            return new Intent(this,ActiveSessionActivity.class);
-        }
-        else return new Intent(this, NotificationActivity.class);
-    }
-
-    private  void createNotification(RemoteMessage remoteMessage,PendingIntent pendingIntent)
-    {
-        createNotificationChannel();
-        NotificationCompat.Builder notificationBuilder=new NotificationCompat.Builder(this, Constants.CHANNEL_ID);
-        notificationBuilder.setContentTitle("FCM NOTIFICATION");
-        notificationBuilder.setContentText(remoteMessage.getNotification().getBody());
-        notificationBuilder.setSmallIcon(android.support.v4.R.drawable.notification_template_icon_bg);
-        notificationBuilder.setAutoCancel(true);
-        notificationBuilder.setContentIntent(pendingIntent);
-        NotificationManager notificationManager =(NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
-
-        notificationManager.notify(0,notificationBuilder.build());
     }
 
     @Override
@@ -65,21 +72,5 @@ public class AppMessagingService extends FirebaseMessagingService {
         Intent intent = new Intent(getApplicationContext(), DeviceTokenService.class);
         intent.putExtra(DeviceTokenService.KEY_TOKEN, token);
         startService(intent);
-    }
-
-    private void createNotificationChannel()
-    {
-        NotificationChannel channel = null;
-        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.O) {
-            channel = new NotificationChannel(Constants.CHANNEL_ID,Constants.CHANNEL_NAME, NotificationManager.IMPORTANCE_HIGH);
-            channel.setDescription(Constants.CHANNEL_DESCRIPTION);
-            channel.enableLights(true);
-            channel.enableVibration(true);
-
-            NotificationManager notificationManager =getSystemService(NotificationManager.class);
-            notificationManager.createNotificationChannel(channel);
-        }
-
-
     }
 }
