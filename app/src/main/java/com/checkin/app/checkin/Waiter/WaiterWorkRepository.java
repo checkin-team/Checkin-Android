@@ -29,7 +29,7 @@ class WaiterWorkRepository {
             NavTableModel navTableModel = new NavTableModel();
             navTableModel.setTableNumber("Table " + (i+1));
 
-            BriefModel host = new BriefModel("","Ashish Gupta","");
+            BriefModel host = new BriefModel("","Ashish ji","");
 
             navTableModel.setHost(host);
 

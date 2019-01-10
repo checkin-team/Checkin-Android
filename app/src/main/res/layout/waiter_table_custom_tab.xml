@@ -25,22 +25,21 @@
 
     <FrameLayout
         android:id="@+id/fl_waiter_table_tab_active"
-        android:layout_marginStart="5dp"
-        android:background="@drawable/background_waiter_table_tab"
-        android:layout_centerInParent="true"
-        android:visibility="gone"
-        android:layout_toEndOf="@id/tv_waiter_table_tab_number"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:layout_marginStart="5dp"
+        android:layout_toEndOf="@id/tv_waiter_table_tab_number"
+        android:background="@drawable/background_waiter_table_tab"
+        android:visibility="gone">
 
         <TextView
-            android:layout_gravity="center"
             android:id="@+id/tv_waiter_table_tab_active"
-            android:textColor="@color/white"
-            android:gravity="center"
-            android:textSize="10sp"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:gravity="center"
+            android:textColor="@color/white"
+            android:textSize="10sp" />
 
     </FrameLayout>
 
