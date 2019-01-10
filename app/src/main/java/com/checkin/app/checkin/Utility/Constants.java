@@ -4,7 +4,7 @@ import static java.util.concurrent.TimeUnit.MILLISECONDS;
 import static java.util.concurrent.TimeUnit.MINUTES;
 
 public class Constants {
-    public static final String API_VERSION = "v0.1";
+    public static final String API_VERSION = "0.4.0";
     public static final String API_PROTOCOL = "https://";
     public static final String API_HOST = "api.check-in.in";
 
@@ -17,20 +17,12 @@ public class Constants {
     public static final String SP_SESSION_ACTIVE_PK = "session_active.pk";
     public static final String SP_SYNC_DEVICE_TOKEN = "device_token";
 
-    public static final String EXTRA_SELECTED_USER_ID = "extra_selected_user_id";
-
     public static final String TARGET_ID = "target_id";
     public static final String LAST_NOTIF_ID = "last_notif_id";
     public static final int NEW_NOTIF_RANGE = 2;//number of days
 
     public static final long DEFAULT_ORDER_CANCEL_DURATION = MILLISECONDS.convert(3, MINUTES);
     public static final long DEFAULT_OTP_AUTO_RETRIEVAL_TIMEOUT = MILLISECONDS.convert(1, MINUTES);
-
-    public static final String CHANNEL_ID="myChannelId";
-
-    public static final String CHANNEL_NAME="myChannelName";
-    public static final String CHANNEL_DESCRIPTION="my description";
-    public static final String FCM_ACTION_CODE = "ACTION_CODE";
 
     public final static String EXPAND_TEXT ="....";
 

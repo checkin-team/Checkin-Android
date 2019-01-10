@@ -22,7 +22,7 @@ import com.checkin.app.checkin.Misc.CoverPagerAdapter;
 import com.checkin.app.checkin.Misc.StatusTextAdapter;
 import com.checkin.app.checkin.R;
 import com.checkin.app.checkin.Shop.RestaurantModel;
-import com.checkin.app.checkin.Utility.Util;
+import com.checkin.app.checkin.Utility.Utils;
 import com.rd.PageIndicatorView;
 import com.rd.animation.type.AnimationType;
 
@@ -121,7 +121,7 @@ public class ShopProfileFragment extends Fragment {
 
     @OnClick(R.id.im_status)
     public void onStatusClick(View v) {
-        Util.toast(requireContext(), v.getTag().toString());
+        Utils.toast(requireContext(), v.getTag().toString());
     }
 
     @OnClick(R.id.btn_profile_edit)

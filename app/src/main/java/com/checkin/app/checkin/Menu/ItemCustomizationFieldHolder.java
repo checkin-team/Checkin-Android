@@ -11,7 +11,7 @@ import android.widget.TextView;
 
 import com.checkin.app.checkin.Menu.Model.ItemCustomizationFieldModel;
 import com.checkin.app.checkin.R;
-import com.checkin.app.checkin.Utility.Util;
+import com.checkin.app.checkin.Utility.Utils;
 
 import java.util.Locale;
 
@@ -39,7 +39,7 @@ public class ItemCustomizationFieldHolder {
         mField = customizationField;
         mView = ((ViewGroup) LayoutInflater.from(context).inflate(R.layout.item_menu_customization_field, null, false));
         ButterKnife.bind(this, mView);
-        tvFieldCost.setText(String.format(Locale.ENGLISH, Util.getCurrencyFormat(context), mField.formatCost()));
+        tvFieldCost.setText(String.format(Locale.ENGLISH, Utils.getCurrencyFormat(context), mField.formatCost()));
         tvFieldName.setText(mField.getName());
         imFieldType.setImageResource(mField.isVegetarian() ? TYPE_VEG : TYPE_NON_VEG);
         mView.setOnClickListener(v -> cbFieldSelect.performClick());

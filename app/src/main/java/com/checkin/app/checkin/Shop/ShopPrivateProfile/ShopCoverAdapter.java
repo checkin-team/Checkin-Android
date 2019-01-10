@@ -11,7 +11,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.checkin.app.checkin.R;
-import com.checkin.app.checkin.Utility.Util;
+import com.checkin.app.checkin.Utility.Utils;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -61,9 +61,9 @@ public class ShopCoverAdapter extends RecyclerView.Adapter<ShopCoverAdapter.View
         }
 
         void bindData(int index) {
-            Drawable drawable = Util.getSingleDrawable(
+            Drawable drawable = Utils.getSingleDrawable(
                     itemView.getContext(), ((LayerDrawable) itemView.getResources().getDrawable(R.drawable.card_image_add)));
-            Util.loadImageOrDefault(imCover, mCoverUrls[index - 1], drawable);
+            Utils.loadImageOrDefault(imCover, mCoverUrls[index - 1], drawable);
             tvIndex.setText(String.valueOf(index));
             btnRemove.setOnClickListener(v -> mListener.onCoverRemove(index));
             imCover.setOnClickListener(v -> mListener.onCoverChange(index));

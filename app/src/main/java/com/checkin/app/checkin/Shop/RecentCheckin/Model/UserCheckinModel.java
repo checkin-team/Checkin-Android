@@ -2,7 +2,7 @@ package com.checkin.app.checkin.Shop.RecentCheckin.Model;
 
 import com.checkin.app.checkin.Misc.BriefModel;
 import com.checkin.app.checkin.User.UserModel;
-import com.checkin.app.checkin.Utility.Util;
+import com.checkin.app.checkin.Utility.Utils;
 import com.fasterxml.jackson.annotation.JsonAutoDetect;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
@@ -36,7 +36,7 @@ public class UserCheckinModel {
     }
 
     public String formatCheckinTime() {
-        return Util.formatDateTo24HoursTime(checkinTime);
+        return Utils.formatDateTo24HoursTime(checkinTime);
     }
 
     public UserModel.GENDER getGender() {

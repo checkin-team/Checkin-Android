@@ -14,8 +14,6 @@ import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.iid.FirebaseInstanceId;
 import com.google.firebase.iid.InstanceIdResult;
 
-import java.io.IOException;
-
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -46,7 +44,9 @@ public class DeviceTokenService extends IntentService implements OnSuccessListen
     }
 
     private void saveToken(String token) {
-        AuthRepository.getInstance(getApplication()).postDeviceToken(token).enqueue(this);
+        AuthRepository.getInstance(getApplication())
+                .postDeviceToken(token)
+                .enqueue(this);
     }
 
     private void processResponse(ApiResponse<ObjectNode> response) {

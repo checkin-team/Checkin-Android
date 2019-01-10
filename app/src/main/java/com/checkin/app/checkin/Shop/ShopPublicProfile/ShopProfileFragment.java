@@ -1,10 +1,13 @@
 package com.checkin.app.checkin.Shop.ShopPublicProfile;
 
+import android.Manifest;
 import android.arch.lifecycle.ViewModelProviders;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
 import android.support.v7.widget.GridLayoutManager;
@@ -37,6 +40,8 @@ import butterknife.Unbinder;
 public class ShopProfileFragment extends Fragment implements View.OnClickListener {
     private static final String TAG = ShopProfileFragment.class.getSimpleName();
     private Unbinder unbinder;
+
+    private static final int RC_CALL_PERM = 901;
 
     @BindView(R.id.tv_shop_name) TextView tvShopName;
     @BindView(R.id.tv_locality) TextView tvLocality;
@@ -113,6 +118,8 @@ public class ShopProfileFragment extends Fragment implements View.OnClickListene
             case R.id.btn_follow:
                 break;
             case R.id.btn_call:
+                if (ActivityCompat.checkSelfPermission(requireContext(), Manifest.permission.CALL_PHONE) != PackageManager.PERMISSION_GRANTED)
+                    requestPermissions(new String[]{Manifest.permission.CALL_PHONE}, RC_CALL_PERM);
                 mViewModel.callShop(requireContext());
                 break;
             case R.id.btn_navigate:
@@ -133,5 +140,18 @@ public class ShopProfileFragment extends Fragment implements View.OnClickListene
     public void onDestroy() {
         super.onDestroy();
         unbinder.unbind();
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+        switch (requestCode) {
+            case RC_CALL_PERM: {
+                if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                    mViewModel.callShop(requireContext());
+                }
+                break;
+            }
+        }
     }
 }

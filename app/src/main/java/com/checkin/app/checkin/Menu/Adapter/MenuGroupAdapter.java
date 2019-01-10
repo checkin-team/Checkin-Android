@@ -30,7 +30,7 @@ import com.checkin.app.checkin.Menu.Model.MenuItemModel;
 import com.checkin.app.checkin.R;
 import com.checkin.app.checkin.Utility.DynamicSwipableViewPager;
 import com.checkin.app.checkin.Utility.GlideApp;
-import com.checkin.app.checkin.Utility.Util;
+import com.checkin.app.checkin.Utility.Utils;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -182,7 +182,7 @@ public class MenuGroupAdapter extends RecyclerView.Adapter<MenuGroupAdapter.Grou
             super(itemView);
             ButterKnife.bind(this, itemView);
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-                Util.setTabsFont(vTabs, itemView.getResources().getFont(R.font.arial_rounded_mt_bold));
+                Utils.setTabsFont(vTabs, itemView.getResources().getFont(R.font.arial_rounded_mt_bold));
             }
             vPager.setEnabled(false);
 
@@ -221,11 +221,11 @@ public class MenuGroupAdapter extends RecyclerView.Adapter<MenuGroupAdapter.Grou
             FrameLayout.LayoutParams layoutParams = (FrameLayout.LayoutParams) tvGroupName.getLayoutParams();
             layoutParams.gravity = Gravity.TOP;
             tvGroupName.setLayoutParams(layoutParams);
-            Animator sizeChangeAnim = Util.changeViewSize(view, Util.NO_CHANGE, (int) view.getResources().getDimension(R.dimen.height_menu_group_expanded));
-            Animator hideImageAnim = Util.hideView(imGroupIcon);
-            Animator showMenuAnim = Util.showView(vSubGroupWrapper);
+            Animator sizeChangeAnim = Utils.changeViewSize(view, Utils.NO_CHANGE, (int) view.getResources().getDimension(R.dimen.height_menu_group_expanded));
+            Animator hideImageAnim = Utils.hideView(imGroupIcon);
+            Animator showMenuAnim = Utils.showView(vSubGroupWrapper);
             ValueAnimator scrollAnimator = ValueAnimator.ofInt(1, 2, 3, 4);
-            scrollAnimator.setDuration(Util.DEFAULT_DURATION).addUpdateListener(animation ->
+            scrollAnimator.setDuration(Utils.DEFAULT_DURATION).addUpdateListener(animation ->
                     ((LinearLayoutManager) mRecyclerView.getLayoutManager()).scrollToPositionWithOffset(getAdapterPosition(), 0));
             AnimatorSet animatorSet = new AnimatorSet();
             animatorSet.playTogether(sizeChangeAnim, hideImageAnim, showMenuAnim, scrollAnimator);
@@ -243,9 +243,9 @@ public class MenuGroupAdapter extends RecyclerView.Adapter<MenuGroupAdapter.Grou
             FrameLayout.LayoutParams layoutParams = (FrameLayout.LayoutParams) tvGroupName.getLayoutParams();
             layoutParams.gravity = Gravity.CENTER;
             tvGroupName.setLayoutParams(layoutParams);
-            Animator sizeChangeAnim = Util.changeViewSize(view, Util.NO_CHANGE, (int) view.getResources().getDimension(R.dimen.height_menu_group_collapsed));
-            Animator showImageAnim = Util.showView(imGroupIcon);
-            Animator hideMenuAnim = Util.hideView(vSubGroupWrapper);
+            Animator sizeChangeAnim = Utils.changeViewSize(view, Utils.NO_CHANGE, (int) view.getResources().getDimension(R.dimen.height_menu_group_collapsed));
+            Animator showImageAnim = Utils.showView(imGroupIcon);
+            Animator hideMenuAnim = Utils.hideView(vSubGroupWrapper);
             AnimatorSet animatorSet = new AnimatorSet();
             animatorSet.playTogether(sizeChangeAnim, showImageAnim, hideMenuAnim);
             isExpanded = false;

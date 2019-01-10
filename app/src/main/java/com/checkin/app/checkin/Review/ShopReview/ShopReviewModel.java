@@ -1,7 +1,7 @@
 package com.checkin.app.checkin.Review.ShopReview;
 
 import com.checkin.app.checkin.Misc.BriefModel;
-import com.checkin.app.checkin.Utility.Util;
+import com.checkin.app.checkin.Utility.Utils;
 import com.fasterxml.jackson.annotation.JsonAutoDetect;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
@@ -74,9 +74,9 @@ public class ShopReviewModel {
 
     public String formatReviewTime() {
         if (!isEdited())
-            return Util.formatElapsedTime(created);
+            return Utils.formatElapsedTime(created);
         else
-            return String.format(Locale.ENGLISH, "(EDITED)\n%s", Util.formatElapsedTime(modified));
+            return String.format(Locale.ENGLISH, "(EDITED)\n%s", Utils.formatElapsedTime(modified));
     }
 
     public String formatUserStats() {
@@ -85,7 +85,7 @@ public class ShopReviewModel {
 
     public String formatCountLikes()
     {
-        return Util.formatCount(countLikes);
+        return Utils.formatCount(countLikes);
     }
 
     public BriefModel getUserInfo() {

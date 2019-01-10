@@ -33,7 +33,7 @@ import com.checkin.app.checkin.Menu.Model.OrderedItemModel;
 import com.checkin.app.checkin.Misc.BaseActivity;
 import com.checkin.app.checkin.R;
 import com.checkin.app.checkin.Utility.EndDrawerToggle;
-import com.checkin.app.checkin.Utility.Util;
+import com.checkin.app.checkin.Utility.Utils;
 import com.miguelcatalan.materialsearchview.MaterialSearchView;
 
 import java.util.ArrayList;
@@ -173,7 +173,7 @@ public class SessionMenuActivity extends BaseActivity implements
             if (count == null)
                 return;
             if (count > 0)
-                tvCountItems.setText(Util.formatCount(count));
+                tvCountItems.setText(Utils.formatCount(count));
             else
                 tvCountItems.setText("");
         });
@@ -181,14 +181,14 @@ public class SessionMenuActivity extends BaseActivity implements
             if (subtotal == null)
                 return;
             tvCartSubtotal.setText(String.format(
-                    Locale.ENGLISH, "Subtotal: " + Util.getCurrencyFormat(this) + " *", subtotal));
+                    Locale.ENGLISH, "Subtotal: " + Utils.getCurrencyFormat(this) + " *", subtotal));
         });
 
         mViewModel.getServerOrderedItems().observe(this, resource -> {
             if (resource == null)
                 return;
             if (resource.status == Status.SUCCESS) {
-                Util.toast(this, "Confirmed orders!");
+                Utils.toast(this, "Confirmed orders!");
                 finish();
             } else {
                 Log.e(TAG, "MSG: " + resource.message);
@@ -249,7 +249,7 @@ public class SessionMenuActivity extends BaseActivity implements
         if (mCartAdapter.getItemCount() > 0) {
             mViewModel.confirmOrder();
         } else {
-            Util.toast(this, "Order something before proceeding!");
+            Utils.toast(this, "Order something before proceeding!");
         }
     }
 

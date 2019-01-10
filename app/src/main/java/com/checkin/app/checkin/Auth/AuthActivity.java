@@ -25,6 +25,7 @@ import com.checkin.app.checkin.Home.HomeActivity;
 import com.checkin.app.checkin.R;
 import com.checkin.app.checkin.User.UserModel.GENDER;
 import com.checkin.app.checkin.Utility.Constants;
+import com.checkin.app.checkin.Utility.Utils;
 import com.facebook.AccessToken;
 import com.facebook.CallbackManager;
 import com.facebook.login.LoginResult;
@@ -106,6 +107,9 @@ public class AuthActivity extends AppCompatActivity implements AuthFragmentInter
                 hideProgress();
             } else if (resource.status == Resource.Status.LOADING) {
                 showProgress();
+            } else {
+                hideProgress();
+                Utils.toast(this, "ERROR!");
             }
         });
 
