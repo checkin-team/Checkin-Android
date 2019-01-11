@@ -1,13 +1,8 @@
 package com.checkin.app.checkin.Waiter;
 
 public class TabTableModel {
-    private static final String TAB_TITLE = "TABLE";
 
     public TabTableModel(){
-    }
-
-    public static String getTabTitle() {
-        return TAB_TITLE;
     }
 
     public int getTableNumber() {
@@ -19,6 +14,16 @@ public class TabTableModel {
     }
 
     private int tableNumber;
+
+    public String getTabTitle() {
+        return tabTitle;
+    }
+
+    public void setTabTitle(String tabTitle) {
+        this.tabTitle = tabTitle;
+    }
+
+    private String tabTitle;
 
     public int getActive() {
         return active;

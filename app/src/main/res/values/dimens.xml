@@ -7,6 +7,7 @@
     <dimen name="font_small_heading" format="float">16.5sp</dimen>
     <dimen name="font_normal">15sp</dimen>
     <dimen name="font_small">12sp</dimen>
+    <dimen name="font_small_extra">14sp</dimen>
     <dimen name="font_extra_small">10sp</dimen>
     <dimen name="font_tiny">8sp</dimen>
 

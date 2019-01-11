@@ -12,7 +12,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
-import com.checkin.app.checkin.Menu.Fragment.MenuItemSearchFragment;
 import com.checkin.app.checkin.R;
 
 import java.util.ArrayList;
@@ -23,8 +22,6 @@ import butterknife.ButterKnife;
 import butterknife.Unbinder;
 
 public class ActiveTableFragment extends Fragment {
-
-    private final String TAG = MenuItemSearchFragment.class.getSimpleName();
 
     @BindView(R.id.active_table_list)
     RecyclerView activeTableList;
@@ -83,21 +80,21 @@ public class ActiveTableFragment extends Fragment {
         WaiterWorkViewModel waiterWorkViewModel = ViewModelProviders.of(this).get(WaiterWorkViewModel.class);
         waiterWorkViewModel.init();
 
-        waiterWorkViewModel.findAssignedWaiterTable().observe(this, (List<NavTableModel> navTableModels) -> {
+        waiterWorkViewModel.findAssignedWaiterTable().observe(this, navTableModels -> {
             if (navTableModels != null && navTableModels.size() > 0) {
                 recentOccupiedAadpter.setWaiterTableData(navTableModels);
                 recentOccupiedAadpter.notifyDataSetChanged();
-            }else {
+            } else {
                 tvWaiterTableRecentOccupied.setVisibility(View.GONE);
                 activeTableList.setVisibility(View.GONE);
             }
         });
 
-        waiterWorkViewModel.findUnassignedWaiterTable().observe(this, (List<NavTableModel> navTableModels) -> {
+        waiterWorkViewModel.findUnassignedWaiterTable().observe(this, navTableModels -> {
             if (navTableModels != null && navTableModels.size() > 0) {
                 ongoingTableAdapter.setWaiterTableData(navTableModels);
                 ongoingTableAdapter.notifyDataSetChanged();
-            }else {
+            } else {
                 tvWaiterTableOngoingTable.setVisibility(View.GONE);
                 activeTableList.setVisibility(View.GONE);
             }
