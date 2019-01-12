@@ -132,4 +132,13 @@
     <string name="table_cleaning">Table\nCleaning</string>
     <string name="refill_glass">Refill\nGlass</string>
     <string name="rs">\u20B9</string>
+    <string name="title_how_can_we_assist_you">How can we assist you?</string>
+    <string name="chat_with_us">Chat With Us</string>
+    <string name="title_toppings">Toppings</string>
+    <string name="title_crust">Crust</string>
+    <string name="title_your_request">Your Request</string>
+    <string name="napkin">Napkin</string>
+    <string name="salt">Salt</string>
+    <string name="sauce">Sauce</string>
+
 </resources>

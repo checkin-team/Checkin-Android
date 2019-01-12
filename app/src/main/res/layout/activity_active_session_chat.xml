@@ -1,0 +1,376 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:card_view="http://schemas.android.com/apk/res-auto">
+
+
+    <android.support.design.widget.AppBarLayout
+        android:id="@+id/appbar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:theme="@style/appbar_main">
+
+        <android.support.v7.widget.Toolbar
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="top"
+            app:popupTheme="@style/PopupOverlay">
+
+            <android.support.constraint.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+
+                android:orientation="horizontal">
+
+                <ImageView
+                    android:id="@+id/im_as_back"
+                    android:layout_width="@dimen/button_height_short"
+                    android:layout_height="@dimen/button_height_short"
+                    android:layout_marginStart="@dimen/spacing_extra_small"
+                    android:layout_marginTop="0dp"
+                    android:background="@color/transparent"
+                    android:src="@drawable/ic_back_white"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <TextView
+                    android:id="@+id/im_as_waiter_profile"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/spacing_normal"
+                    android:padding="@dimen/spacing_extra_small"
+                    android:text="@string/chat_with_us"
+                    android:fontFamily="@font/arial_rounded_mt_bold"
+                    android:textColor="@color/white"
+                    android:textSize="@dimen/font_large"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintStart_toEndOf="@id/im_as_back"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+
+
+
+            </android.support.constraint.ConstraintLayout>
+
+
+        </android.support.v7.widget.Toolbar>
+    </android.support.design.widget.AppBarLayout>
+
+    <fragment
+        android:id="@+id/fragment_active_session_chat"
+        android:name="com.checkin.app.checkin.Session.ActiveSession.ActiveSessionChat.FragementActivitySession2"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/appbar"
+        app:layout_constraintBottom_toTopOf="@+id/container_session_actions"
+        app:layout_constraintVertical_weight="1"/>
+
+    <android.support.constraint.ConstraintLayout
+        android:id="@+id/container_session_actions"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:background="@color/brownish_grey"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/fragment_active_session_chat"
+        app:layout_constraintBottom_toTopOf="@+id/bottom_container"
+        app:layout_constraintVertical_weight="0.2">
+
+        <LinearLayout
+            android:id="@+id/ll_call_waiter_container"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@id/ll_table_cleaning_container"
+            app:layout_constraintStart_toEndOf="@id/ll_waiter_container"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <ImageView
+                android:id="@+id/im_call_waiter"
+                style="@style/ButtonNormal"
+                android:background="@color/brownish_grey"
+                android:src="@drawable/noun_waiter_1793851_1" />
+
+            <TextView
+                android:id="@+id/text_call_waiter"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:text="@string/call_waiter"
+                android:textSize="@dimen/font_small"
+                android:textColor="@color/white"
+                android:fontFamily="@font/arial_rounded_mt_bold"/>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/ll_table_cleaning_container"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@id/ll_refill_glass"
+            app:layout_constraintStart_toEndOf="@id/ll_call_waiter_container"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <ImageView
+                android:id="@+id/im_table_cleaning"
+                style="@style/ButtonNormal"
+                android:src="@drawable/noun_table_557866" />
+
+            <TextView
+                android:id="@+id/text_table_cleaning"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:text="@string/table_cleaning"
+                android:textSize="@dimen/font_small"
+                android:textColor="@color/white"
+                android:fontFamily="@font/arial_rounded_mt_bold"/>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/ll_refill_glass"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@id/im_expand_bottom_menu"
+            app:layout_constraintStart_toEndOf="@id/ll_table_cleaning_container"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <ImageView
+                android:id="@+id/im_refill_glass"
+                style="@style/ButtonNormal"
+                android:src="@drawable/noun_glass_of_water_274838" />
+
+            <TextView
+                android:id="@+id/text_refill_glass"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:text="@string/refill_glass"
+                android:textSize="@dimen/font_small"
+                android:textColor="@color/white"
+                android:fontFamily="@font/arial_rounded_mt_bold"/>
+
+        </LinearLayout>
+
+        <ImageView
+            android:id="@+id/im_expand_bottom_menu"
+            android:layout_width="@dimen/size_small_button"
+            android:layout_height="@dimen/size_small_button"
+            android:tint="@color/white"
+            android:src="@drawable/ic_plus_red"
+            android:padding="@dimen/spacing_extra_small"
+            android:background="@drawable/circle_white_border"
+            android:layout_marginEnd="@dimen/spacing_normal"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            android:clickable="true"
+            android:focusable="true"/>
+
+    </android.support.constraint.ConstraintLayout>
+
+    <RelativeLayout
+        android:id="@+id/bottom_expand_menu"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/brownish_grey"
+        android:layout_marginBottom="60dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        android:visibility="gone">
+
+        <ImageView
+            android:id="@+id/im_collapse_bottom_menu"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:layout_alignParentEnd="true"
+            android:tint="@color/white"
+            android:src="@drawable/ic_plus_red"
+            android:rotation="135"
+            android:padding="@dimen/spacing_extra_small"
+            android:background="@drawable/circle_white_border"
+            android:layout_margin="@dimen/spacing_small"
+            android:focusable="true"/>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/im_collapse_bottom_menu"
+            android:layout_marginStart="@dimen/spacing_large"
+            android:layout_marginEnd="@dimen/spacing_large">
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="0.5"
+                android:orientation="vertical">
+
+                <LinearLayout
+                    android:id="@+id/ll_napkin_container"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content">
+
+                    <ImageView
+                        android:id="@+id/im_napkin"
+                        style="@style/ButtonNormal"
+                        android:src="@drawable/noun_napkins_1068431" />
+
+                    <TextView
+                        android:id="@+id/text_napkin"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:gravity="center"
+                        android:text="@string/napkin"
+                        android:textSize="@dimen/font_normal"
+                        android:textColor="@color/white"
+                        android:layout_marginStart="@dimen/spacing_small"
+                        android:fontFamily="@font/arial_rounded_mt_bold"/>
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/ll_extra_plates_container"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/spacing_normal"
+                    android:layout_marginBottom="@dimen/spacing_normal">
+
+                    <ImageView
+                        android:id="@+id/im_extra_plates"
+                        style="@style/ButtonNormal"
+                        android:src="@drawable/noun_plates_575786" />
+
+                    <TextView
+                        android:id="@+id/text_extra_plates"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:gravity="center"
+                        android:text="@string/napkin"
+                        android:textSize="@dimen/font_normal"
+                        android:textColor="@color/white"
+                        android:layout_marginStart="@dimen/spacing_small"
+                        android:fontFamily="@font/arial_rounded_mt_bold"/>
+
+                </LinearLayout>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="0.5"
+                android:orientation="vertical">
+
+                <LinearLayout
+                    android:id="@+id/ll_salt_container"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content">
+
+                    <ImageView
+                        android:id="@+id/im_salt"
+                        style="@style/ButtonNormal"
+                        android:src="@drawable/noun_salt_1893609" />
+
+                    <TextView
+                        android:id="@+id/text_salt"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:gravity="center"
+                        android:text="@string/salt"
+                        android:textSize="@dimen/font_normal"
+                        android:textColor="@color/white"
+                        android:layout_marginStart="@dimen/spacing_small"
+                        android:fontFamily="@font/arial_rounded_mt_bold"/>
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/ll_sauce_container"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/spacing_normal"
+                    android:layout_marginBottom="@dimen/spacing_normal">
+
+                    <ImageView
+                        android:id="@+id/im_sauce"
+                        style="@style/ButtonNormal"
+                        android:src="@drawable/noun_sauce_1399944_1" />
+
+                    <TextView
+                        android:id="@+id/text_sauce"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:gravity="center"
+                        android:text="@string/sauce"
+                        android:textSize="@dimen/font_normal"
+                        android:textColor="@color/white"
+                        android:layout_marginStart="@dimen/spacing_small"
+                        android:fontFamily="@font/arial_rounded_mt_bold"/>
+
+                </LinearLayout>
+            </LinearLayout>
+
+        </LinearLayout>
+    </RelativeLayout>
+
+    <LinearLayout
+        android:id="@+id/bottom_container"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:gravity="bottom"
+        android:background="@color/white"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/container_session_actions">
+
+        <android.support.v7.widget.CardView
+            android:id="@+id/card_enter_message"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/button_height_normal"
+            android:layout_margin="@dimen/spacing_small"
+            android:layout_weight="1"
+            android:padding="@dimen/spacing_extra_tiny"
+            card_view:cardCornerRadius="12dp"
+            card_view:cardElevation="10dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintRight_toLeftOf="@+id/btn_send_msg"
+            app:layout_constraintBottom_toBottomOf="parent">
+
+            <EditText
+                android:layout_marginStart="@dimen/spacing_normal"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@android:color/transparent"
+                android:hint="@string/title_how_can_we_assist_you"/>
+
+        </android.support.v7.widget.CardView>
+
+        <ImageView
+            android:id="@+id/btn_send_msg"
+            style="@style/ButtonNormal"
+            android:src="@drawable/noun_send_1256682"
+            android:layout_marginBottom="@dimen/spacing_small"
+            android:layout_marginRight="@dimen/spacing_extra_small"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintLeft_toRightOf="@+id/card_enter_message"
+            app:layout_constraintBottom_toBottomOf="parent"/>
+
+    </LinearLayout>
+
+</android.support.constraint.ConstraintLayout>

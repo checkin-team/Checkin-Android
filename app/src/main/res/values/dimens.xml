@@ -8,6 +8,7 @@
     <dimen name="font_small">12sp</dimen>
     <dimen name="font_extra_small">10sp</dimen>
     <dimen name="font_tiny">8sp</dimen>
+    <dimen name="font_standard">14sp</dimen>
 
     <!-- typical spacing between two views -->
     <dimen name="spacing_gigantic">60dp</dimen>
@@ -49,6 +50,7 @@
     <!-- typical sizes of views -->
     <dimen name="button_height_tall">60dp</dimen>
     <dimen name="button_height_normal">40dp</dimen>
+    <dimen name="button_height_medium">50dp</dimen>
     <dimen name="button_height_short">32dp</dimen>
 
     <dimen name="button_oval_large">120dp</dimen>

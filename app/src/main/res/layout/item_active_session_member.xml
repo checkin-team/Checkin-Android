@@ -2,17 +2,16 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="150dp"
-    android:gravity="center"
+    android:layout_width="@dimen/width_card_wide"
     android:orientation="vertical"
-    android:layout_height="match_parent">
+    android:layout_marginTop="@dimen/spacing_large"
+    android:layout_height="@dimen/height_card_wide">
 
     <de.hdodenhof.circleimageview.CircleImageView
         android:id="@+id/im_user"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/spacing_extra_large"
+        style="@style/LogoImageStyle"
         android:layout_above="@+id/tv_user"
+        android:layout_centerHorizontal="true"
         android:src="@drawable/flier" />
 
 
@@ -22,7 +21,6 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/spacing_small"
         android:textColor="@color/brownish_grey"
-        android:layout_marginBottom="@dimen/spacing_large"
         android:layout_centerHorizontal="true"
         android:layout_alignParentBottom="true"
         android:textSize="@dimen/font_normal"

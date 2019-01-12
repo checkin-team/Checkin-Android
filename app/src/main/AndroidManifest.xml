@@ -150,6 +150,11 @@
             android:name=".Shop.ShopPrivateProfile.LogoCoverActivity"
             android:label="Image"
             android:theme="@style/AppThemeWhiteActionBar" />
+        <activity
+            android:name=".Session.ActiveSession.ActiveSessionChat.ActiveSessionChat"
+            android:windowSoftInputMode="adjustNothing" />
+        <activity android:name=".Session.ActiveSession.ActiveSessionViewOrdersActivity"
+            android:windowSoftInputMode="adjustNothing" />
 
         <service
             android:name=".Auth.AuthenticatorService"

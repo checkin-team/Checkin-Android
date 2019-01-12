@@ -11,7 +11,7 @@ import com.checkin.app.checkin.Data.BaseViewModel;
 import com.checkin.app.checkin.Data.Converters;
 import com.checkin.app.checkin.Data.Resource;
 import com.checkin.app.checkin.Menu.Model.OrderedItemModel;
-import com.fasterxml.jackson.databind.node.ArrayNode;
+import com.checkin.app.checkin.Session.SessionViewOrdersModel;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 
 import java.util.List;
@@ -24,6 +24,7 @@ public class ActiveSessionViewModel extends BaseViewModel {
     private final ActiveSessionRepository mRepository;
 
     private MediatorLiveData<Resource<ActiveSessionModel>> mSessionData = new MediatorLiveData<>();
+    private MediatorLiveData<Resource<List<SessionViewOrdersModel>>> mOrdersData = new MediatorLiveData<>();
 
     private String mShopPk;
 
@@ -35,11 +36,17 @@ public class ActiveSessionViewModel extends BaseViewModel {
     @Override
     public void updateResults() {
         getActiveSessionDetail();
+        getSessionOrdersData();
     }
 
     public LiveData<Resource<ActiveSessionModel>> getActiveSessionDetail() {
         mSessionData.addSource(mRepository.getActiveSessionDetail(), mSessionData::setValue);
         return mSessionData;
+    }
+
+    public LiveData<Resource<List<SessionViewOrdersModel>>> getSessionOrdersData() {
+        mOrdersData.addSource(mRepository.getSessionOrdersDetails(),mOrdersData::setValue);
+        return mOrdersData;
     }
 
     public LiveData<List<OrderedItemModel>> getOrderedItems() {
@@ -52,23 +59,27 @@ public class ActiveSessionViewModel extends BaseViewModel {
         });
     }
 
+
     public void cancelOrders(String pk) { }
 
     public void checkoutSession() {
         Log.e("Session", "Checked out");
     }
 
-    /*public void addMembers(List<Long> ids) {
-        ArrayNode value = Converters.objectMapper.valueToTree(ids);
-        ObjectNode data = Converters.objectMapper.createObjectNode();
-        data.putArray("users").addAll(value);
-        mData.addSource(mRepository.postAddMembers(data), mData::setValue);
-    }*/
-
     public void addMembers(String ids) {
         ObjectNode data = Converters.objectMapper.createObjectNode();
         data.put("user_id",ids);
         mData.addSource(mRepository.postAddMembers(data), mData::setValue);
+    }
+
+    public void sendSelfPresence(boolean is_public) {
+        ObjectNode data = Converters.objectMapper.createObjectNode();
+        data.put("is_public",is_public);
+        mData.addSource(mRepository.putSelfPresence(data), mData::setValue);
+    }
+
+    public void deleteSessionOrder(String order_id) {
+        mData.addSource(mRepository.removeSessionOrder(order_id), objectNodeResource -> mData.setValue(objectNodeResource));
     }
 
     public void setShopPk(String shopPk) {

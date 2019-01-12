@@ -6,7 +6,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
-import com.bumptech.glide.Glide;
 import com.checkin.app.checkin.R;
 import com.checkin.app.checkin.Session.SessionCustomerModel;
 import com.checkin.app.checkin.Utility.HeaderFooterRecyclerViewAdapter;
@@ -69,7 +68,7 @@ public class ActiveSessionMemberAdapter extends HeaderFooterRecyclerViewAdapter 
 
     @Override
     public int getBasicItemType(int position) {
-        return R.layout.item_session_member;
+        return R.layout.item_active_session_member;
     }
 
     public void setUsers(List<SessionCustomerModel> users) {

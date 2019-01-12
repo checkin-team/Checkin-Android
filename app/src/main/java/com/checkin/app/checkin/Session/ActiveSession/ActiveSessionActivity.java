@@ -1,5 +1,6 @@
 package com.checkin.app.checkin.Session.ActiveSession;
 
+import android.app.ActivityOptions;
 import android.arch.lifecycle.ViewModelProviders;
 import android.content.BroadcastReceiver;
 import android.content.Context;
@@ -14,14 +15,16 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
+import android.view.View;
+import android.widget.LinearLayout;
 import android.widget.Switch;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.bumptech.glide.Glide;
 import com.checkin.app.checkin.Menu.SessionMenuActivity;
 import com.checkin.app.checkin.R;
 import com.checkin.app.checkin.Search.SearchActivity;
+import com.checkin.app.checkin.Session.ActiveSession.ActiveSessionChat.ActiveSessionChat;
 import com.checkin.app.checkin.Utility.Constants;
 import com.checkin.app.checkin.Utility.Util;
 
@@ -46,6 +49,8 @@ public class ActiveSessionActivity extends AppCompatActivity implements ActiveSe
     @BindView(R.id.tv_waiter_name) TextView tv_waiter_name;
     @BindView(R.id.im_waiter) CircleImageView im_waiter;
     @BindView(R.id.switch_session_presence) Switch switchSessionPresence;
+    @BindView(R.id.ll_refill_glass)
+    LinearLayout ll_refill_glass;
 
     private Receiver mHandler;
 
@@ -84,14 +89,18 @@ public class ActiveSessionActivity extends AppCompatActivity implements ActiveSe
             }
         });
         switchSessionPresence.setOnCheckedChangeListener((buttonView, isChecked) -> {
-            if (isChecked) {
-
-            } else {
-
-            }
+            mViewModel.sendSelfPresence(isChecked);
         });
         mViewModel.setShopPk(shopPk);
 
+        ll_refill_glass.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent myIntent = new Intent(ActiveSessionActivity.this, ActiveSessionChat.class);
+                ActivityOptions options = ActivityOptions.makeCustomAnimation(ActiveSessionActivity.this, R.anim.slide_up, R.anim.slide_down);
+                startActivity(myIntent, options.toBundle());
+            }
+        });
 
         mHandler = new Receiver(mViewModel);
         LocalBroadcastManager.getInstance(this)
@@ -101,6 +110,11 @@ public class ActiveSessionActivity extends AppCompatActivity implements ActiveSe
     @OnClick(R.id.btn_active_session_menu)
     public void onListMenu() {
         SessionMenuActivity.withSession(this, "", mViewModel.getShopPk());
+    }
+
+    @OnClick(R.id.btn_active_session_orders)
+    public void onViewOrders() {
+        startActivity(new Intent(this, ActiveSessionViewOrdersActivity.class));
     }
 
     @OnClick(R.id.btn_active_session_checkout)

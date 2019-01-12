@@ -8,6 +8,7 @@ import com.checkin.app.checkin.Notifications.NotificationModel;
 import com.checkin.app.checkin.RestaurantActivity.Waiter.EventModel;
 import com.checkin.app.checkin.Search.SearchResultModel;
 import com.checkin.app.checkin.Session.ActiveSession.ActiveSessionModel;
+import com.checkin.app.checkin.Session.SessionViewOrdersModel;
 import com.checkin.app.checkin.Shop.RecentCheckin.Model.RecentCheckinModel;
 import com.checkin.app.checkin.Shop.RestaurantModel;
 import com.checkin.app.checkin.Shop.ShopJoin.ShopJoinModel;
@@ -164,7 +165,11 @@ public interface WebApiService {
     Call<ArrayNode> postSessionOrders(@Body List<OrderedItemModel> orderedItemModels);
 
     @GET("sessions/active/orders/")
-    Call<List<OrderedItemModel>> getSessionOrders();
+    Call<List<SessionViewOrdersModel>> getSessionOrders();
+
+    @DELETE("sessions/active/orders/{order_id}/")
+    Call<ObjectNode> deleteSessionOrder(@Path("order_id") String order_id);
+
 
     // endregion
 
