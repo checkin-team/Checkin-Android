@@ -140,5 +140,9 @@
     <string name="napkin">Napkin</string>
     <string name="salt">Salt</string>
     <string name="sauce">Sauce</string>
+    <string name="status_order_accepted">Order Accepted</string>
+    <string name="status_order_cancelled">Order Cancelled</string>
+    <string name="status_order_in_progress">In Progress</string>
+    <string name="status_order_delivered">Delivered</string>
 
 </resources>

@@ -45,7 +45,9 @@
                     android:fontFamily="@font/arial_rounded_mt_bold"
                     android:text="Pizza"
                     android:textColor="@color/brownish_grey"
-                    android:textSize="@dimen/font_normal" />
+                    android:textSize="@dimen/font_normal"
+                    android:layout_alignParentStart="true"
+                    android:layout_toStartOf="@+id/tv_quantity"/>
 
                 <TextView
                     android:id="@+id/tv_quantity"
@@ -169,14 +171,18 @@
             </LinearLayout>
         </LinearLayout>
 
-        <ImageView
-            android:id="@+id/im_order_status"
-            android:layout_width="50dp"
+        <TextView
+            android:id="@+id/tv_order_status"
+            android:layout_width="wrap_content"
             android:layout_height="50dp"
             android:layout_below="@+id/food_details_container"
-            android:layout_centerHorizontal="true"
-            android:padding="@dimen/spacing_small"
-            android:src="@drawable/noun_cooking_76171" />
+            android:layout_centerInParent="true"
+            android:gravity="center"
+            android:padding="@dimen/spacing_extra_small"
+            android:drawableTop="@drawable/noun_cooking_76171"
+            android:text="In Progress"
+            android:textSize="@dimen/font_small"
+            android:fontFamily="@font/arial_rounded_mt_bold"/>
 
         <ImageView
             android:id="@+id/im_cancel_order"

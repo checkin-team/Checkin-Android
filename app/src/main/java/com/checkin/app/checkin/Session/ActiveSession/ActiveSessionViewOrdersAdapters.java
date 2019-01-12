@@ -1,10 +1,8 @@
 package com.checkin.app.checkin.Session.ActiveSession;
 
 import android.content.Context;
-import android.os.CountDownTimer;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -13,7 +11,6 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.checkin.app.checkin.R;
-import com.checkin.app.checkin.Session.SessionOrdersCustomizationModel;
 import com.checkin.app.checkin.Session.SessionViewOrdersModel;
 import com.checkin.app.checkin.Utility.Util;
 
@@ -76,8 +73,8 @@ public class ActiveSessionViewOrdersAdapters extends RecyclerView.Adapter<Active
         TextView tv_remarks;
         @BindView(R.id.im_cancel_order)
         ImageView im_cancel_order;
-        @BindView(R.id.im_order_status)
-        ImageView im_order_status;
+        @BindView(R.id.tv_order_status)
+        TextView tv_order_status;
         @BindView(R.id.add_on_container)
         LinearLayout add_on_container;
         @BindView(R.id.ll_toppings)
@@ -117,12 +114,26 @@ public class ActiveSessionViewOrdersAdapters extends RecyclerView.Adapter<Active
                 tv_remarks.setText(order.getRemarks());
             }
 
-            if(order.getStatus() == SessionViewOrdersModel.SESSIONEVENT.INPROGRESS) im_order_status.setImageDrawable(mContext.getResources().getDrawable(R.drawable.noun_cooking_76171));
+            if(order.getStatus() == SessionViewOrdersModel.SESSIONEVENT.OPEN){
+                tv_order_status.setCompoundDrawablesWithIntrinsicBounds(0,0,0,0);
+                tv_order_status.setText(mContext.getResources().getString(R.string.status_order_accepted));
+                tv_order_status.setTextColor(mContext.getResources().getColor(R.color.apple_green));
+            }
             else if(order.getStatus() == SessionViewOrdersModel.SESSIONEVENT.CANCELLED){
-                im_order_status.setImageDrawable(mContext.getResources().getDrawable(R.drawable.ic_cancel));
+                tv_order_status.setCompoundDrawablesWithIntrinsicBounds(0,0,0,0);
+                tv_order_status.setText(mContext.getResources().getString(R.string.status_order_cancelled));
+                tv_order_status.setTextColor(mContext.getResources().getColor(R.color.primary_red));
                 if(im_cancel_order.getVisibility() == View.VISIBLE) im_cancel_order.setVisibility(View.GONE);
             }
-            else if(order.getStatus() == SessionViewOrdersModel.SESSIONEVENT.OPEN) im_order_status.setImageDrawable(mContext.getResources().getDrawable(R.drawable.noun_cooking_76171));
+            else if(order.getStatus() == SessionViewOrdersModel.SESSIONEVENT.INPROGRESS){
+                tv_order_status.setCompoundDrawablesWithIntrinsicBounds(0,R.drawable.noun_cooking_76171,0,0);
+                tv_order_status.setText(mContext.getResources().getString(R.string.status_order_in_progress));
+                tv_order_status.setTextColor(mContext.getResources().getColor(R.color.blue));
+            }else if(order.getStatus() == SessionViewOrdersModel.SESSIONEVENT.DONE){
+                tv_order_status.setCompoundDrawablesWithIntrinsicBounds(0,0,0,0);
+                tv_order_status.setText(mContext.getResources().getString(R.string.status_order_delivered));
+                tv_order_status.setTextColor(mContext.getResources().getColor(R.color.apple_green));
+            }
 
             ll_crust.removeAllViews();
             ll_toppings.removeAllViews();
