@@ -119,6 +119,7 @@
             tools:text="5" />
 
         <include
+            android:id="@+id/shop_review_images_thumbnail"
             layout="@layout/incl_image_thumbnails"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"

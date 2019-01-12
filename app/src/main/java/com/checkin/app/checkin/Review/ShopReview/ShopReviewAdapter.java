@@ -1,5 +1,7 @@
 package com.checkin.app.checkin.Review.ShopReview;
 
+import android.content.Context;
+import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -23,6 +25,9 @@ import butterknife.OnClick;
 public class ShopReviewAdapter extends RecyclerView.Adapter<ShopReviewAdapter.ViewHolder> {
     private List<ShopReviewModel> mData;
     private ReviewInteraction mListener;
+    private ShopReviewViewModel mViewModel;
+    String shopPk;
+    Context context;
 
     public ShopReviewAdapter(ReviewInteraction listener) {
         mListener = listener;
@@ -112,6 +117,14 @@ public class ShopReviewAdapter extends RecyclerView.Adapter<ShopReviewAdapter.Vi
         public void onUserClick() {
             mListener.onUserClick(mReview.getUserInfo());
         }
+
+        @OnClick(R.id.shop_review_images_thumbnail)
+        public void onThumbnailClick(){
+            Intent intent = new Intent(context, ShopReviewImagesActivity.class);
+           // intent.putExtra(ShopReviewImagesActivity.KEY_SHOP_PK, mViewModel.fetchShopReviews(shopPk));
+            context.startActivity(intent);
+        }
+
     }
 
     public interface ReviewInteraction {
