@@ -98,7 +98,6 @@
             <ImageView
                 android:id="@+id/im_call_waiter"
                 style="@style/ButtonNormal"
-                android:background="@color/brownish_grey"
                 android:src="@drawable/noun_waiter_1793851_1" />
 
             <TextView
@@ -126,7 +125,8 @@
             <ImageView
                 android:id="@+id/im_table_cleaning"
                 style="@style/ButtonNormal"
-                android:src="@drawable/noun_table_557866" />
+                android:src="@drawable/noun_table_557866"
+                android:tint="@color/white"/>
 
             <TextView
                 android:id="@+id/text_table_cleaning"
@@ -153,7 +153,8 @@
             <ImageView
                 android:id="@+id/im_refill_glass"
                 style="@style/ButtonNormal"
-                android:src="@drawable/noun_glass_of_water_274838" />
+                android:src="@drawable/noun_glass_of_water_274838"
+                android:tint="@color/white"/>
 
             <TextView
                 android:id="@+id/text_refill_glass"

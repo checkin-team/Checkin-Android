@@ -278,7 +278,8 @@
                 android:id="@+id/im_call_waiter"
                 android:layout_width="@dimen/size_normal_button"
                 android:layout_height="@dimen/button_height_medium"
-                android:src="@drawable/noun_waiter_1793851_grey" />
+                android:src="@drawable/noun_waiter_1793851_1"
+                android:tint="@color/brownish_grey"/>
 
             <TextView
                 android:id="@+id/text_call_waiter"
@@ -306,7 +307,7 @@
                 android:id="@+id/im_table_cleaning"
                 android:layout_width="@dimen/size_normal_button"
                 android:layout_height="@dimen/button_height_medium"
-                android:src="@drawable/ic_table_cleaning" />
+                android:src="@drawable/noun_table_557866" />
 
             <TextView
                 android:id="@+id/text_table_cleaning"
@@ -334,7 +335,7 @@
                 android:id="@+id/im_refill_glass"
                 android:layout_width="@dimen/size_normal_button"
                 android:layout_height="@dimen/button_height_medium"
-                android:src="@drawable/noun_glass_of_water_grey" />
+                android:src="@drawable/noun_glass_of_water_274838" />
 
             <TextView
                 android:id="@+id/text_refill_glass"
