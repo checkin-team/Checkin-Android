@@ -22,12 +22,12 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.Unbinder;
 
-public abstract class BaseResultFragment extends BaseSearchFragment implements ItemClickSupport.OnItemClickListener, ItemClickSupport.OnItemLongClickListener {
+public abstract class BaseResultFragment <S extends SearchResultModel> extends BaseSearchFragment implements ItemClickSupport.OnItemClickListener, ItemClickSupport.OnItemLongClickListener {
     private Unbinder unbinder;
 
     @BindView(R.id.rv_results) RecyclerView rvResults;
 
-    protected SearchResultAdapter mAdapter;
+    protected SearchResultAdapter<S> mAdapter;
     protected SearchViewModel mViewModel;
     protected SearchResultInteraction mListener;
 
@@ -41,7 +41,7 @@ public abstract class BaseResultFragment extends BaseSearchFragment implements I
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
-        mAdapter = new SearchResultAdapter();
+        mAdapter = new SearchResultAdapter<>(mListener);
         rvResults.setLayoutManager(new LinearLayoutManager(requireContext(), LinearLayoutManager.VERTICAL, false));
         rvResults.setAdapter(mAdapter);
 
@@ -64,11 +64,11 @@ public abstract class BaseResultFragment extends BaseSearchFragment implements I
         mAdapter.setData(null);
     }
 
-    protected void updateResults(List<SearchResultModel> results) {
+    protected void updateResults(List<S> results) {
         mAdapter.setData(results);
     }
 
-    protected void onResultChanged(Resource<List<SearchResultModel>> listResource) {
+    protected void onResultChanged(Resource<List<S>> listResource) {
         if (listResource == null)
             return;
         if (listResource.status == Resource.Status.SUCCESS && listResource.data != null) {

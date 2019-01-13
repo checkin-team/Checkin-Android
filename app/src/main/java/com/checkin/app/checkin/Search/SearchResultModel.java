@@ -6,36 +6,17 @@ import com.fasterxml.jackson.annotation.JsonProperty;
  * Created by Jogi Miglani on 26-10-2018.
  */
 
-public class SearchResultModel  {
+public class SearchResultModel {
+    public static final int TYPE_PEOPLE = 1, TYPE_RESTAURANT = 2;
 
     @JsonProperty("pk")
-    private String pk;
+    private Long pk;
 
     @JsonProperty("display_name")
     private String name;
 
     @JsonProperty("display_pic")
     private String imageUrl;
-
-    private RESULT_TYPE type;
-
-
-    public enum RESULT_TYPE {
-        RESTAURANT(103), PEOPLE(101);
-
-        final int type;
-        RESULT_TYPE(int type) {
-            this.type = type;
-        }
-
-        public static RESULT_TYPE getByType(int type) {
-            for (RESULT_TYPE resultType: RESULT_TYPE.values()) {
-                if (resultType.type == type)
-                    return resultType;
-            }
-            return PEOPLE;
-        }
-    }
 
     public String getImageUrl() {
         return imageUrl;
@@ -45,11 +26,7 @@ public class SearchResultModel  {
         return name;
     }
 
-    public RESULT_TYPE getType() {
-        return type;
-    }
-
-    public String getPk() {
+    public Long getPk() {
         return pk;
     }
 
@@ -61,22 +38,19 @@ public class SearchResultModel  {
         this.name = name;
     }
 
-    @JsonProperty("result_type")
-    public void setType(int type) {
-        this.type = RESULT_TYPE.getByType(type);
-    }
-
-    public void setPk(String pk) {
-        this.pk = pk;
-    }
-
-    public boolean isTypePeople() {
-        return this.type == RESULT_TYPE.PEOPLE;
+    public int getType() {
+        if (this instanceof SearchResultPeopleModel)
+            return TYPE_PEOPLE;
+        else if (this instanceof SearchResultShopModel)
+            return TYPE_RESTAURANT;
+        return 0;
     }
 
     public boolean isTypeRestaurant() {
-        return this.type == RESULT_TYPE.RESTAURANT;
+        return this instanceof SearchResultShopModel;
     }
 
-
+    public boolean isTypePeople() {
+        return this instanceof SearchResultPeopleModel;
+    }
 }

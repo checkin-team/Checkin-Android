@@ -12,9 +12,12 @@ import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 
+import com.checkin.app.checkin.Data.Resource;
 import com.checkin.app.checkin.R;
 import com.checkin.app.checkin.Shop.ShopPublicProfile.ShopActivity;
 import com.checkin.app.checkin.User.NonPersonalProfile.UserProfileActivity;
+import com.checkin.app.checkin.User.NonPersonalProfile.UserViewModel;
+import com.checkin.app.checkin.Utility.Util;
 import com.miguelcatalan.materialsearchview.MaterialSearchView;
 
 import java.util.ArrayList;
@@ -53,6 +56,7 @@ public class SearchActivity extends AppCompatActivity implements SearchResultInt
 
     private ResultTypePagerAdapter mResultTypeAdapter;
     private SearchViewModel mViewModel;
+    private UserViewModel mUserViewModel;
     private SuggestionsFragment mSuggestionsFragment;
 
     private int mSearchMode = MODE_SEARCH;
@@ -71,9 +75,28 @@ public class SearchActivity extends AppCompatActivity implements SearchResultInt
         mSearchFilter = getIntent().getIntExtra(KEY_SEARCH_FILTER, FILTER_ALL);
 
         mViewModel = ViewModelProviders.of(this).get(SearchViewModel.class);
+        if (mSearchType == TYPE_PEOPLE)
+            mViewModel.setup(true, false);
+        else if (mSearchType == TYPE_RESTAURANT)
+            mViewModel.setup(false, true);
+        else
+            mViewModel.setup(true, true);
 
         setupSearch();
         setupUi();
+        setupFollowSupport();
+    }
+
+    private void setupFollowSupport() {
+        mUserViewModel = ViewModelProviders.of(this).get(UserViewModel.class);
+        mUserViewModel.getObservableData().observe(this, resource -> {
+            if (resource == null)
+                return;
+            if (resource.status == Resource.Status.SUCCESS)
+                Util.toast(this, "Success!");
+            else if (resource.status != Resource.Status.LOADING)
+                Util.toast(this, resource.message);
+        });
     }
 
     private void setupUi() {
@@ -229,7 +252,7 @@ public class SearchActivity extends AppCompatActivity implements SearchResultInt
                     .putExtra(KEY_RESULT_NAME, searchItem.getName())
                     .putExtra(KEY_RESULT_IMAGE, searchItem.getImageUrl())
                     .putExtra(KEY_RESULT_PK, searchItem.getPk())
-                    .putExtra(KEY_RESULT_TYPE, searchItem.getType().type);
+                    .putExtra(KEY_RESULT_TYPE, searchItem.getType());
             setResult(RESULT_OK, data);
             finish();
         } else {
@@ -246,6 +269,16 @@ public class SearchActivity extends AppCompatActivity implements SearchResultInt
         return false;
     }
 
+    @Override
+    public void onClickFollowResult(SearchResultModel searchItem) {
+        if (searchItem.isTypePeople()) {
+            mUserViewModel.setUserPk(searchItem.getPk());
+            mUserViewModel.addFriend("");
+        } else {
+            Util.toast(this, "Unsupported operation.");
+        }
+    }
+
     private void showInfo(SearchResultModel searchItem) {
         if (searchItem.isTypeRestaurant())
             showRestaurantInfo(searchItem.getPk());
@@ -253,15 +286,15 @@ public class SearchActivity extends AppCompatActivity implements SearchResultInt
             showUserInfo(searchItem.getPk());
     }
 
-    private void showUserInfo(String pk) {
+    private void showUserInfo(Long pk) {
         Intent intent = new Intent(this, UserProfileActivity.class);
-        intent.putExtra(UserProfileActivity.KEY_PROFILE_USER_ID, Long.valueOf(pk));
+        intent.putExtra(UserProfileActivity.KEY_PROFILE_USER_ID, pk);
         startActivity(intent);
     }
 
-    private void showRestaurantInfo(String pk) {
+    private void showRestaurantInfo(Long pk) {
         Intent intent = new Intent(this, ShopActivity.class);
-        intent.putExtra(ShopActivity.KEY_SHOP_PK, pk);
+        intent.putExtra(ShopActivity.KEY_SHOP_PK, String.valueOf(pk));
         startActivity(intent);
     }
 

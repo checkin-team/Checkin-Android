@@ -6,7 +6,7 @@ import com.checkin.app.checkin.R;
  * Created by Jogi Miglani on 26-10-2018.
  */
 
-public class PeopleResultFragment extends BaseResultFragment {
+public class PeopleResultFragment extends BaseResultFragment<SearchResultPeopleModel> {
     public static PeopleResultFragment newInstance(SearchResultInteraction listener) {
         PeopleResultFragment fragment = new PeopleResultFragment();
         fragment.mListener = listener;

@@ -149,6 +149,11 @@
         <item name="android:textSize">@dimen/font_normal</item>
     </style>
 
+    <style name="PinkishGreySmallTextStyle" parent="GreyTextStyle">
+        <item name="android:textColor">@color/pinkish_grey</item>
+        <item name="android:textSize">@dimen/font_extra_small</item>
+    </style>
+
     <style name="GreyLinkStyle" parent="TextAppearance.AppCompat">
         <item name="android:textColor">@color/brownish_grey</item>
         <item name="android:textSize">@dimen/font_small</item>
