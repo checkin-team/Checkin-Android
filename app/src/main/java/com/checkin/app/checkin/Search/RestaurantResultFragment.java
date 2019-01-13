@@ -6,7 +6,7 @@ import com.checkin.app.checkin.R;
  * Created by Jogi Miglani on 26-10-2018.
  */
 
-public class RestaurantResultFragment extends BaseResultFragment {
+public class RestaurantResultFragment extends BaseResultFragment<SearchResultShopModel> {
     public static RestaurantResultFragment newInstance(SearchResultInteraction listener) {
         RestaurantResultFragment fragment = new RestaurantResultFragment();
         fragment.mListener = listener;

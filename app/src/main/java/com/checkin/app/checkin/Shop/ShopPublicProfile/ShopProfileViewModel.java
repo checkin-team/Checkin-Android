@@ -20,13 +20,13 @@ import com.checkin.app.checkin.Shop.ShopRepository;
  * Created by Bhavik Patel on 19/08/2018.
  */
 
-class ShopProfileViewModel extends BaseViewModel {
+public class ShopProfileViewModel extends BaseViewModel {
     private final ShopRepository mRepository;
 
     private String mShopPk;
     private MediatorLiveData<Resource<RestaurantModel>> mShopData = new MediatorLiveData<>();
 
-    ShopProfileViewModel(@NonNull Application application) {
+    public ShopProfileViewModel(@NonNull Application application) {
         super(application);
         mRepository = ShopRepository.getInstance(application);
     }

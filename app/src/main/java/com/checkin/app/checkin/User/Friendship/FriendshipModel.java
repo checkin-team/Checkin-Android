@@ -26,6 +26,10 @@ public class FriendshipModel {
             }
             return NONE;
         }
+
+        public String getTag() {
+            return this.tag;
+        }
     }
 
     public FriendshipModel() {} //default constructor

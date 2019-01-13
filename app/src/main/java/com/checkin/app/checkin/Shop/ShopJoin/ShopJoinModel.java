@@ -6,6 +6,8 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 
 @JsonInclude(JsonInclude.Include.NON_NULL)
 public class ShopJoinModel {
+    // TODO: Send city, pin-code, etc with location.
+
     @JsonProperty("name") private String name;
     @JsonProperty("gstin") private String gstin;
     @JsonProperty("location") private LocationModel location;
