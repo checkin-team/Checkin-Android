@@ -113,7 +113,15 @@ public class SessionViewOrdersModel {
             this.tag = tag;
         }//constructor of enum
 
-        public static SESSIONEVENT getByTag(int tag) {
+
+        public static SESSIONEVENT getByTag(int id) {
+            for (SESSIONEVENT type: SESSIONEVENT.values()) {
+                if (type.tag == id)
+                    return type;
+            }
+            return NONE;
+        }
+        /*public static SESSIONEVENT getByTag(int tag) {
             switch (tag) {
                 case 0:
                     return NONE;
@@ -127,12 +135,7 @@ public class SessionViewOrdersModel {
                     return DONE;
             }
             return NONE;
-        }
+        }*/
     }
-
-//    @JsonProperty("session_event")
-//    public void setStatus(int status) {
-//        this.sessionevent = SessionEventModel.SESSIONEVENT.getByTag(status);
-//    }
 
 }

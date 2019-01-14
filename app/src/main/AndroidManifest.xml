@@ -152,7 +152,7 @@
             android:theme="@style/AppThemeWhiteActionBar" />
         <activity
             android:name=".Session.ActiveSession.ActiveSessionChat.ActiveSessionChat"
-            android:windowSoftInputMode="adjustNothing" />
+            android:windowSoftInputMode="adjustPan|adjustResize" />
         <activity android:name=".Session.ActiveSession.ActiveSessionViewOrdersActivity"
             android:windowSoftInputMode="adjustNothing" />
 

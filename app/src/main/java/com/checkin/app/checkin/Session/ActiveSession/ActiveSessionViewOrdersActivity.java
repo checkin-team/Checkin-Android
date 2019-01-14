@@ -36,10 +36,6 @@ public class ActiveSessionViewOrdersActivity extends AppCompatActivity implement
         rvOrders.setAdapter(mOrdersAdapter);
 
         mViewModel = ViewModelProviders.of(this).get(ActiveSessionViewModel.class);
-        mViewModel.getSessionOrdersData().observe(this, listResource -> {
-            if (listResource != null && listResource.status == Resource.Status.SUCCESS)
-                mOrdersAdapter.setData(listResource.data);
-        });
 
         mViewModel.getSessionOrdersData().observe(this, new Observer<Resource<List<SessionViewOrdersModel>>>() {
             @Override

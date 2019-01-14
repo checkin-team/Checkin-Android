@@ -301,4 +301,9 @@
         <item name="android:textSize">@dimen/font_tiny</item>
     </style>
 
+
+        <style name="RedHeaderBar">
+            <item name="android:background">@color/primary_red</item>
+        </style>
+
 </resources>

@@ -7,6 +7,7 @@ import com.checkin.app.checkin.Misc.GenericDetailModel;
 import com.checkin.app.checkin.Notifications.NotificationModel;
 import com.checkin.app.checkin.RestaurantActivity.Waiter.EventModel;
 import com.checkin.app.checkin.Search.SearchResultModel;
+import com.checkin.app.checkin.Session.ActiveSession.ActiveSessionChat.ActiveSessionChatModel;
 import com.checkin.app.checkin.Session.ActiveSession.ActiveSessionModel;
 import com.checkin.app.checkin.Session.SessionViewOrdersModel;
 import com.checkin.app.checkin.Shop.RecentCheckin.Model.RecentCheckinModel;
@@ -154,6 +155,12 @@ public interface WebApiService {
 
     @GET("sessions/recent/restaurants/{shop_id}/")
     Call<RecentCheckinModel> getRecentCheckins(@Path("shop_id") String shopId);
+
+    @GET("sessions/active/events/customer/")
+    Call<List<ActiveSessionChatModel>> getSessionChat();
+
+    @POST("sessions/active/message/")
+    Call<ObjectNode> postCustomerMsg(@Body ObjectNode data);
 
     // endregion
 

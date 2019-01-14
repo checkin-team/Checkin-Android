@@ -13,6 +13,7 @@ import com.checkin.app.checkin.Data.NetworkBoundResource;
 import com.checkin.app.checkin.Data.Resource;
 import com.checkin.app.checkin.Data.RetrofitLiveData;
 import com.checkin.app.checkin.Data.WebApiService;
+import com.checkin.app.checkin.Session.ActiveSession.ActiveSessionChat.ActiveSessionChatModel;
 import com.checkin.app.checkin.Session.SessionViewOrdersModel;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 
@@ -131,6 +132,42 @@ public class ActiveSessionRepository extends BaseRepository {
 
             @Override
             protected void saveCallResult(ObjectNode data) { }
+        }.getAsLiveData();
+    }
+
+    public LiveData<Resource<List<ActiveSessionChatModel>>> getSessionChatDetail() {
+        return new NetworkBoundResource<List<ActiveSessionChatModel>, List<ActiveSessionChatModel>>() {
+
+            @Override
+            protected boolean shouldUseLocalDb() {return false;}
+
+            @NonNull
+            @Override
+            protected LiveData<ApiResponse<List<ActiveSessionChatModel>>> createCall() {
+                return new RetrofitLiveData<>(mWebService.getSessionChat());
+            }
+
+            @Override
+            protected void saveCallResult(List<ActiveSessionChatModel> data) {}
+        }.getAsLiveData();
+    }
+
+    public LiveData<Resource<ObjectNode>> postMessage(ObjectNode data) {
+        return new NetworkBoundResource<ObjectNode, ObjectNode>() {
+            @Override
+            protected boolean shouldUseLocalDb() {
+                return false;
+            }
+
+            @NonNull
+            @Override
+            protected LiveData<ApiResponse<ObjectNode>> createCall() {
+                return new RetrofitLiveData<>(mWebService.postCustomerMsg(data));
+            }
+
+            @Override
+            protected void saveCallResult(ObjectNode data) {
+            }
         }.getAsLiveData();
     }
 }

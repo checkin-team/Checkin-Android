@@ -11,6 +11,7 @@ import com.checkin.app.checkin.Data.BaseViewModel;
 import com.checkin.app.checkin.Data.Converters;
 import com.checkin.app.checkin.Data.Resource;
 import com.checkin.app.checkin.Menu.Model.OrderedItemModel;
+import com.checkin.app.checkin.Session.ActiveSession.ActiveSessionChat.ActiveSessionChatModel;
 import com.checkin.app.checkin.Session.SessionViewOrdersModel;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 
@@ -25,6 +26,7 @@ public class ActiveSessionViewModel extends BaseViewModel {
 
     private MediatorLiveData<Resource<ActiveSessionModel>> mSessionData = new MediatorLiveData<>();
     private MediatorLiveData<Resource<List<SessionViewOrdersModel>>> mOrdersData = new MediatorLiveData<>();
+    private MediatorLiveData<Resource<List<ActiveSessionChatModel>>> mChatData = new MediatorLiveData<>();
 
     private String mShopPk;
 
@@ -47,6 +49,11 @@ public class ActiveSessionViewModel extends BaseViewModel {
     public LiveData<Resource<List<SessionViewOrdersModel>>> getSessionOrdersData() {
         mOrdersData.addSource(mRepository.getSessionOrdersDetails(),mOrdersData::setValue);
         return mOrdersData;
+    }
+
+    public LiveData<Resource<List<ActiveSessionChatModel>>> getSessionChat() {
+        mChatData.addSource(mRepository.getSessionChatDetail(),mChatData::setValue);
+        return mChatData;
     }
 
     public LiveData<List<OrderedItemModel>> getOrderedItems() {
@@ -76,6 +83,12 @@ public class ActiveSessionViewModel extends BaseViewModel {
         ObjectNode data = Converters.objectMapper.createObjectNode();
         data.put("is_public",is_public);
         mData.addSource(mRepository.putSelfPresence(data), mData::setValue);
+    }
+
+    public void sendMessage(String msg) {
+        ObjectNode data = Converters.objectMapper.createObjectNode();
+        data.put("message",msg);
+        mData.addSource(mRepository.postMessage(data), mData::setValue);
     }
 
     public void deleteSessionOrder(String order_id) {

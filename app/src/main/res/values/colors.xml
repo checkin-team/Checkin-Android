@@ -29,4 +29,6 @@
     <color name="greyish">#aaaaaa</color>
     <color name="apple_green">#7ed321</color>
     <color name="blue">#004aa1</color>
+    <color name="grey_shade">#d8d8d8</color>
+    <color name="dark_grey_shade">#4a4a4a</color>
 </resources>
