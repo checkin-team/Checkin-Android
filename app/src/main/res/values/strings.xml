@@ -127,4 +127,5 @@
     <string name="action_view_menu">Menu</string>
     <string name="session_presence_private">Private</string>
     <string name="session_presence_public">Public</string>
+    <string name="action_invoice">Invoice</string>
 </resources>
