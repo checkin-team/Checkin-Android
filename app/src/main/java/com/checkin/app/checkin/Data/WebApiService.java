@@ -6,15 +6,14 @@ import com.checkin.app.checkin.Menu.Model.OrderedItemModel;
 import com.checkin.app.checkin.Misc.GenericDetailModel;
 import com.checkin.app.checkin.Notifications.NotificationModel;
 import com.checkin.app.checkin.RestaurantActivity.Waiter.EventModel;
-import com.checkin.app.checkin.Search.SearchResultModel;
-import com.checkin.app.checkin.Session.ActiveSession.ActiveSessionChat.ActiveSessionChatModel;
+import com.checkin.app.checkin.Review.ShopReview.ShopReviewModel;
+import com.checkin.app.checkin.Search.SearchResultPeopleModel;
+import com.checkin.app.checkin.Search.SearchResultShopModel;
 import com.checkin.app.checkin.Session.ActiveSession.ActiveSessionModel;
-import com.checkin.app.checkin.Session.SessionViewOrdersModel;
 import com.checkin.app.checkin.Shop.RecentCheckin.Model.RecentCheckinModel;
 import com.checkin.app.checkin.Shop.RestaurantModel;
 import com.checkin.app.checkin.Shop.ShopJoin.ShopJoinModel;
 import com.checkin.app.checkin.Shop.ShopPrivateProfile.MemberModel;
-import com.checkin.app.checkin.Review.ShopReview.ShopReviewModel;
 import com.checkin.app.checkin.User.Friendship.FriendshipModel;
 import com.checkin.app.checkin.User.UserModel;
 import com.fasterxml.jackson.databind.node.ArrayNode;
@@ -147,20 +146,11 @@ public interface WebApiService {
     @POST("sessions/active/customers/")
     Call<ObjectNode> postActiveSessionCustomers(@Body ObjectNode data);
 
-    @PUT("sessions/active/customers/self/")
-    Call<ObjectNode> putActiveSessionSelfCustomer(@Body ObjectNode data);
-
     @DELETE("sessions/active/customers/{user_id}/")
     Call<ObjectNode> deleteActiveSessionCustomer(@Path("user_id") String userId);
 
     @GET("sessions/recent/restaurants/{shop_id}/")
     Call<RecentCheckinModel> getRecentCheckins(@Path("shop_id") String shopId);
-
-    @GET("sessions/active/events/customer/")
-    Call<List<ActiveSessionChatModel>> getSessionChat();
-
-    @POST("sessions/active/message/")
-    Call<ObjectNode> postCustomerMsg(@Body ObjectNode data);
 
     // endregion
 
@@ -172,11 +162,7 @@ public interface WebApiService {
     Call<ArrayNode> postSessionOrders(@Body List<OrderedItemModel> orderedItemModels);
 
     @GET("sessions/active/orders/")
-    Call<List<SessionViewOrdersModel>> getSessionOrders();
-
-    @DELETE("sessions/active/orders/{order_id}/")
-    Call<ObjectNode> deleteSessionOrder(@Path("order_id") String order_id);
-
+    Call<List<OrderedItemModel>> getSessionOrders();
 
     // endregion
 
@@ -195,8 +181,14 @@ public interface WebApiService {
     @GET("accounts/self/")
     Call<List<AccountModel>> getSelfAccounts();
 
-    @GET("search/")
-    Call<List<SearchResultModel>>getSearchResults(@Query("search") String query);
+    @GET("search/people/")
+    Call<List<SearchResultPeopleModel>> getSearchPeopleResults(
+            @Query("search") String query, @Query("friendship_status") String friendshipStatus);
+
+    @GET("search/restaurant/")
+    Call<List<SearchResultShopModel>> getSearchShopResults(
+            @Query("search") String query, @Query("has_nonveg") Boolean hasNonVeg, @Query("has_alcohol") Boolean hasAlcohol
+    );
 
     //region Waiter Events
     @GET("shops/{table_id}/orders")

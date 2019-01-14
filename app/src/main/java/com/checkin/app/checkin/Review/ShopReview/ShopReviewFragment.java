@@ -17,7 +17,7 @@ import com.checkin.app.checkin.Data.Resource;
 import com.checkin.app.checkin.Misc.BriefModel;
 import com.checkin.app.checkin.R;
 import com.checkin.app.checkin.User.NonPersonalProfile.UserProfileActivity;
-import com.checkin.app.checkin.Utility.Util;
+import com.checkin.app.checkin.Utility.Utils;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -74,9 +74,9 @@ public class ShopReviewFragment extends Fragment implements ShopReviewAdapter.Re
                 return;
 
             if (resource.status == Resource.Status.SUCCESS && resource.data != null)
-                Util.toast(requireContext(), resource.data.get("detail").asText());
+                Utils.toast(requireContext(), resource.data.get("detail").asText());
             else if (resource.status != Resource.Status.LOADING && resource.message != null)
-                Util.toast(requireContext(), resource.message);
+                Utils.toast(requireContext(), resource.message);
         });
     }
 

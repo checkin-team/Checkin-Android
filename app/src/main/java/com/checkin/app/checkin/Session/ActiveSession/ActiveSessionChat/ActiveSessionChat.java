@@ -27,7 +27,7 @@ import android.widget.Toolbar;
 import com.checkin.app.checkin.Data.Resource;
 import com.checkin.app.checkin.R;
 import com.checkin.app.checkin.Session.ActiveSession.ActiveSessionViewModel;
-import com.checkin.app.checkin.Utility.Util;
+import com.checkin.app.checkin.Utility.Utils;
 
 import java.util.List;
 
@@ -75,7 +75,7 @@ public class ActiveSessionChat extends AppCompatActivity {
                 case LOADING:
                     break;
                 default: {
-                    Util.toast(this, resource.message);
+                    Utils.toast(this, resource.message);
                 }
             }
         });

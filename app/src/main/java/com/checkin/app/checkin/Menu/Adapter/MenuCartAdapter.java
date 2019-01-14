@@ -98,10 +98,10 @@ public class MenuCartAdapter extends RecyclerView.Adapter<MenuCartAdapter.ViewHo
                 e.printStackTrace();
             }
 
-            tvItemName.setText(String.format(Locale.ENGLISH, "%s x%d", item.getItemModel().getName(), item.getQuantity()));
+            tvItemName.setText(String.format(Locale.ENGLISH, "%s", item.getItemModel().getName()));
             tvItemPrice.setText(String.format(Locale.ENGLISH, "\u20B9 %.2f", item.getCost()));
             tvItemExtra.setText(String.format(
-                    Locale.ENGLISH, "%s %s", (item.getTypeName() != null ? item.getTypeName() : ""), (item.isCustomized() ? "(Customized)" : "")));
+                    Locale.ENGLISH, "%d %s %s", item.getQuantity(), (item.getTypeName() != null ? item.getTypeName() : ""), (item.isCustomized() ? "(Customized)" : "")));
             qpItemQuantity.scrollToPosition(item.getQuantity());
             scrollPos = item.getQuantity();
         }

@@ -1,6 +1,6 @@
 package com.checkin.app.checkin.User.Friendship;
 
-import com.checkin.app.checkin.Utility.Util;
+import com.checkin.app.checkin.Utility.Utils;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 public class FriendshipModel {
@@ -26,6 +26,10 @@ public class FriendshipModel {
             }
             return NONE;
         }
+
+        public String getTag() {
+            return this.tag;
+        }
     }
 
     public FriendshipModel() {} //default constructor
@@ -39,7 +43,7 @@ public class FriendshipModel {
     }
 
     public String formatCheckins() {
-        return Util.formatCount(mCheckins);
+        return Utils.formatCount(mCheckins);
     }
 
     public Long getUserPk(){return mUserPk; }

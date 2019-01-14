@@ -21,13 +21,12 @@ import java.util.List;
 public class SearchRepository extends BaseRepository {
     private final WebApiService mWebService;
 
-
     public SearchRepository(Context context) {
         mWebService = ApiClient.getApiService(context);
     }
 
-    public LiveData<Resource<List<SearchResultModel>>> getSearchResults(String query){
-        return new NetworkBoundResource<List<SearchResultModel>, List<SearchResultModel>>(){
+    public LiveData<Resource<List<SearchResultPeopleModel>>> getSearchPeopleResults(String query, String friendshipStatus) {
+        return new NetworkBoundResource<List<SearchResultPeopleModel>, List<SearchResultPeopleModel>>() {
 
             @Override
             protected boolean shouldUseLocalDb() {
@@ -37,14 +36,38 @@ public class SearchRepository extends BaseRepository {
 
             @NonNull
             @Override
-            protected LiveData<ApiResponse<List<SearchResultModel>>> createCall() {
-                return new RetrofitLiveData<>(mWebService.getSearchResults(query));
+            protected LiveData<ApiResponse<List<SearchResultPeopleModel>>> createCall() {
+                return new RetrofitLiveData<>(mWebService.getSearchPeopleResults(query, friendshipStatus));
             }
 
             @Override
-            protected void saveCallResult(List<SearchResultModel> data) {
+            protected void saveCallResult(List<SearchResultPeopleModel> data) {
 
             }
         }.getAsLiveData();
+    }
+
+    public LiveData<Resource<List<SearchResultShopModel>>> getSearchShopResults(String query, Boolean hasNonVeg, Boolean hasAlcohol) {
+        return new NetworkBoundResource<List<SearchResultShopModel>, List<SearchResultShopModel>>() {
+            @Override
+            protected boolean shouldUseLocalDb() {
+                return false;
+            }
+
+            @NonNull
+            @Override
+            protected LiveData<ApiResponse<List<SearchResultShopModel>>> createCall() {
+                return new RetrofitLiveData<>(mWebService.getSearchShopResults(query, hasNonVeg, hasAlcohol));
+            }
+
+            @Override
+            protected void saveCallResult(List<SearchResultShopModel> data) {
+
+            }
+        }.getAsLiveData();
+    }
+
+    public LiveData<Resource<List<SearchResultShopModel>>> getSearchShopResults(String query) {
+        return getSearchShopResults(query, null, null);
     }
 }

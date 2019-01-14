@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="horizontal"
+    android:padding="@dimen/spacing_small">
+
+    <de.hdodenhof.circleimageview.CircleImageView
+        android:id="@+id/im_result_pic"
+        style="@style/LogoImageStyle"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:src="@drawable/flier" />
+
+    <TextView
+        android:id="@+id/tv_result_name"
+        style="@style/GreyTextStyle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/spacing_large"
+        app:layout_constraintBottom_toTopOf="@id/tv_result_people_extra"
+        app:layout_constraintStart_toEndOf="@id/im_result_pic"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_chainStyle="packed"
+        tools:text="Name" />
+
+    <TextView
+        android:id="@+id/tv_result_people_extra"
+        style="@style/PinkishGreySmallTextStyle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="29 Checkins | Following."
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="@id/tv_result_name"
+        app:layout_constraintTop_toBottomOf="@id/tv_result_name" />
+
+    <FrameLayout
+        android:id="@+id/container_user_actions"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintBottom_toBottomOf="@id/tv_result_name"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="@id/tv_result_name">
+
+        <FrameLayout
+            android:id="@+id/container_status_none"
+            android:layout_width="wrap_content"
+            android:layout_height="@dimen/button_height_short"
+            android:layout_gravity="center"
+            android:visibility="gone">
+
+            <Button
+                android:id="@+id/btn_result_people_follow"
+                style="@style/ButtonPositiveAction"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:text="@string/action_follow" />
+        </FrameLayout>
+
+        <FrameLayout
+            android:id="@+id/container_status_request"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/button_height_short"
+            android:layout_gravity="center"
+            android:visibility="gone">
+
+            <Button
+                android:id="@+id/btn_result_people_requested"
+                style="@style/ButtonNeutralAction"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_marginStart="@dimen/spacing_tiny"
+                android:text="@string/info_requested" />
+        </FrameLayout>
+    </FrameLayout>
+
+</android.support.constraint.ConstraintLayout>

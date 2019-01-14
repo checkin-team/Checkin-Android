@@ -5,11 +5,9 @@ import android.arch.lifecycle.ViewModelProviders;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
-import android.content.IntentFilter;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.annotation.Nullable;
-import android.support.v4.content.LocalBroadcastManager;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
@@ -26,7 +24,6 @@ import com.checkin.app.checkin.R;
 import com.checkin.app.checkin.Search.SearchActivity;
 import com.checkin.app.checkin.Session.ActiveSession.ActiveSessionChat.ActiveSessionChat;
 import com.checkin.app.checkin.Utility.Constants;
-import com.checkin.app.checkin.Utility.Util;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -102,9 +99,7 @@ public class ActiveSessionActivity extends AppCompatActivity implements ActiveSe
             }
         });
 
-        mHandler = new Receiver(mViewModel);
-        LocalBroadcastManager.getInstance(this)
-                .registerReceiver(mHandler, new IntentFilter(Util.getActivityIntentFilter(getApplicationContext(), IDENTIFIER)));
+//        mHandler = new Receiver(mViewModel);
     }
 
     @OnClick(R.id.btn_active_session_menu)

@@ -14,7 +14,7 @@ import android.widget.ImageView;
 import com.checkin.app.checkin.Data.Resource;
 import com.checkin.app.checkin.Misc.SelectCropImageActivity;
 import com.checkin.app.checkin.R;
-import com.checkin.app.checkin.Utility.Util;
+import com.checkin.app.checkin.Utility.Utils;
 
 import java.io.File;
 import java.util.Arrays;
@@ -60,9 +60,9 @@ public class LogoCoverActivity extends AppCompatActivity implements ShopCoverAda
             if (resource == null)
                 return;
             if (resource.status == Resource.Status.SUCCESS && resource.data != null) {
-                Util.toast(this, resource.data.get("detail").asText());
+                Utils.toast(this, resource.data.get("detail").asText());
             } else if (resource.status != Resource.Status.LOADING) {
-                Util.toast(this, resource.message);
+                Utils.toast(this, resource.message);
             }
         });
     }
@@ -78,7 +78,7 @@ public class LogoCoverActivity extends AppCompatActivity implements ShopCoverAda
         ShopCoverAdapter adapter = new ShopCoverAdapter(coverUrls, this);
         rvCovers.setAdapter(adapter);
         rvCovers.setLayoutManager(new GridLayoutManager(this, 2, LinearLayoutManager.VERTICAL, false));
-        Util.loadImageOrDefault(imLogo, logoUrl, R.drawable.card_image_add);
+        Utils.loadImageOrDefault(imLogo, logoUrl, R.drawable.card_image_add);
     }
 
     @Override

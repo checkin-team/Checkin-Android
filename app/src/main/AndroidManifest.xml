@@ -168,13 +168,14 @@
                 android:name="android.accounts.AccountAuthenticator"
                 android:resource="@xml/authenticator" />
         </service>
-        <service android:name=".Data.MessagingService">
+        <service android:name=".Data.Message.AppMessagingService">
             <intent-filter>
                 <action android:name="com.google.firebase.MESSAGING_EVENT" />
             </intent-filter>
         </service>
         <service android:name=".Maps.FetchAddressIntentService" />
         <service android:name=".Auth.DeviceTokenService" />
+        <receiver android:name=".User.Friendship.FriendshipBroadcastReceiver" />
 
         <meta-data
             android:name="com.facebook.sdk.ApplicationId"

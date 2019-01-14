@@ -28,7 +28,7 @@ import retrofit2.converter.jackson.JacksonConverterFactory;
 
 import static com.checkin.app.checkin.Utility.Constants.API_HOST;
 import static com.checkin.app.checkin.Utility.Constants.API_PROTOCOL;
-import static com.checkin.app.checkin.Utility.Util.isNetworkConnected;
+import static com.checkin.app.checkin.Utility.Utils.isNetworkConnected;
 
 @Module
 public class ApiClient {

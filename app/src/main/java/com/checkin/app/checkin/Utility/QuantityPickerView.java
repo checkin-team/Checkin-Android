@@ -42,7 +42,7 @@ public class QuantityPickerView extends DiscreteScrollView {
 
     private void init() {
         setAdapter(new TextBaseAdapter(
-                Util.range(0, 30),
+                Utils.range(0, 30),
                 getResources().getColor(R.color.pinkish_grey),
                 getResources().getColor(R.color.brownish_grey))
         );

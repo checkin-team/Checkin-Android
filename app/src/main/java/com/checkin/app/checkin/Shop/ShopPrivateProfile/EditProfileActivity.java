@@ -17,7 +17,7 @@ import android.widget.Toast;
 import com.checkin.app.checkin.Data.Resource;
 import com.checkin.app.checkin.R;
 import com.checkin.app.checkin.Shop.RestaurantModel;
-import com.checkin.app.checkin.Utility.Util;
+import com.checkin.app.checkin.Utility.Utils;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -58,10 +58,10 @@ public class EditProfileActivity extends AppCompatActivity implements EditAspect
                 return;
             if (resource.status == Resource.Status.SUCCESS && resource.data != null) {
                 String msg = resource.data.get("detail").asText("Success!");
-                Util.toast(this, msg);
+                Utils.toast(this, msg);
             } else if (resource.status == Resource.Status.ERROR_INVALID_REQUEST) {
                 mViewModel.showError(resource.getErrorBody());
-                Util.toast(this, "Error in updating data.");
+                Utils.toast(this, "Error in updating data.");
             }
         });
     }
