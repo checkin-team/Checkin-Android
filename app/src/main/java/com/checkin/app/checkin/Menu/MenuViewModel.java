@@ -35,8 +35,9 @@ public class MenuViewModel extends BaseViewModel {
 
     private MutableLiveData<List<OrderedItemModel>> mOrderedItems = new MutableLiveData<>();
     private MutableLiveData<OrderedItemModel> mCurrentItem = new MutableLiveData<>();
+    private MutableLiveData<String> mFilteredString = new MutableLiveData<>();
 
-    private final Handler mHandler =  new Handler();
+    private final Handler mHandler = new Handler();
     private Runnable mRunnable;
 
     MenuViewModel(@NonNull Application application) {
@@ -45,7 +46,8 @@ public class MenuViewModel extends BaseViewModel {
     }
 
     @Override
-    public void updateResults() {}
+    public void updateResults() {
+    }
 
     public void fetchAvailableMenu(String shopId) {
         mMenuData.addSource(mRepository.getAvailableMenu(shopId), mMenuData::setValue);
@@ -67,6 +69,12 @@ public class MenuViewModel extends BaseViewModel {
 
     public void resetMenuGroups() {
         mMenuGroups.setValue(mOriginalMenuGroups.getValue());
+    }
+
+    public void clearFilters() {
+        mFilteredString.setValue(null);
+        resetMenuItems();
+        resetMenuGroups();
     }
 
     public LiveData<Resource<List<MenuGroupModel>>> getMenuGroups() {
@@ -104,13 +112,14 @@ public class MenuViewModel extends BaseViewModel {
     }
 
     public void filterMenuGroups(final MenuItemModel.AVAILABLE_MEAL availableMeal) {
+        mFilteredString.setValue("Filtered: " + availableMeal.name());
         LiveData<Resource<List<MenuGroupModel>>> resourceLiveData = Transformations.map(mOriginalMenuGroups, listResource -> {
             if (listResource == null || listResource.data == null)
                 return null;
             List<MenuGroupModel> result = new ArrayList<>();
-            for (MenuGroupModel menuGroupModel: listResource.data) {
+            for (MenuGroupModel menuGroupModel : listResource.data) {
                 List<MenuItemModel> items = new ArrayList<>();
-                for (MenuItemModel menuItemModel: menuGroupModel.getItems()) {
+                for (MenuItemModel menuItemModel : menuGroupModel.getItems()) {
                     if (menuItemModel.hasAvailableMeal(availableMeal)) {
                         items.add(menuItemModel);
                     }
@@ -131,7 +140,7 @@ public class MenuViewModel extends BaseViewModel {
 
     public void addItemCustomization(ItemCustomizationFieldModel customizationField) {
         OrderedItemModel item = mCurrentItem.getValue();
-        if (item == null)   return;
+        if (item == null) return;
         item.addCustomizationField(customizationField);
         mCurrentItem.setValue(item);
     }
@@ -150,21 +159,21 @@ public class MenuViewModel extends BaseViewModel {
 
     public void removeItemCustomization(ItemCustomizationFieldModel customizationField) {
         OrderedItemModel item = mCurrentItem.getValue();
-        if (item == null)   return;
+        if (item == null) return;
         item.removeCustomizationField(customizationField);
         mCurrentItem.setValue(item);
     }
 
     public void setSelectedType(int selectedType) {
         OrderedItemModel item = mCurrentItem.getValue();
-        if (item == null)   return;
+        if (item == null) return;
         item.setTypeIndex(selectedType);
         mCurrentItem.setValue(item);
     }
 
     public void setQuantity(int quantity) {
         OrderedItemModel item = mCurrentItem.getValue();
-        if (item == null)   return;
+        if (item == null) return;
         if (quantity != item.getQuantity()) {
             item.setQuantity(quantity);
             mCurrentItem.setValue(item);
@@ -176,14 +185,14 @@ public class MenuViewModel extends BaseViewModel {
 
     public void changeQuantity(int diff) {
         OrderedItemModel item = mCurrentItem.getValue();
-        if (item == null)   return;
+        if (item == null) return;
         if (diff != 0)
             setQuantity(item.getQuantity() + diff);
     }
 
     public void cancelItem() {
         OrderedItemModel item = mCurrentItem.getValue();
-        if (item == null)   return;
+        if (item == null) return;
         item.setQuantity(0);
         item.setChangeCount(0);
         mCurrentItem.setValue(item);
@@ -253,8 +262,7 @@ public class MenuViewModel extends BaseViewModel {
             orderedItem = item.order(1);
             setCurrentItem(orderedItem);
             result = true;
-        }
-        else if (orderedItem != null && orderedItem.getQuantity() != count) {
+        } else if (orderedItem != null && orderedItem.getQuantity() != count) {
             orderedItem.setQuantity(count);
             setCurrentItem(orderedItem);
             result = true;
@@ -277,8 +285,7 @@ public class MenuViewModel extends BaseViewModel {
             if (item.getQuantity() > 0) {
                 item.setQuantity(orderedItems.get(index).getQuantity() + item.getChangeCount());
                 orderedItems.set(index, item);
-            }
-            else
+            } else
                 orderedItems.remove(index);
         } else {
             if (item.getItemModel().isComplexItem())
@@ -292,7 +299,7 @@ public class MenuViewModel extends BaseViewModel {
         int count = 0;
         List<OrderedItemModel> orderedItems = getOrderedItems().getValue();
         if (orderedItems != null) {
-            for (OrderedItemModel orderedItem: orderedItems) {
+            for (OrderedItemModel orderedItem : orderedItems) {
                 if (orderedItem.getItemModel().equals(item)) {
                     count += orderedItem.getQuantity();
                     if (!item.isComplexItem())
@@ -317,7 +324,7 @@ public class MenuViewModel extends BaseViewModel {
     public LiveData<Integer> getTotalOrderedCount() {
         return Transformations.map(mOrderedItems, input -> {
             int res = 0;
-            for (OrderedItemModel item: input)
+            for (OrderedItemModel item : input)
                 res += item.getQuantity();
             return res;
         });
@@ -326,7 +333,7 @@ public class MenuViewModel extends BaseViewModel {
     public LiveData<Double> getOrderedSubTotal() {
         return Transformations.map(mOrderedItems, input -> {
             double res = 0.0;
-            for (OrderedItemModel item: input)
+            for (OrderedItemModel item : input)
                 res += item.getCost();
             return res;
         });
@@ -338,7 +345,7 @@ public class MenuViewModel extends BaseViewModel {
                 return null;
             List<String> categories = new ArrayList<>();
             String category = "";
-            for (MenuGroupModel menuGroupModel: input.data) {
+            for (MenuGroupModel menuGroupModel : input.data) {
                 if (!category.contentEquals(menuGroupModel.getCategory())) {
                     category = menuGroupModel.getCategory();
                     categories.add(category);
@@ -348,11 +355,35 @@ public class MenuViewModel extends BaseViewModel {
         });
     }
 
+    public void sortMenuItems(boolean low2high) {
+        mFilteredString.setValue("Sorted: " + (low2high ? "Low-High" : "High-Low"));
+        LiveData<Resource<List<MenuItemModel>>> resourceLiveData = Transformations.map(mMenuData, input -> {
+            if (input == null || input.data == null)
+                return Resource.loading(null);
+            List<MenuItemModel> items = new ArrayList<>();
+            for (MenuGroupModel groupModel : input.data.getGroups()) {
+                items.addAll(groupModel.getItems());
+            }
+            if (items.size() == 0)
+                return Resource.errorNotFound(null);
+            Collections.sort(items, (o1, o2) -> {
+                int diff = (int) (o1.getTypeCosts().get(0) - o2.getTypeCosts().get(0));
+                return low2high ?  diff : -diff;
+            });
+            return Resource.cloneResource(input, items);
+        });
+        mMenuItems.addSource(resourceLiveData, mMenuItems::setValue);
+    }
+
     public void confirmOrder() {
         mResultOrder.addSource(mRepository.postMenuOrders(mOrderedItems.getValue()), mResultOrder::setValue);
     }
 
     public LiveData<Resource<ArrayNode>> getServerOrderedItems() {
         return mResultOrder;
+    }
+
+    public LiveData<String> getFilteredString() {
+        return mFilteredString;
     }
 }

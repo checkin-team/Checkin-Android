@@ -101,6 +101,8 @@ public class SessionMenuActivity extends BaseActivity implements
         mViewModel = ViewModelProviders.of(this).get(MenuViewModel.class);
         mViewModel.fetchAvailableMenu(args.getString(KEY_RESTAURANT_PK));
 
+        mSearchFragment = MenuItemSearchFragment.newInstance(SessionMenuActivity.this, isSessionActive());
+
         init(R.id.container_menu_fragment, true);
         setupUiStuff();
         setupMenuFragment();
@@ -197,7 +199,6 @@ public class SessionMenuActivity extends BaseActivity implements
     }
 
     private void setupSearch() {
-        mSearchFragment = MenuItemSearchFragment.newInstance(SessionMenuActivity.this, isSessionActive());
         vMenuSearch.setVoiceSearch(true);
         vMenuSearch.setStartFromRight(false);
         vMenuSearch.setCursorDrawable(R.drawable.color_cursor_white);
@@ -266,6 +267,7 @@ public class SessionMenuActivity extends BaseActivity implements
         } else if (!mFilterFragment.onBackPressed() && !mMenuFragment.onBackPressed()) {
             super.onBackPressed();
         }
+        mViewModel.clearFilters();
     }
 
     public void closeSearch() {
@@ -379,5 +381,15 @@ public class SessionMenuActivity extends BaseActivity implements
     @Override
     public void filterByCategory(String category) {
         mMenuFragment.scrollToCategory(category);
+    }
+
+    @Override
+    public void sortItems() {
+        vMenuSearch.showSearch(true);
+    }
+
+    @Override
+    public void resetFilters() {
+        vMenuSearch.closeSearch();
     }
 }

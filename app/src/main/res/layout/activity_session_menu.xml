@@ -89,32 +89,22 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent">
 
-            <!--<android.support.v4.widget.NestedScrollView-->
-                <!--android:layout_width="match_parent"-->
-                <!--android:layout_height="match_parent"-->
-                <!--app:layout_constraintTop_toTopOf="parent"-->
-                <!--app:layout_constraintStart_toStartOf="parent"-->
-                <!--app:layout_constraintBottom_toTopOf="@id/container_menu_cart_detail">-->
-
-                <!--<LinearLayout-->
-                    <!--android:layout_width="match_parent"-->
-                    <!--android:layout_height="match_parent"-->
-                    <!--android:orientation="vertical">-->
-
-                <android.support.v7.widget.RecyclerView
-                    android:id="@+id/rv_menu_cart"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:paddingTop="@dimen/spacing_small" />
-                <!--</LinearLayout>-->
-            <!--</android.support.v4.widget.NestedScrollView>-->
+            <android.support.v7.widget.RecyclerView
+                android:id="@+id/rv_menu_cart"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:paddingTop="@dimen/spacing_small"
+                app:layout_constraintBottom_toTopOf="@id/container_menu_cart_detail"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
 
             <LinearLayout
                 android:id="@+id/container_menu_cart_detail"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_gravity="bottom"
-                android:orientation="vertical">
+                android:orientation="vertical"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="parent">
 
                 <include layout="@layout/incl_horizontal_line" />
 
@@ -133,7 +123,6 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginBottom="@dimen/spacing_extra_small"
-                    android:layout_marginTop="@dimen/spacing_extra_small"
                     android:text="* Does not include extra charges or discounts."
                     android:textAlignment="center"
                     android:textSize="@dimen/font_small" />
