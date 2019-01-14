@@ -1,0 +1,134 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <LinearLayout
+        android:layout_marginTop="15dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <RelativeLayout
+            android:gravity="center"
+            android:layout_width="@dimen/car_view_size_small_tiny"
+            android:layout_height="wrap_content"
+            android:layout_weight="1">
+
+            <TextView
+                android:id="@+id/tv_shop_invoice_from_title"
+                android:text="From"
+                android:textSize="@dimen/font_heading"
+                android:textColor="@color/colorGainsBoro"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+
+            <android.support.v7.widget.CardView
+                android:id="@+id/cv_shop_invoice_from_date"
+                app:cardElevation="@dimen/spacing_extra_tiny"
+                android:layout_marginTop="@dimen/app_bar_elevation_size"
+                android:layout_marginBottom="@dimen/app_bar_elevation_size"
+                app:cardCornerRadius="@dimen/spacing_extra_tiny"
+                android:layout_below="@+id/tv_shop_invoice_from_title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content">
+
+                <LinearLayout
+                    android:paddingStart="@dimen/spacing_small_tiny"
+                    android:paddingEnd="@dimen/spacing_small_tiny"
+                    android:paddingTop="@dimen/spacing_small_tiny"
+                    android:paddingBottom="@dimen/spacing_small_tiny"
+                    android:gravity="center"
+                    android:orientation="horizontal"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content">
+
+                    <TextView
+                        android:maxLines="1"
+                        android:id="@+id/tv_shop_invoice_from_date"
+                        android:text="Dec 21, 2018"
+                        android:textSize="@dimen/font_small_extra"
+                        android:textColor="@color/brownish_grey"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content" />
+
+                    <ImageView
+                        android:layout_marginStart="@dimen/app_bar_elevation_size"
+                        android:contentDescription="@null"
+                        android:src="@drawable/ic_calender_grey"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content" />
+
+                </LinearLayout>
+
+            </android.support.v7.widget.CardView>
+
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:gravity="center"
+            android:layout_width="@dimen/car_view_size_small_tiny"
+            android:layout_height="wrap_content"
+            android:layout_weight="1">
+
+            <TextView
+                android:id="@+id/tv_shop_invoice_to_title"
+                android:text="To"
+                android:textSize="@dimen/font_heading"
+                android:textColor="@color/colorGainsBoro"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+
+            <android.support.v7.widget.CardView
+                android:id="@+id/cv_shop_invoice_to_date"
+                app:cardElevation="@dimen/spacing_extra_tiny"
+                android:layout_marginTop="@dimen/app_bar_elevation_size"
+                android:layout_marginBottom="@dimen/app_bar_elevation_size"
+                app:cardCornerRadius="@dimen/spacing_extra_tiny"
+                android:layout_below="@+id/tv_shop_invoice_to_title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content">
+
+                <LinearLayout
+                    android:paddingStart="@dimen/spacing_small_tiny"
+                    android:paddingEnd="@dimen/spacing_small_tiny"
+                    android:paddingTop="@dimen/spacing_small_tiny"
+                    android:paddingBottom="@dimen/spacing_small_tiny"
+                    android:gravity="center"
+                    android:orientation="horizontal"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content">
+
+                    <TextView
+                        android:id="@+id/tv_shop_invoice_to_date"
+                        android:text="Jan 13, 2018"
+                        android:maxLines="1"
+                        android:textSize="@dimen/font_small_extra"
+                        android:textColor="@color/brownish_grey"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content" />
+
+                    <ImageView
+                        android:layout_marginStart="@dimen/app_bar_elevation_size"
+                        android:contentDescription="@null"
+                        android:src="@drawable/ic_calender_grey"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content" />
+
+                </LinearLayout>
+
+            </android.support.v7.widget.CardView>
+
+        </RelativeLayout>
+
+    </LinearLayout>
+
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/rv_shop_invoice"
+        android:padding="@dimen/spacing_small"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"/>
+
+</LinearLayout>

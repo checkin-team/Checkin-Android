@@ -1,0 +1,207 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <LinearLayout
+        android:id="@+id/ll_shop_invoice_detail_feedback"
+        android:paddingStart="10dp"
+        android:paddingEnd="10dp"
+        android:paddingTop="5dp"
+        android:paddingBottom="5dp"
+        android:background="@drawable/background_bottom_grey_line"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:weightSum="1">
+
+        <ImageView
+            android:layout_marginTop="16dp"
+            android:contentDescription="@null"
+            android:src="@drawable/ic_appbar_back"
+            android:layout_width="25dp"
+            android:layout_height="25dp" />
+
+        <RelativeLayout
+            android:layout_width="@dimen/car_view_size_small_tiny"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/spacing_small"
+            android:layout_weight="0.75">
+
+            <TextView
+                android:id="@+id/tv_order_title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Order"
+                android:textColor="@color/brownish_grey"
+                android:textSize="@dimen/font_normal" />
+
+            <TextView
+                android:layout_marginStart="5dp"
+                android:layout_alignBaseline="@id/tv_order_title"
+                android:layout_toEndOf="@id/tv_order_title"
+                android:id="@+id/tv_s_id"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="#56743536323"
+                android:textColor="@color/brownish_grey"
+                android:textSize="@dimen/font_medium" />
+
+            <TextView
+                android:id="@+id/tv_shop_invoice_date"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/tv_s_id"
+                android:layout_marginTop="@dimen/spacing_extra_small"
+                android:text="Dec 5, 2108 10:34 AM"
+                android:textColor="@color/brownish_grey"
+                android:textSize="@dimen/font_medium" />
+
+            <TextView
+                android:id="@+id/tv_shop_invoice_waiter_title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/tv_shop_invoice_date"
+                android:layout_marginTop="@dimen/spacing_extra_small"
+                android:text="Waiter :"
+                android:textSize="@dimen/font_medium" />
+
+            <TextView
+                android:id="@+id/tv_shop_invoice_waiter_name"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/tv_shop_invoice_date"
+                android:layout_marginStart="@dimen/app_bar_elevation_size"
+                android:layout_marginTop="@dimen/spacing_extra_small"
+                android:layout_toEndOf="@id/tv_shop_invoice_waiter_title"
+                android:text="Ashish Gupta"
+                android:textSize="@dimen/font_medium" />
+
+            <View
+                android:id="@+id/tv_shop_invoice_view"
+                android:layout_width="@dimen/height_horizontal_line"
+                android:layout_height="@dimen/size_tiny_icon"
+                android:layout_below="@+id/tv_s_id"
+                android:layout_marginStart="@dimen/thickness_line"
+                android:layout_marginTop="@dimen/spacing_bottom_view"
+                android:layout_marginEnd="@dimen/thickness_line"
+                android:layout_toEndOf="@id/tv_shop_invoice_date"
+                android:background="@color/colorGainsBoro" />
+
+            <TextView
+                android:id="@+id/tv_shop_invoice_item"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/tv_s_id"
+                android:layout_marginTop="@dimen/spacing_extra_small"
+                android:layout_toEndOf="@id/tv_shop_invoice_view"
+                android:text="3 Item's"
+                android:textColor="@color/brownish_grey"
+                android:textSize="@dimen/font_medium" />
+
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:layout_width="@dimen/car_view_size_small_tiny"
+            android:layout_height="match_parent"
+            android:layout_weight="0.25"
+            android:gravity="center">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:orientation="vertical">
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:gravity="center"
+                    android:orientation="horizontal">
+
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:contentDescription="@null"
+                        android:src="@drawable/ic_shop_invoice_person" />
+
+                    <TextView
+                        android:id="@+id/tv_shop_invoice_user_number"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="@dimen/app_bar_elevation_size"
+                        android:text="2"
+                        android:textColor="@color/brownish_grey"
+                        android:textSize="@dimen/font_heading" />
+
+                </LinearLayout>
+
+                <TextView
+                    android:id="@+id/tv_shop_invoice_table_number"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/spacing_small"
+                    android:text="TABLE 4"
+                    android:textColor="@color/brownish_grey"
+                    android:textSize="@dimen/font_medium" />
+
+            </LinearLayout>
+
+        </RelativeLayout>
+
+    </LinearLayout>
+
+    <android.support.design.widget.TabLayout
+        app:tabIndicatorColor="@color/colorRed"
+        app:tabSelectedTextColor="@color/colorRed"
+        app:tabTextColor="@color/brownish_grey"
+        app:tabGravity="fill"
+        app:tabMode="fixed"
+        android:background="@color/white"
+        android:elevation="5dp"
+        android:layout_below="@id/ll_shop_invoice_detail_feedback"
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize"/>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:background="@drawable/background_top_grey_line"
+        android:padding="12dp">
+
+        <TextView
+            android:id="@+id/tv_shop_invoice_detail_feedback_bill_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="50dp"
+            android:layout_toStartOf="@id/tv_shop_invoice_detail_feedback_rupee_title"
+            android:text="BILL TOTAL"
+            android:textColor="@color/colorRed"
+            android:textSize="16sp" />
+
+        <TextView
+            android:id="@+id/tv_shop_invoice_detail_feedback_rupee_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="2dp"
+            android:layout_toStartOf="@id/tv_shop_invoice_detail_feedback_bill"
+            android:text="@string/rupee_symbol"
+            android:textColor="@color/colorRed"
+            android:textSize="16sp" />
+
+        <TextView
+            android:id="@+id/tv_shop_invoice_detail_feedback_bill"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:text="786.5"
+            android:textColor="@color/colorRed"
+            android:textSize="16sp" />
+
+    </RelativeLayout>
+
+</RelativeLayout>

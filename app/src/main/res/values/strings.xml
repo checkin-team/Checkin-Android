@@ -14,6 +14,8 @@
     <string name="action_finish">Finish</string>
     <string name="action_filter">Filter Items</string>
 
+    <string name="rupee_symbol">₹</string>
+
     <!--for bottomnav bar-->
 
     <!-- value for the phone mode btn_menu -->
@@ -128,4 +130,5 @@
     <string name="session_presence_private">Private</string>
     <string name="session_presence_public">Public</string>
     <string name="action_invoice">Invoice</string>
+    <string name="shop_invoice_title">Invoice</string>
 </resources>

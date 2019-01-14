@@ -39,6 +39,7 @@ import android.widget.Toast;
 import com.checkin.app.checkin.R;
 
 import java.lang.reflect.Field;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -79,6 +80,18 @@ public class Util {
                 }
             }
         }
+    }
+
+    public static String getCurrentFormattedDate(Calendar c){
+        Date date = c.getTime();
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("MMM dd, yyyy",Locale.getDefault());
+        return simpleDateFormat.format(date);
+    }
+
+    public static String getFormattedSelectedDate (String date, String initDateFormat, String endDateFormat) throws ParseException {
+        Date initDate = new SimpleDateFormat(initDateFormat,Locale.getDefault()).parse(date);
+        SimpleDateFormat formatter = new SimpleDateFormat(endDateFormat,Locale.getDefault());
+        return formatter.format(initDate);
     }
 
     public static void animateShow(View view, float y) {
