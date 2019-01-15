@@ -155,6 +155,7 @@
             android:windowSoftInputMode="adjustPan|adjustResize" />
         <activity android:name=".Session.ActiveSession.ActiveSessionViewOrdersActivity"
             android:windowSoftInputMode="adjustNothing" />
+        <activity android:name=".Session.ActiveSession.ActiveSessionBillDetails"/>
 
         <service
             android:name=".Auth.AuthenticatorService"

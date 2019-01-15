@@ -129,7 +129,7 @@
             android:textColor="@color/pinkish_grey"
             android:textSize="@dimen/font_extra_small"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/switch_session_presence" />
+            app:layout_constraintTop_toBottomOf="@id/switch_session_presence" />
 
         <TextView
             android:id="@+id/btn_active_session_orders"
@@ -210,7 +210,7 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintBottom_toTopOf="@+id/bottom_session_container"
+            app:layout_constraintBottom_toTopOf="@id/bottom_session_container"
             app:layout_constraintVertical_weight="0.9"/>
 
         <android.support.constraint.ConstraintLayout

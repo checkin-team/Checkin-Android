@@ -36,7 +36,8 @@ public class ActiveSessionChatModel {
     @JsonProperty("modified")
     private Date modified;
 
-    public ActiveSessionChatModel(){}
+    public ActiveSessionChatModel() {
+    }
 
     public enum CHATEVENTTYPE {
         EVENT_NONE(400), EVENT_SESSION_CHECKIN(401), EVENT_SESSION_CHECKOUT(409), EVENT_MEMBER_ADD(411), EVENT_MEMBER_REMOVE(412),
@@ -158,5 +159,38 @@ public class ActiveSessionChatModel {
 
     public Date getModified() {
         return modified;
+    }
+
+    public void setPk(int pk) {
+        this.pk = pk;
+    }
+
+    public void setMessage(String message) {
+        this.message = message;
+    }
+
+    @JsonProperty("status")
+    public void setStatus(int status) {
+        this.status = SessionViewOrdersModel.SESSIONEVENT.getByTag(status);
+    }
+
+    public void setData(ActiveSessionCustomChatDataModel data) {
+        this.data = data;
+    }
+
+    public void setSender(CHATSENDERTYPES sender) {
+        this.sender = sender;
+    }
+
+    public void setUser(BriefModel user) {
+        this.user = user;
+    }
+
+    public void setCreated(Date created) {
+        this.created = created;
+    }
+
+    public void setModified(Date modified) {
+        this.modified = modified;
     }
 }

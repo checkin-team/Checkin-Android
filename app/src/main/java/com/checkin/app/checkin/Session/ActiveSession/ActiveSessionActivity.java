@@ -8,12 +8,13 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.annotation.Nullable;
+import android.support.constraint.ConstraintLayout;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
-import android.view.View;
+import android.view.MotionEvent;
 import android.widget.LinearLayout;
 import android.widget.Switch;
 import android.widget.TextView;
@@ -23,7 +24,11 @@ import com.checkin.app.checkin.Menu.SessionMenuActivity;
 import com.checkin.app.checkin.R;
 import com.checkin.app.checkin.Search.SearchActivity;
 import com.checkin.app.checkin.Session.ActiveSession.ActiveSessionChat.ActiveSessionChat;
+import com.checkin.app.checkin.Session.ActiveSession.ActiveSessionChat.ActiveSessionChatModel;
+import com.checkin.app.checkin.Session.ActiveSession.ActiveSessionChat.ActiveSessionCustomChatDataModel;
+import com.checkin.app.checkin.Session.SessionCustomerModel;
 import com.checkin.app.checkin.Utility.Constants;
+import com.checkin.app.checkin.Utility.Utils;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -46,8 +51,8 @@ public class ActiveSessionActivity extends AppCompatActivity implements ActiveSe
     @BindView(R.id.tv_waiter_name) TextView tv_waiter_name;
     @BindView(R.id.im_waiter) CircleImageView im_waiter;
     @BindView(R.id.switch_session_presence) Switch switchSessionPresence;
-    @BindView(R.id.ll_refill_glass)
-    LinearLayout ll_refill_glass;
+    @BindView(R.id.ll_refill_glass) LinearLayout ll_refill_glass;
+    @BindView(R.id.bottom_session_container) ConstraintLayout bottom_session_container;
 
     private Receiver mHandler;
 
@@ -66,7 +71,46 @@ public class ActiveSessionActivity extends AppCompatActivity implements ActiveSe
         rvMembers.setAdapter(mSessionMembersAdapter);
 
         mViewModel = ViewModelProviders.of(this).get(ActiveSessionViewModel.class);
-        getActiveSessionUsers();
+        mViewModel.getActiveSessionDetail().observe(this, resource -> {
+            if (resource == null) return;
+            ActiveSessionModel data = resource.data;
+            switch (resource.status) {
+                case SUCCESS: {
+                    mSessionMembersAdapter.setUsers(data != null ? data.getCustomers() : null);
+                    tvBill.setText(data != null ? String.valueOf(data.getBill()) : null);
+
+                    if(data.gethost()!=null) {
+                        tv_waiter_name.setText(data.gethost().getDisplayName());
+                        Utils.loadImageOrDefault(im_waiter,data.gethost().getDisplayPic(),R.drawable.ic_waiter);
+                    }else
+                        tv_waiter_name.setText("Unassigned");
+                }
+                case LOADING: {
+                    break;
+                }
+                default: {
+                    Log.e(resource.status.name(), resource.message == null ? "Null" : resource.message);
+                }
+            }
+        });
+
+        mViewModel.getPresenceData().observe(this,resource -> {
+            if (resource == null) return;
+//            Log.e("data====", String.valueOf(resource.data.isIs_public()));
+//            if (resource == null) return;
+//            SessionCustomerModel data = resource.data;
+//            switch (resource.status) {
+//                case SUCCESS: {
+//                  switchSessionPresence.setChecked(data.isIs_public());
+//                }
+//                case LOADING: {
+//                    break;
+//                }
+//                default: {
+//                    Log.e(resource.status.name(), resource.message == null ? "Null" : resource.message);
+//                }
+//            }
+        });
 
 
         mViewModel.getObservableData().observe(this, resource -> {
@@ -75,13 +119,13 @@ public class ActiveSessionActivity extends AppCompatActivity implements ActiveSe
             switch (resource.status) {
                 case SUCCESS: {
                     Toast.makeText(this, "Done!", Toast.LENGTH_SHORT).show();
-                    getActiveSessionUsers();
+                    mViewModel.updateResults();
                     break;
                 }
                 case LOADING:
                     break;
                 default: {
-                    Util.toast(this, resource.message);
+                    Utils.toast(this, resource.message);
                 }
             }
         });
@@ -90,15 +134,12 @@ public class ActiveSessionActivity extends AppCompatActivity implements ActiveSe
         });
         mViewModel.setShopPk(shopPk);
 
-        ll_refill_glass.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent myIntent = new Intent(ActiveSessionActivity.this, ActiveSessionChat.class);
-                ActivityOptions options = ActivityOptions.makeCustomAnimation(ActiveSessionActivity.this, R.anim.slide_up, R.anim.slide_down);
-                startActivity(myIntent, options.toBundle());
-            }
-        });
 
+        bottom_session_container.setOnTouchListener((v, event) -> {
+            if (event.getAction() == MotionEvent.ACTION_UP)
+                openChat(ActiveSessionCustomChatDataModel.CHATSERVICETYPES.SERVICE_NONE);
+            return true;
+        });
 //        mHandler = new Receiver(mViewModel);
     }
 
@@ -112,7 +153,7 @@ public class ActiveSessionActivity extends AppCompatActivity implements ActiveSe
         startActivity(new Intent(this, ActiveSessionViewOrdersActivity.class));
     }
 
-    @OnClick(R.id.btn_active_session_checkout)
+    /*@OnClick(R.id.btn_active_session_checkout)
     public void onCheckout() {
         new AlertDialog.Builder(this)
                 .setTitle("Checkout Session")
@@ -120,6 +161,24 @@ public class ActiveSessionActivity extends AppCompatActivity implements ActiveSe
                 .setPositiveButton("Confirm", (dialogInterface, i) -> mViewModel.checkoutSession())
                 .setNegativeButton("Cancel", (dialogInterface, i) -> dialogInterface.dismiss())
                 .show();
+    }*/
+
+    @OnClick(R.id.btn_active_session_checkout)
+    public void openBillDetails(){
+        startActivity(new Intent(this, ActiveSessionBillDetails.class));
+    }
+
+    @OnClick(R.id.ll_call_waiter_container)
+    public void openChatCallWaiter(){
+        openChat(ActiveSessionCustomChatDataModel.CHATSERVICETYPES.SERVICE_CALL_WAITER);
+    }
+    @OnClick(R.id.ll_table_cleaning_container)
+    public void openChatCleanContainer(){
+        openChat(ActiveSessionCustomChatDataModel.CHATSERVICETYPES.SERVICE_CLEAN_TABLE);
+    }
+    @OnClick(R.id.ll_refill_glass)
+    public void openChatRefillGlass(){
+        openChat(ActiveSessionCustomChatDataModel.CHATSERVICETYPES.SERVICE_BRING_COMMODITY);
     }
 
     @Override
@@ -138,30 +197,12 @@ public class ActiveSessionActivity extends AppCompatActivity implements ActiveSe
             mViewModel.addMembers(userPk);
         }
     }
-
-    private void getActiveSessionUsers(){
-        mViewModel.getActiveSessionDetail().observe(this, resource -> {
-            if (resource == null) return;
-            ActiveSessionModel data = resource.data;
-            switch (resource.status) {
-                case SUCCESS: {
-                    mSessionMembersAdapter.setUsers(data != null ? data.getCustomers() : null);
-                    tvBill.setText(data != null ? String.valueOf(data.getBill()) : null);
-
-                    if(data.gethost()!=null) {
-                        tv_waiter_name.setText(data.gethost().getDisplayName());
-                        Util.loadImageOrDefault(im_waiter,data.gethost().getDisplayPic(),R.drawable.ic_waiter);
-                    }else
-                        tv_waiter_name.setText("Unassigned");
-                }
-                case LOADING: {
-                    break;
-                }
-                default: {
-                    Log.e(resource.status.name(), resource.message == null ? "Null" : resource.message);
-                }
-            }
-        });
+    public void openChat(ActiveSessionCustomChatDataModel.CHATSERVICETYPES serviceTypes){
+        Intent myIntent = new Intent(ActiveSessionActivity.this, ActiveSessionChat.class);
+        ActivityOptions options = ActivityOptions.makeCustomAnimation(ActiveSessionActivity.this, R.anim.slide_up, R.anim.slide_down);
+        Log.e("extraaabefore", String.valueOf(serviceTypes));
+        myIntent.putExtra("service",serviceTypes);
+        startActivity(myIntent, options.toBundle());
     }
 
     /*private void setUpRecommendedMenu(){

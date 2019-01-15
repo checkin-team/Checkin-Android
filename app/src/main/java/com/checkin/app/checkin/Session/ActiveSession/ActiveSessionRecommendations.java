@@ -17,7 +17,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 
 
-/*public class ActiveSessionRecommendations extends RecyclerView.Adapter<ActiveSessionRecommendations.ViewHolder> {
+/*public class ActiveSessionRecommendations extends RecyclerView.Adapter<ActiveSessionRecommendations.ViewHolderRightMsg> {
     List<RestaurantModel> mShops;
 
     ActiveSessionRecommendations(List<RestaurantModel> shops) {
@@ -35,13 +35,13 @@ import butterknife.ButterKnife;
 
     @NonNull
     @Override
-    public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+    public ViewHolderRightMsg onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext()).inflate(viewType, parent, false);
-        return new ViewHolder(view);
+        return new ViewHolderRightMsg(view);
     }
 
     @Override
-    public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
+    public void onBindViewHolder(@NonNull ViewHolderRightMsg holder, int position) {
         holder.bindData(mShops.get(position));
     }
 
@@ -55,14 +55,14 @@ import butterknife.ButterKnife;
         return R.layout.item_session_recommendations;
     }
 
-    class ViewHolder extends RecyclerView.ViewHolder {
+    class ViewHolderRightMsg extends RecyclerView.ViewHolderRightMsg {
         @BindView(R.id.item_image)
         ImageView item_image;
         @BindView(R.id.tv_item_name)
         TextView tv_item_name;
         @BindView(R.id.tv_price) TextView tv_price;
 
-        ViewHolder(View v) {
+        ViewHolderRightMsg(View v) {
             super(v);
             ButterKnife.bind(this, v);
         }

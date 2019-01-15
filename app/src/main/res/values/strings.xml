@@ -146,5 +146,14 @@
     <string name="status_order_delivered">Delivered</string>
     <string name="delay">Delay</string>
     <string name="quality">Quality</string>
+    <string name="title_cheesy_does_it">Cheesy Does It</string>
+    <string name="title_bill_details">Bill Details</string>
+    <string name="total">Total</string>
+    <string name="title_request_checkout">Request Checkout</string>
+    <string name="change">Change</string>
+    <string name="title_tip_your_waiter">Tip your waiter</string>
+    <string name="msg_call_waiter">Please send the waiter to our table</string>
+    <string name="msg_clean_table">Please clean the table</string>
+    <string name="msg_refill_glass">Please refill glasses</string>
 
 </resources>

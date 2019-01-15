@@ -31,4 +31,5 @@
     <color name="blue">#004aa1</color>
     <color name="grey_shade">#d8d8d8</color>
     <color name="dark_grey_shade">#4a4a4a</color>
+    <color name="light_grey_shade">#e1e1e1</color>
 </resources>

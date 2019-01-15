@@ -12,6 +12,7 @@ import com.checkin.app.checkin.Data.Converters;
 import com.checkin.app.checkin.Data.Resource;
 import com.checkin.app.checkin.Menu.Model.OrderedItemModel;
 import com.checkin.app.checkin.Session.ActiveSession.ActiveSessionChat.ActiveSessionChatModel;
+import com.checkin.app.checkin.Session.SessionCustomerModel;
 import com.checkin.app.checkin.Session.SessionViewOrdersModel;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 
@@ -25,8 +26,7 @@ public class ActiveSessionViewModel extends BaseViewModel {
     private final ActiveSessionRepository mRepository;
 
     private MediatorLiveData<Resource<ActiveSessionModel>> mSessionData = new MediatorLiveData<>();
-    private MediatorLiveData<Resource<List<SessionViewOrdersModel>>> mOrdersData = new MediatorLiveData<>();
-    private MediatorLiveData<Resource<List<ActiveSessionChatModel>>> mChatData = new MediatorLiveData<>();
+    private MediatorLiveData<Resource<SessionCustomerModel>> mPresenceData = new MediatorLiveData<>();
 
     private String mShopPk;
 
@@ -38,7 +38,7 @@ public class ActiveSessionViewModel extends BaseViewModel {
     @Override
     public void updateResults() {
         getActiveSessionDetail();
-        getSessionOrdersData();
+        getPresenceData();
     }
 
     public LiveData<Resource<ActiveSessionModel>> getActiveSessionDetail() {
@@ -46,14 +46,9 @@ public class ActiveSessionViewModel extends BaseViewModel {
         return mSessionData;
     }
 
-    public LiveData<Resource<List<SessionViewOrdersModel>>> getSessionOrdersData() {
-        mOrdersData.addSource(mRepository.getSessionOrdersDetails(),mOrdersData::setValue);
-        return mOrdersData;
-    }
-
-    public LiveData<Resource<List<ActiveSessionChatModel>>> getSessionChat() {
-        mChatData.addSource(mRepository.getSessionChatDetail(),mChatData::setValue);
-        return mChatData;
+    public LiveData<Resource<SessionCustomerModel>> getPresenceData(){
+        mPresenceData.addSource(mRepository.getSelfPresence(), mPresenceData::setValue);
+        return mPresenceData;
     }
 
     public LiveData<List<OrderedItemModel>> getOrderedItems() {
@@ -83,16 +78,6 @@ public class ActiveSessionViewModel extends BaseViewModel {
         ObjectNode data = Converters.objectMapper.createObjectNode();
         data.put("is_public",is_public);
         mData.addSource(mRepository.putSelfPresence(data), mData::setValue);
-    }
-
-    public void sendMessage(String msg) {
-        ObjectNode data = Converters.objectMapper.createObjectNode();
-        data.put("message",msg);
-        mData.addSource(mRepository.postMessage(data), mData::setValue);
-    }
-
-    public void deleteSessionOrder(String order_id) {
-        mData.addSource(mRepository.removeSessionOrder(order_id), objectNodeResource -> mData.setValue(objectNodeResource));
     }
 
     public void setShopPk(String shopPk) {

@@ -12,7 +12,7 @@ import android.widget.Toast;
 import com.checkin.app.checkin.Data.Resource;
 import com.checkin.app.checkin.R;
 import com.checkin.app.checkin.Session.SessionViewOrdersModel;
-import com.checkin.app.checkin.Utility.Util;
+import com.checkin.app.checkin.Utility.Utils;
 
 import java.util.List;
 
@@ -22,7 +22,7 @@ import butterknife.ButterKnife;
 public class ActiveSessionViewOrdersActivity extends AppCompatActivity implements ActiveSessionViewOrdersAdapters.SessionOrdersInteraction {
     @BindView(R.id.rv_active_session_orders) RecyclerView rvOrders;
     private ActiveSessionViewOrdersAdapters mOrdersAdapter;
-    private ActiveSessionViewModel mViewModel;
+    private ActiveSessionOrdersViewModel mViewModel;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -35,7 +35,7 @@ public class ActiveSessionViewOrdersActivity extends AppCompatActivity implement
         mOrdersAdapter = new ActiveSessionViewOrdersAdapters(null, ActiveSessionViewOrdersActivity.this, (ActiveSessionViewOrdersAdapters.SessionOrdersInteraction) this);
         rvOrders.setAdapter(mOrdersAdapter);
 
-        mViewModel = ViewModelProviders.of(this).get(ActiveSessionViewModel.class);
+        mViewModel = ViewModelProviders.of(this).get(ActiveSessionOrdersViewModel.class);
 
         mViewModel.getSessionOrdersData().observe(this, new Observer<Resource<List<SessionViewOrdersModel>>>() {
             @Override
@@ -60,7 +60,7 @@ public class ActiveSessionViewOrdersActivity extends AppCompatActivity implement
                 case LOADING:
                     break;
                 default: {
-                    Util.toast(this, resource.message);
+                    Utils.toast(this, resource.message);
                 }
             }
         });

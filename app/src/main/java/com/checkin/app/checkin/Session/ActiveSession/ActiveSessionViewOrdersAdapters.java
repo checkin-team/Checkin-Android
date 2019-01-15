@@ -12,7 +12,7 @@ import android.widget.TextView;
 
 import com.checkin.app.checkin.R;
 import com.checkin.app.checkin.Session.SessionViewOrdersModel;
-import com.checkin.app.checkin.Utility.Util;
+import com.checkin.app.checkin.Utility.Utils;
 
 import java.util.Calendar;
 import java.util.List;
@@ -100,7 +100,7 @@ public class ActiveSessionViewOrdersAdapters extends RecyclerView.Adapter<Active
             tv_food_name.setText(order.getItem().getName());
             tv_quantity.setText("QTY: " + order.getQuantity() + " " +order.getItem_type());
             tv_price.setText(mContext.getResources().getString(R.string.rs) + " " + order.formatCost());
-            tv_orders_time.setText(Util.formatElapsedTime(order.getOrdered(), Calendar.getInstance().getTime()));
+            tv_orders_time.setText(Utils.formatElapsedTime(order.getOrdered(), Calendar.getInstance().getTime()));
 
             if (order.canCancel()) im_cancel_order.setVisibility(View.VISIBLE);
             else im_cancel_order.setVisibility(View.GONE);

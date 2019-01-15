@@ -9,7 +9,7 @@ import android.widget.TextView;
 import com.checkin.app.checkin.R;
 import com.checkin.app.checkin.Session.SessionCustomerModel;
 import com.checkin.app.checkin.Utility.HeaderFooterRecyclerViewAdapter;
-import com.checkin.app.checkin.Utility.Util;
+import com.checkin.app.checkin.Utility.Utils;
 
 import java.util.List;
 
@@ -87,7 +87,7 @@ public class ActiveSessionMemberAdapter extends HeaderFooterRecyclerViewAdapter 
 
         void bindData(SessionCustomerModel customer) {
             tvUser.setText(customer.getUser().getDisplayName());
-            Util.loadImageOrDefault(imUser,customer.getUser().getDisplayPic(),R.drawable.cover_unknown_male);
+            Utils.loadImageOrDefault(imUser,customer.getUser().getDisplayPic(),R.drawable.cover_unknown_male);
         }
     }
 
