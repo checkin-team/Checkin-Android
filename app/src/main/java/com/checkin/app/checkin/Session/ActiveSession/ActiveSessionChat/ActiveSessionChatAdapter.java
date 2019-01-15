@@ -37,6 +37,7 @@ public class ActiveSessionChatAdapter extends RecyclerView.Adapter {
 
     public void setData(List<ActiveSessionChatModel> data) {
         this.mChats = data;
+//        notifyItemInserted(mChats.size());
         notifyDataSetChanged();
     }
 

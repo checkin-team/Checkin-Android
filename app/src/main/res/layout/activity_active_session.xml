@@ -64,13 +64,25 @@
                         tools:text="0000" />
                 </FrameLayout>
 
-                <ImageView
-                    android:id="@+id/btn_active_session_checkout"
-                    android:layout_width="100dp"
+                <TextView
+                    android:id="@+id/tv_menu_count_ordered_items"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_gravity="end"
+                    android:layout_marginTop="@dimen/spacing_normal"
+                    android:fontFamily="@font/arial_rounded_mt_bold"
+                    android:textColor="@color/white"
+                    android:text=""
+                    app:layout_constraintEnd_toEndOf="@+id/appbar_active_session" />
+
+                <ImageView
+                    android:id="@+id/btn_cart"
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"
                     android:maxWidth="40dp"
+                    android:layout_gravity="center"
                     android:layout_marginEnd="@dimen/spacing_small"
-                    android:src="@drawable/btn_checkout"
+                    android:src="@drawable/ic_cart"
                     app:layout_constraintEnd_toEndOf="@+id/appbar_active_session" />
 
             </LinearLayout>
@@ -103,7 +115,6 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/spacing_normal"
             android:layout_marginEnd="@dimen/spacing_extra_large"
-            android:checked="true"
             android:scaleX="1.5"
             android:scaleY="1.5"
             android:showText="true"

@@ -37,18 +37,12 @@ public class ActiveSessionChatViewModel extends BaseViewModel {
     public void sendMessage(String msg, Object service) {
         ObjectNode data = Converters.objectMapper.createObjectNode();
         ActiveSessionCustomChatDataModel.CHATSERVICETYPES type = (ActiveSessionCustomChatDataModel.CHATSERVICETYPES) service;
-        if(service.equals(ActiveSessionCustomChatDataModel.CHATSERVICETYPES.SERVICE_NONE)){
+        if(type.tag == 0){
             data.put("message",msg);
             mData.addSource(mRepository.postMessage(data), mData::setValue);
         } else{
             data.put("message",msg);
             data.put("service", type.tag);
-//            if(service.equals(ActiveSessionCustomChatDataModel.CHATSERVICETYPES.SERVICE_CALL_WAITER))
-//            data.put("service", type.tag);
-//            else if(service.equals(ActiveSessionCustomChatDataModel.CHATSERVICETYPES.SERVICE_CLEAN_TABLE))
-//            data.put("service", "2");
-//            else /*if(service.equals(ActiveSessionCustomChatDataModel.CHATSERVICETYPES.SERVICE_CALL_WAITER))*/
-//            data.put("service", "3");
             mData.addSource(mRepository.postServiceMessage(data), mData::setValue);
         }
     }

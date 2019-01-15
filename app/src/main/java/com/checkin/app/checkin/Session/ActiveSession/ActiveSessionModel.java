@@ -17,7 +17,7 @@ public class ActiveSessionModel {
     private String pk;
 
     @JsonProperty("bill")
-    private double bill;
+    private String bill;
 
     // TODO: Remove from here.
     private List<OrderedItemModel> orderedItems;
@@ -39,7 +39,7 @@ public class ActiveSessionModel {
 
     public ActiveSessionModel() {}
 
-    public ActiveSessionModel(int bill, List<OrderedItemModel> orderedItems, List<SessionCustomerModel> customers, BriefModel restaurant, BriefModel host) {
+    public ActiveSessionModel(String bill, List<OrderedItemModel> orderedItems, List<SessionCustomerModel> customers, BriefModel restaurant, BriefModel host) {
         this.bill = bill;
         this.orderedItems = orderedItems;
         this.customers = customers;
@@ -47,7 +47,7 @@ public class ActiveSessionModel {
         this.host = host;
     }
 
-    public double getBill() {
+    public String getBill() {
         return bill;
     }
 

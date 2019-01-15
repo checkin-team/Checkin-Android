@@ -12,6 +12,7 @@ import com.checkin.app.checkin.Data.Converters;
 import com.checkin.app.checkin.Data.Resource;
 import com.checkin.app.checkin.Menu.Model.OrderedItemModel;
 import com.checkin.app.checkin.Session.ActiveSession.ActiveSessionChat.ActiveSessionChatModel;
+import com.checkin.app.checkin.Session.SelfPresenceModel;
 import com.checkin.app.checkin.Session.SessionCustomerModel;
 import com.checkin.app.checkin.Session.SessionViewOrdersModel;
 import com.fasterxml.jackson.databind.node.ObjectNode;
@@ -26,7 +27,7 @@ public class ActiveSessionViewModel extends BaseViewModel {
     private final ActiveSessionRepository mRepository;
 
     private MediatorLiveData<Resource<ActiveSessionModel>> mSessionData = new MediatorLiveData<>();
-    private MediatorLiveData<Resource<SessionCustomerModel>> mPresenceData = new MediatorLiveData<>();
+    private MediatorLiveData<Resource<SelfPresenceModel>> mPresenceData = new MediatorLiveData<>();
 
     private String mShopPk;
 
@@ -46,7 +47,7 @@ public class ActiveSessionViewModel extends BaseViewModel {
         return mSessionData;
     }
 
-    public LiveData<Resource<SessionCustomerModel>> getPresenceData(){
+    public LiveData<Resource<SelfPresenceModel>> getPresenceData(){
         mPresenceData.addSource(mRepository.getSelfPresence(), mPresenceData::setValue);
         return mPresenceData;
     }

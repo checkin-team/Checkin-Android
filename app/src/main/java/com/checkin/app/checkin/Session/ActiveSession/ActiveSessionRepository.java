@@ -14,6 +14,7 @@ import com.checkin.app.checkin.Data.Resource;
 import com.checkin.app.checkin.Data.RetrofitLiveData;
 import com.checkin.app.checkin.Data.WebApiService;
 import com.checkin.app.checkin.Session.ActiveSession.ActiveSessionChat.ActiveSessionChatModel;
+import com.checkin.app.checkin.Session.SelfPresenceModel;
 import com.checkin.app.checkin.Session.SessionCustomerModel;
 import com.checkin.app.checkin.Session.SessionViewOrdersModel;
 import com.checkin.app.checkin.User.UserModel;
@@ -210,8 +211,8 @@ public class ActiveSessionRepository extends BaseRepository {
         }.getAsLiveData();
     }
 
-    public LiveData<Resource<SessionCustomerModel>> getSelfPresence() {
-        return new NetworkBoundResource<SessionCustomerModel, SessionCustomerModel>() {
+    public LiveData<Resource<SelfPresenceModel>> getSelfPresence() {
+        return new NetworkBoundResource<SelfPresenceModel, SelfPresenceModel>() {
             @Override
             protected boolean shouldUseLocalDb() {
                 return false;
@@ -219,12 +220,12 @@ public class ActiveSessionRepository extends BaseRepository {
 
             @NonNull
             @Override
-            protected LiveData<ApiResponse<SessionCustomerModel>> createCall() {
+            protected LiveData<ApiResponse<SelfPresenceModel>> createCall() {
                     return new RetrofitLiveData<>(mWebService.getSelfPresence());
             }
 
             @Override
-            protected void saveCallResult(SessionCustomerModel data) {
+            protected void saveCallResult(SelfPresenceModel data) {
             }
         }.getAsLiveData();
     }

@@ -9,7 +9,6 @@ import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.annotation.Nullable;
 import android.support.constraint.ConstraintLayout;
-import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -20,13 +19,13 @@ import android.widget.Switch;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.checkin.app.checkin.Menu.MenuViewModel;
 import com.checkin.app.checkin.Menu.SessionMenuActivity;
 import com.checkin.app.checkin.R;
 import com.checkin.app.checkin.Search.SearchActivity;
 import com.checkin.app.checkin.Session.ActiveSession.ActiveSessionChat.ActiveSessionChat;
-import com.checkin.app.checkin.Session.ActiveSession.ActiveSessionChat.ActiveSessionChatModel;
 import com.checkin.app.checkin.Session.ActiveSession.ActiveSessionChat.ActiveSessionCustomChatDataModel;
-import com.checkin.app.checkin.Session.SessionCustomerModel;
+import com.checkin.app.checkin.Session.SelfPresenceModel;
 import com.checkin.app.checkin.Utility.Constants;
 import com.checkin.app.checkin.Utility.Utils;
 
@@ -53,8 +52,10 @@ public class ActiveSessionActivity extends AppCompatActivity implements ActiveSe
     @BindView(R.id.switch_session_presence) Switch switchSessionPresence;
     @BindView(R.id.ll_refill_glass) LinearLayout ll_refill_glass;
     @BindView(R.id.bottom_session_container) ConstraintLayout bottom_session_container;
+    @BindView(R.id.tv_menu_count_ordered_items) TextView tvCountItems;
 
     private Receiver mHandler;
+    private MenuViewModel mMenuViewModel;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -71,13 +72,30 @@ public class ActiveSessionActivity extends AppCompatActivity implements ActiveSe
         rvMembers.setAdapter(mSessionMembersAdapter);
 
         mViewModel = ViewModelProviders.of(this).get(ActiveSessionViewModel.class);
+//        mMenuViewModel = ViewModelProviders.of(this).get(MenuViewModel.class);
+        mViewModel.getPresenceData().observe(this,resource -> {
+            if (resource == null) return;
+            SelfPresenceModel data = resource.data;
+            switch (resource.status) {
+                case SUCCESS: {
+                    switchSessionPresence.setChecked(data.isIs_public());
+                }
+                case LOADING: {
+                    break;
+                }
+                default: {
+                    Log.e(resource.status.name(), resource.message == null ? "Null" : resource.message);
+                }
+            }
+        });
+
         mViewModel.getActiveSessionDetail().observe(this, resource -> {
             if (resource == null) return;
             ActiveSessionModel data = resource.data;
             switch (resource.status) {
                 case SUCCESS: {
                     mSessionMembersAdapter.setUsers(data != null ? data.getCustomers() : null);
-                    tvBill.setText(data != null ? String.valueOf(data.getBill()) : null);
+                    tvBill.setText(data != null ? data.getBill() : null);
 
                     if(data.gethost()!=null) {
                         tv_waiter_name.setText(data.gethost().getDisplayName());
@@ -94,23 +112,14 @@ public class ActiveSessionActivity extends AppCompatActivity implements ActiveSe
             }
         });
 
-        mViewModel.getPresenceData().observe(this,resource -> {
-            if (resource == null) return;
-//            Log.e("data====", String.valueOf(resource.data.isIs_public()));
-//            if (resource == null) return;
-//            SessionCustomerModel data = resource.data;
-//            switch (resource.status) {
-//                case SUCCESS: {
-//                  switchSessionPresence.setChecked(data.isIs_public());
-//                }
-//                case LOADING: {
-//                    break;
-//                }
-//                default: {
-//                    Log.e(resource.status.name(), resource.message == null ? "Null" : resource.message);
-//                }
-//            }
-        });
+//        mMenuViewModel.getTotalOrderedCount().observe(this, count -> {
+//            if (count == null)
+//                return;
+//            if (count > 0)
+//                tvCountItems.setText(Utils.formatCount(count));
+//            else
+//                tvCountItems.setText("");
+//        });
 
 
         mViewModel.getObservableData().observe(this, resource -> {
@@ -163,7 +172,7 @@ public class ActiveSessionActivity extends AppCompatActivity implements ActiveSe
                 .show();
     }*/
 
-    @OnClick(R.id.btn_active_session_checkout)
+    @OnClick(R.id.btn_cart)
     public void openBillDetails(){
         startActivity(new Intent(this, ActiveSessionBillDetails.class));
     }

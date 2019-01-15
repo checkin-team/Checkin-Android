@@ -12,6 +12,7 @@ import com.checkin.app.checkin.Review.ShopReview.ShopReviewModel;
 import com.checkin.app.checkin.Search.SearchResultPeopleModel;
 import com.checkin.app.checkin.Search.SearchResultShopModel;
 import com.checkin.app.checkin.Session.ActiveSession.ActiveSessionModel;
+import com.checkin.app.checkin.Session.SelfPresenceModel;
 import com.checkin.app.checkin.Session.SessionCustomerModel;
 import com.checkin.app.checkin.Session.SessionViewOrdersModel;
 import com.checkin.app.checkin.Shop.RecentCheckin.Model.RecentCheckinModel;
@@ -154,7 +155,7 @@ public interface WebApiService {
     Call<ObjectNode> postActiveSessionCustomers(@Body ObjectNode data);
 
     @GET("sessions/active/customers/self/")
-    Call<SessionCustomerModel> getSelfPresence();
+    Call<SelfPresenceModel> getSelfPresence();
 
     @PUT("sessions/active/customers/self/")
     Call<ObjectNode> putActiveSessionSelfCustomer(@Body ObjectNode data);

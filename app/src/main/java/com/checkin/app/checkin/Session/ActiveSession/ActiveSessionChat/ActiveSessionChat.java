@@ -36,18 +36,26 @@ import static com.checkin.app.checkin.Session.ActiveSession.ActiveSessionChat.Ac
 import static com.checkin.app.checkin.Session.ActiveSession.ActiveSessionChat.ActiveSessionChat.CHATCONCERNYPES.CONCERN_QUALITY;
 
 public class ActiveSessionChat extends AppCompatActivity implements ActiveSessionChatAdapter.ChatInteraction {
-    @BindView(R.id.bottom_expand_menu) RelativeLayout bottom_expand_menu;
-    @BindView(R.id.rv_active_session_chat) RecyclerView rv_active_session_chat;
-    @BindView(R.id.et_msg) EditText et_msg;
-    @BindView(R.id.btn_send_msg) ImageView btn_send_msg;
-    @BindView(R.id.im_chat_side_menu) ImageView im_chat_side_menu;
-    @BindView(R.id.ll_call_waiter_container) LinearLayout ll_call_waiter_container;
-    @BindView(R.id.ll_table_cleaning_container) LinearLayout ll_table_cleaning_container;
-    @BindView(R.id.ll_refill_glass) LinearLayout ll_refill_glass;
-    int concerns =0, event_id = 0 ;
+    @BindView(R.id.bottom_expand_menu)
+    RelativeLayout bottom_expand_menu;
+    @BindView(R.id.rv_active_session_chat)
+    RecyclerView rv_active_session_chat;
+    @BindView(R.id.et_msg)
+    EditText et_msg;
+    @BindView(R.id.btn_send_msg)
+    ImageView btn_send_msg;
+    @BindView(R.id.im_chat_side_menu)
+    ImageView im_chat_side_menu;
+    @BindView(R.id.ll_call_waiter_container)
+    LinearLayout ll_call_waiter_container;
+    @BindView(R.id.ll_table_cleaning_container)
+    LinearLayout ll_table_cleaning_container;
+    @BindView(R.id.ll_refill_glass)
+    LinearLayout ll_refill_glass;
+    int concerns = 0, event_id = 0;
 
     public enum CHATCONCERNYPES {
-        CONCERN_NONE (0), CONCERN_DELAY (1), CONCERN_QUALITY (2);
+        CONCERN_NONE(0), CONCERN_DELAY(1), CONCERN_QUALITY(2);
 
         final int tag;
 
@@ -67,6 +75,7 @@ public class ActiveSessionChat extends AppCompatActivity implements ActiveSessio
             return CONCERN_NONE;
         }
     }
+
     private ActiveSessionChatAdapter mChatAdapter;
     private ActiveSessionChatViewModel mViewModel;
     ActiveSessionCustomChatDataModel chatDataModel;
@@ -78,7 +87,9 @@ public class ActiveSessionChat extends AppCompatActivity implements ActiveSessio
         ButterKnife.bind(this);
 
         getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_PAN);
-        rv_active_session_chat.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false));
+        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, true);
+//        linearLayoutManager.setStackFromEnd(true);
+        rv_active_session_chat.setLayoutManager(linearLayoutManager);
         mChatAdapter = new ActiveSessionChatAdapter(null, ActiveSessionChat.this, this);
         rv_active_session_chat.setAdapter(mChatAdapter);
 
@@ -86,18 +97,17 @@ public class ActiveSessionChat extends AppCompatActivity implements ActiveSessio
         mViewModel.getSessionChat().observe(this, new Observer<Resource<List<ActiveSessionChatModel>>>() {
             @Override
             public void onChanged(@Nullable Resource<List<ActiveSessionChatModel>> activeSessionChatModelResource) {
-                if (activeSessionChatModelResource != null && activeSessionChatModelResource.status == Resource.Status.SUCCESS)
+                if (activeSessionChatModelResource != null && activeSessionChatModelResource.status == Resource.Status.SUCCESS){
                     mChatAdapter.setData(activeSessionChatModelResource.data);
+                }
             }
         });
 
-        Log.e("extraaa",String.valueOf(getIntent().getSerializableExtra("service")));
-
-        if(getIntent().getSerializableExtra("service").equals(ActiveSessionCustomChatDataModel.CHATSERVICETYPES.SERVICE_CALL_WAITER))
+        if (getIntent().getSerializableExtra("service").equals(ActiveSessionCustomChatDataModel.CHATSERVICETYPES.SERVICE_CALL_WAITER))
             ll_call_waiter_container.performClick();
-        else if(getIntent().getSerializableExtra("service").equals(ActiveSessionCustomChatDataModel.CHATSERVICETYPES.SERVICE_CLEAN_TABLE))
+        else if (getIntent().getSerializableExtra("service").equals(ActiveSessionCustomChatDataModel.CHATSERVICETYPES.SERVICE_CLEAN_TABLE))
             ll_table_cleaning_container.performClick();
-        else if(getIntent().getSerializableExtra("service").equals(ActiveSessionCustomChatDataModel.CHATSERVICETYPES.SERVICE_BRING_COMMODITY))
+        else if (getIntent().getSerializableExtra("service").equals(ActiveSessionCustomChatDataModel.CHATSERVICETYPES.SERVICE_BRING_COMMODITY))
             ll_refill_glass.performClick();
 
         mViewModel.getObservableData().observe(this, resource -> {
@@ -108,6 +118,7 @@ public class ActiveSessionChat extends AppCompatActivity implements ActiveSessio
                     Toast.makeText(this, "Sent!", Toast.LENGTH_SHORT).show();
                     et_msg.setText("");
                     et_msg.setHint(getResources().getString(R.string.title_how_can_we_assist_you));
+                    btn_send_msg.setTag(null);
                     mViewModel.updateResults();
                     break;
                 }
@@ -120,24 +131,24 @@ public class ActiveSessionChat extends AppCompatActivity implements ActiveSessio
         });
     }
 
-    public void setMessage(String msg){
+    public void setMessage(String msg) {
         et_msg.setText(msg);
     }
 
     @OnClick(R.id.ll_call_waiter_container)
-    public void clickCallWaiter(){
+    public void clickCallWaiter() {
         et_msg.setText(getResources().getString(R.string.msg_call_waiter));
         btn_send_msg.setTag(ActiveSessionCustomChatDataModel.CHATSERVICETYPES.SERVICE_CALL_WAITER);
     }
 
     @OnClick(R.id.ll_table_cleaning_container)
-    public void clickTableClean(){
+    public void clickTableClean() {
         et_msg.setText(getResources().getString(R.string.msg_clean_table));
         btn_send_msg.setTag(ActiveSessionCustomChatDataModel.CHATSERVICETYPES.SERVICE_CLEAN_TABLE);
     }
 
     @OnClick(R.id.ll_refill_glass)
-    public void clickRefillGlass(){
+    public void clickRefillGlass() {
         et_msg.setText(getResources().getString(R.string.msg_refill_glass));
         btn_send_msg.setTag(ActiveSessionCustomChatDataModel.CHATSERVICETYPES.SERVICE_BRING_COMMODITY);
     }
@@ -160,33 +171,43 @@ public class ActiveSessionChat extends AppCompatActivity implements ActiveSessio
     @OnClick(R.id.btn_send_msg)
     public void sendMsg() {
         if (!TextUtils.isEmpty(et_msg.getText().toString().trim())) {
-            if(concerns!= 0) mViewModel.raiseConcern(concerns,et_msg.getText().toString().trim(),event_id);
-            else mViewModel.sendMessage(et_msg.getText().toString().trim(), btn_send_msg.getTag());
-        }else {
+            if (concerns != 0) {
+                mViewModel.raiseConcern(concerns, et_msg.getText().toString().trim(), event_id);
+            } else {
+                if (btn_send_msg.getTag() == null) {
+                    btn_send_msg.setTag(ActiveSessionCustomChatDataModel.CHATSERVICETYPES.SERVICE_NONE);
+                    Log.e("tag====1==", String.valueOf(btn_send_msg.getTag()));
+                }
+                Log.e("tag====12==", String.valueOf(btn_send_msg.getTag()));
+                mViewModel.sendMessage(et_msg.getText().toString().trim(), btn_send_msg.getTag());
+
+            }
+
+        } else {
             Toast.makeText(this, "Please enter the message.", Toast.LENGTH_SHORT).show();
         }
     }
 
     @OnClick(R.id.ll_napkin_container)
-    public void clickNapkin(){
+    public void clickNapkin() {
         et_msg.setText("Napkins required");
         btn_send_msg.setTag(ActiveSessionCustomChatDataModel.CHATSERVICETYPES.SERVICE_BRING_COMMODITY);
     }
 
     @OnClick(R.id.ll_extra_plates_container)
-    public void clickExtraPlates(){
+    public void clickExtraPlates() {
         et_msg.setText("Bring extra plates");
         btn_send_msg.setTag(ActiveSessionCustomChatDataModel.CHATSERVICETYPES.SERVICE_BRING_COMMODITY);
     }
 
     @OnClick(R.id.ll_salt_container)
-    public void clickSalt(){
+    public void clickSalt() {
         et_msg.setText("Bring salt");
         btn_send_msg.setTag(ActiveSessionCustomChatDataModel.CHATSERVICETYPES.SERVICE_BRING_COMMODITY);
     }
 
     @OnClick(R.id.ll_sauce_container)
-    public void clickSauce(){
+    public void clickSauce() {
         et_msg.setText("Bring chili sauce");
         btn_send_msg.setTag(ActiveSessionCustomChatDataModel.CHATSERVICETYPES.SERVICE_BRING_COMMODITY);
     }
