@@ -22,8 +22,8 @@ public class ShopInvoiceRepository {
         mWebService = ApiClient.getApiService(context);
     }
 
-    public LiveData<Resource<List<RestaurantResponseModel>>> getRestaurantById(String restaurant_id){
-        return new NetworkBoundResource<List<RestaurantResponseModel>,List<RestaurantResponseModel>>(){
+    public LiveData<Resource<List<RestaurantSessionModel>>> getRestaurantSessionsById(String restaurantId, String fromDate, String toDate){
+        return new NetworkBoundResource<List<RestaurantSessionModel>,List<RestaurantSessionModel>>(){
 
             @Override
             protected boolean shouldUseLocalDb() {
@@ -32,15 +32,19 @@ public class ShopInvoiceRepository {
 
             @NonNull
             @Override
-            protected LiveData<ApiResponse<List<RestaurantResponseModel>>> createCall() {
-                return new RetrofitLiveData<>(mWebService.getRestaurantsById(restaurant_id));
+            protected LiveData<ApiResponse<List<RestaurantSessionModel>>> createCall() {
+                return new RetrofitLiveData<>(mWebService.getRestaurantSessionsById(restaurantId));
             }
 
             @Override
-            protected void saveCallResult(List<RestaurantResponseModel> data) {
+            protected void saveCallResult(List<RestaurantSessionModel> data) {
 
             }
         }.getAsLiveData();
+    }
+
+    public LiveData<Resource<List<RestaurantSessionModel>>> getRestaurantSessionsById(String restaurantId) {
+        return getRestaurantSessionsById(restaurantId, null, null);
     }
 
     public static ShopInvoiceRepository getInstance(Application application) {

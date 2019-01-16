@@ -5,7 +5,7 @@ import com.checkin.app.checkin.Menu.Model.MenuModel;
 import com.checkin.app.checkin.Menu.Model.OrderedItemModel;
 import com.checkin.app.checkin.Misc.GenericDetailModel;
 import com.checkin.app.checkin.Notifications.NotificationModel;
-import com.checkin.app.checkin.Shop.ShopInvoice.RestaurantResponseModel;
+import com.checkin.app.checkin.Shop.ShopInvoice.RestaurantSessionModel;
 import com.checkin.app.checkin.Waiter.EventModel;
 import com.checkin.app.checkin.Search.SearchResultModel;
 import com.checkin.app.checkin.Session.ActiveSession.ActiveSessionModel;
@@ -192,6 +192,6 @@ public interface WebApiService {
     Call<ObjectNode> postItemCompleted(@Path("table_id") long tableId,@Body ObjectNode data);
 
     /*ShopInvoice all API*/
-    @GET("/sessions/restaurants/{restaurant_id}/")
-    Call<List<RestaurantResponseModel>> getRestaurantsById(@Path("restaurant_id") String restaurant_id);
+    @GET("sessions/restaurants/{restaurant_id}/")
+    Call<List<RestaurantSessionModel>> getRestaurantSessionsById(@Path("restaurant_id") String restaurant_id);
 }

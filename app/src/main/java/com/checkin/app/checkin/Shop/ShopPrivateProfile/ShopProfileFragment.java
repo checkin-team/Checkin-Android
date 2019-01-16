@@ -22,6 +22,7 @@ import com.checkin.app.checkin.Misc.CoverPagerAdapter;
 import com.checkin.app.checkin.Misc.StatusTextAdapter;
 import com.checkin.app.checkin.R;
 import com.checkin.app.checkin.Shop.RestaurantModel;
+import com.checkin.app.checkin.Shop.ShopInvoice.ShopInvoiceActivity;
 import com.checkin.app.checkin.Utility.Util;
 import com.rd.PageIndicatorView;
 import com.rd.animation.type.AnimationType;
@@ -136,7 +137,7 @@ public class ShopProfileFragment extends Fragment {
         startActivity(mImageChangeIntent);
     }
 
-    @OnClick({R.id.btn_members, R.id.btn_notifications, R.id.btn_insights, R.id.btn_cuisine})
+    @OnClick({R.id.btn_members, R.id.btn_invoice, R.id.btn_insights, R.id.btn_cuisine})
     public void onClick(View v) {
         Intent intent;
         switch (v.getId()) {
@@ -145,7 +146,10 @@ public class ShopProfileFragment extends Fragment {
                 intent.putExtra(MembersActivity.KEY_SHOP_PK, mViewModel.getShopPk());
                 startActivity(intent);
                 break;
-            case R.id.btn_notifications:
+            case R.id.btn_invoice:
+                intent = new Intent(v.getContext(),ShopInvoiceActivity.class);
+                intent.putExtra(ShopInvoiceActivity.KEY_SHOP_PK, mViewModel.getShopPk());
+                startActivity(intent);
                 break;
             case R.id.btn_insights:
                 break;

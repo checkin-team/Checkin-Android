@@ -36,9 +36,9 @@ public class ShopInvoiceDetailFeedbackPagerAdapter extends FragmentPagerAdapter 
     @Override
     public CharSequence getPageTitle(int position) {
         if (position == 0)
-            return "DETAIL";
+            return "DETAILS";
         else if (position == 1)
-            return "FEEDBACK";
+            return "FEEDBACKS";
         else
             return null;
     }

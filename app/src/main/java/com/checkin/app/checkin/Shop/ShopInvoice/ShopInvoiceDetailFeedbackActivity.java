@@ -1,17 +1,22 @@
 package com.checkin.app.checkin.Shop.ShopInvoice;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.TabLayout;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.checkin.app.checkin.Misc.BriefModel;
 import com.checkin.app.checkin.R;
+
+import java.util.Date;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -23,8 +28,8 @@ public class ShopInvoiceDetailFeedbackActivity extends AppCompatActivity {
     ImageView ivShopInvoiceDetailFeedbackBack;
     @BindView(R.id.tv_order_title)
     TextView tvOrderTitle;
-    @BindView(R.id.tv_s_id)
-    TextView tvSId;
+    @BindView(R.id.tv_hash_id)
+    TextView tvHashId;
     @BindView(R.id.tv_shop_invoice_date)
     TextView tvShopInvoiceDate;
     @BindView(R.id.tv_shop_invoice_waiter_title)
@@ -55,6 +60,7 @@ public class ShopInvoiceDetailFeedbackActivity extends AppCompatActivity {
     RelativeLayout rlShopInvoiceDetailFeedback;
 
     private static final int TAB_COUNT = 2;
+    public static final String ORDER_DETAIL = "ORDER_DETAIL";
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -62,7 +68,42 @@ public class ShopInvoiceDetailFeedbackActivity extends AppCompatActivity {
         setContentView(R.layout.activity_shop_invoice_detail_feedback);
         ButterKnife.bind(this);
 
+        RestaurantSessionModel data = (RestaurantSessionModel) getIntent().getSerializableExtra("ORDER_DETAIL");
+
+        if (data != null){
+            mSetMyToolbarData(data);
+        }
+
         mSetMyViewPager();
+    }
+
+    private void mSetMyToolbarData(RestaurantSessionModel data) {
+        Integer mPk = data.getPk();
+        Date mDate = data.getCheckedIn();
+        Integer mCountCustomer = data.getCountCustomers();
+        Integer mCountOrder = data.getCountOrders();
+        String mHashId = data.getHashId();
+        String mTable = data.getTable();
+
+        BriefModel mHost = data.getHost();
+
+        if (mHost != null){
+            tvShopInvoiceWaiterName.setText(mHost.getDisplayName());
+        }else {
+            tvShopInvoiceWaiterName.setText("Unassigned");
+        }
+
+        tvHashId.setText(mHashId);
+
+        try{
+            String mFinalDate = data.getFormattedDate(mDate);
+            tvShopInvoiceDate.setText(mFinalDate);
+        }catch (Exception ex){
+            Log.d("Parse Exception",ex.getLocalizedMessage());
+        }
+        tvShopInvoiceUserNumber.setText(String.valueOf(mCountCustomer));
+        tvShopInvoiceItem.setText(String.format("%s %s",mCountOrder,"Item's"));
+        tvShopInvoiceTableNumber.setText(mTable);
     }
 
     private void mSetMyViewPager() {

@@ -42,7 +42,7 @@
                 android:layout_marginStart="@dimen/app_bar_elevation_size"
                 android:layout_alignBaseline="@id/tv_order_title"
                 android:layout_toEndOf="@id/tv_order_title"
-                android:id="@+id/tv_s_id"
+                android:id="@+id/tv_hash_id"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="#56743536323"
@@ -53,16 +53,17 @@
                 android:id="@+id/tv_shop_invoice_date"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_below="@+id/tv_s_id"
+                android:layout_below="@+id/tv_hash_id"
                 android:layout_marginTop="@dimen/spacing_extra_small"
                 android:text="Dec 5, 2108 10:34 AM"
-                android:textColor="@color/brownish_grey"
+                android:textColor="@color/pinkish_grey"
                 android:textSize="@dimen/font_medium" />
 
             <TextView
                 android:id="@+id/tv_shop_invoice_waiter_title"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:textColor="@color/brownish_grey"
                 android:layout_below="@+id/tv_shop_invoice_date"
                 android:layout_marginTop="@dimen/spacing_extra_small"
                 android:text="Waiter :"
@@ -75,6 +76,7 @@
                 android:layout_below="@+id/tv_shop_invoice_date"
                 android:layout_marginStart="@dimen/app_bar_elevation_size"
                 android:layout_marginTop="@dimen/spacing_extra_small"
+                android:textColor="@color/brownish_grey"
                 android:layout_toEndOf="@id/tv_shop_invoice_waiter_title"
                 android:text="Ashish Gupta"
                 android:textSize="@dimen/font_medium" />
@@ -83,7 +85,7 @@
                 android:id="@+id/tv_shop_invoice_view"
                 android:layout_width="@dimen/height_horizontal_line"
                 android:layout_height="@dimen/size_tiny_icon"
-                android:layout_below="@+id/tv_s_id"
+                android:layout_below="@+id/tv_hash_id"
                 android:layout_marginStart="@dimen/thickness_line"
                 android:layout_marginTop="@dimen/spacing_bottom_view"
                 android:layout_marginEnd="@dimen/thickness_line"
@@ -94,11 +96,11 @@
                 android:id="@+id/tv_shop_invoice_item"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_below="@+id/tv_s_id"
+                android:layout_below="@+id/tv_hash_id"
                 android:layout_marginTop="@dimen/spacing_extra_small"
                 android:layout_toEndOf="@id/tv_shop_invoice_view"
                 android:text="3 Item's"
-                android:textColor="@color/brownish_grey"
+                android:textColor="@color/pinkish_grey"
                 android:textSize="@dimen/font_medium" />
 
         </RelativeLayout>
