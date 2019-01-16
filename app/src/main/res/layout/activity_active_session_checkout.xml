@@ -51,7 +51,7 @@
                 android:orientation="vertical">
 
             <android.support.v7.widget.RecyclerView
-                android:id="@+id/rv_food_items"
+                android:id="@+id/rv_ordered_items"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:padding="@dimen/spacing_normal"/>
@@ -74,6 +74,7 @@
                         android:id="@+id/im_waiter"
                        android:layout_width="50dp"
                         android:layout_height="50dp"
+                        android:layout_marginStart="@dimen/spacing_normal"
                         android:src="@drawable/ic_waiter" />
 
                     <TextView
@@ -96,6 +97,7 @@
                     android:layout_marginEnd="@dimen/spacing_small"/>
 
                 <TextView
+                    android:id="@+id/tv_tip"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="20.00"
@@ -128,7 +130,7 @@
                     android:textColor="@color/brownish_grey"/>
 
                 <TextView
-                    android:id="@+id/tv_item_price"
+                    android:id="@+id/tv_subtotal"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="300.00"
@@ -152,6 +154,7 @@
                         android:textColor="@color/brownish_grey"/>
 
                     <TextView
+                        android:id="@+id/tv_charges"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="300.00"
@@ -175,6 +178,7 @@
                         android:textColor="@color/brownish_grey"/>
 
                     <TextView
+                        android:id="@+id/tv_taxes"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="300.00"
@@ -198,6 +202,7 @@
                         android:textColor="@color/brownish_grey"/>
 
                     <TextView
+                        android:id="@+id/tv_promo"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="300.00"
@@ -221,6 +226,7 @@
                         android:textColor="@color/brownish_grey"/>
 
                     <TextView
+                        android:id="@+id/tv_discount"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="300.00"
@@ -250,6 +256,7 @@
                         android:text="@string/total"/>
 
                     <TextView
+                        android:id="@+id/tv_total"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:textSize="@dimen/font_small"

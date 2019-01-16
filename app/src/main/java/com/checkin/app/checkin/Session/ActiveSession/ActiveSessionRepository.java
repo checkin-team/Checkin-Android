@@ -229,4 +229,21 @@ public class ActiveSessionRepository extends BaseRepository {
             }
         }.getAsLiveData();
     }
+
+    public LiveData<Resource<ActiveSessionInvoiceModel>> getSessionInvoiceDetail(String session_id) {
+        return new NetworkBoundResource<ActiveSessionInvoiceModel, ActiveSessionInvoiceModel>() {
+
+            @Override
+            protected void saveCallResult(ActiveSessionInvoiceModel data) {}
+
+            @Override
+            protected boolean shouldUseLocalDb() {return false;}
+
+            @NonNull
+            @Override
+            protected LiveData<ApiResponse<ActiveSessionInvoiceModel>> createCall() {
+                return new RetrofitLiveData<>(mWebService.getSessionInvoice(session_id));
+            }
+        }.getAsLiveData();
+    }
 }

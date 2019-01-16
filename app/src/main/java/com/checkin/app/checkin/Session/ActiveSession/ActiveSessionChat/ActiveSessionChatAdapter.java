@@ -37,7 +37,6 @@ public class ActiveSessionChatAdapter extends RecyclerView.Adapter {
 
     public void setData(List<ActiveSessionChatModel> data) {
         this.mChats = data;
-//        notifyItemInserted(mChats.size());
         notifyDataSetChanged();
     }
 
@@ -115,6 +114,7 @@ public class ActiveSessionChatAdapter extends RecyclerView.Adapter {
                             chat.getStatus() != SessionViewOrdersModel.SESSIONEVENT.CANCELLED) {
                         itemView.setBackgroundColor(mContext.getResources().getColor(R.color.grey_shade));
                         mChatInterface.onLongPress(chat.getType());
+
                         return true;
                     }
                     return false;

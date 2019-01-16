@@ -28,6 +28,7 @@ public class ActiveSessionViewModel extends BaseViewModel {
 
     private MediatorLiveData<Resource<ActiveSessionModel>> mSessionData = new MediatorLiveData<>();
     private MediatorLiveData<Resource<SelfPresenceModel>> mPresenceData = new MediatorLiveData<>();
+    private MediatorLiveData<Resource<ActiveSessionInvoiceModel>> mInvoiceData = new MediatorLiveData<>();
 
     private String mShopPk;
 
@@ -50,6 +51,14 @@ public class ActiveSessionViewModel extends BaseViewModel {
     public LiveData<Resource<SelfPresenceModel>> getPresenceData(){
         mPresenceData.addSource(mRepository.getSelfPresence(), mPresenceData::setValue);
         return mPresenceData;
+    }
+
+    public LiveData<Resource<ActiveSessionInvoiceModel>> getInvoiceData(){
+        return mInvoiceData;
+    }
+
+    public void getSessionId(String sessionId) {
+        mInvoiceData.addSource(mRepository.getSessionInvoiceDetail(sessionId), mInvoiceData::setValue);
     }
 
     public LiveData<List<OrderedItemModel>> getOrderedItems() {

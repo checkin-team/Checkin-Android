@@ -88,7 +88,7 @@ public class ActiveSessionChat extends AppCompatActivity implements ActiveSessio
 
         getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_PAN);
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, true);
-//        linearLayoutManager.setStackFromEnd(true);
+//        linearLayoutManager.setStackFromEnd(false);
         rv_active_session_chat.setLayoutManager(linearLayoutManager);
         mChatAdapter = new ActiveSessionChatAdapter(null, ActiveSessionChat.this, this);
         rv_active_session_chat.setAdapter(mChatAdapter);

@@ -174,7 +174,7 @@ public class ActiveSessionActivity extends AppCompatActivity implements ActiveSe
 
     @OnClick(R.id.btn_cart)
     public void openBillDetails(){
-        startActivity(new Intent(this, ActiveSessionBillDetails.class));
+        startActivity(new Intent(this, ActiveSessionInvoiceActivity.class));
     }
 
     @OnClick(R.id.ll_call_waiter_container)

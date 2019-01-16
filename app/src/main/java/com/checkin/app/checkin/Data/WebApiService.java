@@ -11,6 +11,7 @@ import com.checkin.app.checkin.Session.ActiveSession.ActiveSessionChat.ActiveSes
 import com.checkin.app.checkin.Review.ShopReview.ShopReviewModel;
 import com.checkin.app.checkin.Search.SearchResultPeopleModel;
 import com.checkin.app.checkin.Search.SearchResultShopModel;
+import com.checkin.app.checkin.Session.ActiveSession.ActiveSessionInvoiceModel;
 import com.checkin.app.checkin.Session.ActiveSession.ActiveSessionModel;
 import com.checkin.app.checkin.Session.SelfPresenceModel;
 import com.checkin.app.checkin.Session.SessionCustomerModel;
@@ -174,6 +175,9 @@ public interface WebApiService {
 
     @POST("sessions/active/request/service/")
     Call<ObjectNode> postCustomerServiceMsg(@Body ObjectNode data);
+
+    @GET("sessions/{session_id}/invoice/")
+    Call<ActiveSessionInvoiceModel> getSessionInvoice(@Path("session_id") String session_id);
 
     // endregion
 
