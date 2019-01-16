@@ -3,6 +3,7 @@
     app:cardCornerRadius="@dimen/spacing_small"
     app:cardElevation="@dimen/spacing_extra_tiny"
     android:layout_marginTop="@dimen/app_bar_elevation_size"
+    android:id="@+id/cv_shop_invoice"
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"

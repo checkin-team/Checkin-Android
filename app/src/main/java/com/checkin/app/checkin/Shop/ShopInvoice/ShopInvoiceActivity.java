@@ -17,8 +17,6 @@ import com.checkin.app.checkin.R;
 import java.text.ParseException;
 import java.util.Calendar;
 
-import butterknife.ButterKnife;
-
 import static com.checkin.app.checkin.Utility.Util.getCurrentFormattedDate;
 import static com.checkin.app.checkin.Utility.Util.getFormattedSelectedDate;
 
@@ -38,7 +36,6 @@ public class ShopInvoiceActivity extends AppCompatActivity implements View.OnCli
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_shop_invoice);
-        ButterKnife.bind(this);
 
         ActionBar actionBar = getSupportActionBar();
 
@@ -65,7 +62,7 @@ public class ShopInvoiceActivity extends AppCompatActivity implements View.OnCli
 
         setMyInitial(c);
 
-        ShopInvoiceAdapter shopInvoiceAdapter = new ShopInvoiceAdapter();
+        ShopInvoiceAdapter shopInvoiceAdapter = new ShopInvoiceAdapter(ShopInvoiceActivity.this);
 
         rvShopInvoice.setLayoutManager(new LinearLayoutManager(this));
         rvShopInvoice.setAdapter(shopInvoiceAdapter);

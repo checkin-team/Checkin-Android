@@ -6,10 +6,10 @@
 
     <LinearLayout
         android:id="@+id/ll_shop_invoice_detail_feedback"
-        android:paddingStart="10dp"
-        android:paddingEnd="10dp"
-        android:paddingTop="5dp"
-        android:paddingBottom="5dp"
+        android:paddingStart="@dimen/spacing_small"
+        android:paddingEnd="@dimen/spacing_small"
+        android:paddingTop="@dimen/app_bar_elevation_size"
+        android:paddingBottom="@dimen/app_bar_elevation_size"
         android:background="@drawable/background_bottom_grey_line"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -17,11 +17,12 @@
         android:weightSum="1">
 
         <ImageView
-            android:layout_marginTop="16dp"
+            android:id="@+id/iv_shop_invoice_detail_feedback_back"
+            android:layout_marginTop="@dimen/fab_margin"
             android:contentDescription="@null"
             android:src="@drawable/ic_appbar_back"
-            android:layout_width="25dp"
-            android:layout_height="25dp" />
+            android:layout_width="@dimen/drawer_left_hieght"
+            android:layout_height="@dimen/drawer_left_hieght" />
 
         <RelativeLayout
             android:layout_width="@dimen/car_view_size_small_tiny"
@@ -38,7 +39,7 @@
                 android:textSize="@dimen/font_normal" />
 
             <TextView
-                android:layout_marginStart="5dp"
+                android:layout_marginStart="@dimen/app_bar_elevation_size"
                 android:layout_alignBaseline="@id/tv_order_title"
                 android:layout_toEndOf="@id/tv_order_title"
                 android:id="@+id/tv_s_id"
@@ -155,43 +156,55 @@
     </LinearLayout>
 
     <android.support.design.widget.TabLayout
+        android:id="@+id/tl_shop_invoice_detail_feedback"
         app:tabIndicatorColor="@color/colorRed"
         app:tabSelectedTextColor="@color/colorRed"
         app:tabTextColor="@color/brownish_grey"
         app:tabGravity="fill"
         app:tabMode="fixed"
         android:background="@color/white"
-        android:elevation="5dp"
+        android:elevation="@dimen/card_view_small_elevation"
         android:layout_below="@id/ll_shop_invoice_detail_feedback"
         android:layout_width="match_parent"
         android:layout_height="?attr/actionBarSize"/>
 
+    <android.support.v4.view.ViewPager
+        android:layout_above="@+id/rl_shop_invoice_detail_feedback"
+        android:layout_below="@+id/tl_shop_invoice_detail_feedback"
+        android:id="@+id/vp_shop_invoice_detail_feedback"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"/>
+
     <RelativeLayout
+        android:id="@+id/rl_shop_invoice_detail_feedback"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
         android:background="@drawable/background_top_grey_line"
-        android:padding="12dp">
+        android:paddingStart="@dimen/text_padding_large"
+        android:paddingEnd="@dimen/text_padding_large"
+        android:paddingTop="@dimen/app_bar_elevation_size"
+        android:paddingBottom="@dimen/notif_heading_size">
 
         <TextView
             android:id="@+id/tv_shop_invoice_detail_feedback_bill_title"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginEnd="50dp"
+            android:layout_marginEnd="@dimen/height_spinner_item"
             android:layout_toStartOf="@id/tv_shop_invoice_detail_feedback_rupee_title"
             android:text="BILL TOTAL"
             android:textColor="@color/colorRed"
-            android:textSize="16sp" />
+            android:textSize="@dimen/font_heading" />
 
         <TextView
             android:id="@+id/tv_shop_invoice_detail_feedback_rupee_title"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginEnd="2dp"
+            android:layout_marginEnd="@dimen/card_view_small_elevation"
             android:layout_toStartOf="@id/tv_shop_invoice_detail_feedback_bill"
             android:text="@string/rupee_symbol"
             android:textColor="@color/colorRed"
-            android:textSize="16sp" />
+            android:textSize="@dimen/font_heading" />
 
         <TextView
             android:id="@+id/tv_shop_invoice_detail_feedback_bill"
@@ -200,7 +213,7 @@
             android:layout_alignParentEnd="true"
             android:text="786.5"
             android:textColor="@color/colorRed"
-            android:textSize="16sp" />
+            android:textSize="@dimen/font_heading" />
 
     </RelativeLayout>
 
