@@ -171,52 +171,9 @@
         android:layout_height="?attr/actionBarSize"/>
 
     <android.support.v4.view.ViewPager
-        android:layout_above="@+id/rl_shop_invoice_detail_feedback"
         android:layout_below="@+id/tl_shop_invoice_detail_feedback"
         android:id="@+id/vp_shop_invoice_detail_feedback"
         android:layout_width="match_parent"
         android:layout_height="match_parent"/>
-
-    <RelativeLayout
-        android:id="@+id/rl_shop_invoice_detail_feedback"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:background="@drawable/background_top_grey_line"
-        android:paddingStart="@dimen/text_padding_large"
-        android:paddingEnd="@dimen/text_padding_large"
-        android:paddingTop="@dimen/app_bar_elevation_size"
-        android:paddingBottom="@dimen/notif_heading_size">
-
-        <TextView
-            android:id="@+id/tv_shop_invoice_detail_feedback_bill_title"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginEnd="@dimen/height_spinner_item"
-            android:layout_toStartOf="@id/tv_shop_invoice_detail_feedback_rupee_title"
-            android:text="BILL TOTAL"
-            android:textColor="@color/colorRed"
-            android:textSize="@dimen/font_heading" />
-
-        <TextView
-            android:id="@+id/tv_shop_invoice_detail_feedback_rupee_title"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginEnd="@dimen/card_view_small_elevation"
-            android:layout_toStartOf="@id/tv_shop_invoice_detail_feedback_bill"
-            android:text="@string/rupee_symbol"
-            android:textColor="@color/colorRed"
-            android:textSize="@dimen/font_heading" />
-
-        <TextView
-            android:id="@+id/tv_shop_invoice_detail_feedback_bill"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentEnd="true"
-            android:text="786.5"
-            android:textColor="@color/colorRed"
-            android:textSize="@dimen/font_heading" />
-
-    </RelativeLayout>
 
 </RelativeLayout>

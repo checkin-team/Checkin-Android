@@ -129,6 +129,9 @@ dependencies {
 
     //Readmoretextview
     implementation 'com.borjabravo:readmoretextview:2.1.0'
+
+    //RangeSliderview
+    implementation 'com.appyvet:materialrangebar:1.4.4'
 }
 
 apply plugin: 'com.google.gms.google-services'
