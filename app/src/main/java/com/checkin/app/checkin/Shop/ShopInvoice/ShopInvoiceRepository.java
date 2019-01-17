@@ -33,7 +33,7 @@ public class ShopInvoiceRepository {
             @NonNull
             @Override
             protected LiveData<ApiResponse<List<RestaurantSessionModel>>> createCall() {
-                return new RetrofitLiveData<>(mWebService.getRestaurantSessionsById(restaurantId));
+                return new RetrofitLiveData<>(mWebService.getRestaurantSessionsById(restaurantId,fromDate,toDate));
             }
 
             @Override

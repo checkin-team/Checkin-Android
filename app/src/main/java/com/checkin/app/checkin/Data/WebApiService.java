@@ -21,6 +21,8 @@ import com.fasterxml.jackson.databind.node.ObjectNode;
 
 import java.util.List;
 
+import javax.annotation.Nullable;
+
 import okhttp3.MultipartBody;
 import retrofit2.Call;
 import retrofit2.http.Body;
@@ -193,5 +195,5 @@ public interface WebApiService {
 
     /*ShopInvoice all API*/
     @GET("sessions/restaurants/{restaurant_id}/")
-    Call<List<RestaurantSessionModel>> getRestaurantSessionsById(@Path("restaurant_id") String restaurant_id);
+    Call<List<RestaurantSessionModel>> getRestaurantSessionsById(@Path("restaurant_id") String restaurant_id,@Query("checked_out_before") String checked_out_before, @Query("checked_out_after") String checked_out_after);
 }

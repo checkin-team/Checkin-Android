@@ -11,6 +11,7 @@ import android.support.v7.widget.CardView;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.TextView;
@@ -19,7 +20,9 @@ import com.checkin.app.checkin.Data.Resource;
 import com.checkin.app.checkin.R;
 
 import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.Locale;
 
 import butterknife.BindView;
@@ -49,6 +52,7 @@ public class ShopInvoiceActivity extends AppCompatActivity implements View.OnCli
 
     private int year, month, day;
     private ShopInvoiceAdapter shopInvoiceAdapter;
+    private ShopInvoiceViewModel mShopInvoiceModel;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -71,10 +75,10 @@ public class ShopInvoiceActivity extends AppCompatActivity implements View.OnCli
         String mShopKey = getIntent().getStringExtra(KEY_SHOP_PK);
 
         if (mShopKey != null){
-            ShopInvoiceViewModel mModel = ViewModelProviders.of(this).get(ShopInvoiceViewModel.class);
-            mModel.getRestaurantSessionsById(mShopKey);
+            mShopInvoiceModel = ViewModelProviders.of(this).get(ShopInvoiceViewModel.class);
+            mShopInvoiceModel.getRestaurantSessionsById(mShopKey);
 
-            mModel.getRestaurantSessions().observe(this, input->{
+            mShopInvoiceModel.getRestaurantSessions().observe(this, input->{
                 if (input == null)
                     return;
                 if (input.status == Resource.Status.SUCCESS && input.data !=  null){
@@ -102,12 +106,27 @@ public class ShopInvoiceActivity extends AppCompatActivity implements View.OnCli
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.cv_shop_invoice_from_date:
-                setInvoiceDate(tvShopInvoiceFromDate);
+                String toDate = mFormattedDate(tvShopInvoiceToDate.getText().toString());
+                setInvoiceDate(tvShopInvoiceFromDate,null,toDate);
                 break;
             case R.id.cv_shop_invoice_to_date:
-                setInvoiceDate(tvShopInvoiceToDate);
+                String fromDate = mFormattedDate(tvShopInvoiceFromDate.getText().toString());
+                setInvoiceDate(tvShopInvoiceToDate,fromDate,null);
                 break;
         }
+    }
+
+    private String mFormattedDate(String date) {
+        String mFinalDate = null;
+        try {
+            mFinalDate = getFormattedSelectedDate(date,"MMM dd, yyyy","yyyy-MM-dd");
+            Log.d("mFinalDate", mFinalDate);
+        } catch (ParseException e) {
+            e.printStackTrace();
+            Log.d("ParEx", e.getLocalizedMessage());
+        }
+
+        return mFinalDate;
     }
 
     @Override
@@ -121,14 +140,14 @@ public class ShopInvoiceActivity extends AppCompatActivity implements View.OnCli
         }
     }
 
-    private void setInvoiceDate(TextView tvShopInvoiceDate) {
+    private void setInvoiceDate(TextView tvShopInvoiceDate,String fromDate, String toDate) {
         new DatePickerDialog(this, (datePicker, i, i1, i2) -> {
 
             int mDay = datePicker.getDayOfMonth();
-            int mMonth = datePicker.getMonth();
+            int mMonth = datePicker.getMonth() + 1;
             int mYear = datePicker.getYear();
 
-            String mInitDate = String.format(Locale.ENGLISH, "%04d-%02d-%02d", mYear, mMonth + 1, mDay);
+            String mInitDate = String.format(Locale.ENGLISH, "%04d-%02d-%02d", mYear, mMonth, mDay);
             String finalDate;
 
             try {
@@ -136,6 +155,16 @@ public class ShopInvoiceActivity extends AppCompatActivity implements View.OnCli
                 tvShopInvoiceDate.setText(finalDate);
             } catch (ParseException e) {
                 e.printStackTrace();
+            }
+
+            Log.d("mInite Date",mInitDate);
+
+            if (fromDate != null){
+                mShopInvoiceModel.filterRestaurantSessions(fromDate,mInitDate);
+                Log.d("fromDate", fromDate + " " + mInitDate);
+            }else if (toDate != null){
+                mShopInvoiceModel.filterRestaurantSessions(mInitDate,toDate);
+                Log.d("toDate", mInitDate + " " + toDate);
             }
 
         }, year, month, day).show();
