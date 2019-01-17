@@ -34,6 +34,10 @@ public class SessionViewOrdersModel {
     @JsonProperty("ordered")
     private Date ordered;
 
+    @JsonProperty("is_customized")
+    private boolean is_customized;
+
+
     private SESSIONEVENT status;
 
 
@@ -84,6 +88,10 @@ public class SessionViewOrdersModel {
 
     public Date getOrdered() {
         return ordered;
+    }
+
+    public boolean isIs_customized() {
+        return is_customized;
     }
 
     public long getRemainingCancelTime() {

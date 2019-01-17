@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:id="@+id/parent_layout"
     xmlns:card_view="http://schemas.android.com/apk/res-auto">
 
 
@@ -24,11 +25,10 @@
             <android.support.constraint.ConstraintLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-
                 android:orientation="horizontal">
 
                 <ImageView
-                    android:id="@+id/im_as_back"
+                    android:id="@+id/im_back"
                     android:layout_width="@dimen/button_height_short"
                     android:layout_height="@dimen/button_height_short"
                     android:layout_marginStart="@dimen/spacing_extra_small"
@@ -50,14 +50,14 @@
                     android:textColor="@color/white"
                     android:textSize="@dimen/font_large"
                     app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintStart_toEndOf="@id/im_as_back"
+                    app:layout_constraintStart_toEndOf="@id/im_back"
                     app:layout_constraintTop_toTopOf="parent" />
 
                 <ImageView
                     android:id="@+id/im_chat_side_menu"
                     android:layout_width="40dp"
                     android:layout_height="40dp"
-                    android:src="@drawable/noun_waiter_1793851_1"
+                    android:src="@drawable/complaint_icon"
                     android:layout_marginEnd="@dimen/spacing_normal"
                     app:layout_constraintEnd_toEndOf="parent"
                     android:visibility="gone"/>
@@ -71,6 +71,17 @@
         </android.support.v7.widget.Toolbar>
     </android.support.design.widget.AppBarLayout>
 
+    <android.support.v4.widget.SwipeRefreshLayout
+        android:id="@+id/swipe_down"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        app:layout_constraintBottom_toTopOf="@+id/container_session_actions"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/appbar"
+        app:layout_constraintVertical_chainStyle="spread_inside"
+        app:layout_constraintVertical_weight="1" >
+
     <android.support.v7.widget.RecyclerView
         android:id="@+id/rv_active_session_chat"
         android:layout_width="match_parent"
@@ -82,6 +93,8 @@
         app:layout_constraintTop_toBottomOf="@+id/appbar"
         app:layout_constraintVertical_chainStyle="spread_inside"
         app:layout_constraintVertical_weight="1" />
+    </android.support.v4.widget.SwipeRefreshLayout>
+
 
     <android.support.constraint.ConstraintLayout
         android:id="@+id/container_session_actions"
@@ -91,7 +104,7 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/rv_active_session_chat"
+        app:layout_constraintTop_toBottomOf="@id/swipe_down"
         app:layout_constraintBottom_toTopOf="@+id/bottom_container"
         app:layout_constraintVertical_weight="0.2">
 

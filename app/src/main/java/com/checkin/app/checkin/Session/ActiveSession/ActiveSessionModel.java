@@ -37,6 +37,9 @@ public class ActiveSessionModel {
     @JsonProperty("host")
     private BriefModel host;
 
+    @JsonProperty("is_public")
+    private boolean is_public;
+
     public ActiveSessionModel() {}
 
     public ActiveSessionModel(String bill, List<OrderedItemModel> orderedItems, List<SessionCustomerModel> customers, BriefModel restaurant, BriefModel host) {
@@ -49,6 +52,18 @@ public class ActiveSessionModel {
 
     public String getBill() {
         return bill;
+    }
+
+    public String getPk() {
+        return pk;
+    }
+
+    public Date getCheckedIn() {
+        return checkedIn;
+    }
+
+    public Date getCheckedOut() {
+        return checkedOut;
     }
 
     public List<OrderedItemModel> getOrderedItems() {
@@ -65,5 +80,9 @@ public class ActiveSessionModel {
 
     public BriefModel gethost() {
         return host;
+    }
+
+    public boolean isIs_public() {
+        return is_public;
     }
 }

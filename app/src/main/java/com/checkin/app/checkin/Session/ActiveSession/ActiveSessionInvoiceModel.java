@@ -3,6 +3,7 @@ package com.checkin.app.checkin.Session.ActiveSession;
 import com.checkin.app.checkin.Menu.Model.OrderedItemModel;
 import com.checkin.app.checkin.Misc.BriefModel;
 import com.checkin.app.checkin.Session.SessionBillModel;
+import com.checkin.app.checkin.Session.SessionViewOrdersModel;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 import java.util.List;
@@ -12,7 +13,7 @@ public class ActiveSessionInvoiceModel {
     private String pk;
 
     @JsonProperty("ordered_items")
-    private List<OrderedItemModel> ordered_items;
+    private List<SessionViewOrdersModel> ordered_items;
 
     @JsonProperty("bill")
     private SessionBillModel bill;
@@ -22,7 +23,7 @@ public class ActiveSessionInvoiceModel {
 
     public ActiveSessionInvoiceModel(){}
 
-    public ActiveSessionInvoiceModel(String pk, List<OrderedItemModel> ordered_items, SessionBillModel bill, BriefModel host) {
+    public ActiveSessionInvoiceModel(String pk, List<SessionViewOrdersModel> ordered_items, SessionBillModel bill, BriefModel host) {
         this.pk = pk;
         this.ordered_items = ordered_items;
         this.bill = bill;
@@ -33,7 +34,7 @@ public class ActiveSessionInvoiceModel {
         return pk;
     }
 
-    public List<OrderedItemModel> getOrdered_items() {
+    public List<SessionViewOrdersModel> getOrdered_items() {
         return ordered_items;
     }
 

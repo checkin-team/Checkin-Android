@@ -37,9 +37,6 @@ public class OrderedItemModel implements Cloneable {
     @JsonProperty("ordered")
     private Date ordered;
 
-    @JsonProperty("is_customized")
-    private boolean is_customized;
-
     private int changeCount;
 
     OrderedItemModel() {
@@ -206,7 +203,4 @@ public class OrderedItemModel implements Cloneable {
         return ((OrderedItemModel) super.clone());
     }
 
-    public boolean isIs_customized() {
-        return is_customized;
-    }
 }

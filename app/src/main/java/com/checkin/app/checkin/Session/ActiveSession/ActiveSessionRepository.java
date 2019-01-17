@@ -211,25 +211,6 @@ public class ActiveSessionRepository extends BaseRepository {
         }.getAsLiveData();
     }
 
-    public LiveData<Resource<SelfPresenceModel>> getSelfPresence() {
-        return new NetworkBoundResource<SelfPresenceModel, SelfPresenceModel>() {
-            @Override
-            protected boolean shouldUseLocalDb() {
-                return false;
-            }
-
-            @NonNull
-            @Override
-            protected LiveData<ApiResponse<SelfPresenceModel>> createCall() {
-                    return new RetrofitLiveData<>(mWebService.getSelfPresence());
-            }
-
-            @Override
-            protected void saveCallResult(SelfPresenceModel data) {
-            }
-        }.getAsLiveData();
-    }
-
     public LiveData<Resource<ActiveSessionInvoiceModel>> getSessionInvoiceDetail(String session_id) {
         return new NetworkBoundResource<ActiveSessionInvoiceModel, ActiveSessionInvoiceModel>() {
 

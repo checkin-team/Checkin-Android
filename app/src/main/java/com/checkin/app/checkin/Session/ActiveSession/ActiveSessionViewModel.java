@@ -30,7 +30,7 @@ public class ActiveSessionViewModel extends BaseViewModel {
     private MediatorLiveData<Resource<SelfPresenceModel>> mPresenceData = new MediatorLiveData<>();
     private MediatorLiveData<Resource<ActiveSessionInvoiceModel>> mInvoiceData = new MediatorLiveData<>();
 
-    private String mShopPk;
+    private String mShopPk, mSessionId;
 
     ActiveSessionViewModel(@NonNull Application application) {
         super(application);
@@ -40,7 +40,6 @@ public class ActiveSessionViewModel extends BaseViewModel {
     @Override
     public void updateResults() {
         getActiveSessionDetail();
-        getPresenceData();
     }
 
     public LiveData<Resource<ActiveSessionModel>> getActiveSessionDetail() {
@@ -48,16 +47,11 @@ public class ActiveSessionViewModel extends BaseViewModel {
         return mSessionData;
     }
 
-    public LiveData<Resource<SelfPresenceModel>> getPresenceData(){
-        mPresenceData.addSource(mRepository.getSelfPresence(), mPresenceData::setValue);
-        return mPresenceData;
-    }
-
     public LiveData<Resource<ActiveSessionInvoiceModel>> getInvoiceData(){
         return mInvoiceData;
     }
 
-    public void getSessionId(String sessionId) {
+    public void getSessionIdInvoice(String sessionId) {
         mInvoiceData.addSource(mRepository.getSessionInvoiceDetail(sessionId), mInvoiceData::setValue);
     }
 
@@ -96,5 +90,13 @@ public class ActiveSessionViewModel extends BaseViewModel {
 
     public String getShopPk() {
         return mShopPk;
+    }
+
+    public void setSessionId(String sessionId) {
+        mSessionId = sessionId;
+    }
+
+    public String getSessionId() {
+        return mSessionId;
     }
 }

@@ -1,16 +1,14 @@
 package com.checkin.app.checkin.Session.ActiveSession;
 
+import android.app.Activity;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
-
-import com.checkin.app.checkin.Menu.Model.OrderedItemModel;
 import com.checkin.app.checkin.R;
-import com.checkin.app.checkin.Session.SessionCustomerModel;
-import com.checkin.app.checkin.Utility.HeaderFooterRecyclerViewAdapter;
+import com.checkin.app.checkin.Session.SessionViewOrdersModel;
 import com.checkin.app.checkin.Utility.Utils;
 
 import java.util.List;
@@ -21,23 +19,30 @@ import de.hdodenhof.circleimageview.CircleImageView;
 
 public class ActiveSessionInvoiceAdapter extends RecyclerView.Adapter<ActiveSessionInvoiceAdapter.ViewHolder> {
 
-    private List<OrderedItemModel> mOrderedItems;
+    private List<SessionViewOrdersModel> mOrderedItems;
+    Activity mContext;
 
-    ActiveSessionInvoiceAdapter(List<OrderedItemModel> orderedItems/*, SessionMemberInteraction memberInterface*/){
+    ActiveSessionInvoiceAdapter(List<SessionViewOrdersModel> orderedItems, Activity context){
         this.mOrderedItems = orderedItems;
-//        this.memberInterface = memberInterface;
+        this.mContext = context;
     }
 
-    public void setData(List<OrderedItemModel> data) {
+    public void setData(List<SessionViewOrdersModel> data) {
         this.mOrderedItems = data;
         notifyDataSetChanged();
     }
 
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        final View view = LayoutInflater.from(parent.getContext()).inflate(viewType, parent, false);
+        View view = LayoutInflater.from(parent.getContext()).inflate(viewType, parent, false);
         return new ViewHolder(view);
     }
+
+    @Override
+    public int getItemViewType(final int position) {
+        return R.layout.item_active_session_checkout_menu;
+    }
+
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
@@ -50,7 +55,7 @@ public class ActiveSessionInvoiceAdapter extends RecyclerView.Adapter<ActiveSess
     }
 
 
-    public void setUsers(List<OrderedItemModel> users) {
+    public void setUsers(List<SessionViewOrdersModel> users) {
         this.mOrderedItems = users;
         notifyDataSetChanged();
     }
@@ -63,9 +68,14 @@ public class ActiveSessionInvoiceAdapter extends RecyclerView.Adapter<ActiveSess
             ButterKnife.bind(this, view);
         }
 
-        void bindData(OrderedItemModel orderedItem) {
-            tv_menu_item_name.setText(orderedItem.getItemModel().getName() + " X " + orderedItem.getQuantity());
-            tv_item_price.setText(String.valueOf(orderedItem.getCost()));
+        void bindData(SessionViewOrdersModel orderedItem) {
+            tv_menu_item_name.setText(orderedItem.getItem().getName() + " x " + orderedItem.getQuantity());
+            if(orderedItem.getItem().isVegetarian())
+            tv_menu_item_name.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ic_veg,0,0,0);
+            else
+                tv_menu_item_name.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ic_non_veg,0,0,0);
+            tv_item_price.setText(mContext.getResources().getString(R.string.rs) + " " +String.valueOf(orderedItem.getCost()));
+
         }
     }
 

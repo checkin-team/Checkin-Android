@@ -56,6 +56,7 @@ public class ActiveSessionActivity extends AppCompatActivity implements ActiveSe
 
     private Receiver mHandler;
     private MenuViewModel mMenuViewModel;
+    private  String session_id;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -72,23 +73,6 @@ public class ActiveSessionActivity extends AppCompatActivity implements ActiveSe
         rvMembers.setAdapter(mSessionMembersAdapter);
 
         mViewModel = ViewModelProviders.of(this).get(ActiveSessionViewModel.class);
-//        mMenuViewModel = ViewModelProviders.of(this).get(MenuViewModel.class);
-        mViewModel.getPresenceData().observe(this,resource -> {
-            if (resource == null) return;
-            SelfPresenceModel data = resource.data;
-            switch (resource.status) {
-                case SUCCESS: {
-                    switchSessionPresence.setChecked(data.isIs_public());
-                }
-                case LOADING: {
-                    break;
-                }
-                default: {
-                    Log.e(resource.status.name(), resource.message == null ? "Null" : resource.message);
-                }
-            }
-        });
-
         mViewModel.getActiveSessionDetail().observe(this, resource -> {
             if (resource == null) return;
             ActiveSessionModel data = resource.data;
@@ -96,12 +80,14 @@ public class ActiveSessionActivity extends AppCompatActivity implements ActiveSe
                 case SUCCESS: {
                     mSessionMembersAdapter.setUsers(data != null ? data.getCustomers() : null);
                     tvBill.setText(data != null ? data.getBill() : null);
-
+                    switchSessionPresence.setChecked(data.isIs_public());
                     if(data.gethost()!=null) {
                         tv_waiter_name.setText(data.gethost().getDisplayName());
                         Utils.loadImageOrDefault(im_waiter,data.gethost().getDisplayPic(),R.drawable.ic_waiter);
                     }else
                         tv_waiter_name.setText("Unassigned");
+
+                    mViewModel.setSessionId(data.getPk());
                 }
                 case LOADING: {
                     break;
@@ -138,8 +124,10 @@ public class ActiveSessionActivity extends AppCompatActivity implements ActiveSe
                 }
             }
         });
-        switchSessionPresence.setOnCheckedChangeListener((buttonView, isChecked) -> {
-            mViewModel.sendSelfPresence(isChecked);
+
+        switchSessionPresence.setOnClickListener(v -> {
+            if(switchSessionPresence.isChecked()) mViewModel.sendSelfPresence(true);
+            else mViewModel.sendSelfPresence(false);
         });
         mViewModel.setShopPk(shopPk);
 
@@ -149,7 +137,7 @@ public class ActiveSessionActivity extends AppCompatActivity implements ActiveSe
                 openChat(ActiveSessionCustomChatDataModel.CHATSERVICETYPES.SERVICE_NONE);
             return true;
         });
-//        mHandler = new Receiver(mViewModel);
+
     }
 
     @OnClick(R.id.btn_active_session_menu)
@@ -174,7 +162,7 @@ public class ActiveSessionActivity extends AppCompatActivity implements ActiveSe
 
     @OnClick(R.id.btn_cart)
     public void openBillDetails(){
-        startActivity(new Intent(this, ActiveSessionInvoiceActivity.class));
+        startActivity(new Intent(this, ActiveSessionInvoiceActivity.class).putExtra("session_id",mViewModel.getSessionId()));
     }
 
     @OnClick(R.id.ll_call_waiter_container)
@@ -209,7 +197,6 @@ public class ActiveSessionActivity extends AppCompatActivity implements ActiveSe
     public void openChat(ActiveSessionCustomChatDataModel.CHATSERVICETYPES serviceTypes){
         Intent myIntent = new Intent(ActiveSessionActivity.this, ActiveSessionChat.class);
         ActivityOptions options = ActivityOptions.makeCustomAnimation(ActiveSessionActivity.this, R.anim.slide_up, R.anim.slide_down);
-        Log.e("extraaabefore", String.valueOf(serviceTypes));
         myIntent.putExtra("service",serviceTypes);
         startActivity(myIntent, options.toBundle());
     }

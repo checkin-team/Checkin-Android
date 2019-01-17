@@ -149,14 +149,11 @@ public interface WebApiService {
     @GET("sessions/active/")
     Call<ActiveSessionModel> getActiveSession();
 
-    @PUT("/sessions/active/concern/")
+    @POST("/sessions/active/concern/")
     Call<ObjectNode> postOrderConcern(@Body ObjectNode data);
 
     @POST("sessions/active/customers/")
     Call<ObjectNode> postActiveSessionCustomers(@Body ObjectNode data);
-
-    @GET("sessions/active/customers/self/")
-    Call<SelfPresenceModel> getSelfPresence();
 
     @PUT("sessions/active/customers/self/")
     Call<ObjectNode> putActiveSessionSelfCustomer(@Body ObjectNode data);

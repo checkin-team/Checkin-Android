@@ -3,7 +3,9 @@ package com.checkin.app.checkin.Session.ActiveSession.ActiveSessionChat;
 import android.content.Context;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.constraint.ConstraintLayout;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -28,6 +30,7 @@ public class ActiveSessionChatAdapter extends RecyclerView.Adapter {
     public static final int RIGHT_MSG = 1;
     public static final int LEFT_MSG = 2;
     private ChatInteraction mChatInterface;
+    private int clickedItemPosition =-1 ;
 
     public ActiveSessionChatAdapter(List<ActiveSessionChatModel> chats, Context context, ChatInteraction chatInterface) {
         mChats = chats;
@@ -50,7 +53,7 @@ public class ActiveSessionChatAdapter extends RecyclerView.Adapter {
                 return new ViewHolderRightMsg(view);
             case LEFT_MSG:
                 view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_active_session_chat_left, parent, false);
-                return new ViewHolderLeftMsg(view);
+                return new ViewHolderRightMsg(view);
             case CENTER_MSG:
                 view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_active_session_chat_center, parent, false);
                 return new ViewHolderCenterMsg(view);
@@ -72,7 +75,7 @@ public class ActiveSessionChatAdapter extends RecyclerView.Adapter {
         if (mChats.get(position).getSender() == ActiveSessionChatModel.CHATSENDERTYPES.SENDER_CUSTOMER)
             ((ViewHolderRightMsg) holder).bindData(mChats.get(position));
         else if (mChats.get(position).getSender() == ActiveSessionChatModel.CHATSENDERTYPES.SENDER_RESTAURANT)
-            ((ViewHolderLeftMsg) holder).bindData(mChats.get(position));
+            ((ViewHolderRightMsg) holder).bindData(mChats.get(position));
         else ((ViewHolderCenterMsg) holder).bindData(mChats.get(position));
     }
 
@@ -103,28 +106,32 @@ public class ActiveSessionChatAdapter extends RecyclerView.Adapter {
         ImageView im_msg_typing_3;
         @BindView(R.id.ll_order_status_container)
         LinearLayout ll_order_status_container;
+        @BindView(R.id.rowItem)
+        ConstraintLayout rowItem;
 
         public ViewHolderRightMsg(View itemView) {
             super(itemView);
             ButterKnife.bind(this, itemView);
-
-                itemView.setOnLongClickListener(v -> {
-                    if ((chat.getType() == ActiveSessionChatModel.CHATEVENTTYPE.EVENT_MENU_ORDER_ITEM ||
-                            chat.getType() == ActiveSessionChatModel.CHATEVENTTYPE.EVENT_REQUEST_SERVICE ) &&
-                            chat.getStatus() != SessionViewOrdersModel.SESSIONEVENT.CANCELLED) {
-                        itemView.setBackgroundColor(mContext.getResources().getColor(R.color.grey_shade));
-                        mChatInterface.onLongPress(chat.getType());
-
-                        return true;
-                    }
-                    return false;
-                });
-
-
         }
 
         void bindData(ActiveSessionChatModel chat) {
             this.chat = chat;
+
+            if(clickedItemPosition == getPosition())
+                itemView.setBackgroundColor(mContext.getResources().getColor(R.color.grey_shade));
+            else
+                itemView.setBackgroundColor(0);
+            rowItem.setOnLongClickListener(v -> {
+                if ((chat.getType() == ActiveSessionChatModel.CHATEVENTTYPE.EVENT_MENU_ORDER_ITEM ||
+                        chat.getType() == ActiveSessionChatModel.CHATEVENTTYPE.EVENT_REQUEST_SERVICE ) &&
+                        chat.getStatus() != SessionViewOrdersModel.SESSIONEVENT.CANCELLED ) {
+                    mChatInterface.onLongPress(chat.getType());
+                    clickedItemPosition = getPosition();
+                    notifyDataSetChanged();
+                    return true;
+                }else return false;
+            });
+
             if (chat.getType() == ActiveSessionChatModel.CHATEVENTTYPE.EVENT_MENU_ORDER_ITEM &&
                     chat.getStatus() == SessionViewOrdersModel.SESSIONEVENT.CANCELLED) {
                 tv_chat_msg.setVisibility(View.GONE);
@@ -173,44 +180,20 @@ public class ActiveSessionChatAdapter extends RecyclerView.Adapter {
         }
     }
 
-    class ViewHolderLeftMsg extends RecyclerView.ViewHolder {
+    /*class ViewHolderLeftMsg extends RecyclerView.ViewHolder {
         ActiveSessionChatModel chat;
-        @BindView(R.id.tv_chat_msg)
-        TextView tv_chat_msg;
-        @BindView(R.id.tv_sender_name)
-        TextView tv_sender_name;
-        @BindView(R.id.tv_chat_cancel_msg)
-        TextView tv_chat_cancel_msg;
-        @BindView(R.id.tv_chat_time)
-        TextView tv_chat_time;
-        @BindView(R.id.im_msg_delivered)
-        ImageView im_msg_delivered;
-        @BindView(R.id.im_msg_typing_1)
-        ImageView im_msg_typing_1;
-        @BindView(R.id.im_msg_typing_2)
-        ImageView im_msg_typing_2;
-        @BindView(R.id.im_msg_typing_3)
-        ImageView im_msg_typing_3;
-        @BindView(R.id.ll_order_status_container)
-        LinearLayout ll_order_status_container;
 
         public ViewHolderLeftMsg(View itemView) {
             super(itemView);
             ButterKnife.bind(this, itemView);
-            itemView.setOnLongClickListener(v -> {
-                itemView.setBackgroundColor(mContext.getResources().getColor(R.color.grey_shade));
-                return false;
-            });
-        }
+         }
 
         void bindData(ActiveSessionChatModel chat) {
             this.chat = chat;
-            tv_chat_msg.setText(chat.getMessage());
-            tv_sender_name.setText(chat.getUser().getDisplayName());
 
 
         }
-    }
+    }*/
 
     class ViewHolderCenterMsg extends RecyclerView.ViewHolder {
         ActiveSessionChatModel chat;

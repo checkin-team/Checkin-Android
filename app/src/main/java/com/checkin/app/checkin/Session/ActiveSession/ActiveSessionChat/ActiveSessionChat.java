@@ -3,6 +3,7 @@ package com.checkin.app.checkin.Session.ActiveSession.ActiveSessionChat;
 import android.arch.lifecycle.Observer;
 import android.arch.lifecycle.ViewModelProviders;
 import android.support.annotation.Nullable;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
@@ -52,6 +53,8 @@ public class ActiveSessionChat extends AppCompatActivity implements ActiveSessio
     LinearLayout ll_table_cleaning_container;
     @BindView(R.id.ll_refill_glass)
     LinearLayout ll_refill_glass;
+    @BindView(R.id.swipe_down)
+    SwipeRefreshLayout swipe_down;
     int concerns = 0, event_id = 0;
 
     public enum CHATCONCERNYPES {
@@ -78,7 +81,6 @@ public class ActiveSessionChat extends AppCompatActivity implements ActiveSessio
 
     private ActiveSessionChatAdapter mChatAdapter;
     private ActiveSessionChatViewModel mViewModel;
-    ActiveSessionCustomChatDataModel chatDataModel;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -87,9 +89,8 @@ public class ActiveSessionChat extends AppCompatActivity implements ActiveSessio
         ButterKnife.bind(this);
 
         getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_PAN);
-        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, true);
-//        linearLayoutManager.setStackFromEnd(false);
-        rv_active_session_chat.setLayoutManager(linearLayoutManager);
+
+        rv_active_session_chat.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, true));
         mChatAdapter = new ActiveSessionChatAdapter(null, ActiveSessionChat.this, this);
         rv_active_session_chat.setAdapter(mChatAdapter);
 
@@ -101,6 +102,11 @@ public class ActiveSessionChat extends AppCompatActivity implements ActiveSessio
                     mChatAdapter.setData(activeSessionChatModelResource.data);
                 }
             }
+        });
+
+        swipe_down.setOnRefreshListener(() -> {
+            mViewModel.updateResults();
+            swipe_down.setRefreshing(false);
         });
 
         if (getIntent().getSerializableExtra("service").equals(ActiveSessionCustomChatDataModel.CHATSERVICETYPES.SERVICE_CALL_WAITER))
@@ -212,6 +218,11 @@ public class ActiveSessionChat extends AppCompatActivity implements ActiveSessio
         btn_send_msg.setTag(ActiveSessionCustomChatDataModel.CHATSERVICETYPES.SERVICE_BRING_COMMODITY);
     }
 
+    @OnClick(R.id.parent_layout)
+    public void onParent(){
+        im_chat_side_menu.setVisibility(View.GONE);
+    }
+
     @OnClick(R.id.im_chat_side_menu)
     public void showMenu(View v) {
         PopupMenu popup = new PopupMenu(this, v);
@@ -238,5 +249,10 @@ public class ActiveSessionChat extends AppCompatActivity implements ActiveSessio
         im_chat_side_menu.setVisibility(View.VISIBLE);
         im_chat_side_menu.performClick();
         event_id = event.tag;
+    }
+
+    @OnClick(R.id.im_back)
+    public void goBack(View v){
+        onBackPressed();
     }
 }
