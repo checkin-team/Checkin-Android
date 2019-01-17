@@ -120,12 +120,9 @@ public class ShopInvoiceActivity extends AppCompatActivity implements View.OnCli
         String mFinalDate = null;
         try {
             mFinalDate = getFormattedSelectedDate(date,"MMM dd, yyyy","yyyy-MM-dd");
-            Log.d("mFinalDate", mFinalDate);
         } catch (ParseException e) {
             e.printStackTrace();
-            Log.d("ParEx", e.getLocalizedMessage());
         }
-
         return mFinalDate;
     }
 
@@ -142,29 +139,21 @@ public class ShopInvoiceActivity extends AppCompatActivity implements View.OnCli
 
     private void setInvoiceDate(TextView tvShopInvoiceDate,String fromDate, String toDate) {
         new DatePickerDialog(this, (datePicker, i, i1, i2) -> {
-
             int mDay = datePicker.getDayOfMonth();
             int mMonth = datePicker.getMonth() + 1;
             int mYear = datePicker.getYear();
-
             String mInitDate = String.format(Locale.ENGLISH, "%04d-%02d-%02d", mYear, mMonth, mDay);
             String finalDate;
-
             try {
                 finalDate = getFormattedSelectedDate(mInitDate, "yyyy-MM-dd", "MMM dd, yyyy");
                 tvShopInvoiceDate.setText(finalDate);
             } catch (ParseException e) {
                 e.printStackTrace();
             }
-
-            Log.d("mInite Date",mInitDate);
-
             if (fromDate != null){
                 mShopInvoiceModel.filterRestaurantSessions(fromDate,mInitDate);
-                Log.d("fromDate", fromDate + " " + mInitDate);
             }else if (toDate != null){
                 mShopInvoiceModel.filterRestaurantSessions(mInitDate,toDate);
-                Log.d("toDate", mInitDate + " " + toDate);
             }
 
         }, year, month, day).show();

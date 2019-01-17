@@ -22,20 +22,20 @@ public class ShopInvoiceViewModel extends BaseViewModel {
         this.mShopInvoiceRepository = ShopInvoiceRepository.getInstance(application);
     }
 
-    public void getRestaurantSessionsById(String restaurant_id) {
+    void getRestaurantSessionsById(String restaurant_id) {
         restaurantId = restaurant_id;
         mPrevResults = mShopInvoiceRepository.getRestaurantSessionsById(restaurant_id);
         mResults.addSource(mPrevResults, mResults::setValue);
     }
 
-    public void filterRestaurantSessions(String fromDate, String toDate) {
+    void filterRestaurantSessions(String fromDate, String toDate) {
         if (mPrevResults != null)
             mResults.removeSource(mPrevResults);
         mPrevResults = mShopInvoiceRepository.getRestaurantSessionsById(restaurantId, fromDate, toDate);
         mResults.addSource(mPrevResults, mResults::setValue);
     }
 
-    public LiveData<Resource<List<RestaurantSessionModel>>> getRestaurantSessions() {
+    LiveData<Resource<List<RestaurantSessionModel>>> getRestaurantSessions() {
         return mResults;
     }
 
