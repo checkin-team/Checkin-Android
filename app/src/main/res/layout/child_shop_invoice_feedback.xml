@@ -1,208 +1,205 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:orientation="vertical"
-    android:layout_margin="5dp"
+<android.support.v7.widget.CardView
+    app:cardCornerRadius="@dimen/spacing_small"
+    app:cardMaxElevation="@dimen/spacing_extra_tiny"
+    android:layout_marginTop="8dp"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content">
+    android:layout_height="wrap_content"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
 
-    <android.support.v7.widget.CardView
-        app:cardCornerRadius="10dp"
-        app:cardElevation="2dp"
+    <LinearLayout
+        android:paddingStart="@dimen/spacing_small"
+        android:paddingEnd="@dimen/spacing_small"
+        android:paddingTop="@dimen/card_view_spacing_top"
+        android:paddingBottom="@dimen/card_view_spacing_top"
+        android:orientation="vertical"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
-        <LinearLayout
-            android:orientation="vertical"
+        <TextView
+            android:textSize="@dimen/font_normal"
+            android:text="Customer #1"
+            android:textAllCaps="true"
+            android:id="@+id/tv_shop_invoice_feedback_customer_name"
+            android:layout_gravity="center_horizontal"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+
+        <TextView
+            android:id="@+id/tv_shop_invoice_feedback_experience_title"
+            android:layout_marginTop="@dimen/app_bar_elevation_size"
+            android:textSize="@dimen/font_normal"
+            android:text="Experience"
+            android:textColor="@color/colorRed"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+
+        <com.borjabravo.readmoretextview.ReadMoreTextView
+            android:layout_marginTop="@dimen/app_bar_elevation_size"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textSize="@dimen/font_medium"
+            android:id="@+id/tv_shop_invoice_feedback_experience"
+            app:colorClickableText="@color/colorRed"
+            app:trimCollapsedText="read more"
+            android:text="Now a days people especially teenagers think that external beauty is most important and without external beauty they are not beautiful..!! but it is not true..beauty doesn't define the real meaning of beauty. The beauty of a person depends on his or her thoughts,actions and character."/>
+
+        <RelativeLayout
+            android:id="@+id/rl_shop_invoice_feedback_rating"
+            android:layout_marginBottom="@dimen/spacing_small"
+            android:layout_marginTop="@dimen/spacing_small"
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
 
             <TextView
-                android:textSize="15sp"
-                android:text="Customer #1"
-                android:textAllCaps="true"
-                android:id="@+id/tv_shop_invoice_feedback_customer_name"
-                android:layout_gravity="center_horizontal"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content" />
-
-            <TextView
-                android:textSize="15sp"
-                android:text="Experience"
+                android:id="@+id/tv_shop_invoice_feedback_rating_title"
+                android:textSize="@dimen/font_normal"
+                android:text="Ratings"
                 android:textColor="@color/colorRed"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content" />
 
-            <com.borjabravo.readmoretextview.ReadMoreTextView
-                android:layout_marginTop="5dp"
+            <TextView
+                android:layout_marginTop="@dimen/spacing_small"
+                android:layout_below="@+id/tv_shop_invoice_feedback_rating_title"
+                android:id="@+id/tv_shop_invoice_feedback_food_quality_title"
+                android:textSize="@dimen/font_medium"
+                android:text="Food Quality"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+
+            <com.xw.repo.BubbleSeekBar
+                android:layout_marginTop="@dimen/spacing_small"
+                android:layout_alignStart="@+id/sb_shop_invoice_feedback_service_hospitality"
+                android:layout_below="@+id/tv_shop_invoice_feedback_rating_title"
+                android:layout_toEndOf="@+id/tv_shop_invoice_feedback_food_quality_title"
+                app:bsb_bubble_color="@color/colorRed"
+                app:bsb_bubble_text_color="@color/white"
+                app:bsb_second_track_color="@color/colorRed"
+                app:bsb_track_color="@color/colorRed"
+                app:bsb_section_count="5"
+                app:bsb_min="0"
+                app:bsb_max="5"
+                android:id="@+id/sb_shop_invoice_feedback_food_quality_rating"
+                app:bsb_second_track_size="@dimen/app_bar_elevation_size"
+                app:bsb_always_show_bubble="false"
+                app:bsb_hide_bubble="true"
+                app:bsb_show_progress_in_float="true"
+                app:bsb_bubble_text_size="@dimen/font_extra_small"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:textSize="13sp"
-                android:id="@+id/tv_shop_invoice_feedback_experience"
-                app:colorClickableText="@color/colorRed"
-                app:trimCollapsedText="read more"
-                android:text="Now a days people especially teenagers think that external beauty is most important and without external beauty they are not beautiful..!! but it is not true..beauty doesn't define the real meaning of beauty. The beauty of a person depends on his or her thoughts,actions and character."/>
+                android:layout_height="@dimen/spacing_small" />
 
-            <LinearLayout
-                android:layout_marginTop="5dp"
-                android:orientation="vertical"
+            <TextView
+                android:layout_marginTop="@dimen/size_extra_small_button"
+                android:layout_below="@+id/tv_shop_invoice_feedback_food_quality_title"
+                android:id="@+id/tv_shop_invoice_feedback_ambience_title"
+                android:textSize="@dimen/font_medium"
+                android:text="Ambience"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+
+            <com.xw.repo.BubbleSeekBar
+                android:layout_marginTop="@dimen/size_extra_small_button"
+                android:layout_below="@+id/tv_shop_invoice_feedback_food_quality_title"
+                android:layout_toEndOf="@+id/tv_shop_invoice_feedback_ambience_title"
+                android:layout_alignStart="@+id/sb_shop_invoice_feedback_service_hospitality"
+                app:bsb_bubble_color="@color/colorRed"
+                app:bsb_bubble_text_color="@color/white"
+                app:bsb_second_track_color="@color/colorRed"
+                app:bsb_track_color="@color/colorRed"
+                app:bsb_section_count="5"
+                app:bsb_min="0"
+                app:bsb_max="5"
+                app:bsb_hide_bubble="true"
+                android:id="@+id/sb_shop_invoice_feedback_ambience_rating"
+                app:bsb_second_track_size="@dimen/app_bar_elevation_size"
+                app:bsb_always_show_bubble="false"
+                app:bsb_show_progress_in_float="true"
+                app:bsb_bubble_text_size="@dimen/text_size_small"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content">
+                android:layout_height="@dimen/app_bar_elevation_size" />
 
-                <TextView
-                    android:textSize="15sp"
-                    android:text="Ratings"
-                    android:textColor="@color/colorRed"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content" />
+            <TextView
+                android:layout_marginTop="@dimen/size_extra_small_button"
+                android:layout_below="@+id/tv_shop_invoice_feedback_ambience_title"
+                android:id="@+id/tv_shop_invoice_feedback_service_hospitality_title"
+                android:textSize="@dimen/font_medium"
+                android:text="Service/Hospitality"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
 
-                <LinearLayout
-                    android:gravity="center"
-                    android:orientation="horizontal"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content">
-
-                    <TextView
-                        android:textSize="13sp"
-                        android:text="Food Quality"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content" />
-
-                    <com.appyvet.materialrangebar.RangeBar
-                        app:mrb_rangeBar="false"
-                        app:mrb_pinMaxFont="15sp"
-                        app:mrb_pinMinFont="12sp"
-                        android:layout_gravity="center_horizontal"
-                        app:mrb_pinTextColor="@color/white"
-                        app:mrb_pinColor="@color/colorRed"
-                        app:mrb_pinRadius="14dp"
-                        android:layout_marginBottom="24dp"
-                        app:mrb_tickStart="1"
-                        app:mrb_tickEnd="5"
-                        app:mrb_selectorColor="@color/colorRed"
-                        app:mrb_selectorBoundaryColor="@color/colorRed"
-                        app:mrb_rangeBarColor="@color/colorRed"
-                        app:mrb_tickInterval="1"
-                        app:mrb_connectingLineWeight="5dp"
-                        app:mrb_selectorBoundarySize="4dp"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content" />
-
-                </LinearLayout>
-
-                <LinearLayout
-                    android:gravity="center"
-                    android:orientation="horizontal"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content">
-
-                    <TextView
-                        android:textSize="13sp"
-                        android:text="Ambience"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content" />
-
-                    <com.appyvet.materialrangebar.RangeBar
-                        app:mrb_rangeBar="false"
-                        app:mrb_pinMaxFont="15sp"
-                        android:layout_marginBottom="24dp"
-                        app:mrb_pinMinFont="12sp"
-                        android:layout_gravity="center_horizontal"
-                        app:mrb_pinTextColor="@color/white"
-                        app:mrb_pinColor="@color/colorRed"
-                        app:mrb_pinRadius="14dp"
-                        app:mrb_tickStart="1"
-                        app:mrb_tickEnd="5"
-                        app:mrb_selectorColor="@color/colorRed"
-                        app:mrb_selectorBoundaryColor="@color/colorRed"
-                        app:mrb_rangeBarColor="@color/colorRed"
-                        app:mrb_tickInterval="1"
-                        app:mrb_connectingLineWeight="5dp"
-                        app:mrb_selectorBoundarySize="4dp"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content" />
-
-                </LinearLayout>
-
-                <LinearLayout
-                    android:gravity="center"
-                    android:orientation="horizontal"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content">
-
-                    <TextView
-                        android:textSize="13sp"
-                        android:text="Service/Hospitality"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content" />
-
-                    <com.appyvet.materialrangebar.RangeBar
-                        android:layout_marginBottom="24dp"
-                        app:mrb_rangeBar="false"
-                        app:mrb_pinMaxFont="15sp"
-                        app:mrb_pinMinFont="12sp"
-                        android:layout_gravity="center_horizontal"
-                        app:mrb_pinTextColor="@color/white"
-                        app:mrb_pinColor="@color/colorRed"
-                        app:mrb_pinRadius="14dp"
-                        app:mrb_tickStart="1"
-                        app:mrb_tickEnd="5"
-                        app:mrb_selectorColor="@color/colorRed"
-                        app:mrb_selectorBoundaryColor="@color/colorRed"
-                        app:mrb_rangeBarColor="@color/colorRed"
-                        app:mrb_tickInterval="1"
-                        app:mrb_connectingLineWeight="5dp"
-                        app:mrb_selectorBoundarySize="4dp"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content" />
-
-                </LinearLayout>
-
-                <View
-                    android:layout_marginEnd="20dp"
-                    android:layout_marginStart="20dp"
-                    android:background="@color/pinkish_grey"
-                    android:layout_width="match_parent"
-                    android:layout_height="1dp"/>
-
-                <LinearLayout
-                    android:gravity="center"
-                    android:orientation="horizontal"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content">
-
-                    <TextView
-                        android:textSize="13sp"
-                        android:text="Overall Rating"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content" />
-
-                    <android.support.v4.widget.Space
-                        android:layout_width="30dp"
-                        android:layout_height="match_parent" />
-                    
-                    <TextView
-                        android:paddingStart="5dp"
-                        android:paddingEnd="5dp"
-                        android:paddingTop="4dp"
-                        android:paddingBottom="4dp"
-                        android:background="@drawable/background_red_stroke"
-                        android:textSize="13sp"
-                        android:text="3.67"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content" />
-
-                </LinearLayout>
-
-            </LinearLayout>
-
-            <android.support.v7.widget.RecyclerView
-                android:orientation="horizontal"
+            <com.xw.repo.BubbleSeekBar
+                android:layout_marginStart="@dimen/spacing_small"
+                android:layout_marginTop="@dimen/size_extra_small_button"
+                android:layout_below="@+id/tv_shop_invoice_feedback_ambience_title"
+                android:layout_toEndOf="@+id/tv_shop_invoice_feedback_service_hospitality_title"
+                app:bsb_bubble_color="@color/colorRed"
+                app:bsb_bubble_text_color="@color/white"
+                app:bsb_second_track_color="@color/colorRed"
+                app:bsb_track_color="@color/colorRed"
+                app:bsb_section_count="5"
+                app:bsb_min="0"
+                app:bsb_hide_bubble="true"
+                app:bsb_max="5"
+                android:id="@+id/sb_shop_invoice_feedback_service_hospitality"
+                app:bsb_second_track_size="@dimen/app_bar_elevation_size"
+                app:bsb_always_show_bubble="false"
+                app:bsb_show_progress_in_float="true"
+                app:bsb_bubble_text_size="@dimen/font_extra_small"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"/>
+                android:layout_height="@dimen/spacing_small" />
+
+        </RelativeLayout>
+
+        <include
+            android:id="@+id/incl_shop_invoice_detail_feedback_overall_rating"
+            layout="@layout/incl_horizontal_line"/>
+
+        <LinearLayout
+            android:layout_marginTop="5dp"
+            android:id="@+id/ll_shop_invoice_detail_feedback_overall_rating"
+            android:paddingTop="@dimen/app_bar_elevation_size"
+            android:paddingBottom="@dimen/app_bar_elevation_size"
+            android:gravity="center"
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <TextView
+                android:textSize="@dimen/font_medium"
+                android:text="Overall Rating"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+
+            <android.support.v4.widget.Space
+                android:layout_width="@dimen/size_normal_button"
+                android:layout_height="match_parent" />
+
+            <TextView
+                android:paddingStart="@dimen/app_bar_elevation_size"
+                android:paddingEnd="@dimen/app_bar_elevation_size"
+                android:paddingTop="@dimen/card_elevation"
+                android:paddingBottom="@dimen/card_elevation"
+                android:background="@drawable/background_red_stroke"
+                android:textSize="@dimen/font_medium"
+                android:text="3.67"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
 
         </LinearLayout>
 
-    </android.support.v7.widget.CardView>
+        <View
+            android:id="@+id/v_shop_invoice_detail_feedback_image"
+            android:layout_marginTop="@dimen/app_bar_elevation_size"
+            android:layout_marginBottom="@dimen/spacing_small"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/height_horizontal_line"
+            android:layout_gravity="center_horizontal"
+            android:background="@drawable/ic_line" />
 
-</LinearLayout>
+        <include layout="@layout/incl_image_thumbnails"/>
+
+    </LinearLayout>
+
+</android.support.v7.widget.CardView>
