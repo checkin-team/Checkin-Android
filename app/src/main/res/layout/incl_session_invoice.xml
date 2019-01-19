@@ -1,0 +1,180 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:paddingTop="@dimen/spacing_normal"
+    android:paddingBottom="@dimen/spacing_normal">
+
+    <FrameLayout
+        android:id="@+id/container_invoice_subtotal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingStart="@dimen/spacing_normal"
+        android:paddingEnd="@dimen/spacing_normal">
+
+        <TextView
+            style="@style/GreySmallTextStyle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical|start"
+            android:text="Subtotal" />
+
+        <TextView
+            android:id="@+id/tv_invoice_subtotal"
+            style="@style/GreySmallTextStyle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical|end"
+            tools:text="54" />
+    </FrameLayout>
+
+    <FrameLayout
+        android:id="@+id/container_invoice_charge"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingStart="@dimen/spacing_normal"
+        android:paddingTop="@dimen/spacing_extra_small"
+        android:paddingEnd="@dimen/spacing_normal"
+        android:visibility="gone">
+
+        <TextView
+            style="@style/GreySmallTextStyle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical|start"
+            android:text="Charges" />
+
+        <TextView
+            android:id="@+id/tv_invoice_charge"
+            style="@style/GreySmallTextStyle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical|end"
+            tools:text="54" />
+    </FrameLayout>
+
+    <FrameLayout
+        android:id="@+id/container_invoice_tax"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingStart="@dimen/spacing_normal"
+        android:paddingTop="@dimen/spacing_extra_small"
+        android:paddingEnd="@dimen/spacing_normal">
+
+        <TextView
+            style="@style/GreySmallTextStyle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical|start"
+            android:text="Taxes" />
+
+        <TextView
+            android:id="@+id/tv_invoice_tax"
+            style="@style/GreySmallTextStyle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical|end"
+            tools:text="54" />
+    </FrameLayout>
+
+    <FrameLayout
+        android:id="@+id/container_invoice_promo"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingStart="@dimen/spacing_normal"
+        android:paddingTop="@dimen/spacing_extra_small"
+        android:paddingEnd="@dimen/spacing_normal">
+
+        <TextView
+            style="@style/GreySmallTextStyle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical|start"
+            android:text="Promo - NAME" />
+
+        <TextView
+            android:id="@+id/tv_invoice_promo"
+            style="@style/GreySmallTextStyle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical|end"
+            tools:text="54" />
+    </FrameLayout>
+
+    <FrameLayout
+        android:id="@+id/container_invoice_discount"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingStart="@dimen/spacing_normal"
+        android:paddingTop="@dimen/spacing_extra_small"
+        android:paddingEnd="@dimen/spacing_normal">
+
+        <TextView
+            style="@style/GreySmallTextStyle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical|start"
+            android:text="Discount" />
+
+        <TextView
+            android:id="@+id/tv_invoice_discount"
+            style="@style/GreySmallTextStyle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical|end"
+            tools:text="54" />
+    </FrameLayout>
+
+    <FrameLayout
+        android:id="@+id/container_invoice_tip"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="@dimen/spacing_normal"
+        android:paddingStart="@dimen/spacing_normal"
+        android:paddingTop="@dimen/spacing_extra_small"
+        android:paddingEnd="@dimen/spacing_normal">
+
+        <TextView
+            style="@style/GreySmallTextStyle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical|start"
+            android:text="Tip" />
+
+        <TextView
+            android:id="@+id/tv_invoice_tip"
+            style="@style/GreySmallTextStyle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical|end"
+            tools:text="54" />
+    </FrameLayout>
+
+    <include layout="@layout/incl_horizontal_line" />
+
+    <FrameLayout
+        android:id="@+id/container_invoice_total"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/spacing_extra_small"
+        android:paddingStart="@dimen/spacing_normal"
+        android:paddingEnd="@dimen/spacing_normal">
+
+        <TextView
+            style="@style/GreyTextStyle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical|start"
+            android:text="Total" />
+
+        <TextView
+            android:id="@+id/tv_invoice_total"
+            style="@style/GreyTextStyle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical|end"
+            tools:text="54" />
+    </FrameLayout>
+</LinearLayout>

@@ -12,6 +12,7 @@ import com.checkin.app.checkin.Data.NetworkBoundResource;
 import com.checkin.app.checkin.Data.Resource;
 import com.checkin.app.checkin.Data.RetrofitLiveData;
 import com.checkin.app.checkin.Data.WebApiService;
+import com.checkin.app.checkin.Session.Model.SessionInvoiceModel;
 import com.checkin.app.checkin.Shop.RecentCheckin.Model.RecentCheckinModel;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 
@@ -59,6 +60,23 @@ public class SessionRepository extends BaseRepository {
             @Override
             protected void saveCallResult(RecentCheckinModel data) {
 
+            }
+        }.getAsLiveData();
+    }
+
+    public LiveData<Resource<SessionInvoiceModel>> getSessionInvoiceDetail(int sessionId) {
+        return new NetworkBoundResource<SessionInvoiceModel, SessionInvoiceModel>() {
+
+            @Override
+            protected void saveCallResult(SessionInvoiceModel data) {}
+
+            @Override
+            protected boolean shouldUseLocalDb() {return false;}
+
+            @NonNull
+            @Override
+            protected LiveData<ApiResponse<SessionInvoiceModel>> createCall() {
+                return new RetrofitLiveData<>(mWebService.getSessionInvoice(sessionId));
             }
         }.getAsLiveData();
     }

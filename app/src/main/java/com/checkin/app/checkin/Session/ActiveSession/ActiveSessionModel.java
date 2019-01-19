@@ -1,8 +1,7 @@
 package com.checkin.app.checkin.Session.ActiveSession;
 
-import com.checkin.app.checkin.Menu.Model.OrderedItemModel;
 import com.checkin.app.checkin.Misc.BriefModel;
-import com.checkin.app.checkin.Session.SessionCustomerModel;
+import com.checkin.app.checkin.Session.Model.SessionCustomerModel;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 import java.util.Date;
@@ -14,16 +13,16 @@ import java.util.List;
 
 public class ActiveSessionModel {
     @JsonProperty("pk")
-    private String pk;
+    private int pk;
 
     @JsonProperty("bill")
-    private double bill;
-
-    // TODO: Remove from here.
-    private List<OrderedItemModel> orderedItems;
+    private String bill;
 
     @JsonProperty("customers")
     private List<SessionCustomerModel> customers;
+
+    @JsonProperty("restaurant")
+    private BriefModel restaurant;
 
     @JsonProperty("checked_in")
     private Date checkedIn;
@@ -34,23 +33,44 @@ public class ActiveSessionModel {
     @JsonProperty("host")
     private BriefModel host;
 
+    @JsonProperty("is_public")
+    private boolean isPublic;
+
     public ActiveSessionModel() {}
 
-    public ActiveSessionModel(int bill, List<OrderedItemModel> orderedItems, List<SessionCustomerModel> customers) {
-        this.bill = bill;
-        this.orderedItems = orderedItems;
-        this.customers = customers;
-    }
-
-    public double getBill() {
+    public String getBill() {
         return bill;
     }
 
-    public List<OrderedItemModel> getOrderedItems() {
-        return orderedItems;
+    public int getPk() {
+        return pk;
+    }
+
+    public Date getCheckedIn() {
+        return checkedIn;
+    }
+
+    public Date getCheckedOut() {
+        return checkedOut;
     }
 
     public List<SessionCustomerModel> getCustomers() {
         return customers;
+    }
+
+    public BriefModel getRestaurant() {
+        return restaurant;
+    }
+
+    public BriefModel gethost() {
+        return host;
+    }
+
+    public boolean isCheckinPublic() {
+        return isPublic;
+    }
+
+    public int getShopPk() {
+        return Integer.valueOf(restaurant.getPk());
     }
 }

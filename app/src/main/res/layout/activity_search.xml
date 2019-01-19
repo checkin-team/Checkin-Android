@@ -26,7 +26,7 @@
                 android:layout_height="@dimen/size_small_button"
                 android:layout_marginStart="@dimen/spacing_normal"
                 android:layout_gravity="center_vertical"
-                android:background="@drawable/ic_appbar_back"/>
+                android:background="@drawable/ic_back_grey"/>
 
             <TextView
                 android:id="@+id/tv_search"

@@ -99,10 +99,10 @@ public class HomeActivity extends BaseAccountActivity
         mHomeViewModel.getQrResult().observe(this, resource -> {
             if (resource == null)   return;
             if (resource.status == Status.SUCCESS && resource.data != null) {
-                PreferenceManager.getDefaultSharedPreferences(this).edit()
-                        .putString(Constants.SP_SESSION_RESTAURANT_PK, resource.data.get("restaurant_pk").asText())
-                        .putString(Constants.SP_SESSION_ACTIVE_PK, resource.data.get("session_pk").asText())
-                        .apply();
+//                PreferenceManager.getDefaultSharedPreferences(this).edit()
+//                        .putString(Constants.SP_SESSION_RESTAURANT_PK, resource.data.get("restaurant_pk").asText())
+//                        .putString(Constants.SP_SESSION_ACTIVE_PK, resource.data.get("session_pk").asText())
+//                        .apply();
                 Utils.toast(this, resource.data.get("detail").asText());
             } else if (resource.status != Status.LOADING) {
                 Utils.toast(this, resource.message);
@@ -398,8 +398,8 @@ public class HomeActivity extends BaseAccountActivity
                 break;
             case R.id.nav_menu:
                 SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
-                String restaurantPk = prefs.getString(Constants.SP_SESSION_RESTAURANT_PK, "");
-                String sessionPk = prefs.getString(Constants.SP_SESSION_ACTIVE_PK, "");
+                long restaurantPk = prefs.getLong(Constants.SP_SESSION_RESTAURANT_PK, 0);
+                long sessionPk = prefs.getLong(Constants.SP_SESSION_ACTIVE_PK, 0);
                 SessionMenuActivity.withSession(this, sessionPk, restaurantPk);
                 break;
             case R.id.nav_privacy_settings:

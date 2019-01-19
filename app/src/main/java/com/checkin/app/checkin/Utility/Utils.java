@@ -422,7 +422,15 @@ public class Utils {
     }
 
     public static String getCurrencyFormat(Context context) {
-        return context.getResources().getString(R.string.currency_rupee);
+        return context.getResources().getString(R.string.format_currency_rupee);
+    }
+
+    public static String formatCurrencyAmount(Context context, String amount) {
+        return String.format(Locale.ENGLISH, getCurrencyFormat(context), amount);
+    }
+
+    public static String formatCurrencyAmount(Context context, Double amount) {
+        return formatCurrencyAmount(context, String.valueOf(amount));
     }
 
     public static String formatDateTo24HoursTime(Date dateTime) {

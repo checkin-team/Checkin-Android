@@ -27,7 +27,7 @@
         android:layout_marginBottom="@dimen/spacing_small"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        tools:text="@string/currency_rupee" />
+        tools:text="@string/format_currency_rupee" />
 
     <FrameLayout
         android:id="@+id/container_menu_quantity_picker"

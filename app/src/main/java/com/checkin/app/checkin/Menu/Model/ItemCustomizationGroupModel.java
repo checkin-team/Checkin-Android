@@ -3,6 +3,7 @@ package com.checkin.app.checkin.Menu.Model;
 import com.fasterxml.jackson.annotation.JsonAutoDetect;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -59,11 +60,9 @@ public class ItemCustomizationGroupModel {
         return customizationFields;
     }
 
-    /*@JsonProperty("fields")
-    public void setCustomizationFields(List<ItemCustomizationFieldModel> customizationFields) {
-        AppDatabase.getItemCustomizationGroupModel(null).attach(this);
-        AppDatabase.getItemCustomizationFieldModel(null).put(customizationFields);
-        this.customizationFields.addAll(customizationFields);
-        AppDatabase.getItemCustomizationGroupModel(null).put(this);
-    }*/
+    public void addCustomizationField(String name, double cost) {
+        if (customizationFields == null)
+            customizationFields = new ArrayList<>();
+        customizationFields.add(new ItemCustomizationFieldModel(true, name, cost));
+    }
 }

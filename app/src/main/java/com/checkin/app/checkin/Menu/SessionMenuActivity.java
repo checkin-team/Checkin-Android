@@ -70,11 +70,11 @@ public class SessionMenuActivity extends BaseActivity implements
 
     private static final String SESSION_ARG = "session_arg";
 
-    public static void withSession(Context context, String sessionPk, String restaurantPk) {
+    public static void withSession(Context context, long sessionPk, long restaurantPk) {
         Intent intent = new Intent(context, SessionMenuActivity.class);
         Bundle args = new Bundle();
         args.putSerializable(KEY_SESSION_STATUS, SESSION_STATUS.ACTIVE);
-        args.putString(KEY_RESTAURANT_PK, restaurantPk);
+        args.putLong(KEY_RESTAURANT_PK, restaurantPk);
         intent.putExtra(SESSION_ARG, args);
         context.startActivity(intent);
     }
@@ -99,7 +99,7 @@ public class SessionMenuActivity extends BaseActivity implements
         mSessionStatus = (SESSION_STATUS) args.getSerializable(KEY_SESSION_STATUS);
 
         mViewModel = ViewModelProviders.of(this).get(MenuViewModel.class);
-        mViewModel.fetchAvailableMenu(args.getString(KEY_RESTAURANT_PK));
+        mViewModel.fetchAvailableMenu(args.getLong(KEY_RESTAURANT_PK));
 
         mSearchFragment = MenuItemSearchFragment.newInstance(SessionMenuActivity.this, isSessionActive());
 

@@ -6,10 +6,13 @@ import com.checkin.app.checkin.Menu.Model.OrderedItemModel;
 import com.checkin.app.checkin.Misc.GenericDetailModel;
 import com.checkin.app.checkin.Notifications.NotificationModel;
 import com.checkin.app.checkin.RestaurantActivity.Waiter.EventModel;
+import com.checkin.app.checkin.Session.ActiveSession.Chat.SessionChatModel;
 import com.checkin.app.checkin.Review.ShopReview.ShopReviewModel;
 import com.checkin.app.checkin.Search.SearchResultPeopleModel;
 import com.checkin.app.checkin.Search.SearchResultShopModel;
+import com.checkin.app.checkin.Session.Model.SessionInvoiceModel;
 import com.checkin.app.checkin.Session.ActiveSession.ActiveSessionModel;
+import com.checkin.app.checkin.Session.Model.SessionOrderedItemModel;
 import com.checkin.app.checkin.Shop.RecentCheckin.Model.RecentCheckinModel;
 import com.checkin.app.checkin.Shop.RestaurantModel;
 import com.checkin.app.checkin.Shop.ShopJoin.ShopJoinModel;
@@ -143,14 +146,35 @@ public interface WebApiService {
     @GET("sessions/active/")
     Call<ActiveSessionModel> getActiveSession();
 
+    @POST("/sessions/active/concern/")
+    Call<ObjectNode> postOrderConcern(@Body ObjectNode data);
+
     @POST("sessions/active/customers/")
     Call<ObjectNode> postActiveSessionCustomers(@Body ObjectNode data);
+
+    @PUT("sessions/active/customers/self/")
+    Call<ObjectNode> putActiveSessionSelfCustomer(@Body ObjectNode data);
 
     @DELETE("sessions/active/customers/{user_id}/")
     Call<ObjectNode> deleteActiveSessionCustomer(@Path("user_id") String userId);
 
     @GET("sessions/recent/restaurants/{shop_id}/")
     Call<RecentCheckinModel> getRecentCheckins(@Path("shop_id") String shopId);
+
+    @GET("sessions/active/events/customer/")
+    Call<List<SessionChatModel>> getCustomerSessionChat();
+
+    @POST("sessions/active/message/")
+    Call<ObjectNode> postCustomerMessage(@Body ObjectNode data);
+
+    @POST("sessions/active/request/service/")
+    Call<ObjectNode> postCustomerRequestService(@Body ObjectNode data);
+
+    @POST("sessions/active/request/checkout/")
+    Call<ObjectNode> postCustomerRequestCheckout(@Body ObjectNode data);
+
+    @GET("sessions/{session_id}/invoice/")
+    Call<SessionInvoiceModel> getSessionInvoice(@Path("session_id") int sessionId);
 
     // endregion
 
@@ -159,10 +183,13 @@ public interface WebApiService {
     Call<MenuModel> getAvailableMenu(@Path("shop_id") String shopId);
 
     @POST("sessions/active/order/")
-    Call<ArrayNode> postSessionOrders(@Body List<OrderedItemModel> orderedItemModels);
+    Call<ArrayNode> postActiveSessionOrders(@Body List<OrderedItemModel> orderedItemModels);
 
     @GET("sessions/active/orders/")
-    Call<List<OrderedItemModel>> getSessionOrders();
+    Call<List<SessionOrderedItemModel>> getActiveSessionOrders();
+
+    @DELETE("sessions/active/orders/{order_id}/")
+    Call<ObjectNode> deleteSessionOrder(@Path("order_id") String order_id);
 
     // endregion
 

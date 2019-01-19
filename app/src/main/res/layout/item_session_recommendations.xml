@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.v7.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="120dp"
+    android:layout_height="wrap_content"
+    android:minHeight="140dp"
+    android:id="@+id/cv_recommendation"
+    xmlns:card_view="http://schemas.android.com/apk/res-auto"
+    card_view:cardCornerRadius="10dp"
+    card_view:cardElevation="10dp">
+
+
+    <ImageView
+        android:id="@+id/item_image"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/ic_action_show_menu"
+        android:layout_marginTop="@dimen/spacing_normal"
+        android:layout_gravity="center|top"/>
+
+
+    <TextView
+        android:id="@+id/tv_item_name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center|bottom"
+        android:text="Vanilla Cone"
+        android:textSize="@dimen/font_small"
+        android:textColor="@color/brownish_grey"
+        android:fontFamily="@font/arial_rounded_mt_bold"
+        android:layout_marginBottom="@dimen/spacing_huge"/>
+
+
+    <TextView
+        android:id="@+id/tv_price"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom|center"
+        android:text="200"
+        android:textSize="@dimen/font_normal"
+        android:textColor="@color/primary_red"
+        android:fontFamily="@font/arial_rounded_mt_bold"
+        android:layout_marginBottom="@dimen/spacing_normal"/>
+
+</android.support.v7.widget.CardView>

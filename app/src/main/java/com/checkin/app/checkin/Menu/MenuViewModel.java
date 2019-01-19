@@ -49,8 +49,8 @@ public class MenuViewModel extends BaseViewModel {
     public void updateResults() {
     }
 
-    public void fetchAvailableMenu(String shopId) {
-        mMenuData.addSource(mRepository.getAvailableMenu(shopId), mMenuData::setValue);
+    public void fetchAvailableMenu(long shopId) {
+        mMenuData.addSource(mRepository.getAvailableMenu(String.valueOf(shopId)), mMenuData::setValue);
         resetMenuGroups();
 
         LiveData<Resource<List<MenuGroupModel>>> resourceLiveData = Transformations.map(mMenuData, menuModelResource -> {

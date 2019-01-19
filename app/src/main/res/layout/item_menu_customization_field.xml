@@ -29,7 +29,7 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="@dimen/spacing_small"
         android:layout_weight="0"
-        tools:text="@string/currency_rupee"
+        tools:text="@string/format_currency_rupee"
         android:textColor="@color/white"
         android:textSize="@dimen/font_normal" />
 

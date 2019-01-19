@@ -8,6 +8,7 @@
     <dimen name="font_small">12sp</dimen>
     <dimen name="font_extra_small">10sp</dimen>
     <dimen name="font_tiny">8sp</dimen>
+    <dimen name="font_standard">14sp</dimen>
 
     <!-- typical spacing between two views -->
     <dimen name="spacing_gigantic">60dp</dimen>
@@ -33,6 +34,7 @@
     <dimen name="size_extra_small_button">20dp</dimen>
     <dimen name="size_tiny_button">10dp</dimen>
 
+    <dimen name="size_logo_small">@dimen/size_small_image</dimen>
     <dimen name="size_logo">60dp</dimen>
     <dimen name="size_logo_large">80dp</dimen>
     <dimen name="size_small_image">40dp</dimen>
@@ -49,6 +51,7 @@
     <!-- typical sizes of views -->
     <dimen name="button_height_tall">60dp</dimen>
     <dimen name="button_height_normal">40dp</dimen>
+    <dimen name="button_height_medium">50dp</dimen>
     <dimen name="button_height_short">32dp</dimen>
 
     <dimen name="button_oval_large">120dp</dimen>
@@ -71,9 +74,16 @@
     <dimen name="width_quantity_selection">120dp</dimen>
     <dimen name="height_quantity_selection">60dp</dimen>
 
+    <!--Chat dimensions-->
+    <dimen name="size_chat_status">10dp</dimen>
+    <dimen name="width_chat_card">250dp</dimen>
+    <dimen name="width_input_tip">60dp</dimen>
+    <dimen name="height_card_order_status">50dp</dimen>
+
     <!-- Card dimensions -->
     <dimen name="card_elevation">4dp</dimen>
     <dimen name="card_corner_radius" format="float">10.5dp</dimen>
+    <dimen name="card_corner_radius_large">12dp</dimen>
 
     <dimen name="size_card_square">100dp</dimen>
     <dimen name="height_input_normal">40dp</dimen>

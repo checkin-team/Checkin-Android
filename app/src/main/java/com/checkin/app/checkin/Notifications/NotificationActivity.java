@@ -53,7 +53,7 @@ public class NotificationActivity extends AppCompatActivity {
 //
 //        List<Object> notifs = new ArrayList<>();
 //
-//        class NotifModelViewHolder extends RecyclerView.ViewHolder{
+//        class NotifModelViewHolder extends RecyclerView.ViewHolderRightMsg{
 //            @BindView(R.id.im_profile)ImageView profile;
 //            @BindView(R.id.action)ImageView action;
 //            @BindView(R.id.review)TextView message;
@@ -84,7 +84,7 @@ public class NotificationActivity extends AppCompatActivity {
 //                });
 //            }
 //        }
-//        class NotifHeaderViewHolder extends RecyclerView.ViewHolder{
+//        class NotifHeaderViewHolder extends RecyclerView.ViewHolderRightMsg{
 //            @BindView(R.id.heading) TextView heading;
 //            public NotifHeaderViewHolder(View itemView) {
 //                super(itemView);
@@ -97,7 +97,7 @@ public class NotificationActivity extends AppCompatActivity {
 //
 //        @NonNull
 //        @Override
-//        public RecyclerView.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+//        public RecyclerView.ViewHolderRightMsg onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
 //            if(viewType == TYPE_NOTIF_MODEL){
 //                View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_notification_general,parent,false);
 //                return new NotifModelViewHolder(view);
@@ -109,7 +109,7 @@ public class NotificationActivity extends AppCompatActivity {
 //        }
 //
 //        @Override
-//        public void onBindViewHolder(@NonNull RecyclerView.ViewHolder holder, int position) {
+//        public void onBindViewHolder(@NonNull RecyclerView.ViewHolderRightMsg holder, int position) {
 //            if(holder.getItemViewType() == TYPE_NOTIF_MODEL){
 //                ((NotifModelViewHolder) holder).bind((NotificationModel) notifs.get(position));
 //            }else {

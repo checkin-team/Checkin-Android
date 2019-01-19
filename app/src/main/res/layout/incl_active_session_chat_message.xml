@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="@dimen/width_chat_card"
+    android:layout_height="wrap_content">
+
+    <LinearLayout
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:orientation="vertical"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <TextView
+            android:id="@+id/tv_chat_sender_name"
+            style="@style/RedSmallTextStyle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            tools:text="name" />
+
+        <TextView
+            android:id="@+id/tv_chat_concern_msg"
+            style="@style/GreySmallTextStyle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/spacing_tiny"
+            android:background="@color/white_three"
+            android:padding="@dimen/spacing_extra_small"
+            tools:text="event #1" />
+
+        <TextView
+            android:id="@+id/tv_chat_msg"
+            style="@style/GreyTextStyle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/spacing_tiny"
+            tools:text="msg" />
+
+        <TextView
+            android:id="@+id/tv_chat_time"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="start"
+            android:layout_marginTop="@dimen/spacing_tiny"
+            android:textColor="@color/pinkish_grey"
+            android:textSize="@dimen/font_extra_small"
+            tools:text="10:20" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/ll_order_status_container"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:gravity="bottom"
+        android:orientation="vertical">
+
+        <ImageView
+            android:id="@+id/im_chat_status_done"
+            android:layout_width="@dimen/size_chat_status"
+            android:layout_height="@dimen/size_chat_status"
+            android:padding="@dimen/spacing_extra_tiny"
+            android:src="@drawable/chat_status_toggle"
+            android:visibility="visible" />
+
+        <ImageView
+            android:id="@+id/im_chat_status_progress"
+            android:layout_width="@dimen/size_chat_status"
+            android:layout_height="@dimen/size_chat_status"
+            android:padding="@dimen/spacing_extra_tiny"
+            android:src="@drawable/chat_status_toggle"
+            android:visibility="visible" />
+
+        <ImageView
+            android:id="@+id/im_chat_status_open"
+            android:layout_width="@dimen/size_chat_status"
+            android:layout_height="@dimen/size_chat_status"
+            android:padding="@dimen/spacing_extra_tiny"
+            android:src="@drawable/chat_status_toggle"
+            android:visibility="visible" />
+
+    </LinearLayout>
+</LinearLayout>

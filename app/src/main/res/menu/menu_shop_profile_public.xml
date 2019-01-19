@@ -10,6 +10,6 @@
         android:title="Recent CheckIns" />
     <item
         android:enabled="true"
-        android:icon="@drawable/ic_shop_navigation_menu"
+        android:icon="@drawable/ic_action_show_menu"
         android:title="Menu" />
 </menu>

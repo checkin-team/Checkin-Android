@@ -25,7 +25,7 @@
         android:id="@+id/btn_proceed"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        style="@style/ButtonSmallVerifyAction"
+        style="@style/ButtonRedAlertAction"
         android:text="Proceed"
         android:textSize="@dimen/font_normal"
         android:layout_marginTop="@dimen/spacing_large"
@@ -55,7 +55,7 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:text="Resend otp"
-            style="@style/ButtonSmallVerifyAction"
+            style="@style/ButtonRedAlertAction"
             android:textSize="@dimen/font_normal"
             android:visibility="invisible"/>
     </FrameLayout>

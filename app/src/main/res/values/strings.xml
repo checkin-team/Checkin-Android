@@ -120,11 +120,39 @@
     <string name="action_navigate">Navigate</string>
     <string name="title_member_assign_role">Assign Role</string>
 
-    <string name="currency_rupee">&#x20B9; %s</string>
+    <string name="currency_rupee">&#x20B9;</string>
+    <string name="format_currency_rupee">&#x20B9; %s</string>
 
     <!-- Active Session -->
     <string name="action_list_orders">View Orders</string>
     <string name="action_view_menu">Menu</string>
     <string name="session_presence_private">Private</string>
     <string name="session_presence_public">Public</string>
+    <string name="waiter">Waiter</string>
+    <string name="call_waiter">Call\nWaiter</string>
+    <string name="table_cleaning">Table\nCleaning</string>
+    <string name="refill_glass">Refill\nGlass</string>
+    <string name="title_how_can_we_assist_you">How can we assist you?</string>
+    <string name="chat_with_us">Chat With Us</string>
+    <string name="title_your_request">Your Request</string>
+    <string name="napkin">Napkin</string>
+    <string name="salt">Salt</string>
+    <string name="sauce">Sauce</string>
+    <string name="delay">Delay</string>
+    <string name="quality">Quality</string>
+    <string name="title_bill_details">Bill Details</string>
+    <string name="total">Total</string>
+    <string name="title_request_checkout">Request Checkout</string>
+    <string name="change">Change</string>
+    <string name="title_tip_your_waiter">Tip your waiter</string>
+    <string name="msg_call_waiter">Please send the waiter to our table</string>
+    <string name="msg_clean_table">Please clean the table</string>
+    <string name="msg_refill_glass">Please refill glasses</string>
+    <string name="waiter_unassigned">Unassigned</string>
+
+    <string name="status_order_open">Not Accepted</string>
+    <string name="status_order_cancelled">Order Cancelled</string>
+    <string name="status_order_in_progress">In Progress</string>
+    <string name="status_order_delivered">Delivered</string>
+
 </resources>

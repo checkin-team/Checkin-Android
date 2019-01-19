@@ -49,7 +49,7 @@ public class LogoCoverActivity extends AppCompatActivity implements ShopCoverAda
 
         if (getSupportActionBar() != null) {
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-            getSupportActionBar().setHomeAsUpIndicator(R.drawable.ic_appbar_back);
+            getSupportActionBar().setHomeAsUpIndicator(R.drawable.ic_back_grey);
             getSupportActionBar().setElevation(10);
         }
 
