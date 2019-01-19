@@ -1,17 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    tools:context=".Session.ActiveSession.ActiveSessionChat.ActiveSessionChat">
-
+    xmlns:app="http://schemas.android.com/apk/res-auto">
     <item
         android:id="@+id/menu_delay"
-        app:showAsAction="ifRoom"
-        android:title="@string/delay">
-    </item>
+        android:title="@string/delay"
+        app:showAsAction="never" />
     <item
         android:id="@+id/menu_quality"
-        app:showAsAction="ifRoom"
-        android:title="@string/quality">
-    </item>
+        android:title="@string/quality"
+        app:showAsAction="never" />
 </menu>

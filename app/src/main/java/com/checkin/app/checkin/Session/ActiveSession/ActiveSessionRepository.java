@@ -4,7 +4,6 @@ import android.app.Application;
 import android.arch.lifecycle.LiveData;
 import android.content.Context;
 import android.support.annotation.NonNull;
-import android.util.Log;
 
 import com.checkin.app.checkin.Data.ApiClient;
 import com.checkin.app.checkin.Data.ApiResponse;
@@ -13,11 +12,8 @@ import com.checkin.app.checkin.Data.NetworkBoundResource;
 import com.checkin.app.checkin.Data.Resource;
 import com.checkin.app.checkin.Data.RetrofitLiveData;
 import com.checkin.app.checkin.Data.WebApiService;
-import com.checkin.app.checkin.Session.ActiveSession.ActiveSessionChat.ActiveSessionChatModel;
-import com.checkin.app.checkin.Session.SelfPresenceModel;
-import com.checkin.app.checkin.Session.SessionCustomerModel;
-import com.checkin.app.checkin.Session.SessionViewOrdersModel;
-import com.checkin.app.checkin.User.UserModel;
+import com.checkin.app.checkin.Session.ActiveSession.Chat.SessionChatModel;
+import com.checkin.app.checkin.Session.Model.SessionOrderedItemModel;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 
 import java.util.List;
@@ -83,20 +79,20 @@ public class ActiveSessionRepository extends BaseRepository {
         }.getAsLiveData();
     }
 
-    public LiveData<Resource<List<SessionViewOrdersModel>>> getSessionOrdersDetails() {
-        return new NetworkBoundResource<List<SessionViewOrdersModel>, List<SessionViewOrdersModel>>() {
+    public LiveData<Resource<List<SessionOrderedItemModel>>> getSessionOrdersDetails() {
+        return new NetworkBoundResource<List<SessionOrderedItemModel>, List<SessionOrderedItemModel>>() {
 
             @Override
             protected boolean shouldUseLocalDb() {return false;}
 
             @NonNull
             @Override
-            protected LiveData<ApiResponse<List<SessionViewOrdersModel>>> createCall() {
-                return new RetrofitLiveData<>(mWebService.getSessionOrders());
+            protected LiveData<ApiResponse<List<SessionOrderedItemModel>>> createCall() {
+                return new RetrofitLiveData<>(mWebService.getActiveSessionOrders());
             }
 
             @Override
-            protected void saveCallResult(List<SessionViewOrdersModel> data) {}
+            protected void saveCallResult(List<SessionOrderedItemModel> data) {}
         }.getAsLiveData();
     }
 
@@ -137,20 +133,20 @@ public class ActiveSessionRepository extends BaseRepository {
         }.getAsLiveData();
     }
 
-    public LiveData<Resource<List<ActiveSessionChatModel>>> getSessionChatDetail() {
-        return new NetworkBoundResource<List<ActiveSessionChatModel>, List<ActiveSessionChatModel>>() {
+    public LiveData<Resource<List<SessionChatModel>>> getSessionChatDetail() {
+        return new NetworkBoundResource<List<SessionChatModel>, List<SessionChatModel>>() {
 
             @Override
             protected boolean shouldUseLocalDb() {return false;}
 
             @NonNull
             @Override
-            protected LiveData<ApiResponse<List<ActiveSessionChatModel>>> createCall() {
-                return new RetrofitLiveData<>(mWebService.getSessionChat());
+            protected LiveData<ApiResponse<List<SessionChatModel>>> createCall() {
+                return new RetrofitLiveData<>(mWebService.getCustomerSessionChat());
             }
 
             @Override
-            protected void saveCallResult(List<ActiveSessionChatModel> data) {}
+            protected void saveCallResult(List<SessionChatModel> data) {}
         }.getAsLiveData();
     }
 
@@ -164,7 +160,7 @@ public class ActiveSessionRepository extends BaseRepository {
             @NonNull
             @Override
             protected LiveData<ApiResponse<ObjectNode>> createCall() {
-                return new RetrofitLiveData<>(mWebService.postCustomerMsg(data));
+                return new RetrofitLiveData<>(mWebService.postCustomerMessage(data));
             }
 
             @Override
@@ -183,7 +179,7 @@ public class ActiveSessionRepository extends BaseRepository {
             @NonNull
             @Override
             protected LiveData<ApiResponse<ObjectNode>> createCall() {
-                return new RetrofitLiveData<>(mWebService.postCustomerServiceMsg(data));
+                return new RetrofitLiveData<>(mWebService.postCustomerRequestService(data));
             }
 
             @Override
@@ -211,19 +207,21 @@ public class ActiveSessionRepository extends BaseRepository {
         }.getAsLiveData();
     }
 
-    public LiveData<Resource<ActiveSessionInvoiceModel>> getSessionInvoiceDetail(String session_id) {
-        return new NetworkBoundResource<ActiveSessionInvoiceModel, ActiveSessionInvoiceModel>() {
-
+    public LiveData<Resource<ObjectNode>> postRequestCheckout(ObjectNode data) {
+        return new NetworkBoundResource<ObjectNode, ObjectNode>() {
             @Override
-            protected void saveCallResult(ActiveSessionInvoiceModel data) {}
-
-            @Override
-            protected boolean shouldUseLocalDb() {return false;}
+            protected boolean shouldUseLocalDb() {
+                return false;
+            }
 
             @NonNull
             @Override
-            protected LiveData<ApiResponse<ActiveSessionInvoiceModel>> createCall() {
-                return new RetrofitLiveData<>(mWebService.getSessionInvoice(session_id));
+            protected LiveData<ApiResponse<ObjectNode>> createCall() {
+                return new RetrofitLiveData<>(mWebService.postCustomerRequestCheckout(data));
+            }
+
+            @Override
+            protected void saveCallResult(ObjectNode data) {
             }
         }.getAsLiveData();
     }

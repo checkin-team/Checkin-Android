@@ -13,7 +13,7 @@
             android:layout_gravity="center_vertical|start"
             android:id="@+id/image_action"
             android:layout_marginStart="@dimen/spacing_normal"
-            android:src="@drawable/noun_table_557866"
+            android:src="@drawable/ic_action_clean_table"
             android:layout_height="30dp" />
         <TextView
             android:layout_width="wrap_content"

@@ -151,11 +151,15 @@
             android:label="Image"
             android:theme="@style/AppThemeWhiteActionBar" />
         <activity
-            android:name=".Session.ActiveSession.ActiveSessionChat.ActiveSessionChat"
-            android:windowSoftInputMode="adjustPan|adjustResize" />
+            android:name=".Session.ActiveSession.Chat.SessionChatActivity"
+            android:windowSoftInputMode="adjustPan|adjustResize"
+            android:theme="@style/SessionChatTheme"
+            android:label="Chat with Us"/>
         <activity android:name=".Session.ActiveSession.ActiveSessionViewOrdersActivity"
             android:windowSoftInputMode="adjustNothing" />
-        <activity android:name=".Session.ActiveSession.ActiveSessionInvoiceActivity"/>
+        <activity android:name=".Session.ActiveSession.ActiveSessionInvoiceActivity"
+            android:theme="@style/AppThemeWhiteActionBar"
+            android:label="Invoice"/>
 
         <service
             android:name=".Auth.AuthenticatorService"

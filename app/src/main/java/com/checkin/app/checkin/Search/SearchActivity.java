@@ -140,7 +140,7 @@ public class SearchActivity extends AppCompatActivity implements SearchResultInt
 
     private void setupSearch() {
         vSearch.setStartFromRight(false);
-        vSearch.setBackIcon(getDrawable(R.drawable.ic_appbar_back));
+        vSearch.setBackIcon(getDrawable(R.drawable.ic_back_grey));
         vSearch.setOnQueryTextListener(new MaterialSearchView.OnQueryTextListener() {
             @Override
             public boolean onQueryTextSubmit(String query) {

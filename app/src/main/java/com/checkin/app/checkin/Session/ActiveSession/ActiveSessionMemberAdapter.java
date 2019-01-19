@@ -7,7 +7,7 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.checkin.app.checkin.R;
-import com.checkin.app.checkin.Session.SessionCustomerModel;
+import com.checkin.app.checkin.Session.Model.SessionCustomerModel;
 import com.checkin.app.checkin.Utility.HeaderFooterRecyclerViewAdapter;
 import com.checkin.app.checkin.Utility.Utils;
 

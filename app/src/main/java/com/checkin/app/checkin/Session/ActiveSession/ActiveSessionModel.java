@@ -1,8 +1,7 @@
 package com.checkin.app.checkin.Session.ActiveSession;
 
-import com.checkin.app.checkin.Menu.Model.OrderedItemModel;
 import com.checkin.app.checkin.Misc.BriefModel;
-import com.checkin.app.checkin.Session.SessionCustomerModel;
+import com.checkin.app.checkin.Session.Model.SessionCustomerModel;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 import java.util.Date;
@@ -14,13 +13,10 @@ import java.util.List;
 
 public class ActiveSessionModel {
     @JsonProperty("pk")
-    private String pk;
+    private int pk;
 
     @JsonProperty("bill")
     private String bill;
-
-    // TODO: Remove from here.
-    private List<OrderedItemModel> orderedItems;
 
     @JsonProperty("customers")
     private List<SessionCustomerModel> customers;
@@ -38,23 +34,15 @@ public class ActiveSessionModel {
     private BriefModel host;
 
     @JsonProperty("is_public")
-    private boolean is_public;
+    private boolean isPublic;
 
     public ActiveSessionModel() {}
-
-    public ActiveSessionModel(String bill, List<OrderedItemModel> orderedItems, List<SessionCustomerModel> customers, BriefModel restaurant, BriefModel host) {
-        this.bill = bill;
-        this.orderedItems = orderedItems;
-        this.customers = customers;
-        this.restaurant = restaurant;
-        this.host = host;
-    }
 
     public String getBill() {
         return bill;
     }
 
-    public String getPk() {
+    public int getPk() {
         return pk;
     }
 
@@ -64,10 +52,6 @@ public class ActiveSessionModel {
 
     public Date getCheckedOut() {
         return checkedOut;
-    }
-
-    public List<OrderedItemModel> getOrderedItems() {
-        return orderedItems;
     }
 
     public List<SessionCustomerModel> getCustomers() {
@@ -82,7 +66,11 @@ public class ActiveSessionModel {
         return host;
     }
 
-    public boolean isIs_public() {
-        return is_public;
+    public boolean isCheckinPublic() {
+        return isPublic;
+    }
+
+    public int getShopPk() {
+        return Integer.valueOf(restaurant.getPk());
     }
 }

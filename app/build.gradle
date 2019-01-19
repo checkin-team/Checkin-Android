@@ -92,6 +92,9 @@ dependencies {
     implementation 'com.romandanylyk:pageindicatorview:1.0.2'
     implementation 'com.lyft:scissors:1.1.1'
 
+    //Tooltip library
+    implementation 'com.nhaarman.supertooltips:library:3.0.0'
+
     // Network libraries and JSON <-> POJO
     implementation(
             [group: 'com.fasterxml.jackson.core', name: 'jackson-core', version: versions.jackson],
@@ -116,7 +119,7 @@ dependencies {
     implementation 'com.hootsuite.android:nachos:1.1.1'
     // Graphs
     implementation 'com.github.PhilJay:MPAndroidChart:v3.0.3'
-    // Bottom-navbar
+    // Bottom-nav bar
     implementation 'it.sephiroth.android.library.bottomnavigation:bottom-navigation:2.0.1-rc1'
     // Transition animations
     implementation 'com.andkulikov:transitionseverywhere:1.8.0'
@@ -126,9 +129,6 @@ dependencies {
     implementation 'com.google.android.gms:play-services-maps:16.0.0'
     implementation 'com.google.android.gms:play-services-places:16.0.0'
     implementation 'com.google.android.gms:play-services-location:16.0.0'
-
-    //Tooltip library
-    implementation 'com.nhaarman.supertooltips:library:3.0.+'
 }
 
 apply plugin: 'com.google.gms.google-services'

@@ -43,7 +43,7 @@ public class BusinessFeaturesActivity extends AppCompatActivity {
 
         ActionBar actionBar = getSupportActionBar();
         actionBar.setDisplayHomeAsUpEnabled(true);
-        actionBar.setHomeAsUpIndicator(R.drawable.ic_appbar_back);
+        actionBar.setHomeAsUpIndicator(R.drawable.ic_back_grey);
         actionBar.setElevation(10);
         actionBar.setTitle("");
 

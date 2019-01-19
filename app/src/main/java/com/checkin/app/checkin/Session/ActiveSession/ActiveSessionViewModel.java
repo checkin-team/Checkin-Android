@@ -3,100 +3,84 @@ package com.checkin.app.checkin.Session.ActiveSession;
 import android.app.Application;
 import android.arch.lifecycle.LiveData;
 import android.arch.lifecycle.MediatorLiveData;
-import android.arch.lifecycle.Transformations;
 import android.support.annotation.NonNull;
-import android.util.Log;
 
 import com.checkin.app.checkin.Data.BaseViewModel;
 import com.checkin.app.checkin.Data.Converters;
 import com.checkin.app.checkin.Data.Resource;
-import com.checkin.app.checkin.Menu.Model.OrderedItemModel;
-import com.checkin.app.checkin.Session.ActiveSession.ActiveSessionChat.ActiveSessionChatModel;
-import com.checkin.app.checkin.Session.SelfPresenceModel;
-import com.checkin.app.checkin.Session.SessionCustomerModel;
-import com.checkin.app.checkin.Session.SessionViewOrdersModel;
+import com.checkin.app.checkin.Session.Model.SessionInvoiceModel;
+import com.checkin.app.checkin.Session.SessionRepository;
+import com.checkin.app.checkin.Shop.ShopModel;
 import com.fasterxml.jackson.databind.node.ObjectNode;
-
-import java.util.List;
-
-/**
- * Created by Bhavik Patel on 05/08/2018.
- */
 
 public class ActiveSessionViewModel extends BaseViewModel {
     private final ActiveSessionRepository mRepository;
+    private final SessionRepository mSessionRepository;
 
     private MediatorLiveData<Resource<ActiveSessionModel>> mSessionData = new MediatorLiveData<>();
-    private MediatorLiveData<Resource<SelfPresenceModel>> mPresenceData = new MediatorLiveData<>();
-    private MediatorLiveData<Resource<ActiveSessionInvoiceModel>> mInvoiceData = new MediatorLiveData<>();
+    private MediatorLiveData<Resource<SessionInvoiceModel>> mInvoiceData = new MediatorLiveData<>();
 
-    private String mShopPk, mSessionId;
+    private int mShopPk = -1, mSessionPk = -1;
 
     ActiveSessionViewModel(@NonNull Application application) {
         super(application);
         mRepository = ActiveSessionRepository.getInstance(application);
+        mSessionRepository = SessionRepository.getInstance(application);
     }
 
     @Override
     public void updateResults() {
-        getActiveSessionDetail();
+        fetchActiveSessionDetail();
     }
 
-    public LiveData<Resource<ActiveSessionModel>> getActiveSessionDetail() {
+    public void fetchActiveSessionDetail() {
         mSessionData.addSource(mRepository.getActiveSessionDetail(), mSessionData::setValue);
+    }
+
+    public LiveData<Resource<ActiveSessionModel>> getSessionData() {
         return mSessionData;
     }
 
-    public LiveData<Resource<ActiveSessionInvoiceModel>> getInvoiceData(){
-        return mInvoiceData;
-    }
-
-    public void getSessionIdInvoice(String sessionId) {
-        mInvoiceData.addSource(mRepository.getSessionInvoiceDetail(sessionId), mInvoiceData::setValue);
-    }
-
-    public LiveData<List<OrderedItemModel>> getOrderedItems() {
-        return Transformations.map(getActiveSessionDetail(), input -> {
-            List<OrderedItemModel> orderedItems = null;
-            if (input != null && input.data != null) {
-                orderedItems = input.data.getOrderedItems();
-            }
-            return orderedItems;
-        });
-    }
-
-
-    public void cancelOrders(String pk) { }
-
-    public void checkoutSession() {
-        Log.e("Session", "Checked out");
-    }
-
-    public void addMembers(String ids) {
+    public void addMembers(long id) {
         ObjectNode data = Converters.objectMapper.createObjectNode();
-        data.put("user_id",ids);
+        data.put("user_id", id);
         mData.addSource(mRepository.postAddMembers(data), mData::setValue);
     }
 
-    public void sendSelfPresence(boolean is_public) {
+    public void sendSelfPresence(boolean isPublic) {
         ObjectNode data = Converters.objectMapper.createObjectNode();
-        data.put("is_public",is_public);
+        data.put("is_public", isPublic);
         mData.addSource(mRepository.putSelfPresence(data), mData::setValue);
     }
 
-    public void setShopPk(String shopPk) {
+    public LiveData<Resource<SessionInvoiceModel>> getSessionInvoice() {
+        return mInvoiceData;
+    }
+
+    public void fetchSessionInvoice() {
+        mInvoiceData.addSource(mSessionRepository.getSessionInvoiceDetail(mSessionPk), mInvoiceData::setValue);
+    }
+
+    public void requestCheckout(double tip, ShopModel.PAYMENT_MODE paymentMode) {
+        ObjectNode data = Converters.objectMapper.createObjectNode()
+                .put("tip", tip)
+                .put("payment_mode", paymentMode.tag);
+        mData.addSource(mRepository.postRequestCheckout(data), mData::setValue);
+    }
+
+    public void setShopPk(int shopPk) {
         mShopPk = shopPk;
     }
 
-    public String getShopPk() {
+    public int getShopPk() {
         return mShopPk;
     }
 
-    public void setSessionId(String sessionId) {
-        mSessionId = sessionId;
+    public void setSessionPk(int sessionPk) {
+        mSessionPk = sessionPk;
     }
 
-    public String getSessionId() {
-        return mSessionId;
+    public int getSessionPk() {
+        return mSessionPk;
     }
 }

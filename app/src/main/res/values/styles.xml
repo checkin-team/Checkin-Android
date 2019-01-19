@@ -11,7 +11,7 @@
     </style>
 
     <style name="appbar_main" parent="AppTheme.AppBarOverlay">
-        <item name="android:homeAsUpIndicator">@drawable/ic_appbar_back</item>
+        <item name="android:homeAsUpIndicator">@drawable/ic_back_grey</item>
     </style>
 
     <style name="SessionTheme" parent="Theme.AppCompat.Light.NoActionBar">
@@ -27,7 +27,7 @@
     <style name="AppThemeWhiteActionBar.ActionBar" parent="Widget.AppCompat.ActionBar">
         <item name="background">@color/white</item>
         <item name="titleTextStyle">@style/GreyTextStyle</item>
-        <item name="android:homeAsUpIndicator">@drawable/ic_appbar_back</item>
+        <item name="android:homeAsUpIndicator">@drawable/ic_back_grey</item>
         <item name="android:tabWidgetStyle">@style/AppThemeWhiteActionBar.TabLayout</item>
     </style>
 
@@ -44,6 +44,22 @@
         <item name="android:fontFamily">@font/arial_rounded_mt_bold</item>
         <item name="fontFamily">@font/arial_rounded_mt_bold</item>
         <item name="actionBarStyle">@style/RougeActionBarTheme</item>
+    </style>
+
+    <style name="RougeActionBarTheme" parent="Widget.AppCompat.ActionBar">
+        <item name="titleTextStyle">@style/WhiteHeadingStyle</item>
+        <item name="background">@color/primary_red</item>
+        <item name="android:homeAsUpIndicator">@drawable/ic_back_white</item>
+    </style>
+
+    <style name="SessionChatTheme" parent="AppThemeWithBar">
+        <item name="android:actionOverflowButtonStyle">@style/ConcernButtonOverflow</item>
+        <!-- Support library compatibility -->
+        <item name="actionOverflowButtonStyle">@style/ConcernButtonOverflow</item>
+    </style>
+
+    <style name="ConcernButtonOverflow" parent="@style/Widget.AppCompat.ActionButton.Overflow">
+        <item name="android:src">@drawable/ic_action_complain</item>
     </style>
 
     <style name="CustomDialogTheme" parent="Theme.AppCompat.Light.Dialog">
@@ -79,6 +95,10 @@
         <item name="android:textColor">@color/primary_red</item>
     </style>
 
+    <style name="RedSmallTextStyle" parent="GreySmallTextStyle">
+        <item name="android:textColor">@color/primary_red</item>
+    </style>
+
     <style name="GreyTextContainer">
         <item name="android:textViewStyle">@style/GreyTextStyle</item>
     </style>
@@ -89,19 +109,24 @@
         <item name="android:theme">@style/ThemeOverlay.AppCompat.Light</item>
     </style>
 
-    <style name="LogoImageStyle">
-        <item name="android:layout_width">@dimen/size_logo</item>
-        <item name="android:layout_height">@dimen/size_logo</item>
-    </style>
-
     <style name="ButtonNormal">
         <item name="android:layout_width">@dimen/button_height_normal</item>
         <item name="android:layout_height">@dimen/button_height_normal</item>
     </style>
 
+    <style name="LogoImageStyle">
+        <item name="android:layout_width">@dimen/size_logo</item>
+        <item name="android:layout_height">@dimen/size_logo</item>
+    </style>
+
     <style name="LogoLargeImageStyle">
         <item name="android:layout_width">@dimen/size_logo_large</item>
         <item name="android:layout_height">@dimen/size_logo_large</item>
+    </style>
+
+    <style name="LogoSmallImageStyle">
+        <item name="android:layout_width">@dimen/size_logo_small</item>
+        <item name="android:layout_height">@dimen/size_logo_small</item>
     </style>
 
     <style name="InputLabelGreyLargeStyle" parent="TextAppearance.AppCompat">
@@ -138,11 +163,6 @@
         <item name="android:textSize">@dimen/font_larger</item>
     </style>
 
-    <style name="RougeActionBarTheme" parent="Widget.AppCompat.ActionBar">
-        <item name="titleTextStyle">@style/WhiteHeadingStyle</item>
-        <item name="background">@color/primary_red</item>
-    </style>
-
     <style name="WhiteHeadingStyle" parent="TextAppearance.AppCompat.Widget.ActionBar.Title">
         <item name="android:textColor">@color/white</item>
     </style>
@@ -157,6 +177,10 @@
         <item name="android:textColor">@color/brownish_grey</item>
         <item name="android:fontFamily">@font/arial_rounded_mt_bold</item>
         <item name="android:textSize">@dimen/font_normal</item>
+    </style>
+
+    <style name="GreySmallTextStyle" parent="GreyTextStyle">
+        <item name="android:textSize">@dimen/font_small</item>
     </style>
 
     <style name="PinkishGreySmallTextStyle" parent="GreyTextStyle">
@@ -225,7 +249,7 @@
         <item name="android:textSize">@dimen/font_small</item>
     </style>
 
-    <style name="ButtonSmallVerifyAction" parent="Widget.AppCompat.Button">
+    <style name="ButtonRedAlertAction" parent="Widget.AppCompat.Button">
         <item name="android:fontFamily">@font/lucida_grande</item>
         <item name="android:background">@drawable/bordered_card_rouge</item>
         <item name="android:textColor">@color/white</item>
@@ -274,7 +298,7 @@
         <item name="searchCloseIcon">@drawable/ic_cancel</item>
 
         <!-- Change up icon-->
-        <item name="searchBackIcon">@drawable/ic_appbar_back</item>
+        <item name="searchBackIcon">@drawable/ic_back_grey</item>
 
         <!-- Change icon for the suggestions-->
         <item name="searchSuggestionIcon">@drawable/ic_suggestion</item>
@@ -307,8 +331,8 @@
     </style>
 
 
-        <style name="RedHeaderBar">
-            <item name="android:background">@color/primary_red</item>
-        </style>
+    <style name="RedHeaderBar">
+        <item name="android:background">@color/primary_red</item>
+    </style>
 
 </resources>

@@ -1,6 +1,5 @@
 package com.checkin.app.checkin.Session.ActiveSession;
 
-import android.arch.lifecycle.Observer;
 import android.arch.lifecycle.ViewModelProviders;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -11,17 +10,16 @@ import android.widget.Toast;
 
 import com.checkin.app.checkin.Data.Resource;
 import com.checkin.app.checkin.R;
-import com.checkin.app.checkin.Session.SessionViewOrdersModel;
+import com.checkin.app.checkin.Session.Model.SessionOrderedItemModel;
 import com.checkin.app.checkin.Utility.Utils;
-
-import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
-public class ActiveSessionViewOrdersActivity extends AppCompatActivity implements ActiveSessionViewOrdersAdapters.SessionOrdersInteraction {
-    @BindView(R.id.rv_active_session_orders) RecyclerView rvOrders;
-    private ActiveSessionViewOrdersAdapters mOrdersAdapter;
+public class ActiveSessionViewOrdersActivity extends AppCompatActivity implements ActiveSessionOrdersAdapter.SessionOrdersInteraction {
+    @BindView(R.id.rv_active_session_orders)
+    RecyclerView rvOrders;
+    private ActiveSessionOrdersAdapter mOrdersAdapter;
     private ActiveSessionOrdersViewModel mViewModel;
 
     @Override
@@ -32,17 +30,14 @@ public class ActiveSessionViewOrdersActivity extends AppCompatActivity implement
         ButterKnife.bind(this);
 
         rvOrders.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false));
-        mOrdersAdapter = new ActiveSessionViewOrdersAdapters(null, ActiveSessionViewOrdersActivity.this, (ActiveSessionViewOrdersAdapters.SessionOrdersInteraction) this);
+        mOrdersAdapter = new ActiveSessionOrdersAdapter(null, this);
         rvOrders.setAdapter(mOrdersAdapter);
 
         mViewModel = ViewModelProviders.of(this).get(ActiveSessionOrdersViewModel.class);
 
-        mViewModel.getSessionOrdersData().observe(this, new Observer<Resource<List<SessionViewOrdersModel>>>() {
-            @Override
-            public void onChanged(@Nullable Resource<List<SessionViewOrdersModel>> listResource) {
-                if (listResource != null && listResource.status == Resource.Status.SUCCESS)
-                    mOrdersAdapter.setData(listResource.data);
-            }
+        mViewModel.getSessionOrdersData().observe(this, listResource -> {
+            if (listResource != null && listResource.status == Resource.Status.SUCCESS)
+                mOrdersAdapter.setData(listResource.data);
         });
 
         mViewModel.getObservableData().observe(this, resource -> {
@@ -67,7 +62,7 @@ public class ActiveSessionViewOrdersActivity extends AppCompatActivity implement
     }
 
     @Override
-    public void onCancelOrder(int pk) {
-        mViewModel.deleteSessionOrder(String.valueOf(pk));
+    public void onCancelOrder(SessionOrderedItemModel orderedItem) {
+        mViewModel.deleteSessionOrder(String.valueOf(orderedItem.getPk()));
     }
 }

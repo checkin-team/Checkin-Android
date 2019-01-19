@@ -48,4 +48,9 @@ public class ItemCustomizationFieldModel {
     public boolean isVegetarian() {
         return isVegetarian;
     }
+
+    @Override
+    public String toString() {
+        return getName();
+    }
 }

@@ -1,183 +1,21 @@
 <?xml version="1.0" encoding="utf-8"?>
 <android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:id="@+id/rowItem"
-    android:paddingTop="@dimen/spacing_extra_small"
-    android:paddingBottom="@dimen/spacing_extra_small"
     android:paddingStart="@dimen/spacing_small"
+    android:paddingTop="@dimen/spacing_extra_small"
     android:paddingEnd="@dimen/spacing_small"
-    xmlns:tools="http://schemas.android.com/tools"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
+    android:paddingBottom="@dimen/spacing_extra_small"
+    android:background="@drawable/background_item_selection_toggle">
 
-    <LinearLayout
-        android:layout_width="250dp"
+    <FrameLayout
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:background="@drawable/ic_chat_right_bg"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintEnd_toEndOf="parent">
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:layout_weight="1"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintStart_toStartOf="parent">
-
-            <TextView
-                android:id="@+id/tv_sender_name"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textSize="@dimen/font_small"
-                android:textColor="@color/primary_red"
-                android:paddingEnd="@dimen/spacing_small"
-                android:text="name"
-                android:fontFamily="@font/arial_rounded_mt_bold"/>
-
-            <TextView
-                android:id="@+id/tv_chat_msg"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:textSize="@dimen/font_standard"
-                android:textColor="@color/brownish_grey"
-                android:paddingEnd="@dimen/spacing_extra_small"
-                android:text="msg"
-                android:visibility="gone"
-                android:fontFamily="@font/arial_rounded_mt_bold"/>
-            <TextView
-                android:id="@+id/tv_chat_cancel_msg"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:textSize="@dimen/font_small"
-                android:textColor="@color/brownish_grey"
-                android:paddingEnd="@dimen/spacing_extra_small"
-                android:text="cancelled"
-                android:padding="@dimen/spacing_extra_small"
-                android:background="@color/grey_shade"
-                android:fontFamily="@font/arial_rounded_mt_bold"/>
-
-            <TextView
-                android:id="@+id/tv_chat_cancel_title"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:textSize="@dimen/font_standard"
-                android:textColor="@color/primary_red"
-                android:paddingEnd="@dimen/spacing_extra_small"
-                android:text="@string/status_order_cancelled"
-                android:visibility="visible"
-                android:fontFamily="@font/arial_rounded_mt_bold"/>
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/spacing_extra_tiny">
-
-                <TextView
-                    android:id="@+id/tv_chat_time"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:textColor="@color/pinkish_grey"
-                    android:textSize="@dimen/font_extra_small"
-                    android:layout_gravity="start"
-                    android:text="10:20"
-                    android:layout_weight="1"/>
-
-                <ImageView
-                    android:id="@+id/im_msg_delivered"
-                    android:layout_width="15dp"
-                    android:layout_height="15dp"
-                    android:src="@drawable/ic_cancel"
-                    android:visibility="gone"/>
-
-            </LinearLayout>
-
-        </LinearLayout>
-
-        <LinearLayout
-            android:id="@+id/ll_order_status_container"
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:orientation="vertical"
-            android:gravity="bottom">
-
-            <ImageView
-                android:id="@+id/im_msg_typing_1"
-                android:layout_width="10dp"
-                android:layout_height="10dp"
-                android:src="@drawable/oval_grey"
-                android:padding="2dp"
-                android:visibility="visible"/>
-            <ImageView
-                android:id="@+id/im_msg_typing_2"
-                android:layout_width="10dp"
-                android:layout_height="10dp"
-                android:src="@drawable/oval_grey"
-                android:padding="2dp"
-                android:visibility="visible"/>
-
-            <ImageView
-                android:id="@+id/im_msg_typing_3"
-                android:layout_width="10dp"
-                android:layout_height="10dp"
-                android:src="@drawable/oval_grey"
-                android:padding="2dp"
-                android:visibility="visible"/>
-
-        </LinearLayout>
-
-    </LinearLayout>
+        android:background="@drawable/background_chat_right"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+        <include layout="@layout/incl_active_session_chat_message" />
+    </FrameLayout>
 
 </android.support.constraint.ConstraintLayout>
-
-
-
-
-
-
-
-
-<!--
-<?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:padding="@dimen/spacing_small"
-    android:layout_gravity="right"
-    android:layout_height="match_parent"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
-
-
-        <LinearLayout
-
-            android:background="@drawable/ic_chat_right_bg"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            android:layout_width="250dp"
-            android:layout_height="wrap_content"
-
-            android:orientation="vertical">
-
-
-            <TextView
-                android:textSize="@dimen/font_normal"
-                android:textColor="@color/brownish_grey"
-                android:id="@+id/tv_as2_chat_message"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Contrary to popular belief, Lorem Ipsum is not simply random text. It has roots in a piece of classical Latin literature from 45 BC, making it over 2000 years old. Richard McClintock, a Latin professor at Hampden-Sydney College in Virginia, looked up one of the more obscure Latin words, consectetur, from a Lorem Ipsum passage, and going through the cites of the word in classical literature, discovered the undoubtable source. "
-               />
-
-            <TextView
-                android:textColor="@color/pinkish_grey"
-                android:textSize="@dimen/font_extra_small"
-                android:id="@+id/tv_as2_chat_time"
-                android:layout_gravity="right"
-                android:layout_width="wrap_content"
-                android:layout_height="23dp"
-                android:text="10:20"
-                />
-        </LinearLayout>
-
-
-</android.support.constraint.ConstraintLayout>-->

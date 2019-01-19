@@ -8,14 +8,14 @@ import android.util.Log;
 
 import com.checkin.app.checkin.Data.BaseViewModel;
 import com.checkin.app.checkin.Data.Resource;
-import com.checkin.app.checkin.Session.SessionViewOrdersModel;
+import com.checkin.app.checkin.Session.Model.SessionOrderedItemModel;
 
 import java.util.List;
 
 public class ActiveSessionOrdersViewModel extends BaseViewModel {
     private final ActiveSessionRepository mRepository;
 
-    private MediatorLiveData<Resource<List<SessionViewOrdersModel>>> mOrdersData = new MediatorLiveData<>();
+    private MediatorLiveData<Resource<List<SessionOrderedItemModel>>> mOrdersData = new MediatorLiveData<>();
 
     private String mShopPk;
 
@@ -29,7 +29,7 @@ public class ActiveSessionOrdersViewModel extends BaseViewModel {
         getSessionOrdersData();
     }
 
-    public LiveData<Resource<List<SessionViewOrdersModel>>> getSessionOrdersData() {
+    public LiveData<Resource<List<SessionOrderedItemModel>>> getSessionOrdersData() {
         mOrdersData.addSource(mRepository.getSessionOrdersDetails(),mOrdersData::setValue);
         return mOrdersData;
     }

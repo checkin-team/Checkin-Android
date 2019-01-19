@@ -168,7 +168,7 @@ android:layout_marginTop="@dimen/spacing_small"
             <ImageView
                 android:layout_width="26dp"
                 android:layout_height="26dp"
-                android:src="@drawable/noun_cooking_76171"
+                android:src="@drawable/ic_order_status_cooking"
                 android:id="@+id/current_status"
                 android:layout_gravity="center"/>
             <ImageView

@@ -56,7 +56,7 @@ public class MenuRepository {
             @NonNull
             @Override
             protected LiveData<ApiResponse<ArrayNode>> createCall() {
-                return new RetrofitLiveData<>(mWebService.postSessionOrders(orders));
+                return new RetrofitLiveData<>(mWebService.postActiveSessionOrders(orders));
             }
 
             @Override

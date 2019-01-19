@@ -17,7 +17,7 @@
         android:layout_marginTop="@dimen/spacing_extra_large"
         android:hint="Phone Number"
         android:inputType="phone"
-        android:textColor="@color/greyish"
+        android:textColor="@color/pinkish_grey"
         android:textAlignment="center"
         android:textSize="@dimen/font_normal"
         android:text="@string/prefix_country_code"

@@ -18,7 +18,7 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        tools:src="@drawable/profile_pic_followers" />
+        tools:src="@drawable/dummy_alex" />
 
     <TextView
         android:id="@+id/tv_user_name"

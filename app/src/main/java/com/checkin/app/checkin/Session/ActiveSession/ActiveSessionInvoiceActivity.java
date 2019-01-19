@@ -6,81 +6,142 @@ import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
+import android.text.Editable;
 import android.view.View;
-import android.widget.LinearLayout;
+import android.view.ViewGroup;
+import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.checkin.app.checkin.Data.Resource;
 import com.checkin.app.checkin.R;
+import com.checkin.app.checkin.Session.Model.SessionInvoiceModel;
+import com.checkin.app.checkin.Shop.ShopModel;
 import com.checkin.app.checkin.Utility.Utils;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
-import de.hdodenhof.circleimageview.CircleImageView;
+import butterknife.OnTextChanged;
 
 public class ActiveSessionInvoiceActivity extends AppCompatActivity {
-    @BindView(R.id.rv_ordered_items) RecyclerView rv_ordered_items;
-    @BindView(R.id.im_waiter) CircleImageView im_waiter;
-    @BindView(R.id.tv_subtotal) TextView tv_subtotal;
-    @BindView(R.id.tv_charges) TextView tv_charges;
-    @BindView(R.id.tv_taxes) TextView tv_taxes;
-    @BindView(R.id.tv_promo) TextView tv_promo;
-    @BindView(R.id.tv_discount) TextView tv_discount;
-    @BindView(R.id.tv_tip) TextView tv_tip;
-    @BindView(R.id.tv_total) TextView tv_total;
-    @BindView(R.id.ll_charges_container) LinearLayout ll_charges_container;
-    @BindView(R.id.ll_taxes_container) LinearLayout ll_taxes_container;
-    @BindView(R.id.ll_promo_container) LinearLayout ll_promo_container;
-    @BindView(R.id.ll_discount_container) LinearLayout ll_discount_container;
+    public static final String KEY_SESSION_PK = "invoice.session_pk";
+
+    @BindView(R.id.rv_invoice_ordered_items)
+    RecyclerView rvOrderedItems;
+    @BindView(R.id.im_invoice_waiter)
+    ImageView imWaiterPic;
+    @BindView(R.id.tv_invoice_subtotal)
+    TextView tvInvoiceSubtotal;
+    @BindView(R.id.tv_invoice_tax)
+    TextView tvInvoiceTax;
+    @BindView(R.id.tv_invoice_discount)
+    TextView tvInvoiceDiscount;
+    @BindView(R.id.tv_invoice_tip)
+    TextView tvInvoiceTip;
+    @BindView(R.id.tv_invoice_promo)
+    TextView tvInvoicePromo;
+    @BindView(R.id.tv_invoice_total)
+    TextView tvInvoiceTotal;
+    @BindView(R.id.ed_invoice_tip)
+    EditText edInvoiceTip;
+    @BindView(R.id.container_invoice_tax)
+    ViewGroup containerInvoiceTax;
+    @BindView(R.id.container_invoice_promo)
+    ViewGroup containerInvoicePromo;
+    @BindView(R.id.container_invoice_discount)
+    ViewGroup containerInvoiceDiscount;
+
     private ActiveSessionViewModel mViewModel;
-    private ActiveSessionInvoiceAdapter mAdapter;
+    private InvoiceOrdersAdapter mAdapter;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        setContentView(R.layout.activity_active_session_checkout);
+        setContentView(R.layout.activity_active_session_invoice);
         ButterKnife.bind(this);
 
-        rv_ordered_items.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false));
-        mAdapter = new ActiveSessionInvoiceAdapter(null, this);
-        rv_ordered_items.setAdapter(mAdapter);
+        if (getSupportActionBar() != null) {
+            getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        }
+
+        rvOrderedItems.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false));
+        mAdapter = new InvoiceOrdersAdapter(null);
+        rvOrderedItems.setAdapter(mAdapter);
+
+        int sessionPk = getIntent().getIntExtra(KEY_SESSION_PK, -1);
+        if (sessionPk == -1)
+            throw new IllegalArgumentException("No session PK passed.");
 
         mViewModel = ViewModelProviders.of(this).get(ActiveSessionViewModel.class);
-        mViewModel.getSessionIdInvoice(getIntent().getStringExtra("session_id"));
-        mViewModel.getInvoiceData().observe(this,activeSessionInvoiceModelResource -> {
-            if (activeSessionInvoiceModelResource.status == Resource.Status.SUCCESS && activeSessionInvoiceModelResource.data != null) {
-                ActiveSessionInvoiceModel data = activeSessionInvoiceModelResource.data;
-                mAdapter.setData(data.getOrdered_items());
-                if (data.getHost() != null)
-                    Utils.loadImageOrDefault(im_waiter, data.getHost().getDisplayPic(), R.drawable.ic_waiter);
-
-                if (data.getBill().getSubtotal() != null)
-                    tv_subtotal.setText(getResources().getString(R.string.rs)+ " " +data.getBill().getSubtotal());
-                if (data.getBill().getSubtotal() != null)
-                    tv_charges.setText(getResources().getString(R.string.rs)+ " " +data.getBill().getSubtotal());
-                else ll_charges_container.setVisibility(View.GONE);
-                if (data.getBill().getTax() != null) tv_taxes.setText(getResources().getString(R.string.rs)+ " " +data.getBill().getTax());
-                else ll_taxes_container.setVisibility(View.GONE);
-                if (data.getBill().getOffers() != null)
-                    tv_promo.setText(getResources().getString(R.string.rs)+ " " +data.getBill().getOffers());
-                else ll_promo_container.setVisibility(View.GONE);
-                if (data.getBill().getDiscount() != null)
-                    tv_discount.setText(getResources().getString(R.string.rs)+ " " +data.getBill().getDiscount());
-                else ll_discount_container.setVisibility(View.GONE);
-                if (data.getBill().getTotal() != null) tv_total.setText(getResources().getString(R.string.rs)+ " " +data.getBill().getTotal());
-                if (data.getBill().getTip() != null) tv_tip.setText(data.getBill().getTip());
-                else tv_tip.setText("0.00");
+        mViewModel.setSessionPk(sessionPk);
+        mViewModel.fetchSessionInvoice();
+        mViewModel.getSessionInvoice().observe(this, resource -> {
+            if (resource == null)
+                return;
+            if (resource.status == Resource.Status.SUCCESS && resource.data != null) {
+                setupUi(resource.data);
             }
-
         });
     }
 
-    @OnClick(R.id.im_back)
-    public void goBack(View v){
-        onBackPressed();
+    private void setupUi(SessionInvoiceModel data) {
+        mAdapter.setData(data.getOrderedItems());
+
+        if (data.getHost() != null)
+            Utils.loadImageOrDefault(imWaiterPic, data.getHost().getDisplayPic(), R.drawable.ic_waiter);
+
+        // Subtotal
+        if (data.getBill().getSubtotal() != null)
+            tvInvoiceSubtotal.setText(Utils.formatCurrencyAmount(this, data.getBill().getSubtotal()));
+        // Tax
+        if (data.getBill().getTax() != null)
+            tvInvoiceTax.setText(Utils.formatCurrencyAmount(this, data.getBill().getTax()));
+        else
+            containerInvoiceTax.setVisibility(View.GONE);
+        // Promo
+        if (data.getBill().getOffers() != null)
+            tvInvoicePromo.setText(Utils.formatCurrencyAmount(this, data.getBill().getOffers()));
+        else
+            containerInvoicePromo.setVisibility(View.GONE);
+        // Discount
+        if (data.getBill().getDiscount() != null)
+            tvInvoiceDiscount.setText(Utils.formatCurrencyAmount(this, data.getBill().getDiscount()));
+        else
+            containerInvoiceDiscount.setVisibility(View.GONE);
+        // Tip
+        tvInvoiceTip.setText(Utils.formatCurrencyAmount(this, data.getBill().getTip()));
+        edInvoiceTip.setText(data.getBill().getTip());
+        // Total
+        tvInvoiceTotal.setText(Utils.formatCurrencyAmount(this, data.getBill().getTotal()));
     }
 
+    @OnTextChanged(value = R.id.ed_invoice_tip, callback = OnTextChanged.Callback.AFTER_TEXT_CHANGED)
+    public void onTipChange(Editable editable) {
+        Double amount = 0d;
+        try {
+            amount = Double.valueOf(editable.toString());
+        } catch (NumberFormatException ignored) {
+        }
+        tvInvoiceTip.setText(Utils.formatCurrencyAmount(this, amount));
+    }
+
+    @OnClick(R.id.btn_invoice_request_checkout)
+    public void onRequestCheckout() {
+        double tip;
+        try {
+            tip = Double.valueOf(edInvoiceTip.getText().toString());
+        } catch (NumberFormatException ignored) {
+            Utils.toast(this, "Provide valid tip amount!");
+            return;
+        }
+        mViewModel.requestCheckout(tip, ShopModel.PAYMENT_MODE.CASH);
+    }
+
+    @Override
+    public boolean onSupportNavigateUp() {
+        finish();
+        return true;
+    }
 }

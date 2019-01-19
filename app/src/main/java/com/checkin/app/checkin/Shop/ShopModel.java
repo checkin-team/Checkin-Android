@@ -66,7 +66,7 @@ public class ShopModel {
     public enum PAYMENT_MODE {
         CASH("csh"), PAYTM("ptm"), CARD("crd");
 
-        String tag;
+        public String tag;
 
         PAYMENT_MODE(String tag) {
             this.tag = tag;

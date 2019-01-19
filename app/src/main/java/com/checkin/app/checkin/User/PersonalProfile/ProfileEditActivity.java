@@ -42,7 +42,7 @@ public class ProfileEditActivity extends AppCompatActivity implements OtpVerific
 
         ActionBar actionBar = getSupportActionBar();
         actionBar.setDisplayHomeAsUpEnabled(true);
-        actionBar.setHomeAsUpIndicator(R.drawable.ic_appbar_back);
+        actionBar.setHomeAsUpIndicator(R.drawable.ic_back_grey);
         actionBar.setElevation(10);
 
         mUserViewModel = ViewModelProviders.of(this, new UserViewModel.Factory(getApplication())).get(UserViewModel.class);

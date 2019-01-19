@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:id="@+id/root_session"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:animateLayoutChanges="true"
@@ -14,9 +13,9 @@
         android:layout_height="wrap_content"
         android:fitsSystemWindows="true"
         android:theme="@style/appbar_main"
+        app:layout_constraintBottom_toTopOf="@id/rv_active_session_orders"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintBottom_toTopOf="@id/rv_active_session_orders">
+        app:layout_constraintTop_toTopOf="parent">
 
         <android.support.v7.widget.Toolbar
             android:layout_width="match_parent"
@@ -30,37 +29,31 @@
                 android:layout_height="match_parent">
 
                 <TextView
-                    android:id="@+id/appbar_title"
-                    android:layout_width="wrap_content"
+                    android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center|start"
                     android:layout_weight="1"
                     android:fontFamily="@font/arial_rounded_mt_bold"
                     android:text="@string/action_list_orders"
                     android:textColor="@color/white"
-                    android:textSize="@dimen/font_large"
-                    app:layout_constraintStart_toStartOf="parent" />
+                    android:textSize="@dimen/font_large" />
 
                 <ImageView
                     android:id="@+id/btn_view_orders_help"
-                    android:layout_width="100dp"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginEnd="@dimen/spacing_small"
-                    android:maxWidth="40dp"
-                    android:src="@drawable/btn_help"
-                    app:layout_constraintEnd_toEndOf="@+id/appbar_active_session" />
+                    android:src="@drawable/btn_help" />
 
             </LinearLayout>
 
         </android.support.v7.widget.Toolbar>
     </android.support.design.widget.AppBarLayout>
 
-
     <android.support.v7.widget.RecyclerView
         android:id="@+id/rv_active_session_orders"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:layout_constraintTop_toBottomOf="@+id/appbar_active_session" />
-
+        app:layout_constraintTop_toBottomOf="@id/appbar_active_session" />
 
 </LinearLayout>

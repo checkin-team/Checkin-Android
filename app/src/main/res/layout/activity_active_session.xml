@@ -2,7 +2,6 @@
 <android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    xmlns:card_view="http://schemas.android.com/apk/res-auto"
     android:id="@+id/root_session"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -31,13 +30,12 @@
 
                 <TextView
                     android:id="@+id/appbar_title"
+                    style="@style/WhiteTextStyle"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center|start"
                     android:layout_weight="0.3"
-                    android:fontFamily="@font/arial_rounded_mt_bold"
                     android:text="@string/active_session"
-                    android:textColor="@color/white"
                     android:textSize="@dimen/font_large"
                     app:layout_constraintStart_toStartOf="parent" />
 
@@ -64,26 +62,13 @@
                         tools:text="0000" />
                 </FrameLayout>
 
-                <TextView
-                    android:id="@+id/tv_menu_count_ordered_items"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="end"
-                    android:layout_marginTop="@dimen/spacing_normal"
-                    android:fontFamily="@font/arial_rounded_mt_bold"
-                    android:textColor="@color/white"
-                    android:text=""
-                    app:layout_constraintEnd_toEndOf="@+id/appbar_active_session" />
-
                 <ImageView
-                    android:id="@+id/btn_cart"
-                    android:layout_width="30dp"
-                    android:layout_height="30dp"
-                    android:maxWidth="40dp"
+                    android:id="@+id/btn_active_session_invoice"
+                    android:layout_width="@dimen/size_small_button"
+                    android:layout_height="@dimen/size_small_button"
                     android:layout_gravity="center"
                     android:layout_marginEnd="@dimen/spacing_small"
-                    android:src="@drawable/ic_cart"
-                    app:layout_constraintEnd_toEndOf="@+id/appbar_active_session" />
+                    android:src="@drawable/ic_cart" />
 
             </LinearLayout>
         </android.support.v7.widget.Toolbar>
@@ -120,14 +105,12 @@
             android:showText="true"
             android:splitTrack="false"
             android:switchTextAppearance="@style/SwitchTextAppearance"
-            android:textColor="@color/grey"
             android:textOff="@string/session_presence_private"
             android:textOn="@string/session_presence_public"
             android:thumb="@drawable/ic_switch_toggle"
             android:track="@drawable/rectangle_pinkish_grey"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="@+id/container_second" />
-
 
         <TextView
             android:id="@+id/tv_session_mark_presence"
@@ -148,31 +131,30 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="@dimen/spacing_small"
             android:layout_marginTop="@dimen/spacing_extra_small"
-            android:drawableTop="@drawable/ic_ordered_items"
+            android:drawableTop="@drawable/ic_action_view_orders"
             android:drawablePadding="@dimen/spacing_extra_small"
             android:text="@string/action_list_orders"
             android:textAlignment="center"
             android:textSize="@dimen/font_normal"
             app:layout_constraintEnd_toStartOf="@+id/btn_active_session_menu"
-            app:layout_constraintHorizontal_bias="0.5"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/tv_session_mark_presence" />
 
         <TextView
             android:id="@+id/btn_active_session_menu"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_height="0dp"
             android:layout_marginTop="@dimen/spacing_extra_small"
             android:layout_marginEnd="@dimen/spacing_small"
-            android:drawableTop="@drawable/noun_menu"
-            android:drawablePadding="@dimen/spacing_extra_small"
+            android:drawableTop="@drawable/ic_action_show_menu"
+            android:drawablePadding="@dimen/spacing_small"
             android:text="@string/action_view_menu"
             android:textAlignment="center"
             android:textSize="@dimen/font_normal"
+            app:layout_constraintBottom_toBottomOf="@id/btn_active_session_orders"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.5"
             app:layout_constraintStart_toEndOf="@+id/btn_active_session_orders"
-            app:layout_constraintTop_toBottomOf="@id/tv_session_mark_presence" />
+            app:layout_constraintTop_toTopOf="@id/btn_active_session_orders" />
 
     </android.support.constraint.ConstraintLayout>
 
@@ -188,175 +170,163 @@
         app:layout_constraintTop_toBottomOf="@id/container_second"
         app:layout_constraintVertical_weight="1">
 
-        <!--<android.support.v7.widget.CardView
-            android:id="@+id/cv_session_recommendations"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            app:layout_constraintBottom_toTopOf="@id/container_session_actions"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/container_second"
-            app:layout_constraintVertical_weight="0.9"
-            card_view:cardElevation="3dp">
-
-
-            <android.support.v7.widget.RecyclerView
-                android:id="@+id/rv_session_recommendations"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:background=""/>
-
-        </android.support.v7.widget.CardView>-->
         <View
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@drawable/background_top_inner_shadow"/>
+            android:background="@drawable/background_top_inner_shadow"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
 
         <android.support.v7.widget.RecyclerView
             android:id="@+id/rv_session_recommendations"
             android:layout_width="0dp"
             android:layout_height="0dp"
+            app:layout_constraintBottom_toTopOf="@id/container_as_actions_bottom"
+            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toRightOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintBottom_toTopOf="@id/bottom_session_container"
-            app:layout_constraintVertical_weight="0.9"/>
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_weight="0.9" />
 
         <android.support.constraint.ConstraintLayout
-            android:id="@+id/bottom_session_container"
+            android:id="@+id/container_as_actions_bottom"
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:background="@drawable/swipe_up_card_combined"
             app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toRightOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/rv_session_recommendations"
             app:layout_constraintVertical_weight="0.8">
 
-        <LinearLayout
-            android:id="@+id/ll_waiter_container"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:orientation="vertical"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toStartOf="@id/ll_call_waiter_container"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent">
-
-            <de.hdodenhof.circleimageview.CircleImageView
-                android:id="@+id/im_waiter"
-                style="@style/LogoImageStyle"
-                android:src="@drawable/ic_waiter" />
-
             <TextView
-                android:id="@+id/text_waiter"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/spacing_extra_small"
-                android:gravity="center"
-                android:text="@string/waiter"
-                android:textSize="@dimen/font_extra_small" />
-
-        </LinearLayout>
-
-        <TextView
-            android:id="@+id/tv_waiter_name"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="waiter name"
-            android:textSize="@dimen/font_small"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toStartOf="@id/ll_call_waiter_container"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/ll_waiter_container" />
-
-
-        <LinearLayout
-            android:id="@+id/ll_call_waiter_container"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:layout_marginTop="@dimen/spacing_extra_small"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toStartOf="@id/ll_table_cleaning_container"
-            app:layout_constraintStart_toEndOf="@id/ll_waiter_container"
-            app:layout_constraintTop_toTopOf="parent" >
-
-            <ImageView
-                android:id="@+id/im_call_waiter"
-                android:layout_width="@dimen/size_normal_button"
-                android:layout_height="@dimen/button_height_medium"
-                android:src="@drawable/noun_waiter_1793851_1"
-                android:tint="@color/brownish_grey"/>
-
-            <TextView
-                android:id="@+id/text_call_waiter"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:gravity="center"
-                android:text="@string/call_waiter"
-                android:textSize="@dimen/font_small" />
-
-        </LinearLayout>
-
-
-        <LinearLayout
-            android:id="@+id/ll_table_cleaning_container"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:layout_marginTop="@dimen/spacing_extra_small"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toStartOf="@id/ll_refill_glass"
-            app:layout_constraintStart_toEndOf="@id/ll_call_waiter_container"
-            app:layout_constraintTop_toTopOf="parent" >
-
-            <ImageView
-                android:id="@+id/im_table_cleaning"
-                android:layout_width="@dimen/size_normal_button"
-                android:layout_height="@dimen/button_height_medium"
-                android:src="@drawable/noun_table_557866" />
-
-            <TextView
-                android:id="@+id/text_table_cleaning"
+                style="@style/PinkishGreySmallTextStyle"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:gravity="center"
-                android:text="@string/table_cleaning"
-                android:textSize="@dimen/font_small" />
+                android:layout_marginTop="@dimen/spacing_normal"
+                android:layout_marginEnd="@dimen/spacing_small"
+                android:paddingTop="@dimen/spacing_tiny"
+                android:text="Swipe Up"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
 
-        </LinearLayout>
+            <LinearLayout
+                android:id="@+id/ll_waiter_container"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toStartOf="@id/ll_call_waiter_button"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent">
 
+                <de.hdodenhof.circleimageview.CircleImageView
+                    android:id="@+id/im_as_waiter_pic"
+                    style="@style/LogoImageStyle"
+                    android:src="@drawable/ic_waiter" />
 
-        <LinearLayout
-            android:id="@+id/ll_refill_glass"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:layout_marginTop="@dimen/spacing_extra_small"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toEndOf="@id/ll_table_cleaning_container"
-            app:layout_constraintTop_toTopOf="parent"  >
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/spacing_extra_small"
+                    android:gravity="center"
+                    android:text="@string/waiter"
+                    android:textSize="@dimen/font_extra_small" />
 
-            <ImageView
-                android:id="@+id/im_refill_glass"
-                android:layout_width="@dimen/size_normal_button"
-                android:layout_height="@dimen/button_height_medium"
-                android:src="@drawable/noun_glass_of_water_274838" />
+            </LinearLayout>
 
             <TextView
-                android:id="@+id/text_refill_glass"
-                android:layout_width="match_parent"
+                android:id="@+id/tv_as_waiter_name"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:gravity="center"
-                android:text="@string/refill_glass"
-                android:textSize="@dimen/font_small" />
+                android:textSize="@dimen/font_small"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toStartOf="@id/ll_call_waiter_button"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/ll_waiter_container"
+                app:layout_constraintVertical_bias="0.3"
+                tools:text="waiter name" />
 
-        </LinearLayout>
+            <LinearLayout
+                android:id="@+id/ll_call_waiter_button"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/spacing_extra_small"
+                android:orientation="vertical"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toStartOf="@id/ll_table_cleaning_button"
+                app:layout_constraintStart_toEndOf="@id/ll_waiter_container"
+                app:layout_constraintTop_toTopOf="parent">
+
+                <ImageView
+                    android:layout_width="@dimen/size_normal_button"
+                    android:layout_height="@dimen/button_height_medium"
+                    android:src="@drawable/ic_action_call_waiter"
+                    android:tint="@color/brownish_grey" />
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:text="@string/call_waiter"
+                    android:textSize="@dimen/font_small" />
+
+            </LinearLayout>
+
+
+            <LinearLayout
+                android:id="@+id/ll_table_cleaning_button"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/spacing_extra_small"
+                android:orientation="vertical"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toStartOf="@id/ll_refill_glass_button"
+                app:layout_constraintStart_toEndOf="@id/ll_call_waiter_button"
+                app:layout_constraintTop_toTopOf="parent">
+
+                <ImageView
+                    android:layout_width="@dimen/size_normal_button"
+                    android:layout_height="@dimen/button_height_medium"
+                    android:layout_gravity="center"
+                    android:src="@drawable/ic_action_clean_table" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:text="@string/table_cleaning"
+                    android:textSize="@dimen/font_small" />
+
+            </LinearLayout>
+
+
+            <LinearLayout
+                android:id="@+id/ll_refill_glass_button"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/spacing_extra_small"
+                android:orientation="vertical"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@id/ll_table_cleaning_button"
+                app:layout_constraintTop_toTopOf="parent">
+
+                <ImageView
+                    android:layout_width="@dimen/size_normal_button"
+                    android:layout_height="@dimen/button_height_medium"
+                    android:src="@drawable/ic_action_refill_water" />
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:text="@string/refill_glass"
+                    android:textSize="@dimen/font_small" />
+
+            </LinearLayout>
 
         </android.support.constraint.ConstraintLayout>
 

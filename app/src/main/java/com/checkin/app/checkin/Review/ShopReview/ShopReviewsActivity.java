@@ -26,7 +26,7 @@ public class ShopReviewsActivity extends BaseActivity {
         ActionBar actionBar = getSupportActionBar();
         if (actionBar != null) {
             actionBar.setDisplayHomeAsUpEnabled(true);
-            actionBar.setHomeAsUpIndicator(R.drawable.ic_appbar_back);
+            actionBar.setHomeAsUpIndicator(R.drawable.ic_back_grey);
             actionBar.setElevation(10);
         }
 
