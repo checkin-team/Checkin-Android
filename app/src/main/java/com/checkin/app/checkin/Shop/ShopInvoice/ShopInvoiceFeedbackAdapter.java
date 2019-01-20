@@ -12,12 +12,26 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.borjabravo.readmoretextview.ReadMoreTextView;
+import com.checkin.app.checkin.Misc.BriefModel;
+import com.checkin.app.checkin.Misc.ImageThumbnailHolder;
 import com.checkin.app.checkin.R;
+import com.checkin.app.checkin.Review.ShopReview.ShopReviewAdapter;
+import com.checkin.app.checkin.Review.ShopReview.ShopReviewModel;
 import com.xw.repo.BubbleSeekBar;
 
+import java.util.List;
+
 import butterknife.BindView;
+import butterknife.ButterKnife;
 
 public class ShopInvoiceFeedbackAdapter extends RecyclerView.Adapter<ShopInvoiceFeedbackAdapter.ShopInvoiceFeedbackHolder> {
+
+    private List<ShopSessionFeedbackModel> mList;
+    public static ShopInvoiceFeedbackHolder.ReviewInteraction mListener;
+
+    ShopInvoiceFeedbackAdapter(ShopInvoiceFeedbackHolder.ReviewInteraction listener){
+        mListener = listener;
+    }
 
     @NonNull
     @Override
@@ -28,15 +42,21 @@ public class ShopInvoiceFeedbackAdapter extends RecyclerView.Adapter<ShopInvoice
 
     @Override
     public void onBindViewHolder(@NonNull ShopInvoiceFeedbackHolder holder, int position) {
-
+        ShopSessionFeedbackModel data = mList.get(position);
+        holder.bindData(data);
     }
 
     @Override
     public int getItemCount() {
-        return 3;
+        return mList != null ? mList.size():0;
     }
 
-    class ShopInvoiceFeedbackHolder extends RecyclerView.ViewHolder {
+    void addSessionFeedbackData(List<ShopSessionFeedbackModel> mList) {
+        this.mList = mList;
+        notifyDataSetChanged();
+    }
+
+    static class ShopInvoiceFeedbackHolder extends RecyclerView.ViewHolder {
 
         @BindView(R.id.tv_shop_invoice_feedback_customer_name)
         TextView tvShopInvoiceFeedbackCustomerName;
@@ -46,14 +66,18 @@ public class ShopInvoiceFeedbackAdapter extends RecyclerView.Adapter<ShopInvoice
         ReadMoreTextView tvShopInvoiceFeedbackExperience;
         @BindView(R.id.sb_shop_invoice_feedback_food_quality_rating)
         BubbleSeekBar sbShopInvoiceFeedbackFoodQualityRating;
+        @BindView(R.id.tv_shop_invoice_feedback_food_quality_rating)
+        TextView tvShopInvoiceFeedbackFoodQualityRating;
         @BindView(R.id.sb_shop_invoice_feedback_ambience_rating)
         BubbleSeekBar sbShopInvoiceFeedbackAmbienceRating;
-        @BindView(R.id.sb_shop_invoice_feedback_service_hospitality)
-        BubbleSeekBar sbShopInvoiceFeedbackServiceHospitality;
+        @BindView(R.id.tv_shop_invoice_feedback_ambience_rating)
+        TextView tvShopInvoiceFeedbackAmbienceRating;
+        @BindView(R.id.sb_shop_invoice_feedback_service_hospitality_rating)
+        BubbleSeekBar sbShopInvoiceFeedbackServiceHospitalityRating;
+        @BindView(R.id.tv_shop_invoice_feedback_service_hospitality_rating)
+        TextView tvShopInvoiceFeedbackServiceHospitalityRating;
         @BindView(R.id.rl_shop_invoice_feedback_rating)
         RelativeLayout rlShopInvoiceFeedbackRating;
-        @BindView(R.id.incl_shop_invoice_detail_feedback_overall_rating)
-        RelativeLayout incl_shop_invoice_detail_feedback_overall_rating;
         @BindView(R.id.ll_shop_invoice_detail_feedback_overall_rating)
         LinearLayout llShopInvoiceDetailFeedbackOverallRating;
         @BindView(R.id.v_shop_invoice_detail_feedback_image)
@@ -68,9 +92,60 @@ public class ShopInvoiceFeedbackAdapter extends RecyclerView.Adapter<ShopInvoice
         TextView tvThumbnailCount;
         @BindView(R.id.container_thumbnail_3)
         FrameLayout containerThumbnail3;
+        @BindView(R.id.v_shop_invoice_detail_feedback_overall_rating)
+        View vShopInvoiceDetailFeedbackOverallRating;
+        @BindView(R.id.tv_shop_invoice_detail_feedback_overall_rating)
+        TextView tvShopInvoiceDetailFeedbackOverallRating;
+
+        ImageThumbnailHolder imageThumbnailHolder;
 
         ShopInvoiceFeedbackHolder(View itemView) {
             super(itemView);
+            ButterKnife.bind(this,itemView);
+
+            imageThumbnailHolder = new ImageThumbnailHolder(itemView, new ImageThumbnailHolder.ImageThumbnailInteraction() {
+                @Override
+                public void onThumbnailClick(int index) {
+                    mListener.onUserClick(null);
+                }
+            });
+        }
+
+        public void bindData(ShopSessionFeedbackModel data) {
+            Integer ambienceRating = data.getAmbienceRating();
+            String body = data.getBody();
+            String created = data.getCreated();
+            Integer foodRating = data.getFoodRating();
+            Integer hospitalityRating = data.getHospitalityRating();
+            Integer overAllRating = data.getOverallRating();
+            List<String> thumbanials = data.getThumbnails();
+            String displayName = data.getUser().getDisplayName();
+
+            tvShopInvoiceFeedbackCustomerName.setText(displayName);
+            tvShopInvoiceFeedbackExperience.setText(body);
+
+            sbShopInvoiceFeedbackFoodQualityRating.setProgress((float)foodRating);
+            sbShopInvoiceFeedbackAmbienceRating.setProgress((float)ambienceRating);
+            sbShopInvoiceFeedbackServiceHospitalityRating.setProgress((float)hospitalityRating);
+
+            tvShopInvoiceFeedbackFoodQualityRating.setText(String.valueOf(foodRating));
+            tvShopInvoiceFeedbackAmbienceRating.setText(String.valueOf(ambienceRating));
+            tvShopInvoiceFeedbackServiceHospitalityRating.setText(String.valueOf(hospitalityRating));
+
+            tvShopInvoiceDetailFeedbackOverallRating.setText(String.valueOf(overAllRating));
+
+            String[] stringThumbs = new String[thumbanials.size()];
+            stringThumbs = thumbanials.toArray(stringThumbs);
+
+            imageThumbnailHolder.bindThumbnails(stringThumbs);
+        }
+
+        public interface ReviewInteraction {
+            void onToggleLike(ShopReviewModel review);
+            void onThumbnailClick(ShopReviewModel review, int index);
+            void onRatingClick(ShopReviewModel review);
+            void onFollowClick(BriefModel user);
+            void onUserClick(BriefModel user);
         }
     }
 }

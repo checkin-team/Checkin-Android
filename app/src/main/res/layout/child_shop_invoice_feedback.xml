@@ -71,7 +71,7 @@
 
             <com.xw.repo.BubbleSeekBar
                 android:layout_marginTop="@dimen/spacing_small"
-                android:layout_alignStart="@+id/sb_shop_invoice_feedback_service_hospitality"
+                android:layout_alignStart="@+id/sb_shop_invoice_feedback_service_hospitality_rating"
                 android:layout_below="@+id/tv_shop_invoice_feedback_rating_title"
                 android:layout_toEndOf="@+id/tv_shop_invoice_feedback_food_quality_title"
                 app:bsb_bubble_color="@color/colorRed"
@@ -81,6 +81,7 @@
                 app:bsb_section_count="5"
                 app:bsb_min="0"
                 app:bsb_max="5"
+                android:layout_toStartOf="@+id/tv_shop_invoice_feedback_food_quality_rating"
                 android:id="@+id/sb_shop_invoice_feedback_food_quality_rating"
                 app:bsb_second_track_size="@dimen/app_bar_elevation_size"
                 app:bsb_always_show_bubble="false"
@@ -89,6 +90,17 @@
                 app:bsb_bubble_text_size="@dimen/font_extra_small"
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/spacing_small" />
+
+            <TextView
+                android:layout_alignParentEnd="true"
+                android:layout_marginTop="@dimen/spacing_small"
+                android:layout_below="@+id/tv_shop_invoice_feedback_rating_title"
+                android:id="@+id/tv_shop_invoice_feedback_food_quality_rating"
+                android:textSize="@dimen/font_medium"
+                android:text="2.5"
+                android:textColor="@color/black"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
 
             <TextView
                 android:layout_marginTop="@dimen/size_extra_small_button"
@@ -100,10 +112,11 @@
                 android:layout_height="wrap_content" />
 
             <com.xw.repo.BubbleSeekBar
+                android:layout_toStartOf="@+id/tv_shop_invoice_feedback_ambience_rating"
                 android:layout_marginTop="@dimen/size_extra_small_button"
                 android:layout_below="@+id/tv_shop_invoice_feedback_food_quality_title"
                 android:layout_toEndOf="@+id/tv_shop_invoice_feedback_ambience_title"
-                android:layout_alignStart="@+id/sb_shop_invoice_feedback_service_hospitality"
+                android:layout_alignStart="@+id/sb_shop_invoice_feedback_service_hospitality_rating"
                 app:bsb_bubble_color="@color/colorRed"
                 app:bsb_bubble_text_color="@color/white"
                 app:bsb_second_track_color="@color/colorRed"
@@ -121,6 +134,17 @@
                 android:layout_height="@dimen/app_bar_elevation_size" />
 
             <TextView
+                android:layout_alignParentEnd="true"
+                android:layout_marginTop="@dimen/size_extra_small_button"
+                android:layout_below="@+id/tv_shop_invoice_feedback_food_quality_rating"
+                android:id="@+id/tv_shop_invoice_feedback_ambience_rating"
+                android:textSize="@dimen/font_medium"
+                android:text="2.5"
+                android:textColor="@color/black"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+
+            <TextView
                 android:layout_marginTop="@dimen/size_extra_small_button"
                 android:layout_below="@+id/tv_shop_invoice_feedback_ambience_title"
                 android:id="@+id/tv_shop_invoice_feedback_service_hospitality_title"
@@ -131,6 +155,7 @@
 
             <com.xw.repo.BubbleSeekBar
                 android:layout_marginStart="@dimen/spacing_small"
+                android:layout_toStartOf="@+id/tv_shop_invoice_feedback_service_hospitality_rating"
                 android:layout_marginTop="@dimen/size_extra_small_button"
                 android:layout_below="@+id/tv_shop_invoice_feedback_ambience_title"
                 android:layout_toEndOf="@+id/tv_shop_invoice_feedback_service_hospitality_title"
@@ -142,7 +167,7 @@
                 app:bsb_min="0"
                 app:bsb_hide_bubble="true"
                 app:bsb_max="5"
-                android:id="@+id/sb_shop_invoice_feedback_service_hospitality"
+                android:id="@+id/sb_shop_invoice_feedback_service_hospitality_rating"
                 app:bsb_second_track_size="@dimen/app_bar_elevation_size"
                 app:bsb_always_show_bubble="false"
                 app:bsb_show_progress_in_float="true"
@@ -150,11 +175,28 @@
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/spacing_small" />
 
+            <TextView
+                android:layout_alignBaseline="@id/sb_shop_invoice_feedback_service_hospitality_rating"
+                android:layout_alignParentEnd="true"
+                android:layout_marginTop="@dimen/size_extra_small_button"
+                android:layout_below="@+id/tv_shop_invoice_feedback_ambience_rating"
+                android:id="@+id/tv_shop_invoice_feedback_service_hospitality_rating"
+                android:textSize="@dimen/font_medium"
+                android:text="2.5"
+                android:textColor="@color/black"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+
         </RelativeLayout>
 
-        <include
-            android:id="@+id/incl_shop_invoice_detail_feedback_overall_rating"
-            layout="@layout/incl_horizontal_line"/>
+        <View
+            android:id="@+id/v_shop_invoice_detail_feedback_overall_rating"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/height_horizontal_line"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginEnd="@dimen/spacing_normal"
+            android:layout_marginStart="@dimen/spacing_normal"
+            android:background="@drawable/ic_line" />
 
         <LinearLayout
             android:layout_marginTop="5dp"
@@ -183,6 +225,7 @@
                 android:paddingBottom="@dimen/card_elevation"
                 android:background="@drawable/background_red_stroke"
                 android:textSize="@dimen/font_medium"
+                android:id="@+id/tv_shop_invoice_detail_feedback_overall_rating"
                 android:text="3.67"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content" />

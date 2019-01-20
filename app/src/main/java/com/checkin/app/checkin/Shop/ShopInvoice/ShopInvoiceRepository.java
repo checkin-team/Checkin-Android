@@ -43,6 +43,46 @@ public class ShopInvoiceRepository {
         }.getAsLiveData();
     }
 
+    public LiveData<Resource<ShopSessionDetailModel>> getShopSessionDetailById(String sessionId){
+        return new NetworkBoundResource<ShopSessionDetailModel, ShopSessionDetailModel>() {
+            @Override
+            protected boolean shouldUseLocalDb() {
+                return false;
+            }
+
+            @NonNull
+            @Override
+            protected LiveData<ApiResponse<ShopSessionDetailModel>> createCall() {
+                return new RetrofitLiveData<>(mWebService.getShopSessionDetailById(sessionId));
+            }
+
+            @Override
+            protected void saveCallResult(ShopSessionDetailModel data) {
+
+            }
+        }.getAsLiveData();
+    }
+
+    public LiveData<Resource<List<ShopSessionFeedbackModel>>> getShopSessionFeedbackById(String sessionId){
+        return new NetworkBoundResource<List<ShopSessionFeedbackModel>, List<ShopSessionFeedbackModel>>() {
+            @Override
+            protected boolean shouldUseLocalDb() {
+                return false;
+            }
+
+            @NonNull
+            @Override
+            protected LiveData<ApiResponse<List<ShopSessionFeedbackModel>>> createCall() {
+                return new RetrofitLiveData<>(mWebService.getShopSessionFeedbackById(sessionId));
+            }
+
+            @Override
+            protected void saveCallResult(List<ShopSessionFeedbackModel> data) {
+
+            }
+        }.getAsLiveData();
+    }
+
     public LiveData<Resource<List<RestaurantSessionModel>>> getRestaurantSessionsById(String restaurantId) {
         return getRestaurantSessionsById(restaurantId, null, null);
     }

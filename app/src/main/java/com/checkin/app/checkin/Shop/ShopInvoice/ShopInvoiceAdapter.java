@@ -76,7 +76,8 @@ public class ShopInvoiceAdapter extends RecyclerView.Adapter<ShopInvoiceAdapter.
         }
 
         public void bindData(RestaurantSessionModel data) {
-            Date mDate = data.getCheckedIn();
+            //Date mDate = data.getCheckedIn();
+            Date mDate = data.getCheckedOut();
             Integer mCountCustomer = data.getCountCustomers();
             Integer mCountOrder = data.getCountOrders();
             String mHashId = data.getHashId();

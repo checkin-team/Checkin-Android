@@ -22,7 +22,7 @@
                 android:padding="@dimen/size_tiny_icon">
 
                 <TextView
-                    android:id="@+id/tv__shop_invoice_detail_feedback_session_time_title"
+                    android:id="@+id/tv_shop_invoice_detail_feedback_session_time_title"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_centerHorizontal="true"
@@ -31,20 +31,20 @@
                     android:textSize="@dimen/font_medium" />
 
                 <TextView
-                    android:id="@+id/tv__shop_invoice_detail_feedback_session_time"
+                    android:id="@+id/tv_shop_invoice_detail_feedback_session_time"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="@dimen/app_bar_elevation_size"
-                    android:layout_toEndOf="@id/tv__shop_invoice_detail_feedback_session_time_title"
+                    android:layout_toEndOf="@id/tv_shop_invoice_detail_feedback_session_time_title"
                     android:text="3 Mins"
                     android:textColor="@color/brownish_grey"
                     android:textSize="@dimen/font_medium" />
 
                 <TextView
-                    android:id="@+id/tv__shop_invoice_detail_feedback_avg_confirmation_time_title"
+                    android:id="@+id/tv_shop_invoice_detail_feedback_avg_confirmation_time_title"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_below="@+id/tv__shop_invoice_detail_feedback_session_time_title"
+                    android:layout_below="@+id/tv_shop_invoice_detail_feedback_session_time_title"
                     android:layout_centerHorizontal="true"
                     android:layout_marginTop="@dimen/card_view_spacing_top"
                     android:text="Avg. Confirmation Time :"
@@ -52,13 +52,13 @@
                     android:textSize="@dimen/font_medium" />
 
                 <TextView
-                    android:id="@+id/tv__shop_invoice_detail_feedback_avg_confirmation_time"
+                    android:id="@+id/tv_shop_invoice_detail_feedback_avg_confirmation_time"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_below="@+id/tv__shop_invoice_detail_feedback_session_time_title"
-                    android:layout_alignBaseline="@id/tv__shop_invoice_detail_feedback_avg_confirmation_time_title"
+                    android:layout_below="@+id/tv_shop_invoice_detail_feedback_session_time_title"
+                    android:layout_alignBaseline="@id/tv_shop_invoice_detail_feedback_avg_confirmation_time_title"
                     android:layout_marginStart="@dimen/app_bar_elevation_size"
-                    android:layout_toEndOf="@id/tv__shop_invoice_detail_feedback_avg_confirmation_time_title"
+                    android:layout_toEndOf="@id/tv_shop_invoice_detail_feedback_avg_confirmation_time_title"
                     android:text="2 Mins"
                     android:textColor="@color/brownish_grey"
                     android:textSize="@dimen/font_medium" />
@@ -90,6 +90,7 @@
                 android:layout_weight="1">
 
                 <LinearLayout
+                    android:id="@+id/ll_shop_invoice_detail_subtotal"
                     android:orientation="horizontal"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content">
@@ -111,6 +112,7 @@
                         android:textSize="@dimen/font_medium" />
 
                     <TextView
+                        android:id="@+id/tv_shop_invoice_detail_subtotal"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginStart="@dimen/app_bar_elevation_size"
@@ -121,8 +123,10 @@
                 </LinearLayout>
 
                 <LinearLayout
+                    android:id="@+id/ll_shop_invoice_detail_charges"
                     android:layout_marginTop="10dp"
                     android:orientation="horizontal"
+                    android:visibility="gone"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content">
 
@@ -143,6 +147,7 @@
                         android:textSize="@dimen/font_medium" />
 
                     <TextView
+                        android:id="@+id/tv_shop_invoice_detail_charges"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginStart="@dimen/app_bar_elevation_size"
@@ -153,6 +158,7 @@
                 </LinearLayout>
 
                 <LinearLayout
+                    android:id="@+id/ll_shop_invoice_detail_taxes"
                     android:layout_marginTop="10dp"
                     android:orientation="horizontal"
                     android:layout_width="match_parent"
@@ -175,6 +181,7 @@
                         android:textSize="@dimen/font_medium" />
 
                     <TextView
+                        android:id="@+id/tv_shop_invoice_detail_taxes"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginStart="@dimen/app_bar_elevation_size"
@@ -185,6 +192,7 @@
                 </LinearLayout>
 
                 <LinearLayout
+                    android:id="@+id/ll_shop_invoice_detail_promo"
                     android:layout_marginTop="10dp"
                     android:orientation="horizontal"
                     android:layout_width="match_parent"
@@ -207,6 +215,7 @@
                         android:textSize="@dimen/font_medium" />
 
                     <TextView
+                        android:id="@+id/tv_shop_invoice_detail_promo"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginStart="@dimen/app_bar_elevation_size"
@@ -217,6 +226,7 @@
                 </LinearLayout>
 
                 <LinearLayout
+                    android:id="@+id/ll_shop_invoice_detail_discount"
                     android:layout_marginTop="10dp"
                     android:orientation="horizontal"
                     android:layout_width="match_parent"
@@ -239,6 +249,7 @@
                         android:textSize="@dimen/font_medium" />
 
                     <TextView
+                        android:id="@+id/tv_shop_invoice_detail_discount"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginStart="@dimen/app_bar_elevation_size"
@@ -249,6 +260,7 @@
                 </LinearLayout>
 
                 <LinearLayout
+                    android:id="@+id/ll_shop_invoice_detail_tip"
                     android:layout_marginTop="10dp"
                     android:orientation="horizontal"
                     android:layout_width="match_parent"
@@ -271,6 +283,7 @@
                         android:textSize="@dimen/font_medium" />
 
                     <TextView
+                        android:id="@+id/tv_shop_invoice_detail_tip"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginStart="@dimen/app_bar_elevation_size"

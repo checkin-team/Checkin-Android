@@ -130,9 +130,7 @@ dependencies {
     implementation 'com.borjabravo:readmoretextview:2.1.0'
 
     //RangeSliderview
-    implementation 'com.appyvet:materialrangebar:1.4.4'
     implementation 'com.xw.repo:bubbleseekbar:3.16'
-    implementation 'com.github.warkiz.widget:indicatorseekbar:2.1.2'
 }
 
 apply plugin: 'com.google.gms.google-services'

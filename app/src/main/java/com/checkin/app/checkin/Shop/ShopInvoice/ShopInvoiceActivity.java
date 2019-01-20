@@ -151,9 +151,11 @@ public class ShopInvoiceActivity extends AppCompatActivity implements View.OnCli
                 e.printStackTrace();
             }
             if (fromDate != null){
-                mShopInvoiceModel.filterRestaurantSessions(fromDate,mInitDate);
+                //mShopInvoiceModel.filterRestaurantSessions(fromDate,mInitDate);
+                mShopInvoiceModel.filterRestaurantSessions(mInitDate,fromDate);
             }else if (toDate != null){
-                mShopInvoiceModel.filterRestaurantSessions(mInitDate,toDate);
+                //mShopInvoiceModel.filterRestaurantSessions(mInitDate,toDate);
+                mShopInvoiceModel.filterRestaurantSessions(toDate,mInitDate);
             }
 
         }, year, month, day).show();

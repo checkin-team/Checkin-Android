@@ -6,6 +6,8 @@ import com.checkin.app.checkin.Menu.Model.OrderedItemModel;
 import com.checkin.app.checkin.Misc.GenericDetailModel;
 import com.checkin.app.checkin.Notifications.NotificationModel;
 import com.checkin.app.checkin.Shop.ShopInvoice.RestaurantSessionModel;
+import com.checkin.app.checkin.Shop.ShopInvoice.ShopSessionDetailModel;
+import com.checkin.app.checkin.Shop.ShopInvoice.ShopSessionFeedbackModel;
 import com.checkin.app.checkin.Waiter.EventModel;
 import com.checkin.app.checkin.Search.SearchResultModel;
 import com.checkin.app.checkin.Session.ActiveSession.ActiveSessionModel;
@@ -196,4 +198,10 @@ public interface WebApiService {
     /*ShopInvoice all API*/
     @GET("sessions/restaurants/{restaurant_id}/")
     Call<List<RestaurantSessionModel>> getRestaurantSessionsById(@Path("restaurant_id") String restaurant_id,@Query("checked_out_before") String checked_out_before, @Query("checked_out_after") String checked_out_after);
+
+    @GET("sessions/{session_id}/detail/")
+    Call<ShopSessionDetailModel> getShopSessionDetailById(@Path("session_id") String session_id);
+
+    @GET("sessions/{session_id}/feedbacks/")
+    Call<List<ShopSessionFeedbackModel>> getShopSessionFeedbackById(@Path("session_id") String session_id);
 }

@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.TabLayout;
+import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
@@ -16,6 +17,7 @@ import android.widget.TextView;
 import com.checkin.app.checkin.Misc.BriefModel;
 import com.checkin.app.checkin.R;
 
+import java.util.ArrayList;
 import java.util.Date;
 
 import butterknife.BindView;
@@ -50,16 +52,7 @@ public class ShopInvoiceDetailFeedbackActivity extends AppCompatActivity {
     TabLayout tlShopInvoiceDetailFeedback;
     @BindView(R.id.vp_shop_invoice_detail_feedback)
     ViewPager vpShopInvoiceDetailFeedback;
-    @BindView(R.id.tv_shop_invoice_detail_feedback_bill_title)
-    TextView tvShopInvoiceDetailFeedbackBillTitle;
-    @BindView(R.id.tv_shop_invoice_detail_feedback_rupee_title)
-    TextView tvShopInvoiceDetailFeedbackRupeeTitle;
-    @BindView(R.id.tv_shop_invoice_detail_feedback_bill)
-    TextView tvShopInvoiceDetailFeedbackBill;
-    @BindView(R.id.rl_shop_invoice_detail_feedback)
-    RelativeLayout rlShopInvoiceDetailFeedback;
 
-    private static final int TAB_COUNT = 2;
     public static final String ORDER_DETAIL = "ORDER_DETAIL";
 
     @Override
@@ -72,14 +65,12 @@ public class ShopInvoiceDetailFeedbackActivity extends AppCompatActivity {
 
         if (data != null){
             mSetMyToolbarData(data);
+            mSetMyViewPager(data);
         }
-
-        mSetMyViewPager();
     }
 
     private void mSetMyToolbarData(RestaurantSessionModel data) {
-        Integer mPk = data.getPk();
-        Date mDate = data.getCheckedIn();
+        Date mDate = data.getCheckedOut();
         Integer mCountCustomer = data.getCountCustomers();
         Integer mCountOrder = data.getCountOrders();
         String mHashId = data.getHashId();
@@ -106,8 +97,18 @@ public class ShopInvoiceDetailFeedbackActivity extends AppCompatActivity {
         tvShopInvoiceTableNumber.setText(mTable);
     }
 
-    private void mSetMyViewPager() {
-        ShopInvoiceDetailFeedbackPagerAdapter shopInvoiceDetailFeedbackPagerAdapter = new ShopInvoiceDetailFeedbackPagerAdapter(TAB_COUNT,getSupportFragmentManager());
+    private void mSetMyViewPager(RestaurantSessionModel data) {
+
+        ArrayList<Fragment> mFragmentList = new ArrayList<>();
+        ArrayList<String> mTitleList =  new ArrayList<>();
+         ;
+        mFragmentList.add(ShopInvoiceDetailFragment.newInstance(data.getPk()));
+        mFragmentList.add(ShopInvoiceFeedbackFragment.newInstance(data.getPk()));
+
+        mTitleList.add("DETAILS");
+        mTitleList.add("FEEDBACKS");
+
+        ShopInvoiceDetailFeedbackPagerAdapter shopInvoiceDetailFeedbackPagerAdapter = new ShopInvoiceDetailFeedbackPagerAdapter(mFragmentList,mTitleList,getSupportFragmentManager());
         vpShopInvoiceDetailFeedback.setAdapter(shopInvoiceDetailFeedbackPagerAdapter);
         tlShopInvoiceDetailFeedback.setupWithViewPager(vpShopInvoiceDetailFeedback,true);
     }

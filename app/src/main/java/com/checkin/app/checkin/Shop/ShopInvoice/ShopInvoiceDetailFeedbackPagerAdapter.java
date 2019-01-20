@@ -5,41 +5,32 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 
+import java.util.ArrayList;
+
 public class ShopInvoiceDetailFeedbackPagerAdapter extends FragmentPagerAdapter {
 
-    private int tabCount;
+    private ArrayList<Fragment> mFragmentList;
+    private ArrayList<String> mTitleList;
 
-    ShopInvoiceDetailFeedbackPagerAdapter(int tabCount, FragmentManager fm) {
-        super(fm);
-        this.tabCount = tabCount;
+    public ShopInvoiceDetailFeedbackPagerAdapter(ArrayList<Fragment> mFragmentList, ArrayList<String> mTitleList, FragmentManager supportFragmentManager) {
+        super(supportFragmentManager);
+        this.mFragmentList = mFragmentList;
+        this.mTitleList = mTitleList;
     }
 
     @Override
     public Fragment getItem(int position) {
-        Fragment fragment = null;
-
-        if (position == 0){
-            fragment = ShopInvoiceDetailFragment.newInstance();
-        }else if (position == 1){
-            fragment = ShopInvoiceFeedbackFragment.newInstance();
-        }
-
-        return fragment;
+        return mFragmentList.get(position);
     }
 
     @Override
     public int getCount() {
-        return tabCount;
+        return mTitleList.size();
     }
 
     @Nullable
     @Override
     public CharSequence getPageTitle(int position) {
-        if (position == 0)
-            return "DETAILS";
-        else if (position == 1)
-            return "FEEDBACKS";
-        else
-            return null;
+        return mTitleList.get(position);
     }
 }
