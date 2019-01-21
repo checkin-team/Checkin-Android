@@ -33,11 +33,11 @@
         <activity
             android:name=".Home.SplashActivity"
             android:theme="@style/Theme.AppCompat.Light.NoActionBar">
-            <intent-filter>
+            <!--<intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
+            </intent-filter>-->
         </activity>
         <activity
             android:name=".Auth.AuthActivity"
@@ -158,6 +158,19 @@
             </intent-filter>-->
         </activity>
         <activity android:name=".Shop.ShopInvoice.ShopInvoiceDetailFeedbackActivity" />
+        <activity android:name=".User.NonPersonalProfile.TaxDiscountActivity"
+            android:label="@string/action_discout"
+            android:theme="@style/AppThemeWhiteActionBar"/>
+        <activity android:name=".User.NonPersonalProfile.Demo"
+            android:label="Checkins"
+            android:theme="@style/AppThemeWhiteActionBar">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+
         <service
             android:name=".Auth.AuthenticatorService"
             android:enabled="true"
