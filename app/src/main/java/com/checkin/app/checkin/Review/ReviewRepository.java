@@ -4,7 +4,6 @@ import android.app.Application;
 import android.arch.lifecycle.LiveData;
 import android.content.Context;
 import android.support.annotation.NonNull;
-import android.util.Log;
 
 import com.checkin.app.checkin.Data.ApiClient;
 import com.checkin.app.checkin.Data.ApiResponse;
@@ -12,6 +11,9 @@ import com.checkin.app.checkin.Data.NetworkBoundResource;
 import com.checkin.app.checkin.Data.Resource;
 import com.checkin.app.checkin.Data.RetrofitLiveData;
 import com.checkin.app.checkin.Data.WebApiService;
+import com.checkin.app.checkin.Misc.GenericDetailModel;
+import com.checkin.app.checkin.Review.NewReview.NewReviewModel;
+import com.checkin.app.checkin.Review.NewReview.ReviewImageModel;
 import com.checkin.app.checkin.Review.ShopReview.ShopReviewModel;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 
@@ -82,7 +84,7 @@ public class ReviewRepository {
         return INSTANCE;
     }
 
-    public LiveData<Resource<ObjectNode>> postReview(final ObjectNode credentials) {
+    public LiveData<Resource<ObjectNode>> postSessionReview(String sessionPk, NewReviewModel data) {
         return new NetworkBoundResource<ObjectNode, ObjectNode>() {
             @Override
             protected boolean shouldUseLocalDb() {
@@ -92,8 +94,7 @@ public class ReviewRepository {
             @NonNull
             @Override
             protected LiveData<ApiResponse<ObjectNode>> createCall() {
-                Log.e("rating===1",credentials.toString());
-                return new RetrofitLiveData<>(mWebService.postCustomerReview("1",credentials));
+                return new RetrofitLiveData<>(mWebService.postCustomerReview(sessionPk, data));
             }
 
             @Override
@@ -102,10 +103,10 @@ public class ReviewRepository {
         }.getAsLiveData();
     }
 
-    public LiveData<Resource<ObjectNode>> postReviewImage(File pic, ObjectNode credentials) {
+    public LiveData<Resource<GenericDetailModel>> postReviewImage(File pic, ReviewImageModel data) {
         RequestBody requestFile = RequestBody.create(MediaType.parse("image/jpeg"), pic);
         final MultipartBody.Part body = MultipartBody.Part.createFormData("image", pic.getName(), requestFile);
-        return new NetworkBoundResource<ObjectNode, ObjectNode>() {
+        return new NetworkBoundResource<GenericDetailModel, GenericDetailModel>() {
             @Override
             protected boolean shouldUseLocalDb() {
                 return false;
@@ -113,12 +114,12 @@ public class ReviewRepository {
 
             @NonNull
             @Override
-            protected LiveData<ApiResponse<ObjectNode>> createCall() {
-                return new RetrofitLiveData<>(mWebService.postCustomerReviewPic(body,credentials));
+            protected LiveData<ApiResponse<GenericDetailModel>> createCall() {
+                return new RetrofitLiveData<>(mWebService.postCustomerReviewPic(body, data));
             }
 
             @Override
-            protected void saveCallResult(ObjectNode data) {
+            protected void saveCallResult(GenericDetailModel data) {
 
             }
         }.getAsLiveData();

@@ -1,4 +1,4 @@
-package com.checkin.app.checkin.Review;
+package com.checkin.app.checkin.Review.NewReview;
 
 import android.app.Dialog;
 import android.arch.lifecycle.ViewModelProviders;
@@ -23,7 +23,11 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 
-public class ActivityReview extends AppCompatActivity {
+public class NewReviewActivity extends AppCompatActivity {
+    private static final String TAG = NewReviewActivity.class.getSimpleName();
+
+    public static final String KEY_SESSION_PK = "review.session_pk";
+
     @BindView(R.id.et_experience)
     EditText et_experience;
     @BindView(R.id.seekbar_food_quality)
@@ -41,8 +45,13 @@ public class ActivityReview extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_review_add);
+        setContentView(R.layout.activity_review_new);
         ButterKnife.bind(this);
+
+        if (getSupportActionBar() != null) {
+            getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+            getSupportActionBar().setHomeAsUpIndicator(R.drawable.ic_back_grey);
+        }
 
         seekbar_food_quality.setProgress(0);
         seekbar_food_quality.incrementProgressBy(1);
@@ -128,7 +137,7 @@ public class ActivityReview extends AppCompatActivity {
     @OnClick(R.id.btn_done)
     public void onDone() {
         Log.e("ratingfff", et_experience.getText().toString());
-        mViewModel.register(et_experience.getText().toString(), mFoodQualityRating, mAmbienceRating, mServiceRating);
+//        mViewModel.register(et_experience.getText().toString(), mFoodQualityRating, mAmbienceRating, mServiceRating);
     }
 
     @OnClick(R.id.btn_add_image)
@@ -143,7 +152,7 @@ public class ActivityReview extends AppCompatActivity {
         if (requestCode == SelectCropImageActivity.RC_CROP_IMAGE && resultCode == RESULT_OK) {
             if (data.getExtras() != null) {
                 File image = (File) data.getExtras().get(SelectCropImageActivity.KEY_IMAGE);
-                mViewModel.uploadReviewImage(image);
+//                mViewModel.uploadReviewImage(image);
                 fleetDialog();
 //                ll_add_images.addView();
             }

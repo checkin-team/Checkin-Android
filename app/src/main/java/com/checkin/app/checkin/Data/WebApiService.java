@@ -6,6 +6,8 @@ import com.checkin.app.checkin.Menu.Model.OrderedItemModel;
 import com.checkin.app.checkin.Misc.GenericDetailModel;
 import com.checkin.app.checkin.Notifications.NotificationModel;
 import com.checkin.app.checkin.RestaurantActivity.Waiter.EventModel;
+import com.checkin.app.checkin.Review.NewReview.NewReviewModel;
+import com.checkin.app.checkin.Review.NewReview.ReviewImageModel;
 import com.checkin.app.checkin.Session.ActiveSession.Chat.SessionChatModel;
 import com.checkin.app.checkin.Review.ShopReview.ShopReviewModel;
 import com.checkin.app.checkin.Search.SearchResultPeopleModel;
@@ -201,11 +203,11 @@ public interface WebApiService {
     Call<ObjectNode> postReviewReact(@Path("review_id") String reviewId);
 
     @POST("reviews/sessions/{session_id}/")
-    Call<ObjectNode> postCustomerReview(@Path("session_id") String sessionId, @Body ObjectNode review);
+    Call<ObjectNode> postCustomerReview(@Path("session_id") String sessionId, @Body NewReviewModel review);
 
     @Multipart
     @POST("images/reviews/upload/")
-    Call<ObjectNode> postCustomerReviewPic(@Part MultipartBody.Part pic,@Body ObjectNode data);
+    Call<GenericDetailModel> postCustomerReviewPic(@Part MultipartBody.Part pic, @Body ReviewImageModel data);
 
     // endregion
 
