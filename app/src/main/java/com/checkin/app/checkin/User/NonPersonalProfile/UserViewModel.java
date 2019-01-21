@@ -10,11 +10,13 @@ import android.support.annotation.NonNull;
 import com.checkin.app.checkin.Data.BaseViewModel;
 import com.checkin.app.checkin.Data.Converters;
 import com.checkin.app.checkin.Data.Resource;
+import com.checkin.app.checkin.Misc.BriefModel;
 import com.checkin.app.checkin.User.Friendship.FriendshipRequestModel;
 import com.checkin.app.checkin.User.UserModel;
 import com.checkin.app.checkin.User.UserRepository;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class UserViewModel extends BaseViewModel {
@@ -100,6 +102,17 @@ public class UserViewModel extends BaseViewModel {
     public void getUsercheckinById(String userId){
         LiveData<Resource<List<UserCheckinModel>>> mLiveData = mRepository.getUserCheckinById(userId);
         mUserCheckinMediatorLiveData.addSource(mLiveData,mUserCheckinMediatorLiveData::setValue);
+    }
+
+    // TODO: remove this
+    public void dummyCheckins() {
+        List<UserCheckinModel> data = new ArrayList<>();
+
+        data.add(new UserCheckinModel(new BriefModel("1", "Roma", null), "Chinchpokli", 32));
+        data.add(new UserCheckinModel(new BriefModel("1", "Roman", null), "ds", 45));
+        data.add(new UserCheckinModel(new BriefModel("1", "Romca", null), "Chinchpokli", 32));
+
+        mUserCheckinMediatorLiveData.setValue(Resource.success(data));
     }
 
     public LiveData<Resource<List<UserCheckinModel>>> getUsercheckinModel(){

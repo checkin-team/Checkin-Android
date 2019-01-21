@@ -38,13 +38,20 @@ public class UserCheckinsActivity extends AppCompatActivity {
         rvUserCheckRestaurant.setItemAnimator(new DefaultItemAnimator());
 
         UserViewModel mUserViewModel = ViewModelProviders.of(this).get(UserViewModel.class);
-        mUserViewModel.getUsercheckinById("1");
+        //mUserViewModel.getUsercheckinById("1");
+        mUserViewModel.dummyCheckins();
         mUserViewModel.getUsercheckinModel().observe(this, input ->{
             if (input == null)
                 return;
-            if (input.status == Resource.Status.SUCCESS && input.data != null && input.data.size() >0){
+            if (input.status == Resource.Status.SUCCESS && input.data != null && input.data.size() > 0){
                 userRestaurantAdapter.addUserCheckinData(input.data);
             }
         });
+    }
+
+    @Override
+    public boolean onSupportNavigateUp() {
+        finish();
+        return true;
     }
 }

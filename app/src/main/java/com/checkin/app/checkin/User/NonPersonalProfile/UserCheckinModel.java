@@ -28,4 +28,10 @@ public class UserCheckinModel {
     public int getCountVisits() {
         return countVisits;
     }
+
+    public UserCheckinModel(BriefModel shop, String location, int countVisits) {
+        this.shop = shop;
+        this.location = location;
+        this.countVisits = countVisits;
+    }
 }

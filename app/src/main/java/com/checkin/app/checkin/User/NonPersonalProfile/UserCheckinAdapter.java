@@ -16,6 +16,7 @@ import java.util.Locale;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import de.hdodenhof.circleimageview.CircleImageView;
 
 public class UserCheckinAdapter extends RecyclerView.Adapter<UserCheckinAdapter.UserCheckinHolder> {
 
@@ -46,7 +47,7 @@ public class UserCheckinAdapter extends RecyclerView.Adapter<UserCheckinAdapter.
     class UserCheckinHolder extends RecyclerView.ViewHolder {
 
         @BindView(R.id.iv_user_checkin_image)
-        ImageView ivUserCheckinImage;
+        CircleImageView ivUserCheckinImage;
         @BindView(R.id.tv_user_checkin_name)
         TextView tvUserCheckinName;
         @BindView(R.id.tv_user_checkin_address)

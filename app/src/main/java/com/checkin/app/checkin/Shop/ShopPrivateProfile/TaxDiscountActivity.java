@@ -1,4 +1,4 @@
-package com.checkin.app.checkin.User.NonPersonalProfile;
+package com.checkin.app.checkin.Shop.ShopPrivateProfile;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
