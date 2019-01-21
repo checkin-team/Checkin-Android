@@ -160,6 +160,8 @@
         <activity android:name=".Session.ActiveSession.ActiveSessionInvoiceActivity"
             android:theme="@style/AppThemeWhiteActionBar"
             android:label="Invoice"/>
+        <activity android:name=".Review.ActivityReview"
+            android:windowSoftInputMode="adjustPan|adjustResize"/>
 
         <service
             android:name=".Auth.AuthenticatorService"

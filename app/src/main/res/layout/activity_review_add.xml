@@ -1,0 +1,332 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white"
+    android:orientation="vertical">
+
+    <android.support.design.widget.AppBarLayout
+        android:id="@+id/appbar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/white"
+        android:theme="@style/AppThemeWhiteActionBar">
+
+        <android.support.v7.widget.Toolbar
+            android:id="@+id/toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="top"
+            app:popupTheme="@style/PopupOverlay">
+
+            <android.support.constraint.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+
+                android:orientation="horizontal">
+
+                <ImageView
+                    android:id="@+id/im_back"
+                    android:layout_width="@dimen/button_height_short"
+                    android:layout_height="@dimen/button_height_short"
+                    android:layout_marginStart="@dimen/spacing_extra_small"
+                    android:layout_marginTop="0dp"
+                    android:background="@color/transparent"
+                    android:src="@drawable/ic_back_white"
+                    android:tint="@color/brownish_grey"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/spacing_normal"
+                    android:fontFamily="@font/arial_rounded_mt_bold"
+                    android:padding="@dimen/spacing_extra_small"
+                    android:text="@string/label_review_write"
+                    android:textColor="@color/brownish_grey"
+                    android:textSize="@dimen/font_large"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintStart_toEndOf="@id/im_back"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+            </android.support.constraint.ConstraintLayout>
+
+
+        </android.support.v7.widget.Toolbar>
+    </android.support.design.widget.AppBarLayout>
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:scrollbars="none"
+        android:fillViewport="true"
+        app:layout_constraintTop_toBottomOf="@id/appbar">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/spacing_normal">
+
+            <de.hdodenhof.circleimageview.CircleImageView
+                android:layout_width="80dp"
+                android:layout_height="80dp"
+                android:src="@drawable/fore_male_grey" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:gravity="center"
+                android:orientation="vertical">
+
+                <TextView
+                    android:id="@+id/tv_resturant_name"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/arial_rounded_mt_bold"
+                    android:text="@string/active_session"
+                    android:textColor="@color/primary_red"
+                    android:textAllCaps="true"
+                    android:textSize="@dimen/font_small_heading" />
+
+                <TextView
+                    android:id="@+id/tv_review_followers"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/arial_rounded_mt_bold"
+                    android:text="@string/active_session"
+                    android:textColor="@color/brownish_grey"
+                    android:textSize="@dimen/font_small" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:gravity="bottom|center">
+
+                    <TextView
+                        android:id="@+id/tv_rated"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginEnd="5dp"
+                        android:background="@drawable/rounded_rectangle_grey_border"
+                        android:padding="@dimen/spacing_tiny"
+                        android:text="rated 5 "
+                        android:textAllCaps="true"
+                        android:fontFamily="@font/lucida_grande"
+                        android:drawableEnd="@drawable/noun_cash_747843"
+                        android:textColor="@color/brownish_grey"
+                        android:textSize="@dimen/font_standard" />
+
+                    <TextView
+                        android:id="@+id/tv_follow"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="5dp"
+                        android:minWidth="80dp"
+                        android:background="@drawable/rectangle_border_red"
+                        android:fontFamily="@font/lucida_grande"
+                        android:gravity="center"
+                        android:padding="@dimen/spacing_tiny"
+                        android:textAllCaps="true"
+                        android:text="@string/title_follow"
+                        android:textColor="@color/brownish_grey"
+                        android:textSize="@dimen/font_standard" />
+
+                </LinearLayout>
+
+
+            </LinearLayout>
+
+        </LinearLayout>
+
+        <android.support.v7.widget.CardView
+            android:layout_width="match_parent"
+            android:layout_height="120dp"
+            android:layout_marginStart="@dimen/spacing_normal"
+            android:layout_marginEnd="@dimen/spacing_normal"
+            app:cardCornerRadius="10dp"
+            app:cardElevation="8dp">
+
+        <EditText
+            android:id="@+id/et_experience"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:hint="@string/label_share_your_experience"
+            android:textSize="@dimen/font_normal"
+            android:background="@null"
+            android:gravity="top"
+            android:padding="@dimen/spacing_small" />
+
+        </android.support.v7.widget.CardView>
+
+        <android.support.v7.widget.CardView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/spacing_normal"
+            android:layout_marginEnd="@dimen/spacing_normal"
+            android:layout_marginTop="@dimen/spacing_normal"
+            app:cardCornerRadius="10dp"
+            app:cardElevation="8dp">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:paddingBottom="@dimen/spacing_small">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/title_ratings"
+                    android:textSize="@dimen/font_normal"
+                    android:textColor="@color/primary_red"
+                    android:padding="@dimen/spacing_small" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/spacing_small"
+                    android:layout_marginEnd="@dimen/spacing_small">
+
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="0.5"
+                        android:text="@string/title_food_quality"
+                        android:textSize="@dimen/font_standard"
+                        android:textColor="@color/brownish_grey"
+                        android:paddingLeft="@dimen/spacing_small" />
+
+                    <SeekBar
+                        android:id="@+id/seekbar_food_quality"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="0.5"
+                        android:layout_gravity="center|end"
+                        android:progressDrawable="@drawable/seekbar_progress_bar"/>
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="@dimen/spacing_small">
+
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="0.5"
+                        android:text="@string/title_ambience"
+                        android:textSize="@dimen/font_standard"
+                        android:textColor="@color/brownish_grey"
+                        android:paddingLeft="@dimen/spacing_small" />
+
+                    <SeekBar
+                        android:id="@+id/seekbar_ambience"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="0.5"
+                        android:layout_gravity="center|end"
+                        android:progressDrawable="@drawable/seekbar_progress_bar"/>
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/spacing_small"
+                    android:layout_marginEnd="@dimen/spacing_small"
+                    android:layout_marginBottom="@dimen/spacing_small">
+
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="0.5"
+                        android:text="@string/title_service_hospitality"
+                        android:textSize="@dimen/font_standard"
+                        android:textColor="@color/brownish_grey"
+                        android:paddingLeft="@dimen/spacing_small" />
+
+                    <SeekBar
+                        android:id="@+id/seekbar_service"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="0.5"
+                        android:layout_gravity="center|end"
+                        android:progressDrawable="@drawable/seekbar_progress_bar"/>
+
+                </LinearLayout>
+            </LinearLayout>
+        </android.support.v7.widget.CardView>
+
+        <android.support.v7.widget.CardView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/spacing_normal"
+            android:layout_marginEnd="@dimen/spacing_normal"
+            android:layout_marginTop="@dimen/spacing_normal"
+            app:cardCornerRadius="10dp"
+            app:cardElevation="8dp">
+
+            <LinearLayout
+                android:id="@+id/ll_add_images"
+                android:layout_width="match_parent"
+                android:layout_height="130dp"
+                android:layout_marginLeft="@dimen/spacing_small"
+                android:padding="@dimen/spacing_small"
+                android:orientation="horizontal">
+
+            </LinearLayout>
+
+
+        </android.support.v7.widget.CardView>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="end|center"
+            android:layout_marginTop="@dimen/spacing_extra_small"
+            android:layout_marginBottom="@dimen/spacing_small">
+
+
+        <TextView
+            android:id="@+id/btn_add_image"
+            android:layout_width="wrap_content"
+            android:layout_height="40dp"
+            android:text="@string/add_image"
+            android:layout_marginEnd="@dimen/spacing_small"
+            android:paddingStart="@dimen/spacing_small"
+            android:paddingEnd="@dimen/spacing_small"
+            android:textSize="@dimen/font_normal"
+            android:textColor="@color/white"
+            android:drawableStart="@drawable/ic_menu_camera"
+            android:drawableTint="@color/white"
+            android:drawablePadding="@dimen/spacing_extra_small"
+            android:gravity="center"
+            android:background="@drawable/rounded_rectangle_brownish_grey"/>
+
+        <TextView
+            android:id="@+id/btn_done"
+            android:layout_width="80dp"
+            android:layout_height="40dp"
+            android:text="@string/title_done"
+            android:layout_margin="@dimen/spacing_normal"
+            android:textSize="@dimen/font_normal"
+            android:textColor="@color/white"
+            android:gravity="center"
+            android:background="@drawable/rounded_rectangle_brownish_grey"/>
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+    </ScrollView>
+
+</LinearLayout>

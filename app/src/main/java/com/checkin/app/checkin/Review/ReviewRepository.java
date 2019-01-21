@@ -4,6 +4,7 @@ import android.app.Application;
 import android.arch.lifecycle.LiveData;
 import android.content.Context;
 import android.support.annotation.NonNull;
+import android.util.Log;
 
 import com.checkin.app.checkin.Data.ApiClient;
 import com.checkin.app.checkin.Data.ApiResponse;
@@ -14,7 +15,12 @@ import com.checkin.app.checkin.Data.WebApiService;
 import com.checkin.app.checkin.Review.ShopReview.ShopReviewModel;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 
+import java.io.File;
 import java.util.List;
+
+import okhttp3.MediaType;
+import okhttp3.MultipartBody;
+import okhttp3.RequestBody;
 
 public class ReviewRepository {
     private final WebApiService mWebService;
@@ -74,5 +80,47 @@ public class ReviewRepository {
             }
         }
         return INSTANCE;
+    }
+
+    public LiveData<Resource<ObjectNode>> postReview(final ObjectNode credentials) {
+        return new NetworkBoundResource<ObjectNode, ObjectNode>() {
+            @Override
+            protected boolean shouldUseLocalDb() {
+                return false;
+            }
+
+            @NonNull
+            @Override
+            protected LiveData<ApiResponse<ObjectNode>> createCall() {
+                Log.e("rating===1",credentials.toString());
+                return new RetrofitLiveData<>(mWebService.postCustomerReview("1",credentials));
+            }
+
+            @Override
+            protected void saveCallResult(ObjectNode data) {
+            }
+        }.getAsLiveData();
+    }
+
+    public LiveData<Resource<ObjectNode>> postReviewImage(File pic, ObjectNode credentials) {
+        RequestBody requestFile = RequestBody.create(MediaType.parse("image/jpeg"), pic);
+        final MultipartBody.Part body = MultipartBody.Part.createFormData("image", pic.getName(), requestFile);
+        return new NetworkBoundResource<ObjectNode, ObjectNode>() {
+            @Override
+            protected boolean shouldUseLocalDb() {
+                return false;
+            }
+
+            @NonNull
+            @Override
+            protected LiveData<ApiResponse<ObjectNode>> createCall() {
+                return new RetrofitLiveData<>(mWebService.postCustomerReviewPic(body,credentials));
+            }
+
+            @Override
+            protected void saveCallResult(ObjectNode data) {
+
+            }
+        }.getAsLiveData();
     }
 }

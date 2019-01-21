@@ -1,0 +1,212 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <android.support.design.widget.AppBarLayout
+        android:id="@+id/appbar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/white"
+        android:theme="@style/AppThemeWhiteActionBar">
+
+        <android.support.v7.widget.Toolbar
+            android:id="@+id/toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="top"
+            app:popupTheme="@style/PopupOverlay">
+
+            <android.support.constraint.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+
+                android:orientation="horizontal">
+
+                <ImageView
+                    android:id="@+id/im_back"
+                    android:layout_width="@dimen/button_height_short"
+                    android:layout_height="@dimen/button_height_short"
+                    android:layout_marginStart="@dimen/spacing_extra_small"
+                    android:layout_marginTop="0dp"
+                    android:background="@color/transparent"
+                    android:src="@drawable/ic_back_white"
+                    android:tint="@color/brownish_grey"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/spacing_normal"
+                    android:fontFamily="@font/arial_rounded_mt_bold"
+                    android:padding="@dimen/spacing_extra_small"
+                    android:text="@string/label_reviews"
+                    android:textColor="@color/brownish_grey"
+                    android:textSize="@dimen/font_large"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintStart_toEndOf="@id/im_back"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+            </android.support.constraint.ConstraintLayout>
+
+
+        </android.support.v7.widget.Toolbar>
+    </android.support.design.widget.AppBarLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/background_top_inner_shadow"
+        app:layout_constraintTop_toBottomOf="@id/appbar"
+        android:orientation="vertical">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/spacing_normal">
+
+            <de.hdodenhof.circleimageview.CircleImageView
+                android:layout_width="80dp"
+                android:layout_height="80dp"
+                android:src="@drawable/fore_male_grey" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:gravity="center"
+                android:orientation="vertical">
+
+                <TextView
+                    android:id="@+id/tv_name"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/arial_rounded_mt_bold"
+                    android:text="@string/active_session"
+                    android:textColor="@color/brownish_grey"
+                    android:textSize="@dimen/font_small_heading" />
+
+                <TextView
+                    android:id="@+id/tv_review_followers"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/arial_rounded_mt_bold"
+                    android:text="@string/active_session"
+                    android:textColor="@color/brownish_grey"
+                    android:textSize="@dimen/font_small" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:gravity="bottom|center">
+
+                    <TextView
+                        android:id="@+id/tv_rated"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginEnd="5dp"
+                        android:background="@drawable/rounded_rectangle_grey_border"
+                        android:padding="@dimen/spacing_tiny"
+                        android:text="rated 5 "
+                        android:textAllCaps="true"
+                        android:fontFamily="@font/lucida_grande"
+                        android:drawableEnd="@drawable/noun_cash_747843"
+                        android:textColor="@color/brownish_grey"
+                        android:textSize="@dimen/font_standard" />
+
+                    <TextView
+                        android:id="@+id/tv_follow"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="5dp"
+                        android:minWidth="80dp"
+                        android:background="@drawable/rectangle_border_red"
+                        android:fontFamily="@font/lucida_grande"
+                        android:gravity="center"
+                        android:padding="@dimen/spacing_tiny"
+                        android:textAllCaps="true"
+                        android:text="@string/title_follow"
+                        android:textColor="@color/brownish_grey"
+                        android:textSize="@dimen/font_standard" />
+
+                </LinearLayout>
+
+
+            </LinearLayout>
+
+        </LinearLayout>
+
+        <TextView
+            android:id="@+id/tv_experience"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="exp"
+            android:layout_marginStart="@dimen/spacing_normal"
+            android:layout_marginEnd="@dimen/spacing_normal"
+            android:layout_marginBottom="@dimen/spacing_normal"/>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/spacing_normal">
+
+            <ImageView
+                android:id="@+id/im_like"
+                style="@style/ButtonNormal"
+                android:src="@drawable/noun_like_837116"
+                android:layout_gravity="center"/>
+
+            <TextView
+                android:id="@+id/tv_likes_number"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="24"
+                android:textSize="@dimen/font_normal"
+                android:layout_gravity="center"
+                android:layout_marginStart="@dimen/spacing_small" />
+
+            <LinearLayout
+                android:id="@+id/ll_add_images"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:layout_marginStart="@dimen/spacing_small"
+                android:orientation="horizontal"
+                android:visibility="gone"/>
+
+            <ImageView
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:src="@drawable/ic_plus_red"
+                android:tint="@color/white"
+                android:background="@color/black"
+                android:padding="@dimen/spacing_small"
+                android:layout_marginStart="@dimen/spacing_small"/>
+
+            <TextView
+                android:id="@+id/tv_time"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/arial_rounded_mt_bold"
+                android:text="14 hours ago"
+                android:textAllCaps="true"
+                android:layout_gravity="center"
+                android:gravity="end"
+                android:textColor="@color/brownish_grey"
+                android:textSize="@dimen/font_small"
+                android:layout_marginStart="@dimen/spacing_normal"
+                android:layout_marginEnd="@dimen/spacing_normal"/>
+
+        </LinearLayout>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_marginTop="@dimen/spacing_tiny"
+            android:background="@color/lightest_grey"/>
+
+
+    </LinearLayout>
+
+</android.support.constraint.ConstraintLayout>

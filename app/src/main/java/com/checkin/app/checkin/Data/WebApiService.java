@@ -200,6 +200,13 @@ public interface WebApiService {
     @POST("reviews/{review_id}/react/")
     Call<ObjectNode> postReviewReact(@Path("review_id") String reviewId);
 
+    @POST("reviews/sessions/{session_id}/")
+    Call<ObjectNode> postCustomerReview(@Path("session_id") String sessionId, @Body ObjectNode review);
+
+    @Multipart
+    @POST("images/reviews/upload/")
+    Call<ObjectNode> postCustomerReviewPic(@Part MultipartBody.Part pic,@Body ObjectNode data);
+
     // endregion
 
     @GET("notification")
