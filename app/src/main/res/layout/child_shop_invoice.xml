@@ -25,7 +25,7 @@
             <TextView
                 android:id="@+id/tv_hash_id"
                 android:text="#56743536323"
-                android:textSize="@dimen/font_medium"
+                android:textSize="@dimen/font_normal"
                 android:textColor="@color/brownish_grey"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content" />
@@ -35,7 +35,7 @@
                 android:layout_below="@+id/tv_hash_id"
                 android:id="@+id/tv_shop_invoice_date"
                 android:text="Dec 5, 2108 10:34 AM"
-                android:textSize="@dimen/font_medium"
+                android:textSize="@dimen/font_normal"
                 android:textColor="@color/pinkish_grey"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content" />
@@ -43,7 +43,7 @@
             <TextView
                 android:layout_marginTop="@dimen/spacing_extra_small"
                 android:text="Waiter :"
-                android:textSize="@dimen/font_medium"
+                android:textSize="@dimen/font_normal"
                 android:textColor="@color/brownish_grey"
                 android:layout_below="@+id/tv_shop_invoice_date"
                 android:id="@+id/tv_shop_invoice_waiter_title"
@@ -51,7 +51,7 @@
                 android:layout_height="wrap_content" />
 
             <TextView
-                android:textSize="@dimen/font_medium"
+                android:textSize="@dimen/font_normal"
                 android:layout_marginTop="@dimen/spacing_extra_small"
                 android:layout_marginStart="@dimen/app_bar_elevation_size"
                 android:layout_toEndOf="@id/tv_shop_invoice_waiter_title"
@@ -67,7 +67,7 @@
                 android:layout_marginStart="@dimen/thickness_line"
                 android:layout_marginEnd="@dimen/thickness_line"
                 android:layout_below="@+id/tv_hash_id"
-                android:background="@color/colorGainsBoro"
+                android:background="@color/brownish_grey"
                 android:layout_toEndOf="@id/tv_shop_invoice_date"
                 android:id="@+id/tv_shop_invoice_view"
                 android:layout_width="@dimen/height_horizontal_line"
@@ -79,7 +79,7 @@
                 android:layout_below="@+id/tv_hash_id"
                 android:id="@+id/tv_shop_invoice_item"
                 android:text="3 Item's"
-                android:textSize="@dimen/font_medium"
+                android:textSize="@dimen/font_normal"
                 android:textColor="@color/pinkish_grey"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content" />
@@ -87,19 +87,19 @@
             <TextView
                 android:layout_toStartOf="@+id/tv_shop_invoice_rupee"
                 android:id="@+id/tv_shop_invoice_rupee_title"
-                android:text="@string/rupee_symbol"
-                android:textSize="@dimen/font_medium"
-                android:textColor="@color/colorRed"
+                android:text="@string/format_currency_rupee"
+                android:textSize="@dimen/font_normal"
+                android:textColor="@color/primary_red"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content" />
 
             <TextView
                 android:layout_marginStart="@dimen/card_view_small_elevation"
-                android:textColor="@color/colorRed"
+                android:textColor="@color/primary_red"
                 android:layout_alignParentEnd="true"
                 android:id="@+id/tv_shop_invoice_rupee"
                 android:text="265.85"
-                android:textSize="@dimen/font_medium"
+                android:textSize="@dimen/font_normal"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content" />
 
@@ -151,7 +151,7 @@
                     android:layout_marginTop="@dimen/spacing_small"
                     android:text="TABLE 4"
                     android:textColor="@color/brownish_grey"
-                    android:textSize="@dimen/font_medium" />
+                    android:textSize="@dimen/font_normal" />
 
             </LinearLayout>
 

@@ -70,9 +70,9 @@
             android:elevation="@dimen/tab_layout_elevation_size"
             app:tabMode="scrollable"
             app:tabGravity="fill"
-            app:tabSelectedTextColor="@color/colorRed"
-            app:tabIndicatorColor="@color/colorRed"
-            app:tabTextColor="@color/tab_unselected_text_color"
+            app:tabSelectedTextColor="@color/primary_red"
+            app:tabIndicatorColor="@color/primary_red"
+            app:tabTextColor="@color/pinkish_grey"
             android:layout_height="?attr/actionBarSize"/>
 
         <android.support.v4.view.ViewPager
@@ -96,7 +96,7 @@
                 android:layout_width="@dimen/barcode_width"
                 android:layout_height="@dimen/barcode_height"
                 android:layout_gravity="center"
-                android:backgroundTint="@color/colorTint"
+                android:backgroundTint="@color/pinkish_grey"
                 android:src="@drawable/noun_qr_code_1340286" />
 
         </FrameLayout>

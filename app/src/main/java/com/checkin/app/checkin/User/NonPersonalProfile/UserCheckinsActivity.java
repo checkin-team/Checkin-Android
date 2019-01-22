@@ -39,7 +39,7 @@ public class UserCheckinsActivity extends AppCompatActivity {
         UserCheckinAdapter userRestaurantAdapter = new UserCheckinAdapter();
         rvUserCheckRestaurant.setLayoutManager(new GridLayoutManager(this,2));
         rvUserCheckRestaurant.setAdapter(userRestaurantAdapter);
-        rvUserCheckRestaurant.addItemDecoration(new MyItemDecorator(15));
+        rvUserCheckRestaurant.addItemDecoration(new UserCheckinAdapter.MyItemDecorator(15));
         rvUserCheckRestaurant.setItemAnimator(new DefaultItemAnimator());
 
         UserViewModel mUserViewModel = ViewModelProviders.of(this).get(UserViewModel.class);

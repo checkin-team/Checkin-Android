@@ -2,16 +2,12 @@ package com.checkin.app.checkin.Waiter;
 
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
-import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
-import com.checkin.app.checkin.R;
-
 import java.util.List;
 
-import butterknife.BindView;
 import butterknife.ButterKnife;
 
 public class WaiterEndNavigationTableAdapter extends RecyclerView.Adapter<WaiterEndNavigationTableAdapter.ViewHolder> {
@@ -27,11 +23,11 @@ public class WaiterEndNavigationTableAdapter extends RecyclerView.Adapter<Waiter
     @NonNull
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View view;
-        if (viewType == 0)
-            view = LayoutInflater.from(parent.getContext()).inflate(R.layout.child_waiter_assigned_table, parent, false);
-        else
-            view = LayoutInflater.from(parent.getContext()).inflate(R.layout.child_waiter_unassigned_table, parent, false);
+        View view = null;
+//        if (viewType == 0)
+//            view = LayoutInflater.from(parent.getContext()).inflate(R.layout.child_waiter_assigned_table, parent, false);
+//        else
+//            view = LayoutInflater.from(parent.getContext()).inflate(R.layout.child_waiter_unassigned_table, parent, false);
 
         return new ViewHolder(view);
     }
@@ -41,14 +37,14 @@ public class WaiterEndNavigationTableAdapter extends RecyclerView.Adapter<Waiter
         NavTableModel navTableModel = navTableModelsList.get(position);
         String tableNumber = navTableModel.getTableNumber();
 
-        if (navTableModel.getHost() != null){
-            String userName = navTableModel.getHost().getDisplayName();
-
-            holder.tvTableNumber.setText(tableNumber);
-            holder.tvName.setText(userName);
-        }else {
-            holder.tvTableNumber.setText(tableNumber);
-        }
+//        if (navTableModel.getHost() != null){
+//            String userName = navTableModel.getHost().getDisplayName();
+//
+//            holder.tvTableNumber.setText(tableNumber);
+//            holder.tvName.setText(userName);
+//        }else {
+//            holder.tvTableNumber.setText(tableNumber);
+//        }
     }
 
     @Override
@@ -69,12 +65,12 @@ public class WaiterEndNavigationTableAdapter extends RecyclerView.Adapter<Waiter
     }
 
     class ViewHolder extends RecyclerView.ViewHolder {
-
-        @BindView(R.id.tvTableNumber)
-        TextView tvTableNumber;
-        @BindView(R.id.tvName)
-        TextView tvName;
-        @BindView(R.id.tvTime)
+//
+//        @BindView(R.id.tvTableNumber)
+//        TextView tvTableNumber;
+//        @BindView(R.id.tvName)
+//        TextView tvName;
+//        @BindView(R.id.tvTime)
         TextView tvTime;
 
         ViewHolder(View v) {

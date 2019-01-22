@@ -165,7 +165,7 @@
             android:theme="@style/AppThemeWhiteActionBar">
         </activity>
         <activity android:name=".Shop.ShopInvoice.ShopInvoiceDetailFeedbackActivity" />
-        <activity android:name=".Shop.ShopPrivateProfile.TaxDiscountActivity"
+        <activity android:name=".Shop.ShopPrivateProfile.FinanceDetailActivity"
             android:label="@string/action_discout"
             android:theme="@style/AppThemeWhiteActionBar"/>
 

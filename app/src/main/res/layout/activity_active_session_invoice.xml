@@ -81,7 +81,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginEnd="@dimen/spacing_small"
-                    android:text="@string/currency_rupee"
+                    android:text="@string/symbol_currency_rupee"
                     android:textSize="@dimen/font_largest"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toStartOf="@id/ed_invoice_tip"
@@ -90,7 +90,7 @@
                 <EditText
                     android:id="@+id/ed_invoice_tip"
                     style="@style/GreyTextStyle"
-                    android:layout_width="@dimen/width_input_tip"
+                    android:layout_width="@dimen/width_input_small"
                     android:layout_height="wrap_content"
                     android:layout_marginEnd="@dimen/spacing_normal"
                     android:background="@drawable/rounded_rectangle_white"
@@ -98,7 +98,7 @@
                     android:textAlignment="textStart"
                     android:padding="@dimen/spacing_extra_small"
                     android:text="0.00"
-                    android:textSize="@dimen/font_small_heading"
+                    android:textSize="@dimen/font_heading"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />

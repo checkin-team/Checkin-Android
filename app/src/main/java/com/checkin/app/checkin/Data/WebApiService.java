@@ -5,26 +5,29 @@ import com.checkin.app.checkin.Menu.Model.MenuModel;
 import com.checkin.app.checkin.Menu.Model.OrderedItemModel;
 import com.checkin.app.checkin.Misc.GenericDetailModel;
 import com.checkin.app.checkin.Notifications.NotificationModel;
-import com.checkin.app.checkin.RestaurantActivity.Waiter.EventModel;
-import com.checkin.app.checkin.Session.ActiveSession.Chat.SessionChatModel;
 import com.checkin.app.checkin.Review.ShopReview.ShopReviewModel;
 import com.checkin.app.checkin.Search.SearchResultPeopleModel;
 import com.checkin.app.checkin.Search.SearchResultShopModel;
-import com.checkin.app.checkin.Session.Model.SessionInvoiceModel;
 import com.checkin.app.checkin.Session.ActiveSession.ActiveSessionModel;
+import com.checkin.app.checkin.Session.ActiveSession.Chat.SessionChatModel;
+import com.checkin.app.checkin.Session.Model.SessionInvoiceModel;
 import com.checkin.app.checkin.Session.Model.SessionOrderedItemModel;
 import com.checkin.app.checkin.Shop.RecentCheckin.Model.RecentCheckinModel;
 import com.checkin.app.checkin.Shop.RestaurantModel;
+import com.checkin.app.checkin.Shop.ShopInvoice.RestaurantSessionModel;
+import com.checkin.app.checkin.Shop.ShopInvoice.ShopSessionDetailModel;
+import com.checkin.app.checkin.Shop.ShopInvoice.ShopSessionFeedbackModel;
 import com.checkin.app.checkin.Shop.ShopJoin.ShopJoinModel;
+import com.checkin.app.checkin.Shop.ShopPrivateProfile.FinanceModel;
 import com.checkin.app.checkin.Shop.ShopPrivateProfile.MemberModel;
 import com.checkin.app.checkin.User.Friendship.FriendshipModel;
+import com.checkin.app.checkin.User.NonPersonalProfile.ShopCustomerModel;
 import com.checkin.app.checkin.User.UserModel;
+import com.checkin.app.checkin.Waiter.EventModel;
 import com.fasterxml.jackson.databind.node.ArrayNode;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 
 import java.util.List;
-
-import javax.annotation.Nullable;
 
 import okhttp3.MultipartBody;
 import retrofit2.Call;
@@ -228,7 +231,7 @@ public interface WebApiService {
 
     /*ShopInvoice all API*/
     @GET("sessions/restaurants/{restaurant_id}/")
-    Call<List<RestaurantSessionModel>> getRestaurantSessionsById(@Path("restaurant_id") String restaurantId,@Query("checked_out_before") String checkedOutBefore, @Query("checked_out_after") String checkedOutAfter);
+    Call<List<RestaurantSessionModel>> getRestaurantSessionsById(@Path("restaurant_id") String restaurantId, @Query("checked_out_before") String checkedOutBefore, @Query("checked_out_after") String checkedOutAfter);
 
     @GET("sessions/{session_id}/detail/")
     Call<ShopSessionDetailModel> getShopSessionDetailById(@Path("session_id") String sessionId);
@@ -237,7 +240,7 @@ public interface WebApiService {
     Call<List<ShopSessionFeedbackModel>> getShopSessionFeedbackById(@Path("session_id") String sessionId);
 
     @GET("sessions/recent/users/{user_id}/")
-    Call<List<UserCheckinModel>> getUserCheckinById(@Path("user_id") String userId);
+    Call<List<ShopCustomerModel>> getUserCheckinById(@Path("user_id") String userId);
 
     @GET("restaurants/{restaurant_id}/finance/")
     Call<FinanceModel> getRestaurantFinanceById(@Path("restaurant_id") String restaurantId);

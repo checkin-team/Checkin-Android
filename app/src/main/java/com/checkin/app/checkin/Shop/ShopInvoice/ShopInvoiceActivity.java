@@ -2,7 +2,6 @@ package com.checkin.app.checkin.Shop.ShopInvoice;
 
 import android.app.DatePickerDialog;
 import android.arch.lifecycle.ViewModelProviders;
-import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.ActionBar;
@@ -11,25 +10,20 @@ import android.support.v7.widget.CardView;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.TextView;
 
 import com.checkin.app.checkin.Data.Resource;
 import com.checkin.app.checkin.R;
+import com.checkin.app.checkin.Utility.Utils;
 
 import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.Calendar;
-import java.util.Date;
 import java.util.Locale;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
-
-import static com.checkin.app.checkin.Utility.Util.getCurrentFormattedDate;
-import static com.checkin.app.checkin.Utility.Util.getFormattedSelectedDate;
 
 public class ShopInvoiceActivity extends AppCompatActivity implements View.OnClickListener {
 
@@ -99,8 +93,8 @@ public class ShopInvoiceActivity extends AppCompatActivity implements View.OnCli
     }
 
     private void setMyInitial(Calendar c) {
-        tvShopInvoiceFromDate.setText(getCurrentFormattedDate(c));
-        tvShopInvoiceToDate.setText(getCurrentFormattedDate(c));
+        tvShopInvoiceFromDate.setText(Utils.getCurrentFormattedDate(c));
+        tvShopInvoiceToDate.setText(Utils.getCurrentFormattedDate(c));
     }
 
     public void onClick(View view) {
@@ -119,7 +113,7 @@ public class ShopInvoiceActivity extends AppCompatActivity implements View.OnCli
     private String mFormattedDate(String date) {
         String mFinalDate = null;
         try {
-            mFinalDate = getFormattedSelectedDate(date,"MMM dd, yyyy","yyyy-MM-dd");
+            mFinalDate = Utils.getFormattedSelectedDate(date,"MMM dd, yyyy","yyyy-MM-dd");
         } catch (ParseException e) {
             e.printStackTrace();
         }
@@ -145,7 +139,7 @@ public class ShopInvoiceActivity extends AppCompatActivity implements View.OnCli
             String mInitDate = String.format(Locale.ENGLISH, "%04d-%02d-%02d", mYear, mMonth, mDay);
             String finalDate;
             try {
-                finalDate = getFormattedSelectedDate(mInitDate, "yyyy-MM-dd", "MMM dd, yyyy");
+                finalDate = Utils.getFormattedSelectedDate(mInitDate, "yyyy-MM-dd", "MMM dd, yyyy");
                 tvShopInvoiceDate.setText(finalDate);
             } catch (ParseException e) {
                 e.printStackTrace();

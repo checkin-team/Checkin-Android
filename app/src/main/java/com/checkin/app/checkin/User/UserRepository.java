@@ -13,7 +13,7 @@ import com.checkin.app.checkin.Data.Resource;
 import com.checkin.app.checkin.Data.RetrofitLiveData;
 import com.checkin.app.checkin.Data.WebApiService;
 import com.checkin.app.checkin.User.Friendship.FriendshipModel;
-import com.checkin.app.checkin.User.NonPersonalProfile.UserCheckinModel;
+import com.checkin.app.checkin.User.NonPersonalProfile.ShopCustomerModel;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 
 import java.io.File;
@@ -261,8 +261,8 @@ public class UserRepository extends BaseRepository {
         }.getAsLiveData();
     }
 
-    public LiveData<Resource<List<UserCheckinModel>>> getUserCheckinById(String userId) {
-        return new NetworkBoundResource<List<UserCheckinModel>,List<UserCheckinModel>>(){
+    public LiveData<Resource<List<ShopCustomerModel>>> getUserCheckinById(String userId) {
+        return new NetworkBoundResource<List<ShopCustomerModel>,List<ShopCustomerModel>>(){
 
             @Override
             protected boolean shouldUseLocalDb() {
@@ -271,12 +271,12 @@ public class UserRepository extends BaseRepository {
 
             @NonNull
             @Override
-            protected LiveData<ApiResponse<List<UserCheckinModel>>> createCall() {
+            protected LiveData<ApiResponse<List<ShopCustomerModel>>> createCall() {
                 return new RetrofitLiveData<>(mWebService.getUserCheckinById(userId));
             }
 
             @Override
-            protected void saveCallResult(List<UserCheckinModel> data) {
+            protected void saveCallResult(List<ShopCustomerModel> data) {
 
             }
         }.getAsLiveData();

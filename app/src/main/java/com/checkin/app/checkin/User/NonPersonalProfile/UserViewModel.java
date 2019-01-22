@@ -24,7 +24,7 @@ public class UserViewModel extends BaseViewModel {
     private long userPk;
     private String requestPk;
     private MediatorLiveData<Resource<UserModel>> mUser = new MediatorLiveData<>();
-    private MediatorLiveData<Resource<List<UserCheckinModel>>> mUserCheckinMediatorLiveData = new MediatorLiveData<>();
+    private MediatorLiveData<Resource<List<ShopCustomerModel>>> mUserCheckinMediatorLiveData = new MediatorLiveData<>();
     private LiveData<Resource<List<UserModel>>> mAllUsers;
 
     public UserViewModel(@NonNull Application application) {
@@ -100,22 +100,22 @@ public class UserViewModel extends BaseViewModel {
     }
 
     public void getUsercheckinById(String userId){
-        LiveData<Resource<List<UserCheckinModel>>> mLiveData = mRepository.getUserCheckinById(userId);
+        LiveData<Resource<List<ShopCustomerModel>>> mLiveData = mRepository.getUserCheckinById(userId);
         mUserCheckinMediatorLiveData.addSource(mLiveData,mUserCheckinMediatorLiveData::setValue);
     }
 
     // TODO: remove this
     public void dummyCheckins() {
-        List<UserCheckinModel> data = new ArrayList<>();
+        List<ShopCustomerModel> data = new ArrayList<>();
 
-        data.add(new UserCheckinModel(new BriefModel("1", "Roma", null), "Chinchpokli", 32));
-        data.add(new UserCheckinModel(new BriefModel("1", "Roman", null), "dsdsfdsffd", 45));
-        data.add(new UserCheckinModel(new BriefModel("1", "Romca", null), "Chinchpokli", 32));
+        data.add(new ShopCustomerModel(new BriefModel("1", "Roma", null), "Chinchpokli", 32));
+        data.add(new ShopCustomerModel(new BriefModel("1", "Roman", null), "dsdsfdsffd", 45));
+        data.add(new ShopCustomerModel(new BriefModel("1", "Romca", null), "Chinchpokli", 32));
 
         mUserCheckinMediatorLiveData.setValue(Resource.success(data));
     }
 
-    public LiveData<Resource<List<UserCheckinModel>>> getUsercheckinModel(){
+    public LiveData<Resource<List<ShopCustomerModel>>> getUsercheckinModel(){
         return mUserCheckinMediatorLiveData;
     }
 }

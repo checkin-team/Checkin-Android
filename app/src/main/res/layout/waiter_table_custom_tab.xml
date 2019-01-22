@@ -8,7 +8,7 @@
 
     <TextView
         android:id="@+id/tv_waiter_table_tab_title"
-        android:textColor="@color/color_waiter_table_custom_tab"
+        android:textColor="@color/pinkish_grey"
         android:textSize="16sp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content" />
@@ -18,7 +18,7 @@
         android:layout_marginStart="5dp"
         android:layout_toEndOf="@id/tv_waiter_table_tab_title"
         android:id="@+id/tv_waiter_table_tab_number"
-        android:textColor="@color/color_waiter_table_custom_tab"
+        android:textColor="@color/pinkish_grey"
         android:textSize="16sp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content" />

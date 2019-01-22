@@ -69,7 +69,7 @@
                         android:layout_gravity="center_horizontal"
                         android:text="@string/shop_status_check"
                         android:textColor="@color/brownish_grey"
-                        android:textSize="@dimen/font_small_heading" />
+                        android:textSize="@dimen/font_heading" />
 
                     <FrameLayout
                         android:layout_width="match_parent"
@@ -140,7 +140,7 @@
                             android:layout_gravity="center_horizontal"
                             android:text="User Activity"
                             android:textColor="@color/brownish_grey"
-                            android:textSize="@dimen/font_small_heading" />
+                            android:textSize="@dimen/font_heading" />
 
                         <FrameLayout
                             android:layout_width="match_parent"

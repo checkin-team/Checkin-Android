@@ -1,20 +1,13 @@
 package com.checkin.app.checkin.Shop.ShopInvoice;
 
 import com.checkin.app.checkin.Misc.BriefModel;
-import com.checkin.app.checkin.Utility.Util;
-import com.fasterxml.jackson.annotation.JsonAnyGetter;
-import com.fasterxml.jackson.annotation.JsonAnySetter;
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
-import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 
 import java.io.Serializable;
 import java.text.SimpleDateFormat;
 import java.util.Date;
-import java.util.HashMap;
 import java.util.Locale;
-import java.util.Map;
 
 @JsonInclude(JsonInclude.Include.NON_NULL)
 public class RestaurantSessionModel  implements Serializable {

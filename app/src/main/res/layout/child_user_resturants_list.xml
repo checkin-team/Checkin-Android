@@ -44,7 +44,7 @@
                 <TextView
                     android:id="@+id/tv_user_checkin_address"
                     android:layout_marginTop="@dimen/card_view_small_elevation"
-                    android:textSize="@dimen/font_small_extra"
+                    android:textSize="@dimen/font_small"
                     android:textColor="@color/pinkish_grey"
                     android:text="Lanka, Varanasi"
                     android:layout_width="match_parent"
@@ -61,7 +61,7 @@
             android:textColor="@color/white"
             android:background="@drawable/background_brownish_bottom_corner_rounded"
             android:text="Total Visits : 43"
-            android:textSize="@dimen/font_small_extra"
+            android:textSize="@dimen/font_small"
             android:layout_width="match_parent"
             android:layout_height="wrap_content" />
 

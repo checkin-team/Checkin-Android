@@ -154,8 +154,8 @@ public class ShopProfileFragment extends Fragment {
             case R.id.btn_insights:
                 break;
             case R.id.btn_discount:
-                intent = new Intent(v.getContext(), TaxDiscountActivity.class);
-                intent.putExtra(TaxDiscountActivity.KEY_SHOP_PK, mViewModel.getShopPk());
+                intent = new Intent(v.getContext(), FinanceDetailActivity.class);
+                intent.putExtra(FinanceDetailActivity.KEY_SHOP_PK, mViewModel.getShopPk());
                 startActivity(intent);
                 break;
         }

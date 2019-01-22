@@ -5,7 +5,7 @@ import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 @JsonInclude(JsonInclude.Include.NON_NULL)
-public class UserCheckinModel {
+public class ShopCustomerModel {
 
     @JsonProperty("shop")
     private
@@ -17,7 +17,7 @@ public class UserCheckinModel {
     private
     int countVisits;
 
-    public UserCheckinModel(){
+    public ShopCustomerModel(){
     }
 
     public BriefModel getShop() {
@@ -32,7 +32,7 @@ public class UserCheckinModel {
         return countVisits;
     }
 
-    public UserCheckinModel(BriefModel shop, String location, int countVisits) {
+    public ShopCustomerModel(BriefModel shop, String location, int countVisits) {
         this.shop = shop;
         this.location = location;
         this.countVisits = countVisits;

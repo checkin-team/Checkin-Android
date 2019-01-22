@@ -1,15 +1,15 @@
 package com.checkin.app.checkin.User.NonPersonalProfile;
 
+import android.graphics.Rect;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.checkin.app.checkin.R;
-import com.checkin.app.checkin.Utility.Util;
+import com.checkin.app.checkin.Utility.Utils;
 
 import java.util.List;
 import java.util.Locale;
@@ -20,7 +20,7 @@ import de.hdodenhof.circleimageview.CircleImageView;
 
 public class UserCheckinAdapter extends RecyclerView.Adapter<UserCheckinAdapter.UserCheckinHolder> {
 
-    private List<UserCheckinModel> mList;
+    private List<ShopCustomerModel> mList;
 
     @NonNull
     @Override
@@ -31,7 +31,7 @@ public class UserCheckinAdapter extends RecyclerView.Adapter<UserCheckinAdapter.
 
     @Override
     public void onBindViewHolder(@NonNull UserCheckinHolder holder, int position) {
-        UserCheckinModel data = mList.get(position);
+        ShopCustomerModel data = mList.get(position);
         holder.bindData(data);
     }
 
@@ -40,7 +40,7 @@ public class UserCheckinAdapter extends RecyclerView.Adapter<UserCheckinAdapter.
         return mList != null ? mList.size() : 0;
     }
 
-    void addUserCheckinData(List<UserCheckinModel> mList) {
+    void addUserCheckinData(List<ShopCustomerModel> mList) {
         this.mList = mList;
         notifyDataSetChanged();
     }
@@ -61,16 +61,35 @@ public class UserCheckinAdapter extends RecyclerView.Adapter<UserCheckinAdapter.
             ButterKnife.bind(this, itemView);
         }
 
-        public void bindData(UserCheckinModel data) {
+        public void bindData(ShopCustomerModel data) {
             String mLocation = data.getLocation();
             int mCount = data.getCountVisits();
             String mName = data.getShop().getDisplayName();
             String mPic = data.getShop().getDisplayPic();
 
-            Util.loadImageOrDefault(ivUserCheckinImage,mPic,R.drawable.cover_restaurant_unknown);
+            Utils.loadImageOrDefault(ivUserCheckinImage,mPic,R.drawable.cover_restaurant_unknown);
             tvUserCheckinName.setText(mName);
             tvUserCheckinAddress.setText(mLocation);
             tvUserCheckinTotalVisits.setText(String.format(Locale.getDefault(),"Total Visits : %d", mCount));
+        }
+    }
+
+    public static class MyItemDecorator extends RecyclerView.ItemDecoration {
+
+        private int size;
+
+        public MyItemDecorator(int size){
+            this.size = size;
+        }
+
+        @Override
+        public void getItemOffsets(Rect outRect, View view, RecyclerView parent, RecyclerView.State state) {
+            super.getItemOffsets(outRect, view, parent, state);
+
+            outRect.top = size;
+            outRect.bottom = size;
+            outRect.left = size;
+            outRect.right = size;
         }
     }
 }

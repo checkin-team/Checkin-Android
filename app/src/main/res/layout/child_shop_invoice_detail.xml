@@ -19,7 +19,7 @@
 
     <TextView
         android:id="@+id/tv_shop_invoice_detail"
-        android:textSize="@dimen/font_medium"
+        android:textSize="@dimen/font_normal"
         android:layout_marginStart="@dimen/spacing_small"
         android:layout_marginEnd="@dimen/app_bar_elevation_size"
         android:layout_gravity="center"
@@ -29,16 +29,16 @@
         android:layout_height="wrap_content" />
 
     <TextView
-        android:textSize="@dimen/font_medium"
+        android:textSize="@dimen/font_normal"
         android:layout_marginEnd="@dimen/card_view_small_elevation"
         android:layout_gravity="center"
-        android:text="@string/rupee_symbol"
+        android:text="@string/format_currency_rupee"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content" />
 
     <TextView
         android:id="@+id/tv_shop_invoice_detail_rupee"
-        android:textSize="@dimen/font_medium"
+        android:textSize="@dimen/font_normal"
         android:layout_gravity="center"
         android:text="255"
         android:layout_width="wrap_content"

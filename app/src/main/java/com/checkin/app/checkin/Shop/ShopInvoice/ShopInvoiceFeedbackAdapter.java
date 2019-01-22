@@ -15,9 +15,7 @@ import com.borjabravo.readmoretextview.ReadMoreTextView;
 import com.checkin.app.checkin.Misc.BriefModel;
 import com.checkin.app.checkin.Misc.ImageThumbnailHolder;
 import com.checkin.app.checkin.R;
-import com.checkin.app.checkin.Review.ShopReview.ShopReviewAdapter;
 import com.checkin.app.checkin.Review.ShopReview.ShopReviewModel;
-import com.xw.repo.BubbleSeekBar;
 
 import java.util.List;
 
@@ -64,16 +62,16 @@ public class ShopInvoiceFeedbackAdapter extends RecyclerView.Adapter<ShopInvoice
         TextView tvShopInvoiceFeedbackExperienceTitle;
         @BindView(R.id.tv_shop_invoice_feedback_experience)
         ReadMoreTextView tvShopInvoiceFeedbackExperience;
-        @BindView(R.id.sb_shop_invoice_feedback_food_quality_rating)
-        BubbleSeekBar sbShopInvoiceFeedbackFoodQualityRating;
+//        @BindView(R.id.sb_shop_invoice_feedback_food_quality_rating)
+//        BubbleSeekBar sbShopInvoiceFeedbackFoodQualityRating;
         @BindView(R.id.tv_shop_invoice_feedback_food_quality_rating)
         TextView tvShopInvoiceFeedbackFoodQualityRating;
-        @BindView(R.id.sb_shop_invoice_feedback_ambience_rating)
-        BubbleSeekBar sbShopInvoiceFeedbackAmbienceRating;
+//        @BindView(R.id.sb_shop_invoice_feedback_ambience_rating)
+//        BubbleSeekBar sbShopInvoiceFeedbackAmbienceRating;
         @BindView(R.id.tv_shop_invoice_feedback_ambience_rating)
         TextView tvShopInvoiceFeedbackAmbienceRating;
-        @BindView(R.id.sb_shop_invoice_feedback_service_hospitality_rating)
-        BubbleSeekBar sbShopInvoiceFeedbackServiceHospitalityRating;
+//        @BindView(R.id.sb_shop_invoice_feedback_service_hospitality_rating)
+//        BubbleSeekBar sbShopInvoiceFeedbackServiceHospitalityRating;
         @BindView(R.id.tv_shop_invoice_feedback_service_hospitality_rating)
         TextView tvShopInvoiceFeedbackServiceHospitalityRating;
         @BindView(R.id.rl_shop_invoice_feedback_rating)
@@ -123,10 +121,10 @@ public class ShopInvoiceFeedbackAdapter extends RecyclerView.Adapter<ShopInvoice
 
             tvShopInvoiceFeedbackCustomerName.setText(displayName);
             tvShopInvoiceFeedbackExperience.setText(body);
-
-            sbShopInvoiceFeedbackFoodQualityRating.setProgress((float)foodRating);
-            sbShopInvoiceFeedbackAmbienceRating.setProgress((float)ambienceRating);
-            sbShopInvoiceFeedbackServiceHospitalityRating.setProgress((float)hospitalityRating);
+//
+//            sbShopInvoiceFeedbackFoodQualityRating.setProgress((float)foodRating);
+//            sbShopInvoiceFeedbackAmbienceRating.setProgress((float)ambienceRating);
+//            sbShopInvoiceFeedbackServiceHospitalityRating.setProgress((float)hospitalityRating);
 
             tvShopInvoiceFeedbackFoodQualityRating.setText(String.valueOf(foodRating));
             tvShopInvoiceFeedbackAmbienceRating.setText(String.valueOf(ambienceRating));

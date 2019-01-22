@@ -9,11 +9,9 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.checkin.app.checkin.Misc.BriefModel;
 import com.checkin.app.checkin.R;
-import com.checkin.app.checkin.Utility.Util;
 
 import java.util.Date;
 import java.util.List;
