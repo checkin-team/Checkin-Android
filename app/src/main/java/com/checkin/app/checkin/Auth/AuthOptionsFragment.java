@@ -52,6 +52,8 @@ public class AuthOptionsFragment extends Fragment {
 
         unbinder = ButterKnife.bind(this, rootView);
 
+        edPhone.setSelection(3);
+
         if (mFacebookCallbackManager != null) {
             btnLoginFb.setReadPermissions(Arrays.asList("email", "user_friends"));
             btnLoginFb.registerCallback(mFacebookCallbackManager, new FacebookCallback<LoginResult>() {

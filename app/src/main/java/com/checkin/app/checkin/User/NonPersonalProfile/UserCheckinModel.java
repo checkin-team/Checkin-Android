@@ -1,0 +1,40 @@
+package com.checkin.app.checkin.User.NonPersonalProfile;
+
+import com.checkin.app.checkin.Misc.BriefModel;
+import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.annotation.JsonProperty;
+
+@JsonInclude(JsonInclude.Include.NON_NULL)
+public class UserCheckinModel {
+
+    @JsonProperty("shop")
+    private
+    BriefModel shop;
+    @JsonProperty("locality")
+    private
+    String location;
+    @JsonProperty("no_visits")
+    private
+    int countVisits;
+
+    public UserCheckinModel(){
+    }
+
+    public BriefModel getShop() {
+        return shop;
+    }
+
+    public String getLocation() {
+        return location;
+    }
+
+    public int getCountVisits() {
+        return countVisits;
+    }
+
+    public UserCheckinModel(BriefModel shop, String location, int countVisits) {
+        this.shop = shop;
+        this.location = location;
+        this.countVisits = countVisits;
+    }
+}

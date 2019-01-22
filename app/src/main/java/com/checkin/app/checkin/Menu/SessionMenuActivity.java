@@ -85,6 +85,7 @@ public class SessionMenuActivity extends BaseActivity implements
         args.putSerializable(KEY_SESSION_STATUS, SESSION_STATUS.INACTIVE);
         args.putString(KEY_RESTAURANT_PK, restaurantPk);
         intent.putExtra(SESSION_ARG, args);
+        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
         context.startActivity(intent);
     }
 

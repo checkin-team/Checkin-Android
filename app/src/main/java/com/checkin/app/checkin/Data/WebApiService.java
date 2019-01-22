@@ -24,6 +24,8 @@ import com.fasterxml.jackson.databind.node.ObjectNode;
 
 import java.util.List;
 
+import javax.annotation.Nullable;
+
 import okhttp3.MultipartBody;
 import retrofit2.Call;
 import retrofit2.http.Body;
@@ -223,4 +225,23 @@ public interface WebApiService {
 
     @POST("shops/{table_id}/orders/")
     Call<ObjectNode> postItemCompleted(@Path("table_id") long tableId,@Body ObjectNode data);
+
+    /*ShopInvoice all API*/
+    @GET("sessions/restaurants/{restaurant_id}/")
+    Call<List<RestaurantSessionModel>> getRestaurantSessionsById(@Path("restaurant_id") String restaurantId,@Query("checked_out_before") String checkedOutBefore, @Query("checked_out_after") String checkedOutAfter);
+
+    @GET("sessions/{session_id}/detail/")
+    Call<ShopSessionDetailModel> getShopSessionDetailById(@Path("session_id") String sessionId);
+
+    @GET("sessions/{session_id}/feedbacks/")
+    Call<List<ShopSessionFeedbackModel>> getShopSessionFeedbackById(@Path("session_id") String sessionId);
+
+    @GET("sessions/recent/users/{user_id}/")
+    Call<List<UserCheckinModel>> getUserCheckinById(@Path("user_id") String userId);
+
+    @GET("restaurants/{restaurant_id}/finance/")
+    Call<FinanceModel> getRestaurantFinanceById(@Path("restaurant_id") String restaurantId);
+
+    @PUT("restaurants/{restaurant_id}/finance/")
+    Call<GenericDetailModel> setRestaurantFinanceById(@Body FinanceModel financeModel,@Path("restaurant_id") String restaurantId);
 }

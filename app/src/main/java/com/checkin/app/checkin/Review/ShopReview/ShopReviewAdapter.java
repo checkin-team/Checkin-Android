@@ -88,7 +88,12 @@ public class ShopReviewAdapter extends RecyclerView.Adapter<ShopReviewAdapter.Vi
                 btnReviewLike.setActivated(mReview.isLiked());
             });
             btnReviewRating.setOnClickListener(v -> mListener.onRatingClick(mReview));
-            mThumbnailHolder = new ImageThumbnailHolder(itemView, index -> mListener.onThumbnailClick(mReview, index));
+            mThumbnailHolder = new ImageThumbnailHolder(itemView, new ImageThumbnailHolder.ImageThumbnailInteraction() {
+                @Override
+                public void onThumbnailClick(int index) {
+                    mListener.onThumbnailClick(mReview, index);
+                }
+            });
         }
 
         public void bindData(ShopReviewModel shopReviewModel) {

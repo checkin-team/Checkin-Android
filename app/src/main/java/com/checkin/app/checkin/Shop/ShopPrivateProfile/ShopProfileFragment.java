@@ -23,6 +23,7 @@ import com.checkin.app.checkin.Misc.StatusTextAdapter;
 import com.checkin.app.checkin.R;
 import com.checkin.app.checkin.Shop.RestaurantModel;
 import com.checkin.app.checkin.Utility.Utils;
+import com.checkin.app.checkin.Shop.ShopInvoice.ShopInvoiceActivity;
 import com.rd.PageIndicatorView;
 import com.rd.animation.type.AnimationType;
 
@@ -72,7 +73,7 @@ public class ShopProfileFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        mViewModel = ViewModelProviders.of(requireActivity()) .get(ShopProfileViewModel.class);
+        mViewModel = ViewModelProviders.of(requireActivity()).get(ShopProfileViewModel.class);
         mImageChangeIntent = new Intent(requireContext(), LogoCoverActivity.class);
 
         mCoverPagerAdapter = new CoverPagerAdapter();
@@ -85,7 +86,7 @@ public class ShopProfileFragment extends Fragment {
         rvAdditionalData.setAdapter(mExtraDataAdapter);
         rvAdditionalData.setLayoutManager(new GridLayoutManager(requireContext(), 2, LinearLayoutManager.VERTICAL, false));
 
-        mViewModel.getShopData().observe( this, shopResource -> {
+        mViewModel.getShopData().observe(this, shopResource -> {
             if (shopResource == null) return;
 
             if (shopResource.status == Resource.Status.SUCCESS && shopResource.data != null) {
@@ -136,7 +137,7 @@ public class ShopProfileFragment extends Fragment {
         startActivity(mImageChangeIntent);
     }
 
-    @OnClick({R.id.btn_members, R.id.btn_notifications, R.id.btn_insights, R.id.btn_cuisine})
+    @OnClick({R.id.btn_members, R.id.btn_invoice, R.id.btn_insights, R.id.btn_discount})
     public void onClick(View v) {
         Intent intent;
         switch (v.getId()) {
@@ -145,11 +146,17 @@ public class ShopProfileFragment extends Fragment {
                 intent.putExtra(MembersActivity.KEY_SHOP_PK, mViewModel.getShopPk());
                 startActivity(intent);
                 break;
-            case R.id.btn_notifications:
+            case R.id.btn_invoice:
+                intent = new Intent(v.getContext(), ShopInvoiceActivity.class);
+                intent.putExtra(ShopInvoiceActivity.KEY_SHOP_PK, mViewModel.getShopPk());
+                startActivity(intent);
                 break;
             case R.id.btn_insights:
                 break;
-            case R.id.btn_cuisine:
+            case R.id.btn_discount:
+                intent = new Intent(v.getContext(), TaxDiscountActivity.class);
+                intent.putExtra(TaxDiscountActivity.KEY_SHOP_PK, mViewModel.getShopPk());
+                startActivity(intent);
                 break;
         }
     }

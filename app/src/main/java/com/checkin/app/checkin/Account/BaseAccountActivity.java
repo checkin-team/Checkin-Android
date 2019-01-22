@@ -26,6 +26,7 @@ import com.checkin.app.checkin.Misc.BaseActivity;
 import com.checkin.app.checkin.R;
 import com.checkin.app.checkin.Shop.ShopPrivateProfile.ShopActivity;
 import com.checkin.app.checkin.Utility.GlideApp;
+import com.checkin.app.checkin.Waiter.WaiterWorkActivity;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -36,6 +37,7 @@ import butterknife.OnClick;
 import de.hdodenhof.circleimageview.CircleImageView;
 
 public abstract class BaseAccountActivity extends BaseActivity {
+    // Required to include "incl_account_base" layout.
     private final static String TAG = BaseAccountActivity.class.getSimpleName();
 
     private DrawerLayout mDrawerLayout;
@@ -168,11 +170,14 @@ public abstract class BaseAccountActivity extends BaseActivity {
             switchAccount(mBaseActivity.getApplicationContext(), account);
         }
 
-        protected void switchAccount(Context context, AccountModel account) {
+        void switchAccount(Context context, AccountModel account) {
             switch (account.getAccountType()) {
                 case USER:
-                    if (mBaseActivity.getClass() != HomeActivity.class)
-                        context.startActivity(new Intent(context, HomeActivity.class));
+                    if (mBaseActivity.getClass() != HomeActivity.class){
+                        Intent intent = new Intent(context,HomeActivity.class);
+                        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                        context.startActivity(intent);
+                    }
                     break;
                 case SHOP_OWNER:
                 case SHOP_ADMIN:
@@ -185,6 +190,10 @@ public abstract class BaseAccountActivity extends BaseActivity {
                     break;
                 case RESTAURANT_MANAGER:
                 case RESTAURANT_WAITER:
+                    if (mBaseActivity.getClass() != WaiterWorkActivity.class) {
+                        Intent intent = new Intent(context, WaiterWorkActivity.class);
+                        context.startActivity(intent);
+                    }
                 case RESTAURANT_COOK:
                     break;
             }

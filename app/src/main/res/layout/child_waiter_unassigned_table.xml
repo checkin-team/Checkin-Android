@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.v7.widget.CardView app:cardCornerRadius="10dp"
+    app:cardElevation="@dimen/card_view_small_elevation"
+    android:layout_gravity="center_horizontal"
+    android:layout_width="wrap_content"
+    android:layout_marginTop="@dimen/card_view_spacing_top"
+    android:layout_marginBottom="@dimen/spacing_end_small"
+    android:layout_height="wrap_content"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <android.support.v7.widget.CardView
+            app:cardElevation="@dimen/card_view_small_elevation"
+            android:layout_marginEnd="@dimen/spacing_end_small"
+            app:cardCornerRadius="@dimen/car_view_corner_radius"
+            app:cardBackgroundColor="@color/assigned_waiter_table_color"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+
+            <TextView
+                android:padding="@dimen/text_padding_large"
+                android:id="@+id/tvTableNumber"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:textColor="@color/white"
+                android:textSize="@dimen/font_normal" />
+
+        </android.support.v7.widget.CardView>
+
+        <Space
+            android:layout_width="@dimen/spacing_large_to_view"
+            android:layout_height="match_parent" />
+
+        <LinearLayout
+            android:layout_gravity="center"
+            android:orientation="vertical"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+
+            <TextView
+                android:layout_marginEnd="@dimen/spacing_large_end_text"
+                android:layout_gravity="end"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="end"
+                android:id="@+id/tvName"
+                android:textColor="@color/black"
+                android:textSize="@dimen/font_small" />
+
+            <TextView
+                android:visibility="gone"
+                android:layout_marginTop="@dimen/spacing_extra_tiny"
+                android:layout_marginEnd="@dimen/spacing_small_extra"
+                android:layout_gravity="end"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:id="@+id/tvTime"
+                android:text="2 minutes"
+                android:textColor="@color/black"
+                android:textSize="@dimen/font_extra_small" />
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+</android.support.v7.widget.CardView>

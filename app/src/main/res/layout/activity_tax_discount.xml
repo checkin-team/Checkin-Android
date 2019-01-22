@@ -1,0 +1,369 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <LinearLayout android:orientation="vertical"
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        xmlns:app="http://schemas.android.com/apk/res-auto">
+
+        <TextView
+            android:layout_marginTop="@dimen/spacing_small"
+            android:layout_marginStart="@dimen/spacing_small"
+            android:layout_marginEnd="@dimen/spacing_small"
+            android:textSize="@dimen/font_medium"
+            android:textColor="@color/brownish_grey"
+            android:gravity="center"
+            android:text="@string/action_tax_discount_description"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+
+        <android.support.v7.widget.CardView
+            android:layout_marginTop="@dimen/spacing_small_extra"
+            android:layout_marginStart="@dimen/size_extra_small_button"
+            android:layout_marginEnd="@dimen/size_extra_small_button"
+            app:cardCornerRadius="@dimen/spacing_small"
+            app:cardElevation="@dimen/spacing_extra_tiny"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <LinearLayout
+                android:padding="@dimen/size_tiny_icon"
+                android:orientation="vertical"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <TextView
+                    android:textSize="@dimen/font_normal"
+                    android:textColor="@color/brownish_grey"
+                    android:text="Total discount disbursed in  last 30 days"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
+
+                <TextView
+                    android:id="@+id/tv_tax_discount_one_month"
+                    android:layout_marginTop="@dimen/spacing_small_extra"
+                    android:textSize="@dimen/font_large_extra"
+                    android:textStyle="bold"
+                    android:textColor="@color/colorRed"
+                    android:text="@string/total_bill_last_one_month"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
+
+            </LinearLayout>
+
+        </android.support.v7.widget.CardView>
+
+        <android.support.v7.widget.CardView
+            android:layout_marginTop="@dimen/size_tiny_icon"
+            android:layout_marginStart="@dimen/size_extra_small_button"
+            android:layout_marginEnd="@dimen/size_extra_small_button"
+            app:cardCornerRadius="@dimen/spacing_small"
+            app:cardElevation="@dimen/spacing_extra_tiny"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <LinearLayout
+                android:padding="@dimen/size_tiny_icon"
+                android:orientation="vertical"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <TextView
+                    android:textStyle="bold"
+                    android:textSize="@dimen/font_normal"
+                    android:textColor="@color/colorRed"
+                    android:text="Apply Discount"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
+
+                <LinearLayout
+                    android:layout_marginTop="@dimen/spacing_top"
+                    android:gravity="center"
+                    android:layout_gravity="center"
+                    android:orientation="horizontal"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content">
+
+                    <EditText
+                        android:id="@+id/et_tax_discount"
+                        android:layout_gravity="center"
+                        android:gravity="center"
+                        android:inputType="numberDecimal"
+                        android:imeOptions="actionDone"
+                        android:text="20"
+                        android:cursorVisible="false"
+                        android:textColor="@color/colorRed"
+                        android:paddingStart="@dimen/app_bar_elevation_size"
+                        android:paddingEnd="@dimen/app_bar_elevation_size"
+                        android:paddingTop="@dimen/app_bar_elevation_size"
+                        android:paddingBottom="@dimen/app_bar_elevation_size"
+                        android:background="@drawable/background_grey_stroke"
+                        android:layout_width="50dp"
+                        android:layout_height="wrap_content" />
+
+                    <TextView
+                        android:layout_marginStart="@dimen/app_bar_elevation_size"
+                        android:layout_gravity="center"
+                        android:gravity="center"
+                        android:text="%"
+                        android:textSize="@dimen/notif_heading_size"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content" />
+
+                </LinearLayout>
+
+                <TextView
+                    android:layout_marginTop="@dimen/spacing_small"
+                    android:textSize="@dimen/card_view_spacing_top"
+                    android:gravity="center"
+                    android:layout_gravity="center"
+                    android:text="@string/text_discount_on_bill"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
+
+                <TextView
+                    android:id="@+id/tv_tax_discount_save_changes"
+                    android:layout_marginTop="@dimen/spacing_small"
+                    android:textSize="@dimen/font_small_extra"
+                    android:gravity="center"
+                    android:textColor="@color/white"
+                    android:paddingStart="@dimen/spacing_small"
+                    android:paddingEnd="@dimen/spacing_small"
+                    android:paddingBottom="@dimen/app_bar_elevation_size"
+                    android:paddingTop="@dimen/app_bar_elevation_size"
+                    android:layout_gravity="center"
+                    android:background="@drawable/background_button_grey"
+                    android:text="Save Changes"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
+
+            </LinearLayout>
+
+        </android.support.v7.widget.CardView>
+
+        <android.support.v7.widget.CardView
+            android:layout_marginTop="@dimen/size_tiny_icon"
+            android:layout_marginBottom="@dimen/size_tiny_icon"
+            android:layout_marginStart="@dimen/size_extra_small_button"
+            android:layout_marginEnd="@dimen/size_extra_small_button"
+            app:cardCornerRadius="@dimen/spacing_small"
+            app:cardElevation="@dimen/spacing_extra_tiny"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <LinearLayout
+
+                android:padding="@dimen/size_tiny_icon"
+                android:orientation="vertical"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <TextView
+                    android:textStyle="bold"
+                    android:textSize="@dimen/font_normal"
+                    android:textColor="@color/colorRed"
+                    android:text="Tax Details"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
+
+                <LinearLayout
+                    android:layout_marginStart="40dp"
+                    android:layout_marginTop="@dimen/spacing_top"
+                    android:orientation="horizontal"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content">
+
+                    <TextView
+                        android:paddingStart="@dimen/spacing_small"
+                        android:paddingEnd="@dimen/spacing_small"
+                        android:paddingTop="@dimen/app_bar_elevation_size"
+                        android:paddingBottom="@dimen/app_bar_elevation_size"
+                        android:text="CGST"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content" />
+
+                    <android.support.v4.widget.Space
+                        android:layout_width="50dp"
+                        android:layout_height="match_parent" />
+
+                    <TextView
+                        android:id="@+id/tv_user_tax_discount_cgst"
+                        android:paddingStart="@dimen/app_bar_elevation_size"
+                        android:paddingEnd="@dimen/app_bar_elevation_size"
+                        android:paddingTop="@dimen/spacing_extra_tiny"
+                        android:paddingBottom="@dimen/spacing_extra_tiny"
+                        android:background="@drawable/background_grey_stroke"
+                        android:text="2.50"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content" />
+
+                    <TextView
+                        android:layout_marginStart="@dimen/app_bar_elevation_size"
+                        android:paddingStart="@dimen/spacing_small"
+                        android:paddingEnd="@dimen/spacing_small"
+                        android:paddingTop="@dimen/app_bar_elevation_size"
+                        android:paddingBottom="@dimen/app_bar_elevation_size"
+                        android:text="%"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content" />
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_marginStart="40dp"
+                    android:layout_marginTop="5dp"
+                    android:orientation="horizontal"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content">
+
+                    <TextView
+                        android:paddingStart="@dimen/spacing_small"
+                        android:paddingEnd="@dimen/spacing_small"
+                        android:paddingTop="@dimen/app_bar_elevation_size"
+                        android:paddingBottom="@dimen/app_bar_elevation_size"
+                        android:text="SGST"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content" />
+
+                    <android.support.v4.widget.Space
+                        android:layout_width="50dp"
+                        android:layout_height="match_parent" />
+
+                    <TextView
+                        android:id="@+id/tv_user_tax_discount_sgst"
+                        android:paddingStart="@dimen/app_bar_elevation_size"
+                        android:paddingEnd="@dimen/app_bar_elevation_size"
+                        android:paddingTop="@dimen/spacing_extra_tiny"
+                        android:paddingBottom="@dimen/spacing_extra_tiny"
+                        android:background="@drawable/background_grey_stroke"
+                        android:text="2.50"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content" />
+
+                    <TextView
+                        android:layout_marginStart="@dimen/app_bar_elevation_size"
+                        android:paddingStart="@dimen/spacing_small"
+                        android:paddingEnd="@dimen/spacing_small"
+                        android:paddingTop="@dimen/app_bar_elevation_size"
+                        android:paddingBottom="@dimen/app_bar_elevation_size"
+                        android:text="%"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content" />
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_marginStart="45dp"
+                    android:layout_marginTop="5dp"
+                    android:orientation="horizontal"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content">
+
+                    <TextView
+                        android:paddingStart="@dimen/spacing_small"
+                        android:paddingEnd="@dimen/spacing_small"
+                        android:paddingTop="@dimen/app_bar_elevation_size"
+                        android:paddingBottom="@dimen/app_bar_elevation_size"
+                        android:text="IGST"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content" />
+
+                    <android.support.v4.widget.Space
+                        android:layout_width="50dp"
+                        android:layout_height="match_parent" />
+
+                    <TextView
+                        android:id="@+id/tv_user_tax_discount_igst"
+                        android:paddingStart="@dimen/app_bar_elevation_size"
+                        android:paddingEnd="@dimen/app_bar_elevation_size"
+                        android:paddingTop="@dimen/spacing_extra_tiny"
+                        android:paddingBottom="@dimen/spacing_extra_tiny"
+                        android:background="@drawable/background_grey_stroke"
+                        android:text="2.50"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content" />
+
+                    <TextView
+                        android:layout_marginStart="@dimen/app_bar_elevation_size"
+                        android:paddingStart="@dimen/spacing_small"
+                        android:paddingEnd="@dimen/spacing_small"
+                        android:paddingTop="@dimen/app_bar_elevation_size"
+                        android:paddingBottom="@dimen/app_bar_elevation_size"
+                        android:text="%"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content" />
+
+                </LinearLayout>
+
+                <View
+                    android:layout_marginTop="15dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/height_horizontal_line"
+                    android:layout_gravity="center_horizontal"
+                    android:layout_marginEnd="@dimen/spacing_normal"
+                    android:layout_marginStart="@dimen/spacing_normal"
+                    android:background="@drawable/ic_line" />
+
+                <LinearLayout
+                    android:layout_marginStart="48dp"
+                    android:layout_marginTop="5dp"
+                    android:orientation="horizontal"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content">
+
+                    <TextView
+                        android:paddingStart="@dimen/spacing_small"
+                        android:paddingEnd="@dimen/spacing_small"
+                        android:paddingTop="@dimen/app_bar_elevation_size"
+                        android:paddingBottom="@dimen/app_bar_elevation_size"
+                        android:text="GST"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content" />
+
+                    <android.support.v4.widget.Space
+                        android:layout_width="50dp"
+                        android:layout_height="match_parent" />
+
+                    <TextView
+                        android:id="@+id/tv_user_tax_discount_gst"
+                        android:paddingStart="@dimen/app_bar_elevation_size"
+                        android:paddingEnd="@dimen/app_bar_elevation_size"
+                        android:paddingTop="@dimen/spacing_extra_tiny"
+                        android:paddingBottom="@dimen/spacing_extra_tiny"
+                        android:background="@drawable/background_grey_stroke"
+                        android:text="2.50"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content" />
+
+                    <TextView
+                        android:layout_marginStart="@dimen/app_bar_elevation_size"
+                        android:paddingStart="@dimen/spacing_small"
+                        android:paddingEnd="@dimen/spacing_small"
+                        android:paddingTop="@dimen/app_bar_elevation_size"
+                        android:paddingBottom="@dimen/app_bar_elevation_size"
+                        android:text="%"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content" />
+
+                </LinearLayout>
+
+                <TextView
+                    android:layout_marginTop="10dp"
+                    android:layout_marginBottom="10dp"
+                    android:textColor="@color/brownish_grey"
+                    android:textSize="10sp"
+                    android:layout_gravity="center"
+                    android:text="**Contact us for changes in tax"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
+
+            </LinearLayout>
+
+        </android.support.v7.widget.CardView>
+
+    </LinearLayout>
+
+</ScrollView>

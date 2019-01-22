@@ -76,7 +76,7 @@
         <activity android:name=".Misc.TransactionActivity" />
         <activity android:name=".Misc.FilterTransactions" />
         <activity
-            android:name=".RestaurantActivity.Waiter.WaitorWork"
+            android:name=".Waiter.WaiterWorkActivity"
             android:label="WaitorWorkActivity"
             android:screenOrientation="sensorPortrait"
             android:theme="@style/AppTheme"
@@ -160,6 +160,14 @@
         <activity android:name=".Session.ActiveSession.ActiveSessionInvoiceActivity"
             android:theme="@style/AppThemeWhiteActionBar"
             android:label="Invoice"/>
+        <activity android:name=".Shop.ShopInvoice.ShopInvoiceActivity"
+            android:label="@string/action_invoice"
+            android:theme="@style/AppThemeWhiteActionBar">
+        </activity>
+        <activity android:name=".Shop.ShopInvoice.ShopInvoiceDetailFeedbackActivity" />
+        <activity android:name=".Shop.ShopPrivateProfile.TaxDiscountActivity"
+            android:label="@string/action_discout"
+            android:theme="@style/AppThemeWhiteActionBar"/>
 
         <service
             android:name=".Auth.AuthenticatorService"

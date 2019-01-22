@@ -121,13 +121,19 @@
     <string name="title_member_assign_role">Assign Role</string>
 
     <string name="currency_rupee">&#x20B9;</string>
-    <string name="format_currency_rupee">&#x20B9; %s</string>
+    <string name="symbol_currency_rupee">&#x20B9; %s</string>
 
     <!-- Active Session -->
     <string name="action_list_orders">View Orders</string>
     <string name="action_view_menu">Menu</string>
     <string name="session_presence_private">Private</string>
     <string name="session_presence_public">Public</string>
+    <string name="action_invoice">Invoice</string>
+    <string name="shop_invoice_title">Invoice</string>
+    <string name="action_checkins">Checkins</string>
+    <string name="action_discout">Discount</string>
+    <string name="action_tax_discount_description">Apply discount on the bill to retain customers.\nDiscountapplies to a subtotal of the bill.</string>
+    <string name="text_discount_on_bill">**20% discount applied to the bill though you can change the discount\npercentage for the individual bill during checkout.**</string>
     <string name="waiter">Waiter</string>
     <string name="call_waiter">Call\nWaiter</string>
     <string name="table_cleaning">Table\nCleaning</string>
