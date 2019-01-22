@@ -15,6 +15,9 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 
 public class UserCheckinsActivity extends AppCompatActivity {
+
+    public static final String KEY_USERCHECKINS_PK = "KEY_USERCHECKINS_PK";
+
     @BindView(R.id.rv_user_checkin_restaurant)
     RecyclerView rvUserCheckRestaurant;
 
@@ -31,6 +34,8 @@ public class UserCheckinsActivity extends AppCompatActivity {
             actionBar.setHomeAsUpIndicator(R.drawable.ic_back_grey);
         }
 
+        long userId = getIntent().getLongExtra(KEY_USERCHECKINS_PK,0);
+
         UserCheckinAdapter userRestaurantAdapter = new UserCheckinAdapter();
         rvUserCheckRestaurant.setLayoutManager(new GridLayoutManager(this,2));
         rvUserCheckRestaurant.setAdapter(userRestaurantAdapter);
@@ -38,8 +43,8 @@ public class UserCheckinsActivity extends AppCompatActivity {
         rvUserCheckRestaurant.setItemAnimator(new DefaultItemAnimator());
 
         UserViewModel mUserViewModel = ViewModelProviders.of(this).get(UserViewModel.class);
-        //mUserViewModel.getUsercheckinById("1");
-        mUserViewModel.dummyCheckins();
+        mUserViewModel.getUsercheckinById(String.valueOf(userId));
+        //mUserViewModel.dummyCheckins();
         mUserViewModel.getUsercheckinModel().observe(this, input ->{
             if (input == null)
                 return;

@@ -10,14 +10,14 @@
         xmlns:app="http://schemas.android.com/apk/res-auto">
 
         <TextView
-            android:layout_marginStart="@dimen/size_extra_small_button"
-            android:layout_marginEnd="@dimen/size_extra_small_button"
+            android:layout_marginTop="@dimen/spacing_small"
+            android:layout_marginStart="@dimen/spacing_small"
+            android:layout_marginEnd="@dimen/spacing_small"
             android:textSize="@dimen/font_medium"
             android:textColor="@color/brownish_grey"
-            android:layout_gravity="center"
             android:gravity="center"
             android:text="@string/action_tax_discount_description"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content" />
 
         <android.support.v7.widget.CardView
@@ -87,27 +87,27 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content">
 
-                    <TextView
-                        android:id="@+id/tv_tax_discount"
+                    <EditText
+                        android:id="@+id/et_tax_discount"
                         android:layout_gravity="center"
                         android:gravity="center"
-                        android:paddingStart="@dimen/spacing_small"
-                        android:paddingEnd="@dimen/spacing_small"
+                        android:inputType="numberDecimal"
+                        android:imeOptions="actionDone"
+                        android:text="20"
+                        android:cursorVisible="false"
+                        android:textColor="@color/colorRed"
+                        android:paddingStart="@dimen/app_bar_elevation_size"
+                        android:paddingEnd="@dimen/app_bar_elevation_size"
                         android:paddingTop="@dimen/app_bar_elevation_size"
                         android:paddingBottom="@dimen/app_bar_elevation_size"
                         android:background="@drawable/background_grey_stroke"
-                        android:text="20"
-                        android:layout_width="wrap_content"
+                        android:layout_width="50dp"
                         android:layout_height="wrap_content" />
 
                     <TextView
                         android:layout_marginStart="@dimen/app_bar_elevation_size"
                         android:layout_gravity="center"
                         android:gravity="center"
-                        android:paddingStart="@dimen/spacing_small"
-                        android:paddingEnd="@dimen/spacing_small"
-                        android:paddingTop="@dimen/app_bar_elevation_size"
-                        android:paddingBottom="@dimen/app_bar_elevation_size"
                         android:text="%"
                         android:textSize="@dimen/notif_heading_size"
                         android:layout_width="wrap_content"
@@ -117,7 +117,7 @@
 
                 <TextView
                     android:layout_marginTop="@dimen/spacing_small"
-                    android:textSize="@dimen/text_size_small"
+                    android:textSize="@dimen/card_view_spacing_top"
                     android:gravity="center"
                     android:layout_gravity="center"
                     android:text="@string/text_discount_on_bill"
@@ -146,6 +146,7 @@
 
         <android.support.v7.widget.CardView
             android:layout_marginTop="@dimen/size_tiny_icon"
+            android:layout_marginBottom="@dimen/size_tiny_icon"
             android:layout_marginStart="@dimen/size_extra_small_button"
             android:layout_marginEnd="@dimen/size_extra_small_button"
             app:cardCornerRadius="@dimen/spacing_small"
@@ -154,6 +155,7 @@
             android:layout_height="wrap_content">
 
             <LinearLayout
+
                 android:padding="@dimen/size_tiny_icon"
                 android:orientation="vertical"
                 android:layout_width="match_parent"
@@ -163,7 +165,7 @@
                     android:textStyle="bold"
                     android:textSize="@dimen/font_normal"
                     android:textColor="@color/colorRed"
-                    android:text="Apply Discount"
+                    android:text="Tax Details"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content" />
 
@@ -188,7 +190,7 @@
                         android:layout_height="match_parent" />
 
                     <TextView
-                        android:id="@+id/user_tax_discount_cgst"
+                        android:id="@+id/tv_user_tax_discount_cgst"
                         android:paddingStart="@dimen/app_bar_elevation_size"
                         android:paddingEnd="@dimen/app_bar_elevation_size"
                         android:paddingTop="@dimen/spacing_extra_tiny"
@@ -231,7 +233,7 @@
                         android:layout_height="match_parent" />
 
                     <TextView
-                        android:id="@+id/user_tax_discount_sgst"
+                        android:id="@+id/tv_user_tax_discount_sgst"
                         android:paddingStart="@dimen/app_bar_elevation_size"
                         android:paddingEnd="@dimen/app_bar_elevation_size"
                         android:paddingTop="@dimen/spacing_extra_tiny"
@@ -274,7 +276,7 @@
                         android:layout_height="match_parent" />
 
                     <TextView
-                        android:id="@+id/user_tax_discount_igst"
+                        android:id="@+id/tv_user_tax_discount_igst"
                         android:paddingStart="@dimen/app_bar_elevation_size"
                         android:paddingEnd="@dimen/app_bar_elevation_size"
                         android:paddingTop="@dimen/spacing_extra_tiny"
@@ -326,7 +328,7 @@
                         android:layout_height="match_parent" />
 
                     <TextView
-                        android:id="@+id/user_tax_discount_gst"
+                        android:id="@+id/tv_user_tax_discount_gst"
                         android:paddingStart="@dimen/app_bar_elevation_size"
                         android:paddingEnd="@dimen/app_bar_elevation_size"
                         android:paddingTop="@dimen/spacing_extra_tiny"

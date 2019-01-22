@@ -8,6 +8,7 @@ import com.checkin.app.checkin.Notifications.NotificationModel;
 import com.checkin.app.checkin.Shop.ShopInvoice.RestaurantSessionModel;
 import com.checkin.app.checkin.Shop.ShopInvoice.ShopSessionDetailModel;
 import com.checkin.app.checkin.Shop.ShopInvoice.ShopSessionFeedbackModel;
+import com.checkin.app.checkin.Shop.ShopPrivateProfile.FinanceModel;
 import com.checkin.app.checkin.User.NonPersonalProfile.UserCheckinAdapter;
 import com.checkin.app.checkin.User.NonPersonalProfile.UserCheckinModel;
 import com.checkin.app.checkin.Waiter.EventModel;
@@ -209,4 +210,10 @@ public interface WebApiService {
 
     @GET("sessions/recent/users/{user_id}/")
     Call<List<UserCheckinModel>> getUserCheckinById(@Path("user_id") String userId);
+
+    @GET("restaurants/{restaurant_id}/finance/")
+    Call<FinanceModel> getRestaurantFinanceById(@Path("restaurant_id") String restaurantId);
+
+    @PUT("restaurants/{restaurant_id}/finance/")
+    Call<GenericDetailModel> setRestaurantFinanceById(@Body FinanceModel financeModel,@Path("restaurant_id") String restaurantId);
 }

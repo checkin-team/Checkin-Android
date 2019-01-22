@@ -22,13 +22,12 @@
                 android:id="@+id/iv_user_checkin_image"
                 android:contentDescription="@null"
                 android:src="@drawable/ic_roma_cafe"
-                android:layout_width="@dimen/view_width"
-                android:layout_height="@dimen/view_width" />
+                android:layout_width="@dimen/size_normal_icon"
+                android:layout_height="@dimen/size_normal_icon" />
 
             <LinearLayout
-                android:layout_marginStart="@dimen/spacing_small"
+                android:layout_marginStart="20dp"
                 android:layout_gravity="center"
-                android:gravity="center"
                 android:layout_weight="1"
                 android:orientation="vertical"
                 android:layout_width="@dimen/car_view_size_small_tiny"
@@ -39,7 +38,7 @@
                     android:textSize="@dimen/font_heading"
                     android:textColor="@color/brownish_grey"
                     android:text="Romas Cafe"
-                    android:layout_width="wrap_content"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content" />
 
                 <TextView
@@ -47,8 +46,8 @@
                     android:layout_marginTop="@dimen/card_view_small_elevation"
                     android:textSize="@dimen/font_small_extra"
                     android:textColor="@color/pinkish_grey"
-                    android:text="Lanka, Varansi"
-                    android:layout_width="wrap_content"
+                    android:text="Lanka, Varanasi"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content" />
 
             </LinearLayout>

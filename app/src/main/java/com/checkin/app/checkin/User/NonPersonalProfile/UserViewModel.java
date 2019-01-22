@@ -109,7 +109,7 @@ public class UserViewModel extends BaseViewModel {
         List<UserCheckinModel> data = new ArrayList<>();
 
         data.add(new UserCheckinModel(new BriefModel("1", "Roma", null), "Chinchpokli", 32));
-        data.add(new UserCheckinModel(new BriefModel("1", "Roman", null), "ds", 45));
+        data.add(new UserCheckinModel(new BriefModel("1", "Roman", null), "dsdsfdsffd", 45));
         data.add(new UserCheckinModel(new BriefModel("1", "Romca", null), "Chinchpokli", 32));
 
         mUserCheckinMediatorLiveData.setValue(Resource.success(data));

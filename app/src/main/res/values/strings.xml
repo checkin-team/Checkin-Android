@@ -134,6 +134,6 @@
     <string name="action_checkins">Checkins</string>
     <string name="action_discout">Discount</string>
     <string name="total_bill_last_one_month">&#x20B9; 2,120</string>
-    <string name="action_tax_discount_description">Apply discount on the bill to retain customers. Discount\napplies to a subtotal of the bill.</string>
+    <string name="action_tax_discount_description">Apply discount on the bill to retain customers.\nDiscountapplies to a subtotal of the bill.</string>
     <string name="text_discount_on_bill">**20% discount applied to the bill though you can change the discount\npercentage for the individual bill during checkout.**</string>
 </resources>

@@ -42,6 +42,7 @@ public class UserCheckinAdapter extends RecyclerView.Adapter<UserCheckinAdapter.
 
     void addUserCheckinData(List<UserCheckinModel> mList) {
         this.mList = mList;
+        notifyDataSetChanged();
     }
 
     class UserCheckinHolder extends RecyclerView.ViewHolder {

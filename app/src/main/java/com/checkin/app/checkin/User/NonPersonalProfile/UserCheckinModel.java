@@ -10,12 +10,15 @@ public class UserCheckinModel {
     @JsonProperty("shop")
     private
     BriefModel shop;
-    @JsonProperty("location")
+    @JsonProperty("locality")
     private
     String location;
-    @JsonProperty("count_visits")
+    @JsonProperty("no_visits")
     private
     int countVisits;
+
+    public UserCheckinModel(){
+    }
 
     public BriefModel getShop() {
         return shop;

@@ -5,6 +5,8 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.constraint.ConstraintLayout;
+import android.support.constraint.Guideline;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
 import android.support.v7.widget.GridLayoutManager;
@@ -13,7 +15,10 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -38,19 +43,59 @@ import butterknife.Unbinder;
 
 public class ShopProfileFragment extends Fragment {
     private static final String TAG = ShopProfileFragment.class.getSimpleName();
+    @BindView(R.id.im_shadow_upper)
+    ImageView imShadowUpper;
+    @BindView(R.id.btn_add_image)
+    ImageView btnAddImage;
+    @BindView(R.id.im_shadow_lower)
+    ImageView imShadowLower;
+    @BindView(R.id.container_followers)
+    RelativeLayout containerFollowers;
+    @BindView(R.id.container_checkins)
+    RelativeLayout containerCheckins;
+    @BindView(R.id.container_reviews)
+    RelativeLayout containerReviews;
+    @BindView(R.id.layout_upper)
+    ConstraintLayout layoutUpper;
+    @BindView(R.id.guideline_above)
+    Guideline guidelineAbove;
+    @BindView(R.id.guideline_below)
+    Guideline guidelineBelow;
+    @BindView(R.id.btn_profile_edit)
+    Button btnProfileEdit;
+    @BindView(R.id.btn_members)
+    LinearLayout btnMembers;
+    @BindView(R.id.btn_insights)
+    LinearLayout btnInsights;
+    @BindView(R.id.btn_invoice)
+    LinearLayout btnInvoice;
+    @BindView(R.id.btn_discount)
+    LinearLayout btnDiscount;
+    @BindView(R.id.container_shop)
+    LinearLayout containerShop;
     private Unbinder unbinder;
     public static final String KEY_SHOP_PK = "shop_private.pk";
 
-    @BindView(R.id.tv_shop_name) TextView tvShopName;
-    @BindView(R.id.tv_locality) TextView tvLocality;
-    @BindView(R.id.tv_tag_line) TextView tvTagLine;
-    @BindView(R.id.im_status) ImageView imStatus;
-    @BindView(R.id.tv_followers) TextView tvFollowers;
-    @BindView(R.id.tv_reviews) TextView tvReviews;
-    @BindView(R.id.tv_checkins) TextView tvCheckins;
-    @BindView(R.id.rv_additional_data) RecyclerView rvAdditionalData;
-    @BindView(R.id.pager_cover) ViewPager vPagerCover;
-    @BindView(R.id.indicator_top_cover) PageIndicatorView vPivCover;
+    @BindView(R.id.tv_shop_name)
+    TextView tvShopName;
+    @BindView(R.id.tv_locality)
+    TextView tvLocality;
+    @BindView(R.id.tv_tag_line)
+    TextView tvTagLine;
+    @BindView(R.id.im_status)
+    ImageView imStatus;
+    @BindView(R.id.tv_followers)
+    TextView tvFollowers;
+    @BindView(R.id.tv_reviews)
+    TextView tvReviews;
+    @BindView(R.id.tv_checkins)
+    TextView tvCheckins;
+    @BindView(R.id.rv_additional_data)
+    RecyclerView rvAdditionalData;
+    @BindView(R.id.pager_cover)
+    ViewPager vPagerCover;
+    @BindView(R.id.indicator_top_cover)
+    PageIndicatorView vPivCover;
 
     private ShopProfileViewModel mViewModel;
     private StatusTextAdapter mExtraDataAdapter;
@@ -73,7 +118,7 @@ public class ShopProfileFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        mViewModel = ViewModelProviders.of(requireActivity()) .get(ShopProfileViewModel.class);
+        mViewModel = ViewModelProviders.of(requireActivity()).get(ShopProfileViewModel.class);
         mImageChangeIntent = new Intent(requireContext(), LogoCoverActivity.class);
 
         mCoverPagerAdapter = new CoverPagerAdapter();
@@ -86,7 +131,7 @@ public class ShopProfileFragment extends Fragment {
         rvAdditionalData.setAdapter(mExtraDataAdapter);
         rvAdditionalData.setLayoutManager(new GridLayoutManager(requireContext(), 2, LinearLayoutManager.VERTICAL, false));
 
-        mViewModel.getShopData().observe( this, shopResource -> {
+        mViewModel.getShopData().observe(this, shopResource -> {
             if (shopResource == null) return;
 
             if (shopResource.status == Resource.Status.SUCCESS && shopResource.data != null) {
@@ -137,7 +182,7 @@ public class ShopProfileFragment extends Fragment {
         startActivity(mImageChangeIntent);
     }
 
-    @OnClick({R.id.btn_members, R.id.btn_invoice, R.id.btn_insights, R.id.btn_cuisine})
+    @OnClick({R.id.btn_members, R.id.btn_invoice, R.id.btn_insights, R.id.btn_discount})
     public void onClick(View v) {
         Intent intent;
         switch (v.getId()) {
@@ -147,13 +192,16 @@ public class ShopProfileFragment extends Fragment {
                 startActivity(intent);
                 break;
             case R.id.btn_invoice:
-                intent = new Intent(v.getContext(),ShopInvoiceActivity.class);
+                intent = new Intent(v.getContext(), ShopInvoiceActivity.class);
                 intent.putExtra(ShopInvoiceActivity.KEY_SHOP_PK, mViewModel.getShopPk());
                 startActivity(intent);
                 break;
             case R.id.btn_insights:
                 break;
-            case R.id.btn_cuisine:
+            case R.id.btn_discount:
+                intent = new Intent(v.getContext(), TaxDiscountActivity.class);
+                intent.putExtra(TaxDiscountActivity.KEY_SHOP_PK, mViewModel.getShopPk());
+                startActivity(intent);
                 break;
         }
     }
