@@ -53,10 +53,8 @@ public class NewReviewActivity extends AppCompatActivity implements SeekBar.OnSe
     SeekBar seekbar_ambience;
     @BindView(R.id.seekbar_service)
     SeekBar seekbar_service;
-//    @BindView(R.id.rv_add_images)
-//    RecyclerView rvAddImages;
     @BindView(R.id.rv_add_images)
-    LinearLayout llAddImages;
+    RecyclerView rvAddImages;
     private NewReviewViewModel mViewModel;
     int mFoodQualityRating, mAmbienceRating, mServiceRating;
     final CharSequence[] imageUseCase = {"Ambiance", "Food"};
@@ -91,9 +89,9 @@ public class NewReviewActivity extends AppCompatActivity implements SeekBar.OnSe
         seekbar_ambience.setOnSeekBarChangeListener(this);
         seekbar_service.setOnSeekBarChangeListener(this);
 
-//        rvAddImages.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false));
-//        mImageAdapter = new ReviewImageAdapter(null, this);
-//        rvAddImages.setAdapter(mImageAdapter);
+        rvAddImages.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false));
+        mImageAdapter = new ReviewImageAdapter(null, this);
+        rvAddImages.setAdapter(mImageAdapter);
 
         mViewModel.getObservableData().observe(this, resource -> {
             if (resource == null)
@@ -118,9 +116,9 @@ public class NewReviewActivity extends AppCompatActivity implements SeekBar.OnSe
                 case SUCCESS: {
                     Toast.makeText(this, "Done!", Toast.LENGTH_SHORT).show();
                     Log.e(TAG,String.valueOf(genericDetailModelResource.data.getIdentifier()));
-//                    genericDetailModelResource.data.setPk(String.valueOf(genericDetailModelResource.data.getIdentifier()));
-//                    mImageAdapter.setData(Collections.singletonList(genericDetailModelResource.data));
-                    addImages(genericDetailModelResource.data.getImage(),llAddImages);
+                    genericDetailModelResource.data.setPk(String.valueOf(genericDetailModelResource.data.getIdentifier()));
+                    mImageAdapter.setData(Collections.singletonList(genericDetailModelResource.data));
+//                    addImages(genericDetailModelResource.data.getImage(),llAddImages);
                     break;
                 }
                 case LOADING:
@@ -131,29 +129,6 @@ public class NewReviewActivity extends AppCompatActivity implements SeekBar.OnSe
                 }
             }
         });
-    }
-
-    void addImages(File foodPics, ViewGroup container){
-        View view = LayoutInflater.from(this).inflate(R.layout.ativity_review_image_add, container, false);
-        ImageView imDisplay = view.findViewById(R.id.im_display_pic);
-        ImageView imDeleteImage = view.findViewById(R.id.im_delete_image);
-        ProgressBar progressBar = view.findViewById(R.id.progress_bar);
-        if(foodPics != null){
-            Utils.loadImageOrDefault(imDisplay, foodPics.getPath(), R.drawable.card_image_add);
-            imDisplay.setVisibility(View.VISIBLE);
-            imDeleteImage.setVisibility(View.VISIBLE);
-        } else
-        {
-            progressBar.setVisibility(View.VISIBLE);
-            imDisplay.setVisibility(View.GONE);
-            imDeleteImage.setVisibility(View.GONE);
-        }
-
-        imDeleteImage.setOnClickListener(v -> {
-
-        });
-        container.addView(view);
-
     }
 
     @OnClick(R.id.btn_done)
