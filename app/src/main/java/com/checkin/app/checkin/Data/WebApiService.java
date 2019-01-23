@@ -211,7 +211,7 @@ public interface WebApiService {
     Call<GenericDetailModel> postCustomerReviewPic(@Part MultipartBody.Part pic, @Part("use_case") RequestBody data);
 
     @DELETE("images/{image_id}/")
-    Call<ObjectNode> deleteImage(@Path("image_id") String imageId);
+    Call<GenericDetailModel> deleteImage(@Path("image_id") String imageId);
 
     // endregion
 

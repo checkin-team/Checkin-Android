@@ -229,7 +229,7 @@ public class NewReviewActivity extends AppCompatActivity implements SeekBar.OnSe
 
     @Override
     public void onDeleteImage(GenericDetailModel orderedItem) {
-        mViewModel.deleteReviewImage(orderedItem.getPk());
+        mViewModel.deleteReviewImage(orderedItem);
 
     }
 

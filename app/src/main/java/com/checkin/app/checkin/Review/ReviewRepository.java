@@ -132,8 +132,8 @@ public class ReviewRepository {
         }.getAsLiveData();
     }
 
-    public LiveData<Resource<ObjectNode>> deleteSelectedImage(final String imagePk) {
-        return new NetworkBoundResource<ObjectNode, ObjectNode>() {
+    public LiveData<Resource<GenericDetailModel>> deleteSelectedImage(final String imagePk) {
+        return new NetworkBoundResource<GenericDetailModel, GenericDetailModel>() {
             @Override
             protected boolean shouldUseLocalDb() {
                 return false;
@@ -141,12 +141,12 @@ public class ReviewRepository {
 
             @NonNull
             @Override
-            protected LiveData<ApiResponse<ObjectNode>> createCall() {
+            protected LiveData<ApiResponse<GenericDetailModel>> createCall() {
                 return new RetrofitLiveData<>(mWebService.deleteImage(imagePk));
             }
 
             @Override
-            protected void saveCallResult(ObjectNode data) {
+            protected void saveCallResult(GenericDetailModel data) {
 
             }
         }.getAsLiveData();
