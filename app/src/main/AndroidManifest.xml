@@ -152,14 +152,19 @@
             android:theme="@style/AppThemeWhiteActionBar" />
         <activity
             android:name=".Session.ActiveSession.Chat.SessionChatActivity"
-            android:windowSoftInputMode="adjustPan|adjustResize"
+            android:label="Chat with Us"
             android:theme="@style/SessionChatTheme"
-            android:label="Chat with Us"/>
-        <activity android:name=".Session.ActiveSession.ActiveSessionViewOrdersActivity"
+            android:windowSoftInputMode="adjustPan|adjustResize" />
+        <activity
+            android:name=".Session.ActiveSession.ActiveSessionViewOrdersActivity"
             android:windowSoftInputMode="adjustNothing" />
-        <activity android:name=".Session.ActiveSession.ActiveSessionInvoiceActivity"
-            android:theme="@style/AppThemeWhiteActionBar"
-            android:label="Invoice"/>
+        <activity
+            android:name=".Session.ActiveSession.ActiveSessionInvoiceActivity"
+            android:label="Invoice"
+            android:theme="@style/AppThemeWhiteActionBar" />
+
+        <activity android:name=".ManagerOrders.ManagerOrdersActivity"
+            android:theme="@style/AppThemeWhiteActionBar"/>
 
         <service
             android:name=".Auth.AuthenticatorService"
@@ -180,6 +185,7 @@
         </service>
         <service android:name=".Maps.FetchAddressIntentService" />
         <service android:name=".Auth.DeviceTokenService" />
+
         <receiver android:name=".User.Friendship.FriendshipBroadcastReceiver" />
 
         <meta-data

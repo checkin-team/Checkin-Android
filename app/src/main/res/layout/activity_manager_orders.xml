@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <android.support.design.widget.AppBarLayout
+        android:id="@+id/appbar_active_session"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:fitsSystemWindows="true"
+        android:theme="@style/appbar_main"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <android.support.v7.widget.Toolbar
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/white">
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <ImageView
+                    android:id="@+id/btn_back"
+                    android:layout_width="@dimen/button_height_normal"
+                    android:layout_height="@dimen/button_height_normal"
+                    android:clickable="true"
+                    android:focusable="true"
+                    android:tint="@color/brownish_grey"
+                    android:layout_alignParentStart="true"
+                    android:src="@drawable/ic_back_white" />
+
+                <ImageView
+                    android:id="@+id/im_as_waiter_pic"
+                    style="@style/LogoSmallImageStyle"
+                    android:src="@drawable/ic_waiter"
+                    android:layout_marginStart="@dimen/spacing_extra_small"
+                    android:layout_toEndOf="@+id/btn_back"/>
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:layout_marginStart="@dimen/spacing_extra_small"
+                    android:layout_toEndOf="@id/im_as_waiter_pic">
+
+                    <TextView
+                        android:id="@+id/tv_table_number"
+                        style="@style/RedTitleStyle"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center|start"
+                        android:layout_weight="0.3"
+                        android:text="@string/active_session"
+                        android:textSize="@dimen/font_normal"
+                        android:textAllCaps="true"
+                        tools:text="table 2"/>
+
+                    <TextView
+                        android:id="@+id/appbar_title"
+                        style="@style/GreyTextStyle"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center|start"
+                        android:text="@string/active_session"
+                        android:textSize="@dimen/font_small"
+                        android:gravity="center"
+                        tools:text="rajeev jain"/>
+
+                </LinearLayout>
+
+                <TextView
+                    android:id="@+id/tv_cart_item_price"
+                    style="@style/GreyTextStyle"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentEnd="true"
+                    android:drawableEnd="@drawable/ic_cart"
+                    android:drawableTint="@color/brownish_grey"
+                    android:gravity="center"
+                    android:textSize="@dimen/font_large"
+                    android:layout_centerVertical="true"
+                    android:padding="@dimen/spacing_extra_small"
+                    android:layout_marginEnd="@dimen/spacing_normal"
+                    android:background="@drawable/bordered_rectangle_brownish_grey"
+                    tools:text="$ 420 " />
+
+            </RelativeLayout>
+        </android.support.v7.widget.Toolbar>
+    </android.support.design.widget.AppBarLayout>
+
+</android.support.constraint.ConstraintLayout>
