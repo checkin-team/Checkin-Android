@@ -24,4 +24,8 @@ public class ReviewImageModel {
     public String getUseCase() {
         return useCase.tag;
     }
+
+    public void setUseCase(REVIEW_IMAGE_USE_CASE useCase) {
+        this.useCase = useCase;
+    }
 }

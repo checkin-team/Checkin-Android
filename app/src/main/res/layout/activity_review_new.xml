@@ -3,6 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:tools="http://schemas.android.com/tools"
     android:background="@color/white"
     android:orientation="vertical">
 
@@ -21,73 +22,72 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_margin="@dimen/spacing_normal">
+                android:layout_marginBottom="@dimen/spacing_normal"
+                android:layout_marginStart="@dimen/spacing_small"
+                android:orientation="horizontal"
+                android:weightSum="6">
 
                 <de.hdodenhof.circleimageview.CircleImageView
-                    android:layout_width="80dp"
-                    android:layout_height="80dp"
-                    android:src="@drawable/fore_male_grey" />
+                    android:id="@+id/im_sr_user_pic"
+                    style="@style/LogoImageStyle"
+                    android:layout_marginBottom="@dimen/spacing_small"
+                    android:layout_marginStart="@dimen/spacing_small"
+                    android:layout_marginTop="@dimen/spacing_small"
+                    android:layout_weight="1"
+                    tools:src="@drawable/flier" />
 
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:gravity="center"
+                    android:layout_weight="5"
                     android:orientation="vertical">
 
                     <TextView
-                        android:id="@+id/tv_resturant_name"
+                        android:id="@+id/tv_sr_user_name"
+                        style="@style/GreyTitleStyle"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:fontFamily="@font/arial_rounded_mt_bold"
-                        android:text="@string/active_session"
-                        android:textAllCaps="true"
-                        android:textColor="@color/primary_red"
-                        android:textSize="@dimen/font_small_heading" />
+                        android:layout_gravity="center"
+                        android:layout_marginTop="@dimen/spacing_tiny"
+                        android:text="Ishu Darshan"
+                        android:textSize="@dimen/font_normal" />
 
                     <TextView
-                        android:id="@+id/tv_review_followers"
+                        android:id="@+id/tv_sr_user_stats"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:fontFamily="@font/arial_rounded_mt_bold"
-                        android:text="@string/active_session"
-                        android:textColor="@color/brownish_grey"
-                        android:textSize="@dimen/font_small" />
+                        android:layout_gravity="center"
+                        android:textColor="@color/pinkish_grey"
+                        android:textSize="@dimen/font_extra_small"
+                        tools:text="86reviviews, 215 followes" />
 
                     <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:gravity="bottom|center">
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_horizontal"
+                        android:layout_marginBottom="@dimen/spacing_tiny"
+                        android:layout_marginTop="@dimen/spacing_small"
+                        android:orientation="horizontal">
 
-                        <TextView
-                            android:id="@+id/tv_rated"
+                        <Button
+                            android:id="@+id/btn_sr_review_ratings"
+                            style="@style/ButtonNeutralAction"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_marginEnd="5dp"
-                            android:fontFamily="@font/lucida_grande"
-                            android:padding="@dimen/spacing_tiny"
-                            android:text="rated 5 "
-                            android:textAllCaps="true"
-                            android:textColor="@color/brownish_grey"
-                            android:textSize="@dimen/font_standard" />
+                            android:layout_marginEnd="@dimen/spacing_tiny"
+                            android:drawableEnd="@drawable/ic_star_grey"
+                            android:drawablePadding="0dp"
+                            android:text="RATED  5" />
 
-                        <TextView
-                            android:id="@+id/tv_follow"
+                        <Button
+                            android:id="@+id/btn_sr_user_follow"
+                            style="@style/ButtonPositiveAction"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_marginStart="5dp"
-                            android:background="@drawable/rectangle_border_red"
-                            android:fontFamily="@font/lucida_grande"
-                            android:gravity="center"
-                            android:minWidth="80dp"
-                            android:padding="@dimen/spacing_tiny"
-                            android:text="@string/title_follow"
-                            android:textAllCaps="true"
-                            android:textColor="@color/brownish_grey"
-                            android:textSize="@dimen/font_standard" />
-
+                            android:layout_marginStart="@dimen/spacing_tiny"
+                            android:text="FOLLOW"
+                            android:textAppearance="@style/RedTitleStyle" />
                     </LinearLayout>
-
-
                 </LinearLayout>
 
             </LinearLayout>
@@ -95,10 +95,10 @@
             <android.support.v7.widget.CardView
                 android:layout_width="match_parent"
                 android:layout_height="120dp"
-                android:layout_marginStart="@dimen/spacing_normal"
-                android:layout_marginEnd="@dimen/spacing_normal"
-                app:cardCornerRadius="10dp"
-                app:cardElevation="8dp">
+                android:layout_marginStart="@dimen/spacing_small"
+                android:layout_marginEnd="@dimen/spacing_small"
+                app:cardCornerRadius="@dimen/card_corner_radius"
+                app:cardElevation="@dimen/card_elevation">
 
                 <EditText
                     android:id="@+id/et_experience"
@@ -108,18 +108,16 @@
                     android:gravity="top"
                     android:hint="@string/label_share_your_experience"
                     android:padding="@dimen/spacing_small"
-                    android:textSize="@dimen/font_normal" />
+                    android:textSize="@dimen/font_small" />
 
             </android.support.v7.widget.CardView>
 
             <android.support.v7.widget.CardView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="@dimen/spacing_normal"
-                android:layout_marginTop="@dimen/spacing_normal"
-                android:layout_marginEnd="@dimen/spacing_normal"
-                app:cardCornerRadius="10dp"
-                app:cardElevation="8dp">
+                android:layout_margin="@dimen/spacing_small"
+                app:cardCornerRadius="@dimen/card_corner_radius"
+                app:cardElevation="@dimen/card_elevation">
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -133,7 +131,7 @@
                         android:padding="@dimen/spacing_small"
                         android:text="@string/title_ratings"
                         android:textColor="@color/primary_red"
-                        android:textSize="@dimen/font_normal" />
+                        android:textSize="@dimen/font_standard" />
 
                     <LinearLayout
                         android:layout_width="match_parent"
@@ -150,14 +148,31 @@
                             android:textColor="@color/brownish_grey"
                             android:textSize="@dimen/font_standard" />
 
+                       <!-- <com.appyvet.materialrangebar.RangeBar
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            app:mrb_rangeBar="false"
+                            app:mrb_pinMaxFont="12sp"
+                            app:mrb_pinMinFont="12sp"
+                            app:mrb_rangeBarPaddingBottom="20dp"
+                            app:mrb_selectorBoundarySize="0dp"
+                            app:mrb_pinTextColor="@color/black"
+                            app:mrb_temporaryPins="true"
+                            app:mrb_selectorSize="10dp"
+                            app:mrb_tickEnd="10"
+                            app:mrb_tickInterval="1"
+                            app:mrb_tickStart="5"
+                            app:mrb_pinRadius="8dp"
+                            app:mrb_rangeBar_rounded="true"
+                            app:mrb_pinColor="@color/pinkish_grey"/>-->
+
                         <SeekBar
                             android:id="@+id/seekbar_food_quality"
                             android:layout_width="0dp"
-                            android:layout_height="wrap_content"
+                            android:layout_height="10dp"
                             android:layout_gravity="center|end"
                             android:layout_weight="0.5"
                             android:progressDrawable="@drawable/seekbar_progress_bar" />
-
                     </LinearLayout>
 
                     <LinearLayout
@@ -215,21 +230,17 @@
             <android.support.v7.widget.CardView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="@dimen/spacing_normal"
-                android:layout_marginTop="@dimen/spacing_normal"
-                android:layout_marginEnd="@dimen/spacing_normal"
-                app:cardCornerRadius="10dp"
-                app:cardElevation="8dp">
+                android:layout_marginStart="@dimen/spacing_small"
+                android:layout_marginEnd="@dimen/spacing_small"
+                app:cardCornerRadius="@dimen/card_corner_radius"
+                app:cardElevation="@dimen/card_elevation">
 
                 <LinearLayout
-                    android:id="@+id/ll_add_images"
+                    android:id="@+id/rv_add_images"
                     android:layout_width="match_parent"
-                    android:layout_height="130dp"
-                    android:layout_marginLeft="@dimen/spacing_small"
-                    android:orientation="horizontal"
-                    android:padding="@dimen/spacing_small">
-
-                </LinearLayout>
+                    android:layout_height="120dp"
+                    android:layout_margin="@dimen/spacing_small"
+                    android:orientation="horizontal"/>
 
 
             </android.support.v7.widget.CardView>

@@ -27,6 +27,7 @@ import com.fasterxml.jackson.databind.node.ObjectNode;
 import java.util.List;
 
 import okhttp3.MultipartBody;
+import okhttp3.RequestBody;
 import retrofit2.Call;
 import retrofit2.http.Body;
 import retrofit2.http.DELETE;
@@ -207,7 +208,10 @@ public interface WebApiService {
 
     @Multipart
     @POST("images/reviews/upload/")
-    Call<GenericDetailModel> postCustomerReviewPic(@Part MultipartBody.Part pic, @Body ReviewImageModel data);
+    Call<GenericDetailModel> postCustomerReviewPic(@Part MultipartBody.Part pic, @Part("use_case") RequestBody data);
+
+    @DELETE("images/{image_id}/")
+    Call<ObjectNode> deleteImage(@Path("image_id") String imageId);
 
     // endregion
 

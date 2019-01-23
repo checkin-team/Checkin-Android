@@ -129,6 +129,10 @@ dependencies {
     implementation 'com.google.android.gms:play-services-maps:16.0.0'
     implementation 'com.google.android.gms:play-services-places:16.0.0'
     implementation 'com.google.android.gms:play-services-location:16.0.0'
+
+    //Seekbar Library
+    implementation 'com.appyvet:materialrangebar:1.4.4'
+
 }
 
 apply plugin: 'com.google.gms.google-services'

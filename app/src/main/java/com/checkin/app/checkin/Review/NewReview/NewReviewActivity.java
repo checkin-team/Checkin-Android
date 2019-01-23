@@ -1,46 +1,69 @@
 package com.checkin.app.checkin.Review.NewReview;
 
+import android.app.AlertDialog;
 import android.app.Dialog;
+import android.arch.lifecycle.Observer;
 import android.arch.lifecycle.ViewModelProviders;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.util.Log;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
 import android.view.Window;
+import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.ProgressBar;
+import android.widget.RadioButton;
+import android.widget.RadioGroup;
 import android.widget.SeekBar;
 import android.widget.Toast;
 
+import com.checkin.app.checkin.Data.Resource;
+import com.checkin.app.checkin.Misc.GenericDetailModel;
 import com.checkin.app.checkin.Misc.SelectCropImageActivity;
 import com.checkin.app.checkin.R;
-import com.checkin.app.checkin.Review.ShopReview.ShopReviewViewModel;
+import com.checkin.app.checkin.Session.ActiveSession.Chat.ActiveSessionChatAdapter;
 import com.checkin.app.checkin.Utility.Utils;
 
 import java.io.File;
+import java.util.Collections;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 
-public class NewReviewActivity extends AppCompatActivity {
+public class NewReviewActivity extends AppCompatActivity implements SeekBar.OnSeekBarChangeListener, ReviewImageAdapter.ImageInteraction/*, DialogInterface.OnClickListener*/ {
     private static final String TAG = NewReviewActivity.class.getSimpleName();
 
     public static final String KEY_SESSION_PK = "review.session_pk";
 
     @BindView(R.id.et_experience)
-    EditText et_experience;
+    EditText etExperience;
     @BindView(R.id.seekbar_food_quality)
     SeekBar seekbar_food_quality;
     @BindView(R.id.seekbar_ambience)
     SeekBar seekbar_ambience;
     @BindView(R.id.seekbar_service)
     SeekBar seekbar_service;
-    @BindView(R.id.ll_add_images)
-    LinearLayout ll_add_images;
-    private ShopReviewViewModel mViewModel;
+//    @BindView(R.id.rv_add_images)
+//    RecyclerView rvAddImages;
+    @BindView(R.id.rv_add_images)
+    LinearLayout llAddImages;
+    private NewReviewViewModel mViewModel;
     int mFoodQualityRating, mAmbienceRating, mServiceRating;
-    Dialog imageCaseDialog;
+    final CharSequence[] imageUseCase = {"Ambiance", "Food"};
+
+    private ReviewImageAdapter mImageAdapter;
+    ReviewImageShowModel imageShowModel;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -54,67 +77,23 @@ public class NewReviewActivity extends AppCompatActivity {
         }
 
         seekbar_food_quality.setProgress(0);
-        seekbar_food_quality.incrementProgressBy(1);
+        seekbar_food_quality.incrementProgressBy(0);
         seekbar_food_quality.setMax(5);
         seekbar_ambience.setProgress(0);
-        seekbar_ambience.incrementProgressBy(1);
+        seekbar_ambience.incrementProgressBy(0);
         seekbar_ambience.setMax(5);
         seekbar_service.setProgress(0);
-        seekbar_service.incrementProgressBy(1);
+        seekbar_service.incrementProgressBy(0);
         seekbar_service.setMax(5);
 
-        mViewModel = ViewModelProviders.of(this).get(ShopReviewViewModel.class);
-        seekbar_food_quality.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
-            @Override
-            public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
-                mFoodQualityRating = progress;
-                Log.e("mFoodQualityRating", String.valueOf(mFoodQualityRating));
-            }
+        mViewModel = ViewModelProviders.of(this).get(NewReviewViewModel.class);
+        seekbar_food_quality.setOnSeekBarChangeListener(this);
+        seekbar_ambience.setOnSeekBarChangeListener(this);
+        seekbar_service.setOnSeekBarChangeListener(this);
 
-            @Override
-            public void onStartTrackingTouch(SeekBar seekBar) {
-
-            }
-
-            @Override
-            public void onStopTrackingTouch(SeekBar seekBar) {
-
-            }
-        });
-        seekbar_ambience.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
-            @Override
-            public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
-                mAmbienceRating = progress;
-                Log.e("mFoodQualityRating", String.valueOf(mFoodQualityRating));
-            }
-
-            @Override
-            public void onStartTrackingTouch(SeekBar seekBar) {
-
-            }
-
-            @Override
-            public void onStopTrackingTouch(SeekBar seekBar) {
-
-            }
-        });
-        seekbar_service.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
-            @Override
-            public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
-                mServiceRating = progress;
-                Log.e("mFoodQualityRating", String.valueOf(mFoodQualityRating));
-            }
-
-            @Override
-            public void onStartTrackingTouch(SeekBar seekBar) {
-
-            }
-
-            @Override
-            public void onStopTrackingTouch(SeekBar seekBar) {
-
-            }
-        });
+//        rvAddImages.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false));
+//        mImageAdapter = new ReviewImageAdapter(null, this);
+//        rvAddImages.setAdapter(mImageAdapter);
 
         mViewModel.getObservableData().observe(this, resource -> {
             if (resource == null)
@@ -132,12 +111,56 @@ public class NewReviewActivity extends AppCompatActivity {
             }
         });
 
+        mViewModel.getImageData().observe(this, genericDetailModelResource -> {
+            if (genericDetailModelResource == null)
+                return;
+            switch (genericDetailModelResource.status) {
+                case SUCCESS: {
+                    Toast.makeText(this, "Done!", Toast.LENGTH_SHORT).show();
+                    Log.e(TAG,String.valueOf(genericDetailModelResource.data.getIdentifier()));
+//                    genericDetailModelResource.data.setPk(String.valueOf(genericDetailModelResource.data.getIdentifier()));
+//                    mImageAdapter.setData(Collections.singletonList(genericDetailModelResource.data));
+                    addImages(genericDetailModelResource.data.getImage(),llAddImages);
+                    break;
+                }
+                case LOADING:
+//                    mImageAdapter.setData(Collections.singletonList(genericDetailModelResource.data));
+                    break;
+                default: {
+                    Utils.toast(this, genericDetailModelResource.message);
+                }
+            }
+        });
+    }
+
+    void addImages(File foodPics, ViewGroup container){
+        View view = LayoutInflater.from(this).inflate(R.layout.ativity_review_image_add, container, false);
+        ImageView imDisplay = view.findViewById(R.id.im_display_pic);
+        ImageView imDeleteImage = view.findViewById(R.id.im_delete_image);
+        ProgressBar progressBar = view.findViewById(R.id.progress_bar);
+        if(foodPics != null){
+            Utils.loadImageOrDefault(imDisplay, foodPics.getPath(), R.drawable.card_image_add);
+            imDisplay.setVisibility(View.VISIBLE);
+            imDeleteImage.setVisibility(View.VISIBLE);
+        } else
+        {
+            progressBar.setVisibility(View.VISIBLE);
+            imDisplay.setVisibility(View.GONE);
+            imDeleteImage.setVisibility(View.GONE);
+        }
+
+        imDeleteImage.setOnClickListener(v -> {
+
+        });
+        container.addView(view);
+
     }
 
     @OnClick(R.id.btn_done)
     public void onDone() {
-        Log.e("ratingfff", et_experience.getText().toString());
-//        mViewModel.register(et_experience.getText().toString(), mFoodQualityRating, mAmbienceRating, mServiceRating);
+        mViewModel.updateBody(etExperience.getText().toString());
+        mViewModel.updateRating(mFoodQualityRating, mAmbienceRating, mServiceRating);
+        mViewModel.submitReview();
     }
 
     @OnClick(R.id.btn_add_image)
@@ -152,29 +175,33 @@ public class NewReviewActivity extends AppCompatActivity {
         if (requestCode == SelectCropImageActivity.RC_CROP_IMAGE && resultCode == RESULT_OK) {
             if (data.getExtras() != null) {
                 File image = (File) data.getExtras().get(SelectCropImageActivity.KEY_IMAGE);
-//                mViewModel.uploadReviewImage(image);
-                fleetDialog();
-//                ll_add_images.addView();
+                openDialog(image);
             }
         }
     }
 
-    private String fleetDialog() {
-        imageCaseDialog = new Dialog(this, R.style.AppDialog);
-        imageCaseDialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
-        imageCaseDialog.setContentView(R.layout.dialog_review_image_case);
-        imageCaseDialog.getWindow().setBackgroundDrawableResource(android.R.color.transparent);
-        imageCaseDialog.setCancelable(false);
-        imageCaseDialog.show();
-        ButterKnife.bind(this,imageCaseDialog);
-        return null;
+    private void openDialog(File image){
+        AlertDialog.Builder builder2 = new AlertDialog.Builder(this)
+                .setTitle("Choose a Image Use Case")
+                .setSingleChoiceItems(imageUseCase, -1, new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        if (imageUseCase[which] == "Ambience") mViewModel.uploadReviewImage(image,ReviewImageModel.REVIEW_IMAGE_USE_CASE.AMBIENCE,0);
+                        else  mViewModel.uploadReviewImage(image,ReviewImageModel.REVIEW_IMAGE_USE_CASE.FOOD,0);
+
+
+                        dialog.dismiss();
+                    }
+                });
+        AlertDialog alertdialog2 = builder2.create();
+        alertdialog2.show();
+
     }
 
 
-
-   /* @Override
+    @Override
     public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
-        switch (seekBar.getId()){
+        switch (seekBar.getId()) {
             case R.id.seekbar_food_quality:
                 mFoodQualityRating = progress;
                 Log.e("mFoodQualityRating", String.valueOf(mFoodQualityRating));
@@ -197,6 +224,17 @@ public class NewReviewActivity extends AppCompatActivity {
 
     @Override
     public void onStopTrackingTouch(SeekBar seekBar) {
+
+    }
+
+    @Override
+    public void onDeleteImage(GenericDetailModel orderedItem) {
+        mViewModel.deleteReviewImage(orderedItem.getPk());
+
+    }
+
+    /*@Override
+    public void onClick(DialogInterface dialog, int which) {
 
     }*/
 }

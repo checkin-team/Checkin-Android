@@ -3,33 +3,38 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical">
+    android:orientation="vertical"
+    android:background="@color/white">
 
     <TextView
         android:layout_width="match_parent"
         android:layout_height="40dp"
         android:textSize="@dimen/font_normal"
-        android:text="Select Uploaded Image Type"
+        android:text="Select Uploaded Image UseCase Type"
         android:textColor="@color/primary_red"
         android:gravity="center"/>
 
     <RadioGroup
-        android:id="@+id/rg_image_case"
+        android:id="@+id/rg_image_use_case"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
         android:layout_marginStart="@dimen/spacing_small">
 
         <RadioButton
+            android:id="@+id/rb_ambiance"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="Ambiance"
+            android:textColor="@color/black"
             android:tag="review.ambiance"/>
 
         <RadioButton
+            android:id="@+id/rb_food"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="Food"
+            android:textColor="@color/black"
             android:tag="review.food"/>
     </RadioGroup>
 

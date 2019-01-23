@@ -24,6 +24,9 @@ public class NewReviewModel {
     public void addImage(String imagePk) {
         this.imagePks.add(imagePk);
     }
+    public void removeImage(String imagePk) {
+        this.imagePks.remove(imagePk);
+    }
 
     public String getBody() {
         return body;
