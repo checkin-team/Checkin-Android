@@ -88,7 +88,7 @@ public class NewReviewViewModel extends BaseViewModel {
 //        return mShowData;
 //    }
 
-    public void deleteReviewImage(GenericDetailModel genericDetailModel){
+    public void deleteReviewImage(ReviewImageShowModel genericDetailModel){
         mData.addSource(mRepository.deleteSelectedImage(genericDetailModel.getPk()), objectNodeResource -> {
             if (objectNodeResource == null)
                 return;

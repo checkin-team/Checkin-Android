@@ -1,40 +1,27 @@
 package com.checkin.app.checkin.Review.NewReview;
 
 import android.app.AlertDialog;
-import android.app.Dialog;
-import android.arch.lifecycle.Observer;
 import android.arch.lifecycle.ViewModelProviders;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
-import android.view.Window;
-import android.widget.Button;
 import android.widget.EditText;
-import android.widget.ImageView;
-import android.widget.LinearLayout;
-import android.widget.ProgressBar;
-import android.widget.RadioButton;
-import android.widget.RadioGroup;
 import android.widget.SeekBar;
 import android.widget.Toast;
 
-import com.checkin.app.checkin.Data.Resource;
 import com.checkin.app.checkin.Misc.GenericDetailModel;
 import com.checkin.app.checkin.Misc.SelectCropImageActivity;
 import com.checkin.app.checkin.R;
-import com.checkin.app.checkin.Session.ActiveSession.Chat.ActiveSessionChatAdapter;
 import com.checkin.app.checkin.Utility.Utils;
 
 import java.io.File;
+import java.util.ArrayList;
 import java.util.Collections;
+import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -48,11 +35,11 @@ public class NewReviewActivity extends AppCompatActivity implements SeekBar.OnSe
     @BindView(R.id.et_experience)
     EditText etExperience;
     @BindView(R.id.seekbar_food_quality)
-    SeekBar seekbar_food_quality;
+    SeekBar seekbarFoodQuality;
     @BindView(R.id.seekbar_ambience)
-    SeekBar seekbar_ambience;
+    SeekBar seekbarAmbience;
     @BindView(R.id.seekbar_service)
-    SeekBar seekbar_service;
+    SeekBar seekbarService;
     @BindView(R.id.rv_add_images)
     RecyclerView rvAddImages;
     private NewReviewViewModel mViewModel;
@@ -60,7 +47,7 @@ public class NewReviewActivity extends AppCompatActivity implements SeekBar.OnSe
     final CharSequence[] imageUseCase = {"Ambiance", "Food"};
 
     private ReviewImageAdapter mImageAdapter;
-    ReviewImageShowModel imageShowModel;
+    ArrayList<ReviewImageShowModel> imageShowModel = new ArrayList<>() ;
 
 
     @Override
@@ -74,20 +61,20 @@ public class NewReviewActivity extends AppCompatActivity implements SeekBar.OnSe
             getSupportActionBar().setHomeAsUpIndicator(R.drawable.ic_back_grey);
         }
 
-        seekbar_food_quality.setProgress(0);
-        seekbar_food_quality.incrementProgressBy(0);
-        seekbar_food_quality.setMax(5);
-        seekbar_ambience.setProgress(0);
-        seekbar_ambience.incrementProgressBy(0);
-        seekbar_ambience.setMax(5);
-        seekbar_service.setProgress(0);
-        seekbar_service.incrementProgressBy(0);
-        seekbar_service.setMax(5);
+        seekbarFoodQuality.setProgress(0);
+        seekbarFoodQuality.incrementProgressBy(0);
+        seekbarFoodQuality.setMax(5);
+        seekbarAmbience.setProgress(0);
+        seekbarAmbience.incrementProgressBy(0);
+        seekbarAmbience.setMax(5);
+        seekbarService.setProgress(0);
+        seekbarService.incrementProgressBy(0);
+        seekbarService.setMax(5);
 
         mViewModel = ViewModelProviders.of(this).get(NewReviewViewModel.class);
-        seekbar_food_quality.setOnSeekBarChangeListener(this);
-        seekbar_ambience.setOnSeekBarChangeListener(this);
-        seekbar_service.setOnSeekBarChangeListener(this);
+        seekbarFoodQuality.setOnSeekBarChangeListener(this);
+        seekbarAmbience.setOnSeekBarChangeListener(this);
+        seekbarService.setOnSeekBarChangeListener(this);
 
         rvAddImages.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false));
         mImageAdapter = new ReviewImageAdapter(null, this);
@@ -117,7 +104,9 @@ public class NewReviewActivity extends AppCompatActivity implements SeekBar.OnSe
                     Toast.makeText(this, "Done!", Toast.LENGTH_SHORT).show();
                     Log.e(TAG,String.valueOf(genericDetailModelResource.data.getIdentifier()));
                     genericDetailModelResource.data.setPk(String.valueOf(genericDetailModelResource.data.getIdentifier()));
-                    mImageAdapter.setData(Collections.singletonList(genericDetailModelResource.data));
+                    ReviewImageShowModel imageData = new ReviewImageShowModel(genericDetailModelResource.data.getPk(), genericDetailModelResource.data.getImage());
+                    imageShowModel.add(imageData);
+                    mImageAdapter.setData(imageShowModel);
 //                    addImages(genericDetailModelResource.data.getImage(),llAddImages);
                     break;
                 }
@@ -161,9 +150,8 @@ public class NewReviewActivity extends AppCompatActivity implements SeekBar.OnSe
                 .setSingleChoiceItems(imageUseCase, -1, new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
-                        if (imageUseCase[which] == "Ambience") mViewModel.uploadReviewImage(image,ReviewImageModel.REVIEW_IMAGE_USE_CASE.AMBIENCE,0);
-                        else  mViewModel.uploadReviewImage(image,ReviewImageModel.REVIEW_IMAGE_USE_CASE.FOOD,0);
-
+                        if (imageUseCase[which] == "Ambience") mViewModel.uploadReviewImage(image,ReviewImageModel.REVIEW_IMAGE_USE_CASE.AMBIENCE,mImageAdapter.getItemCount());
+                        else  mViewModel.uploadReviewImage(image,ReviewImageModel.REVIEW_IMAGE_USE_CASE.FOOD, mImageAdapter.getItemCount());
 
                         dialog.dismiss();
                     }
@@ -203,10 +191,15 @@ public class NewReviewActivity extends AppCompatActivity implements SeekBar.OnSe
     }
 
     @Override
+    public void onDeleteImage(ReviewImageShowModel orderedItem) {
+        mViewModel.deleteReviewImage(orderedItem);
+    }
+
+    /*  @Override
     public void onDeleteImage(GenericDetailModel orderedItem) {
         mViewModel.deleteReviewImage(orderedItem);
 
-    }
+    }*/
 
     /*@Override
     public void onClick(DialogInterface dialog, int which) {

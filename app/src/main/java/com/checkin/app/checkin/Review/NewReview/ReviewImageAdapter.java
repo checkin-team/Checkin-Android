@@ -12,25 +12,27 @@ import com.checkin.app.checkin.Misc.GenericDetailModel;
 import com.checkin.app.checkin.R;
 import com.checkin.app.checkin.Utility.Utils;
 
+import java.io.File;
 import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
 public class ReviewImageAdapter extends RecyclerView.Adapter<ReviewImageAdapter.ViewHolder> {
-    private List<GenericDetailModel> mOrders;
+    private List<ReviewImageShowModel> mOrders;
     private ImageInteraction mListener;
     private static final String TAG = ReviewImageAdapter.class.getSimpleName();
 
-    ReviewImageAdapter(List<GenericDetailModel> orders, ImageInteraction ordersInterface) {
+    ReviewImageAdapter(List<ReviewImageShowModel> orders, ImageInteraction ordersInterface) {
         mOrders = orders;
         mListener = ordersInterface;
     }
 
-    public void setData(List<GenericDetailModel> data) {
+    public void setData(List<ReviewImageShowModel> data) {
         this.mOrders = data;
         notifyDataSetChanged();
     }
+
 
     @NonNull
     @Override
@@ -60,7 +62,7 @@ public class ReviewImageAdapter extends RecyclerView.Adapter<ReviewImageAdapter.
         @BindView(R.id.im_display_pic)
         ImageView imDisplayPic;
 
-        private GenericDetailModel mOrderModel;
+        private ReviewImageShowModel mOrderModel;
 
         ViewHolder(View itemView) {
             super(itemView);
@@ -69,15 +71,10 @@ public class ReviewImageAdapter extends RecyclerView.Adapter<ReviewImageAdapter.
             imDeleteImage.setOnClickListener(v -> mListener.onDeleteImage(mOrderModel));
         }
 
-        void bindData(GenericDetailModel order) {
+        void bindData(ReviewImageShowModel order) {
             this.mOrderModel = order;
 
             if(order !=null){
-                if(order.getIdentifier() != 0)
-                    Log.e(TAG,String.valueOf(order.getIdentifier()));
-                if(order.getPk() !=null)
-                    Log.e(TAG,String.valueOf(order.getPk()));
-
                 Utils.loadImageOrDefault(imDisplayPic, order.getImage().getPath(), R.drawable.card_image_add);
             }
 
@@ -86,6 +83,6 @@ public class ReviewImageAdapter extends RecyclerView.Adapter<ReviewImageAdapter.
     }
 
     public interface ImageInteraction {
-        void onDeleteImage(GenericDetailModel orderedItem);
+        void onDeleteImage(ReviewImageShowModel orderedItem);
     }
 }
