@@ -33,11 +33,11 @@
         <activity
             android:name=".Home.SplashActivity"
             android:theme="@style/Theme.AppCompat.Light.NoActionBar">
-            <intent-filter>
+           <!-- <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
+            </intent-filter>-->
         </activity>
         <activity
             android:name=".Auth.AuthActivity"
@@ -160,6 +160,13 @@
         <activity android:name=".Session.ActiveSession.ActiveSessionInvoiceActivity"
             android:theme="@style/AppThemeWhiteActionBar"
             android:label="Invoice"/>
+        <activity android:name=".ManagerProfile.DemoActivity">
+             <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
 
         <service
             android:name=".Auth.AuthenticatorService"
