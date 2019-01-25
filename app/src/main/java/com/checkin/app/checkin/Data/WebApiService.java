@@ -179,6 +179,9 @@ public interface WebApiService {
     @GET("sessions/{session_id}/orders/")
     Call<List<SessionOrderedItemModel>> getManagerOrders(@Path("session_id") int sessionId);
 
+    @POST("sessions/manage/orders/{order_id}/status/")
+    Call<ObjectNode> postChangeOrderStatus(@Path("order_id") int orderId, @Body ObjectNode data);
+
     // endregion
 
     // region MENU

@@ -1,9 +1,9 @@
 package com.checkin.app.checkin.ManagerOrders;
 
+import android.support.v4.app.Fragment;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.view.animation.Animation;
-import android.view.animation.AnimationUtils;
+import android.view.View;
 import android.widget.ImageView;
 
 import com.checkin.app.checkin.R;
@@ -13,7 +13,6 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 
 public class ManagerOrdersActivity extends AppCompatActivity implements ManagerOrdersFragment.ManagerOrdersInteraction {
-    private ManagerOrdersFragment mFilterFragment;
     @BindView(R.id.im_swipe_up)
     ImageView imSwipeUp;
     @Override
@@ -30,10 +29,21 @@ public class ManagerOrdersActivity extends AppCompatActivity implements ManagerO
 
 
     private void setupOrdersListing() {
-        mFilterFragment = ManagerOrdersFragment.newInstance(this);
         getSupportFragmentManager().beginTransaction()
-                .add(R.id.container_orders_fragment, mFilterFragment)
-                .setCustomAnimations(R.anim.slide_up,R.anim.slide_down)
+                .add(R.id.container_orders_fragment, ManagerOrdersFragment.newInstance(this),"manager_orders")
                 .commit();
+    }
+
+    @Override
+    public void onBackPressed() {
+        Fragment mFragment = getSupportFragmentManager().findFragmentByTag("manager_orders");
+        if (mFragment != null) {
+            ((ManagerOrdersFragment) mFragment).onBackPressed();
+        }else super.onBackPressed();
+    }
+
+    @OnClick(R.id.btn_back)
+    public void goBack(View v){
+        onBackPressed();
     }
 }

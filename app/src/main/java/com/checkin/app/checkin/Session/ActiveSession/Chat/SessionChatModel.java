@@ -81,7 +81,7 @@ public class SessionChatModel {
     public enum CHAT_STATUS_TYPE {
         NONE(0), OPEN(1), IN_PROGRESS(5), CANCELLED(9), DONE(10);
 
-        final int tag;
+        public final int tag;
 
         CHAT_STATUS_TYPE(int tag) {
             this.tag = tag;

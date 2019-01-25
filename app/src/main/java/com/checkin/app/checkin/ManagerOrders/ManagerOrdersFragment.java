@@ -1,5 +1,6 @@
 package com.checkin.app.checkin.ManagerOrders;
 
+import android.annotation.SuppressLint;
 import android.arch.lifecycle.ViewModelProviders;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -11,6 +12,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.AnimationUtils;
 import android.widget.Toast;
 
 import com.checkin.app.checkin.R;
@@ -23,14 +25,14 @@ import butterknife.ButterKnife;
 import butterknife.Unbinder;
 
 public class ManagerOrdersFragment extends Fragment implements ManagerOrdersNewAdapter.SessionOrdersInteraction {
-    private Unbinder unbinder;
-    private ManagerOrdersInteraction mListener;
     @BindView(R.id.rv_orders_accepted)
     RecyclerView rvOrdersAccepted;
     @BindView(R.id.rv_orders_new)
     RecyclerView rvOrdersNew;
     @BindView(R.id.refresh_orders)
     SwipeRefreshLayout refreshLayout;
+    private Unbinder unbinder;
+    private ManagerOrdersInteraction mListener;
 
     private ManagerOrdersViewModel mViewModel;
     private ManagerOrdersNewAdapter mOrdersNewAdapter;
@@ -48,16 +50,20 @@ public class ManagerOrdersFragment extends Fragment implements ManagerOrdersNewA
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         final View view = inflater.inflate(R.layout.fragment_mangers_orders, container, false);
         unbinder = ButterKnife.bind(this, view);
-
         return view;
     }
 
+    @SuppressLint("ClickableViewAccessibility")
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         setupUi();
         getData();
+        view.setOnTouchListener((v, event) -> {
+            onBackPressed();
+            return true;
+        });
+        view.startAnimation(AnimationUtils.loadAnimation(requireContext(), R.anim.slide_up));
     }
-
 
     private void setupUi() {
         rvOrdersAccepted.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false));
@@ -118,6 +124,7 @@ public class ManagerOrdersFragment extends Fragment implements ManagerOrdersNewA
             switch (resource.status) {
                 case SUCCESS: {
                     Toast.makeText(getContext(), "Done!", Toast.LENGTH_SHORT).show();
+                    mViewModel.updateResults();
                     break;
                 }
                 case LOADING:
@@ -129,9 +136,17 @@ public class ManagerOrdersFragment extends Fragment implements ManagerOrdersNewA
         });
     }
 
-    @Override
-    public void onOrderStatusChange(SessionOrderedItemModel orderedItem, SessionChatModel.CHAT_STATUS_TYPE cancelled) {
+    public void onBackPressed() {
+        if (getFragmentManager() != null) {
+            getFragmentManager().beginTransaction()
+                    .remove(this)
+                    .commit();
+        }
+    }
 
+    @Override
+    public void onOrderStatusChange(SessionOrderedItemModel orderedItem, SessionChatModel.CHAT_STATUS_TYPE statusType) {
+        mViewModel.sendOrderStatus(orderedItem.getPk(), statusType.tag);
     }
 
     public interface ManagerOrdersInteraction {
