@@ -137,4 +137,8 @@ public class SessionOrderedItemModel {
     public String formatQuantityType() {
         return String.format(Locale.ENGLISH, "QTY: %d %s", quantity, itemType);
     }
+
+    public String formatQuantityItemType() {
+        return String.format(Locale.ENGLISH, "%d %s", quantity, itemType);
+    }
 }

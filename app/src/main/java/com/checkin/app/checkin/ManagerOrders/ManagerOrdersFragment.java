@@ -13,6 +13,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.AnimationUtils;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.checkin.app.checkin.R;
@@ -31,6 +32,8 @@ public class ManagerOrdersFragment extends Fragment implements ManagerOrdersNewA
     RecyclerView rvOrdersNew;
     @BindView(R.id.refresh_orders)
     SwipeRefreshLayout refreshLayout;
+    @BindView(R.id.tv_new_header)
+    TextView tvNewHeader;
     private Unbinder unbinder;
     private ManagerOrdersInteraction mListener;
 
@@ -89,8 +92,11 @@ public class ManagerOrdersFragment extends Fragment implements ManagerOrdersNewA
                 return;
             switch (listResource.status) {
                 case SUCCESS:
-                    mOrdersNewAdapter.setData(listResource.data);
-                    refreshLayout.setRefreshing(false);
+                    if(listResource.data.size()>0) {
+                        mOrdersNewAdapter.setData(listResource.data);
+                        refreshLayout.setRefreshing(false);
+                        tvNewHeader.setVisibility(View.VISIBLE);
+                    }
                     break;
                 case LOADING:
                     refreshLayout.setRefreshing(false);
@@ -128,6 +134,9 @@ public class ManagerOrdersFragment extends Fragment implements ManagerOrdersNewA
                     break;
                 }
                 case LOADING:
+                    break;
+                case ERROR_INVALID_REQUEST:
+                    mViewModel.showError(resource.getErrorBody());
                     break;
                 default: {
                     Utils.toast(getContext(), resource.message);

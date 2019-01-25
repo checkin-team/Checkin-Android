@@ -26,17 +26,19 @@
                     android:id="@+id/rv_orders_accepted"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:paddingBottom="@dimen/spacing_small"/>
+                    android:paddingBottom="@dimen/spacing_normal"/>
 
 
                 <TextView
+                    android:id="@+id/tv_new_header"
                     style="@style/RedSmallTextStyle"
                     android:layout_width="match_parent"
                     android:layout_height="@dimen/size_small_button"
                     android:background="@color/pinkish_grey"
                     android:gravity="center"
                     android:text="@string/label_new"
-                    android:textAllCaps="true" />
+                    android:textAllCaps="true"
+                    android:visibility="gone"/>
 
                 <android.support.v7.widget.RecyclerView
                     android:id="@+id/rv_orders_new"

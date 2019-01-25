@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_marginStart="@dimen/spacing_small"
-    android:layout_marginTop="@dimen/spacing_small"
+    android:layout_marginTop="@dimen/spacing_normal"
     android:layout_marginEnd="@dimen/spacing_small"
     android:background="@color/white">
 
@@ -52,20 +52,19 @@
                     android:gravity="center"
                     android:minWidth="@dimen/size_small_icon"
                     android:layout_centerVertical="true"
+                    android:textSize="@dimen/font_extra_small"
                     tools:text="QTY: 1" />
 
                 <TextView
                     android:id="@+id/tv_order_status"
                     style="@style/WhiteSmallTextStyle"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                    android:layout_width="@dimen/size_large_button"
+                    android:layout_height="@dimen/size_small_button"
                     android:layout_alignParentEnd="true"
                     android:background="@color/primary_red"
-                    android:paddingTop="@dimen/spacing_tiny"
-                    android:paddingBottom="@dimen/spacing_tiny"
-                    android:paddingStart="@dimen/spacing_extra_small"
-                    android:paddingEnd="@dimen/spacing_extra_small"
-                    tools:text="Delivered" />
+                    android:gravity="center"
+                    android:textSize="@dimen/font_extra_small"
+                    tools:text="In Progress" />
 
             </RelativeLayout>
         </LinearLayout>

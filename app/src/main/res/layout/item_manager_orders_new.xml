@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_marginStart="@dimen/spacing_small"
-    android:layout_marginTop="@dimen/spacing_small"
+    android:layout_marginTop="@dimen/spacing_normal"
     android:layout_marginEnd="@dimen/spacing_small"
     android:background="@color/white">
 
@@ -19,64 +19,73 @@
             android:layout_height="20dp"
             android:layout_alignParentStart="true"
             android:layout_alignParentTop="true"
-            android:layout_marginTop="16dp"
+
             android:src="@drawable/ic_veg_square" />
 
         <LinearLayout
             android:id="@+id/food_details_container"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical"
             android:layout_toEndOf="@id/im_order_type">
 
-            <RelativeLayout
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="@dimen/spacing_small">
 
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:weightSum="2"
+                    android:layout_weight="1"
+                    android:gravity="center">
+
                 <TextView
                     android:id="@+id/tv_order_item_name"
                     style="@style/GreySmallTextStyle"
-                    android:layout_width="wrap_content"
+                    android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:layout_alignParentStart="true"
-                    android:layout_centerVertical="true"
-                    android:layout_toStartOf="@id/tv_order_quantity"
+                    android:layout_weight="1"
                     tools:text="Pizza" />
 
                 <TextView
                     android:id="@+id/tv_order_quantity"
                     style="@style/GreySmallTextStyle"
-                    android:layout_width="wrap_content"
+                    android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:gravity="center"
-                    android:layout_centerInParent="true"
+                    android:layout_weight="1"
+                    android:textSize="@dimen/font_extra_small"
                     tools:text="QTY: 1" />
 
-                <TextView
+                </LinearLayout>
+
+
+                <Button
                     android:id="@+id/tv_order_confirm"
-                    android:layout_width="50dp"
-                    android:layout_height="50dp"
-                    android:layout_toStartOf="@id/tv_order_reject"
-                    android:background="@drawable/oval_green_solid_grey_border"
+                    android:layout_width="70dp"
+                    android:layout_height="@dimen/size_small_button"
+                    style="@style/ButtonPositiveAction"
+                    android:background="@color/apple_green"
                     android:text="@string/confirm"
                     android:textSize="@dimen/font_extra_small"
                     android:textColor="@color/white"
                     android:layout_marginEnd="@dimen/spacing_tiny"
                     android:gravity="center" />
 
-                <TextView
+                <Button
                     android:id="@+id/tv_order_reject"
-                    android:layout_width="50dp"
-                    android:layout_height="50dp"
+                    android:layout_width="70dp"
+                    android:layout_height="@dimen/size_small_button"
+                    style="@style/ButtonNeutralAction"
                     android:layout_alignParentEnd="true"
-                    android:background="@drawable/oval_red_solid_grey_border"
+                    android:background="@color/primary_red"
                     android:text="@string/reject"
                     android:textSize="@dimen/font_extra_small"
                     android:textColor="@color/white"
                     android:gravity="center" />
 
-            </RelativeLayout>
+            </LinearLayout>
 
             <LinearLayout
                 android:id="@+id/container_order_customizations"

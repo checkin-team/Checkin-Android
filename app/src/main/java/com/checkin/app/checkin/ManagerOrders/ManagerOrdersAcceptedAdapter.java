@@ -74,7 +74,7 @@ public class ManagerOrdersAcceptedAdapter extends RecyclerView.Adapter<ManagerOr
         void bindData(SessionOrderedItemModel orderedItem) {
             if (orderedItem.getStatus() != OPEN) {
                 tvName.setText(orderedItem.getItem().getName());
-                tvQuality.setText(orderedItem.formatQuantityType());
+                tvQuality.setText(orderedItem.formatQuantityItemType());
                 if (!orderedItem.getItem().isVegetarian())
                     imOrderType.setImageDrawable(imOrderType.getContext().getResources().getDrawable(R.drawable.ic_non_veg_square));
 
@@ -88,7 +88,7 @@ public class ManagerOrdersAcceptedAdapter extends RecyclerView.Adapter<ManagerOr
                         tvOrderStatus.setBackgroundColor(tvOrderStatus.getContext().getResources().getColor(R.color.primary_red));
                         break;
                     case CANCELLED:
-                        tvOrderStatus.setText(R.string.status_order_cancelled);
+                        tvOrderStatus.setText(R.string.status_cancelled);
                         tvOrderStatus.setBackgroundColor(tvOrderStatus.getContext().getResources().getColor(R.color.primary_red));
                         break;
                 }

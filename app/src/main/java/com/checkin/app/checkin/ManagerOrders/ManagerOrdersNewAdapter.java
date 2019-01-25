@@ -6,6 +6,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -67,9 +68,9 @@ public class ManagerOrdersNewAdapter extends RecyclerView.Adapter<ManagerOrdersN
         @BindView(R.id.tv_order_quantity)
         TextView tvQuantity;
         @BindView(R.id.tv_order_confirm)
-        TextView tvOrderConfirm;
+        Button tvOrderConfirm;
         @BindView(R.id.tv_order_reject)
-        TextView tvOrderReject;
+        Button tvOrderReject;
         @BindView(R.id.tv_order_remarks)
         TextView tvRemarks;
         @BindView(R.id.im_order_type)
@@ -98,7 +99,7 @@ public class ManagerOrdersNewAdapter extends RecyclerView.Adapter<ManagerOrdersN
 
             if (order.getStatus() == OPEN) {
                 tvItemName.setText(order.getItem().getName());
-                tvQuantity.setText(order.formatQuantityType());
+                tvQuantity.setText(order.formatQuantityItemType());
 
                 if (!order.getItem().isVegetarian())
                     imOrderType.setImageDrawable(imOrderType.getContext().getResources().getDrawable(R.drawable.ic_non_veg_square));

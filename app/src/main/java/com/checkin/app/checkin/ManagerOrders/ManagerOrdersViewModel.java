@@ -3,6 +3,7 @@ package com.checkin.app.checkin.ManagerOrders;
 import android.app.Application;
 import android.arch.lifecycle.LiveData;
 import android.arch.lifecycle.MediatorLiveData;
+import android.arch.lifecycle.MutableLiveData;
 import android.arch.lifecycle.Transformations;
 import android.support.annotation.NonNull;
 import android.util.Log;
@@ -15,6 +16,7 @@ import com.checkin.app.checkin.Data.Resource;
 import com.checkin.app.checkin.Data.RetrofitLiveData;
 import com.checkin.app.checkin.Session.ActiveSession.Chat.SessionChatModel;
 import com.checkin.app.checkin.Session.Model.SessionOrderedItemModel;
+import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 
 import java.util.ArrayList;
@@ -28,6 +30,7 @@ public class ManagerOrdersViewModel extends BaseViewModel {
     private MediatorLiveData<Resource<List<SessionOrderedItemModel>>> mOrdersData = new MediatorLiveData<>();
     private MediatorLiveData<Resource<List<SessionOrderedItemModel>>> mOrdersNewData = new MediatorLiveData<>();
     private MediatorLiveData<Resource<List<SessionOrderedItemModel>>> mOrdersAcceptedData = new MediatorLiveData<>();
+    private MutableLiveData<JsonNode> mErrors = new MutableLiveData<>();
 
     public ManagerOrdersViewModel(@NonNull Application application) {
         super(application);
@@ -88,5 +91,12 @@ public class ManagerOrdersViewModel extends BaseViewModel {
     }
 
 
+    public void showError(JsonNode data) {
+        mErrors.setValue(data);
+    }
+
+    public LiveData<JsonNode> getErrors() {
+        return mErrors;
+    }
 
 }
