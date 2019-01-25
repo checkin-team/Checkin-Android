@@ -19,7 +19,7 @@
             android:layout_height="20dp"
             android:layout_alignParentStart="true"
             android:layout_alignParentTop="true"
-
+            android:layout_marginTop="6dp"
             android:src="@drawable/ic_veg_square" />
 
         <LinearLayout
@@ -66,10 +66,8 @@
                     android:layout_width="70dp"
                     android:layout_height="@dimen/size_small_button"
                     style="@style/ButtonPositiveAction"
-                    android:background="@color/apple_green"
                     android:text="@string/confirm"
                     android:textSize="@dimen/font_extra_small"
-                    android:textColor="@color/white"
                     android:layout_marginEnd="@dimen/spacing_tiny"
                     android:gravity="center" />
 
@@ -79,10 +77,8 @@
                     android:layout_height="@dimen/size_small_button"
                     style="@style/ButtonNeutralAction"
                     android:layout_alignParentEnd="true"
-                    android:background="@color/primary_red"
                     android:text="@string/reject"
                     android:textSize="@dimen/font_extra_small"
-                    android:textColor="@color/white"
                     android:gravity="center" />
 
             </LinearLayout>

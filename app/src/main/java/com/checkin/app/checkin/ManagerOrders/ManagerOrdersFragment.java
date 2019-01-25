@@ -85,7 +85,7 @@ public class ManagerOrdersFragment extends Fragment implements ManagerOrdersNewA
 
     private void getData() {
         mViewModel = ViewModelProviders.of(requireActivity()).get(ManagerOrdersViewModel.class);
-        mViewModel.fetchManagerOrdersDetails(1);
+        mViewModel.fetchManagerOrdersDetails(3);
 
         mViewModel.getNewData().observe(this, listResource -> {
             if (listResource == null)

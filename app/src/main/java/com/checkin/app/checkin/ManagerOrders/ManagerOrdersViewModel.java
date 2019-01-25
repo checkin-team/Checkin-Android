@@ -40,7 +40,7 @@ public class ManagerOrdersViewModel extends BaseViewModel {
 
     @Override
     public void updateResults() {
-        fetchManagerOrdersDetails(1);
+        fetchManagerOrdersDetails(3);
     }
 
     public void fetchManagerOrdersDetails(int sessionId) {
