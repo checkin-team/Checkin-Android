@@ -173,6 +173,10 @@
         <item name="android:textSize">@dimen/font_normal</item>
     </style>
 
+    <style name="WhiteSmallTextStyle" parent="WhiteTextStyle">
+        <item name="android:textSize">@dimen/font_small</item>
+    </style>
+
     <style name="GreyTextStyle" parent="TextAppearance.AppCompat">
         <item name="android:textColor">@color/brownish_grey</item>
         <item name="android:fontFamily">@font/arial_rounded_mt_bold</item>

@@ -176,6 +176,9 @@ public interface WebApiService {
     @GET("sessions/{session_id}/invoice/")
     Call<SessionInvoiceModel> getSessionInvoice(@Path("session_id") int sessionId);
 
+    @GET("sessions/{session_id}/orders/")
+    Call<List<SessionOrderedItemModel>> getManagerOrders(@Path("session_id") int sessionId);
+
     // endregion
 
     // region MENU

@@ -26,6 +26,7 @@ import android.widget.TextView;
 import com.checkin.app.checkin.Account.AccountModel.ACCOUNT_TYPE;
 import com.checkin.app.checkin.Account.BaseAccountActivity;
 import com.checkin.app.checkin.Data.Resource.Status;
+import com.checkin.app.checkin.ManagerOrders.ManagerOrdersActivity;
 import com.checkin.app.checkin.Menu.SessionMenuActivity;
 import com.checkin.app.checkin.Misc.QRScannerActivity;
 import com.checkin.app.checkin.Notifications.NotificationActivity;
@@ -509,7 +510,8 @@ public class HomeActivity extends BaseAccountActivity
 
     @OnClick(R.id.action_dine_in)
     public  void dine_in(View v){
-        startActivity(new Intent(this, BusinessFeaturesActivity.class));
+//        startActivity(new Intent(this, BusinessFeaturesActivity.class));
+        startActivity(new Intent(this, ManagerOrdersActivity.class));
     }
 
     @OnClick(R.id.action_delivery)

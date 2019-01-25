@@ -164,7 +164,7 @@
             android:theme="@style/AppThemeWhiteActionBar" />
 
         <activity android:name=".ManagerOrders.ManagerOrdersActivity"
-            android:theme="@style/AppThemeWhiteActionBar"/>
+            android:windowSoftInputMode="adjustNothing"/>
 
         <service
             android:name=".Auth.AuthenticatorService"

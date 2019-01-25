@@ -155,4 +155,10 @@
     <string name="status_order_in_progress">In Progress</string>
     <string name="status_order_delivered">Delivered</string>
 
+    <!--Manager Orders-->
+    <string name="label_orders">Orders</string>
+    <string name="label_new">New</string>
+    <string name="confirm">Confirm</string>
+    <string name="reject">Reject</string>
+
 </resources>

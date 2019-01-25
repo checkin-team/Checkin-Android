@@ -1,18 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:orientation="vertical">
 
     <android.support.design.widget.AppBarLayout
-        android:id="@+id/appbar_active_session"
+        android:id="@+id/appbar"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="?android:attr/actionBarSize"
         android:fitsSystemWindows="true"
-        android:theme="@style/appbar_main"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
+        android:theme="@style/appbar_main">
 
         <android.support.v7.widget.Toolbar
             android:layout_width="match_parent"
@@ -54,7 +53,6 @@
                         android:layout_height="wrap_content"
                         android:layout_gravity="center|start"
                         android:layout_weight="0.3"
-                        android:text="@string/active_session"
                         android:textSize="@dimen/font_normal"
                         android:textAllCaps="true"
                         tools:text="table 2"/>
@@ -65,7 +63,6 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center|start"
-                        android:text="@string/active_session"
                         android:textSize="@dimen/font_small"
                         android:gravity="center"
                         tools:text="rajeev jain"/>
@@ -92,4 +89,122 @@
         </android.support.v7.widget.Toolbar>
     </android.support.design.widget.AppBarLayout>
 
-</android.support.constraint.ConstraintLayout>
+    <FrameLayout
+        android:id="@+id/container_orders_fragment"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+    <RelativeLayout
+        android:id="@+id/container_as_actions_bottom"
+        android:layout_width="match_parent"
+        android:layout_height="120dp"
+        android:background="@color/brownish_grey"
+        android:padding="@dimen/spacing_small"
+        android:layout_gravity="bottom">
+
+        <TextView
+            android:id="@+id/tv_orders_label"
+            style="@style/WhiteTextStyle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/label_orders"/>
+
+        <ImageView
+            android:id="@+id/im_swipe_up"
+            android:layout_width="@dimen/size_small_button"
+            android:layout_height="@dimen/size_extra_small_button"
+            android:layout_alignParentEnd="true"
+            android:src="@drawable/ic_cart"/>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_below="@id/tv_orders_label"
+            android:layout_marginTop="@dimen/spacing_extra_small"
+            android:background="@drawable/rounded_rectangle_white"
+            android:weightSum="3">
+
+            <LinearLayout
+                android:id="@+id/ll_order_new"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:gravity="center">
+
+                <TextView
+                    android:id="@+id/tv_count_orders_new"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textSize="@dimen/font_largest"
+                    android:textColor="@color/primary_red"
+                    android:gravity="center"
+                    android:layout_marginEnd="@dimen/spacing_tiny"
+                    tools:text="3"/>
+
+                <ImageView
+                    style="@style/ButtonNormal"
+                    android:src="@drawable/ic_new_file"/>
+
+            </LinearLayout>
+            <include
+                layout="@layout/incl_vertical_line"/>
+
+            <LinearLayout
+                android:id="@+id/ll_order_in_progress"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:gravity="center">
+
+                <TextView
+                    android:id="@+id/tv_count_orders_in_progress"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textSize="@dimen/font_largest"
+                    android:textColor="@color/brownish_grey"
+                    android:gravity="center"
+                    android:layout_marginEnd="@dimen/spacing_tiny"
+                    tools:text="3"/>
+
+                <ImageView
+                    style="@style/ButtonNormal"
+                    android:src="@drawable/ic_order_status_cooking"/>
+
+            </LinearLayout>
+
+            <include
+                layout="@layout/incl_vertical_line"/>
+
+            <LinearLayout
+                android:id="@+id/ll_order_delivered"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:gravity="center">
+
+                <TextView
+                    android:id="@+id/tv_count_orders_delivered"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textSize="@dimen/font_largest"
+                    android:textColor="@color/brownish_grey"
+                    android:gravity="center"
+                    android:layout_marginEnd="@dimen/spacing_tiny"
+                    tools:text="3"/>
+
+                <ImageView
+                    style="@style/ButtonNormal"
+                    android:src="@drawable/noun_waiter_1473037"/>
+
+            </LinearLayout>
+
+            <include
+                layout="@layout/incl_vertical_line"/>
+        </LinearLayout>
+
+
+    </RelativeLayout>
+
+    </FrameLayout>
+
+</LinearLayout>
