@@ -16,7 +16,7 @@ import java.util.List;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
-public class DemoActivity extends AppCompatActivity {
+public class LiveOrdersActivity extends AppCompatActivity {
 
     @BindView(R.id.vp_tl_live_orders)
     ViewPager vpTlLiveOrders;
@@ -26,7 +26,7 @@ public class DemoActivity extends AppCompatActivity {
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_demo);
+        setContentView(R.layout.activity_live_orders);
         ButterKnife.bind(this);
 
         ActionBar actionBar = getSupportActionBar();

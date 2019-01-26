@@ -154,5 +154,6 @@
     <string name="status_order_cancelled">Order Cancelled</string>
     <string name="status_order_in_progress">In Progress</string>
     <string name="status_order_delivered">Delivered</string>
+    <string name="shop_manager_table_statics_title_description">Understand ongoing the food trend of your customer. And get an insight into sales for the day.</string>
 
 </resources>

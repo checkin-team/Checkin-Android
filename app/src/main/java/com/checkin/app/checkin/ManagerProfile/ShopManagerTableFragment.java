@@ -27,7 +27,7 @@ public class ShopManagerTableFragment extends Fragment {
     public ShopManagerTableFragment() {
     }
 
-    public ShopManagerTableFragment newInstance() {
+    public static ShopManagerTableFragment newInstance() {
         return new ShopManagerTableFragment();
     }
 

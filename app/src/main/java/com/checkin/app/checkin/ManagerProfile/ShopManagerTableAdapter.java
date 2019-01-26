@@ -13,7 +13,6 @@ import com.checkin.app.checkin.R;
 import com.checkin.app.checkin.Session.Model.RestaurantTableModel;
 import com.checkin.app.checkin.Utility.GlideApp;
 
-import java.util.Date;
 import java.util.List;
 
 import butterknife.BindView;

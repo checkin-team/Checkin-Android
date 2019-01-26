@@ -64,7 +64,7 @@
                         android:id="@+id/im_invoice_waiter"
                         style="@style/LogoSmallImageStyle"
                         android:layout_gravity="center"
-                        android:src="@drawable/ic_waiter" />
+                        android:src="@drawable/ic_waiter_person" />
 
                     <TextView
                         android:id="@+id/tv_invoice_waiter_name"

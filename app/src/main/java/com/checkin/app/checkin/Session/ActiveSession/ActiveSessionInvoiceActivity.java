@@ -90,7 +90,7 @@ public class ActiveSessionInvoiceActivity extends AppCompatActivity {
         mAdapter.setData(data.getOrderedItems());
 
         if (data.getHost() != null)
-            Utils.loadImageOrDefault(imWaiterPic, data.getHost().getDisplayPic(), R.drawable.ic_waiter);
+            Utils.loadImageOrDefault(imWaiterPic, data.getHost().getDisplayPic(), R.drawable.ic_waiter_person);
 
         // Subtotal
         if (data.getBill().getSubtotal() != null)

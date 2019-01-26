@@ -127,7 +127,7 @@ public class ActiveSessionActivity extends AppCompatActivity implements ActiveSe
         switchSessionPresence.setChecked(data.isCheckinPublic());
         if (data.gethost() != null) {
             tvWaiterName.setText(data.gethost().getDisplayName());
-            Utils.loadImageOrDefault(imWaiterPic, data.gethost().getDisplayPic(), R.drawable.ic_waiter);
+            Utils.loadImageOrDefault(imWaiterPic, data.gethost().getDisplayPic(), R.drawable.ic_waiter_person);
         } else {
             tvWaiterName.setText(R.string.waiter_unassigned);
         }
