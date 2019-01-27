@@ -36,6 +36,12 @@ public class ActiveSessionModel {
     @JsonProperty("is_public")
     private boolean isPublic;
 
+    @JsonProperty("customer_count")
+    private int customerCount;
+
+    @JsonProperty("created")
+    private Date created;
+
     public ActiveSessionModel() {}
 
     public String getBill() {
@@ -72,5 +78,13 @@ public class ActiveSessionModel {
 
     public int getShopPk() {
         return Integer.valueOf(restaurant.getPk());
+    }
+
+    public int getCustomerCount() {
+        return customerCount;
+    }
+
+    public Date getCreated() {
+        return created;
     }
 }

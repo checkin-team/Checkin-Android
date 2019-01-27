@@ -12,6 +12,7 @@ import com.checkin.app.checkin.Data.NetworkBoundResource;
 import com.checkin.app.checkin.Data.Resource;
 import com.checkin.app.checkin.Data.RetrofitLiveData;
 import com.checkin.app.checkin.Data.WebApiService;
+import com.checkin.app.checkin.Session.ActiveSession.ActiveSessionModel;
 import com.checkin.app.checkin.Session.Model.SessionOrderedItemModel;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 
@@ -69,6 +70,23 @@ public class ManagerOrdersRepository extends BaseRepository {
 
             @Override
             protected void saveCallResult(ObjectNode data) { }
+        }.getAsLiveData();
+    }
+
+    public LiveData<Resource<ActiveSessionModel>> getManagerOrdersBrief(int sessionId) {
+        return new NetworkBoundResource<ActiveSessionModel, ActiveSessionModel>() {
+
+            @Override
+            protected void saveCallResult(ActiveSessionModel data) {}
+
+            @Override
+            protected boolean shouldUseLocalDb() {return false;}
+
+            @NonNull
+            @Override
+            protected LiveData<ApiResponse<ActiveSessionModel>> createCall() {
+                return new RetrofitLiveData<>(mWebService.getManagerOrderBrief(sessionId));
+            }
         }.getAsLiveData();
     }
 }

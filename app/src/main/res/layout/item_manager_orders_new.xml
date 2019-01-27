@@ -60,6 +60,18 @@
 
                 </LinearLayout>
 
+                <TextView
+                    android:id="@+id/tv_order_status"
+                    style="@style/WhiteSmallTextStyle"
+                    android:layout_width="@dimen/size_large_button"
+                    android:layout_height="@dimen/size_small_button"
+                    android:layout_alignParentEnd="true"
+                    android:background="@color/primary_red"
+                    android:gravity="center"
+                    android:textSize="@dimen/font_extra_small"
+                    tools:text="In Progress"
+                    android:visibility="gone"/>
+
 
                 <Button
                     android:id="@+id/tv_order_confirm"

@@ -1,13 +1,16 @@
 package com.checkin.app.checkin.ManagerOrders;
 
+import android.content.Context;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.checkin.app.checkin.Menu.Model.ItemCustomizationGroupModel;
 import com.checkin.app.checkin.R;
 import com.checkin.app.checkin.Session.Model.SessionOrderedItemModel;
 import com.checkin.app.checkin.Utility.Utils;
@@ -63,6 +66,16 @@ public class ManagerOrdersAcceptedAdapter extends RecyclerView.Adapter<ManagerOr
         TextView tvQuality;
         @BindView(R.id.im_order_type)
         ImageView imOrderType;
+        @BindView(R.id.tv_order_remarks)
+        TextView tvRemarks;
+        @BindView(R.id.container_order_customizations)
+        ViewGroup containerCustomizations;
+        @BindView(R.id.container_order_customizations_left)
+        LinearLayout containerCustomizationsLeft;
+        @BindView(R.id.container_order_customizations_right)
+        LinearLayout containerCustomizationsRight;
+        @BindView(R.id.container_order_remarks)
+        LinearLayout containerRemarks;
 
         private SessionOrderedItemModel mOrderModel;
 
@@ -72,7 +85,7 @@ public class ManagerOrdersAcceptedAdapter extends RecyclerView.Adapter<ManagerOr
         }
 
         void bindData(SessionOrderedItemModel orderedItem) {
-            if (orderedItem.getStatus() != OPEN) {
+
                 tvName.setText(orderedItem.getItem().getName());
                 tvQuality.setText(orderedItem.formatQuantityItemType());
                 if (!orderedItem.getItem().isVegetarian())
@@ -93,7 +106,32 @@ public class ManagerOrdersAcceptedAdapter extends RecyclerView.Adapter<ManagerOr
                         break;
                 }
 
+            if (orderedItem.getRemarks() == null) containerRemarks.setVisibility(View.GONE);
+            else tvRemarks.setText(orderedItem.getRemarks());
+
+            if (orderedItem.getCustomizations().size() > 0) {
+                containerCustomizations.setVisibility(View.VISIBLE);
+                containerCustomizationsRight.removeAllViews();
+                containerCustomizationsLeft.removeAllViews();
+                for (int i = 0; i < orderedItem.getCustomizations().size(); i++) {
+                    addCustomizations(
+                            itemView.getContext(), orderedItem.getCustomizations().get(i), i % 2 == 0 ? containerCustomizationsLeft : containerCustomizationsRight);
+                }
+            } else {
+                containerCustomizations.setVisibility(View.GONE);
             }
+
+        }
+
+        void addCustomizations(Context context, ItemCustomizationGroupModel group, ViewGroup
+                container) {
+            View view = LayoutInflater.from(context).inflate(R.layout.item_active_session_order_customization, container, false);
+            TextView tvGroupName = view.findViewById(R.id.tv_order_customization_group);
+            TextView tvFieldNames = view.findViewById(R.id.tv_order_customization_names);
+            tvGroupName.setText(group.getName());
+            tvFieldNames.setText(Utils.joinCollection(group.getCustomizationFields(), "\n"));
+            container.addView(view);
+
         }
 
     }

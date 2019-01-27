@@ -182,6 +182,9 @@ public interface WebApiService {
     @POST("sessions/manage/orders/{order_id}/status/")
     Call<ObjectNode> postChangeOrderStatus(@Path("order_id") int orderId, @Body ObjectNode data);
 
+    @GET("sessions/{session_id}/brief/")
+    Call<ActiveSessionModel> getManagerOrderBrief(@Path("session_id") int sessionId);
+
     // endregion
 
     // region MENU

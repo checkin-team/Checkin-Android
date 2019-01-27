@@ -9,6 +9,7 @@ import android.support.v4.app.Fragment;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -16,6 +17,7 @@ import android.view.animation.AnimationUtils;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.checkin.app.checkin.Data.Resource;
 import com.checkin.app.checkin.R;
 import com.checkin.app.checkin.Session.ActiveSession.Chat.SessionChatModel;
 import com.checkin.app.checkin.Session.Model.SessionOrderedItemModel;
@@ -69,13 +71,13 @@ public class ManagerOrdersFragment extends Fragment implements ManagerOrdersNewA
     }
 
     private void setupUi() {
+        rvOrdersNew.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false));
+        mOrdersNewAdapter = new ManagerOrdersNewAdapter(null, this, true);
+        rvOrdersNew.setAdapter(mOrdersNewAdapter);
+
         rvOrdersAccepted.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false));
         mOrdersAcceptedAdapter = new ManagerOrdersAcceptedAdapter(null);
         rvOrdersAccepted.setAdapter(mOrdersAcceptedAdapter);
-
-        rvOrdersNew.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false));
-        mOrdersNewAdapter = new ManagerOrdersNewAdapter(null, this);
-        rvOrdersNew.setAdapter(mOrdersNewAdapter);
 
         rvOrdersAccepted.setNestedScrollingEnabled(false);
         rvOrdersNew.setNestedScrollingEnabled(false);
@@ -87,16 +89,31 @@ public class ManagerOrdersFragment extends Fragment implements ManagerOrdersNewA
         mViewModel = ViewModelProviders.of(requireActivity()).get(ManagerOrdersViewModel.class);
         mViewModel.fetchManagerOrdersDetails(3);
 
+       /* mViewModel.getOrderList().observe(this, resource -> {
+            if (resource == null)
+                return;
+            if (resource.status == Resource.Status.SUCCESS && resource.data != null) {
+                Log.e("is====size==", String.valueOf(resource.data.size()));
+                mOrdersNewAdapter.setDataNew(resource.data);
+//                mOrdersAcceptedAdapter.setDataNew(resource.data);
+                refreshLayout.setRefreshing(false);
+            } else if (resource.status == Resource.Status.LOADING) {
+//                refreshSessionChat.setRefreshing(true);
+            }
+        });*/
+
         mViewModel.getNewData().observe(this, listResource -> {
             if (listResource == null)
                 return;
             switch (listResource.status) {
                 case SUCCESS:
-                    if(listResource.data.size()>0) {
-                        mOrdersNewAdapter.setData(listResource.data);
+//                    if(listResource.data.size()>0) {
+                        mOrdersNewAdapter.setDataNew(listResource.data);
                         refreshLayout.setRefreshing(false);
                         tvNewHeader.setVisibility(View.VISIBLE);
-                    }
+//                    }else {
+//                        rvOrdersNew.setVisibility(View.GONE);
+//                    }
                     break;
                 case LOADING:
                     refreshLayout.setRefreshing(false);
