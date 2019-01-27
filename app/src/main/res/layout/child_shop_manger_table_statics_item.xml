@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    android:padding="@dimen/spacing_small"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <ImageView
+        android:id="@+id/iv_shop_manager_table_statics_item"
+        android:contentDescription="@null"
+        android:src="@drawable/ic_waiter_person"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
+
+    <TextView
+        android:layout_marginStart="@dimen/spacing_normal"
+        android:id="@+id/tv_shop_manager_table_statics_item"
+        android:text="Butter Chicken"
+        style="@style/GreyTextStyle"
+        android:layout_toEndOf="@+id/iv_shop_manager_table_statics_item"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
+
+    <TextView
+        android:layout_alignStart="@+id/tv_shop_manager_table_statics_item"
+        android:layout_marginTop="@dimen/spacing_extra_tiny"
+        android:layout_below="@+id/tv_shop_manager_table_statics_item"
+        android:id="@+id/tv_shop_manager_table_statics_item_description"
+        android:text="19.2 % revenue contribution"
+        style="@style/PinkishGreySmallTextStyle"
+        android:layout_toEndOf="@+id/iv_shop_manager_table_statics_item"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
+
+</RelativeLayout>

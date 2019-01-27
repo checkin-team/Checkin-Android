@@ -9,7 +9,6 @@
     <dimen name="font_small">12sp</dimen>
     <dimen name="font_extra_small">10sp</dimen>
     <dimen name="font_tiny">8sp</dimen>
-    <dimen name="font_standard">14sp</dimen>
 
     <!-- typical spacing between two views -->
     <dimen name="spacing_gigantic">60dp</dimen>
