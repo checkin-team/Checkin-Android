@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.v7.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    style="@style/WhiteCardStyle"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginStart="@dimen/spacing_tiny"
+    android:layout_marginTop="@dimen/spacing_tiny"
+    android:layout_marginEnd="@dimen/spacing_tiny">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingStart="@dimen/spacing_small"
+        android:paddingTop="@dimen/spacing_extra_small"
+        android:paddingEnd="@dimen/spacing_small"
+        android:paddingBottom="@dimen/spacing_small">
+
+        <TextView
+            android:id="@+id/tv_shop_manager_table_time"
+            style="@style/PinkishGreySmallTextStyle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            tools:text="4.19" />
+
+        <de.hdodenhof.circleimageview.CircleImageView
+            android:id="@+id/iv_shop_manager_table_image"
+            style="@style/LogoSmallImageStyle"
+            android:layout_below="@+id/tv_shop_manager_table_time"
+            android:layout_gravity="center"
+            android:src="@drawable/dummy_monica" />
+
+        <TextView
+            android:id="@+id/tv_shop_manager_table_number"
+            style="@style/GreyHeadingStyle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/tv_shop_manager_table_time"
+            android:layout_marginStart="@dimen/spacing_normal"
+            android:layout_toEndOf="@+id/iv_shop_manager_table_image"
+            tools:text="TABLE : 4" />
+
+        <ImageView
+            android:id="@+id/iv_shop_manager_table_icon"
+            android:layout_width="@dimen/size_tiny_icon"
+            android:layout_height="@dimen/size_tiny_icon"
+            android:layout_below="@+id/tv_shop_manager_table_number"
+            android:layout_alignBottom="@+id/tv_shop_manager_table_detail"
+            android:layout_marginStart="@dimen/spacing_normal"
+            android:layout_marginTop="@dimen/spacing_small"
+            android:layout_toEndOf="@+id/iv_shop_manager_table_image"
+            android:contentDescription="@null"
+            tools:src="@drawable/ic_veg" />
+
+        <TextView
+            android:id="@+id/tv_shop_manager_table_detail"
+            style="@style/GreyTextStyle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/tv_shop_manager_table_number"
+            android:layout_marginStart="@dimen/spacing_small"
+            android:layout_marginTop="@dimen/spacing_small"
+            android:layout_toStartOf="@+id/tv_shop_manager_table_person_number"
+            android:layout_toEndOf="@+id/iv_shop_manager_table_icon"
+            tools:text="Join the table @4.30 pm." />
+
+        <TextView
+            android:id="@+id/tv_shop_manager_table_person_number"
+            android:layout_width="@dimen/size_tiny_icon"
+            android:layout_height="@dimen/size_tiny_icon"
+            android:layout_below="@+id/tv_shop_manager_table_number"
+            android:layout_alignBaseline="@+id/tv_shop_manager_table_detail"
+            android:layout_alignParentEnd="true"
+            android:layout_marginTop="@dimen/spacing_small"
+            android:background="@drawable/oval_primary_red"
+            android:gravity="center"
+            android:textColor="@color/white"
+            android:textSize="@dimen/font_extra_small"
+            tools:text="2" />
+
+        <TextView
+            android:id="@+id/tv_shop_manager_table_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/iv_shop_manager_table_image"
+            android:layout_marginTop="@dimen/spacing_small"
+            android:textColor="@color/brownish_grey"
+            android:textSize="@dimen/font_small"
+            tools:text="Monica" />
+
+    </RelativeLayout>
+
+</android.support.v7.widget.CardView>

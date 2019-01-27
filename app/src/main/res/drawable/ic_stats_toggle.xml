@@ -2,8 +2,6 @@
 <selector xmlns:android="http://schemas.android.com/apk/res/android">
     <item
         android:state_selected="true"
-        android:drawable="@drawable/ic_statics_red"/>
-    <item
-        android:state_selected="false"
-        android:drawable="@drawable/ic_statics_grey"/>
+        android:drawable="@drawable/ic_stats_rouge"/>
+    <item android:drawable="@drawable/ic_stats_grey"/>
 </selector>

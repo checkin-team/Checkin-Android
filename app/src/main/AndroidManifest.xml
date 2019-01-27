@@ -33,11 +33,11 @@
         <activity
             android:name=".Home.SplashActivity"
             android:theme="@style/Theme.AppCompat.Light.NoActionBar">
-            <!--<intent-filter>
+            <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>-->
+            </intent-filter>
         </activity>
         <activity
             android:name=".Auth.AuthActivity"
@@ -160,18 +160,9 @@
         <activity android:name=".Session.ActiveSession.ActiveSessionInvoiceActivity"
             android:theme="@style/AppThemeWhiteActionBar"
             android:label="Invoice"/>
-        <activity android:name=".ManagerProfile.DemoActivity"
-            android:theme="@style/AppThemeWhiteActionBar"
-            android:label="Live Orders">
-             <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
-        </activity>
-        <activity android:name=".ManagerProfile.LiveOrdersActivity"
-            android:theme="@style/AppThemeWhiteActionBar"
-            android:label="Live Orders"/>
+        <activity android:name=".ManagerProfile.ManagerWorkActivity"
+            android:label="Manager"
+            android:theme="@style/AppThemeWhiteActionBar"/>
 
         <service
             android:name=".Auth.AuthenticatorService"
@@ -199,7 +190,6 @@
             android:value="@string/facebook_app_id" />
         <!--
              The API key for Google Maps-based APIs is defined as a string resource.
-             (See the file "res/values/google_maps_api.xml").
              (See the file "res/values/google_maps_api.xml").
              Note that the API key is linked to the encryption key used to sign the APK.
              You need a different API key for each encryption key, including the release key that is used to

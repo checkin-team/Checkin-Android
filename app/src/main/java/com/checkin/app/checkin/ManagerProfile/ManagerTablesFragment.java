@@ -5,7 +5,6 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
-import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -19,16 +18,16 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.Unbinder;
 
-public class ShopManagerTableFragment extends Fragment {
+public class ManagerTablesFragment extends Fragment {
     @BindView(R.id.rv_shop_manager_table)
     RecyclerView rvShopManagerTable;
     Unbinder unbinder;
 
-    public ShopManagerTableFragment() {
+    public ManagerTablesFragment() {
     }
 
-    public static ShopManagerTableFragment newInstance() {
-        return new ShopManagerTableFragment();
+    public static ManagerTablesFragment newInstance() {
+        return new ManagerTablesFragment();
     }
 
     @Nullable
@@ -43,13 +42,12 @@ public class ShopManagerTableFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         ShopManagerTableAdapter shopManagerTableAdapter = new ShopManagerTableAdapter();
-        rvShopManagerTable.setLayoutManager(new LinearLayoutManager(getActivity()));
-        rvShopManagerTable.setItemAnimator(new DefaultItemAnimator());
+        rvShopManagerTable.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false));
         rvShopManagerTable.setAdapter(shopManagerTableAdapter);
 
-        RestaurantTableViewModel restaurantTableViewModel = ViewModelProviders.of(this).get(RestaurantTableViewModel.class);
-        restaurantTableViewModel.getRestaurantTableById("3");
-        restaurantTableViewModel.getRestaurantTableModel().observe(this, input->{
+        ManagerWorkViewModel managerWorkViewModel = ViewModelProviders.of(this).get(ManagerWorkViewModel.class);
+        managerWorkViewModel.getRestaurantTableById("3");
+        managerWorkViewModel.getRestaurantTableModel().observe(this, input->{
             if (input != null && input.data == null)
                 return;
             if (input != null && input.data.size() > 0 && input.status == Resource.Status.SUCCESS) {

@@ -7,19 +7,18 @@ import android.support.annotation.NonNull;
 
 import com.checkin.app.checkin.Data.BaseViewModel;
 import com.checkin.app.checkin.Data.Resource;
-import com.checkin.app.checkin.R;
 import com.checkin.app.checkin.Session.Model.RestaurantTableModel;
 
 import java.util.List;
 
-public class RestaurantTableViewModel extends BaseViewModel {
+public class ManagerWorkViewModel extends BaseViewModel {
 
-    private RestaurantTableRepository mRestaurantTableRepository;
+    private ManagerRepository mRestaurantTableRepository;
     private MediatorLiveData<Resource<List<RestaurantTableModel>>> mResourceMediatorLiveData = new MediatorLiveData<>();
 
-    public RestaurantTableViewModel(@NonNull Application application) {
+    public ManagerWorkViewModel(@NonNull Application application) {
         super(application);
-        mRestaurantTableRepository = RestaurantTableRepository.getInstance(application);
+        mRestaurantTableRepository = ManagerRepository.getInstance(application);
     }
 
     void getRestaurantTableById(String restaurantId){

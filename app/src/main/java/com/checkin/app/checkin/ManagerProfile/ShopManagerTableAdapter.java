@@ -11,7 +11,7 @@ import android.widget.TextView;
 import com.checkin.app.checkin.Misc.BriefModel;
 import com.checkin.app.checkin.R;
 import com.checkin.app.checkin.Session.Model.RestaurantTableModel;
-import com.checkin.app.checkin.Utility.GlideApp;
+import com.checkin.app.checkin.Utility.Utils;
 
 import java.util.List;
 
@@ -20,13 +20,12 @@ import butterknife.ButterKnife;
 import de.hdodenhof.circleimageview.CircleImageView;
 
 public class ShopManagerTableAdapter extends RecyclerView.Adapter<ShopManagerTableAdapter.ShopManagerTableHolder> {
-
     private List<RestaurantTableModel> mList;
 
     @NonNull
     @Override
     public ShopManagerTableHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.child_shop_manager_table, parent, false);
+        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_shop_manager_table, parent, false);
         return new ShopManagerTableHolder(view);
     }
 
@@ -69,30 +68,18 @@ public class ShopManagerTableAdapter extends RecyclerView.Adapter<ShopManagerTab
         }
 
         public void bindData(RestaurantTableModel data) {
-            String time = data.getEvent().formatTimestamp();
-
             BriefModel host = data.getHost();
 
             if (host != null){
-                String name = host.getDisplayName();
-                String imgUrl = host.getDisplayPic();
-                tvShopManagerTableName.setText(name);
-                GlideApp
-                        .with(itemView)
-                        .load(imgUrl)
-                        .error(R.drawable.ic_waiter)
-                        .placeholder(R.drawable.ic_waiter)
-                        .into(ivShopManagerTableImage);
+                tvShopManagerTableName.setText(host.getDisplayName());
+                Utils.loadImageOrDefault(ivShopManagerTableImage, host.getDisplayPic(), R.drawable.ic_waiter);
             }else {
                 tvShopManagerTableName.setText(R.string.waiter_unassigned);
             }
 
-            String table = data.getTable();
-            String type = data.getEvent().getMessage();
-
-            tvShopManagerTableTime.setText(time);
-            tvShopManagerTableNumber.setText(table);
-            tvShopManagerTableDetail.setText(type);
+            tvShopManagerTableTime.setText(data.getEvent().formatTimestamp());
+            tvShopManagerTableNumber.setText(data.getTable());
+            tvShopManagerTableDetail.setText(data.getEvent().getMessage());
         }
     }
 }

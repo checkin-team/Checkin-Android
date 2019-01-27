@@ -19,7 +19,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.Unbinder;
 
-public class ShopManagerTableStaticsFragment extends Fragment {
+public class ManagerStatsFragment extends Fragment {
 
     @BindView(R.id.cv_shop_manager_table_statics)
     CardView cvShopManagerTableStatics;
@@ -29,11 +29,11 @@ public class ShopManagerTableStaticsFragment extends Fragment {
     RecyclerView rvShopManagerTableStatics;
     Unbinder unbinder;
 
-    public ShopManagerTableStaticsFragment() {
+    public ManagerStatsFragment() {
     }
 
-    public static ShopManagerTableStaticsFragment newInstance() {
-        return new ShopManagerTableStaticsFragment();
+    public static ManagerStatsFragment newInstance() {
+        return new ManagerStatsFragment();
     }
 
     @Nullable

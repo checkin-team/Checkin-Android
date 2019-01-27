@@ -225,7 +225,7 @@
                 <de.hdodenhof.circleimageview.CircleImageView
                     android:id="@+id/im_as_waiter_pic"
                     style="@style/LogoImageStyle"
-                    android:src="@drawable/ic_waiter_person" />
+                    android:src="@drawable/ic_waiter" />
 
                 <TextView
                     android:layout_width="match_parent"

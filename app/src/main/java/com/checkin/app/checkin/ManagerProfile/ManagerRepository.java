@@ -15,12 +15,12 @@ import com.checkin.app.checkin.Session.Model.RestaurantTableModel;
 
 import java.util.List;
 
-public class RestaurantTableRepository {
+public class ManagerRepository {
 
-    private static RestaurantTableRepository INSTANCE;
+    private static ManagerRepository INSTANCE;
     private WebApiService mWebApiService;
 
-    private RestaurantTableRepository(Context context){
+    private ManagerRepository(Context context){
         mWebApiService = ApiClient.getApiService(context);
     }
 
@@ -45,11 +45,11 @@ public class RestaurantTableRepository {
         }.getAsLiveData();
     }
 
-    public static RestaurantTableRepository getInstance(Application application) {
+    public static ManagerRepository getInstance(Application application) {
         if (INSTANCE == null) {
-            synchronized (RestaurantTableRepository.class) {
+            synchronized (ManagerRepository.class) {
                 if (INSTANCE == null) {
-                    INSTANCE = new RestaurantTableRepository(application.getApplicationContext());
+                    INSTANCE = new ManagerRepository(application.getApplicationContext());
                 }
             }
         }
