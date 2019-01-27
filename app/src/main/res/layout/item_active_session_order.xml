@@ -139,7 +139,7 @@
             android:layout_centerInParent="true"
             android:fontFamily="@font/arial_rounded_mt_bold"
             android:gravity="center"
-            android:padding="@dimen/spacing_extra_small"
+            android:paddingTop="@dimen/spacing_tiny"
             android:textSize="@dimen/font_small"
             tools:text="In Progress" />
 

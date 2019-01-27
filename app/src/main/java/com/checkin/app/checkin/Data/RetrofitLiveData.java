@@ -39,9 +39,9 @@ public class RetrofitLiveData<T> extends LiveData<ApiResponse<T>> {
     @Override
     protected void onInactive() {
         super.onInactive();
-//        if (!hasObservers()) {
-//            cancel();
-//        }
+        if (!hasObservers()) {
+            cancel();
+        }
     }
 
     public void cancel() {

@@ -1,14 +1,12 @@
-package com.checkin.app.checkin.ManagerOrders;
+package com.checkin.app.checkin.Manager;
 
 import android.content.Context;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
-import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
@@ -27,28 +25,16 @@ import static com.checkin.app.checkin.Session.ActiveSession.Chat.SessionChatMode
 import static com.checkin.app.checkin.Session.ActiveSession.Chat.SessionChatModel.CHAT_STATUS_TYPE.IN_PROGRESS;
 import static com.checkin.app.checkin.Session.ActiveSession.Chat.SessionChatModel.CHAT_STATUS_TYPE.OPEN;
 
-public class ManagerOrdersNewAdapter extends RecyclerView.Adapter<ManagerOrdersNewAdapter.ViewHolder> {
-    private List<SessionOrderedItemModel> mOrdersNew;
-    private List<SessionOrderedItemModel> mOrdersAccepted;
+public class ManagerSessionOrderAdapter extends RecyclerView.Adapter<ManagerSessionOrderAdapter.ViewHolder> {
+    private List<SessionOrderedItemModel> mOrders;
     private SessionOrdersInteraction mListener;
-    private boolean mIsNew;
 
-    ManagerOrdersNewAdapter(List<SessionOrderedItemModel> orders, SessionOrdersInteraction ordersInterface, boolean isNew) {
-        mOrdersNew = orders;
-//        mOrdersAccepted = orders;
-        mIsNew = isNew;
+    ManagerSessionOrderAdapter(SessionOrdersInteraction ordersInterface) {
         mListener = ordersInterface;
     }
 
-    public void setDataNew(List<SessionOrderedItemModel> data) {
-        this.mOrdersNew = data;
-//        mIsNew = isNew;
-        notifyDataSetChanged();
-    }
-
-    public void setDataAccepted(List<SessionOrderedItemModel> data) {
-        this.mOrdersAccepted = data;
-//        mIsNew = isNew;
+    public void setData(List<SessionOrderedItemModel> data) {
+        this.mOrders = data;
         notifyDataSetChanged();
     }
 
@@ -61,48 +47,42 @@ public class ManagerOrdersNewAdapter extends RecyclerView.Adapter<ManagerOrdersN
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
-        Log.e("is=====bindview=", String.valueOf(mOrdersNew.size()));
-        holder.bindData(mOrdersNew.get(position));
-//       if(mIsNew) holder.bindData(mOrdersNew.get(position), mIsNew);
-//       else holder.bindData(mOrdersAccepted.get(position), mIsNew);
+        holder.bindData(mOrders.get(position));
     }
 
     @Override
     public int getItemCount() {
-        return mOrdersNew != null /*&& mOrdersAccepted !=null */? mOrdersNew.size()/* + mOrdersAccepted.size()*/ : 0;
+        return mOrders != null ? mOrders.size() : 0;
     }
 
     @Override
     public int getItemViewType(final int position) {
-        return R.layout.item_manager_orders_new;
-//        if (mOrdersNew.get(position).getStatus() == OPEN)
-//            return R.layout.item_manager_orders_new;
-//        else return R.layout.item_manager_orders_accepted;
+        return R.layout.item_manager_session_order;
     }
 
     class ViewHolder extends RecyclerView.ViewHolder {
-        @BindView(R.id.tv_order_item_name)
+        @BindView(R.id.tv_ms_order_item_name)
         TextView tvItemName;
-        @BindView(R.id.tv_order_quantity)
+        @BindView(R.id.tv_ms_order_item_quantity)
         TextView tvQuantity;
-        @BindView(R.id.tv_order_confirm)
+        @BindView(R.id.btn_ms_order_accept)
         Button tvOrderConfirm;
-        @BindView(R.id.tv_order_reject)
+        @BindView(R.id.btn_ms_order_cancel)
         Button tvOrderReject;
-        @BindView(R.id.tv_order_remarks)
+        @BindView(R.id.tv_ms_order_remarks)
         TextView tvRemarks;
-        @BindView(R.id.im_order_type)
-        ImageView imOrderType;
-        @BindView(R.id.container_order_customizations)
+        @BindView(R.id.container_ms_order_customizations)
         ViewGroup containerCustomizations;
-        @BindView(R.id.container_order_customizations_left)
+        @BindView(R.id.container_ms_order_customizations_left)
         LinearLayout containerCustomizationsLeft;
-        @BindView(R.id.container_order_customizations_right)
+        @BindView(R.id.container_ms_order_customizations_right)
         LinearLayout containerCustomizationsRight;
-        @BindView(R.id.container_order_remarks)
+        @BindView(R.id.container_ms_order_remarks)
         LinearLayout containerRemarks;
-        @BindView(R.id.tv_order_status)
+        @BindView(R.id.tv_ms_order_status)
         TextView tvOrderStatus;
+        @BindView(R.id.container_ms_order_status_open)
+        ViewGroup containerStatusOpen;
 
         private SessionOrderedItemModel mOrderModel;
 
@@ -116,42 +96,33 @@ public class ManagerOrdersNewAdapter extends RecyclerView.Adapter<ManagerOrdersN
 
         void bindData(SessionOrderedItemModel order) {
             this.mOrderModel = order;
-            Log.e("is======11==", order.getItem().getName());
 
-//            if (order.getStatus() == OPEN) {
-                tvItemName.setText(order.getItem().getName());
-                tvQuantity.setText(order.formatQuantityItemType());
+            tvItemName.setText(order.getItem().getName());
+            tvQuantity.setText(order.formatQuantityItemType());
 
-                if (!order.getItem().isVegetarian())
-                    imOrderType.setImageDrawable(imOrderType.getContext().getResources().getDrawable(R.drawable.ic_non_veg_square));
+            if (!order.getItem().isVegetarian())
+                tvItemName.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ic_non_veg, 0, 0, 0);
 
-                if (order.getRemarks() == null) containerRemarks.setVisibility(View.GONE);
-                else tvRemarks.setText(order.getRemarks());
+            if (order.getRemarks() == null) containerRemarks.setVisibility(View.GONE);
+            else tvRemarks.setText(order.getRemarks());
 
-                if (order.getCustomizations().size() > 0) {
-                    containerCustomizations.setVisibility(View.VISIBLE);
-                    containerCustomizationsRight.removeAllViews();
-                    containerCustomizationsLeft.removeAllViews();
-                    for (int i = 0; i < order.getCustomizations().size(); i++) {
-                        addCustomizations(
-                                itemView.getContext(), order.getCustomizations().get(i), i % 2 == 0 ? containerCustomizationsLeft : containerCustomizationsRight);
-                    }
-                } else {
-                    containerCustomizations.setVisibility(View.GONE);
+            if (order.getCustomizations().size() > 0) {
+                containerCustomizations.setVisibility(View.VISIBLE);
+                containerCustomizationsRight.removeAllViews();
+                containerCustomizationsLeft.removeAllViews();
+                for (int i = 0; i < order.getCustomizations().size(); i++) {
+                    addCustomizations(
+                            itemView.getContext(), order.getCustomizations().get(i), i % 2 == 0 ? containerCustomizationsLeft : containerCustomizationsRight);
                 }
+            } else {
+                containerCustomizations.setVisibility(View.GONE);
+            }
 
-                /*if(!mIsNew){
-                    Log.e("is======", String.valueOf(mIsNew));
-                    tvOrderStatus.setVisibility(View.VISIBLE);
-                    tvOrderConfirm.setVisibility(View.GONE);
-                    tvOrderReject.setVisibility(View.GONE);
-                } else{
-                    Log.e("is====else==", String.valueOf(mIsNew));
-                    tvOrderConfirm.setVisibility(View.VISIBLE);
-                    tvOrderReject.setVisibility(View.VISIBLE);
-                    tvOrderStatus.setVisibility(View.GONE);
-                }
-
+            if (order.getStatus() == OPEN) {
+                containerStatusOpen.setVisibility(View.VISIBLE);
+                tvOrderStatus.setVisibility(View.GONE);
+            } else {
+                containerStatusOpen.setVisibility(View.GONE);
                 switch (order.getStatus()) {
                     case IN_PROGRESS:
                         tvOrderStatus.setText(R.string.status_order_in_progress);
@@ -165,8 +136,8 @@ public class ManagerOrdersNewAdapter extends RecyclerView.Adapter<ManagerOrdersN
                         tvOrderStatus.setText(R.string.status_cancelled);
                         tvOrderStatus.setBackgroundColor(tvOrderStatus.getContext().getResources().getColor(R.color.primary_red));
                         break;
-                }*/
-//            }
+                }
+            }
         }
 
         void addCustomizations(Context context, ItemCustomizationGroupModel group, ViewGroup

@@ -9,13 +9,11 @@ import com.checkin.app.checkin.Data.BaseViewModel;
 import com.checkin.app.checkin.Data.Converters;
 import com.checkin.app.checkin.Data.Resource;
 import com.checkin.app.checkin.Session.Model.SessionInvoiceModel;
-import com.checkin.app.checkin.Session.SessionRepository;
 import com.checkin.app.checkin.Shop.ShopModel;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 
 public class ActiveSessionViewModel extends BaseViewModel {
     private final ActiveSessionRepository mRepository;
-    private final SessionRepository mSessionRepository;
 
     private MediatorLiveData<Resource<ActiveSessionModel>> mSessionData = new MediatorLiveData<>();
     private MediatorLiveData<Resource<SessionInvoiceModel>> mInvoiceData = new MediatorLiveData<>();
@@ -25,7 +23,6 @@ public class ActiveSessionViewModel extends BaseViewModel {
     ActiveSessionViewModel(@NonNull Application application) {
         super(application);
         mRepository = ActiveSessionRepository.getInstance(application);
-        mSessionRepository = SessionRepository.getInstance(application);
     }
 
     @Override
@@ -58,7 +55,7 @@ public class ActiveSessionViewModel extends BaseViewModel {
     }
 
     public void fetchSessionInvoice() {
-        mInvoiceData.addSource(mSessionRepository.getSessionInvoiceDetail(), mInvoiceData::setValue);
+        mInvoiceData.addSource(mRepository.getActiveSessionInvoice(), mInvoiceData::setValue);
     }
 
     public void requestCheckout(double tip, ShopModel.PAYMENT_MODE paymentMode) {

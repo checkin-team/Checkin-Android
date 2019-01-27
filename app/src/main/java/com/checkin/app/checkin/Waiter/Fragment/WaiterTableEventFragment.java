@@ -15,7 +15,9 @@ import android.widget.TextView;
 
 import com.checkin.app.checkin.Data.Resource.Status;
 import com.checkin.app.checkin.R;
+import com.checkin.app.checkin.Session.ActiveSession.Chat.SessionChatModel.CHAT_STATUS_TYPE;
 import com.checkin.app.checkin.Session.Model.SessionOrderedItemModel;
+import com.checkin.app.checkin.Utility.Utils;
 import com.checkin.app.checkin.Waiter.Model.WaiterEventModel;
 import com.checkin.app.checkin.Waiter.WaiterEventAdapter;
 import com.checkin.app.checkin.Waiter.WaiterTableViewModel;
@@ -69,8 +71,10 @@ public class WaiterTableEventFragment extends Fragment implements WaiterEventAda
             if (listResource == null)
                 return;
             if (listResource.status == Status.SUCCESS && listResource.data != null) {
+                refreshEvent.setRefreshing(false);
                 mAdapter.setData(listResource.data);
-            }
+            } else if (listResource.status == Status.LOADING)
+                refreshEvent.setRefreshing(true);
         });
         mViewModel.getSessionDetail().observe(this, resource -> {
             if (resource == null)
@@ -79,26 +83,44 @@ public class WaiterTableEventFragment extends Fragment implements WaiterEventAda
                 tvMembersCount.setText(resource.data.formatCustomerCount());
             }
         });
+        mViewModel.getObservableData().observe(this, resource -> {
+            if (resource == null)
+                return;
+            if (resource.status == Status.SUCCESS && resource.data != null)
+                Utils.toast(requireContext(), "Done!");
+            else if (resource.status != Status.LOADING)
+                Utils.toast(requireContext(), resource.message);
+        });
+        mViewModel.getEventUpdate().observe(this, resource -> {
+            if (resource == null)
+                return;
+            if (resource.status == Status.SUCCESS && resource.data != null)
+                Utils.toast(requireContext(), resource.data.getDetail());
+            else if (resource.status != Status.LOADING)
+                Utils.toast(requireContext(), resource.message);
+        });
+
+        refreshEvent.setOnRefreshListener(() -> mViewModel.updateResults());
     }
 
     @Override
     public void onEventMarkDone(WaiterEventModel eventModel) {
-
+        mViewModel.markEventDone(eventModel.getPk());
     }
 
     @Override
     public void onOrderMarkDone(SessionOrderedItemModel orderedItemModel) {
-
+        mViewModel.updateOrderStatus(orderedItemModel.getPk(), CHAT_STATUS_TYPE.DONE);
     }
 
     @Override
     public void onOrderAccept(SessionOrderedItemModel orderedItemModel) {
-
+        mViewModel.updateOrderStatus(orderedItemModel.getPk(), CHAT_STATUS_TYPE.IN_PROGRESS);
     }
 
     @Override
     public void onOrderCancel(SessionOrderedItemModel orderedItemModel) {
-
+        mViewModel.updateOrderStatus(orderedItemModel.getPk(), CHAT_STATUS_TYPE.CANCELLED);
     }
 
     @Override

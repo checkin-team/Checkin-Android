@@ -1,0 +1,153 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginStart="@dimen/spacing_small"
+    android:layout_marginTop="@dimen/spacing_normal"
+    android:layout_marginEnd="@dimen/spacing_small"
+    android:background="@color/white"
+    android:paddingTop="@dimen/spacing_small">
+
+    <TextView
+        android:id="@+id/tv_ms_order_item_name"
+        style="@style/GreySmallTextStyle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:drawableStart="@drawable/ic_veg"
+        android:drawablePadding="@dimen/spacing_small"
+        android:gravity="center_vertical|start"
+        app:layout_constraintBottom_toBottomOf="@id/container_ms_order_status"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:text="Pizza" />
+
+    <TextView
+        android:id="@+id/tv_ms_order_item_quantity"
+        style="@style/GreySmallTextStyle"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:textAlignment="center"
+        app:layout_constraintBottom_toBottomOf="@id/container_ms_order_status"
+        app:layout_constraintEnd_toStartOf="@id/container_ms_order_status"
+        app:layout_constraintHorizontal_bias="0"
+        app:layout_constraintStart_toEndOf="@id/tv_ms_order_item_name"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:text="QTY: 1" />
+
+    <FrameLayout
+        android:id="@+id/container_ms_order_status"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <TextView
+            android:id="@+id/tv_ms_order_status"
+            style="@style/WhiteSmallTextStyle"
+            android:layout_width="@dimen/width_manager_order_item_status"
+            android:layout_height="wrap_content"
+            android:background="@color/primary_red"
+            android:paddingTop="@dimen/spacing_tiny"
+            android:paddingBottom="@dimen/spacing_tiny"
+            android:textAlignment="center"
+            android:textAllCaps="true"
+            android:textSize="@dimen/font_extra_small"
+            tools:text="In Progress" />
+
+        <LinearLayout
+            android:id="@+id/container_ms_order_status_open"
+            android:layout_width="wrap_content"
+            android:layout_height="@dimen/size_small_button"
+            android:orientation="horizontal"
+            android:visibility="gone">
+
+            <Button
+                android:id="@+id/btn_ms_order_accept"
+                style="@style/ButtonPositiveAction"
+                android:layout_width="@dimen/button_width_short"
+                android:layout_height="match_parent"
+                android:layout_marginEnd="@dimen/spacing_tiny"
+                android:gravity="center"
+                android:text="@string/confirm"
+                android:textSize="@dimen/font_extra_small" />
+
+            <Button
+                android:id="@+id/btn_ms_order_cancel"
+                style="@style/ButtonNeutralAction"
+                android:layout_width="@dimen/button_width_short"
+                android:layout_height="match_parent"
+                android:gravity="center"
+                android:text="@string/reject"
+                android:textSize="@dimen/font_extra_small" />
+        </LinearLayout>
+    </FrameLayout>
+
+    <LinearLayout
+        android:id="@+id/container_ms_order_customizations"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/spacing_extra_small"
+        android:layout_marginTop="@dimen/spacing_extra_small"
+        android:layout_marginEnd="@dimen/spacing_extra_small"
+        android:orientation="horizontal"
+        android:visibility="gone"
+        app:layout_constraintBottom_toTopOf="@id/container_ms_order_remarks"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/container_ms_order_status">
+
+        <LinearLayout
+            android:id="@+id/container_ms_order_customizations_left"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/spacing_normal"
+            android:layout_marginEnd="@dimen/spacing_normal"
+            android:layout_weight="1"
+            android:gravity="start"
+            android:orientation="vertical" />
+
+        <LinearLayout
+            android:id="@+id/container_ms_order_customizations_right"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/spacing_normal"
+            android:layout_marginEnd="@dimen/spacing_normal"
+            android:layout_weight="1"
+            android:gravity="end"
+            android:orientation="vertical" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/container_ms_order_remarks"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/spacing_small"
+        android:orientation="vertical"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent">
+
+        <include layout="@layout/incl_horizontal_line" />
+
+        <TextView
+            style="@style/RedSmallTextStyle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/spacing_normal"
+            android:layout_marginTop="@dimen/spacing_extra_small"
+            android:text="@string/title_your_request" />
+
+        <TextView
+            android:id="@+id/tv_ms_order_remarks"
+            style="@style/GreySmallTextStyle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/spacing_normal"
+            android:layout_marginEnd="@dimen/spacing_normal"
+            tools:text="requested no cheese" />
+
+    </LinearLayout>
+</android.support.constraint.ConstraintLayout>

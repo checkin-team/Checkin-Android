@@ -61,6 +61,7 @@
     <dimen name="button_height_short">32dp</dimen>
 
     <dimen name="button_width_normal">100dp</dimen>
+    <dimen name="button_width_short">70dp</dimen>
 
     <dimen name="button_oval_large">120dp</dimen>
     <dimen name="button_oval_normal">96dp</dimen>
@@ -88,6 +89,11 @@
     <!--Order dimensions-->
     <dimen name="height_card_order_status">50dp</dimen>
     <dimen name="size_icon_order_status">@dimen/size_medium_icon</dimen>
+
+    <!--Manager dimensions-->
+    <dimen name="height_manager_bottom_actions">140dp</dimen>
+    <dimen name="width_manager_order_item_name">150dp</dimen>
+    <dimen name="width_manager_order_item_status">80dp</dimen>
 
     <!-- Card dimensions -->
     <dimen name="card_elevation">4dp</dimen>

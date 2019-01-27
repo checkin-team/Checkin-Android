@@ -6,6 +6,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.speech.RecognizerIntent;
+import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.AlertDialog;
@@ -50,7 +51,8 @@ public class SessionMenuActivity extends BaseActivity implements
         MenuCartAdapter.MenuCartInteraction, MenuFilterFragment.MenuFilterInteraction {
     private static final String TAG = SessionMenuActivity.class.getSimpleName();
 
-    private static final String KEY_RESTAURANT_PK = "session.shop_pk";
+    private static final String KEY_RESTAURANT_PK = "menu.shop_pk";
+    private static final String KEY_SESSION_PK = "menu.session_pk";
 
     @BindView(R.id.view_menu_search)
     MaterialSearchView vMenuSearch;
@@ -70,11 +72,13 @@ public class SessionMenuActivity extends BaseActivity implements
 
     private static final String SESSION_ARG = "session_arg";
 
-    public static void withSession(Context context, long sessionPk, long restaurantPk) {
+    public static void withSession(Context context, Long restaurantPk, @Nullable Long sessionPk) {
         Intent intent = new Intent(context, SessionMenuActivity.class);
         Bundle args = new Bundle();
         args.putSerializable(KEY_SESSION_STATUS, SESSION_STATUS.ACTIVE);
         args.putLong(KEY_RESTAURANT_PK, restaurantPk);
+        if (sessionPk != null)
+            args.putLong(KEY_SESSION_PK, sessionPk);
         intent.putExtra(SESSION_ARG, args);
         context.startActivity(intent);
     }
@@ -101,6 +105,9 @@ public class SessionMenuActivity extends BaseActivity implements
 
         mViewModel = ViewModelProviders.of(this).get(MenuViewModel.class);
         mViewModel.fetchAvailableMenu(args.getLong(KEY_RESTAURANT_PK));
+        long sessionPk = args.getLong(KEY_SESSION_PK, 0L);
+        if (sessionPk > 0L)
+            mViewModel.manageSession(sessionPk);
 
         mSearchFragment = MenuItemSearchFragment.newInstance(SessionMenuActivity.this, isSessionActive());
 
@@ -158,7 +165,7 @@ public class SessionMenuActivity extends BaseActivity implements
         if (isSessionActive()) {
             DrawerLayout drawerLayout = findViewById(R.id.drawer_menu);
             EndDrawerToggle endToggle = new EndDrawerToggle(
-                    this, drawerLayout, toolbar, R.string.menu_drawer_open, R.string.menu_drawer_close, R.drawable.ic_cart);
+                    this, drawerLayout, toolbar, R.string.menu_drawer_open, R.string.menu_drawer_close, R.drawable.ic_cart_white);
             drawerLayout.addDrawerListener(endToggle);
             endToggle.syncState();
         } else {

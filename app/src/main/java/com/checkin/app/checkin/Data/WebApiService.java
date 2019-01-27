@@ -17,11 +17,11 @@ import com.checkin.app.checkin.Session.Model.SessionInvoiceModel;
 import com.checkin.app.checkin.Session.Model.SessionOrderedItemModel;
 import com.checkin.app.checkin.Shop.RecentCheckin.Model.RecentCheckinModel;
 import com.checkin.app.checkin.Shop.RestaurantModel;
+import com.checkin.app.checkin.Shop.ShopJoin.ShopJoinModel;
+import com.checkin.app.checkin.Shop.ShopPrivateProfile.Finance.FinanceModel;
 import com.checkin.app.checkin.Shop.ShopPrivateProfile.Invoice.RestaurantSessionModel;
 import com.checkin.app.checkin.Shop.ShopPrivateProfile.Invoice.ShopSessionDetailModel;
 import com.checkin.app.checkin.Shop.ShopPrivateProfile.Invoice.ShopSessionFeedbackModel;
-import com.checkin.app.checkin.Shop.ShopJoin.ShopJoinModel;
-import com.checkin.app.checkin.Shop.ShopPrivateProfile.Finance.FinanceModel;
 import com.checkin.app.checkin.Shop.ShopPrivateProfile.MemberModel;
 import com.checkin.app.checkin.User.Friendship.FriendshipModel;
 import com.checkin.app.checkin.User.NonPersonalProfile.ShopCustomerModel;
@@ -143,6 +143,21 @@ public interface WebApiService {
 
     @DELETE("restaurants/{shop_id}/members/{user_id}/")
     Call<ObjectNode> deleteRestaurantMember(@Path("shop_id") long shopId, @Path("user_id") long userId);
+
+    @GET("sessions/restaurants/{restaurant_id}/")
+    Call<List<RestaurantSessionModel>> getRestaurantSessionsById(@Path("restaurant_id") long restaurantId, @Query("checked_out_after") String checkedOutAfter, @Query("checked_out_before") String checkedOutBefore);
+
+    @GET("sessions/{session_id}/detail/")
+    Call<ShopSessionDetailModel> getShopSessionDetailById(@Path("session_id") long sessionId);
+
+    @GET("sessions/{session_id}/feedbacks/")
+    Call<List<ShopSessionFeedbackModel>> getShopSessionFeedbackById(@Path("session_id") long sessionId);
+
+    @GET("restaurants/{restaurant_id}/finance/")
+    Call<FinanceModel> getRestaurantFinanceById(@Path("restaurant_id") long restaurantId);
+
+    @PUT("restaurants/{restaurant_id}/finance/")
+    Call<GenericDetailModel> setRestaurantFinanceById(@Body FinanceModel financeModel, @Path("restaurant_id") long restaurantId);
     // endregion
 
     // endregion
@@ -186,10 +201,13 @@ public interface WebApiService {
     Call<ObjectNode> postCustomerRequestCheckout(@Body ObjectNode data);
 
     @GET("sessions/active/invoice/")
-    Call<SessionInvoiceModel> getSessionInvoice();
+    Call<SessionInvoiceModel> getActiveSessionInvoice();
 
     @GET("sessions/{session_id}/brief/")
     Call<SessionBriefModel> getSessionBriefDetail(@Path("session_id") long sessionId);
+
+    @GET("sessions/{session_id}/orders/")
+    Call<List<SessionOrderedItemModel>> getSessionOrders(@Path("session_id") long sessionId);
 
     // endregion
 
@@ -207,14 +225,11 @@ public interface WebApiService {
     @GET("sessions/waiter/tables/active/")
     Call<List<WaiterTableModel>> getWaiterServedTables();
 
-    @GET("sessions/{session_id}/orders/")
-    Call<List<SessionOrderedItemModel>> getManagerOrders(@Path("session_id") int sessionId);
-
     @POST("sessions/manage/orders/{order_id}/status/")
-    Call<ObjectNode> postChangeOrderStatus(@Path("order_id") int orderId, @Body ObjectNode data);
+    Call<ObjectNode> postChangeOrderStatus(@Path("order_id") long orderId, @Body ObjectNode data);
 
-    @GET("sessions/{session_id}/brief/")
-    Call<ActiveSessionModel> getManagerOrderBrief(@Path("session_id") int sessionId);
+    @PUT("sessions/manage/events/{event_id}/done/")
+    Call<GenericDetailModel> putSessionEventDone(@Path("event_id") long eventId);
 
     // endregion
 
@@ -230,6 +245,9 @@ public interface WebApiService {
 
     @DELETE("sessions/active/orders/{order_id}/")
     Call<ObjectNode> deleteSessionOrder(@Path("order_id") String order_id);
+
+    @POST("sessions/{session_id}/manage/order/")
+    Call<ArrayNode> postSessionManagerOrders(@Path("session_id") long sessionId, @Body List<OrderedItemModel> orderedItemModels);
 
     // endregion
 
@@ -256,20 +274,4 @@ public interface WebApiService {
     Call<List<SearchResultShopModel>> getSearchShopResults(
             @Query("search") String query, @Query("has_nonveg") Boolean hasNonVeg, @Query("has_alcohol") Boolean hasAlcohol
     );
-
-    /*ShopInvoice all API*/
-    @GET("sessions/restaurants/{restaurant_id}/")
-    Call<List<RestaurantSessionModel>> getRestaurantSessionsById(@Path("restaurant_id") long restaurantId, @Query("checked_out_after") String checkedOutAfter, @Query("checked_out_before") String checkedOutBefore);
-
-    @GET("sessions/{session_id}/detail/")
-    Call<ShopSessionDetailModel> getShopSessionDetailById(@Path("session_id") long sessionId);
-
-    @GET("sessions/{session_id}/feedbacks/")
-    Call<List<ShopSessionFeedbackModel>> getShopSessionFeedbackById(@Path("session_id") long sessionId);
-
-    @GET("restaurants/{restaurant_id}/finance/")
-    Call<FinanceModel> getRestaurantFinanceById(@Path("restaurant_id") long restaurantId);
-
-    @PUT("restaurants/{restaurant_id}/finance/")
-    Call<GenericDetailModel> setRestaurantFinanceById(@Body FinanceModel financeModel, @Path("restaurant_id") long restaurantId);
 }

@@ -70,7 +70,7 @@
             android:layout_marginStart="@dimen/spacing_tiny"
             android:text="Ritika Das accepted your follow request"
             android:textStyle="bold"
-            app:layout_constraintBottom_toTopOf="@+id/time"
+            app:layout_constraintBottom_toTopOf="@+id/tv_notif_item_time"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"

@@ -66,6 +66,26 @@ public class MenuRepository {
         }.getAsLiveData();
     }
 
+    public LiveData<Resource<ArrayNode>> postMenuManageOrders(final long sessionPk, final List<OrderedItemModel> orders) {
+        return new NetworkBoundResource<ArrayNode, ArrayNode>() {
+            @Override
+            protected boolean shouldUseLocalDb() {
+                return false;
+            }
+
+            @NonNull
+            @Override
+            protected LiveData<ApiResponse<ArrayNode>> createCall() {
+                return new RetrofitLiveData<>(mWebService.postSessionManagerOrders(sessionPk, orders));
+            }
+
+            @Override
+            protected void saveCallResult(ArrayNode data) {
+
+            }
+        }.getAsLiveData();
+    }
+
     public static MenuRepository getInstance(Application application) {
         if (INSTANCE == null) {
             synchronized (MenuRepository.class) {

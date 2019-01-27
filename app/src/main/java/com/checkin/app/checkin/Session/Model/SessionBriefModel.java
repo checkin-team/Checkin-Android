@@ -42,6 +42,10 @@ public class SessionBriefModel {
         return bill;
     }
 
+    public String formatBill() {
+        return String.valueOf(bill);
+    }
+
     public Date getCreated() {
         return created;
     }

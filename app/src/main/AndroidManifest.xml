@@ -172,7 +172,7 @@
             android:label="@string/action_discount"
             android:theme="@style/AppThemeWhiteActionBar" />
         <activity
-            android:name=".ManagerOrders.ManagerOrdersActivity"
+            android:name=".Manager.ManagerSessionActivity"
             android:windowSoftInputMode="adjustNothing" />
 
         <service

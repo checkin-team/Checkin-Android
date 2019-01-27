@@ -68,7 +68,7 @@
                     android:layout_height="@dimen/size_small_button"
                     android:layout_gravity="center"
                     android:layout_marginEnd="@dimen/spacing_small"
-                    android:src="@drawable/ic_cart" />
+                    android:src="@drawable/ic_cart_white" />
 
             </LinearLayout>
         </android.support.v7.widget.Toolbar>

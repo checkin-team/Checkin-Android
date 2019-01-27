@@ -13,6 +13,7 @@ import com.checkin.app.checkin.Data.Resource;
 import com.checkin.app.checkin.Data.RetrofitLiveData;
 import com.checkin.app.checkin.Data.WebApiService;
 import com.checkin.app.checkin.Session.ActiveSession.Chat.SessionChatModel;
+import com.checkin.app.checkin.Session.Model.SessionInvoiceModel;
 import com.checkin.app.checkin.Session.Model.SessionOrderedItemModel;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 
@@ -42,7 +43,6 @@ public class ActiveSessionRepository extends BaseRepository {
         return INSTANCE;
     }
 
-
     public LiveData<Resource<ActiveSessionModel>> getActiveSessionDetail() {
         return new NetworkBoundResource<ActiveSessionModel, ActiveSessionModel>() {
 
@@ -59,6 +59,27 @@ public class ActiveSessionRepository extends BaseRepository {
             }
         }.getAsLiveData();
     }
+
+    public LiveData<Resource<SessionInvoiceModel>> getActiveSessionInvoice() {
+        return new NetworkBoundResource<SessionInvoiceModel, SessionInvoiceModel>() {
+
+            @Override
+            protected void saveCallResult(SessionInvoiceModel data) {
+            }
+
+            @Override
+            protected boolean shouldUseLocalDb() {
+                return false;
+            }
+
+            @NonNull
+            @Override
+            protected LiveData<ApiResponse<SessionInvoiceModel>> createCall() {
+                return new RetrofitLiveData<>(mWebService.getActiveSessionInvoice());
+            }
+        }.getAsLiveData();
+    }
+
 
     public LiveData<Resource<ObjectNode>> postAddMembers(ObjectNode data) {
         return new NetworkBoundResource<ObjectNode, ObjectNode>() {

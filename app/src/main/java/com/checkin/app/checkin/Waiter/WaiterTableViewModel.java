@@ -6,10 +6,14 @@ import android.arch.lifecycle.MediatorLiveData;
 import android.support.annotation.NonNull;
 
 import com.checkin.app.checkin.Data.BaseViewModel;
+import com.checkin.app.checkin.Data.Converters;
 import com.checkin.app.checkin.Data.Resource;
+import com.checkin.app.checkin.Misc.GenericDetailModel;
+import com.checkin.app.checkin.Session.ActiveSession.Chat.SessionChatModel;
 import com.checkin.app.checkin.Session.Model.SessionBriefModel;
 import com.checkin.app.checkin.Session.SessionRepository;
 import com.checkin.app.checkin.Waiter.Model.WaiterEventModel;
+import com.fasterxml.jackson.databind.node.ObjectNode;
 
 import java.util.List;
 
@@ -19,6 +23,7 @@ public class WaiterTableViewModel extends BaseViewModel {
 
     private MediatorLiveData<Resource<SessionBriefModel>> mSessionDetail = new MediatorLiveData<>();
     private MediatorLiveData<Resource<List<WaiterEventModel>>> mEventData = new MediatorLiveData<>();
+    private MediatorLiveData<Resource<GenericDetailModel>> mEventUpdate = new MediatorLiveData<>();
 
     private long mSessionPk;
 
@@ -49,8 +54,22 @@ public class WaiterTableViewModel extends BaseViewModel {
         return mSessionPk;
     }
 
+    public void updateOrderStatus(long orderId, SessionChatModel.CHAT_STATUS_TYPE statusType) {
+        ObjectNode data = Converters.objectMapper.createObjectNode();
+        data.put("status", statusType.tag);
+        mData.addSource(mWaiterRepository.changeOrderStatus(orderId, data), mData::setValue);
+    }
+
+    public void markEventDone(long eventId) {
+        mEventUpdate.addSource(mWaiterRepository.markEventDone(eventId), mEventUpdate::setValue);
+    }
+
+    public LiveData<Resource<GenericDetailModel>> getEventUpdate() {
+        return mEventUpdate;
+    }
+
     @Override
     public void updateResults() {
-
+        fetchTableEvents();
     }
 }

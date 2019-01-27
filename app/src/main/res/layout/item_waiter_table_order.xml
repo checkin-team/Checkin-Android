@@ -144,7 +144,7 @@
                 android:clickable="true"
                 android:focusable="true"
                 android:padding="@dimen/spacing_extra_small"
-                android:src="@drawable/ic_order_status_cooking" />
+                android:src="@drawable/ic_order_cooking_grey" />
 
             <ImageView
                 android:id="@+id/im_waiter_order_mark_done"

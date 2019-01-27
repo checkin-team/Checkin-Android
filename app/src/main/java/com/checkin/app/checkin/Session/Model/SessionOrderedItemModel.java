@@ -43,10 +43,6 @@ public class SessionOrderedItemModel {
     @JsonProperty("status")
     private CHAT_STATUS_TYPE status;
 
-    private String newOrderSize;
-    private String inProgressOrderSize;
-    private String deliveredOrderSize;
-
     public SessionOrderedItemModel() {
     }
 
@@ -143,29 +139,5 @@ public class SessionOrderedItemModel {
 
     public String formatQuantityItemType() {
         return String.format(Locale.ENGLISH, "%d %s", quantity, itemType);
-    }
-
-    public String getNewOrderSize() {
-        return newOrderSize;
-    }
-
-    public void setNewOrderSize(String newOrderSize) {
-        this.newOrderSize = newOrderSize;
-    }
-
-    public String getInProgressOrderSize() {
-        return inProgressOrderSize;
-    }
-
-    public void setInProgressOrderSize(String inProgressOrderSize) {
-        this.inProgressOrderSize = inProgressOrderSize;
-    }
-
-    public String getDeliveredOrderSize() {
-        return deliveredOrderSize;
-    }
-
-    public void setDeliveredOrderSize(String deliveredOrderSize) {
-        this.deliveredOrderSize = deliveredOrderSize;
     }
 }

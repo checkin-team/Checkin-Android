@@ -2,15 +2,15 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/background_top_inner_shadow"
-    android:orientation="vertical">
+    android:orientation="vertical"
+    android:background="@color/white">
 
     <android.support.v4.widget.SwipeRefreshLayout
-        android:id="@+id/refresh_orders"
+        android:id="@+id/refresh_ms_orders"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-        <ScrollView
+        <android.support.v4.widget.NestedScrollView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:fillViewport="true"
@@ -19,34 +19,36 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/spacing_extra_small"
                 android:orientation="vertical">
 
                 <android.support.v7.widget.RecyclerView
-                    android:id="@+id/rv_orders_accepted"
+                    android:id="@+id/rv_ms_orders_accepted"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:paddingBottom="@dimen/spacing_normal"/>
-
+                    android:nestedScrollingEnabled="false"
+                    android:paddingBottom="@dimen/spacing_normal" />
 
                 <TextView
-                    android:id="@+id/tv_new_header"
+                    android:id="@+id/title_ms_new"
                     style="@style/RedSmallTextStyle"
                     android:layout_width="match_parent"
-                    android:layout_height="@dimen/size_small_button"
+                    android:layout_height="wrap_content"
                     android:background="@color/pinkish_grey"
                     android:gravity="center"
+                    android:padding="@dimen/spacing_small"
                     android:text="@string/label_new"
                     android:textAllCaps="true"
-                    android:visibility="gone"/>
+                    android:visibility="gone" />
 
                 <android.support.v7.widget.RecyclerView
-                    android:id="@+id/rv_orders_new"
+                    android:id="@+id/rv_ms_orders_new"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:paddingBottom="@dimen/spacing_small"/>
+                    android:nestedScrollingEnabled="false"
+                    android:paddingBottom="@dimen/spacing_small"
+                    android:visibility="gone" />
 
             </LinearLayout>
-        </ScrollView>
+        </android.support.v4.widget.NestedScrollView>
     </android.support.v4.widget.SwipeRefreshLayout>
 </LinearLayout>

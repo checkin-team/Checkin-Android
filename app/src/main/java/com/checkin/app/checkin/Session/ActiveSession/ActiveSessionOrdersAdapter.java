@@ -106,15 +106,17 @@ public class ActiveSessionOrdersAdapter extends RecyclerView.Adapter<ActiveSessi
                 case OPEN:
                     tvOrderStatus.setText(R.string.status_order_open);
                     tvOrderStatus.setTextColor(itemView.getResources().getColor(R.color.order_status_bad));
+                    tvOrderStatus.setCompoundDrawablesWithIntrinsicBounds(0, R.drawable.ic_order_new_grey, 0, 0);
                     break;
                 case IN_PROGRESS:
                     tvOrderStatus.setText(R.string.status_order_in_progress);
                     tvOrderStatus.setTextColor(itemView.getResources().getColor(R.color.order_status_good));
-                    tvOrderStatus.setCompoundDrawablesWithIntrinsicBounds(0, R.drawable.ic_order_status_cooking, 0, 0);
+                    tvOrderStatus.setCompoundDrawablesWithIntrinsicBounds(0, R.drawable.ic_order_cooking_grey, 0, 0);
                     break;
                 case DONE:
                     tvOrderStatus.setText(R.string.status_order_delivered);
                     tvOrderStatus.setTextColor(itemView.getResources().getColor(R.color.order_status_good));
+                    tvOrderStatus.setCompoundDrawablesWithIntrinsicBounds(0, R.drawable.ic_order_delivered_grey, 0, 0);
                     break;
                 case CANCELLED:
                     tvOrderStatus.setText(R.string.status_order_cancelled);

@@ -26,12 +26,11 @@ import android.widget.TextView;
 import com.checkin.app.checkin.Account.AccountModel.ACCOUNT_TYPE;
 import com.checkin.app.checkin.Account.BaseAccountActivity;
 import com.checkin.app.checkin.Data.Resource.Status;
-import com.checkin.app.checkin.ManagerOrders.ManagerOrdersActivity;
+import com.checkin.app.checkin.Manager.ManagerSessionActivity;
 import com.checkin.app.checkin.Menu.SessionMenuActivity;
 import com.checkin.app.checkin.Misc.QRScannerActivity;
 import com.checkin.app.checkin.Notifications.NotificationActivity;
 import com.checkin.app.checkin.R;
-import com.checkin.app.checkin.Waiter.WaiterWorkActivity;
 import com.checkin.app.checkin.Search.SearchActivity;
 import com.checkin.app.checkin.Session.ActiveSession.ActiveSessionActivity;
 import com.checkin.app.checkin.Shop.ShopJoin.BusinessFeaturesActivity;
@@ -42,6 +41,7 @@ import com.checkin.app.checkin.Utility.ClipRevealFrame;
 import com.checkin.app.checkin.Utility.Constants;
 import com.checkin.app.checkin.Utility.ItemClickSupport;
 import com.checkin.app.checkin.Utility.Utils;
+import com.checkin.app.checkin.Waiter.WaiterWorkActivity;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -396,8 +396,7 @@ public class HomeActivity extends BaseAccountActivity
             case R.id.nav_menu:
                 SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
                 long restaurantPk = prefs.getLong(Constants.SP_SESSION_RESTAURANT_PK, 0);
-                long sessionPk = prefs.getLong(Constants.SP_SESSION_ACTIVE_PK, 0);
-                SessionMenuActivity.withSession(this, sessionPk, restaurantPk);
+                SessionMenuActivity.withSession(this, restaurantPk, null);
                 break;
             case R.id.nav_privacy_settings:
                 startActivity(new Intent(this,ActiveSessionActivity.class));
@@ -506,12 +505,15 @@ public class HomeActivity extends BaseAccountActivity
 
     @OnClick(R.id.action_dine_in)
     public  void dine_in(View v){
-//        startActivity(new Intent(this, BusinessFeaturesActivity.class));
-        startActivity(new Intent(this, ManagerOrdersActivity.class));
+        startActivity(new Intent(this, BusinessFeaturesActivity.class));
     }
 
     @OnClick(R.id.action_delivery)
-    public void delivery(View v) { }
+    public void delivery(View v) {
+        Intent intent = new Intent(this, ManagerSessionActivity.class);
+        intent.putExtra(ManagerSessionActivity.KEY_SESSION_PK, 3L);
+        startActivity(intent);
+    }
 
     @Override
     protected int getNavMenu() {

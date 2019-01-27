@@ -39,6 +39,7 @@ public class MenuViewModel extends BaseViewModel {
 
     private final Handler mHandler = new Handler();
     private Runnable mRunnable;
+    private Long mSessionPk;
 
     MenuViewModel(@NonNull Application application) {
         super(application);
@@ -376,7 +377,14 @@ public class MenuViewModel extends BaseViewModel {
     }
 
     public void confirmOrder() {
-        mResultOrder.addSource(mRepository.postMenuOrders(mOrderedItems.getValue()), mResultOrder::setValue);
+        if (mSessionPk == null)
+            mResultOrder.addSource(mRepository.postMenuOrders(mOrderedItems.getValue()), mResultOrder::setValue);
+        else
+            mResultOrder.addSource(mRepository.postMenuManageOrders(mSessionPk, mOrderedItems.getValue()), mResultOrder::setValue);
+    }
+
+    public void manageSession(long sessionPk) {
+        mSessionPk = sessionPk;
     }
 
     public LiveData<Resource<ArrayNode>> getServerOrderedItems() {

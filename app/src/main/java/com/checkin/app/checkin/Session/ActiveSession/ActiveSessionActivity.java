@@ -162,7 +162,7 @@ public class ActiveSessionActivity extends AppCompatActivity implements ActiveSe
 
     @OnClick(R.id.btn_active_session_menu)
     public void onListMenu() {
-        SessionMenuActivity.withSession(this, mViewModel.getSessionPk(), mViewModel.getShopPk());
+        SessionMenuActivity.withSession(this, mViewModel.getShopPk(), null);
     }
 
     @OnClick(R.id.btn_active_session_orders)

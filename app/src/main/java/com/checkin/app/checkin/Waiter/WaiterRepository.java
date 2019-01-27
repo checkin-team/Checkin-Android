@@ -12,6 +12,7 @@ import com.checkin.app.checkin.Data.NetworkBoundResource;
 import com.checkin.app.checkin.Data.Resource;
 import com.checkin.app.checkin.Data.RetrofitLiveData;
 import com.checkin.app.checkin.Data.WebApiService;
+import com.checkin.app.checkin.Misc.GenericDetailModel;
 import com.checkin.app.checkin.Session.Model.QRResultModel;
 import com.checkin.app.checkin.Session.Model.RestaurantTableModel;
 import com.checkin.app.checkin.Waiter.Model.WaiterEventModel;
@@ -119,6 +120,44 @@ public class WaiterRepository extends BaseRepository {
             @Override
             protected void saveCallResult(QRResultModel data) {
 
+            }
+        }.getAsLiveData();
+    }
+
+    public LiveData<Resource<ObjectNode>> changeOrderStatus(long orderId, ObjectNode data) {
+        return new NetworkBoundResource<ObjectNode, ObjectNode>() {
+            @Override
+            protected boolean shouldUseLocalDb() {
+                return false;
+            }
+
+            @NonNull
+            @Override
+            protected LiveData<ApiResponse<ObjectNode>> createCall() {
+                return new RetrofitLiveData<>(mWebService.postChangeOrderStatus(orderId, data));
+            }
+
+            @Override
+            protected void saveCallResult(ObjectNode data) {
+            }
+        }.getAsLiveData();
+    }
+
+    public LiveData<Resource<GenericDetailModel>> markEventDone(long eventId) {
+        return new NetworkBoundResource<GenericDetailModel, GenericDetailModel>() {
+            @Override
+            protected boolean shouldUseLocalDb() {
+                return false;
+            }
+
+            @NonNull
+            @Override
+            protected LiveData<ApiResponse<GenericDetailModel>> createCall() {
+                return new RetrofitLiveData<>(mWebService.putSessionEventDone(eventId));
+            }
+
+            @Override
+            protected void saveCallResult(GenericDetailModel data) {
             }
         }.getAsLiveData();
     }

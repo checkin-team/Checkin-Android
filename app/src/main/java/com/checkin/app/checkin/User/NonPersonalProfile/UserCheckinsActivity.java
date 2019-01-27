@@ -62,7 +62,7 @@ public class UserCheckinsActivity extends AppCompatActivity implements UserCheck
     @Override
     public void onClickShop(BriefModel shop) {
         Intent intent = new Intent(this, ShopActivity.class);
-        intent.putExtra(ShopActivity.KEY_SHOP_PK, shop.getPk());
+        intent.putExtra(ShopActivity.KEY_SHOP_PK, Long.valueOf(shop.getPk()));
         startActivity(intent);
     }
 }
