@@ -174,12 +174,10 @@
         <activity
             android:name=".Manager.ManagerSessionActivity"
             android:windowSoftInputMode="adjustNothing" />
-        <activity android:name=".Session.ActiveSession.ActiveSessionInvoiceActivity"
-            android:theme="@style/AppThemeWhiteActionBar"
-            android:label="Invoice"/>
-        <activity android:name=".ManagerProfile.ManagerWorkActivity"
+        <activity
+            android:name=".Manager.ManagerWorkActivity"
             android:label="Manager"
-            android:theme="@style/AppThemeWhiteActionBar"/>
+            android:theme="@style/AppThemeWhiteActionBar" />
 
         <service
             android:name=".Auth.AuthenticatorService"

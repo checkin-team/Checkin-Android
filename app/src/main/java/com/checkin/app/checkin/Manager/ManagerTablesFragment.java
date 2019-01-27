@@ -1,6 +1,7 @@
-package com.checkin.app.checkin.ManagerProfile;
+package com.checkin.app.checkin.Manager;
 
 import android.arch.lifecycle.ViewModelProviders;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -13,12 +14,14 @@ import android.view.ViewGroup;
 
 import com.checkin.app.checkin.Data.Resource;
 import com.checkin.app.checkin.R;
+import com.checkin.app.checkin.Session.Model.RestaurantTableModel;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.Unbinder;
 
-public class ManagerTablesFragment extends Fragment {
+public class ManagerTablesFragment extends Fragment implements ManagerWorkTableAdapter.ManagerTableInteraction {
+
     @BindView(R.id.rv_shop_manager_table)
     RecyclerView rvShopManagerTable;
     Unbinder unbinder;
@@ -41,17 +44,16 @@ public class ManagerTablesFragment extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        ShopManagerTableAdapter shopManagerTableAdapter = new ShopManagerTableAdapter();
+        ManagerWorkTableAdapter managerWorkTableAdapter = new ManagerWorkTableAdapter(this);
         rvShopManagerTable.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false));
-        rvShopManagerTable.setAdapter(shopManagerTableAdapter);
+        rvShopManagerTable.setAdapter(managerWorkTableAdapter);
 
-        ManagerWorkViewModel managerWorkViewModel = ViewModelProviders.of(this).get(ManagerWorkViewModel.class);
-        managerWorkViewModel.getRestaurantTableById("3");
-        managerWorkViewModel.getRestaurantTableModel().observe(this, input->{
+        ManagerWorkViewModel managerWorkViewModel = ViewModelProviders.of(requireActivity()).get(ManagerWorkViewModel.class);
+        managerWorkViewModel.getActiveTables().observe(this, input->{
             if (input != null && input.data == null)
                 return;
             if (input != null && input.data.size() > 0 && input.status == Resource.Status.SUCCESS) {
-                shopManagerTableAdapter.setRestaurantTableList(input.data);
+                managerWorkTableAdapter.setRestaurantTableList(input.data);
             }
         });
     }
@@ -60,5 +62,12 @@ public class ManagerTablesFragment extends Fragment {
     public void onDestroyView() {
         super.onDestroyView();
         unbinder.unbind();
+    }
+
+    @Override
+    public void onClickTable(RestaurantTableModel tableModel) {
+        Intent intent = new Intent(getContext(), ManagerSessionActivity.class);
+        intent.putExtra(ManagerSessionActivity.KEY_SESSION_PK, tableModel.getPk());
+        startActivity(intent);
     }
 }

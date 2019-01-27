@@ -36,9 +36,9 @@
             style="@style/GreyHeadingStyle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/tv_shop_manager_table_time"
+            android:layout_below="@id/tv_shop_manager_table_time"
             android:layout_marginStart="@dimen/spacing_normal"
-            android:layout_toEndOf="@+id/iv_shop_manager_table_image"
+            android:layout_toEndOf="@id/iv_shop_manager_table_image"
             tools:text="TABLE : 4" />
 
         <ImageView
@@ -46,34 +46,34 @@
             android:layout_width="@dimen/size_tiny_icon"
             android:layout_height="@dimen/size_tiny_icon"
             android:layout_below="@+id/tv_shop_manager_table_number"
-            android:layout_alignBottom="@+id/tv_shop_manager_table_detail"
+            android:layout_alignBottom="@id/tv_shop_manager_table_detail"
             android:layout_marginStart="@dimen/spacing_normal"
             android:layout_marginTop="@dimen/spacing_small"
-            android:layout_toEndOf="@+id/iv_shop_manager_table_image"
+            android:layout_toEndOf="@id/iv_shop_manager_table_image"
             android:contentDescription="@null"
-            tools:src="@drawable/ic_veg" />
+            tools:src="@drawable/ic_session_event_checkin" />
 
         <TextView
             android:id="@+id/tv_shop_manager_table_detail"
             style="@style/GreyTextStyle"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/tv_shop_manager_table_number"
+            android:layout_below="@id/tv_shop_manager_table_number"
             android:layout_marginStart="@dimen/spacing_small"
             android:layout_marginTop="@dimen/spacing_small"
-            android:layout_toStartOf="@+id/tv_shop_manager_table_person_number"
-            android:layout_toEndOf="@+id/iv_shop_manager_table_icon"
+            android:layout_toStartOf="@id/tv_shop_manager_table_event_badge"
+            android:layout_toEndOf="@id/iv_shop_manager_table_icon"
             tools:text="Join the table @4.30 pm." />
 
         <TextView
-            android:id="@+id/tv_shop_manager_table_person_number"
-            android:layout_width="@dimen/size_tiny_icon"
-            android:layout_height="@dimen/size_tiny_icon"
-            android:layout_below="@+id/tv_shop_manager_table_number"
-            android:layout_alignBaseline="@+id/tv_shop_manager_table_detail"
+            android:id="@+id/tv_shop_manager_table_event_badge"
+            android:layout_width="@dimen/size_small_icon"
+            android:layout_height="@dimen/size_small_icon"
+            android:layout_below="@id/tv_shop_manager_table_number"
+            android:layout_alignBaseline="@id/tv_shop_manager_table_detail"
             android:layout_alignParentEnd="true"
             android:layout_marginTop="@dimen/spacing_small"
-            android:background="@drawable/oval_primary_red"
+            android:background="@drawable/shape_oval_red"
             android:gravity="center"
             android:textColor="@color/white"
             android:textSize="@dimen/font_extra_small"
@@ -83,10 +83,9 @@
             android:id="@+id/tv_shop_manager_table_name"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/iv_shop_manager_table_image"
+            android:layout_below="@id/iv_shop_manager_table_image"
             android:layout_marginTop="@dimen/spacing_small"
-            android:textColor="@color/brownish_grey"
-            android:textSize="@dimen/font_small"
+            style="@style/GreySmallTextStyle"
             tools:text="Monica" />
 
     </RelativeLayout>

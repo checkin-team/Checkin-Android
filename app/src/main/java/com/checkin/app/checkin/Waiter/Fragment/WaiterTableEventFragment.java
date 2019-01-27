@@ -32,11 +32,14 @@ public class WaiterTableEventFragment extends Fragment implements WaiterEventAda
     private static final String KEY_WAITER_TABLE_ID = "waiter.table";
 
     @BindView(R.id.container_waiter_table_actions) ViewGroup containerActions;
-    @BindView(R.id.rv_waiter_table_events) RecyclerView rvEvents;
+    @BindView(R.id.rv_waiter_table_events_active) RecyclerView rvEventsActive;
+    @BindView(R.id.rv_waiter_table_events_done) RecyclerView rvEventsDone;
+    @BindView(R.id.title_waiter_delivered) TextView tvDelivered;
     @BindView(R.id.tv_waiter_table_members_count) TextView tvMembersCount;
     @BindView(R.id.refresh_waiter_event) SwipeRefreshLayout refreshEvent;
 
-    private WaiterEventAdapter mAdapter;
+    private WaiterEventAdapter mActiveAdapter;
+    private WaiterEventAdapter mDoneAdapter;
     private WaiterTableViewModel mViewModel;
 
     public static WaiterTableEventFragment newInstance(long tableNumber) {
@@ -57,9 +60,12 @@ public class WaiterTableEventFragment extends Fragment implements WaiterEventAda
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
-        mAdapter = new WaiterEventAdapter(this);
-        rvEvents.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false));
-        rvEvents.setAdapter(mAdapter);
+        mActiveAdapter = new WaiterEventAdapter(this);
+        mDoneAdapter = new WaiterEventAdapter(this);
+        rvEventsActive.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false));
+        rvEventsDone.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false));
+        rvEventsActive.setAdapter(mActiveAdapter);
+        rvEventsDone.setAdapter(mDoneAdapter);
 
         if (getArguments() == null)
             return;
@@ -67,12 +73,24 @@ public class WaiterTableEventFragment extends Fragment implements WaiterEventAda
         mViewModel = ViewModelProviders.of(this).get(WaiterTableViewModel.class);
         mViewModel.fetchSessionDetail(getArguments().getLong(KEY_WAITER_TABLE_ID, 0));
         mViewModel.fetchTableEvents();
-        mViewModel.getTableEvents().observe(this, listResource -> {
+        mViewModel.getActiveTableEvents().observe(this, listResource -> {
             if (listResource == null)
                 return;
             if (listResource.status == Status.SUCCESS && listResource.data != null) {
                 refreshEvent.setRefreshing(false);
-                mAdapter.setData(listResource.data);
+                mActiveAdapter.setData(listResource.data);
+            } else if (listResource.status == Status.LOADING)
+                refreshEvent.setRefreshing(true);
+        });
+        mViewModel.getDeliveredTableEvents().observe(this, listResource -> {
+            if (listResource == null)
+                return;
+            if (listResource.status == Status.SUCCESS && listResource.data != null) {
+                if (listResource.data.size() > 0) {
+                    tvDelivered.setVisibility(View.VISIBLE);
+                    rvEventsDone.setVisibility(View.VISIBLE);
+                    mDoneAdapter.setData(listResource.data);
+                }
             } else if (listResource.status == Status.LOADING)
                 refreshEvent.setRefreshing(true);
         });

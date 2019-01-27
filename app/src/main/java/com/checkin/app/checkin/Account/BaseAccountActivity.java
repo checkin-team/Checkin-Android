@@ -21,6 +21,7 @@ import android.widget.TextView;
 import com.checkin.app.checkin.Account.AccountModel.ACCOUNT_TYPE;
 import com.checkin.app.checkin.Data.Resource;
 import com.checkin.app.checkin.Home.HomeActivity;
+import com.checkin.app.checkin.Manager.ManagerWorkActivity;
 import com.checkin.app.checkin.Misc.BaseActivity;
 import com.checkin.app.checkin.R;
 import com.checkin.app.checkin.Shop.ShopPrivateProfile.ShopActivity;
@@ -191,6 +192,11 @@ public abstract class BaseAccountActivity extends BaseActivity {
                     }
                     break;
                 case RESTAURANT_MANAGER:
+                    if (mBaseActivity.getClass() != ManagerWorkActivity.class) {
+                        Intent intent = new Intent(context, ManagerWorkActivity.class);
+                        intent.putExtra(ManagerWorkActivity.KEY_RESTAURANT_PK, Long.valueOf(account.getTargetPk()));
+                        context.startActivity(intent);
+                    }
                     break;
                 case RESTAURANT_WAITER:
                     if (mBaseActivity.getClass() != WaiterWorkActivity.class) {

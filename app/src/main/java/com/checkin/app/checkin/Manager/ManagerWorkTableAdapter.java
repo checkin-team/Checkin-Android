@@ -1,4 +1,4 @@
-package com.checkin.app.checkin.ManagerProfile;
+package com.checkin.app.checkin.Manager;
 
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
@@ -10,6 +10,7 @@ import android.widget.TextView;
 
 import com.checkin.app.checkin.Misc.BriefModel;
 import com.checkin.app.checkin.R;
+import com.checkin.app.checkin.Session.ActiveSession.Chat.SessionEventBasicModel;
 import com.checkin.app.checkin.Session.Model.RestaurantTableModel;
 import com.checkin.app.checkin.Utility.Utils;
 
@@ -19,8 +20,13 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import de.hdodenhof.circleimageview.CircleImageView;
 
-public class ShopManagerTableAdapter extends RecyclerView.Adapter<ShopManagerTableAdapter.ShopManagerTableHolder> {
+public class ManagerWorkTableAdapter extends RecyclerView.Adapter<ManagerWorkTableAdapter.ShopManagerTableHolder> {
     private List<RestaurantTableModel> mList;
+    private ManagerTableInteraction mListener;
+
+    public ManagerWorkTableAdapter(ManagerTableInteraction listener) {
+        mListener = listener;
+    }
 
     @NonNull
     @Override
@@ -31,8 +37,7 @@ public class ShopManagerTableAdapter extends RecyclerView.Adapter<ShopManagerTab
 
     @Override
     public void onBindViewHolder(@NonNull ShopManagerTableHolder holder, int position) {
-        RestaurantTableModel data = mList.get(position);
-        holder.bindData(data);
+        holder.bindData(mList.get(position));
     }
 
     @Override
@@ -59,27 +64,40 @@ public class ShopManagerTableAdapter extends RecyclerView.Adapter<ShopManagerTab
         ImageView ivShopManagerTableIcon;
         @BindView(R.id.tv_shop_manager_table_detail)
         TextView tvShopManagerTableDetail;
-        @BindView(R.id.tv_shop_manager_table_person_number)
-        TextView tvShopManagerTablePersonNumber;
+        @BindView(R.id.tv_shop_manager_table_event_badge)
+        TextView tvEventBadge;
+
+        private RestaurantTableModel mTableModel;
 
         ShopManagerTableHolder(View itemView) {
             super(itemView);
             ButterKnife.bind(this,itemView);
+
+            itemView.setOnClickListener(v -> mListener.onClickTable(mTableModel));
         }
 
         public void bindData(RestaurantTableModel data) {
+            mTableModel = data;
+
             BriefModel host = data.getHost();
 
             if (host != null){
                 tvShopManagerTableName.setText(host.getDisplayName());
                 Utils.loadImageOrDefault(ivShopManagerTableImage, host.getDisplayPic(), R.drawable.ic_waiter);
-            }else {
+            } else {
                 tvShopManagerTableName.setText(R.string.waiter_unassigned);
             }
 
+            tvEventBadge.setText("0");
+            ivShopManagerTableIcon.setImageResource(SessionEventBasicModel.getEventIcon(
+                    data.getEvent().getType(), data.getEvent().getService(), data.getEvent().getConcern()));
             tvShopManagerTableTime.setText(data.getEvent().formatTimestamp());
             tvShopManagerTableNumber.setText(data.getTable());
             tvShopManagerTableDetail.setText(data.getEvent().getMessage());
         }
+    }
+
+    public interface ManagerTableInteraction {
+        void onClickTable(RestaurantTableModel tableModel);
     }
 }

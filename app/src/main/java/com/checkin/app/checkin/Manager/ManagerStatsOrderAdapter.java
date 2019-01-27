@@ -1,4 +1,4 @@
-package com.checkin.app.checkin.ManagerProfile;
+package com.checkin.app.checkin.Manager;
 
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
@@ -13,15 +13,15 @@ import com.checkin.app.checkin.R;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
-public class ShopManagerTableStaticsAdapter extends RecyclerView.Adapter<ShopManagerTableStaticsAdapter.ShopManagerTableStaticsHolder> {
+public class ManagerStatsOrderAdapter extends RecyclerView.Adapter<ManagerStatsOrderAdapter.ShopManagerTableStaticsHolder> {
 
-    public ShopManagerTableStaticsAdapter(){
+    public ManagerStatsOrderAdapter(){
     }
 
     @NonNull
     @Override
     public ShopManagerTableStaticsHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.child_shop_manger_table_statics_item, parent, false);
+        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_shop_manager_stats_order, parent, false);
         return new ShopManagerTableStaticsHolder(view);
     }
 

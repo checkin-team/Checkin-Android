@@ -510,9 +510,6 @@ public class HomeActivity extends BaseAccountActivity
 
     @OnClick(R.id.action_delivery)
     public void delivery(View v) {
-        Intent intent = new Intent(this, ManagerSessionActivity.class);
-        intent.putExtra(ManagerSessionActivity.KEY_SESSION_PK, 3L);
-        startActivity(intent);
     }
 
     @Override

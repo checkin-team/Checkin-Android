@@ -6,14 +6,15 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.checkin.app.checkin.Menu.Model.ItemCustomizationGroupModel;
 import com.checkin.app.checkin.R;
+import com.checkin.app.checkin.Session.ActiveSession.Chat.SessionChatModel;
 import com.checkin.app.checkin.Session.ActiveSession.Chat.SessionChatModel.CHAT_EVENT_TYPE;
-import com.checkin.app.checkin.Session.ActiveSession.Chat.SessionChatModel.CHAT_STATUS_TYPE;
 import com.checkin.app.checkin.Session.ActiveSession.Chat.SessionEventBasicModel;
 import com.checkin.app.checkin.Session.Model.SessionOrderedItemModel;
 import com.checkin.app.checkin.Utility.Utils;
@@ -140,12 +141,20 @@ public class WaiterEventAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
                 containerCustomizations.setVisibility(View.GONE);
             }
 
-            if (order.getStatus() == CHAT_STATUS_TYPE.OPEN) {
-                containerStatusOpen.setVisibility(View.VISIBLE);
-                containerStatusProgress.setVisibility(View.GONE);
-            } else {
-                containerStatusProgress.setVisibility(View.VISIBLE);
-                containerStatusOpen.setVisibility(View.GONE);
+            switch (order.getStatus()) {
+                case OPEN:
+                    containerStatusOpen.setVisibility(View.VISIBLE);
+                    containerStatusProgress.setVisibility(View.GONE);
+                    break;
+                case IN_PROGRESS:
+                    containerStatusProgress.setVisibility(View.VISIBLE);
+                    containerStatusOpen.setVisibility(View.GONE);
+                    break;
+                case DONE:
+                    containerStatusProgress.setVisibility(View.GONE);
+                    containerStatusOpen.setVisibility(View.GONE);
+                    ((FrameLayout) itemView).setForeground(itemView.getResources().getDrawable(R.color.translucent_white));
+                    break;
             }
         }
 
@@ -177,7 +186,12 @@ public class WaiterEventAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
             this.mEventModel = eventModel;
 
             tvEventMessage.setText(eventModel.getMessage());
-            imEventType.setImageResource(SessionEventBasicModel.getEventIcon(eventModel.getType(), eventModel.getService(), null));
+            if (eventModel.getStatus() == SessionChatModel.CHAT_STATUS_TYPE.DONE || eventModel.getStatus() == SessionChatModel.CHAT_STATUS_TYPE.CANCELLED) {
+                imEventMarkDone.setVisibility(View.GONE);
+                ((FrameLayout) itemView).setForeground(itemView.getResources().getDrawable(R.color.translucent_white));
+            } else {
+                imEventType.setImageResource(SessionEventBasicModel.getEventIcon(eventModel.getType(), eventModel.getService(), null));
+            }
         }
     }
 

@@ -1,31 +1,40 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.design.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<android.support.v4.widget.DrawerLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/drawer_manager_work"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <com.checkin.app.checkin.Utility.DynamicSwipableViewPager
-        android:id="@+id/pager_manager_work"
+    <android.support.design.widget.CoordinatorLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent" />
+        android:layout_height="match_parent">
 
-    <android.support.v7.widget.CardView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_gravity="bottom"
-        android:elevation="@dimen/card_elevation">
+        <com.checkin.app.checkin.Utility.DynamicSwipableViewPager
+            android:id="@+id/pager_manager_work"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
 
-        <android.support.design.widget.TabLayout
-            android:id="@+id/tabs_manager_work"
+        <android.support.v7.widget.CardView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            app:tabGravity="fill"
-            app:tabIndicatorColor="@android:color/transparent"
-            app:tabIndicatorHeight="0dp"
-            app:tabMode="fixed"
-            app:tabSelectedTextColor="@color/colorAccent"
-            app:tabTextColor="@color/translucent_half_black" />
+            android:layout_gravity="bottom"
+            android:elevation="@dimen/card_elevation">
 
-    </android.support.v7.widget.CardView>
+            <android.support.design.widget.TabLayout
+                android:id="@+id/tabs_manager_work"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:tabGravity="fill"
+                app:tabIndicatorColor="@android:color/transparent"
+                app:tabIndicatorHeight="0dp"
+                app:tabMode="fixed"
+                app:tabSelectedTextColor="@color/colorAccent"
+                app:tabTextColor="@color/translucent_half_black" />
 
-</android.support.design.widget.CoordinatorLayout>
+        </android.support.v7.widget.CardView>
+
+    </android.support.design.widget.CoordinatorLayout>
+
+    <include layout="@layout/incl_account_base" />
+
+</android.support.v4.widget.DrawerLayout>

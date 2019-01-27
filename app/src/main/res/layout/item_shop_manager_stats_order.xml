@@ -8,7 +8,7 @@
     <ImageView
         android:id="@+id/iv_shop_manager_table_statics_item"
         android:contentDescription="@null"
-        android:src="@drawable/ic_waiter_person"
+        android:src="@drawable/ic_veg"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content" />
 
