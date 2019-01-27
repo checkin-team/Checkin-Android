@@ -21,7 +21,7 @@ public class InvoiceOrdersAdapter extends RecyclerView.Adapter<InvoiceOrdersAdap
 
     private List<SessionOrderedItemModel> mOrderedItems;
 
-    InvoiceOrdersAdapter(List<SessionOrderedItemModel> orderedItems) {
+    public InvoiceOrdersAdapter(List<SessionOrderedItemModel> orderedItems) {
         this.mOrderedItems = orderedItems;
     }
 

@@ -18,7 +18,7 @@
 
             <TextView
                 style="@style/RedTitleStyle"
-                android:textSize="@dimen/font_small_heading"
+                android:textSize="@dimen/font_heading"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_horizontal"
@@ -39,7 +39,7 @@
 
     <TextView
         style="@style/RedTitleStyle"
-        android:textSize="@dimen/font_small_heading"
+        android:textSize="@dimen/font_heading"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"

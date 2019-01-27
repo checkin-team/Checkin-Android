@@ -14,7 +14,7 @@ import java.util.Locale;
         setterVisibility = JsonAutoDetect.Visibility.NONE)
 public class ShopReviewModel {
     @JsonProperty("pk")
-    private String pk;
+    private long pk;
 
     @JsonProperty("user")
     private BriefModel userInfo;
@@ -124,7 +124,7 @@ public class ShopReviewModel {
         return thumbnails;
     }
 
-    public String getPk() {
+    public long getPk() {
         return pk;
     }
 

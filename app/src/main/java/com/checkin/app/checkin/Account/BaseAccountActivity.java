@@ -17,7 +17,6 @@ import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.Spinner;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.checkin.app.checkin.Account.AccountModel.ACCOUNT_TYPE;
 import com.checkin.app.checkin.Data.Resource;
@@ -26,6 +25,8 @@ import com.checkin.app.checkin.Misc.BaseActivity;
 import com.checkin.app.checkin.R;
 import com.checkin.app.checkin.Shop.ShopPrivateProfile.ShopActivity;
 import com.checkin.app.checkin.Utility.GlideApp;
+import com.checkin.app.checkin.Utility.Utils;
+import com.checkin.app.checkin.Waiter.WaiterWorkActivity;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -36,6 +37,7 @@ import butterknife.OnClick;
 import de.hdodenhof.circleimageview.CircleImageView;
 
 public abstract class BaseAccountActivity extends BaseActivity {
+    // Required to include "incl_account_base" layout.
     private final static String TAG = BaseAccountActivity.class.getSimpleName();
 
     private DrawerLayout mDrawerLayout;
@@ -65,6 +67,8 @@ public abstract class BaseAccountActivity extends BaseActivity {
 
         mViewModel = ViewModelProviders.of(this).get(AccountViewModel.class);
         mViewModel.getAccounts().observe(this, listResource -> {
+            if (listResource == null)
+                return;
             if (listResource.status == Resource.Status.SUCCESS && listResource.data != null) {
                 List<AccountModel> accounts = listResource.data;
                 mAccountAdapter.setData(accounts);
@@ -82,7 +86,7 @@ public abstract class BaseAccountActivity extends BaseActivity {
         mViewModel.getCurrentAccount().observe(this, account -> {
             if (account == null) {
                 // User doesn't have rights to access this account.
-                Toast.makeText(getApplicationContext(), "User doesn't have access to any accounts with the given account type.", Toast.LENGTH_SHORT).show();
+                Utils.toast(this, "User doesn't have access to any accounts with the given account type.");
                 finish();
                 return;
             }
@@ -157,7 +161,7 @@ public abstract class BaseAccountActivity extends BaseActivity {
 
         @OnClick(R.id.btn_refresh)
         void onAccountRefreshClick() {
-            Toast.makeText(mBaseActivity.getApplicationContext(), "Refreshing...", Toast.LENGTH_SHORT).show();
+            Utils.toast(mBaseActivity.getApplicationContext(), "Refreshing...");
             mBaseActivity.mViewModel.updateResults();
         }
 
@@ -168,23 +172,32 @@ public abstract class BaseAccountActivity extends BaseActivity {
             switchAccount(mBaseActivity.getApplicationContext(), account);
         }
 
-        protected void switchAccount(Context context, AccountModel account) {
+        void switchAccount(Context context, AccountModel account) {
             switch (account.getAccountType()) {
                 case USER:
-                    if (mBaseActivity.getClass() != HomeActivity.class)
-                        context.startActivity(new Intent(context, HomeActivity.class));
+                    if (mBaseActivity.getClass() != HomeActivity.class){
+                        Intent intent = new Intent(context,HomeActivity.class);
+                        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                        context.startActivity(intent);
+                    }
                     break;
                 case SHOP_OWNER:
                 case SHOP_ADMIN:
                     if (mBaseActivity.getClass() != ShopActivity.class) {
                         Intent intent = new Intent(context, ShopActivity.class);
-                        intent.putExtra(ShopActivity.KEY_SHOP_PK, account.getTargetPk());
+                        intent.putExtra(ShopActivity.KEY_SHOP_PK, Long.valueOf(account.getTargetPk()));
                         intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                         context.startActivity(intent);
                     }
                     break;
                 case RESTAURANT_MANAGER:
+                    break;
                 case RESTAURANT_WAITER:
+                    if (mBaseActivity.getClass() != WaiterWorkActivity.class) {
+                        Intent intent = new Intent(context, WaiterWorkActivity.class);
+                        intent.putExtra(WaiterWorkActivity.KEY_SHOP_PK, Long.valueOf(account.getTargetPk()));
+                        context.startActivity(intent);
+                    }
                 case RESTAURANT_COOK:
                     break;
             }

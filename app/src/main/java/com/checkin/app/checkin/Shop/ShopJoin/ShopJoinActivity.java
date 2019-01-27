@@ -12,7 +12,7 @@ import com.checkin.app.checkin.Data.Resource;
 import com.checkin.app.checkin.Misc.GenericDetailModel;
 import com.checkin.app.checkin.R;
 import com.checkin.app.checkin.Shop.RestaurantModel;
-import com.checkin.app.checkin.Shop.ShopPrivateProfile.EditAspectFragment;
+import com.checkin.app.checkin.Shop.ShopPrivateProfile.Edit.EditAspectFragment;
 import com.checkin.app.checkin.Shop.ShopPrivateProfile.ShopActivity;
 import com.checkin.app.checkin.Shop.ShopPrivateProfile.ShopProfileViewModel;
 

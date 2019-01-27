@@ -13,6 +13,7 @@ import com.checkin.app.checkin.Data.Resource;
 import com.checkin.app.checkin.Data.RetrofitLiveData;
 import com.checkin.app.checkin.Data.WebApiService;
 import com.checkin.app.checkin.User.Friendship.FriendshipModel;
+import com.checkin.app.checkin.User.NonPersonalProfile.ShopCustomerModel;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 
 import java.io.File;
@@ -209,7 +210,7 @@ public class UserRepository extends BaseRepository {
                 if (userPk == 0) {
                     return new RetrofitLiveData<>(mWebService.getPersonalUser());
                 } else {
-                    return new RetrofitLiveData<>(mWebService.getNonPersonalUser(String.valueOf(userPk)));
+                    return new RetrofitLiveData<>(mWebService.getNonPersonalUser(userPk));
                 }
             }
 
@@ -255,6 +256,27 @@ public class UserRepository extends BaseRepository {
 
             @Override
             protected void saveCallResult(ObjectNode data) {
+
+            }
+        }.getAsLiveData();
+    }
+
+    public LiveData<Resource<List<ShopCustomerModel>>> getUserCheckinById(long userId) {
+        return new NetworkBoundResource<List<ShopCustomerModel>, List<ShopCustomerModel>>(){
+
+            @Override
+            protected boolean shouldUseLocalDb() {
+                return false;
+            }
+
+            @NonNull
+            @Override
+            protected LiveData<ApiResponse<List<ShopCustomerModel>>> createCall() {
+                return new RetrofitLiveData<>(mWebService.getUserCheckins(userId));
+            }
+
+            @Override
+            protected void saveCallResult(List<ShopCustomerModel> data) {
 
             }
         }.getAsLiveData();

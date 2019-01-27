@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/white">
@@ -81,7 +82,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginEnd="@dimen/spacing_small"
-                    android:text="@string/currency_rupee"
+                    android:text="@string/symbol_currency_rupee"
                     android:textSize="@dimen/font_largest"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toStartOf="@id/ed_invoice_tip"
@@ -90,15 +91,15 @@
                 <EditText
                     android:id="@+id/ed_invoice_tip"
                     style="@style/GreyTextStyle"
-                    android:layout_width="@dimen/width_input_tip"
+                    android:layout_width="@dimen/width_input_small"
                     android:layout_height="wrap_content"
                     android:layout_marginEnd="@dimen/spacing_normal"
                     android:background="@drawable/rounded_rectangle_white"
                     android:inputType="numberDecimal"
-                    android:textAlignment="textStart"
                     android:padding="@dimen/spacing_extra_small"
                     android:text="0.00"
-                    android:textSize="@dimen/font_small_heading"
+                    android:textAlignment="textStart"
+                    android:textSize="@dimen/font_heading"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />
@@ -106,6 +107,32 @@
             </android.support.constraint.ConstraintLayout>
 
             <include layout="@layout/incl_session_invoice" />
+
+            <include layout="@layout/incl_horizontal_line" />
+
+            <FrameLayout
+                android:id="@+id/container_invoice_total"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/spacing_extra_small"
+                android:paddingStart="@dimen/spacing_normal"
+                android:paddingEnd="@dimen/spacing_normal">
+
+                <TextView
+                    style="@style/GreyTextStyle"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical|start"
+                    android:text="Total" />
+
+                <TextView
+                    android:id="@+id/tv_invoice_total"
+                    style="@style/GreyTextStyle"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical|end"
+                    tools:text="54" />
+            </FrameLayout>
 
         </LinearLayout>
 

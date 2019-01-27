@@ -12,6 +12,8 @@ import com.checkin.app.checkin.Data.NetworkBoundResource;
 import com.checkin.app.checkin.Data.Resource;
 import com.checkin.app.checkin.Data.RetrofitLiveData;
 import com.checkin.app.checkin.Data.WebApiService;
+import com.checkin.app.checkin.Session.Model.QRResultModel;
+import com.checkin.app.checkin.Session.Model.SessionBriefModel;
 import com.checkin.app.checkin.Session.Model.SessionInvoiceModel;
 import com.checkin.app.checkin.Shop.RecentCheckin.Model.RecentCheckinModel;
 import com.fasterxml.jackson.databind.node.ObjectNode;
@@ -24,8 +26,8 @@ public class SessionRepository extends BaseRepository {
         mWebService = ApiClient.getApiService(context);
     }
 
-    public LiveData<Resource<ObjectNode>> newCustomerSession(final ObjectNode data) {
-        return new NetworkBoundResource<ObjectNode, ObjectNode>() {
+    public LiveData<Resource<QRResultModel>> newCustomerSession(final ObjectNode data) {
+        return new NetworkBoundResource<QRResultModel, QRResultModel>() {
 
             @Override
             protected boolean shouldUseLocalDb() {
@@ -34,16 +36,16 @@ public class SessionRepository extends BaseRepository {
 
             @NonNull
             @Override
-            protected LiveData<ApiResponse<ObjectNode>> createCall() {
+            protected LiveData<ApiResponse<QRResultModel>> createCall() {
                 return new RetrofitLiveData<>(mWebService.postNewCustomerSession(data));
             }
 
             @Override
-            protected void saveCallResult(ObjectNode data) {}
+            protected void saveCallResult(QRResultModel data) {}
         }.getAsLiveData();
     }
 
-    public LiveData<Resource<RecentCheckinModel>> getRecentCheckins(final String shopId) {
+    public LiveData<Resource<RecentCheckinModel>> getRecentCheckins(final long shopId) {
         return new NetworkBoundResource<RecentCheckinModel, RecentCheckinModel>() {
 
             @Override
@@ -64,7 +66,7 @@ public class SessionRepository extends BaseRepository {
         }.getAsLiveData();
     }
 
-    public LiveData<Resource<SessionInvoiceModel>> getSessionInvoiceDetail(int sessionId) {
+    public LiveData<Resource<SessionInvoiceModel>> getSessionInvoiceDetail() {
         return new NetworkBoundResource<SessionInvoiceModel, SessionInvoiceModel>() {
 
             @Override
@@ -76,7 +78,27 @@ public class SessionRepository extends BaseRepository {
             @NonNull
             @Override
             protected LiveData<ApiResponse<SessionInvoiceModel>> createCall() {
-                return new RetrofitLiveData<>(mWebService.getSessionInvoice(sessionId));
+                return new RetrofitLiveData<>(mWebService.getSessionInvoice());
+            }
+        }.getAsLiveData();
+    }
+
+    public LiveData<Resource<SessionBriefModel>> getSessionBriefDetail(final long sessionPk) {
+        return new NetworkBoundResource<SessionBriefModel, SessionBriefModel>() {
+            @Override
+            protected boolean shouldUseLocalDb() {
+                return false;
+            }
+
+            @NonNull
+            @Override
+            protected LiveData<ApiResponse<SessionBriefModel>> createCall() {
+                return new RetrofitLiveData<>(mWebService.getSessionBriefDetail(sessionPk));
+            }
+
+            @Override
+            protected void saveCallResult(SessionBriefModel data) {
+
             }
         }.getAsLiveData();
     }

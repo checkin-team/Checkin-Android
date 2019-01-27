@@ -23,7 +23,7 @@ import java.util.List;
 
 public class ShopProfileViewModel extends BaseViewModel{
     private ShopRepository mRepository;
-    private String mShopPk;
+    private long mShopPk;
     private MediatorLiveData<Resource<RestaurantModel>> mShopData = new MediatorLiveData<>();
     private MutableLiveData<Boolean> mCollectAspectData = new MutableLiveData<>();
     private MutableLiveData<Boolean> mCollectBasicData = new MutableLiveData<>();
@@ -123,17 +123,17 @@ public class ShopProfileViewModel extends BaseViewModel{
         return mErrors;
     }
 
-    public void fetchShopDetails(String shopPk) {
+    public void fetchShopDetails(long shopPk) {
         mShopPk = shopPk;
         mShopData.addSource(mRepository.getShopModel(shopPk), mShopData::setValue);
     }
 
-    public void fetchShopManage(String shopPk) {
+    public void fetchShopManage(long shopPk) {
         mShopPk = shopPk;
         mShopData.addSource(mRepository.getShopManageModel(shopPk), mShopData::setValue);
     }
 
-    public String getShopPk() {
+    public long getShopPk() {
         return mShopPk;
     }
 
@@ -153,7 +153,7 @@ public class ShopProfileViewModel extends BaseViewModel{
         mData.addSource(mRepository.deleteRestaurantCover(mShopPk, index), mData::setValue);
     }
 
-    public void setShopPk(String shopPk) {
+    public void setShopPk(long shopPk) {
         mShopPk = shopPk;
     }
 

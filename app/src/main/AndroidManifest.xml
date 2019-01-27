@@ -52,8 +52,9 @@
         <activity android:name=".User.PersonalProfile.UserProfileActivity" />
         <activity
             android:name=".User.NonPersonalProfile.UserCheckinsActivity"
+            android:label="Checkins"
             android:parentActivityName=".User.NonPersonalProfile.UserProfileActivity"
-            android:theme="@style/Theme.AppCompat.Light" />
+            android:theme="@style/AppThemeWhiteActionBar" />
         <activity
             android:name=".User.PersonalProfile.ProfileEditActivity"
             android:label="Edit Profile"
@@ -76,11 +77,10 @@
         <activity android:name=".Misc.TransactionActivity" />
         <activity android:name=".Misc.FilterTransactions" />
         <activity
-            android:name=".RestaurantActivity.Waiter.WaitorWork"
-            android:label="WaitorWorkActivity"
-            android:screenOrientation="sensorPortrait"
-            android:theme="@style/AppTheme"
-            tools:replace="screenOrientation" />
+            android:name=".Waiter.WaiterWorkActivity"
+            android:label="Waiter"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme" />
         <activity
             android:name=".Session.ActiveSession.ActiveSessionActivity"
             android:windowSoftInputMode="adjustNothing" />
@@ -96,7 +96,7 @@
             android:parentActivityName=".Shop.ShopJoin.ContactVerifyActivity"
             android:theme="@style/AppThemeWhiteActionBar" />
         <activity
-            android:name=".Shop.ShopPrivateProfile.EditProfileActivity"
+            android:name=".Shop.ShopPrivateProfile.Edit.EditProfileActivity"
             android:label="Edit Profile"
             android:screenOrientation="portrait"
             android:theme="@style/AppThemeWhiteActionBar" />
@@ -162,9 +162,18 @@
             android:name=".Session.ActiveSession.ActiveSessionInvoiceActivity"
             android:label="Invoice"
             android:theme="@style/AppThemeWhiteActionBar" />
-
-        <activity android:name=".ManagerOrders.ManagerOrdersActivity"
-            android:windowSoftInputMode="adjustNothing"/>
+        <activity
+            android:name=".Shop.ShopPrivateProfile.Invoice.ShopInvoiceListActivity"
+            android:label="@string/action_invoice"
+            android:theme="@style/AppThemeWhiteActionBar"></activity>
+        <activity android:name=".Shop.ShopPrivateProfile.Invoice.ShopInvoiceDetailActivity" />
+        <activity
+            android:name=".Shop.ShopPrivateProfile.Finance.FinanceDetailActivity"
+            android:label="@string/action_discount"
+            android:theme="@style/AppThemeWhiteActionBar" />
+        <activity
+            android:name=".ManagerOrders.ManagerOrdersActivity"
+            android:windowSoftInputMode="adjustNothing" />
 
         <service
             android:name=".Auth.AuthenticatorService"

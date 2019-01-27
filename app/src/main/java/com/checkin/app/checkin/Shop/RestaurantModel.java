@@ -34,7 +34,7 @@ public class RestaurantModel extends ShopModel {
 
     public RestaurantModel() {}
 
-    public RestaurantModel(String pk) {
+    public RestaurantModel(long pk) {
         super(pk);
     }
 

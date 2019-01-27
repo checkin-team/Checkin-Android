@@ -28,7 +28,7 @@ public class RecentCheckinViewModel extends BaseViewModel {
         return mRecentCheckinData;
     }
 
-    public void fetchRecentCheckins(String shopId) {
+    public void fetchRecentCheckins(long shopId) {
         mRecentCheckinData.addSource(mRepository.getRecentCheckins(shopId), mRecentCheckinData::setValue);
     }
 }

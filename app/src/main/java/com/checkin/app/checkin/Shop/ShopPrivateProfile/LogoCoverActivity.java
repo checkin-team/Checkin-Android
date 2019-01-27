@@ -70,7 +70,7 @@ public class LogoCoverActivity extends AppCompatActivity implements ShopCoverAda
     private void setupUi() {
         String[] coverUrls = getIntent().getStringArrayExtra(KEY_SHOP_COVERS);
         String logoUrl = getIntent().getStringExtra(KEY_SHOP_LOGO);
-        String shopPk = getIntent().getStringExtra(KEY_SHOP_PK);
+        long shopPk = getIntent().getLongExtra(KEY_SHOP_PK, 0);
 
         Log.e(TAG, "SHOP: " + shopPk + logoUrl + Arrays.toString(coverUrls));
 

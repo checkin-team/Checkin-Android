@@ -5,20 +5,29 @@ import com.checkin.app.checkin.Menu.Model.MenuModel;
 import com.checkin.app.checkin.Menu.Model.OrderedItemModel;
 import com.checkin.app.checkin.Misc.GenericDetailModel;
 import com.checkin.app.checkin.Notifications.NotificationModel;
-import com.checkin.app.checkin.RestaurantActivity.Waiter.EventModel;
-import com.checkin.app.checkin.Session.ActiveSession.Chat.SessionChatModel;
 import com.checkin.app.checkin.Review.ShopReview.ShopReviewModel;
 import com.checkin.app.checkin.Search.SearchResultPeopleModel;
 import com.checkin.app.checkin.Search.SearchResultShopModel;
-import com.checkin.app.checkin.Session.Model.SessionInvoiceModel;
 import com.checkin.app.checkin.Session.ActiveSession.ActiveSessionModel;
+import com.checkin.app.checkin.Session.ActiveSession.Chat.SessionChatModel;
+import com.checkin.app.checkin.Session.Model.QRResultModel;
+import com.checkin.app.checkin.Session.Model.RestaurantTableModel;
+import com.checkin.app.checkin.Session.Model.SessionBriefModel;
+import com.checkin.app.checkin.Session.Model.SessionInvoiceModel;
 import com.checkin.app.checkin.Session.Model.SessionOrderedItemModel;
 import com.checkin.app.checkin.Shop.RecentCheckin.Model.RecentCheckinModel;
 import com.checkin.app.checkin.Shop.RestaurantModel;
+import com.checkin.app.checkin.Shop.ShopPrivateProfile.Invoice.RestaurantSessionModel;
+import com.checkin.app.checkin.Shop.ShopPrivateProfile.Invoice.ShopSessionDetailModel;
+import com.checkin.app.checkin.Shop.ShopPrivateProfile.Invoice.ShopSessionFeedbackModel;
 import com.checkin.app.checkin.Shop.ShopJoin.ShopJoinModel;
+import com.checkin.app.checkin.Shop.ShopPrivateProfile.Finance.FinanceModel;
 import com.checkin.app.checkin.Shop.ShopPrivateProfile.MemberModel;
 import com.checkin.app.checkin.User.Friendship.FriendshipModel;
+import com.checkin.app.checkin.User.NonPersonalProfile.ShopCustomerModel;
 import com.checkin.app.checkin.User.UserModel;
+import com.checkin.app.checkin.Waiter.Model.WaiterEventModel;
+import com.checkin.app.checkin.Waiter.Model.WaiterTableModel;
 import com.fasterxml.jackson.databind.node.ArrayNode;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 
@@ -53,7 +62,7 @@ public interface WebApiService {
     Call<List<UserModel>> getUsers();
 
     @GET("users/{user_pk}/")
-    Call<UserModel> getNonPersonalUser(@Path("user_pk") String userPk);
+    Call<UserModel> getNonPersonalUser(@Path("user_pk") long userPk);
 
     @GET("users/self/")
     Call<UserModel> getPersonalUser();
@@ -95,7 +104,7 @@ public interface WebApiService {
     Call<GenericDetailModel> postRegisterShop(@Body ShopJoinModel model);
 
     @GET("restaurants/{shop_id}/")
-    Call<RestaurantModel> getRestaurantDetails(@Path("shop_id") String shopId);
+    Call<RestaurantModel> getRestaurantDetails(@Path("shop_id") long shopId);
 
     @GET("restaurants/")
     Call<List<RestaurantModel>> getRestaurants();
@@ -103,37 +112,37 @@ public interface WebApiService {
     @Multipart
     @POST("restaurants/{shop_id}/logo/")
     Call<ObjectNode> postRestaurantLogo(
-            @Path("shop_id") String shopId, @Part MultipartBody.Part pic);
+            @Path("shop_id") long shopId, @Part MultipartBody.Part pic);
 
     @Multipart
     @POST("restaurants/{shop_id}/covers/{index}/")
     Call<ObjectNode> postRestaurantCover(
-            @Path("shop_id") String shopId, @Path("index") int index, @Part MultipartBody.Part pic);
+            @Path("shop_id") long shopId, @Path("index") int index, @Part MultipartBody.Part pic);
 
     @DELETE("restaurants/{shop_id}/covers/{index}/")
-    Call<ObjectNode> deleteRestaurantCover(@Path("shop_id") String shopId, @Path("index") int index);
+    Call<ObjectNode> deleteRestaurantCover(@Path("shop_id") long shopId, @Path("index") int index);
 
     @GET("restaurants/{shop_id}/edit/")
-    Call<RestaurantModel> getRestaurantManageDetails(@Path("shop_id") String shopId);
+    Call<RestaurantModel> getRestaurantManageDetails(@Path("shop_id") long shopId);
 
     @PATCH("restaurants/{shop_id}/edit/")
-    Call<ObjectNode> putRestaurantManageDetails(@Path("shop_id") String shopId, @Body RestaurantModel shopData);
+    Call<ObjectNode> putRestaurantManageDetails(@Path("shop_id") long shopId, @Body RestaurantModel shopData);
 
     @PUT("restaurants/{shop_id}/verify/")
-    Call<ObjectNode> putRestaurantContactVerify(@Path("shop_id") String shopId, @Body ObjectNode data);
+    Call<ObjectNode> putRestaurantContactVerify(@Path("shop_id") long shopId, @Body ObjectNode data);
 
     // region SHOP_MEMBERS
     @GET("restaurants/{shop_id}/members/")
-    Call<List<MemberModel>> getRestaurantMembers(@Path("shop_id") String shopId);
+    Call<List<MemberModel>> getRestaurantMembers(@Path("shop_id") long shopId);
 
     @POST("restaurants/{shop_id}/members/")
-    Call<ObjectNode> postRestaurantMember(@Path("shop_id") String shopId, @Body MemberModel data);
+    Call<ObjectNode> postRestaurantMember(@Path("shop_id") long shopId, @Body MemberModel data);
 
     @PUT("restaurants/{shop_id}/members/{user_id}/")
-    Call<ObjectNode> putRestaurantMember(@Path("shop_id") String shopId, @Path("user_id") String userId, @Body MemberModel data);
+    Call<ObjectNode> putRestaurantMember(@Path("shop_id") long shopId, @Path("user_id") long userId, @Body MemberModel data);
 
     @DELETE("restaurants/{shop_id}/members/{user_id}/")
-    Call<ObjectNode> deleteRestaurantMember(@Path("shop_id") String shopId, @Path("user_id") String userId);
+    Call<ObjectNode> deleteRestaurantMember(@Path("shop_id") long shopId, @Path("user_id") long userId);
     // endregion
 
     // endregion
@@ -141,7 +150,7 @@ public interface WebApiService {
     // region SESSION
 
     @POST("sessions/customer/new/")
-    Call<ObjectNode> postNewCustomerSession(@Body ObjectNode data);
+    Call<QRResultModel> postNewCustomerSession(@Body ObjectNode data);
 
     @GET("sessions/active/")
     Call<ActiveSessionModel> getActiveSession();
@@ -159,7 +168,10 @@ public interface WebApiService {
     Call<ObjectNode> deleteActiveSessionCustomer(@Path("user_id") String userId);
 
     @GET("sessions/recent/restaurants/{shop_id}/")
-    Call<RecentCheckinModel> getRecentCheckins(@Path("shop_id") String shopId);
+    Call<RecentCheckinModel> getRecentCheckins(@Path("shop_id") long shopId);
+
+    @GET("sessions/recent/users/{user_id}/")
+    Call<List<ShopCustomerModel>> getUserCheckins(@Path("user_id") long userId);
 
     @GET("sessions/active/events/customer/")
     Call<List<SessionChatModel>> getCustomerSessionChat();
@@ -173,8 +185,27 @@ public interface WebApiService {
     @POST("sessions/active/request/checkout/")
     Call<ObjectNode> postCustomerRequestCheckout(@Body ObjectNode data);
 
-    @GET("sessions/{session_id}/invoice/")
-    Call<SessionInvoiceModel> getSessionInvoice(@Path("session_id") int sessionId);
+    @GET("sessions/active/invoice/")
+    Call<SessionInvoiceModel> getSessionInvoice();
+
+    @GET("sessions/{session_id}/brief/")
+    Call<SessionBriefModel> getSessionBriefDetail(@Path("session_id") long sessionId);
+
+    // endregion
+
+    // region WAITER
+
+    @POST("sessions/waiter/new/")
+    Call<QRResultModel> postNewWaiterSession(@Body ObjectNode data);
+
+    @GET("sessions/active/restaurants/{restaurant_id}/")
+    Call<List<RestaurantTableModel>> getRestaurantActiveTables(@Path("restaurant_id") long restaurantId);
+
+    @GET("sessions/{session_id}/waiter/events/")
+    Call<List<WaiterEventModel>> getWaiterSessionEvents(@Path("session_id") long sessionId);
+
+    @GET("sessions/waiter/tables/active/")
+    Call<List<WaiterTableModel>> getWaiterServedTables();
 
     @GET("sessions/{session_id}/orders/")
     Call<List<SessionOrderedItemModel>> getManagerOrders(@Path("session_id") int sessionId);
@@ -204,10 +235,10 @@ public interface WebApiService {
 
     // region REVIEWS
     @GET("reviews/restaurants/{shop_id}/")
-    Call<List<ShopReviewModel>> getRestaurantReviews(@Path("shop_id") String shopId);
+    Call<List<ShopReviewModel>> getRestaurantReviews(@Path("shop_id") long shopId);
 
     @POST("reviews/{review_id}/react/")
-    Call<ObjectNode> postReviewReact(@Path("review_id") String reviewId);
+    Call<ObjectNode> postReviewReact(@Path("review_id") long reviewId);
 
     // endregion
 
@@ -226,10 +257,19 @@ public interface WebApiService {
             @Query("search") String query, @Query("has_nonveg") Boolean hasNonVeg, @Query("has_alcohol") Boolean hasAlcohol
     );
 
-    //region Waiter Events
-    @GET("shops/{table_id}/orders")
-    Call<List<EventModel>> getItems(@Path("table_id") long tableId);
+    /*ShopInvoice all API*/
+    @GET("sessions/restaurants/{restaurant_id}/")
+    Call<List<RestaurantSessionModel>> getRestaurantSessionsById(@Path("restaurant_id") long restaurantId, @Query("checked_out_after") String checkedOutAfter, @Query("checked_out_before") String checkedOutBefore);
 
-    @POST("shops/{table_id}/orders/")
-    Call<ObjectNode> postItemCompleted(@Path("table_id") long tableId,@Body ObjectNode data);
+    @GET("sessions/{session_id}/detail/")
+    Call<ShopSessionDetailModel> getShopSessionDetailById(@Path("session_id") long sessionId);
+
+    @GET("sessions/{session_id}/feedbacks/")
+    Call<List<ShopSessionFeedbackModel>> getShopSessionFeedbackById(@Path("session_id") long sessionId);
+
+    @GET("restaurants/{restaurant_id}/finance/")
+    Call<FinanceModel> getRestaurantFinanceById(@Path("restaurant_id") long restaurantId);
+
+    @PUT("restaurants/{restaurant_id}/finance/")
+    Call<GenericDetailModel> setRestaurantFinanceById(@Body FinanceModel financeModel, @Path("restaurant_id") long restaurantId);
 }

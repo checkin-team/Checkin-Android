@@ -29,7 +29,7 @@ public class ShopActivity extends BaseActivity {
 
     public static final String KEY_SHOP_PK = "shop_public.pk";
 
-    private String mShopPk;
+    private long mShopPk;
     private ShopProfileViewModel mViewModel;
 
     @Override
@@ -43,7 +43,7 @@ public class ShopActivity extends BaseActivity {
 
         mViewModel = ViewModelProviders.of(this).get(ShopProfileViewModel.class);
 
-        mShopPk = getIntent().getStringExtra(KEY_SHOP_PK);
+        mShopPk = getIntent().getLongExtra(KEY_SHOP_PK, 0);
         mViewModel.fetchShop(mShopPk);
     }
 

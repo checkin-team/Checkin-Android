@@ -1,0 +1,292 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:paddingStart="@dimen/spacing_normal"
+        android:paddingEnd="@dimen/spacing_normal">
+
+        <TextView
+            style="@style/GreySmallTextStyle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/spacing_small"
+            android:gravity="center"
+            android:text="@string/action_tax_discount_description" />
+
+        <android.support.v7.widget.CardView
+            style="@style/WhiteCardStyle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/spacing_normal"
+            android:layout_marginStart="@dimen/spacing_small"
+            android:layout_marginEnd="@dimen/spacing_small">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:padding="@dimen/spacing_normal">
+
+                <TextView
+                    style="@style/GreyTextStyle"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/header_shop_discount_total" />
+
+                <TextView
+                    android:id="@+id/tv_finance_total_discount"
+                    style="@style/RedTitleStyle"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/spacing_small"
+                    tools:text="@string/symbol_currency_rupee" />
+
+            </LinearLayout>
+
+        </android.support.v7.widget.CardView>
+
+        <android.support.v7.widget.CardView
+            style="@style/WhiteCardStyle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/spacing_normal"
+            android:layout_marginStart="@dimen/spacing_small"
+            android:layout_marginEnd="@dimen/spacing_small">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:padding="@dimen/spacing_normal">
+
+                <TextView
+                    style="@style/RedTitleStyle"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/heading_shop_finance_discount"
+                    android:textSize="@dimen/font_large" />
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_marginTop="@dimen/spacing_small"
+                    android:gravity="center"
+                    android:orientation="horizontal">
+
+                    <EditText
+                        android:id="@+id/et_finance_discount"
+                        style="@style/TextBorderedGrey"
+                        android:layout_width="@dimen/width_input_small"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:cursorVisible="false"
+                        android:gravity="center"
+                        android:imeOptions="actionDone"
+                        android:inputType="numberDecimal"
+                        android:padding="@dimen/spacing_extra_tiny"
+                        android:textColor="@color/primary_red"
+                        tools:text="20" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:layout_marginStart="@dimen/spacing_tiny"
+                        android:gravity="center"
+                        android:text="%"
+                        android:textSize="@dimen/font_large" />
+                </LinearLayout>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_marginTop="@dimen/spacing_small"
+                    android:gravity="center"
+                    android:text="@string/description_shop_finance_discount"
+                    android:textSize="@dimen/font_extra_small" />
+
+                <Button
+                    android:id="@+id/btn_finance_save"
+                    style="@style/ButtonSmallGreyText"
+                    android:layout_width="wrap_content"
+                    android:layout_height="@dimen/button_height_short"
+                    android:layout_gravity="center_horizontal"
+                    android:layout_marginTop="@dimen/spacing_small"
+                    android:text="Save changes" />
+            </LinearLayout>
+
+        </android.support.v7.widget.CardView>
+
+        <android.support.v7.widget.CardView
+            style="@style/WhiteCardStyle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/spacing_normal"
+            android:layout_marginBottom="@dimen/spacing_normal"
+            android:layout_marginStart="@dimen/spacing_small"
+            android:layout_marginEnd="@dimen/spacing_small">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:padding="@dimen/spacing_normal">
+
+                <TextView
+                    style="@style/RedTitleStyle"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/heading_shop_finance_tax"
+                    android:textSize="@dimen/font_large" />
+
+                <LinearLayout
+                    android:layout_width="@dimen/width_shop_finance_tax"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/spacing_extra_large"
+                    android:layout_marginTop="@dimen/spacing_small"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="CGST" />
+
+                    <TextView
+                        android:id="@+id/tv_finance_tax_cgst"
+                        style="@style/TextBorderedGrey"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        tools:text="2.50" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:layout_marginStart="@dimen/spacing_small"
+                        android:gravity="center"
+                        android:text="%"
+                        android:textSize="@dimen/font_heading" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="@dimen/width_shop_finance_tax"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/spacing_extra_large"
+                    android:layout_marginTop="@dimen/spacing_small"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="SGST" />
+
+                    <TextView
+                        android:id="@+id/tv_finance_tax_sgst"
+                        style="@style/TextBorderedGrey"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        tools:text="2.50" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:layout_marginStart="@dimen/spacing_small"
+                        android:gravity="center"
+                        android:text="%"
+                        android:textSize="@dimen/font_heading" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="@dimen/width_shop_finance_tax"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/spacing_extra_large"
+                    android:layout_marginTop="@dimen/spacing_small"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="IGST" />
+
+                    <TextView
+                        android:id="@+id/tv_finance_tax_igst"
+                        style="@style/TextBorderedGrey"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        tools:text="2.50" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:layout_marginStart="@dimen/spacing_small"
+                        android:gravity="center"
+                        android:text="%"
+                        android:textSize="@dimen/font_heading" />
+                </LinearLayout>
+
+                <View
+                    android:layout_width="@dimen/width_shop_finance_tax"
+                    android:layout_height="@dimen/height_horizontal_line"
+                    android:layout_marginStart="@dimen/spacing_extra_large"
+                    android:layout_marginTop="@dimen/spacing_small"
+                    android:background="@drawable/ic_line" />
+
+                <LinearLayout
+                    android:layout_width="@dimen/width_shop_finance_tax"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/spacing_extra_large"
+                    android:layout_marginTop="@dimen/spacing_small"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="GST" />
+
+                    <TextView
+                        android:id="@+id/tv_finance_tax_gst"
+                        style="@style/TextBorderedGrey"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        tools:text="2.50" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:layout_marginStart="@dimen/spacing_small"
+                        android:gravity="center"
+                        android:text="%"
+                        android:textSize="@dimen/font_heading" />
+                </LinearLayout>
+
+                <TextView
+                    style="@style/GreySmallTextStyle"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_marginTop="@dimen/spacing_normal"
+                    android:text="@string/description_shop_finance_tax_change"
+                    android:textSize="@dimen/font_extra_small" />
+
+            </LinearLayout>
+
+        </android.support.v7.widget.CardView>
+
+    </LinearLayout>
+
+</ScrollView>

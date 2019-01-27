@@ -42,7 +42,7 @@ public class JoinViewModel extends AndroidViewModel {
 
     public RestaurantModel getNewShop(String pk) {
         isRegistered = true;
-        RestaurantModel restaurantModel = new RestaurantModel(pk);
+        RestaurantModel restaurantModel = new RestaurantModel(Long.valueOf(pk));
         restaurantModel.setExtraData("Night Life", "Outdoor Seating", "Host Parties");
         restaurantModel.setPaymentModes(RestaurantModel.PAYMENT_MODE.CASH);
         return restaurantModel;

@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.v7.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    style="@style/WhiteCardStyle"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_margin="@dimen/spacing_extra_small">
+
+    <android.support.constraint.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <android.support.v7.widget.CardView
+            android:id="@+id/container_waiter_table_name"
+            style="@style/GreyCardStyle"
+            android:layout_width="wrap_content"
+            android:layout_height="0dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent">
+
+            <TextView
+                android:id="@+id/tv_waiter_table_name"
+                style="@style/WhiteTextStyle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:paddingStart="@dimen/spacing_normal"
+                android:paddingTop="@dimen/spacing_small"
+                android:paddingEnd="@dimen/spacing_normal"
+                android:paddingBottom="@dimen/spacing_small"
+                tools:text="Table" />
+        </android.support.v7.widget.CardView>
+
+        <TextView
+            android:id="@+id/tv_waiter_table_host"
+            style="@style/GreyTextStyle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@id/container_waiter_table_name"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:text="Sample" />
+
+        <TextView
+            android:id="@+id/tv_waiter_table_timestamp"
+            style="@style/PinkishGreySmallTextStyle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="@dimen/spacing_tiny"
+            android:layout_marginBottom="@dimen/spacing_tiny"
+            app:layout_constraintTop_toBottomOf="@id/tv_waiter_table_host"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            tools:text="2 minutes ago." />
+
+        <View
+            android:id="@+id/view_waiter_table_mask"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:background="@color/translucent_white"
+            android:translationZ="5dp"
+            android:visibility="gone"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+    </android.support.constraint.ConstraintLayout>
+
+</android.support.v7.widget.CardView>

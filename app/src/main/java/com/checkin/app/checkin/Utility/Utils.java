@@ -39,6 +39,7 @@ import android.widget.Toast;
 import com.checkin.app.checkin.R;
 
 import java.lang.reflect.Field;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -417,7 +418,10 @@ public class Utils {
 
     public static boolean isNetworkConnected(Context context) {
         ConnectivityManager connectivityManager = (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
-        NetworkInfo networkInfo = connectivityManager.getActiveNetworkInfo();
+        NetworkInfo networkInfo = null;
+        if (connectivityManager != null) {
+            networkInfo = connectivityManager.getActiveNetworkInfo();
+        }
         return (networkInfo != null && networkInfo.isConnected());
     }
 
@@ -435,6 +439,44 @@ public class Utils {
 
     public static String formatDateTo24HoursTime(Date dateTime) {
         return new SimpleDateFormat("HH:mm", Locale.ENGLISH).format(dateTime);
+    }
+
+    public static String getCurrentFormattedDate() {
+        Date date = Calendar.getInstance().getTime();
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("MMM dd, yyyy", Locale.getDefault());
+        return simpleDateFormat.format(date);
+    }
+
+    public static String formatCompleteDate(Date date) {
+        SimpleDateFormat formatter = new SimpleDateFormat("MMM dd, yyyy hh:mm a", Locale.getDefault());
+        return formatter.format(date);
+    }
+
+    public static String formatDate(String date, String initDateFormat, String endDateFormat) throws ParseException {
+        Date initDate = new SimpleDateFormat(initDateFormat, Locale.getDefault()).parse(date);
+        SimpleDateFormat formatter = new SimpleDateFormat(endDateFormat, Locale.getDefault());
+        return formatter.format(initDate);
+    }
+
+    public static String formatTimeDuration(long milliSec) {
+        long secondsInMilli = 1000;
+        long minutesInMilli = secondsInMilli * 60;
+        long hoursInMilli = minutesInMilli * 60;
+
+        long elapsedHours = milliSec / hoursInMilli;
+        milliSec = milliSec % hoursInMilli;
+        long elapsedMinutes = milliSec / minutesInMilli;
+        milliSec = milliSec % minutesInMilli;
+        long elapsedSeconds = milliSec / secondsInMilli;
+        milliSec = milliSec % secondsInMilli;
+
+        if (elapsedHours > 0)
+            return String.format(Locale.ENGLISH, "%d Hours", elapsedHours);
+        if (elapsedMinutes > 0)
+            return String.format(Locale.ENGLISH, "%d Mins", elapsedMinutes);
+        if (elapsedSeconds > 0)
+            return String.format(Locale.ENGLISH, "%d Sec", elapsedSeconds);
+        return "0 Sec";
     }
 
     public static String formatElapsedTime(Date eventTime) {

@@ -7,7 +7,7 @@ import java.util.List;
 
 public class SessionInvoiceModel {
     @JsonProperty("pk")
-    private String pk;
+    private long pk;
 
     @JsonProperty("ordered_items")
     private List<SessionOrderedItemModel> orderedItems;
@@ -20,7 +20,7 @@ public class SessionInvoiceModel {
 
     public SessionInvoiceModel(){}
 
-    public String getPk() {
+    public long getPk() {
         return pk;
     }
 

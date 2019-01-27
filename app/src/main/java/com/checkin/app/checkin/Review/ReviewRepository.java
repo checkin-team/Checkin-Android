@@ -24,7 +24,7 @@ public class ReviewRepository {
         mWebService = ApiClient.getApiService(context);
     }
 
-    public LiveData<Resource<List<ShopReviewModel>>> getRestaurantReviews(final String shopPk) {
+    public LiveData<Resource<List<ShopReviewModel>>> getRestaurantReviews(final long shopPk) {
         return new NetworkBoundResource<List<ShopReviewModel>, List<ShopReviewModel>>() {
             @Override
             protected boolean shouldUseLocalDb() {
@@ -44,7 +44,7 @@ public class ReviewRepository {
         }.getAsLiveData();
     }
 
-    public LiveData<Resource<ObjectNode>> postReviewReact(final String reviewPk) {
+    public LiveData<Resource<ObjectNode>> postReviewReact(final long reviewPk) {
         return new NetworkBoundResource<ObjectNode, ObjectNode>() {
             @Override
             protected boolean shouldUseLocalDb() {

@@ -50,6 +50,7 @@ public class ActiveSessionActivity extends AppCompatActivity implements ActiveSe
 
     private ActiveSessionViewModel mViewModel;
     private ActiveSessionMemberAdapter mSessionMembersAdapter;
+    private PostCheckinFragment mPostCheckinFragment;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -69,11 +70,11 @@ public class ActiveSessionActivity extends AppCompatActivity implements ActiveSe
                 case SUCCESS: {
                     if (data == null)
                         return;
-                    mViewModel.setSessionPk(data.getPk());
-                    mViewModel.setShopPk(data.getShopPk());
                     if (mViewModel.getSessionPk() != data.getPk()) {
                         showPostCheckIn();
                     }
+                    mViewModel.setSessionPk(data.getPk());
+                    mViewModel.setShopPk(data.getShopPk());
                     setupData(data);
                 }
                 case LOADING: {
@@ -133,22 +134,29 @@ public class ActiveSessionActivity extends AppCompatActivity implements ActiveSe
         }
     }
 
-    private void updateState(int shopPk, int sessionPk) {
+    private void updateState(long shopPk, long sessionPk) {
         PreferenceManager.getDefaultSharedPreferences(this).edit()
-                .putInt(Constants.SP_SESSION_ACTIVE_PK, sessionPk)
-                .putInt(Constants.SP_SESSION_RESTAURANT_PK, shopPk)
+                .putLong(Constants.SP_SESSION_ACTIVE_PK, sessionPk)
+                .putLong(Constants.SP_SESSION_RESTAURANT_PK, shopPk)
                 .apply();
+        if (mPostCheckinFragment != null) {
+            getSupportFragmentManager().beginTransaction()
+                    .remove(mPostCheckinFragment)
+                    .commit();
+            mPostCheckinFragment = null;
+        }
     }
 
     private void showPostCheckIn() {
+        mPostCheckinFragment = PostCheckinFragment.newInstance(this);
         getSupportFragmentManager().beginTransaction()
-                .add(R.id.root_session, PostCheckinFragment.newInstance(this))
+                .add(R.id.root_session, mPostCheckinFragment)
                 .commit();
     }
 
     private void setupInitialState() {
         SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
-        mViewModel.setSessionPk(prefs.getInt(Constants.SP_SESSION_ACTIVE_PK, -1));
+        mViewModel.setSessionPk(prefs.getLong(Constants.SP_SESSION_ACTIVE_PK, -1));
         mViewModel.fetchActiveSessionDetail();
     }
 

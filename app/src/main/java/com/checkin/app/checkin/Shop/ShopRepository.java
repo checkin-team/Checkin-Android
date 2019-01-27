@@ -90,7 +90,7 @@ public class ShopRepository extends BaseRepository {
         }.getAsLiveData();
     }
 
-    public LiveData<Resource<ObjectNode>> updateShopContact(final String shopId, final ObjectNode data) {
+    public LiveData<Resource<ObjectNode>> updateShopContact(final long shopId, final ObjectNode data) {
         return new NetworkBoundResource<ObjectNode, ObjectNode>() {
             @Override
             protected boolean shouldUseLocalDb() {
@@ -110,7 +110,7 @@ public class ShopRepository extends BaseRepository {
         }.getAsLiveData();
     }
 
-    public LiveData<Resource<RestaurantModel>> getShopModel(String shopId) {
+    public LiveData<Resource<RestaurantModel>> getShopModel(long shopId) {
         return new NetworkBoundResource<RestaurantModel, RestaurantModel> () {
 
             @Override
@@ -129,7 +129,7 @@ public class ShopRepository extends BaseRepository {
         }.getAsLiveData();
     }
 
-    public LiveData<Resource<RestaurantModel>> getShopManageModel(String shopId) {
+    public LiveData<Resource<RestaurantModel>> getShopManageModel(long shopId) {
         return new NetworkBoundResource<RestaurantModel, RestaurantModel> () {
 
             @Override
@@ -168,7 +168,7 @@ public class ShopRepository extends BaseRepository {
         }.getAsLiveData();
     }
 
-    public LiveData<Resource<List<MemberModel>>> getRestaurantMembers(String shopId) {
+    public LiveData<Resource<List<MemberModel>>> getRestaurantMembers(long shopId) {
         return new NetworkBoundResource<List<MemberModel>, List<MemberModel>>() {
             @Override
             protected boolean shouldUseLocalDb() {
@@ -188,7 +188,7 @@ public class ShopRepository extends BaseRepository {
         }.getAsLiveData();
     }
 
-    public LiveData<Resource<ObjectNode>> addRestaurantMember(String shopId, MemberModel data) {
+    public LiveData<Resource<ObjectNode>> addRestaurantMember(long shopId, MemberModel data) {
         return new NetworkBoundResource<ObjectNode, ObjectNode>() {
             @Override
             protected boolean shouldUseLocalDb() {
@@ -206,7 +206,7 @@ public class ShopRepository extends BaseRepository {
         }.getAsLiveData();
     }
 
-    public LiveData<Resource<ObjectNode>> updateRestaurantMember(String shopId, MemberModel shopMember) {
+    public LiveData<Resource<ObjectNode>> updateRestaurantMember(long shopId, MemberModel shopMember) {
         return new NetworkBoundResource<ObjectNode, ObjectNode>() {
             @Override
             protected boolean shouldUseLocalDb() {
@@ -224,7 +224,7 @@ public class ShopRepository extends BaseRepository {
         }.getAsLiveData();
     }
 
-    public LiveData<Resource<ObjectNode>> removeRestaurantMember(String shopId, String userId) {
+    public LiveData<Resource<ObjectNode>> removeRestaurantMember(long shopId, long userId) {
         return new NetworkBoundResource<ObjectNode, ObjectNode>() {
             @Override
             protected boolean shouldUseLocalDb() {
@@ -242,7 +242,7 @@ public class ShopRepository extends BaseRepository {
         }.getAsLiveData();
     }
 
-    public LiveData<Resource<ObjectNode>> postRestaurantCover(String shopId, int index, File pic) {
+    public LiveData<Resource<ObjectNode>> postRestaurantCover(long shopId, int index, File pic) {
         RequestBody requestFile = RequestBody.create(MediaType.parse("image/jpeg"), pic);
         final MultipartBody.Part body = MultipartBody.Part.createFormData("image", "cover.jpg", requestFile);
         return new NetworkBoundResource<ObjectNode, ObjectNode>() {
@@ -264,7 +264,7 @@ public class ShopRepository extends BaseRepository {
         }.getAsLiveData();
     }
 
-    public LiveData<Resource<ObjectNode>> deleteRestaurantCover(String shopId, int index) {
+    public LiveData<Resource<ObjectNode>> deleteRestaurantCover(long shopId, int index) {
         return new NetworkBoundResource<ObjectNode, ObjectNode>() {
             @Override
             protected boolean shouldUseLocalDb() {
@@ -284,7 +284,7 @@ public class ShopRepository extends BaseRepository {
         }.getAsLiveData();
     }
 
-    public LiveData<Resource<ObjectNode>> postRestaurantLogo(String shopId, File pic) {
+    public LiveData<Resource<ObjectNode>> postRestaurantLogo(long shopId, File pic) {
         RequestBody requestFile = RequestBody.create(MediaType.parse("image/jpeg"), pic);
         final MultipartBody.Part body = MultipartBody.Part.createFormData("logo", "cover.jpg", requestFile);
         return new NetworkBoundResource<ObjectNode, ObjectNode>() {

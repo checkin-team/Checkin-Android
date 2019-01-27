@@ -18,7 +18,7 @@ public class MemberViewModel extends BaseViewModel {
     private MediatorLiveData<Resource<List<MemberModel>>> mShopMembers = new MediatorLiveData<>();
     private MediatorLiveData<Resource<ObjectNode>> mRemovedMember = new MediatorLiveData<>();
 
-    private String mShopPk;
+    private long mShopPk;
     @Nullable private MemberModel mCurrentMember;
 
     public MemberViewModel(@NonNull Application application) {
@@ -26,12 +26,12 @@ public class MemberViewModel extends BaseViewModel {
         mRepository = ShopRepository.getInstance(application);
     }
 
-    public void fetchShopMembers(String shopPk) {
+    public void fetchShopMembers(long shopPk) {
         mShopPk = shopPk;
         mShopMembers.addSource(mRepository.getRestaurantMembers(mShopPk), mShopMembers::setValue);
     }
 
-    public String getShopPk() {
+    public long getShopPk() {
         return mShopPk;
     }
 
@@ -52,7 +52,7 @@ public class MemberViewModel extends BaseViewModel {
     public void deleteShopMember() {
         if (mCurrentMember == null)
             return;
-        String userId = mCurrentMember.getUserId();
+        long userId = mCurrentMember.getUserId();
         mRemovedMember.addSource(mRepository.removeRestaurantMember(mShopPk, userId), mRemovedMember::setValue);
     }
 
