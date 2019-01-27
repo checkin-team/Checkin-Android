@@ -2,7 +2,7 @@
     <!-- font sizes -->
     <dimen name="font_largest">26sp</dimen>
     <dimen name="font_larger">22sp</dimen>
-    <dimen name="font_large_extra">20sp</dimen>
+    <dimen name="font_extra_large">20sp</dimen>
     <dimen name="font_large">18sp</dimen>
     <dimen name="font_heading" format="float">16.5sp</dimen>
     <dimen name="font_normal">15sp</dimen>
@@ -26,6 +26,7 @@
     <!-- icon sizes -->
     <dimen name="size_tiny_icon">12dp</dimen>
     <dimen name="size_small_icon">24dp</dimen>
+    <dimen name="size_medium_icon">30dp</dimen>
     <dimen name="size_normal_icon">40dp</dimen>
 
     <!-- button sizes -->
@@ -35,10 +36,14 @@
     <dimen name="size_extra_small_button">20dp</dimen>
     <dimen name="size_tiny_button">10dp</dimen>
 
-    <dimen name="size_logo_small">@dimen/size_small_image</dimen>
+    <dimen name="size_logo_small">@dimen/size_image_small</dimen>
     <dimen name="size_logo">60dp</dimen>
     <dimen name="size_logo_large">80dp</dimen>
-    <dimen name="size_small_image">40dp</dimen>
+
+    <dimen name="size_image_small">40dp</dimen>
+    <dimen name="size_image_large">250dp</dimen>
+
+    <dimen name="size_fab">60dp</dimen>
 
     <dimen name="height_card_normal">80dp</dimen>
     <dimen name="height_card_tall">120dp</dimen>
@@ -51,17 +56,17 @@
 
     <!-- typical sizes of views -->
     <dimen name="button_height_tall">60dp</dimen>
-    <dimen name="button_height_normal">40dp</dimen>
     <dimen name="button_height_medium">50dp</dimen>
+    <dimen name="button_height_normal">40dp</dimen>
     <dimen name="button_height_short">32dp</dimen>
+
+    <dimen name="button_width_normal">100dp</dimen>
 
     <dimen name="button_oval_large">120dp</dimen>
     <dimen name="button_oval_normal">96dp</dimen>
     <dimen name="width_input_small">60dp</dimen>
 
     <dimen name="height_spinner_item">50dp</dimen>
-
-    <dimen name="size_image_large">250dp</dimen>
 
     <!-- Menu dimensions -->
     <dimen name="height_menu_filter">400dp</dimen>
@@ -79,7 +84,10 @@
     <!--Chat dimensions-->
     <dimen name="size_chat_status">10dp</dimen>
     <dimen name="width_chat_card">250dp</dimen>
+
+    <!--Order dimensions-->
     <dimen name="height_card_order_status">50dp</dimen>
+    <dimen name="size_icon_order_status">@dimen/size_medium_icon</dimen>
 
     <!-- Card dimensions -->
     <dimen name="card_elevation">4dp</dimen>
@@ -91,6 +99,7 @@
     <dimen name="height_input_small">25dp</dimen>
 
     <dimen name="height_horizontal_line">1dp</dimen>
+    <dimen name="width_vertical_line">1dp</dimen>
     
     <!-- Shop dimensions -->
     <dimen name="width_shop_finance_tax">160dp</dimen>

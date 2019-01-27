@@ -24,6 +24,7 @@
 
     <!--Transparency variants-->
     <color name="translucent_pinkish_grey">#5ebebebe</color>
+    <color name="translucent_white">#5effffff</color>
     <color name="translucent_black">#aa000000</color>
     <color name="translucent_half_black">#80000000</color>
 </resources>

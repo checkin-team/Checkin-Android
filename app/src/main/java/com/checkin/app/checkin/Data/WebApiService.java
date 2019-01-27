@@ -10,6 +10,9 @@ import com.checkin.app.checkin.Search.SearchResultPeopleModel;
 import com.checkin.app.checkin.Search.SearchResultShopModel;
 import com.checkin.app.checkin.Session.ActiveSession.ActiveSessionModel;
 import com.checkin.app.checkin.Session.ActiveSession.Chat.SessionChatModel;
+import com.checkin.app.checkin.Session.Model.QRResultModel;
+import com.checkin.app.checkin.Session.Model.RestaurantTableModel;
+import com.checkin.app.checkin.Session.Model.SessionBriefModel;
 import com.checkin.app.checkin.Session.Model.SessionInvoiceModel;
 import com.checkin.app.checkin.Session.Model.SessionOrderedItemModel;
 import com.checkin.app.checkin.Shop.RecentCheckin.Model.RecentCheckinModel;
@@ -23,7 +26,8 @@ import com.checkin.app.checkin.Shop.ShopPrivateProfile.MemberModel;
 import com.checkin.app.checkin.User.Friendship.FriendshipModel;
 import com.checkin.app.checkin.User.NonPersonalProfile.ShopCustomerModel;
 import com.checkin.app.checkin.User.UserModel;
-import com.checkin.app.checkin.Waiter.EventModel;
+import com.checkin.app.checkin.Waiter.Model.WaiterEventModel;
+import com.checkin.app.checkin.Waiter.Model.WaiterTableModel;
 import com.fasterxml.jackson.databind.node.ArrayNode;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 
@@ -146,7 +150,7 @@ public interface WebApiService {
     // region SESSION
 
     @POST("sessions/customer/new/")
-    Call<ObjectNode> postNewCustomerSession(@Body ObjectNode data);
+    Call<QRResultModel> postNewCustomerSession(@Body ObjectNode data);
 
     @GET("sessions/active/")
     Call<ActiveSessionModel> getActiveSession();
@@ -178,8 +182,27 @@ public interface WebApiService {
     @POST("sessions/active/request/checkout/")
     Call<ObjectNode> postCustomerRequestCheckout(@Body ObjectNode data);
 
-    @GET("sessions/{session_id}/invoice/")
-    Call<SessionInvoiceModel> getSessionInvoice(@Path("session_id") int sessionId);
+    @GET("sessions/active/invoice/")
+    Call<SessionInvoiceModel> getSessionInvoice();
+
+    @GET("sessions/{session_id}/brief/")
+    Call<SessionBriefModel> getSessionBriefDetail(@Path("session_id") long sessionId);
+
+    // endregion
+
+    // region WAITER
+
+    @POST("sessions/waiter/new/")
+    Call<QRResultModel> postNewWaiterSession(@Body ObjectNode data);
+
+    @GET("sessions/active/restaurants/{restaurant_id}/")
+    Call<List<RestaurantTableModel>> getRestaurantActiveTables(@Path("restaurant_id") long restaurantId);
+
+    @GET("sessions/{session_id}/waiter/events/")
+    Call<List<WaiterEventModel>> getWaiterSessionEvents(@Path("session_id") long sessionId);
+
+    @GET("sessions/waiter/tables/active/")
+    Call<List<WaiterTableModel>> getWaiterServedTables();
 
     // endregion
 
@@ -222,13 +245,6 @@ public interface WebApiService {
             @Query("search") String query, @Query("has_nonveg") Boolean hasNonVeg, @Query("has_alcohol") Boolean hasAlcohol
     );
 
-    //region Waiter Events
-    @GET("shops/{table_id}/orders")
-    Call<List<EventModel>> getItems(@Path("table_id") long tableId);
-
-    @POST("shops/{table_id}/orders/")
-    Call<ObjectNode> postItemCompleted(@Path("table_id") long tableId,@Body ObjectNode data);
-
     /*ShopInvoice all API*/
     @GET("sessions/restaurants/{restaurant_id}/")
     Call<List<RestaurantSessionModel>> getRestaurantSessionsById(@Path("restaurant_id") String restaurantId, @Query("checked_out_before") String checkedOutBefore, @Query("checked_out_after") String checkedOutAfter);
@@ -246,5 +262,5 @@ public interface WebApiService {
     Call<FinanceModel> getRestaurantFinanceById(@Path("restaurant_id") String restaurantId);
 
     @PUT("restaurants/{restaurant_id}/finance/")
-    Call<GenericDetailModel> setRestaurantFinanceById(@Body FinanceModel financeModel,@Path("restaurant_id") String restaurantId);
+    Call<GenericDetailModel> setRestaurantFinanceById(@Body FinanceModel financeModel, @Path("restaurant_id") String restaurantId);
 }

@@ -3,219 +3,147 @@ package com.checkin.app.checkin.Waiter;
 import android.arch.lifecycle.ViewModelProviders;
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.design.widget.AppBarLayout;
-import android.support.design.widget.NavigationView;
+import android.support.annotation.Nullable;
 import android.support.design.widget.TabLayout;
-import android.support.v4.view.GravityCompat;
-import android.support.v4.view.ViewPager;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentStatePagerAdapter;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.widget.Button;
-import android.widget.FrameLayout;
-import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.checkin.app.checkin.Account.AccountModel;
 import com.checkin.app.checkin.Account.BaseAccountActivity;
+import com.checkin.app.checkin.Data.Resource.Status;
 import com.checkin.app.checkin.Misc.QRScannerActivity;
 import com.checkin.app.checkin.R;
+import com.checkin.app.checkin.Utility.DynamicSwipableViewPager;
 import com.checkin.app.checkin.Utility.EndDrawerToggle;
+import com.checkin.app.checkin.Waiter.Fragment.WaiterTableEventFragment;
+import com.checkin.app.checkin.Waiter.Model.WaiterTableModel;
 
+import java.util.ArrayList;
 import java.util.List;
 
-public class WaiterWorkActivity extends BaseAccountActivity implements WaiterActiveTableAdapter.onTableInterActionListener {
+import butterknife.BindView;
+import butterknife.ButterKnife;
+import butterknife.OnClick;
 
-    Toolbar toolbarWaiterTable;
-    ImageView drawerOpen;
-    ImageView actionTableMenu;
-    AppBarLayout appbarWaiterTable;
-    TabLayout tlWaiterTable;
-    ViewPager vpWaiterTable;
-    ImageView ivBarcodeScanner;
-    Button btnLogout;
-    NavigationView navAccount;
-    NavigationView navTableView;
-    DrawerLayout drawerWaiterTable;
+public class WaiterWorkActivity extends BaseAccountActivity {
+    public static final String KEY_SHOP_PK = "waiter.shop_pk";
+    private static final int REQUEST_QR_SCANNER = 121;
 
-    private List<TabTableModel> mList;
+    @BindView(R.id.toolbar_waiter)
+    Toolbar toolbarWaiter;
+    @BindView(R.id.drawer_waiter_work)
+    DrawerLayout drawerLayout;
+    @BindView(R.id.tabs_waiter)
+    TabLayout tabLayout;
+    @BindView(R.id.pager_waiter)
+    DynamicSwipableViewPager pagerTables;
+    @BindView(R.id.rv_waiter_drawer_assigned_tables)
+    RecyclerView rvAssignedTables;
+    @BindView(R.id.rv_waiter_drawer_unassigned_tables)
+    RecyclerView rvUnassignedTables;
+
+    private WaiterWorkViewModel mViewModel;
+    private WaiterTablePagerAdapter mFragmentAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_waiter_work);
+        ButterKnife.bind(this);
 
+        mViewModel = ViewModelProviders.of(this).get(WaiterWorkViewModel.class);
         setupUI();
-        setupMyWaiterTableViewPager();
-        setMyClickListener();
+        setupShopAssignedTables();
+        setupTableFragments();
+        fetchData();
     }
 
-    private void setMyClickListener() {
+    private void fetchData() {
+        long shopPk = getIntent().getLongExtra(KEY_SHOP_PK, 0);
+        mViewModel.fetchShopActiveTables(shopPk);
+        mViewModel.fetchWaiterServedTables();
+    }
 
-        actionTableMenu.setOnClickListener(view -> {
-            if (drawerWaiterTable.isDrawerOpen(GravityCompat.END))
-                drawerWaiterTable.closeDrawer(GravityCompat.END);
-            else
-                drawerWaiterTable.openDrawer(GravityCompat.END);
+    private void setupTableFragments() {
+        mFragmentAdapter = new WaiterTablePagerAdapter(getSupportFragmentManager());
+        pagerTables.setAdapter(mFragmentAdapter);
+        tabLayout.setupWithViewPager(pagerTables);
+
+        mViewModel.getWaiterTables().observe(this, listResource -> {
+            if (listResource == null)
+                return;
+            if (listResource.status == Status.SUCCESS && listResource.data != null) {
+                mFragmentAdapter.setTables(tabLayout, listResource.data);
+            }
         });
 
-        ivBarcodeScanner.setOnClickListener(view -> {
-            Intent qrScannerIntent = new Intent(getBaseContext(), QRScannerActivity.class);
-            startActivity(qrScannerIntent);
+        mViewModel.getQrResult().observe(this, qrResource -> {
+            if (qrResource == null)
+                return;
+            if (qrResource.status == Status.SUCCESS && qrResource.data != null) {
+                mFragmentAdapter.addTable(tabLayout, new WaiterTableModel(qrResource.data.getSessionPk(), qrResource.data.getTable()));
+            }
         });
     }
 
-    private void setupMyWaiterTableViewPager() {
-        /*This is used to setup Tab for waiter table. this will be changed in future.*/
-        WaiterTablePagerAdapter mWaiterTablePagerAdapter = new WaiterTablePagerAdapter(getSupportFragmentManager());
+    private void setupShopAssignedTables() {
+        final WaiterEndDrawerTableAdapter assignedTableAdapter = new WaiterEndDrawerTableAdapter();
+        final WaiterEndDrawerTableAdapter unassignedTableAdapter = new WaiterEndDrawerTableAdapter();
+        rvAssignedTables.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false));
+        rvUnassignedTables.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false));
 
-        TabTableViewModel mViewModel = ViewModelProviders.of(this).get(TabTableViewModel.class);
-        mViewModel.init();
+        rvAssignedTables.setAdapter(assignedTableAdapter);
+        rvUnassignedTables.setAdapter(unassignedTableAdapter);
 
-        /*mViewModel.findTabModelList().observe(this, tabTableModels -> {
-            if (tabTableModels != null && tabTableModels.size() > 0){
-                mList = tabTableModels;
-                for (int i = 0; i < tabTableModels.size(); i++){
-                    WaiterTableFragment mWaiterTableFragment = WaiterTableFragment.newInstance(tabTableModels.get(i).getTableNumber());
-                    mWaiterTablePagerAdapter.addWaiterTableFragment(mWaiterTableFragment);
-                }
-            }
-        });*/
-
-        /*for (int i = 0; i < 8; i++){
-            WaiterTableFragment mWaiterTableFragment = WaiterTableFragment.newInstance(i+1);
-            mWaiterTablePagerAdapter.addWaiterTableFragment(mWaiterTableFragment);
-        }*/
-
-        vpWaiterTable.setAdapter(mWaiterTablePagerAdapter);
-        tlWaiterTable.setupWithViewPager(vpWaiterTable);
-
-        try{
-            mViewModel.findTabModelList().observe(this, tabTableModels -> {
-                if (tabTableModels != null && tabTableModels.size() > 0){
-                    mList = tabTableModels;
-
-                    Log.d("Size ji",mList.size()+"");
-
-                    for (int i = 0; i < tabTableModels.size(); i++){
-                        WaiterTableFragment mWaiterTableFragment = WaiterTableFragment.newInstance(tabTableModels.get(i).getTableNumber());
-                        mWaiterTablePagerAdapter.addWaiterTableFragment(mWaiterTableFragment);
-                        mWaiterTablePagerAdapter.notifyDataSetChanged();
-
-                    }
-                }
-            });
-        }catch (Exception ex){
-            Log.d("Exc",ex.toString());
-        }
-
-        createTabIcon(mList);
-        //createTabIcon();
+        mViewModel.getShopAssignedTables().observe(this, listResource -> {
+            if (listResource == null)
+                return;
+            if (listResource.status == Status.SUCCESS && listResource.data != null)
+                assignedTableAdapter.setData(listResource.data);
+        });
+        mViewModel.getShopUnassignedTables().observe(this, listResource -> {
+            if (listResource == null)
+                return;
+            if (listResource.status == Status.SUCCESS && listResource.data != null)
+                unassignedTableAdapter.setData(listResource.data);
+        });
     }
-
-    private void createTabIcon(List<TabTableModel> mList) {
-        if (mList != null && mList.size() >0){
-            for (int i = 0; i < mList.size(); i++) {
-                View mView = LayoutInflater.from(this).inflate(R.layout.waiter_table_custom_tab, null);
-
-                FrameLayout fl_waiter_table_tab_active = (FrameLayout) mView.findViewById(R.id.fl_waiter_table_tab_active);
-
-                TextView mtv_waiter_table_tab_title = (TextView) mView.findViewById(R.id.tv_waiter_table_tab_title);
-                TextView mtv_waiter_table_tab_number = (TextView) mView.findViewById(R.id.tv_waiter_table_tab_number);
-                TextView mtv_waiter_table_tab_active = (TextView) mView.findViewById(R.id.tv_waiter_table_tab_active);
-
-                if(mList.get(i).getActive() != 0){
-                    mtv_waiter_table_tab_active.setText(String.valueOf(i+1));
-                    fl_waiter_table_tab_active.setVisibility(View.VISIBLE);
-                }else {
-                    fl_waiter_table_tab_active.setVisibility(View.GONE);
-                }
-
-                mtv_waiter_table_tab_title.setText(mList.get(i).getTabTitle());
-                mtv_waiter_table_tab_number.setText(String.valueOf(mList.get(i).getTableNumber()));
-
-                TabLayout.Tab mTab = tlWaiterTable.getTabAt(i);
-
-                if (mTab != null){
-                    mTab.setCustomView(mView);
-                }
-            }
-        }
-    }
-
-    /*private void createTabIcon() {
-
-        for (int i = 0; i < 8; i++) {
-            View mView = LayoutInflater.from(this).inflate(R.layout.waiter_table_custom_tab, null);
-
-            FrameLayout fl_waiter_table_tab_active = (FrameLayout) mView.findViewById(R.id.fl_waiter_table_tab_active);
-
-            TextView mtv_waiter_table_tab_title = (TextView) mView.findViewById(R.id.tv_waiter_table_tab_title);
-            TextView mtv_waiter_table_tab_number = (TextView) mView.findViewById(R.id.tv_waiter_table_tab_number);
-            TextView mtv_waiter_table_tab_active = (TextView) mView.findViewById(R.id.tv_waiter_table_tab_active);
-
-            *//*if(i == 0){
-                mtv_waiter_table_tab_active.setText(String.valueOf(mTableList.get(i).getActive()));
-                fl_waiter_table_tab_active.setVisibility(View.VISIBLE);
-            }else {
-                fl_waiter_table_tab_active.setVisibility(View.GONE);
-            }
-
-            mtv_waiter_table_tab_title.setText(mTableList.get(i).getTabTitle());
-            mtv_waiter_table_tab_number.setText(mTableList.get(i).getTableNumber());*//*
-
-            if(i == 0){
-                mtv_waiter_table_tab_active.setText(String.valueOf(i+1));
-                fl_waiter_table_tab_active.setVisibility(View.VISIBLE);
-            }else {
-                fl_waiter_table_tab_active.setVisibility(View.GONE);
-            }
-
-            mtv_waiter_table_tab_title.setText("TABLE");
-            mtv_waiter_table_tab_number.setText(String.valueOf(i+1));
-
-            TabLayout.Tab mTab = tlWaiterTable.getTabAt(i);
-
-            if (mTab != null){
-                mTab.setCustomView(mView);
-            }
-        }
-    }*/
 
     private void setupUI() {
+        setSupportActionBar(toolbarWaiter);
 
-        toolbarWaiterTable = (Toolbar) findViewById(R.id.toolbar_waiter_table);
-        drawerOpen = (ImageView) findViewById(R.id.drawer_open);
-        actionTableMenu = (ImageView) findViewById(R.id.action_table_menu);
-        appbarWaiterTable = (AppBarLayout) findViewById(R.id.appbar_waiter_table);
-        tlWaiterTable = (TabLayout) findViewById(R.id.tl_Waiter_Table);
-        vpWaiterTable = (ViewPager) findViewById(R.id.vp_waiter_table);
-        ivBarcodeScanner = (ImageView) findViewById(R.id.iv_waiter_table_barcode_scanner);
-        btnLogout = (Button) findViewById(R.id.btn_logout);
-        navAccount = (NavigationView) findViewById(R.id.nav_account);
-        navTableView = (NavigationView) findViewById(R.id.nav_table_view);
-        drawerWaiterTable = (DrawerLayout) findViewById(R.id.drawer_waiter_table);
-
-        setSupportActionBar(toolbarWaiterTable);
-
-        ActionBarDrawerToggle startToggle = new ActionBarDrawerToggle(this, drawerWaiterTable, toolbarWaiterTable, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
-        drawerWaiterTable.addDrawerListener(startToggle);
+        ActionBarDrawerToggle startToggle = new ActionBarDrawerToggle(this, drawerLayout, toolbarWaiter, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
+        drawerLayout.addDrawerListener(startToggle);
         startToggle.syncState();
 
-        EndDrawerToggle endToggle = new EndDrawerToggle(this, drawerWaiterTable, toolbarWaiterTable, R.string.messages_drawer_open, R.string.messages_drawer_close,R.drawable.ic_waiter_table_menu);
-        drawerWaiterTable.addDrawerListener(endToggle);
+        EndDrawerToggle endToggle = new EndDrawerToggle(this, drawerLayout, toolbarWaiter, R.string.tables_drawer_open, R.string.tables_drawer_close, R.drawable.ic_table_grey);
+        drawerLayout.addDrawerListener(endToggle);
         endToggle.syncState();
+    }
 
-        ActiveTableFragment activeTableFragment = new ActiveTableFragment();
-
-        getSupportFragmentManager().beginTransaction().add(navTableView.getId(), activeTableFragment).commit();
+    @OnClick(R.id.im_waiter_scanner)
+    public void onClickScanner(View v) {
+        Intent intent = new Intent(getApplicationContext(), QRScannerActivity.class);
+        startActivityForResult(intent, REQUEST_QR_SCANNER);
     }
 
     @Override
-    public void selectedTableChanged(int position) {
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if (requestCode == REQUEST_QR_SCANNER && resultCode == RESULT_OK) {
+            String qrData = data.getStringExtra(QRScannerActivity.KEY_QR_RESULT);
+            mViewModel.processQr(qrData);
+        } else {
+            super.onActivityResult(requestCode, resultCode, data);
+        }
     }
 
     @Override
@@ -231,5 +159,83 @@ public class WaiterWorkActivity extends BaseAccountActivity implements WaiterAct
     @Override
     protected AccountModel.ACCOUNT_TYPE[] getAccountTypes() {
         return new AccountModel.ACCOUNT_TYPE[]{AccountModel.ACCOUNT_TYPE.RESTAURANT_WAITER};
+    }
+
+    private static class WaiterTablePagerAdapter extends FragmentStatePagerAdapter {
+        private List<WaiterTableEventFragment> mFragmentList = new ArrayList<>();
+        private List<WaiterTableModel> mTableList = new ArrayList<>();
+
+        WaiterTablePagerAdapter(FragmentManager fm) {
+            super(fm);
+        }
+
+        @Override
+        public Fragment getItem(int position) {
+            return mFragmentList.get(position);
+        }
+
+        @Nullable
+        @Override
+        public CharSequence getPageTitle(int position) {
+            return mTableList.get(position).getTable();
+        }
+
+        @Override
+        public int getCount() {
+            return mFragmentList.size();
+        }
+
+        public void setTables(TabLayout tabLayout, List<WaiterTableModel> tableModels) {
+            for (WaiterTableModel tableModel: tableModels)
+                addTable(tabLayout, tableModel);
+        }
+
+        public void addTable(TabLayout tabLayout, WaiterTableModel tableModel) {
+            mTableList.add(tableModel);
+            mFragmentList.add(WaiterTableEventFragment.newInstance(tableModel.getPk()));
+            notifyDataSetChanged();
+            setTabCustomView(tabLayout, mTableList.size() - 1, tableModel);
+        }
+
+        private void setTabCustomView(TabLayout tabLayout, int index, WaiterTableModel tableModel) {
+            TabLayout.Tab tab = tabLayout.getTabAt(index);
+            if (tab != null) {
+                View view = LayoutInflater.from(tabLayout.getContext()).inflate(R.layout.view_tab_badge, null, false);
+                this.updateTabView(view, tableModel.getTable(), null);
+                tab.setCustomView(view);
+            }
+        }
+
+        public void updateTabCount(TabLayout tabLayout, long tableId, int count) {
+            int index = -1;
+            String title = "";
+            for (int i = 0; i < mTableList.size(); i++) {
+                if (mTableList.get(i).getPk() == tableId) {
+                    index = i;
+                    title = mTableList.get(i).getTable();
+                    break;
+                }
+            }
+            if (index == -1)
+                return;
+            TabLayout.Tab tab = tabLayout.getTabAt(index);
+            if (tab != null && tab.getCustomView() != null) {
+                if (count > 0) {
+                    this.updateTabView(tab.getCustomView(), title, String.valueOf(count));
+                } else {
+                    this.updateTabView(tab.getCustomView(), title, null);
+                }
+            }
+        }
+
+        private void updateTabView(View view, String title, String badge) {
+            TextView tvTitle = view.findViewById(R.id.tv_tab_title);
+            TextView tvBadge = view.findViewById(R.id.tv_tab_badge);
+            tvTitle.setText(title);
+            if (badge != null)
+                tvBadge.setText(badge);
+            else
+                tvBadge.setVisibility(View.GONE);
+        }
     }
 }

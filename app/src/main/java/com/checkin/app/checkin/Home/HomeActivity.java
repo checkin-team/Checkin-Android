@@ -99,11 +99,7 @@ public class HomeActivity extends BaseAccountActivity
         mHomeViewModel.getQrResult().observe(this, resource -> {
             if (resource == null)   return;
             if (resource.status == Status.SUCCESS && resource.data != null) {
-//                PreferenceManager.getDefaultSharedPreferences(this).edit()
-//                        .putString(Constants.SP_SESSION_RESTAURANT_PK, resource.data.get("restaurant_pk").asText())
-//                        .putString(Constants.SP_SESSION_ACTIVE_PK, resource.data.get("session_pk").asText())
-//                        .apply();
-                Utils.toast(this, resource.data.get("detail").asText());
+                Utils.toast(this, resource.data.getDetail());
             } else if (resource.status != Status.LOADING) {
                 Utils.toast(this, resource.message);
             }
@@ -513,8 +509,7 @@ public class HomeActivity extends BaseAccountActivity
     }
 
     @OnClick(R.id.action_delivery)
-    public void delivery(View v) {
-    }
+    public void delivery(View v) { }
 
     @Override
     protected int getNavMenu() {

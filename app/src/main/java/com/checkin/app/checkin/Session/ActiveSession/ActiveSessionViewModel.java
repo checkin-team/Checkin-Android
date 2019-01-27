@@ -20,7 +20,7 @@ public class ActiveSessionViewModel extends BaseViewModel {
     private MediatorLiveData<Resource<ActiveSessionModel>> mSessionData = new MediatorLiveData<>();
     private MediatorLiveData<Resource<SessionInvoiceModel>> mInvoiceData = new MediatorLiveData<>();
 
-    private int mShopPk = -1, mSessionPk = -1;
+    private long mShopPk = -1, mSessionPk = -1;
 
     ActiveSessionViewModel(@NonNull Application application) {
         super(application);
@@ -58,7 +58,7 @@ public class ActiveSessionViewModel extends BaseViewModel {
     }
 
     public void fetchSessionInvoice() {
-        mInvoiceData.addSource(mSessionRepository.getSessionInvoiceDetail(mSessionPk), mInvoiceData::setValue);
+        mInvoiceData.addSource(mSessionRepository.getSessionInvoiceDetail(), mInvoiceData::setValue);
     }
 
     public void requestCheckout(double tip, ShopModel.PAYMENT_MODE paymentMode) {
@@ -68,19 +68,19 @@ public class ActiveSessionViewModel extends BaseViewModel {
         mData.addSource(mRepository.postRequestCheckout(data), mData::setValue);
     }
 
-    public void setShopPk(int shopPk) {
+    public void setShopPk(long shopPk) {
         mShopPk = shopPk;
     }
 
-    public int getShopPk() {
+    public long getShopPk() {
         return mShopPk;
     }
 
-    public void setSessionPk(int sessionPk) {
+    public void setSessionPk(long sessionPk) {
         mSessionPk = sessionPk;
     }
 
-    public int getSessionPk() {
+    public long getSessionPk() {
         return mSessionPk;
     }
 }

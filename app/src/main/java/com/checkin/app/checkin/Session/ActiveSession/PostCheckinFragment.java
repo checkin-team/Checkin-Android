@@ -10,8 +10,6 @@ import android.widget.ImageView;
 
 import com.checkin.app.checkin.R;
 import com.checkin.app.checkin.Utility.Utils;
-import com.nhaarman.supertooltips.ToolTip;
-import com.nhaarman.supertooltips.ToolTipRelativeLayout;
 import com.nhaarman.supertooltips.ToolTipView;
 
 import butterknife.BindView;
@@ -27,8 +25,6 @@ public class PostCheckinFragment extends Fragment {
     ImageView btnPublic;
     @BindView(R.id.im_help_choose_privacy)
     ImageView im_help_choose_privacy;
-    @BindView(R.id.tooltip_help_choose_privacy)
-    ToolTipRelativeLayout tooltipHelpPrivacy;
 
     private ToolTipView mToolTipView;
     private Unbinder unbinder;
@@ -57,26 +53,9 @@ public class PostCheckinFragment extends Fragment {
         return view;
     }
 
-    private void addToolTipView() {
-        ToolTip toolTip = new ToolTip()
-                .withText("A tooltip button to show text.")
-                .withColor(getResources().getColor(R.color.primary_red))
-                .withTextColor(getResources().getColor(R.color.white))
-                .withShadow()
-                .withAnimationType(ToolTip.AnimationType.FROM_TOP);
-
-        mToolTipView = tooltipHelpPrivacy.showToolTipForView(toolTip, im_help_choose_privacy);
-        mToolTipView.setOnToolTipViewClickedListener(toolTipView -> mToolTipView = null);
-    }
-
     @OnClick(R.id.im_help_choose_privacy)
     public void onClickHelp(View v) {
-        if (mToolTipView == null) {
-            addToolTipView();
-        } else {
-            mToolTipView.remove();
-            mToolTipView = null;
-        }
+        Utils.toast(requireContext(), "Help description");
     }
 
     @OnClick(R.id.btn_proceed)

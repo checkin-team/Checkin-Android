@@ -77,10 +77,9 @@
         <activity android:name=".Misc.FilterTransactions" />
         <activity
             android:name=".Waiter.WaiterWorkActivity"
-            android:label="WaitorWorkActivity"
-            android:screenOrientation="sensorPortrait"
-            android:theme="@style/AppTheme"
-            tools:replace="screenOrientation" />
+            android:label="Waiter"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme" />
         <activity
             android:name=".Session.ActiveSession.ActiveSessionActivity"
             android:windowSoftInputMode="adjustNothing" />

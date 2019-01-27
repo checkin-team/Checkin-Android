@@ -4,8 +4,8 @@
 
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
-    <string name="messages_drawer_open">Open messages drawer</string>
-    <string name="messages_drawer_close">Close messages drawer</string>
+    <string name="tables_drawer_open">Open tables drawer</string>
+    <string name="tables_drawer_close">Close tables drawer</string>
     <string name="appbar_scrolling_view_behavior" translatable="false">android.support.design.widget.AppBarLayout$ScrollingViewBehavior</string>
 
     <string name="action_settings">Settings</string>
@@ -164,5 +164,6 @@
     <string name="heading_shop_finance_discount">Apply Discount</string>
     <string name="heading_shop_finance_tax">Tax Details</string>
     <string name="description_shop_finance_tax_change">**Contact us for changes in tax.**</string>
+    <string name="title_table_status">Table Status</string>
 
 </resources>
