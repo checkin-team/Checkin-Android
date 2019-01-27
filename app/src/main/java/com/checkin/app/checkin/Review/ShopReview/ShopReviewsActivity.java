@@ -40,7 +40,7 @@ public class ShopReviewsActivity extends BaseActivity {
                 .add(R.id.root_shop_review, mFragment)
                 .commit();
 
-        String shopPk = getIntent().getStringExtra(KEY_SHOP_PK);
+        long shopPk = getIntent().getLongExtra(KEY_SHOP_PK, 0);
         mViewModel.fetchShopReviews(shopPk);
     }
 

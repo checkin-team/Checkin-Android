@@ -151,30 +151,4 @@
             android:layout_gravity="center_vertical|end"
             tools:text="54" />
     </FrameLayout>
-
-    <include layout="@layout/incl_horizontal_line" />
-
-    <FrameLayout
-        android:id="@+id/container_invoice_total"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/spacing_extra_small"
-        android:paddingStart="@dimen/spacing_normal"
-        android:paddingEnd="@dimen/spacing_normal">
-
-        <TextView
-            style="@style/GreyTextStyle"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center_vertical|start"
-            android:text="Total" />
-
-        <TextView
-            android:id="@+id/tv_invoice_total"
-            style="@style/GreyTextStyle"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center_vertical|end"
-            tools:text="54" />
-    </FrameLayout>
 </LinearLayout>

@@ -103,40 +103,10 @@
     
     <!-- Shop dimensions -->
     <dimen name="width_shop_finance_tax">160dp</dimen>
+    <dimen name="height_rangebar_short">50dp</dimen>
+    <dimen name="padding_rangebar_bottom">15dp</dimen>
 
     <!--Notification-->
     <dimen name="notif_heading_padding">10dp</dimen>
     <dimen name="notif_heading_size">18sp</dimen>
-
-    <!--TODO: To Clean-->
-    <dimen name="fab_margin">16dp</dimen>
-    <dimen name="textview_hight_title">60dp</dimen>
-    <dimen name="spacing_bottom_view">10dp</dimen>
-    <dimen name="nav_end_width">230dp</dimen>
-    <dimen name="card_view_small_elevation">2dp</dimen>
-    <dimen name="spacing_end_small">5dp</dimen>
-    <dimen name="car_view_corner_radius">10dp</dimen>
-    <dimen name="text_padding_large">15dp</dimen>
-    <dimen name="spacing_large_to_view">20dp</dimen>
-    <dimen name="spacing_large_end_text">30dp</dimen>
-    <dimen name="card_view_spacing_top">8dp</dimen>
-    <dimen name="card_radius_small_tiny">1dp</dimen>
-    <dimen name="content_inset_spacing">0dp</dimen>
-    <dimen name="drawer_left_width">28dp</dimen>
-    <dimen name="drawer_left_hieght">25dp</dimen>
-    <dimen name="drawer_end_width">30dp</dimen>
-    <dimen name="drawer_end_hieght">30dp</dimen>
-    <dimen name="spacing_small_tiny">8dp</dimen>
-    <dimen name="spacing_normal_large">20dp</dimen>
-    <dimen name="spacing_layout_height">40dp</dimen>
-    <dimen name="text_size_dine_ine">23sp</dimen>
-    <dimen name="barcode_width">33dp</dimen>
-    <dimen name="barcode_height">30dp</dimen>
-    <dimen name="view_width">60dp</dimen>
-    <dimen name="view_height">54dp</dimen>
-    <dimen name="car_view_size_small_tiny">0dp</dimen>
-    <dimen name="text_checkin_waiter_size">22sp</dimen>
-    <dimen name="app_bar_elevation_size">5dp</dimen>
-    <dimen name="tab_layout_elevation_size">5dp</dimen>
-    <dimen name="spacing_waiter_table_number_user">13dp</dimen>
 </resources>

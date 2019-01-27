@@ -4,9 +4,9 @@
     style="@style/WhiteCardStyle"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_marginStart="@dimen/spacing_small"
+    android:layout_marginStart="@dimen/spacing_tiny"
     android:layout_marginTop="@dimen/spacing_normal"
-    android:layout_marginEnd="@dimen/spacing_small">
+    android:layout_marginEnd="@dimen/spacing_tiny">
 
     <RelativeLayout
         android:layout_width="match_parent"

@@ -14,7 +14,7 @@ import java.util.List;
 public class ShopReviewViewModel extends BaseViewModel {
     private ReviewRepository mRepository;
 
-    private String mShopPk;
+    private long mShopPk;
     private MediatorLiveData<Resource<List<ShopReviewModel>>> mShopReviewData = new MediatorLiveData<>();
 
     public ShopReviewViewModel(@NonNull Application application) {
@@ -31,7 +31,7 @@ public class ShopReviewViewModel extends BaseViewModel {
         return mShopReviewData;
     }
 
-    public void fetchShopReviews(String shopPk) {
+    public void fetchShopReviews(long shopPk) {
         mShopPk = shopPk;
         mShopReviewData.addSource(mRepository.getRestaurantReviews(shopPk), mShopReviewData::setValue);
     }

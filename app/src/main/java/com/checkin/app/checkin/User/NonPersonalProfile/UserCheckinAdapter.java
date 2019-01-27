@@ -1,6 +1,5 @@
 package com.checkin.app.checkin.User.NonPersonalProfile;
 
-import android.graphics.Rect;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -8,6 +7,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import com.checkin.app.checkin.Misc.BriefModel;
 import com.checkin.app.checkin.R;
 import com.checkin.app.checkin.Utility.Utils;
 
@@ -19,13 +19,17 @@ import butterknife.ButterKnife;
 import de.hdodenhof.circleimageview.CircleImageView;
 
 public class UserCheckinAdapter extends RecyclerView.Adapter<UserCheckinAdapter.UserCheckinHolder> {
-
     private List<ShopCustomerModel> mList;
+    private UserCheckinShopInteraction mListener;
+
+    public UserCheckinAdapter(UserCheckinShopInteraction listener) {
+        mListener = listener;
+    }
 
     @NonNull
     @Override
     public UserCheckinHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.child_user_resturants_list, parent, false);
+        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_user_checkin_shop, parent, false);
         return new UserCheckinHolder(view);
     }
 
@@ -40,7 +44,7 @@ public class UserCheckinAdapter extends RecyclerView.Adapter<UserCheckinAdapter.
         return mList != null ? mList.size() : 0;
     }
 
-    void addUserCheckinData(List<ShopCustomerModel> mList) {
+    void setData(List<ShopCustomerModel> mList) {
         this.mList = mList;
         notifyDataSetChanged();
     }
@@ -56,40 +60,26 @@ public class UserCheckinAdapter extends RecyclerView.Adapter<UserCheckinAdapter.
         @BindView(R.id.tv_user_checkin_total_visits)
         TextView tvUserCheckinTotalVisits;
 
+        private ShopCustomerModel mCheckinData;
+
         UserCheckinHolder(View itemView) {
             super(itemView);
             ButterKnife.bind(this, itemView);
+
+            itemView.setOnClickListener(v -> mListener.onClickShop(mCheckinData.getShop()));
         }
 
         public void bindData(ShopCustomerModel data) {
-            String mLocation = data.getLocation();
-            int mCount = data.getCountVisits();
-            String mName = data.getShop().getDisplayName();
-            String mPic = data.getShop().getDisplayPic();
+            mCheckinData = data;
 
-            Utils.loadImageOrDefault(ivUserCheckinImage,mPic,R.drawable.cover_restaurant_unknown);
-            tvUserCheckinName.setText(mName);
-            tvUserCheckinAddress.setText(mLocation);
-            tvUserCheckinTotalVisits.setText(String.format(Locale.getDefault(),"Total Visits : %d", mCount));
+            Utils.loadImageOrDefault(ivUserCheckinImage, data.getShop().getDisplayPic(), R.drawable.cover_restaurant_unknown);
+            tvUserCheckinName.setText(data.getShop().getDisplayName());
+            tvUserCheckinAddress.setText(data.getLocation());
+            tvUserCheckinTotalVisits.setText(String.format(Locale.getDefault(), "Total Visits : %d", data.getCountVisits()));
         }
     }
 
-    public static class MyItemDecorator extends RecyclerView.ItemDecoration {
-
-        private int size;
-
-        public MyItemDecorator(int size){
-            this.size = size;
-        }
-
-        @Override
-        public void getItemOffsets(Rect outRect, View view, RecyclerView parent, RecyclerView.State state) {
-            super.getItemOffsets(outRect, view, parent, state);
-
-            outRect.top = size;
-            outRect.bottom = size;
-            outRect.left = size;
-            outRect.right = size;
-        }
+    public interface UserCheckinShopInteraction {
+        void onClickShop(BriefModel shop);
     }
 }

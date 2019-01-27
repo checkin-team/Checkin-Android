@@ -1,22 +1,24 @@
 package com.checkin.app.checkin.User.NonPersonalProfile;
 
 import android.arch.lifecycle.ViewModelProviders;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 
 import com.checkin.app.checkin.Data.Resource;
+import com.checkin.app.checkin.Misc.BriefModel;
 import com.checkin.app.checkin.R;
+import com.checkin.app.checkin.Shop.ShopPublicProfile.ShopActivity;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
-public class UserCheckinsActivity extends AppCompatActivity {
+public class UserCheckinsActivity extends AppCompatActivity implements UserCheckinAdapter.UserCheckinShopInteraction {
 
-    public static final String KEY_USERCHECKINS_PK = "KEY_USERCHECKINS_PK";
+    public static final String KEY_USER_PK = "KEY_USER_PK";
 
     @BindView(R.id.rv_user_checkin_restaurant)
     RecyclerView rvUserCheckRestaurant;
@@ -34,22 +36,19 @@ public class UserCheckinsActivity extends AppCompatActivity {
             actionBar.setHomeAsUpIndicator(R.drawable.ic_back_grey);
         }
 
-        long userId = getIntent().getLongExtra(KEY_USERCHECKINS_PK,0);
+        long userId = getIntent().getLongExtra(KEY_USER_PK, 0);
 
-        UserCheckinAdapter userRestaurantAdapter = new UserCheckinAdapter();
-        rvUserCheckRestaurant.setLayoutManager(new GridLayoutManager(this,2));
+        UserCheckinAdapter userRestaurantAdapter = new UserCheckinAdapter(this);
+        rvUserCheckRestaurant.setLayoutManager(new GridLayoutManager(this, 2));
         rvUserCheckRestaurant.setAdapter(userRestaurantAdapter);
-        rvUserCheckRestaurant.addItemDecoration(new UserCheckinAdapter.MyItemDecorator(15));
-        rvUserCheckRestaurant.setItemAnimator(new DefaultItemAnimator());
 
         UserViewModel mUserViewModel = ViewModelProviders.of(this).get(UserViewModel.class);
-        mUserViewModel.getUsercheckinById(String.valueOf(userId));
-        //mUserViewModel.dummyCheckins();
-        mUserViewModel.getUsercheckinModel().observe(this, input ->{
+        mUserViewModel.fetchUserCheckins(userId);
+        mUserViewModel.getUserCheckinsData().observe(this, input -> {
             if (input == null)
                 return;
-            if (input.status == Resource.Status.SUCCESS && input.data != null && input.data.size() > 0){
-                userRestaurantAdapter.addUserCheckinData(input.data);
+            if (input.status == Resource.Status.SUCCESS && input.data != null) {
+                userRestaurantAdapter.setData(input.data);
             }
         });
     }
@@ -58,5 +57,12 @@ public class UserCheckinsActivity extends AppCompatActivity {
     public boolean onSupportNavigateUp() {
         finish();
         return true;
+    }
+
+    @Override
+    public void onClickShop(BriefModel shop) {
+        Intent intent = new Intent(this, ShopActivity.class);
+        intent.putExtra(ShopActivity.KEY_SHOP_PK, shop.getPk());
+        startActivity(intent);
     }
 }

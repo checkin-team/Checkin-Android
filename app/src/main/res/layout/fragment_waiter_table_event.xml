@@ -4,8 +4,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:paddingTop="@dimen/spacing_normal"
     android:paddingStart="@dimen/spacing_normal"
+    android:paddingTop="@dimen/spacing_normal"
     android:paddingEnd="@dimen/spacing_normal">
 
     <android.support.v7.widget.CardView
@@ -72,14 +72,20 @@
             android:src="@drawable/ic_action_show_menu" />
     </LinearLayout>
 
-    <android.support.v7.widget.RecyclerView
-        android:id="@+id/rv_waiter_table_events"
+    <android.support.v4.widget.SwipeRefreshLayout
+        android:id="@+id/refresh_waiter_event"
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:layout_marginTop="@dimen/spacing_normal"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/container_waiter_member_details" />
+        app:layout_constraintTop_toBottomOf="@id/container_waiter_member_details">
+
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/rv_waiter_table_events"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
+    </android.support.v4.widget.SwipeRefreshLayout>
 
 </android.support.constraint.ConstraintLayout>

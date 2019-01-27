@@ -79,11 +79,11 @@ public class SessionMenuActivity extends BaseActivity implements
         context.startActivity(intent);
     }
 
-    public static void withoutSession(Context context, String restaurantPk) {
+    public static void withoutSession(Context context, long restaurantPk) {
         Intent intent = new Intent(context, SessionMenuActivity.class);
         Bundle args = new Bundle();
         args.putSerializable(KEY_SESSION_STATUS, SESSION_STATUS.INACTIVE);
-        args.putString(KEY_RESTAURANT_PK, restaurantPk);
+        args.putLong(KEY_RESTAURANT_PK, restaurantPk);
         intent.putExtra(SESSION_ARG, args);
         intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
         context.startActivity(intent);

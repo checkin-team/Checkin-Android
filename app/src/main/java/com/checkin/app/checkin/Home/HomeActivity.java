@@ -89,7 +89,7 @@ public class HomeActivity extends BaseAccountActivity
 
         ButterKnife.bind(this);
 
-        mUserViewModel = ViewModelProviders.of(this, new UserViewModel.Factory(getApplication())).get(UserViewModel.class);
+        mUserViewModel = ViewModelProviders.of(this).get(UserViewModel.class);
         mHomeViewModel = ViewModelProviders.of(this, new HomeViewModel.Factory(getApplication())).get(HomeViewModel.class);
 
         setupUiStuff();

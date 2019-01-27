@@ -45,7 +45,7 @@ public class SessionRepository extends BaseRepository {
         }.getAsLiveData();
     }
 
-    public LiveData<Resource<RecentCheckinModel>> getRecentCheckins(final String shopId) {
+    public LiveData<Resource<RecentCheckinModel>> getRecentCheckins(final long shopId) {
         return new NetworkBoundResource<RecentCheckinModel, RecentCheckinModel>() {
 
             @Override

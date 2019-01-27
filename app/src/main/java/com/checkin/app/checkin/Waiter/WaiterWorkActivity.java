@@ -24,6 +24,7 @@ import com.checkin.app.checkin.Misc.QRScannerActivity;
 import com.checkin.app.checkin.R;
 import com.checkin.app.checkin.Utility.DynamicSwipableViewPager;
 import com.checkin.app.checkin.Utility.EndDrawerToggle;
+import com.checkin.app.checkin.Utility.Utils;
 import com.checkin.app.checkin.Waiter.Fragment.WaiterTableEventFragment;
 import com.checkin.app.checkin.Waiter.Model.WaiterTableModel;
 
@@ -91,6 +92,8 @@ public class WaiterWorkActivity extends BaseAccountActivity {
                 return;
             if (qrResource.status == Status.SUCCESS && qrResource.data != null) {
                 mFragmentAdapter.addTable(tabLayout, new WaiterTableModel(qrResource.data.getSessionPk(), qrResource.data.getTable()));
+            } else if (qrResource.status != Status.LOADING) {
+                Utils.toast(this, qrResource.message);
             }
         });
     }

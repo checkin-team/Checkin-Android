@@ -7,13 +7,12 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.Editable;
-import android.view.View;
-import android.view.ViewGroup;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.checkin.app.checkin.Data.Resource;
+import com.checkin.app.checkin.Misc.BillHolder;
 import com.checkin.app.checkin.R;
 import com.checkin.app.checkin.Session.Model.SessionInvoiceModel;
 import com.checkin.app.checkin.Shop.ShopModel;
@@ -31,29 +30,16 @@ public class ActiveSessionInvoiceActivity extends AppCompatActivity {
     RecyclerView rvOrderedItems;
     @BindView(R.id.im_invoice_waiter)
     ImageView imWaiterPic;
-    @BindView(R.id.tv_invoice_subtotal)
-    TextView tvInvoiceSubtotal;
-    @BindView(R.id.tv_invoice_tax)
-    TextView tvInvoiceTax;
-    @BindView(R.id.tv_invoice_discount)
-    TextView tvInvoiceDiscount;
     @BindView(R.id.tv_invoice_tip)
     TextView tvInvoiceTip;
-    @BindView(R.id.tv_invoice_promo)
-    TextView tvInvoicePromo;
     @BindView(R.id.tv_invoice_total)
     TextView tvInvoiceTotal;
     @BindView(R.id.ed_invoice_tip)
     EditText edInvoiceTip;
-    @BindView(R.id.container_invoice_tax)
-    ViewGroup containerInvoiceTax;
-    @BindView(R.id.container_invoice_promo)
-    ViewGroup containerInvoicePromo;
-    @BindView(R.id.container_invoice_discount)
-    ViewGroup containerInvoiceDiscount;
 
     private ActiveSessionViewModel mViewModel;
     private InvoiceOrdersAdapter mAdapter;
+    private BillHolder mBillHolder;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -70,12 +56,7 @@ public class ActiveSessionInvoiceActivity extends AppCompatActivity {
         mAdapter = new InvoiceOrdersAdapter(null);
         rvOrderedItems.setAdapter(mAdapter);
 
-        int sessionPk = getIntent().getIntExtra(KEY_SESSION_PK, -1);
-        if (sessionPk == -1)
-            throw new IllegalArgumentException("No session PK passed.");
-
         mViewModel = ViewModelProviders.of(this).get(ActiveSessionViewModel.class);
-        mViewModel.setSessionPk(sessionPk);
         mViewModel.fetchSessionInvoice();
         mViewModel.getSessionInvoice().observe(this, resource -> {
             if (resource == null)
@@ -92,26 +73,9 @@ public class ActiveSessionInvoiceActivity extends AppCompatActivity {
         if (data.getHost() != null)
             Utils.loadImageOrDefault(imWaiterPic, data.getHost().getDisplayPic(), R.drawable.ic_waiter);
 
-        // Subtotal
-        if (data.getBill().getSubtotal() != null)
-            tvInvoiceSubtotal.setText(Utils.formatCurrencyAmount(this, data.getBill().getSubtotal()));
-        // Tax
-        if (data.getBill().getTax() != null)
-            tvInvoiceTax.setText(Utils.formatCurrencyAmount(this, data.getBill().getTax()));
-        else
-            containerInvoiceTax.setVisibility(View.GONE);
-        // Promo
-        if (data.getBill().getOffers() != null)
-            tvInvoicePromo.setText(Utils.formatCurrencyAmount(this, data.getBill().getOffers()));
-        else
-            containerInvoicePromo.setVisibility(View.GONE);
-        // Discount
-        if (data.getBill().getDiscount() != null)
-            tvInvoiceDiscount.setText(Utils.formatCurrencyAmount(this, data.getBill().getDiscount()));
-        else
-            containerInvoiceDiscount.setVisibility(View.GONE);
-        // Tip
-        tvInvoiceTip.setText(Utils.formatCurrencyAmount(this, data.getBill().getTip()));
+        mBillHolder = new BillHolder(findViewById(android.R.id.content));
+        mBillHolder.bind(data.getBill());
+
         edInvoiceTip.setText(data.getBill().getTip());
         // Total
         tvInvoiceTotal.setText(Utils.formatCurrencyAmount(this, data.getBill().getTotal()));

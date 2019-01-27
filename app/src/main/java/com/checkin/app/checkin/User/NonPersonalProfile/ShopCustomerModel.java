@@ -8,17 +8,15 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 public class ShopCustomerModel {
 
     @JsonProperty("shop")
-    private
-    BriefModel shop;
-    @JsonProperty("locality")
-    private
-    String location;
-    @JsonProperty("no_visits")
-    private
-    int countVisits;
+    private BriefModel shop;
 
-    public ShopCustomerModel(){
-    }
+    @JsonProperty("locality")
+    private String location;
+
+    @JsonProperty("no_visits")
+    private int countVisits;
+
+    public ShopCustomerModel() {}
 
     public BriefModel getShop() {
         return shop;
@@ -32,9 +30,7 @@ public class ShopCustomerModel {
         return countVisits;
     }
 
-    public ShopCustomerModel(BriefModel shop, String location, int countVisits) {
-        this.shop = shop;
-        this.location = location;
-        this.countVisits = countVisits;
+    public String formatCountVisits() {
+        return String.valueOf(countVisits);
     }
 }

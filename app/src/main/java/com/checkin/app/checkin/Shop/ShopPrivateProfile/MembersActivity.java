@@ -42,7 +42,7 @@ public class MembersActivity extends AppCompatActivity implements ShopMembersLis
     }
 
     private void setupShopMembers() {
-        String shopPk = getIntent().getStringExtra(KEY_SHOP_PK);
+        long shopPk = getIntent().getLongExtra(KEY_SHOP_PK, 0);
         mViewModel.fetchShopMembers(shopPk);
         mFragmentShopMembers = ShopMembersListFragment.newInstance(this);
 

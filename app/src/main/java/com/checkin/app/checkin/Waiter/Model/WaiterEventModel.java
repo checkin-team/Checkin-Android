@@ -59,4 +59,19 @@ public class WaiterEventModel {
     public SessionOrderedItemModel getOrderedItem() {
         return orderedItem;
     }
+
+    @JsonProperty("status")
+    public void setStatus(int status) {
+        this.status = CHAT_STATUS_TYPE.getByTag(status);
+    }
+
+    @JsonProperty("type")
+    public void setType(int type) {
+        this.type = CHAT_EVENT_TYPE.getByTag(type);
+    }
+
+    @JsonProperty("service")
+    public void setService(int service) {
+        this.service = EVENT_REQUEST_SERVICE_TYPE.getByTag(service);
+    }
 }

@@ -81,14 +81,18 @@
 
     </LinearLayout>
 
-    <TextView
+    <com.borjabravo.readmoretextview.ReadMoreTextView
         android:id="@+id/tv_sr_description"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginEnd="@dimen/spacing_small"
         android:layout_marginStart="@dimen/spacing_small"
-        android:paddingStart="@dimen/spacing_small"
-        tools:text="We had a great time @Cheesy Does It. I visited this restaurant by seeing the ratings and profile on Checkin. The Hospitality really amazed…" />
+        app:colorClickableText="@color/primary_red"
+        app:trimCollapsedText=" read more"
+        app:trimExpandedText=" read less"
+        app:trimLines="2"
+        app:trimMode="trimModeLine"
+        tools:text="We had a great time @Cheesy Does It. I visited this restaurant by seeing the ratings and profile on Checkin. The Hospitality really amazed me…" />
 
     <android.support.constraint.ConstraintLayout
         android:layout_width="match_parent"

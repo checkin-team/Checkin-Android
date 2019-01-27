@@ -67,6 +67,8 @@ public abstract class BaseAccountActivity extends BaseActivity {
 
         mViewModel = ViewModelProviders.of(this).get(AccountViewModel.class);
         mViewModel.getAccounts().observe(this, listResource -> {
+            if (listResource == null)
+                return;
             if (listResource.status == Resource.Status.SUCCESS && listResource.data != null) {
                 List<AccountModel> accounts = listResource.data;
                 mAccountAdapter.setData(accounts);
@@ -183,7 +185,7 @@ public abstract class BaseAccountActivity extends BaseActivity {
                 case SHOP_ADMIN:
                     if (mBaseActivity.getClass() != ShopActivity.class) {
                         Intent intent = new Intent(context, ShopActivity.class);
-                        intent.putExtra(ShopActivity.KEY_SHOP_PK, account.getTargetPk());
+                        intent.putExtra(ShopActivity.KEY_SHOP_PK, Long.valueOf(account.getTargetPk()));
                         intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                         context.startActivity(intent);
                     }

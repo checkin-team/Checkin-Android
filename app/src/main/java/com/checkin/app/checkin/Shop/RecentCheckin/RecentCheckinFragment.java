@@ -34,11 +34,11 @@ public class RecentCheckinFragment extends Fragment implements RecentCheckinAdap
     @BindView(R.id.tv_rc_count_female) TextView tvCountFemale;
     @BindView(R.id.rv_recent_checkins) RecyclerView rvUserCheckins;
 
-    private String mShopId;
+    private long mShopId;
     private RecentCheckinViewModel mViewModel;
     private RecentCheckinAdapter mAdapter;
 
-    public static RecentCheckinFragment newInstance(String shopPk) {
+    public static RecentCheckinFragment newInstance(long shopPk) {
         RecentCheckinFragment fragment = new RecentCheckinFragment();
         fragment.mShopId = shopPk;
         return fragment;

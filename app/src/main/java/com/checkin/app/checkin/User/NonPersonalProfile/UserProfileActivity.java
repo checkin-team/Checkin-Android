@@ -211,7 +211,7 @@ public class UserProfileActivity extends BaseActivity {
     @OnClick(R.id.container_checkins)
     public void onShowCheckins() {
         Intent intent =new Intent(getApplicationContext(), UserCheckinsActivity.class);
-        intent.putExtra(UserCheckinsActivity.KEY_USERCHECKINS_PK, mViewModel.getPk());
+        intent.putExtra(UserCheckinsActivity.KEY_USER_PK, mViewModel.getPk());
         startActivity(intent);
     }
 

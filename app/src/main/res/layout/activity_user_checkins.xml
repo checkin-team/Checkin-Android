@@ -5,7 +5,7 @@
     android:layout_height="match_parent">
 
     <android.support.v7.widget.RecyclerView
-        android:padding="@dimen/spacing_small"
+        android:padding="@dimen/spacing_extra_small"
         android:id="@+id/rv_user_checkin_restaurant"
         android:layout_width="match_parent"
         android:layout_height="match_parent"/>

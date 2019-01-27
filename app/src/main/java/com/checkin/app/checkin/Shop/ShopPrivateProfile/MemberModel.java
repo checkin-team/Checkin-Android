@@ -86,9 +86,8 @@ public class MemberModel {
     }
 
     @JsonProperty("user")
-    public String getUserId()
-    {
-        return user.getPk();
+    public long getUserId() {
+        return Long.valueOf(user.getPk());
     }
 
     public void assignRoles(CharSequence[] roles) {

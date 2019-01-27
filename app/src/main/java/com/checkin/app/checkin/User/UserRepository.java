@@ -210,7 +210,7 @@ public class UserRepository extends BaseRepository {
                 if (userPk == 0) {
                     return new RetrofitLiveData<>(mWebService.getPersonalUser());
                 } else {
-                    return new RetrofitLiveData<>(mWebService.getNonPersonalUser(String.valueOf(userPk)));
+                    return new RetrofitLiveData<>(mWebService.getNonPersonalUser(userPk));
                 }
             }
 
@@ -261,8 +261,8 @@ public class UserRepository extends BaseRepository {
         }.getAsLiveData();
     }
 
-    public LiveData<Resource<List<ShopCustomerModel>>> getUserCheckinById(String userId) {
-        return new NetworkBoundResource<List<ShopCustomerModel>,List<ShopCustomerModel>>(){
+    public LiveData<Resource<List<ShopCustomerModel>>> getUserCheckinById(long userId) {
+        return new NetworkBoundResource<List<ShopCustomerModel>, List<ShopCustomerModel>>(){
 
             @Override
             protected boolean shouldUseLocalDb() {
@@ -272,7 +272,7 @@ public class UserRepository extends BaseRepository {
             @NonNull
             @Override
             protected LiveData<ApiResponse<List<ShopCustomerModel>>> createCall() {
-                return new RetrofitLiveData<>(mWebService.getUserCheckinById(userId));
+                return new RetrofitLiveData<>(mWebService.getUserCheckins(userId));
             }
 
             @Override

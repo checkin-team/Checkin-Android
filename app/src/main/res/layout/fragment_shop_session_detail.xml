@@ -1,0 +1,122 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <android.support.v4.widget.NestedScrollView
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <android.support.constraint.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <TextView
+                    android:id="@+id/title_shop_session_total_time"
+                    style="@style/GreyTextStyle"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Session Time :"
+                    android:layout_marginTop="@dimen/spacing_normal"
+                    app:layout_constraintEnd_toStartOf="@id/tv_shop_session_total_time"
+                    app:layout_constraintHorizontal_chainStyle="packed"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <TextView
+                    android:id="@+id/tv_shop_session_total_time"
+                    style="@style/GreyTextStyle"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/spacing_extra_small"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toEndOf="@id/title_shop_session_total_time"
+                    app:layout_constraintTop_toTopOf="@id/title_shop_session_total_time"
+                    tools:text="3 Mins" />
+
+                <TextView
+                    android:id="@+id/title_shop_session_preparation_time"
+                    style="@style/GreyTextStyle"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/spacing_tiny"
+                    android:text="Avg. Preparation Time :"
+                    app:layout_constraintEnd_toStartOf="@id/tv_shop_session_preparation_time"
+                    app:layout_constraintHorizontal_chainStyle="packed"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/title_shop_session_total_time" />
+
+                <TextView
+                    android:id="@+id/tv_shop_session_preparation_time"
+                    style="@style/GreyTextStyle"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/spacing_extra_small"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toEndOf="@id/title_shop_session_preparation_time"
+                    app:layout_constraintTop_toTopOf="@id/title_shop_session_preparation_time"
+                    tools:text="3 Mins" />
+
+                <View
+                    android:layout_width="0dp"
+                    android:layout_height="@dimen/thickness_line"
+                    android:layout_gravity="center_horizontal"
+                    android:background="@color/brownish_grey"
+                    android:layout_marginTop="@dimen/spacing_normal"
+                    app:layout_constraintTop_toBottomOf="@id/title_shop_session_preparation_time"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent" />
+            </android.support.constraint.ConstraintLayout>
+
+            <android.support.v7.widget.RecyclerView
+                android:id="@+id/rv_shop_session_orders"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="1"
+                android:padding="@dimen/spacing_small"
+                android:nestedScrollingEnabled="false"/>
+
+            <include layout="@layout/incl_horizontal_line" />
+
+            <include layout="@layout/incl_session_invoice" />
+
+        </LinearLayout>
+
+    </android.support.v4.widget.NestedScrollView>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:elevation="@dimen/card_elevation"
+        android:orientation="horizontal"
+        android:padding="@dimen/spacing_extra_small">
+
+        <TextView
+            style="@style/RedTitleStyle"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="@dimen/spacing_large"
+            android:layout_weight="1"
+            android:text="Bill Total"
+            android:textAlignment="textEnd"
+            android:textAllCaps="true" />
+
+        <TextView
+            android:id="@+id/tv_shop_session_bill_total"
+            style="@style/RedTitleStyle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            tools:text="Rs. 123" />
+
+    </LinearLayout>
+
+</LinearLayout>

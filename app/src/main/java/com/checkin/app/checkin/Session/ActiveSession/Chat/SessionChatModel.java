@@ -1,5 +1,7 @@
 package com.checkin.app.checkin.Session.ActiveSession.Chat;
 
+import android.support.annotation.Nullable;
+
 import com.checkin.app.checkin.Misc.BriefModel;
 import com.checkin.app.checkin.Utility.Utils;
 import com.fasterxml.jackson.annotation.JsonProperty;
@@ -29,6 +31,7 @@ public class SessionChatModel {
     @JsonProperty("sender")
     private CHAT_SENDER_TYPE sender;
 
+    @Nullable
     @JsonProperty("user")
     private BriefModel user;
 
@@ -136,6 +139,7 @@ public class SessionChatModel {
         return sender;
     }
 
+    @Nullable
     public BriefModel getUser() {
         return user;
     }
@@ -164,7 +168,7 @@ public class SessionChatModel {
         this.sender = sender;
     }
 
-    public void setUser(BriefModel user) {
+    public void setUser(@Nullable BriefModel user) {
         this.user = user;
     }
 

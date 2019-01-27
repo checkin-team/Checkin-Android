@@ -130,7 +130,10 @@ public class ActiveSessionChatAdapter extends RecyclerView.Adapter {
         void bindData(SessionChatModel chat) {
             this.chatModel = chat;
             itemView.setSelected(mSelectedViewHolder == this);
-            tvSenderName.setText(chat.getUser().getDisplayName());
+            if (chat.getUser() != null)
+                tvSenderName.setText(chat.getUser().getDisplayName());
+            else if (chat.getSender() == SessionChatModel.CHAT_SENDER_TYPE.SENDER_RESTAURANT)
+                tvSenderName.setText("Restaurant");
             tvChatTime.setText(chat.formatEventTime());
             if (chat.getType() == CHAT_EVENT_TYPE.EVENT_MENU_ORDER_ITEM && chat.getStatus() == CHAT_STATUS_TYPE.CANCELLED) {
                 tvChatMsg.setText(itemView.getContext().getString(R.string.status_order_cancelled));

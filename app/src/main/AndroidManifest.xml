@@ -53,7 +53,8 @@
         <activity
             android:name=".User.NonPersonalProfile.UserCheckinsActivity"
             android:parentActivityName=".User.NonPersonalProfile.UserProfileActivity"
-            android:theme="@style/Theme.AppCompat.Light" />
+            android:label="Checkins"
+            android:theme="@style/AppThemeWhiteActionBar" />
         <activity
             android:name=".User.PersonalProfile.ProfileEditActivity"
             android:label="Edit Profile"
@@ -95,7 +96,7 @@
             android:parentActivityName=".Shop.ShopJoin.ContactVerifyActivity"
             android:theme="@style/AppThemeWhiteActionBar" />
         <activity
-            android:name=".Shop.ShopPrivateProfile.EditProfileActivity"
+            android:name=".Shop.ShopPrivateProfile.Edit.EditProfileActivity"
             android:label="Edit Profile"
             android:screenOrientation="portrait"
             android:theme="@style/AppThemeWhiteActionBar" />
@@ -159,13 +160,13 @@
         <activity android:name=".Session.ActiveSession.ActiveSessionInvoiceActivity"
             android:theme="@style/AppThemeWhiteActionBar"
             android:label="Invoice"/>
-        <activity android:name=".Shop.ShopInvoice.ShopInvoiceActivity"
+        <activity android:name=".Shop.ShopPrivateProfile.Invoice.ShopInvoiceListActivity"
             android:label="@string/action_invoice"
             android:theme="@style/AppThemeWhiteActionBar">
         </activity>
-        <activity android:name=".Shop.ShopInvoice.ShopInvoiceDetailFeedbackActivity" />
-        <activity android:name=".Shop.ShopPrivateProfile.FinanceDetailActivity"
-            android:label="@string/action_discout"
+        <activity android:name=".Shop.ShopPrivateProfile.Invoice.ShopInvoiceDetailActivity" />
+        <activity android:name=".Shop.ShopPrivateProfile.Finance.FinanceDetailActivity"
+            android:label="@string/action_discount"
             android:theme="@style/AppThemeWhiteActionBar"/>
 
         <service

@@ -21,6 +21,9 @@ public class SessionBriefModel {
     @JsonProperty("created")
     private Date created;
 
+    @JsonProperty("table")
+    private String table;
+
     public SessionBriefModel() {}
 
     public long getPk() {
@@ -45,5 +48,9 @@ public class SessionBriefModel {
 
     public String formatCustomerCount() {
         return String.valueOf(customerCount);
+    }
+
+    public String getTable() {
+        return table;
     }
 }

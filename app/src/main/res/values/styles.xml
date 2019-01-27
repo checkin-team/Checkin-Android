@@ -99,6 +99,10 @@
         <item name="android:textColor">@color/primary_red</item>
     </style>
 
+    <style name="RedHeadingStyle" parent="GreyHeadingStyle">
+        <item name="android:textColor">@color/primary_red</item>
+    </style>
+
     <style name="GreyTextContainer">
         <item name="android:textViewStyle">@style/GreyTextStyle</item>
     </style>
@@ -360,4 +364,19 @@
         <item name="android:background">@color/primary_red</item>
     </style>
 
+    <style name="MaterialSeekbarRatingStyle">
+        <item name="android:layout_height">@dimen/height_rangebar_short</item>
+        <item name="mrb_rangeBar">false</item>
+        <item name="mrb_selectorColor">@color/primary_red</item>
+        <item name="mrb_tickColor">@color/primary_red</item>
+        <item name="mrb_tickEnd">5</item>
+        <item name="mrb_tickInterval">1</item>
+        <item name="mrb_tickStart">0</item>
+        <item name="mrb_connectingLineColor">@color/pinkish_grey</item>
+        <item name="mrb_pinColor">@color/pinkish_grey</item>
+        <item name="mrb_pinMaxFont">@dimen/font_extra_small</item>
+        <item name="mrb_pinRadius">8dp</item>
+        <item name="mrb_pinTextColor">@color/primary_red</item>
+        <item name="mrb_rangeBarPaddingBottom">@dimen/padding_rangebar_bottom</item>
+    </style>
 </resources>

@@ -22,8 +22,10 @@ import com.checkin.app.checkin.Misc.CoverPagerAdapter;
 import com.checkin.app.checkin.Misc.StatusTextAdapter;
 import com.checkin.app.checkin.R;
 import com.checkin.app.checkin.Shop.RestaurantModel;
+import com.checkin.app.checkin.Shop.ShopPrivateProfile.Edit.EditProfileActivity;
+import com.checkin.app.checkin.Shop.ShopPrivateProfile.Finance.FinanceDetailActivity;
+import com.checkin.app.checkin.Shop.ShopPrivateProfile.Invoice.ShopInvoiceListActivity;
 import com.checkin.app.checkin.Utility.Utils;
-import com.checkin.app.checkin.Shop.ShopInvoice.ShopInvoiceActivity;
 import com.rd.PageIndicatorView;
 import com.rd.animation.type.AnimationType;
 
@@ -147,8 +149,8 @@ public class ShopProfileFragment extends Fragment {
                 startActivity(intent);
                 break;
             case R.id.btn_invoice:
-                intent = new Intent(v.getContext(), ShopInvoiceActivity.class);
-                intent.putExtra(ShopInvoiceActivity.KEY_SHOP_PK, mViewModel.getShopPk());
+                intent = new Intent(v.getContext(), ShopInvoiceListActivity.class);
+                intent.putExtra(ShopInvoiceListActivity.KEY_SHOP_PK, mViewModel.getShopPk());
                 startActivity(intent);
                 break;
             case R.id.btn_insights:

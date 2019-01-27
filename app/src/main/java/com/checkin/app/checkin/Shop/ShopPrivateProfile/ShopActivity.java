@@ -3,7 +3,6 @@ package com.checkin.app.checkin.Shop.ShopPrivateProfile;
 import android.arch.lifecycle.ViewModelProviders;
 import android.os.Bundle;
 import android.support.annotation.IdRes;
-import android.support.annotation.MenuRes;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
@@ -29,7 +28,7 @@ public class ShopActivity extends BaseAccountActivity {
     protected BottomNavigation mBottomNavigation;
 
     public static final String KEY_SHOP_PK = "shop_private.pk";
-    String shopPk;
+    long shopPk;
     private ShopProfileViewModel mViewModel;
 
     @Override
@@ -44,18 +43,18 @@ public class ShopActivity extends BaseAccountActivity {
         drawerLayout.addDrawerListener(startToggle);
         startToggle.syncState();
 
-        setupPagers(new ShopPagerAdapter(getSupportFragmentManager()), R.menu.menu_shop_profile_private);
+        setupPagers(new ShopPagerAdapter(getSupportFragmentManager()));
 
         mViewModel = ViewModelProviders.of(this).get(ShopProfileViewModel.class);
-        shopPk = getIntent().getStringExtra(KEY_SHOP_PK);
+        shopPk = getIntent().getLongExtra(KEY_SHOP_PK, 0);
 
         mViewModel.fetchShopDetails(shopPk);
     }
 
-    protected void setupPagers(FragmentPagerAdapter pagerAdapter, @MenuRes int menuId) {
+    protected void setupPagers(FragmentPagerAdapter pagerAdapter) {
         mViewPager.setEnabled(false);
         mViewPager.setAdapter(pagerAdapter);
-        mBottomNavigation.inflateMenu(menuId);
+        mBottomNavigation.inflateMenu(R.menu.menu_shop_profile_private);
         mBottomNavigation.setOnMenuItemClickListener(new BottomNavigation.OnMenuItemSelectionListener() {
             @Override
             public void onMenuItemSelect(@IdRes final int itemId, final int position, final boolean fromUser) {
@@ -75,12 +74,12 @@ public class ShopActivity extends BaseAccountActivity {
 
     @Override
     protected <T extends AccountHeaderViewHolder> T getHeaderViewHolder() {
-        return (T) new  AccountHeaderViewHolder(this, R.layout.layout_header_account);
+        return (T) new AccountHeaderViewHolder(this, R.layout.layout_header_account);
     }
 
     @Override
     protected ACCOUNT_TYPE[] getAccountTypes() {
-        return new ACCOUNT_TYPE[] {ACCOUNT_TYPE.SHOP_OWNER, ACCOUNT_TYPE.SHOP_ADMIN};
+        return new ACCOUNT_TYPE[]{ACCOUNT_TYPE.SHOP_OWNER, ACCOUNT_TYPE.SHOP_ADMIN};
     }
 
     private class ShopPagerAdapter extends FragmentPagerAdapter {
@@ -93,8 +92,7 @@ public class ShopActivity extends BaseAccountActivity {
         public Fragment getItem(int position) {
             switch (position) {
                 case 0:
-                    ShopProfileFragment shopProfileFragment = ShopProfileFragment.newInstance();
-                    return shopProfileFragment;
+                    return ShopProfileFragment.newInstance();
                 case 1:
                 case 2:
             }
