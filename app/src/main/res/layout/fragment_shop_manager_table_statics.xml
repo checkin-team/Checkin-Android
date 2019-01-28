@@ -7,19 +7,20 @@
     android:layout_height="match_parent">
 
     <TextView
+        android:layout_marginTop="@dimen/spacing_tiny"
         android:id="@+id/tv_shop_manager_table_statics_title"
         android:text="@string/shop_manager_table_statics_title_description"
-        android:textSize="12sp"
+        android:textSize="@dimen/font_extra_small"
         android:paddingStart="@dimen/spacing_small"
         android:paddingEnd="@dimen/spacing_small"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content" />
 
     <android.support.v7.widget.CardView
-        android:layout_marginTop="@dimen/spacing_small"
+        android:layout_marginTop="@dimen/spacing_normal"
         android:layout_below="@+id/tv_shop_manager_table_statics_title"
-        android:layout_marginStart="@dimen/spacing_small"
-        android:layout_marginEnd="@dimen/spacing_small"
+        android:layout_marginStart="@dimen/spacing_large"
+        android:layout_marginEnd="@dimen/spacing_large"
         android:id="@+id/cv_shop_manager_table_statics"
         style="@style/WhiteCardStyle"
         android:layout_width="match_parent"
@@ -40,7 +41,7 @@
                 android:layout_height="wrap_content">
 
                 <LinearLayout
-                    android:padding="@dimen/spacing_small"
+                    android:padding="@dimen/spacing_extra_small"
                     android:layout_weight="1"
                     android:orientation="vertical"
                     android:layout_width="0dp"
@@ -55,7 +56,8 @@
                     <TextView
                         android:layout_marginTop="@dimen/spacing_extra_tiny"
                         android:text="2,120"
-                        android:textSize="@dimen/font_normal"
+                        style="@style/GreySmallTextStyle"
+                        android:id="@+id/tv_shop_manager_table_day_revenue"
                         android:textColor="@color/colorAccent"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content" />
@@ -63,40 +65,43 @@
                     <TextView
                         android:layout_marginTop="@dimen/spacing_tiny"
                         android:text="8 orders"
-                        style="@style/GreySmallTextStyle"
+                        android:textSize="@dimen/font_extra_small"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content" />
 
                 </LinearLayout>
 
+                <View style="@style/dividerVertical"/>
+
                 <LinearLayout
-                    android:paddingStart="@dimen/spacing_large"
-                    android:paddingEnd="@dimen/spacing_large"
-                    android:paddingTop="@dimen/spacing_small"
-                    android:paddingBottom="@dimen/spacing_small"
+                    android:padding="@dimen/spacing_extra_small"
                     android:layout_weight="1"
                     android:orientation="vertical"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content">
 
                     <TextView
+                        android:layout_marginStart="@dimen/spacing_normal"
                         android:text="Week's Revenue"
                         android:textSize="@dimen/font_extra_small"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content" />
 
                     <TextView
+                        android:layout_marginStart="@dimen/spacing_normal"
                         android:layout_marginTop="@dimen/spacing_extra_tiny"
                         android:text="14,120"
-                        android:textSize="@dimen/font_normal"
+                        android:id="@+id/tv_shop_manager_table_week_revenue"
+                        style="@style/GreySmallTextStyle"
                         android:textColor="@color/colorAccent"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content" />
 
                     <TextView
+                        android:layout_marginStart="@dimen/spacing_normal"
                         android:layout_marginTop="@dimen/spacing_tiny"
                         android:text="48 orders"
-                        style="@style/GreySmallTextStyle"
+                        android:textSize="@dimen/font_extra_small"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content" />
 
@@ -104,13 +109,15 @@
 
             </LinearLayout>
 
+            <View style="@style/dividerHorizontal"/>
+
             <LinearLayout
                 android:orientation="horizontal"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
 
                 <LinearLayout
-                    android:padding="@dimen/spacing_small"
+                    android:padding="@dimen/spacing_extra_small"
                     android:layout_weight="1"
                     android:orientation="vertical"
                     android:layout_width="0dp"
@@ -125,33 +132,36 @@
                     <TextView
                         android:layout_marginTop="@dimen/spacing_extra_tiny"
                         android:text="23.02 Min"
-                        android:textSize="@dimen/font_normal"
+                        style="@style/GreySmallTextStyle"
+                        android:id="@+id/tv_shop_manager_table_session_time"
                         android:textColor="@color/colorAccent"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content" />
 
                 </LinearLayout>
 
+                <View style="@style/dividerVertical"/>
+
                 <LinearLayout
-                    android:paddingStart="@dimen/spacing_large"
-                    android:paddingEnd="@dimen/spacing_large"
-                    android:paddingTop="@dimen/spacing_small"
-                    android:paddingBottom="@dimen/spacing_small"
+                   android:padding="@dimen/spacing_extra_small"
                     android:layout_weight="1"
                     android:orientation="vertical"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content">
 
                     <TextView
+                        android:layout_marginStart="@dimen/spacing_normal"
                         android:text="Average Serving Time"
                         android:textSize="@dimen/font_extra_small"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content" />
 
                     <TextView
+                        android:layout_marginStart="@dimen/spacing_normal"
                         android:layout_marginTop="@dimen/spacing_extra_tiny"
                         android:text="15.16 Min"
-                        android:textSize="@dimen/font_normal"
+                        android:id="@+id/tv_shop_manager_table_serving_time"
+                        style="@style/GreySmallTextStyle"
                         android:textColor="@color/colorAccent"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content" />
@@ -169,7 +179,7 @@
         android:layout_marginEnd="@dimen/spacing_small"
         android:layout_marginTop="@dimen/spacing_large"
         android:layout_below="@+id/cv_shop_manager_table_statics"
-        android:text="TRENDIN ITEMS IN LAST 30  DAYS"
+        android:text="TRENDING ITEMS IN LAST 30  DAYS"
         android:id="@+id/tv_shop_manger_table_statics_title"
         style="@style/RedSmallTextStyle"
         android:layout_width="wrap_content"

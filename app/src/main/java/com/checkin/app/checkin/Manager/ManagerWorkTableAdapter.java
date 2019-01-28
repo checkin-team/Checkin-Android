@@ -60,12 +60,12 @@ public class ManagerWorkTableAdapter extends RecyclerView.Adapter<ManagerWorkTab
         TextView tvShopManagerTableName;
         @BindView(R.id.tv_shop_manager_table_number)
         TextView tvShopManagerTableNumber;
-        @BindView(R.id.iv_shop_manager_table_icon)
-        ImageView ivShopManagerTableIcon;
         @BindView(R.id.tv_shop_manager_table_detail)
         TextView tvShopManagerTableDetail;
         @BindView(R.id.tv_shop_manager_table_event_badge)
         TextView tvEventBadge;
+        @BindView(R.id.iv_shop_manager_table_icon)
+        ImageView ivShopManagerTableIcon;
 
         private RestaurantTableModel mTableModel;
 

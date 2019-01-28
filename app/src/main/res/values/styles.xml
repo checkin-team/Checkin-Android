@@ -10,6 +10,21 @@
         <item name="fontFamily">@font/arial_rounded_mt_bold</item>
     </style>
 
+    <style name="dividerBase">
+        <item name="android:background">@color/pinkish_grey</item> //you can give your color here. that will change all divider color in your app.
+    </style>
+
+    <style name="dividerHorizontal" parent="dividerBase">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">0.3dp</item> // You can change thickness here.
+
+    </style>
+
+    <style name="dividerVertical" parent="dividerBase">
+        <item name="android:layout_width">0.3dp</item>
+        <item name="android:layout_height">match_parent</item>
+    </style>
+
     <style name="appbar_main" parent="AppTheme.AppBarOverlay">
         <item name="android:homeAsUpIndicator">@drawable/ic_back_grey</item>
     </style>

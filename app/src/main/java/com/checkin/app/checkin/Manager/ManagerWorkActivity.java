@@ -9,6 +9,10 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentStatePagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.ActionBar;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.widget.ImageView;
+import android.widget.TextView;
 
 import com.checkin.app.checkin.Account.AccountModel;
 import com.checkin.app.checkin.Account.BaseAccountActivity;
@@ -19,6 +23,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 
 public class ManagerWorkActivity extends BaseAccountActivity {
+
     public static final String KEY_RESTAURANT_PK = "manager.restaurant_pk";
 
     @BindView(R.id.pager_manager_work)
@@ -38,6 +43,7 @@ public class ManagerWorkActivity extends BaseAccountActivity {
 
         if (actionBar != null){
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+            actionBar.setTitle("Live Orders");
             getSupportActionBar().setHomeAsUpIndicator(R.drawable.ic_back_grey);
         }
 
@@ -50,15 +56,33 @@ public class ManagerWorkActivity extends BaseAccountActivity {
             @Override
             public void onPageSelected(int position) {
                 if (actionBar != null) {
-                    actionBar.setTitle(tabLayout.getTabAt(position).getText());
+                    if (position == 0){
+                        actionBar.setTitle("Live Orders");
+                    }else if (position == 1){
+                        actionBar.setTitle("Statistics");
+                    }
                 }
             }
         });
         tabLayout.setupWithViewPager(pagerManager);
 
         if (tabLayout.getTabCount() == 2) {
-            tabLayout.getTabAt(0).setIcon(R.drawable.ic_orders_list_toggle);
-            tabLayout.getTabAt(1).setIcon(R.drawable.ic_stats_toggle);
+
+            View vLiveOrder = LayoutInflater.from(this).inflate(R.layout.manager_statistics_tab,null);
+            TextView tvLiveOrder = vLiveOrder.findViewById(R.id.tv_tab);
+            ImageView ivLiveOrder = vLiveOrder.findViewById(R.id.iv_tab);
+
+            tvLiveOrder.setText("Live Orders");
+            ivLiveOrder.setImageResource(R.drawable.ic_orders_list_toggle);
+            tabLayout.getTabAt(0).setCustomView(vLiveOrder);
+
+            View vStatics = LayoutInflater.from(this).inflate(R.layout.manager_statistics_tab,null);
+            TextView tvStatics = vStatics.findViewById(R.id.tv_tab);
+            ImageView ivStatics = vStatics.findViewById(R.id.iv_tab);
+
+            tvStatics.setText("Stats");
+            ivStatics.setImageResource(R.drawable.ic_stats_toggle);
+            tabLayout.getTabAt(1).setCustomView(vStatics);
         }
     }
 
@@ -104,16 +128,16 @@ public class ManagerWorkActivity extends BaseAccountActivity {
             return 2;
         }
 
-        @Nullable
-        @Override
-        public CharSequence getPageTitle(int position) {
-            switch (position) {
-                case 0:
-                    return "Live Orders";
-                case 1:
-                    return "Stats";
-            }
-            return null;
-        }
+//        @Nullable
+//        @Override
+//        public CharSequence getPageTitle(int position) {
+//            switch (position) {
+//                case 0:
+//                    return "Live Orders";
+//                case 1:
+//                    return "Stats";
+//            }
+//            return null;
+//        }
     }
 }

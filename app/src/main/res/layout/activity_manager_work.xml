@@ -14,24 +14,19 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent" />
 
-        <android.support.v7.widget.CardView
+        <android.support.design.widget.TabLayout
+            android:id="@+id/tabs_manager_work"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            app:tabGravity="fill"
+            app:tabIndicatorColor="@android:color/transparent"
+            app:tabIndicatorHeight="0dp"
+            app:tabMode="fixed"
+            android:background="@drawable/manager_statistics_tab__shadow"
             android:layout_gravity="bottom"
-            android:elevation="@dimen/card_elevation">
-
-            <android.support.design.widget.TabLayout
-                android:id="@+id/tabs_manager_work"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                app:tabGravity="fill"
-                app:tabIndicatorColor="@android:color/transparent"
-                app:tabIndicatorHeight="0dp"
-                app:tabMode="fixed"
-                app:tabSelectedTextColor="@color/colorAccent"
-                app:tabTextColor="@color/translucent_half_black" />
-
-        </android.support.v7.widget.CardView>
+            android:elevation="@dimen/spacing_small"
+            app:tabSelectedTextColor="@color/colorAccent"
+            app:tabTextColor="@color/translucent_half_black" />
 
     </android.support.design.widget.CoordinatorLayout>
 
