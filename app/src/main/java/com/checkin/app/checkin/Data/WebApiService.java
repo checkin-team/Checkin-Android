@@ -261,6 +261,16 @@ public interface WebApiService {
     @POST("reviews/{review_id}/react/")
     Call<ObjectNode> postReviewReact(@Path("review_id") long reviewId);
 
+    @POST("reviews/sessions/{session_id}/")
+    Call<ObjectNode> postCustomerReview(@Path("session_id") String sessionId, @Body NewReviewModel review);
+
+    @Multipart
+    @POST("images/reviews/upload/")
+    Call<GenericDetailModel> postCustomerReviewPic(@Part MultipartBody.Part pic, @Part("use_case") RequestBody data);
+
+    @DELETE("images/{image_id}/")
+    Call<GenericDetailModel> deleteImage(@Path("image_id") String imageId);
+
     // endregion
 
     @GET("notification")

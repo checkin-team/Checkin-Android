@@ -2,6 +2,7 @@ package com.checkin.app.checkin.Review;
 
 import android.app.Application;
 import android.arch.lifecycle.LiveData;
+import android.arch.lifecycle.MediatorLiveData;
 import android.content.Context;
 import android.support.annotation.NonNull;
 
@@ -11,10 +12,19 @@ import com.checkin.app.checkin.Data.NetworkBoundResource;
 import com.checkin.app.checkin.Data.Resource;
 import com.checkin.app.checkin.Data.RetrofitLiveData;
 import com.checkin.app.checkin.Data.WebApiService;
+import com.checkin.app.checkin.Misc.GenericDetailModel;
+import com.checkin.app.checkin.Review.NewReview.NewReviewModel;
+import com.checkin.app.checkin.Review.NewReview.ReviewImageModel;
+import com.checkin.app.checkin.Review.NewReview.ReviewImageShowModel;
 import com.checkin.app.checkin.Review.ShopReview.ShopReviewModel;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 
+import java.io.File;
 import java.util.List;
+
+import okhttp3.MediaType;
+import okhttp3.MultipartBody;
+import okhttp3.RequestBody;
 
 public class ReviewRepository {
     private final WebApiService mWebService;
@@ -23,6 +33,8 @@ public class ReviewRepository {
     private ReviewRepository(Context context) {
         mWebService = ApiClient.getApiService(context);
     }
+    private MediatorLiveData<Resource<ReviewImageShowModel>> mReviewImageShowModel = new MediatorLiveData<>();
+//    private final LiveData<List<ReviewImageShowModel>> mSelectedImage;
 
     public LiveData<Resource<List<ShopReviewModel>>> getRestaurantReviews(final long shopPk) {
         return new NetworkBoundResource<List<ShopReviewModel>, List<ShopReviewModel>>() {
@@ -75,4 +87,72 @@ public class ReviewRepository {
         }
         return INSTANCE;
     }
+
+    public LiveData<Resource<ObjectNode>> postSessionReview(String sessionPk, NewReviewModel data) {
+        return new NetworkBoundResource<ObjectNode, ObjectNode>() {
+            @Override
+            protected boolean shouldUseLocalDb() {
+                return false;
+            }
+
+            @NonNull
+            @Override
+            protected LiveData<ApiResponse<ObjectNode>> createCall() {
+                return new RetrofitLiveData<>(mWebService.postCustomerReview(sessionPk, data));
+            }
+
+            @Override
+            protected void saveCallResult(ObjectNode data) {
+            }
+        }.getAsLiveData();
+    }
+
+    public LiveData<Resource<GenericDetailModel>> postReviewImage(File pic, ReviewImageModel data) {
+        RequestBody requestFile = RequestBody.create(MediaType.parse("image/jpeg"), pic);
+        final MultipartBody.Part body = MultipartBody.Part.createFormData("image", pic.getName(), requestFile);
+
+
+        RequestBody useCaseData = RequestBody.create(MediaType.parse("application/json"), data.getUseCase());
+        return new NetworkBoundResource<GenericDetailModel, GenericDetailModel>() {
+            @Override
+            protected boolean shouldUseLocalDb() {
+                return false;
+            }
+
+            @NonNull
+            @Override
+            protected LiveData<ApiResponse<GenericDetailModel>> createCall() {
+                return new RetrofitLiveData<>(mWebService.postCustomerReviewPic(body, useCaseData));
+            }
+
+            @Override
+            protected void saveCallResult(GenericDetailModel data) {
+
+            }
+        }.getAsLiveData();
+    }
+
+    public LiveData<Resource<GenericDetailModel>> deleteSelectedImage(final String imagePk) {
+        return new NetworkBoundResource<GenericDetailModel, GenericDetailModel>() {
+            @Override
+            protected boolean shouldUseLocalDb() {
+                return false;
+            }
+
+            @NonNull
+            @Override
+            protected LiveData<ApiResponse<GenericDetailModel>> createCall() {
+                return new RetrofitLiveData<>(mWebService.deleteImage(imagePk));
+            }
+
+            @Override
+            protected void saveCallResult(GenericDetailModel data) {
+
+            }
+        }.getAsLiveData();
+    }
+
+//    public void displayImages(){
+//        mReviewImageShowModel.p
+//    }
 }

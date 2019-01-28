@@ -37,7 +37,8 @@ public class SelectCropImageActivity extends AppCompatActivity {
 
         float viewportRatio = getIntent().getFloatExtra(KEY_CROP_ASPECT_RATIO, 0.81f);
 
-        mRectangleFile = new File(getCacheDir(), "profile.png");
+        mRectangleFile = new File(getCacheDir(), "cropped.png");
+        mRectangleFile.delete();
 
         cropView = findViewById(R.id.crop_view);
         cropView.setViewportRatio(viewportRatio);
