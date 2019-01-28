@@ -7,26 +7,28 @@
         android:layout_height="125dp">
 
         <ProgressBar
-            android:id="@+id/progress_bar"
+            android:id="@+id/progress_bar_add_review"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:visibility="gone"/>
 
+
         <ImageView
-            android:id="@+id/im_display_pic"
+            android:id="@+id/im_add_review_display_pic"
             android:layout_width="100dp"
             android:layout_height="115dp"
             android:background="@color/black"
             android:layout_gravity="bottom|left" />
 
         <ImageView
-            android:id="@+id/im_delete_image"
+            android:id="@+id/im_add_review_delete_image"
             android:layout_width="15dp"
             android:layout_height="15dp"
             android:src="@drawable/noun_cancel_653848"
             android:layout_gravity="end|top"
             android:layout_margin="2dp"/>
+
 
     </FrameLayout>
 

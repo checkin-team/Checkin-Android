@@ -47,8 +47,6 @@ public class NewReviewActivity extends AppCompatActivity implements SeekBar.OnSe
     final CharSequence[] imageUseCase = {"Ambiance", "Food"};
 
     private ReviewImageAdapter mImageAdapter;
-    ArrayList<ReviewImageShowModel> imageShowModel = new ArrayList<>() ;
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -77,7 +75,7 @@ public class NewReviewActivity extends AppCompatActivity implements SeekBar.OnSe
         seekbarService.setOnSeekBarChangeListener(this);
 
         rvAddImages.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false));
-        mImageAdapter = new ReviewImageAdapter(null, this);
+        mImageAdapter = new ReviewImageAdapter( this);
         rvAddImages.setAdapter(mImageAdapter);
 
         mViewModel.getObservableData().observe(this, resource -> {
@@ -96,25 +94,21 @@ public class NewReviewActivity extends AppCompatActivity implements SeekBar.OnSe
             }
         });
 
-        mViewModel.getImageData().observe(this, genericDetailModelResource -> {
-            if (genericDetailModelResource == null)
+        mViewModel.getImageData().observe(this, resource -> {
+            if (resource == null)
                 return;
-            switch (genericDetailModelResource.status) {
+            switch (resource.status) {
                 case SUCCESS: {
-                    Toast.makeText(this, "Done!", Toast.LENGTH_SHORT).show();
-                    Log.e(TAG,String.valueOf(genericDetailModelResource.data.getIdentifier()));
-                    genericDetailModelResource.data.setPk(String.valueOf(genericDetailModelResource.data.getIdentifier()));
-                    ReviewImageShowModel imageData = new ReviewImageShowModel(genericDetailModelResource.data.getPk(), genericDetailModelResource.data.getImage());
-                    imageShowModel.add(imageData);
-                    mImageAdapter.setData(imageShowModel);
-//                    addImages(genericDetailModelResource.data.getImage(),llAddImages);
+                    if (resource.data != null) {
+                        Toast.makeText(this, "Done!", Toast.LENGTH_SHORT).show();
+                        mImageAdapter.updateData(resource.data.getIdentifier(), Long.valueOf(resource.data.getPk()));
+                    }
                     break;
                 }
                 case LOADING:
-//                    mImageAdapter.setData(Collections.singletonList(genericDetailModelResource.data));
                     break;
                 default: {
-                    Utils.toast(this, genericDetailModelResource.message);
+                    Utils.toast(this, resource.message);
                 }
             }
         });
@@ -152,7 +146,7 @@ public class NewReviewActivity extends AppCompatActivity implements SeekBar.OnSe
                     public void onClick(DialogInterface dialog, int which) {
                         if (imageUseCase[which] == "Ambience") mViewModel.uploadReviewImage(image,ReviewImageModel.REVIEW_IMAGE_USE_CASE.AMBIENCE,mImageAdapter.getItemCount());
                         else  mViewModel.uploadReviewImage(image,ReviewImageModel.REVIEW_IMAGE_USE_CASE.FOOD, mImageAdapter.getItemCount());
-
+                        mImageAdapter.addData(new ReviewImageShowModel(0, image));
                         dialog.dismiss();
                     }
                 });

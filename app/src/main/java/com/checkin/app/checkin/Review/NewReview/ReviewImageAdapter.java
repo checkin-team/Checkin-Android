@@ -1,5 +1,8 @@
 package com.checkin.app.checkin.Review.NewReview;
 
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.net.Uri;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
@@ -7,24 +10,26 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.ProgressBar;
 
 import com.checkin.app.checkin.Misc.GenericDetailModel;
 import com.checkin.app.checkin.R;
+import com.checkin.app.checkin.Utility.GlideApp;
 import com.checkin.app.checkin.Utility.Utils;
 
 import java.io.File;
+import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
 public class ReviewImageAdapter extends RecyclerView.Adapter<ReviewImageAdapter.ViewHolder> {
-    private List<ReviewImageShowModel> mOrders;
+    private List<ReviewImageShowModel> mOrders = new ArrayList<>();
     private ImageInteraction mListener;
     private static final String TAG = ReviewImageAdapter.class.getSimpleName();
 
-    ReviewImageAdapter(List<ReviewImageShowModel> orders, ImageInteraction ordersInterface) {
-        mOrders = orders;
+    ReviewImageAdapter(ImageInteraction ordersInterface) {
         mListener = ordersInterface;
     }
 
@@ -33,6 +38,15 @@ public class ReviewImageAdapter extends RecyclerView.Adapter<ReviewImageAdapter.
         notifyDataSetChanged();
     }
 
+    public void addData(ReviewImageShowModel data) {
+        this.mOrders.add(data);
+        notifyItemInserted(mOrders.size() - 1);
+    }
+
+    public void updateData(int pos, long pk){
+        mOrders.get(pos).setPk(pk);
+        notifyItemChanged(pos);
+    }
 
     @NonNull
     @Override
@@ -57,10 +71,12 @@ public class ReviewImageAdapter extends RecyclerView.Adapter<ReviewImageAdapter.
     }
 
     class ViewHolder extends RecyclerView.ViewHolder {
-        @BindView(R.id.im_delete_image)
+        @BindView(R.id.im_add_review_delete_image)
         ImageView imDeleteImage;
-        @BindView(R.id.im_display_pic)
+        @BindView(R.id.im_add_review_display_pic)
         ImageView imDisplayPic;
+        @BindView(R.id.progress_bar_add_review)
+        ProgressBar progressBarAddReview;
 
         private ReviewImageShowModel mOrderModel;
 
@@ -73,11 +89,15 @@ public class ReviewImageAdapter extends RecyclerView.Adapter<ReviewImageAdapter.
 
         void bindData(ReviewImageShowModel order) {
             this.mOrderModel = order;
-
-            if(order !=null){
-                Utils.loadImageOrDefault(imDisplayPic, order.getImage().getPath(), R.drawable.card_image_add);
+            if (order.getPk() == 0) {
+                progressBarAddReview.setVisibility(View.VISIBLE);
+                imDeleteImage.setVisibility(View.GONE);
+                imDisplayPic.setVisibility(View.GONE);
+            } else {
+                if(order.getImage().exists()) {
+                    imDisplayPic.setImageURI(Uri.fromFile(order.getImage()));
+                }
             }
-
         }
 
     }

@@ -6,19 +6,19 @@ import java.io.File;
 
 public class ReviewImageShowModel {
 
-    private String pk;
+    private long pk;
 
     private File image;
 
     public ReviewImageShowModel() {
     }
 
-    public ReviewImageShowModel(String pk, File image) {
+    public ReviewImageShowModel(long pk, File image) {
         this.pk = pk;
         this.image = image;
     }
 
-    public String getPk() {
+    public long getPk() {
         return pk;
     }
 
@@ -28,5 +28,9 @@ public class ReviewImageShowModel {
 
     public void setImage(File image) {
         this.image = image;
+    }
+
+    public void setPk(long pk) {
+        this.pk = pk;
     }
 }

@@ -89,11 +89,11 @@ public class NewReviewViewModel extends BaseViewModel {
 //    }
 
     public void deleteReviewImage(ReviewImageShowModel genericDetailModel){
-        mData.addSource(mRepository.deleteSelectedImage(genericDetailModel.getPk()), objectNodeResource -> {
+        mData.addSource(mRepository.deleteSelectedImage(String.valueOf(genericDetailModel.getPk())), objectNodeResource -> {
             if (objectNodeResource == null)
                 return;
             if (objectNodeResource.status == Resource.Status.SUCCESS && objectNodeResource.data != null) {
-                NewReviewViewModel.this.removeImagePk(genericDetailModel.getPk());
+                NewReviewViewModel.this.removeImagePk(String.valueOf(genericDetailModel.getPk()));
             }
             mImageData.setValue(objectNodeResource);
         });
