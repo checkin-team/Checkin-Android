@@ -16,6 +16,7 @@ import com.checkin.app.checkin.Session.Model.QRResultModel;
 import com.checkin.app.checkin.Session.Model.SessionBriefModel;
 import com.checkin.app.checkin.Session.Model.SessionOrderedItemModel;
 import com.checkin.app.checkin.Shop.RecentCheckin.Model.RecentCheckinModel;
+import com.checkin.app.checkin.Waiter.Model.WaiterEventModel;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 
 import java.util.List;
@@ -105,6 +106,25 @@ public class SessionRepository extends BaseRepository {
 
             @Override
             protected void saveCallResult(List<SessionOrderedItemModel> data) {
+            }
+        }.getAsLiveData();
+    }
+    public LiveData<Resource<List<WaiterEventModel>>> getSessionEvents(long sessionId) {
+        return new NetworkBoundResource<List<WaiterEventModel>, List<WaiterEventModel>>() {
+
+            @Override
+            protected boolean shouldUseLocalDb() {
+                return false;
+            }
+
+            @NonNull
+            @Override
+            protected LiveData<ApiResponse<List<WaiterEventModel>>> createCall() {
+                return new RetrofitLiveData<>(mWebService.getManagerSessionEvents(sessionId));
+            }
+
+            @Override
+            protected void saveCallResult(List<WaiterEventModel> data) {
             }
         }.getAsLiveData();
     }

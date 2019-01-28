@@ -1,6 +1,7 @@
 package com.checkin.app.checkin.Session.Model;
 
 import com.checkin.app.checkin.Misc.BriefModel;
+import com.checkin.app.checkin.Utility.Utils;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 import java.util.Date;
@@ -52,6 +53,10 @@ public class SessionBriefModel {
 
     public String formatCustomerCount() {
         return String.valueOf(customerCount);
+    }
+
+    public String formatTimeDuration(){
+        return Utils.formatTimeDuration(created.getTime());
     }
 
     public String getTable() {

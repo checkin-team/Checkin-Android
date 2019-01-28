@@ -36,6 +36,7 @@ public class ManagerSessionActivity extends AppCompatActivity implements Manager
     ImageView imWaiterPic;
 
     private ManagerSessionOrderFragment mOrderFragment;
+    private ManagerSessionEventFragment mEventFragment;
     private ManagerSessionViewModel mViewModel;
 
     @Override
@@ -47,6 +48,8 @@ public class ManagerSessionActivity extends AppCompatActivity implements Manager
         mViewModel = ViewModelProviders.of(this).get(ManagerSessionViewModel.class);
         setupUi();
         mOrderFragment = ManagerSessionOrderFragment.newInstance(this);
+        mEventFragment = ManagerSessionEventFragment.newInstance();
+        setupEventListing();
     }
 
     private void setupUi() {
@@ -107,6 +110,7 @@ public class ManagerSessionActivity extends AppCompatActivity implements Manager
     }
 
     private void setupData(SessionBriefModel data) {
+
         tvCartItemPrice.setText(String.format(Locale.ENGLISH, Utils.getCurrencyFormat(this), data.formatBill()));
         if (data.getHost() != null) {
             tvWaiterName.setText(data.getHost().getDisplayName());
@@ -126,6 +130,12 @@ public class ManagerSessionActivity extends AppCompatActivity implements Manager
     private void setupOrdersListing() {
         getSupportFragmentManager().beginTransaction()
                 .add(R.id.container_manager_session_fragment, mOrderFragment)
+                .commit();
+    }
+
+    private void setupEventListing(){
+        getSupportFragmentManager().beginTransaction()
+                .add(R.id.fragment_manager_session_events, mEventFragment)
                 .commit();
     }
 

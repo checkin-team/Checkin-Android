@@ -209,6 +209,9 @@ public interface WebApiService {
     @GET("sessions/{session_id}/orders/")
     Call<List<SessionOrderedItemModel>> getSessionOrders(@Path("session_id") long sessionId);
 
+    @GET("sessions/{session_id}/manager/events")
+    Call<List<WaiterEventModel>> getManagerSessionEvents(@Path("session_id") long sessionId);
+
     // endregion
 
     // region WAITER

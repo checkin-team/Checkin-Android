@@ -5,5 +5,87 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
+    <android.support.v4.widget.NestedScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:scrollbars="none">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <LinearLayout
+                    android:id="@+id/container_ms_details"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/spacing_large"
+                    android:layout_marginTop="@dimen/spacing_small"
+                    android:layout_marginBottom="@dimen/spacing_normal"
+                    android:layout_weight="1"
+                    android:orientation="vertical"
+                    app:layout_constraintBottom_toTopOf="@id/rv_ms_events"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent">
+
+
+                    <TextView
+                        android:id="@+id/tv_ms_customer_count"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:background="@drawable/btn_small_bordered_grey"
+                        android:drawableStart="@drawable/fore_male_grey"
+                        android:gravity="center"
+                        android:paddingStart="@dimen/spacing_small"
+                        android:paddingTop="@dimen/spacing_small"
+                        android:paddingBottom="@dimen/spacing_small"
+                        android:textSize="@dimen/font_largest"
+                        tools:text="5" />
+
+                    <TextView
+                        android:id="@+id/tv_ms_event_session_time"
+                        style="@style/PinkishGreySmallTextStyle"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/spacing_small"
+                        android:textSize="@dimen/font_normal"
+                        android:text="Session Time: "
+                        tools:text="Session time : 20 min" />
+
+                </LinearLayout>
+
+
+                <TextView
+                    android:id="@+id/btn_ms_menu"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="@dimen/spacing_large"
+                    android:layout_marginTop="@dimen/spacing_small"
+                    android:drawableTop="@drawable/ic_action_show_menu"
+                    android:drawablePadding="@dimen/spacing_normal"
+                    android:text="@string/action_view_menu"
+                    android:textAlignment="center"
+                    android:textSize="@dimen/font_normal"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+            </LinearLayout>
+
+
+            <android.support.v7.widget.RecyclerView
+                android:id="@+id/rv_ms_events"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingBottom="@dimen/spacing_small"
+                app:layout_constraintTop_toBottomOf="@id/container_ms_details" />
+
+        </LinearLayout>
+
+    </android.support.v4.widget.NestedScrollView>
+
 
 </android.support.constraint.ConstraintLayout>

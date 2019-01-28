@@ -12,6 +12,7 @@ import com.checkin.app.checkin.Data.Resource;
 import com.checkin.app.checkin.Session.Model.SessionBriefModel;
 import com.checkin.app.checkin.Session.Model.SessionOrderedItemModel;
 import com.checkin.app.checkin.Session.SessionRepository;
+import com.checkin.app.checkin.Waiter.Model.WaiterEventModel;
 import com.checkin.app.checkin.Waiter.WaiterRepository;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 
@@ -30,6 +31,7 @@ public class ManagerSessionViewModel extends BaseViewModel {
 
     private MediatorLiveData<Resource<SessionBriefModel>> mBriefData = new MediatorLiveData<>();
     private MediatorLiveData<Resource<List<SessionOrderedItemModel>>> mOrdersData = new MediatorLiveData<>();
+    private MediatorLiveData<Resource<List<WaiterEventModel>>> mEventData = new MediatorLiveData<>();
 
     private long mSessionPk;
 
@@ -54,8 +56,16 @@ public class ManagerSessionViewModel extends BaseViewModel {
         mOrdersData.addSource(mSessionRepository.getSessionOrders(mSessionPk), mOrdersData::setValue);
     }
 
+    public void fetchSessionEvents() {
+        mEventData.addSource(mSessionRepository.getSessionEvents(mSessionPk), mEventData::setValue);
+    }
+
     public LiveData<Resource<SessionBriefModel>> getSessionBriefData() {
         return mBriefData;
+    }
+
+    public LiveData<Resource<List<WaiterEventModel>>> getSessionEventData() {
+        return mEventData;
     }
 
     public LiveData<Integer> getCountNewOrders() {
