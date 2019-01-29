@@ -35,11 +35,10 @@ public class ManagerWorkViewModel extends BaseViewModel {
     }
 
     void fetchStatistics() {
-        Log.d("ShopId",mShopPk+"");
         mRestaurantStaticsData.addSource(mManagerRepository.getRestaurantStaticsById(String.valueOf(mShopPk)),mRestaurantStaticsData::setValue);
     }
 
-    void dummyData(){
+    /*void dummyData(){
 
         RestaurantStaticsModel staticsModel = new RestaurantStaticsModel();
         staticsModel.setAvgServingTime("10.16 Min");
@@ -66,7 +65,7 @@ public class ManagerWorkViewModel extends BaseViewModel {
         staticsModel.setTrendingOrders(mList);
 
         mRestaurantStaticsData.setValue(Resource.success(staticsModel));
-    }
+    }*/
 
     public LiveData<Resource<List<RestaurantTableModel>>> getActiveTables(){
         return mActiveTablesData;

@@ -11,6 +11,7 @@ import android.widget.TextView;
 import com.checkin.app.checkin.R;
 
 import java.util.List;
+import java.util.Locale;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -61,7 +62,7 @@ public class ManagerStatsOrderAdapter extends RecyclerView.Adapter<ManagerStatsO
 
         public void bindData(RestaurantStaticsModel.TrendingOrder data) {
             RestaurantItemModel item = data.getItem();
-            String revenueGenerated = data.getRevenueGenerated();
+            double revenueGenerated = data.getRevenueGenerated();
             if (item != null){
                 boolean isVegetarian = item.getIsVegetarian();
                 String name = item.getName();
@@ -72,7 +73,7 @@ public class ManagerStatsOrderAdapter extends RecyclerView.Adapter<ManagerStatsO
                     ivShopManagerTableStaticsItem.setImageResource(R.drawable.ic_non_veg);
 
                 tvShopManagerTableStaticsItem.setText(name);
-                tvShopManagerTableStaticsItemDescription.setText(revenueGenerated);
+                tvShopManagerTableStaticsItemDescription.setText(String.format(Locale.getDefault(),"%f %s",revenueGenerated,"revenue contribution"));
             }
         }
     }

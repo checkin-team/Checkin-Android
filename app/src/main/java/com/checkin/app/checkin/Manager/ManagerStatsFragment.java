@@ -15,8 +15,10 @@ import android.widget.TextView;
 
 import com.checkin.app.checkin.Data.Resource;
 import com.checkin.app.checkin.R;
+import com.checkin.app.checkin.Utility.Utils;
 
 import java.util.List;
+import java.util.Locale;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -66,19 +68,19 @@ public class ManagerStatsFragment extends Fragment {
         rvShopManagerTableStatics.setAdapter(managerStatsOrderAdapter);
 
         ManagerWorkViewModel managerWorkViewModel = ViewModelProviders.of(requireActivity()).get(ManagerWorkViewModel.class);
-        //managerWorkViewModel.fetchStatistics();
-        managerWorkViewModel.dummyData();
+        managerWorkViewModel.fetchStatistics();
+        //managerWorkViewModel.dummyData();
         managerWorkViewModel.getRestaurantStatics().observe(this, input -> {
             if (input != null && input.data == null)
                 return;
             if (input != null && input.status == Resource.Status.SUCCESS) {
                 RestaurantStaticsModel mModel = input.data;
-                String sessionTime = mModel.getAvgSessionTime();
-                String servingTime = mModel.getAvgServingTime();
-                String daysRevenue = mModel.getDaysRevenue();
-                String weekRevenue = mModel.getWeeksRevenue();
-                tvShopManagerTableDayRevenue.setText(daysRevenue);
-                tvShopManagerTableWeekRevenue.setText(weekRevenue);
+                String sessionTime = Utils.formatTime(mModel.getAvgSessionTime());
+                String servingTime = Utils.formatTime(mModel.getAvgServingTime());
+                double daysRevenue = mModel.getDaysRevenue();
+                double weekRevenue = mModel.getWeeksRevenue();
+                tvShopManagerTableDayRevenue.setText(String.format(Locale.ENGLISH, Utils.getCurrencyFormat(getActivity()), String.valueOf(daysRevenue)));
+                tvShopManagerTableWeekRevenue.setText(String.format(Locale.ENGLISH, Utils.getCurrencyFormat(getActivity()), String.valueOf(weekRevenue)));
                 tvShopManagerTableSessionTime.setText(String.valueOf(sessionTime));
                 tvShopManagerTableServingTime.setText(String.valueOf(servingTime));
                 List<RestaurantStaticsModel.TrendingOrder> trendingOrder = mModel.getTrendingOrders();

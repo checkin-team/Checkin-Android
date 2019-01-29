@@ -10,29 +10,29 @@ import java.util.List;
 public class RestaurantStaticsModel {
 
     @JsonProperty("days_revenue")
-    private String daysRevenue;
+    private double daysRevenue;
     @JsonProperty("weeks_revenue")
-    private String weeksRevenue;
+    private double weeksRevenue;
     @JsonProperty("avg_session_time")
-    private String avgSessionTime;
+    private long avgSessionTime;
     @JsonProperty("avg_serving_time")
-    private String avgServingTime;
+    private long avgServingTime;
     @JsonProperty("trending_orders")
     private List<TrendingOrder> trendingOrders = null;
 
-    public void setDaysRevenue(String daysRevenue) {
+    public void setDaysRevenue(double daysRevenue) {
         this.daysRevenue = daysRevenue;
     }
 
-    public void setWeeksRevenue(String weeksRevenue) {
+    public void setWeeksRevenue(double weeksRevenue) {
         this.weeksRevenue = weeksRevenue;
     }
 
-    public void setAvgSessionTime(String avgSessionTime) {
+    public void setAvgSessionTime(long avgSessionTime) {
         this.avgSessionTime = avgSessionTime;
     }
 
-    public void setAvgServingTime(String avgServingTime) {
+    public void setAvgServingTime(long avgServingTime) {
         this.avgServingTime = avgServingTime;
     }
 
@@ -40,19 +40,19 @@ public class RestaurantStaticsModel {
         this.trendingOrders = trendingOrders;
     }
 
-    public String getDaysRevenue() {
+    public double getDaysRevenue() {
         return daysRevenue;
     }
 
-    public String getWeeksRevenue() {
+    public double getWeeksRevenue() {
         return weeksRevenue;
     }
 
-    public String getAvgSessionTime() {
+    public long getAvgSessionTime() {
         return avgSessionTime;
     }
 
-    public String getAvgServingTime() {
+    public long getAvgServingTime() {
         return avgServingTime;
     }
 
@@ -66,13 +66,13 @@ public class RestaurantStaticsModel {
         @JsonProperty("item")
         private RestaurantItemModel item;
         @JsonProperty("revenue_generated")
-        private String revenueGenerated;
+        private double revenueGenerated;
 
         public void setItem(RestaurantItemModel item) {
             this.item = item;
         }
 
-        public void setRevenueGenerated(String revenueGenerated) {
+        public void setRevenueGenerated(double revenueGenerated) {
             this.revenueGenerated = revenueGenerated;
         }
 
@@ -80,7 +80,7 @@ public class RestaurantStaticsModel {
             return item;
         }
 
-        public String getRevenueGenerated() {
+        public double getRevenueGenerated() {
             return revenueGenerated;
         }
     }

@@ -275,5 +275,5 @@ public interface WebApiService {
     Call<List<SearchResultShopModel>> getSearchShopResults(@Query("search") String query, @Query("has_nonveg") Boolean hasNonVeg, @Query("has_alcohol") Boolean hasAlcohol);
 
     @GET("restaurants/{restaurant_id}/stats/")
-    Call<RestaurantStaticsModel> getRestaurantStaticsById(@Path("restaurant_id ") String restaurantId);
+    Call<RestaurantStaticsModel> getRestaurantStaticsById(@Path("restaurant_id") String restaurantId);
 }
