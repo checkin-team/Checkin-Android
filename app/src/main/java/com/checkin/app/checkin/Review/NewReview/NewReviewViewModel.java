@@ -23,6 +23,7 @@ public class NewReviewViewModel extends BaseViewModel {
     private MediatorLiveData<Resource<GenericDetailModel>> mImageData = new MediatorLiveData<>();
     private NewReviewModel mReviewData;
     private MediatorLiveData<Resource<List<ReviewImageShowModel>>> mShowData = new MediatorLiveData<>();
+    private MediatorLiveData<Resource<RestaurantBriefModel>> mRestaurantData = new MediatorLiveData<>();
 
     public NewReviewViewModel(@NonNull Application application) {
         super(application);
@@ -55,10 +56,10 @@ public class NewReviewViewModel extends BaseViewModel {
         mReviewData.setHospitalityRating(serviceRating);
     }
 
-    public boolean submitReview() {
+    public boolean submitReview(String sessionId) {
         if (mReviewData == null || !mReviewData.isValidData())
             return false;
-        mData.addSource(mRepository.postSessionReview("1", mReviewData), mData::setValue);
+        mData.addSource(mRepository.postSessionReview(sessionId, mReviewData), mData::setValue);
         return true;
     }
 
@@ -82,12 +83,6 @@ public class NewReviewViewModel extends BaseViewModel {
         return mImageData;
     }
 
-//    public LiveData<Resource<List<ReviewImageShowModel>>> showImagesData() {
-//        mShowData.addSource(mRepository.getSessionOrdersDetails(),mShowData::setValue);
-//        mShowData.postValue(mImageData.getValue());
-//        return mShowData;
-//    }
-
     public void deleteReviewImage(ReviewImageShowModel genericDetailModel){
         mData.addSource(mRepository.deleteSelectedImage(String.valueOf(genericDetailModel.getPk())), objectNodeResource -> {
             if (objectNodeResource == null)
@@ -99,7 +94,10 @@ public class NewReviewViewModel extends BaseViewModel {
         });
     }
 
-
+    public LiveData<Resource<RestaurantBriefModel>> getRestaurantBriefData(String restaurantId) {
+        mRestaurantData.addSource(mRepository.getRestaurantBrief(restaurantId), mRestaurantData::setValue);
+        return mRestaurantData;
+    }
 
     @Override
     public void updateResults() {

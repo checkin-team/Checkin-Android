@@ -14,6 +14,7 @@ import com.checkin.app.checkin.Data.RetrofitLiveData;
 import com.checkin.app.checkin.Data.WebApiService;
 import com.checkin.app.checkin.Misc.GenericDetailModel;
 import com.checkin.app.checkin.Review.NewReview.NewReviewModel;
+import com.checkin.app.checkin.Review.NewReview.RestaurantBriefModel;
 import com.checkin.app.checkin.Review.NewReview.ReviewImageModel;
 import com.checkin.app.checkin.Review.NewReview.ReviewImageShowModel;
 import com.checkin.app.checkin.Review.ShopReview.ShopReviewModel;
@@ -76,16 +77,23 @@ public class ReviewRepository {
         }.getAsLiveData();
     }
 
-
-    public static ReviewRepository getInstance(Application application) {
-        if (INSTANCE == null) {
-            synchronized (ReviewRepository.class) {
-                if (INSTANCE == null) {
-                    INSTANCE = new ReviewRepository(application.getApplicationContext());
-                }
+    public LiveData<Resource<RestaurantBriefModel>> getRestaurantBrief(final String restaurantId) {
+        return new NetworkBoundResource<RestaurantBriefModel, RestaurantBriefModel>() {
+            @Override
+            protected boolean shouldUseLocalDb() {
+                return false;
             }
-        }
-        return INSTANCE;
+
+            @NonNull
+            @Override
+            protected LiveData<ApiResponse<RestaurantBriefModel>> createCall() {
+                return new RetrofitLiveData<>(mWebService.getRestaurantBrief(restaurantId));
+            }
+
+            @Override
+            protected void saveCallResult(RestaurantBriefModel data) {
+            }
+        }.getAsLiveData();
     }
 
     public LiveData<Resource<ObjectNode>> postSessionReview(String sessionPk, NewReviewModel data) {
@@ -152,7 +160,14 @@ public class ReviewRepository {
         }.getAsLiveData();
     }
 
-//    public void displayImages(){
-//        mReviewImageShowModel.p
-//    }
+    public static ReviewRepository getInstance(Application application) {
+        if (INSTANCE == null) {
+            synchronized (ReviewRepository.class) {
+                if (INSTANCE == null) {
+                    INSTANCE = new ReviewRepository(application.getApplicationContext());
+                }
+            }
+        }
+        return INSTANCE;
+    }
 }

@@ -511,7 +511,9 @@ public class HomeActivity extends BaseAccountActivity
 
     @OnClick(R.id.action_delivery)
     public void delivery(View v) {
-        startActivity(new Intent(this, NewReviewActivity.class));
+        startActivity(new Intent(this, NewReviewActivity.class)
+                .putExtra(NewReviewActivity.KEY_SESSION_PK,"3")
+                .putExtra(NewReviewActivity.KEY_RESTAURANT_PK,"1"));
     }
 
     @Override

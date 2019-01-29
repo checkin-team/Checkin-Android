@@ -6,6 +6,7 @@ import com.checkin.app.checkin.Menu.Model.OrderedItemModel;
 import com.checkin.app.checkin.Misc.GenericDetailModel;
 import com.checkin.app.checkin.Notifications.NotificationModel;
 import com.checkin.app.checkin.Review.NewReview.NewReviewModel;
+import com.checkin.app.checkin.Review.NewReview.RestaurantBriefModel;
 import com.checkin.app.checkin.Review.ShopReview.ShopReviewModel;
 import com.checkin.app.checkin.Search.SearchResultPeopleModel;
 import com.checkin.app.checkin.Search.SearchResultShopModel;
@@ -272,6 +273,9 @@ public interface WebApiService {
 
     @DELETE("images/{image_id}/")
     Call<GenericDetailModel> deleteImage(@Path("image_id") String imageId);
+
+    @GET("restaurants/{restaurant_id}/brief/")
+    Call<RestaurantBriefModel> getRestaurantBrief(@Path("restaurant_id") String restaurantId);
 
     // endregion
 
