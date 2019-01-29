@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
@@ -13,12 +14,14 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import com.checkin.app.checkin.Menu.SessionMenuActivity;
 import com.checkin.app.checkin.R;
 import com.checkin.app.checkin.Session.Model.SessionBriefModel;
 import com.checkin.app.checkin.Utility.Utils;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 import butterknife.Unbinder;
 
 public class ManagerSessionEventFragment extends Fragment implements ManagerSessionEventAdapter.SessionEventInteraction {
@@ -29,6 +32,8 @@ public class ManagerSessionEventFragment extends Fragment implements ManagerSess
     TextView tvCustomerCount;
     @BindView(R.id.tv_ms_event_session_time)
     TextView tvSessionTime;
+    @BindView(R.id.swipe_refresh_ms_event)
+    SwipeRefreshLayout swipeRefreshLayout;
 
     private ManagerSessionViewModel mViewModel;
     private ManagerSessionEventAdapter mAdapter;
@@ -58,6 +63,8 @@ public class ManagerSessionEventFragment extends Fragment implements ManagerSess
         mAdapter = new ManagerSessionEventAdapter(this);
         rvMSEvent.setAdapter(mAdapter);
         rvMSEvent.setNestedScrollingEnabled(false);
+
+        swipeRefreshLayout.setOnRefreshListener(() -> mViewModel.updateResults());
     }
 
     private void getData() {
@@ -87,8 +94,10 @@ public class ManagerSessionEventFragment extends Fragment implements ManagerSess
             switch (listResource.status) {
                 case SUCCESS:
                     mAdapter.setData(listResource.data);
+                    swipeRefreshLayout.setRefreshing(false);
                     break;
                 case LOADING:
+                    swipeRefreshLayout.setRefreshing(true);
                     break;
                 default: {
                     Utils.toast(requireContext(), listResource.message);
@@ -100,6 +109,11 @@ public class ManagerSessionEventFragment extends Fragment implements ManagerSess
     private void setupData(SessionBriefModel data){
         tvCustomerCount.setText(data.formatCustomerCount());
         tvSessionTime.setText(data.formatTimeDuration());
+    }
+
+    @OnClick(R.id.btn_ms_event_menu)
+    public void onListMenu() {
+//        SessionMenuActivity.withSession(this, , null);
     }
 
     @Override

@@ -46,11 +46,13 @@
         <TextView
             android:id="@+id/tv_ms_event_order_status"
             style="@style/WhiteSmallTextStyle"
-            android:layout_width="80dp"
+            android:layout_width="60dp"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/spacing_tiny"
-            android:background="@color/primary_red"
+            android:background="@color/pinkish_grey"
             android:gravity="center"
+            android:text="@string/title_request"
+            android:textSize="@dimen/font_extra_small"
             android:visibility="gone"
             tools:text="Delayed" />
 
@@ -68,17 +70,15 @@
         android:layout_gravity="center"
         android:text="@string/label_done"/>
 
-    <TextView
+    <Button
         android:id="@+id/btn_ms_event_approve"
-        style="@style/WhiteSmallTextStyle"
-        android:layout_width="@dimen/button_height_medium"
-        android:layout_height="@dimen/button_height_medium"
-        android:background="@drawable/shape_oval_brownish_grey"
-        android:paddingTop="@dimen/spacing_tiny"
-        android:paddingBottom="@dimen/spacing_tiny"
+        style="@style/ButtonPositiveAction"
+        android:layout_width="@dimen/button_width_short"
+        android:layout_height="match_parent"
+        android:layout_marginEnd="@dimen/spacing_tiny"
         android:gravity="center"
+        android:text="@string/title_approve"
         android:textSize="@dimen/font_extra_small"
-        android:visibility="gone"
-        tools:text="Approve" />
+        android:visibility="gone"/>
 
 </LinearLayout>

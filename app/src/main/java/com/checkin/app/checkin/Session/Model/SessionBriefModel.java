@@ -56,7 +56,7 @@ public class SessionBriefModel {
     }
 
     public String formatTimeDuration(){
-        return Utils.formatTimeDuration(created.getTime());
+        return "Session Time: " + Utils.formatTimeDuration(created.getTime());
     }
 
     public String getTable() {

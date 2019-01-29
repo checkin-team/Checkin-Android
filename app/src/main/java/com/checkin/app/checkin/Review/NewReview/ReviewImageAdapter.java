@@ -14,7 +14,6 @@ import android.widget.ProgressBar;
 
 import com.checkin.app.checkin.Misc.GenericDetailModel;
 import com.checkin.app.checkin.R;
-import com.checkin.app.checkin.Utility.GlideApp;
 import com.checkin.app.checkin.Utility.Utils;
 
 import java.io.File;

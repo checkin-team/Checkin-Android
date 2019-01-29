@@ -187,5 +187,7 @@
     <string name="title_service_hospitality">Service/Hospitality</string>
     <string name="add_image">Add Images</string>
     <string name="title_done">Done</string>
+    <string name="title_request">Request</string>
+    <string name="title_approve">Approve</string>
 
 </resources>

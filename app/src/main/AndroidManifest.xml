@@ -136,9 +136,6 @@
             android:screenOrientation="portrait"
             android:theme="@style/AppThemeWhiteActionBar" />
         <activity
-            android:name=".Review.ShopReview.ShopReviewFragment"
-            android:theme="@style/AppThemeWhiteActionBar" />
-        <activity
             android:name=".Misc.QRScannerActivity"
             android:label="Scan CheckIn QR"
             android:theme="@style/AppThemeWhiteActionBar" />
@@ -168,7 +165,7 @@
         <activity
             android:name=".Shop.ShopPrivateProfile.Invoice.ShopInvoiceListActivity"
             android:label="@string/action_invoice"
-            android:theme="@style/AppThemeWhiteActionBar"></activity>
+            android:theme="@style/AppThemeWhiteActionBar" />
         <activity android:name=".Shop.ShopPrivateProfile.Invoice.ShopInvoiceDetailActivity" />
         <activity
             android:name=".Shop.ShopPrivateProfile.Finance.FinanceDetailActivity"

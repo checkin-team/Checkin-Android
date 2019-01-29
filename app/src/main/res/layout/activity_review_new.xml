@@ -131,7 +131,7 @@
                         android:padding="@dimen/spacing_small"
                         android:text="@string/title_ratings"
                         android:textColor="@color/primary_red"
-                        android:textSize="@dimen/font_standard" />
+                        android:textSize="@dimen/font_small" />
 
                     <LinearLayout
                         android:layout_width="match_parent"
@@ -146,7 +146,7 @@
                             android:paddingLeft="@dimen/spacing_small"
                             android:text="@string/title_food_quality"
                             android:textColor="@color/brownish_grey"
-                            android:textSize="@dimen/font_standard" />
+                            android:textSize="@dimen/font_small" />
 
                        <!-- <com.appyvet.materialrangebar.RangeBar
                             android:layout_width="match_parent"
@@ -187,7 +187,7 @@
                             android:paddingLeft="@dimen/spacing_small"
                             android:text="@string/title_ambience"
                             android:textColor="@color/brownish_grey"
-                            android:textSize="@dimen/font_standard" />
+                            android:textSize="@dimen/font_small" />
 
                         <SeekBar
                             android:id="@+id/seekbar_ambience"
@@ -213,7 +213,7 @@
                             android:paddingLeft="@dimen/spacing_small"
                             android:text="@string/title_service_hospitality"
                             android:textColor="@color/brownish_grey"
-                            android:textSize="@dimen/font_standard" />
+                            android:textSize="@dimen/font_small" />
 
                         <SeekBar
                             android:id="@+id/seekbar_service"

@@ -5,6 +5,7 @@ import com.checkin.app.checkin.Menu.Model.MenuModel;
 import com.checkin.app.checkin.Menu.Model.OrderedItemModel;
 import com.checkin.app.checkin.Misc.GenericDetailModel;
 import com.checkin.app.checkin.Notifications.NotificationModel;
+import com.checkin.app.checkin.Review.NewReview.NewReviewModel;
 import com.checkin.app.checkin.Review.ShopReview.ShopReviewModel;
 import com.checkin.app.checkin.Search.SearchResultPeopleModel;
 import com.checkin.app.checkin.Search.SearchResultShopModel;
@@ -34,6 +35,7 @@ import com.fasterxml.jackson.databind.node.ObjectNode;
 import java.util.List;
 
 import okhttp3.MultipartBody;
+import okhttp3.RequestBody;
 import retrofit2.Call;
 import retrofit2.http.Body;
 import retrofit2.http.DELETE;

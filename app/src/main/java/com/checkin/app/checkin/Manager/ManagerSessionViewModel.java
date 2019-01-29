@@ -19,6 +19,7 @@ import com.fasterxml.jackson.databind.node.ObjectNode;
 import java.util.ArrayList;
 import java.util.List;
 
+import static com.checkin.app.checkin.Session.ActiveSession.Chat.SessionChatModel.CHAT_EVENT_TYPE.EVENT_MENU_ORDER_ITEM;
 import static com.checkin.app.checkin.Session.ActiveSession.Chat.SessionChatModel.CHAT_STATUS_TYPE.DONE;
 import static com.checkin.app.checkin.Session.ActiveSession.Chat.SessionChatModel.CHAT_STATUS_TYPE.IN_PROGRESS;
 import static com.checkin.app.checkin.Session.ActiveSession.Chat.SessionChatModel.CHAT_STATUS_TYPE.OPEN;
@@ -45,6 +46,7 @@ public class ManagerSessionViewModel extends BaseViewModel {
     @Override
     public void updateResults() {
         fetchSessionOrders();
+        fetchSessionEvents();
     }
 
     public void fetchSessionBriefData(long sessionId) {
@@ -65,7 +67,17 @@ public class ManagerSessionViewModel extends BaseViewModel {
     }
 
     public LiveData<Resource<List<WaiterEventModel>>> getSessionEventData() {
-        return mEventData;
+        return Transformations.map(mEventData, input -> {
+            if (input == null || input.data == null)
+                return input;
+            List<WaiterEventModel> list = new ArrayList<>();
+            if (input.status == Resource.Status.SUCCESS)
+                for (WaiterEventModel data : input.data) {
+                    if(data.getType() != EVENT_MENU_ORDER_ITEM)
+                        list.add(data);
+                }
+            return Resource.cloneResource(input, list);
+        });
     }
 
     public LiveData<Integer> getCountNewOrders() {

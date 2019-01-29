@@ -25,8 +25,8 @@
             android:id="@+id/im_add_review_delete_image"
             android:layout_width="15dp"
             android:layout_height="15dp"
-            android:src="@drawable/noun_cancel_653848"
             android:layout_gravity="end|top"
+            android:src="@drawable/ic_cancel"
             android:layout_margin="2dp"/>
 
 
