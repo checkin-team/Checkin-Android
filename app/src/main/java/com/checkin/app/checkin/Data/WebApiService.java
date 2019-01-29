@@ -5,6 +5,7 @@ import com.checkin.app.checkin.Menu.Model.MenuModel;
 import com.checkin.app.checkin.Menu.Model.OrderedItemModel;
 import com.checkin.app.checkin.Misc.GenericDetailModel;
 import com.checkin.app.checkin.Notifications.NotificationModel;
+import com.checkin.app.checkin.RestaurantImage.ImageGalleryModel;
 import com.checkin.app.checkin.Review.ShopReview.ShopReviewModel;
 import com.checkin.app.checkin.Search.SearchResultPeopleModel;
 import com.checkin.app.checkin.Search.SearchResultShopModel;
@@ -274,4 +275,7 @@ public interface WebApiService {
     Call<List<SearchResultShopModel>> getSearchShopResults(
             @Query("search") String query, @Query("has_nonveg") Boolean hasNonVeg, @Query("has_alcohol") Boolean hasAlcohol
     );
+
+    @GET("reviews/{review_id}/images/")
+    Call<ImageGalleryModel> getImageGalleryById(@Path("review_id") String reviewId);
 }
