@@ -114,4 +114,7 @@
     <!--Notification-->
     <dimen name="notif_heading_padding">10dp</dimen>
     <dimen name="notif_heading_size">18sp</dimen>
+    <dimen name="text_spacing_from_right">18dp</dimen>
+    <dimen name="width_input_large">75dp</dimen>
+    <dimen name="height_input_large">35dp</dimen>
 </resources>

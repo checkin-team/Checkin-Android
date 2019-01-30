@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/ll_invoice_discount"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:orientation="horizontal">
+
+    <View
+        android:layout_width="@dimen/spacing_small"
+        android:layout_height="@dimen/height_horizontal_line"
+        android:background="@color/white" />
+
+    <Space
+        android:layout_width="@dimen/spacing_tiny"
+        android:layout_height="match_parent" />
+
+    <View
+        android:layout_width="@dimen/spacing_small"
+        android:layout_height="@dimen/height_horizontal_line"
+        android:background="@color/white" />
+
+    <Space
+        android:layout_width="@dimen/spacing_tiny"
+        android:layout_height="match_parent" />
+
+    <View
+        android:layout_width="@dimen/spacing_small"
+        android:layout_height="@dimen/height_horizontal_line"
+        android:background="@color/white" />
+
+    <Space
+        android:layout_width="@dimen/spacing_tiny"
+        android:layout_height="match_parent" />
+
+    <View
+        android:layout_width="@dimen/spacing_small"
+        android:layout_height="@dimen/height_horizontal_line"
+        android:background="@color/white" />
+
+    <Space
+        android:layout_width="@dimen/spacing_tiny"
+        android:layout_height="match_parent" />
+
+    <View
+        android:layout_width="@dimen/spacing_small"
+        android:layout_height="@dimen/height_horizontal_line"
+        android:background="@color/white" />
+
+    <Space
+        android:layout_width="@dimen/spacing_tiny"
+        android:layout_height="match_parent" />
+
+    <View
+        android:layout_width="@dimen/spacing_small"
+        android:layout_height="@dimen/height_horizontal_line"
+        android:background="@color/white" />
+
+    <Space
+        android:layout_width="@dimen/spacing_tiny"
+        android:layout_height="match_parent" />
+
+    <View
+        android:layout_width="@dimen/spacing_small"
+        android:layout_height="@dimen/height_horizontal_line"
+        android:background="@color/white" />
+
+</LinearLayout>

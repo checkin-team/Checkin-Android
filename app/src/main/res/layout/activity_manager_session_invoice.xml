@@ -1,0 +1,199 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:background="@color/white">
+
+    <TextView
+        android:id="@+id/title_bill_details"
+        style="@style/GreyTextStyle"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/white_three"
+        android:padding="@dimen/spacing_extra_small"
+        android:text="@string/title_bill_details" />
+
+    <ScrollView
+        android:layout_below="@+id/title_bill_details"
+        android:layout_above="@+id/payment_mode_container"
+        android:id="@+id/menu_price_container"
+        android:fillViewport="true"
+        android:scrollbars="none"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <android.support.v7.widget.RecyclerView
+                android:id="@+id/rv_invoice_ordered_items"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:nestedScrollingEnabled="false"
+                android:paddingStart="@dimen/spacing_normal"
+                android:paddingTop="@dimen/spacing_extra_small"
+                android:paddingEnd="@dimen/spacing_normal"
+                android:paddingBottom="@dimen/spacing_extra_small" />
+
+            <LinearLayout
+                android:paddingStart="@dimen/spacing_normal"
+                android:paddingTop="@dimen/spacing_small"
+                android:paddingEnd="@dimen/spacing_normal"
+                android:paddingBottom="@dimen/spacing_small"
+                android:background="@color/white_three"
+                android:orientation="vertical"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <LinearLayout
+                    android:orientation="horizontal"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <TextView
+                        android:id="@+id/tv_invoice_discount_title"
+                        android:text="Discount"
+                        style="@style/GreyHeadingStyle"
+                        android:layout_width="0dp"
+                        android:layout_weight="1"
+                        android:layout_height="wrap_content" />
+
+                    <EditText
+                        android:layout_marginEnd="@dimen/spacing_tiny"
+                        android:id="@+id/ed_invoice_discount"
+                        android:background="@drawable/bordered_text_light_grey"
+                        android:hint="20.00"
+                        style="@style/GreyTextStyle"
+                        android:inputType="numberDecimal"
+                        android:paddingTop="@dimen/spacing_extra_small"
+                        android:enabled="false"
+                        android:paddingBottom="@dimen/spacing_extra_small"
+                        android:paddingStart="@dimen/spacing_normal"
+                        android:paddingEnd="@dimen/spacing_normal"
+                        android:textSize="@dimen/font_heading"
+                        android:layout_width="@dimen/width_input_large"
+                        android:layout_height="@dimen/height_input_large"
+                        android:importantForAutofill="no"
+                        tools:ignore="LabelFor,UnusedAttribute" />
+
+                    <TextView
+                        android:id="@+id/tv_invoice_percent"
+                        android:text="%"
+                        android:textStyle="bold"
+                        style="@style/GreyHeadingStyle"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content" />
+
+                </LinearLayout>
+
+                <include
+                    android:layout_gravity="end"
+                    layout="@layout/incl_dotted_view"
+                    android:layout_marginTop="@dimen/spacing_extra_small"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"/>
+
+                <TextView
+                    android:id="@+id/tv_invoice_change"
+                    android:layout_marginTop="@dimen/spacing_tiny"
+                    android:layout_marginEnd="@dimen/text_spacing_from_right"
+                    android:layout_gravity="end"
+                    android:text="Change"
+                    style="@style/RedSmallTextStyle"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
+
+                <TextView
+                    android:id="@+id/tv_invoice_save_change"
+                    android:layout_marginTop="@dimen/spacing_normal"
+                    android:layout_marginBottom="@dimen/spacing_small"
+                    android:background="@drawable/text_card_rouge"
+                    android:layout_gravity="end"
+                    android:gravity="center"
+                    android:textSize="@dimen/font_extra_small"
+                    android:paddingStart="@dimen/spacing_small"
+                    android:paddingEnd="@dimen/spacing_small"
+                    android:paddingTop="@dimen/spacing_extra_small"
+                    android:paddingBottom="@dimen/spacing_extra_small"
+                    android:text="Save Changes"
+                    android:visibility="gone"
+                    android:textColor="@color/white"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
+
+            </LinearLayout>
+
+            <include layout="@layout/incl_session_invoice" />
+
+            <include layout="@layout/incl_horizontal_line" />
+
+            <FrameLayout
+                android:id="@+id/container_invoice_total"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/spacing_extra_small"
+                android:paddingStart="@dimen/spacing_normal"
+                android:paddingEnd="@dimen/spacing_normal">
+
+                <TextView
+                    style="@style/GreyTextStyle"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical|start"
+                    android:text="Total" />
+
+                <TextView
+                    android:id="@+id/tv_invoice_total"
+                    style="@style/GreyTextStyle"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical|end"
+                    tools:text="54" />
+            </FrameLayout>
+
+        </LinearLayout>
+
+    </ScrollView>
+
+    <LinearLayout
+        android:id="@+id/payment_mode_container"
+        android:layout_alignParentBottom="true"
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/spacing_normal"
+        android:background="@drawable/rounded_rectangle_light_grey"
+        android:padding="@dimen/spacing_small">
+
+        <TextView
+            android:layout_marginStart="@dimen/spacing_large"
+            style="@style/GreyTextStyle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:drawableStart="@drawable/ic_cash"
+            android:drawablePadding="@dimen/spacing_small"
+            android:text="Via Cash" />
+
+        <Space
+            android:layout_weight="1"
+            android:layout_width="0dp"
+            android:layout_height="match_parent" />
+
+        <TextView
+            android:id="@+id/btn_invoice_request_checkout"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            style="@style/WhiteTextStyle"
+            android:paddingStart="@dimen/spacing_large"
+            android:paddingEnd="@dimen/spacing_large"
+            android:paddingTop="@dimen/spacing_extra_small"
+            android:paddingBottom="@dimen/spacing_extra_small"
+            android:background="@color/colorAccent"
+            android:text="Collect Cash" />
+
+    </LinearLayout>
+
+</RelativeLayout>
