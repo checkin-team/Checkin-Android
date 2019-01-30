@@ -2,11 +2,14 @@ package com.checkin.app.checkin.Session.ActiveSession;
 
 import android.annotation.SuppressLint;
 import android.arch.lifecycle.ViewModelProviders;
+import android.content.BroadcastReceiver;
+import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.annotation.Nullable;
+import android.support.v4.content.LocalBroadcastManager;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -16,8 +19,10 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.Switch;
 import android.widget.TextView;
-import android.widget.Toast;
 
+import com.checkin.app.checkin.Data.Message.MessageModel;
+import com.checkin.app.checkin.Data.Message.MessageModel.MESSAGE_TYPE;
+import com.checkin.app.checkin.Data.Message.MessageUtils;
 import com.checkin.app.checkin.Menu.SessionMenuActivity;
 import com.checkin.app.checkin.R;
 import com.checkin.app.checkin.Search.SearchActivity;
@@ -30,10 +35,13 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 
+import static com.checkin.app.checkin.Data.Message.Constants.KEY_DATA;
+
 public class ActiveSessionActivity extends AppCompatActivity implements ActiveSessionMemberAdapter.SessionMemberInteraction, PostCheckinFragment.PostCheckinInteraction {
     private static final String TAG = ActiveSessionActivity.class.getSimpleName();
 
     private static final int RC_SEARCH_MEMBER = 201;
+    private static LocalBroadcastManager sBroadcastManager;
 
     @BindView(R.id.rv_session_members)
     RecyclerView rvMembers;
@@ -52,17 +60,43 @@ public class ActiveSessionActivity extends AppCompatActivity implements ActiveSe
     private ActiveSessionMemberAdapter mSessionMembersAdapter;
     private PostCheckinFragment mPostCheckinFragment;
 
+    private final BroadcastReceiver mReceiver = new BroadcastReceiver() {
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            MessageModel message;
+            try {
+                message = ((MessageModel) intent.getSerializableExtra(KEY_DATA));
+                if (message == null)
+                    return;
+            } catch (ClassCastException e) {
+                Log.e(TAG, "Invalid message object received.");
+                e.printStackTrace();
+                return;
+            }
+            switch (message.getType()) {
+                case SESSION_BILL_CHANGE:
+                    ActiveSessionActivity.this.updateBill(message.getRawData().get("bill").asText());
+                case SESSION_HOST_ASSIGNED:
+                    ActiveSessionActivity.this.updateHost();
+            }
+        }
+    };
+
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_active_session);
         ButterKnife.bind(this);
+        sBroadcastManager = LocalBroadcastManager.getInstance(this);
 
         mViewModel = ViewModelProviders.of(this).get(ActiveSessionViewModel.class);
 
         setupUi();
         setupInitialState();
+        setupObservers();
+    }
 
+    private void setupObservers() {
         mViewModel.getSessionData().observe(this, resource -> {
             if (resource == null) return;
             ActiveSessionModel data = resource.data;
@@ -91,7 +125,7 @@ public class ActiveSessionActivity extends AppCompatActivity implements ActiveSe
                 return;
             switch (resource.status) {
                 case SUCCESS: {
-                    Toast.makeText(this, "Done!", Toast.LENGTH_SHORT).show();
+                    Utils.toast(this, "Done!");
                     updateState(mViewModel.getShopPk(), mViewModel.getSessionPk());
                     break;
                 }
@@ -132,6 +166,14 @@ public class ActiveSessionActivity extends AppCompatActivity implements ActiveSe
         } else {
             tvWaiterName.setText(R.string.waiter_unassigned);
         }
+    }
+
+    private void updateBill(String bill) {
+        mViewModel.updateBill(bill);
+    }
+
+    private void updateHost() {
+
     }
 
     private void updateState(long shopPk, long sessionPk) {
@@ -219,5 +261,18 @@ public class ActiveSessionActivity extends AppCompatActivity implements ActiveSe
     @Override
     public void OnProceedClicked(boolean isPublic) {
         mViewModel.sendSelfPresence(isPublic);
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        MessageUtils.registerLocalReceiver(
+                this, mReceiver, MESSAGE_TYPE.SESSION_BILL_CHANGE, MESSAGE_TYPE.SESSION_HOST_ASSIGNED, MESSAGE_TYPE.SESSION_MEMBER_ADDED, MESSAGE_TYPE.SESSION_END);
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        sBroadcastManager.unregisterReceiver(mReceiver);
     }
 }

@@ -13,10 +13,6 @@ import android.widget.Toast;
 
 import com.checkin.app.checkin.R;
 
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
-
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
@@ -26,7 +22,7 @@ public class NotificationActivity extends AppCompatActivity {
     @BindView(R.id.notifRV) RecyclerView notifRV;
     @BindView(R.id.back) ImageView back;
 
-    private NotifViewModel notifViewModel;
+//    private NotifViewModel notifViewModel;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -150,16 +146,16 @@ public class NotificationActivity extends AppCompatActivity {
 //            notifyDataSetChanged();
 //        }
 //    }
-
-    private List<NotificationModel> getNotifs(){
-        List<NotificationModel> notifs = new ArrayList<>();
-        for(int i = 0; i < 20; i++){
-            if(i%5==0)
-                notifs.add(new NotificationModel("Message " + i,new Date(),"profile url","action url",false ,i));
-            else notifs.add(new NotificationModel("Message " + i,new Date(),"profile url","action url",true ,i));
-        }
-        return notifs;
-    }
+//
+//    private List<NotificationModel> getNotifs(){
+//        List<NotificationModel> notifs = new ArrayList<>();
+//        for(int i = 0; i < 20; i++){
+//            if(i%5==0)
+//                notifs.add(new NotificationModel("Message " + i,new Date(),"profile url","action url",false ,i));
+//            else notifs.add(new NotificationModel("Message " + i,new Date(),"profile url","action url",true ,i));
+//        }
+//        return notifs;
+//    }
 
     private BroadcastReceiver mHandler=new BroadcastReceiver() {
         @Override

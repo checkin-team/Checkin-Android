@@ -11,8 +11,8 @@ import android.support.v7.app.ActionBarDrawerToggle;
 
 import com.checkin.app.checkin.Account.AccountModel.ACCOUNT_TYPE;
 import com.checkin.app.checkin.Account.BaseAccountActivity;
-import com.checkin.app.checkin.Profile.ShopProfile.FragmentShopInsights;
 import com.checkin.app.checkin.R;
+import com.checkin.app.checkin.Shop.RecentCheckin.RecentCheckinFragment;
 import com.checkin.app.checkin.Utility.DynamicSwipableViewPager;
 
 import butterknife.BindView;
@@ -96,7 +96,7 @@ public class ShopActivity extends BaseAccountActivity {
                 case 1:
                 case 2:
             }
-            return FragmentShopInsights.newInstance("1", "2");
+            return RecentCheckinFragment.newInstance(mViewModel.getShopPk());
         }
 
         @Override

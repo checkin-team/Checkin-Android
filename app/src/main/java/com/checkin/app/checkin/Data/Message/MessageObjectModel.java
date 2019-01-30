@@ -2,7 +2,9 @@ package com.checkin.app.checkin.Data.Message;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 
-public class MessageObjectModel {
+import java.io.Serializable;
+
+public class MessageObjectModel implements Serializable {
     private MESSAGE_OBJECT_TYPE type;
 
     @JsonProperty("text")
@@ -16,7 +18,7 @@ public class MessageObjectModel {
 
     public enum MESSAGE_OBJECT_TYPE {
         NONE(0), USER(1), SESSION(2), REVIEW(3), FRIENDSHIP_REQUEST(4),
-        RESTAURANT(5);
+        RESTAURANT(5), ORDER_ITEM(6), SESSION_EVENT(7);
 
         int id;
         MESSAGE_OBJECT_TYPE(int id) {

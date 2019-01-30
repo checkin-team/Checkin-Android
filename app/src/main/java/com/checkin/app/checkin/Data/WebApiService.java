@@ -4,7 +4,7 @@ import com.checkin.app.checkin.Account.AccountModel;
 import com.checkin.app.checkin.Menu.Model.MenuModel;
 import com.checkin.app.checkin.Menu.Model.OrderedItemModel;
 import com.checkin.app.checkin.Misc.GenericDetailModel;
-import com.checkin.app.checkin.Notifications.NotificationModel;
+import com.checkin.app.checkin.Notifications.NotificationItemModel;
 import com.checkin.app.checkin.Review.ShopReview.ShopReviewModel;
 import com.checkin.app.checkin.Search.SearchResultPeopleModel;
 import com.checkin.app.checkin.Search.SearchResultShopModel;
@@ -261,7 +261,7 @@ public interface WebApiService {
     // endregion
 
     @GET("notification")
-    Call<List<NotificationModel>> getNotif(@Query("last_notif_id") int lastNotifId);
+    Call<List<NotificationItemModel>> getNotif(@Query("last_notif_id") int lastNotifId);
 
     @GET("accounts/self/")
     Call<List<AccountModel>> getSelfAccounts();

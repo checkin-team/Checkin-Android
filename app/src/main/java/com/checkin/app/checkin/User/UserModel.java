@@ -40,10 +40,9 @@ public class UserModel {
     @JsonProperty("phone_no")
     private String phoneNo;
 
-    @JsonProperty("friend_count") private long followers;
-    private long checkins;
-    @JsonProperty("no_reviews") private long reviews;
-    @JsonProperty("is_public") private boolean isPublic;
+    @JsonProperty("count_followers") private long countFollowers;
+    @JsonProperty("count_checkins") private long countCheckins;
+    @JsonProperty("count_reviews") private long countReviews;
 
     @Nullable
     @JsonProperty("friendship_request")
@@ -106,16 +105,16 @@ public class UserModel {
         return bio;
     }
 
-    public long getFollowers() {
-        return followers;
+    public long getCountFollowers() {
+        return countFollowers;
     }
 
-    public long getCheckins() {
-        return checkins;
+    public long getCountCheckins() {
+        return countCheckins;
     }
 
-    public long getReviews() {
-        return reviews;
+    public long getCountReviews() {
+        return countReviews;
     }
 
     public String getPhoneNumber() {
@@ -127,15 +126,15 @@ public class UserModel {
     }
 
     public String formatReviews() {
-        return Utils.formatCount(reviews);
+        return Utils.formatCount(countReviews);
     }
 
     public String formatFollowers() {
-        return Utils.formatCount(followers);
+        return Utils.formatCount(countFollowers);
     }
 
     public String formatCheckins() {
-        return Utils.formatCount(checkins);
+        return Utils.formatCount(countCheckins);
     }
 
     public String getAddress() {
@@ -152,10 +151,6 @@ public class UserModel {
 
     void setId(long id) {
         this.id = id;
-    }
-
-    public boolean isPublic() {
-        return isPublic;
     }
 
     @Nullable

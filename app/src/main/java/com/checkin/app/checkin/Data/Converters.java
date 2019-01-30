@@ -4,8 +4,6 @@ import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.util.Log;
 
-import com.checkin.app.checkin.Notifications.NotificationModel.ACTION;
-import com.checkin.app.checkin.User.UserModel;
 import com.checkin.app.checkin.User.UserModel.GENDER;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.core.type.TypeReference;
@@ -56,20 +54,6 @@ public class Converters {
                 e.printStackTrace();
             }
             return "";
-        }
-    }
-
-    public static class ActionConverter implements PropertyConverter<ACTION, Integer> {
-        @Override
-        public ACTION convertToEntityProperty(Integer databaseValue) {
-            if (databaseValue == null)
-                return null;
-            return ACTION.getById(databaseValue, ACTION.NULL);
-        }
-
-        @Override
-        public Integer convertToDatabaseValue(ACTION entityProperty) {
-            return entityProperty == null ? null : entityProperty.id;
         }
     }
 

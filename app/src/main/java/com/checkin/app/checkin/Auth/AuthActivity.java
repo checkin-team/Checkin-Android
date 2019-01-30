@@ -20,7 +20,6 @@ import android.widget.ProgressBar;
 import android.widget.Toast;
 
 import com.checkin.app.checkin.Data.Resource;
-import com.checkin.app.checkin.Data.TestDb;
 import com.checkin.app.checkin.Home.HomeActivity;
 import com.checkin.app.checkin.R;
 import com.checkin.app.checkin.User.UserModel.GENDER;
@@ -247,7 +246,6 @@ public class AuthActivity extends AppCompatActivity implements AuthFragmentInter
 
     private void successAuth(@NonNull ObjectNode data) {
         new Handler().post(() -> {
-            TestDb.populateWithTestData(getApplicationContext());
 
             if (!data.has("token")) {
                 Log.e(TAG, "'token' field missing from the response!");

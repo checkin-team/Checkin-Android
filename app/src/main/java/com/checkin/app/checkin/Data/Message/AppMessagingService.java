@@ -1,11 +1,8 @@
 package com.checkin.app.checkin.Data.Message;
 
-import android.app.Notification;
 import android.app.NotificationManager;
-import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
-import android.support.v4.content.LocalBroadcastManager;
 import android.util.Log;
 
 import com.checkin.app.checkin.Auth.DeviceTokenService;
@@ -18,15 +15,13 @@ import java.util.Map;
 
 public class AppMessagingService extends FirebaseMessagingService {
     private static final String TAG = AppMessagingService.class.getSimpleName();
-    private LocalBroadcastManager mBroadcastManager;
     private NotificationManager mNotificationManager;
 
     @Override
     public void onCreate() {
         super.onCreate();
-        mBroadcastManager = LocalBroadcastManager.getInstance(this);
         mNotificationManager = ((NotificationManager) this.getSystemService(Context.NOTIFICATION_SERVICE));
-        Utils.createDefaultChannels(mNotificationManager);
+        MessageUtils.createDefaultChannels(mNotificationManager);
     }
 
     @Override
@@ -34,9 +29,8 @@ public class AppMessagingService extends FirebaseMessagingService {
         super.onMessageReceived(remoteMessage);
         Map<String, String> params = remoteMessage.getData();
 
-        if (params == null) {
+        if (params == null)
             return;
-        }
         MessageModel data;
         try {
             String json = Converters.objectMapper.writeValueAsString(params);
@@ -47,22 +41,14 @@ public class AppMessagingService extends FirebaseMessagingService {
             return;
         }
 
-        boolean shouldShowNotification = data.shouldShowNotification();
-
-        Intent intent = new Intent(this, data.getTargetActivity());
-        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
-
+        boolean shouldShowNotification = false;
         if (data.shouldTryUpdateUi()) {
-            shouldShowNotification = shouldShowNotification && !mBroadcastManager.sendBroadcast(intent);
+            shouldShowNotification = !MessageUtils.sendLocalBroadcast(this, data) && data.shouldShowNotification();
         }
 
         if (shouldShowNotification) {
-            int notificationId = Utils.getNotificationId();
-            PendingIntent pendingIntent = PendingIntent.getActivity(this, 0, intent, PendingIntent.FLAG_UPDATE_CURRENT);
-            Notification notification = data.getNotificationBuilder(this, notificationId)
-                    .setContentIntent(pendingIntent)
-                    .build();
-            mNotificationManager.notify(notificationId, notification);
+            int notificationId = MessageUtils.getNotificationId();
+            data.showNotification(this, mNotificationManager, notificationId);
         }
     }
 

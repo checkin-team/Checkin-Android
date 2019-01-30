@@ -80,4 +80,12 @@ public class ActiveSessionViewModel extends BaseViewModel {
     public long getSessionPk() {
         return mSessionPk;
     }
+
+    public void updateBill(String bill) {
+        Resource<ActiveSessionModel> resource = mSessionData.getValue();
+        if (resource != null && resource.status == Resource.Status.SUCCESS && resource.data != null) {
+            resource.data.setBill(bill);
+        }
+        mSessionData.setValue(resource);
+    }
 }

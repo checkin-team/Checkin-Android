@@ -73,4 +73,8 @@ public class ActiveSessionModel {
     public int getShopPk() {
         return Integer.valueOf(restaurant.getPk());
     }
+
+    public void setBill(String bill) {
+        this.bill = bill;
+    }
 }

@@ -125,7 +125,7 @@ public class WaiterTableDetailModel {
     }
 
     @JsonProperty("created")
-    public String getCreated() {
+    public String getModified() {
         return created;
     }
 
