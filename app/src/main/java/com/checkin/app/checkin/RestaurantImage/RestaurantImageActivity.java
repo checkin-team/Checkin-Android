@@ -9,6 +9,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.checkin.app.checkin.Data.Resource;
@@ -39,6 +40,8 @@ public class RestaurantImageActivity extends AppCompatActivity {
     View vBottomLine;
     @BindView(R.id.tv_item_name)
     TextView tvItemName;
+    @BindView(R.id.pb_image_progress)
+    ProgressBar pbImageProgress;
 
     private ImageGalleryPagerAdapter mCoverPagerAdapter;
 
@@ -57,7 +60,7 @@ public class RestaurantImageActivity extends AppCompatActivity {
 
         ImageGalleryViewModel mViewModel = ViewModelProviders.of(this).get(ImageGalleryViewModel.class);
 
-        mCoverPagerAdapter = new ImageGalleryPagerAdapter(getApplicationContext());
+        mCoverPagerAdapter = new ImageGalleryPagerAdapter(getApplicationContext(),pbImageProgress);
         vpImagePagerCover.setAdapter(mCoverPagerAdapter);
 
         indicatorBottomCover.setViewPager(vpImagePagerCover);

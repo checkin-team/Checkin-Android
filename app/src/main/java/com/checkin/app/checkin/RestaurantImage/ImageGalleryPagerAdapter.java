@@ -1,7 +1,9 @@
 package com.checkin.app.checkin.RestaurantImage;
 
 import android.content.Context;
+import android.graphics.drawable.Drawable;
 import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import android.support.v4.view.PagerAdapter;
 import android.view.Gravity;
 import android.view.LayoutInflater;
@@ -9,7 +11,12 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.ProgressBar;
 
+import com.bumptech.glide.load.DataSource;
+import com.bumptech.glide.load.engine.GlideException;
+import com.bumptech.glide.request.RequestListener;
+import com.bumptech.glide.request.target.Target;
 import com.checkin.app.checkin.R;
 import com.checkin.app.checkin.Utility.GlideApp;
 
@@ -21,11 +28,13 @@ public class ImageGalleryPagerAdapter extends PagerAdapter {
     private List<String> mData;
     private List<ImageView> mViews;
     private LayoutInflater inflater;
+    private ProgressBar progressBar;
 
-    public ImageGalleryPagerAdapter(Context context,String... data) {
+    public ImageGalleryPagerAdapter(Context context, ProgressBar progressBar, String... data) {
         mData = Arrays.asList(data);
         mViews = new ArrayList<>();
         inflater = LayoutInflater.from(context);
+        this.progressBar = progressBar;
     }
 
     public void setData(String... data) {
@@ -46,7 +55,21 @@ public class ImageGalleryPagerAdapter extends PagerAdapter {
         final ImageView ivGallery = (ImageView) imageLayout.findViewById(R.id.iv_gallery);
         String uri = mData.get(position);
         if (uri != null) {
-            GlideApp.with(container).load(uri).into(ivGallery);
+            GlideApp.with(container).load(uri)
+                    .listener(new RequestListener<Drawable>() {
+                        @Override
+                        public boolean onLoadFailed(@Nullable GlideException e, Object model, Target<Drawable> target, boolean isFirstResource) {
+                            progressBar.setVisibility(View.GONE);
+                            return false;
+                        }
+
+                        @Override
+                        public boolean onResourceReady(Drawable resource, Object model, Target<Drawable> target, DataSource dataSource, boolean isFirstResource) {
+                            progressBar.setVisibility(View.GONE);
+                            return false;
+                        }
+                    })
+                    .into(ivGallery);
         }
         container.addView(imageLayout);
         return imageLayout;
