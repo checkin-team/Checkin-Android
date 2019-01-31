@@ -1,4 +1,4 @@
-package com.checkin.app.checkin.RestaurantImage;
+package com.checkin.app.checkin.ImageGallery;
 
 import com.checkin.app.checkin.Misc.BriefModel;
 import com.fasterxml.jackson.annotation.JsonInclude;
@@ -8,13 +8,16 @@ import java.util.List;
 
 @JsonInclude(JsonInclude.Include.NON_NULL)
 public class ImageGalleryModel {
-
     @JsonProperty("title")
     private String title;
+
     @JsonProperty("uploader")
     private BriefModel uploader;
+
     @JsonProperty("images")
     private List<String> images = null;
+
+    public ImageGalleryModel() {}
 
     public void setTitle(String title) {
         this.title = title;

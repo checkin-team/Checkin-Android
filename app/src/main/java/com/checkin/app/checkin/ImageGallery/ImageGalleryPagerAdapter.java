@@ -1,16 +1,14 @@
-package com.checkin.app.checkin.RestaurantImage;
+package com.checkin.app.checkin.ImageGallery;
 
 import android.content.Context;
 import android.graphics.drawable.Drawable;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.view.PagerAdapter;
-import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 
 import com.bumptech.glide.load.DataSource;
@@ -42,6 +40,11 @@ public class ImageGalleryPagerAdapter extends PagerAdapter {
         notifyDataSetChanged();
     }
 
+    public void setData(List<String> data) {
+        mData = data;
+        notifyDataSetChanged();
+    }
+
     @Override
     public int getCount() {
         return mData.size();
@@ -50,9 +53,9 @@ public class ImageGalleryPagerAdapter extends PagerAdapter {
     @NonNull
     @Override
     public Object instantiateItem(@NonNull ViewGroup container, int position) {
-        View imageLayout = inflater.inflate(R.layout.child_image_gallery, container, false);
+        View imageLayout = inflater.inflate(R.layout.item_image_gallery, container, false);
         assert imageLayout != null;
-        final ImageView ivGallery = (ImageView) imageLayout.findViewById(R.id.iv_gallery);
+        final ImageView ivGallery = imageLayout.findViewById(R.id.iv_gallery_image);
         String uri = mData.get(position);
         if (uri != null) {
             GlideApp.with(container).load(uri)

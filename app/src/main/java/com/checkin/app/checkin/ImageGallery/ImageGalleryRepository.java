@@ -1,4 +1,4 @@
-package com.checkin.app.checkin.RestaurantImage;
+package com.checkin.app.checkin.ImageGallery;
 
 import android.app.Application;
 import android.arch.lifecycle.LiveData;
@@ -13,15 +13,14 @@ import com.checkin.app.checkin.Data.RetrofitLiveData;
 import com.checkin.app.checkin.Data.WebApiService;
 
 public class ImageGalleryRepository {
-
-    public static ImageGalleryRepository INSTANCE = null;
+    private static ImageGalleryRepository INSTANCE;
     private WebApiService mWebApiService;
 
     private ImageGalleryRepository(Context context) {
         mWebApiService = ApiClient.getApiService(context);
     }
 
-    LiveData<Resource<ImageGalleryModel>> getImageGalleryById(String reviewId){
+    LiveData<Resource<ImageGalleryModel>> getReviewImages(long reviewId){
         return new NetworkBoundResource<ImageGalleryModel,ImageGalleryModel>(){
 
             @Override
@@ -32,7 +31,7 @@ public class ImageGalleryRepository {
             @NonNull
             @Override
             protected LiveData<ApiResponse<ImageGalleryModel>> createCall() {
-                return new RetrofitLiveData<>(mWebApiService.getImageGalleryById(reviewId));
+                return new RetrofitLiveData<>(mWebApiService.getReviewImages(reviewId));
             }
 
             @Override
