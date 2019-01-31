@@ -119,11 +119,12 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignParentStart="true"
-                android:text="@string/label_orders" />
+                android:text="@string/label_orders"
+                android:textSize="@dimen/font_large"/>
 
             <ImageView
                 android:id="@+id/im_ms_bottom_swipe_up"
-                android:layout_width="@dimen/size_small_button"
+                android:layout_width="@dimen/size_extra_small_button"
                 android:layout_height="0dp"
                 android:layout_alignTop="@id/title_orders_label"
                 android:layout_alignBottom="@+id/title_orders_label"

@@ -31,6 +31,7 @@ import com.checkin.app.checkin.Menu.SessionMenuActivity;
 import com.checkin.app.checkin.Misc.QRScannerActivity;
 import com.checkin.app.checkin.Notifications.NotificationActivity;
 import com.checkin.app.checkin.R;
+import com.checkin.app.checkin.Review.NewReview.NewReviewActivity;
 import com.checkin.app.checkin.Search.SearchActivity;
 import com.checkin.app.checkin.Session.ActiveSession.ActiveSessionActivity;
 import com.checkin.app.checkin.Shop.ShopJoin.BusinessFeaturesActivity;
@@ -510,6 +511,9 @@ public class HomeActivity extends BaseAccountActivity
 
     @OnClick(R.id.action_delivery)
     public void delivery(View v) {
+        startActivity(new Intent(this, NewReviewActivity.class)
+                .putExtra(NewReviewActivity.KEY_SESSION_PK,"3")
+                .putExtra(NewReviewActivity.KEY_RESTAURANT_PK,"1"));
     }
 
     @Override

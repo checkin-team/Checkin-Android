@@ -5,6 +5,8 @@ import com.checkin.app.checkin.Menu.Model.MenuModel;
 import com.checkin.app.checkin.Menu.Model.OrderedItemModel;
 import com.checkin.app.checkin.Misc.GenericDetailModel;
 import com.checkin.app.checkin.Notifications.NotificationItemModel;
+import com.checkin.app.checkin.Review.NewReview.NewReviewModel;
+import com.checkin.app.checkin.Review.NewReview.RestaurantBriefModel;
 import com.checkin.app.checkin.Review.ShopReview.ShopReviewModel;
 import com.checkin.app.checkin.Search.SearchResultPeopleModel;
 import com.checkin.app.checkin.Search.SearchResultShopModel;
@@ -34,6 +36,7 @@ import com.fasterxml.jackson.databind.node.ObjectNode;
 import java.util.List;
 
 import okhttp3.MultipartBody;
+import okhttp3.RequestBody;
 import retrofit2.Call;
 import retrofit2.http.Body;
 import retrofit2.http.DELETE;
@@ -209,6 +212,9 @@ public interface WebApiService {
     @GET("sessions/{session_id}/orders/")
     Call<List<SessionOrderedItemModel>> getSessionOrders(@Path("session_id") long sessionId);
 
+    @GET("sessions/{session_id}/manager/events")
+    Call<List<WaiterEventModel>> getManagerSessionEvents(@Path("session_id") long sessionId);
+
     // endregion
 
     // region WAITER
@@ -257,6 +263,19 @@ public interface WebApiService {
 
     @POST("reviews/{review_id}/react/")
     Call<ObjectNode> postReviewReact(@Path("review_id") long reviewId);
+
+    @POST("reviews/sessions/{session_id}/")
+    Call<ObjectNode> postCustomerReview(@Path("session_id") String sessionId, @Body NewReviewModel review);
+
+    @Multipart
+    @POST("images/reviews/upload/")
+    Call<GenericDetailModel> postCustomerReviewPic(@Part MultipartBody.Part pic, @Part("use_case") RequestBody data);
+
+    @DELETE("images/{image_id}/")
+    Call<GenericDetailModel> deleteImage(@Path("image_id") String imageId);
+
+    @GET("restaurants/{restaurant_id}/brief/")
+    Call<RestaurantBriefModel> getRestaurantBrief(@Path("restaurant_id") String restaurantId);
 
     // endregion
 

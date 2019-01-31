@@ -50,7 +50,7 @@ public class UserProfileActivity extends BaseActivity {
 
     private UserViewModel mViewModel;
     private MaterialStyledDialog mMessageDialog;
-//    float currY,  maxPercentDiff = 0.1f;
+//    float currY,  maxPercentDiff = 0.1f;add
 //    float origAbovePercent = .67f, currAbovePercent = .67f;
 
     protected void onCreate(@Nullable Bundle savedInstanceState) {

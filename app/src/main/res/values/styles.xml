@@ -363,7 +363,6 @@
         <item name="android:textSize">@dimen/font_tiny</item>
     </style>
 
-
     <style name="RedHeaderBar">
         <item name="android:background">@color/primary_red</item>
     </style>
@@ -382,5 +381,9 @@
         <item name="mrb_pinRadius">8dp</item>
         <item name="mrb_pinTextColor">@color/primary_red</item>
         <item name="mrb_rangeBarPaddingBottom">@dimen/padding_rangebar_bottom</item>
+    </style>
+
+    <style name="ShopRatingStyle" parent="ButtonNeutralAction">
+        <item name="android:drawableEnd">@drawable/ic_star_grey</item>
     </style>
 </resources>

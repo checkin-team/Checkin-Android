@@ -172,6 +172,22 @@
     <string name="label_new">New</string>
     <string name="confirm">Confirm</string>
     <string name="reject">Reject</string>
+    <string name="label_done">Done</string>
     <string name="shop_manager_table_statics_title_description">Understand ongoing the food trend of your customer. And get an insight into sales for the day.</string>
+    <string name="title_rated">Rated</string>
+    <string name="title_follow">Follow</string>
+    <string name="title_uploaded_by">Uploaded by</string>
+
+    <!--Review-->
+    <string name="label_review_write">Write a review</string>
+    <string name="label_share_your_experience">Share your experience</string>
+    <string name="title_ratings">Ratings</string>
+    <string name="title_food_quality">Food Quality</string>
+    <string name="title_ambience">Ambience</string>
+    <string name="title_service_hospitality">Service/Hospitality</string>
+    <string name="add_image">Add Images</string>
+    <string name="title_done">Done</string>
+    <string name="title_request">Request</string>
+    <string name="title_approve">Approve</string>
 
 </resources>

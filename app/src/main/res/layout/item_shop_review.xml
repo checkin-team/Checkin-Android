@@ -12,7 +12,8 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginBottom="@dimen/spacing_large"
-        android:layout_marginStart="@dimen/spacing_small"
+        android:paddingStart="@dimen/spacing_small"
+        android:paddingEnd="@dimen/spacing_small"
         android:orientation="horizontal"
         android:weightSum="6">
 
@@ -60,12 +61,10 @@
 
                 <Button
                     android:id="@+id/btn_sr_review_ratings"
-                    style="@style/ButtonNeutralAction"
+                    style="@style/ShopRatingStyle"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginEnd="@dimen/spacing_tiny"
-                    android:drawableEnd="@drawable/ic_star_grey"
-                    android:drawablePadding="0dp"
                     android:text="RATED  5" />
 
                 <Button
