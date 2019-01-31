@@ -14,6 +14,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.checkin.app.checkin.Data.Resource;
+import com.checkin.app.checkin.ImageGallery.ImageGalleryActivity;
 import com.checkin.app.checkin.Misc.BriefModel;
 import com.checkin.app.checkin.R;
 import com.checkin.app.checkin.User.NonPersonalProfile.UserProfileActivity;
@@ -94,7 +95,10 @@ public class ShopReviewFragment extends Fragment implements ShopReviewAdapter.Re
 
     @Override
     public void onThumbnailClick(ShopReviewModel review, int index) {
-
+        Intent intent = new Intent(getActivity(), ImageGalleryActivity.class);
+        intent.putExtra(ImageGalleryActivity.REVIEW_ID, review.getPk());
+        intent.putExtra(ImageGalleryActivity.INDEX, index);
+        startActivity(intent);
     }
 
     @Override

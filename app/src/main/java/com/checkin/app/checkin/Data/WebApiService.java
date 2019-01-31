@@ -1,6 +1,7 @@
 package com.checkin.app.checkin.Data;
 
 import com.checkin.app.checkin.Account.AccountModel;
+import com.checkin.app.checkin.ImageGallery.ImageGalleryModel;
 import com.checkin.app.checkin.Menu.Model.MenuModel;
 import com.checkin.app.checkin.Menu.Model.OrderedItemModel;
 import com.checkin.app.checkin.Misc.GenericDetailModel;
@@ -263,6 +264,9 @@ public interface WebApiService {
 
     @POST("reviews/{review_id}/react/")
     Call<ObjectNode> postReviewReact(@Path("review_id") long reviewId);
+
+    @GET("reviews/{review_id}/images/")
+    Call<ImageGalleryModel> getReviewImages(@Path("review_id") long reviewId);
 
     @POST("reviews/sessions/{session_id}/")
     Call<ObjectNode> postCustomerReview(@Path("session_id") String sessionId, @Body NewReviewModel review);

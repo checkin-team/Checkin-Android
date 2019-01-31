@@ -39,6 +39,7 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity android:name=".ImageGallery.ImageGalleryActivity"/>
         <activity
             android:name=".Auth.AuthActivity"
             android:screenOrientation="portrait"
