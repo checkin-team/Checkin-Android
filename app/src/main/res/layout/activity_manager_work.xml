@@ -5,30 +5,33 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <android.support.design.widget.CoordinatorLayout
+    <android.support.constraint.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
         <com.checkin.app.checkin.Utility.DynamicSwipableViewPager
             android:id="@+id/pager_manager_work"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent" />
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            app:layout_constraintBottom_toTopOf="@id/tabs_manager_work"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
 
         <android.support.design.widget.TabLayout
             android:id="@+id/tabs_manager_work"
-            android:layout_width="match_parent"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
+            android:background="@drawable/background_tab_bottom_shadowed"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
             app:tabGravity="fill"
             app:tabIndicatorColor="@android:color/transparent"
             app:tabIndicatorHeight="0dp"
-            app:tabMode="fixed"
-            android:background="@drawable/manager_statistics_tab__shadow"
-            android:layout_gravity="bottom"
-            android:elevation="@dimen/spacing_small"
-            app:tabSelectedTextColor="@color/colorAccent"
-            app:tabTextColor="@color/translucent_half_black" />
+            app:tabMode="fixed" />
 
-    </android.support.design.widget.CoordinatorLayout>
+    </android.support.constraint.ConstraintLayout>
 
     <include layout="@layout/incl_account_base" />
 

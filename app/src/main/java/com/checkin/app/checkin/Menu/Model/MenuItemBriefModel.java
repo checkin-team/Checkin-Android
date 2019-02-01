@@ -1,18 +1,22 @@
-package com.checkin.app.checkin.Manager;
+package com.checkin.app.checkin.Menu.Model;
 
-import com.fasterxml.jackson.annotation.JsonAutoDetect;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 @JsonInclude(value = JsonInclude.Include.NON_NULL)
-public class RestaurantItemModel {
+public class MenuItemBriefModel {
 
     @JsonProperty("pk")
     private Integer pk;
+
     @JsonProperty("name")
     private String name;
+
     @JsonProperty("is_vegetarian")
     private boolean isVegetarian;
+
+    public MenuItemBriefModel() {
+    }
 
     public void setPk(Integer pk) {
         this.pk = pk;

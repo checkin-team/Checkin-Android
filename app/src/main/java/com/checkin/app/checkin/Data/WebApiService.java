@@ -1,7 +1,7 @@
 package com.checkin.app.checkin.Data;
 
 import com.checkin.app.checkin.Account.AccountModel;
-import com.checkin.app.checkin.Manager.RestaurantStaticsModel;
+import com.checkin.app.checkin.Manager.ManagerStatsModel;
 import com.checkin.app.checkin.Menu.Model.MenuModel;
 import com.checkin.app.checkin.Menu.Model.OrderedItemModel;
 import com.checkin.app.checkin.Misc.GenericDetailModel;
@@ -234,6 +234,13 @@ public interface WebApiService {
 
     // endregion
 
+    // region MANAGER
+
+    @GET("restaurants/{restaurant_id}/stats/manager/")
+    Call<ManagerStatsModel> getRestaurantManagerStats(@Path("restaurant_id") long restaurantId);
+
+    // endregion
+
     // region MENU
     @GET("menus/restaurants/{shop_id}/available/")
     Call<MenuModel> getAvailableMenu(@Path("shop_id") String shopId);
@@ -273,7 +280,4 @@ public interface WebApiService {
 
     @GET("search/restaurant/")
     Call<List<SearchResultShopModel>> getSearchShopResults(@Query("search") String query, @Query("has_nonveg") Boolean hasNonVeg, @Query("has_alcohol") Boolean hasAlcohol);
-
-    @GET("restaurants/{restaurant_id}/stats/")
-    Call<RestaurantStaticsModel> getRestaurantStaticsById(@Path("restaurant_id") String restaurantId);
 }

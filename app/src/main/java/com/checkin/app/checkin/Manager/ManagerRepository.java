@@ -21,8 +21,8 @@ public class ManagerRepository extends BaseRepository {
         mWebService = ApiClient.getApiService(context);
     }
 
-    public LiveData<Resource<RestaurantStaticsModel>> getRestaurantStaticsById(String restaurantId){
-        return new NetworkBoundResource<RestaurantStaticsModel, RestaurantStaticsModel>() {
+    public LiveData<Resource<ManagerStatsModel>> getManagerStats(long restaurantId){
+        return new NetworkBoundResource<ManagerStatsModel, ManagerStatsModel>() {
             @Override
             protected boolean shouldUseLocalDb() {
                 return false;
@@ -30,12 +30,12 @@ public class ManagerRepository extends BaseRepository {
 
             @NonNull
             @Override
-            protected LiveData<ApiResponse<RestaurantStaticsModel>> createCall() {
-                return new RetrofitLiveData<>(mWebService.getRestaurantStaticsById(restaurantId));
+            protected LiveData<ApiResponse<ManagerStatsModel>> createCall() {
+                return new RetrofitLiveData<>(mWebService.getRestaurantManagerStats(restaurantId));
             }
 
             @Override
-            protected void saveCallResult(RestaurantStaticsModel data) {
+            protected void saveCallResult(ManagerStatsModel data) {
 
             }
         }.getAsLiveData();

@@ -1,36 +1,35 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout
-    android:padding="@dimen/spacing_small"
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content">
+    android:layout_height="wrap_content"
+    android:padding="@dimen/spacing_small">
 
     <ImageView
+        android:id="@+id/iv_manager_stats_trending_order_veg"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/spacing_tiny"
-        android:id="@+id/iv_shop_manager_table_statics_item"
         android:contentDescription="@null"
-        android:src="@drawable/ic_veg"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content" />
+        tools:src="@drawable/ic_veg" />
 
     <TextView
-        android:layout_marginStart="@dimen/spacing_normal"
-        android:id="@+id/tv_shop_manager_table_statics_item"
-        android:text="Butter Chicken"
+        android:id="@+id/tv_manager_stats_trending_order_name"
         style="@style/GreyTextStyle"
-        android:layout_toEndOf="@+id/iv_shop_manager_table_statics_item"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content" />
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/spacing_normal"
+        android:layout_toEndOf="@id/iv_manager_stats_trending_order_veg"
+        tools:text="Butter Chicken" />
 
     <TextView
-        android:layout_alignStart="@+id/tv_shop_manager_table_statics_item"
-        android:layout_marginTop="@dimen/spacing_extra_tiny"
-        android:layout_below="@+id/tv_shop_manager_table_statics_item"
-        android:id="@+id/tv_shop_manager_table_statics_item_description"
-        android:text="19.2 % revenue contribution"
+        android:id="@+id/tv_manager_stats_trending_order_revenue"
         style="@style/PinkishGreySmallTextStyle"
-        android:layout_toEndOf="@+id/iv_shop_manager_table_statics_item"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content" />
+        android:layout_height="wrap_content"
+        android:layout_below="@id/tv_manager_stats_trending_order_name"
+        android:layout_alignStart="@id/tv_manager_stats_trending_order_name"
+        android:layout_marginTop="@dimen/spacing_extra_tiny"
+        tools:text="19.2 % revenue contribution" />
 
 </RelativeLayout>

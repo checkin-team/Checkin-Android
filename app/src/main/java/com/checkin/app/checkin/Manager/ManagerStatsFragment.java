@@ -5,7 +5,6 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
-import android.support.v7.widget.CardView;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -15,34 +14,30 @@ import android.widget.TextView;
 
 import com.checkin.app.checkin.Data.Resource;
 import com.checkin.app.checkin.R;
-import com.checkin.app.checkin.Utility.Utils;
-
-import java.util.List;
-import java.util.Locale;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.Unbinder;
 
 public class ManagerStatsFragment extends Fragment {
-
-    @BindView(R.id.cv_shop_manager_table_statics)
-    CardView cvShopManagerTableStatics;
-    @BindView(R.id.tv_shop_manger_table_statics_title)
-    TextView tvShopMangerTableStaticsTitle;
-    @BindView(R.id.rv_shop_manager_table_statics)
-    RecyclerView rvShopManagerTableStatics;
-    @BindView(R.id.tv_shop_manager_table_statics_title)
-    TextView tvShopManagerTableStaticsTitle;
-    @BindView(R.id.tv_shop_manager_table_day_revenue)
-    TextView tvShopManagerTableDayRevenue;
-    @BindView(R.id.tv_shop_manager_table_week_revenue)
-    TextView tvShopManagerTableWeekRevenue;
-    @BindView(R.id.tv_shop_manager_table_session_time)
-    TextView tvShopManagerTableSessionTime;
-    @BindView(R.id.tv_shop_manager_table_serving_time)
-    TextView tvShopManagerTableServingTime;
     private Unbinder unbinder;
+
+    @BindView(R.id.rv_manager_stats_trending_orders)
+    RecyclerView rvTrendingOrders;
+    @BindView(R.id.tv_manager_stats_revenue_day)
+    TextView tvDayRevenue;
+    @BindView(R.id.tv_manager_stats_revenue_week)
+    TextView tvWeekRevenue;
+    @BindView(R.id.tv_manager_stats_orders_day)
+    TextView tvDayOrders;
+    @BindView(R.id.tv_manager_stats_orders_week)
+    TextView tvWeekOrders;
+    @BindView(R.id.tv_manager_stats_session_time)
+    TextView tvSessionTime;
+    @BindView(R.id.tv_manager_stats_serving_time)
+    TextView tvServingTime;
+
+    private ManagerStatsOrderAdapter mAdapter;
 
     public ManagerStatsFragment() {
     }
@@ -54,7 +49,7 @@ public class ManagerStatsFragment extends Fragment {
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_shop_manager_table_statics, container, false);
+        View view = inflater.inflate(R.layout.fragment_shop_manager_statistics, container, false);
         unbinder = ButterKnife.bind(this, view);
         return view;
     }
@@ -63,32 +58,30 @@ public class ManagerStatsFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        ManagerStatsOrderAdapter managerStatsOrderAdapter = new ManagerStatsOrderAdapter();
-        rvShopManagerTableStatics.setLayoutManager(new LinearLayoutManager(getActivity()));
-        rvShopManagerTableStatics.setAdapter(managerStatsOrderAdapter);
+        mAdapter = new ManagerStatsOrderAdapter();
+        rvTrendingOrders.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false));
+        rvTrendingOrders.setAdapter(mAdapter);
 
         ManagerWorkViewModel managerWorkViewModel = ViewModelProviders.of(requireActivity()).get(ManagerWorkViewModel.class);
         managerWorkViewModel.fetchStatistics();
-        //managerWorkViewModel.dummyData();
-        managerWorkViewModel.getRestaurantStatics().observe(this, input -> {
-            if (input != null && input.data == null)
+        managerWorkViewModel.getRestaurantStatistics().observe(this, input -> {
+            if (input == null)
                 return;
-            if (input != null && input.status == Resource.Status.SUCCESS) {
-                RestaurantStaticsModel mModel = input.data;
-                String sessionTime = Utils.formatTime(mModel.getAvgSessionTime());
-                String servingTime = Utils.formatTime(mModel.getAvgServingTime());
-                double daysRevenue = mModel.getDaysRevenue();
-                double weekRevenue = mModel.getWeeksRevenue();
-                tvShopManagerTableDayRevenue.setText(String.format(Locale.ENGLISH, Utils.getCurrencyFormat(getActivity()), String.valueOf(daysRevenue)));
-                tvShopManagerTableWeekRevenue.setText(String.format(Locale.ENGLISH, Utils.getCurrencyFormat(getActivity()), String.valueOf(weekRevenue)));
-                tvShopManagerTableSessionTime.setText(String.valueOf(sessionTime));
-                tvShopManagerTableServingTime.setText(String.valueOf(servingTime));
-                List<RestaurantStaticsModel.TrendingOrder> trendingOrder = mModel.getTrendingOrders();
-                if (trendingOrder != null && trendingOrder.size() > 0) {
-                    managerStatsOrderAdapter.setRestaurantStaticsList(trendingOrder);
-                }
+            if (input.status == Resource.Status.SUCCESS && input.data != null) {
+                setupData(input.data);
             }
         });
+    }
+
+    private void setupData(@NonNull ManagerStatsModel data) {
+        tvDayOrders.setText(data.getDayOrdersCount());
+        tvWeekOrders.setText(data.getWeekOrdersCount());
+        tvDayRevenue.setText(data.getDayRevenue());
+        tvWeekRevenue.setText(data.getWeekRevenue());
+        tvSessionTime.setText(data.formatAvgSessionTime());
+        tvServingTime.setText(data.formatAvgServingTime());
+
+        mAdapter.setData(data.getTrendingOrders());
     }
 
     @Override

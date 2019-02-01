@@ -6,16 +6,14 @@ import android.support.annotation.Nullable;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentStatePagerAdapter;
 import android.support.v4.view.ViewPager;
+import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBar;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.widget.ImageView;
-import android.widget.TextView;
+import android.support.v7.app.ActionBarDrawerToggle;
 
 import com.checkin.app.checkin.Account.AccountModel;
 import com.checkin.app.checkin.Account.BaseAccountActivity;
+import com.checkin.app.checkin.Misc.BaseFragmentAdapterBottomNav;
 import com.checkin.app.checkin.R;
 import com.checkin.app.checkin.Utility.DynamicSwipableViewPager;
 
@@ -30,6 +28,8 @@ public class ManagerWorkActivity extends BaseAccountActivity {
     DynamicSwipableViewPager pagerManager;
     @BindView(R.id.tabs_manager_work)
     TabLayout tabLayout;
+    @BindView(R.id.drawer_manager_work)
+    DrawerLayout drawerLayout;
 
     private ManagerWorkViewModel mViewModel;
 
@@ -41,60 +41,39 @@ public class ManagerWorkActivity extends BaseAccountActivity {
 
         ActionBar actionBar = getSupportActionBar();
 
-        if (actionBar != null){
-            getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        if (actionBar != null) {
             actionBar.setTitle("Live Orders");
-            getSupportActionBar().setHomeAsUpIndicator(R.drawable.ic_back_grey);
+
+            ActionBarDrawerToggle startToggle = new ActionBarDrawerToggle(this, drawerLayout, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
+            drawerLayout.addDrawerListener(startToggle);
+            startToggle.syncState();
         }
 
         mViewModel = ViewModelProviders.of(this).get(ManagerWorkViewModel.class);
         mViewModel.fetchActiveTables(getIntent().getLongExtra(KEY_RESTAURANT_PK, 0L));
 
         pagerManager.setEnabled(false);
-        pagerManager.setAdapter(new ManagerFragmentAdapter(getSupportFragmentManager()));
+        ManagerFragmentAdapter pagerAdapter = new ManagerFragmentAdapter(getSupportFragmentManager());
+        pagerManager.setAdapter(pagerAdapter);
         pagerManager.addOnPageChangeListener(new ViewPager.SimpleOnPageChangeListener() {
             @Override
             public void onPageSelected(int position) {
                 if (actionBar != null) {
-                    if (position == 0){
+                    if (position == 0) {
                         actionBar.setTitle("Live Orders");
-                    }else if (position == 1){
+                    } else if (position == 1) {
                         actionBar.setTitle("Statistics");
                     }
                 }
             }
         });
         tabLayout.setupWithViewPager(pagerManager);
-
-        if (tabLayout.getTabCount() == 2) {
-
-            View vLiveOrder = LayoutInflater.from(this).inflate(R.layout.manager_statistics_tab,null);
-            TextView tvLiveOrder = vLiveOrder.findViewById(R.id.tv_tab);
-            ImageView ivLiveOrder = vLiveOrder.findViewById(R.id.iv_tab);
-
-            tvLiveOrder.setText("Live Orders");
-            ivLiveOrder.setImageResource(R.drawable.ic_orders_list_toggle);
-            tabLayout.getTabAt(0).setCustomView(vLiveOrder);
-
-            View vStatics = LayoutInflater.from(this).inflate(R.layout.manager_statistics_tab,null);
-            TextView tvStatics = vStatics.findViewById(R.id.tv_tab);
-            ImageView ivStatics = vStatics.findViewById(R.id.iv_tab);
-
-            tvStatics.setText("Stats");
-            ivStatics.setImageResource(R.drawable.ic_stats_toggle);
-            tabLayout.getTabAt(1).setCustomView(vStatics);
-        }
-    }
-
-    @Override
-    public boolean onSupportNavigateUp() {
-        finish();
-        return true;
+        pagerAdapter.setupWithTab(tabLayout, pagerManager);
     }
 
     @Override
     protected int getNavMenu() {
-        return R.menu.menu_manager_work;
+        return R.menu.drawer_manager_work;
     }
 
     @Override
@@ -107,9 +86,21 @@ public class ManagerWorkActivity extends BaseAccountActivity {
         return new AccountModel.ACCOUNT_TYPE[]{AccountModel.ACCOUNT_TYPE.RESTAURANT_MANAGER};
     }
 
-    static class ManagerFragmentAdapter extends FragmentStatePagerAdapter {
+    static class ManagerFragmentAdapter extends BaseFragmentAdapterBottomNav {
         public ManagerFragmentAdapter(FragmentManager fm) {
             super(fm);
+        }
+
+        @Override
+        public int getTabDrawable(int position) {
+            switch (position) {
+                case 0:
+                    return R.drawable.ic_orders_list_toggle;
+                case 1:
+                    return R.drawable.ic_stats_toggle;
+                default:
+                    return 0;
+            }
         }
 
         @Override
@@ -128,16 +119,16 @@ public class ManagerWorkActivity extends BaseAccountActivity {
             return 2;
         }
 
-//        @Nullable
-//        @Override
-//        public CharSequence getPageTitle(int position) {
-//            switch (position) {
-//                case 0:
-//                    return "Live Orders";
-//                case 1:
-//                    return "Stats";
-//            }
-//            return null;
-//        }
+        @Nullable
+        @Override
+        public CharSequence getPageTitle(int position) {
+            switch (position) {
+                case 0:
+                    return "Live Orders";
+                case 1:
+                    return "Stats";
+            }
+            return null;
+        }
     }
 }
