@@ -10,7 +10,7 @@
         android:id="@+id/im_status"
         android:layout_width="@dimen/size_small_icon"
         android:layout_height="@dimen/size_small_icon"
-        android:src="@drawable/ic_action_add"
+        android:src="@drawable/ic_oval_red_white_tick"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"/>
     <TextView

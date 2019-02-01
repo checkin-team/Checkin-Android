@@ -38,7 +38,13 @@ public abstract class BaseFragmentAdapterBottomNav extends FragmentStatePagerAda
             TextView tvTitle = itemView.findViewById(R.id.tv_bnav_title);
             ImageView imIcon = itemView.findViewById(R.id.iv_bnav_icon);
 
-            tvTitle.setText(getPageTitle(pos));
+            if (getPageTitle(pos) != null) {
+                tvTitle.setText(getPageTitle(pos));
+                tvTitle.setVisibility(View.VISIBLE);
+            }
+            else
+                tvTitle.setVisibility(View.GONE);
+
             imIcon.setImageResource(getTabDrawable(pos));
 
             selectionHandlers.add(new TabSelectionHandler(pos, itemView));

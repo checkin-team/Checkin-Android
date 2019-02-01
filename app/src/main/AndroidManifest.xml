@@ -68,9 +68,6 @@
             android:name=".Shop.ShopPublicProfile.ShopActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".Shop.ShopPrivateProfile.ShopActivity"
-            android:screenOrientation="portrait" />
-        <activity
             android:name=".Menu.SessionMenuActivity"
             android:screenOrientation="portrait"
             android:theme="@style/SessionTheme"
@@ -180,6 +177,8 @@
         <activity android:name=".Manager.ManagerSessionInvoiceActivity"
             android:label="Invoice"
             android:theme="@style/AppThemeWhiteActionBar"/>
+        <activity android:name=".Shop.ShopPrivateProfile.ShopPrivateActivity"
+            android:screenOrientation="portrait"/>
 
         <service
             android:name=".Auth.AuthenticatorService"

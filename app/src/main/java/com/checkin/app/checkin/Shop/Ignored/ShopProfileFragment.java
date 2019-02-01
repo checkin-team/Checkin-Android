@@ -1,4 +1,4 @@
-package com.checkin.app.checkin.Shop.ShopPrivateProfile;
+package com.checkin.app.checkin.Shop.Ignored;
 
 import android.arch.lifecycle.ViewModelProviders;
 import android.content.Intent;
@@ -25,6 +25,9 @@ import com.checkin.app.checkin.Shop.RestaurantModel;
 import com.checkin.app.checkin.Shop.ShopPrivateProfile.Edit.EditProfileActivity;
 import com.checkin.app.checkin.Shop.ShopPrivateProfile.Finance.FinanceDetailActivity;
 import com.checkin.app.checkin.Shop.ShopPrivateProfile.Invoice.ShopInvoiceListActivity;
+import com.checkin.app.checkin.Shop.ShopPrivateProfile.LogoCoverActivity;
+import com.checkin.app.checkin.Shop.ShopPrivateProfile.MembersActivity;
+import com.checkin.app.checkin.Shop.ShopPrivateProfile.ShopProfileViewModel;
 import com.checkin.app.checkin.Utility.Utils;
 import com.rd.PageIndicatorView;
 import com.rd.animation.type.AnimationType;
@@ -65,7 +68,7 @@ public class ShopProfileFragment extends Fragment {
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        final View view = inflater.inflate(R.layout.fragment_shop_profile_private, container, false);
+        final View view = inflater.inflate(R.layout.ignored_fragment_shop_profile_private, container, false);
         unbinder = ButterKnife.bind(this, view);
 
         return view;

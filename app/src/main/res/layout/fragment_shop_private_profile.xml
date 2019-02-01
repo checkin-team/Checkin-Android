@@ -1,0 +1,272 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.design.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layout_marginBottom="?attr/actionBarSize"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <LinearLayout
+            android:background="@color/black"
+            android:orientation="vertical"
+            android:id="@+id/ll_image_swipe"
+            android:layout_weight="0.4"
+            android:layout_width="match_parent"
+            android:layout_height="0dp">
+
+            <RelativeLayout
+                android:layout_marginTop="@dimen/spacing_small"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <com.rd.PageIndicatorView
+                    android:layout_centerVertical="true"
+                    android:layout_centerHorizontal="true"
+                    android:id="@+id/indicator_top_cover"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/spacing_normal"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:piv_viewPager="@id/pager_cover"
+                    app:piv_animationType="scale"
+                    app:piv_dynamicCount="true"
+                    app:piv_interactiveAnimation="true"
+                    app:piv_unselectedColor="@color/pinkish_grey"
+                    app:piv_selectedColor="@color/white" />
+
+                <ImageView
+                    android:id="@+id/btn_add_image"
+                    android:layout_centerVertical="true"
+                    android:layout_marginEnd="@dimen/size_tiny_icon"
+                    android:layout_alignParentEnd="true"
+                    android:contentDescription="@null"
+                    android:src="@drawable/ic_add_picture"
+                    android:layout_width="@dimen/spacing_extra_large"
+                    android:layout_height="@dimen/spacing_extra_large" />
+
+            </RelativeLayout>
+
+            <com.checkin.app.checkin.Utility.DynamicSwipableViewPager
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:id="@+id/vp_image"/>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_weight="0.6"
+            android:layout_width="match_parent"
+            android:layout_height="0dp">
+
+            <LinearLayout
+                android:layout_marginTop="@dimen/spacing_extra_large"
+                android:layout_marginEnd="@dimen/spacing_extra_large"
+                android:layout_marginStart="@dimen/spacing_extra_large"
+                android:orientation="horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <ImageView
+                    android:layout_marginTop="@dimen/spacing_extra_tiny"
+                    android:id="@+id/im_status"
+                    android:layout_width="@dimen/spacing_normal"
+                    android:layout_height="@dimen/spacing_normal"
+                    android:src="@drawable/ic_exclamation_red" />
+
+                <LinearLayout
+                    android:layout_marginStart="@dimen/spacing_extra_small"
+                    android:orientation="vertical"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content">
+
+                    <TextView
+                        android:id="@+id/tv_shop_name"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="CHEESY DOES IT"
+                        android:textColor="@color/primary_red"
+                        android:textSize="@dimen/font_normal"/>
+
+                    <TextView
+                        android:id="@+id/tv_shop_address"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Mexican Chelsea"
+                        style="@style/GreySmallTextStyle" />
+
+                </LinearLayout>
+
+                <Space
+                    android:layout_weight="1"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent" />
+
+                <Button
+                    android:layout_gravity="center"
+                    android:id="@+id/btn_profile_edit"
+                    android:layout_width="wrap_content"
+                    android:layout_height="@dimen/button_height_short"
+                    android:text="@string/action_profile_edit"
+                    style="@style/ButtonNeutralAction" />
+
+            </LinearLayout>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/height_horizontal_line"
+                android:layout_marginTop="@dimen/spacing_large"
+                android:background="@drawable/ic_line" />
+
+            <LinearLayout
+                android:layout_marginTop="@dimen/spacing_tiny"
+                android:layout_marginBottom="@dimen/spacing_tiny"
+                android:gravity="center"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:padding="@dimen/spacing_small"
+                android:weightSum="4">
+
+                <LinearLayout
+                    android:id="@+id/btn_members"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:layout_gravity="center_vertical"
+                    android:orientation="vertical">
+
+                    <ImageView
+                        android:layout_width="@dimen/button_height_short"
+                        android:layout_height="@dimen/button_height_short"
+                        android:layout_gravity="center_horizontal"
+                        android:src="@drawable/ic_shop_follow" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_horizontal"
+                        style="@style/GreyLinkStyle"
+                        android:text="@string/action_shop_members"
+                        android:layout_marginTop="@dimen/spacing_small"/>
+                </LinearLayout>
+
+                <Space
+                    android:layout_width="@dimen/spacing_large"
+                    android:layout_height="match_parent" />
+
+                <LinearLayout
+                    android:id="@+id/btn_invoice"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:layout_gravity="center_vertical"
+                    android:orientation="vertical">
+
+                    <ImageView
+                        android:layout_width="@dimen/button_height_short"
+                        android:layout_height="@dimen/button_height_short"
+                        android:layout_gravity="center_horizontal"
+                        android:src="@drawable/ic_invoice" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_horizontal"
+                        style="@style/GreyLinkStyle"
+                        android:text="@string/action_invoice"
+                        android:layout_marginTop="@dimen/spacing_small"/>
+                </LinearLayout>
+
+                <Space
+                    android:layout_width="@dimen/spacing_large"
+                    android:layout_height="match_parent" />
+
+                <LinearLayout
+                    android:id="@+id/btn_discount"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:layout_gravity="center_vertical"
+                    android:orientation="vertical">
+
+                    <ImageView
+                        android:layout_width="@dimen/spacing_extra_large"
+                        android:layout_height="@dimen/spacing_extra_large"
+                        android:layout_gravity="center_horizontal"
+                        android:src="@drawable/ic_discount" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_horizontal"
+                        style="@style/GreyLinkStyle"
+                        android:text="@string/action_discount"
+                        android:layout_marginTop="@dimen/spacing_small"/>
+                </LinearLayout>
+
+            </LinearLayout>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/height_horizontal_line"
+                android:layout_marginBottom="@dimen/spacing_extra_tiny"
+                android:background="@drawable/ic_line" />
+
+            <TextView
+                android:layout_marginTop="4dp"
+                android:layout_gravity="center_horizontal"
+                android:text="More Info"
+                android:textColor="@color/pinkish_grey"
+                android:textSize="@dimen/font_heading"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+
+            <android.support.v7.widget.RecyclerView
+                android:layout_marginTop="@dimen/spacing_small"
+                android:layout_marginStart="@dimen/size_tiny_icon"
+                android:layout_marginEnd="@dimen/size_tiny_icon"
+                android:id="@+id/rv_additional_data"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"/>
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+    <LinearLayout
+        app:layout_anchor="@id/ll_image_swipe"
+        app:layout_anchorGravity="center|bottom"
+        android:paddingStart="32dp"
+        android:paddingEnd="32dp"
+        android:paddingTop="4dp"
+        android:paddingBottom="4dp"
+        android:gravity="center"
+        android:background="@drawable/thin_grey_stroke"
+        android:orientation="vertical"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content">
+
+        <TextView
+            android:id="@+id/tv_checkins"
+            style="@style/GreySmallTextStyle"
+            android:text="1.3k"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+
+        <TextView
+            android:layout_marginTop="2dp"
+            style="@style/GreySmallTextStyle"
+            android:text="Checkins"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+
+    </LinearLayout>
+
+</android.support.design.widget.CoordinatorLayout>

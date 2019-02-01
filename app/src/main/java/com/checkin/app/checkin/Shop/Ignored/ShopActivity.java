@@ -1,4 +1,4 @@
-package com.checkin.app.checkin.Shop.ShopPrivateProfile;
+package com.checkin.app.checkin.Shop.Ignored;
 
 import android.arch.lifecycle.ViewModelProviders;
 import android.os.Bundle;
@@ -13,6 +13,7 @@ import com.checkin.app.checkin.Account.AccountModel.ACCOUNT_TYPE;
 import com.checkin.app.checkin.Account.BaseAccountActivity;
 import com.checkin.app.checkin.R;
 import com.checkin.app.checkin.Shop.RecentCheckin.RecentCheckinFragment;
+import com.checkin.app.checkin.Shop.ShopPrivateProfile.ShopProfileViewModel;
 import com.checkin.app.checkin.Utility.DynamicSwipableViewPager;
 
 import butterknife.BindView;
@@ -34,7 +35,7 @@ public class ShopActivity extends BaseAccountActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_shop_private);
+        setContentView(R.layout.ignored_activity_shop_private);
         ButterKnife.bind(this);
 
         DrawerLayout drawerLayout = findViewById(R.id.drawer_root);
