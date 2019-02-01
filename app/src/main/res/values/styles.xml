@@ -363,6 +363,7 @@
         <item name="android:textSize">@dimen/font_tiny</item>
     </style>
 
+
     <style name="RedHeaderBar">
         <item name="android:background">@color/primary_red</item>
     </style>
@@ -385,5 +386,20 @@
 
     <style name="ShopRatingStyle" parent="ButtonNeutralAction">
         <item name="android:drawableEnd">@drawable/ic_star_grey</item>
+    </style>
+
+    <style name="DividerBase">
+        <item name="android:background">@color/pinkish_grey</item>
+    </style>
+
+    <style name="DividerHorizontal" parent="DividerBase">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">0.3dp</item>
+
+    </style>
+
+    <style name="DividerVertical" parent="DividerBase">
+        <item name="android:layout_width">0.3dp</item>
+        <item name="android:layout_height">match_parent</item>
     </style>
 </resources>

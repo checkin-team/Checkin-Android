@@ -123,7 +123,7 @@ dependencies {
     // Graphs
     implementation 'com.github.PhilJay:MPAndroidChart:v3.0.3'
     // Bottom-nav bar
-    implementation 'it.sephiroth.android.library.bottomnavigation:bottom-navigation:2.0.1-rc1'
+    implementation 'it.sephiroth.android.library.bottomnavigation:bottom-navigation:2.0.0'
     // Transition animations
     implementation 'com.andkulikov:transitionseverywhere:1.8.0'
     implementation 'com.jsibbold:zoomage:1.1.0'

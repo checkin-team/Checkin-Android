@@ -17,6 +17,7 @@ public class ManagerWorkViewModel extends BaseViewModel {
     private WaiterRepository mWaiterRepository;
 
     private MediatorLiveData<Resource<List<RestaurantTableModel>>> mActiveTablesData = new MediatorLiveData<>();
+    private MediatorLiveData<Resource<ManagerStatsModel>> mStatsData = new MediatorLiveData<>();
 
     private long mShopPk;
 
@@ -32,11 +33,15 @@ public class ManagerWorkViewModel extends BaseViewModel {
     }
 
     public void fetchStatistics() {
-
+        mStatsData.addSource(mManagerRepository.getManagerStats(mShopPk), mStatsData::setValue);
     }
 
-    public LiveData<Resource<List<RestaurantTableModel>>> getActiveTables(){
+    public LiveData<Resource<List<RestaurantTableModel>>> getActiveTables() {
         return mActiveTablesData;
+    }
+
+    public LiveData<Resource<ManagerStatsModel>> getRestaurantStatistics() {
+        return mStatsData;
     }
 
     @Override

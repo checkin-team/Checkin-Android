@@ -168,7 +168,7 @@
                         android:layout_height="wrap_content"
                         android:layout_marginStart="@dimen/spacing_large"
                         android:layout_marginTop="@dimen/spacing_normal"
-                        tools:text="Ishu Darshan"
+                        tools:text="@tools:sample/full_names"
                         android:textColor="@color/brownish_grey"
                         android:textSize="@dimen/font_large"
                         android:textStyle="bold" />
@@ -182,7 +182,7 @@
                         android:layout_below="@id/tv_display_name"
                         android:gravity="center_horizontal"
                         android:textSize="@dimen/font_small"
-                        tools:text="Lyon,France"
+                        tools:text="@tools:sample/cities"
                         android:textColor="@color/pinkish_grey" />
 
                     <FrameLayout

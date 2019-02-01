@@ -27,4 +27,5 @@
     <color name="translucent_white">#5effffff</color>
     <color name="translucent_black">#aa000000</color>
     <color name="translucent_half_black">#80000000</color>
+    <color name="translucent_brownish_grey">#806d6d6d</color>
 </resources>

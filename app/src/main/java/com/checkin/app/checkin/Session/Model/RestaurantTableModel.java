@@ -24,6 +24,9 @@ public class RestaurantTableModel {
     @JsonProperty("created")
     private Date created;
 
+    @JsonProperty("is_requested_checkout")
+    private boolean isRequestedCheckout;
+
     public RestaurantTableModel() {}
 
     public RestaurantTableModel(long pk, String table, @Nullable BriefModel host, EventBriefModel event) {
@@ -52,5 +55,9 @@ public class RestaurantTableModel {
 
     public Date getCreated() {
         return created;
+    }
+
+    public boolean isRequestedCheckout() {
+        return isRequestedCheckout;
     }
 }

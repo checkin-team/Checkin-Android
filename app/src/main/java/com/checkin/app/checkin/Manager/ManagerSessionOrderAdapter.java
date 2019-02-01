@@ -140,8 +140,7 @@ public class ManagerSessionOrderAdapter extends RecyclerView.Adapter<ManagerSess
             }
         }
 
-        void addCustomizations(Context context, ItemCustomizationGroupModel group, ViewGroup
-                container) {
+        void addCustomizations(Context context, ItemCustomizationGroupModel group, ViewGroup container) {
             View view = LayoutInflater.from(context).inflate(R.layout.item_active_session_order_customization, container, false);
             TextView tvGroupName = view.findViewById(R.id.tv_order_customization_group);
             TextView tvFieldNames = view.findViewById(R.id.tv_order_customization_names);

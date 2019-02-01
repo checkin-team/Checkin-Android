@@ -6,12 +6,14 @@ import android.support.annotation.Nullable;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentStatePagerAdapter;
 import android.support.v4.view.ViewPager;
+import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBar;
+import android.support.v7.app.ActionBarDrawerToggle;
 
 import com.checkin.app.checkin.Account.AccountModel;
 import com.checkin.app.checkin.Account.BaseAccountActivity;
+import com.checkin.app.checkin.Misc.BaseFragmentAdapterBottomNav;
 import com.checkin.app.checkin.R;
 import com.checkin.app.checkin.Utility.DynamicSwipableViewPager;
 
@@ -19,12 +21,15 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 
 public class ManagerWorkActivity extends BaseAccountActivity {
+
     public static final String KEY_RESTAURANT_PK = "manager.restaurant_pk";
 
     @BindView(R.id.pager_manager_work)
     DynamicSwipableViewPager pagerManager;
     @BindView(R.id.tabs_manager_work)
     TabLayout tabLayout;
+    @BindView(R.id.drawer_manager_work)
+    DrawerLayout drawerLayout;
 
     private ManagerWorkViewModel mViewModel;
 
@@ -36,41 +41,39 @@ public class ManagerWorkActivity extends BaseAccountActivity {
 
         ActionBar actionBar = getSupportActionBar();
 
-        if (actionBar != null){
-            getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-            getSupportActionBar().setHomeAsUpIndicator(R.drawable.ic_back_grey);
+        if (actionBar != null) {
+            actionBar.setTitle("Live Orders");
+
+            ActionBarDrawerToggle startToggle = new ActionBarDrawerToggle(this, drawerLayout, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
+            drawerLayout.addDrawerListener(startToggle);
+            startToggle.syncState();
         }
 
         mViewModel = ViewModelProviders.of(this).get(ManagerWorkViewModel.class);
         mViewModel.fetchActiveTables(getIntent().getLongExtra(KEY_RESTAURANT_PK, 0L));
 
         pagerManager.setEnabled(false);
-        pagerManager.setAdapter(new ManagerFragmentAdapter(getSupportFragmentManager()));
+        ManagerFragmentAdapter pagerAdapter = new ManagerFragmentAdapter(getSupportFragmentManager());
+        pagerManager.setAdapter(pagerAdapter);
         pagerManager.addOnPageChangeListener(new ViewPager.SimpleOnPageChangeListener() {
             @Override
             public void onPageSelected(int position) {
                 if (actionBar != null) {
-                    actionBar.setTitle(tabLayout.getTabAt(position).getText());
+                    if (position == 0) {
+                        actionBar.setTitle("Live Orders");
+                    } else if (position == 1) {
+                        actionBar.setTitle("Statistics");
+                    }
                 }
             }
         });
         tabLayout.setupWithViewPager(pagerManager);
-
-        if (tabLayout.getTabCount() == 2) {
-            tabLayout.getTabAt(0).setIcon(R.drawable.ic_orders_list_toggle);
-            tabLayout.getTabAt(1).setIcon(R.drawable.ic_stats_toggle);
-        }
-    }
-
-    @Override
-    public boolean onSupportNavigateUp() {
-        finish();
-        return true;
+        pagerAdapter.setupWithTab(tabLayout, pagerManager);
     }
 
     @Override
     protected int getNavMenu() {
-        return R.menu.menu_manager_work;
+        return R.menu.drawer_manager_work;
     }
 
     @Override
@@ -83,9 +86,21 @@ public class ManagerWorkActivity extends BaseAccountActivity {
         return new AccountModel.ACCOUNT_TYPE[]{AccountModel.ACCOUNT_TYPE.RESTAURANT_MANAGER};
     }
 
-    static class ManagerFragmentAdapter extends FragmentStatePagerAdapter {
+    static class ManagerFragmentAdapter extends BaseFragmentAdapterBottomNav {
         public ManagerFragmentAdapter(FragmentManager fm) {
             super(fm);
+        }
+
+        @Override
+        public int getTabDrawable(int position) {
+            switch (position) {
+                case 0:
+                    return R.drawable.ic_orders_list_toggle;
+                case 1:
+                    return R.drawable.ic_stats_toggle;
+                default:
+                    return 0;
+            }
         }
 
         @Override
