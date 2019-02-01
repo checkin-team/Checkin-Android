@@ -55,19 +55,18 @@
 
                     <TextView
                         android:id="@+id/tv_manager_stats_revenue_day"
-                        style="@style/GreySmallTextStyle"
+                        style="@style/RedHeadingStyle"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="@dimen/spacing_extra_tiny"
-                        android:textColor="@color/colorAccent"
                         tools:text="2,120" />
 
                     <TextView
                         android:id="@+id/tv_manager_stats_orders_day"
+                        style="@style/GreySmallTextStyle"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="@dimen/spacing_tiny"
-                        android:textSize="@dimen/font_extra_small"
                         tools:text="8 orders" />
 
                 </LinearLayout>
@@ -90,21 +89,20 @@
 
                     <TextView
                         android:id="@+id/tv_manager_stats_revenue_week"
-                        style="@style/GreySmallTextStyle"
+                        style="@style/RedHeadingStyle"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginStart="@dimen/spacing_normal"
                         android:layout_marginTop="@dimen/spacing_extra_tiny"
-                        android:textColor="@color/colorAccent"
                         tools:text="14,120" />
 
                     <TextView
                         android:id="@+id/tv_manager_stats_orders_week"
+                        style="@style/GreySmallTextStyle"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginStart="@dimen/spacing_normal"
                         android:layout_marginTop="@dimen/spacing_tiny"
-                        android:textSize="@dimen/font_extra_small"
                         tools:text="48 orders" />
 
                 </LinearLayout>
@@ -133,11 +131,10 @@
 
                     <TextView
                         android:id="@+id/tv_manager_stats_session_time"
-                        style="@style/GreySmallTextStyle"
+                        style="@style/RedHeadingStyle"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="@dimen/spacing_extra_tiny"
-                        android:textColor="@color/colorAccent"
                         tools:text="23.02 Min" />
 
                 </LinearLayout>
@@ -160,12 +157,11 @@
 
                     <TextView
                         android:id="@+id/tv_manager_stats_serving_time"
-                        style="@style/GreySmallTextStyle"
+                        style="@style/RedHeadingStyle"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginStart="@dimen/spacing_normal"
                         android:layout_marginTop="@dimen/spacing_extra_tiny"
-                        android:textColor="@color/colorAccent"
                         tools:text="15.16 Min" />
 
                 </LinearLayout>

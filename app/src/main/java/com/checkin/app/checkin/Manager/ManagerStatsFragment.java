@@ -14,6 +14,9 @@ import android.widget.TextView;
 
 import com.checkin.app.checkin.Data.Resource;
 import com.checkin.app.checkin.R;
+import com.checkin.app.checkin.Utility.Utils;
+
+import java.util.Locale;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -74,10 +77,10 @@ public class ManagerStatsFragment extends Fragment {
     }
 
     private void setupData(@NonNull ManagerStatsModel data) {
-        tvDayOrders.setText(data.getDayOrdersCount());
-        tvWeekOrders.setText(data.getWeekOrdersCount());
-        tvDayRevenue.setText(data.getDayRevenue());
-        tvWeekRevenue.setText(data.getWeekRevenue());
+        tvDayOrders.setText(String.format(Locale.ENGLISH, "%s orders", data.getDayOrdersCount()));
+        tvWeekOrders.setText(String.format(Locale.ENGLISH, "%s orders", data.getWeekOrdersCount()));
+        tvDayRevenue.setText(Utils.formatCurrencyAmount(getContext(), data.getDayRevenue()));
+        tvWeekRevenue.setText(Utils.formatCurrencyAmount(getContext(), data.getWeekRevenue()));
         tvSessionTime.setText(data.formatAvgSessionTime());
         tvServingTime.setText(data.formatAvgServingTime());
 

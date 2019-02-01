@@ -5,17 +5,16 @@ import android.support.annotation.Nullable;
 import com.checkin.app.checkin.User.Friendship.FriendshipModel.FRIEND_STATUS;
 import com.checkin.app.checkin.User.Friendship.FriendshipRequestModel;
 import com.checkin.app.checkin.Utility.Utils;
-import com.fasterxml.jackson.annotation.JsonAutoDetect;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
-//@Entity
-@JsonAutoDetect(fieldVisibility = JsonAutoDetect.Visibility.ANY)
+@JsonIgnoreProperties(ignoreUnknown = true)
 public class UserModel {
     @JsonProperty("pk")
-//    @Id(assignable = true)
     private long id;
 
-    @JsonProperty("username") private String username;
+    @JsonProperty("username")
+    private String username;
 
     @JsonProperty("first_name")
     private String firstName;
@@ -29,20 +28,24 @@ public class UserModel {
     @JsonProperty("locality")
     private String address;
 
-//    @Convert(converter = Converters.GenderConverter.class, dbType = Character.class)
+    //    @Convert(converter = Converters.GenderConverter.class, dbType = Character.class)
     private GENDER gender;
 
     @JsonProperty("profile_pic")
     private String profilePic;
 
-    @JsonProperty("bio") private String bio;
+    @JsonProperty("bio")
+    private String bio;
 
     @JsonProperty("phone_no")
     private String phoneNo;
 
-    @JsonProperty("count_followers") private long countFollowers;
-    @JsonProperty("count_checkins") private long countCheckins;
-    @JsonProperty("count_reviews") private long countReviews;
+    @JsonProperty("count_followers")
+    private long countFollowers;
+    @JsonProperty("count_checkins")
+    private long countCheckins;
+    @JsonProperty("count_reviews")
+    private long countReviews;
 
     @Nullable
     @JsonProperty("friendship_request")
@@ -54,6 +57,7 @@ public class UserModel {
         MALE('m'), FEMALE('f');
 
         public final char tag;
+
         GENDER(char tag) {
             this.tag = tag;
         }//constructor of enum
@@ -70,7 +74,8 @@ public class UserModel {
     }
 
     // TODO: Move from here.
-    public UserModel() {}
+    public UserModel() {
+    }
 
     public UserModel(GENDER gender) {
         this.gender = gender;

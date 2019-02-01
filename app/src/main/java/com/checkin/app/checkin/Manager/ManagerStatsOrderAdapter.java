@@ -70,7 +70,7 @@ public class ManagerStatsOrderAdapter extends RecyclerView.Adapter<ManagerStatsO
                     imItemStatus.setImageResource(R.drawable.ic_non_veg);
 
                 tvItemName.setText(item.getName());
-                tvRevenue.setText(String.format(Locale.getDefault(), "%f revenue contribution", revenueGenerated));
+                tvRevenue.setText(String.format(Locale.getDefault(), "%.2f %% revenue contribution", revenueGenerated));
             }
         }
     }
