@@ -1,0 +1,212 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    package="com.checkin.app.checkin">
+
+    <uses-permission
+        android:name="android.permission.AUTHENTICATE_ACCOUNTS"
+        android:maxSdkVersion="22" />
+    <uses-permission
+        android:name="android.permission.GET_ACCOUNTS"
+        android:maxSdkVersion="22" />
+    <uses-permission android:name="android.permission.CALL_PHONE" />
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission
+        android:name="android.permission.USE_CREDENTIALS"
+        android:maxSdkVersion="22" />
+    <uses-permission android:name="android.permission.CAMERA" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+
+    <uses-feature android:name="android.hardware.camera" />
+
+    <application
+        android:allowBackup="true"
+        android:icon="@mipmap/ic_launcher"
+        android:label="@string/app_name"
+        android:roundIcon="@mipmap/ic_launcher_round"
+        android:supportsRtl="true"
+        android:theme="@style/AppTheme"
+        tools:replace="android:theme">
+        <activity android:name=".ImageGallery.ImageGalleryActivity"/>
+        <activity
+            android:name=".Auth.AuthActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/Theme.AppCompat.Light.NoActionBar" />
+        <activity
+            android:name=".Home.HomeActivity"
+            android:screenOrientation="sensorPortrait"
+            android:theme="@style/AppTheme"
+            tools:replace="screenOrientation" />
+        <activity android:name=".User.NonPersonalProfile.UserProfileActivity" />
+        <activity
+            android:name=".User.NonPersonalProfile.UserCheckinsActivity"
+            android:label="Checkins"
+            android:parentActivityName=".User.NonPersonalProfile.UserProfileActivity"
+            android:theme="@style/AppThemeWhiteActionBar" />
+        <activity
+            android:name=".User.Private.ProfileEditActivity"
+            android:label="Edit Profile"
+            android:theme="@style/AppThemeWhiteActionBar" />
+        <activity
+            android:name=".User.Friendship.FriendsListActivity"
+            android:label="Friends"
+            android:theme="@style/AppThemeWhiteActionBar" />
+        <activity
+            android:name=".Shop.ShopPublicProfile.ShopActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".Menu.SessionMenuActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/SessionTheme"
+            android:windowSoftInputMode="adjustPan" />
+        <activity
+            android:name=".Waiter.WaiterWorkActivity"
+            android:label="Waiter"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme" />
+        <activity
+            android:name=".Session.ActiveSession.ActiveSessionActivity"
+            android:windowSoftInputMode="adjustNothing" />
+        <activity
+            android:name=".Shop.ShopJoin.BusinessFeaturesActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppThemeWhiteActionBar" />
+        <activity
+            android:name=".Shop.ShopJoin.ContactVerifyActivity"
+            android:parentActivityName=".Home.HomeActivity" />
+        <activity
+            android:name=".Shop.ShopJoin.ShopJoinActivity"
+            android:parentActivityName=".Shop.ShopJoin.ContactVerifyActivity"
+            android:theme="@style/AppThemeWhiteActionBar" />
+        <activity
+            android:name=".Shop.Private.Edit.EditProfileActivity"
+            android:label="Edit Profile"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppThemeWhiteActionBar" />
+        <activity
+            android:name=".Notifications.NotificationActivity"
+            android:launchMode="singleTop">
+            <intent-filter>
+                <action android:name="com.checkin.app.checkin.notifications" />
+            </intent-filter>
+        </activity>
+        <activity
+            android:name=".Maps.MapsActivity"
+            android:theme="@style/AppTheme" />
+        <activity android:name=".Misc.SelectCropImageActivity" />
+        <activity
+            android:name="com.facebook.FacebookActivity"
+            android:configChanges="keyboard|keyboardHidden|screenLayout|screenSize|orientation"
+            android:label="@string/app_name" />
+        <activity
+            android:name="com.facebook.CustomTabActivity"
+            android:exported="true">
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="android.intent.category.BROWSABLE" />
+
+                <data android:scheme="@string/fb_login_protocol_scheme" />
+            </intent-filter>
+        </activity>
+        <activity
+            android:name=".Search.SearchActivity"
+            android:theme="@style/AppTheme" />
+        <activity
+            android:name=".Shop.Private.MembersActivity"
+            android:label="Members"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppThemeWhiteActionBar" />
+        <activity
+            android:name=".Misc.QRScannerActivity"
+            android:label="Scan CheckIn QR"
+            android:theme="@style/AppThemeWhiteActionBar" />
+        <activity
+            android:name=".Review.ShopReview.ShopReviewsActivity"
+            android:label="Reviews"
+            android:theme="@style/AppThemeWhiteActionBar" />
+        <activity
+            android:name=".Shop.Private.LogoCoverActivity"
+            android:label="Image"
+            android:theme="@style/AppThemeWhiteActionBar" />
+        <activity
+            android:name=".Session.ActiveSession.Chat.SessionChatActivity"
+            android:label="Chat with Us"
+            android:theme="@style/SessionChatTheme"
+            android:windowSoftInputMode="adjustPan|adjustResize" />
+        <activity
+            android:name=".Session.ActiveSession.ActiveSessionViewOrdersActivity"
+            android:windowSoftInputMode="adjustNothing" />
+        <activity android:name=".Review.NewReview.NewReviewActivity"
+            android:theme="@style/AppThemeWhiteActionBar"
+            android:label="Write a Review"/>
+        <activity
+            android:name=".Session.ActiveSession.ActiveSessionInvoiceActivity"
+            android:label="Invoice"
+            android:theme="@style/AppThemeWhiteActionBar" />
+        <activity
+            android:name=".Shop.Private.Invoice.ShopInvoiceListActivity"
+            android:label="@string/action_invoice"
+            android:theme="@style/AppThemeWhiteActionBar" />
+        <activity android:name=".Shop.Private.Invoice.ShopInvoiceDetailActivity" />
+        <activity
+            android:name=".Shop.Private.Finance.FinanceDetailActivity"
+            android:label="@string/action_discount"
+            android:theme="@style/AppThemeWhiteActionBar" />
+        <activity
+            android:name=".Manager.ManagerSessionActivity"
+            android:windowSoftInputMode="adjustNothing" />
+        <activity
+            android:name=".Manager.ManagerWorkActivity"
+            android:label="Manager"
+            android:theme="@style/AppThemeWhiteActionBar" />
+        <activity android:name=".Manager.ManagerSessionInvoiceActivity"
+            android:label="Invoice"
+            android:theme="@style/AppThemeWhiteActionBar"/>
+        <activity android:name=".Shop.Private.ShopPrivateActivity"
+            android:screenOrientation="portrait"/>
+
+        <service
+            android:name=".Auth.AuthenticatorService"
+            android:enabled="true"
+            android:exported="true">
+            <intent-filter>
+                <action android:name="android.accounts.AccountAuthenticator" />
+            </intent-filter>
+
+            <meta-data
+                android:name="android.accounts.AccountAuthenticator"
+                android:resource="@xml/authenticator" />
+        </service>
+        <service android:name=".Data.Message.AppMessagingService">
+            <intent-filter>
+                <action android:name="com.google.firebase.MESSAGING_EVENT" />
+            </intent-filter>
+        </service>
+        <service android:name=".Maps.FetchAddressIntentService" />
+        <service android:name=".Auth.DeviceTokenService" />
+
+        <receiver android:name=".User.Friendship.FriendshipBroadcastReceiver" />
+
+        <meta-data
+            android:name="com.facebook.sdk.ApplicationId"
+            android:value="@string/facebook_app_id" />
+        <!--
+             The API key for Google Maps-based APIs is defined as a string resource.
+             (See the file "res/values/google_maps_api.xml").
+             Note that the API key is linked to the encryption key used to sign the APK.
+             You need a different API key for each encryption key, including the release key that is used to
+             sign the APK for publishing.
+             You can define the keys for the debug and release targets in src/debug/ and src/release/.
+        -->
+        <meta-data
+            android:name="com.google.android.geo.API_KEY"
+            android:value="@string/google_maps_key" />
+
+    </application>
+
+</manifest>

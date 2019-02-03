@@ -24,8 +24,7 @@ import com.checkin.app.checkin.Home.HomeActivity;
 import com.checkin.app.checkin.Manager.ManagerWorkActivity;
 import com.checkin.app.checkin.Misc.BaseActivity;
 import com.checkin.app.checkin.R;
-import com.checkin.app.checkin.Shop.Ignored.ShopActivity;
-import com.checkin.app.checkin.Shop.ShopPrivateProfile.ShopPrivateActivity;
+import com.checkin.app.checkin.Shop.Private.ShopPrivateActivity;
 import com.checkin.app.checkin.Utility.GlideApp;
 import com.checkin.app.checkin.Utility.Utils;
 import com.checkin.app.checkin.Waiter.WaiterWorkActivity;
@@ -178,13 +177,13 @@ public abstract class BaseAccountActivity extends BaseActivity {
             switch (account.getAccountType()) {
                 case USER:
                     if (mBaseActivity.getClass() != HomeActivity.class){
-                        Intent intent = new Intent(context,HomeActivity.class);
+                        Intent intent = new Intent(context, HomeActivity.class);
                         context.startActivity(intent);
                     }
                     break;
                 case SHOP_OWNER:
                 case SHOP_ADMIN:
-                    if (mBaseActivity.getClass() != ShopActivity.class) {
+                    if (mBaseActivity.getClass() != ShopPrivateActivity.class) {
                         Intent intent = new Intent(context, ShopPrivateActivity.class);
                         intent.putExtra(ShopPrivateActivity.KEY_SHOP_PK, Long.valueOf(account.getTargetPk()));
                         context.startActivity(intent);

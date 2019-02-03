@@ -1,0 +1,37 @@
+package com.checkin.app.checkin.Home;
+
+import android.app.Application;
+import android.arch.lifecycle.LiveData;
+import android.arch.lifecycle.MediatorLiveData;
+
+import com.checkin.app.checkin.Data.BaseViewModel;
+import com.checkin.app.checkin.Data.Converters;
+import com.checkin.app.checkin.Data.Resource;
+import com.checkin.app.checkin.Session.Model.QRResultModel;
+import com.checkin.app.checkin.Session.SessionRepository;
+import com.fasterxml.jackson.databind.node.ObjectNode;
+
+public class HomeViewModel extends BaseViewModel {
+    private SessionRepository mSessionRepository;
+    private MediatorLiveData<Resource<QRResultModel>> mQrResult = new MediatorLiveData<>();
+
+    HomeViewModel(Application application) {
+        super(application);
+        mSessionRepository = SessionRepository.getInstance(application);
+    }
+
+    @Override
+    public void updateResults() {
+
+    }
+
+    public void processQr(String data) {
+        ObjectNode requestJson = Converters.objectMapper.createObjectNode();
+        requestJson.put("data", data);
+        mQrResult.addSource(mSessionRepository.newCustomerSession(requestJson), mQrResult::setValue);
+    }
+
+    public LiveData<Resource<QRResultModel>> getQrResult() {
+        return mQrResult;
+    }
+}

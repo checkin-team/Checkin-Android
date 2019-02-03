@@ -2,15 +2,12 @@ package com.checkin.app.checkin.Home;
 
 import android.accounts.AccountManager;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.os.Handler;
 import android.preference.PreferenceManager;
 import android.support.v7.app.AppCompatActivity;
 
 import com.checkin.app.checkin.Auth.AuthActivity;
 import com.checkin.app.checkin.Auth.DeviceTokenService;
-import com.checkin.app.checkin.Data.ApiClient;
 import com.checkin.app.checkin.Utility.Constants;
 
 public class SplashActivity extends AppCompatActivity {

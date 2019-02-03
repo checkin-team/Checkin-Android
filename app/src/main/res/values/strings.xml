@@ -189,5 +189,6 @@
     <string name="title_done">Done</string>
     <string name="title_request">Request</string>
     <string name="title_approve">Approve</string>
+    <string name="coming_soon">Feature coming soon.</string>
 
 </resources>

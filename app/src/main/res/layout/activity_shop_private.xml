@@ -1,40 +1,40 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.v4.widget.DrawerLayout android:fitsSystemWindows="true"
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<android.support.v4.widget.DrawerLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/drawer_shop_private"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:id="@+id/drawer_root"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
+    android:fitsSystemWindows="true">
 
     <RelativeLayout
-        android:fitsSystemWindows="true"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:fitsSystemWindows="true">
 
         <com.checkin.app.checkin.Utility.DynamicSwipableViewPager
             android:id="@+id/vp_shop_private"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"/>
+            android:layout_height="match_parent" />
 
         <android.support.design.widget.TabLayout
             android:id="@+id/tabs_shop_private"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
             android:background="@drawable/background_tab_bottom_shadowed"
             app:tabGravity="fill"
             app:tabIndicatorColor="@android:color/transparent"
             app:tabIndicatorHeight="0dp"
-            app:tabMode="fixed"
-            android:layout_alignParentBottom="true"/>
+            app:tabMode="fixed" />
 
         <ImageView
+            android:id="@+id/iv_shop_profile_navigation"
+            android:layout_width="@dimen/size_small_icon"
+            android:layout_height="@dimen/size_small_icon"
+            android:layout_marginStart="@dimen/spacing_small"
             android:layout_marginTop="@dimen/spacing_small"
-            android:id="@+id/iv_shop_profile_Navigation"
             android:contentDescription="@null"
-            android:layout_marginStart="@dimen/spacing_small_extra"
-            android:src="@drawable/ic_navigation_white"
-            android:layout_width="@dimen/spacing_large"
-            android:layout_height="@dimen/spacing_large" />
+            android:src="@drawable/ic_navigation_white" />
 
     </RelativeLayout>
 
