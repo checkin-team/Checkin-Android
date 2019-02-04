@@ -72,7 +72,8 @@ public class ProgressRequestBody extends RequestBody {
                 lastProgress = progress;
             }
 
-            mUpdateProgressFlag = true;
+            if (bytesUploaded == contentLength())
+                mUpdateProgressFlag = true;
         }
     }
 

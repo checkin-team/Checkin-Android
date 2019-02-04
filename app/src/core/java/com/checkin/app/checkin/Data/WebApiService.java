@@ -23,6 +23,7 @@ import com.checkin.app.checkin.Shop.Private.Invoice.ShopSessionDetailModel;
 import com.checkin.app.checkin.Shop.Private.MemberModel;
 import com.checkin.app.checkin.Shop.RestaurantModel;
 import com.checkin.app.checkin.Shop.ShopJoin.ShopJoinModel;
+import com.checkin.app.checkin.User.ShopCustomerModel;
 import com.checkin.app.checkin.User.UserModel;
 import com.checkin.app.checkin.Waiter.Model.OrderStatusModel;
 import com.checkin.app.checkin.Waiter.Model.WaiterEventModel;
@@ -183,7 +184,8 @@ public interface WebApiService {
     @GET("sessions/{session_id}/orders/")
     Call<List<SessionOrderedItemModel>> getSessionOrders(@Path("session_id") long sessionId);
 
-
+    @GET("sessions/recent/users/self/")
+    Call<List<ShopCustomerModel>> getUserRecentCheckins();
     // endregion
 
     // region WAITER

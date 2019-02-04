@@ -6,6 +6,8 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v7.widget.DefaultItemAnimator;
+import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -27,6 +29,9 @@ import butterknife.OnClick;
 import butterknife.Unbinder;
 
 import static android.app.Activity.RESULT_OK;
+import static com.checkin.app.checkin.User.Private.ProfileEditActivity.FIRST_NAME;
+import static com.checkin.app.checkin.User.Private.ProfileEditActivity.LAST_NAME;
+import static com.checkin.app.checkin.User.Private.ProfileEditActivity.USERNAME;
 
 public class UserPrivateProfileFragment extends Fragment {
     private Unbinder unbinder;
@@ -43,6 +48,8 @@ public class UserPrivateProfileFragment extends Fragment {
     RecyclerView rvRecentShops;
 
     private UserViewModel mViewModel;
+    private UserModel mUserModel;
+    private UserCheckinAdapter mUserCheckinAdapter;
 
     public static UserPrivateProfileFragment newInstance() {
         return new UserPrivateProfileFragment();
@@ -61,9 +68,17 @@ public class UserPrivateProfileFragment extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         mViewModel = ViewModelProviders.of(requireActivity()).get(UserViewModel.class);
-
         setupObservers();
+        rvRecentShops.setLayoutManager(new LinearLayoutManager(getActivity(),LinearLayoutManager.HORIZONTAL,false));
+        mUserCheckinAdapter = new UserCheckinAdapter();
+        rvRecentShops.setAdapter(mUserCheckinAdapter);
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
         mViewModel.fetchUserData();
+        mViewModel.fetchUserRecentCheckinsData();
     }
 
     private void setupObservers() {
@@ -78,9 +93,20 @@ public class UserPrivateProfileFragment extends Fragment {
                 Utils.toast(requireContext(), "Error: " + resource.message);
             }
         });
+
+        mViewModel.getUserRecentCheckinsData().observe(this, input -> {
+            if (input == null)
+                return;
+            if (input.status == Status.SUCCESS && input.data != null){
+                if (input.data.size() > 0){
+                    mUserCheckinAdapter.setUserCheckinsData(input.data);
+                }
+            }
+        });
     }
 
     private void setupData(UserModel data) {
+        mUserModel = data;
         tvDisplayName.setText(data.getFullName());
         Utils.loadImageOrDefault(imCover, data.getProfilePic(), (data.getGender() == UserModel.GENDER.MALE) ? R.drawable.cover_unknown_male : R.drawable.cover_unknown_female);
         tvCheckins.setText(data.formatCheckins());
@@ -102,7 +128,16 @@ public class UserPrivateProfileFragment extends Fragment {
                 startActivityForResult(intent, SelectCropImageActivity.RC_CROP_IMAGE);
                 break;
             case R.id.btn_user_private_edit:
-                startActivity(new Intent(requireContext(), ProfileEditActivity.class));
+                String firstName = mUserModel.getFirstName();
+                String lastName = mUserModel.getLastName();
+                String userName = mUserModel.getUsername();
+                if (firstName != null && lastName != null && userName != null){
+                    Intent editProfileIntent = new Intent(requireContext(), ProfileEditActivity.class);
+                    editProfileIntent.putExtra(FIRST_NAME,firstName);
+                    editProfileIntent.putExtra(LAST_NAME,lastName);
+                    editProfileIntent.putExtra(USERNAME,userName);
+                    startActivity(editProfileIntent);
+                }
                 break;
         }
     }
