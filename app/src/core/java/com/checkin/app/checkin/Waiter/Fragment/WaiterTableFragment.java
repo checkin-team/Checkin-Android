@@ -13,6 +13,7 @@ import com.checkin.app.checkin.Menu.SessionMenuActivity;
 import com.checkin.app.checkin.Misc.BaseFragment;
 import com.checkin.app.checkin.R;
 import com.checkin.app.checkin.Session.Model.SessionBriefModel;
+import com.checkin.app.checkin.Utility.Utils;
 import com.checkin.app.checkin.Waiter.WaiterTableViewModel;
 import com.checkin.app.checkin.Waiter.WaiterWorkViewModel;
 
@@ -75,6 +76,12 @@ public class WaiterTableFragment extends BaseFragment {
             } else if (listResource.status == Status.LOADING)
                 startRefreshing();
         });
+        mViewModel.getObservableData().observe(this, resource -> {
+            if (resource == null)
+                return;
+            if (resource.status != Status.LOADING && resource.message != null)
+                Utils.toast(requireContext(), resource.message);
+        });
     }
 
     private void setupTableData(SessionBriefModel data) {
@@ -100,8 +107,13 @@ public class WaiterTableFragment extends BaseFragment {
         mViewModel.updateResults();
     }
 
+    @OnClick(R.id.btn_waiter_table_checkout)
+    public void onClickCheckout() {
+        mViewModel.requestSessionCheckout();
+    }
+
     @OnClick(R.id.btn_waiter_table_menu)
-    public void onClickMenu(View v) {
+    public void onClickMenu() {
         SessionMenuActivity.withSession(requireContext(), shopPk, mViewModel.getSessionPk());
     }
 

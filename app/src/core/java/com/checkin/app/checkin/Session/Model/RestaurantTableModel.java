@@ -24,7 +24,7 @@ public class RestaurantTableModel {
     @JsonProperty("created")
     private Date created;
 
-    @JsonProperty("is_requested_checkout")
+    @JsonProperty("is_accepted_checkout")
     private boolean isRequestedCheckout;
 
     private int eventCount;

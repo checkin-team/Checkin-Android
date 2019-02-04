@@ -9,7 +9,7 @@ import com.checkin.app.checkin.Menu.Model.OrderedItemModel;
 import com.checkin.app.checkin.Misc.GenericDetailModel;
 import com.checkin.app.checkin.Search.SearchResultPeopleModel;
 import com.checkin.app.checkin.Search.SearchResultShopModel;
-import com.checkin.app.checkin.Session.ActiveSession.ActiveSessionModel;
+import com.checkin.app.checkin.Session.Model.ActiveSessionModel;
 import com.checkin.app.checkin.Session.ActiveSession.Chat.SessionChatModel;
 import com.checkin.app.checkin.Session.Model.QRResultModel;
 import com.checkin.app.checkin.Session.Model.RestaurantTableModel;
@@ -208,6 +208,9 @@ public interface WebApiService {
 
     @GET("restaurants/{restaurant_id}/stats/waiter/")
     Call<WaiterStatsModel> getRestaurantWaiterStats(@Path("restaurant_id") long restaurantId);
+
+    @POST("sessions/{session_id}/request/checkout/")
+    Call<ObjectNode> postSessionRequestCheckout(@Path("session_id") long sessionId, @Body ObjectNode data);
 
     // endregion
 

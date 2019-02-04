@@ -15,7 +15,6 @@ import com.checkin.app.checkin.Data.Converters;
 import com.checkin.app.checkin.Data.Message.Constants.CHANNEL;
 import com.checkin.app.checkin.R;
 import com.fasterxml.jackson.annotation.JsonProperty;
-import com.fasterxml.jackson.databind.node.ObjectNode;
 
 import java.io.IOException;
 import java.io.Serializable;
@@ -36,7 +35,7 @@ public class MessageModel implements Serializable {
     private MessageObjectModel target;
 
     @JsonProperty("data")
-    private ObjectNode data;
+    private MessageDataModel data;
 
     public enum MESSAGE_TYPE {
         NONE(0),
@@ -120,7 +119,7 @@ public class MessageModel implements Serializable {
     @JsonProperty("data")
     public void setData(String data) {
         try {
-            this.data = Converters.objectMapper.readValue(data, ObjectNode.class);
+            this.data = Converters.objectMapper.readValue(data, MessageDataModel.class);
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -139,7 +138,7 @@ public class MessageModel implements Serializable {
         return data.toString();
     }
 
-    public ObjectNode getRawData() {
+    public MessageDataModel getRawData() {
         return data;
     }
 

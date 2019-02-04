@@ -82,6 +82,11 @@ public class WaiterTableViewModel extends BaseViewModel {
         });
     }
 
+    public void requestSessionCheckout() {
+        ObjectNode data = Converters.objectMapper.createObjectNode();
+        data.put("payment_mode", "csh");
+        mData.addSource(mWaiterRepository.postSessionRequestCheckout(mSessionPk, data), mData::setValue);
+    }
 
     public long getSessionPk() {
         return mSessionPk;

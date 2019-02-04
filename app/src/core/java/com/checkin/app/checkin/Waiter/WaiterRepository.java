@@ -173,6 +173,26 @@ public class WaiterRepository extends BaseRepository {
         }.getAsLiveData();
     }
 
+    public LiveData<Resource<ObjectNode>> postSessionRequestCheckout(long sessionId, ObjectNode data) {
+        return new NetworkBoundResource<ObjectNode, ObjectNode>() {
+            @Override
+            protected boolean shouldUseLocalDb() {
+                return false;
+            }
+
+            @NonNull
+            @Override
+            protected LiveData<ApiResponse<ObjectNode>> createCall() {
+                return new RetrofitLiveData<>(mWebService.postSessionRequestCheckout(sessionId, data));
+            }
+
+            @Override
+            protected void saveCallResult(ObjectNode data) {
+
+            }
+        }.getAsLiveData();
+    }
+
     public static WaiterRepository getInstance(Application application) {
         if (INSTANCE == null) {
             synchronized (WaiterRepository.class) {

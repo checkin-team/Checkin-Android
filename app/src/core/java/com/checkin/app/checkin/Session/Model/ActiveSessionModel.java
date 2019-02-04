@@ -1,7 +1,6 @@
-package com.checkin.app.checkin.Session.ActiveSession;
+package com.checkin.app.checkin.Session.Model;
 
 import com.checkin.app.checkin.Misc.BriefModel;
-import com.checkin.app.checkin.Session.Model.SessionCustomerModel;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 import java.util.Date;

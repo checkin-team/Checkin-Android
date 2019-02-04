@@ -8,6 +8,7 @@ import android.support.annotation.NonNull;
 import com.checkin.app.checkin.Data.BaseViewModel;
 import com.checkin.app.checkin.Data.Converters;
 import com.checkin.app.checkin.Data.Resource;
+import com.checkin.app.checkin.Session.Model.ActiveSessionModel;
 import com.checkin.app.checkin.Session.Model.SessionInvoiceModel;
 import com.checkin.app.checkin.Shop.ShopModel;
 import com.fasterxml.jackson.databind.node.ObjectNode;
@@ -81,10 +82,10 @@ public class ActiveSessionViewModel extends BaseViewModel {
         return mSessionPk;
     }
 
-    public void updateBill(String bill) {
+    public void updateBill(double bill) {
         Resource<ActiveSessionModel> resource = mSessionData.getValue();
         if (resource != null && resource.status == Resource.Status.SUCCESS && resource.data != null) {
-            resource.data.setBill(bill);
+            resource.data.setBill(String.valueOf(bill));
         }
         mSessionData.setValue(resource);
     }

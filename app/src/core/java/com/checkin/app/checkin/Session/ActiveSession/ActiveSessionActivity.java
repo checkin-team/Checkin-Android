@@ -25,6 +25,7 @@ import com.checkin.app.checkin.R;
 import com.checkin.app.checkin.Search.SearchActivity;
 import com.checkin.app.checkin.Session.ActiveSession.Chat.SessionChatActivity;
 import com.checkin.app.checkin.Session.ActiveSession.Chat.SessionChatDataModel;
+import com.checkin.app.checkin.Session.Model.ActiveSessionModel;
 import com.checkin.app.checkin.Session.Model.SessionCustomerModel;
 import com.checkin.app.checkin.Utility.Utils;
 
@@ -70,7 +71,7 @@ public class ActiveSessionActivity extends BaseActivity implements ActiveSession
             }
             switch (message.getType()) {
                 case USER_SESSION_BILL_CHANGE:
-                    ActiveSessionActivity.this.updateBill(message.getRawData().get("bill").asText());
+                    ActiveSessionActivity.this.updateBill(message.getRawData().getSessionBillTotal());
                 case USER_SESSION_HOST_ASSIGNED:
                     ActiveSessionActivity.this.updateHost();
             }
@@ -165,7 +166,7 @@ public class ActiveSessionActivity extends BaseActivity implements ActiveSession
         }
     }
 
-    private void updateBill(String bill) {
+    private void updateBill(double bill) {
         mViewModel.updateBill(bill);
     }
 

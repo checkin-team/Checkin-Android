@@ -25,7 +25,7 @@ public class SessionBriefModel {
     @JsonProperty("table")
     private String table;
 
-    @JsonProperty("is_requested_checkout")
+    @JsonProperty("is_accepted_checkout")
     private boolean isRequestedCheckout;
 
     public SessionBriefModel() {}
