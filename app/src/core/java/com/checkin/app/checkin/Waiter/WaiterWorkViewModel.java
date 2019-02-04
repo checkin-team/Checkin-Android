@@ -10,11 +10,9 @@ import com.checkin.app.checkin.Data.BaseViewModel;
 import com.checkin.app.checkin.Data.Converters;
 import com.checkin.app.checkin.Data.Resource;
 import com.checkin.app.checkin.Data.Resource.Status;
-import com.checkin.app.checkin.Misc.BriefModel;
-import com.checkin.app.checkin.Session.ActiveSession.Chat.SessionChatModel;
-import com.checkin.app.checkin.Session.Model.EventBriefModel;
 import com.checkin.app.checkin.Session.Model.QRResultModel;
 import com.checkin.app.checkin.Session.Model.RestaurantTableModel;
+import com.checkin.app.checkin.Waiter.Model.WaiterStatsModel;
 import com.checkin.app.checkin.Waiter.Model.WaiterTableModel;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 
@@ -27,6 +25,9 @@ public class WaiterWorkViewModel extends BaseViewModel {
     private MediatorLiveData<Resource<List<RestaurantTableModel>>> mShopTables = new MediatorLiveData<>();
     private MediatorLiveData<Resource<List<WaiterTableModel>>> mWaiterTables = new MediatorLiveData<>();
     private MediatorLiveData<Resource<QRResultModel>> mQrResult = new MediatorLiveData<>();
+    private MediatorLiveData<Resource<WaiterStatsModel>> mWaiterStats = new MediatorLiveData<>();
+
+    private long mShopPk;
 
     public WaiterWorkViewModel(@NonNull Application application) {
         super(application);
@@ -35,14 +36,20 @@ public class WaiterWorkViewModel extends BaseViewModel {
 
     @Override
     public void updateResults() {
-
+        fetchShopActiveTables(mShopPk);
+        fetchWaiterStats();
     }
 
     public void fetchWaiterServedTables() {
         mWaiterTables.addSource(mWaiterRepository.getWaiterServedTables(), mWaiterTables::setValue);
     }
 
+    public void fetchWaiterStats() {
+        mWaiterStats.addSource(mWaiterRepository.getWaiterStats(mShopPk), mWaiterStats::setValue);
+    }
+
     public void fetchShopActiveTables(long shopId) {
+        mShopPk = shopId;
         mShopTables.addSource(mWaiterRepository.getShopActiveTables(shopId), mShopTables::setValue);
     }
 
@@ -77,6 +84,10 @@ public class WaiterWorkViewModel extends BaseViewModel {
         });
     }
 
+    public LiveData<Resource<WaiterStatsModel>> getWaiterStats() {
+        return mWaiterStats;
+    }
+
     public LiveData<Resource<List<WaiterTableModel>>> getWaiterTables() {
         return mWaiterTables;
     }
@@ -91,16 +102,7 @@ public class WaiterWorkViewModel extends BaseViewModel {
         mQrResult.addSource(mWaiterRepository.newWaiterSession(requestJson), mQrResult::setValue);
     }
 
-    public void setupDummyData() {
-        List<WaiterTableModel> tableModels = new ArrayList<>();
-        tableModels.add(new WaiterTableModel(1, "Table 1"));
-        tableModels.add(new WaiterTableModel(2, "Table 2"));
-        mWaiterTables.setValue(Resource.success(tableModels));
-
-        List<RestaurantTableModel> restaurantTableModels = new ArrayList<>();
-        restaurantTableModels.add(new RestaurantTableModel(1, "Random", null, new EventBriefModel(1, SessionChatModel.CHAT_EVENT_TYPE.EVENT_CUSTOM_MESSAGE, "Message")));
-        restaurantTableModels.add(new RestaurantTableModel(2, "Table 4", new BriefModel("1", "Alex", null), new EventBriefModel(1, SessionChatModel.CHAT_EVENT_TYPE.EVENT_HOST_ASSIGNED, "Assigned")));
-        restaurantTableModels.add(new RestaurantTableModel(3, "Special", null, new EventBriefModel(1, SessionChatModel.CHAT_EVENT_TYPE.EVENT_CONCERN, "Concern")));
-        mShopTables.setValue(Resource.success(restaurantTableModels));
+    public long getShopPk() {
+        return mShopPk;
     }
 }

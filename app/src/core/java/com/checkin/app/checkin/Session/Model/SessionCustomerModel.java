@@ -5,7 +5,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 
 public class SessionCustomerModel {
     @JsonProperty("pk")
-    private String pk;
+    private long pk;
 
     @JsonProperty("user")
     private BriefModel user;
@@ -19,9 +19,12 @@ public class SessionCustomerModel {
     @JsonProperty("is_payee")
     private boolean isPayee;
 
+    @JsonProperty("is_accepted")
+    private boolean isAccepted;
+
     public SessionCustomerModel() {}
 
-    public SessionCustomerModel(String pk, BriefModel user, boolean isOwner, boolean is_public, boolean isPayee) {
+    public SessionCustomerModel(long pk, BriefModel user, boolean isOwner, boolean is_public, boolean isPayee) {
         this.pk = pk;
         this.user = user;
         this.isOwner = isOwner;
@@ -29,7 +32,7 @@ public class SessionCustomerModel {
         this.isPayee = isPayee;
     }
 
-    public String getPk() {
+    public long getPk() {
         return pk;
     }
 
@@ -47,5 +50,9 @@ public class SessionCustomerModel {
 
     public boolean isIs_public() {
         return is_public;
+    }
+
+    public boolean isAccepted() {
+        return isAccepted;
     }
 }

@@ -4,55 +4,94 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 
 public class SessionBillModel {
     @JsonProperty("subtotal")
-    private String subtotal;
+    private Double subtotal;
 
     @JsonProperty("tax")
-    private String tax;
+    private Double tax;
 
     @JsonProperty("tip")
-    private String tip;
+    private Double tip;
 
     @JsonProperty("discount")
-    private String discount;
+    private Double discount;
 
     @JsonProperty("offers")
-    private String offers;
+    private Double offers;
 
     @JsonProperty("total")
-    private String total;
+    private Double total;
+
+    private Double discountPercentage;
 
     public SessionBillModel(){}
 
-    public SessionBillModel(String subtotal, String tax, String tip, String discount, String offers, String total) {
-        this.subtotal = subtotal;
-        this.tax = tax;
-        this.tip = tip;
-        this.discount = discount;
-        this.offers = offers;
-        this.total = total;
-    }
-
-    public String getSubtotal() {
+    public Double getSubtotal() {
         return subtotal;
     }
 
-    public String getTax() {
+    public Double getTax() {
         return tax;
     }
 
-    public String getTip() {
+    public Double getTip() {
         return tip;
     }
 
-    public String getDiscount() {
+    public Double getDiscount() {
         return discount;
     }
 
-    public String getOffers() {
+    public Double getOffers() {
         return offers;
     }
 
-    public String getTotal() {
+    @JsonProperty("offers")
+    public void setOffers(Double offers) {
+        this.offers = (offers > 0) ? offers : null;
+    }
+
+    @JsonProperty("discount")
+    public void setDiscount(Double discount) {
+        this.discount = (discount > 0) ? discount : null;
+    }
+
+    public String formatSubTotal() {
+        return String.valueOf(subtotal);
+    }
+
+    public String formatTax() {
+        return String.valueOf(tax);
+    }
+
+    public String formatTip() {
+        return String.valueOf(tip);
+    }
+
+    public String formatDiscount() {
+        return String.valueOf(discount);
+    }
+
+    public String formatTotal() {
+        return String.valueOf(total);
+    }
+
+    public Double getTotal() {
         return total;
+    }
+
+    public void calculateDiscount(Double percent) {
+        discountPercentage = percent;
+
+        double oldDiscount = discount;
+        discount = (subtotal * percent) / 100;
+        total -= (discount - oldDiscount);
+    }
+
+    public Double getDiscountPercentage() {
+        return discountPercentage;
+    }
+
+    public void setDiscountPercentage(Double discountPercentage) {
+        this.discountPercentage = discountPercentage;
     }
 }

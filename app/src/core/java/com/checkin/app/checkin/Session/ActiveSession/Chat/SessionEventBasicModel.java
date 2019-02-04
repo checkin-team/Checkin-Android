@@ -54,6 +54,9 @@ public class SessionEventBasicModel {
     public static int getEventIcon(CHAT_EVENT_TYPE type, @Nullable EVENT_REQUEST_SERVICE_TYPE service, @Nullable EVENT_CONCERN_TYPE concern) {
         switch (type) {
             case EVENT_SESSION_CHECKIN:
+            case EVENT_SESSION_CHECKOUT:
+            case EVENT_MEMBER_ADD:
+            case EVENT_MEMBER_REMOVE:
                 return R.drawable.ic_session_event_checkin;
             case EVENT_CUSTOM_MESSAGE:
                 return R.drawable.ic_session_event_custom;
@@ -61,18 +64,23 @@ public class SessionEventBasicModel {
                 return R.drawable.ic_session_event_request_checkout;
             case EVENT_CONCERN:
                 if (concern != null) {
-                    return (concern == EVENT_CONCERN_TYPE.CONCERN_DELAY ? R.drawable.ic_session_event_concern_delay : R.drawable.ic_session_event_concern_delay);
+                    return (concern == EVENT_CONCERN_TYPE.CONCERN_DELAY ? R.drawable.ic_session_event_concern_delay : R.drawable.ic_session_event_concern_quality);
                 }
             case EVENT_REQUEST_SERVICE:
                 if (service != null) {
-                    if (service == EVENT_REQUEST_SERVICE_TYPE.SERVICE_CALL_WAITER)
-                        return R.drawable.ic_session_event_request_waiter;
-                    else if (service == EVENT_REQUEST_SERVICE_TYPE.SERVICE_BRING_COMMODITY)
-                        return R.drawable.ic_session_event_request_item;
+                    switch (service) {
+                        case SERVICE_BRING_COMMODITY:
+                            return R.drawable.ic_session_event_request_item;
+                        case SERVICE_CLEAN_TABLE:
+                            return R.drawable.ic_session_event_request_clean_table;
+                        case SERVICE_CALL_WAITER:
+                            return R.drawable.ic_session_event_request_waiter;
+                    }
                 }
+            case EVENT_MENU_ORDER_ITEM:
+                return R.drawable.ic_session_event_order_new;
             default:
-                // TODO: Remove test icons.
-                return R.drawable.ic_session_event_checkin;
+                return R.drawable.ic_session_event_custom;
         }
     }
 }

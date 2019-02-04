@@ -1,34 +1,31 @@
 package com.checkin.app.checkin.Session.ActiveSession;
 
 import android.annotation.SuppressLint;
+import android.app.AlertDialog;
 import android.arch.lifecycle.ViewModelProviders;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.preference.PreferenceManager;
 import android.support.annotation.Nullable;
-import android.support.v4.content.LocalBroadcastManager;
-import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.MotionEvent;
 import android.view.ViewGroup;
 import android.widget.ImageView;
-import android.widget.Switch;
 import android.widget.TextView;
 
 import com.checkin.app.checkin.Data.Message.MessageModel;
 import com.checkin.app.checkin.Data.Message.MessageModel.MESSAGE_TYPE;
 import com.checkin.app.checkin.Data.Message.MessageUtils;
 import com.checkin.app.checkin.Menu.SessionMenuActivity;
+import com.checkin.app.checkin.Misc.BaseActivity;
 import com.checkin.app.checkin.R;
 import com.checkin.app.checkin.Search.SearchActivity;
 import com.checkin.app.checkin.Session.ActiveSession.Chat.SessionChatActivity;
 import com.checkin.app.checkin.Session.ActiveSession.Chat.SessionChatDataModel;
-import com.checkin.app.checkin.Utility.Constants;
+import com.checkin.app.checkin.Session.Model.SessionCustomerModel;
 import com.checkin.app.checkin.Utility.Utils;
 
 import butterknife.BindView;
@@ -37,11 +34,10 @@ import butterknife.OnClick;
 
 import static com.checkin.app.checkin.Data.Message.Constants.KEY_DATA;
 
-public class ActiveSessionActivity extends AppCompatActivity implements ActiveSessionMemberAdapter.SessionMemberInteraction, PostCheckinFragment.PostCheckinInteraction {
+public class ActiveSessionActivity extends BaseActivity implements ActiveSessionMemberAdapter.SessionMemberInteraction {
     private static final String TAG = ActiveSessionActivity.class.getSimpleName();
 
     private static final int RC_SEARCH_MEMBER = 201;
-    private static LocalBroadcastManager sBroadcastManager;
 
     @BindView(R.id.rv_session_members)
     RecyclerView rvMembers;
@@ -49,16 +45,15 @@ public class ActiveSessionActivity extends AppCompatActivity implements ActiveSe
     TextView tvBill;
     @BindView(R.id.tv_as_waiter_name)
     TextView tvWaiterName;
+    @BindView(R.id.tv_session_live_at)
+    TextView tvSessionLiveAt;
     @BindView(R.id.im_as_waiter_pic)
     ImageView imWaiterPic;
-    @BindView(R.id.switch_session_presence)
-    Switch switchSessionPresence;
     @BindView(R.id.container_as_actions_bottom)
     ViewGroup containerBottomActions;
 
     private ActiveSessionViewModel mViewModel;
     private ActiveSessionMemberAdapter mSessionMembersAdapter;
-    private PostCheckinFragment mPostCheckinFragment;
 
     private final BroadcastReceiver mReceiver = new BroadcastReceiver() {
         @Override
@@ -74,9 +69,9 @@ public class ActiveSessionActivity extends AppCompatActivity implements ActiveSe
                 return;
             }
             switch (message.getType()) {
-                case SESSION_BILL_CHANGE:
+                case USER_SESSION_BILL_CHANGE:
                     ActiveSessionActivity.this.updateBill(message.getRawData().get("bill").asText());
-                case SESSION_HOST_ASSIGNED:
+                case USER_SESSION_HOST_ASSIGNED:
                     ActiveSessionActivity.this.updateHost();
             }
         }
@@ -87,13 +82,13 @@ public class ActiveSessionActivity extends AppCompatActivity implements ActiveSe
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_active_session);
         ButterKnife.bind(this);
-        sBroadcastManager = LocalBroadcastManager.getInstance(this);
 
         mViewModel = ViewModelProviders.of(this).get(ActiveSessionViewModel.class);
 
         setupUi();
-        setupInitialState();
         setupObservers();
+
+        mViewModel.fetchActiveSessionDetail();
     }
 
     private void setupObservers() {
@@ -104,17 +99,18 @@ public class ActiveSessionActivity extends AppCompatActivity implements ActiveSe
                 case SUCCESS: {
                     if (data == null)
                         return;
-                    if (mViewModel.getSessionPk() != data.getPk()) {
-                        showPostCheckIn();
-                    }
+                    stopRefreshing();
                     mViewModel.setSessionPk(data.getPk());
                     mViewModel.setShopPk(data.getShopPk());
                     setupData(data);
+                    break;
                 }
                 case LOADING: {
+                    startRefreshing();
                     break;
                 }
                 default: {
+                    stopRefreshing();
                     Log.e(resource.status.name(), resource.message == null ? "Null" : resource.message);
                 }
             }
@@ -126,7 +122,6 @@ public class ActiveSessionActivity extends AppCompatActivity implements ActiveSe
             switch (resource.status) {
                 case SUCCESS: {
                     Utils.toast(this, "Done!");
-                    updateState(mViewModel.getShopPk(), mViewModel.getSessionPk());
                     break;
                 }
                 case LOADING:
@@ -136,6 +131,11 @@ public class ActiveSessionActivity extends AppCompatActivity implements ActiveSe
                 }
             }
         });
+    }
+
+    @Override
+    protected void updateScreen() {
+        mViewModel.updateResults();
     }
 
     @SuppressLint("ClickableViewAccessibility")
@@ -150,16 +150,13 @@ public class ActiveSessionActivity extends AppCompatActivity implements ActiveSe
             return true;
         });
 
-        switchSessionPresence.setOnClickListener(v -> {
-            if (switchSessionPresence.isChecked()) mViewModel.sendSelfPresence(true);
-            else mViewModel.sendSelfPresence(false);
-        });
+        initRefreshScreen(R.id.sr_active_session);
     }
 
     private void setupData(ActiveSessionModel data) {
         mSessionMembersAdapter.setUsers(data.getCustomers());
         tvBill.setText(data.getBill());
-        switchSessionPresence.setChecked(data.isCheckinPublic());
+        tvSessionLiveAt.setText(data.getRestaurant().getDisplayName());
         if (data.gethost() != null) {
             tvWaiterName.setText(data.gethost().getDisplayName());
             Utils.loadImageOrDefault(imWaiterPic, data.gethost().getDisplayPic(), R.drawable.ic_waiter);
@@ -176,32 +173,6 @@ public class ActiveSessionActivity extends AppCompatActivity implements ActiveSe
 
     }
 
-    private void updateState(long shopPk, long sessionPk) {
-        PreferenceManager.getDefaultSharedPreferences(this).edit()
-                .putLong(Constants.SP_SESSION_ACTIVE_PK, sessionPk)
-                .putLong(Constants.SP_SESSION_RESTAURANT_PK, shopPk)
-                .apply();
-        if (mPostCheckinFragment != null) {
-            getSupportFragmentManager().beginTransaction()
-                    .remove(mPostCheckinFragment)
-                    .commit();
-            mPostCheckinFragment = null;
-        }
-    }
-
-    private void showPostCheckIn() {
-        mPostCheckinFragment = PostCheckinFragment.newInstance(this);
-        getSupportFragmentManager().beginTransaction()
-                .add(R.id.root_session, mPostCheckinFragment)
-                .commit();
-    }
-
-    private void setupInitialState() {
-        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
-        mViewModel.setSessionPk(prefs.getLong(Constants.SP_SESSION_ACTIVE_PK, -1));
-        mViewModel.fetchActiveSessionDetail();
-    }
-
     @OnClick(R.id.btn_active_session_menu)
     public void onListMenu() {
         SessionMenuActivity.withSession(this, mViewModel.getShopPk(), null);
@@ -212,7 +183,7 @@ public class ActiveSessionActivity extends AppCompatActivity implements ActiveSe
         startActivity(new Intent(this, ActiveSessionViewOrdersActivity.class));
     }
 
-    @OnClick(R.id.btn_active_session_invoice)
+    @OnClick(R.id.tv_active_session_bill)
     public void openBillDetails() {
         startActivity(new Intent(
                 this, ActiveSessionInvoiceActivity.class)
@@ -235,11 +206,12 @@ public class ActiveSessionActivity extends AppCompatActivity implements ActiveSe
     }
 
     @Override
-    public void onAddMemberClicked() {
-        Intent intent = new Intent(this, SearchActivity.class);
-        intent.putExtra(SearchActivity.KEY_SEARCH_TYPE, SearchActivity.TYPE_PEOPLE);
-        intent.putExtra(SearchActivity.KEY_SEARCH_MODE, SearchActivity.MODE_SELECT);
-        startActivityForResult(intent, RC_SEARCH_MEMBER);
+    public void onUnacceptedMemberClicked(SessionCustomerModel customerModel) {
+        new AlertDialog.Builder(this)
+                .setMessage("Do you want to accept/reject member request?")
+                .setPositiveButton("Accept", ((dialog, which) -> mViewModel.acceptSessionMember(customerModel.getUser().getPk())))
+                .setNegativeButton("Reject", ((dialog, which) -> mViewModel.removeSessionMember(customerModel.getUser().getPk())))
+                .show();
     }
 
     @Override
@@ -259,20 +231,15 @@ public class ActiveSessionActivity extends AppCompatActivity implements ActiveSe
     }
 
     @Override
-    public void OnProceedClicked(boolean isPublic) {
-        mViewModel.sendSelfPresence(isPublic);
-    }
-
-    @Override
     protected void onResume() {
         super.onResume();
         MessageUtils.registerLocalReceiver(
-                this, mReceiver, MESSAGE_TYPE.SESSION_BILL_CHANGE, MESSAGE_TYPE.SESSION_HOST_ASSIGNED, MESSAGE_TYPE.SESSION_MEMBER_ADDED, MESSAGE_TYPE.SESSION_END);
+                this, mReceiver, MESSAGE_TYPE.USER_SESSION_BILL_CHANGE, MESSAGE_TYPE.USER_SESSION_HOST_ASSIGNED, MESSAGE_TYPE.USER_SESSION_MEMBER_ADDED, MESSAGE_TYPE.USER_SESSION_END);
     }
 
     @Override
     protected void onPause() {
         super.onPause();
-        sBroadcastManager.unregisterReceiver(mReceiver);
+        MessageUtils.unregisterLocalReceiver(this, mReceiver);
     }
 }

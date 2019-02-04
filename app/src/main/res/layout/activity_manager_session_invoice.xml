@@ -1,8 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:tools="http://schemas.android.com/tools"
     android:background="@color/white">
 
     <TextView
@@ -15,21 +16,21 @@
         android:text="@string/title_bill_details" />
 
     <ScrollView
-        android:layout_below="@+id/title_bill_details"
-        android:layout_above="@+id/payment_mode_container"
-        android:id="@+id/menu_price_container"
-        android:fillViewport="true"
-        android:scrollbars="none"
+        android:id="@+id/container_ms_session_invoice"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:layout_above="@+id/payment_mode_container"
+        android:layout_below="@+id/title_bill_details"
+        android:fillViewport="true"
+        android:scrollbars="none">
 
         <LinearLayout
-            android:orientation="vertical"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
 
             <android.support.v7.widget.RecyclerView
-                android:id="@+id/rv_invoice_ordered_items"
+                android:id="@+id/rv_ms_invoice_ordered_items"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:nestedScrollingEnabled="false"
@@ -38,100 +39,110 @@
                 android:paddingEnd="@dimen/spacing_normal"
                 android:paddingBottom="@dimen/spacing_extra_small" />
 
-            <LinearLayout
+            <android.support.constraint.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/white_three"
+                android:orientation="vertical"
                 android:paddingStart="@dimen/spacing_normal"
                 android:paddingTop="@dimen/spacing_small"
                 android:paddingEnd="@dimen/spacing_normal"
-                android:paddingBottom="@dimen/spacing_small"
-                android:background="@color/white_three"
-                android:orientation="vertical"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content">
+                android:paddingBottom="@dimen/spacing_small">
 
-                <LinearLayout
-                    android:orientation="horizontal"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content">
+                <TextView
+                    android:id="@+id/tv_invoice_discount_title"
+                    style="@style/GreyHeadingStyle"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="Discount"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="@id/ed_ms_invoice_discount"
+                    app:layout_constraintBottom_toBottomOf="@id/ed_ms_invoice_discount"/>
 
-                    <TextView
-                        android:id="@+id/tv_invoice_discount_title"
-                        android:text="Discount"
-                        style="@style/GreyHeadingStyle"
-                        android:layout_width="0dp"
-                        android:layout_weight="1"
-                        android:layout_height="wrap_content" />
+                <EditText
+                    android:id="@+id/ed_ms_invoice_discount"
+                    style="@style/GreyTextStyle"
+                    android:layout_width="@dimen/width_input_large"
+                    android:layout_height="@dimen/height_input_large"
+                    android:layout_marginEnd="@dimen/spacing_large"
+                    android:background="@drawable/bordered_text_light_grey"
+                    android:enabled="false"
+                    android:importantForAutofill="no"
+                    android:inputType="numberDecimal"
+                    android:paddingStart="@dimen/spacing_normal"
+                    android:paddingTop="@dimen/spacing_extra_small"
+                    android:paddingEnd="@dimen/spacing_normal"
+                    android:paddingBottom="@dimen/spacing_extra_small"
+                    android:textSize="@dimen/font_heading"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    tools:ignore="LabelFor,UnusedAttribute" />
 
-                    <EditText
-                        android:layout_marginEnd="@dimen/spacing_tiny"
-                        android:id="@+id/ed_invoice_discount"
-                        android:background="@drawable/bordered_text_light_grey"
-                        android:hint="20.00"
-                        style="@style/GreyTextStyle"
-                        android:inputType="numberDecimal"
-                        android:paddingTop="@dimen/spacing_extra_small"
-                        android:enabled="false"
-                        android:paddingBottom="@dimen/spacing_extra_small"
-                        android:paddingStart="@dimen/spacing_normal"
-                        android:paddingEnd="@dimen/spacing_normal"
-                        android:textSize="@dimen/font_heading"
-                        android:layout_width="@dimen/width_input_large"
-                        android:layout_height="@dimen/height_input_large"
-                        android:importantForAutofill="no"
-                        tools:ignore="LabelFor,UnusedAttribute" />
-
-                    <TextView
-                        android:id="@+id/tv_invoice_percent"
-                        android:text="%"
-                        android:textStyle="bold"
-                        style="@style/GreyHeadingStyle"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content" />
-
-                </LinearLayout>
+                <TextView
+                    android:id="@+id/tv_invoice_percent"
+                    style="@style/GreyHeadingStyle"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/spacing_extra_small"
+                    android:text="%"
+                    android:textStyle="bold"
+                    app:layout_constraintBottom_toBottomOf="@id/ed_ms_invoice_discount"
+                    app:layout_constraintStart_toEndOf="@id/ed_ms_invoice_discount"
+                    app:layout_constraintTop_toTopOf="@id/ed_ms_invoice_discount" />
 
                 <include
-                    android:layout_gravity="end"
                     layout="@layout/incl_dotted_view"
-                    android:layout_marginTop="@dimen/spacing_extra_small"
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"/>
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/ed_ms_invoice_discount"
+                    android:layout_gravity="end"
+                    android:layout_marginTop="@dimen/spacing_extra_small"
+                    app:layout_constraintEnd_toEndOf="@id/ed_ms_invoice_discount"
+                    app:layout_constraintStart_toStartOf="@id/ed_ms_invoice_discount"
+                    app:layout_constraintTop_toBottomOf="@id/ed_ms_invoice_discount" />
 
                 <TextView
-                    android:id="@+id/tv_invoice_change"
-                    android:layout_marginTop="@dimen/spacing_tiny"
-                    android:layout_marginEnd="@dimen/text_spacing_from_right"
-                    android:layout_gravity="end"
-                    android:text="Change"
+                    android:id="@+id/tv_ms_invoice_change"
                     style="@style/RedSmallTextStyle"
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content" />
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="end"
+                    android:layout_marginTop="@dimen/spacing_normal"
+                    android:text="@string/change"
+                    android:visibility="gone"
+                    app:layout_constraintEnd_toEndOf="@id/ed_ms_invoice_discount"
+                    app:layout_constraintStart_toStartOf="@id/ed_ms_invoice_discount"
+                    app:layout_constraintTop_toBottomOf="@id/ed_ms_invoice_discount" />
 
-                <TextView
-                    android:id="@+id/tv_invoice_save_change"
+                <Button
+                    android:id="@+id/btn_ms_invoice_save_change"
+                    style="@style/ButtonRedAlertAction"
+                    android:layout_width="wrap_content"
+                    android:layout_height="@dimen/button_height_short"
                     android:layout_marginTop="@dimen/spacing_normal"
                     android:layout_marginBottom="@dimen/spacing_small"
-                    android:background="@drawable/text_card_rouge"
-                    android:layout_gravity="end"
                     android:gravity="center"
-                    android:textSize="@dimen/font_extra_small"
                     android:paddingStart="@dimen/spacing_small"
-                    android:paddingEnd="@dimen/spacing_small"
                     android:paddingTop="@dimen/spacing_extra_small"
+                    android:paddingEnd="@dimen/spacing_small"
                     android:paddingBottom="@dimen/spacing_extra_small"
                     android:text="Save Changes"
-                    android:visibility="gone"
                     android:textColor="@color/white"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content" />
+                    android:textSize="@dimen/font_extra_small"
+                    android:visibility="gone"
+                    app:layout_constraintEnd_toEndOf="@id/ed_ms_invoice_discount"
+                    app:layout_constraintStart_toStartOf="@id/ed_ms_invoice_discount"
+                    app:layout_constraintTop_toBottomOf="@id/tv_ms_invoice_change" />
 
-            </LinearLayout>
+            </android.support.constraint.ConstraintLayout>
 
             <include layout="@layout/incl_session_invoice" />
 
             <include layout="@layout/incl_horizontal_line" />
 
             <FrameLayout
-                android:id="@+id/container_invoice_total"
+                android:id="@+id/container_ms_invoice_total"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/spacing_extra_small"
@@ -146,7 +157,7 @@
                     android:text="Total" />
 
                 <TextView
-                    android:id="@+id/tv_invoice_total"
+                    android:id="@+id/tv_ms_invoice_total"
                     style="@style/GreyTextStyle"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -160,39 +171,37 @@
 
     <LinearLayout
         android:id="@+id/payment_mode_container"
-        android:layout_alignParentBottom="true"
-        android:orientation="horizontal"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
         android:layout_margin="@dimen/spacing_normal"
         android:background="@drawable/rounded_rectangle_light_grey"
+        android:orientation="horizontal"
         android:padding="@dimen/spacing_small">
 
         <TextView
-            android:layout_marginStart="@dimen/spacing_large"
             style="@style/GreyTextStyle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:drawableStart="@drawable/ic_cash"
+            android:layout_marginStart="@dimen/spacing_large"
+            android:drawableStart="@drawable/ic_cash_grey"
             android:drawablePadding="@dimen/spacing_small"
             android:text="Via Cash" />
 
         <Space
-            android:layout_weight="1"
             android:layout_width="0dp"
-            android:layout_height="match_parent" />
+            android:layout_height="match_parent"
+            android:layout_weight="1" />
 
-        <TextView
-            android:id="@+id/btn_invoice_request_checkout"
+        <Button
+            android:id="@+id/btn_ms_invoice_collect_cash"
+            style="@style/ButtonRedAlertAction"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            style="@style/WhiteTextStyle"
-            android:paddingStart="@dimen/spacing_large"
-            android:paddingEnd="@dimen/spacing_large"
-            android:paddingTop="@dimen/spacing_extra_small"
-            android:paddingBottom="@dimen/spacing_extra_small"
-            android:background="@color/colorAccent"
-            android:text="Collect Cash" />
+            android:layout_height="@dimen/button_height_short"
+            android:text="Collect Cash"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
 
     </LinearLayout>
 

@@ -8,6 +8,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.support.annotation.Nullable;
 import android.support.v4.app.NotificationCompat;
+import android.text.Html;
 import android.text.TextUtils;
 
 import com.checkin.app.checkin.Data.Converters;
@@ -42,12 +43,26 @@ public class MessageModel implements Serializable {
 
         /* Users */
 
-        // Activity
-        REVIEW_WRITE_REQUEST(220), REVIEW_LIKED(221),
-
         // Active Session
-        SESSION_MEMBER_ADDED(302), SESSION_HOST_ASSIGNED(305), SESSION_END(309),
-        SESSION_BILL_CHANGE(311);
+        USER_SESSION_MEMBER_ADD_REQUEST(302), USER_SESSION_ADDED_BY_OWNER(303), USER_SESSION_MEMBER_REMOVED(304),
+        USER_SESSION_HOST_ASSIGNED(305), USER_SESSION_MEMBER_ADDED(306), USER_SESSION_END(309),
+        USER_SESSION_BILL_CHANGE(311), USER_SESSION_EVENT_NEW(312), USER_SESSION_EVENT_UPDATE(313),
+        USER_SESSION_ORDER_ACCEPTED(315), USER_SESSION_ORDER_REJECTED(316),
+
+        /* Restaurant */
+
+        // Members
+        SHOP_MEMBER_ADDED(505),
+
+        // Manager
+        MANAGER_SESSION_NEW(611), MANAGER_SESSION_MEMBER_CHANGE(612), MANAGER_SESSION_HOST_ASSIGNED(613),
+        MANAGER_SESSION_NEW_ORDER(615), MANAGER_SESSION_UPDATE_ORDER(616), MANAGER_SESSION_EVENT_SERVICE(617),
+        MANAGER_SESSION_EVENT_CONCERN(618), MANAGER_SESSION_BILL_CHANGE(619), MANAGER_SESSION_CHECKOUT_REQUEST(625),
+
+        // Waiter
+        WAITER_SESSION_NEW(711), WAITER_SESSION_MEMBER_CHANGE(712), WAITER_SESSION_HOST_ASSIGNED(713),
+        WAITER_SESSION_NEW_ORDER(715), WAITER_SESSION_UPDATE_ORDER(716), WAITER_SESSION_EVENT_SERVICE(717),
+        WAITER_SESSION_COLLECT_CASH(725), WAITER_SESSION_END(726);
 
         public int id;
 
@@ -145,17 +160,17 @@ public class MessageModel implements Serializable {
         return this.type.name() + " -- " + this.description;
     }
 
-    public String getChannelId() {
+    protected String getChannelId() {
         switch (this.type) {
-            case SESSION_BILL_CHANGE:
-            case SESSION_MEMBER_ADDED:
+            case USER_SESSION_BILL_CHANGE:
+            case USER_SESSION_MEMBER_ADD_REQUEST:
                 return CHANNEL.ACTIVE_SESSION.id;
             default:
                 return CHANNEL.DEFAULT.id;
         }
     }
 
-    public Intent getNotificationIntent(Context context) {
+    private Intent getNotificationIntent(Context context) {
         Intent intent = new Intent();
         intent.putExtra(Constants.KEY_DATA, this);
         ComponentName componentName = getTargetComponent(context);
@@ -169,13 +184,11 @@ public class MessageModel implements Serializable {
         return null;
     }
 
-    public NotificationCompat.Builder getNotificationBuilder(Context context, int notificationId) {
-        if (!shouldShowNotification())
-            return null;
+    private NotificationCompat.Builder getNotificationBuilder(Context context, int notificationId) {
         NotificationCompat.Builder builder = new NotificationCompat.Builder(context, this.getChannelId());
         builder.setContentTitle(context.getString(R.string.app_name))
-                .setContentText(this.description)
-                .setSmallIcon(R.drawable.ic_launcher_background)
+                .setContentText(Html.fromHtml(this.description).toString())
+                .setSmallIcon(R.drawable.ic_logo_notification)
                 .setAutoCancel(true);
         addNotificationExtra(context, builder, notificationId);
         return builder;
@@ -184,7 +197,7 @@ public class MessageModel implements Serializable {
     private void addNotificationExtra(Context context, NotificationCompat.Builder builder, int notificationId) {
     }
 
-    public void showNotification(Context context, NotificationManager notificationManager, int notificationId) {
+    void showNotification(Context context, NotificationManager notificationManager, int notificationId) {
         Intent intent = getNotificationIntent(context);
         PendingIntent pendingIntent = PendingIntent.getActivity(context, 0, intent, PendingIntent.FLAG_UPDATE_CURRENT);
         Notification notification = getNotificationBuilder(context, notificationId)
@@ -193,22 +206,38 @@ public class MessageModel implements Serializable {
         notificationManager.notify(notificationId, notification);
     }
 
-    public boolean shouldShowNotification() {
+    protected boolean shouldShowNotification() {
         return !TextUtils.isEmpty(description) && !isOnlyUiUpdate();
     }
 
-    public boolean isOnlyUiUpdate() {
+    protected boolean isOnlyUiUpdate() {
         switch (this.type) {
-            case SESSION_BILL_CHANGE:
-            case SESSION_END:
-            case SESSION_HOST_ASSIGNED:
+            case USER_SESSION_BILL_CHANGE:
+            case USER_SESSION_END:
+            case USER_SESSION_HOST_ASSIGNED:
+            case USER_SESSION_ORDER_ACCEPTED:
+            case USER_SESSION_ORDER_REJECTED:
+            case MANAGER_SESSION_NEW:
+            case MANAGER_SESSION_NEW_ORDER:
+            case MANAGER_SESSION_EVENT_CONCERN:
+            case WAITER_SESSION_NEW:
+            case WAITER_SESSION_NEW_ORDER:
+            case WAITER_SESSION_EVENT_SERVICE:
+            case WAITER_SESSION_COLLECT_CASH:
                 return false;
             default:
                 return true;
         }
     }
 
-    public boolean shouldTryUpdateUi() {
-        return true;
+    boolean shouldTryUpdateUi() {
+        switch (this.type) {
+            case USER_SESSION_ORDER_ACCEPTED:
+            case USER_SESSION_ORDER_REJECTED:
+            case SHOP_MEMBER_ADDED:
+                return false;
+            default:
+                return true;
+        }
     }
 }

@@ -9,10 +9,13 @@ import android.support.annotation.NonNull;
 import com.checkin.app.checkin.Data.BaseViewModel;
 import com.checkin.app.checkin.Data.Converters;
 import com.checkin.app.checkin.Data.Resource;
+import com.checkin.app.checkin.Manager.Model.ManagerSessionEventModel;
+import com.checkin.app.checkin.Manager.Model.ManagerSessionInvoiceModel;
+import com.checkin.app.checkin.Misc.GenericDetailModel;
 import com.checkin.app.checkin.Session.Model.SessionBriefModel;
 import com.checkin.app.checkin.Session.Model.SessionOrderedItemModel;
 import com.checkin.app.checkin.Session.SessionRepository;
-import com.checkin.app.checkin.Waiter.Model.WaiterEventModel;
+import com.checkin.app.checkin.Waiter.Model.OrderStatusModel;
 import com.checkin.app.checkin.Waiter.WaiterRepository;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 
@@ -32,9 +35,12 @@ public class ManagerSessionViewModel extends BaseViewModel {
 
     private MediatorLiveData<Resource<SessionBriefModel>> mBriefData = new MediatorLiveData<>();
     private MediatorLiveData<Resource<List<SessionOrderedItemModel>>> mOrdersData = new MediatorLiveData<>();
-    private MediatorLiveData<Resource<List<WaiterEventModel>>> mEventData = new MediatorLiveData<>();
+    private MediatorLiveData<Resource<List<ManagerSessionEventModel>>> mEventData = new MediatorLiveData<>();
+    private MediatorLiveData<Resource<GenericDetailModel>> mDetailData = new MediatorLiveData<>();
+    private MediatorLiveData<Resource<OrderStatusModel>> mOrderStatusData = new MediatorLiveData<>();
 
     private long mSessionPk;
+    private long mShopPk;
 
     public ManagerSessionViewModel(@NonNull Application application) {
         super(application);
@@ -47,6 +53,21 @@ public class ManagerSessionViewModel extends BaseViewModel {
     public void updateResults() {
         fetchSessionOrders();
         fetchSessionEvents();
+    }
+
+    public LiveData<Resource<ManagerSessionInvoiceModel>> getSessionInvoice(long sessionId) {
+        mSessionPk = sessionId;
+        return mManagerRepository.getManagerSessionInvoice(sessionId);
+    }
+
+    public void approveBill(double discountPercent) {
+        ObjectNode data = Converters.objectMapper.createObjectNode();
+        data.put("discount_percent", discountPercent);
+        mDetailData.addSource(mManagerRepository.putManagerSessionApproveCheckout(mSessionPk, data), mDetailData::setValue);
+    }
+
+    public LiveData<Resource<GenericDetailModel>> getDetailData() {
+        return mDetailData;
     }
 
     public void fetchSessionBriefData(long sessionId) {
@@ -66,13 +87,13 @@ public class ManagerSessionViewModel extends BaseViewModel {
         return mBriefData;
     }
 
-    public LiveData<Resource<List<WaiterEventModel>>> getSessionEventData() {
+    public LiveData<Resource<List<ManagerSessionEventModel>>> getSessionEventData() {
         return Transformations.map(mEventData, input -> {
             if (input == null || input.data == null)
                 return input;
-            List<WaiterEventModel> list = new ArrayList<>();
+            List<ManagerSessionEventModel> list = new ArrayList<>();
             if (input.status == Resource.Status.SUCCESS)
-                for (WaiterEventModel data : input.data) {
+                for (ManagerSessionEventModel data : input.data) {
                     if(data.getType() != EVENT_MENU_ORDER_ITEM)
                         list.add(data);
                 }
@@ -147,6 +168,26 @@ public class ManagerSessionViewModel extends BaseViewModel {
     public void updateOrderStatus(int orderId, int statusType) {
         ObjectNode data = Converters.objectMapper.createObjectNode();
         data.put("status", statusType);
-        mData.addSource(mWaiterRepository.changeOrderStatus(orderId, data), mData::setValue);
+        mOrderStatusData.addSource(mWaiterRepository.changeOrderStatus(orderId, data), mOrderStatusData::setValue);
+    }
+
+    public LiveData<Resource<OrderStatusModel>> getOrderStatusData() {
+        return mOrderStatusData;
+    }
+
+    public long getSessionPk() {
+        return mSessionPk;
+    }
+
+    public long getShopPk() {
+        return mShopPk;
+    }
+
+    public void setShopPk(long shopId) {
+        mShopPk = shopId;
+    }
+
+    public void markEventDone(long eventPk) {
+        mDetailData.addSource(mWaiterRepository.markEventDone(eventPk), mDetailData::setValue);
     }
 }

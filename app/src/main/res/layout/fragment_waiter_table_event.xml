@@ -1,128 +1,41 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
+<android.support.v4.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:paddingStart="@dimen/spacing_normal"
-    android:paddingTop="@dimen/spacing_normal"
-    android:paddingEnd="@dimen/spacing_normal">
-
-    <android.support.v7.widget.CardView
-        android:id="@+id/container_waiter_member_details"
-        style="@style/WhiteCardStyle"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
-
-        <android.support.constraint.ConstraintLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:paddingStart="@dimen/spacing_normal"
-            android:paddingTop="@dimen/spacing_extra_small"
-            android:paddingEnd="@dimen/spacing_normal"
-            android:paddingBottom="@dimen/spacing_extra_small">
-
-            <ImageView
-                android:id="@+id/im_waiter_table_members"
-                android:layout_width="@dimen/size_image_small"
-                android:layout_height="@dimen/size_image_small"
-                android:layout_marginEnd="@dimen/spacing_small"
-                android:src="@drawable/fore_male_grey"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
-
-            <TextView
-                android:id="@+id/tv_waiter_table_members_count"
-                style="@style/GreyTitleStyle"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="@dimen/spacing_small"
-                android:textSize="@dimen/font_largest"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintStart_toEndOf="@id/im_waiter_table_members"
-                app:layout_constraintTop_toTopOf="parent"
-                tools:text="0" />
-
-        </android.support.constraint.ConstraintLayout>
-
-    </android.support.v7.widget.CardView>
+    android:fillViewport="true"
+    android:scrollbars="none">
 
     <LinearLayout
-        android:id="@+id/container_waiter_table_actions"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
+        android:orientation="vertical">
 
-        <Button
-            style="@style/ButtonNeutralAction"
-            android:layout_width="wrap_content"
-            android:layout_height="@dimen/button_height_normal"
-            android:text="Checkout" />
-
-        <ImageButton
-            android:id="@+id/btn_waiter_table_menu"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="@dimen/spacing_normal"
-            android:background="@color/transparent"
-            android:src="@drawable/ic_action_show_menu" />
-    </LinearLayout>
-
-    <android.support.v4.widget.SwipeRefreshLayout
-        android:id="@+id/refresh_waiter_event"
-        android:layout_width="0dp"
-        android:layout_height="0dp"
-        android:layout_marginTop="@dimen/spacing_normal"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/container_waiter_member_details">
-
-        <android.support.v4.widget.NestedScrollView
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/rv_waiter_table_events_active"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:fillViewport="true"
-            android:scrollbars="none">
+            android:nestedScrollingEnabled="false"
+            android:paddingBottom="@dimen/spacing_normal" />
 
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="vertical">
+        <TextView
+            android:id="@+id/title_waiter_delivered"
+            style="@style/RedSmallTextStyle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/pinkish_grey"
+            android:gravity="center"
+            android:padding="@dimen/spacing_small"
+            android:text="Delivered"
+            android:textAllCaps="true"
+            android:visibility="gone" />
 
-                <android.support.v7.widget.RecyclerView
-                    android:id="@+id/rv_waiter_table_events_active"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:nestedScrollingEnabled="false"
-                    android:paddingBottom="@dimen/spacing_normal" />
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/rv_waiter_table_events_done"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:nestedScrollingEnabled="false"
+            android:paddingBottom="@dimen/spacing_small"
+            android:visibility="gone" />
 
-                <TextView
-                    android:id="@+id/title_waiter_delivered"
-                    style="@style/RedSmallTextStyle"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:background="@color/pinkish_grey"
-                    android:gravity="center"
-                    android:padding="@dimen/spacing_small"
-                    android:text="Delivered"
-                    android:textAllCaps="true"
-                    android:visibility="gone" />
-
-                <android.support.v7.widget.RecyclerView
-                    android:id="@+id/rv_waiter_table_events_done"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:nestedScrollingEnabled="false"
-                    android:paddingBottom="@dimen/spacing_small"
-                    android:visibility="gone" />
-
-            </LinearLayout>
-        </android.support.v4.widget.NestedScrollView>
-
-    </android.support.v4.widget.SwipeRefreshLayout>
-
-</android.support.constraint.ConstraintLayout>
+    </LinearLayout>
+</android.support.v4.widget.NestedScrollView>

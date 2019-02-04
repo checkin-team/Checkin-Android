@@ -122,7 +122,7 @@ public class WaiterEventAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
             this.mOrderedItem = order;
 
             tvItemName.setText(order.getItem().getName());
-            tvQuantity.setText(order.formatQuantityType());
+            tvQuantity.setText(order.formatQuantityItemType());
             tvOrderTime.setText(order.formatElapsedTime());
             tvOrderCost.setText(Utils.formatCurrencyAmount(itemView.getContext(), order.getCost()));
 

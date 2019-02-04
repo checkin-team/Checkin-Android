@@ -26,7 +26,7 @@ import static android.support.v4.app.NotificationCompat.PRIORITY_LOW;
 
 public class MessageUtils {
     @RequiresApi(api = Build.VERSION_CODES.O)
-    public static void createChannels(NotificationManager notificationManager, CHANNEL_GROUP group, final int importance, CHANNEL... channelTypes) {
+    private static void createChannels(NotificationManager notificationManager, CHANNEL_GROUP group, final int importance, CHANNEL... channelTypes) {
         List<NotificationChannel> channels = new ArrayList<>(channelTypes.length);
         for (CHANNEL channelType: channelTypes) {
             NotificationChannel channel = new NotificationChannel(channelType.id, channelType.title, importance);
@@ -36,19 +36,54 @@ public class MessageUtils {
         notificationManager.createNotificationChannels(channels);
     }
 
-    public static void createDefaultChannels(NotificationManager notificationManager) {
+    @RequiresApi(api = Build.VERSION_CODES.O)
+    private static void createChannelGroups(NotificationManager notificationManager, CHANNEL_GROUP... channelGroups) {
+        List<NotificationChannelGroup> groups = new ArrayList<>(channelGroups.length);
+        for (CHANNEL_GROUP channelGroup: channelGroups) {
+            groups.add(new NotificationChannelGroup(channelGroup.id, channelGroup.title));
+        }
+        notificationManager.createNotificationChannelGroups(groups);
+    }
+
+    static void createDefaultChannels(NotificationManager notificationManager) {
         if (notificationManager == null)
             return;
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-            List<NotificationChannelGroup> channelGroups = new ArrayList<>();
-            channelGroups.add(
-                    new NotificationChannelGroup(CHANNEL_GROUP.DEFAULT_USER.id, CHANNEL_GROUP.DEFAULT_USER.title));
-            channelGroups.add(
-                    new NotificationChannelGroup(CHANNEL_GROUP.RESTAURANT_CUSTOMER.id, CHANNEL_GROUP.RESTAURANT_CUSTOMER.title)
-            );
-            notificationManager.createNotificationChannelGroups(channelGroups);
+            createChannelGroups(notificationManager, CHANNEL_GROUP.DEFAULT_USER, CHANNEL_GROUP.RESTAURANT_CUSTOMER, CHANNEL_GROUP.MISC);
 
-            createChannels(notificationManager, CHANNEL_GROUP.DEFAULT_USER, NotificationManager.IMPORTANCE_DEFAULT, CHANNEL.DEFAULT, CHANNEL.ACTIVE_SESSION);
+            createChannels(notificationManager, CHANNEL_GROUP.DEFAULT_USER, NotificationManager.IMPORTANCE_DEFAULT, CHANNEL.DEFAULT);
+            createChannels(notificationManager, CHANNEL_GROUP.RESTAURANT_CUSTOMER, NotificationManager.IMPORTANCE_DEFAULT, CHANNEL.ACTIVE_SESSION);
+            createChannels(notificationManager, CHANNEL_GROUP.MISC, NotificationManager.IMPORTANCE_LOW, CHANNEL.MEDIA_UPLOAD);
+        }
+    }
+
+    public static void createManagerChannels(NotificationManager notificationManager) {
+        if (notificationManager == null)
+            return;
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            createChannelGroups(notificationManager, CHANNEL_GROUP.RESTAURANT_MEMBER);
+
+            createChannels(notificationManager, CHANNEL_GROUP.RESTAURANT_MEMBER, NotificationManager.IMPORTANCE_DEFAULT, CHANNEL.MEMBER, CHANNEL.MANAGER);
+        }
+    }
+
+    public static void createWaiterChannels(NotificationManager notificationManager) {
+        if (notificationManager == null)
+            return;
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            createChannelGroups(notificationManager, CHANNEL_GROUP.RESTAURANT_MEMBER);
+
+            createChannels(notificationManager, CHANNEL_GROUP.RESTAURANT_MEMBER, NotificationManager.IMPORTANCE_DEFAULT, CHANNEL.MEMBER, CHANNEL.WAITER);
+        }
+    }
+
+    public static void createAdminChannels(NotificationManager notificationManager) {
+        if (notificationManager == null)
+            return;
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            createChannelGroups(notificationManager, CHANNEL_GROUP.RESTAURANT_MEMBER);
+
+            createChannels(notificationManager, CHANNEL_GROUP.RESTAURANT_MEMBER, NotificationManager.IMPORTANCE_DEFAULT, CHANNEL.MEMBER, CHANNEL.ADMIN);
         }
     }
 
@@ -65,6 +100,11 @@ public class MessageUtils {
                 .registerReceiver(receiver, intentFilter);
     }
 
+    public static void unregisterLocalReceiver(Context context, BroadcastReceiver receiver) {
+        LocalBroadcastManager.getInstance(context.getApplicationContext())
+                .unregisterReceiver(receiver);
+    }
+
     public static boolean sendLocalBroadcast(Context context, @NonNull MessageModel data) {
         Intent intent = new Intent(data.getType().actionTag());
         intent.addCategory(Constants.FCM_INTENT_CATEGORY);
@@ -76,7 +116,7 @@ public class MessageUtils {
         NotificationCompat.Builder builder = new NotificationCompat.Builder(context, CHANNEL.MEDIA_UPLOAD.id);
         builder.setContentTitle("Media upload")
                 .setContentText("Upload in progress")
-                .setSmallIcon(R.drawable.ic_launcher_background)
+                .setSmallIcon(R.drawable.ic_logo_notification)
                 .setPriority(PRIORITY_LOW)
                 .setProgress(100, 0, false);
         return builder;

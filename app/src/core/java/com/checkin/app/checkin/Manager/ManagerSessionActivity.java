@@ -7,6 +7,8 @@ import android.util.Log;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.checkin.app.checkin.Manager.Fragment.ManagerSessionEventFragment;
+import com.checkin.app.checkin.Manager.Fragment.ManagerSessionOrderFragment;
 import com.checkin.app.checkin.R;
 import com.checkin.app.checkin.Session.Model.SessionBriefModel;
 import com.checkin.app.checkin.Utility.Utils;
@@ -19,6 +21,7 @@ import butterknife.OnClick;
 
 public class ManagerSessionActivity extends AppCompatActivity implements ManagerSessionOrderFragment.ManagerOrdersInteraction {
     public static final String KEY_SESSION_PK = "manager.session_pk";
+    public static final String KEY_SHOP_PK = "manager.shop_pk";
 
     @BindView(R.id.tv_ms_order_new_count)
     TextView tvCountOrdersNew;
@@ -54,7 +57,9 @@ public class ManagerSessionActivity extends AppCompatActivity implements Manager
 
     private void setupUi() {
         long sessionId = getIntent().getLongExtra(KEY_SESSION_PK, 0);
+        long shopId = getIntent().getLongExtra(KEY_SHOP_PK, 0);
         mViewModel.fetchSessionBriefData(sessionId);
+        mViewModel.setShopPk(shopId);
         mViewModel.fetchSessionOrders();
 
         mViewModel.getSessionBriefData().observe(this, resource -> {
@@ -93,7 +98,7 @@ public class ManagerSessionActivity extends AppCompatActivity implements Manager
             tvCountOrdersDelivered.setText(String.valueOf(integer));
         });
 
-        mViewModel.getObservableData().observe(this, resource -> {
+        mViewModel.getOrderStatusData().observe(this, resource -> {
             if (resource == null)
                 return;
             switch (resource.status) {

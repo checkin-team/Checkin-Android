@@ -12,10 +12,11 @@ import com.checkin.app.checkin.Data.NetworkBoundResource;
 import com.checkin.app.checkin.Data.Resource;
 import com.checkin.app.checkin.Data.RetrofitLiveData;
 import com.checkin.app.checkin.Data.WebApiService;
+import com.checkin.app.checkin.Manager.Model.ManagerSessionEventModel;
 import com.checkin.app.checkin.Session.Model.QRResultModel;
+import com.checkin.app.checkin.Session.Model.SessionBasicModel;
 import com.checkin.app.checkin.Session.Model.SessionBriefModel;
 import com.checkin.app.checkin.Session.Model.SessionOrderedItemModel;
-import com.checkin.app.checkin.Waiter.Model.WaiterEventModel;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 
 import java.util.List;
@@ -27,6 +28,27 @@ public class SessionRepository extends BaseRepository {
     private SessionRepository(Context context) {
         mWebService = ApiClient.getApiService(context);
     }
+
+    public LiveData<Resource<SessionBasicModel>> getActiveSessionCheck() {
+        return new NetworkBoundResource<SessionBasicModel, SessionBasicModel>() {
+            @Override
+            protected boolean shouldUseLocalDb() {
+                return false;
+            }
+
+            @NonNull
+            @Override
+            protected LiveData<ApiResponse<SessionBasicModel>> createCall() {
+                return new RetrofitLiveData<>(mWebService.getActiveSessionCheck());
+            }
+
+            @Override
+            protected void saveCallResult(SessionBasicModel data) {
+
+            }
+        }.getAsLiveData();
+    }
+
 
     public LiveData<Resource<QRResultModel>> newCustomerSession(final ObjectNode data) {
         return new NetworkBoundResource<QRResultModel, QRResultModel>() {
@@ -87,8 +109,8 @@ public class SessionRepository extends BaseRepository {
             }
         }.getAsLiveData();
     }
-    public LiveData<Resource<List<WaiterEventModel>>> getSessionEvents(long sessionId) {
-        return new NetworkBoundResource<List<WaiterEventModel>, List<WaiterEventModel>>() {
+    public LiveData<Resource<List<ManagerSessionEventModel>>> getSessionEvents(long sessionId) {
+        return new NetworkBoundResource<List<ManagerSessionEventModel>, List<ManagerSessionEventModel>>() {
 
             @Override
             protected boolean shouldUseLocalDb() {
@@ -97,12 +119,12 @@ public class SessionRepository extends BaseRepository {
 
             @NonNull
             @Override
-            protected LiveData<ApiResponse<List<WaiterEventModel>>> createCall() {
+            protected LiveData<ApiResponse<List<ManagerSessionEventModel>>> createCall() {
                 return new RetrofitLiveData<>(mWebService.getManagerSessionEvents(sessionId));
             }
 
             @Override
-            protected void saveCallResult(List<WaiterEventModel> data) {
+            protected void saveCallResult(List<ManagerSessionEventModel> data) {
             }
         }.getAsLiveData();
     }

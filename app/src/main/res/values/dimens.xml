@@ -24,6 +24,7 @@
 
     <!-- icon sizes -->
     <dimen name="size_tiny_icon">12dp</dimen>
+    <dimen name="size_extra_small_icon">18dp</dimen>
     <dimen name="size_small_icon">24dp</dimen>
     <dimen name="size_medium_icon">30dp</dimen>
     <dimen name="size_normal_icon">40dp</dimen>
@@ -61,12 +62,16 @@
 
     <dimen name="button_width_normal">100dp</dimen>
     <dimen name="button_width_short">70dp</dimen>
+    <dimen name="button_width_tiny">50dp</dimen>
 
     <dimen name="button_oval_large">120dp</dimen>
     <dimen name="button_oval_normal">96dp</dimen>
     <dimen name="width_input_small">60dp</dimen>
 
     <dimen name="height_spinner_item">50dp</dimen>
+
+    <!-- Cover dimensions -->
+    <dimen name="height_shadow_top_cover">80dp</dimen>
 
     <!-- Menu dimensions -->
     <dimen name="height_menu_filter">400dp</dimen>
@@ -93,6 +98,8 @@
     <dimen name="height_manager_bottom_actions">140dp</dimen>
     <dimen name="width_manager_order_item_name">150dp</dimen>
     <dimen name="width_manager_order_item_status">80dp</dimen>
+    <dimen name="width_manager_table_event_icon">26dp</dimen>
+    <dimen name="height_manager_table_event_icon">18dp</dimen>
 
     <!-- Card dimensions -->
     <dimen name="card_elevation">4dp</dimen>
@@ -110,6 +117,10 @@
     <dimen name="width_shop_finance_tax">160dp</dimen>
     <dimen name="height_rangebar_short">50dp</dimen>
     <dimen name="padding_rangebar_bottom">15dp</dimen>
+
+    <!--Waiter dimensions-->
+    <dimen name="width_waiter_collect_cash">250dp</dimen>
+    <dimen name="height_waiter_collect_cash">200dp</dimen>
 
     <!--Notification-->
     <dimen name="notif_heading_padding">10dp</dimen>

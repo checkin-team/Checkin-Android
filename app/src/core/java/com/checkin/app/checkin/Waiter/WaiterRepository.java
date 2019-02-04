@@ -15,7 +15,9 @@ import com.checkin.app.checkin.Data.WebApiService;
 import com.checkin.app.checkin.Misc.GenericDetailModel;
 import com.checkin.app.checkin.Session.Model.QRResultModel;
 import com.checkin.app.checkin.Session.Model.RestaurantTableModel;
+import com.checkin.app.checkin.Waiter.Model.OrderStatusModel;
 import com.checkin.app.checkin.Waiter.Model.WaiterEventModel;
+import com.checkin.app.checkin.Waiter.Model.WaiterStatsModel;
 import com.checkin.app.checkin.Waiter.Model.WaiterTableModel;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 
@@ -31,17 +33,6 @@ public class WaiterRepository extends BaseRepository {
 
     private WaiterRepository(Context context) {
         mWebService = ApiClient.getApiService(context);
-    }
-
-    public static WaiterRepository getInstance(Application application) {
-        if (INSTANCE == null) {
-            synchronized (WaiterRepository.class) {
-                if (INSTANCE == null) {
-                    INSTANCE = new WaiterRepository(application.getApplicationContext());
-                }
-            }
-        }
-        return INSTANCE;
     }
 
     public LiveData<Resource<List<WaiterTableModel>>> getWaiterServedTables() {
@@ -124,8 +115,8 @@ public class WaiterRepository extends BaseRepository {
         }.getAsLiveData();
     }
 
-    public LiveData<Resource<ObjectNode>> changeOrderStatus(long orderId, ObjectNode data) {
-        return new NetworkBoundResource<ObjectNode, ObjectNode>() {
+    public LiveData<Resource<OrderStatusModel>> changeOrderStatus(long orderId, ObjectNode data) {
+        return new NetworkBoundResource<OrderStatusModel, OrderStatusModel>() {
             @Override
             protected boolean shouldUseLocalDb() {
                 return false;
@@ -133,12 +124,12 @@ public class WaiterRepository extends BaseRepository {
 
             @NonNull
             @Override
-            protected LiveData<ApiResponse<ObjectNode>> createCall() {
+            protected LiveData<ApiResponse<OrderStatusModel>> createCall() {
                 return new RetrofitLiveData<>(mWebService.postChangeOrderStatus(orderId, data));
             }
 
             @Override
-            protected void saveCallResult(ObjectNode data) {
+            protected void saveCallResult(OrderStatusModel data) {
             }
         }.getAsLiveData();
     }
@@ -160,5 +151,36 @@ public class WaiterRepository extends BaseRepository {
             protected void saveCallResult(GenericDetailModel data) {
             }
         }.getAsLiveData();
+    }
+
+    public LiveData<Resource<WaiterStatsModel>> getWaiterStats(long restaurantId) {
+        return new NetworkBoundResource<WaiterStatsModel, WaiterStatsModel>() {
+            @Override
+            protected boolean shouldUseLocalDb() {
+                return false;
+            }
+
+            @NonNull
+            @Override
+            protected LiveData<ApiResponse<WaiterStatsModel>> createCall() {
+                return new RetrofitLiveData<>(mWebService.getRestaurantWaiterStats(restaurantId));
+            }
+
+            @Override
+            protected void saveCallResult(WaiterStatsModel data) {
+
+            }
+        }.getAsLiveData();
+    }
+
+    public static WaiterRepository getInstance(Application application) {
+        if (INSTANCE == null) {
+            synchronized (WaiterRepository.class) {
+                if (INSTANCE == null) {
+                    INSTANCE = new WaiterRepository(application.getApplicationContext());
+                }
+            }
+        }
+        return INSTANCE;
     }
 }

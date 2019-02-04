@@ -63,6 +63,11 @@ public class ShopPrivateActivity extends BaseAccountActivity {
     }
 
     @Override
+    protected int getDrawerRootId() {
+        return R.id.drawer_shop_private;
+    }
+
+    @Override
     protected int getNavMenu() {
         return R.menu.drawer_shop_admin;
     }

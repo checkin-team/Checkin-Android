@@ -2,5 +2,6 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
     <item
         android:id="@+id/nav_new_shop"
-        android:title="Create Shop Profile" />
+        android:title="Create Shop Profile"
+        android:icon="@drawable/ic_tab_home_grey"/>
 </menu>

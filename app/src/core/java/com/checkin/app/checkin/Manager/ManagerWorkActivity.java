@@ -1,6 +1,9 @@
 package com.checkin.app.checkin.Manager;
 
 import android.arch.lifecycle.ViewModelProviders;
+import android.content.BroadcastReceiver;
+import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.TabLayout;
@@ -10,9 +13,15 @@ import android.support.v4.view.ViewPager;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.ActionBarDrawerToggle;
+import android.support.v7.widget.Toolbar;
+import android.util.Log;
 
 import com.checkin.app.checkin.Account.AccountModel;
 import com.checkin.app.checkin.Account.BaseAccountActivity;
+import com.checkin.app.checkin.Data.Message.MessageModel;
+import com.checkin.app.checkin.Manager.Fragment.ManagerStatsFragment;
+import com.checkin.app.checkin.Manager.Fragment.ManagerTablesFragment;
+import com.checkin.app.checkin.Manager.Model.ManagerWorkViewModel;
 import com.checkin.app.checkin.Misc.BaseFragmentAdapterBottomNav;
 import com.checkin.app.checkin.R;
 import com.checkin.app.checkin.Utility.DynamicSwipableViewPager;
@@ -20,7 +29,10 @@ import com.checkin.app.checkin.Utility.DynamicSwipableViewPager;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
+import static com.checkin.app.checkin.Data.Message.Constants.KEY_DATA;
+
 public class ManagerWorkActivity extends BaseAccountActivity {
+    private static final String TAG = ManagerWorkActivity.class.getSimpleName();
 
     public static final String KEY_RESTAURANT_PK = "manager.restaurant_pk";
 
@@ -30,8 +42,31 @@ public class ManagerWorkActivity extends BaseAccountActivity {
     TabLayout tabLayout;
     @BindView(R.id.drawer_manager_work)
     DrawerLayout drawerLayout;
+    @BindView(R.id.toolbar_manager_work)
+    Toolbar toolbar;
 
     private ManagerWorkViewModel mViewModel;
+
+    private final BroadcastReceiver mReceiver = new BroadcastReceiver() {
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            MessageModel message;
+            try {
+                message = ((MessageModel) intent.getSerializableExtra(KEY_DATA));
+                if (message == null)
+                    return;
+            } catch (ClassCastException e) {
+                Log.e(TAG, "Invalid message object received.");
+                e.printStackTrace();
+                return;
+            }
+            switch (message.getType()) {
+                case MANAGER_SESSION_NEW:
+                    mViewModel.updateResults();
+                    break;
+            }
+        }
+    };
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -39,12 +74,14 @@ public class ManagerWorkActivity extends BaseAccountActivity {
         setContentView(R.layout.activity_manager_work);
         ButterKnife.bind(this);
 
+        setSupportActionBar(toolbar);
         ActionBar actionBar = getSupportActionBar();
 
         if (actionBar != null) {
             actionBar.setTitle("Live Orders");
+            actionBar.setDisplayHomeAsUpEnabled(true);
 
-            ActionBarDrawerToggle startToggle = new ActionBarDrawerToggle(this, drawerLayout, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
+            ActionBarDrawerToggle startToggle = new ActionBarDrawerToggle(this, drawerLayout, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
             drawerLayout.addDrawerListener(startToggle);
             startToggle.syncState();
         }
@@ -69,6 +106,11 @@ public class ManagerWorkActivity extends BaseAccountActivity {
         });
         tabLayout.setupWithViewPager(pagerManager);
         pagerAdapter.setupWithTab(tabLayout, pagerManager);
+    }
+
+    @Override
+    protected int getDrawerRootId() {
+        return R.id.drawer_manager_work;
     }
 
     @Override

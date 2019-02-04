@@ -4,10 +4,12 @@ import com.checkin.app.checkin.Session.ActiveSession.Chat.SessionChatDataModel.E
 import com.checkin.app.checkin.Session.ActiveSession.Chat.SessionChatModel.CHAT_EVENT_TYPE;
 import com.checkin.app.checkin.Session.ActiveSession.Chat.SessionChatModel.CHAT_STATUS_TYPE;
 import com.checkin.app.checkin.Session.Model.SessionOrderedItemModel;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 import java.util.Date;
 
+@JsonIgnoreProperties(ignoreUnknown = true)
 public class WaiterEventModel {
     @JsonProperty("pk")
     private long pk;
@@ -63,6 +65,10 @@ public class WaiterEventModel {
     @JsonProperty("status")
     public void setStatus(int status) {
         this.status = CHAT_STATUS_TYPE.getByTag(status);
+    }
+
+    public void setStatus(CHAT_STATUS_TYPE status) {
+        this.status = status;
     }
 
     @JsonProperty("type")

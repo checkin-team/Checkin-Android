@@ -13,6 +13,7 @@ import com.checkin.app.checkin.Misc.GenericDetailModel;
 import com.checkin.app.checkin.Session.ActiveSession.Chat.SessionChatModel.CHAT_STATUS_TYPE;
 import com.checkin.app.checkin.Session.Model.SessionBriefModel;
 import com.checkin.app.checkin.Session.SessionRepository;
+import com.checkin.app.checkin.Waiter.Model.OrderStatusModel;
 import com.checkin.app.checkin.Waiter.Model.WaiterEventModel;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 
@@ -26,6 +27,7 @@ public class WaiterTableViewModel extends BaseViewModel {
     private MediatorLiveData<Resource<SessionBriefModel>> mSessionDetail = new MediatorLiveData<>();
     private MediatorLiveData<Resource<List<WaiterEventModel>>> mEventData = new MediatorLiveData<>();
     private MediatorLiveData<Resource<GenericDetailModel>> mEventUpdate = new MediatorLiveData<>();
+    private MediatorLiveData<Resource<OrderStatusModel>> mOrderStatus = new MediatorLiveData<>();
 
     private long mSessionPk;
 
@@ -54,7 +56,7 @@ public class WaiterTableViewModel extends BaseViewModel {
                 return input;
             List<WaiterEventModel> result = new ArrayList<>();
             if (input.status == Resource.Status.SUCCESS) {
-                for (WaiterEventModel eventModel: input.data) {
+                for (WaiterEventModel eventModel : input.data) {
                     if (eventModel.getStatus() == CHAT_STATUS_TYPE.OPEN || eventModel.getStatus() == CHAT_STATUS_TYPE.IN_PROGRESS)
                         result.add(eventModel);
                 }
@@ -70,7 +72,7 @@ public class WaiterTableViewModel extends BaseViewModel {
                 return input;
             List<WaiterEventModel> result = new ArrayList<>();
             if (input.status == Resource.Status.SUCCESS) {
-                for (WaiterEventModel eventModel: input.data) {
+                for (WaiterEventModel eventModel : input.data) {
                     if (eventModel.getStatus() == CHAT_STATUS_TYPE.DONE)
                         result.add(eventModel);
                 }
@@ -88,7 +90,11 @@ public class WaiterTableViewModel extends BaseViewModel {
     public void updateOrderStatus(long orderId, CHAT_STATUS_TYPE statusType) {
         ObjectNode data = Converters.objectMapper.createObjectNode();
         data.put("status", statusType.tag);
-        mData.addSource(mWaiterRepository.changeOrderStatus(orderId, data), mData::setValue);
+        mOrderStatus.addSource(mWaiterRepository.changeOrderStatus(orderId, data), mOrderStatus::setValue);
+    }
+
+    public LiveData<Resource<OrderStatusModel>> getOrderStatus() {
+        return mOrderStatus;
     }
 
     public void markEventDone(long eventId) {
@@ -101,6 +107,42 @@ public class WaiterTableViewModel extends BaseViewModel {
 
     @Override
     public void updateResults() {
-        fetchTableEvents();
+        fetchSessionDetail(mSessionPk);
+    }
+
+    public void updateUiMarkEventDone(long eventId) {
+        Resource<List<WaiterEventModel>> listResource = mEventData.getValue();
+        if (listResource == null || listResource.data == null)
+            return;
+        int pos = -1;
+        for (int i = 0, count = listResource.data.size(); i < count; i++) {
+            if (listResource.data.get(i).getPk() == eventId) {
+                pos = i;
+                break;
+            }
+        }
+        if (pos > -1) {
+            listResource.data.get(pos).setStatus(CHAT_STATUS_TYPE.DONE);
+        }
+        mEventData.setValue(Resource.cloneResource(listResource, listResource.data));
+    }
+
+    public void updateUiMarkOrderStatus(OrderStatusModel data) {
+        Resource<List<WaiterEventModel>> listResource = mEventData.getValue();
+        if (listResource == null || listResource.data == null)
+            return;
+        int pos = -1;
+        for (int i = 0, count = listResource.data.size(); i < count; i++) {
+            if (listResource.data.get(i).getPk() == data.getPk()) {
+                pos = i;
+                break;
+            }
+        }
+        if (pos > -1) {
+            WaiterEventModel event = listResource.data.get(pos);
+            event.setStatus(data.getStatus());
+            listResource.data.set(pos, event);
+        }
+        mEventData.setValue(Resource.cloneResource(listResource, listResource.data));
     }
 }

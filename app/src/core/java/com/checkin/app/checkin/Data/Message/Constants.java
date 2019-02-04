@@ -23,6 +23,12 @@ public class Constants {
         // User group
         ACTIVE_SESSION("channel.active_session", "Active Session"),
 
+        // Restaurant Member group
+        MEMBER("channel.restaurant_member", "Restaurant Member"),
+        ADMIN("channel.restaurant_admin", "Restaurant Admin"),
+        MANAGER("channel.restaurant_manager", "Restaurant Manager"),
+        WAITER("channel.restaurant_waiter", "Restaurant Waiter"),
+
         // Misc group
         MEDIA_UPLOAD("channel.media_upload", "Media upload progress");
 

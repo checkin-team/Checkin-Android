@@ -14,11 +14,11 @@
         android:background="@color/white_three"
         android:padding="@dimen/spacing_extra_small"
         android:text="@string/title_bill_details"
-        app:layout_constraintBottom_toTopOf="@id/menu_price_container"
+        app:layout_constraintBottom_toTopOf="@id/container_session_invoice"
         app:layout_constraintTop_toTopOf="parent" />
 
     <ScrollView
-        android:id="@+id/menu_price_container"
+        android:id="@+id/container_session_invoice"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:fillViewport="true"
@@ -153,7 +153,7 @@
             style="@style/GreyTextStyle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:drawableStart="@drawable/ic_cash"
+            android:drawableStart="@drawable/ic_cash_grey"
             android:drawablePadding="@dimen/spacing_small"
             android:text="Via Cash"
             app:layout_constraintBottom_toBottomOf="parent"

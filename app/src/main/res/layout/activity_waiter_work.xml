@@ -70,6 +70,7 @@
         android:layout_height="match_parent"
         android:layout_gravity="end"
         android:fitsSystemWindows="false">
+
         <include layout="@layout/incl_waiter_drawer_tables" />
     </android.support.design.widget.NavigationView>
 

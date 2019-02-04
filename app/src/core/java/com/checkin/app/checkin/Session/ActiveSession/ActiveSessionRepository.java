@@ -136,7 +136,7 @@ public class ActiveSessionRepository extends BaseRepository {
         }.getAsLiveData();
     }
 
-    public LiveData<Resource<ObjectNode>> removeSessionOrder(long order_id) {
+    public LiveData<Resource<ObjectNode>> removeSessionOrder(long orderId) {
         return new NetworkBoundResource<ObjectNode, ObjectNode>() {
             @Override
             protected boolean shouldUseLocalDb() {
@@ -146,7 +146,7 @@ public class ActiveSessionRepository extends BaseRepository {
             @NonNull
             @Override
             protected LiveData<ApiResponse<ObjectNode>> createCall() {
-                return new RetrofitLiveData<>(mWebService.deleteSessionOrder(order_id));
+                return new RetrofitLiveData<>(mWebService.deleteSessionOrder(orderId));
             }
 
             @Override
@@ -239,6 +239,44 @@ public class ActiveSessionRepository extends BaseRepository {
             @Override
             protected LiveData<ApiResponse<ObjectNode>> createCall() {
                 return new RetrofitLiveData<>(mWebService.postCustomerRequestCheckout(data));
+            }
+
+            @Override
+            protected void saveCallResult(ObjectNode data) {
+            }
+        }.getAsLiveData();
+    }
+
+    public LiveData<Resource<ObjectNode>> acceptSessionMemberRequest(String userId) {
+        return new NetworkBoundResource<ObjectNode, ObjectNode>() {
+            @Override
+            protected boolean shouldUseLocalDb() {
+                return false;
+            }
+
+            @NonNull
+            @Override
+            protected LiveData<ApiResponse<ObjectNode>> createCall() {
+                return new RetrofitLiveData<>(mWebService.postActiveSessionCustomerRequest(userId));
+            }
+
+            @Override
+            protected void saveCallResult(ObjectNode data) {
+            }
+        }.getAsLiveData();
+    }
+
+    public LiveData<Resource<ObjectNode>> deleteSessionMember(String userId) {
+        return new NetworkBoundResource<ObjectNode, ObjectNode>() {
+            @Override
+            protected boolean shouldUseLocalDb() {
+                return false;
+            }
+
+            @NonNull
+            @Override
+            protected LiveData<ApiResponse<ObjectNode>> createCall() {
+                return new RetrofitLiveData<>(mWebService.deleteActiveSessionCustomer(userId));
             }
 
             @Override

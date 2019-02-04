@@ -1,6 +1,8 @@
 package com.checkin.app.checkin.Waiter;
 
 import android.arch.lifecycle.ViewModelProviders;
+import android.content.BroadcastReceiver;
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -14,28 +16,33 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
+import android.view.Menu;
 import android.view.View;
 import android.widget.TextView;
 
 import com.checkin.app.checkin.Account.AccountModel;
 import com.checkin.app.checkin.Account.BaseAccountActivity;
+import com.checkin.app.checkin.Data.Message.MessageModel.MESSAGE_TYPE;
+import com.checkin.app.checkin.Data.Message.MessageUtils;
 import com.checkin.app.checkin.Data.Resource.Status;
 import com.checkin.app.checkin.Misc.QRScannerActivity;
 import com.checkin.app.checkin.R;
 import com.checkin.app.checkin.Utility.DynamicSwipableViewPager;
 import com.checkin.app.checkin.Utility.EndDrawerToggle;
 import com.checkin.app.checkin.Utility.Utils;
-import com.checkin.app.checkin.Waiter.Fragment.WaiterTableEventFragment;
+import com.checkin.app.checkin.Waiter.Fragment.WaiterTableFragment;
+import com.checkin.app.checkin.Waiter.Model.WaiterStatsModel;
 import com.checkin.app.checkin.Waiter.Model.WaiterTableModel;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 
-public class WaiterWorkActivity extends BaseAccountActivity {
+public class WaiterWorkActivity extends BaseAccountActivity implements WaiterTableFragment.WaiterTableInteraction {
     public static final String KEY_SHOP_PK = "waiter.shop_pk";
     private static final int REQUEST_QR_SCANNER = 121;
 
@@ -55,6 +62,13 @@ public class WaiterWorkActivity extends BaseAccountActivity {
     private WaiterWorkViewModel mViewModel;
     private WaiterTablePagerAdapter mFragmentAdapter;
 
+    private final BroadcastReceiver mReceiver = new BroadcastReceiver() {
+        @Override
+        public void onReceive(Context context, Intent intent) {
+
+        }
+    };
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -66,12 +80,31 @@ public class WaiterWorkActivity extends BaseAccountActivity {
         setupShopAssignedTables();
         setupTableFragments();
         fetchData();
+        setupDrawer();
+    }
+
+    private void setupDrawer() {
+        mViewModel.getWaiterStats().observe(this, resource -> {
+            if (resource == null)
+                return;
+            if (resource.status == Status.SUCCESS && resource.data != null) {
+                WaiterStatsModel data = resource.data;
+                Menu menu = getNavAccount().getMenu();
+                try {
+                    menu.getItem(0).setTitle(String.format(
+                            Locale.ENGLISH, getString(R.string.menu_waiter_orders_taken), data.formatOrdersTaken()));
+                    menu.getItem(1).setTitle(String.format(
+                            Locale.ENGLISH, getString(R.string.menu_waiter_total_tip), data.formatTotalTip(this)));
+                } catch (IndexOutOfBoundsException ignored) {}
+            }
+        });
     }
 
     private void fetchData() {
         long shopPk = getIntent().getLongExtra(KEY_SHOP_PK, 0);
         mViewModel.fetchShopActiveTables(shopPk);
         mViewModel.fetchWaiterServedTables();
+        mViewModel.fetchWaiterStats();
     }
 
     private void setupTableFragments() {
@@ -92,6 +125,7 @@ public class WaiterWorkActivity extends BaseAccountActivity {
                 return;
             if (qrResource.status == Status.SUCCESS && qrResource.data != null) {
                 mFragmentAdapter.addTable(tabLayout, new WaiterTableModel(qrResource.data.getSessionPk(), qrResource.data.getTable()));
+                mViewModel.updateResults();
             } else if (qrResource.status != Status.LOADING) {
                 Utils.toast(this, qrResource.message);
             }
@@ -110,8 +144,9 @@ public class WaiterWorkActivity extends BaseAccountActivity {
         mViewModel.getShopAssignedTables().observe(this, listResource -> {
             if (listResource == null)
                 return;
-            if (listResource.status == Status.SUCCESS && listResource.data != null)
+            if (listResource.status == Status.SUCCESS && listResource.data != null) {
                 assignedTableAdapter.setData(listResource.data);
+            }
         });
         mViewModel.getShopUnassignedTables().observe(this, listResource -> {
             if (listResource == null)
@@ -150,6 +185,17 @@ public class WaiterWorkActivity extends BaseAccountActivity {
     }
 
     @Override
+    protected void onResume() {
+        super.onResume();
+        MessageUtils.registerLocalReceiver(this, mReceiver, MESSAGE_TYPE.WAITER_SESSION_NEW, MESSAGE_TYPE.WAITER_SESSION_NEW_ORDER, MESSAGE_TYPE.WAITER_SESSION_COLLECT_CASH);
+    }
+
+    @Override
+    protected int getDrawerRootId() {
+        return R.id.drawer_waiter_work;
+    }
+
+    @Override
     protected int getNavMenu() {
         return R.menu.drawer_waiter_work;
     }
@@ -164,8 +210,13 @@ public class WaiterWorkActivity extends BaseAccountActivity {
         return new AccountModel.ACCOUNT_TYPE[]{AccountModel.ACCOUNT_TYPE.RESTAURANT_WAITER};
     }
 
-    private static class WaiterTablePagerAdapter extends FragmentStatePagerAdapter {
-        private List<WaiterTableEventFragment> mFragmentList = new ArrayList<>();
+    @Override
+    public void onTableActiveEventCount(long sessionPk, int count) {
+        mFragmentAdapter.updateTabCount(tabLayout, sessionPk, count);
+    }
+
+    private class WaiterTablePagerAdapter extends FragmentStatePagerAdapter {
+        private List<WaiterTableFragment> mFragmentList = new ArrayList<>();
         private List<WaiterTableModel> mTableList = new ArrayList<>();
 
         WaiterTablePagerAdapter(FragmentManager fm) {
@@ -195,7 +246,7 @@ public class WaiterWorkActivity extends BaseAccountActivity {
 
         public void addTable(TabLayout tabLayout, WaiterTableModel tableModel) {
             mTableList.add(tableModel);
-            mFragmentList.add(WaiterTableEventFragment.newInstance(tableModel.getPk()));
+            mFragmentList.add(WaiterTableFragment.newInstance(tableModel.getPk(), WaiterWorkActivity.this));
             notifyDataSetChanged();
             setTabCustomView(tabLayout, mTableList.size() - 1, tableModel);
         }

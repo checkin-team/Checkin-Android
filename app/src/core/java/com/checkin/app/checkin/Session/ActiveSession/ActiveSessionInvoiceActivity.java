@@ -76,7 +76,7 @@ public class ActiveSessionInvoiceActivity extends AppCompatActivity {
         mBillHolder = new BillHolder(findViewById(android.R.id.content));
         mBillHolder.bind(data.getBill());
 
-        edInvoiceTip.setText(data.getBill().getTip());
+        edInvoiceTip.setText(data.getBill().formatTip());
         // Total
         tvInvoiceTotal.setText(Utils.formatCurrencyAmount(this, data.getBill().getTotal()));
     }

@@ -43,8 +43,9 @@ public class AppMessagingService extends FirebaseMessagingService {
 
         boolean shouldShowNotification = false;
         if (data.shouldTryUpdateUi()) {
-            shouldShowNotification = !MessageUtils.sendLocalBroadcast(this, data) && data.shouldShowNotification();
-        }
+            boolean result = MessageUtils.sendLocalBroadcast(this, data);
+            if (!data.isOnlyUiUpdate()) shouldShowNotification = !result && data.shouldShowNotification();
+        } else shouldShowNotification = true;
 
         if (shouldShowNotification) {
             int notificationId = MessageUtils.getNotificationId();

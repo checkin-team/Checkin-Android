@@ -138,7 +138,7 @@
         <activity
             android:name=".Manager.ManagerWorkActivity"
             android:label="Manager"
-            android:theme="@style/AppThemeWhiteActionBar" />
+            android:theme="@style/AppTheme" />
         <activity android:name=".Manager.ManagerSessionInvoiceActivity"
             android:label="Invoice"
             android:theme="@style/AppThemeWhiteActionBar"/>

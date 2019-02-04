@@ -3,6 +3,7 @@ package com.checkin.app.checkin.Account;
 import android.arch.lifecycle.ViewModelProviders;
 import android.content.Context;
 import android.content.Intent;
+import android.support.annotation.IdRes;
 import android.support.annotation.LayoutRes;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -50,7 +51,7 @@ public abstract class BaseAccountActivity extends BaseActivity {
     private AccountHeaderViewHolder mHeaderViewHolder;
 
     protected void setupUi() {
-        mDrawerLayout = findViewById(R.id.drawer_root);
+        mDrawerLayout = findViewById(getDrawerRootId());
         mNavAccount = findViewById(R.id.nav_account);
 
         mAccountAdapter = new AccountAdapter(getApplicationContext(), R.layout.simple_spinner_item, new ArrayList<>());
@@ -98,6 +99,9 @@ public abstract class BaseAccountActivity extends BaseActivity {
         mNavAccount.addHeaderView(mHeaderViewHolder.getHeaderView());
     }
 
+    @IdRes
+    protected abstract int getDrawerRootId();
+
     protected abstract int getNavMenu();
 
     protected abstract <T extends AccountHeaderViewHolder> T getHeaderViewHolder();
@@ -108,6 +112,10 @@ public abstract class BaseAccountActivity extends BaseActivity {
     public void setContentView(int layoutResID) {
         super.setContentView(layoutResID);
         setupUi();
+    }
+
+    protected AccountViewModel getAccountViewModel() {
+        return mViewModel;
     }
 
     protected DrawerLayout getDrawerLayout() {

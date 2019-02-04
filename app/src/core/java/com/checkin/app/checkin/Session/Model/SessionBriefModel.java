@@ -25,6 +25,9 @@ public class SessionBriefModel {
     @JsonProperty("table")
     private String table;
 
+    @JsonProperty("is_requested_checkout")
+    private boolean isRequestedCheckout;
+
     public SessionBriefModel() {}
 
     public long getPk() {
@@ -56,10 +59,14 @@ public class SessionBriefModel {
     }
 
     public String formatTimeDuration(){
-        return "Session Time: " + Utils.formatTimeDuration(created.getTime());
+        return Utils.formatTimeDuration(created.getTime());
     }
 
     public String getTable() {
         return table;
+    }
+
+    public boolean isRequestedCheckout() {
+        return isRequestedCheckout;
     }
 }

@@ -1,7 +1,9 @@
 package com.checkin.app.checkin.Data;
 
 import com.checkin.app.checkin.Account.AccountModel;
-import com.checkin.app.checkin.Manager.ManagerStatsModel;
+import com.checkin.app.checkin.Manager.Model.ManagerSessionEventModel;
+import com.checkin.app.checkin.Manager.Model.ManagerSessionInvoiceModel;
+import com.checkin.app.checkin.Manager.Model.ManagerStatsModel;
 import com.checkin.app.checkin.Menu.Model.MenuModel;
 import com.checkin.app.checkin.Menu.Model.OrderedItemModel;
 import com.checkin.app.checkin.Misc.GenericDetailModel;
@@ -11,6 +13,7 @@ import com.checkin.app.checkin.Session.ActiveSession.ActiveSessionModel;
 import com.checkin.app.checkin.Session.ActiveSession.Chat.SessionChatModel;
 import com.checkin.app.checkin.Session.Model.QRResultModel;
 import com.checkin.app.checkin.Session.Model.RestaurantTableModel;
+import com.checkin.app.checkin.Session.Model.SessionBasicModel;
 import com.checkin.app.checkin.Session.Model.SessionBriefModel;
 import com.checkin.app.checkin.Session.Model.SessionInvoiceModel;
 import com.checkin.app.checkin.Session.Model.SessionOrderedItemModel;
@@ -21,7 +24,9 @@ import com.checkin.app.checkin.Shop.Private.MemberModel;
 import com.checkin.app.checkin.Shop.RestaurantModel;
 import com.checkin.app.checkin.Shop.ShopJoin.ShopJoinModel;
 import com.checkin.app.checkin.User.UserModel;
+import com.checkin.app.checkin.Waiter.Model.OrderStatusModel;
 import com.checkin.app.checkin.Waiter.Model.WaiterEventModel;
+import com.checkin.app.checkin.Waiter.Model.WaiterStatsModel;
 import com.checkin.app.checkin.Waiter.Model.WaiterTableModel;
 import com.fasterxml.jackson.databind.node.ArrayNode;
 import com.fasterxml.jackson.databind.node.ObjectNode;
@@ -133,6 +138,9 @@ public interface WebApiService {
 
     // region SESSION
 
+    @GET("sessions/active/check/")
+    Call<SessionBasicModel> getActiveSessionCheck();
+
     @POST("sessions/customer/new/")
     Call<QRResultModel> postNewCustomerSession(@Body ObjectNode data);
 
@@ -147,6 +155,9 @@ public interface WebApiService {
 
     @PUT("sessions/active/customers/self/")
     Call<ObjectNode> putActiveSessionSelfCustomer(@Body ObjectNode data);
+
+    @POST("sessions/active/customers/{user_id}/")
+    Call<ObjectNode> postActiveSessionCustomerRequest(@Path("user_id") String userId);
 
     @DELETE("sessions/active/customers/{user_id}/")
     Call<ObjectNode> deleteActiveSessionCustomer(@Path("user_id") String userId);
@@ -190,10 +201,13 @@ public interface WebApiService {
     Call<List<WaiterTableModel>> getWaiterServedTables();
 
     @POST("sessions/manage/orders/{order_id}/status/")
-    Call<ObjectNode> postChangeOrderStatus(@Path("order_id") long orderId, @Body ObjectNode data);
+    Call<OrderStatusModel> postChangeOrderStatus(@Path("order_id") long orderId, @Body ObjectNode data);
 
     @PUT("sessions/manage/events/{event_id}/done/")
     Call<GenericDetailModel> putSessionEventDone(@Path("event_id") long eventId);
+
+    @GET("restaurants/{restaurant_id}/stats/waiter/")
+    Call<WaiterStatsModel> getRestaurantWaiterStats(@Path("restaurant_id") long restaurantId);
 
     // endregion
 
@@ -203,7 +217,16 @@ public interface WebApiService {
     Call<ManagerStatsModel> getRestaurantManagerStats(@Path("restaurant_id") long restaurantId);
 
     @GET("sessions/{session_id}/events/manager/")
-    Call<List<WaiterEventModel>> getManagerSessionEvents(@Path("session_id") long sessionId);
+    Call<List<ManagerSessionEventModel>> getManagerSessionEvents(@Path("session_id") long sessionId);
+
+    @GET("sessions/{session_id}/manager/checkout/approve/")
+    Call<ManagerSessionInvoiceModel> getManagerSessionInvoice(@Path("session_id") long sessionId);
+
+    @PUT("sessions/{session_id}/manager/checkout/approve/")
+    Call<GenericDetailModel> putManagerCheckoutApprove(@Path("session_id") long sessionId, @Body ObjectNode data);
+
+    @POST("sessions/{session_id}/checkout/")
+    Call<GenericDetailModel> postSessionCheckout(@Path("session_id") long sessionId);
 
     // endregion
 

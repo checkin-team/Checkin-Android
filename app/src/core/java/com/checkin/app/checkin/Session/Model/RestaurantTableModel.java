@@ -27,6 +27,8 @@ public class RestaurantTableModel {
     @JsonProperty("is_requested_checkout")
     private boolean isRequestedCheckout;
 
+    private int eventCount;
+
     public RestaurantTableModel() {}
 
     public RestaurantTableModel(long pk, String table, @Nullable BriefModel host, EventBriefModel event) {
@@ -59,5 +61,17 @@ public class RestaurantTableModel {
 
     public boolean isRequestedCheckout() {
         return isRequestedCheckout;
+    }
+
+    public int getEventCount() {
+        return eventCount;
+    }
+
+    public String formatEventCount() {
+        return String.valueOf(eventCount);
+    }
+
+    public void setEventCount(int eventCount) {
+        this.eventCount = eventCount;
     }
 }

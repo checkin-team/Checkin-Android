@@ -3,14 +3,18 @@ package com.checkin.app.checkin.Home;
 import android.arch.lifecycle.ViewModelProviders;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.design.widget.NavigationView;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.view.Gravity;
+import android.view.MenuItem;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -21,6 +25,8 @@ import com.checkin.app.checkin.Misc.BaseFragmentAdapterBottomNav;
 import com.checkin.app.checkin.Misc.BlankFragment;
 import com.checkin.app.checkin.Misc.QRScannerActivity;
 import com.checkin.app.checkin.R;
+import com.checkin.app.checkin.Session.ActiveSession.ActiveSessionActivity;
+import com.checkin.app.checkin.Shop.ShopJoin.BusinessFeaturesActivity;
 import com.checkin.app.checkin.User.Private.UserPrivateProfileFragment;
 import com.checkin.app.checkin.User.Private.UserViewModel;
 import com.checkin.app.checkin.User.UserModel;
@@ -31,7 +37,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 
-public class HomeActivity extends BaseAccountActivity {
+public class HomeActivity extends BaseAccountActivity implements NavigationView.OnNavigationItemSelectedListener {
     private static final int REQUEST_QR_SCANNER = 212;
 
     @BindView(R.id.drawer_home)
@@ -42,6 +48,11 @@ public class HomeActivity extends BaseAccountActivity {
     TabLayout tabLayout;
     @BindView(R.id.vp_home)
     DynamicSwipableViewPager vpHome;
+
+    @BindView(R.id.container_home_session_status)
+    ViewGroup vSessionStatus;
+    @BindView(R.id.tv_home_session_active_status)
+    TextView tvSessionStatus;
 
     ImageView imTabUserIcon;
 
@@ -62,8 +73,17 @@ public class HomeActivity extends BaseAccountActivity {
         vpHome.setAdapter(adapter);
         vpHome.setEnabled(false);
         adapter.setupWithTab(tabLayout, vpHome);
+        getNavAccount().setNavigationItemSelectedListener(this);
+
+        initRefreshScreen(R.id.sr_home);
 
         setup();
+    }
+
+    @Override
+    protected void updateScreen() {
+        mViewModel.updateResults();
+        getAccountViewModel().updateResults();
     }
 
     private void setup() {
@@ -78,22 +98,47 @@ public class HomeActivity extends BaseAccountActivity {
                 if (imTabUserIcon != null) {
                     Utils.loadImageOrDefault(imTabUserIcon, data.getProfilePic(), (data.getGender() == UserModel.GENDER.MALE) ? R.drawable.cover_unknown_male : R.drawable.cover_unknown_female);
                 }
-            }
+                stopRefreshing();
+            } else if (resource.status == Resource.Status.LOADING)
+                startRefreshing();
         });
 
         mViewModel.getQrResult().observe(this, resource -> {
-            if (resource == null)   return;
+            if (resource == null) return;
             if (resource.status == Resource.Status.SUCCESS && resource.data != null) {
                 Utils.toast(this, resource.data.getDetail());
             } else if (resource.status != Resource.Status.LOADING) {
                 Utils.toast(this, resource.message);
             }
         });
+        mViewModel.getSessionStatus().observe(this, resource -> {
+            if (resource == null)
+                return;
+            stopRefreshing();
+            if (resource.status == Resource.Status.SUCCESS && resource.data != null) {
+                vSessionStatus.setVisibility(View.VISIBLE);
+                tvSessionStatus.setText(resource.data.getLiveStatus());
+            } else if (resource.status == Resource.Status.ERROR_NOT_FOUND) {
+                vSessionStatus.setVisibility(View.GONE);
+            }
+        });
+
+        mViewModel.fetchSessionStatus();
     }
 
     @OnClick(R.id.iv_home_navigation)
     public void onViewClicked() {
         drawerLayout.openDrawer(Gravity.START);
+    }
+
+    @OnClick(R.id.container_home_session_status)
+    public void onSessionStatusClick() {
+        startActivity(new Intent(this, ActiveSessionActivity.class));
+    }
+
+    @Override
+    protected int getDrawerRootId() {
+        return R.id.drawer_home;
     }
 
     @Override
@@ -108,7 +153,7 @@ public class HomeActivity extends BaseAccountActivity {
 
     @Override
     protected AccountModel.ACCOUNT_TYPE[] getAccountTypes() {
-        return new AccountModel.ACCOUNT_TYPE[] {AccountModel.ACCOUNT_TYPE.USER};
+        return new AccountModel.ACCOUNT_TYPE[]{AccountModel.ACCOUNT_TYPE.USER};
     }
 
     @Override
@@ -118,6 +163,16 @@ public class HomeActivity extends BaseAccountActivity {
             String qrData = data.getStringExtra(QRScannerActivity.KEY_QR_RESULT);
             mViewModel.processQr(qrData);
         }
+    }
+
+    @Override
+    public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.nav_new_shop:
+                startActivity(new Intent(this, BusinessFeaturesActivity.class));
+                return true;
+        }
+        return false;
     }
 
     private class HomeFragmentAdapter extends BaseFragmentAdapterBottomNav {
@@ -174,8 +229,7 @@ public class HomeActivity extends BaseAccountActivity {
             if (position == 1) {
                 Intent intent = new Intent(getApplicationContext(), QRScannerActivity.class);
                 startActivityForResult(intent, REQUEST_QR_SCANNER);
-            }
-            else super.onTabClick(position);
+            } else super.onTabClick(position);
         }
 
         @Nullable

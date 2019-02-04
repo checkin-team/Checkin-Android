@@ -53,7 +53,7 @@ public class UserPrivateProfileFragment extends Fragment {
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        final View view = inflater.inflate(R.layout.fragment_user_profile_personal, container, false);
+        final View view = inflater.inflate(R.layout.fragment_user_profile_private, container, false);
         unbinder = ButterKnife.bind(this, view);
         return view;
     }
