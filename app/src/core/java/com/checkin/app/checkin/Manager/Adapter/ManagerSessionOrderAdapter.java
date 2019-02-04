@@ -104,7 +104,10 @@ public class ManagerSessionOrderAdapter extends RecyclerView.Adapter<ManagerSess
                 tvItemName.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ic_non_veg, 0, 0, 0);
 
             if (order.getRemarks() == null) containerRemarks.setVisibility(View.GONE);
-            else tvRemarks.setText(order.getRemarks());
+            else {
+                tvRemarks.setText(order.getRemarks());
+                containerRemarks.setVisibility(View.VISIBLE);
+            }
 
             if (order.getCustomizations().size() > 0) {
                 containerCustomizations.setVisibility(View.VISIBLE);

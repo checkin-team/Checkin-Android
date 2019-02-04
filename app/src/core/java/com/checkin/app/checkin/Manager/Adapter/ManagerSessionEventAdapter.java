@@ -82,6 +82,8 @@ public class ManagerSessionEventAdapter extends RecyclerView.Adapter<ManagerSess
         void bindData(ManagerSessionEventModel eventModel) {
             this.mEventModel = eventModel;
 
+            tvEventSubType.setVisibility(View.GONE);
+
             tvEventMsg.setText(eventModel.getMessage());
             imEventType.setImageResource(SessionEventBasicModel.getEventIcon(eventModel.getType(), eventModel.getService(), eventModel.getConcern()));
 
@@ -92,6 +94,7 @@ public class ManagerSessionEventAdapter extends RecyclerView.Adapter<ManagerSess
 
             if (eventModel.getType() == EVENT_REQUEST_SERVICE && eventModel.getStatus() != CHAT_STATUS_TYPE.DONE)
                 btnEventDone.setVisibility(View.VISIBLE);
+            else btnEventDone.setVisibility(View.GONE);
 
             switch (eventModel.getType()) {
                 case EVENT_REQUEST_SERVICE:
