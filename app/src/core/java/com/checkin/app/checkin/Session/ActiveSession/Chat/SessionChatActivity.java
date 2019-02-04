@@ -35,6 +35,8 @@ public class SessionChatActivity extends AppCompatActivity implements ActiveSess
 
     @BindView(R.id.bottom_expand_menu)
     ViewGroup bottomExpandedMenu;
+    @BindView(R.id.container_session_actions)
+    ViewGroup containerSessionActions;
     @BindView(R.id.rv_active_session_chat)
     RecyclerView rvSessionChat;
     @BindView(R.id.et_chat_msg)
@@ -97,7 +99,7 @@ public class SessionChatActivity extends AppCompatActivity implements ActiveSess
     }
 
     private void setupUi() {
-        getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_PAN);
+//        getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_PAN);
         if (getSupportActionBar() != null) {
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);
             getSupportActionBar().setHomeAsUpIndicator(R.drawable.ic_back_white);
@@ -155,16 +157,20 @@ public class SessionChatActivity extends AppCompatActivity implements ActiveSess
 
     @OnClick(R.id.im_expand_bottom_menu)
     public void onExpandMenu() {
-        bottomExpandedMenu.setVisibility(View.VISIBLE);
         Animation bottomUp = AnimationUtils.loadAnimation(this, R.anim.slide_up);
         bottomExpandedMenu.startAnimation(bottomUp);
+        bottomExpandedMenu.clearAnimation();
+        bottomExpandedMenu.setVisibility(View.VISIBLE);
+//        containerSessionActions.setVisibility(View.GONE);
     }
 
     @OnClick(R.id.im_collapse_bottom_menu)
     public void onCollapseMenu() {
-        bottomExpandedMenu.setVisibility(View.GONE);
         Animation upDown = AnimationUtils.loadAnimation(this, R.anim.slide_down);
         bottomExpandedMenu.startAnimation(upDown);
+        bottomExpandedMenu.clearAnimation();
+        bottomExpandedMenu.setVisibility(View.GONE);
+        containerSessionActions.setVisibility(View.VISIBLE);
     }
 
     @OnClick(R.id.btn_chat_send_msg)

@@ -1,7 +1,10 @@
 package com.checkin.app.checkin.Session.ActiveSession;
 
+import android.content.Context;
+
 import com.checkin.app.checkin.Misc.BriefModel;
 import com.checkin.app.checkin.Session.Model.SessionCustomerModel;
+import com.checkin.app.checkin.Utility.Utils;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 import java.util.Date;
@@ -76,5 +79,9 @@ public class ActiveSessionModel {
 
     public void setBill(String bill) {
         this.bill = bill;
+    }
+
+    public String formatBill(Context context) {
+        return Utils.formatCurrencyAmount(context, bill);
     }
 }

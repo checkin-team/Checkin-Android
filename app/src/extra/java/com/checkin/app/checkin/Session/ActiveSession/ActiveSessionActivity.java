@@ -1,9 +1,11 @@
 package com.checkin.app.checkin.Session.ActiveSession;
 
 import android.annotation.SuppressLint;
+import android.app.AlertDialog;
 import android.arch.lifecycle.ViewModelProviders;
 import android.content.BroadcastReceiver;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
@@ -16,7 +18,6 @@ import android.util.Log;
 import android.view.MotionEvent;
 import android.view.ViewGroup;
 import android.widget.ImageView;
-import android.widget.Switch;
 import android.widget.TextView;
 
 import com.checkin.app.checkin.Data.Message.MessageModel;
@@ -27,6 +28,7 @@ import com.checkin.app.checkin.R;
 import com.checkin.app.checkin.Search.SearchActivity;
 import com.checkin.app.checkin.Session.ActiveSession.Chat.SessionChatActivity;
 import com.checkin.app.checkin.Session.ActiveSession.Chat.SessionChatDataModel;
+import com.checkin.app.checkin.Session.Model.SessionCustomerModel;
 import com.checkin.app.checkin.Utility.Constants;
 import com.checkin.app.checkin.Utility.Utils;
 
@@ -47,10 +49,10 @@ public class ActiveSessionActivity extends AppCompatActivity implements ActiveSe
     TextView tvBill;
     @BindView(R.id.tv_as_waiter_name)
     TextView tvWaiterName;
+    @BindView(R.id.tv_session_live_at)
+    TextView tvSessionLiveAt;
     @BindView(R.id.im_as_waiter_pic)
     ImageView imWaiterPic;
-    @BindView(R.id.switch_session_presence)
-    Switch switchSessionPresence;
     @BindView(R.id.container_as_actions_bottom)
     ViewGroup containerBottomActions;
 
@@ -146,17 +148,12 @@ public class ActiveSessionActivity extends AppCompatActivity implements ActiveSe
                 openChat(SessionChatDataModel.EVENT_REQUEST_SERVICE_TYPE.SERVICE_NONE);
             return true;
         });
-
-        switchSessionPresence.setOnClickListener(v -> {
-            if (switchSessionPresence.isChecked()) mViewModel.sendSelfPresence(true);
-            else mViewModel.sendSelfPresence(false);
-        });
     }
 
     private void setupData(ActiveSessionModel data) {
         mSessionMembersAdapter.setUsers(data.getCustomers());
         tvBill.setText(data.getBill());
-        switchSessionPresence.setChecked(data.isCheckinPublic());
+        tvSessionLiveAt.setText(data.getRestaurant().formatRestaurantName());
         if (data.gethost() != null) {
             tvWaiterName.setText(data.gethost().getDisplayName());
             Utils.loadImageOrDefault(imWaiterPic, data.gethost().getDisplayPic(), R.drawable.ic_waiter);
@@ -232,11 +229,26 @@ public class ActiveSessionActivity extends AppCompatActivity implements ActiveSe
     }
 
     @Override
-    public void onAddMemberClicked() {
-        Intent intent = new Intent(this, SearchActivity.class);
-        intent.putExtra(SearchActivity.KEY_SEARCH_TYPE, SearchActivity.TYPE_PEOPLE);
-        intent.putExtra(SearchActivity.KEY_SEARCH_MODE, SearchActivity.MODE_SELECT);
-        startActivityForResult(intent, RC_SEARCH_MEMBER);
+    public void onAddMemberClicked(SessionCustomerModel customerModel) {
+
+        AlertDialog.Builder dialog = new AlertDialog.Builder(this);
+        dialog.setMessage("Are you sure, you want to accept the request?");
+        dialog.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface paramDialogInterface, int paramInt) {
+               mViewModel.postSessionMember(customerModel.getPk());
+            }
+        });
+        dialog.setNegativeButton("No", new DialogInterface.OnClickListener() {
+
+            @Override
+            public void onClick(DialogInterface paramDialogInterface, int paramInt) {
+                // TODO Auto-generated method stub
+                mViewModel.deleteSessionMember(customerModel.getPk());
+
+            }
+        });
+        dialog.show();
     }
 
     @Override

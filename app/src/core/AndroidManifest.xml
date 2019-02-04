@@ -112,7 +112,7 @@
             android:name=".Session.ActiveSession.Chat.SessionChatActivity"
             android:label="Chat with Us"
             android:theme="@style/SessionChatTheme"
-            android:windowSoftInputMode="adjustPan|adjustResize" />
+            android:windowSoftInputMode="adjustResize" />
         <activity
             android:name=".Session.ActiveSession.ActiveSessionViewOrdersActivity"
             android:windowSoftInputMode="adjustNothing" />

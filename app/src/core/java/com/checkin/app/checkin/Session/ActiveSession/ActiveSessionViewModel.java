@@ -61,7 +61,8 @@ public class ActiveSessionViewModel extends BaseViewModel {
     public void requestCheckout(double tip, ShopModel.PAYMENT_MODE paymentMode) {
         ObjectNode data = Converters.objectMapper.createObjectNode()
                 .put("tip", tip)
-                .put("payment_mode", paymentMode.tag);
+                .put("payment_mode", paymentMode.tag)
+                .put("message", "sent");
         mData.addSource(mRepository.postRequestCheckout(data), mData::setValue);
     }
 

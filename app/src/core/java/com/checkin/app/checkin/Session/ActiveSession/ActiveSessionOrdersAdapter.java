@@ -98,9 +98,13 @@ public class ActiveSessionOrdersAdapter extends RecyclerView.Adapter<ActiveSessi
             tvPrice.setText(Utils.formatCurrencyAmount(itemView.getContext(), order.getCost()));
 
             if (!order.canCancel()) imCancelOrder.setVisibility(View.GONE);
+            else imCancelOrder.setVisibility(View.VISIBLE);
 
             if (order.getRemarks() == null) containerRemarks.setVisibility(View.GONE);
-            else tvRemarks.setText(order.getRemarks());
+            else{
+                containerRemarks.setVisibility(View.VISIBLE);
+                tvRemarks.setText(order.getRemarks());
+            }
 
             switch (order.getStatus()) {
                 case OPEN:

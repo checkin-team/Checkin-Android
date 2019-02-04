@@ -22,14 +22,14 @@ public class ActiveSessionMemberAdapter extends HeaderFooterRecyclerViewAdapter 
     private List<SessionCustomerModel> mUsers;
     private SessionMemberInteraction memberInterface;
 
-    ActiveSessionMemberAdapter(List<SessionCustomerModel> users, SessionMemberInteraction memberInterface){
+    public ActiveSessionMemberAdapter(List<SessionCustomerModel> users, SessionMemberInteraction memberInterface){
         this.mUsers = users;
         this.memberInterface = memberInterface;
     }
 
     @Override
     public boolean useHeader() {
-        return true;
+        return false;
     }
 
     @Override
@@ -80,25 +80,35 @@ public class ActiveSessionMemberAdapter extends HeaderFooterRecyclerViewAdapter 
         @BindView(R.id.im_user)
         CircleImageView imUser;
         @BindView(R.id.tv_user) TextView tvUser;
+        @BindView(R.id.tv_label_pending_request) TextView tvPendingRequest;
+
+        private SessionCustomerModel customerModel;
         ItemViewHolder(View view){
             super(view);
             ButterKnife.bind(this, view);
+
+            view.setOnClickListener(v -> {
+                if(!customerModel.isAccepted())
+                    memberInterface.onAddMemberClicked(customerModel);
+            });
         }
 
         void bindData(SessionCustomerModel customer) {
+            this.customerModel = customer;
             tvUser.setText(customer.getUser().getDisplayName());
             Utils.loadImageOrDefault(imUser,customer.getUser().getDisplayPic(),R.drawable.cover_unknown_male);
+            if(!customer.isAccepted()) tvPendingRequest.setVisibility(View.VISIBLE);
         }
     }
 
     class HeaderViewHolder extends RecyclerView.ViewHolder {
         HeaderViewHolder(View view) {
             super(view);
-            view.findViewById(R.id.im_add_member).setOnClickListener((v) -> memberInterface.onAddMemberClicked());
+//            view.findViewById(R.id.im_add_member).setOnClickListener((v) -> memberInterface.onAddMemberClicked(customerModel));
         }
     }
 
-    interface SessionMemberInteraction {
-        void onAddMemberClicked();
+    public interface SessionMemberInteraction {
+        void onAddMemberClicked(SessionCustomerModel customerModel);
     }
 }

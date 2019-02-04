@@ -15,6 +15,7 @@ import com.checkin.app.checkin.Utility.Utils;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 
 public class ActiveSessionViewOrdersActivity extends AppCompatActivity implements ActiveSessionOrdersAdapter.SessionOrdersInteraction {
     @BindView(R.id.rv_active_session_orders)
@@ -59,6 +60,11 @@ public class ActiveSessionViewOrdersActivity extends AppCompatActivity implement
                 }
             }
         });
+    }
+
+    @OnClick(R.id.im_session_view_orders_back)
+    public void onBack(){
+        onBackPressed();
     }
 
     @Override

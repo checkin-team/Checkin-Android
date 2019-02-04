@@ -65,6 +65,22 @@ public class ActiveSessionInvoiceActivity extends AppCompatActivity {
                 setupUi(resource.data);
             }
         });
+
+        mViewModel.getObservableData().observe(this, objectNodeResource -> {
+            if (objectNodeResource == null)
+                return;
+            switch (objectNodeResource.status) {
+                case SUCCESS: {
+                    Utils.toast(this, "Done!");
+                    break;
+                }
+                case LOADING:
+                    break;
+                default: {
+                    Utils.toast(this, objectNodeResource.message);
+                }
+            }
+        });
     }
 
     private void setupUi(SessionInvoiceModel data) {

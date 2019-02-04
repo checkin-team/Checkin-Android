@@ -155,6 +155,9 @@
     <string name="msg_clean_table">Please clean the table</string>
     <string name="msg_refill_glass">Please refill glasses</string>
     <string name="waiter_unassigned">Unassigned</string>
+    <string name="your_friends_can_join_by_scanning_qr_code">Your friends can join your session by scanning the QR Code</string>
+    <string name="recommendation_coming_soon">Recommendation of dishes coming soon</string>
+    <string name="pending_request">(Pending Request)</string>
 
     <string name="status_order_open">Not Accepted</string>
     <string name="status_order_cancelled">Order Cancelled</string>

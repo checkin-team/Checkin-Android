@@ -32,6 +32,10 @@ public class BriefModel {
         return displayName;
     }
 
+    public String formatRestaurantName() {
+        return "You are live at "+ displayName;
+    }
+
     public void setDisplayName(String displayName) {
         this.displayName = displayName;
     }
