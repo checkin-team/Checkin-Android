@@ -1,6 +1,7 @@
 package com.checkin.app.checkin.Account;
 
 import android.arch.lifecycle.ViewModelProviders;
+import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
 import android.support.annotation.IdRes;
@@ -185,28 +186,27 @@ public abstract class BaseAccountActivity extends BaseActivity {
             switch (account.getAccountType()) {
                 case USER:
                     if (mBaseActivity.getClass() != HomeActivity.class){
-                        Intent intent = new Intent(context, HomeActivity.class);
-                        context.startActivity(intent);
+                        Utils.navigateBackToHome(context);
                     }
                     break;
                 case SHOP_OWNER:
                 case SHOP_ADMIN:
                     if (mBaseActivity.getClass() != ShopPrivateActivity.class) {
-                        Intent intent = new Intent(context, ShopPrivateActivity.class);
+                        Intent intent = Intent.makeMainActivity(new ComponentName(context, ShopPrivateActivity.class));
                         intent.putExtra(ShopPrivateActivity.KEY_SHOP_PK, Long.valueOf(account.getTargetPk()));
                         context.startActivity(intent);
                     }
                     break;
                 case RESTAURANT_MANAGER:
                     if (mBaseActivity.getClass() != ManagerWorkActivity.class) {
-                        Intent intent = new Intent(context, ManagerWorkActivity.class);
+                        Intent intent = Intent.makeMainActivity(new ComponentName(context, ManagerWorkActivity.class));
                         intent.putExtra(ManagerWorkActivity.KEY_RESTAURANT_PK, Long.valueOf(account.getTargetPk()));
                         context.startActivity(intent);
                     }
                     break;
                 case RESTAURANT_WAITER:
                     if (mBaseActivity.getClass() != WaiterWorkActivity.class) {
-                        Intent intent = new Intent(context, WaiterWorkActivity.class);
+                        Intent intent = Intent.makeMainActivity(new ComponentName(context, WaiterWorkActivity.class));
                         intent.putExtra(WaiterWorkActivity.KEY_SHOP_PK, Long.valueOf(account.getTargetPk()));
                         context.startActivity(intent);
                     }

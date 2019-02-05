@@ -18,9 +18,11 @@ import android.widget.TextView;
 
 import com.checkin.app.checkin.Data.Message.MessageModel;
 import com.checkin.app.checkin.Data.Message.MessageModel.MESSAGE_TYPE;
+import com.checkin.app.checkin.Data.Message.MessageObjectModel;
 import com.checkin.app.checkin.Data.Message.MessageUtils;
 import com.checkin.app.checkin.Menu.SessionMenuActivity;
 import com.checkin.app.checkin.Misc.BaseActivity;
+import com.checkin.app.checkin.Misc.BriefModel;
 import com.checkin.app.checkin.R;
 import com.checkin.app.checkin.Search.SearchActivity;
 import com.checkin.app.checkin.Session.ActiveSession.Chat.SessionChatActivity;
@@ -69,11 +71,28 @@ public class ActiveSessionActivity extends BaseActivity implements ActiveSession
                 e.printStackTrace();
                 return;
             }
+            MessageObjectModel model;
             switch (message.getType()) {
                 case USER_SESSION_BILL_CHANGE:
                     ActiveSessionActivity.this.updateBill(message.getRawData().getSessionBillTotal());
+                    break;
                 case USER_SESSION_HOST_ASSIGNED:
-                    ActiveSessionActivity.this.updateHost();
+                    model = message.getObject();
+                    ActiveSessionActivity.this.updateHost(model.getBriefModel());
+                    break;
+                case USER_SESSION_MEMBER_ADD_REQUEST:
+                    model = message.getActor();
+                    SessionCustomerModel customer = new SessionCustomerModel(model.getPk(), model.getBriefModel(), false, false);
+                    ActiveSessionActivity.this.addCustomer(customer);
+                    break;
+                case USER_SESSION_MEMBER_ADDED:
+                    model = message.getObject();
+                    SessionCustomerModel accCustomer = new SessionCustomerModel(model.getPk(), model.getBriefModel(), false, true);
+                    ActiveSessionActivity.this.addCustomer(accCustomer);
+                    break;
+                case USER_SESSION_END:
+                    Utils.navigateBackToHome(getApplicationContext());
+                    break;
             }
         }
     };
@@ -171,8 +190,13 @@ public class ActiveSessionActivity extends BaseActivity implements ActiveSession
         mViewModel.updateBill(bill);
     }
 
-    private void updateHost() {
+    private void updateHost(BriefModel user) {
+        mViewModel.updateHost(user);
+    }
 
+
+    private void addCustomer(SessionCustomerModel customer) {
+        mViewModel.addCustomer(customer);
     }
 
     @OnClick(R.id.btn_active_session_menu)
@@ -235,8 +259,11 @@ public class ActiveSessionActivity extends BaseActivity implements ActiveSession
     @Override
     protected void onResume() {
         super.onResume();
-        MessageUtils.registerLocalReceiver(
-                this, mReceiver, MESSAGE_TYPE.USER_SESSION_BILL_CHANGE, MESSAGE_TYPE.USER_SESSION_HOST_ASSIGNED, MESSAGE_TYPE.USER_SESSION_MEMBER_ADDED, MESSAGE_TYPE.USER_SESSION_END);
+        MESSAGE_TYPE[] types = new MESSAGE_TYPE[] {
+                MESSAGE_TYPE.USER_SESSION_BILL_CHANGE, MESSAGE_TYPE.USER_SESSION_HOST_ASSIGNED,
+                MESSAGE_TYPE.USER_SESSION_MEMBER_ADD_REQUEST, MESSAGE_TYPE.USER_SESSION_MEMBER_ADDED, MESSAGE_TYPE.USER_SESSION_END
+        };
+        MessageUtils.registerLocalReceiver(this, mReceiver, types);
     }
 
     @Override

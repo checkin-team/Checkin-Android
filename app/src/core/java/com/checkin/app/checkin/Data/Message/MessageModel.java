@@ -11,27 +11,31 @@ import android.support.v4.app.NotificationCompat;
 import android.text.Html;
 import android.text.TextUtils;
 
-import com.checkin.app.checkin.Data.Converters;
 import com.checkin.app.checkin.Data.Message.Constants.CHANNEL;
+import com.checkin.app.checkin.Manager.ManagerWorkActivity;
 import com.checkin.app.checkin.R;
+import com.checkin.app.checkin.Session.ActiveSession.ActiveSessionActivity;
+import com.checkin.app.checkin.Waiter.WaiterWorkActivity;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 
-import java.io.IOException;
 import java.io.Serializable;
 
 public class MessageModel implements Serializable {
     private MESSAGE_TYPE type;
 
+    @JsonDeserialize(using = MessageObjectModel.MessageObjectModelDeserializer.class)
     @JsonProperty("actor")
     private MessageObjectModel actor;
 
     @JsonProperty("description")
     private String description;
 
+    @JsonDeserialize(using = MessageObjectModel.MessageObjectModelDeserializer.class)
     @JsonProperty("object")
     private MessageObjectModel object;
 
+    @JsonDeserialize(using = MessageObjectModel.MessageObjectModelDeserializer.class)
     @JsonProperty("target")
     private MessageObjectModel target;
 
@@ -91,33 +95,6 @@ public class MessageModel implements Serializable {
         this.type = MESSAGE_TYPE.getById(type);
     }
 
-    @JsonProperty("actor")
-    public void setActor(String actor) {
-        try {
-            this.actor = Converters.objectMapper.readValue(actor, MessageObjectModel.class);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-    }
-
-    @JsonProperty("object")
-    public void setObject(String object) {
-        try {
-            this.object = Converters.objectMapper.readValue(object, MessageObjectModel.class);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-    }
-
-    @JsonProperty("target")
-    public void setTarget(String target) {
-        try {
-            this.target = Converters.objectMapper.readValue(target, MessageObjectModel.class);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-    }
-
     public MessageObjectModel getTarget() {
         return target;
     }
@@ -164,15 +141,24 @@ public class MessageModel implements Serializable {
 
     private Intent getNotificationIntent(Context context) {
         Intent intent = new Intent();
-        intent.putExtra(Constants.KEY_DATA, this);
         ComponentName componentName = getTargetComponent(context);
         if (componentName != null)
             intent.setComponent(componentName);
+        addIntentExtra(intent, componentName != null ? componentName.getClass() : null);
         return intent;
+    }
+
+    private void addIntentExtra(Intent intent, @Nullable Class<?> classObj) {
     }
 
     @Nullable
     private ComponentName getTargetComponent(Context context) {
+        if (isUserActiveSessionNotification())
+            return new ComponentName(context, ActiveSessionActivity.class);
+        if (isShopWaiterNotification())
+            return new ComponentName(context, WaiterWorkActivity.class);
+        if (isShopManagerNotification())
+            return new ComponentName(context, ManagerWorkActivity.class);
         return null;
     }
 
@@ -193,7 +179,7 @@ public class MessageModel implements Serializable {
         Intent intent = getNotificationIntent(context);
         PendingIntent pendingIntent = PendingIntent.getActivity(context, 0, intent, PendingIntent.FLAG_UPDATE_CURRENT);
         Notification notification = getNotificationBuilder(context, notificationId)
-                .setContentIntent(pendingIntent)
+//                .setContentIntent(pendingIntent)
                 .build();
         notificationManager.notify(notificationId, notification);
     }
@@ -231,5 +217,17 @@ public class MessageModel implements Serializable {
             default:
                 return true;
         }
+    }
+
+    private boolean isUserActiveSessionNotification() {
+        return this.type.id > 300 && this.type.id < 400;
+    }
+
+    private boolean isShopWaiterNotification() {
+        return this.type.id > 700 && this.type.id < 800;
+    }
+
+    private boolean isShopManagerNotification() {
+        return this.type.id > 600 && this.type.id < 700;
     }
 }

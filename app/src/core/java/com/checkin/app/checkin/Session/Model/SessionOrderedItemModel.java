@@ -12,12 +12,13 @@ import com.fasterxml.jackson.databind.DeserializationContext;
 import com.fasterxml.jackson.databind.JsonDeserializer;
 
 import java.io.IOException;
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Locale;
 
-public class SessionOrderedItemModel {
+public class SessionOrderedItemModel implements Serializable {
     @JsonProperty("pk")
     private int pk;
 

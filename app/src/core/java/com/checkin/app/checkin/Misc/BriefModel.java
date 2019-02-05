@@ -20,6 +20,12 @@ public class BriefModel {
         this.displayPic = displayPic;
     }
 
+    public BriefModel(long pk, String displayName, String displayPic) {
+        this.pk = String.valueOf(pk);
+        this.displayName = displayName;
+        this.displayPic = displayPic;
+    }
+
     public String getPk() {
         return pk;
     }

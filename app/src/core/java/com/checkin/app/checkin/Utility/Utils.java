@@ -6,7 +6,9 @@ import android.animation.AnimatorSet;
 import android.animation.ArgbEvaluator;
 import android.animation.ObjectAnimator;
 import android.animation.ValueAnimator;
+import android.content.ComponentName;
 import android.content.Context;
+import android.content.Intent;
 import android.content.res.ColorStateList;
 import android.content.res.Resources;
 import android.database.Cursor;
@@ -36,6 +38,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.checkin.app.checkin.Home.HomeActivity;
 import com.checkin.app.checkin.R;
 
 import java.lang.reflect.Field;
@@ -80,6 +83,10 @@ public class Utils {
                 }
             }
         }
+    }
+
+    public static void navigateBackToHome(Context context) {
+        context.startActivity(Intent.makeRestartActivityTask(new ComponentName(context, HomeActivity.class)));
     }
 
     public static void animateShow(View view, float y) {

@@ -140,7 +140,7 @@ public class ActiveSessionChatAdapter extends RecyclerView.Adapter {
                 tvChatConcernMsg.setText(chat.getMessage());
                 tvChatConcernMsg.setVisibility(View.VISIBLE);
                 return;
-            } else if (chat.getType() == CHAT_EVENT_TYPE.EVENT_MENU_ORDER_ITEM) {
+            } else if (chat.isOfAnyType(CHAT_EVENT_TYPE.EVENT_MENU_ORDER_ITEM, CHAT_EVENT_TYPE.EVENT_REQUEST_SERVICE, CHAT_EVENT_TYPE.EVENT_REQUEST_CHECKOUT, CHAT_EVENT_TYPE.EVENT_CONCERN)) {
                 imStatusDone.setActivated(chat.getStatus().tag >= CHAT_STATUS_TYPE.DONE.tag);
                 imStatusProgress.setActivated(chat.getStatus().tag >= CHAT_STATUS_TYPE.IN_PROGRESS.tag);
                 imStatusOpen.setActivated(chat.getStatus().tag >= CHAT_STATUS_TYPE.OPEN.tag);

@@ -21,7 +21,7 @@ public class UserCheckinAdapter extends RecyclerView.Adapter<UserCheckinAdapter.
 
     private List<ShopCustomerModel> mList;
 
-    UserCheckinAdapter(){
+    UserCheckinAdapter() {
     }
 
     @NonNull
@@ -35,12 +35,12 @@ public class UserCheckinAdapter extends RecyclerView.Adapter<UserCheckinAdapter.
     public void onBindViewHolder(@NonNull UserCheckinHolder holder, int position) {
         String shopName = mList.get(position).getShop().getDisplayName();
         String shopImageUrl = mList.get(position).getShop().getDisplayPic();
-        holder.bindData(shopImageUrl,shopName);
+        holder.bindData(shopImageUrl, shopName);
     }
 
     @Override
     public int getItemViewType(int position) {
-        return R.layout.item_user_chekins;
+        return R.layout.item_user_checkins;
     }
 
     @Override
@@ -55,18 +55,18 @@ public class UserCheckinAdapter extends RecyclerView.Adapter<UserCheckinAdapter.
 
     class UserCheckinHolder extends RecyclerView.ViewHolder {
 
-        @BindView(R.id.iv_user_name)
+        @BindView(R.id.iv_uc_user_name)
         CircleImageView ivUserName;
-        @BindView(R.id.tv_user_name)
+        @BindView(R.id.tv_uc_user_name)
         TextView tvUserName;
 
         UserCheckinHolder(View itemView) {
             super(itemView);
-            ButterKnife.bind(this,itemView);
+            ButterKnife.bind(this, itemView);
         }
 
         public void bindData(String shopImageUrl, String shopName) {
-            Utils.loadImageOrDefault(ivUserName,shopImageUrl,R.drawable.cover_restaurant_unknown);
+            Utils.loadImageOrDefault(ivUserName, shopImageUrl, R.drawable.cover_restaurant_unknown);
             tvUserName.setText(shopName);
         }
     }

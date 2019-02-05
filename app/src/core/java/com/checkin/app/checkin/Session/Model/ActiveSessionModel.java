@@ -3,7 +3,6 @@ package com.checkin.app.checkin.Session.Model;
 import android.content.Context;
 
 import com.checkin.app.checkin.Misc.BriefModel;
-import com.checkin.app.checkin.Session.Model.SessionCustomerModel;
 import com.checkin.app.checkin.Utility.Utils;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
@@ -61,6 +60,10 @@ public class ActiveSessionModel {
         return customers;
     }
 
+    public void addCustomer(SessionCustomerModel customerModel) {
+        customers.add(customerModel);
+    }
+
     public BriefModel getRestaurant() {
         return restaurant;
     }
@@ -83,5 +86,9 @@ public class ActiveSessionModel {
 
     public String formatBill(Context context) {
         return Utils.formatCurrencyAmount(context, bill);
+    }
+
+    public void setHost(BriefModel user) {
+        this.host = user;
     }
 }

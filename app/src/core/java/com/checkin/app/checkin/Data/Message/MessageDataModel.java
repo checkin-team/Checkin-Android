@@ -1,8 +1,8 @@
 package com.checkin.app.checkin.Data.Message;
 
 import com.checkin.app.checkin.Data.Converters;
+import com.checkin.app.checkin.Manager.Model.ManagerSessionEventModel;
 import com.checkin.app.checkin.Session.ActiveSession.Chat.SessionChatModel;
-import com.checkin.app.checkin.Session.Model.EventBriefModel;
 import com.checkin.app.checkin.Session.Model.SessionOrderedItemModel;
 import com.checkin.app.checkin.Shop.ShopModel;
 import com.checkin.app.checkin.User.UserModel;
@@ -14,23 +14,27 @@ import com.fasterxml.jackson.databind.JsonDeserializer;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 
 import java.io.IOException;
+import java.io.Serializable;
 
 @JsonIgnoreProperties(ignoreUnknown = true)
-public class MessageDataModel {
+public class MessageDataModel implements Serializable {
     @JsonProperty("session__bill__total")
     private double sessionBillTotal;
 
     @JsonProperty("user__gender")
-    private UserModel.GENDER userGender;
+    private char userGender;
 
     @JsonProperty("session__bill__payment_mode")
-    private ShopModel.PAYMENT_MODE sessionBillPaymentMode;
+    private String sessionBillPaymentMode;
 
-    @JsonProperty("session__event_status")
-    private SessionChatModel.CHAT_STATUS_TYPE sessionEventStatus;
+    @JsonProperty("session__event__status")
+    private int sessionEventStatus;
 
     @JsonProperty("session__customer_count")
     private int sessionCustomerCount;
+
+    @JsonProperty("session__table")
+    private String sessionTableName;
 
     @JsonDeserialize(using = SessionOrderedItemModel.SessionOrderedItemDeserializer.class)
     @JsonProperty("session__ordered_item")
@@ -40,29 +44,11 @@ public class MessageDataModel {
     @JsonProperty("session__event_detail")
     private SessionChatModel sessionEventDetail;
 
-    @JsonDeserialize(using = EventBriefModel.EventBriefModelDeserializer.class)
+    @JsonDeserialize(using = ManagerSessionEventModel.ManagerSessionEventModelDeserializer.class)
     @JsonProperty("session__event")
-    private EventBriefModel sessionEventBrief;
-
-    @JsonProperty("session__table")
-    private String sessionTableName;
+    private ManagerSessionEventModel sessionEventBrief;
 
     public MessageDataModel() {
-    }
-
-    @JsonProperty("user__gender")
-    public void setUserGender(char gender) {
-        this.userGender = UserModel.GENDER.getByTag(gender);
-    }
-
-    @JsonProperty("session__bill__payment_mode")
-    public void setSessionBillPaymentMode(String sessionBillPaymentMode) {
-        this.sessionBillPaymentMode = ShopModel.PAYMENT_MODE.getByTag(sessionBillPaymentMode);
-    }
-
-    @JsonProperty("session__event_status")
-    public void setSessionEventStatus(int status) {
-        this.sessionEventStatus = SessionChatModel.CHAT_STATUS_TYPE.getByTag(status);
     }
 
     public double getSessionBillTotal() {
@@ -70,11 +56,11 @@ public class MessageDataModel {
     }
 
     public UserModel.GENDER getUserGender() {
-        return userGender;
+        return UserModel.GENDER.getByTag(userGender);
     }
 
     public ShopModel.PAYMENT_MODE getSessionBillPaymentMode() {
-        return sessionBillPaymentMode;
+        return ShopModel.PAYMENT_MODE.getByTag(sessionBillPaymentMode);
     }
 
     public int getSessionCustomerCount() {
@@ -90,10 +76,10 @@ public class MessageDataModel {
     }
 
     public SessionChatModel.CHAT_STATUS_TYPE getSessionEventStatus() {
-        return sessionEventStatus;
+        return SessionChatModel.CHAT_STATUS_TYPE.getByTag(sessionEventStatus);
     }
 
-    public EventBriefModel getSessionEventBrief() {
+    public ManagerSessionEventModel getSessionEventBrief() {
         return sessionEventBrief;
     }
 

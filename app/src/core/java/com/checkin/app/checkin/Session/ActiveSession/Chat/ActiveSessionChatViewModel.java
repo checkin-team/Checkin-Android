@@ -10,6 +10,7 @@ import com.checkin.app.checkin.Data.Converters;
 import com.checkin.app.checkin.Data.Resource;
 import com.checkin.app.checkin.Session.ActiveSession.ActiveSessionRepository;
 import com.checkin.app.checkin.Session.ActiveSession.Chat.SessionChatDataModel.EVENT_REQUEST_SERVICE_TYPE;
+import com.checkin.app.checkin.Session.ActiveSession.Chat.SessionChatModel.CHAT_STATUS_TYPE;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 
 import java.util.List;
@@ -55,5 +56,31 @@ public class ActiveSessionChatViewModel extends BaseViewModel {
         data.put("message", message);
         data.put("event_id", event_id);
         mData.addSource(mRepository.postConcern(data), mData::setValue);
+    }
+
+    public void addNewEvent(SessionChatModel chatModel) {
+        Resource<List<SessionChatModel>> listResource = mChatData.getValue();
+        if (listResource == null || listResource.data == null)
+            return;
+        listResource.data.add(0, chatModel);
+        mChatData.setValue(Resource.cloneResource(listResource, listResource.data));
+    }
+
+    public void updateEventStatus(long eventPk, CHAT_STATUS_TYPE status) {
+        Resource<List<SessionChatModel>> listResource = mChatData.getValue();
+        if (listResource == null || listResource.data == null)
+            return;
+        int pos = -1;
+        for (int i = 0, count = listResource.data.size(); i < count; i++) {
+            if (listResource.data.get(i).getPk() == eventPk) {
+                pos = i;
+                break;
+            }
+        }
+
+        if (pos > -1) {
+            listResource.data.get(pos).setStatus(status.tag);
+            mChatData.setValue(Resource.cloneResource(listResource, listResource.data));
+        }
     }
 }

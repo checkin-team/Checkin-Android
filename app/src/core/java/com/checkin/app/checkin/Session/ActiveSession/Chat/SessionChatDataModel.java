@@ -53,7 +53,7 @@ public class SessionChatDataModel {
     }
 
     public enum EVENT_CONCERN_TYPE {
-        CONCERN_NONE(0), CONCERN_DELAY(1), CONCERN_QUALITY(2);
+        CONCERN_NONE(0), CONCERN_DELAY(1), CONCERN_QUALITY(2), CONCERN_REMARK(3);
 
         final int tag;
 

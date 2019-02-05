@@ -1,7 +1,9 @@
 package com.checkin.app.checkin.Session.ActiveSession.Chat;
 
 import android.arch.lifecycle.ViewModelProviders;
+import android.content.BroadcastReceiver;
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.widget.SwipeRefreshLayout;
@@ -9,17 +11,21 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.WindowManager;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 import android.widget.ImageView;
 
+import com.checkin.app.checkin.Data.Message.MessageModel;
+import com.checkin.app.checkin.Data.Message.MessageModel.MESSAGE_TYPE;
+import com.checkin.app.checkin.Data.Message.MessageObjectModel;
+import com.checkin.app.checkin.Data.Message.MessageUtils;
 import com.checkin.app.checkin.Data.Resource;
 import com.checkin.app.checkin.R;
 import com.checkin.app.checkin.Session.ActiveSession.Chat.SessionChatDataModel.EVENT_CONCERN_TYPE;
@@ -30,7 +36,11 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 
+import static com.checkin.app.checkin.Data.Message.Constants.KEY_DATA;
+
 public class SessionChatActivity extends AppCompatActivity implements ActiveSessionChatAdapter.SessionChatInteraction {
+    private static final String TAG = SessionChatActivity.class.getSimpleName();
+
     public static final String KEY_SERVICE_TYPE = "session_chat.service";
 
     @BindView(R.id.bottom_expand_menu)
@@ -54,6 +64,28 @@ public class SessionChatActivity extends AppCompatActivity implements ActiveSess
 
     private ActiveSessionChatAdapter mChatAdapter;
     private ActiveSessionChatViewModel mViewModel;
+
+    private final BroadcastReceiver mReceiver = new BroadcastReceiver() {
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            MessageModel message;
+            try {
+                message = ((MessageModel) intent.getSerializableExtra(KEY_DATA));
+                if (message == null)
+                    return;
+            } catch (ClassCastException e) {
+                Log.e(TAG, "Invalid message object received.");
+                e.printStackTrace();
+                return;
+            }
+            switch (message.getType()) {
+                case USER_SESSION_EVENT_NEW:
+                    SessionChatActivity.this.addEvent(message.getRawData().getSessionEventDetail());
+                case USER_SESSION_EVENT_UPDATE:
+                    SessionChatActivity.this.updateEvent(message.getObject(), message.getRawData().getSessionEventStatus());
+            }
+        }
+    };
 
     private int concernTag = 0;
 
@@ -213,6 +245,15 @@ public class SessionChatActivity extends AppCompatActivity implements ActiveSess
         btnSendMsg.setTag(EVENT_REQUEST_SERVICE_TYPE.SERVICE_BRING_COMMODITY);
     }
 
+    private void updateEvent(MessageObjectModel object, SessionChatModel.CHAT_STATUS_TYPE sessionEventStatus) {
+        mViewModel.updateEventStatus(object.getPk(), sessionEventStatus);
+    }
+
+
+    private void addEvent(SessionChatModel sessionEventDetail) {
+        mViewModel.addNewEvent(sessionEventDetail);
+    }
+
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
@@ -222,6 +263,10 @@ public class SessionChatActivity extends AppCompatActivity implements ActiveSess
                 return true;
             case R.id.menu_quality:
                 concernTag = EVENT_CONCERN_TYPE.CONCERN_QUALITY.tag;
+                setMessage("");
+                return true;
+            case R.id.menu_remark:
+                concernTag = EVENT_CONCERN_TYPE.CONCERN_REMARK.tag;
                 setMessage("");
                 return true;
             default:
@@ -256,5 +301,17 @@ public class SessionChatActivity extends AppCompatActivity implements ActiveSess
         if (mChatAdapter.getSelectedEvent() != null) {
             mChatAdapter.resetSelectedEvent();
         } else super.onBackPressed();
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        MessageUtils.registerLocalReceiver(this, mReceiver, MESSAGE_TYPE.USER_SESSION_EVENT_NEW, MESSAGE_TYPE.USER_SESSION_EVENT_UPDATE);
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        MessageUtils.unregisterLocalReceiver(this, mReceiver);
     }
 }

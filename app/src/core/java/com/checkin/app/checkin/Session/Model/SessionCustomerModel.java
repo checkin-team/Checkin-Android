@@ -13,8 +13,8 @@ public class SessionCustomerModel {
     @JsonProperty("is_owner")
     private boolean isOwner;
 
-    @JsonProperty("is_public")
-    private boolean is_public;
+    @JsonProperty("isPublic")
+    private boolean isPublic;
 
     @JsonProperty("is_payee")
     private boolean isPayee;
@@ -24,12 +24,11 @@ public class SessionCustomerModel {
 
     public SessionCustomerModel() {}
 
-    public SessionCustomerModel(long pk, BriefModel user, boolean isOwner, boolean is_public, boolean isPayee) {
+    public SessionCustomerModel(long pk, BriefModel user, boolean isOwner, boolean isAccepted) {
         this.pk = pk;
         this.user = user;
         this.isOwner = isOwner;
-        this.is_public = is_public;
-        this.isPayee = isPayee;
+        this.isAccepted = isAccepted;
     }
 
     public long getPk() {
@@ -48,8 +47,8 @@ public class SessionCustomerModel {
         return isOwner;
     }
 
-    public boolean isIs_public() {
-        return is_public;
+    public boolean isPublic() {
+        return isPublic;
     }
 
     public boolean isAccepted() {

@@ -3,12 +3,12 @@ package com.checkin.app.checkin.Session.ActiveSession;
 import android.arch.lifecycle.ViewModelProviders;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.widget.Toast;
 
 import com.checkin.app.checkin.Data.Resource;
+import com.checkin.app.checkin.Misc.BaseActivity;
 import com.checkin.app.checkin.R;
 import com.checkin.app.checkin.Session.Model.SessionOrderedItemModel;
 import com.checkin.app.checkin.Utility.Utils;
@@ -17,7 +17,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 
-public class ActiveSessionViewOrdersActivity extends AppCompatActivity implements ActiveSessionOrdersAdapter.SessionOrdersInteraction {
+public class ActiveSessionViewOrdersActivity extends BaseActivity implements ActiveSessionOrdersAdapter.SessionOrdersInteraction {
     @BindView(R.id.rv_active_session_orders)
     RecyclerView rvOrders;
     private ActiveSessionOrdersAdapter mOrdersAdapter;
@@ -29,6 +29,8 @@ public class ActiveSessionViewOrdersActivity extends AppCompatActivity implement
 
         setContentView(R.layout.activity_active_session_view_orders);
         ButterKnife.bind(this);
+
+        initRefreshScreen(R.id.sr_active_session_orders);
 
         rvOrders.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false));
         mOrdersAdapter = new ActiveSessionOrdersAdapter(null, this);

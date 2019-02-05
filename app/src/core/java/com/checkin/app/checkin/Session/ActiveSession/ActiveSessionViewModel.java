@@ -8,7 +8,9 @@ import android.support.annotation.NonNull;
 import com.checkin.app.checkin.Data.BaseViewModel;
 import com.checkin.app.checkin.Data.Converters;
 import com.checkin.app.checkin.Data.Resource;
+import com.checkin.app.checkin.Misc.BriefModel;
 import com.checkin.app.checkin.Session.Model.ActiveSessionModel;
+import com.checkin.app.checkin.Session.Model.SessionCustomerModel;
 import com.checkin.app.checkin.Session.Model.SessionInvoiceModel;
 import com.checkin.app.checkin.Shop.ShopModel;
 import com.fasterxml.jackson.databind.node.ObjectNode;
@@ -97,5 +99,21 @@ public class ActiveSessionViewModel extends BaseViewModel {
 
     public void removeSessionMember(String userId) {
         mData.addSource(mRepository.deleteSessionMember(userId), mData::setValue);
+    }
+
+    public void updateHost(BriefModel user) {
+        Resource<ActiveSessionModel> resource = mSessionData.getValue();
+        if (resource == null || resource.data == null)
+            return;
+        resource.data.setHost(user);
+        mSessionData.setValue(Resource.cloneResource(resource, resource.data));
+    }
+
+    public void addCustomer(SessionCustomerModel customer) {
+        Resource<ActiveSessionModel> resource = mSessionData.getValue();
+        if (resource == null || resource.data == null)
+            return;
+        resource.data.addCustomer(customer);
+        mSessionData.setValue(Resource.cloneResource(resource, resource.data));
     }
 }

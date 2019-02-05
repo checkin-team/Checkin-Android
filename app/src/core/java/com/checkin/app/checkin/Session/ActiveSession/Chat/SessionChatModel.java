@@ -11,13 +11,14 @@ import com.fasterxml.jackson.databind.DeserializationContext;
 import com.fasterxml.jackson.databind.JsonDeserializer;
 
 import java.io.IOException;
+import java.io.Serializable;
 import java.util.Date;
 
 /**
  * Created by ACER on 1/2/2019.
  */
 
-public class SessionChatModel {
+public class SessionChatModel implements Serializable {
     @JsonProperty("pk")
     private int pk;
 
@@ -194,6 +195,13 @@ public class SessionChatModel {
         return Utils.formatDateTo24HoursTime(modified);
     }
 
+    public boolean isOfAnyType(CHAT_EVENT_TYPE... types) {
+        for (CHAT_EVENT_TYPE type: types) {
+            if (type == this.type)
+                return true;
+        }
+        return false;
+    }
 
     public static class SessionChatDeserializer extends JsonDeserializer<SessionChatModel> {
         @Override
