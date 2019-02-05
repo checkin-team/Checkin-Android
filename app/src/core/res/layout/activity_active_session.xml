@@ -171,11 +171,13 @@
                 <TextView
                     android:id="@+id/rv_session_recommendations"
                     style="@style/GreyTextStyle"
-                    android:layout_width="0dp"
+                    android:layout_width="wrap_content"
                     android:layout_height="0dp"
                     android:gravity="center"
                     android:text="@string/recommendation_coming_soon"
                     android:textSize="@dimen/font_small"
+                    android:drawableStart="@drawable/ic_hourglass"
+                    android:drawablePadding="@dimen/spacing_small"
                     app:layout_constraintBottom_toTopOf="@id/container_as_actions_bottom"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintLeft_toLeftOf="parent"
@@ -256,15 +258,15 @@
                         app:layout_constraintTop_toTopOf="parent">
 
                         <ImageView
-                            android:layout_width="@dimen/size_normal_button"
+                            android:layout_width="wrap_content"
                             android:layout_height="@dimen/button_height_medium"
-                            android:src="@drawable/ic_action_call_waiter"
-                            android:tint="@color/brownish_grey" />
+                            android:src="@drawable/ic_noun_waiter" />
 
                         <TextView
-                            android:layout_width="match_parent"
+                            android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:gravity="center"
+                            android:layout_gravity="center"
                             android:text="@string/call_waiter"
                             android:textSize="@dimen/font_small" />
 
@@ -283,14 +285,15 @@
                         app:layout_constraintTop_toTopOf="parent">
 
                         <ImageView
-                            android:layout_width="@dimen/size_normal_button"
+                            android:layout_width="wrap_content"
                             android:layout_height="@dimen/button_height_medium"
                             android:layout_gravity="center"
-                            android:src="@drawable/ic_action_clean_table" />
+                            android:src="@drawable/ic_table" />
 
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
+                            android:layout_gravity="center"
                             android:gravity="center"
                             android:text="@string/table_cleaning"
                             android:textSize="@dimen/font_small" />
@@ -310,13 +313,14 @@
                         app:layout_constraintTop_toTopOf="parent">
 
                         <ImageView
-                            android:layout_width="@dimen/size_normal_button"
+                            android:layout_width="wrap_content"
                             android:layout_height="@dimen/button_height_medium"
-                            android:src="@drawable/ic_action_refill_water" />
+                            android:src="@drawable/ic_glass" />
 
                         <TextView
-                            android:layout_width="match_parent"
+                            android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
+                            android:layout_gravity="center"
                             android:gravity="center"
                             android:text="@string/refill_glass"
                             android:textSize="@dimen/font_small" />

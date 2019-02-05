@@ -246,4 +246,42 @@ public class ActiveSessionRepository extends BaseRepository {
             }
         }.getAsLiveData();
     }
+
+    public LiveData<Resource<ObjectNode>> postSessionMember(String userId) {
+        return new NetworkBoundResource<ObjectNode, ObjectNode>() {
+            @Override
+            protected boolean shouldUseLocalDb() {
+                return false;
+            }
+
+            @NonNull
+            @Override
+            protected LiveData<ApiResponse<ObjectNode>> createCall() {
+                return new RetrofitLiveData<>(mWebService.postSessionMember(userId));
+            }
+
+            @Override
+            protected void saveCallResult(ObjectNode data) {
+            }
+        }.getAsLiveData();
+    }
+
+    public LiveData<Resource<ObjectNode>> deleteSessionMember(String userId) {
+        return new NetworkBoundResource<ObjectNode, ObjectNode>() {
+            @Override
+            protected boolean shouldUseLocalDb() {
+                return false;
+            }
+
+            @NonNull
+            @Override
+            protected LiveData<ApiResponse<ObjectNode>> createCall() {
+                return new RetrofitLiveData<>(mWebService.deleteSessionMember(userId));
+            }
+
+            @Override
+            protected void saveCallResult(ObjectNode data) {
+            }
+        }.getAsLiveData();
+    }
 }

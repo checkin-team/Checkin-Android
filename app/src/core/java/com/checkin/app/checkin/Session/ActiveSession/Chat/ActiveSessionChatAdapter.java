@@ -138,6 +138,7 @@ public class ActiveSessionChatAdapter extends RecyclerView.Adapter {
             if (chat.getType() == CHAT_EVENT_TYPE.EVENT_MENU_ORDER_ITEM && chat.getStatus() == CHAT_STATUS_TYPE.CANCELLED) {
                 tvChatMsg.setText(itemView.getContext().getString(R.string.status_order_cancelled));
                 tvChatConcernMsg.setText(chat.getMessage());
+                tvChatConcernMsg.setVisibility(View.VISIBLE);
                 return;
             } else if (chat.getType() == CHAT_EVENT_TYPE.EVENT_MENU_ORDER_ITEM) {
                 imStatusDone.setActivated(chat.getStatus().tag >= CHAT_STATUS_TYPE.DONE.tag);
@@ -145,6 +146,7 @@ public class ActiveSessionChatAdapter extends RecyclerView.Adapter {
                 imStatusOpen.setActivated(chat.getStatus().tag >= CHAT_STATUS_TYPE.OPEN.tag);
                 tvChatMsg.setText(chat.getMessage());
                 tvChatConcernMsg.setVisibility(View.GONE);
+                containerOrderStatus.setVisibility(View.VISIBLE);
                 return;
             } else {
                 containerOrderStatus.setVisibility(View.GONE);
@@ -153,6 +155,7 @@ public class ActiveSessionChatAdapter extends RecyclerView.Adapter {
                 SessionEventBasicModel event = chat.getData().getEvent();
                 if (event != null) {
                     tvChatConcernMsg.setText(event.getMessage());
+                    tvChatConcernMsg.setVisibility(View.VISIBLE);
                 }
                 tvChatMsg.setText(chat.getMessage());
             } else {

@@ -123,6 +123,7 @@ public class ActiveSessionActivity extends BaseActivity implements ActiveSession
             switch (resource.status) {
                 case SUCCESS: {
                     Utils.toast(this, "Done!");
+                    mViewModel.updateResults();
                     break;
                 }
                 case LOADING:
@@ -156,7 +157,7 @@ public class ActiveSessionActivity extends BaseActivity implements ActiveSession
 
     private void setupData(ActiveSessionModel data) {
         mSessionMembersAdapter.setUsers(data.getCustomers());
-        tvBill.setText(data.getBill());
+        tvBill.setText(data.formatBill(this));
         tvSessionLiveAt.setText(data.getRestaurant().getDisplayName());
         if (data.gethost() != null) {
             tvWaiterName.setText(data.gethost().getDisplayName());

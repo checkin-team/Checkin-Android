@@ -19,6 +19,9 @@ public class SessionCustomerModel {
     @JsonProperty("is_payee")
     private boolean isPayee;
 
+    @JsonProperty("is_accepted")
+    private boolean isAccepted;
+
     public SessionCustomerModel() {}
 
     public SessionCustomerModel(String pk, BriefModel user, boolean isOwner, boolean is_public, boolean isPayee) {
@@ -47,5 +50,9 @@ public class SessionCustomerModel {
 
     public boolean isIs_public() {
         return is_public;
+    }
+
+    public boolean isAccepted() {
+        return isAccepted;
     }
 }

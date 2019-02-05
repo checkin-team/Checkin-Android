@@ -74,15 +74,47 @@
         </android.support.v7.widget.Toolbar>
     </android.support.design.widget.AppBarLayout>
 
-    <android.support.v7.widget.RecyclerView
-        android:id="@+id/rv_session_members"
+    <RelativeLayout
+        android:id="@+id/container_first"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:background="@drawable/background_card_white_inner_shadow"
         app:layout_constraintBottom_toTopOf="@id/container_second"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/appbar_active_session"
-        app:layout_constraintVertical_weight="0.5" />
+        app:layout_constraintVertical_weight="0.8">
+
+        <TextView
+            android:id="@+id/tv_session_live_at"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            style="@style/GreySmallTextStyle"
+            tools:text="You are live at Roma's Cafe"
+            android:layout_marginTop="@dimen/spacing_small"
+            android:layout_marginBottom="@dimen/spacing_tiny"
+            android:layout_marginStart="@dimen/spacing_normal"/>
+
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/rv_session_members"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/tv_session_live_at"
+            android:layout_above="@id/tv_title_friends_can_join"
+
+            android:layout_marginStart="@dimen/spacing_small" />
+
+        <TextView
+            android:id="@+id/tv_title_friends_can_join"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            style="@style/PinkishGreySmallTextStyle"
+            android:layout_marginBottom="@dimen/spacing_small"
+            android:layout_marginTop="@dimen/spacing_small"
+            android:layout_centerInParent="true"
+            android:layout_alignParentBottom="true"
+            android:text="@string/your_friends_can_join_by_scanning_qr_code" />
+
+    </RelativeLayout>
 
     <android.support.constraint.ConstraintLayout
         android:id="@+id/container_second"
@@ -91,70 +123,38 @@
         app:layout_constraintBottom_toTopOf="@id/container_session_actions"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/rv_session_members"
+        app:layout_constraintTop_toBottomOf="@id/container_first"
         app:layout_constraintVertical_weight="0.5">
-
-        <Switch
-            android:id="@+id/switch_session_presence"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/spacing_normal"
-            android:layout_marginEnd="@dimen/spacing_extra_large"
-            android:scaleX="1.5"
-            android:scaleY="1.5"
-            android:showText="true"
-            android:splitTrack="false"
-            android:switchTextAppearance="@style/SwitchTextAppearance"
-            android:textOff="@string/session_presence_private"
-            android:textOn="@string/session_presence_public"
-            android:thumb="@drawable/ic_switch_toggle"
-            android:track="@drawable/rectangle_pinkish_grey"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="@+id/container_second" />
-
-        <TextView
-            android:id="@+id/tv_session_mark_presence"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/spacing_tiny"
-            android:layout_marginEnd="@dimen/spacing_normal"
-            android:fontFamily="@font/arial_rounded_mt_bold"
-            android:text="@string/title_checkin_privacy"
-            android:textColor="@color/pinkish_grey"
-            android:textSize="@dimen/font_extra_small"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/switch_session_presence" />
 
         <TextView
             android:id="@+id/btn_active_session_orders"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="@dimen/spacing_small"
-            android:layout_marginTop="@dimen/spacing_extra_small"
+            android:layout_marginTop="@dimen/spacing_small"
             android:drawableTop="@drawable/ic_action_view_orders"
             android:drawablePadding="@dimen/spacing_extra_small"
             android:text="@string/action_list_orders"
             android:textAlignment="center"
             android:textSize="@dimen/font_normal"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintEnd_toStartOf="@+id/btn_active_session_menu"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/tv_session_mark_presence" />
+            app:layout_constraintStart_toStartOf="parent" />
 
         <TextView
             android:id="@+id/btn_active_session_menu"
             android:layout_width="wrap_content"
-            android:layout_height="0dp"
-            android:layout_marginTop="@dimen/spacing_extra_small"
-            android:layout_marginEnd="@dimen/spacing_small"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/spacing_small"
             android:drawableTop="@drawable/ic_action_show_menu"
             android:drawablePadding="@dimen/spacing_small"
             android:text="@string/action_view_menu"
             android:textAlignment="center"
             android:textSize="@dimen/font_normal"
-            app:layout_constraintBottom_toBottomOf="@id/btn_active_session_orders"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toEndOf="@+id/btn_active_session_orders"
-            app:layout_constraintTop_toTopOf="@id/btn_active_session_orders" />
+            app:layout_constraintStart_toEndOf="@+id/btn_active_session_orders" />
 
     </android.support.constraint.ConstraintLayout>
 
@@ -177,17 +177,21 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
-        <android.support.v7.widget.RecyclerView
+        <TextView
             android:id="@+id/rv_session_recommendations"
             android:layout_width="0dp"
             android:layout_height="0dp"
+            style="@style/GreyTextStyle"
+            android:text="@string/recommendation_coming_soon"
+            android:textSize="@dimen/font_small"
+            android:gravity="center"
             app:layout_constraintBottom_toTopOf="@id/container_as_actions_bottom"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toRightOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_weight="0.9" />
+            app:layout_constraintVertical_weight="0.5" />
 
         <android.support.constraint.ConstraintLayout
             android:id="@+id/container_as_actions_bottom"

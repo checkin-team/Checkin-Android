@@ -217,6 +217,14 @@ public interface WebApiService {
     @GET("sessions/{session_id}/manager/events")
     Call<List<WaiterEventModel>> getManagerSessionEvents(@Path("session_id") long sessionId);
 
+    @POST("sessions/active/customers/{user_id}/")
+    Call<ObjectNode> postSessionMember(@Path("user_id") String userId);
+
+    @DELETE("sessions/active/customers/{user_id}/")
+    Call<ObjectNode> deleteSessionMember(@Path("user_id") String userId);
+
+
+
     // endregion
 
     // region WAITER

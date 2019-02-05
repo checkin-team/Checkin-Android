@@ -88,4 +88,12 @@ public class ActiveSessionViewModel extends BaseViewModel {
         }
         mSessionData.setValue(resource);
     }
+
+    public void postSessionMember(String userId){
+        mData.addSource(mRepository.postSessionMember(userId),mData::setValue);
+    }
+
+    public void deleteSessionMember(String userId){
+        mData.addSource(mRepository.deleteSessionMember(userId),mData::setValue);
+    }
 }

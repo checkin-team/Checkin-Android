@@ -29,6 +29,7 @@
         android:layout_marginTop="@dimen/spacing_tiny"
         android:text="@string/pending_request"
         style="@style/RedSmallTextStyle"
-        android:visibility="gone" />
+        android:visibility="invisible"
+        android:textSize="@dimen/font_extra_small"/>
 
 </LinearLayout>
