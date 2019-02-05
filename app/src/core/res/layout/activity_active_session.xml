@@ -259,7 +259,7 @@
 
                         <ImageView
                             android:layout_width="wrap_content"
-                            android:layout_height="@dimen/button_height_medium"
+                            android:layout_height="@dimen/button_height_normal"
                             android:src="@drawable/ic_noun_waiter" />
 
                         <TextView
@@ -267,6 +267,7 @@
                             android:layout_height="wrap_content"
                             android:gravity="center"
                             android:layout_gravity="center"
+                            android:layout_marginTop="@dimen/spacing_extra_tiny"
                             android:text="@string/call_waiter"
                             android:textSize="@dimen/font_small" />
 
@@ -286,7 +287,7 @@
 
                         <ImageView
                             android:layout_width="wrap_content"
-                            android:layout_height="@dimen/button_height_medium"
+                            android:layout_height="@dimen/button_height_normal"
                             android:layout_gravity="center"
                             android:src="@drawable/ic_table" />
 
@@ -295,6 +296,7 @@
                             android:layout_height="wrap_content"
                             android:layout_gravity="center"
                             android:gravity="center"
+                            android:layout_marginTop="@dimen/spacing_extra_tiny"
                             android:text="@string/table_cleaning"
                             android:textSize="@dimen/font_small" />
 
@@ -314,7 +316,7 @@
 
                         <ImageView
                             android:layout_width="wrap_content"
-                            android:layout_height="@dimen/button_height_medium"
+                            android:layout_height="@dimen/button_height_normal"
                             android:src="@drawable/ic_glass" />
 
                         <TextView
@@ -322,6 +324,7 @@
                             android:layout_height="wrap_content"
                             android:layout_gravity="center"
                             android:gravity="center"
+                            android:layout_marginTop="@dimen/spacing_extra_tiny"
                             android:text="@string/refill_glass"
                             android:textSize="@dimen/font_small" />
 

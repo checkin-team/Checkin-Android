@@ -79,4 +79,10 @@ public class ActiveSessionViewOrdersActivity extends BaseActivity implements Act
     public void onCancelOrder(SessionOrderedItemModel orderedItem) {
         mViewModel.deleteSessionOrder(orderedItem.getPk());
     }
+
+    @Override
+    protected void updateScreen() {
+        super.updateScreen();
+        mViewModel.updateResults();
+    }
 }

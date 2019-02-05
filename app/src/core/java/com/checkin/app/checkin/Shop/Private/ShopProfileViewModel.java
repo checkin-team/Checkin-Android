@@ -1,16 +1,23 @@
 package com.checkin.app.checkin.Shop.Private;
 
 import android.app.Application;
+import android.app.NotificationManager;
 import android.arch.lifecycle.LiveData;
 import android.arch.lifecycle.MediatorLiveData;
 import android.arch.lifecycle.MutableLiveData;
+import android.content.Context;
 import android.support.annotation.NonNull;
+import android.support.v4.app.NotificationCompat;
 
 import com.checkin.app.checkin.Data.BaseViewModel;
 import com.checkin.app.checkin.Data.Converters;
+import com.checkin.app.checkin.Data.Message.MessageUtils;
 import com.checkin.app.checkin.Data.Resource;
+import com.checkin.app.checkin.Data.RetrofitCallAsyncTask;
+import com.checkin.app.checkin.Misc.GenericDetailModel;
 import com.checkin.app.checkin.Shop.RestaurantModel;
 import com.checkin.app.checkin.Shop.ShopRepository;
+import com.checkin.app.checkin.Utility.ProgressRequestBody;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 
@@ -141,13 +148,6 @@ public class ShopProfileViewModel extends BaseViewModel{
         mShopData.setValue(Resource.success(restaurantModel));
     }
 
-    public void uploadCoverImage(int index, File pic) {
-        mData.addSource(mRepository.postRestaurantCover(mShopPk, index, pic), mData::setValue);
-    }
-
-    public void uploadLogoImage(File pic) {
-        mData.addSource(mRepository.postRestaurantLogo(mShopPk, pic), mData::setValue);
-    }
 
     public void removeCoverImage(int index) {
         mData.addSource(mRepository.deleteRestaurantCover(mShopPk, index), mData::setValue);
@@ -160,5 +160,19 @@ public class ShopProfileViewModel extends BaseViewModel{
     @Override
     public void updateResults() {
         fetchShopDetails(mShopPk);
+    }
+
+
+    public void updateProfilePic(File pictureFile, Context context, int index) {
+        NotificationCompat.Builder builder = MessageUtils.createUploadNotification(context);
+        MessageUtils.NotificationUpdate notificationUpdate = new MessageUtils.NotificationUpdate(context, builder);
+        doUploadImage(pictureFile, notificationUpdate, index);
+    }
+
+    private void doUploadImage(File pictureFile, ProgressRequestBody.UploadCallbacks listener, int index) {
+        if(index == -1)
+        new RetrofitCallAsyncTask<GenericDetailModel>(listener).execute(mRepository.postRestaurantLogo(mShopPk,pictureFile, listener));
+        else
+            new RetrofitCallAsyncTask<GenericDetailModel>(listener).execute(mRepository.postRestaurantCover(mShopPk,index,pictureFile, listener));
     }
 }
