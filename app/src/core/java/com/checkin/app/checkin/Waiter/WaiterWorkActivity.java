@@ -15,6 +15,7 @@ import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.View;
@@ -22,6 +23,7 @@ import android.widget.TextView;
 
 import com.checkin.app.checkin.Account.AccountModel;
 import com.checkin.app.checkin.Account.BaseAccountActivity;
+import com.checkin.app.checkin.Data.Message.MessageModel;
 import com.checkin.app.checkin.Data.Message.MessageModel.MESSAGE_TYPE;
 import com.checkin.app.checkin.Data.Message.MessageUtils;
 import com.checkin.app.checkin.Data.Resource.Status;
@@ -42,7 +44,11 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 
+import static com.checkin.app.checkin.Data.Message.Constants.KEY_DATA;
+
 public class WaiterWorkActivity extends BaseAccountActivity implements WaiterTableFragment.WaiterTableInteraction {
+    private static final String TAG = WaiterWorkActivity.class.getSimpleName();
+
     public static final String KEY_SHOP_PK = "waiter.shop_pk";
     private static final int REQUEST_QR_SCANNER = 121;
 
@@ -65,7 +71,22 @@ public class WaiterWorkActivity extends BaseAccountActivity implements WaiterTab
     private final BroadcastReceiver mReceiver = new BroadcastReceiver() {
         @Override
         public void onReceive(Context context, Intent intent) {
-
+            MessageModel message;
+            try {
+                message = ((MessageModel) intent.getSerializableExtra(KEY_DATA));
+                if (message == null)
+                    return;
+            } catch (ClassCastException e) {
+                Log.e(TAG, "Invalid message object received.");
+                e.printStackTrace();
+                return;
+            }
+            switch (message.getType()) {
+                case WAITER_SESSION_NEW:
+                    break;
+                case USER_SESSION_HOST_ASSIGNED:
+                    break;
+            }
         }
     };
 
@@ -187,7 +208,18 @@ public class WaiterWorkActivity extends BaseAccountActivity implements WaiterTab
     @Override
     protected void onResume() {
         super.onResume();
-        MessageUtils.registerLocalReceiver(this, mReceiver, MESSAGE_TYPE.WAITER_SESSION_NEW, MESSAGE_TYPE.WAITER_SESSION_NEW_ORDER, MESSAGE_TYPE.WAITER_SESSION_COLLECT_CASH);
+        MESSAGE_TYPE[] types = new MESSAGE_TYPE[] {
+                MESSAGE_TYPE.WAITER_SESSION_NEW, MESSAGE_TYPE.WAITER_SESSION_NEW_ORDER, MESSAGE_TYPE.WAITER_SESSION_COLLECT_CASH,
+                MESSAGE_TYPE.WAITER_SESSION_EVENT_SERVICE, MESSAGE_TYPE.WAITER_SESSION_HOST_ASSIGNED, MESSAGE_TYPE.WAITER_SESSION_MEMBER_CHANGE,
+                MESSAGE_TYPE.WAITER_SESSION_UPDATE_ORDER, MESSAGE_TYPE.WAITER_SESSION_END
+        };
+        MessageUtils.registerLocalReceiver(this, mReceiver, types);
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        MessageUtils.unregisterLocalReceiver(this, mReceiver);
     }
 
     @Override

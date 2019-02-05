@@ -1,12 +1,17 @@
 package com.checkin.app.checkin.Session.Model;
 
+import com.checkin.app.checkin.Data.Converters;
 import com.checkin.app.checkin.Menu.Model.ItemCustomizationGroupModel;
 import com.checkin.app.checkin.Menu.Model.MenuItemModel;
 import com.checkin.app.checkin.Session.ActiveSession.Chat.SessionChatModel.CHAT_STATUS_TYPE;
 import com.checkin.app.checkin.Utility.Constants;
 import com.checkin.app.checkin.Utility.Utils;
 import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.core.JsonParser;
+import com.fasterxml.jackson.databind.DeserializationContext;
+import com.fasterxml.jackson.databind.JsonDeserializer;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -139,5 +144,12 @@ public class SessionOrderedItemModel {
 
     public String formatQuantityItemType() {
         return String.format(Locale.ENGLISH, "%d %s", quantity, itemType);
+    }
+
+    public static class SessionOrderedItemDeserializer extends JsonDeserializer<SessionOrderedItemModel> {
+        @Override
+        public SessionOrderedItemModel deserialize(JsonParser jsonParser, DeserializationContext deserializationContext) throws IOException {
+            return Converters.objectMapper.readValue(jsonParser.getText(), SessionOrderedItemModel.class);
+        }
     }
 }

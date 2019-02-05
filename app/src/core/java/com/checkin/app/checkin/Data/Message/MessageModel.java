@@ -15,6 +15,7 @@ import com.checkin.app.checkin.Data.Converters;
 import com.checkin.app.checkin.Data.Message.Constants.CHANNEL;
 import com.checkin.app.checkin.R;
 import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 
 import java.io.IOException;
 import java.io.Serializable;
@@ -34,6 +35,7 @@ public class MessageModel implements Serializable {
     @JsonProperty("target")
     private MessageObjectModel target;
 
+    @JsonDeserialize(using = MessageDataModel.MessageDataDeserializer.class)
     @JsonProperty("data")
     private MessageDataModel data;
 
@@ -111,15 +113,6 @@ public class MessageModel implements Serializable {
     public void setTarget(String target) {
         try {
             this.target = Converters.objectMapper.readValue(target, MessageObjectModel.class);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-    }
-
-    @JsonProperty("data")
-    public void setData(String data) {
-        try {
-            this.data = Converters.objectMapper.readValue(data, MessageDataModel.class);
         } catch (IOException e) {
             e.printStackTrace();
         }

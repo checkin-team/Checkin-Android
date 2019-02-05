@@ -7,18 +7,19 @@ import java.io.Serializable;
 public class MessageObjectModel implements Serializable {
     private MESSAGE_OBJECT_TYPE type;
 
-    @JsonProperty("text")
-    private String text;
+    @JsonProperty("display_name")
+    private String displayName;
 
     @JsonProperty("pk")
     private int pk;
 
-    @JsonProperty("img_url")
-    private String imgUrl;
+    @JsonProperty("display_pic_url")
+    private String displayPicUrl;
 
     public enum MESSAGE_OBJECT_TYPE {
         NONE(0), USER(1), SESSION(2), REVIEW(3), FRIENDSHIP_REQUEST(4),
-        RESTAURANT(5), ORDER_ITEM(6), SESSION_EVENT(7);
+        RESTAURANT(5), ORDER_ITEM(6), SESSION_EVENT(7), RESTAURANT_CUSTOMER(8),
+        RESTAURANT_MEMBER(9);
 
         int id;
         MESSAGE_OBJECT_TYPE(int id) {
@@ -40,16 +41,16 @@ public class MessageObjectModel implements Serializable {
         return type;
     }
 
-    public String getText() {
-        return text;
+    public String getDisplayName() {
+        return displayName;
     }
 
     public int getPk() {
         return pk;
     }
 
-    public String getImgUrl() {
-        return imgUrl;
+    public String getDisplayPicUrl() {
+        return displayPicUrl;
     }
 
     @JsonProperty("type")

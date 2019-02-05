@@ -2,10 +2,15 @@ package com.checkin.app.checkin.Session.ActiveSession.Chat;
 
 import android.support.annotation.Nullable;
 
+import com.checkin.app.checkin.Data.Converters;
 import com.checkin.app.checkin.Misc.BriefModel;
 import com.checkin.app.checkin.Utility.Utils;
 import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.core.JsonParser;
+import com.fasterxml.jackson.databind.DeserializationContext;
+import com.fasterxml.jackson.databind.JsonDeserializer;
 
+import java.io.IOException;
 import java.util.Date;
 
 /**
@@ -187,5 +192,13 @@ public class SessionChatModel {
 
     public String formatEventTime() {
         return Utils.formatDateTo24HoursTime(modified);
+    }
+
+
+    public static class SessionChatDeserializer extends JsonDeserializer<SessionChatModel> {
+        @Override
+        public SessionChatModel deserialize(JsonParser jsonParser, DeserializationContext deserializationContext) throws IOException {
+            return Converters.objectMapper.readValue(jsonParser.getText(), SessionChatModel.class);
+        }
     }
 }
