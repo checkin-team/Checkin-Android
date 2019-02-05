@@ -40,7 +40,8 @@ public class QRScannerActivity extends AppCompatActivity implements QRScannerFra
         ActionBar actionBar = getSupportActionBar();
         assert actionBar != null;
         actionBar.setDisplayHomeAsUpEnabled(true);
-        actionBar.setHomeButtonEnabled(true);
+        actionBar.setHomeAsUpIndicator(R.drawable.ic_back_grey);
+        actionBar.setElevation(10);
 
         checkValidCamera();
         setupFragment();

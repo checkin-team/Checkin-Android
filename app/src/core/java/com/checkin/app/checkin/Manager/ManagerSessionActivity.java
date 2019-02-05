@@ -4,7 +4,9 @@ import android.arch.lifecycle.ViewModelProviders;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
+import android.view.View;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.checkin.app.checkin.Manager.Fragment.ManagerSessionEventFragment;
@@ -37,6 +39,12 @@ public class ManagerSessionActivity extends AppCompatActivity implements Manager
     TextView tvTable;
     @BindView(R.id.im_manager_session_waiter)
     ImageView imWaiterPic;
+    @BindView(R.id.container_ms_order_new)
+    LinearLayout containerMsOrderNew;
+    @BindView(R.id.container_ms_order_progress)
+    LinearLayout containerMsOrderProgress;
+    @BindView(R.id.container_ms_order_done)
+    LinearLayout containerMsOrderDone;
 
     private ManagerSessionOrderFragment mOrderFragment;
     private ManagerSessionEventFragment mEventFragment;
@@ -138,7 +146,7 @@ public class ManagerSessionActivity extends AppCompatActivity implements Manager
                 .commit();
     }
 
-    private void setupEventListing(){
+    private void setupEventListing() {
         getSupportFragmentManager().beginTransaction()
                 .add(R.id.fragment_manager_session_events, mEventFragment)
                 .commit();
@@ -153,5 +161,20 @@ public class ManagerSessionActivity extends AppCompatActivity implements Manager
     @OnClick(R.id.im_manager_session_back)
     public void goBack() {
         onBackPressed();
+    }
+
+    @OnClick({R.id.container_ms_order_new, R.id.container_ms_order_progress, R.id.container_ms_order_done})
+    public void onViewClicked(View view) {
+        switch (view.getId()) {
+            case R.id.container_ms_order_new:
+                setupOrdersListing();
+                break;
+            case R.id.container_ms_order_progress:
+                setupOrdersListing();
+                break;
+            case R.id.container_ms_order_done:
+                setupOrdersListing();
+                break;
+        }
     }
 }

@@ -44,8 +44,8 @@ public class EditProfileActivity extends AppCompatActivity implements EditAspect
 
         ActionBar actionBar = getSupportActionBar();
         if (actionBar != null) {
-            actionBar.setHomeButtonEnabled(true);
             actionBar.setDisplayHomeAsUpEnabled(true);
+            actionBar.setHomeAsUpIndicator(R.drawable.ic_back_grey);
             actionBar.setElevation(0);
         }
 

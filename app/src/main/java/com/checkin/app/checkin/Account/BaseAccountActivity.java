@@ -168,13 +168,7 @@ public abstract class BaseAccountActivity extends BaseActivity {
             int pos = mBaseActivity.mAccountAdapter.getPosition(account);
             vAccountSelector.setSelection(pos, true);
         }
-
-        @OnClick(R.id.btn_refresh)
-        void onAccountRefreshClick() {
-            Utils.toast(mBaseActivity.getApplicationContext(), "Refreshing...");
-            mBaseActivity.mViewModel.updateResults();
-        }
-
+        
         @Override
         public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
             AccountModel account = mBaseActivity.mAccountAdapter.getItem(position);

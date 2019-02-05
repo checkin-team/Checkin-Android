@@ -31,7 +31,7 @@
                 android:id="@+id/tabs_waiter"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:background="@color/white"
+                android:background="@drawable/background_bottom_inner_shadow"
                 app:tabGravity="fill"
                 app:tabIndicatorColor="@color/primary_red"
                 app:tabMode="scrollable"

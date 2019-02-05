@@ -15,7 +15,7 @@
 
         <android.support.v7.widget.CardView
             android:id="@+id/container_waiter_member_details"
-            style="@style/WhiteCardStyle"
+            app:cardCornerRadius="@dimen/card_corner_radius"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             app:layout_constraintStart_toStartOf="parent"

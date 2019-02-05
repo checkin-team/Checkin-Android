@@ -41,116 +41,122 @@
 
         </ScrollView>
 
-        <LinearLayout
-            android:id="@+id/header_menu_customization"
-            android:layout_width="match_parent"
-            android:layout_height="@dimen/height_menu_customization_header"
-            android:background="@drawable/background_white_rounded_card_shadow"
-            android:gravity="center_vertical"
-            android:orientation="horizontal"
-            android:paddingEnd="@dimen/spacing_normal"
-            android:paddingStart="@dimen/spacing_normal"
+        <android.support.v7.widget.CardView
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent">
+            app:layout_constraintTop_toTopOf="parent"
+            style="@style/WhiteCardStyle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
 
-            <TextView
-                android:id="@+id/tv_menu_customization_item_name"
-                style="@style/RedTitleStyle"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                tools:text="Pizza" />
+            <LinearLayout
+                android:id="@+id/header_menu_customization"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/height_menu_customization_header"
+                android:gravity="center_vertical"
+                android:orientation="horizontal"
+                android:paddingEnd="@dimen/spacing_normal"
+                android:paddingStart="@dimen/spacing_normal">
 
-            <RadioGroup
-                android:id="@+id/rg_menu_customization_type"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:orientation="horizontal">
+                <TextView
+                    android:id="@+id/tv_menu_customization_item_name"
+                    style="@style/RedTitleStyle"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    tools:text="Pizza" />
 
-                <android.support.constraint.ConstraintLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent">
+                <RadioGroup
+                    android:id="@+id/rg_menu_customization_type"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:orientation="horizontal">
 
-                    <View
-                        android:id="@+id/line_horizontal"
-                        android:layout_width="0dp"
-                        android:layout_height="@dimen/height_horizontal_line"
-                        android:background="@drawable/ic_line"
-                        app:layout_constraintBottom_toBottomOf="@+id/rb_menu_customization_type_3"
-                        app:layout_constraintEnd_toEndOf="@+id/rb_menu_customization_type_3"
-                        app:layout_constraintStart_toStartOf="@+id/rb_menu_customization_type_1"
-                        app:layout_constraintTop_toTopOf="@+id/rb_menu_customization_type_3" />
+                    <android.support.constraint.ConstraintLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent">
 
-                    <RadioButton
-                        android:id="@+id/rb_menu_customization_type_1"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:button="@drawable/radiobutton_selector"
-                        app:layout_constraintEnd_toEndOf="@+id/tv_menu_customization_radio_1"
-                        app:layout_constraintStart_toStartOf="@+id/tv_menu_customization_radio_1"
-                        app:layout_constraintTop_toTopOf="parent" />
+                        <View
+                            android:id="@+id/line_horizontal"
+                            android:layout_width="0dp"
+                            android:layout_height="@dimen/height_horizontal_line"
+                            android:background="@drawable/ic_line"
+                            app:layout_constraintBottom_toBottomOf="@+id/rb_menu_customization_type_3"
+                            app:layout_constraintEnd_toEndOf="@+id/rb_menu_customization_type_3"
+                            app:layout_constraintStart_toStartOf="@+id/rb_menu_customization_type_1"
+                            app:layout_constraintTop_toTopOf="@+id/rb_menu_customization_type_3" />
 
-                    <RadioButton
-                        android:id="@+id/rb_menu_customization_type_2"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:button="@drawable/radiobutton_selector"
-                        app:layout_constraintEnd_toEndOf="@+id/tv_menu_customization_radio_2"
-                        app:layout_constraintStart_toStartOf="@+id/tv_menu_customization_radio_2"
-                        app:layout_constraintTop_toTopOf="parent" />
+                        <RadioButton
+                            android:id="@+id/rb_menu_customization_type_1"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:button="@drawable/radiobutton_selector"
+                            app:layout_constraintEnd_toEndOf="@+id/tv_menu_customization_radio_1"
+                            app:layout_constraintStart_toStartOf="@+id/tv_menu_customization_radio_1"
+                            app:layout_constraintTop_toTopOf="parent" />
 
-                    <RadioButton
-                        android:id="@+id/rb_menu_customization_type_3"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:button="@drawable/radiobutton_selector"
-                        app:layout_constraintEnd_toEndOf="@+id/tv_menu_customization_radio_3"
-                        app:layout_constraintStart_toStartOf="@+id/tv_menu_customization_radio_3"
-                        app:layout_constraintTop_toTopOf="parent" />
+                        <RadioButton
+                            android:id="@+id/rb_menu_customization_type_2"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:button="@drawable/radiobutton_selector"
+                            app:layout_constraintEnd_toEndOf="@+id/tv_menu_customization_radio_2"
+                            app:layout_constraintStart_toStartOf="@+id/tv_menu_customization_radio_2"
+                            app:layout_constraintTop_toTopOf="parent" />
 
-                    <TextView
-                        android:id="@+id/tv_menu_customization_radio_1"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:textAlignment="center"
-                        android:textColor="@color/brownish_grey"
-                        android:textSize="@dimen/font_small"
-                        android:layout_marginStart="@dimen/spacing_normal"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toBottomOf="@id/rb_menu_customization_type_1"
-                        tools:text="Small" />
+                        <RadioButton
+                            android:id="@+id/rb_menu_customization_type_3"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:button="@drawable/radiobutton_selector"
+                            app:layout_constraintEnd_toEndOf="@+id/tv_menu_customization_radio_3"
+                            app:layout_constraintStart_toStartOf="@+id/tv_menu_customization_radio_3"
+                            app:layout_constraintTop_toTopOf="parent" />
 
-                    <TextView
-                        android:id="@+id/tv_menu_customization_radio_2"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:textAlignment="center"
-                        android:textColor="@color/brownish_grey"
-                        android:textSize="@dimen/font_small"
-                        app:layout_constraintEnd_toStartOf="@id/tv_menu_customization_radio_3"
-                        app:layout_constraintStart_toEndOf="@id/tv_menu_customization_radio_1"
-                        app:layout_constraintTop_toBottomOf="@id/rb_menu_customization_type_2"
-                        tools:text="Medium" />
+                        <TextView
+                            android:id="@+id/tv_menu_customization_radio_1"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:textAlignment="center"
+                            android:textColor="@color/brownish_grey"
+                            android:textSize="@dimen/font_small"
+                            android:layout_marginStart="@dimen/spacing_normal"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toBottomOf="@id/rb_menu_customization_type_1"
+                            tools:text="Small" />
 
-                    <TextView
-                        android:id="@+id/tv_menu_customization_radio_3"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:textAlignment="center"
-                        android:textColor="@color/brownish_grey"
-                        android:textSize="@dimen/font_small"
-                        android:layout_marginEnd="@dimen/spacing_normal"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintTop_toBottomOf="@id/rb_menu_customization_type_3"
-                        tools:text="Large" />
+                        <TextView
+                            android:id="@+id/tv_menu_customization_radio_2"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:textAlignment="center"
+                            android:textColor="@color/brownish_grey"
+                            android:textSize="@dimen/font_small"
+                            app:layout_constraintEnd_toStartOf="@id/tv_menu_customization_radio_3"
+                            app:layout_constraintStart_toEndOf="@id/tv_menu_customization_radio_1"
+                            app:layout_constraintTop_toBottomOf="@id/rb_menu_customization_type_2"
+                            tools:text="Medium" />
 
-                </android.support.constraint.ConstraintLayout>
+                        <TextView
+                            android:id="@+id/tv_menu_customization_radio_3"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:textAlignment="center"
+                            android:textColor="@color/brownish_grey"
+                            android:textSize="@dimen/font_small"
+                            android:layout_marginEnd="@dimen/spacing_normal"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintTop_toBottomOf="@id/rb_menu_customization_type_3"
+                            tools:text="Large" />
 
-            </RadioGroup>
+                    </android.support.constraint.ConstraintLayout>
 
-        </LinearLayout>
+                </RadioGroup>
+
+            </LinearLayout>
+
+        </android.support.v7.widget.CardView>
 
         <android.support.constraint.ConstraintLayout
             android:id="@+id/footer_menu_customization"
