@@ -138,7 +138,8 @@ public class WaiterTableViewModel extends BaseViewModel {
             return;
         int pos = -1;
         for (int i = 0, count = listResource.data.size(); i < count; i++) {
-            if (listResource.data.get(i).getPk() == data.getPk()) {
+            WaiterEventModel eventModel = listResource.data.get(i);
+            if (eventModel.getOrderedItem() != null && eventModel.getOrderedItem().getPk() == data.getPk()) {
                 pos = i;
                 break;
             }
@@ -146,6 +147,7 @@ public class WaiterTableViewModel extends BaseViewModel {
         if (pos > -1) {
             WaiterEventModel event = listResource.data.get(pos);
             event.setStatus(data.getStatus());
+            event.getOrderedItem().setStatus(data.getStatus().tag);
             listResource.data.set(pos, event);
         }
         mEventData.setValue(Resource.cloneResource(listResource, listResource.data));

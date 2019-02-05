@@ -27,7 +27,15 @@ public class ManagerSessionEventModel extends WaiterEventModel implements Serial
     }
 
     public String formatConcernType() {
-        return concern == EVENT_CONCERN_TYPE.CONCERN_QUALITY ? "Quality" : "Delay";
+        switch (concern) {
+            case CONCERN_DELAY:
+                return "Delay";
+            case CONCERN_QUALITY:
+                return "Quality";
+            case CONCERN_REMARK:
+                return "Remark";
+        }
+        return "";
     }
 
     public static class ManagerSessionEventModelDeserializer extends JsonDeserializer<ManagerSessionEventModel> {

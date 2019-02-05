@@ -79,7 +79,14 @@ public class ManagerSessionEventAdapter extends RecyclerView.Adapter<ManagerSess
             btnEventApprove.setOnClickListener(v -> mListener.onBillApprove());
         }
 
+        private void resetLayout() {
+            btnEventApprove.setVisibility(View.GONE);
+            btnEventDone.setVisibility(View.GONE);
+            tvEventSubType.setVisibility(View.GONE);
+        }
+
         void bindData(ManagerSessionEventModel eventModel) {
+            resetLayout();
             this.mEventModel = eventModel;
 
             tvEventSubType.setVisibility(View.GONE);

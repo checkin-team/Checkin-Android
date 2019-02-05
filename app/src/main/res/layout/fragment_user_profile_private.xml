@@ -63,6 +63,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_alignParentStart="true"
+                    android:layout_centerVertical="true"
                     tools:text="@tools:sample/full_names" />
 
                 <TextView
@@ -74,6 +75,7 @@
                     android:layout_alignStart="@id/tv_user_private_display_name"
                     android:layout_alignEnd="@id/tv_user_private_display_name"
                     android:textAlignment="center"
+                    android:visibility="gone"
                     tools:text="@tools:sample/cities" />
 
                 <Button

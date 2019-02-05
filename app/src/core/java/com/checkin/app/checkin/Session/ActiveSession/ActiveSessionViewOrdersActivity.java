@@ -39,8 +39,14 @@ public class ActiveSessionViewOrdersActivity extends BaseActivity implements Act
         mViewModel = ViewModelProviders.of(this).get(ActiveSessionOrdersViewModel.class);
 
         mViewModel.getSessionOrdersData().observe(this, listResource -> {
-            if (listResource != null && listResource.status == Resource.Status.SUCCESS)
+            if (listResource == null)
+                return;
+            if (listResource.status == Resource.Status.SUCCESS && listResource.data != null) {
                 mOrdersAdapter.setData(listResource.data);
+                stopRefreshing();
+            } else if (listResource.status == Resource.Status.LOADING) {
+                startRefreshing();
+            }
         });
 
         mViewModel.getObservableData().observe(this, resource -> {

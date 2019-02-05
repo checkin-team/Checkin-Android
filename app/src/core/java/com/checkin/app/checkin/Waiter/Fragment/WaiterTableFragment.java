@@ -86,8 +86,13 @@ public class WaiterTableFragment extends BaseFragment {
 
     private void setupTableData(SessionBriefModel data) {
         tvMembersCount.setText(data.formatCustomerCount());
-        if (data.isRequestedCheckout()) showCollectBill();
-        else showEventList();
+        if (data.isRequestedCheckout()) {
+            containerActions.setVisibility(View.GONE);
+            showCollectBill();
+        } else {
+            containerActions.setVisibility(View.VISIBLE);
+            showEventList();
+        }
     }
 
     private void showEventList() {

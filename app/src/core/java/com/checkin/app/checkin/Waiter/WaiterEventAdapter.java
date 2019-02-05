@@ -38,11 +38,6 @@ public class WaiterEventAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
         notifyDataSetChanged();
     }
 
-    public void addEventData(WaiterEventModel data) {
-        mData.add(data);
-        notifyItemInserted(mData.size() - 1);
-    }
-
     @NonNull
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
