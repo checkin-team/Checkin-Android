@@ -1,26 +1,36 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<android.support.v4.widget.SwipeRefreshLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/sv_shop_members"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".Shop.Private.MembersActivity"
     android:fitsSystemWindows="true"
-    android:orientation="vertical">
+    android:orientation="vertical"
+    tools:context=".Shop.Private.MembersActivity">
 
-    <Button
-        android:id="@+id/btn_add_member"
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        style="@style/ButtonLargeGreyTitle"
-        android:text="Add member"
-        android:textAllCaps="false"
-        android:layout_marginTop="@dimen/spacing_large"
-        android:layout_marginStart="@dimen/spacing_large"
-        android:layout_marginEnd="@dimen/spacing_large" />
+        android:orientation="vertical">
 
-    <FrameLayout
-        android:id="@+id/container_members"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/spacing_normal" />
-</LinearLayout>
+
+        <Button
+            android:id="@+id/btn_add_member"
+            style="@style/ButtonLargeGreyTitle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/spacing_large"
+            android:layout_marginTop="@dimen/spacing_large"
+            android:layout_marginEnd="@dimen/spacing_large"
+            android:text="Add member"
+            android:textAllCaps="false" />
+
+        <FrameLayout
+            android:id="@+id/container_members"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/spacing_normal" />
+
+    </LinearLayout>
+
+</android.support.v4.widget.SwipeRefreshLayout>

@@ -102,4 +102,5 @@ public class UserViewModel extends BaseViewModel {
         data.put("last_name", lastName);
         mData.addSource(mRepository.postUserData(data), mData::setValue);
     }
+
 }

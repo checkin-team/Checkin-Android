@@ -52,15 +52,17 @@
             app:layout_constraintTop_toTopOf="parent">
 
             <ImageView
-                style="@style/ButtonNormal"
-                android:layout_gravity="center"
+                android:layout_width="wrap_content"
+                android:layout_height="@dimen/button_height_normal"
                 android:src="@drawable/ic_action_call_waiter" />
 
             <TextView
-                style="@style/WhiteTextStyle"
-                android:layout_width="match_parent"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                style="@style/WhiteTextStyle"
                 android:gravity="center"
+                android:layout_gravity="center"
+                android:layout_marginTop="@dimen/spacing_extra_tiny"
                 android:text="@string/call_waiter"
                 android:textSize="@dimen/font_small" />
 
@@ -79,7 +81,8 @@
             app:layout_constraintTop_toTopOf="parent">
 
             <ImageView
-                style="@style/ButtonNormal"
+                android:layout_width="wrap_content"
+                android:layout_height="@dimen/button_height_normal"
                 android:layout_gravity="center"
                 android:src="@drawable/ic_action_clean_table"
                 android:tint="@color/white" />
@@ -106,8 +109,8 @@
             app:layout_constraintTop_toTopOf="parent">
 
             <ImageView
-                android:id="@+id/im_refill_glass"
-                style="@style/ButtonNormal"
+                android:layout_width="wrap_content"
+                android:layout_height="@dimen/button_height_normal"
                 android:layout_gravity="center"
                 android:src="@drawable/ic_action_refill_water"
                 android:tint="@color/white" />
@@ -115,8 +118,10 @@
             <TextView
                 android:id="@+id/text_refill_glass"
                 style="@style/WhiteTextStyle"
-                android:layout_width="match_parent"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:gravity="center"
                 android:text="@string/refill_glass"
                 android:textAlignment="center"
                 android:textSize="@dimen/font_small" />
@@ -158,7 +163,8 @@
             android:layout_width="@dimen/size_small_button"
             android:layout_height="@dimen/size_small_button"
             android:layout_alignParentEnd="true"
-            android:layout_margin="@dimen/spacing_small"
+            android:layout_marginTop="@dimen/spacing_small"
+            android:layout_marginEnd="@dimen/spacing_small"
             android:background="@drawable/ring_white_border"
             android:focusable="true"
             android:padding="@dimen/spacing_extra_small"
@@ -187,7 +193,8 @@
                     android:focusable="true">
 
                     <ImageView
-                        style="@style/ButtonNormal"
+                        android:layout_width="wrap_content"
+                        android:layout_height="@dimen/button_height_normal"
                         android:src="@drawable/ic_action_bring_napkins" />
 
                     <TextView
@@ -204,13 +211,14 @@
                     android:id="@+id/ll_extra_plates_container_button"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/spacing_normal"
+
                     android:layout_marginBottom="@dimen/spacing_normal"
                     android:clickable="true"
                     android:focusable="true">
 
                     <ImageView
-                        style="@style/ButtonNormal"
+                        android:layout_width="wrap_content"
+                        android:layout_height="@dimen/button_height_normal"
                         android:src="@drawable/ic_action_extra_plates" />
 
                     <TextView
@@ -229,6 +237,7 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="0.5"
+                android:layout_marginStart="@dimen/spacing_small"
                 android:orientation="vertical">
 
                 <LinearLayout
@@ -239,7 +248,8 @@
                     android:focusable="true">
 
                     <ImageView
-                        style="@style/ButtonNormal"
+                        android:layout_width="wrap_content"
+                        android:layout_height="@dimen/button_height_normal"
                         android:src="@drawable/ic_action_bring_salt" />
 
                     <TextView
@@ -256,13 +266,13 @@
                     android:id="@+id/ll_sauce_container_button"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/spacing_normal"
                     android:layout_marginBottom="@dimen/spacing_normal"
                     android:clickable="true"
                     android:focusable="true">
 
                     <ImageView
-                        style="@style/ButtonNormal"
+                        android:layout_width="wrap_content"
+                        android:layout_height="@dimen/button_height_normal"
                         android:src="@drawable/ic_action_bring_sauce" />
 
                     <TextView

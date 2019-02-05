@@ -134,13 +134,13 @@ public class ManagerSessionActivity extends AppCompatActivity implements Manager
 
     private void setupOrdersListing() {
         getSupportFragmentManager().beginTransaction()
-                .add(R.id.container_manager_session_fragment, mOrderFragment)
+                .replace(R.id.container_manager_session_fragment, mOrderFragment)
                 .commit();
     }
 
     private void setupEventListing(){
         getSupportFragmentManager().beginTransaction()
-                .add(R.id.fragment_manager_session_events, mEventFragment)
+                .replace(R.id.fragment_manager_session_events, mEventFragment)
                 .commit();
     }
 

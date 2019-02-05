@@ -13,6 +13,7 @@ import android.widget.ImageView;
 
 import com.checkin.app.checkin.Account.AccountModel;
 import com.checkin.app.checkin.Account.BaseAccountActivity;
+import com.checkin.app.checkin.Data.Resource;
 import com.checkin.app.checkin.Menu.SessionMenuActivity;
 import com.checkin.app.checkin.Misc.BaseFragmentAdapterBottomNav;
 import com.checkin.app.checkin.Misc.BlankFragment;
@@ -42,6 +43,7 @@ public class ShopPrivateActivity extends BaseAccountActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_shop_private);
         ButterKnife.bind(this);
+        initRefreshScreen(R.id.sr_shop_private);
 
         ActionBarDrawerToggle startToggle = new ActionBarDrawerToggle(this, drawerRoot, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
         drawerRoot.addDrawerListener(startToggle);
@@ -52,7 +54,17 @@ public class ShopPrivateActivity extends BaseAccountActivity {
         mViewModel = ViewModelProviders.of(this).get(ShopProfileViewModel.class);
         long shopPk = getIntent().getLongExtra(KEY_SHOP_PK, 0);
 
+        startRefreshing();
         mViewModel.fetchShopDetails(shopPk);
+
+        mViewModel.getShopData().observe(this, restaurantModelResource -> {
+            if (restaurantModelResource == null)
+                return;
+            if (restaurantModelResource.status == Resource.Status.SUCCESS && restaurantModelResource.data != null) {
+                stopRefreshing();
+            } else if (restaurantModelResource.status == Resource.Status.LOADING)
+                startRefreshing();
+        });
     }
 
     private void setUpMyViewPager(NewShopPrivatePagerAdapter newShopPrivatePagerAdapter) {
@@ -126,5 +138,11 @@ public class ShopPrivateActivity extends BaseAccountActivity {
                 SessionMenuActivity.withoutSession(getApplicationContext(), mViewModel.getShopPk());
             else super.onTabClick(position);
         }
+    }
+
+    @Override
+    protected void updateScreen() {
+        super.updateScreen();
+        mViewModel.updateResults();
     }
 }

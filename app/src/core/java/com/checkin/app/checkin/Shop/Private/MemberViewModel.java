@@ -84,6 +84,6 @@ public class MemberViewModel extends BaseViewModel {
 
     @Override
     public void updateResults() {
-
+        fetchShopMembers(mShopPk);
     }
 }

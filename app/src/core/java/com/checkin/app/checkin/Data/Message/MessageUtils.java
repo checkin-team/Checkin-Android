@@ -17,6 +17,7 @@ import com.checkin.app.checkin.Data.Message.Constants.CHANNEL;
 import com.checkin.app.checkin.Data.Message.Constants.CHANNEL_GROUP;
 import com.checkin.app.checkin.Data.Message.MessageModel.MESSAGE_TYPE;
 import com.checkin.app.checkin.R;
+import com.checkin.app.checkin.Utility.ProgressRequestBody;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -120,5 +121,39 @@ public class MessageUtils {
                 .setPriority(PRIORITY_LOW)
                 .setProgress(100, 0, false);
         return builder;
+    }
+
+    public static class NotificationUpdate implements ProgressRequestBody.UploadCallbacks {
+        private NotificationCompat.Builder builder;
+        private NotificationManager notificationManager;
+        private int notificationId;
+
+        public NotificationUpdate(Context context, NotificationCompat.Builder builder) {
+            notificationId = 202;
+            notificationManager = ((NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE));
+            this.builder = builder;
+        }
+
+        @Override
+        public void onProgressUpdate(int percentage) {
+            builder.setProgress(100, percentage, false);
+            notificationManager.notify(notificationId, builder.build());
+        }
+
+        @Override
+        public void onSuccess() {
+            builder.setContentText("Upload completed.")
+                    .setProgress(0, 0, false)
+                    .setAutoCancel(true);
+            notificationManager.notify(notificationId, builder.build());
+        }
+
+        @Override
+        public void onFailure() {
+            builder.setContentText("Upload error.")
+                    .setProgress(0, 0, false)
+                    .setAutoCancel(true);
+            notificationManager.notify(notificationId, builder.build());
+        }
     }
 }

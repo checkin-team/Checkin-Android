@@ -7,13 +7,15 @@ import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 
+import com.checkin.app.checkin.Data.Resource;
+import com.checkin.app.checkin.Misc.BaseActivity;
 import com.checkin.app.checkin.R;
 import com.checkin.app.checkin.Search.SearchActivity;
 
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 
-public class MembersActivity extends AppCompatActivity implements ShopMembersListFragment.MemberListInteraction, MemberAssignRoleFragment.AssignRoleInteraction {
+public class MembersActivity extends BaseActivity implements ShopMembersListFragment.MemberListInteraction, MemberAssignRoleFragment.AssignRoleInteraction {
     private static final String TAG = MembersActivity.class.getSimpleName();
 
     public static final String KEY_SHOP_PK = "shop_members.pk";
@@ -28,7 +30,7 @@ public class MembersActivity extends AppCompatActivity implements ShopMembersLis
         setContentView(R.layout.activity_shop_members);
 
         ButterKnife.bind(this);
-
+        initRefreshScreen(R.id.sv_shop_members);
         ActionBar actionBar = getSupportActionBar();
         assert actionBar != null;
 
@@ -38,6 +40,7 @@ public class MembersActivity extends AppCompatActivity implements ShopMembersLis
 
         mViewModel = ViewModelProviders.of(this).get(MemberViewModel.class);
 
+
         setupShopMembers();
     }
 
@@ -46,6 +49,14 @@ public class MembersActivity extends AppCompatActivity implements ShopMembersLis
         mViewModel.fetchShopMembers(shopPk);
         mFragmentShopMembers = ShopMembersListFragment.newInstance(this);
 
+        mViewModel.getShopMembers().observe(this, listResource -> {
+            if (listResource == null)
+                return;
+            if (listResource.status == Resource.Status.SUCCESS && listResource.data != null) {
+                stopRefreshing();
+            } else if (listResource.status == Resource.Status.LOADING)
+                startRefreshing();
+        });
         getSupportFragmentManager().beginTransaction()
                 .replace(R.id.container_members, mFragmentShopMembers)
                 .commit();
@@ -104,5 +115,11 @@ public class MembersActivity extends AppCompatActivity implements ShopMembersLis
 
             changeMemberRole(member, MemberAssignRoleFragment.POSITION_NEW_MEMBER);
         }
+    }
+
+    @Override
+    protected void updateScreen() {
+        super.updateScreen();
+        mViewModel.updateResults();
     }
 }

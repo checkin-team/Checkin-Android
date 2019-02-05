@@ -89,12 +89,12 @@ public interface WebApiService {
 
     @Multipart
     @POST("restaurants/{shop_id}/logo/")
-    Call<ObjectNode> postRestaurantLogo(
+    Call<GenericDetailModel> postRestaurantLogo(
             @Path("shop_id") long shopId, @Part MultipartBody.Part pic);
 
     @Multipart
     @POST("restaurants/{shop_id}/covers/{index}/")
-    Call<ObjectNode> postRestaurantCover(
+    Call<GenericDetailModel> postRestaurantCover(
             @Path("shop_id") long shopId, @Path("index") int index, @Part MultipartBody.Part pic);
 
     @DELETE("restaurants/{shop_id}/covers/{index}/")
