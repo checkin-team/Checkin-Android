@@ -16,6 +16,9 @@ public class Constants {
     public static final String SP_SESSION_RESTAURANT_PK = "session_active.restaurant.pk";
     public static final String SP_SESSION_ACTIVE_PK = "session_active.pk";
     public static final String SP_SYNC_DEVICE_TOKEN = "device_token";
+    public static final String SP_LAST_ACCOUNT_TYPE = "last_account.type";
+    public static final String SP_LAST_ACCOUNT_PK = "last_account.pk";
+
 
     public static final String TARGET_ID = "target_id";
     public static final String LAST_NOTIF_ID = "last_notif_id";

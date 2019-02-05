@@ -98,7 +98,7 @@ public class MembersActivity extends AppCompatActivity implements ShopMembersLis
         super.onActivityResult(requestCode, resultCode, data);
         if (requestCode == REQUEST_PICK_USER && resultCode == RESULT_OK) {
             String userName = data.getStringExtra(SearchActivity.KEY_RESULT_NAME);
-            String userPk = data.getStringExtra(SearchActivity.KEY_RESULT_PK);
+            long userPk = data.getLongExtra(SearchActivity.KEY_RESULT_PK, 0L);
             String userPic = data.getStringExtra(SearchActivity.KEY_RESULT_IMAGE);
             MemberModel member = new MemberModel(userPk, userName, userPic);
 

@@ -32,7 +32,7 @@ public class MemberModel {
 
     public MemberModel() {}
 
-    public MemberModel(String userPk, String userName, String userPic) {
+    public MemberModel(long userPk, String userName, String userPic) {
         user = new BriefModel(userPk, userName, userPic);
     }
 

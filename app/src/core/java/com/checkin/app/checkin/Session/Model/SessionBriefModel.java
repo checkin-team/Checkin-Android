@@ -69,4 +69,16 @@ public class SessionBriefModel {
     public boolean isRequestedCheckout() {
         return isRequestedCheckout;
     }
+
+    public void setBill(double bill) {
+        this.bill = bill;
+    }
+
+    public void setRequestedCheckout(boolean requestedCheckout) {
+        this.isRequestedCheckout = requestedCheckout;
+    }
+
+    public void setCustomerCount(int customerCount) {
+        this.customerCount = customerCount;
+    }
 }

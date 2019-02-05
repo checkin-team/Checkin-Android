@@ -122,6 +122,10 @@ public class WaiterTableFragment extends BaseFragment {
         SessionMenuActivity.withSession(requireContext(), shopPk, mViewModel.getSessionPk());
     }
 
+    public WaiterTableViewModel getViewModel() {
+        return mViewModel;
+    }
+
     public interface WaiterTableInteraction {
         void onTableActiveEventCount(long sessionPk, int count);
     }

@@ -1,5 +1,6 @@
 package com.checkin.app.checkin.Session.Model;
 
+import com.checkin.app.checkin.Manager.Model.ManagerSessionEventModel;
 import com.checkin.app.checkin.Session.ActiveSession.Chat.SessionChatDataModel.EVENT_CONCERN_TYPE;
 import com.checkin.app.checkin.Session.ActiveSession.Chat.SessionChatDataModel.EVENT_REQUEST_SERVICE_TYPE;
 import com.checkin.app.checkin.Session.ActiveSession.Chat.SessionChatModel.CHAT_EVENT_TYPE;
@@ -34,6 +35,14 @@ public class EventBriefModel {
         this.type = type;
         this.message = message;
         this.timestamp = new Date();
+    }
+
+    public static EventBriefModel getFromManagerEventModel(ManagerSessionEventModel eventModel) {
+        EventBriefModel result = new EventBriefModel(eventModel.getPk(), eventModel.getType(), eventModel.getMessage());
+        result.timestamp = eventModel.getModified();
+        result.service = eventModel.getService();
+        result.concern = eventModel.getConcern();
+        return result;
     }
 
     public CHAT_EVENT_TYPE getType() {

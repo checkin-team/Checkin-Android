@@ -3,6 +3,7 @@ package com.checkin.app.checkin.Waiter.Model;
 import com.checkin.app.checkin.Session.ActiveSession.Chat.SessionChatDataModel.EVENT_REQUEST_SERVICE_TYPE;
 import com.checkin.app.checkin.Session.ActiveSession.Chat.SessionChatModel.CHAT_EVENT_TYPE;
 import com.checkin.app.checkin.Session.ActiveSession.Chat.SessionChatModel.CHAT_STATUS_TYPE;
+import com.checkin.app.checkin.Session.Model.EventBriefModel;
 import com.checkin.app.checkin.Session.Model.SessionOrderedItemModel;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
@@ -79,5 +80,19 @@ public class WaiterEventModel {
     @JsonProperty("service")
     public void setService(int service) {
         this.service = EVENT_REQUEST_SERVICE_TYPE.getByTag(service);
+    }
+
+    public static WaiterEventModel fromEventBriefModel(EventBriefModel eventBriefModel) {
+        WaiterEventModel result = new WaiterEventModel();
+        result.pk = eventBriefModel.getPk();
+        result.type = eventBriefModel.getType();
+        result.message = eventBriefModel.getMessage();
+        result.service = eventBriefModel.getService();
+        result.modified = eventBriefModel.getTimestamp();
+        return result;
+    }
+
+    public void setOrderedItem(SessionOrderedItemModel orderedItemModel) {
+        this.orderedItem = orderedItemModel;
     }
 }

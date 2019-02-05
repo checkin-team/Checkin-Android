@@ -6,7 +6,6 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
-import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -55,7 +54,8 @@ public class UserPrivateProfileFragment extends Fragment {
         return new UserPrivateProfileFragment();
     }
 
-    public UserPrivateProfileFragment() {}
+    public UserPrivateProfileFragment() {
+    }
 
     @Nullable
     @Override
@@ -69,14 +69,10 @@ public class UserPrivateProfileFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         mViewModel = ViewModelProviders.of(requireActivity()).get(UserViewModel.class);
         setupObservers();
-        rvRecentShops.setLayoutManager(new LinearLayoutManager(getActivity(),LinearLayoutManager.HORIZONTAL,false));
+        rvRecentShops.setLayoutManager(new LinearLayoutManager(getActivity(), LinearLayoutManager.HORIZONTAL, false));
         mUserCheckinAdapter = new UserCheckinAdapter();
         rvRecentShops.setAdapter(mUserCheckinAdapter);
-    }
 
-    @Override
-    public void onResume() {
-        super.onResume();
         mViewModel.fetchUserData();
         mViewModel.fetchUserRecentCheckinsData();
     }
@@ -97,8 +93,8 @@ public class UserPrivateProfileFragment extends Fragment {
         mViewModel.getUserRecentCheckinsData().observe(this, input -> {
             if (input == null)
                 return;
-            if (input.status == Status.SUCCESS && input.data != null){
-                if (input.data.size() > 0){
+            if (input.status == Status.SUCCESS && input.data != null) {
+                if (input.data.size() > 0) {
                     mUserCheckinAdapter.setUserCheckinsData(input.data);
                 }
             }
@@ -124,20 +120,21 @@ public class UserPrivateProfileFragment extends Fragment {
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.btn_user_private_add_logo:
-                Intent intent = new Intent(requireContext() , SelectCropImageActivity.class);
+                Intent intent = new Intent(requireContext(), SelectCropImageActivity.class);
                 startActivityForResult(intent, SelectCropImageActivity.RC_CROP_IMAGE);
                 break;
             case R.id.btn_user_private_edit:
                 String firstName = mUserModel.getFirstName();
                 String lastName = mUserModel.getLastName();
                 String userName = mUserModel.getUsername();
-                if (firstName != null && lastName != null && userName != null){
+                if (firstName != null && lastName != null && userName != null) {
                     Intent editProfileIntent = new Intent(requireContext(), ProfileEditActivity.class);
-                    editProfileIntent.putExtra(FIRST_NAME,firstName);
-                    editProfileIntent.putExtra(LAST_NAME,lastName);
-                    editProfileIntent.putExtra(USERNAME,userName);
+                    editProfileIntent.putExtra(FIRST_NAME, firstName);
+                    editProfileIntent.putExtra(LAST_NAME, lastName);
+                    editProfileIntent.putExtra(USERNAME, userName);
                     startActivity(editProfileIntent);
                 }
+                mViewModel.fetchUserData();
                 break;
         }
     }

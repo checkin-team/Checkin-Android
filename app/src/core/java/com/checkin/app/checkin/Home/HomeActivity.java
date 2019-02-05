@@ -57,6 +57,7 @@ public class HomeActivity extends BaseAccountActivity implements NavigationView.
     ImageView imTabUserIcon;
 
     private HomeViewModel mViewModel;
+    private UserViewModel mUserViewModel;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -83,11 +84,14 @@ public class HomeActivity extends BaseAccountActivity implements NavigationView.
     @Override
     protected void updateScreen() {
         mViewModel.updateResults();
+        mUserViewModel.updateResults();
         getAccountViewModel().updateResults();
     }
 
     private void setup() {
         mViewModel = ViewModelProviders.of(this).get(HomeViewModel.class);
+        mUserViewModel = ViewModelProviders.of(this).get(UserViewModel.class);
+
         UserViewModel userViewModel = ViewModelProviders.of(this).get(UserViewModel.class);
 
         userViewModel.getUserData().observe(this, resource -> {

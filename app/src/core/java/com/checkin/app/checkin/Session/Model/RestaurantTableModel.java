@@ -74,4 +74,8 @@ public class RestaurantTableModel {
     public void setEventCount(int eventCount) {
         this.eventCount = eventCount;
     }
+
+    public void setHost(@Nullable BriefModel host) {
+        this.host = host;
+    }
 }

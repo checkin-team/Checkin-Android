@@ -42,6 +42,8 @@ public class BusinessFeaturesActivity extends AppCompatActivity {
         ButterKnife.bind(this);
 
         ActionBar actionBar = getSupportActionBar();
+        assert actionBar != null;
+
         actionBar.setDisplayHomeAsUpEnabled(true);
         actionBar.setHomeAsUpIndicator(R.drawable.ic_back_grey);
         actionBar.setElevation(10);

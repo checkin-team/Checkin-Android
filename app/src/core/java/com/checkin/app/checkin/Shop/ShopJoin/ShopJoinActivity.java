@@ -1,6 +1,7 @@
 package com.checkin.app.checkin.Shop.ShopJoin;
 
 import android.arch.lifecycle.ViewModelProviders;
+import android.content.ComponentName;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
@@ -61,10 +62,9 @@ public class ShopJoinActivity extends AppCompatActivity implements
     }
 
     private void finishSignup(long pk) {
-        Intent intent = new Intent(this, ShopPrivateActivity.class);
+        Intent intent = Intent.makeRestartActivityTask(new ComponentName(this, ShopPrivateActivity.class));
         intent.putExtra(ShopPrivateActivity.KEY_SHOP_PK, pk);
         startActivity(intent);
-        finish();
     }
 
     private void askBasicInfo() {

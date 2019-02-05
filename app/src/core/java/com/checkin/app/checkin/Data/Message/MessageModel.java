@@ -179,7 +179,7 @@ public class MessageModel implements Serializable {
         Intent intent = getNotificationIntent(context);
         PendingIntent pendingIntent = PendingIntent.getActivity(context, 0, intent, PendingIntent.FLAG_UPDATE_CURRENT);
         Notification notification = getNotificationBuilder(context, notificationId)
-//                .setContentIntent(pendingIntent)
+                .setContentIntent(pendingIntent)
                 .build();
         notificationManager.notify(notificationId, notification);
     }
@@ -192,6 +192,7 @@ public class MessageModel implements Serializable {
         switch (this.type) {
             case USER_SESSION_BILL_CHANGE:
             case USER_SESSION_END:
+            case USER_SESSION_MEMBER_ADD_REQUEST:
             case USER_SESSION_HOST_ASSIGNED:
             case USER_SESSION_ORDER_ACCEPTED:
             case USER_SESSION_ORDER_REJECTED:

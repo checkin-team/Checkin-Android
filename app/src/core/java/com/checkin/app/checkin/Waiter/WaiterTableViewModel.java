@@ -132,6 +132,26 @@ public class WaiterTableViewModel extends BaseViewModel {
         mEventData.setValue(Resource.cloneResource(listResource, listResource.data));
     }
 
+    public void updateOrderItemStatus(long eventId, CHAT_STATUS_TYPE status) {
+        Resource<List<WaiterEventModel>> listResource = mEventData.getValue();
+        if (listResource == null || listResource.data == null)
+            return;
+        int pos = -1;
+        for (int i = 0, count = listResource.data.size(); i < count; i++) {
+            if (listResource.data.get(i).getPk() == eventId) {
+                pos = i;
+                break;
+            }
+        }
+        if (pos > -1) {
+            WaiterEventModel event = listResource.data.get(pos);
+            event.setStatus(status);
+            if (event.getOrderedItem() != null)
+                event.getOrderedItem().setStatus(status.tag);
+        }
+        mEventData.setValue(Resource.cloneResource(listResource, listResource.data));
+    }
+
     public void updateUiMarkOrderStatus(OrderStatusModel data) {
         Resource<List<WaiterEventModel>> listResource = mEventData.getValue();
         if (listResource == null || listResource.data == null)
@@ -148,8 +168,33 @@ public class WaiterTableViewModel extends BaseViewModel {
             WaiterEventModel event = listResource.data.get(pos);
             event.setStatus(data.getStatus());
             event.getOrderedItem().setStatus(data.getStatus().tag);
-            listResource.data.set(pos, event);
         }
         mEventData.setValue(Resource.cloneResource(listResource, listResource.data));
+    }
+
+    public void initiateCollectCash(double bill) {
+        Resource<SessionBriefModel> resource = mSessionDetail.getValue();
+        if (resource == null || resource.data == null)
+            return;
+        SessionBriefModel data = resource.data;
+        data.setBill(bill);
+        data.setRequestedCheckout(true);
+        mSessionDetail.setValue(Resource.cloneResource(resource, data));
+    }
+
+    public void addNewEvent(WaiterEventModel waiterEventModel) {
+        Resource<List<WaiterEventModel>> listResource = mEventData.getValue();
+        if (listResource == null || listResource.data == null)
+            return;
+        listResource.data.add(waiterEventModel);
+        mEventData.setValue(Resource.cloneResource(listResource, listResource.data));
+    }
+
+    public void updateMemberCount(int customerCount) {
+        Resource<SessionBriefModel> resource = mSessionDetail.getValue();
+        if (resource == null || resource.data == null)
+            return;
+        resource.data.setCustomerCount(customerCount);
+        mSessionDetail.setValue(Resource.cloneResource(resource, resource.data));
     }
 }
