@@ -81,7 +81,9 @@
                 android:gravity="center"
                 android:text="@string/reject"
                 android:textSize="@dimen/font_extra_small" />
+
         </LinearLayout>
+
     </FrameLayout>
 
     <LinearLayout
@@ -123,6 +125,7 @@
     <LinearLayout
         android:id="@+id/container_ms_order_remarks"
         android:layout_width="0dp"
+        android:paddingTop="@dimen/spacing_small"
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/spacing_small"
         android:orientation="vertical"

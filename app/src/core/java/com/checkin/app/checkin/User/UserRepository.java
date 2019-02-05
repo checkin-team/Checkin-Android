@@ -32,6 +32,26 @@ public class UserRepository extends BaseRepository {
         mWebService = ApiClient.getApiService(context);
     }
 
+    public LiveData<Resource<List<ShopCustomerModel>>> getUserRecentCheckins(){
+        return new NetworkBoundResource<List<ShopCustomerModel>, List<ShopCustomerModel>>() {
+            @Override
+            protected boolean shouldUseLocalDb() {
+                return false;
+            }
+
+            @NonNull
+            @Override
+            protected LiveData<ApiResponse<List<ShopCustomerModel>>> createCall() {
+                return new RetrofitLiveData<>(mWebService.getUserRecentCheckins());
+            }
+
+            @Override
+            protected void saveCallResult(List<ShopCustomerModel> data) {
+
+            }
+        }.getAsLiveData();
+    }
+
     public LiveData<Resource<List<UserModel>>> getAllUsers() {
         return new NetworkBoundResource<List<UserModel>, List<UserModel>>() {
 

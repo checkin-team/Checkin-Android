@@ -2,6 +2,7 @@ package com.checkin.app.checkin.User.Private;
 
 import android.arch.lifecycle.ViewModelProviders;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
@@ -23,15 +24,19 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 
 public class ProfileEditActivity extends AppCompatActivity implements OtpVerificationDialog.AuthCallback {
+
     private static final String TAG = ProfileEditActivity.class.getSimpleName();
 
     @BindView(R.id.et_first_name) EditText etFirstName;
     @BindView(R.id.et_last_name) EditText etLastName;
-    @BindView(R.id.et_location) EditText etLocation;
-    @BindView(R.id.et_bio) EditText etBio;
+    @BindView(R.id.tv_user) TextView tvUser;
     @BindView(R.id.tv_username) TextView tvUsername;
 
     private UserViewModel mUserViewModel;
+
+    public static final String FIRST_NAME = "com.checkin.app.checkin.User.Private.first_name";
+    public static final String LAST_NAME = "com.checkin.app.checkin.User.Private.last_name";
+    public static final String USERNAME = "com.checkin.app.checkin.User.Private.username";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -45,6 +50,16 @@ public class ProfileEditActivity extends AppCompatActivity implements OtpVerific
             actionBar.setHomeAsUpIndicator(R.drawable.ic_back_grey);
             actionBar.setElevation(10);
         }
+
+        Intent userIntent = getIntent();
+
+        String firstName = userIntent.getStringExtra(FIRST_NAME);
+        String lastName = userIntent.getStringExtra(LAST_NAME);
+        String userName = userIntent.getStringExtra(USERNAME);
+
+        etFirstName.setText(firstName);
+        etLastName.setText(lastName);
+        tvUser.setText(userName);
 
         mUserViewModel = ViewModelProviders.of(this).get(UserViewModel.class);
 
@@ -70,10 +85,7 @@ public class ProfileEditActivity extends AppCompatActivity implements OtpVerific
     private void setUi(UserModel user) {
         etFirstName.setText(user.getFirstName());
         etLastName.setText(user.getLastName());
-        etLocation.setText(user.getAddress());
-        etBio.setText(user.getBio());
         tvUsername.setText("Username: " + user.getUsername());
-        //etEmail.setText(mUserModel.getEmail);
     }
 
     @Override
@@ -89,9 +101,7 @@ public class ProfileEditActivity extends AppCompatActivity implements OtpVerific
                 Toast.makeText(this, "Done", Toast.LENGTH_SHORT).show();
                 String firstName = etFirstName.getText().toString();
                 String lastName = etLastName.getText().toString();
-                String location = etLocation.getText().toString();
-                String bio = etBio.getText().toString();
-                mUserViewModel.postUserData(firstName, lastName, location, bio);
+                mUserViewModel.postUserData(firstName, lastName);
                 return true;
             }
         }

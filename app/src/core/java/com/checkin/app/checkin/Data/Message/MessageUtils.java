@@ -112,7 +112,7 @@ public class MessageUtils {
         return LocalBroadcastManager.getInstance(context.getApplicationContext()).sendBroadcast(intent);
     }
 
-    public static NotificationCompat.Builder createDownloadNotification(Context context) {
+    public static NotificationCompat.Builder createUploadNotification(Context context) {
         NotificationCompat.Builder builder = new NotificationCompat.Builder(context, CHANNEL.MEDIA_UPLOAD.id);
         builder.setContentTitle("Media upload")
                 .setContentText("Upload in progress")

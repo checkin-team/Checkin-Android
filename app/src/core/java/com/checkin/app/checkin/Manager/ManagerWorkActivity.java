@@ -19,6 +19,8 @@ import android.util.Log;
 import com.checkin.app.checkin.Account.AccountModel;
 import com.checkin.app.checkin.Account.BaseAccountActivity;
 import com.checkin.app.checkin.Data.Message.MessageModel;
+import com.checkin.app.checkin.Data.Message.MessageModel.MESSAGE_TYPE;
+import com.checkin.app.checkin.Data.Message.MessageUtils;
 import com.checkin.app.checkin.Manager.Fragment.ManagerStatsFragment;
 import com.checkin.app.checkin.Manager.Fragment.ManagerTablesFragment;
 import com.checkin.app.checkin.Manager.Model.ManagerWorkViewModel;
@@ -30,6 +32,11 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 
 import static com.checkin.app.checkin.Data.Message.Constants.KEY_DATA;
+import static com.checkin.app.checkin.Data.Message.MessageModel.MESSAGE_TYPE.MANAGER_SESSION_CHECKOUT_REQUEST;
+import static com.checkin.app.checkin.Data.Message.MessageModel.MESSAGE_TYPE.MANAGER_SESSION_EVENT_CONCERN;
+import static com.checkin.app.checkin.Data.Message.MessageModel.MESSAGE_TYPE.MANAGER_SESSION_EVENT_SERVICE;
+import static com.checkin.app.checkin.Data.Message.MessageModel.MESSAGE_TYPE.MANAGER_SESSION_NEW;
+import static com.checkin.app.checkin.Data.Message.MessageModel.MESSAGE_TYPE.MANAGER_SESSION_NEW_ORDER;
 
 public class ManagerWorkActivity extends BaseAccountActivity {
     private static final String TAG = ManagerWorkActivity.class.getSimpleName();
@@ -44,6 +51,8 @@ public class ManagerWorkActivity extends BaseAccountActivity {
     DrawerLayout drawerLayout;
     @BindView(R.id.toolbar_manager_work)
     Toolbar toolbar;
+
+    public static int EVENT_COUNT = 0;
 
     private ManagerWorkViewModel mViewModel;
 
@@ -60,9 +69,17 @@ public class ManagerWorkActivity extends BaseAccountActivity {
                 e.printStackTrace();
                 return;
             }
+
             switch (message.getType()) {
                 case MANAGER_SESSION_NEW:
-                    mViewModel.updateResults();
+                    break;
+                case MANAGER_SESSION_NEW_ORDER:
+                    break;
+                case MANAGER_SESSION_EVENT_SERVICE:
+                    break;
+                case MANAGER_SESSION_CHECKOUT_REQUEST:
+                    break;
+                case MANAGER_SESSION_EVENT_CONCERN:
                     break;
             }
         }
@@ -126,6 +143,22 @@ public class ManagerWorkActivity extends BaseAccountActivity {
     @Override
     protected AccountModel.ACCOUNT_TYPE[] getAccountTypes() {
         return new AccountModel.ACCOUNT_TYPE[]{AccountModel.ACCOUNT_TYPE.RESTAURANT_MANAGER};
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        MESSAGE_TYPE[] types = new MESSAGE_TYPE[] {
+                MANAGER_SESSION_NEW, MANAGER_SESSION_NEW_ORDER, MANAGER_SESSION_EVENT_SERVICE, MANAGER_SESSION_CHECKOUT_REQUEST,
+                MANAGER_SESSION_EVENT_CONCERN
+        };
+        MessageUtils.registerLocalReceiver(this, mReceiver, types);
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        MessageUtils.unregisterLocalReceiver(this, mReceiver);
     }
 
     static class ManagerFragmentAdapter extends BaseFragmentAdapterBottomNav {
