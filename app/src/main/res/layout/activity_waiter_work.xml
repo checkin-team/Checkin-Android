@@ -25,6 +25,7 @@
                 android:layout_height="?android:attr/actionBarSize"
                 android:gravity="center_vertical"
                 app:layout_scrollFlags="snap"
+                app:titleTextColor="@color/brownish_grey"
                 app:popupTheme="@style/PopupOverlay" />
 
             <android.support.design.widget.TabLayout
@@ -69,6 +70,7 @@
         android:layout_width="wrap_content"
         android:layout_height="match_parent"
         android:layout_gravity="end"
+        app:itemTextColor="@color/brownish_grey"
         android:fitsSystemWindows="false">
 
         <include layout="@layout/incl_waiter_drawer_tables" />

@@ -187,6 +187,7 @@ public abstract class BaseAccountActivity extends BaseActivity {
                 case SHOP_ADMIN:
                     if (mBaseActivity.getClass() != ShopPrivateActivity.class) {
                         Intent intent = Intent.makeMainActivity(new ComponentName(context, ShopPrivateActivity.class));
+                        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                         intent.putExtra(ShopPrivateActivity.KEY_SHOP_PK, Long.valueOf(account.getTargetPk()));
                         context.startActivity(intent);
                     }
@@ -194,6 +195,7 @@ public abstract class BaseAccountActivity extends BaseActivity {
                 case RESTAURANT_MANAGER:
                     if (mBaseActivity.getClass() != ManagerWorkActivity.class) {
                         Intent intent = Intent.makeMainActivity(new ComponentName(context, ManagerWorkActivity.class));
+                        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                         intent.putExtra(ManagerWorkActivity.KEY_RESTAURANT_PK, Long.valueOf(account.getTargetPk()));
                         context.startActivity(intent);
                     }
@@ -201,6 +203,7 @@ public abstract class BaseAccountActivity extends BaseActivity {
                 case RESTAURANT_WAITER:
                     if (mBaseActivity.getClass() != WaiterWorkActivity.class) {
                         Intent intent = Intent.makeMainActivity(new ComponentName(context, WaiterWorkActivity.class));
+                        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                         intent.putExtra(WaiterWorkActivity.KEY_SHOP_PK, Long.valueOf(account.getTargetPk()));
                         context.startActivity(intent);
                     }

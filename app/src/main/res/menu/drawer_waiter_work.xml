@@ -4,11 +4,11 @@
         android:id="@+id/nav_waiter_orders"
         android:icon="@drawable/ic_cash_grey"
         android:title="@string/menu_waiter_orders_taken"
-        android:enabled="false"/>
+        android:enabled="true"/>
 
     <item
         android:id="@+id/nav_waiter_tip"
         android:icon="@drawable/ic_orders_list_grey"
         android:title="@string/menu_waiter_total_tip"
-        android:enabled="false"/>
+        android:enabled="true"/>
 </menu>

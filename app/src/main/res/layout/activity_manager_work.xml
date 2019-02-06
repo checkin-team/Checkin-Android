@@ -10,6 +10,7 @@
         android:layout_height="match_parent">
 
         <android.support.v7.widget.Toolbar
+            app:titleTextColor="@color/brownish_grey"
             android:id="@+id/toolbar_manager_work"
             android:layout_width="match_parent"
             android:layout_height="?attr/actionBarSize"
