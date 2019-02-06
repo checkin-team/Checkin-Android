@@ -12,6 +12,7 @@ import com.checkin.app.checkin.Data.Resource;
 import com.checkin.app.checkin.Manager.Model.ManagerSessionEventModel;
 import com.checkin.app.checkin.Manager.Model.ManagerSessionInvoiceModel;
 import com.checkin.app.checkin.Misc.GenericDetailModel;
+import com.checkin.app.checkin.Session.ActiveSession.Chat.SessionChatModel;
 import com.checkin.app.checkin.Session.Model.SessionBriefModel;
 import com.checkin.app.checkin.Session.Model.SessionOrderedItemModel;
 import com.checkin.app.checkin.Session.SessionRepository;
@@ -41,6 +42,7 @@ public class ManagerSessionViewModel extends BaseViewModel {
 
     private long mSessionPk;
     private long mShopPk;
+    private SessionChatModel.CHAT_STATUS_TYPE mStatusType;
 
     public ManagerSessionViewModel(@NonNull Application application) {
         super(application);
@@ -168,11 +170,47 @@ public class ManagerSessionViewModel extends BaseViewModel {
     public void updateOrderStatus(int orderId, int statusType) {
         ObjectNode data = Converters.objectMapper.createObjectNode();
         data.put("status", statusType);
+        mStatusType = SessionChatModel.CHAT_STATUS_TYPE.getByTag(statusType);
         mOrderStatusData.addSource(mWaiterRepository.changeOrderStatus(orderId, data), mOrderStatusData::setValue);
     }
 
     public LiveData<Resource<OrderStatusModel>> getOrderStatusData() {
         return mOrderStatusData;
+    }
+
+
+    public void updateUiOrderStatus(OrderStatusModel data) {
+        Resource<List<SessionOrderedItemModel>> listResource = mOrdersData.getValue();
+        if (listResource == null || listResource.data == null)
+            return;
+        int pos = -1;
+        for (int i = 0, count = listResource.data.size(); i < count; i++) {
+            if (listResource.data.get(i).getPk() == data.getPk()) {
+                pos = i;
+                break;
+            }
+        }
+        if (pos > -1) {
+            listResource.data.get(pos).setStatus(mStatusType.tag);
+        }
+        mOrdersData.setValue(Resource.cloneResource(listResource, listResource.data));
+    }
+
+    public void updateUiEventStatus(long eventId) {
+        Resource<List<ManagerSessionEventModel>> listResource = mEventData.getValue();
+        if (listResource == null || listResource.data == null)
+            return;
+        int pos = -1;
+        for (int i = 0, count = listResource.data.size(); i < count; i++) {
+            if (listResource.data.get(i).getPk() == eventId) {
+                pos = i;
+                break;
+            }
+        }
+        if (pos > -1) {
+            listResource.data.get(pos).setStatus(SessionChatModel.CHAT_STATUS_TYPE.DONE);
+        }
+        mEventData.setValue(Resource.cloneResource(listResource, listResource.data));
     }
 
     public long getSessionPk() {

@@ -21,6 +21,7 @@ import com.checkin.app.checkin.Account.BaseAccountActivity;
 import com.checkin.app.checkin.Data.Message.MessageModel;
 import com.checkin.app.checkin.Data.Message.MessageModel.MESSAGE_TYPE;
 import com.checkin.app.checkin.Data.Message.MessageUtils;
+import com.checkin.app.checkin.Data.Resource;
 import com.checkin.app.checkin.Manager.Fragment.ManagerStatsFragment;
 import com.checkin.app.checkin.Manager.Fragment.ManagerTablesFragment;
 import com.checkin.app.checkin.Manager.Model.ManagerWorkViewModel;
@@ -90,7 +91,7 @@ public class ManagerWorkActivity extends BaseAccountActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_manager_work);
         ButterKnife.bind(this);
-
+        initRefreshScreen(R.id.sr_manager_work);
         setSupportActionBar(toolbar);
         ActionBar actionBar = getSupportActionBar();
 
@@ -105,6 +106,15 @@ public class ManagerWorkActivity extends BaseAccountActivity {
 
         mViewModel = ViewModelProviders.of(this).get(ManagerWorkViewModel.class);
         mViewModel.fetchActiveTables(getIntent().getLongExtra(KEY_RESTAURANT_PK, 0L));
+
+        mViewModel.getActiveTables().observe(this, listResource -> {
+            if (listResource == null)
+                return;
+            if (listResource.status == Resource.Status.SUCCESS && listResource.data != null) {
+                stopRefreshing();
+            } else if (listResource.status == Resource.Status.LOADING)
+                startRefreshing();
+        });
 
         pagerManager.setEnabled(false);
         ManagerFragmentAdapter pagerAdapter = new ManagerFragmentAdapter(getSupportFragmentManager());
@@ -205,5 +215,11 @@ public class ManagerWorkActivity extends BaseAccountActivity {
             }
             return null;
         }
+    }
+
+    @Override
+    protected void updateScreen() {
+        super.updateScreen();
+        mViewModel.updateResults();
     }
 }

@@ -125,6 +125,7 @@ public class ActiveSessionOrdersAdapter extends RecyclerView.Adapter<ActiveSessi
                 case CANCELLED:
                     tvOrderStatus.setText(R.string.status_order_cancelled);
                     tvOrderStatus.setTextColor(itemView.getResources().getColor(R.color.order_status_bad));
+                    tvOrderStatus.setCompoundDrawablesWithIntrinsicBounds(0, 0, 0, 0);
                     break;
             }
 

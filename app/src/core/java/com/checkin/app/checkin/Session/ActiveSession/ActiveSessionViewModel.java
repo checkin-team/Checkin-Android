@@ -9,19 +9,24 @@ import com.checkin.app.checkin.Data.BaseViewModel;
 import com.checkin.app.checkin.Data.Converters;
 import com.checkin.app.checkin.Data.Resource;
 import com.checkin.app.checkin.Misc.BriefModel;
+import com.checkin.app.checkin.Misc.GenericDetailModel;
 import com.checkin.app.checkin.Session.Model.ActiveSessionModel;
 import com.checkin.app.checkin.Session.Model.SessionCustomerModel;
 import com.checkin.app.checkin.Session.Model.SessionInvoiceModel;
 import com.checkin.app.checkin.Shop.ShopModel;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 
+import java.util.List;
+
 public class ActiveSessionViewModel extends BaseViewModel {
     private final ActiveSessionRepository mRepository;
 
     private MediatorLiveData<Resource<ActiveSessionModel>> mSessionData = new MediatorLiveData<>();
     private MediatorLiveData<Resource<SessionInvoiceModel>> mInvoiceData = new MediatorLiveData<>();
+    private MediatorLiveData<Resource<GenericDetailModel>> mMemberUpdate = new MediatorLiveData<>();
 
     private long mShopPk = -1, mSessionPk = -1;
+    private boolean isAccepted;
 
     ActiveSessionViewModel(@NonNull Application application) {
         super(application);
@@ -94,11 +99,38 @@ public class ActiveSessionViewModel extends BaseViewModel {
     }
 
     public void acceptSessionMember(String userId) {
-        mData.addSource(mRepository.acceptSessionMemberRequest(userId), mData::setValue);
+        isAccepted = true;
+        mMemberUpdate.addSource(mRepository.acceptSessionMemberRequest(userId), mMemberUpdate::setValue);
     }
 
     public void removeSessionMember(String userId) {
-        mData.addSource(mRepository.deleteSessionMember(userId), mData::setValue);
+        isAccepted = false;
+        mMemberUpdate.addSource(mRepository.deleteSessionMember(userId), mMemberUpdate::setValue);
+    }
+
+    public LiveData<Resource<GenericDetailModel>> getSessionMemberUpdate() {
+        return mMemberUpdate;
+    }
+
+    public void updateUiSessionMember(long eventId) {
+        Resource<ActiveSessionModel> listResource = mSessionData.getValue();
+        if (listResource == null || listResource.data == null)
+            return;
+        int pos = -1;
+        List<SessionCustomerModel> list= listResource.data.getCustomers();
+        for (int i = 0, count = list.size(); i < count; i++) {
+            if (list.get(i).getPk() == eventId) {
+                pos = i;
+                break;
+            }
+        }
+        if (pos > -1) {
+            if (isAccepted)
+                list.get(pos).setAccepted(true);
+            else
+                list.remove(pos);
+        }
+        mSessionData.setValue(Resource.cloneResource(listResource, listResource.data));
     }
 
     public void updateHost(BriefModel user) {

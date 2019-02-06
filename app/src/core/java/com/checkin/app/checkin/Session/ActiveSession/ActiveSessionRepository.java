@@ -12,6 +12,7 @@ import com.checkin.app.checkin.Data.NetworkBoundResource;
 import com.checkin.app.checkin.Data.Resource;
 import com.checkin.app.checkin.Data.RetrofitLiveData;
 import com.checkin.app.checkin.Data.WebApiService;
+import com.checkin.app.checkin.Misc.GenericDetailModel;
 import com.checkin.app.checkin.Session.ActiveSession.Chat.SessionChatModel;
 import com.checkin.app.checkin.Session.Model.ActiveSessionModel;
 import com.checkin.app.checkin.Session.Model.SessionInvoiceModel;
@@ -248,8 +249,8 @@ public class ActiveSessionRepository extends BaseRepository {
         }.getAsLiveData();
     }
 
-    public LiveData<Resource<ObjectNode>> acceptSessionMemberRequest(String userId) {
-        return new NetworkBoundResource<ObjectNode, ObjectNode>() {
+    public LiveData<Resource<GenericDetailModel>> acceptSessionMemberRequest(String userId) {
+        return new NetworkBoundResource<GenericDetailModel, GenericDetailModel>() {
             @Override
             protected boolean shouldUseLocalDb() {
                 return false;
@@ -257,18 +258,18 @@ public class ActiveSessionRepository extends BaseRepository {
 
             @NonNull
             @Override
-            protected LiveData<ApiResponse<ObjectNode>> createCall() {
+            protected LiveData<ApiResponse<GenericDetailModel>> createCall() {
                 return new RetrofitLiveData<>(mWebService.postActiveSessionCustomerRequest(userId));
             }
 
             @Override
-            protected void saveCallResult(ObjectNode data) {
+            protected void saveCallResult(GenericDetailModel data) {
             }
         }.getAsLiveData();
     }
 
-    public LiveData<Resource<ObjectNode>> deleteSessionMember(String userId) {
-        return new NetworkBoundResource<ObjectNode, ObjectNode>() {
+    public LiveData<Resource<GenericDetailModel>> deleteSessionMember(String userId) {
+        return new NetworkBoundResource<GenericDetailModel, GenericDetailModel>() {
             @Override
             protected boolean shouldUseLocalDb() {
                 return false;
@@ -276,12 +277,12 @@ public class ActiveSessionRepository extends BaseRepository {
 
             @NonNull
             @Override
-            protected LiveData<ApiResponse<ObjectNode>> createCall() {
+            protected LiveData<ApiResponse<GenericDetailModel>> createCall() {
                 return new RetrofitLiveData<>(mWebService.deleteActiveSessionCustomer(userId));
             }
 
             @Override
-            protected void saveCallResult(ObjectNode data) {
+            protected void saveCallResult(GenericDetailModel data) {
             }
         }.getAsLiveData();
     }

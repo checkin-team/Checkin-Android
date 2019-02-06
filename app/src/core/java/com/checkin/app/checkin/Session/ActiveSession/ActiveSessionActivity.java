@@ -136,13 +136,13 @@ public class ActiveSessionActivity extends BaseActivity implements ActiveSession
             }
         });
 
-        mViewModel.getObservableData().observe(this, resource -> {
+        mViewModel.getSessionMemberUpdate().observe(this, resource -> {
             if (resource == null)
                 return;
             switch (resource.status) {
                 case SUCCESS: {
                     Utils.toast(this, "Done!");
-                    mViewModel.updateResults();
+                    mViewModel.updateUiSessionMember(Long.parseLong(resource.data.getPk()));
                     break;
                 }
                 case LOADING:

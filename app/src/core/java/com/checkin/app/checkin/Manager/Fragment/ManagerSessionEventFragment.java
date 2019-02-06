@@ -115,10 +115,18 @@ public class ManagerSessionEventFragment extends Fragment implements ManagerSess
         });
 
         mViewModel.getDetailData().observe(this, resource -> {
-           if (resource == null)
-               return;
-           if (resource.message != null)
-               Utils.toast(requireContext(), resource.message);
+            if (resource == null || resource.data == null)
+                return;
+            switch (resource.status) {
+                case SUCCESS:
+                   mViewModel.updateUiEventStatus(Long.parseLong(resource.data.getPk()));
+                    break;
+                case LOADING:
+                    break;
+                default: {
+                    Utils.toast(requireContext(), resource.message);
+                }
+            }
         });
     }
 

@@ -54,7 +54,6 @@ public class ShopPrivateActivity extends BaseAccountActivity {
         mViewModel = ViewModelProviders.of(this).get(ShopProfileViewModel.class);
         long shopPk = getIntent().getLongExtra(KEY_SHOP_PK, 0);
 
-        startRefreshing();
         mViewModel.fetchShopDetails(shopPk);
 
         mViewModel.getShopData().observe(this, restaurantModelResource -> {
