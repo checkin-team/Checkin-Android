@@ -80,6 +80,8 @@ public class ActiveSessionChatViewModel extends BaseViewModel {
 
         if (pos > -1) {
             listResource.data.get(pos).setStatus(status.tag);
+            listResource.data.add(listResource.data.get(pos));
+            listResource.data.remove(pos);
             mChatData.setValue(Resource.cloneResource(listResource, listResource.data));
         }
     }
