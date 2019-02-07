@@ -34,9 +34,9 @@ public class MembersActivity extends BaseActivity implements ShopMembersListFrag
         ActionBar actionBar = getSupportActionBar();
         assert actionBar != null;
 
-        actionBar.setHomeButtonEnabled(true);
         actionBar.setDisplayHomeAsUpEnabled(true);
-        actionBar.setElevation(10);
+        actionBar.setHomeAsUpIndicator(R.drawable.ic_back_grey);
+        actionBar.setElevation(10);;
 
         mViewModel = ViewModelProviders.of(this).get(MemberViewModel.class);
 

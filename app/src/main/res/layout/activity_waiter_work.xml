@@ -25,13 +25,14 @@
                 android:layout_height="?android:attr/actionBarSize"
                 android:gravity="center_vertical"
                 app:layout_scrollFlags="snap"
+                app:titleTextColor="@color/brownish_grey"
                 app:popupTheme="@style/PopupOverlay" />
 
             <android.support.design.widget.TabLayout
                 android:id="@+id/tabs_waiter"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:background="@color/white"
+                android:background="@drawable/background_bottom_inner_shadow"
                 app:tabGravity="fill"
                 app:tabIndicatorColor="@color/primary_red"
                 app:tabMode="scrollable"
@@ -69,6 +70,7 @@
         android:layout_width="wrap_content"
         android:layout_height="match_parent"
         android:layout_gravity="end"
+        app:itemTextColor="@color/brownish_grey"
         android:fitsSystemWindows="false">
 
         <include layout="@layout/incl_waiter_drawer_tables" />

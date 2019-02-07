@@ -386,8 +386,8 @@ public class WaiterWorkActivity extends BaseAccountActivity implements WaiterTab
         void addTable(TabLayout tabLayout, WaiterTableModel tableModel) {
             mTableList.add(tableModel);
             mFragmentList.add(WaiterTableFragment.newInstance(tableModel.getPk(), WaiterWorkActivity.this));
-            notifyDataSetChanged();
             setTabCustomView(tabLayout, mTableList.size() - 1, tableModel);
+            notifyDataSetChanged();
         }
 
         @Nullable

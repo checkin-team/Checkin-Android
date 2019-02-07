@@ -13,7 +13,7 @@
         android:layout_height="wrap_content"
         android:layout_gravity="top|center_horizontal"
         android:src="@drawable/logo_checkin"
-        app:layout_constraintBottom_toTopOf="@+id/fragment_container"
+        app:layout_constraintBottom_toTopOf="@+id/cv_container"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
@@ -26,17 +26,24 @@
         android:visibility="gone"
         android:background="@color/black" />
 
-    <FrameLayout
-        android:id="@+id/fragment_container"
-        android:layout_width="match_parent"
-        android:layout_height="350dp"
-        android:layout_gravity="center_vertical"
+    <android.support.v7.widget.CardView
         android:layout_marginTop="@dimen/spacing_large"
-        android:background="@drawable/background_card_white_shadow"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        android:id="@+id/cv_container"
+        style="@style/WhiteCardStyle"
+        android:layout_width="match_parent"
+        android:layout_height="350dp">
+
+        <FrameLayout
+            android:id="@+id/fragment_container"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_gravity="center_vertical" />
+
+    </android.support.v7.widget.CardView>
 
     <TextView
         android:id="@+id/tv_tag_line"
@@ -59,5 +66,5 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintBottom_toTopOf="@id/tv_tag_line"
-        app:layout_constraintTop_toBottomOf="@id/fragment_container"/>
+        app:layout_constraintTop_toBottomOf="@id/cv_container"/>
 </android.support.constraint.ConstraintLayout>
