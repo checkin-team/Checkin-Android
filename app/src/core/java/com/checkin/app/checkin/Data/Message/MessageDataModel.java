@@ -11,7 +11,6 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.core.JsonParser;
 import com.fasterxml.jackson.databind.DeserializationContext;
 import com.fasterxml.jackson.databind.JsonDeserializer;
-import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 
 import java.io.IOException;
 import java.io.Serializable;
@@ -36,15 +35,15 @@ public class MessageDataModel implements Serializable {
     @JsonProperty("session__table")
     private String sessionTableName;
 
-    @JsonDeserialize(using = SessionOrderedItemModel.SessionOrderedItemDeserializer.class)
+    @JsonProperty("session__order_id")
+    private long sessionOrderId;
+
     @JsonProperty("session__ordered_item")
     private SessionOrderedItemModel sessionOrderedItem;
 
-    @JsonDeserialize(using = SessionChatModel.SessionChatDeserializer.class)
     @JsonProperty("session__event_detail")
     private SessionChatModel sessionEventDetail;
 
-    @JsonDeserialize(using = ManagerSessionEventModel.ManagerSessionEventModelDeserializer.class)
     @JsonProperty("session__event")
     private ManagerSessionEventModel sessionEventBrief;
 
@@ -85,6 +84,10 @@ public class MessageDataModel implements Serializable {
 
     public String getSessionTableName() {
         return sessionTableName;
+    }
+
+    public long getSessionOrderId() {
+        return sessionOrderId;
     }
 
     public static class MessageDataDeserializer extends JsonDeserializer<MessageDataModel> {

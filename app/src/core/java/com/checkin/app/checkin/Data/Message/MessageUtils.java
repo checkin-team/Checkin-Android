@@ -21,6 +21,7 @@ import com.checkin.app.checkin.Utility.ProgressRequestBody;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 import java.util.Random;
 
 import static android.support.v4.app.NotificationCompat.PRIORITY_LOW;
@@ -95,6 +96,18 @@ public class MessageUtils {
     public static void registerLocalReceiver(Context context, BroadcastReceiver receiver, @NonNull MESSAGE_TYPE... types) {
         IntentFilter intentFilter = new IntentFilter();
         intentFilter.addCategory(Constants.FCM_INTENT_CATEGORY);
+        for (MESSAGE_TYPE type: types)
+            intentFilter.addAction(type.actionTag());
+        LocalBroadcastManager.getInstance(context.getApplicationContext())
+                .registerReceiver(receiver, intentFilter);
+    }
+
+    public static void registerLocalReceiver(Context context, BroadcastReceiver receiver, long targetPk, @NonNull MESSAGE_TYPE... types) {
+        IntentFilter intentFilter = new IntentFilter();
+        intentFilter.addCategory(Constants.FCM_INTENT_CATEGORY);
+        intentFilter.addDataScheme(Constants.FILTER_DATA_SCHEME);
+        intentFilter.addDataAuthority(Constants.FILTER_DATA_HOST, "");
+        intentFilter.addDataPath(String.format(Locale.ENGLISH, Constants.FILTER_DATA_TARGET_PATH, targetPk), 0);
         for (MESSAGE_TYPE type: types)
             intentFilter.addAction(type.actionTag());
         LocalBroadcastManager.getInstance(context.getApplicationContext())

@@ -20,6 +20,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 
 import java.io.Serializable;
+import java.util.Locale;
 
 public class MessageModel implements Serializable {
     private MESSAGE_TYPE type;
@@ -84,7 +85,7 @@ public class MessageModel implements Serializable {
         }
 
         public String actionTag() {
-            return String.valueOf(id);
+            return String.format(Locale.ENGLISH, "CHECKIN.MESSAGE_TYPE.%d", id);
         }
     }
 

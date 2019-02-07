@@ -3,6 +3,10 @@ package com.checkin.app.checkin.Data.Message;
 public class Constants {
     public static final String FCM_INTENT_CATEGORY = "checkin.fcm_real_time";
     public static final String KEY_DATA = "fcm.message_data";
+    public static final String FILTER_DATA_SCHEME = "checkin";
+    public static final String FILTER_DATA_HOST = "realtime.data";
+    public static final String FILTER_DATA_TARGET_PATH = "target/%d";
+
 
     public enum CHANNEL_GROUP {
         DEFAULT_USER("group.user", "User"),

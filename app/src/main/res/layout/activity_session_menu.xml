@@ -50,10 +50,12 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="end"
-                    android:layout_marginEnd="@dimen/spacing_huge"
                     android:layout_marginTop="@dimen/spacing_normal"
+                    android:layout_marginEnd="@dimen/spacing_huge"
+                    android:background="@drawable/shape_oval_white"
                     android:fontFamily="@font/arial_rounded_mt_bold"
-                    android:textColor="@color/white"
+                    android:padding="@dimen/spacing_tiny"
+                    android:textColor="@color/primary_red"
                     android:textSize="@dimen/font_normal"
                     tools:text="10" />
 
@@ -113,8 +115,8 @@
                     style="@style/RedTitleStyle"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginBottom="@dimen/spacing_extra_small"
                     android:layout_marginTop="@dimen/spacing_extra_small"
+                    android:layout_marginBottom="@dimen/spacing_extra_small"
                     android:textAlignment="center"
                     tools:text="Subtotal: 213 *" />
 

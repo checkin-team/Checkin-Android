@@ -6,7 +6,7 @@
     android:background="@color/white">
 
     <android.support.v4.widget.SwipeRefreshLayout
-        android:id="@+id/refresh_ms_orders"
+        android:id="@+id/sr_manager_session_orders"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 

@@ -5,48 +5,47 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-
     <android.support.v4.widget.SwipeRefreshLayout
         android:id="@+id/sr_manager_work"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content">
 
-    <android.support.constraint.ConstraintLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent">
-
-        <android.support.v7.widget.Toolbar
-            app:titleTextColor="@color/brownish_grey"
-            android:id="@+id/toolbar_manager_work"
+        <android.support.constraint.ConstraintLayout
             android:layout_width="match_parent"
-            android:layout_height="?attr/actionBarSize"
-            android:theme="@style/AppThemeWhiteActionBar.ActionBar"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintStart_toStartOf="parent"/>
+            android:layout_height="match_parent">
 
-        <com.checkin.app.checkin.Utility.DynamicSwipableViewPager
-            android:id="@+id/pager_manager_work"
-            android:layout_width="0dp"
-            android:layout_height="0dp"
-            app:layout_constraintBottom_toTopOf="@id/tabs_manager_work"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/toolbar_manager_work" />
+            <android.support.v7.widget.Toolbar
+                android:id="@+id/toolbar_manager_work"
+                android:layout_width="match_parent"
+                android:layout_height="?attr/actionBarSize"
+                android:theme="@style/AppThemeWhiteActionBar.ActionBar"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:titleTextColor="@color/brownish_grey" />
 
-        <android.support.design.widget.TabLayout
-            android:id="@+id/tabs_manager_work"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:background="@drawable/background_tab_bottom_shadowed"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:tabGravity="fill"
-            app:tabIndicatorColor="@android:color/transparent"
-            app:tabIndicatorHeight="0dp"
-            app:tabMode="fixed" />
+            <com.checkin.app.checkin.Utility.DynamicSwipableViewPager
+                android:id="@+id/pager_manager_work"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                app:layout_constraintBottom_toTopOf="@id/tabs_manager_work"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/toolbar_manager_work" />
 
-    </android.support.constraint.ConstraintLayout>
+            <android.support.design.widget.TabLayout
+                android:id="@+id/tabs_manager_work"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:background="@drawable/background_tab_bottom_shadowed"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:tabGravity="fill"
+                app:tabIndicatorColor="@android:color/transparent"
+                app:tabIndicatorHeight="0dp"
+                app:tabMode="fixed" />
+
+        </android.support.constraint.ConstraintLayout>
 
     </android.support.v4.widget.SwipeRefreshLayout>
 

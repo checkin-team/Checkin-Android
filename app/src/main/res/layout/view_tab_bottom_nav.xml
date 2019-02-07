@@ -1,9 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
     xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
     android:layout_gravity="center"
+    android:clickable="true"
+    android:focusable="true"
+    android:gravity="center"
     android:orientation="vertical">
 
     <ImageView
@@ -12,7 +15,7 @@
         android:layout_height="@dimen/size_small_icon"
         android:layout_gravity="center_horizontal"
         android:layout_marginTop="@dimen/spacing_tiny"
-        tools:src="@drawable/ic_orders_list_toggle"/>
+        tools:src="@drawable/ic_orders_list_toggle" />
 
     <TextView
         android:id="@+id/tv_bnav_title"
@@ -23,5 +26,5 @@
         android:layout_marginBottom="@dimen/spacing_tiny"
         android:textColor="@drawable/selector_tab_color"
         android:textSize="@dimen/font_small"
-        tools:text="Option"/>
+        tools:text="Option" />
 </LinearLayout>

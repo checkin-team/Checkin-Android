@@ -2,13 +2,9 @@ package com.checkin.app.checkin.Auth;
 
 import android.accounts.Account;
 import android.accounts.AccountManager;
-import android.accounts.AuthenticatorException;
-import android.accounts.OperationCanceledException;
 import android.content.Context;
 
 import com.checkin.app.checkin.Utility.Constants;
-
-import java.io.IOException;
 
 public class AuthPreferences {
 

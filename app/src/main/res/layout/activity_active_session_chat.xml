@@ -6,7 +6,7 @@
     android:fitsSystemWindows="true">
 
     <android.support.v4.widget.SwipeRefreshLayout
-        android:id="@+id/refresh_session_chat"
+        android:id="@+id/sr_session_chat"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         app:layout_constraintBottom_toTopOf="@+id/container_session_actions"
