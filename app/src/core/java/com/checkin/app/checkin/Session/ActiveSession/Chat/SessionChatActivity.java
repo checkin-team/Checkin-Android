@@ -83,6 +83,9 @@ public class SessionChatActivity extends AppCompatActivity implements ActiveSess
                     SessionChatActivity.this.addEvent(message.getRawData().getSessionEventDetail());
                 case USER_SESSION_EVENT_UPDATE:
                     SessionChatActivity.this.updateEvent(message.getObject(), message.getRawData().getSessionEventStatus());
+                case WAITER_SESSION_UPDATE_ORDER:
+                    SessionChatActivity.this.updateEvent(message.getObject(), message.getRawData().getSessionEventStatus());
+
             }
         }
     };

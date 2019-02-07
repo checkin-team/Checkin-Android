@@ -97,21 +97,6 @@ public class ManagerSessionActivity extends AppCompatActivity implements Manager
                 integer = 0;
             tvCountOrdersDelivered.setText(String.valueOf(integer));
         });
-
-        mViewModel.getOrderStatusData().observe(this, resource -> {
-            if (resource == null)
-                return;
-            switch (resource.status) {
-                case SUCCESS: {
-                    break;
-                }
-                case LOADING:
-                    break;
-                default: {
-                    Utils.toast(this, resource.message);
-                }
-            }
-        });
     }
 
     private void setupData(SessionBriefModel data) {

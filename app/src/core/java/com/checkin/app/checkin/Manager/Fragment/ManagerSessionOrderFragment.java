@@ -119,6 +119,22 @@ public class ManagerSessionOrderFragment extends Fragment implements ManagerSess
                 }
             }
         });
+
+        mViewModel.getOrderStatusData().observe(this, resource -> {
+            if (resource == null)
+                return;
+            switch (resource.status) {
+                case SUCCESS: {
+                    mViewModel.updateUiOrderStatus(resource.data);
+                    break;
+                }
+                case LOADING:
+                    break;
+                default: {
+                    Utils.toast(requireContext(), resource.message);
+                }
+            }
+        });
     }
 
     public boolean onBackPressed() {

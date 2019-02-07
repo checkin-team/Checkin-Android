@@ -102,6 +102,8 @@ public class ManagerSessionOrderAdapter extends RecyclerView.Adapter<ManagerSess
 
             if (!order.getItem().isVegetarian())
                 tvItemName.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ic_non_veg, 0, 0, 0);
+            else
+                tvItemName.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ic_veg, 0, 0, 0);
 
             if (order.getRemarks() == null) containerRemarks.setVisibility(View.GONE);
             else {
@@ -126,6 +128,7 @@ public class ManagerSessionOrderAdapter extends RecyclerView.Adapter<ManagerSess
                 tvOrderStatus.setVisibility(View.GONE);
             } else {
                 containerStatusOpen.setVisibility(View.GONE);
+                tvOrderStatus.setVisibility(View.VISIBLE);
                 switch (order.getStatus()) {
                     case IN_PROGRESS:
                         tvOrderStatus.setText(R.string.status_order_in_progress);

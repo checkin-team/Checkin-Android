@@ -158,10 +158,10 @@ public interface WebApiService {
     Call<ObjectNode> putActiveSessionSelfCustomer(@Body ObjectNode data);
 
     @POST("sessions/active/customers/{user_id}/")
-    Call<ObjectNode> postActiveSessionCustomerRequest(@Path("user_id") String userId);
+    Call<GenericDetailModel> postActiveSessionCustomerRequest(@Path("user_id") String userId);
 
     @DELETE("sessions/active/customers/{user_id}/")
-    Call<ObjectNode> deleteActiveSessionCustomer(@Path("user_id") String userId);
+    Call<GenericDetailModel> deleteActiveSessionCustomer(@Path("user_id") String userId);
 
     @GET("sessions/active/events/")
     Call<List<SessionChatModel>> getCustomerSessionChat();

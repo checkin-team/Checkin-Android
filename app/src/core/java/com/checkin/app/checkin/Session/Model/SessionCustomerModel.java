@@ -54,4 +54,8 @@ public class SessionCustomerModel {
     public boolean isAccepted() {
         return isAccepted;
     }
+
+    public void setAccepted(boolean accepted) {
+        isAccepted = accepted;
+    }
 }
