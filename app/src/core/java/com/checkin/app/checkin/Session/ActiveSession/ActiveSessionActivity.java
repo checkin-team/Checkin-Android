@@ -207,6 +207,7 @@ public class ActiveSessionActivity extends BaseActivity implements ActiveSession
     @OnClick(R.id.btn_active_session_orders)
     public void onViewOrders() {
         startActivity(new Intent(this, ActiveSessionViewOrdersActivity.class));
+        updateScreen(); 
     }
 
     @OnClick(R.id.tv_active_session_bill)

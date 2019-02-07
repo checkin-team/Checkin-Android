@@ -4,6 +4,7 @@ import android.arch.lifecycle.ViewModelProviders;
 import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
+import android.preference.PreferenceManager;
 import android.support.annotation.IdRes;
 import android.support.annotation.LayoutRes;
 import android.support.annotation.NonNull;
@@ -27,6 +28,7 @@ import com.checkin.app.checkin.Manager.ManagerWorkActivity;
 import com.checkin.app.checkin.Misc.BaseActivity;
 import com.checkin.app.checkin.R;
 import com.checkin.app.checkin.Shop.Private.ShopPrivateActivity;
+import com.checkin.app.checkin.Utility.Constants;
 import com.checkin.app.checkin.Utility.GlideApp;
 import com.checkin.app.checkin.Utility.Utils;
 import com.checkin.app.checkin.Waiter.WaiterWorkActivity;
@@ -183,6 +185,11 @@ public abstract class BaseAccountActivity extends BaseActivity {
         }
 
         void switchAccount(Context context, AccountModel account) {
+            PreferenceManager.getDefaultSharedPreferences(context).edit()
+                    .putInt(Constants.SP_LAST_ACCOUNT_TYPE, account.getAccountType().id)
+                    .putLong(Constants.SP_LAST_ACCOUNT_PK, Long.valueOf(account.getTargetPk()))
+                    .apply();
+
             switch (account.getAccountType()) {
                 case USER:
                     if (mBaseActivity.getClass() != HomeActivity.class){
