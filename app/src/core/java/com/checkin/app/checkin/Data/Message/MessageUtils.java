@@ -22,7 +22,6 @@ import com.checkin.app.checkin.Utility.ProgressRequestBody;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
-import java.util.Random;
 
 import static android.support.v4.app.NotificationCompat.PRIORITY_LOW;
 
@@ -89,10 +88,6 @@ public class MessageUtils {
         }
     }
 
-    public static int getNotificationId() {
-        return new Random().nextInt();
-    }
-
     public static void registerLocalReceiver(Context context, BroadcastReceiver receiver, @NonNull MESSAGE_TYPE... types) {
         IntentFilter intentFilter = new IntentFilter();
         intentFilter.addCategory(Constants.FCM_INTENT_CATEGORY);
@@ -142,8 +137,8 @@ public class MessageUtils {
         private int notificationId;
 
         public NotificationUpdate(Context context, NotificationCompat.Builder builder) {
-            notificationId = 202;
-            notificationManager = ((NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE));
+            this.notificationId = Constants.getNotificationID();
+            this.notificationManager = ((NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE));
             this.builder = builder;
         }
 

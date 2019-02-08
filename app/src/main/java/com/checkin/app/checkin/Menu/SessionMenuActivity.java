@@ -147,8 +147,12 @@ public class SessionMenuActivity extends BaseActivity implements
                     item.setChangeCount(0);
                     mViewModel.setCurrentItem(item);
                     mViewModel.orderItem();
+                    input.setText("");
                 })
-                .setNegativeButton("Cancel", (dialog, which) -> dialog.cancel())
+                .setNegativeButton("Cancel", (dialog, which) -> {
+                    dialog.cancel();
+                    input.setText("");
+                })
                 .create();
     }
 
@@ -181,10 +185,12 @@ public class SessionMenuActivity extends BaseActivity implements
         mViewModel.getTotalOrderedCount().observe(this, count -> {
             if (count == null)
                 return;
-            if (count > 0)
+            if (count > 0) {
                 tvCountItems.setText(Utils.formatCount(count));
-            else
-                tvCountItems.setText("");
+                tvCountItems.setVisibility(View.VISIBLE);
+            } else {
+                tvCountItems.setVisibility(View.GONE);
+            }
         });
         mViewModel.getOrderedSubTotal().observe(this, subtotal -> {
             if (subtotal == null)

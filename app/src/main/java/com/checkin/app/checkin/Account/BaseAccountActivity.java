@@ -17,11 +17,13 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.Spinner;
 import android.widget.TextView;
 
 import com.checkin.app.checkin.Account.AccountModel.ACCOUNT_TYPE;
+import com.checkin.app.checkin.Auth.AuthPreferences;
 import com.checkin.app.checkin.Data.Resource;
 import com.checkin.app.checkin.Home.HomeActivity;
 import com.checkin.app.checkin.Manager.ManagerWorkActivity;
@@ -46,6 +48,7 @@ public abstract class BaseAccountActivity extends BaseActivity {
 
     private DrawerLayout mDrawerLayout;
     private NavigationView mNavAccount;
+    private Button btnLogout;
 
     private AccountViewModel mViewModel;
     private AccountAdapter mAccountAdapter;
@@ -55,6 +58,8 @@ public abstract class BaseAccountActivity extends BaseActivity {
     protected void setupUi() {
         mDrawerLayout = findViewById(getDrawerRootId());
         mNavAccount = findViewById(R.id.nav_account);
+        btnLogout = findViewById(R.id.btn_logout);
+        btnLogout.setOnClickListener(this::onLogoutClick);
 
         mAccountAdapter = new AccountAdapter(getApplicationContext(), R.layout.simple_spinner_item, new ArrayList<>());
         mAccountAdapter.setDropDownViewResource(R.layout.item_simple_spinner_dropdown);
@@ -99,6 +104,17 @@ public abstract class BaseAccountActivity extends BaseActivity {
         });
 
         mNavAccount.addHeaderView(mHeaderViewHolder.getHeaderView());
+    }
+
+    protected void onLogoutClick(View v) {
+        if (AuthPreferences.removeCurrentAccount(this)) {
+            PreferenceManager.getDefaultSharedPreferences(this).edit()
+                    .clear()
+                    .apply();
+            finish();
+        } else {
+            Utils.toast(this, "Unable to logout. Manually remove account from settings.");
+        }
     }
 
     @IdRes

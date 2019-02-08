@@ -27,7 +27,7 @@ import java.util.List;
  * Created by Bhavik Patel on 24/08/2018.
  */
 
-public class ShopProfileViewModel extends BaseViewModel{
+public class ShopProfileViewModel extends BaseViewModel {
     private ShopRepository mRepository;
     private long mShopPk;
     private MediatorLiveData<Resource<RestaurantModel>> mShopData = new MediatorLiveData<>();
@@ -147,7 +147,6 @@ public class ShopProfileViewModel extends BaseViewModel{
         mShopData.setValue(Resource.success(restaurantModel));
     }
 
-
     public void removeCoverImage(int index) {
         mData.addSource(mRepository.deleteRestaurantCover(mShopPk, index), mData::setValue);
     }
@@ -161,17 +160,16 @@ public class ShopProfileViewModel extends BaseViewModel{
         fetchShopDetails(mShopPk);
     }
 
-
-    public void updateProfilePic(File pictureFile, Context context, int index) {
+    public void updateCoverPic(File pictureFile, Context context, int index) {
         NotificationCompat.Builder builder = MessageUtils.createUploadNotification(context);
         MessageUtils.NotificationUpdate notificationUpdate = new MessageUtils.NotificationUpdate(context, builder);
         doUploadImage(pictureFile, notificationUpdate, index);
     }
 
     private void doUploadImage(File pictureFile, ProgressRequestBody.UploadCallbacks listener, int index) {
-        if(index == -1)
-        new RetrofitCallAsyncTask<GenericDetailModel>(listener).execute(mRepository.postRestaurantLogo(mShopPk,pictureFile, listener));
+        if (index == -1)
+            new RetrofitCallAsyncTask<GenericDetailModel>(listener).execute(mRepository.postRestaurantLogo(mShopPk, pictureFile, listener));
         else
-            new RetrofitCallAsyncTask<GenericDetailModel>(listener).execute(mRepository.postRestaurantCover(mShopPk,index,pictureFile, listener));
+            new RetrofitCallAsyncTask<GenericDetailModel>(listener).execute(mRepository.postRestaurantCover(mShopPk, index, pictureFile, listener));
     }
 }

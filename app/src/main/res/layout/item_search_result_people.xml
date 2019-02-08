@@ -13,7 +13,7 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        tools:src="@drawable/flier" />
+        tools:src="@drawable/dummy_alex" />
 
     <TextView
         android:id="@+id/tv_result_name"
@@ -32,7 +32,7 @@
         style="@style/PinkishGreySmallTextStyle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="29 Checkins | Following."
+        tools:text="29 Checkins | Following."
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="@id/tv_result_name"
         app:layout_constraintTop_toBottomOf="@id/tv_result_name" />

@@ -55,6 +55,7 @@
             android:id="@+id/btn_done"
             android:layout_width="60dp"
             android:layout_height="60dp"
+            style="@style/ButtonLarge"
             android:layout_gravity="bottom|end"
             android:layout_margin="@dimen/spacing_small"
             android:background="@drawable/ic_floating_oval"

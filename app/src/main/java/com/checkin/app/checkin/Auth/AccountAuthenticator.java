@@ -95,4 +95,6 @@ public class AccountAuthenticator extends AbstractAccountAuthenticator {
     public Bundle hasFeatures(AccountAuthenticatorResponse accountAuthenticatorResponse, Account account, String[] strings) throws NetworkErrorException {
         throw new UnsupportedOperationException();
     }
+
+
 }

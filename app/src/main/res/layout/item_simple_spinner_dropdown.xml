@@ -11,7 +11,7 @@
         android:id="@+id/im_display_pic"
         android:layout_width="@dimen/size_normal_icon"
         android:layout_height="@dimen/size_normal_icon"
-        tools:src="@drawable/flier"
+        tools:src="@drawable/dummy_alex"
         android:layout_marginStart="@dimen/spacing_normal"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintBottom_toBottomOf="parent"

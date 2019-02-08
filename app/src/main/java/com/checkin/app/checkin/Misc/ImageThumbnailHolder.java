@@ -1,10 +1,16 @@
 package com.checkin.app.checkin.Misc;
 
+import android.graphics.drawable.Drawable;
+import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.bumptech.glide.request.target.SimpleTarget;
+import com.bumptech.glide.request.transition.Transition;
 import com.checkin.app.checkin.R;
 import com.checkin.app.checkin.Utility.GlideApp;
 
@@ -17,7 +23,7 @@ public class ImageThumbnailHolder {
     @BindView(R.id.im_thumbnail_2)
     ImageView imThumbnail2;
     @BindView(R.id.im_thumbnail_3)
-    ImageView imThumbnail3;
+    FrameLayout imThumbnail3;
     @BindView(R.id.tv_thumbnail_count)
     TextView tvThumbnailsCount;
     @BindView(R.id.container_thumbnail_3)
@@ -36,7 +42,12 @@ public class ImageThumbnailHolder {
             tvThumbnailsCount.setText(String.valueOf(thumbnailUrls.length - 2));
             GlideApp.with(imThumbnail3.getContext())
                     .load(thumbnailUrls[2])
-                    .into(imThumbnail3);
+                    .into(new SimpleTarget<Drawable>() {
+                        @Override
+                        public void onResourceReady(@NonNull Drawable resource, @Nullable Transition<? super Drawable> transition) {
+                            imThumbnail3.setBackground(resource);
+                        }
+                    });
         } else {
             containerThumbnail3.setVisibility(View.GONE);
         }

@@ -47,17 +47,17 @@
 
                 <TextView
                     android:id="@+id/tv_menu_count_ordered_items"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                    android:layout_width="@dimen/size_small_icon"
+                    android:layout_height="@dimen/size_small_icon"
                     android:layout_gravity="end"
                     android:layout_marginTop="@dimen/spacing_normal"
                     android:layout_marginEnd="@dimen/spacing_huge"
+                    android:layout_marginBottom="@dimen/spacing_tiny"
                     android:background="@drawable/shape_oval_white"
-                    android:fontFamily="@font/arial_rounded_mt_bold"
-                    android:padding="@dimen/spacing_tiny"
+                    android:gravity="center"
                     android:textColor="@color/primary_red"
-                    android:textSize="@dimen/font_normal"
-                    tools:text="10" />
+                    android:textSize="@dimen/font_small"
+                    tools:text="62" />
 
                 <com.miguelcatalan.materialsearchview.MaterialSearchView
                     android:id="@+id/view_menu_search"

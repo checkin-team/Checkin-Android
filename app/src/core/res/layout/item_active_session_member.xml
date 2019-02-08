@@ -11,7 +11,7 @@
         android:id="@+id/im_as_member_user"
         style="@style/LogoImageStyle"
         android:scaleType="centerCrop"
-        tools:src="@drawable/flier" />
+        tools:src="@drawable/dummy_alex" />
 
     <TextView
         android:id="@+id/tv_as_member_user"

@@ -43,7 +43,7 @@ public class SelectCropImageActivity extends AppCompatActivity {
         cropView = findViewById(R.id.crop_view);
         cropView.setViewportRatio(viewportRatio);
 
-        findViewById(R.id.next_button).setOnClickListener(v -> {
+        findViewById(R.id.btn_image_crop_done).setOnClickListener(v -> {
             Bitmap bitmap = cropView.crop();
             if (bitmap == null) {
                 Log.e(TAG, "Cropped bitmap is null!");

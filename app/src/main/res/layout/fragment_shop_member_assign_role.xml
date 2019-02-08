@@ -21,7 +21,7 @@
     <de.hdodenhof.circleimageview.CircleImageView
         android:id="@+id/im_user_pic"
         style="@style/LogoImageStyle"
-        tools:src="@drawable/flier"
+        tools:src="@drawable/dummy_alex"
         android:layout_marginTop="@dimen/spacing_normal"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/tv_title"/>

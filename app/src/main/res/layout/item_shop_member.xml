@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <android.support.v7.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    style="@style/WhiteCardStyle"
     android:layout_width="match_parent"
     android:layout_height="@dimen/height_card_normal"
-    style="@style/WhiteCardStyle"
-    android:layout_marginBottom="@dimen/spacing_small"
     android:layout_marginStart="@dimen/spacing_extra_small"
-    android:layout_marginEnd="@dimen/spacing_extra_small">
+    android:layout_marginEnd="@dimen/spacing_extra_small"
+    android:layout_marginBottom="@dimen/spacing_small">
 
     <android.support.constraint.ConstraintLayout
         android:layout_width="match_parent"
@@ -17,33 +17,33 @@
         <de.hdodenhof.circleimageview.CircleImageView
             android:id="@+id/im_display_pic"
             style="@style/LogoImageStyle"
-            tools:src="@drawable/flier"
+            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintBottom_toBottomOf="parent"/>
+            tools:src="@drawable/dummy_alex" />
 
         <TextView
             android:id="@+id/tv_display_name"
+            style="@style/GreyTextStyle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            style="@style/GreyTextStyle"
-            tools:text="ABCDEF"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@id/btn_role_edit"
             app:layout_constraintStart_toEndOf="@id/im_display_pic"
             app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toStartOf="@id/btn_role_edit"/>
+            tools:text="ABCDEF" />
 
         <Button
             android:id="@+id/btn_role_edit"
+            style="@style/ButtonNeutralAction"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            tools:text="assign"
             android:drawableEnd="@drawable/ic_edit_pencil_grey"
-            style="@style/ButtonNeutralAction"
             android:textAllCaps="false"
+            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintBottom_toBottomOf="parent"/>
+            tools:text="assign" />
 
     </android.support.constraint.ConstraintLayout>
 </android.support.v7.widget.CardView>

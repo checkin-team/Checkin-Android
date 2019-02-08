@@ -48,7 +48,7 @@ public class AppMessagingService extends FirebaseMessagingService {
         } else shouldShowNotification = true;
 
         if (shouldShowNotification) {
-            int notificationId = MessageUtils.getNotificationId();
+            int notificationId = Constants.getNotificationID();
             data.showNotification(this, mNotificationManager, notificationId);
         }
     }

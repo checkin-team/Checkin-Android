@@ -23,7 +23,7 @@
             android:id="@+id/im_menu_info_image"
             android:layout_width="@dimen/size_image_large"
             android:layout_height="@dimen/size_image_large"
-            tools:src="@drawable/dummy_shop"
+            tools:src="@drawable/dummy_alex"
             android:scaleType="centerCrop"
             app:layout_constraintBottom_toTopOf="@id/tv_menu_info_description"
             app:layout_constraintEnd_toEndOf="parent"

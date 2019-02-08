@@ -80,7 +80,7 @@ public class AuthActivity extends AppCompatActivity implements AuthFragmentInter
             user.delete();
         }
 
-        mAuthViewModel = ViewModelProviders.of(this, new AuthViewModel.Factory(getApplication())).get(AuthViewModel.class);
+        mAuthViewModel = ViewModelProviders.of(this).get(AuthViewModel.class);
 
         mAuthViewModel.getObservableData().observe(this, resource -> {
             if (resource == null)

@@ -1,6 +1,6 @@
 package com.checkin.app.checkin.Home;
 
-import android.accounts.AccountManager;
+import android.accounts.Account;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
@@ -9,6 +9,7 @@ import android.support.v7.app.AppCompatActivity;
 
 import com.checkin.app.checkin.Account.AccountModel;
 import com.checkin.app.checkin.Auth.AuthActivity;
+import com.checkin.app.checkin.Auth.AuthPreferences;
 import com.checkin.app.checkin.Auth.DeviceTokenService;
 import com.checkin.app.checkin.Manager.ManagerWorkActivity;
 import com.checkin.app.checkin.Shop.Private.ShopPrivateActivity;
@@ -27,9 +28,12 @@ public class SplashActivity extends AppCompatActivity {
             startService(new Intent(getApplicationContext(), DeviceTokenService.class));
         }
 
-        if (AccountManager.get(getApplicationContext()).getAccountsByType(Constants.ACCOUNT_TYPE).length == 0) {
+        Account account = AuthPreferences.getCurrentAccount(this);
+
+        if (account == null) {
             startActivity(new Intent(this, AuthActivity.class));
             finish();
+            return;
         }
 
         int accountTag = prefs.getInt(Constants.SP_LAST_ACCOUNT_TYPE, 201);

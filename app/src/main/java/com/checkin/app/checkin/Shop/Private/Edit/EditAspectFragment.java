@@ -9,6 +9,7 @@ import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.text.InputType;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -269,14 +270,21 @@ public class EditAspectFragment extends Fragment implements MultiSpinner.MultiSp
         }
 
         private void setupAddDialog() {
-            final View view = LayoutInflater.from(getContext()).inflate(R.layout.view_input_text, null, false);
-            EditText edText = view.findViewById(R.id.ed_input);
+            EditText input = new EditText(requireContext());
+            input.setInputType(InputType.TYPE_CLASS_TEXT);
+
             AlertDialog.Builder builder = new AlertDialog.Builder(requireContext());
             mAddDialog = builder
                     .setTitle("Add detail")
-                    .setView(view)
-                    .setPositiveButton("Add", (dialog, which) -> this.addData(edText.getText().toString()))
-                    .setNegativeButton("Cancel", ((dialogInterface, i) -> dialogInterface.dismiss()))
+                    .setView(input)
+                    .setPositiveButton("Add", (dialog, which) -> {
+                        this.addData(input.getText().toString());
+                        input.setText("");
+                    })
+                    .setNegativeButton("Cancel", ((dialogInterface, i) -> {
+                        dialogInterface.dismiss();
+                        input.setText("");
+                    }))
                     .create();
         }
 

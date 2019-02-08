@@ -105,9 +105,9 @@ public class LogoCoverActivity extends AppCompatActivity implements ShopCoverAda
             if (data.getExtras() != null) {
                 File image = (File) data.getExtras().get(SelectCropImageActivity.KEY_IMAGE);
                 if (requestCode == RC_LOGO) {
-                    mViewModel.updateProfilePic(image,this, -1);
+                    mViewModel.updateCoverPic(image,this, -1);
                 } else {
-                    mViewModel.updateProfilePic(image,this, requestCode - RC_COVER_BASE);
+                    mViewModel.updateCoverPic(image,this, requestCode - RC_COVER_BASE);
                 }
             }
         }

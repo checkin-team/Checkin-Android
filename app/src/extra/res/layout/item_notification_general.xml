@@ -16,14 +16,6 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 
-        <de.hdodenhof.circleimageview.CircleImageView
-            android:id="@+id/im_profile"
-           style="@style/LogoImageStyle"
-            android:src="@drawable/ic_connect_facebook"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:srcCompat="@drawable/ic_connect_facebook" />
-
         <Space
             android:id="@+id/space"
             android:layout_width="wrap_content"

@@ -3,8 +3,6 @@ package com.checkin.app.checkin.Auth;
 import android.app.Application;
 import android.arch.lifecycle.LiveData;
 import android.arch.lifecycle.MutableLiveData;
-import android.arch.lifecycle.ViewModel;
-import android.arch.lifecycle.ViewModelProvider;
 import android.os.CountDownTimer;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -103,19 +101,5 @@ public class AuthViewModel extends BaseViewModel{
 
     public LiveData<JsonNode> getErrors() {
         return mErrors;
-    }
-
-    public static class Factory extends ViewModelProvider.NewInstanceFactory {
-        @NonNull Application mApplication;
-
-        public Factory(@NonNull Application application) {
-            mApplication = application;
-        }
-
-        @NonNull
-        @Override
-        public <T extends ViewModel> T create(@NonNull Class<T> modelClass) {
-            return (T) new AuthViewModel(mApplication);
-        }
     }
 }
