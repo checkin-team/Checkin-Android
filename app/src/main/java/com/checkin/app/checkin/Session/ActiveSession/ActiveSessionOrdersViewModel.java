@@ -1,9 +1,9 @@
 package com.checkin.app.checkin.Session.ActiveSession;
 
 import android.app.Application;
-import android.arch.lifecycle.LiveData;
-import android.arch.lifecycle.MediatorLiveData;
-import android.support.annotation.NonNull;
+import androidx.lifecycle.LiveData;
+import androidx.lifecycle.MediatorLiveData;
+import androidx.annotation.NonNull;
 import android.util.Log;
 
 import com.checkin.app.checkin.Data.BaseViewModel;

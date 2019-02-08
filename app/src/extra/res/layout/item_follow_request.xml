@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:background="@color/white"
@@ -28,7 +28,7 @@
         app:layout_constraintTop_toTopOf="parent"
         tools:text="Alex" />
 
-    <android.support.v7.widget.CardView
+    <androidx.cardview.widget.CardView
         android:clickable="true"
         android:focusable="true"
         android:layout_width="@dimen/size_large_button"
@@ -49,9 +49,9 @@
             android:textSize="@dimen/font_small"
             style="@style/WhiteTextStyle" />
 
-    </android.support.v7.widget.CardView>
+    </androidx.cardview.widget.CardView>
 
-    <android.support.v7.widget.CardView
+    <androidx.cardview.widget.CardView
         android:clickable="true"
         android:focusable="true"
         android:id="@+id/card_view_reject"
@@ -72,5 +72,5 @@
             android:layout_gravity="center"
             android:textSize="@dimen/font_small"/>
 
-    </android.support.v7.widget.CardView>
-</android.support.constraint.ConstraintLayout>
+    </androidx.cardview.widget.CardView>
+</androidx.constraintlayout.ConstraintLayout>

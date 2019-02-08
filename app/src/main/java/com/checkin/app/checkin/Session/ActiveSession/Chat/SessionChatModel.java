@@ -1,6 +1,6 @@
 package com.checkin.app.checkin.Session.ActiveSession.Chat;
 
-import android.support.annotation.Nullable;
+import androidx.annotation.Nullable;
 
 import com.checkin.app.checkin.Misc.BriefModel;
 import com.checkin.app.checkin.Utility.Utils;

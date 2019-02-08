@@ -1,6 +1,6 @@
 package com.checkin.app.checkin.Utility;
 
-import android.support.v7.widget.RecyclerView;
+import androidx.recyclerview.widget.RecyclerView;
 import android.view.View;
 
 import com.checkin.app.checkin.R;

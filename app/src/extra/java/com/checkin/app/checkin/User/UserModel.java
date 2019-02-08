@@ -1,6 +1,6 @@
 package com.checkin.app.checkin.User;
 
-import android.support.annotation.Nullable;
+import androidx.annotation.Nullable;
 
 import com.checkin.app.checkin.User.Friendship.FriendshipModel.FRIEND_STATUS;
 import com.checkin.app.checkin.User.Friendship.FriendshipRequestModel;

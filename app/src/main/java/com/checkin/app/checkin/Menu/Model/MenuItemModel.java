@@ -1,6 +1,6 @@
 package com.checkin.app.checkin.Menu.Model;
 
-import android.support.annotation.NonNull;
+import androidx.annotation.NonNull;
 
 import com.checkin.app.checkin.Menu.Adapter.MenuItemAdapter;
 import com.fasterxml.jackson.annotation.JsonAutoDetect;

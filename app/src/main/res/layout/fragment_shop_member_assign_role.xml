@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.v7.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     style="@style/WhiteCardStyle"
@@ -7,7 +7,7 @@
     android:layout_height="wrap_content"
     android:layout_gravity="center">
 
-    <android.support.constraint.ConstraintLayout
+    <androidx.constraintlayout.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:padding="@dimen/spacing_large">
@@ -97,5 +97,5 @@
             app:layout_constraintStart_toEndOf="@id/btn_remove"
             app:layout_constraintTop_toTopOf="@id/btn_remove" />
 
-    </android.support.constraint.ConstraintLayout>
-</android.support.v7.widget.CardView>
+    </androidx.constraintlayout.ConstraintLayout>
+</androidx.cardview.widget.CardView>

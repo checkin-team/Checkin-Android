@@ -1,9 +1,9 @@
 package com.checkin.app.checkin.Review.ShopReview;
 
-import android.arch.lifecycle.ViewModelProviders;
+import androidx.lifecycle.ViewModelProviders;
 import android.os.Bundle;
-import android.support.annotation.Nullable;
-import android.support.v7.app.ActionBar;
+import androidx.annotation.Nullable;
+import androidx.appcompat.app.ActionBar;
 
 import com.checkin.app.checkin.Misc.BaseActivity;
 import com.checkin.app.checkin.R;

@@ -29,7 +29,7 @@
             android:layout_height="wrap_content"
             android:orientation="vertical">
 
-            <android.support.v7.widget.RecyclerView
+            <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/rv_ms_invoice_ordered_items"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -39,7 +39,7 @@
                 android:paddingEnd="@dimen/spacing_normal"
                 android:paddingBottom="@dimen/spacing_extra_small" />
 
-            <android.support.constraint.ConstraintLayout
+            <androidx.constraintlayout.ConstraintLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:background="@color/white_three"
@@ -135,7 +135,7 @@
                     app:layout_constraintStart_toStartOf="@id/ed_ms_invoice_discount"
                     app:layout_constraintTop_toBottomOf="@id/tv_ms_invoice_change" />
 
-            </android.support.constraint.ConstraintLayout>
+            </androidx.constraintlayout.ConstraintLayout>
 
             <include layout="@layout/incl_session_invoice" />
 

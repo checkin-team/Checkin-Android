@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     android:orientation="vertical">
 
-    <android.support.design.widget.AppBarLayout
+    <com.google.android.material.appbar.AppBarLayout
         android:id="@+id/appbar_shop_invoice"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -26,7 +26,7 @@
                 android:layout_weight="0.1"
                 android:src="@drawable/ic_back_grey" />
 
-            <android.support.constraint.ConstraintLayout
+            <androidx.constraintlayout.ConstraintLayout
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="0.75"
@@ -71,9 +71,9 @@
                     app:layout_constraintTop_toBottomOf="@id/tv_invoice_session_id"
                     tools:text=" | 3 items" />
 
-            </android.support.constraint.ConstraintLayout>
+            </androidx.constraintlayout.ConstraintLayout>
 
-            <android.support.constraint.ConstraintLayout
+            <androidx.constraintlayout.ConstraintLayout
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="0.25"
@@ -113,7 +113,7 @@
                     app:layout_constraintTop_toBottomOf="@id/tv_invoice_session_member_count"
                     tools:text="TABLE 4" />
 
-            </android.support.constraint.ConstraintLayout>
+            </androidx.constraintlayout.ConstraintLayout>
 
         </LinearLayout>
 
@@ -123,7 +123,7 @@
             android:layout_gravity="center_horizontal"
             android:background="@drawable/ic_line" />
 
-        <android.support.design.widget.TabLayout
+        <com.google.android.material.tabs.TabLayout
             android:id="@+id/tabs_shop_invoice"
             android:layout_width="match_parent"
             android:layout_height="?attr/actionBarSize"
@@ -134,9 +134,9 @@
             app:tabSelectedTextColor="@color/primary_red"
             app:tabTextColor="@color/pinkish_grey" />
 
-    </android.support.design.widget.AppBarLayout>
+    </com.google.android.material.appbar.AppBarLayout>
 
-    <android.support.v4.view.ViewPager
+    <androidx.viewpager.widget.ViewPager
         android:id="@+id/pager_shop_invoice"
         android:layout_width="match_parent"
         android:layout_height="match_parent" />

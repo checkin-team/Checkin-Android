@@ -93,7 +93,7 @@
         app:trimMode="trimModeLine"
         tools:text="We had a great time @Cheesy Does It. I visited this restaurant by seeing the ratings and profile on Checkin. The Hospitality really amazed me…" />
 
-    <android.support.constraint.ConstraintLayout
+    <androidx.constraintlayout.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="@dimen/size_normal_icon"
         android:layout_marginStart="@dimen/spacing_normal"
@@ -142,7 +142,7 @@
             app:layout_constraintEnd_toEndOf="parent"
             tools:text="14 hours ago" />
 
-    </android.support.constraint.ConstraintLayout>
+    </androidx.constraintlayout.ConstraintLayout>
 
     <View
         android:layout_width="match_parent"

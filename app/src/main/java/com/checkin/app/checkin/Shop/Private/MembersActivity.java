@@ -1,9 +1,9 @@
 package com.checkin.app.checkin.Shop.Private;
 
-import android.arch.lifecycle.ViewModelProviders;
+import androidx.lifecycle.ViewModelProviders;
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.v7.app.ActionBar;
+import androidx.appcompat.app.ActionBar;
 import android.view.View;
 
 import com.checkin.app.checkin.Data.Resource;

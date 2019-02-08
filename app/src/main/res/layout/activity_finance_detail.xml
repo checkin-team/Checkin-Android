@@ -19,7 +19,7 @@
             android:gravity="center"
             android:text="@string/action_tax_discount_description" />
 
-        <android.support.v7.widget.CardView
+        <androidx.cardview.widget.CardView
             style="@style/WhiteCardStyle"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -49,9 +49,9 @@
 
             </LinearLayout>
 
-        </android.support.v7.widget.CardView>
+        </androidx.cardview.widget.CardView>
 
-        <android.support.v7.widget.CardView
+        <androidx.cardview.widget.CardView
             style="@style/WhiteCardStyle"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -123,9 +123,9 @@
                     android:text="Save changes" />
             </LinearLayout>
 
-        </android.support.v7.widget.CardView>
+        </androidx.cardview.widget.CardView>
 
-        <android.support.v7.widget.CardView
+        <androidx.cardview.widget.CardView
             style="@style/WhiteCardStyle"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -285,7 +285,7 @@
 
             </LinearLayout>
 
-        </android.support.v7.widget.CardView>
+        </androidx.cardview.widget.CardView>
 
     </LinearLayout>
 

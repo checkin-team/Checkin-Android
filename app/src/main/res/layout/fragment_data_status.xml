@@ -7,7 +7,7 @@
     android:background="@color/white"
     tools:context=".Misc.DataStatusFragment">
 
-    <android.support.constraint.ConstraintLayout
+    <androidx.constraintlayout.ConstraintLayout
         android:id="@+id/container_progress"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -33,9 +33,9 @@
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"/>
-    </android.support.constraint.ConstraintLayout>
+    </androidx.constraintlayout.ConstraintLayout>
 
-    <android.support.constraint.ConstraintLayout
+    <androidx.constraintlayout.ConstraintLayout
         android:id="@+id/container_error"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -49,6 +49,6 @@
             android:text="Oops, there's an error!\nSorry for the inconvenience.\nWe promise it'll be fixed soon!"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"/>
-    </android.support.constraint.ConstraintLayout>
+    </androidx.constraintlayout.ConstraintLayout>
 
 </FrameLayout>

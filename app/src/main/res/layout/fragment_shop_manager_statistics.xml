@@ -16,7 +16,7 @@
         android:text="@string/shop_manager_table_statics_title_description"
         android:textSize="@dimen/font_extra_small" />
 
-    <android.support.v7.widget.CardView
+    <androidx.cardview.widget.CardView
         android:id="@+id/cv_shop_manager_table_statics"
         style="@style/WhiteCardStyle"
         android:layout_width="match_parent"
@@ -170,7 +170,7 @@
 
         </LinearLayout>
 
-    </android.support.v7.widget.CardView>
+    </androidx.cardview.widget.CardView>
 
     <TextView
         android:id="@+id/title_manager_stats_trending"
@@ -183,7 +183,7 @@
         android:layout_marginEnd="@dimen/spacing_small"
         android:text="TRENDING ITEMS IN LAST 30  DAYS" />
 
-    <android.support.v7.widget.RecyclerView
+    <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/rv_manager_stats_trending_orders"
         android:layout_width="match_parent"
         android:layout_height="match_parent"

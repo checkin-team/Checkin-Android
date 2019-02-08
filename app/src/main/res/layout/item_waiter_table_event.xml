@@ -4,7 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content">
 
-    <android.support.v7.widget.CardView
+    <androidx.cardview.widget.CardView
         style="@style/GreyCardStyle"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -50,5 +50,5 @@
                 android:src="@drawable/ic_accept_green_white" />
 
         </RelativeLayout>
-    </android.support.v7.widget.CardView>
+    </androidx.cardview.widget.CardView>
 </FrameLayout>
