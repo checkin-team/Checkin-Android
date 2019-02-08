@@ -140,6 +140,8 @@ public class MessageUtils {
             this.notificationId = Constants.getNotificationID();
             this.notificationManager = ((NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE));
             this.builder = builder;
+
+            notificationManager.notify(notificationId, builder.build());
         }
 
         @Override

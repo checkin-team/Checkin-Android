@@ -13,6 +13,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:fitsSystemWindows="true"
+        android:elevation="@dimen/card_elevation"
         android:theme="@style/appbar_main"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
@@ -78,7 +79,6 @@
         android:id="@+id/container_first"
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:background="@drawable/background_card_white_inner_shadow"
         app:layout_constraintBottom_toTopOf="@id/container_second"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/appbar_active_session"
@@ -113,7 +113,6 @@
             android:layout_centerInParent="true"
             android:layout_alignParentBottom="true"
             android:text="@string/your_friends_can_join_by_scanning_qr_code" />
-
     </RelativeLayout>
 
     <android.support.constraint.ConstraintLayout

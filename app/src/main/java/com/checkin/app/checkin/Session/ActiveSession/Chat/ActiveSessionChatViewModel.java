@@ -19,7 +19,7 @@ public class ActiveSessionChatViewModel extends BaseViewModel {
     private final ActiveSessionRepository mRepository;
     private MediatorLiveData<Resource<List<SessionChatModel>>> mChatData = new MediatorLiveData<>();
 
-    ActiveSessionChatViewModel(@NonNull Application application) {
+    public ActiveSessionChatViewModel(@NonNull Application application) {
         super(application);
         mRepository = ActiveSessionRepository.getInstance(application);
     }

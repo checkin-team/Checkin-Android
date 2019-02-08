@@ -110,6 +110,7 @@ public class HomeActivity extends BaseAccountActivity implements NavigationView.
         mViewModel.getQrResult().observe(this, resource -> {
             if (resource == null) return;
             if (resource.status == Resource.Status.SUCCESS && resource.data != null) {
+                startActivity(new Intent(this, ActiveSessionActivity.class));
                 Utils.toast(this, resource.data.getDetail());
             } else if (resource.status != Resource.Status.LOADING) {
                 Utils.toast(this, resource.message);

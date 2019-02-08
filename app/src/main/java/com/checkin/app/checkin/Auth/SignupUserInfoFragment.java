@@ -9,7 +9,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
 import android.widget.FrameLayout;
-import android.widget.ImageView;
 import android.widget.Toast;
 
 import com.checkin.app.checkin.R;
@@ -79,7 +78,7 @@ public class SignupUserInfoFragment extends Fragment {
     }
 
     @OnClick({R.id.im_female, R.id.im_male})
-    public void onGenderIconClicked(ImageView icon) {
+    public void onGenderIconClicked(View icon) {
         icon.setSelected(true);
         genderChosen = (icon.getId() == R.id.im_male) ? GENDER.MALE : GENDER.FEMALE;
         if (genderChosen == GENDER.MALE) imFemale.setSelected(false);

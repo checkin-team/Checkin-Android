@@ -31,7 +31,7 @@ public class UserViewModel extends BaseViewModel {
     private MediatorLiveData<Resource<UserModel>> mUserData = new MediatorLiveData<>();
     private MediatorLiveData<Resource<List<ShopCustomerModel>>> mUserRecentCheckinsData = new MediatorLiveData<>();
 
-    UserViewModel(@NonNull Application application) {
+    public UserViewModel(@NonNull Application application) {
         super(application);
         mRepository = UserRepository.getInstance(application);
     }

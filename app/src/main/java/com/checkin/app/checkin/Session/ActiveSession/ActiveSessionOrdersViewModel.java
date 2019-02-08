@@ -19,7 +19,7 @@ public class ActiveSessionOrdersViewModel extends BaseViewModel {
 
     private String mShopPk;
 
-    ActiveSessionOrdersViewModel(@NonNull Application application) {
+    public ActiveSessionOrdersViewModel(@NonNull Application application) {
         super(application);
         mRepository = ActiveSessionRepository.getInstance(application);
     }

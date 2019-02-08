@@ -25,18 +25,15 @@ import java.util.Locale;
 public class MessageModel implements Serializable {
     private MESSAGE_TYPE type;
 
-    @JsonDeserialize(using = MessageObjectModel.MessageObjectModelDeserializer.class)
     @JsonProperty("actor")
     private MessageObjectModel actor;
 
     @JsonProperty("description")
     private String description;
 
-    @JsonDeserialize(using = MessageObjectModel.MessageObjectModelDeserializer.class)
     @JsonProperty("object")
     private MessageObjectModel object;
 
-    @JsonDeserialize(using = MessageObjectModel.MessageObjectModelDeserializer.class)
     @JsonProperty("target")
     private MessageObjectModel target;
 

@@ -165,6 +165,7 @@ public class ManagerWorkActivity extends BaseAccountActivity {
 
     @Override
     protected void updateScreen() {
+        getAccountViewModel().updateResults();
         mViewModel.updateResults();
     }
 }

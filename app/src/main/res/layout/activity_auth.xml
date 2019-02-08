@@ -9,9 +9,11 @@
     tools:context=".Auth.AuthActivity">
 
     <ImageView
-        android:layout_width="150dp"
-        android:layout_height="150dp"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
         android:layout_gravity="top|center_horizontal"
+        android:layout_marginTop="@dimen/spacing_normal"
+        android:layout_marginBottom="@dimen/spacing_normal"
         android:src="@drawable/logo_checkin"
         app:layout_constraintBottom_toTopOf="@+id/cv_container"
         app:layout_constraintEnd_toEndOf="parent"
@@ -46,6 +48,17 @@
     </android.support.v7.widget.CardView>
 
     <TextView
+        android:id="@+id/tv_read_eula"
+        style="@style/RedSmallTextStyle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="@dimen/spacing_small"
+        android:text="Read EULA"
+        app:layout_constraintBottom_toTopOf="@id/tv_tag_line"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <TextView
         android:id="@+id/tv_tag_line"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -63,7 +76,7 @@
         android:layout_height="wrap_content"
         android:progress="25"
         android:visibility="gone"
-        app:layout_constraintBottom_toTopOf="@id/tv_tag_line"
+        app:layout_constraintBottom_toTopOf="@id/tv_read_eula"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/cv_container" />

@@ -41,7 +41,7 @@ public class MenuViewModel extends BaseViewModel {
     private Runnable mRunnable;
     private Long mSessionPk;
 
-    MenuViewModel(@NonNull Application application) {
+    public MenuViewModel(@NonNull Application application) {
         super(application);
         mRepository = MenuRepository.getInstance(application);
     }

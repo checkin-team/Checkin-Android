@@ -1,14 +1,9 @@
 package com.checkin.app.checkin.Data.Message;
 
-import com.checkin.app.checkin.Data.Converters;
 import com.checkin.app.checkin.Misc.BriefModel;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
-import com.fasterxml.jackson.core.JsonParser;
-import com.fasterxml.jackson.databind.DeserializationContext;
-import com.fasterxml.jackson.databind.JsonDeserializer;
 
-import java.io.IOException;
 import java.io.Serializable;
 
 @JsonIgnoreProperties(ignoreUnknown = true)
@@ -68,12 +63,5 @@ public class MessageObjectModel implements Serializable {
     @JsonProperty("type")
     public void setType(int type) {
         this.type = MESSAGE_OBJECT_TYPE.getById(type);
-    }
-
-    public static class MessageObjectModelDeserializer extends JsonDeserializer<MessageObjectModel> {
-        @Override
-        public MessageObjectModel deserialize(JsonParser jsonParser, DeserializationContext deserializationContext) throws IOException {
-            return Converters.objectMapper.readValue(jsonParser.getText(), MessageObjectModel.class);
-        }
     }
 }

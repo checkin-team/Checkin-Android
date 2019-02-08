@@ -14,7 +14,7 @@ import com.checkin.app.checkin.User.UserModel;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 
-public class AuthViewModel extends BaseViewModel{
+public class AuthViewModel extends BaseViewModel {
     private static final String TAG = AuthViewModel.class.getSimpleName();
 
     private final AuthRepository mRepository;
@@ -24,7 +24,7 @@ public class AuthViewModel extends BaseViewModel{
     private String providerIdToken;
     private MutableLiveData<JsonNode> mErrors = new MutableLiveData<>();
 
-    AuthViewModel(@NonNull Application application) {
+    public AuthViewModel(@NonNull Application application) {
         super(application);
         mRepository = AuthRepository.getInstance(application);
     }

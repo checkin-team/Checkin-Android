@@ -21,6 +21,7 @@ import android.widget.Toast;
 
 import com.checkin.app.checkin.Data.Resource;
 import com.checkin.app.checkin.Home.HomeActivity;
+import com.checkin.app.checkin.Misc.EulaDialog;
 import com.checkin.app.checkin.R;
 import com.checkin.app.checkin.User.UserModel.GENDER;
 import com.checkin.app.checkin.Utility.Constants;
@@ -45,6 +46,7 @@ import com.google.firebase.auth.PhoneAuthCredential;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 
 public class AuthActivity extends AppCompatActivity implements AuthFragmentInteraction, OtpVerificationDialog.AuthCallback {
     private static final String TAG = AuthActivity.class.getSimpleName();
@@ -198,6 +200,14 @@ public class AuthActivity extends AppCompatActivity implements AuthFragmentInter
                         mDarkBack.setVisibility(View.GONE);
                     }
                 });
+    }
+
+    @OnClick(R.id.tv_read_eula)
+    public void readEula() {
+        new EulaDialog(this, isAccepted -> {
+            if (!isAccepted)
+                finish();
+        }).show();
     }
 
     @Override

@@ -28,7 +28,7 @@ public class ActiveSessionViewModel extends BaseViewModel {
     private long mShopPk = -1, mSessionPk = -1;
     private boolean isAccepted;
 
-    ActiveSessionViewModel(@NonNull Application application) {
+    public ActiveSessionViewModel(@NonNull Application application) {
         super(application);
         mRepository = ActiveSessionRepository.getInstance(application);
     }

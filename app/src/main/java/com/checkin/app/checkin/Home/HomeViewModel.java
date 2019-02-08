@@ -3,6 +3,7 @@ package com.checkin.app.checkin.Home;
 import android.app.Application;
 import android.arch.lifecycle.LiveData;
 import android.arch.lifecycle.MediatorLiveData;
+import android.support.annotation.NonNull;
 
 import com.checkin.app.checkin.Data.BaseViewModel;
 import com.checkin.app.checkin.Data.Converters;
@@ -18,7 +19,7 @@ public class HomeViewModel extends BaseViewModel {
     private MediatorLiveData<Resource<QRResultModel>> mQrResult = new MediatorLiveData<>();
     private MediatorLiveData<Resource<SessionBasicModel>> mSessionStatus = new MediatorLiveData<>();
 
-    HomeViewModel(Application application) {
+    public HomeViewModel(@NonNull Application application) {
         super(application);
         mSessionRepository = SessionRepository.getInstance(application);
     }
