@@ -87,11 +87,11 @@
         android:layout_gravity="end"
         android:fitsSystemWindows="false">
 
-        <androidx.constraintlayout.ConstraintLayout
+        <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent">
 
-            <android.support.v7.widget.RecyclerView
+            <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/rv_menu_cart"
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
@@ -137,6 +137,6 @@
                     android:background="@color/primary_red"
                     android:text="Proceed" />
             </LinearLayout>
-        </androidx.constraintlayout.ConstraintLayout>
+        </androidx.constraintlayout.widget.ConstraintLayout>
     </com.google.android.material.navigation.NavigationView>
 </androidx.drawerlayout.widget.DrawerLayout>

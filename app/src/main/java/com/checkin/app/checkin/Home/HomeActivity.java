@@ -1,16 +1,7 @@
 package com.checkin.app.checkin.Home;
 
-import androidx.lifecycle.ViewModelProviders;
 import android.content.Intent;
 import android.os.Bundle;
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import com.google.android.material.navigation.NavigationView;
-import com.google.android.material.tabs.TabLayout;
-import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentManager;
-import androidx.drawerlayout.widget.DrawerLayout;
-import androidx.appcompat.app.ActionBarDrawerToggle;
 import android.view.Gravity;
 import android.view.MenuItem;
 import android.view.View;
@@ -32,7 +23,16 @@ import com.checkin.app.checkin.User.Private.UserViewModel;
 import com.checkin.app.checkin.User.UserModel;
 import com.checkin.app.checkin.Utility.DynamicSwipableViewPager;
 import com.checkin.app.checkin.Utility.Utils;
+import com.google.android.material.navigation.NavigationView;
+import com.google.android.material.tabs.TabLayout;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.appcompat.app.ActionBarDrawerToggle;
+import androidx.drawerlayout.widget.DrawerLayout;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
+import androidx.lifecycle.ViewModelProviders;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
@@ -234,6 +234,7 @@ public class HomeActivity extends BaseAccountActivity implements NavigationView.
             if (position == 1) {
                 Intent intent = new Intent(getApplicationContext(), QRScannerActivity.class);
                 startActivityForResult(intent, REQUEST_QR_SCANNER);
+                vpHome.setCurrentItem(0);
             } else super.onTabClick(position);
         }
 

@@ -243,7 +243,6 @@ public class ActiveSessionActivity extends AppCompatActivity implements ActiveSe
 
             @Override
             public void onClick(DialogInterface paramDialogInterface, int paramInt) {
-                // TODO Auto-generated method stub
                 mViewModel.deleteSessionMember(customerModel.getPk());
 
             }

@@ -6,11 +6,11 @@
     android:layout_height="match_parent"
     android:fitsSystemWindows="true">
 
-    <androidx.constraintlayout.ConstraintLayout
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-        <android.support.design.widget.AppBarLayout
+        <com.google.android.material.appbar.AppBarLayout
             android:id="@+id/appbar_waiter"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -19,7 +19,7 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent">
 
-            <android.support.v7.widget.Toolbar
+            <androidx.appcompat.widget.Toolbar
                 android:id="@+id/toolbar_waiter"
                 android:layout_width="match_parent"
                 android:layout_height="?android:attr/actionBarSize"
@@ -28,7 +28,7 @@
                 app:titleTextColor="@color/brownish_grey"
                 app:popupTheme="@style/PopupOverlay" />
 
-            <android.support.design.widget.TabLayout
+            <com.google.android.material.tabs.TabLayout
                 android:id="@+id/tabs_waiter"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -39,7 +39,7 @@
                 app:tabSelectedTextColor="@color/primary_red"
                 app:tabTextColor="@color/pinkish_grey" />
 
-        </android.support.design.widget.AppBarLayout>
+        </com.google.android.material.appbar.AppBarLayout>
 
         <com.checkin.app.checkin.Utility.DynamicSwipableViewPager
             android:id="@+id/pager_waiter"
@@ -61,7 +61,7 @@
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent" />
 
-    </androidx.constraintlayout.ConstraintLayout>
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
     <include layout="@layout/incl_account_base" />
 

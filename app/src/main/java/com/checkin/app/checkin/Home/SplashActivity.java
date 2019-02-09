@@ -5,9 +5,8 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
-import androidx.appcompat.app.AppCompatActivity;
 
-import com.checkin.app.checkin.Account.AccountModel;
+import com.checkin.app.checkin.Account.AccountModel.ACCOUNT_TYPE;
 import com.checkin.app.checkin.Auth.AuthActivity;
 import com.checkin.app.checkin.Auth.AuthPreferences;
 import com.checkin.app.checkin.Auth.DeviceTokenService;
@@ -15,6 +14,8 @@ import com.checkin.app.checkin.Manager.ManagerWorkActivity;
 import com.checkin.app.checkin.Shop.Private.ShopPrivateActivity;
 import com.checkin.app.checkin.Utility.Constants;
 import com.checkin.app.checkin.Waiter.WaiterWorkActivity;
+
+import androidx.appcompat.app.AppCompatActivity;
 
 public class SplashActivity extends AppCompatActivity {
 
@@ -24,21 +25,20 @@ public class SplashActivity extends AppCompatActivity {
 
         SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
 
-        if (!prefs.getBoolean(Constants.SP_SYNC_DEVICE_TOKEN, false)) {
-            startService(new Intent(getApplicationContext(), DeviceTokenService.class));
-        }
-
         Account account = AuthPreferences.getCurrentAccount(this);
-
         if (account == null) {
             startActivity(new Intent(this, AuthActivity.class));
             finish();
             return;
         }
 
-        int accountTag = prefs.getInt(Constants.SP_LAST_ACCOUNT_TYPE, 201);
+        if (!prefs.getBoolean(Constants.SP_SYNC_DEVICE_TOKEN, false)) {
+            startService(new Intent(getApplicationContext(), DeviceTokenService.class));
+        }
+
+        int accountTag = prefs.getInt(Constants.SP_LAST_ACCOUNT_TYPE, ACCOUNT_TYPE.USER.id);
         long accountPk = prefs.getLong(Constants.SP_LAST_ACCOUNT_PK, 0);
-        AccountModel.ACCOUNT_TYPE accountType = AccountModel.ACCOUNT_TYPE.getById(accountTag);
+        ACCOUNT_TYPE accountType = ACCOUNT_TYPE.getById(accountTag);
         Intent intent;
         switch (accountType) {
             case SHOP_OWNER:

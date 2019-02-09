@@ -4,22 +4,17 @@ import android.accounts.Account;
 import android.accounts.AccountManager;
 import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
-import androidx.lifecycle.ViewModelProviders;
+import android.annotation.SuppressLint;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.preference.PreferenceManager;
-import androidx.annotation.NonNull;
-import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentTransaction;
-import androidx.appcompat.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
 import android.widget.ProgressBar;
 import android.widget.Toast;
 
-import com.checkin.app.checkin.Data.Resource;
 import com.checkin.app.checkin.Home.HomeActivity;
 import com.checkin.app.checkin.Misc.EulaDialog;
 import com.checkin.app.checkin.R;
@@ -30,7 +25,6 @@ import com.facebook.AccessToken;
 import com.facebook.CallbackManager;
 import com.facebook.login.LoginResult;
 import com.fasterxml.jackson.databind.JsonNode;
-import com.fasterxml.jackson.databind.node.ObjectNode;
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
@@ -44,6 +38,13 @@ import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.auth.GoogleAuthProvider;
 import com.google.firebase.auth.PhoneAuthCredential;
 
+import java.util.Locale;
+
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentTransaction;
+import androidx.lifecycle.ViewModelProviders;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
@@ -52,8 +53,10 @@ public class AuthActivity extends AppCompatActivity implements AuthFragmentInter
     private static final String TAG = AuthActivity.class.getSimpleName();
     private static final int RC_AUTH_GOOGLE = 1000;
 
-    @BindView(R.id.circle_progress) ProgressBar vCircleProgress;
-    @BindView(R.id.dark_back) View mDarkBack;
+    @BindView(R.id.circle_progress)
+    ProgressBar vCircleProgress;
+    @BindView(R.id.dark_back)
+    View mDarkBack;
 
     private CallbackManager mFacebookCallbackManager;
     private PhoneAuth mPhoneAuth;
@@ -61,6 +64,7 @@ public class AuthActivity extends AppCompatActivity implements AuthFragmentInter
     private AuthViewModel mAuthViewModel;
     private boolean goBack = true;
 
+    @SuppressLint("ClickableViewAccessibility")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -79,38 +83,41 @@ public class AuthActivity extends AppCompatActivity implements AuthFragmentInter
         FirebaseUser user = mAuth.getCurrentUser();
         if (user != null && !PreferenceManager.getDefaultSharedPreferences(getApplicationContext()).getBoolean(Constants.SP_SYNC_DEVICE_TOKEN, false)) {
             Log.e(TAG, "User already exists.");
-            user.delete();
         }
 
         mAuthViewModel = ViewModelProviders.of(this).get(AuthViewModel.class);
 
-        mAuthViewModel.getObservableData().observe(this, resource -> {
+        mAuthViewModel.getAuthResult().observe(this, resource -> {
             if (resource == null)
                 return;
-            if (resource.status == Resource.Status.SUCCESS && resource.data != null) {
-                hideProgress();
-                successAuth(resource.data);
-            } else if (resource.status == Resource.Status.ERROR_INVALID_REQUEST) {
-                JsonNode error = resource.getErrorBody();
-                if (error == null)
-                    return;
-                if (error.has("errors")) {
-                    String msg = error.get("errors").get(0).asText();
-                    Toast.makeText(getApplicationContext(), msg + "\nTry again.", Toast.LENGTH_SHORT).show();
-                    if (user != null)
-                        user.delete();
-                }
-                else if (error.has("username")) {
-                    mAuthViewModel.showError(error);
-                } else {
-                    Toast.makeText(getApplicationContext(), resource.message, Toast.LENGTH_SHORT).show();
-                }
-                hideProgress();
-            } else if (resource.status == Resource.Status.LOADING) {
-                showProgress();
-            } else {
-                hideProgress();
-                Utils.toast(this, "ERROR!");
+            switch (resource.status) {
+                case SUCCESS:
+                    assert resource.data != null;
+                    hideProgress();
+                    Utils.toast(this, "Welcome!");
+                    successAuth(resource.data);
+                    break;
+                case LOADING:
+                    showProgress();
+                    break;
+                case ERROR_INVALID_REQUEST:
+                    if (mAuthViewModel.isLoginAttempt()) {
+                        askUserDetails();
+                    } else {
+                        JsonNode error = resource.getErrorBody();
+                        if (error == null)
+                            return;
+                        if (error.has("errors")) {
+                            String msg = error.get("errors").get(0).asText();
+                            Utils.toast(this, String.format(Locale.ENGLISH, "%s\nTry again.", msg));
+                        } else if (error.has("username")) {
+                            mAuthViewModel.showError(error);
+                        } else Utils.toast(this, resource.message);
+                    }
+                    break;
+                default:
+                    hideProgress();
+                    Utils.toast(this, resource.message);
             }
         });
 
@@ -129,32 +136,20 @@ public class AuthActivity extends AppCompatActivity implements AuthFragmentInter
         mAuth.signInWithCredential(credential)
                 .addOnCompleteListener(this, task -> {
                     if (task.isSuccessful()) {
+                        assert mAuth.getCurrentUser() != null;
+
                         mAuth.getCurrentUser().getIdToken(false).addOnSuccessListener(tokenResult -> {
                             mAuthViewModel.setFireBaseIdToken(tokenResult.getToken());
-                            boolean isNew = task.getResult().getAdditionalUserInfo().isNewUser();
-                            if (isNew)
-                                onVerifiedNewUser();
-                            else
-                                onVerifiedExistingUser();
+                            mAuthViewModel.login();
                         });
-                    }
-                    else {
+                    } else {
                         Log.e(TAG, "Authentication failed", task.getException());
-                        Toast.makeText(getApplicationContext(),R.string.error_authentication,Toast.LENGTH_SHORT).show();
+                        Toast.makeText(getApplicationContext(), R.string.error_authentication, Toast.LENGTH_SHORT).show();
                     }
                 });
     }
 
-    private void onVerifiedExistingUser() {
-        if (mAuth.getCurrentUser() != null && mAuth.getCurrentUser().getDisplayName() != null) {
-            Toast.makeText(getApplicationContext(), "Welcome back,  " + mAuth.getCurrentUser().getDisplayName(), Toast.LENGTH_LONG).show();
-        } else {
-            Toast.makeText(getApplicationContext(), "Welcome back!", Toast.LENGTH_LONG).show();
-        }
-        mAuthViewModel.login();
-    }
-
-    private void onVerifiedNewUser() {
+    private void askUserDetails() {
         FirebaseUser user = mAuth.getCurrentUser();
         Fragment fragment = SignupUserInfoFragment.newInstance(AuthActivity.this);
         if (user == null) {
@@ -212,7 +207,7 @@ public class AuthActivity extends AppCompatActivity implements AuthFragmentInter
 
     @Override
     public void onUserInfoProcess(String firstName, String lastName, String userName, GENDER gender) {
-        Log.e(TAG, "Username: "+ userName +"First name: " + firstName + " | Last name: " + lastName + " | Gender: " + gender.name());
+        Log.e(TAG, "Username: " + userName + "First name: " + firstName + " | Last name: " + lastName + " | Gender: " + gender.name());
         mAuthViewModel.register(firstName, lastName, gender, userName);
     }
 
@@ -245,7 +240,6 @@ public class AuthActivity extends AppCompatActivity implements AuthFragmentInter
     @Override
     public void onPhoneAuth(String phoneNo) {
         Log.e(TAG, "Phone number: " + phoneNo);
-        mAuthViewModel.setPhoneNo(phoneNo);
         OtpVerificationDialog dialog = OtpVerificationDialog.Builder.with(this)
                 .setAuthCallback(this)
                 .build();
@@ -254,21 +248,14 @@ public class AuthActivity extends AppCompatActivity implements AuthFragmentInter
         showDarkBack();
     }
 
-    private void successAuth(@NonNull ObjectNode data) {
+    private void successAuth(@NonNull AuthResultModel data) {
         new Handler().post(() -> {
-
-            if (!data.has("token")) {
-                Log.e(TAG, "'token' field missing from the response!");
-                Toast.makeText(getApplicationContext(), R.string.error_api_invalid_response, Toast.LENGTH_SHORT).show();
-                return;
-            }
-            String authToken = data.get("token").asText();
+            String authToken = data.getToken();
             Account account = new Account(getResources().getString(R.string.app_name), Constants.ACCOUNT_TYPE);
             AccountManager accountManager = AccountManager.get(this);
 
             Bundle userData = new Bundle();
-            if (data.has("account_pk"))
-                userData.putString(Constants.ACCOUNT_UID, data.get("account_pk").asText());
+            userData.putLong(Constants.ACCOUNT_UID, data.getUserId());
             accountManager.addAccountExplicitly(account, null, userData);
             accountManager.setAuthToken(account, AccountManager.KEY_AUTHTOKEN, authToken);
 

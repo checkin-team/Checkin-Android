@@ -50,7 +50,7 @@
                     android:layout_height="wrap_content"
                     tools:text="TABLE : 4" />
 
-                <androidx.constraintlayout.ConstraintLayout
+                <androidx.constraintlayout.widget.ConstraintLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="@dimen/spacing_extra_small"
@@ -127,7 +127,7 @@
                             android:textAllCaps="false" />
                     </LinearLayout>
 
-                </androidx.constraintlayout.ConstraintLayout>
+                </androidx.constraintlayout.widget.ConstraintLayout>
 
             </LinearLayout>
 

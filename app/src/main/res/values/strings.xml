@@ -6,7 +6,7 @@
     <string name="navigation_drawer_close">Close navigation drawer</string>
     <string name="tables_drawer_open">Open tables drawer</string>
     <string name="tables_drawer_close">Close tables drawer</string>
-    <string name="appbar_scrolling_view_behavior" translatable="false">android.support.design.widget.AppBarLayout$ScrollingViewBehavior</string>
+    <string name="appbar_scrolling_view_behavior" translatable="false">com.google.android.material.appbar.AppBarLayout$ScrollingViewBehavior</string>
 
     <string name="action_settings">Settings</string>
 

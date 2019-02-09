@@ -31,7 +31,7 @@
                     android:focusable="true"
                     android:src="@drawable/ic_back_grey" />
 
-                <androidx.constraintlayout.ConstraintLayout
+                <androidx.constraintlayout.widget.ConstraintLayout
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="@dimen/spacing_small"
@@ -70,7 +70,7 @@
                         app:layout_constraintBottom_toBottomOf="parent"
                         tools:text="@string/waiter_unassigned" />
 
-                </androidx.constraintlayout.ConstraintLayout>
+                </androidx.constraintlayout.widget.ConstraintLayout>
 
                 <TextView
                     android:id="@+id/tv_manager_session_bill"

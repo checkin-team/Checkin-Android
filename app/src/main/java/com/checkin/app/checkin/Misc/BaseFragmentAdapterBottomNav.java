@@ -1,20 +1,21 @@
 package com.checkin.app.checkin.Misc;
 
-import androidx.annotation.DrawableRes;
-import androidx.annotation.LayoutRes;
-import com.google.android.material.tabs.TabLayout;
-import androidx.fragment.app.FragmentManager;
-import androidx.fragment.app.FragmentStatePagerAdapter;
-import androidx.viewpager.widget.ViewPager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.checkin.app.checkin.R;
+import com.google.android.material.tabs.TabLayout;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import androidx.annotation.DrawableRes;
+import androidx.annotation.LayoutRes;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentStatePagerAdapter;
+import androidx.viewpager.widget.ViewPager;
 
 public abstract class BaseFragmentAdapterBottomNav extends FragmentStatePagerAdapter {
     private ViewPager mPager;
@@ -65,6 +66,12 @@ public abstract class BaseFragmentAdapterBottomNav extends FragmentStatePagerAda
             this.bindCustomView(itemView, pos);
 
             selectionHandlers.add(new TabSelectionHandler(pos, itemView));
+            viewPager.addOnPageChangeListener(new ViewPager.SimpleOnPageChangeListener() {
+                @Override
+                public void onPageSelected(int position) {
+                    onTabClick(position);
+                }
+            });
 
             TabLayout.Tab tab = tabLayout.getTabAt(pos);
             if (tab != null) {

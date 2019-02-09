@@ -4,7 +4,7 @@ apply from: '../versions.gradle'
 
 def keystoreProperties = new Properties()
 // Load your keystore.properties file into the keystoreProperties object.
-keystoreProperties.load(new FileInputStream(rootProject.file("keystore.debug")))
+keystoreProperties.load(new FileInputStream(rootProject.file("keystore.release")))
 
 android {
     signingConfigs {
@@ -58,7 +58,6 @@ android {
         }
         core {
             dimension "feature"
-            applicationIdSuffix ".lite"
             versionNameSuffix "-lite"
         }
     }
@@ -109,8 +108,8 @@ dependencies {
             [group: 'com.fasterxml.jackson.core', name: 'jackson-annotations', version: versions.jackson],
             [group: 'com.fasterxml.jackson.core', name: 'jackson-databind', version: versions.jackson]
     )
-    implementation 'com.squareup.retrofit2:retrofit:2.4.0'
-    implementation 'com.squareup.retrofit2:converter-jackson:2.4.0'
+    implementation 'com.squareup.retrofit2:retrofit:' + versions.retrofit
+    implementation 'com.squareup.retrofit2:converter-jackson:' + versions.retrofit
     implementation 'com.squareup.okhttp3:logging-interceptor:3.10.0'
     // ObjectBox components
     implementation 'io.objectbox:objectbox-android:' + versions.objectBox

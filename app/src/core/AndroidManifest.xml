@@ -89,9 +89,6 @@
         <activity
             android:name=".Session.ActiveSession.ActiveSessionViewOrdersActivity"
             android:windowSoftInputMode="adjustNothing" />
-        <activity android:name=".Review.NewReview.NewReviewActivity"
-            android:theme="@style/AppThemeWhiteActionBar"
-            android:label="Write a Review"/>
         <activity
             android:name=".Session.ActiveSession.ActiveSessionInvoiceActivity"
             android:label="Invoice"

@@ -9,7 +9,7 @@
     android:layout_marginEnd="@dimen/spacing_extra_small"
     android:layout_marginBottom="@dimen/spacing_small">
 
-    <androidx.constraintlayout.ConstraintLayout
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:padding="@dimen/spacing_small">
@@ -45,5 +45,5 @@
             app:layout_constraintTop_toTopOf="parent"
             tools:text="assign" />
 
-    </androidx.constraintlayout.ConstraintLayout>
+    </androidx.constraintlayout.widget.ConstraintLayout>
 </androidx.cardview.widget.CardView>

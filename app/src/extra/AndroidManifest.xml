@@ -57,6 +57,9 @@
         <activity
             android:name=".Shop.ShopPublicProfile.ShopActivity"
             android:screenOrientation="portrait" />
+        <activity android:name=".Review.NewReview.NewReviewActivity"
+            android:theme="@style/AppThemeWhiteActionBar"
+            android:label="Write a Review"/>
         <activity
             android:name=".Menu.SessionMenuActivity"
             android:screenOrientation="portrait"

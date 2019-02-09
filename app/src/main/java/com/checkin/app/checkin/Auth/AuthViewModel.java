@@ -1,28 +1,32 @@
 package com.checkin.app.checkin.Auth;
 
 import android.app.Application;
-import androidx.lifecycle.LiveData;
-import androidx.lifecycle.MutableLiveData;
-import android.os.CountDownTimer;
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 import android.util.Log;
 
 import com.checkin.app.checkin.Data.BaseViewModel;
 import com.checkin.app.checkin.Data.Converters;
+import com.checkin.app.checkin.Data.Resource;
 import com.checkin.app.checkin.User.UserModel;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.node.ObjectNode;
+
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.lifecycle.LiveData;
+import androidx.lifecycle.MediatorLiveData;
+import androidx.lifecycle.MutableLiveData;
 
 public class AuthViewModel extends BaseViewModel {
     private static final String TAG = AuthViewModel.class.getSimpleName();
 
     private final AuthRepository mRepository;
-    private MutableLiveData<Long> mOtpTimeOut = new MutableLiveData<>();
-    private String phoneNo;
+
+    private MutableLiveData<JsonNode> mErrors = new MutableLiveData<>();
+    private MediatorLiveData<Resource<AuthResultModel>> mAuthResult = new MediatorLiveData<>();
+
     private String firebaseIdToken;
     private String providerIdToken;
-    private MutableLiveData<JsonNode> mErrors = new MutableLiveData<>();
+    private boolean isLoginAttempt;
 
     public AuthViewModel(@NonNull Application application) {
         super(application);
@@ -32,35 +36,6 @@ public class AuthViewModel extends BaseViewModel {
     @Override
     public void updateResults() {
 
-    }
-
-    public void setOtpTimeout(long timeout) {
-        mOtpTimeOut.setValue(timeout);
-        if (timeout > 0) {
-            new CountDownTimer(timeout, 1000) {
-                @Override
-                public void onTick(long millisUntilFinished) {
-                    mOtpTimeOut.setValue(millisUntilFinished);
-                }
-
-                @Override
-                public void onFinish() {
-                    mOtpTimeOut.setValue(0L);
-                }
-            }.start();
-        }
-    }
-
-    public LiveData<Long> getOtpTimeOut() {
-        return mOtpTimeOut;
-    }
-
-    public void setPhoneNo(String phoneNo) {
-        this.phoneNo = phoneNo;
-    }
-
-    public String getPhoneNo() {
-        return phoneNo;
     }
 
     public void setFireBaseIdToken(String idToken) {
@@ -78,7 +53,8 @@ public class AuthViewModel extends BaseViewModel {
         data.put("id_token", firebaseIdToken);
         if (providerIdToken != null)
             data.put("provider_token", providerIdToken);
-        mData.addSource(mRepository.login(data), mData::setValue);
+        isLoginAttempt = true;
+        mAuthResult.addSource(mRepository.login(data), mAuthResult::setValue);
     }
 
     public void register(@NonNull String firstName, @Nullable String lastName, @NonNull UserModel.GENDER gender, @NonNull String username) {
@@ -92,7 +68,16 @@ public class AuthViewModel extends BaseViewModel {
         data.put("first_name", firstName);
         data.put("gender", gender == UserModel.GENDER.MALE ? "m" : "f");
         data.put("last_name", lastName == null ? "" : lastName);
-        mData.addSource(mRepository.register(data), mData::setValue);
+        isLoginAttempt = false;
+        mAuthResult.addSource(mRepository.register(data), mAuthResult::setValue);
+    }
+
+    public boolean isLoginAttempt() {
+        return isLoginAttempt;
+    }
+
+    public MediatorLiveData<Resource<AuthResultModel>> getAuthResult() {
+        return mAuthResult;
     }
 
     public void showError(JsonNode data) {

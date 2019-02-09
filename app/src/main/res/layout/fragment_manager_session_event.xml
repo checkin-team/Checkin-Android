@@ -35,7 +35,7 @@
                         android:layout_height="wrap_content"
                         style="@style/WhiteCardStyle">
 
-                        <androidx.constraintlayout.ConstraintLayout
+                        <androidx.constraintlayout.widget.ConstraintLayout
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
                             android:paddingStart="@dimen/spacing_normal"
@@ -64,7 +64,7 @@
                                 app:layout_constraintTop_toTopOf="parent"
                                 tools:text="5" />
 
-                        </androidx.constraintlayout.ConstraintLayout>
+                        </androidx.constraintlayout.widget.ConstraintLayout>
 
                     </androidx.cardview.widget.CardView>
 

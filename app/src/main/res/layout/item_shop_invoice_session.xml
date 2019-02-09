@@ -16,7 +16,7 @@
         android:orientation="horizontal"
         android:weightSum="1">
 
-        <androidx.constraintlayout.ConstraintLayout
+        <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="0.75"
@@ -70,9 +70,9 @@
                 app:layout_constraintTop_toTopOf="parent"
                 tools:text="265.85" />
 
-        </androidx.constraintlayout.ConstraintLayout>
+        </androidx.constraintlayout.widget.ConstraintLayout>
 
-        <androidx.constraintlayout.ConstraintLayout
+        <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="0.25"
@@ -112,7 +112,7 @@
                 app:layout_constraintTop_toBottomOf="@id/tv_invoice_session_member_count"
                 tools:text="TABLE 4" />
 
-        </androidx.constraintlayout.ConstraintLayout>
+        </androidx.constraintlayout.widget.ConstraintLayout>
 
     </LinearLayout>
 

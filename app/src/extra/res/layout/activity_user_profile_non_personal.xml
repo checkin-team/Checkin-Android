@@ -5,11 +5,11 @@
     android:id="@+id/root_view"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
-    <androidx.constraintlayout.ConstraintLayout
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-        <android.support.constraint.ConstraintLayout
+        <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/layout_upper"
             android:layout_width="match_parent"
             android:layout_height="0dp"
@@ -127,9 +127,9 @@
                     android:layout_below="@id/tv_reviews" />
             </RelativeLayout>
 
-        </android.support.constraint.ConstraintLayout>
+        </androidx.constraintlayout.widget.ConstraintLayout>
 
-        <android.support.constraint.Guideline
+        <androidx.constraintlayout.widget.Guideline
             android:id="@+id/guideline_above"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -137,7 +137,7 @@
             app:layout_constraintGuide_percent="0.67"
             app:layout_constraintTop_toTopOf="parent" />
 
-        <android.support.constraint.Guideline
+        <androidx.constraintlayout.widget.Guideline
             android:id="@+id/guideline_below"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -153,7 +153,7 @@
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintTop_toBottomOf="@id/guideline_above">
 
-            <android.support.constraint.ConstraintLayout
+            <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent">
 
@@ -301,9 +301,9 @@
                         tools:text="Follow our Food and Travel Journey 🍔🍕✈️⛵️\n🎥: Content Creators\n📍: MIA / NYC / LA 🌎"
                         android:textColor="@color/brownish_grey" />
                 </FrameLayout>
-            </android.support.constraint.ConstraintLayout>
+            </androidx.constraintlayout.widget.ConstraintLayout>
 
         </FrameLayout>
 
-    </androidx.constraintlayout.ConstraintLayout>
+    </androidx.constraintlayout.widget.ConstraintLayout>
 </FrameLayout>

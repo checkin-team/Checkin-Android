@@ -7,7 +7,7 @@
     android:layout_height="wrap_content"
     android:layout_gravity="center">
 
-    <androidx.constraintlayout.ConstraintLayout
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:padding="@dimen/spacing_large">
@@ -97,5 +97,5 @@
             app:layout_constraintStart_toEndOf="@id/btn_remove"
             app:layout_constraintTop_toTopOf="@id/btn_remove" />
 
-    </androidx.constraintlayout.ConstraintLayout>
+    </androidx.constraintlayout.widget.ConstraintLayout>
 </androidx.cardview.widget.CardView>

@@ -47,7 +47,7 @@
             android:layout_height="match_parent"
             app:cardCornerRadius="@dimen/card_corner_radius">
 
-            <androidx.constraintlayout.ConstraintLayout
+            <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:background="@drawable/bordered_card_rouge"
@@ -107,7 +107,7 @@
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintBottom_toBottomOf="parent"/>
 
-            </androidx.constraintlayout.ConstraintLayout>
+            </androidx.constraintlayout.widget.ConstraintLayout>
         </androidx.cardview.widget.CardView>
 
     </FrameLayout>

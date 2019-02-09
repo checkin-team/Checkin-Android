@@ -1,14 +1,6 @@
 package com.checkin.app.checkin.Shop.Private;
 
-import androidx.lifecycle.ViewModelProviders;
 import android.os.Bundle;
-import androidx.annotation.Nullable;
-import com.google.android.material.tabs.TabLayout;
-import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentManager;
-import androidx.drawerlayout.widget.DrawerLayout;
-import androidx.appcompat.app.ActionBarDrawerToggle;
-import android.view.Gravity;
 import android.widget.ImageView;
 
 import com.checkin.app.checkin.Account.AccountModel;
@@ -19,7 +11,15 @@ import com.checkin.app.checkin.Misc.BaseFragmentAdapterBottomNav;
 import com.checkin.app.checkin.Misc.BlankFragment;
 import com.checkin.app.checkin.R;
 import com.checkin.app.checkin.Utility.DynamicSwipableViewPager;
+import com.google.android.material.tabs.TabLayout;
 
+import androidx.annotation.Nullable;
+import androidx.appcompat.app.ActionBarDrawerToggle;
+import androidx.core.view.GravityCompat;
+import androidx.drawerlayout.widget.DrawerLayout;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
+import androidx.lifecycle.ViewModelProviders;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
@@ -90,12 +90,12 @@ public class ShopPrivateActivity extends BaseAccountActivity {
 
     @Override
     protected AccountModel.ACCOUNT_TYPE[] getAccountTypes() {
-        return new AccountModel.ACCOUNT_TYPE[] { AccountModel.ACCOUNT_TYPE.SHOP_OWNER, AccountModel.ACCOUNT_TYPE.SHOP_ADMIN };
+        return new AccountModel.ACCOUNT_TYPE[]{AccountModel.ACCOUNT_TYPE.SHOP_OWNER, AccountModel.ACCOUNT_TYPE.SHOP_ADMIN};
     }
 
     @OnClick(R.id.iv_shop_profile_navigation)
     public void onViewClicked() {
-        drawerRoot.openDrawer(Gravity.START);
+        drawerRoot.openDrawer(GravityCompat.START);
     }
 
     private class NewShopPrivatePagerAdapter extends BaseFragmentAdapterBottomNav {
@@ -133,9 +133,10 @@ public class ShopPrivateActivity extends BaseAccountActivity {
 
         @Override
         protected void onTabClick(int position) {
-            if (position == 1)
+            if (position == 1) {
                 SessionMenuActivity.withoutSession(getApplicationContext(), mViewModel.getShopPk());
-            else super.onTabClick(position);
+                vpShopPrivate.setCurrentItem(0);
+            } else super.onTabClick(position);
         }
     }
 

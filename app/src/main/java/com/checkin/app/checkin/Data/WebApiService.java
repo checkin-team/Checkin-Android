@@ -1,6 +1,7 @@
 package com.checkin.app.checkin.Data;
 
 import com.checkin.app.checkin.Account.AccountModel;
+import com.checkin.app.checkin.Auth.AuthResultModel;
 import com.checkin.app.checkin.Manager.Model.ManagerSessionEventModel;
 import com.checkin.app.checkin.Manager.Model.ManagerSessionInvoiceModel;
 import com.checkin.app.checkin.Manager.Model.ManagerStatsModel;
@@ -9,8 +10,8 @@ import com.checkin.app.checkin.Menu.Model.OrderedItemModel;
 import com.checkin.app.checkin.Misc.GenericDetailModel;
 import com.checkin.app.checkin.Search.SearchResultPeopleModel;
 import com.checkin.app.checkin.Search.SearchResultShopModel;
-import com.checkin.app.checkin.Session.Model.ActiveSessionModel;
 import com.checkin.app.checkin.Session.ActiveSession.Chat.SessionChatModel;
+import com.checkin.app.checkin.Session.Model.ActiveSessionModel;
 import com.checkin.app.checkin.Session.Model.QRResultModel;
 import com.checkin.app.checkin.Session.Model.RestaurantTableModel;
 import com.checkin.app.checkin.Session.Model.SessionBasicModel;
@@ -48,14 +49,16 @@ import retrofit2.http.Path;
 import retrofit2.http.Query;
 
 public interface WebApiService {
+    // region AUTH
     @POST("auth/login/")
-    Call<ObjectNode> postLogin(@Body ObjectNode credentials);
+    Call<AuthResultModel> postLogin(@Body ObjectNode credentials);
 
     @POST("auth/register/")
-    Call<ObjectNode> postRegister(@Body ObjectNode credentials);
+    Call<AuthResultModel> postRegister(@Body ObjectNode credentials);
 
     @PUT("auth/devices/self/update/")
     Call<ObjectNode> postFCMToken(@Body ObjectNode tokenData);
+    // endregion
 
     // region USER
     // region GET
@@ -253,6 +256,7 @@ public interface WebApiService {
 
     // endregion
 
+    // region MISC
     @GET("accounts/self/")
     Call<List<AccountModel>> getSelfAccounts();
 
@@ -262,4 +266,5 @@ public interface WebApiService {
 
     @GET("search/restaurant/")
     Call<List<SearchResultShopModel>> getSearchShopResults(@Query("search") String query, @Query("has_nonveg") Boolean hasNonVeg, @Query("has_alcohol") Boolean hasAlcohol);
+    // endregion
 }

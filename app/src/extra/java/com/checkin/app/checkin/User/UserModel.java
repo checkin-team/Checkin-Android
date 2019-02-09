@@ -73,7 +73,6 @@ public class UserModel {
         }
     }
 
-    // TODO: Move from here.
     public UserModel() {
     }
 
