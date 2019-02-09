@@ -6,6 +6,7 @@ import com.checkin.app.checkin.Session.ActiveSession.Chat.SessionChatModel;
 import com.checkin.app.checkin.Session.Model.SessionOrderedItemModel;
 import com.checkin.app.checkin.Shop.ShopModel;
 import com.checkin.app.checkin.User.UserModel;
+import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.core.JsonParser;
@@ -47,6 +48,7 @@ public class MessageDataModel implements Serializable {
     @JsonProperty("session__event")
     private ManagerSessionEventModel sessionEventBrief;
 
+    @JsonCreator
     public MessageDataModel() {
     }
 

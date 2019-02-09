@@ -1,9 +1,6 @@
 package com.checkin.app.checkin.Session.ActiveSession.Chat;
 
 import android.app.Application;
-import androidx.lifecycle.LiveData;
-import androidx.lifecycle.MediatorLiveData;
-import androidx.annotation.NonNull;
 
 import com.checkin.app.checkin.Data.BaseViewModel;
 import com.checkin.app.checkin.Data.Converters;
@@ -14,6 +11,10 @@ import com.checkin.app.checkin.Session.ActiveSession.Chat.SessionChatModel.CHAT_
 import com.fasterxml.jackson.databind.node.ObjectNode;
 
 import java.util.List;
+
+import androidx.annotation.NonNull;
+import androidx.lifecycle.LiveData;
+import androidx.lifecycle.MediatorLiveData;
 
 public class ActiveSessionChatViewModel extends BaseViewModel {
     private final ActiveSessionRepository mRepository;
@@ -61,7 +62,7 @@ public class ActiveSessionChatViewModel extends BaseViewModel {
         Resource<List<SessionChatModel>> listResource = mChatData.getValue();
         if (listResource == null || listResource.data == null)
             return;
-        listResource.data.add(chatModel);
+        listResource.data.add(0, chatModel);
         mChatData.setValue(Resource.cloneResource(listResource, listResource.data));
     }
 
@@ -81,7 +82,7 @@ public class ActiveSessionChatViewModel extends BaseViewModel {
             SessionChatModel chatModel = listResource.data.get(pos);
             chatModel.setStatus(status.tag);
             listResource.data.remove(pos);
-            listResource.data.add(chatModel);
+            listResource.data.add(0, chatModel);
 
             mChatData.setValue(Resource.cloneResource(listResource, listResource.data));
         }

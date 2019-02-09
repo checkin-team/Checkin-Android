@@ -142,7 +142,7 @@ public class ShopPrivateActivity extends BaseAccountActivity {
 
     @Override
     protected void updateScreen() {
-        super.updateScreen();
+        getAccountViewModel().updateResults();
         mViewModel.updateResults();
     }
 }

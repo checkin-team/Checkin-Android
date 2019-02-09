@@ -23,11 +23,6 @@ import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.Build;
 import android.provider.MediaStore;
-import androidx.annotation.DrawableRes;
-import androidx.annotation.NonNull;
-import androidx.annotation.RequiresApi;
-import androidx.annotation.StringRes;
-import com.google.android.material.tabs.TabLayout;
 import android.util.Log;
 import android.util.SparseArray;
 import android.view.View;
@@ -40,6 +35,7 @@ import android.widget.Toast;
 
 import com.checkin.app.checkin.Home.HomeActivity;
 import com.checkin.app.checkin.R;
+import com.google.android.material.tabs.TabLayout;
 
 import java.lang.reflect.Field;
 import java.text.ParseException;
@@ -53,6 +49,11 @@ import java.util.Locale;
 import java.util.Map;
 import java.util.regex.MatchResult;
 import java.util.regex.Matcher;
+
+import androidx.annotation.DrawableRes;
+import androidx.annotation.NonNull;
+import androidx.annotation.RequiresApi;
+import androidx.annotation.StringRes;
 
 /**
  * Created by shivanshs9 on 12/5/18.
@@ -450,6 +451,10 @@ public class Utils {
 
     public static String getCurrentFormattedDate() {
         Date date = Calendar.getInstance().getTime();
+        return getFormattedDate(date);
+    }
+
+    public static String getFormattedDate(Date date) {
         SimpleDateFormat simpleDateFormat = new SimpleDateFormat("MMM dd, yyyy", Locale.getDefault());
         return simpleDateFormat.format(date);
     }

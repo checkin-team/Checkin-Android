@@ -4,6 +4,7 @@ import com.checkin.app.checkin.Misc.BriefModel;
 import com.checkin.app.checkin.Utility.Utils;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
+import java.util.Calendar;
 import java.util.Date;
 
 public class SessionBriefModel {
@@ -59,7 +60,7 @@ public class SessionBriefModel {
     }
 
     public String formatTimeDuration(){
-        return Utils.formatTimeDuration(created.getTime());
+        return Utils.formatTimeDuration(Calendar.getInstance().getTime().getTime() - created.getTime());
     }
 
     public String getTable() {

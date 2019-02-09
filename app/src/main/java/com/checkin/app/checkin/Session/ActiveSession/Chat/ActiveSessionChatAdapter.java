@@ -1,8 +1,5 @@
 package com.checkin.app.checkin.Session.ActiveSession.Chat;
 
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.recyclerview.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -15,6 +12,9 @@ import com.checkin.app.checkin.Session.ActiveSession.Chat.SessionChatModel.CHAT_
 
 import java.util.List;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.recyclerview.widget.RecyclerView;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
@@ -158,10 +158,12 @@ public class ActiveSessionChatAdapter extends RecyclerView.Adapter {
                     } else {
                         if (chat.getType() == CHAT_EVENT_TYPE.EVENT_CONCERN)
                             tvChatMsg.setText("Concern raised.");
+                        else
+                            tvChatMsg.setText(chat.getMessage());
                         if (chat.getData().getEvent() != null) {
                             tvChatConcernMsg.setText(chat.getData().getEvent().getMessage());
+                            tvChatConcernMsg.setVisibility(View.VISIBLE);
                         }
-                        tvChatConcernMsg.setVisibility(View.VISIBLE);
                     }
                     if (chat.getType() == CHAT_EVENT_TYPE.EVENT_MENU_ORDER_ITEM) {
                         containerOrderStatus.setVisibility(View.VISIBLE);

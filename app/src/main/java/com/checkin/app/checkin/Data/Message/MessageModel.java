@@ -6,8 +6,6 @@ import android.app.PendingIntent;
 import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
-import androidx.annotation.Nullable;
-import androidx.core.app.NotificationCompat;
 import android.text.Html;
 import android.text.TextUtils;
 
@@ -16,24 +14,31 @@ import com.checkin.app.checkin.Manager.ManagerWorkActivity;
 import com.checkin.app.checkin.R;
 import com.checkin.app.checkin.Session.ActiveSession.ActiveSessionActivity;
 import com.checkin.app.checkin.Waiter.WaiterWorkActivity;
+import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 
 import java.io.Serializable;
 import java.util.Locale;
 
+import androidx.annotation.Nullable;
+import androidx.core.app.NotificationCompat;
+
 public class MessageModel implements Serializable {
     private MESSAGE_TYPE type;
-
-    @JsonProperty("actor")
-    private MessageObjectModel actor;
 
     @JsonProperty("description")
     private String description;
 
+    @JsonDeserialize(using = MessageObjectModel.MessageObjectDeserializer.class)
+    @JsonProperty("actor")
+    private MessageObjectModel actor;
+
+    @JsonDeserialize(using = MessageObjectModel.MessageObjectDeserializer.class)
     @JsonProperty("object")
     private MessageObjectModel object;
 
+    @JsonDeserialize(using = MessageObjectModel.MessageObjectDeserializer.class)
     @JsonProperty("target")
     private MessageObjectModel target;
 
@@ -86,6 +91,7 @@ public class MessageModel implements Serializable {
         }
     }
 
+    @JsonCreator
     public MessageModel() {}
 
     @JsonProperty("type")
@@ -197,6 +203,7 @@ public class MessageModel implements Serializable {
             case MANAGER_SESSION_NEW:
             case MANAGER_SESSION_NEW_ORDER:
             case MANAGER_SESSION_EVENT_CONCERN:
+            case MANAGER_SESSION_CHECKOUT_REQUEST:
             case WAITER_SESSION_NEW:
             case WAITER_SESSION_NEW_ORDER:
             case WAITER_SESSION_EVENT_SERVICE:

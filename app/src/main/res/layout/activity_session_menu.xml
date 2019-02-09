@@ -57,6 +57,7 @@
                     android:gravity="center"
                     android:textColor="@color/primary_red"
                     android:textSize="@dimen/font_small"
+                    android:visibility="gone"
                     tools:text="62" />
 
                 <com.miguelcatalan.materialsearchview.MaterialSearchView
