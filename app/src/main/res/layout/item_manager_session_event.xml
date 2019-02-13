@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginStart="@dimen/spacing_small"
+    android:layout_marginTop="@dimen/spacing_small"
+    android:layout_marginEnd="@dimen/spacing_small">
+
+    <FrameLayout
+        android:layout_width="@dimen/size_image_small"
+        android:layout_height="@dimen/size_image_small">
+
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_gravity="center"
+            android:src="@drawable/background_oval_white_shadow" />
+
+        <ImageView
+            android:id="@+id/im_ms_event_type"
+            android:layout_width="@dimen/size_extra_small_icon"
+            android:layout_height="@dimen/size_extra_small_icon"
+            android:layout_gravity="center"
+            android:src="@drawable/ic_session_event_request_checkout" />
+    </FrameLayout>
+
+    <LinearLayout
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_marginStart="@dimen/spacing_extra_small"
+        android:layout_marginEnd="@dimen/spacing_extra_small"
+        android:layout_weight="1"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/tv_ms_event_msg"
+            style="@style/GreySmallTextStyle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            tools:text="requested no cheese" />
+
+        <TextView
+            android:id="@+id/tv_ms_event_subtype"
+            style="@style/WhiteSmallTextStyle"
+            android:layout_width="@dimen/width_manager_order_item_status"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/spacing_tiny"
+            android:background="@color/pinkish_grey"
+            android:gravity="center"
+            android:textSize="@dimen/font_extra_small"
+            android:visibility="gone"
+            tools:text="Delayed" />
+
+    </LinearLayout>
+
+    <TextView
+        android:id="@+id/btn_ms_event_done"
+        style="@style/WhiteSmallTextStyle"
+        android:layout_width="@dimen/button_width_tiny"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:background="@color/brownish_grey"
+        android:gravity="center"
+        android:paddingTop="@dimen/spacing_extra_tiny"
+        android:paddingBottom="@dimen/spacing_extra_tiny"
+        android:text="@string/label_done"
+        android:visibility="gone"/>
+
+    <Button
+        android:id="@+id/btn_ms_event_approve"
+        style="@style/ButtonPositiveAction"
+        android:layout_width="@dimen/button_width_short"
+        android:layout_height="@dimen/button_height_short"
+        android:layout_marginEnd="@dimen/spacing_tiny"
+        android:gravity="center"
+        android:text="@string/title_approve"
+        android:textSize="@dimen/font_extra_small"
+        android:visibility="gone" />
+
+</LinearLayout>

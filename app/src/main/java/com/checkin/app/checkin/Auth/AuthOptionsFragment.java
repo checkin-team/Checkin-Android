@@ -1,8 +1,8 @@
 package com.checkin.app.checkin.Auth;
 
 import android.os.Bundle;
-import android.support.annotation.NonNull;
-import android.support.v4.app.Fragment;
+import androidx.annotation.NonNull;
+import androidx.fragment.app.Fragment;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -11,7 +11,7 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 import com.checkin.app.checkin.R;
-import com.checkin.app.checkin.Utility.Util;
+import com.checkin.app.checkin.Utility.Utils;
 import com.facebook.CallbackManager;
 import com.facebook.FacebookCallback;
 import com.facebook.FacebookException;
@@ -102,7 +102,7 @@ public class AuthOptionsFragment extends Fragment {
     }
 
     private boolean isNetworkUnavailable() {
-        if (getContext() != null && !Util.isNetworkConnected(getContext())) {
+        if (getContext() != null && !Utils.isNetworkConnected(getContext())) {
             Toast.makeText(getContext(), R.string.error_unavailable_network, Toast.LENGTH_SHORT).show();
             return true;
         }

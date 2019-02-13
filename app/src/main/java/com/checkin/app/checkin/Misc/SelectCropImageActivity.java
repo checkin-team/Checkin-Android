@@ -6,7 +6,7 @@ import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
-import android.support.v7.app.AppCompatActivity;
+import androidx.appcompat.app.AppCompatActivity;
 import android.util.Log;
 
 import com.checkin.app.checkin.R;
@@ -37,12 +37,13 @@ public class SelectCropImageActivity extends AppCompatActivity {
 
         float viewportRatio = getIntent().getFloatExtra(KEY_CROP_ASPECT_RATIO, 0.81f);
 
-        mRectangleFile = new File(getCacheDir(), "profile.png");
+        mRectangleFile = new File(getCacheDir(), "cropped.png");
+        mRectangleFile.delete();
 
         cropView = findViewById(R.id.crop_view);
         cropView.setViewportRatio(viewportRatio);
 
-        findViewById(R.id.next_button).setOnClickListener(v -> {
+        findViewById(R.id.btn_image_crop_done).setOnClickListener(v -> {
             Bitmap bitmap = cropView.crop();
             if (bitmap == null) {
                 Log.e(TAG, "Cropped bitmap is null!");

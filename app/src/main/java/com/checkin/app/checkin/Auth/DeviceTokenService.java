@@ -3,8 +3,6 @@ package com.checkin.app.checkin.Auth;
 import android.app.IntentService;
 import android.content.Intent;
 import android.preference.PreferenceManager;
-import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
 import android.util.Log;
 
 import com.checkin.app.checkin.Data.ApiResponse;
@@ -14,8 +12,8 @@ import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.iid.FirebaseInstanceId;
 import com.google.firebase.iid.InstanceIdResult;
 
-import java.io.IOException;
-
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -46,7 +44,9 @@ public class DeviceTokenService extends IntentService implements OnSuccessListen
     }
 
     private void saveToken(String token) {
-        AuthRepository.getInstance(getApplication()).postDeviceToken(token).enqueue(this);
+        AuthRepository.getInstance(getApplication())
+                .postDeviceToken(token)
+                .enqueue(this);
     }
 
     private void processResponse(ApiResponse<ObjectNode> response) {

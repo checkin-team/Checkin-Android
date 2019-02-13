@@ -11,7 +11,7 @@ import android.util.AttributeSet;
  * Issues: https://github.com/bachors/Android-Prefix-Input/issues
  */
 
-public class PrefixEditText extends android.support.v7.widget.AppCompatEditText {
+public class PrefixEditText extends androidx.appcompat.widget.AppCompatEditText {
     private String prefix, fix;
 
     public PrefixEditText(Context context) {

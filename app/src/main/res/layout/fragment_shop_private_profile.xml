@@ -1,0 +1,239 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <FrameLayout
+            android:id="@+id/container_shop_private_top"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="0.4"
+            android:background="@color/black"
+            android:orientation="vertical">
+
+            <com.checkin.app.checkin.Utility.DynamicSwipableViewPager
+                android:id="@+id/vp_shop_private_cover"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent" />
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/spacing_small">
+
+                <com.rd.PageIndicatorView
+                    android:id="@+id/indicator_shop_private_top_cover"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerHorizontal="true"
+                    android:layout_centerVertical="true"
+                    android:layout_marginTop="@dimen/spacing_normal"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:piv_animationType="scale"
+                    app:piv_dynamicCount="true"
+                    app:piv_interactiveAnimation="true"
+                    app:piv_selectedColor="@color/white"
+                    app:piv_unselectedColor="@color/pinkish_grey"
+                    app:piv_viewPager="@id/vp_shop_private_cover" />
+
+                <ImageView
+                    android:id="@+id/btn_shop_private_add_logo"
+                    android:layout_width="@dimen/size_small_button"
+                    android:layout_height="@dimen/size_small_button"
+                    android:layout_alignParentEnd="true"
+                    android:layout_centerVertical="true"
+                    android:layout_marginEnd="@dimen/spacing_small"
+                    android:contentDescription="@null"
+                    android:src="@drawable/ic_add_picture" />
+
+            </RelativeLayout>
+
+        </FrameLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="0.6"
+            android:orientation="vertical">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/spacing_extra_large"
+                android:layout_marginTop="@dimen/spacing_extra_large"
+                android:layout_marginEnd="@dimen/spacing_extra_large"
+                android:orientation="horizontal">
+
+                <ImageView
+                    android:id="@+id/im_shop_private_status"
+                    android:layout_width="@dimen/size_tiny_icon"
+                    android:layout_height="@dimen/size_tiny_icon"
+                    android:layout_marginTop="@dimen/spacing_extra_tiny"
+                    android:src="@drawable/ic_exclamation_rouge" />
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/spacing_extra_small"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:id="@+id/tv_shop_private_display_name"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textColor="@color/primary_red"
+                        android:textSize="@dimen/font_normal"
+                        tools:text="CHEESY DOES IT" />
+
+                    <TextView
+                        android:id="@+id/tv_shop_private_locality"
+                        style="@style/GreySmallTextStyle"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        tools:text="Mexican Chelsea" />
+
+                </LinearLayout>
+
+                <Space
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1" />
+
+                <Button
+                    android:id="@+id/btn_shop_private_edit"
+                    style="@style/ButtonNeutralAction"
+                    android:layout_width="wrap_content"
+                    android:layout_height="@dimen/button_height_short"
+                    android:layout_gravity="center"
+                    android:text="@string/action_profile_edit" />
+
+            </LinearLayout>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/height_horizontal_line"
+                android:layout_marginTop="@dimen/spacing_large"
+                android:background="@drawable/ic_line" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/spacing_tiny"
+                android:layout_marginBottom="@dimen/spacing_tiny"
+                android:gravity="center"
+                android:orientation="horizontal"
+                android:padding="@dimen/spacing_small"
+                android:weightSum="4">
+
+                <Button
+                    android:id="@+id/btn_shop_private_members"
+                    style="@style/GreyLinkStyle"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:background="@color/transparent"
+                    android:drawableTop="@drawable/ic_follow_person_grey"
+                    android:drawablePadding="@dimen/spacing_small"
+                    android:text="@string/action_shop_members" />
+
+                <Space
+                    android:layout_width="@dimen/spacing_large"
+                    android:layout_height="match_parent" />
+
+                <Button
+                    android:id="@+id/btn_shop_private_invoice"
+                    style="@style/GreyLinkStyle"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:background="@color/transparent"
+                    android:drawableTop="@drawable/ic_invoice"
+                    android:drawablePadding="@dimen/spacing_small"
+                    android:text="@string/action_invoice" />
+
+                <Space
+                    android:layout_width="@dimen/spacing_large"
+                    android:layout_height="match_parent" />
+
+                <Button
+                    android:id="@+id/btn_shop_private_discount"
+                    style="@style/GreyLinkStyle"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:background="@color/transparent"
+                    android:drawableTop="@drawable/ic_discount_grey"
+                    android:drawablePadding="@dimen/spacing_small"
+                    android:text="@string/action_discount" />
+
+            </LinearLayout>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/height_horizontal_line"
+                android:layout_marginBottom="@dimen/spacing_extra_tiny"
+                android:background="@drawable/ic_line" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginTop="@dimen/spacing_extra_small"
+                android:text="More Info"
+                android:textAllCaps="true"
+                android:textColor="@color/pinkish_grey"
+                android:textSize="@dimen/font_heading" />
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/rv_shop_private_extra_data"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginStart="@dimen/spacing_normal"
+                android:layout_marginTop="@dimen/spacing_small"
+                android:layout_marginEnd="@dimen/spacing_normal"
+                app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
+                app:spanCount="2"/>
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@drawable/background_transparent_rounded_stroke_grey"
+        android:gravity="center"
+        android:orientation="vertical"
+        android:paddingStart="@dimen/spacing_extra_large"
+        android:paddingTop="@dimen/spacing_extra_small"
+        android:paddingEnd="@dimen/spacing_extra_large"
+        android:paddingBottom="@dimen/spacing_extra_small"
+        app:layout_anchor="@id/container_shop_private_top"
+        app:layout_anchorGravity="center|bottom">
+
+        <TextView
+            android:id="@+id/tv_shop_private_checkins"
+            style="@style/GreySmallTextStyle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            tools:text="1.3k" />
+
+        <TextView
+            style="@style/GreySmallTextStyle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="2dp"
+            android:text="Checkins" />
+
+    </LinearLayout>
+
+</androidx.coordinatorlayout.widget.CoordinatorLayout>

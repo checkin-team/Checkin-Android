@@ -2,25 +2,26 @@ package com.checkin.app.checkin.Menu.Fragment;
 
 import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
-import android.arch.lifecycle.ViewModelProviders;
+import androidx.lifecycle.ViewModelProviders;
 import android.os.Bundle;
-import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
-import android.support.v4.app.Fragment;
-import android.support.v7.widget.GridLayoutManager;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.GridLayoutManager;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageButton;
+import android.widget.TextView;
 
 import com.checkin.app.checkin.Menu.Adapter.FilterCategoryAdapter;
 import com.checkin.app.checkin.Menu.MenuViewModel;
 import com.checkin.app.checkin.Menu.Model.MenuItemModel.AVAILABLE_MEAL;
 import com.checkin.app.checkin.R;
-import com.checkin.app.checkin.Utility.Util;
+import com.checkin.app.checkin.Utility.Utils;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -35,6 +36,8 @@ public class MenuFilterFragment extends Fragment {
     @BindView(R.id.container_filter) ViewGroup containerFilter;
     @BindView(R.id.rv_menu_categories) RecyclerView rvFilterCategories;
     @BindView(R.id.btn_filter_toggle) ImageButton btnFilterToggle;
+    @BindView(R.id.tv_menu_filter_title) TextView tvFilterTitle;
+    @BindView(R.id.tv_menu_filter_clear) TextView tvFilterClear;
 
     private MenuViewModel mViewModel;
     private FilterCategoryAdapter mAdapter;
@@ -85,6 +88,18 @@ public class MenuFilterFragment extends Fragment {
 
         mViewModel = ViewModelProviders.of(requireActivity()).get(MenuViewModel.class);
         mViewModel.getCategories().observe(this, mAdapter::setCategories);
+        mViewModel.getFilteredString().observe(this, value -> {
+            if (value == null) {
+                tvFilterClear.setVisibility(View.GONE);
+                tvFilterTitle.setText("Filters");
+                btnFilterToggle.setActivated(false);
+            }
+            else {
+                tvFilterTitle.setText(value);
+                tvFilterClear.setVisibility(View.VISIBLE);
+                btnFilterToggle.setActivated(true);
+            }
+        });
 
         resetFilterContainer();
         hideDarkBack();
@@ -92,7 +107,7 @@ public class MenuFilterFragment extends Fragment {
 
     private void resetFilterContainer() {
         containerFilter.measure(0, 0);
-        containerFilter.setPivotY(Util.dpToPx(374));
+        containerFilter.setPivotY(Utils.dpToPx(374));
         containerFilter.setPivotX(0.5f * containerFilter.getMeasuredWidth());
         containerFilter.setVisibility(View.GONE);
         containerFilter.setRotation(180);
@@ -114,9 +129,27 @@ public class MenuFilterFragment extends Fragment {
         hideFilter();
     }
 
+    @OnClick(R.id.tv_menu_filter_clear)
+    public void resetFilter() {
+        mViewModel.clearFilters();
+        mListener.resetFilters();
+    }
+
     @OnClick({R.id.btn_sort_high2low, R.id.btn_sort_mainstream, R.id.btn_sort_low2high})
     public void sortMenuItems(View v) {
-        Util.toast(requireContext(), "Unsupported operation.");
+        switch (v.getId()) {
+            case R.id.btn_sort_mainstream:
+                Utils.toast(requireContext(), "Unsupported operation.");
+                break;
+            case R.id.btn_sort_high2low:
+                mListener.sortItems();
+                mViewModel.sortMenuItems(false);
+                break;
+            case R.id.btn_sort_low2high:
+                mListener.sortItems();
+                mViewModel.sortMenuItems(true);
+                break;
+        }
         hideFilter();
     }
 
@@ -207,5 +240,7 @@ public class MenuFilterFragment extends Fragment {
         void onShowFilter();
         void onHideFilter();
         void filterByCategory(String category);
+        void sortItems();
+        void resetFilters();
     }
 }

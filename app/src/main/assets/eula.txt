@@ -1,0 +1,691 @@
+<p class="western" lang="en-GB" align="center"><a name="__DdeLink__792_305844378"></a><a name="_GoBack"></a> <span style="font-size: x-large;"><span lang="en-IN"><strong>End User License Agreement</strong></span></span></p>
+<p class="western" lang="en-GB" align="justify"><span lang="en-IN"><em>Please read the following terms and conditions of the End-User License Agreement carefully before using this Application, as described hereinabove. Your acceptance of these terms and conditions, in the manner provided therein, shall constitute a binding agreement between </em></span><span lang="en-IN"><em><strong>User </strong></em></span><span lang="en-IN"><em>and </em></span><u> </u><span lang="en-IN"><em><u><strong>Reservefree Private Limited</strong></u></em></span><span lang="en-IN">, </span><span lang="en-IN"><em>a Company incorporated under the Indian Companies Act, 2013 and having its registered office at</em></span><span lang="en-IN"> _______________________________________________________________________________________________________________________________ </span><span lang="en-IN"><strong>(hereinafter referred as </strong></span><span lang="en-IN"><em><strong>Licenser</strong></em></span><span lang="en-IN"><strong>),</strong></span><span lang="en-IN"> collectively both the User and the Licenser will be referred as parties for the purposes of this End-User License Agreement (hereinafter referred as </span><span lang="en-IN"><em>License</em></span><span lang="en-IN">).</span></p>
+<p class="western" lang="en-GB" align="justify">The Application provided herein is Licensed, and not sold, to the User for using, in accordance with the terms as set forth in this License. The Licenser reserves all rights not expressly granted herein.</p>
+<p class="western" lang="en-GB" align="justify">The following terms and conditions, and the policy, instructions, terms and conditions mentioned on the online page(s) located at <a href="https://check-in.in/"><strong>https://</strong><strong>check-in.in</strong></a> collectively governs User&rsquo;s access and use of all programs, code, services and information (collectively, &ldquo;content&rdquo;) available from Licenser.</p>
+<p class="western" lang="en-GB" align="justify">By purchasing or installing this Application on a system(s) or device(s); or obtaining or using or paying for any content from the Application, User agrees to be bound by and comply with all of the terms of this License. If the User do not agrees with any of the applicable terms, then the User shall not install the Application on a system(s) or device(s); or obtain or use any content from the Application. User will be asked to review the terms of the License. User is not authorized to purchase a License or install the Application on a system(s) or device(s) or use this Application unless and until User has reviewed the terms of this License and accepted the same as it is. By installing the Application, User agrees to be bound by the terms of this License. If User do not agree to the terms of this License, do not purchase, install, or attempt to use the Application, or immediately uninstall the Application and delete any copies of same from User system(s) or device(s) and any backups thereof.</p>
+<p class="western" lang="en-GB" align="justify">WHEREAS, User is desirous of obtaining a non-exclusive, limited License to use the Application for the purpose of utilising the services as provided by its usage;</p>
+<p class="western" lang="en-GB" align="justify">WHEREAS, User is desirous of being able to utilize the Application, services and related media for purposes related to User&rsquo;s need; and</p>
+<p class="western" lang="en-GB" align="justify">whereas, <span lang="en-IN">The User has desired to install and use the Application in User&rsquo;s System(s) or Device(s), being run by Android OS, manufactured by Google Inc. </span><span lang="en-IN"><strong>(Google)</strong></span><span lang="en-IN">, a California corporation with its principal place of business at 1600 Amphitheatre Parkway, Mountain View, California 94043 U.S.A. </span><span lang="en-IN"><strong>(Android Device) </strong></span><span lang="en-IN">and/or on User&rsquo;s System(s) or Device(s), being run by iOS, manufactured by Apple Inc. (&ldquo;</span><span lang="en-IN"><strong>Apple</strong></span><span lang="en-IN">&rdquo;), a California corporation with its principal place of business at One Infinite Loop, Cupertino, California 95014, U.S.A. (&ldquo;</span><span lang="en-IN"><strong>iPhone or other Google or Apple Manufactured Device</strong></span><span lang="en-IN">&rdquo;), on the terms and conditions contained herein.</span></p>
+<p class="western" lang="en-GB" align="justify">WHEREAS, Licensor is willing to grant such License under such rights in exchange for the consideration as set forth herein;</p>
+<p class="western" lang="en-GB" align="justify">NOW THEREFORE, in consideration of the premises, the parties hereby agree the<span lang="en-IN"> preceding and following terms and conditions, by way of opting the &ldquo;</span><span lang="en-IN"><strong>I AGREE</strong></span><span lang="en-IN">&rdquo; option and shall constitute a binding agreement between the User and Licenser</span>:</p>
+<ol type="A">
+<li>
+<p lang="en-GB" align="justify"><span style="font-size: small;"><strong>definition</strong></span></p>
+</li>
+</ol>
+<ol>
+<li>
+<p lang="en-GB" align="justify">&ldquo;<span style="font-size: small;">Account Holder&rdquo; means the User having a valid and recognised account with the Licenser.</span></p>
+</li>
+<li>
+<p lang="en-GB" align="justify">&ldquo;<span style="font-size: small;">Anonymised&rdquo; means the data which went through the irreversible process of transforming or converting it to a form in which the person being referred in the data cannot be identified.</span></p>
+</li>
+<li>
+<p lang="en-GB" align="justify">&ldquo;<span style="font-size: small;">Application&rdquo; means the bundle of codes resulting into a software developed by the Licenser for being used by the User, under the name of _______________</span></p>
+</li>
+<li>
+<p lang="en-GB" align="justify">&ldquo;<span style="font-size: small;">Arbitration Board&rdquo; means a body constituted under Clause T for the resolution of disputes between the parties by following the principles and law enumerated in this License and Arbitration and Conciliation Act, 1996 or any law replacing the same or the law in effect at Varanasi, Uttar Pradesh (India) at the time of initiation of dispute resolution process. </span></p>
+</li>
+<li>
+<p lang="en-GB" align="justify">&ldquo;<span style="font-size: small;">Automatic Diagnostic Test&rdquo; means an inspection carried by the Application itself to assess the compatibility of the System(s) or Device(s) on which the User wishes to install the Application.</span></p>
+</li>
+<li>
+<p lang="en-GB" align="justify">&ldquo;<span style="font-size: small;">Corporate User&rdquo; means user, intended to use the Application, for its own and commercial use and being recognised as a Corporate Account Holder by the Licenser.</span></p>
+</li>
+<li>
+<p lang="en-GB" align="justify">&ldquo;<span style="font-size: small;">Data&rdquo; means and includes a representation of information, facts, concepts, opinions, or instructions in a manner suitable for communication, interpretation, or processing by humans or by automated means</span></p>
+</li>
+<li>
+<p lang="en-GB" align="justify">&ldquo;<span style="font-size: small;">Individual User&rdquo; means a User, intended to use the Application, for its own and non-commercial use and being recognised as a Individual Account Holder by the Licenser.</span></p>
+</li>
+<li>
+<p lang="en-GB" align="justify">&ldquo;<span style="font-size: small;">Installation&rdquo; means the process of decompressing the Software and to ensure effecting running and using of the Application on the System(s) or Device(s), on which the User intends to use the Application.</span></p>
+</li>
+<li>
+<p lang="en-GB" align="justify">&ldquo;<span style="font-size: small;">Point System Mechanism&rdquo; `means [to be filled]</span></p>
+</li>
+<li>
+<p lang="en-GB" align="justify">&ldquo;<span style="font-size: small;">Social Netowrking Website&rdquo; means the third party entities working as an online platform that allows users to create a public profile and interact with other users on the website</span></p>
+</li>
+<li>
+<p lang="en-GB" align="justify">&ldquo;<span style="font-size: small;">Software&rdquo; means the bundle of source code, developed by the Licenser, and essential for the effective installation, running and usage of the Application. </span></p>
+</li>
+<li>
+<p lang="en-GB" align="justify">&ldquo;<span style="font-size: small;">System(s) or Device(s)&rdquo; means the instrument used by the User for installing, running and using the Application.</span></p>
+</li>
+<li>
+<p lang="en-GB" align="justify">&ldquo;<span style="font-size: small;">Upgraded&rdquo; means the latest version of the Application available on the Playstore or Apple Store.</span></p>
+</li>
+<li>
+<p lang="en-GB" align="justify">&ldquo;<span style="font-size: small;">User&rdquo; means the person, either individual or corporate, using the Application under the provisions of this License. </span></p>
+</li>
+<li>
+<p lang="en-GB" align="justify">&ldquo;<span style="font-size: small;">Website&rdquo; means </span><span style="font-size: small;"><em><u><strong>http</strong></u></em></span><span style="font-size: small;"><em><u><strong>s</strong></u></em></span><span style="font-size: small;"><em><u><strong>://</strong></u></em></span><span style="font-size: small;"><em><u><strong>check-in.in/</strong></u></em></span></p>
+</li>
+</ol>
+<ol start="2" type="A">
+<li>
+<p lang="en-GB" align="justify"><span style="font-size: small;"><strong>login and user</strong></span></p>
+</li>
+</ol>
+<ol>
+<li>
+<p lang="en-GB" align="justify"><span style="font-size: small;">By accepting the License and completing the sign-in process, the User becomes an account holder of the Application. The User may become one of two types of account holders i.e. Individual User or Corporate User.</span></p>
+</li>
+<li>
+<p lang="en-GB" align="justify"><span style="font-size: small;">The User is permitted to complete the sign-in process by connecting the Application through the credentials of a third party social netoworking website such as Facebook, Google etc. However, by connecting the Application with a social networking website, the User authorises the Licenser to access and collect the authenticated information such as name, email address and other encrypted access credentials, subject to the terms and conditions of such social networking website. The User further allows the Licenser to store these information and to use the same for providing a better, effective and efficient services through the Application or otherwise. </span></p>
+</li>
+<li>
+<p lang="en-GB" align="justify"><span style="font-size: small;">Any sharing of the credentials of the third party social netoworking website such as Facebook, Google etc. used for authorising and connecting the Application would be the sole responsibility of the User. </span></p>
+</li>
+<li>
+<p lang="en-GB" align="justify"><span style="font-size: small;">The user is required to register himself/herself/itself by choosing a username of its discretion, subject to availability. The User is solely responsible for the confidentiality of its username and its circulation. </span></p>
+</li>
+<li>
+<p lang="en-GB" align="justify"><span style="font-size: small;">The User may contact the Licenser via an email at _____________________________ for intimation of unauthorised used, in the event of which the Licenser retains the right to suspend the account till the verification of the User and its access is not completed to the satisfaction of the Licenser. </span></p>
+</li>
+<li>
+<p lang="en-GB" align="justify"><span style="font-size: small;">By creating an account, the User agrees to provide access to certain personal details of the User for the effective and efficient running of the Application. Further, the User also agrees to provide grant of access to Licenser to certain other functions and information stored in the system or device, subject to the individual request of the Licenser for grant of access notwithstanding to the Clause C of this License. </span></p>
+</li>
+</ol>
+<ol start="3" type="A">
+<li>
+<p lang="en-GB" align="justify"><span style="font-size: small;"><strong>permissions</strong></span></p>
+</li>
+</ol>
+<ol>
+<li>
+<p lang="en-GB" align="justify"><span style="font-size: small;">t</span><span style="font-size: small;">he User agrees to provide access to the Licenser to the following functions/services available on the system or device through which the User logins the Application:</span></p>
+</li>
+</ol>
+<ol type="i">
+<li>
+<p lang="en-GB" align="justify"><span style="font-size: small;">Access to Short Message Service (SMS)</span></p>
+</li>
+<li>
+<p lang="en-GB" align="justify"><span style="font-size: small;">Access to Camera</span></p>
+</li>
+<li>
+<p lang="en-GB" align="justify"><span style="font-size: small;">Access to Location</span></p>
+</li>
+<li>
+<p lang="en-GB" align="justify"><span style="font-size: small;">Access to Files</span></p>
+</li>
+<li>
+<p lang="en-GB" align="justify"><span style="font-size: small;">Access to Contacts</span></p>
+</li>
+</ol>
+<ol start="2">
+<li>
+<p lang="en-GB" align="justify"><span style="font-size: small;">The User further grants permission to the Licenser to use the data stored in the system(s) or device(s) through which the User logins the Application or the data collected or stored by the system(s) or device(s), through which the User logins the Application, by the help of the abovementioned functions/services, for providing a better, effective and efficient service to the User by the Application or otherwise. </span></p>
+</li>
+<li>
+<p lang="en-GB" align="justify"><span style="font-size: small;">That in case of Corporate User, the User further grants permission to the Licenser to access the monthly profits, details of employees, details of orders or business transactions, menu, taxation details or any other information required for providing better, effective and efficient service to the User by the Application or otherwise.</span></p>
+</li>
+<li>
+<p lang="en-GB" align="justify"><span style="font-size: small;">That the Licenser agrees not to share the data or information collected by the aforesaid means to a third party except for providing better, effective and efficient service to the User by the Application or otherwise, or by way of special grant of permission from the User or as permitted in the terms and conditions of this License.</span></p>
+</li>
+<li>
+<p lang="en-GB" align="justify"><span style="font-size: small;">That the User expressly and without any restrictions grants the permission to the Licenser to analyse the data or information collected from the above means and to use such analysis for its own benefits, subject to maintainability of the privacy of the User and the terms and conditions of this License. </span></p>
+</li>
+</ol>
+<ol start="4" type="A">
+<li>
+<p lang="en-GB" align="justify"><span style="font-size: small;"><strong>payment</strong></span></p>
+</li>
+</ol>
+<ol>
+<li>
+<p align="justify"><span style="font-family: 'Times New Roman', serif;"><span style="font-family: Garamond, serif;"><span style="font-size: small;">No payment is required from an Individual User to obtain a License to use the Application. A fee, subscription or payment may be associated with and required in connection with the purchase of services or goods through, via, while using or otherwise in connection with the Application.</span></span></span></p>
+</li>
+<li>
+<p align="justify"><span style="font-family: 'Times New Roman', serif;"><span style="font-family: Garamond, serif;"><span style="font-size: small;">A Corporate User would be required to make the necessary payment for obtaining a License to use the Application. A fee, subscription or payment may be associated with and required in connection with the purchase of services or goods through, via, while using or otherwise in connection with the Application.</span></span></span></p>
+</li>
+<li>
+<p align="justify"><span style="font-family: 'Times New Roman', serif;"><span style="font-family: Garamond, serif;"><span style="font-size: small;">The Corporate User would be required to make the necessary payment, subject to the applicable discounts, concessions, offers, surcharges, taxes and additional costs, before using the Application. The payment is required to be made in the manner in which provided under this Agreement or provided by the Licensor through necessary payment gateways.</span></span></span></p>
+</li>
+<li>
+<p align="justify"><span style="font-family: 'Times New Roman', serif;"><span style="font-family: Garamond, serif;"><span style="font-size: small;">Payments to be made in INR or using any other method or mode available at the time of purchase. User agrees to not request a chargeback or refund for any accurately delivered goods or correctly provided services without first dialoguing with the Licenser to attempt to resolve the situation.</span></span></span></p>
+</li>
+<li>
+<p align="justify"><span style="font-family: 'Times New Roman', serif;"><span style="font-family: Garamond, serif;"><span style="font-size: small;">Termination or expiration of this License shall not excuse User&rsquo;s obligation to make payments of sums due and payable pursuant to this or any other agreement between the Parties at the time of any termination or expiration hereof.</span></span></span></p>
+</li>
+</ol>
+<ol start="5" type="A">
+<li>
+<p lang="en-GB" align="justify"><span style="font-size: small;"><strong>refunds/Bonus</strong></span></p>
+</li>
+</ol>
+<ol>
+<li>
+<p lang="en-GB" align="justify"><span style="font-size: small;">Any refund or bonus made by the Licenser to the User shall be made in terms of Point System Mechanisms wherein each point would have the same value of the refund to be made in INR, in actual, or the bonus User is entitled for in INR, in actual. </span></p>
+</li>
+<li>
+<p lang="en-GB" align="justify"><span style="font-size: small;">Points received by the User, through the Point System Mechanism, shall be available till the time, as mentioned along with. </span></p>
+</li>
+<li>
+<p lang="en-GB" align="justify"><span style="font-size: small;">Points received by the User, under the Points System Mechanism, shall be transferrable to another User however will not be available for conversion to INR or any other recognised monetary currency. </span></p>
+</li>
+</ol>
+<ol start="6" type="A">
+<li>
+<p lang="en-GB" align="justify"><span style="font-size: small;"><strong>License grant</strong></span></p>
+</li>
+</ol>
+<ol>
+<li>
+<p lang="en-GB" align="justify"><span style="font-size: small;"><span lang="en-IN">By accepting the terms and conditions of this License, Licenser grants to the User, during the term of this License, a personal, limited, non-exclusive, revocable, non-transferable and non-commercial License to install and use the Application for personal purposes on System(s) or Device(s), being run by Android OS, manufactured by Google and/or on System(s) or Device(s), being run by iOS, manufactured by Apple, </span></span><span style="font-size: small;"><span lang="en-IN">and as permitted by the Usage Rules set forth in the Play Store Terms of Service or Application Store Terms of Service, respectively, applicable and binding upon the </span></span><span style="font-size: small;"><span lang="en-IN">User and subject to the terms and conditions and privacy policy of the Licenser as setforth on its website</span></span><span style="font-size: small;"><span lang="en-IN">.</span></span></p>
+</li>
+<li>
+<p lang="en-GB" align="justify"><span style="font-size: small;"><span lang="en-IN">The User agrees and acknowledges that all Licenses not expressly granted in this License are reserved and no other Licenses, immunity or rights, express or implied are granted by Licenser by implication, </span></span><span style="font-size: small;"><span lang="en-IN"><em>estoppel</em></span></span><span style="font-size: small;"><span lang="en-IN"> or otherwise.</span></span></p>
+</li>
+<li>
+<p lang="en-GB" align="justify"><span style="font-size: small;"><span lang="en-IN">User agrees that user will not (a) reproduce, modify, distribute, transfer, disclose, or make available to any third party any portion of the Software (or any related user manuals, documentation, screenshots or prints) in any form; (b) reverse engineer, decompile, disassemble, or otherwise attempt to derive the source code for the Software; or (c) publish any performance or benchmark tests or analyses relating to the Software or the use thereof. </span></span></p>
+</li>
+<li>
+<p lang="en-GB" align="justify"><span style="font-size: small;"><span lang="en-IN">Notwithstanding the foregoing, decompiling the Software is permitted to the extent the laws of the jurisdiction where User&rsquo;s location gives the User the right to do so to obtain information necessary to render the Software interoperable with other software; provided, however, that User must first request such information from Licenser and Licenser may, in its discretion, either provide such information to the User or impose reasonable conditions, including reasonable fees, on such use of the Software to ensure that Licenser&rsquo;s proprietary rights in the Software are protected.</span></span></p>
+</li>
+</ol>
+<ol start="7" type="A">
+<li>
+<p lang="en-GB" align="justify"><span style="font-size: small;"><strong>installation</strong></span></p>
+</li>
+</ol>
+<ol>
+<li>
+<p lang="en-GB" align="justify"><span style="font-size: small;">The User hereby accepts the responsibility of installing the Application on its system(s)/device(s) on its own. </span></p>
+</li>
+<li>
+<p lang="en-GB" align="justify"><span style="font-size: small;">The Application may run an Automatic Diagnostic Test for ensuring the compatibility of the Application with the system(s) or device(s) from which the User tries to access the Application. </span></p>
+</li>
+</ol>
+<ol start="8" type="A">
+<li>
+<p lang="en-GB" align="justify"><span style="font-size: small;"><strong>terms of grant</strong></span></p>
+</li>
+</ol>
+<ol>
+<li>
+<p lang="en-GB" align="justify"><span style="font-size: small;">To the fullest the extent permitted by applicable law, Licenser shall not be liable for any delay, failure, breakdown, damage, loss, costs, claim, penalty, fine or expense arising from the followings:</span></p>
+</li>
+</ol>
+<ol start="9" type="a">
+<li>
+<p lang="en-GB" align="justify"><span style="font-size: small;">User&rsquo;s use of the Application otherwise than in accordance with the terms of this License;</span></p>
+</li>
+</ol>
+<ol start="2" type="i">
+<li>
+<p lang="en-GB" align="justify"><span style="font-size: small;">User effecting any changes, modifications or upgrades to the Application without Licenser&rsquo;s prior written consent;</span></p>
+</li>
+<li>
+<p lang="en-GB" align="justify"><span style="font-size: small;">operator error on the part of User or User&rsquo;s personnel, or any fault in any hardware or third-party software supplied to Licenser or software supplied to or obtained by the User from any entity other than Licenser;</span></p>
+</li>
+<li>
+<p lang="en-GB" align="justify"><span style="font-size: small;">the intentional or negligent act or omission of any person who is not a member of Licenser&rsquo;s personnel;</span></p>
+</li>
+<li>
+<p lang="en-GB" align="justify"><span style="font-size: small;">User&rsquo;s negligence;</span></p>
+</li>
+<li>
+<p lang="en-GB" align="justify"><span style="font-size: small;">the actions or omissions of any telecommunications authority or a supplier of telecommunications services; or</span></p>
+</li>
+<li>
+<p lang="en-GB" align="justify"><span style="font-size: small;">the actions or omissions of any upstream data providers or suppliers of network services; or</span></p>
+</li>
+<li>
+<p lang="en-GB" align="justify"><span style="font-size: small;">any other cause beyond our reasonable control, including the failure or fluctuation of electrical supplies, accidents or natural disasters.</span></p>
+</li>
+</ol>
+<ol start="2">
+<li>
+<p lang="en-GB" align="justify"><span style="font-size: small;">In no event shall our aggregate liability, whether in contract, warranty, delict (including negligence, whether active, passive or imputed), product liability, strict liability or other theory, arising out of or relating to the use of the Application exceed any compensation User pays, if any, for access to or use of the Application.</span></p>
+</li>
+</ol>
+<ol start="9" type="A">
+<li>
+<p lang="en-GB" align="justify"><span style="font-size: small;"><strong>Term/termination</strong></span></p>
+</li>
+</ol>
+<ol>
+<li>
+<p lang="en-GB" align="justify"><span style="font-size: small;">The License is effective upon User's installation of the Application on the system(s)/device(s), and the License will remain in effect until termination or expiry.</span></p>
+</li>
+<li>
+<p lang="en-GB" align="justify"><span style="font-size: small;">If User breaches the License, Licenser may terminate the License immediately by notice to User.</span></p>
+</li>
+<li>
+<p lang="en-GB" align="justify"><span style="font-size: small;">If the License expires or is terminated, the License will cease immediately and User will immediately cease use of the Application and Documentation and either return all copies of the Application and Documentation in User's possession, custody or power or, destroy all such copies. In the latter case, if requested by Licenser, User shall provide Licenser with a certificate confirming that such destruction has been completed.</span></p>
+</li>
+<li>
+<p lang="en-GB" align="justify"><span style="font-size: small;">After the expiry or termination of the License, the Licenser undertakes to, immediately, destroy all the data or information, of the User, collected during the period of usage of the Application. However, any analysis developed by the Licenser after processing and analysing the above data shall not be covered by this clause and the Licenser shall be free to use the same in future despite the expiry or termination of this License. </span></p>
+</li>
+<li>
+<p lang="en-GB" align="justify"><span style="font-size: small;">Licenser reserves the right to terminate and/or suspend the License as it deems reasonable in its sole discretion by notice to User if it becomes aware that Licensee has failed to pay any sum due either to Licenser either in connection with the License or in connection with any other agreement or License to use any product(s)/service(s) of Licenser, in connection with any Maintenance and Support Agreement or any other Agreement or if the User is otherwise in breach of or fails to comply with any term of the License.</span></p>
+</li>
+<li>
+<p lang="en-GB" align="justify"><span style="font-size: small;">Licenser may also terminate this License, if User becomes subject to criminal proceedings, bankruptcy proceedings, becomes insolvent, or makes an arrangement with User&rsquo;s creditors. This License will terminate automatically without further notice or action by Licenser if User goes into liquidation.</span></p>
+</li>
+</ol>
+<ol start="9" type="A">
+<li>
+<p lang="en-GB" align="justify"><span style="font-size: small;"><strong>updates/ehancements</strong></span></p>
+</li>
+</ol>
+<ol>
+<li>
+<p lang="en-GB" align="justify"><span style="font-size: small;">The Licenser reserves the right to upgrade the Application by modifying, altering or changing the Source Code or in any other manner possible, irrespective of the fact that the Upgraded version remains compatible with the User&rsquo;s existing System(s)/Device(s) or not. </span></p>
+</li>
+<li>
+<p lang="en-GB" align="justify"><span style="font-size: small;">The User, at no point of time, shall have any right to question or object to the Upgrades made. Although, the User shall have to the right to opt out of the Upgrade by not updating the existing Application in the System(s)/Device(s) of the User, subject to the Clause J.2 of this License. </span></p>
+</li>
+<li>
+<p lang="en-GB" align="justify"><span style="font-size: small;">The User may apply to the Application each Update released by the Licenser and made available by the Licenser to the User from time to time.</span></p>
+</li>
+<li>
+<p lang="en-GB" align="justify"><span style="font-size: small;">The Licenser will have no obligation to provide support for the Application or software, or repair or replace the Application or Software in relation to any version of the Application or software that does not incorporate the most recent Upgrade to the Application or Software.</span></p>
+</li>
+<li>
+<p lang="en-GB" align="justify"><span style="color: #000000;"><span style="font-size: small;"><span lang="en-IN">Notwithstanding any other provision of this License, User is not permitted to Use Upgrades unless User, at the time of acquiring such Upgrade:</span></span></span></p>
+</li>
+</ol>
+<ol start="9" type="a">
+<li>
+<p lang="en-GB" align="justify"><span style="color: #000000;"><span style="font-size: small;"><span lang="en-IN">already hold a valid license to the original version of the Application, are in compliance with such license, and have paid the applicable fee for the Upgrade; and</span></span></span></p>
+</li>
+</ol>
+<ol start="2" type="i">
+<li>
+<p lang="en-GB" align="justify"><span style="color: #000000;"><span style="font-size: small;"><span lang="en-IN">unless otherwise provided in the Documentation, make and use additional copies solely for backup purposes, where backup is limited to archiving for restoration purposes.</span></span></span></p>
+</li>
+</ol>
+<ol start="9" type="A">
+<li>
+<p lang="en-GB" align="justify"><span style="font-size: small;"><strong>training</strong></span></p>
+</li>
+</ol>
+<ol>
+<li>
+<p lang="en-GB" align="justify"><span style="font-size: small;">The Corporate User hereby allows the Licenser to provide adequate training to its personnel or employees for the effective and efficient use of the Application.</span></p>
+</li>
+<li>
+<p lang="en-GB" align="justify"><span style="font-size: small;">Any additional cost, to be incurred in providing such training to the personnel or employees of the User shall be borne by the User. </span></p>
+</li>
+<li>
+<p lang="en-GB" align="justify"><span style="font-size: small;">The User further allows the Licenser to appoint its own employees at the premises of the Corporate User for the smooth running of the Application for the period necessary. </span></p>
+</li>
+</ol>
+<ol start="9" type="A">
+<li>
+<p lang="en-GB" align="justify"><span style="font-size: small;"><strong>warranties</strong></span></p>
+</li>
+</ol>
+<ol>
+<li>
+<p lang="en-GB" align="justify"><span style="font-size: small;">The User warrants to the Licenser that it has the legal right and authority to enter into and perform its obligations under this License.</span></p>
+</li>
+<li>
+<p lang="en-GB" align="justify"><span style="font-size: small;">The Licenser warrants to the User:</span></p>
+</li>
+</ol>
+<ol start="9" type="a">
+<li>
+<p lang="en-GB" align="justify"><span style="font-size: small;">that it has the legal right and authority to enter into and perform its obligations under this License;</span></p>
+</li>
+</ol>
+<ol start="2" type="i">
+<li>
+<p lang="en-GB" align="justify"><span style="font-size: small;">that the use of the Application by the User in accordance with the terms of this License will not infringe the Intellectual Property Rights of any third party;</span></p>
+</li>
+<li>
+<p lang="en-GB" align="justify"><span style="font-size: small;">that the Application will operate, and will continue to operate for a perpetual period following the installation in accordance with the License and if the Application does not so operate, the Licenser will, for no additional charge, either: </span></p>
+<ol type="a">
+<li>
+<p lang="en-GB" align="justify"><span style="font-size: small;">carry out any work necessary in order to ensure that the Application operates in accordance with the License during this period; or </span></p>
+</li>
+<li>
+<p lang="en-GB" align="justify"><span style="font-size: small;">provide the User or arrange for the provision to the User of alternative software performing substantially the same function as the Application; and</span></p>
+</li>
+<li>
+<p lang="en-GB" align="justify"><span style="font-size: small;">that the Licenser has tested the Application for computer virus and other malicious third party software infections in accordance with standard industry practice from time to time.</span></p>
+</li>
+</ol>
+</li>
+<li>
+<p lang="en-GB" align="justify"><span style="font-size: small;">The User acknowledges that:</span></p>
+<ol type="a">
+<li>
+<p lang="en-GB" align="justify"><span style="font-size: small;">the Application may not be error-free,</span></p>
+</li>
+<li>
+<p lang="en-GB" align="justify"><span style="font-size: small;">the Application has not been developed to meet the specific requirements of the User, and accordingly the User will be responsible for ensuring that the Application is suitable to meet the User's requirements.</span></p>
+</li>
+</ol>
+</li>
+<li>
+<p lang="en-GB" align="justify"><span style="font-size: small;">The warranty in Clause L.2.iii is conditional upon the User promptly providing to the Licenser all such information and assistance, and access to its premises and systems, as the Licenser may reasonably require.</span></p>
+</li>
+</ol>
+<ol start="3">
+<li>
+<p lang="en-GB" align="justify"><span style="font-size: small;">The Licenser shall be responsible, solely, for any malfunction or deficiency of Service occurring out of the malfunction of the Application or its Source Code. However, the User, either individual or corporate, shall be liable for the deficiency of Service occurring due to any error, mistake, negligence or wrong doing on part of them and the Licenser shall not be responsible in any manner in such deficiency. </span></p>
+</li>
+<li>
+<p lang="en-GB" align="justify"><span style="font-size: small;">Nothing in the License will:</span></p>
+</li>
+</ol>
+<ol start="9" type="a">
+<li>
+<p lang="en-GB" align="justify"><span style="font-size: small;">limit or exclude the liability of a party for death or personal injury resulting from negligence;</span></p>
+</li>
+</ol>
+<ol start="2" type="i">
+<li>
+<p lang="en-GB" align="justify"><span style="font-size: small;">limit or exclude the liability of a party for fraud or fraudulent misrepresentation by that party; </span></p>
+</li>
+<li>
+<p lang="en-GB" align="justify"><span style="font-size: small;">limit any liability of a party in any way that is not permitted under applicable law; or</span></p>
+</li>
+<li>
+<p lang="en-GB" align="justify"><span style="font-size: small;">exclude any liability of a party that may not be excluded under applicable law.</span></p>
+</li>
+</ol>
+<ol start="5">
+<li>
+<p lang="en-GB" align="justify"><span style="font-size: small;">Licenser shall not be liable for breach-of-license damages that are remote or speculative, or that the Licenser could not reasonably have foreseen on entry into this agreement.</span></p>
+</li>
+</ol>
+<p lang="en-GB" align="justify"><br /> </p>
+<ol start="9" type="A">
+<li>
+<p lang="en-GB" align="justify"><span style="font-size: small;"><strong>intellectual property rights</strong></span></p>
+</li>
+</ol>
+<ol>
+<li>
+<p lang="en-GB" align="justify"><span style="font-size: small;">User hereby acknowledges that the Copyright in the Application is the property of Licenser.</span></p>
+</li>
+<li>
+<p lang="en-GB" align="justify"><span style="font-size: small;">Licenser has exclusive ownership of all enhancements, alterations, modifications, fixes, patches, workarounds and other additions to the Application or its source code. </span></p>
+</li>
+<li>
+<p lang="en-GB" align="justify"><span style="font-size: small;">User hereby acknowledges and agrees that the brand, name and all Intellectual Property in and to the Application vests in the Licenser and that nothing in this License shall operate to transfer, or is intended to operate or transfer, any right, title or interest in or to the Application except that the User may use the Application in accordance with terms and conditions given in this license.</span></p>
+</li>
+<li>
+<p lang="en-GB" align="justify"><span style="font-size: small;">User shall have the copyright over any content, information, image, video or audio sequences or any graphics shared by the User through the Application. However, the User grants liberty to the Licenser to use such content, information, image or video for providing better service through the Application or otherwise. Provided further, on termination of the License, the Licenser shall cease to use such content, information, image, video or audio sequences or any graphics except the analysis generated by the Licenser by using such content, information, image and video. </span></p>
+</li>
+<li>
+<p lang="en-GB" align="justify"><span style="font-size: small;">The User may print off one copy, and may download extracts, of any page(s) from the Application for its personal reference and may draw the attention of others within its organisation to material posted on the Application. </span></p>
+</li>
+<li>
+<p lang="en-GB" align="justify"><span style="font-size: small;">The User must not modify the paper or digital copies of any materials it has printed off or downloaded in any way, and must not use any illustrations, images, video or audio sequences or any graphics separately from any accompanying text.</span></p>
+</li>
+<li>
+<p lang="en-GB" align="justify"><span style="font-size: small;">Licenser&rsquo;s status (and that of any identified contributors) as the authors of material on the Application must always be acknowledged.</span></p>
+</li>
+<li>
+<p lang="en-GB" align="justify"><span style="font-size: small;">The User must not use any part of the materials on the Application for commercial purposes without obtaining a licence to do so from Licenser. </span></p>
+</li>
+</ol>
+<ol start="9" type="A">
+<li>
+<p lang="en-GB" align="justify"><span style="font-size: small;"><strong>data protection</strong></span></p>
+</li>
+</ol>
+<ol>
+<li>
+<p lang="en-GB" align="justify"><span style="font-size: small;">t</span><span style="font-size: small;">he User agrees to provide access to the Licenser to the following functions/services available on the system or device through which the User logins the Application:</span></p>
+</li>
+</ol>
+<ol type="i">
+<li>
+<p lang="en-GB" align="justify"><span style="font-size: small;">Access to Short Message Service (SMS)</span></p>
+</li>
+<li>
+<p lang="en-GB" align="justify"><span style="font-size: small;">Access to Camera</span></p>
+</li>
+<li>
+<p lang="en-GB" align="justify"><span style="font-size: small;">Access to Location</span></p>
+</li>
+<li>
+<p lang="en-GB" align="justify"><span style="font-size: small;">Access to Files</span></p>
+</li>
+<li>
+<p lang="en-GB" align="justify"><span style="font-size: small;">Access o Contacts</span></p>
+</li>
+</ol>
+<ol start="2">
+<li>
+<p lang="en-GB" align="justify"><span style="font-size: small;">The User further grants permission to the Licenser to use the data stored in the system or device through which the User logins the Application or the data collected or stored by the system or device, through which the User logins the Application, by the help of the abovementioned functions/services. </span></p>
+</li>
+<li>
+<p lang="en-GB" align="justify"><span style="font-size: small;">That in case the User has a Corporate Login, the User further grants permission to the Licenser to access the monthly profits, details of employees, details of orders or business transactions, menu, taxation details or any other information required.</span></p>
+</li>
+<li>
+<p lang="en-GB" align="justify"><span style="font-size: small;">The Licenser agrees to use the data received in the above mentioned clauses for providing:</span></p>
+</li>
+</ol>
+<ol start="9" type="a">
+<li>
+<p lang="en-GB" align="justify"><span style="font-size: small;">Personalised/customised experience on the Application to the User.</span></p>
+</li>
+</ol>
+<ol start="2" type="i">
+<li>
+<p lang="en-GB" align="justify"><span style="font-size: small;">Modification, changes, alterations or development new features for the better, effective and efficient use of the Application.</span></p>
+</li>
+</ol>
+<ol start="5">
+<li>
+<p lang="en-GB" align="justify"><span style="font-size: small;">The Licenser further specifies and the User agrees that the date collected from the User, either personal or sensitive or confidential may be utilised for analysis and development of market research. </span></p>
+</li>
+<li>
+<p lang="en-GB" align="justify"><span style="font-size: small;">The Licenser further specifies and the User agrees that the market research developed after the analysis of the data collected can be commercially used by the Licenser, including it to be sold to third parties. Provided, no personal information, including sensitive and confidential shall be transferred to a third party other than in form of anonymised data. </span></p>
+</li>
+<li>
+<p lang="en-GB" align="justify"><span style="font-size: small;">The Licenser agrees to keep the data collected in servers to be located in India.</span></p>
+</li>
+<li>
+<p lang="en-GB" align="justify"><span style="font-size: small;">The User shall have the right to mark any data, either personal or sensitive, as anonymous and such data shall only be disclosed on the Application to a third party after being properly anonymised.</span></p>
+</li>
+<li>
+<p lang="en-GB" align="justify"><span style="font-size: small;">The User shall have the right to delete and forget the Data provided to the Licenser. In the event of exercise of this right, the Licenser shall delete all such Data of the User within seven (7) working days. Provided, any analysis created out of such Data shall not be deleted. </span></p>
+</li>
+<li>
+<p lang="en-GB" align="justify"><span style="font-size: small;">The Licenser shall periodically review the Data collected and shall endeavour to take all necessary steps to remove the Data no more required.</span></p>
+</li>
+</ol>
+<ol start="9" type="A">
+<li>
+<p lang="en-GB" align="justify"><span style="font-size: small;"><strong>Indemnities</strong></span></p>
+</li>
+</ol>
+<ol>
+<li>
+<p align="justify"><span style="font-family: 'Times New Roman', serif;"><span style="color: #000000;"><span style="font-family: Garamond, serif;"><span style="font-size: small;">User&nbsp;(as an indemnifying party)&nbsp;shall indemnify&nbsp;Licenser (as an indemnified party)&nbsp;against all losses and expenses arising out of any proceeding</span></span></span></span></p>
+</li>
+</ol>
+<ol start="9" type="a">
+<li>
+<p align="justify"><span style="font-family: 'Times New Roman', serif;"><span style="color: #000000;"><span style="font-family: Garamond, serif;"><span style="font-size: small;">brought by either a third party; and</span></span></span></span></p>
+</li>
+</ol>
+<ol start="2" type="i">
+<li>
+<p align="justify"><span style="font-family: 'Times New Roman', serif;"><span style="color: #000000;"><span style="font-family: Garamond, serif;"><span style="font-size: small;">arising out of User's breach of its obligations, representations, warranties, or covenants under&nbsp;this License, or</span></span></span></span></p>
+</li>
+<li>
+<p align="justify"><span style="font-family: 'Times New Roman', serif;"><span style="color: #000000;"><span style="font-family: Garamond, serif;"><span style="font-size: small;">arising out of User's unauthorized exercise of the rights to the Application in breach of this License.</span></span></span></span></p>
+</li>
+</ol>
+<ol start="2">
+<li>
+<p align="justify"><span style="font-family: 'Times New Roman', serif;"><span style="color: #000000;"><span style="font-family: Garamond, serif;"><span style="font-size: small;">Licenser shall indemnify the Corporate User for all the damages incurred out of the malfunction of the Application or Source Code. However, it is agreed by the Parties that the Licenser shall only be liable to the extent the actual damage or loss of income has occurred and the same shall be verified from the invoices or bills generated by the Corporate User. </span></span></span></span></p>
+</li>
+<li>
+<p align="justify"><span style="font-family: 'Times New Roman', serif;"><span style="color: #000000;"><span style="font-family: Garamond, serif;"><span style="font-size: small;">Licenser shall provide damages to the Individual User for all the damages incurred out of the malfunction of the Application or Source Code. However, it is agreed by the Parties that the Licenser shall only be liable to the extent the actual damage occurred and the same shall be verified from the invoices or bills generated upon the individual User.</span></span></span></span></p>
+</li>
+<li>
+<p align="justify"><span style="font-family: 'Times New Roman', serif;"><span style="color: #000000;"><span style="font-family: Garamond, serif;"><span style="font-size: small;">Before bringing a claim for indemnification, an indemnified party shall</span></span></span></span></p>
+</li>
+</ol>
+<ol start="9" type="a">
+<li>
+<p align="justify"><span style="font-family: 'Times New Roman', serif;"><span style="color: #000000;"><span style="font-family: Garamond, serif;"><span style="font-size: small;">promptly notify the indemnifying party of the indemnifiable proceeding, and</span></span></span></span></p>
+</li>
+</ol>
+<ol start="2" type="i">
+<li>
+<p align="justify"><span style="font-family: 'Times New Roman', serif;"><span style="color: #000000;"><span style="font-family: Garamond, serif;"><span style="font-size: small;">deliver to the indemnifying party all legal pleadings and documents necessary to defend the indemnifiable proceeding.</span></span></span></span></p>
+</li>
+</ol>
+<ol start="5">
+<li>
+<p align="justify"><span style="font-family: 'Times New Roman', serif;"><span style="color: #000000;"><span style="font-family: Garamond, serif;"><span style="font-size: small;">If the indemnified party fails to notify&nbsp;indemnifying party&nbsp;of the indemnifiable proceeding,&nbsp;indemnifying party&nbsp;will be relieved of its indemnification obligations to the extent it was prejudiced by&nbsp;indemnified party's failure.</span></span></span></span></p>
+</li>
+<li>
+<p align="justify"><span style="font-family: 'Times New Roman', serif;"><span style="color: #000000;"><span style="font-family: Garamond, serif;"><span style="font-size: small;">The parties' right to indemnification is the exclusive remedy available in connection with the indemnifiable proceedings.</span></span></span></span></p>
+</li>
+</ol>
+<ol start="9" type="A">
+<li>
+<p lang="en-GB" align="justify"><span style="color: #000000;"><span style="font-size: small;"><span lang="en-IN"><strong>SUSPENSION</strong></span></span></span></p>
+</li>
+</ol>
+<p lang="en-GB" align="justify"><span style="color: #000000;"><span style="font-size: small;"><span lang="en-IN">Licenser shall have the right to suspend partially or permanently the services provided under the Application if so directed by Google or Apple or if it is required to be done under the applicable laws.</span></span></span></p>
+<p align="justify"><br /> </p>
+<p align="justify"><br /> </p>
+<ol start="9" type="A">
+<li>
+<p lang="en-GB" align="justify"><span style="font-size: small;"><strong>force majeure</strong></span></p>
+</li>
+</ol>
+<p lang="en-GB" align="justify"><span style="font-size: small;">Neither party will be liable neither for performance delays nor for non-performance due to causes beyond its reasonable control, including force majeure, except for payment obligations.</span></p>
+<ol start="9" type="A">
+<li>
+<p lang="en-GB" align="justify"><span style="font-size: small;"><strong>Severability</strong></span></p>
+</li>
+</ol>
+<p lang="en-GB" align="justify"><span style="font-size: small;">If any part of this License is declared unenforceable or non-obligatory or invalid, the remainder will continue to be valid and enforceable.</span></p>
+<ol start="9" type="A">
+<li>
+<p lang="en-GB" align="justify"><span style="font-size: small;"><strong>confidentiality</strong></span></p>
+</li>
+</ol>
+<ol>
+<li>
+<p lang="en-GB" align="justify"><span style="color: #000000;"><span style="font-size: small;">For purposes of this License, &ldquo;</span></span><span style="color: #000000;"><span style="font-size: small;"><em>Confidential Information</em></span></span><span style="color: #000000;"><span style="font-size: small;">&rdquo; includes:</span></span></p>
+</li>
+</ol>
+<ol start="9" type="a">
+<li>
+<p lang="en-GB" align="justify"><span style="color: #000000;"><span style="font-size: small;">any trade secret, know-how, invention, concept, software program, source code, object code, application, documentation, schematic, procedure, contract, information, knowledge, data, database, process, technique, design, drawing, program, formula or test data, work in progress, engineering, manufacturing, marketing, financial, sales, supplier, technical, scientific, customer, employee, investor, or business information, whether in oral, written, graphic, or electronic form, provided or disclosed by the Licenser; and</span></span></p>
+</li>
+</ol>
+<ol start="2" type="i">
+<li>
+<p align="justify"><span style="font-family: 'Times New Roman', serif;"><span style="color: #000000;"><span style="font-family: Garamond, serif;"><span style="font-size: small;">any non-public business information, including personnel data, correspondence with any Governmental Authority, historical customer information and data, historical cost information such as budgets, operating expenses, and capital costs, and projected capital additions, operating cost information, and other business, and financial reports and forecasts;</span></span></span></span></p>
+</li>
+<li>
+<p align="justify"><span style="font-family: 'Times New Roman', serif;"><span style="color: #000000;"><span style="font-family: Garamond, serif;"><span style="font-size: small;">any document, diagram, photograph, drawing, computer program, information or other communication that is either conspicuously marked &ldquo;anonymous&rdquo; by the User.</span></span></span></span></p>
+</li>
+</ol>
+<ol start="2">
+<li>
+<p align="justify"><span style="font-family: 'Times New Roman', serif;"><span style="color: #000000;"><span style="font-family: Garamond, serif;"><span style="font-size: small;">The receiving party shall hold in confidence all Confidential Information disclosed by the disclosing party to the receiving party.</span></span></span></span></p>
+</li>
+<li>
+<p align="justify"><span style="font-family: 'Times New Roman', serif;"><span style="color: #000000;"><span style="font-family: Garamond, serif;"><span style="font-size: small;">A receiving party may only use the Confidential Information according to the terms of this License.</span></span></span></span></p>
+</li>
+<li>
+<p align="justify"><span style="font-family: 'Times New Roman', serif;"><span style="color: #000000;"><span style="font-family: Garamond, serif;"><span style="font-size: small;">A receiving party may not disclose Confidential Information, to any third party, except to the extent allowed in this license and in the following manners:</span></span></span></span></p>
+</li>
+</ol>
+<ol start="9" type="a">
+<li>
+<p align="justify"><span style="font-family: 'Times New Roman', serif;"><span style="color: #000000;"><span style="font-family: Garamond, serif;"><span style="font-size: small;">A receiving party may disclose Confidential Information to its Representatives</span></span></span></span></p>
+<ol type="a">
+<li>
+<p align="justify"><span style="font-family: 'Times New Roman', serif;"><span style="color: #000000;"><span style="font-family: Garamond, serif;"><span style="font-size: small;">if and to the extent that the disclosing party consents in writing to such disclosure, or</span></span></span></span></p>
+</li>
+<li>
+<p align="justify"><span style="font-family: 'Times New Roman', serif;"><span style="color: #000000;"><span style="font-family: Garamond, serif;"><span style="font-size: small;">to the receiving party's officers, directors, employees, Affiliates, or Representatives </span></span></span></span></p>
+</li>
+</ol>
+</li>
+</ol>
+<ol start="2" type="i">
+<li>
+<p align="justify"><span style="font-family: 'Times New Roman', serif;"><span style="color: #000000;"><span style="font-family: Garamond, serif;"><span style="font-size: small;">who need to know the Confidential Information in connection with the Purpose,</span></span></span></span></p>
+</li>
+<li>
+<p align="justify"><span style="font-family: 'Times New Roman', serif;"><span style="color: #000000;"><span style="font-family: Garamond, serif;"><span style="font-size: small;">have</span></span></span><span style="color: #000000;"><span style="font-family: Garamond, serif;"><span style="font-size: small;">&nbsp;been informed&nbsp;</span></span></span><span style="color: #000000;"><span style="font-family: Garamond, serif;"><span style="font-size: small;">of</span></span></span><span style="color: #000000;"><span style="font-family: Garamond, serif;"><span style="font-size: small;">&nbsp;</span></span></span><span style="color: #000000;"><span style="font-family: Garamond, serif;"><span style="font-size: small;">the confidentiality</span></span></span><span style="color: #000000;"><span style="font-family: Garamond, serif;"><span style="font-size: small;">&nbsp;obligations&nbsp;</span></span></span><span style="color: #000000;"><span style="font-family: Garamond, serif;"><span style="font-size: small;">of</span></span></span><span style="color: #000000;"><span style="font-family: Garamond, serif;"><span style="font-size: small;">&nbsp;this agreement,&nbsp;</span></span></span><span style="color: #000000;"><span style="font-family: Garamond, serif;"><span style="font-size: small;">and</span></span></span></span></p>
+</li>
+<li>
+<p align="justify"><span style="font-family: 'Times New Roman', serif;"><span style="color: #000000;"><span style="font-family: Garamond, serif;"><span style="font-size: small;">agree comply with the confidentiality obligations of this agreement.</span></span></span></span></p>
+</li>
+</ol>
+<ol start="5">
+<li>
+<p align="justify"><span style="font-family: 'Times New Roman', serif;"><span style="color: #000000;"><span style="font-family: Garamond, serif;"><span style="font-size: small;">The receiving party may disclose Confidential Information if it is required to do so by Law but only if the receiving party gives the disclosing party Notice to allow it a reasonable opportunity to either seek a protective order or other appropriate remedy or waive the recipient's compliance with the confidentiality obligations, reasonably cooperates with the disclosing party in its reasonable efforts to obtain a protective order or other appropriate remedy, discloses only that portion of the Confidential Information that, having consulted with its counsel, it is legally required to disclose, and uses reasonable efforts to obtain reliable written assurance from the third party that the Confidential Information will be kept confidential.</span></span></span></span></p>
+</li>
+<li>
+<p align="justify"><span style="font-family: 'Times New Roman', serif;"><span style="color: #000000;"><span style="font-family: Garamond, serif;"><span style="font-size: small;">In protecting the Confidential Information, the receiving party shall exercise at least the same degree of care as it uses with its own Confidential Information, but in no event less than reasonable care.</span></span></span></span></p>
+</li>
+<li>
+<p align="justify"><span style="font-family: 'Times New Roman', serif;"><span style="color: #000000;"><span style="font-family: Garamond, serif;"><span style="font-size: small;">The disclosing party will have the burden of proof relating to all exceptions to the definition of Confidential Information.</span></span></span></span></p>
+</li>
+<li>
+<p align="justify"><span style="font-family: 'Times New Roman', serif;"><span style="color: #000000;"><span style="font-family: Garamond, serif;"><span style="font-size: small;">The User will not copy, decompile, modify, reverse engineer, or create derivative works out of any Confidential Information without the Licenser&rsquo;s written consent.</span></span></span></span></p>
+</li>
+<li>
+<p align="justify"><span style="font-family: 'Times New Roman', serif;"><span style="color: #000000;"><span style="font-family: Garamond, serif;"><span style="font-size: small;">The Licenser may analyse, copy, decompile, modify, reverse engineer, or create derivative works out of any Confidential Information given by the User for providing a better service through the Application or otherwise.</span></span></span></span></p>
+</li>
+</ol>
+<ol start="9" type="A">
+<li>
+<p lang="en-GB" align="justify"><span style="font-size: small;"><strong>governing law and jurisdiction</strong></span></p>
+</li>
+</ol>
+<ol>
+<li>
+<p lang="en-GB" align="justify"><span style="color: #000000;"><span style="font-size: small;"><span lang="en-IN">This License will be governed by and construed in accordance with the substantive laws in force in the Republic of India, even if a license to the Application is purchased when the User is not in India or within its territorial boundaries or the Application is downloaded or installed in the System(s) or Device(s), irrespective of the fact that the User or the System(s) or Device(s) are not in India or within its territorial boundaries.</span></span></span></p>
+</li>
+<li>
+<p lang="en-GB" align="justify"><span style="color: #000000;"><span style="font-size: small;"><span lang="en-IN">Any dispute or controversy arising out of this agreement will be settled exclusively by arbitration at Varanasi, Uttar Pradesh (India) by a three member Arbitration Board and in accordance with the prevalent law at that time.</span></span></span></p>
+</li>
+<li>
+<p lang="en-GB" align="justify"><span style="color: #000000;"><span style="font-size: small;"><span lang="en-IN">Arbitration Board shall consist three members, one appointed by Licenser, one appointed by User, and the third will be appointed by the first two arbitrators.</span></span></span></p>
+</li>
+<li>
+<p lang="en-GB" align="justify"><span style="color: #000000;"><span style="font-size: small;"><span lang="en-IN">The arbitration will be conducted promptly and expeditiously and shall needs to be concluded within 180 days from the date of appointment of arbitrators. </span></span></span></p>
+</li>
+<li>
+<p lang="en-GB" align="justify"><span style="color: #000000;"><span style="font-size: small;"><span lang="en-IN">The expenses of the arbitrators shall be bear by the Party losing the Arbitration. However, till the final outcome of the Arbitration, the Claimant shall bear the expenses.</span></span></span></p>
+</li>
+<li>
+<p lang="en-GB" align="justify"><span style="color: #000000;"><span style="font-size: small;"><span lang="en-IN">All the disputes arising out of this License shall be subject to the jurisdiction of the Courts in Varanasi, India.</span></span></span></p>
+</li>
+<li>
+<p lang="en-GB" align="justify"><span style="color: #000000;"><span style="font-size: small;"><span lang="en-IN">This License will not be governed by the conflict of law rules of any jurisdiction or the United Nations Convention on Contracts for the International Sale of Goods, the application of which is expressly excluded.</span></span></span></p>
+</li>
+</ol>
+<ol start="9" type="A">
+<li>
+<p lang="en-GB" align="justify"><span style="font-size: small;"><strong>third party rights</strong></span></p>
+</li>
+</ol>
+<ol start="2" type="i">
+<ol type="a">
+<ol type="i">
+<ol>
+<li>
+<p lang="en-GB" align="justify"><span style="color: #000000;"><span style="font-size: small;"><span lang="en-IN">The User and Licenser acknowledge and agree that Google or Apple and its subsidiaries, are third party beneficiaries of this License, and that, upon the User&rsquo;s acceptance of the terms and conditions herein, Google or Apple will have the right to enforce this License against him/her as a third party beneficiary hereof.</span></span></span></p>
+</li>
+<li>
+<p lang="en-GB" align="justify"><span style="color: #000000;"><span style="font-size: small;"><span lang="en-IN">The User acknowledges that Licenser shall have the right to terminate or suspend the services or use of the Application by the User due to any change in terms and conditions entered between the Licenser and the Google or Apple or if required to be done by the Google or Apple or under the laws of India.</span></span></span></p>
+</li>
+</ol>
+</ol>
+</ol>
+</ol>

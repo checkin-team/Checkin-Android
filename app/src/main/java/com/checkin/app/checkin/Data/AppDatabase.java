@@ -1,36 +1,28 @@
 package com.checkin.app.checkin.Data;
 
-import android.content.Context;
-
-import com.checkin.app.checkin.MyObjectBox;
-import com.checkin.app.checkin.Notifications.NotificationModel;
-
 import javax.inject.Singleton;
-
-import io.objectbox.Box;
-import io.objectbox.BoxStore;
 
 @Singleton
 public class AppDatabase {
-    private static BoxStore mBoxStore;
+//    private static BoxStore mBoxStore;
+//
+//    private static BoxStore getBoxStore(final Context context) {
+//        if (mBoxStore == null) {
+//            synchronized (AppDatabase.class) {
+//                if (mBoxStore == null) {
+//                    mBoxStore = MyObjectBox.builder().androidContext(context).buildDefault();
+//                }
+//            }
+//        }
+//        return mBoxStore;
+//    }
+//
+//    private AppDatabase() {
+//    }
 
-    private static BoxStore getBoxStore(final Context context) {
-        if (mBoxStore == null) {
-            synchronized (AppDatabase.class) {
-                if (mBoxStore == null) {
-                    mBoxStore = MyObjectBox.builder().androidContext(context).buildDefault();
-                }
-            }
-        }
-        return mBoxStore;
-    }
-
-    private AppDatabase() {
-    }
-
-    public static Box<NotificationModel> getNotifModel(final Context context) {
-        return getBoxStore(context).boxFor(NotificationModel.class);
-    }
+//    public static Box<NotificationModel> getNotifModel(final Context context) {
+//        return getBoxStore(context).boxFor(NotificationModel.class);
+//    }
 
     /*public static Box<UserModel> getUserModel(final Context context) {
         return getBoxStore(context).boxFor(UserModel.class);

@@ -3,7 +3,6 @@ package com.checkin.app.checkin.Utility;
 import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
-import android.view.ViewGroup;
 
 public abstract class DragTouchListener implements View.OnTouchListener {
     private static final String TAG= DragTouchListener.class.getSimpleName();

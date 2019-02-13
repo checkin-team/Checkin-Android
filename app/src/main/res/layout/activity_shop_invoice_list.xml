@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/spacing_normal"
+        android:orientation="horizontal">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1">
+
+            <TextView
+                style="@style/PinkishGreySmallTextStyle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="@dimen/spacing_extra_small"
+                android:text="From"
+                android:textSize="@dimen/font_heading"
+                app:layout_constraintBottom_toTopOf="@id/tv_shop_invoice_filter_from"
+                app:layout_constraintStart_toStartOf="@id/tv_shop_invoice_filter_from" />
+
+            <TextView
+                android:id="@+id/tv_shop_invoice_filter_from"
+                style="@style/GreyTextStyle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@drawable/background_textbox"
+                android:drawableEnd="@drawable/ic_calendar_grey"
+                android:drawablePadding="@dimen/spacing_extra_small"
+                android:padding="@dimen/spacing_small"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                tools:text="Dec 21, 2018" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1">
+
+            <TextView
+                style="@style/PinkishGreySmallTextStyle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="@dimen/spacing_extra_small"
+                android:text="To"
+                android:textSize="@dimen/font_heading"
+                app:layout_constraintBottom_toTopOf="@id/tv_shop_invoice_filter_to"
+                app:layout_constraintStart_toStartOf="@id/tv_shop_invoice_filter_to" />
+
+            <TextView
+                android:id="@+id/tv_shop_invoice_filter_to"
+                style="@style/GreyTextStyle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@drawable/background_textbox"
+                android:drawableEnd="@drawable/ic_calendar_grey"
+                android:drawablePadding="@dimen/spacing_extra_small"
+                android:padding="@dimen/spacing_small"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                tools:text="Dec 21, 2018" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </LinearLayout>
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/rv_shop_invoice_sessions"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginTop="@dimen/spacing_small" />
+
+</LinearLayout>

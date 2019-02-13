@@ -1,9 +1,11 @@
 package com.checkin.app.checkin.Misc;
 
 import android.annotation.SuppressLint;
-import android.support.annotation.IdRes;
-import android.support.v4.app.FragmentTransaction;
-import android.support.v7.app.AppCompatActivity;
+import androidx.annotation.IdRes;
+import androidx.annotation.Nullable;
+import androidx.fragment.app.FragmentTransaction;
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
+import androidx.appcompat.app.AppCompatActivity;
 import android.util.Log;
 
 import com.checkin.app.checkin.Data.Resource.Status;
@@ -13,7 +15,12 @@ public class BaseActivity extends AppCompatActivity {
     private static final String TAG = BaseActivity.class.getSimpleName();
     private DataStatusFragment mFragment;
     private boolean isFragmentShown = false;
-    @IdRes private int vGroupId;
+
+    @IdRes
+    private int vGroupId;
+
+    @Nullable
+    private SwipeRefreshLayout swipeRefreshLayout;
 
     public void init(@IdRes int groupId, boolean isNetworkRequired) {
         if (mFragment != null) {
@@ -52,5 +59,22 @@ public class BaseActivity extends AppCompatActivity {
         ft.remove(mFragment);
         ft.commit();
         isFragmentShown = false;
+    }
+
+    protected void initRefreshScreen(@IdRes int viewId) {
+        swipeRefreshLayout = findViewById(viewId);
+        swipeRefreshLayout.setOnRefreshListener(this::updateScreen);
+    }
+
+    protected void updateScreen() {}
+
+    protected void startRefreshing() {
+        if (swipeRefreshLayout != null)
+            swipeRefreshLayout.setRefreshing(true);
+    }
+
+    protected void stopRefreshing() {
+        if (swipeRefreshLayout != null)
+            swipeRefreshLayout.setRefreshing(false);
     }
 }

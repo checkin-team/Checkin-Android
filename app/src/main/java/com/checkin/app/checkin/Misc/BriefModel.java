@@ -2,7 +2,9 @@ package com.checkin.app.checkin.Misc;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 
-public class BriefModel {
+import java.io.Serializable;
+
+public class BriefModel implements Serializable {
     @JsonProperty("pk")
     private String pk;
 
@@ -20,6 +22,12 @@ public class BriefModel {
         this.displayPic = displayPic;
     }
 
+    public BriefModel(long pk, String displayName, String displayPic) {
+        this.pk = String.valueOf(pk);
+        this.displayName = displayName;
+        this.displayPic = displayPic;
+    }
+
     public String getPk() {
         return pk;
     }
@@ -30,6 +38,10 @@ public class BriefModel {
 
     public String getDisplayName() {
         return displayName;
+    }
+
+    public String formatRestaurantName() {
+        return "You are live at "+ displayName;
     }
 
     public void setDisplayName(String displayName) {

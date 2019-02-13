@@ -1,12 +1,6 @@
 package com.checkin.app.checkin.Search;
 
-import android.arch.lifecycle.ViewModelProviders;
 import android.os.Bundle;
-import android.support.annotation.LayoutRes;
-import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -18,16 +12,23 @@ import com.checkin.app.checkin.Utility.ItemClickSupport;
 
 import java.util.List;
 
+import androidx.annotation.LayoutRes;
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.lifecycle.ViewModelProviders;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.Unbinder;
 
-public abstract class BaseResultFragment extends BaseSearchFragment implements ItemClickSupport.OnItemClickListener, ItemClickSupport.OnItemLongClickListener {
+public abstract class BaseResultFragment<S extends SearchResultModel> extends BaseSearchFragment implements ItemClickSupport.OnItemClickListener, ItemClickSupport.OnItemLongClickListener {
     private Unbinder unbinder;
 
-    @BindView(R.id.rv_results) RecyclerView rvResults;
+    @BindView(R.id.rv_results)
+    RecyclerView rvResults;
 
-    protected SearchResultAdapter mAdapter;
+    protected SearchResultAdapter<S> mAdapter;
     protected SearchViewModel mViewModel;
     protected SearchResultInteraction mListener;
 
@@ -41,8 +42,8 @@ public abstract class BaseResultFragment extends BaseSearchFragment implements I
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
-        mAdapter = new SearchResultAdapter();
-        rvResults.setLayoutManager(new LinearLayoutManager(requireContext(), LinearLayoutManager.VERTICAL, false));
+        mAdapter = new SearchResultAdapter<>(mListener);
+        rvResults.setLayoutManager(new LinearLayoutManager(requireContext(), RecyclerView.VERTICAL, false));
         rvResults.setAdapter(mAdapter);
 
         ItemClickSupport.addTo(rvResults)
@@ -64,11 +65,11 @@ public abstract class BaseResultFragment extends BaseSearchFragment implements I
         mAdapter.setData(null);
     }
 
-    protected void updateResults(List<SearchResultModel> results) {
+    protected void updateResults(List<S> results) {
         mAdapter.setData(results);
     }
 
-    protected void onResultChanged(Resource<List<SearchResultModel>> listResource) {
+    protected void onResultChanged(Resource<List<S>> listResource) {
         if (listResource == null)
             return;
         if (listResource.status == Resource.Status.SUCCESS && listResource.data != null) {

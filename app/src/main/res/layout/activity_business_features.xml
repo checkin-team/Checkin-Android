@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout
+<androidx.constraintlayout.widget.ConstraintLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
@@ -18,7 +18,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <android.support.v4.view.ViewPager
+    <androidx.viewpager.widget.ViewPager
         android:id="@+id/pager"
         android:layout_width="match_parent"
         android:layout_height="0dp"
@@ -47,15 +47,16 @@
         app:piv_unselectedColor="@color/brownish_grey"
         app:piv_viewPager="@id/pager" />
 
+
     <View
         android:id="@+id/line_horizontal"
         android:layout_width="match_parent"
-        android:layout_height="1dp"
-        android:background="@color/warm_grey"
+        android:layout_height="@dimen/height_horizontal_line"
+        android:background="@drawable/ic_line"
         android:layout_marginBottom="@dimen/spacing_large"
-        app:layout_constraintBottom_toTopOf="@+id/btn_create_account"
+        app:layout_constraintBottom_toTopOf="@id/btn_create_account"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
+        app:layout_constraintStart_toStartOf="parent"/>
 
     <Button
         android:id="@+id/btn_create_account"
@@ -71,4 +72,4 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
-</android.support.constraint.ConstraintLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>

@@ -12,7 +12,7 @@
         android:layout_height="match_parent"
         android:background="@color/translucent_black" />
 
-    <android.support.constraint.ConstraintLayout
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/container_menu_info"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -23,7 +23,7 @@
             android:id="@+id/im_menu_info_image"
             android:layout_width="@dimen/size_image_large"
             android:layout_height="@dimen/size_image_large"
-            tools:src="@drawable/dummy_shop"
+            tools:src="@drawable/dummy_alex"
             android:scaleType="centerCrop"
             app:layout_constraintBottom_toTopOf="@id/tv_menu_info_description"
             app:layout_constraintEnd_toEndOf="parent"
@@ -43,6 +43,6 @@
             app:layout_constraintTop_toBottomOf="@id/im_menu_info_image"
             tools:text="It is a 5% abv pilsner beer with a global distribution to 140 markets. It was first brewed in 1904, and was created by Carl Jacobsen, son of Carlsberg's founder JC Jacobsen." />
 
-    </android.support.constraint.ConstraintLayout>
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
 </FrameLayout>

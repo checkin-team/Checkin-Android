@@ -4,9 +4,9 @@
 
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
-    <string name="messages_drawer_open">Open messages drawer</string>
-    <string name="messages_drawer_close">Close messages drawer</string>
-    <string name="appbar_scrolling_view_behavior" translatable="false">android.support.design.widget.AppBarLayout$ScrollingViewBehavior</string>
+    <string name="tables_drawer_open">Open tables drawer</string>
+    <string name="tables_drawer_close">Close tables drawer</string>
+    <string name="appbar_scrolling_view_behavior" translatable="false">com.google.android.material.appbar.AppBarLayout$ScrollingViewBehavior</string>
 
     <string name="action_settings">Settings</string>
 
@@ -120,11 +120,80 @@
     <string name="action_navigate">Navigate</string>
     <string name="title_member_assign_role">Assign Role</string>
 
-    <string name="currency_rupee">&#x20B9; %s</string>
+    <string name="symbol_currency_rupee">&#x20B9;</string>
+    <string name="format_currency_rupee">&#x20B9; %s</string>
 
     <!-- Active Session -->
     <string name="action_list_orders">View Orders</string>
     <string name="action_view_menu">Menu</string>
     <string name="session_presence_private">Private</string>
     <string name="session_presence_public">Public</string>
+    <string name="action_invoice">Invoice</string>
+    <string name="shop_invoice_title">Invoice</string>
+    <string name="action_checkins">Checkins</string>
+    <string name="action_discount">Discount</string>
+    <string name="action_tax_discount_description">Apply discount on the bill to retain customers. Discount applies to a subtotal of the bill.</string>
+    <string name="description_shop_finance_discount">**This discount percentage is applied to every bill, though you can change the discount amount for the individual bill during checkout.**</string>
+    <string name="waiter">Waiter</string>
+    <string name="call_waiter">Call\nWaiter</string>
+    <string name="table_cleaning">Table\nCleaning</string>
+    <string name="refill_glass">Refill\nGlass</string>
+    <string name="title_how_can_we_assist_you">How can we assist you?</string>
+    <string name="chat_with_us">Chat With Us</string>
+    <string name="title_your_request">Your Request</string>
+    <string name="napkin">Napkin</string>
+    <string name="salt">Salt</string>
+    <string name="sauce">Sauce</string>
+    <string name="delay">Delay</string>
+    <string name="quality">Quality</string>
+    <string name="title_bill_details">Bill Details</string>
+    <string name="total">Total</string>
+    <string name="title_request_checkout">Request Checkout</string>
+    <string name="change">Change</string>
+    <string name="title_tip_your_waiter">Tip your waiter</string>
+    <string name="msg_call_waiter">Please send the waiter to our table</string>
+    <string name="msg_clean_table">Please clean the table</string>
+    <string name="msg_refill_glass">Please refill glasses</string>
+    <string name="waiter_unassigned">Unassigned</string>
+    <string name="your_friends_can_join_by_scanning_qr_code">Your friends can join your session by scanning the QR Code</string>
+    <string name="recommendation_coming_soon">Recommendation of dishes coming soon</string>
+    <string name="pending_request">(Pending Request)</string>
+
+    <string name="status_order_open">Not Accepted</string>
+    <string name="status_order_cancelled">Order Cancelled</string>
+    <string name="status_cancelled">Cancelled</string>
+    <string name="status_order_in_progress">In Progress</string>
+    <string name="status_order_delivered">Delivered</string>
+    <string name="header_shop_discount_total">Total discount disbursed in last 30 days</string>
+    <string name="heading_shop_finance_discount">Apply Discount</string>
+    <string name="heading_shop_finance_tax">Tax Details</string>
+    <string name="description_shop_finance_tax_change">**Contact us for changes in tax.**</string>
+    <string name="title_table_status">Table Status</string>
+
+    <!--Manager Orders-->
+    <string name="label_orders">Orders</string>
+    <string name="label_new">New</string>
+    <string name="confirm">Confirm</string>
+    <string name="reject">Reject</string>
+    <string name="label_done">Done</string>
+    <string name="shop_manager_table_statics_title_description">Understand ongoing the food trend of your customer. And get an insight into sales for the day.</string>
+    <string name="title_rated">Rated</string>
+    <string name="title_follow">Follow</string>
+    <string name="title_uploaded_by">Uploaded by</string>
+
+    <!--Review-->
+    <string name="label_review_write">Write a review</string>
+    <string name="label_share_your_experience">Share your experience</string>
+    <string name="title_ratings">Ratings</string>
+    <string name="title_food_quality">Food Quality</string>
+    <string name="title_ambience">Ambience</string>
+    <string name="title_service_hospitality">Service/Hospitality</string>
+    <string name="add_image">Add Images</string>
+    <string name="title_done">Done</string>
+    <string name="title_request">Request</string>
+    <string name="title_approve">Approve</string>
+    <string name="coming_soon">Feature coming soon.</string>
+    <string name="menu_waiter_orders_taken">Orders Taken: %s</string>
+    <string name="menu_waiter_total_tip">Total Tip: %s</string>
+
 </resources>

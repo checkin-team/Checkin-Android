@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout
+<androidx.constraintlayout.widget.ConstraintLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
@@ -44,48 +44,44 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/im_female" />
 
-    <ImageView
+    <FrameLayout
         android:id="@+id/im_male"
-        android:layout_width="80dp"
-        android:layout_height="80dp"
+        android:layout_width="@dimen/size_large_button"
+        android:layout_height="@dimen/size_large_button"
         android:layout_marginStart="@dimen/spacing_normal"
         android:layout_marginTop="@dimen/spacing_normal"
         android:clickable="true"
         android:focusable="true"
         android:foreground="@drawable/foreground_button_selector"
-        android:src="@drawable/ic_male"
+        android:background="@drawable/ic_male"
         app:layout_constraintEnd_toStartOf="@+id/im_female"
-        app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/ed_lastname" />
 
-    <ImageView
+    <FrameLayout
         android:id="@+id/im_female"
-        android:layout_width="80dp"
-        android:layout_height="80dp"
+        android:layout_width="@dimen/size_large_button"
+        android:layout_height="@dimen/size_large_button"
         android:layout_marginEnd="@dimen/spacing_normal"
         android:layout_marginTop="@dimen/spacing_normal"
         android:clickable="true"
         android:focusable="true"
         android:foreground="@drawable/foreground_button_selector"
-        android:src="@drawable/ic_female"
+        android:background="@drawable/ic_female"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/im_male"
         app:layout_constraintTop_toBottomOf="@+id/ed_lastname" />
 
     <Button
         android:id="@+id/btn_enter"
-        android:layout_width="wrap_content"
+        android:layout_width="@dimen/button_width_wide"
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/spacing_normal"
-        android:background="@drawable/background_button_red_shadow"
+        style="@style/ButtonRedAlertAction"
         android:text="Enter"
         android:textAlignment="center"
-        android:textColor="@color/white"
-        android:textSize="@dimen/font_normal"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/ed_Username" />
 
-
-</android.support.constraint.ConstraintLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>

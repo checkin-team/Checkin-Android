@@ -9,7 +9,7 @@
     <de.hdodenhof.circleimageview.CircleImageView
         android:id="@+id/im_result_pic"
         style="@style/LogoImageStyle"
-        tools:src="@drawable/flier" />
+        tools:src="@drawable/dummy_alex" />
 
     <TextView
         android:id="@+id/tv_result_name"

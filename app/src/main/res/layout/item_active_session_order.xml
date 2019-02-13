@@ -1,0 +1,158 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:card_view="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginStart="@dimen/spacing_small"
+    android:layout_marginTop="@dimen/spacing_small"
+    android:layout_marginEnd="@dimen/spacing_small"
+    card_view:cardCornerRadius="@dimen/card_corner_radius"
+    card_view:cardElevation="@dimen/card_elevation">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <LinearLayout
+            android:id="@+id/food_details_container"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/background_bottom_inner_shadow"
+            android:orientation="vertical"
+            android:paddingBottom="@dimen/spacing_normal">
+
+            <TextView
+                android:id="@+id/tv_order_time"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="end"
+                android:fontFamily="@font/arial_rounded_mt_bold"
+                android:padding="@dimen/spacing_tiny"
+                android:layout_marginEnd="@dimen/spacing_tiny"
+                android:textColor="@color/pinkish_grey"
+                android:textSize="@dimen/font_tiny"
+                tools:text="3 minutes ago" />
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/spacing_normal"
+                android:layout_marginEnd="@dimen/spacing_normal">
+
+                <TextView
+                    android:id="@+id/tv_order_item_name"
+                    style="@style/GreyTextStyle"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentStart="true"
+                    android:layout_toStartOf="@id/tv_order_quantity"
+                    tools:text="Pizza" />
+
+                <TextView
+                    android:id="@+id/tv_order_quantity"
+                    style="@style/WhiteTextStyle"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerHorizontal="true"
+                    android:background="@drawable/bordered_card_brownish_grey"
+                    android:gravity="center"
+                    android:minWidth="@dimen/size_small_icon"
+                    android:paddingStart="@dimen/spacing_extra_small"
+                    android:paddingTop="@dimen/spacing_tiny"
+                    android:paddingEnd="@dimen/spacing_extra_small"
+                    android:paddingBottom="@dimen/spacing_tiny"
+                    android:textSize="@dimen/font_small"
+                    tools:text="QTY: 1" />
+
+                <TextView
+                    android:id="@+id/tv_order_cost"
+                    style="@style/GreyTextStyle"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentEnd="true"
+                    tools:text="$ 2222" />
+
+            </RelativeLayout>
+
+            <LinearLayout
+                android:id="@+id/container_order_customizations"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/spacing_normal"
+                android:layout_marginTop="@dimen/spacing_extra_small"
+                android:layout_marginEnd="@dimen/spacing_normal"
+                android:orientation="horizontal">
+
+                <LinearLayout
+                    android:id="@+id/container_order_customizations_left"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:gravity="start"
+                    android:orientation="vertical" />
+
+                <LinearLayout
+                    android:id="@+id/container_order_customizations_right"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:gravity="end"
+                    android:orientation="vertical" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/container_order_remarks"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/spacing_small"
+                android:orientation="vertical">
+
+                <include layout="@layout/incl_horizontal_line" />
+
+                <TextView
+                    style="@style/RedSmallTextStyle"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/spacing_normal"
+                    android:layout_marginTop="@dimen/spacing_small"
+                    android:text="@string/title_your_request" />
+
+                <TextView
+                    android:id="@+id/tv_order_remarks"
+                    style="@style/GreyTextStyle"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/spacing_normal"
+                    android:layout_marginEnd="@dimen/spacing_normal"
+                    tools:text="requested no cheese" />
+
+            </LinearLayout>
+        </LinearLayout>
+
+        <TextView
+            android:id="@+id/tv_order_status"
+            android:layout_width="wrap_content"
+            android:layout_height="@dimen/height_card_order_status"
+            android:layout_below="@+id/food_details_container"
+            android:layout_centerInParent="true"
+            android:fontFamily="@font/arial_rounded_mt_bold"
+            android:gravity="center"
+            android:paddingTop="@dimen/spacing_tiny"
+            android:textSize="@dimen/font_small"
+            tools:text="In Progress" />
+
+        <ImageView
+            android:id="@+id/im_order_cancel"
+            android:layout_width="wrap_content"
+            android:layout_height="@dimen/height_card_order_status"
+            android:layout_below="@+id/food_details_container"
+            android:layout_alignParentEnd="true"
+            android:clickable="true"
+            android:focusable="true"
+            android:padding="@dimen/size_tiny_icon"
+            android:src="@drawable/ic_cancel" />
+
+    </RelativeLayout>
+</androidx.cardview.widget.CardView>

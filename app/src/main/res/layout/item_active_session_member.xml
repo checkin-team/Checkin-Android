@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="@dimen/width_card_wide"
+    android:layout_height="@dimen/height_card_tall"
+    android:layout_marginTop="@dimen/spacing_normal"
+    android:gravity="center"
+    android:orientation="vertical">
+
+    <de.hdodenhof.circleimageview.CircleImageView
+        android:id="@+id/im_as_member_user"
+        style="@style/LogoImageStyle"
+        android:scaleType="centerCrop"
+        tools:src="@drawable/dummy_alex" />
+
+    <TextView
+        android:id="@+id/tv_as_member_user"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/spacing_small"
+        android:textAlignment="center"
+        android:textColor="@color/brownish_grey"
+        android:textSize="@dimen/font_normal"
+        tools:text="Laura" />
+
+    <TextView
+        android:id="@+id/tv_as_member_unaccepted"
+        style="@style/RedSmallTextStyle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/spacing_tiny"
+        android:text="@string/pending_request"
+        android:textSize="@dimen/font_extra_small"
+        android:visibility="invisible" />
+
+</LinearLayout>

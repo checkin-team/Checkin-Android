@@ -12,7 +12,7 @@ import com.fasterxml.jackson.databind.node.ObjectNode;
 @JsonAutoDetect(fieldVisibility = JsonAutoDetect.Visibility.NONE, getterVisibility = JsonAutoDetect.Visibility.NONE, isGetterVisibility = JsonAutoDetect.Visibility.NONE)
 public class ShopModel {
     @JsonProperty("pk")
-    protected String pk;
+    protected long pk;
 
     @JsonProperty("name")
     protected String name;
@@ -66,7 +66,7 @@ public class ShopModel {
     public enum PAYMENT_MODE {
         CASH("csh"), PAYTM("ptm"), CARD("crd");
 
-        String tag;
+        public String tag;
 
         PAYMENT_MODE(String tag) {
             this.tag = tag;
@@ -83,11 +83,11 @@ public class ShopModel {
 
     public ShopModel() {}
 
-    public ShopModel(String pk) {
+    public ShopModel(long pk) {
         this.pk = pk;
     }
 
-    public String getPk() {
+    public long getPk() {
         return pk;
     }
 

@@ -1,9 +1,9 @@
 package com.checkin.app.checkin.Shop;
 
 import android.app.Application;
-import android.arch.lifecycle.LiveData;
+import androidx.lifecycle.LiveData;
 import android.content.Context;
-import android.support.annotation.NonNull;
+import androidx.annotation.NonNull;
 
 import com.checkin.app.checkin.Data.ApiClient;
 import com.checkin.app.checkin.Data.ApiResponse;
@@ -14,7 +14,8 @@ import com.checkin.app.checkin.Data.RetrofitLiveData;
 import com.checkin.app.checkin.Data.WebApiService;
 import com.checkin.app.checkin.Misc.GenericDetailModel;
 import com.checkin.app.checkin.Shop.ShopJoin.ShopJoinModel;
-import com.checkin.app.checkin.Shop.ShopPrivateProfile.MemberModel;
+import com.checkin.app.checkin.Shop.Private.MemberModel;
+import com.checkin.app.checkin.Utility.ProgressRequestBody;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 
 import java.io.File;
@@ -23,6 +24,7 @@ import java.util.List;
 import okhttp3.MediaType;
 import okhttp3.MultipartBody;
 import okhttp3.RequestBody;
+import retrofit2.Call;
 
 /**
  * Created by Bhavik Patel on 24/08/2018.
@@ -31,12 +33,10 @@ import okhttp3.RequestBody;
 public class ShopRepository extends BaseRepository {
 
     private final WebApiService mWebService;
-//    private Box<RestaurantModel> mShopModel;
     private static ShopRepository INSTANCE;
 
     private ShopRepository(Context context) {
         mWebService = ApiClient.getApiService(context);
-//        mShopModel = AppDatabase.getShopModel(context);
     }
 
     public static ShopRepository getInstance(Application application) {
@@ -90,7 +90,7 @@ public class ShopRepository extends BaseRepository {
         }.getAsLiveData();
     }
 
-    public LiveData<Resource<ObjectNode>> updateShopContact(final String shopId, final ObjectNode data) {
+    public LiveData<Resource<ObjectNode>> updateShopContact(final long shopId, final ObjectNode data) {
         return new NetworkBoundResource<ObjectNode, ObjectNode>() {
             @Override
             protected boolean shouldUseLocalDb() {
@@ -110,7 +110,7 @@ public class ShopRepository extends BaseRepository {
         }.getAsLiveData();
     }
 
-    public LiveData<Resource<RestaurantModel>> getShopModel(String shopId) {
+    public LiveData<Resource<RestaurantModel>> getShopModel(long shopId) {
         return new NetworkBoundResource<RestaurantModel, RestaurantModel> () {
 
             @Override
@@ -129,7 +129,7 @@ public class ShopRepository extends BaseRepository {
         }.getAsLiveData();
     }
 
-    public LiveData<Resource<RestaurantModel>> getShopManageModel(String shopId) {
+    public LiveData<Resource<RestaurantModel>> getShopManageModel(long shopId) {
         return new NetworkBoundResource<RestaurantModel, RestaurantModel> () {
 
             @Override
@@ -168,7 +168,7 @@ public class ShopRepository extends BaseRepository {
         }.getAsLiveData();
     }
 
-    public LiveData<Resource<List<MemberModel>>> getRestaurantMembers(String shopId) {
+    public LiveData<Resource<List<MemberModel>>> getRestaurantMembers(long shopId) {
         return new NetworkBoundResource<List<MemberModel>, List<MemberModel>>() {
             @Override
             protected boolean shouldUseLocalDb() {
@@ -188,7 +188,7 @@ public class ShopRepository extends BaseRepository {
         }.getAsLiveData();
     }
 
-    public LiveData<Resource<ObjectNode>> addRestaurantMember(String shopId, MemberModel data) {
+    public LiveData<Resource<ObjectNode>> addRestaurantMember(long shopId, MemberModel data) {
         return new NetworkBoundResource<ObjectNode, ObjectNode>() {
             @Override
             protected boolean shouldUseLocalDb() {
@@ -206,7 +206,7 @@ public class ShopRepository extends BaseRepository {
         }.getAsLiveData();
     }
 
-    public LiveData<Resource<ObjectNode>> updateRestaurantMember(String shopId, MemberModel shopMember) {
+    public LiveData<Resource<ObjectNode>> updateRestaurantMember(long shopId, MemberModel shopMember) {
         return new NetworkBoundResource<ObjectNode, ObjectNode>() {
             @Override
             protected boolean shouldUseLocalDb() {
@@ -224,7 +224,7 @@ public class ShopRepository extends BaseRepository {
         }.getAsLiveData();
     }
 
-    public LiveData<Resource<ObjectNode>> removeRestaurantMember(String shopId, String userId) {
+    public LiveData<Resource<ObjectNode>> removeRestaurantMember(long shopId, long userId) {
         return new NetworkBoundResource<ObjectNode, ObjectNode>() {
             @Override
             protected boolean shouldUseLocalDb() {
@@ -242,29 +242,7 @@ public class ShopRepository extends BaseRepository {
         }.getAsLiveData();
     }
 
-    public LiveData<Resource<ObjectNode>> postRestaurantCover(String shopId, int index, File pic) {
-        RequestBody requestFile = RequestBody.create(MediaType.parse("image/jpeg"), pic);
-        final MultipartBody.Part body = MultipartBody.Part.createFormData("image", "cover.jpg", requestFile);
-        return new NetworkBoundResource<ObjectNode, ObjectNode>() {
-            @Override
-            protected boolean shouldUseLocalDb() {
-                return false;
-            }
-
-            @NonNull
-            @Override
-            protected LiveData<ApiResponse<ObjectNode>> createCall() {
-                return new RetrofitLiveData<>(mWebService.postRestaurantCover(shopId, index, body));
-            }
-
-            @Override
-            protected void saveCallResult(ObjectNode data) {
-
-            }
-        }.getAsLiveData();
-    }
-
-    public LiveData<Resource<ObjectNode>> deleteRestaurantCover(String shopId, int index) {
+    public LiveData<Resource<ObjectNode>> deleteRestaurantCover(long shopId, int index) {
         return new NetworkBoundResource<ObjectNode, ObjectNode>() {
             @Override
             protected boolean shouldUseLocalDb() {
@@ -284,26 +262,18 @@ public class ShopRepository extends BaseRepository {
         }.getAsLiveData();
     }
 
-    public LiveData<Resource<ObjectNode>> postRestaurantLogo(String shopId, File pic) {
+    public Call<GenericDetailModel> postRestaurantLogo(long mShopPk, File pic, ProgressRequestBody.UploadCallbacks listener) {
         RequestBody requestFile = RequestBody.create(MediaType.parse("image/jpeg"), pic);
-        final MultipartBody.Part body = MultipartBody.Part.createFormData("logo", "cover.jpg", requestFile);
-        return new NetworkBoundResource<ObjectNode, ObjectNode>() {
-            @Override
-            protected boolean shouldUseLocalDb() {
-                return false;
-            }
+        ProgressRequestBody requestBody = new ProgressRequestBody(requestFile, listener);
+        final MultipartBody.Part body = MultipartBody.Part.createFormData("logo", "cover.jpg", requestBody);
+        return mWebService.postRestaurantLogo(mShopPk,body);
+    }
 
-            @NonNull
-            @Override
-            protected LiveData<ApiResponse<ObjectNode>> createCall() {
-                return new RetrofitLiveData<>(mWebService.postRestaurantLogo(shopId, body));
-            }
-
-            @Override
-            protected void saveCallResult(ObjectNode data) {
-
-            }
-        }.getAsLiveData();
+    public Call<GenericDetailModel> postRestaurantCover(long mShopPk, int index, File pic, ProgressRequestBody.UploadCallbacks listener) {
+        RequestBody requestFile = RequestBody.create(MediaType.parse("image/jpeg"), pic);
+        ProgressRequestBody requestBody = new ProgressRequestBody(requestFile, listener);
+        final MultipartBody.Part body = MultipartBody.Part.createFormData("image", "cover.jpg", requestBody);
+        return mWebService.postRestaurantCover(mShopPk,index,body);
     }
 
 }

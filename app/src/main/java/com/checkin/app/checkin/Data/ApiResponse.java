@@ -1,7 +1,7 @@
 package com.checkin.app.checkin.Data;
 
-import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import android.util.Log;
 
 import com.fasterxml.jackson.databind.JsonNode;

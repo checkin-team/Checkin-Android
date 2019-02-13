@@ -1,17 +1,10 @@
 package com.checkin.app.checkin.Menu;
 
 import android.annotation.SuppressLint;
-import android.arch.lifecycle.ViewModelProviders;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.speech.RecognizerIntent;
-import android.support.v4.app.Fragment;
-import android.support.v4.widget.DrawerLayout;
-import android.support.v7.app.AlertDialog;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
-import android.support.v7.widget.Toolbar;
 import android.text.InputType;
 import android.text.TextUtils;
 import android.util.Log;
@@ -33,12 +26,20 @@ import com.checkin.app.checkin.Menu.Model.OrderedItemModel;
 import com.checkin.app.checkin.Misc.BaseActivity;
 import com.checkin.app.checkin.R;
 import com.checkin.app.checkin.Utility.EndDrawerToggle;
-import com.checkin.app.checkin.Utility.Util;
+import com.checkin.app.checkin.Utility.Utils;
 import com.miguelcatalan.materialsearchview.MaterialSearchView;
 
 import java.util.ArrayList;
 import java.util.Locale;
 
+import androidx.annotation.Nullable;
+import androidx.appcompat.app.AlertDialog;
+import androidx.appcompat.widget.Toolbar;
+import androidx.drawerlayout.widget.DrawerLayout;
+import androidx.fragment.app.Fragment;
+import androidx.lifecycle.ViewModelProviders;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
@@ -50,7 +51,8 @@ public class SessionMenuActivity extends BaseActivity implements
         MenuCartAdapter.MenuCartInteraction, MenuFilterFragment.MenuFilterInteraction {
     private static final String TAG = SessionMenuActivity.class.getSimpleName();
 
-    private static final String KEY_RESTAURANT_PK = "session.shop_pk";
+    private static final String KEY_RESTAURANT_PK = "menu.shop_pk";
+    private static final String KEY_SESSION_PK = "menu.session_pk";
 
     @BindView(R.id.view_menu_search)
     MaterialSearchView vMenuSearch;
@@ -70,21 +72,24 @@ public class SessionMenuActivity extends BaseActivity implements
 
     private static final String SESSION_ARG = "session_arg";
 
-    public static void withSession(Context context, String sessionPk, String restaurantPk) {
+    public static void withSession(Context context, Long restaurantPk, @Nullable Long sessionPk) {
         Intent intent = new Intent(context, SessionMenuActivity.class);
         Bundle args = new Bundle();
         args.putSerializable(KEY_SESSION_STATUS, SESSION_STATUS.ACTIVE);
-        args.putString(KEY_RESTAURANT_PK, restaurantPk);
+        args.putLong(KEY_RESTAURANT_PK, restaurantPk);
+        if (sessionPk != null)
+            args.putLong(KEY_SESSION_PK, sessionPk);
         intent.putExtra(SESSION_ARG, args);
         context.startActivity(intent);
     }
 
-    public static void withoutSession(Context context, String restaurantPk) {
+    public static void withoutSession(Context context, long restaurantPk) {
         Intent intent = new Intent(context, SessionMenuActivity.class);
         Bundle args = new Bundle();
         args.putSerializable(KEY_SESSION_STATUS, SESSION_STATUS.INACTIVE);
-        args.putString(KEY_RESTAURANT_PK, restaurantPk);
+        args.putLong(KEY_RESTAURANT_PK, restaurantPk);
         intent.putExtra(SESSION_ARG, args);
+        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
         context.startActivity(intent);
     }
 
@@ -92,14 +97,18 @@ public class SessionMenuActivity extends BaseActivity implements
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_session_menu);
-
         ButterKnife.bind(this);
 
         Bundle args = getIntent().getBundleExtra(SESSION_ARG);
         mSessionStatus = (SESSION_STATUS) args.getSerializable(KEY_SESSION_STATUS);
 
         mViewModel = ViewModelProviders.of(this).get(MenuViewModel.class);
-        mViewModel.fetchAvailableMenu(args.getString(KEY_RESTAURANT_PK));
+        mViewModel.fetchAvailableMenu(args.getLong(KEY_RESTAURANT_PK));
+        long sessionPk = args.getLong(KEY_SESSION_PK, 0L);
+        if (sessionPk > 0L)
+            mViewModel.manageSession(sessionPk);
+
+        mSearchFragment = MenuItemSearchFragment.newInstance(SessionMenuActivity.this, isSessionActive());
 
         init(R.id.container_menu_fragment, true);
         setupUiStuff();
@@ -138,8 +147,12 @@ public class SessionMenuActivity extends BaseActivity implements
                     item.setChangeCount(0);
                     mViewModel.setCurrentItem(item);
                     mViewModel.orderItem();
+                    input.setText("");
                 })
-                .setNegativeButton("Cancel", (dialog, which) -> dialog.cancel())
+                .setNegativeButton("Cancel", (dialog, which) -> {
+                    dialog.cancel();
+                    input.setText("");
+                })
                 .create();
     }
 
@@ -155,7 +168,7 @@ public class SessionMenuActivity extends BaseActivity implements
         if (isSessionActive()) {
             DrawerLayout drawerLayout = findViewById(R.id.drawer_menu);
             EndDrawerToggle endToggle = new EndDrawerToggle(
-                    this, drawerLayout, toolbar, R.string.menu_drawer_open, R.string.menu_drawer_close, R.drawable.ic_cart);
+                    this, drawerLayout, toolbar, R.string.menu_drawer_open, R.string.menu_drawer_close, R.drawable.ic_cart_white);
             drawerLayout.addDrawerListener(endToggle);
             endToggle.syncState();
         } else {
@@ -165,30 +178,32 @@ public class SessionMenuActivity extends BaseActivity implements
 
     private void setupCart() {
         mCartAdapter = new MenuCartAdapter(this);
-        rvCart.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false));
+        rvCart.setLayoutManager(new LinearLayoutManager(this, RecyclerView.VERTICAL, false));
         rvCart.setAdapter(mCartAdapter);
 
         mViewModel.getOrderedItems().observe(this, mCartAdapter::setOrderedItems);
         mViewModel.getTotalOrderedCount().observe(this, count -> {
             if (count == null)
                 return;
-            if (count > 0)
-                tvCountItems.setText(Util.formatCount(count));
-            else
-                tvCountItems.setText("");
+            if (count > 0) {
+                tvCountItems.setText(Utils.formatCount(count));
+                tvCountItems.setVisibility(View.VISIBLE);
+            } else {
+                tvCountItems.setVisibility(View.GONE);
+            }
         });
         mViewModel.getOrderedSubTotal().observe(this, subtotal -> {
             if (subtotal == null)
                 return;
             tvCartSubtotal.setText(String.format(
-                    Locale.ENGLISH, "Subtotal: " + Util.getCurrencyFormat(this), subtotal));
+                    Locale.ENGLISH, "Subtotal: " + Utils.getCurrencyFormat(this) + " *", subtotal));
         });
 
         mViewModel.getServerOrderedItems().observe(this, resource -> {
             if (resource == null)
                 return;
             if (resource.status == Status.SUCCESS) {
-                Util.toast(this, "Confirmed orders!");
+                Utils.toast(this, "Confirmed orders!");
                 finish();
             } else {
                 Log.e(TAG, "MSG: " + resource.message);
@@ -197,7 +212,6 @@ public class SessionMenuActivity extends BaseActivity implements
     }
 
     private void setupSearch() {
-        mSearchFragment = MenuItemSearchFragment.newInstance(SessionMenuActivity.this, isSessionActive());
         vMenuSearch.setVoiceSearch(true);
         vMenuSearch.setStartFromRight(false);
         vMenuSearch.setCursorDrawable(R.drawable.color_cursor_white);
@@ -249,7 +263,7 @@ public class SessionMenuActivity extends BaseActivity implements
         if (mCartAdapter.getItemCount() > 0) {
             mViewModel.confirmOrder();
         } else {
-            Util.toast(this, "Order something before proceeding!");
+            Utils.toast(this, "Order something before proceeding!");
         }
     }
 
@@ -266,6 +280,7 @@ public class SessionMenuActivity extends BaseActivity implements
         } else if (!mFilterFragment.onBackPressed() && !mMenuFragment.onBackPressed()) {
             super.onBackPressed();
         }
+        mViewModel.clearFilters();
     }
 
     public void closeSearch() {
@@ -379,5 +394,15 @@ public class SessionMenuActivity extends BaseActivity implements
     @Override
     public void filterByCategory(String category) {
         mMenuFragment.scrollToCategory(category);
+    }
+
+    @Override
+    public void sortItems() {
+        vMenuSearch.showSearch(true);
+    }
+
+    @Override
+    public void resetFilters() {
+        vMenuSearch.closeSearch();
     }
 }

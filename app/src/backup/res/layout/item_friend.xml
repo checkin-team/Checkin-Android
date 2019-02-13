@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:paddingTop="@dimen/spacing_small"
+    android:paddingBottom="@dimen/spacing_small"
+    android:paddingStart="@dimen/spacing_large"
+    android:paddingEnd="@dimen/spacing_large">
+
+    <de.hdodenhof.circleimageview.CircleImageView
+        android:id="@+id/im_profile_pic"
+        android:layout_width="@dimen/button_height_tall"
+        android:layout_height="@dimen/button_height_tall"
+        android:scaleType="centerCrop"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:src="@drawable/dummy_alex" />
+
+    <TextView
+        android:id="@+id/tv_user_name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        tools:text="Ishu Darshan"
+        android:textColor="@color/brownish_grey"
+        android:textSize="@dimen/font_large"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toTopOf="@+id/tv_checkins"
+        app:layout_constraintEnd_toStartOf="@id/container_user_actions"
+        app:layout_constraintStart_toEndOf="@+id/im_profile_pic"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/tv_checkins"
+        android:layout_width="150dp"
+        android:layout_height="20dp"
+        android:layout_marginBottom="8dp"
+        tools:text="Checkins: 42"
+        android:textAlignment="center"
+        android:textColor="@color/pinkish_grey"
+        android:textSize="@dimen/font_normal"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="@+id/tv_user_name"
+        app:layout_constraintEnd_toEndOf="@id/tv_user_name"
+        app:layout_constraintTop_toBottomOf="@+id/tv_user_name" />
+
+    <FrameLayout
+        android:id="@+id/container_user_actions"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent">
+
+        <FrameLayout
+            android:id="@+id/container_status_none"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/button_height_short"
+            android:layout_gravity="center"
+            android:visibility="gone">
+            <Button
+                android:id="@+id/btn_follow"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:text="@string/action_follow"
+                style="@style/ButtonPositiveAction"/>
+        </FrameLayout>
+
+        <FrameLayout
+            android:id="@+id/container_status_request"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/button_height_short"
+            android:layout_gravity="center"
+            android:visibility="gone">
+            <TextView
+                android:id="@+id/tv_requested"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:text="@string/info_requested"
+                style="@style/ButtonNeutralAction" />
+        </FrameLayout>
+
+        <FrameLayout
+            android:id="@+id/container_status_friend"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/button_height_short"
+            android:layout_gravity="center"
+            android:visibility="gone">
+            <Button
+                android:id="@+id/btn_following"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:text="@string/info_following"
+                style="@style/ButtonNeutralAction"/>
+        </FrameLayout>
+    </FrameLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>

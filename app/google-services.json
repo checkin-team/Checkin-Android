@@ -23,6 +23,14 @@
           }
         },
         {
+          "client_id": "759838524399-guua3653hbeh9q0758ig04f7rrkvfbu0.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.checkin.app.checkin",
+            "certificate_hash": "4547f5bea2e60985ca08a1e9390d9346e28946e9"
+          }
+        },
+        {
           "client_id": "759838524399-5biih3a8q0mnb9f46hlp51ao9bhgd22s.apps.googleusercontent.com",
           "client_type": 3
         }
@@ -38,7 +46,56 @@
         },
         "appinvite_service": {
           "status": 2,
-          "other_platform_oauth_client": []
+          "other_platform_oauth_client": [
+            {
+              "client_id": "759838524399-5biih3a8q0mnb9f46hlp51ao9bhgd22s.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:759838524399:android:997e5e36a6ff1f40",
+        "android_client_info": {
+          "package_name": "com.checkin.app.checkin.lite"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "759838524399-cgb6r7mk1tj5v6scp3ip9ti4steped1t.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.checkin.app.checkin.lite",
+            "certificate_hash": "4547f5bea2e60985ca08a1e9390d9346e28946e9"
+          }
+        },
+        {
+          "client_id": "759838524399-5biih3a8q0mnb9f46hlp51ao9bhgd22s.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBgbGTaBq24PjvnGKswpumxRxEZ63B2S5A"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "759838524399-5biih3a8q0mnb9f46hlp51ao9bhgd22s.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
         },
         "ads_service": {
           "status": 2

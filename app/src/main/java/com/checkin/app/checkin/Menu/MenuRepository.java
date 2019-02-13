@@ -1,9 +1,9 @@
 package com.checkin.app.checkin.Menu;
 
 import android.app.Application;
-import android.arch.lifecycle.LiveData;
+import androidx.lifecycle.LiveData;
 import android.content.Context;
-import android.support.annotation.NonNull;
+import androidx.annotation.NonNull;
 
 import com.checkin.app.checkin.Data.ApiClient;
 import com.checkin.app.checkin.Data.ApiResponse;
@@ -28,7 +28,7 @@ public class MenuRepository {
         mWebService = ApiClient.getApiService(context);
     }
 
-    public LiveData<Resource<MenuModel>> getAvailableMenu(final String shopId) {
+    public LiveData<Resource<MenuModel>> getAvailableMenu(final long shopId) {
         return new NetworkBoundResource<MenuModel, MenuModel>() {
             @Override
             protected boolean shouldUseLocalDb() {
@@ -56,7 +56,27 @@ public class MenuRepository {
             @NonNull
             @Override
             protected LiveData<ApiResponse<ArrayNode>> createCall() {
-                return new RetrofitLiveData<>(mWebService.postSessionOrders(orders));
+                return new RetrofitLiveData<>(mWebService.postActiveSessionOrders(orders));
+            }
+
+            @Override
+            protected void saveCallResult(ArrayNode data) {
+
+            }
+        }.getAsLiveData();
+    }
+
+    public LiveData<Resource<ArrayNode>> postMenuManageOrders(final long sessionPk, final List<OrderedItemModel> orders) {
+        return new NetworkBoundResource<ArrayNode, ArrayNode>() {
+            @Override
+            protected boolean shouldUseLocalDb() {
+                return false;
+            }
+
+            @NonNull
+            @Override
+            protected LiveData<ApiResponse<ArrayNode>> createCall() {
+                return new RetrofitLiveData<>(mWebService.postSessionManagerOrders(sessionPk, orders));
             }
 
             @Override

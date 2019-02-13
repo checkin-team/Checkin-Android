@@ -1,45 +1,54 @@
 package com.checkin.app.checkin.Account;
 
-import android.arch.lifecycle.ViewModelProviders;
+import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
-import android.support.annotation.LayoutRes;
-import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
-import android.support.design.widget.NavigationView;
-import android.support.v4.widget.DrawerLayout;
+import android.preference.PreferenceManager;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.Spinner;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.checkin.app.checkin.Account.AccountModel.ACCOUNT_TYPE;
+import com.checkin.app.checkin.Auth.AuthPreferences;
 import com.checkin.app.checkin.Data.Resource;
 import com.checkin.app.checkin.Home.HomeActivity;
+import com.checkin.app.checkin.Manager.ManagerWorkActivity;
 import com.checkin.app.checkin.Misc.BaseActivity;
 import com.checkin.app.checkin.R;
-import com.checkin.app.checkin.Shop.ShopPrivateProfile.ShopActivity;
+import com.checkin.app.checkin.Shop.Private.ShopPrivateActivity;
+import com.checkin.app.checkin.Utility.Constants;
 import com.checkin.app.checkin.Utility.GlideApp;
+import com.checkin.app.checkin.Utility.Utils;
+import com.checkin.app.checkin.Waiter.WaiterWorkActivity;
+import com.google.android.material.navigation.NavigationView;
 
 import java.util.ArrayList;
 import java.util.List;
 
+import androidx.annotation.IdRes;
+import androidx.annotation.LayoutRes;
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.drawerlayout.widget.DrawerLayout;
+import androidx.lifecycle.ViewModelProviders;
 import butterknife.BindView;
 import butterknife.ButterKnife;
-import butterknife.OnClick;
 import de.hdodenhof.circleimageview.CircleImageView;
 
 public abstract class BaseAccountActivity extends BaseActivity {
+    // Required to include "incl_account_base" layout.
     private final static String TAG = BaseAccountActivity.class.getSimpleName();
 
     private DrawerLayout mDrawerLayout;
     private NavigationView mNavAccount;
+    private Button btnLogout;
 
     private AccountViewModel mViewModel;
     private AccountAdapter mAccountAdapter;
@@ -47,8 +56,10 @@ public abstract class BaseAccountActivity extends BaseActivity {
     private AccountHeaderViewHolder mHeaderViewHolder;
 
     protected void setupUi() {
-        mDrawerLayout = findViewById(R.id.drawer_root);
+        mDrawerLayout = findViewById(getDrawerRootId());
         mNavAccount = findViewById(R.id.nav_account);
+        btnLogout = findViewById(R.id.btn_logout);
+        btnLogout.setOnClickListener(this::onLogoutClick);
 
         mAccountAdapter = new AccountAdapter(getApplicationContext(), R.layout.simple_spinner_item, new ArrayList<>());
         mAccountAdapter.setDropDownViewResource(R.layout.item_simple_spinner_dropdown);
@@ -65,6 +76,8 @@ public abstract class BaseAccountActivity extends BaseActivity {
 
         mViewModel = ViewModelProviders.of(this).get(AccountViewModel.class);
         mViewModel.getAccounts().observe(this, listResource -> {
+            if (listResource == null)
+                return;
             if (listResource.status == Resource.Status.SUCCESS && listResource.data != null) {
                 List<AccountModel> accounts = listResource.data;
                 mAccountAdapter.setData(accounts);
@@ -82,7 +95,7 @@ public abstract class BaseAccountActivity extends BaseActivity {
         mViewModel.getCurrentAccount().observe(this, account -> {
             if (account == null) {
                 // User doesn't have rights to access this account.
-                Toast.makeText(getApplicationContext(), "User doesn't have access to any accounts with the given account type.", Toast.LENGTH_SHORT).show();
+                Utils.toast(this, "User doesn't have access to any accounts with the given account type.");
                 finish();
                 return;
             }
@@ -92,6 +105,20 @@ public abstract class BaseAccountActivity extends BaseActivity {
 
         mNavAccount.addHeaderView(mHeaderViewHolder.getHeaderView());
     }
+
+    protected void onLogoutClick(View v) {
+        if (AuthPreferences.removeCurrentAccount(this)) {
+            PreferenceManager.getDefaultSharedPreferences(this).edit()
+                    .clear()
+                    .apply();
+            finish();
+        } else {
+            Utils.toast(this, "Unable to logout. Manually remove account from settings.");
+        }
+    }
+
+    @IdRes
+    protected abstract int getDrawerRootId();
 
     protected abstract int getNavMenu();
 
@@ -103,6 +130,10 @@ public abstract class BaseAccountActivity extends BaseActivity {
     public void setContentView(int layoutResID) {
         super.setContentView(layoutResID);
         setupUi();
+    }
+
+    protected AccountViewModel getAccountViewModel() {
+        return mViewModel;
     }
 
     protected DrawerLayout getDrawerLayout() {
@@ -155,12 +186,6 @@ public abstract class BaseAccountActivity extends BaseActivity {
             vAccountSelector.setSelection(pos, true);
         }
 
-        @OnClick(R.id.btn_refresh)
-        void onAccountRefreshClick() {
-            Toast.makeText(mBaseActivity.getApplicationContext(), "Refreshing...", Toast.LENGTH_SHORT).show();
-            mBaseActivity.mViewModel.updateResults();
-        }
-
         @Override
         public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
             AccountModel account = mBaseActivity.mAccountAdapter.getItem(position);
@@ -168,23 +193,39 @@ public abstract class BaseAccountActivity extends BaseActivity {
             switchAccount(mBaseActivity.getApplicationContext(), account);
         }
 
-        protected void switchAccount(Context context, AccountModel account) {
+        void switchAccount(Context context, AccountModel account) {
+            PreferenceManager.getDefaultSharedPreferences(context).edit()
+                    .putInt(Constants.SP_LAST_ACCOUNT_TYPE, account.getAccountType().id)
+                    .putLong(Constants.SP_LAST_ACCOUNT_PK, Long.valueOf(account.getTargetPk()))
+                    .apply();
+
             switch (account.getAccountType()) {
                 case USER:
-                    if (mBaseActivity.getClass() != HomeActivity.class)
-                        context.startActivity(new Intent(context, HomeActivity.class));
+                    if (mBaseActivity.getClass() != HomeActivity.class){
+                        Utils.navigateBackToHome(context);
+                    }
                     break;
                 case SHOP_OWNER:
                 case SHOP_ADMIN:
-                    if (mBaseActivity.getClass() != ShopActivity.class) {
-                        Intent intent = new Intent(context, ShopActivity.class);
-                        intent.putExtra(ShopActivity.KEY_SHOP_PK, account.getTargetPk());
-                        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                    if (mBaseActivity.getClass() != ShopPrivateActivity.class) {
+                        Intent intent = Intent.makeRestartActivityTask(new ComponentName(context, ShopPrivateActivity.class));
+                        intent.putExtra(ShopPrivateActivity.KEY_SHOP_PK, Long.valueOf(account.getTargetPk()));
                         context.startActivity(intent);
                     }
                     break;
                 case RESTAURANT_MANAGER:
+                    if (mBaseActivity.getClass() != ManagerWorkActivity.class) {
+                        Intent intent = Intent.makeRestartActivityTask(new ComponentName(context, ManagerWorkActivity.class));
+                        intent.putExtra(ManagerWorkActivity.KEY_RESTAURANT_PK, Long.valueOf(account.getTargetPk()));
+                        context.startActivity(intent);
+                    }
+                    break;
                 case RESTAURANT_WAITER:
+                    if (mBaseActivity.getClass() != WaiterWorkActivity.class) {
+                        Intent intent = Intent.makeRestartActivityTask(new ComponentName(context, WaiterWorkActivity.class));
+                        intent.putExtra(WaiterWorkActivity.KEY_SHOP_PK, Long.valueOf(account.getTargetPk()));
+                        context.startActivity(intent);
+                    }
                 case RESTAURANT_COOK:
                     break;
             }

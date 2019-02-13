@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/card_view"
@@ -27,12 +27,12 @@
         android:layout_marginBottom="@dimen/spacing_small"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        tools:text="@string/currency_rupee" />
+        tools:text="@string/format_currency_rupee" />
 
     <FrameLayout
         android:id="@+id/container_menu_quantity_picker"
-        android:layout_width="@dimen/width_quantity_selection"
-        android:layout_height="@dimen/height_quantity_selection"
+        android:layout_width="110dp"
+        android:layout_height="50dp"
         android:layout_marginBottom="@dimen/spacing_small"
         android:layout_marginEnd="@dimen/spacing_small"
         android:layout_marginTop="@dimen/spacing_small"
@@ -47,6 +47,9 @@
             android:id="@+id/btn_menu_item_add"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
+            style="@style/WhiteTextStyle"
+            android:textAllCaps="false"
+            android:text="Add"
             android:background="@drawable/btn_menu_item_add"
             android:visibility="gone" />
 
@@ -62,4 +65,4 @@
             android:focusable="false"/>
     </FrameLayout>
 
-</android.support.constraint.ConstraintLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>

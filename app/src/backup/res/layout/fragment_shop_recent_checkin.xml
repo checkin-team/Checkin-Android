@@ -1,0 +1,156 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:fitsSystemWindows="true"
+    android:orientation="vertical">
+
+    <TextView
+        android:id="@+id/tv_rc_title"
+        style="@style/GreyTitleStyle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="@dimen/spacing_normal"
+        android:text="Recent Check-In" />
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginTop="@dimen/spacing_small">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginTop="@dimen/spacing_large"
+            android:orientation="vertical">
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:src="@drawable/ic_recent_checkin_head" />
+
+            <View
+                android:layout_width="@dimen/thickness_line"
+                android:layout_height="match_parent"
+                android:layout_gravity="center_horizontal"
+                android:background="@color/pinkish_grey" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <androidx.cardview.widget.CardView
+                    style="@style/WhiteCardStyle"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_marginStart="@dimen/spacing_normal"
+                    android:layout_marginTop="@dimen/spacing_extra_small"
+                    android:layout_marginBottom="@dimen/spacing_extra_small"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent">
+
+                    <androidx.constraintlayout.widget.ConstraintLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:padding="@dimen/spacing_extra_small">
+
+                        <ImageView
+                            android:id="@+id/im_rc_profile_male"
+                            android:layout_width="@dimen/size_image_small"
+                            android:layout_height="@dimen/size_image_small"
+                            android:layout_marginEnd="@dimen/spacing_small"
+                            android:src="@drawable/fore_male_grey"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toTopOf="parent" />
+
+                        <ImageView
+                            android:id="@+id/im_rc_profile_female"
+                            android:layout_width="@dimen/size_image_small"
+                            android:layout_height="@dimen/size_image_small"
+                            android:layout_marginStart="@dimen/spacing_small"
+                            android:src="@drawable/fore_female_grey"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintStart_toEndOf="@id/im_rc_profile_male"
+                            app:layout_constraintTop_toTopOf="parent" />
+
+                        <TextView
+                            android:id="@+id/tv_rc_count_male"
+                            style="@style/GreyTextStyle"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="@dimen/spacing_tiny"
+                            android:text="0"
+                            android:textSize="@dimen/font_small"
+                            app:layout_constraintEnd_toEndOf="@id/im_rc_profile_male"
+                            app:layout_constraintStart_toStartOf="@id/im_rc_profile_male"
+                            app:layout_constraintTop_toBottomOf="@id/im_rc_profile_male" />
+
+                        <TextView
+                            android:id="@+id/tv_rc_count_female"
+                            style="@style/GreyTextStyle"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="@dimen/spacing_tiny"
+                            android:text="0"
+                            android:textSize="@dimen/font_small"
+                            app:layout_constraintEnd_toEndOf="@id/im_rc_profile_female"
+                            app:layout_constraintStart_toStartOf="@id/im_rc_profile_female"
+                            app:layout_constraintTop_toBottomOf="@id/im_rc_profile_female" />
+                    </androidx.constraintlayout.widget.ConstraintLayout>
+
+                </androidx.cardview.widget.CardView>
+
+                <androidx.cardview.widget.CardView
+                    style="@style/WhiteCardStyle"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_marginEnd="@dimen/spacing_normal"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="parent">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:padding="@dimen/spacing_extra_small">
+
+                        <ImageView
+                            android:layout_width="@dimen/size_small_icon"
+                            android:layout_height="@dimen/size_small_icon"
+                            android:layout_gravity="center_vertical"
+                            android:src="@drawable/ic_person_outline_rouge" />
+
+                        <TextView
+                            android:id="@+id/tv_rc_live"
+                            style="@style/GreyTextStyle"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center_vertical"
+                            android:layout_marginStart="@dimen/spacing_extra_small"
+                            android:text="0 LIVE" />
+                    </LinearLayout>
+
+                </androidx.cardview.widget.CardView>
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/rv_recent_checkins"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:overScrollMode="never" />
+
+        </LinearLayout>
+
+    </FrameLayout>
+</LinearLayout>

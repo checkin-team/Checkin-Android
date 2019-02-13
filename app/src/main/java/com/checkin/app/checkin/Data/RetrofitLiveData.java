@@ -1,10 +1,8 @@
 package com.checkin.app.checkin.Data;
 
-import android.arch.lifecycle.LiveData;
-import android.support.annotation.NonNull;
+import androidx.lifecycle.LiveData;
+import androidx.annotation.NonNull;
 import android.util.Log;
-
-import java.io.IOException;
 
 import retrofit2.Call;
 import retrofit2.Callback;

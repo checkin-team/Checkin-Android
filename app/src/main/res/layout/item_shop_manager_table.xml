@@ -1,0 +1,147 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    style="@style/WhiteCardStyle"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginStart="@dimen/spacing_tiny"
+    android:layout_marginTop="@dimen/spacing_tiny"
+    android:layout_marginEnd="@dimen/spacing_tiny">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:paddingStart="@dimen/spacing_small"
+        android:paddingTop="@dimen/spacing_extra_small"
+        android:paddingEnd="@dimen/spacing_small"
+        android:paddingBottom="@dimen/spacing_small">
+
+        <TextView
+            android:id="@+id/tv_shop_manager_table_time"
+            style="@style/GreySmallTextStyle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="end"
+            tools:text="4.19" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <de.hdodenhof.circleimageview.CircleImageView
+                android:id="@+id/iv_shop_manager_table_waiter"
+                style="@style/LogoSmallImageStyle"
+                android:layout_gravity="center"
+                android:src="@drawable/ic_waiter" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/spacing_small"
+                android:orientation="vertical">
+
+                <TextView
+                    android:id="@+id/tv_shop_manager_table_number"
+                    style="@style/GreyTextStyle"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    tools:text="TABLE : 4" />
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/spacing_extra_small"
+                    android:orientation="horizontal">
+
+                    <FrameLayout
+                        android:id="@+id/container_manager_table_event_icon"
+                        android:layout_width="@dimen/width_manager_table_event_icon"
+                        android:layout_height="@dimen/height_manager_table_event_icon"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent">
+
+                        <ImageView
+                            android:id="@+id/iv_shop_manager_table_icon"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center_vertical"
+                            android:contentDescription="@null"
+                            tools:src="@drawable/ic_session_event_request_checkout" />
+                    </FrameLayout>
+
+                    <LinearLayout
+                        android:id="@+id/container_manager_table_active"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toEndOf="@id/container_manager_table_event_icon"
+                        app:layout_constraintTop_toTopOf="parent">
+
+                        <TextView
+                            android:id="@+id/tv_shop_manager_table_detail"
+                            style="@style/GreySmallTextStyle"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="@dimen/spacing_tiny"
+                            android:layout_marginEnd="@dimen/spacing_tiny"
+                            android:layout_weight="1"
+                            tools:text="Join the table @4.30 pm." />
+
+                        <TextView
+                            android:id="@+id/tv_shop_manager_table_event_badge"
+                            android:layout_width="@dimen/size_extra_small_icon"
+                            android:layout_height="@dimen/size_extra_small_icon"
+                            android:background="@drawable/shape_oval_red"
+                            android:gravity="center"
+                            android:textColor="@color/white"
+                            android:layout_marginBottom="@dimen/spacing_tiny"
+                            android:textSize="@dimen/font_extra_small"
+                            tools:text="62" />
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:id="@+id/container_manager_table_end"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:visibility="gone"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toEndOf="@id/container_manager_table_event_icon"
+                        app:layout_constraintTop_toTopOf="parent">
+
+                        <Space
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1" />
+
+                        <Button
+                            android:id="@+id/btn_manager_table_session_done"
+                            style="@style/ButtonRedAlertAction"
+                            android:layout_width="wrap_content"
+                            android:layout_height="@dimen/button_height_normal"
+                            android:text="End\nSession"
+                            android:textAllCaps="false" />
+                    </LinearLayout>
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+            </LinearLayout>
+
+        </LinearLayout>
+
+        <TextView
+            android:id="@+id/tv_shop_manager_table_name"
+            style="@style/GreyTextStyle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/spacing_small"
+            android:gravity="center"
+            tools:text="Monica" />
+
+    </LinearLayout>
+
+</androidx.cardview.widget.CardView>

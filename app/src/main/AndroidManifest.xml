@@ -26,7 +26,7 @@
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
-        android:roundIcon="@mipmap/ic_launcher_round"
+        android:roundIcon="@mipmap/ic_launcher"
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         tools:replace="android:theme">
@@ -39,6 +39,7 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
         <activity
             android:name=".Auth.AuthActivity"
             android:screenOrientation="portrait"
@@ -48,65 +49,7 @@
             android:screenOrientation="sensorPortrait"
             android:theme="@style/AppTheme"
             tools:replace="screenOrientation" />
-        <activity android:name=".User.NonPersonalProfile.UserProfileActivity" />
-        <activity android:name=".User.PersonalProfile.UserProfileActivity" />
-        <activity
-            android:name=".User.NonPersonalProfile.UserCheckinsActivity"
-            android:parentActivityName=".User.NonPersonalProfile.UserProfileActivity"
-            android:theme="@style/Theme.AppCompat.Light"></activity>
-        <activity
-            android:name=".User.PersonalProfile.ProfileEditActivity"
-            android:label="Edit Profile"
-            android:theme="@style/AppThemeWhiteActionBar" />
-        <activity
-            android:name=".User.Friendship.FriendsListActivity"
-            android:label="Friends"
-            android:theme="@style/AppThemeWhiteActionBar" />
-        <activity
-            android:name=".Shop.ShopPublicProfile.ShopActivity"
-            android:screenOrientation="portrait" />
-        <activity
-            android:name=".Shop.ShopPrivateProfile.ShopActivity"
-            android:screenOrientation="portrait" />
-        <activity
-            android:name=".Menu.SessionMenuActivity"
-            android:screenOrientation="portrait"
-            android:theme="@style/SessionTheme"
-            android:windowSoftInputMode="adjustPan" />
-        <activity android:name=".Misc.TransactionActivity" />
-        <activity android:name=".Misc.FilterTransactions" />
-        <activity
-            android:name=".RestaurantActivity.Waiter.WaitorWork"
-            android:label="WaitorWorkActivity"
-            android:screenOrientation="sensorPortrait"
-            android:theme="@style/AppTheme"
-            tools:replace="screenOrientation" />
-        <activity
-            android:name=".Session.ActiveSession.ActiveSessionActivity"
-            android:windowSoftInputMode="adjustNothing" />
-        <activity
-            android:name=".Shop.ShopJoin.BusinessFeaturesActivity"
-            android:screenOrientation="portrait"
-            android:theme="@style/AppThemeWhiteActionBar" />
-        <activity
-            android:name=".Shop.ShopJoin.ContactVerifyActivity"
-            android:parentActivityName=".Home.HomeActivity" />
-        <activity
-            android:name=".Shop.ShopJoin.ShopJoinActivity"
-            android:parentActivityName=".Shop.ShopJoin.ContactVerifyActivity"
-            android:theme="@style/AppThemeWhiteActionBar" />
-        <activity
-            android:name=".Shop.ShopPrivateProfile.EditProfileActivity"
-            android:label="Edit Profile"
-            android:screenOrientation="portrait"
-            android:theme="@style/AppThemeWhiteActionBar" />
-        <activity
-            android:name=".Notifications.NotificationActivity"
-            android:launchMode="singleTop">
-            <intent-filter>
-                <action android:name="com.checkin.app.checkin.notifications" />
-            </intent-filter>
-        </activity>
+
         <activity
             android:name=".Maps.MapsActivity"
             android:theme="@style/AppTheme" />
@@ -127,28 +70,7 @@
                 <data android:scheme="@string/fb_login_protocol_scheme" />
             </intent-filter>
         </activity>
-        <activity
-            android:name=".Search.SearchActivity"
-            android:theme="@style/AppTheme" />
-        <activity
-            android:name=".Shop.ShopPrivateProfile.MembersActivity"
-            android:screenOrientation="portrait"
-            android:label="Members"
-            android:theme="@style/AppThemeWhiteActionBar" />
-        <activity android:name=".Review.ShopReview.ShopReviewFragment"
-            android:theme="@style/AppThemeWhiteActionBar"/>
 
-        <activity android:name=".Misc.QRScannerActivity"
-            android:label="Scan CheckIn QR"
-            android:theme="@style/AppThemeWhiteActionBar"/>
-
-        <activity android:name=".Review.ShopReview.ShopReviewsActivity"
-            android:label="Reviews"
-            android:theme="@style/AppThemeWhiteActionBar"/>
-
-        <activity android:name=".Shop.ShopPrivateProfile.LogoCoverActivity"
-            android:label="Image"
-            android:theme="@style/AppThemeWhiteActionBar" />
 
         <service
             android:name=".Auth.AuthenticatorService"
@@ -162,11 +84,7 @@
                 android:name="android.accounts.AccountAuthenticator"
                 android:resource="@xml/authenticator" />
         </service>
-        <service android:name=".Data.MessagingService">
-            <intent-filter>
-                <action android:name="com.google.firebase.MESSAGING_EVENT" />
-            </intent-filter>
-        </service>
+
         <service android:name=".Maps.FetchAddressIntentService" />
         <service android:name=".Auth.DeviceTokenService" />
 
@@ -184,6 +102,7 @@
         <meta-data
             android:name="com.google.android.geo.API_KEY"
             android:value="@string/google_maps_key" />
+
     </application>
 
 </manifest>

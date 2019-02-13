@@ -4,20 +4,27 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.checkin.app.checkin.Misc.SelectCropImageActivity"
     android:orientation="vertical"
-    >
-         <com.lyft.android.scissors.CropView
-            android:id="@+id/crop_view"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            app:cropviewViewportRatio="0.81"
-            />
-        <Button
-            android:id="@+id/next_button"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="bottom|end"
-            android:text="confirm"
-            />
+    tools:context="com.checkin.app.checkin.Misc.SelectCropImageActivity">
+
+    <com.lyft.android.scissors.CropView
+        android:id="@+id/crop_view"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        app:cropviewViewportRatio="0.81" />
+
+    <ImageView
+        android:id="@+id/btn_image_crop_done"
+        style="@style/ButtonLarge"
+        android:layout_width="60dp"
+        android:layout_height="60dp"
+        android:layout_gravity="bottom|end"
+        android:layout_margin="@dimen/spacing_small"
+        android:background="@drawable/ic_floating_oval"
+        android:clickable="true"
+        android:focusable="true"
+        android:padding="@dimen/spacing_normal"
+        android:src="@drawable/ic_tick"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent" />
 </FrameLayout>

@@ -1,9 +1,7 @@
 package com.checkin.app.checkin.Auth;
 
 import android.app.Application;
-import android.arch.lifecycle.LiveData;
 import android.content.Context;
-import android.support.annotation.NonNull;
 
 import com.checkin.app.checkin.Data.ApiClient;
 import com.checkin.app.checkin.Data.ApiResponse;
@@ -17,6 +15,8 @@ import com.fasterxml.jackson.databind.node.ObjectNode;
 
 import javax.inject.Singleton;
 
+import androidx.annotation.NonNull;
+import androidx.lifecycle.LiveData;
 import retrofit2.Call;
 
 @Singleton
@@ -28,8 +28,8 @@ public class AuthRepository extends BaseRepository {
         mWebService = ApiClient.getApiService(context);
     }
 
-    public LiveData<Resource<ObjectNode>> login(final ObjectNode credentials) {
-        return new NetworkBoundResource<ObjectNode, ObjectNode>() {
+    public LiveData<Resource<AuthResultModel>> login(final ObjectNode credentials) {
+        return new NetworkBoundResource<AuthResultModel, AuthResultModel>() {
             @Override
             protected boolean shouldUseLocalDb() {
                 return false;
@@ -37,18 +37,18 @@ public class AuthRepository extends BaseRepository {
 
             @NonNull
             @Override
-            protected LiveData<ApiResponse<ObjectNode>> createCall() {
+            protected LiveData<ApiResponse<AuthResultModel>> createCall() {
                 return new RetrofitLiveData<>(mWebService.postLogin(credentials));
             }
 
             @Override
-            protected void saveCallResult(ObjectNode data) {
+            protected void saveCallResult(AuthResultModel data) {
             }
         }.getAsLiveData();
     }
 
-    public LiveData<Resource<ObjectNode>> register(final ObjectNode credentials) {
-        return new NetworkBoundResource<ObjectNode, ObjectNode>() {
+    public LiveData<Resource<AuthResultModel>> register(final ObjectNode credentials) {
+        return new NetworkBoundResource<AuthResultModel, AuthResultModel>() {
             @Override
             protected boolean shouldUseLocalDb() {
                 return false;
@@ -56,12 +56,12 @@ public class AuthRepository extends BaseRepository {
 
             @NonNull
             @Override
-            protected LiveData<ApiResponse<ObjectNode>> createCall() {
+            protected LiveData<ApiResponse<AuthResultModel>> createCall() {
                 return new RetrofitLiveData<>(mWebService.postRegister(credentials));
             }
 
             @Override
-            protected void saveCallResult(ObjectNode data) {
+            protected void saveCallResult(AuthResultModel data) {
             }
         }.getAsLiveData();
     }

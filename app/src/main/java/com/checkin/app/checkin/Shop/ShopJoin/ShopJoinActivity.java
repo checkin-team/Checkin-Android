@@ -1,9 +1,10 @@
 package com.checkin.app.checkin.Shop.ShopJoin;
 
-import android.arch.lifecycle.ViewModelProviders;
+import androidx.lifecycle.ViewModelProviders;
+import android.content.ComponentName;
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.v7.app.AppCompatActivity;
+import androidx.appcompat.app.AppCompatActivity;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
@@ -12,9 +13,9 @@ import com.checkin.app.checkin.Data.Resource;
 import com.checkin.app.checkin.Misc.GenericDetailModel;
 import com.checkin.app.checkin.R;
 import com.checkin.app.checkin.Shop.RestaurantModel;
-import com.checkin.app.checkin.Shop.ShopPrivateProfile.EditAspectFragment;
-import com.checkin.app.checkin.Shop.ShopPrivateProfile.ShopActivity;
-import com.checkin.app.checkin.Shop.ShopPrivateProfile.ShopProfileViewModel;
+import com.checkin.app.checkin.Shop.Private.Edit.EditAspectFragment;
+import com.checkin.app.checkin.Shop.Private.ShopPrivateActivity;
+import com.checkin.app.checkin.Shop.Private.ShopProfileViewModel;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -50,7 +51,7 @@ public class ShopJoinActivity extends AppCompatActivity implements
             if (resource == null)
                 return;
             if (resource.status == Resource.Status.SUCCESS && resource.data != null) {
-                String pk = resource.data.get("pk").textValue();
+                long pk = resource.data.get("pk").longValue();
                 finishSignup(pk);
             } else {
                 mShopViewModel.showError(resource.getErrorBody());
@@ -60,11 +61,10 @@ public class ShopJoinActivity extends AppCompatActivity implements
         askBasicInfo();
     }
 
-    private void finishSignup(String pk) {
-        Intent intent = new Intent(this, ShopActivity.class);
-        intent.putExtra(ShopActivity.KEY_SHOP_PK, pk);
+    private void finishSignup(long pk) {
+        Intent intent = Intent.makeRestartActivityTask(new ComponentName(this, ShopPrivateActivity.class));
+        intent.putExtra(ShopPrivateActivity.KEY_SHOP_PK, pk);
         startActivity(intent);
-        finish();
     }
 
     private void askBasicInfo() {

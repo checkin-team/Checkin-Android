@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:layout_gravity="center"
+    android:gravity="center"
+    android:orientation="horizontal">
+
+    <TextView
+        android:id="@+id/tv_tab_title"
+        style="@style/PinkishGreySmallTextStyle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="@dimen/font_normal"
+        android:textColor="@drawable/selector_tab_color"
+        android:textAllCaps="false"
+        tools:text="Tab 1" />
+
+    <TextView
+        android:id="@+id/tv_tab_badge"
+        style="@style/WhiteTextStyle"
+        android:layout_width="@dimen/size_small_icon"
+        android:layout_height="@dimen/size_small_icon"
+        android:layout_marginStart="@dimen/spacing_extra_small"
+        android:background="@drawable/shape_oval_green"
+        android:textAlignment="center"
+        android:textSize="@dimen/font_normal"
+        tools:text="2" />
+</LinearLayout>

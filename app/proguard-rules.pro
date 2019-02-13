@@ -47,6 +47,10 @@
 -keepclassmembers public final enum com.fasterxml.jackson.annotation.JsonAutoDetect$Visibility {
     public static final com.fasterxml.jackson.annotation.JsonAutoDetect$Visibility *;
 }
+-keepclassmembers class * {
+     @com.fasterxml.jackson.annotation.JsonCreator *;
+     @com.fasterxml.jackson.annotation.JsonProperty *;
+}
 -keep class com.fasterxml.jackson.annotation.** { *; }
 -dontwarn com.fasterxml.jackson.databind.**
 
@@ -57,6 +61,48 @@
   public *;
 }
 
+##########
+# Android architecture components: Lifecycle ( https://issuetracker.google.com/issues/62113696 )
+##########
+# LifecycleObserver's empty constructor is considered to be unused by proguard
+-keepclassmembers class * implements android.arch.lifecycle.LifecycleObserver {
+    <init>(...);
+}
+# ViewModel's empty constructor is considered to be unused by proguard
+-keepclassmembers class * extends android.arch.lifecycle.ViewModel {
+    <init>(...);
+}
+# keep Lifecycle State and Event enums values
+-keepclassmembers class android.arch.lifecycle.Lifecycle$State { *; }
+-keepclassmembers class android.arch.lifecycle.Lifecycle$Event { *; }
+# keep methods annotated with @OnLifecycleEvent even if they seem to be unused
+# (Mostly for LiveData.LifecycleBoundObserver.onStateChange(), but who knows)
+-keepclassmembers class * {
+    @android.arch.lifecycle.OnLifecycleEvent *;
+}
+
 ########### General
 -keepattributes SourceFile,LineNumberTable,*Annotation*,EnclosingMethod,Signature,Exceptions,InnerClasses
 -keep class com.checkin.app.checkin.**Model { *; }
+
+##########
+# View - Gets and setters - keep setters in Views so that animations can still work.
+# see http://proguard.sourceforge.net/manual/examples.html#beans
+##########
+
+-keepclassmembers public class * extends android.view.View {
+   void set*(***);
+   *** get*();
+}
+
+-keepclasseswithmembers class * {
+    public <init>(android.content.Context, android.util.AttributeSet);
+}
+
+-keepclasseswithmembers class * {
+    public <init>(android.content.Context, android.util.AttributeSet, int);
+}
+
+-keepclasseswithmembers class * {
+    public <init>();
+}

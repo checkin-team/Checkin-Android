@@ -1,23 +1,23 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/root_session"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:animateLayoutChanges="true"
-    android:background="@color/white">
+    android:background="@color/white"
+    android:orientation="vertical">
 
-    <android.support.design.widget.AppBarLayout
+    <com.google.android.material.appbar.AppBarLayout
         android:id="@+id/appbar_active_session"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:elevation="@dimen/card_elevation"
         android:fitsSystemWindows="true"
-        android:theme="@style/appbar_main"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
+        android:theme="@style/appbar_main">
 
-        <android.support.v7.widget.Toolbar
+        <androidx.appcompat.widget.Toolbar
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_gravity="top"
@@ -30,159 +30,331 @@
 
                 <TextView
                     android:id="@+id/appbar_title"
+                    style="@style/WhiteTextStyle"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center|start"
                     android:layout_weight="0.3"
-                    android:fontFamily="@font/arial_rounded_mt_bold"
                     android:text="@string/active_session"
-                    android:textColor="@color/white"
                     android:textSize="@dimen/font_large"
                     app:layout_constraintStart_toStartOf="parent" />
 
-                <FrameLayout
+                <TextView
+                    android:id="@+id/tv_active_session_bill"
+                    style="@style/WhiteTextStyle"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
-                    android:paddingTop="@dimen/spacing_extra_small"
-                    android:paddingBottom="@dimen/spacing_extra_small"
                     android:layout_marginEnd="@dimen/spacing_normal"
-                    android:layout_marginStart="@dimen/spacing_tiny"
-                    android:layout_marginTop="@dimen/spacing_tiny"
-                    android:background="@drawable/menu_item_price_white">
-
-                    <TextView
-                        android:id="@+id/tv_active_session_bill"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="center"
-                        android:layout_marginBottom="@dimen/spacing_tiny"
-                        android:layout_marginStart="@dimen/spacing_extra_small"
-                        style="@style/WhiteTextStyle"
-                        tools:text="4200" />
-                </FrameLayout>
-
-                <ImageView
-                    android:id="@+id/btn_active_session_checkout"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginEnd="@dimen/spacing_small"
-                    android:src="@drawable/btn_checkout"
-                    app:layout_constraintEnd_toEndOf="@+id/appbar_active_session" />
+                    android:background="@drawable/bordered_rectangle_white"
+                    android:drawableEnd="@drawable/ic_cart_white"
+                    android:drawablePadding="@dimen/spacing_extra_small"
+                    android:gravity="center"
+                    android:padding="@dimen/spacing_extra_small"
+                    android:textSize="@dimen/font_large"
+                    tools:text="$ 420" />
 
             </LinearLayout>
-        </android.support.v7.widget.Toolbar>
-    </android.support.design.widget.AppBarLayout>
+        </androidx.appcompat.widget.Toolbar>
+    </com.google.android.material.appbar.AppBarLayout>
 
-    <android.support.v7.widget.RecyclerView
-        android:id="@+id/rv_session_members"
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:background="@drawable/background_card_white_inner_shadow"
-        app:layout_constraintBottom_toTopOf="@id/container_second"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/appbar_active_session"
-        app:layout_constraintVertical_weight="0.7" />
+    <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+        android:id="@+id/sr_active_session"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content">
 
-    <android.support.constraint.ConstraintLayout
-        android:id="@+id/container_second"
-        android:layout_width="0dp"
-        android:layout_height="0dp"
-        app:layout_constraintBottom_toTopOf="@id/rv_session_recommendations"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/rv_session_members"
-        app:layout_constraintVertical_weight="0.8">
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
 
-        <Switch
-            android:id="@+id/switch_session_presence"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginEnd="@dimen/spacing_extra_large"
-            android:layout_marginTop="@dimen/spacing_normal"
-            android:checked="true"
-            android:scaleX="1.5"
-            android:scaleY="1.5"
-            android:showText="true"
-            android:splitTrack="false"
-            android:switchTextAppearance="@style/SwitchTextAppearance"
-            android:textColor="@color/grey"
-            android:textOff="@string/session_presence_private"
-            android:textOn="@string/session_presence_public"
-            android:thumb="@drawable/ic_switch_toggle"
-            android:track="@drawable/rectangle_pinkish_grey"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="@+id/container_second" />
+            <androidx.cardview.widget.CardView
+                android:id="@+id/cv_container_first"
+                style="@style/WhiteCardStyle"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                app:layout_constraintBottom_toTopOf="@id/container_second"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintVertical_weight="0.8">
+
+                <RelativeLayout
+                    android:id="@+id/container_first"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
+
+                    <TextView
+                        android:id="@+id/tv_session_live_at"
+                        style="@style/GreySmallTextStyle"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="@dimen/spacing_normal"
+                        android:layout_marginTop="@dimen/spacing_small"
+                        android:layout_marginBottom="@dimen/spacing_tiny"
+                        tools:text="You are live at Roma's Cafe" />
+
+                    <androidx.recyclerview.widget.RecyclerView
+                        android:id="@+id/rv_session_members"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_above="@id/tv_title_friends_can_join"
+                        android:layout_below="@+id/tv_session_live_at"
+
+                        android:layout_marginStart="@dimen/spacing_small" />
+
+                    <TextView
+                        android:id="@+id/tv_title_friends_can_join"
+                        style="@style/PinkishGreySmallTextStyle"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentBottom="true"
+                        android:layout_centerInParent="true"
+                        android:layout_marginTop="@dimen/spacing_small"
+                        android:layout_marginBottom="@dimen/spacing_small"
+                        android:text="@string/your_friends_can_join_by_scanning_qr_code" />
+
+                </RelativeLayout>
+
+            </androidx.cardview.widget.CardView>
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/container_second"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                app:layout_constraintBottom_toTopOf="@id/container_session_actions"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/cv_container_first"
+                app:layout_constraintVertical_weight="0.5">
+
+                <TextView
+                    android:id="@+id/btn_active_session_orders"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/spacing_small"
+                    android:drawableTop="@drawable/ic_action_view_orders"
+                    android:drawablePadding="@dimen/spacing_extra_small"
+                    android:text="@string/action_list_orders"
+                    android:textAlignment="center"
+                    android:textSize="@dimen/font_normal"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toStartOf="@+id/btn_active_session_menu"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <TextView
+                    android:id="@+id/btn_active_session_menu"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/spacing_small"
+                    android:drawableTop="@drawable/ic_action_show_menu"
+                    android:drawablePadding="@dimen/spacing_small"
+                    android:text="@string/action_view_menu"
+                    android:textAlignment="center"
+                    android:textSize="@dimen/font_normal"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toEndOf="@+id/btn_active_session_orders"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/container_session_actions"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:orientation="vertical"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/container_second"
+                app:layout_constraintVertical_weight="1">
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/background_top_inner_shadow"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <TextView
+                    android:id="@+id/rv_session_recommendations"
+                    style="@style/GreyTextStyle"
+                    android:layout_width="wrap_content"
+                    android:layout_height="0dp"
+                    android:drawableStart="@drawable/ic_hourglass"
+                    android:drawablePadding="@dimen/spacing_small"
+                    android:gravity="center"
+                    android:text="@string/recommendation_coming_soon"
+                    android:textSize="@dimen/font_small"
+                    app:layout_constraintBottom_toTopOf="@id/container_as_actions_bottom"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintLeft_toLeftOf="parent"
+                    app:layout_constraintRight_toRightOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintVertical_weight="0.5" />
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:id="@+id/container_as_actions_bottom"
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
+                    android:background="@drawable/swipe_up_card_combined"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintLeft_toLeftOf="parent"
+                    app:layout_constraintRight_toRightOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/rv_session_recommendations"
+                    app:layout_constraintVertical_weight="0.8">
 
 
-        <TextView
-            android:id="@+id/tv_session_mark_presence"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginEnd="@dimen/spacing_normal"
-            android:layout_marginTop="@dimen/spacing_tiny"
-            android:fontFamily="@font/arial_rounded_mt_bold"
-            android:text="@string/title_checkin_privacy"
-            android:textColor="@color/pinkish_grey"
-            android:textSize="@dimen/font_extra_small"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/switch_session_presence" />
+                    <TextView
+                        style="@style/PinkishGreySmallTextStyle"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="@dimen/spacing_small"
+                        android:layout_marginTop="@dimen/spacing_normal"
+                        android:paddingTop="@dimen/spacing_tiny"
+                        android:text="Interact with us"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
 
-        <TextView
-            android:id="@+id/btn_active_session_orders"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="@dimen/spacing_small"
-            android:layout_marginTop="@dimen/spacing_extra_small"
-            android:drawablePadding="@dimen/spacing_extra_small"
-            android:drawableTop="@drawable/ic_ordered_items"
-            android:text="@string/action_list_orders"
-            android:textAlignment="center"
-            android:textSize="@dimen/font_normal"
-            app:layout_constraintEnd_toStartOf="@+id/btn_active_session_menu"
-            app:layout_constraintHorizontal_bias="0.5"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/tv_session_mark_presence" />
+                    <TextView
+                        style="@style/PinkishGreySmallTextStyle"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/spacing_normal"
+                        android:layout_marginEnd="@dimen/spacing_small"
+                        android:paddingTop="@dimen/spacing_tiny"
+                        android:text="Swipe Up"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
 
-        <TextView
-            android:id="@+id/btn_active_session_menu"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginEnd="@dimen/spacing_small"
-            android:layout_marginTop="@dimen/spacing_extra_small"
-            android:drawablePadding="@dimen/spacing_extra_small"
-            android:drawableTop="@drawable/ic_table_cleaning"
-            android:text="@string/action_view_menu"
-            android:textAlignment="center"
-            android:textSize="@dimen/font_normal"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.5"
-            app:layout_constraintStart_toEndOf="@+id/btn_active_session_orders"
-            app:layout_constraintTop_toBottomOf="@id/tv_session_mark_presence" />
+                    <LinearLayout
+                        android:id="@+id/ll_waiter_container"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toStartOf="@id/ll_call_waiter_button"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent">
 
-    </android.support.constraint.ConstraintLayout>
+                        <de.hdodenhof.circleimageview.CircleImageView
+                            android:id="@+id/im_as_waiter_pic"
+                            style="@style/LogoImageStyle"
+                            android:src="@drawable/ic_waiter" />
 
-    <android.support.v7.widget.RecyclerView
-        android:id="@+id/rv_session_recommendations"
-        android:layout_width="0dp"
-        android:layout_height="0dp"
-        android:background="@drawable/background_card_white_inner_shadow"
-        app:layout_constraintBottom_toTopOf="@id/container_session_actions"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/container_second"
-        app:layout_constraintVertical_weight="0.9" />
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="@dimen/spacing_extra_small"
+                            android:gravity="center"
+                            android:text="@string/waiter"
+                            android:textSize="@dimen/font_extra_small" />
 
-    <android.support.constraint.ConstraintLayout
-        android:id="@+id/container_session_actions"
-        android:layout_width="0dp"
-        android:layout_height="0dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/rv_session_recommendations"
-        app:layout_constraintVertical_weight="0.7" />
+                    </LinearLayout>
+
+                    <TextView
+                        android:id="@+id/tv_as_waiter_name"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textSize="@dimen/font_small"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toStartOf="@id/ll_call_waiter_button"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@id/ll_waiter_container"
+                        app:layout_constraintVertical_bias="0.3"
+                        tools:text="waiter name" />
+
+                    <LinearLayout
+                        android:id="@+id/ll_call_waiter_button"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/spacing_extra_small"
+                        android:orientation="vertical"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toStartOf="@id/ll_table_cleaning_button"
+                        app:layout_constraintStart_toEndOf="@id/ll_waiter_container"
+                        app:layout_constraintTop_toTopOf="parent">
+
+                        <ImageView
+                            android:layout_width="match_parent"
+                            android:layout_height="@dimen/button_height_normal"
+                            android:src="@drawable/ic_action_call_waiter"
+                            android:tint="@color/brownish_grey" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center"
+                            android:layout_marginTop="@dimen/spacing_extra_tiny"
+                            android:gravity="center"
+                            android:text="@string/call_waiter"
+                            android:textSize="@dimen/font_small" />
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:id="@+id/ll_table_cleaning_button"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/spacing_extra_small"
+                        android:orientation="vertical"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toStartOf="@id/ll_refill_glass_button"
+                        app:layout_constraintStart_toEndOf="@id/ll_call_waiter_button"
+                        app:layout_constraintTop_toTopOf="parent">
+
+                        <ImageView
+                            android:layout_width="match_parent"
+                            android:layout_height="@dimen/button_height_normal"
+                            android:layout_gravity="center"
+                            android:src="@drawable/ic_action_clean_table" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center"
+                            android:layout_marginTop="@dimen/spacing_extra_tiny"
+                            android:gravity="center"
+                            android:text="@string/table_cleaning"
+                            android:textSize="@dimen/font_small" />
+
+                    </LinearLayout>
 
 
-</android.support.constraint.ConstraintLayout>
+                    <LinearLayout
+                        android:id="@+id/ll_refill_glass_button"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/spacing_extra_small"
+                        android:orientation="vertical"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toEndOf="@id/ll_table_cleaning_button"
+                        app:layout_constraintTop_toTopOf="parent">
 
+                        <ImageView
+                            android:layout_width="match_parent"
+                            android:layout_height="@dimen/button_height_normal"
+                            android:src="@drawable/ic_action_refill_water" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center"
+                            android:layout_marginTop="@dimen/spacing_extra_tiny"
+                            android:gravity="center"
+                            android:text="@string/refill_glass"
+                            android:textSize="@dimen/font_small" />
+
+                    </LinearLayout>
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
+
+</LinearLayout>

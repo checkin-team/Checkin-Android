@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:padding="@dimen/spacing_small">
+
+    <ImageView
+        android:id="@+id/iv_manager_stats_trending_order_veg"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/spacing_tiny"
+        android:contentDescription="@null"
+        tools:src="@drawable/ic_veg" />
+
+    <TextView
+        android:id="@+id/tv_manager_stats_trending_order_name"
+        style="@style/GreyTextStyle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/spacing_normal"
+        android:layout_toEndOf="@id/iv_manager_stats_trending_order_veg"
+        tools:text="Butter Chicken" />
+
+    <TextView
+        android:id="@+id/tv_manager_stats_trending_order_revenue"
+        style="@style/PinkishGreySmallTextStyle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/tv_manager_stats_trending_order_name"
+        android:layout_alignStart="@id/tv_manager_stats_trending_order_name"
+        android:layout_marginTop="@dimen/spacing_extra_tiny"
+        tools:text="19.2 % revenue contribution" />
+
+</RelativeLayout>

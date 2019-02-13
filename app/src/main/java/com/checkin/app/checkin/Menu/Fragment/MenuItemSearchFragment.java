@@ -1,12 +1,7 @@
 package com.checkin.app.checkin.Menu.Fragment;
 
 import android.annotation.SuppressLint;
-import android.arch.lifecycle.ViewModelProviders;
 import android.os.Bundle;
-import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -20,6 +15,11 @@ import com.checkin.app.checkin.Menu.SessionMenuActivity;
 import com.checkin.app.checkin.Misc.BaseSearchFragment;
 import com.checkin.app.checkin.R;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.lifecycle.ViewModelProviders;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.Unbinder;
@@ -28,7 +28,8 @@ public class MenuItemSearchFragment extends BaseSearchFragment implements MenuIt
     private static final String TAG = MenuItemSearchFragment.class.getSimpleName();
     private Unbinder unbinder;
 
-    @BindView(R.id.rv_menu_items) RecyclerView rvMenuItems;
+    @BindView(R.id.rv_menu_items)
+    RecyclerView rvMenuItems;
 
     private MenuViewModel mViewModel;
     private MenuItemAdapter mAdapter;
@@ -41,7 +42,8 @@ public class MenuItemSearchFragment extends BaseSearchFragment implements MenuIt
         return fragment;
     }
 
-    public MenuItemSearchFragment() {}
+    public MenuItemSearchFragment() {
+    }
 
     @Nullable
     @Override
@@ -64,7 +66,7 @@ public class MenuItemSearchFragment extends BaseSearchFragment implements MenuIt
         });
 
         rvMenuItems.setAdapter(mAdapter);
-        rvMenuItems.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false));
+        rvMenuItems.setLayoutManager(new LinearLayoutManager(getContext(), RecyclerView.VERTICAL, false));
 
         mViewModel = ViewModelProviders.of(requireActivity()).get(MenuViewModel.class);
         mViewModel.getFilteredMenuItems().observe(this, listResource -> {

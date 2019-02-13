@@ -1,0 +1,343 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:fitsSystemWindows="true">
+
+    <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+        android:id="@+id/sr_session_chat"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/container_session_actions"
+        app:layout_constraintBottom_toTopOf="@+id/container_session_actions"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_chainStyle="spread_inside"
+        app:layout_constraintVertical_weight="1">
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/rv_active_session_chat"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:orientation="vertical"
+            android:paddingBottom="@dimen/spacing_small"
+            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+            app:reverseLayout="true"
+            app:stackFromEnd="true" />
+    </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
+
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/container_session_actions"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_above="@id/bottom_chat_container"
+        android:background="@color/brownish_grey"
+        app:layout_anchor="@id/bottom_chat_container"
+        app:layout_anchorGravity="top"
+        app:layout_constraintBottom_toTopOf="@id/bottom_chat_container"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintVertical_weight="0.2">
+
+        <LinearLayout
+            android:id="@+id/ll_call_waiter_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/spacing_small"
+            android:clickable="true"
+            android:focusable="true"
+            android:orientation="vertical"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@id/ll_table_cleaning_button"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="@dimen/button_height_normal"
+                android:src="@drawable/ic_action_call_waiter" />
+
+            <TextView
+                style="@style/WhiteTextStyle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginTop="@dimen/spacing_extra_tiny"
+                android:gravity="center"
+                android:text="@string/call_waiter"
+                android:textSize="@dimen/font_small" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/ll_table_cleaning_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:clickable="true"
+            android:focusable="true"
+            android:orientation="vertical"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@id/ll_refill_glass_button"
+            app:layout_constraintStart_toEndOf="@id/ll_call_waiter_button"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="@dimen/button_height_normal"
+                android:layout_gravity="center"
+                android:src="@drawable/ic_action_clean_table"
+                android:tint="@color/white" />
+
+            <TextView
+                style="@style/WhiteTextStyle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:text="@string/table_cleaning"
+                android:textSize="@dimen/font_small" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/ll_refill_glass_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:clickable="true"
+            android:focusable="true"
+            android:orientation="vertical"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@id/im_expand_bottom_menu"
+            app:layout_constraintStart_toEndOf="@id/ll_table_cleaning_button"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="@dimen/button_height_normal"
+                android:layout_gravity="center"
+                android:src="@drawable/ic_action_refill_water"
+                android:tint="@color/white" />
+
+            <TextView
+                android:id="@+id/text_refill_glass"
+                style="@style/WhiteTextStyle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:gravity="center"
+                android:text="@string/refill_glass"
+                android:textAlignment="center"
+                android:textSize="@dimen/font_small" />
+
+        </LinearLayout>
+
+        <ImageView
+            android:id="@+id/im_expand_bottom_menu"
+            android:layout_width="@dimen/size_small_button"
+            android:layout_height="@dimen/size_small_button"
+            android:layout_marginEnd="@dimen/spacing_normal"
+            android:background="@drawable/ring_white_border"
+            android:clickable="true"
+            android:focusable="true"
+            android:padding="@dimen/spacing_extra_small"
+            android:src="@drawable/ic_plus_red"
+            android:tint="@color/white"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <RelativeLayout
+        android:id="@+id/bottom_expand_menu"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/bottom_chat_container"
+        android:background="@color/brownish_grey"
+        android:clickable="true"
+        android:focusable="true"
+        android:visibility="gone"
+        app:layout_constraintBottom_toTopOf="@id/bottom_chat_container"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent">
+
+        <ImageView
+            android:id="@+id/im_collapse_bottom_menu"
+            android:layout_width="@dimen/size_small_button"
+            android:layout_height="@dimen/size_small_button"
+            android:layout_alignParentEnd="true"
+            android:layout_marginTop="@dimen/spacing_small"
+            android:layout_marginEnd="@dimen/spacing_small"
+            android:background="@drawable/ring_white_border"
+            android:focusable="true"
+            android:padding="@dimen/spacing_extra_small"
+            android:rotation="135"
+            android:src="@drawable/ic_plus_red"
+            android:tint="@color/white" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/im_collapse_bottom_menu"
+            android:layout_marginStart="@dimen/spacing_large"
+            android:layout_marginEnd="@dimen/spacing_large">
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="0.5"
+                android:orientation="vertical">
+
+                <LinearLayout
+                    android:id="@+id/ll_napkin_container_button"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:clickable="true"
+                    android:focusable="true">
+
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="@dimen/button_height_normal"
+                        android:src="@drawable/ic_action_bring_napkins" />
+
+                    <TextView
+                        style="@style/WhiteTextStyle"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_marginStart="@dimen/spacing_small"
+                        android:gravity="center"
+                        android:text="@string/napkin" />
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/ll_extra_plates_container_button"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+
+                    android:layout_marginBottom="@dimen/spacing_normal"
+                    android:clickable="true"
+                    android:focusable="true">
+
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="@dimen/button_height_normal"
+                        android:src="@drawable/ic_action_extra_plates" />
+
+                    <TextView
+                        style="@style/WhiteTextStyle"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_marginStart="@dimen/spacing_small"
+                        android:gravity="center"
+                        android:text="Extra Plates" />
+
+                </LinearLayout>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/spacing_small"
+                android:layout_weight="0.5"
+                android:orientation="vertical">
+
+                <LinearLayout
+                    android:id="@+id/ll_salt_container_button"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:clickable="true"
+                    android:focusable="true">
+
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="@dimen/button_height_normal"
+                        android:src="@drawable/ic_action_bring_salt" />
+
+                    <TextView
+                        style="@style/WhiteTextStyle"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_marginStart="@dimen/spacing_small"
+                        android:gravity="center"
+                        android:text="@string/salt" />
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/ll_sauce_container_button"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="@dimen/spacing_normal"
+                    android:clickable="true"
+                    android:focusable="true">
+
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="@dimen/button_height_normal"
+                        android:src="@drawable/ic_action_bring_sauce" />
+
+                    <TextView
+                        style="@style/WhiteTextStyle"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_marginStart="@dimen/spacing_small"
+                        android:gravity="center"
+                        android:text="@string/sauce" />
+                </LinearLayout>
+            </LinearLayout>
+
+        </LinearLayout>
+    </RelativeLayout>
+
+    <LinearLayout
+        android:id="@+id/bottom_chat_container"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_gravity="bottom"
+        android:background="@color/white"
+        android:gravity="bottom"
+        android:orientation="horizontal"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/container_session_actions">
+
+        <androidx.cardview.widget.CardView
+            android:id="@+id/card_enter_message"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/spacing_small"
+            android:layout_weight="1"
+            android:padding="@dimen/spacing_extra_tiny"
+            app:cardCornerRadius="@dimen/card_corner_radius"
+            app:cardElevation="@dimen/card_elevation">
+
+            <EditText
+                android:id="@+id/et_chat_msg"
+                style="@style/GreyTextStyle"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginStart="@dimen/spacing_normal"
+                android:background="@android:color/transparent"
+                android:hint="@string/title_how_can_we_assist_you"
+                android:maxHeight="80dp"
+                android:minHeight="@dimen/button_height_normal" />
+
+        </androidx.cardview.widget.CardView>
+
+        <ImageView
+            android:id="@+id/btn_chat_send_msg"
+            style="@style/ButtonNormal"
+            android:layout_marginEnd="@dimen/spacing_extra_small"
+            android:layout_marginBottom="@dimen/spacing_small"
+            android:src="@drawable/ic_action_send" />
+
+    </LinearLayout>
+
+</RelativeLayout>
+

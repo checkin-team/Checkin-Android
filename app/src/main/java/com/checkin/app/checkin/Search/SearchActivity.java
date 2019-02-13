@@ -1,20 +1,19 @@
 package com.checkin.app.checkin.Search;
 
-import android.arch.lifecycle.ViewModelProviders;
+import androidx.lifecycle.ViewModelProviders;
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.annotation.Nullable;
-import android.support.design.widget.TabLayout;
-import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentPagerAdapter;
-import android.support.v4.view.ViewPager;
-import android.support.v7.app.AppCompatActivity;
+import androidx.annotation.Nullable;
+import com.google.android.material.tabs.TabLayout;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentPagerAdapter;
+import androidx.viewpager.widget.ViewPager;
+import androidx.appcompat.app.AppCompatActivity;
 import android.view.View;
 
 import com.checkin.app.checkin.R;
-import com.checkin.app.checkin.Shop.ShopPublicProfile.ShopActivity;
-import com.checkin.app.checkin.User.NonPersonalProfile.UserProfileActivity;
+import com.checkin.app.checkin.Utility.Utils;
 import com.miguelcatalan.materialsearchview.MaterialSearchView;
 
 import java.util.ArrayList;
@@ -53,7 +52,6 @@ public class SearchActivity extends AppCompatActivity implements SearchResultInt
 
     private ResultTypePagerAdapter mResultTypeAdapter;
     private SearchViewModel mViewModel;
-    private SuggestionsFragment mSuggestionsFragment;
 
     private int mSearchMode = MODE_SEARCH;
     private int mSearchType = TYPE_ALL;
@@ -71,19 +69,19 @@ public class SearchActivity extends AppCompatActivity implements SearchResultInt
         mSearchFilter = getIntent().getIntExtra(KEY_SEARCH_FILTER, FILTER_ALL);
 
         mViewModel = ViewModelProviders.of(this).get(SearchViewModel.class);
+        if (mSearchType == TYPE_PEOPLE)
+            mViewModel.setup(true, false);
+        else if (mSearchType == TYPE_RESTAURANT)
+            mViewModel.setup(false, true);
+        else
+            mViewModel.setup(true, true);
 
         setupSearch();
         setupUi();
     }
 
     private void setupUi() {
-        if (shouldShowSuggestions()) {
-            mSuggestionsFragment = SuggestionsFragment.newInstance();
-            showSuggestions();
-        }
-        else {
-            vSearch.showSearch(false);
-        }
+        vSearch.showSearch(false);
         setupSearchTabs();
         vPagerSearchType.setAdapter(mResultTypeAdapter);
         vTabs.setupWithViewPager(vPagerSearchType);
@@ -117,7 +115,7 @@ public class SearchActivity extends AppCompatActivity implements SearchResultInt
 
     private void setupSearch() {
         vSearch.setStartFromRight(false);
-        vSearch.setBackIcon(getDrawable(R.drawable.ic_appbar_back));
+        vSearch.setBackIcon(getDrawable(R.drawable.ic_back_grey));
         vSearch.setOnQueryTextListener(new MaterialSearchView.OnQueryTextListener() {
             @Override
             public boolean onQueryTextSubmit(String query) {
@@ -149,31 +147,12 @@ public class SearchActivity extends AppCompatActivity implements SearchResultInt
         });
     }
 
-    private void showSuggestions() {
-        getSupportFragmentManager().beginTransaction()
-                .add(R.id.container_search_suggestions, mSuggestionsFragment)
-                .commit();
-    }
-
-    private void removeSuggestions() {
-        getSupportFragmentManager().beginTransaction()
-                .remove(mSuggestionsFragment)
-                .commit();
-    }
-
     private void resetUi() {
-        if (shouldShowSuggestions()) {
-            showSuggestions();
-        } else {
-            onCancelSearch();
-        }
+        onCancelSearch();
     }
 
     @OnClick(R.id.tv_search)
     public void onClickSearch(View v) {
-        if (shouldShowSuggestions()) {
-            removeSuggestions();
-        }
         vSearch.showSearch(true);
     }
 
@@ -184,10 +163,6 @@ public class SearchActivity extends AppCompatActivity implements SearchResultInt
 
     private void showTabs() {
         vTabs.setVisibility(View.VISIBLE);
-    }
-
-    private boolean shouldShowSuggestions() {
-        return mSearchMode == MODE_SEARCH;
     }
 
     private boolean shouldReturnResult() {
@@ -229,7 +204,7 @@ public class SearchActivity extends AppCompatActivity implements SearchResultInt
                     .putExtra(KEY_RESULT_NAME, searchItem.getName())
                     .putExtra(KEY_RESULT_IMAGE, searchItem.getImageUrl())
                     .putExtra(KEY_RESULT_PK, searchItem.getPk())
-                    .putExtra(KEY_RESULT_TYPE, searchItem.getType().type);
+                    .putExtra(KEY_RESULT_TYPE, searchItem.getType());
             setResult(RESULT_OK, data);
             finish();
         } else {
@@ -246,6 +221,11 @@ public class SearchActivity extends AppCompatActivity implements SearchResultInt
         return false;
     }
 
+    @Override
+    public void onClickFollowResult(SearchResultModel searchItem) {
+        Utils.toast(this, "Unsupported operation.");
+    }
+
     private void showInfo(SearchResultModel searchItem) {
         if (searchItem.isTypeRestaurant())
             showRestaurantInfo(searchItem.getPk());
@@ -253,16 +233,10 @@ public class SearchActivity extends AppCompatActivity implements SearchResultInt
             showUserInfo(searchItem.getPk());
     }
 
-    private void showUserInfo(String pk) {
-        Intent intent = new Intent(this, UserProfileActivity.class);
-        intent.putExtra(UserProfileActivity.KEY_PROFILE_USER_ID, Long.valueOf(pk));
-        startActivity(intent);
+    private void showUserInfo(Long pk) {
     }
 
-    private void showRestaurantInfo(String pk) {
-        Intent intent = new Intent(this, ShopActivity.class);
-        intent.putExtra(ShopActivity.KEY_SHOP_PK, pk);
-        startActivity(intent);
+    private void showRestaurantInfo(Long pk) {
     }
 
     private static class ResultTypePagerAdapter extends FragmentPagerAdapter {

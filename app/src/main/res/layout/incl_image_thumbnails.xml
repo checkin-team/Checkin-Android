@@ -9,37 +9,38 @@
         android:id="@+id/im_thumbnail_1"
         android:layout_width="@dimen/size_normal_icon"
         android:layout_height="@dimen/size_normal_icon"
-        tools:src="@drawable/dummy_shop"
-        android:visibility="visible" />
+        android:visibility="visible"
+        tools:src="@drawable/dummy_alex" />
 
     <ImageView
         android:id="@+id/im_thumbnail_2"
         android:layout_width="@dimen/size_normal_icon"
         android:layout_height="@dimen/size_normal_icon"
         android:layout_marginStart="@dimen/spacing_small"
-        tools:src="@drawable/dummy_shop"
-        android:visibility="visible" />
+        android:visibility="visible"
+        tools:src="@drawable/dummy_alex" />
 
     <FrameLayout
         android:id="@+id/container_thumbnail_3"
         android:layout_width="@dimen/size_normal_icon"
         android:layout_height="@dimen/size_normal_icon"
         android:layout_marginStart="@dimen/spacing_small">
-        <ImageView
+
+        <FrameLayout
             android:id="@+id/im_thumbnail_3"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:foreground="@color/translucent_black"
-            tools:src="@drawable/dummy_shop"
-            android:visibility="visible" />
+            android:visibility="visible"
+            tools:background="@drawable/dummy_alex" />
 
         <TextView
             android:id="@+id/tv_thumbnail_count"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            tools:text="320+"
-            android:textSize="@dimen/font_small"
+            android:layout_gravity="center"
             android:textColor="@color/white"
-            android:layout_gravity="center" />
+            android:textSize="@dimen/font_small"
+            tools:text="320+" />
     </FrameLayout>
 </LinearLayout>

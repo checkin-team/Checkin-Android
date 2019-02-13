@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.v4.widget.DrawerLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.drawerlayout.widget.DrawerLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/drawer_menu"
@@ -13,7 +13,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-        <android.support.design.widget.AppBarLayout
+        <com.google.android.material.appbar.AppBarLayout
             android:layout_width="match_parent"
             android:layout_height="?android:attr/actionBarSize"
             android:theme="@style/appbar_main">
@@ -22,7 +22,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent">
 
-                <android.support.v7.widget.Toolbar
+                <androidx.appcompat.widget.Toolbar
                     android:id="@+id/toolbar_menu"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
@@ -47,15 +47,18 @@
 
                 <TextView
                     android:id="@+id/tv_menu_count_ordered_items"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                    android:layout_width="@dimen/size_small_icon"
+                    android:layout_height="@dimen/size_small_icon"
                     android:layout_gravity="end"
-                    android:layout_marginEnd="@dimen/spacing_huge"
                     android:layout_marginTop="@dimen/spacing_normal"
-                    android:fontFamily="@font/arial_rounded_mt_bold"
-                    android:textColor="@color/white"
-                    android:textSize="@dimen/font_normal"
-                    tools:text="10" />
+                    android:layout_marginEnd="@dimen/spacing_huge"
+                    android:layout_marginBottom="@dimen/spacing_tiny"
+                    android:background="@drawable/shape_oval_white"
+                    android:gravity="center"
+                    android:textColor="@color/primary_red"
+                    android:textSize="@dimen/font_small"
+                    android:visibility="gone"
+                    tools:text="62" />
 
                 <com.miguelcatalan.materialsearchview.MaterialSearchView
                     android:id="@+id/view_menu_search"
@@ -64,7 +67,7 @@
                     android:layout_height="match_parent" />
             </FrameLayout>
 
-        </android.support.design.widget.AppBarLayout>
+        </com.google.android.material.appbar.AppBarLayout>
 
         <FrameLayout
             android:id="@+id/container_menu"
@@ -78,57 +81,63 @@
             android:layout_height="match_parent" />
     </FrameLayout>
 
-    <android.support.design.widget.NavigationView
+    <com.google.android.material.navigation.NavigationView
         android:id="@+id/nav_menu_cart"
         android:layout_width="wrap_content"
         android:layout_height="match_parent"
         android:layout_gravity="end"
         android:fitsSystemWindows="false">
 
-        <android.support.v4.widget.NestedScrollView
+        <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="match_parent">
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/rv_menu_cart"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:paddingTop="@dimen/spacing_small"
+                app:layout_constraintBottom_toTopOf="@id/container_menu_cart_detail"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
 
             <LinearLayout
+                android:id="@+id/container_menu_cart_detail"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:orientation="vertical">
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="parent">
 
-                <android.support.v7.widget.RecyclerView
-                    android:id="@+id/rv_menu_cart"
+                <include layout="@layout/incl_horizontal_line" />
+
+                <TextView
+                    android:id="@+id/tv_menu_subtotal"
+                    style="@style/RedTitleStyle"
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:nestedScrollingEnabled="false"
-                    android:paddingTop="@dimen/spacing_small" />
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/spacing_extra_small"
+                    android:layout_marginBottom="@dimen/spacing_extra_small"
+                    android:textAlignment="center"
+                    tools:text="Subtotal: 213 *" />
+
+                <TextView
+                    style="@style/GreyTextStyle"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="@dimen/spacing_extra_small"
+                    android:text="* Does not include extra charges or discounts."
+                    android:textAlignment="center"
+                    android:textSize="@dimen/font_small" />
+
+                <Button
+                    android:id="@+id/btn_menu_cart_proceed"
+                    style="@style/WhiteTitleStyle"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@color/primary_red"
+                    android:text="Proceed" />
             </LinearLayout>
-        </android.support.v4.widget.NestedScrollView>
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_gravity="bottom"
-            android:orientation="vertical">
-
-            <include layout="@layout/incl_horizontal_line" />
-
-            <TextView
-                android:id="@+id/tv_menu_subtotal"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                style="@style/RedTitleStyle"
-                android:layout_marginTop="@dimen/spacing_extra_small"
-                android:layout_marginBottom="@dimen/spacing_extra_small"
-                android:textAlignment="center"
-                tools:text="Subtotal: 213" />
-
-            <Button
-                android:id="@+id/btn_menu_cart_proceed"
-                style="@style/WhiteTitleStyle"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:background="@color/primary_red"
-                android:text="Proceed" />
-        </LinearLayout>
-
-    </android.support.design.widget.NavigationView>
-</android.support.v4.widget.DrawerLayout>
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </com.google.android.material.navigation.NavigationView>
+</androidx.drawerlayout.widget.DrawerLayout>

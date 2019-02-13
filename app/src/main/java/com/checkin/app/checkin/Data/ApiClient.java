@@ -3,7 +3,7 @@ package com.checkin.app.checkin.Data;
 import android.accounts.AccountManager;
 import android.content.Context;
 import android.os.Build;
-import android.support.annotation.NonNull;
+import androidx.annotation.NonNull;
 import android.util.Log;
 
 import com.checkin.app.checkin.Auth.AuthPreferences;
@@ -28,7 +28,7 @@ import retrofit2.converter.jackson.JacksonConverterFactory;
 
 import static com.checkin.app.checkin.Utility.Constants.API_HOST;
 import static com.checkin.app.checkin.Utility.Constants.API_PROTOCOL;
-import static com.checkin.app.checkin.Utility.Util.isNetworkConnected;
+import static com.checkin.app.checkin.Utility.Utils.isNetworkConnected;
 
 @Module
 public class ApiClient {

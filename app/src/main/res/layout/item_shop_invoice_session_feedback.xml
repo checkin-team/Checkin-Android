@@ -1,0 +1,164 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    style="@style/WhiteCardStyle"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_margin="@dimen/spacing_normal">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="@dimen/spacing_small">
+
+        <TextView
+            android:id="@+id/tv_shop_session_review_customer_name"
+            style="@style/GreyTextStyle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:textAllCaps="true"
+            tools:text="Customer #1" />
+
+        <TextView
+            style="@style/RedHeadingStyle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/spacing_small"
+            android:text="Experience" />
+
+        <com.borjabravo.readmoretextview.ReadMoreTextView
+            android:id="@+id/tv_shop_session_review_body"
+            style="@style/GreyTextStyle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/spacing_tiny"
+            app:colorClickableText="@color/primary_red"
+            app:trimCollapsedText=" read more"
+            app:trimExpandedText=" read less"
+            app:trimLines="2"
+            app:trimMode="trimModeLine"
+            tools:text="Now a days people especially teenagers think that external beauty is most important and without external beauty they are not beautiful..!! but it is not true..beauty doesn't define the real meaning of beauty. The beauty of a person depends on his or her thoughts,actions and character." />
+
+        <TextView
+            style="@style/RedHeadingStyle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/spacing_small"
+            android:text="Ratings" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:paddingStart="@dimen/spacing_extra_small"
+            android:paddingEnd="@dimen/spacing_extra_small">
+
+            <TextView
+                style="@style/GreyTextStyle"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:layout_weight="1"
+                android:text="Food Quality" />
+
+            <com.appyvet.materialrangebar.RangeBar
+                android:id="@+id/seekbar_feedback_food"
+                style="@style/MaterialSeekbarRatingStyle"
+                android:layout_width="0dp"
+                android:layout_weight="0.5"
+                app:mrb_temporaryPins="false" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:paddingStart="@dimen/spacing_extra_small"
+            android:paddingEnd="@dimen/spacing_extra_small">
+
+            <TextView
+                style="@style/GreyTextStyle"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:layout_weight="1"
+                android:text="Ambiance" />
+
+            <com.appyvet.materialrangebar.RangeBar
+                android:id="@+id/seekbar_feedback_ambiance"
+                style="@style/MaterialSeekbarRatingStyle"
+                android:layout_width="0dp"
+                android:layout_weight="0.5"
+                app:mrb_temporaryPins="false" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="@dimen/spacing_small"
+            android:orientation="horizontal"
+            android:paddingStart="@dimen/spacing_extra_small"
+            android:paddingEnd="@dimen/spacing_extra_small">
+
+            <TextView
+                style="@style/GreyTextStyle"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:layout_weight="1"
+                android:text="Hospitality" />
+
+            <com.appyvet.materialrangebar.RangeBar
+                android:id="@+id/seekbar_feedback_hospitality"
+                style="@style/MaterialSeekbarRatingStyle"
+                android:layout_width="0dp"
+                android:layout_weight="0.5"
+                app:mrb_temporaryPins="false" />
+        </LinearLayout>
+
+        <include layout="@layout/incl_horizontal_line" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/spacing_small"
+            android:gravity="center"
+            android:orientation="horizontal">
+
+            <TextView
+                style="@style/GreyTextStyle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Overall Rating" />
+
+            <TextView
+                android:id="@+id/tv_feedback_overall"
+                style="@style/RedSmallTextStyle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/spacing_large"
+                android:background="@drawable/background_grey_stroke"
+                android:elevation="@dimen/card_elevation"
+                android:padding="@dimen/spacing_tiny"
+                android:textSize="@dimen/font_normal"
+                tools:text="3.67" />
+
+        </LinearLayout>
+
+        <View
+            android:id="@+id/v_shop_invoice_detail_feedback_image"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/height_horizontal_line"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="@dimen/spacing_normal"
+            android:layout_marginBottom="@dimen/spacing_small"
+            android:background="@drawable/ic_line" />
+
+        <include layout="@layout/incl_image_thumbnails" />
+
+    </LinearLayout>
+</androidx.cardview.widget.CardView>

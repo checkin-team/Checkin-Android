@@ -202,4 +202,5 @@ public class OrderedItemModel implements Cloneable {
     public OrderedItemModel clone() throws CloneNotSupportedException {
         return ((OrderedItemModel) super.clone());
     }
+
 }

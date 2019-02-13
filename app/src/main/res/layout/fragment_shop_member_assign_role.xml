@@ -1,96 +1,101 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    style="@style/WhiteCardStyle"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_gravity="center"
-    android:background="@drawable/background_card_white_shadow"
-    android:padding="@dimen/spacing_large">
+    android:layout_gravity="center">
 
-    <TextView
-        android:id="@+id/tv_title"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        style="@style/GreyTitleStyle"
-        android:text="@string/title_member_assign_role"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent"/>
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:padding="@dimen/spacing_large">
 
-    <de.hdodenhof.circleimageview.CircleImageView
-        android:id="@+id/im_user_pic"
-        style="@style/LogoImageStyle"
-        tools:src="@drawable/flier"
-        android:layout_marginTop="@dimen/spacing_normal"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/tv_title"/>
+        <TextView
+            android:id="@+id/tv_title"
+            style="@style/GreyTitleStyle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/title_member_assign_role"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
 
-    <TextView
-        android:id="@+id/tv_user_name"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        style="@style/GreyTextStyle"
-        tools:text="ABC"
-        app:layout_constraintHorizontal_bias=".25"
-        app:layout_constraintTop_toTopOf="@id/im_user_pic"
-        app:layout_constraintStart_toEndOf="@id/im_user_pic"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintBottom_toBottomOf="@id/im_user_pic"/>
+        <de.hdodenhof.circleimageview.CircleImageView
+            android:id="@+id/im_user_pic"
+            style="@style/LogoImageStyle"
+            android:layout_marginTop="@dimen/spacing_normal"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tv_title"
+            tools:src="@drawable/dummy_alex" />
 
-    <TextView
-        android:id="@+id/tv_label_select"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Member Role(s):"
-        style="@style/InputLabelRougeSmallStyle"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toStartOf="@id/container_roles"
-        app:layout_constraintTop_toTopOf="@id/container_roles"
-        app:layout_constraintBottom_toBottomOf="@id/container_roles" />
+        <TextView
+            android:id="@+id/tv_user_name"
+            style="@style/GreyTextStyle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintBottom_toBottomOf="@id/im_user_pic"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias=".25"
+            app:layout_constraintStart_toEndOf="@id/im_user_pic"
+            app:layout_constraintTop_toTopOf="@id/im_user_pic"
+            tools:text="ABC" />
 
-    <FrameLayout
-        android:id="@+id/container_roles"
-        android:layout_width="0dp"
-        android:layout_height="@dimen/height_input_normal"
-        style="@style/InputTextStyle"
-        android:layout_marginTop="@dimen/spacing_normal"
-        android:layout_marginStart="@dimen/spacing_normal"
-        app:layout_constraintStart_toEndOf="@id/tv_label_select"
-        app:layout_constraintTop_toBottomOf="@id/im_user_pic"
-        app:layout_constraintEnd_toEndOf="parent">
+        <TextView
+            android:id="@+id/tv_label_select"
+            style="@style/InputLabelRougeSmallStyle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Member Role(s):"
+            app:layout_constraintBottom_toBottomOf="@id/container_roles"
+            app:layout_constraintEnd_toStartOf="@id/container_roles"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="@id/container_roles" />
 
-        <com.checkin.app.checkin.Utility.MultiSpinner
-            android:id="@+id/spinner_roles"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            app:staticText="false"
-            app:hintText="Assign"
-            app:entries="@array/shop_member_roles"
-            app:values="@array/value_shop_member_roles"/>
-    </FrameLayout>
+        <FrameLayout
+            android:id="@+id/container_roles"
+            style="@style/InputTextStyle"
+            android:layout_width="0dp"
+            android:layout_height="@dimen/height_input_normal"
+            android:layout_marginStart="@dimen/spacing_normal"
+            android:layout_marginTop="@dimen/spacing_normal"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@id/tv_label_select"
+            app:layout_constraintTop_toBottomOf="@id/im_user_pic">
 
-    <Button
-        android:id="@+id/btn_remove"
-        style="@style/ButtonNeutralAction"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/spacing_normal"
-        android:text="@string/btn_remove"
-        android:layout_marginEnd="@dimen/spacing_small"
-        app:layout_constraintEnd_toStartOf="@id/btn_save"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/container_roles" />
+            <com.checkin.app.checkin.Utility.MultiSpinner
+                android:id="@+id/spinner_roles"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                app:entries="@array/shop_member_roles"
+                app:hintText="Assign"
+                app:staticText="false"
+                app:values="@array/value_shop_member_roles" />
+        </FrameLayout>
 
-    <Button
-        android:id="@+id/btn_save"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        style="@style/ButtonPositiveAction"
-        android:text="@string/btn_save"
-        android:layout_marginStart="@dimen/spacing_small"
-        app:layout_constraintStart_toEndOf="@id/btn_remove"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="@id/btn_remove" />
+        <Button
+            android:id="@+id/btn_remove"
+            style="@style/ButtonNeutralAction"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/spacing_normal"
+            android:layout_marginEnd="@dimen/spacing_small"
+            android:text="@string/btn_remove"
+            app:layout_constraintEnd_toStartOf="@id/btn_save"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/container_roles" />
 
-</android.support.constraint.ConstraintLayout>
+        <Button
+            android:id="@+id/btn_save"
+            style="@style/ButtonPositiveAction"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/spacing_small"
+            android:text="@string/btn_save"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@id/btn_remove"
+            app:layout_constraintTop_toTopOf="@id/btn_remove" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</androidx.cardview.widget.CardView>
