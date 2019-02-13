@@ -31,7 +31,7 @@ public class WaiterTableModel {
     }
 
     public String formatEventCount() {
-        return String.valueOf(eventCount);
+        return eventCount > 0 ? String.valueOf(eventCount) : null;
     }
 
     public void setEventCount(int eventCount) {

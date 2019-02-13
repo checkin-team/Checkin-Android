@@ -175,7 +175,7 @@ public class MessageModel implements Serializable {
     public NotificationCompat.Builder getNotificationBuilder(Context context, int notificationId) {
         if (!shouldShowNotification())
             return null;
-        NotificationCompat.Builder builder = new NotificationCompat.Builder(context, this.getChannelId());
+        NotificationCompat.Builder builder = new NotificationCompat.Builder(context, this.getChannel());
         builder.setContentTitle(context.getString(R.string.app_name))
                 .setContentText(this.description)
                 .setSmallIcon(R.drawable.ic_launcher_background)

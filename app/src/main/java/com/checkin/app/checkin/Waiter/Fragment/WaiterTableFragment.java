@@ -67,8 +67,11 @@ public class WaiterTableFragment extends BaseFragment {
         mViewModel.getObservableData().observe(this, resource -> {
             if (resource == null)
                 return;
-            if (resource.status != Status.LOADING && resource.message != null)
+            if (resource.status == Status.SUCCESS && resource.data != null) {
+                Utils.toast(requireContext(), "Session requested to end.");
+            } else if (resource.status != Status.LOADING && resource.message != null) {
                 Utils.toast(requireContext(), resource.message);
+            }
         });
     }
 

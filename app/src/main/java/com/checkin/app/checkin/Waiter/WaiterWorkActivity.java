@@ -37,6 +37,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 
+import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.widget.Toolbar;
@@ -268,7 +269,11 @@ public class WaiterWorkActivity extends BaseAccountActivity implements WaiterTab
         int index = mFragmentAdapter.getTableIndex(sessionPk);
         WaiterTableModel tableModel = mFragmentAdapter.getTable(index);
         if (tableModel == null) return;
-        tableModel.increaseEventCount();
+        if (index == pagerTables.getCurrentItem()) {
+            tableModel.resetEventCount();
+        } else {
+            tableModel.increaseEventCount();
+        }
         mFragmentAdapter.updateTableStatus(tabLayout, index);
     }
 
@@ -396,19 +401,39 @@ public class WaiterWorkActivity extends BaseAccountActivity implements WaiterTab
             return mFragmentList.size();
         }
 
-        void setTables(TabLayout tabLayout, List<WaiterTableModel> tableModels, WaiterTableFragment.WaiterTableInteraction listener) {
+        @Override
+        public int getItemPosition(@NonNull Object object) {
+            WaiterTableFragment fragment = ((WaiterTableFragment) object);
+            int index = mFragmentList.indexOf(fragment);
+            if (index > -1) return index;
+            else return POSITION_NONE;
+        }
+
+        void resetTables() {
             mTableList.clear();
             mFragmentList.clear();
             notifyDataSetChanged();
-            for (WaiterTableModel tableModel : tableModels)
-                addTable(tabLayout, tableModel, listener);
+        }
+
+        void setTables(TabLayout tabLayout, List<WaiterTableModel> tableModels, WaiterTableFragment.WaiterTableInteraction listener) {
+            resetTables();
+            for (WaiterTableModel tableModel : tableModels) {
+                mTableList.add(tableModel);
+                mFragmentList.add(WaiterTableFragment.newInstance(tableModel.getPk(), listener));
+            }
+            updateTabUi(tabLayout);
+        }
+
+        void updateTabUi(TabLayout tabLayout) {
+            notifyDataSetChanged();
+            for (int i = 0, length = mTableList.size(); i < length; i++)
+                setTabCustomView(tabLayout, i, mTableList.get(i));
         }
 
         void addTable(TabLayout tabLayout, WaiterTableModel tableModel, WaiterTableFragment.WaiterTableInteraction listener) {
             mTableList.add(tableModel);
             mFragmentList.add(WaiterTableFragment.newInstance(tableModel.getPk(), listener));
-            setTabCustomView(tabLayout, mTableList.size() - 1, tableModel);
-            notifyDataSetChanged();
+            updateTabUi(tabLayout);
         }
 
         @Nullable
@@ -431,7 +456,7 @@ public class WaiterWorkActivity extends BaseAccountActivity implements WaiterTab
             TabLayout.Tab tab = tabLayout.getTabAt(index);
             if (tab != null) {
                 View view = LayoutInflater.from(tabLayout.getContext()).inflate(R.layout.view_tab_badge, null, false);
-                this.updateTabView(view, tableModel.getTable(), null);
+                this.updateTabView(view, tableModel.getTable(), tableModel.formatEventCount());
                 tab.setCustomView(view);
             }
         }
@@ -459,7 +484,12 @@ public class WaiterWorkActivity extends BaseAccountActivity implements WaiterTab
             WaiterTableModel data = mTableList.get(index);
             if (tab != null && tab.getCustomView() != null) {
                 if (data.getEventCount() > 0) {
-                    this.updateTabView(tab.getCustomView(), data.getTable(), data.formatEventCount());
+                    WaiterTableFragment fragment = mFragmentList.get(index);
+                    mFragmentList.remove(index);
+                    mTableList.remove(index);
+                    mTableList.add(0, data);
+                    mFragmentList.add(0, fragment);
+                    updateTabUi(tabLayout);
                 } else {
                     this.updateTabView(tab.getCustomView(), data.getTable(), null);
                 }
@@ -470,10 +500,12 @@ public class WaiterWorkActivity extends BaseAccountActivity implements WaiterTab
             TextView tvTitle = view.findViewById(R.id.tv_tab_title);
             TextView tvBadge = view.findViewById(R.id.tv_tab_badge);
             tvTitle.setText(title);
-            if (badge != null)
+            if (badge != null) {
                 tvBadge.setText(badge);
-            else
+                tvBadge.setVisibility(View.VISIBLE);
+            } else {
                 tvBadge.setVisibility(View.GONE);
+            }
         }
     }
 }

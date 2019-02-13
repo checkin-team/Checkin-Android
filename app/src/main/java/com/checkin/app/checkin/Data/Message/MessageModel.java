@@ -134,14 +134,16 @@ public class MessageModel implements Serializable {
         return this.type.name() + " -- " + this.description;
     }
 
-    protected String getChannelId() {
-        switch (this.type) {
-            case USER_SESSION_BILL_CHANGE:
-            case USER_SESSION_MEMBER_ADD_REQUEST:
-                return CHANNEL.ACTIVE_SESSION.id;
-            default:
-                return CHANNEL.DEFAULT.id;
-        }
+    protected CHANNEL getChannel() {
+        if (isUserActiveSessionNotification())
+            return CHANNEL.ACTIVE_SESSION;
+        if (isShopWaiterNotification())
+            return CHANNEL.WAITER;
+        if (isShopManagerNotification())
+            return CHANNEL.MANAGER;
+        if (this.type == MESSAGE_TYPE.SHOP_MEMBER_ADDED)
+            return CHANNEL.MEMBER;
+        return CHANNEL.DEFAULT;
     }
 
     private Intent getNotificationIntent(Context context) {
@@ -175,7 +177,9 @@ public class MessageModel implements Serializable {
     }
 
     private NotificationCompat.Builder getNotificationBuilder(Context context, int notificationId) {
-        NotificationCompat.Builder builder = new NotificationCompat.Builder(context, this.getChannelId());
+        CHANNEL channel = this.getChannel();
+        MessageUtils.createRequiredChannel(channel, context);
+        NotificationCompat.Builder builder = new NotificationCompat.Builder(context, channel.id);
         builder.setContentTitle(context.getString(R.string.app_name))
                 .setContentText(Html.fromHtml(this.description).toString())
                 .setSmallIcon(R.drawable.ic_logo_notification)

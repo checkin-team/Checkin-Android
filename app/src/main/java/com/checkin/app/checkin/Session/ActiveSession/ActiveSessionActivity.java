@@ -194,13 +194,11 @@ public class ActiveSessionActivity extends BaseActivity implements ActiveSession
     @OnClick(R.id.btn_active_session_menu)
     public void onListMenu() {
         SessionMenuActivity.withSession(this, mViewModel.getShopPk(), null);
-        updateScreen();
     }
 
     @OnClick(R.id.btn_active_session_orders)
     public void onViewOrders() {
         startActivity(new Intent(this, ActiveSessionViewOrdersActivity.class));
-        updateScreen();
     }
 
     @OnClick(R.id.tv_active_session_bill)
@@ -258,6 +256,7 @@ public class ActiveSessionActivity extends BaseActivity implements ActiveSession
                 MESSAGE_TYPE.USER_SESSION_MEMBER_ADD_REQUEST, MESSAGE_TYPE.USER_SESSION_MEMBER_ADDED, MESSAGE_TYPE.USER_SESSION_END
         };
         MessageUtils.registerLocalReceiver(this, mReceiver, types);
+        updateScreen();
     }
 
     @Override

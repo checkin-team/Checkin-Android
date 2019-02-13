@@ -10,9 +10,9 @@
 
     <androidx.cardview.widget.CardView
         android:id="@+id/container_waiter_member_details"
+        style="@style/WhiteCardStyle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        app:cardCornerRadius="@dimen/card_corner_radius"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 

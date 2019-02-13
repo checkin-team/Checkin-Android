@@ -1,14 +1,8 @@
 package com.checkin.app.checkin.Shop.Private.Invoice;
 
 import android.app.DatePickerDialog;
-import androidx.lifecycle.ViewModelProviders;
 import android.content.Intent;
 import android.os.Bundle;
-import androidx.annotation.Nullable;
-import androidx.appcompat.app.ActionBar;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
 import android.widget.TextView;
 
 import com.checkin.app.checkin.Data.Resource;
@@ -21,6 +15,12 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.Locale;
 
+import androidx.annotation.Nullable;
+import androidx.appcompat.app.ActionBar;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.lifecycle.ViewModelProviders;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
@@ -57,11 +57,13 @@ public class ShopInvoiceListActivity extends AppCompatActivity implements ShopIn
         long shopPk = getIntent().getLongExtra(KEY_SHOP_PK, 0);
         mViewModel.fetchShopSessions(shopPk);
 
-        mViewModel.getRestaurantSessions().observe(this, input->{
+        mViewModel.getRestaurantSessions().observe(this, input -> {
             if (input == null)
                 return;
-            if (input.status == Resource.Status.SUCCESS && input.data !=  null){
+            if (input.status == Resource.Status.SUCCESS && input.data != null) {
                 mAdapter.setSessionData(input.data);
+            } else if (input.status != Resource.Status.LOADING) {
+                Utils.toast(this, input.message);
             }
         });
         setupUi();

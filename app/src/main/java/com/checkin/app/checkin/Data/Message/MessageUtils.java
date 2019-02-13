@@ -69,7 +69,7 @@ public class MessageUtils {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
             createChannelGroups(notificationManager, CHANNEL_GROUP.RESTAURANT_MEMBER);
 
-            createChannels(notificationManager, CHANNEL_GROUP.RESTAURANT_MEMBER, NotificationManager.IMPORTANCE_DEFAULT, CHANNEL.MEMBER, CHANNEL.MANAGER);
+            createChannels(notificationManager, CHANNEL_GROUP.RESTAURANT_MEMBER, NotificationManager.IMPORTANCE_HIGH, CHANNEL.MEMBER, CHANNEL.MANAGER);
         }
     }
 
@@ -79,7 +79,7 @@ public class MessageUtils {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
             createChannelGroups(notificationManager, CHANNEL_GROUP.RESTAURANT_MEMBER);
 
-            createChannels(notificationManager, CHANNEL_GROUP.RESTAURANT_MEMBER, NotificationManager.IMPORTANCE_DEFAULT, CHANNEL.MEMBER, CHANNEL.WAITER);
+            createChannels(notificationManager, CHANNEL_GROUP.RESTAURANT_MEMBER, NotificationManager.IMPORTANCE_HIGH, CHANNEL.MEMBER, CHANNEL.WAITER);
         }
     }
 
@@ -143,6 +143,26 @@ public class MessageUtils {
             Log.e(TAG, "Invalid message object received.");
             e.printStackTrace();
             return null;
+        }
+    }
+
+    public static void createRequiredChannel(CHANNEL channel, Context context) {
+        NotificationManager notificationManager = ((NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE));
+        switch (channel) {
+            case ADMIN:
+            case MEMBER:
+                createAdminChannels(notificationManager);
+                break;
+            case WAITER:
+                createWaiterChannels(notificationManager);
+                break;
+            case MANAGER:
+                createManagerChannels(notificationManager);
+                break;
+            case ACTIVE_SESSION:
+            case MEDIA_UPLOAD:
+            case DEFAULT:
+                createDefaultChannels(notificationManager);
         }
     }
 
