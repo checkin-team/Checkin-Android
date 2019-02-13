@@ -37,6 +37,16 @@ android:
     - 'android-sdk-license-.+'
     - 'google-gdk-license-.+'
 
+before_cache:
+  - rm -f  $HOME/.gradle/caches/modules-2/modules-2.lock
+  - rm -fr $HOME/.gradle/caches/*/plugin-resolution/
+
+cache:
+  directories:
+    - $HOME/.gradle/caches/
+    - $HOME/.gradle/wrapper/
+    - $HOME/.android/build-cache
+
 before_install:
   - chmod +x gradlew
 #  - echo no | android create avd --force -n test -t "android-"$EMULATOR_API_LEVEL --abi $ANDROID_ABI --tag $ANDROID_TAG
@@ -49,4 +59,4 @@ script:
   - echo "Travis branch is $TRAVIS_BRANCH"
   - echo "Travis branch is in pull request $TRAVIS_PULL+REQUEST"
   - android list target
-  - ./gradlew build assembleCoreRelease
+  - ./gradlew build assembleDebug

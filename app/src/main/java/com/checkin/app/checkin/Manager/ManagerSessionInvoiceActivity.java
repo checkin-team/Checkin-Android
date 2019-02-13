@@ -1,14 +1,7 @@
 package com.checkin.app.checkin.Manager;
 
-import androidx.lifecycle.ViewModelProviders;
 import android.content.Intent;
 import android.os.Bundle;
-import androidx.annotation.Nullable;
-import androidx.core.content.ContextCompat;
-import androidx.appcompat.app.ActionBar;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -22,6 +15,13 @@ import com.checkin.app.checkin.Session.ActiveSession.InvoiceOrdersAdapter;
 import com.checkin.app.checkin.Session.Model.SessionBillModel;
 import com.checkin.app.checkin.Utility.Utils;
 
+import androidx.annotation.Nullable;
+import androidx.appcompat.app.ActionBar;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.content.ContextCompat;
+import androidx.lifecycle.ViewModelProviders;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
@@ -71,7 +71,7 @@ public class ManagerSessionInvoiceActivity extends AppCompatActivity {
             actionBar.setHomeAsUpIndicator(R.drawable.ic_back_grey);
         }
 
-        rvOrderedItems.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false));
+        rvOrderedItems.setLayoutManager(new LinearLayoutManager(this, RecyclerView.VERTICAL, false));
         mAdapter = new InvoiceOrdersAdapter(null);
         rvOrderedItems.setAdapter(mAdapter);
 

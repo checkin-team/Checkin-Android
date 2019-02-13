@@ -1,14 +1,6 @@
 package com.checkin.app.checkin.Shop.Private.Edit;
 
-import androidx.lifecycle.ViewModelProviders;
 import android.os.Bundle;
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.fragment.app.Fragment;
-import androidx.appcompat.app.AlertDialog;
-import androidx.recyclerview.widget.GridLayoutManager;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
 import android.text.InputType;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -20,9 +12,9 @@ import android.widget.Toast;
 import com.checkin.app.checkin.Data.Resource;
 import com.checkin.app.checkin.Misc.StatusTextViewHolder;
 import com.checkin.app.checkin.R;
+import com.checkin.app.checkin.Shop.Private.ShopProfileViewModel;
 import com.checkin.app.checkin.Shop.RestaurantModel;
 import com.checkin.app.checkin.Shop.ShopModel.PAYMENT_MODE;
-import com.checkin.app.checkin.Shop.Private.ShopProfileViewModel;
 import com.checkin.app.checkin.Utility.HeaderFooterRecyclerViewAdapter;
 import com.checkin.app.checkin.Utility.MultiSpinner;
 
@@ -30,6 +22,13 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.appcompat.app.AlertDialog;
+import androidx.fragment.app.Fragment;
+import androidx.lifecycle.ViewModelProviders;
+import androidx.recyclerview.widget.GridLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
@@ -43,20 +42,32 @@ public class EditAspectFragment extends Fragment implements MultiSpinner.MultiSp
     private static final String TAG = EditAspectFragment.class.getSimpleName();
     private Unbinder unbinder;
 
-    @BindView(R.id.cb_choice_paytm) CompoundButton cbChoicePaytm;
-    @BindView(R.id.cb_choice_card) CompoundButton cbChoiceCard;
-    @BindView(R.id.cb_choice_cash) CompoundButton cbChoiceCash;
+    @BindView(R.id.cb_choice_paytm)
+    CompoundButton cbChoicePaytm;
+    @BindView(R.id.cb_choice_card)
+    CompoundButton cbChoiceCard;
+    @BindView(R.id.cb_choice_cash)
+    CompoundButton cbChoiceCash;
 
-    @BindView(R.id.rb_alcohol_yes) CompoundButton rbChoiceAlcoholYes;
-    @BindView(R.id.rb_alcohol_no) CompoundButton rbChoiceAlcoholNo;
-    @BindView(R.id.rb_delivery_no) CompoundButton rbChoiceDeliveryNo;
-    @BindView(R.id.rb_delivery_yes) CompoundButton rbChoiceDeliveryYes;
-    @BindView(R.id.rb_non_veg) CompoundButton rbChoiceNonVeg;
-    @BindView(R.id.rb_veg) CompoundButton rbChoiceVeg;
+    @BindView(R.id.rb_alcohol_yes)
+    CompoundButton rbChoiceAlcoholYes;
+    @BindView(R.id.rb_alcohol_no)
+    CompoundButton rbChoiceAlcoholNo;
+    @BindView(R.id.rb_delivery_no)
+    CompoundButton rbChoiceDeliveryNo;
+    @BindView(R.id.rb_delivery_yes)
+    CompoundButton rbChoiceDeliveryYes;
+    @BindView(R.id.rb_non_veg)
+    CompoundButton rbChoiceNonVeg;
+    @BindView(R.id.rb_veg)
+    CompoundButton rbChoiceVeg;
 
-    @BindView(R.id.rv_additional_data) RecyclerView rvExtraData;
-    @BindView(R.id.spinner_cuisines) MultiSpinner vCuisines;
-    @BindView(R.id.spinner_categories) MultiSpinner vCategories;
+    @BindView(R.id.rv_additional_data)
+    RecyclerView rvExtraData;
+    @BindView(R.id.spinner_cuisines)
+    MultiSpinner vCuisines;
+    @BindView(R.id.spinner_categories)
+    MultiSpinner vCategories;
 
     private AdditionalDataAdapter mAdapter;
     private ShopProfileViewModel mViewModel;
@@ -71,14 +82,14 @@ public class EditAspectFragment extends Fragment implements MultiSpinner.MultiSp
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        final View view =inflater.inflate(R.layout.fragment_shop_edit_aspect, container, false);
+        final View view = inflater.inflate(R.layout.fragment_shop_edit_aspect, container, false);
         unbinder = ButterKnife.bind(this, view);
         return view;
     }
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
-        rvExtraData.setLayoutManager(new GridLayoutManager(getContext(), 2, LinearLayoutManager.VERTICAL, false));
+        rvExtraData.setLayoutManager(new GridLayoutManager(getContext(), 2, RecyclerView.VERTICAL, false));
         mAdapter = new AdditionalDataAdapter(null);
         rvExtraData.setAdapter(mAdapter);
 
@@ -147,7 +158,7 @@ public class EditAspectFragment extends Fragment implements MultiSpinner.MultiSp
     }
 
     private void setPaymentModes(PAYMENT_MODE[] modes) {
-        for (PAYMENT_MODE mode: modes) {
+        for (PAYMENT_MODE mode : modes) {
             switch (mode) {
                 case CASH:
                     cbChoiceCash.setChecked(true);
@@ -198,6 +209,7 @@ public class EditAspectFragment extends Fragment implements MultiSpinner.MultiSp
 
     public interface AspectFragmentInteraction {
         void updateShopAspects(RestaurantModel shop);
+
         void onAspectDataValidStatus(boolean isValid);
     }
 

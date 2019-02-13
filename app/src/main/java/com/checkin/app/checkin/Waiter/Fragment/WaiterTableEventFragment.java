@@ -1,12 +1,6 @@
 package com.checkin.app.checkin.Waiter.Fragment;
 
-import androidx.lifecycle.ViewModelProviders;
 import android.os.Bundle;
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.fragment.app.Fragment;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
 import android.view.View;
 import android.widget.TextView;
 
@@ -20,6 +14,12 @@ import com.checkin.app.checkin.Waiter.Model.WaiterEventModel;
 import com.checkin.app.checkin.Waiter.WaiterEventAdapter;
 import com.checkin.app.checkin.Waiter.WaiterTableViewModel;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.fragment.app.Fragment;
+import androidx.lifecycle.ViewModelProviders;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 import butterknife.BindView;
 
 public class WaiterTableEventFragment extends BaseFragment implements WaiterEventAdapter.WaiterEventInteraction {
@@ -51,8 +51,8 @@ public class WaiterTableEventFragment extends BaseFragment implements WaiterEven
         mActiveAdapter = new WaiterEventAdapter(this);
         mDoneAdapter = new WaiterEventAdapter(this);
 
-        rvEventsActive.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false));
-        rvEventsDone.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false));
+        rvEventsActive.setLayoutManager(new LinearLayoutManager(getContext(), RecyclerView.VERTICAL, false));
+        rvEventsDone.setLayoutManager(new LinearLayoutManager(getContext(), RecyclerView.VERTICAL, false));
         rvEventsActive.setAdapter(mActiveAdapter);
         rvEventsDone.setAdapter(mDoneAdapter);
 

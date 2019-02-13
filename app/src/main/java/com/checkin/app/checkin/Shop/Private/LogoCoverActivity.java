@@ -1,13 +1,7 @@
 package com.checkin.app.checkin.Shop.Private;
 
-import androidx.lifecycle.ViewModelProviders;
 import android.content.Intent;
 import android.os.Bundle;
-import androidx.annotation.Nullable;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.recyclerview.widget.GridLayoutManager;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
 import android.util.Log;
 import android.widget.ImageView;
 
@@ -19,6 +13,11 @@ import com.checkin.app.checkin.Utility.Utils;
 import java.io.File;
 import java.util.Arrays;
 
+import androidx.annotation.Nullable;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.lifecycle.ViewModelProviders;
+import androidx.recyclerview.widget.GridLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
@@ -77,7 +76,7 @@ public class LogoCoverActivity extends AppCompatActivity implements ShopCoverAda
         mViewModel.setShopPk(shopPk);
         ShopCoverAdapter adapter = new ShopCoverAdapter(coverUrls, this);
         rvCovers.setAdapter(adapter);
-        rvCovers.setLayoutManager(new GridLayoutManager(this, 2, LinearLayoutManager.VERTICAL, false));
+        rvCovers.setLayoutManager(new GridLayoutManager(this, 2, RecyclerView.VERTICAL, false));
         Utils.loadImageOrDefault(imLogo, logoUrl, R.drawable.card_image_add);
     }
 
@@ -94,7 +93,7 @@ public class LogoCoverActivity extends AppCompatActivity implements ShopCoverAda
 
     @Override
     public void onCoverChange(int index) {
-        Intent intent = new Intent(this , SelectCropImageActivity.class);
+        Intent intent = new Intent(this, SelectCropImageActivity.class);
         startActivityForResult(intent, RC_COVER_BASE + index);
     }
 
@@ -105,9 +104,9 @@ public class LogoCoverActivity extends AppCompatActivity implements ShopCoverAda
             if (data.getExtras() != null) {
                 File image = (File) data.getExtras().get(SelectCropImageActivity.KEY_IMAGE);
                 if (requestCode == RC_LOGO) {
-                    mViewModel.updateCoverPic(image,this, -1);
+                    mViewModel.updateCoverPic(image, this, -1);
                 } else {
-                    mViewModel.updateCoverPic(image,this, requestCode - RC_COVER_BASE);
+                    mViewModel.updateCoverPic(image, this, requestCode - RC_COVER_BASE);
                 }
             }
         }

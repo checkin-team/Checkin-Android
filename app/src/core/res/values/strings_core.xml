@@ -1,6 +1,0 @@
-<?xml version="1.0" encoding="utf-8"?>
-<resources>
-    <string name="your_friends_can_join_by_scanning_qr_code">Your friends can join your session by scanning the QR Code</string>
-    <string name="recommendation_coming_soon">Recommendation of dishes coming soon</string>
-    <string name="pending_request">(Pending Request)</string>
-</resources>

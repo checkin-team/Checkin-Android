@@ -1,11 +1,6 @@
 package com.checkin.app.checkin.Menu.Fragment;
 
-import androidx.lifecycle.ViewModelProviders;
 import android.os.Bundle;
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
 import android.view.View;
 import android.widget.TextView;
 
@@ -18,6 +13,11 @@ import com.checkin.app.checkin.Misc.BaseFragment;
 import com.checkin.app.checkin.R;
 import com.checkin.app.checkin.Utility.Utils;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.lifecycle.ViewModelProviders;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 import butterknife.BindView;
 
 public class MenuGroupsFragment extends BaseFragment {
@@ -86,7 +86,7 @@ public class MenuGroupsFragment extends BaseFragment {
     }
 
     private void setupGroupRecycler() {
-        rvGroupsList.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false));
+        rvGroupsList.setLayoutManager(new LinearLayoutManager(getContext(), RecyclerView.VERTICAL, false));
 
         mAdapter = new MenuGroupAdapter(null, requireFragmentManager(), mListener);
         mAdapter.setSessionActive(mIsSessionActive);

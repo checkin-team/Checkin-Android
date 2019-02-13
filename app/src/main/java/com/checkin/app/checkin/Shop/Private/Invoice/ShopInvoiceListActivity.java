@@ -70,7 +70,7 @@ public class ShopInvoiceListActivity extends AppCompatActivity implements ShopIn
     }
 
     private void setupUi() {
-        rvSessions.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false));
+        rvSessions.setLayoutManager(new LinearLayoutManager(this, RecyclerView.VERTICAL, false));
         rvSessions.setAdapter(mAdapter);
 
         tvFilterFrom.setText(Utils.getCurrentFormattedDate());

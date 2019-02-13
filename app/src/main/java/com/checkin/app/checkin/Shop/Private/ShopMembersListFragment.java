@@ -1,12 +1,6 @@
 package com.checkin.app.checkin.Shop.Private;
 
-import androidx.lifecycle.ViewModelProviders;
 import android.os.Bundle;
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.fragment.app.Fragment;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -14,6 +8,12 @@ import android.view.ViewGroup;
 import com.checkin.app.checkin.Data.Resource.Status;
 import com.checkin.app.checkin.R;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.fragment.app.Fragment;
+import androidx.lifecycle.ViewModelProviders;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.Unbinder;
@@ -21,7 +21,8 @@ import butterknife.Unbinder;
 public class ShopMembersListFragment extends Fragment implements MemberAdapter.OnMemberInteractionListener {
     private Unbinder unbinder;
 
-    @BindView(R.id.rv_shop_members) RecyclerView rvShopMembers;
+    @BindView(R.id.rv_shop_members)
+    RecyclerView rvShopMembers;
 
     private MemberAdapter mAdapter;
     private MemberViewModel mViewModel;
@@ -33,7 +34,8 @@ public class ShopMembersListFragment extends Fragment implements MemberAdapter.O
         return fragment;
     }
 
-    public ShopMembersListFragment() { }
+    public ShopMembersListFragment() {
+    }
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -59,7 +61,7 @@ public class ShopMembersListFragment extends Fragment implements MemberAdapter.O
     public void setupUI() {
         mAdapter = new MemberAdapter(null);
         mAdapter.setItemListener(this);
-        rvShopMembers.setLayoutManager(new LinearLayoutManager(requireContext(), LinearLayoutManager.VERTICAL, false));
+        rvShopMembers.setLayoutManager(new LinearLayoutManager(requireContext(), RecyclerView.VERTICAL, false));
         rvShopMembers.setAdapter(mAdapter);
     }
 

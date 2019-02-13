@@ -1,12 +1,7 @@
 package com.checkin.app.checkin.Manager.Fragment;
 
 import android.annotation.SuppressLint;
-import androidx.lifecycle.ViewModelProviders;
 import android.os.Bundle;
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
 import android.view.View;
 import android.view.animation.AnimationUtils;
 import android.widget.TextView;
@@ -19,6 +14,11 @@ import com.checkin.app.checkin.Session.ActiveSession.Chat.SessionChatModel;
 import com.checkin.app.checkin.Session.Model.SessionOrderedItemModel;
 import com.checkin.app.checkin.Utility.Utils;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.lifecycle.ViewModelProviders;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 import butterknife.BindView;
 
 public class ManagerSessionOrderFragment extends BaseFragment implements ManagerSessionOrderAdapter.SessionOrdersInteraction {
@@ -56,11 +56,11 @@ public class ManagerSessionOrderFragment extends BaseFragment implements Manager
     }
 
     private void setupUi() {
-        rvOrdersNew.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false));
+        rvOrdersNew.setLayoutManager(new LinearLayoutManager(getContext(), RecyclerView.VERTICAL, false));
         mAdapterNew = new ManagerSessionOrderAdapter(this);
         rvOrdersNew.setAdapter(mAdapterNew);
 
-        rvOrdersAccepted.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false));
+        rvOrdersAccepted.setLayoutManager(new LinearLayoutManager(getContext(), RecyclerView.VERTICAL, false));
         mAdapterAccepted = new ManagerSessionOrderAdapter(this);
         rvOrdersAccepted.setAdapter(mAdapterAccepted);
 
@@ -147,6 +147,7 @@ public class ManagerSessionOrderFragment extends BaseFragment implements Manager
         mViewModel.updateOrderStatus(orderedItem.getPk(), statusType.tag);
     }
 
-    public interface ManagerOrdersInteraction {}
+    public interface ManagerOrdersInteraction {
+    }
 }
 

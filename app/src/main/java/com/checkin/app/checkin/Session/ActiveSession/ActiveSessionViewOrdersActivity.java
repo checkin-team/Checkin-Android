@@ -32,7 +32,7 @@ public class ActiveSessionViewOrdersActivity extends BaseActivity implements Act
 
         initRefreshScreen(R.id.sr_active_session_orders);
 
-        rvOrders.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false));
+        rvOrders.setLayoutManager(new LinearLayoutManager(this, RecyclerView.VERTICAL, false));
         mOrdersAdapter = new ActiveSessionOrdersAdapter(null, this);
         rvOrders.setAdapter(mOrdersAdapter);
 

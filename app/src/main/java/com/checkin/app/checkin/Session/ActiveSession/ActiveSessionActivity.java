@@ -154,7 +154,7 @@ public class ActiveSessionActivity extends BaseActivity implements ActiveSession
 
     @SuppressLint("ClickableViewAccessibility")
     private void setupUi() {
-        rvMembers.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false));
+        rvMembers.setLayoutManager(new LinearLayoutManager(this, RecyclerView.HORIZONTAL, false));
         mSessionMembersAdapter = new ActiveSessionMemberAdapter(null, this);
         rvMembers.setAdapter(mSessionMembersAdapter);
 

@@ -1,12 +1,6 @@
 package com.checkin.app.checkin.Search;
 
-import androidx.lifecycle.ViewModelProviders;
 import android.os.Bundle;
-import androidx.annotation.LayoutRes;
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -18,14 +12,21 @@ import com.checkin.app.checkin.Utility.ItemClickSupport;
 
 import java.util.List;
 
+import androidx.annotation.LayoutRes;
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.lifecycle.ViewModelProviders;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.Unbinder;
 
-public abstract class BaseResultFragment <S extends SearchResultModel> extends BaseSearchFragment implements ItemClickSupport.OnItemClickListener, ItemClickSupport.OnItemLongClickListener {
+public abstract class BaseResultFragment<S extends SearchResultModel> extends BaseSearchFragment implements ItemClickSupport.OnItemClickListener, ItemClickSupport.OnItemLongClickListener {
     private Unbinder unbinder;
 
-    @BindView(R.id.rv_results) RecyclerView rvResults;
+    @BindView(R.id.rv_results)
+    RecyclerView rvResults;
 
     protected SearchResultAdapter<S> mAdapter;
     protected SearchViewModel mViewModel;
@@ -42,7 +43,7 @@ public abstract class BaseResultFragment <S extends SearchResultModel> extends B
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         mAdapter = new SearchResultAdapter<>(mListener);
-        rvResults.setLayoutManager(new LinearLayoutManager(requireContext(), LinearLayoutManager.VERTICAL, false));
+        rvResults.setLayoutManager(new LinearLayoutManager(requireContext(), RecyclerView.VERTICAL, false));
         rvResults.setAdapter(mAdapter);
 
         ItemClickSupport.addTo(rvResults)
