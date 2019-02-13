@@ -1,12 +1,6 @@
 package com.checkin.app.checkin.Manager.Fragment;
 
-import androidx.lifecycle.ViewModelProviders;
 import android.os.Bundle;
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.fragment.app.Fragment;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -15,12 +9,18 @@ import android.widget.TextView;
 import com.checkin.app.checkin.Data.Resource;
 import com.checkin.app.checkin.Manager.Adapter.ManagerStatsOrderAdapter;
 import com.checkin.app.checkin.Manager.Model.ManagerStatsModel;
-import com.checkin.app.checkin.Manager.Model.ManagerWorkViewModel;
+import com.checkin.app.checkin.Manager.ManagerWorkViewModel;
 import com.checkin.app.checkin.R;
 import com.checkin.app.checkin.Utility.Utils;
 
 import java.util.Locale;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.fragment.app.Fragment;
+import androidx.lifecycle.ViewModelProviders;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.Unbinder;
@@ -65,12 +65,12 @@ public class ManagerStatsFragment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
 
         mAdapter = new ManagerStatsOrderAdapter();
-        rvTrendingOrders.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false));
+        rvTrendingOrders.setLayoutManager(new LinearLayoutManager(getContext(), RecyclerView.VERTICAL, false));
         rvTrendingOrders.setAdapter(mAdapter);
 
-        ManagerWorkViewModel managerWorkViewModel = ViewModelProviders.of(requireActivity()).get(ManagerWorkViewModel.class);
-        managerWorkViewModel.fetchStatistics();
-        managerWorkViewModel.getRestaurantStatistics().observe(this, input -> {
+        ManagerWorkViewModel viewModel = ViewModelProviders.of(requireActivity()).get(ManagerWorkViewModel.class);
+        viewModel.fetchStatistics();
+        viewModel.getRestaurantStatistics().observe(this, input -> {
             if (input == null)
                 return;
             if (input.status == Resource.Status.SUCCESS && input.data != null) {

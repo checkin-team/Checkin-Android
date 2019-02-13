@@ -1,7 +1,5 @@
 package com.checkin.app.checkin.Manager.Adapter;
 
-import androidx.annotation.NonNull;
-import androidx.recyclerview.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -16,6 +14,8 @@ import com.checkin.app.checkin.Session.ActiveSession.Chat.SessionEventBasicModel
 
 import java.util.List;
 
+import androidx.annotation.NonNull;
+import androidx.recyclerview.widget.RecyclerView;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
@@ -95,7 +95,7 @@ public class ManagerSessionEventAdapter extends RecyclerView.Adapter<ManagerSess
             tvEventMsg.setText(eventModel.getMessage());
             imEventType.setImageResource(SessionEventBasicModel.getEventIcon(eventModel.getType(), eventModel.getService(), eventModel.getConcern()));
 
-            if (eventModel.getType() == EVENT_REQUEST_CHECKOUT) {
+            if (eventModel.getType() == EVENT_REQUEST_CHECKOUT && eventModel.getStatus() == CHAT_STATUS_TYPE.OPEN) {
                 btnEventApprove.setVisibility(View.VISIBLE);
                 btnEventDone.setVisibility(View.GONE);
             }
@@ -120,6 +120,7 @@ public class ManagerSessionEventAdapter extends RecyclerView.Adapter<ManagerSess
 
     public interface SessionEventInteraction {
         void onEventMarkDone(ManagerSessionEventModel eventModel);
+
         void onBillApprove();
     }
 }

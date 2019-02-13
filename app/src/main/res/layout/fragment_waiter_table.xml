@@ -1,92 +1,86 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.swiperefreshlayout.widget.SwipeRefreshLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/sr_waiter_table"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:paddingStart="@dimen/spacing_normal"
+    android:paddingTop="@dimen/spacing_normal"
+    android:paddingEnd="@dimen/spacing_normal">
 
-    <androidx.constraintlayout.widget.ConstraintLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:paddingStart="@dimen/spacing_normal"
-        android:paddingTop="@dimen/spacing_normal"
-        android:paddingEnd="@dimen/spacing_normal">
+    <androidx.cardview.widget.CardView
+        android:id="@+id/container_waiter_member_details"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:cardCornerRadius="@dimen/card_corner_radius"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
 
-        <androidx.cardview.widget.CardView
-            android:id="@+id/container_waiter_member_details"
-            app:cardCornerRadius="@dimen/card_corner_radius"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent">
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:paddingStart="@dimen/spacing_normal"
+            android:paddingTop="@dimen/spacing_extra_small"
+            android:paddingEnd="@dimen/spacing_normal"
+            android:paddingBottom="@dimen/spacing_extra_small">
 
-            <androidx.constraintlayout.widget.ConstraintLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:paddingStart="@dimen/spacing_normal"
-                android:paddingTop="@dimen/spacing_extra_small"
-                android:paddingEnd="@dimen/spacing_normal"
-                android:paddingBottom="@dimen/spacing_extra_small">
+            <ImageView
+                android:id="@+id/im_waiter_table_members"
+                android:layout_width="@dimen/size_image_small"
+                android:layout_height="@dimen/size_image_small"
+                android:layout_marginEnd="@dimen/spacing_small"
+                android:src="@drawable/fore_male_grey"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
 
-                <ImageView
-                    android:id="@+id/im_waiter_table_members"
-                    android:layout_width="@dimen/size_image_small"
-                    android:layout_height="@dimen/size_image_small"
-                    android:layout_marginEnd="@dimen/spacing_small"
-                    android:src="@drawable/fore_male_grey"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent" />
-
-                <TextView
-                    android:id="@+id/tv_waiter_table_members_count"
-                    style="@style/GreyTitleStyle"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="@dimen/spacing_small"
-                    android:textSize="@dimen/font_largest"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintStart_toEndOf="@id/im_waiter_table_members"
-                    app:layout_constraintTop_toTopOf="parent"
-                    tools:text="0" />
-
-            </androidx.constraintlayout.widget.ConstraintLayout>
-
-        </androidx.cardview.widget.CardView>
-
-        <LinearLayout
-            android:id="@+id/container_waiter_table_actions"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="parent">
-
-            <Button
-                android:id="@+id/btn_waiter_table_checkout"
-                style="@style/ButtonNeutralAction"
-                android:layout_width="wrap_content"
-                android:layout_height="@dimen/button_height_normal"
-                android:text="Checkout" />
-
-            <ImageButton
-                android:id="@+id/btn_waiter_table_menu"
+            <TextView
+                android:id="@+id/tv_waiter_table_members_count"
+                style="@style/GreyTitleStyle"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="@dimen/spacing_normal"
-                android:background="@color/transparent"
-                android:src="@drawable/ic_action_show_menu" />
-        </LinearLayout>
+                android:layout_marginStart="@dimen/spacing_small"
+                android:textSize="@dimen/font_largest"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toEndOf="@id/im_waiter_table_members"
+                app:layout_constraintTop_toTopOf="parent"
+                tools:text="0" />
 
-        <FrameLayout
-            android:id="@+id/container_waiter_table_fragment"
-            android:layout_width="0dp"
-            android:layout_height="0dp"
-            android:layout_marginTop="@dimen/spacing_normal"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/container_waiter_member_details" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
 
-    </androidx.constraintlayout.widget.ConstraintLayout>
-</androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
+    </androidx.cardview.widget.CardView>
+
+    <LinearLayout
+        android:id="@+id/container_waiter_table_actions"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <Button
+            android:id="@+id/btn_waiter_table_checkout"
+            style="@style/ButtonNeutralAction"
+            android:layout_width="wrap_content"
+            android:layout_height="@dimen/button_height_normal"
+            android:text="Checkout" />
+
+        <ImageButton
+            android:id="@+id/btn_waiter_table_menu"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/spacing_normal"
+            android:background="@color/transparent"
+            android:src="@drawable/ic_action_show_menu" />
+    </LinearLayout>
+
+    <FrameLayout
+        android:id="@+id/container_waiter_table_fragment"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginTop="@dimen/spacing_normal"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/container_waiter_member_details" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

@@ -94,4 +94,23 @@ public class SessionBillModel {
     public void setDiscountPercentage(Double discountPercentage) {
         this.discountPercentage = discountPercentage;
     }
+
+    public void giveTip(double tip) {
+        this.tip = tip;
+        calculateTotal();
+    }
+
+    private void calculateTotal() {
+        this.total = 0d;
+        if (this.subtotal != null)
+            this.total += this.subtotal;
+        if (this.tip != null)
+            this.total += this.tip;
+        if (this.tax != null)
+            this.total += this.tax;
+        if (this.discount != null)
+            this.total -= this.discount;
+        if (this.offers != null)
+            this.total -= this.offers;
+    }
 }

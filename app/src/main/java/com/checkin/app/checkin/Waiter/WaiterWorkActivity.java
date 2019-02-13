@@ -1,21 +1,9 @@
 package com.checkin.app.checkin.Waiter;
 
-import androidx.lifecycle.ViewModelProviders;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
-import androidx.annotation.Nullable;
-import com.google.android.material.tabs.TabLayout;
-import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentManager;
-import androidx.fragment.app.FragmentStatePagerAdapter;
-import androidx.drawerlayout.widget.DrawerLayout;
-import androidx.appcompat.app.ActionBarDrawerToggle;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
-import androidx.appcompat.widget.Toolbar;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.View;
@@ -43,16 +31,26 @@ import com.checkin.app.checkin.Waiter.Fragment.WaiterTableFragment;
 import com.checkin.app.checkin.Waiter.Model.WaiterEventModel;
 import com.checkin.app.checkin.Waiter.Model.WaiterStatsModel;
 import com.checkin.app.checkin.Waiter.Model.WaiterTableModel;
+import com.google.android.material.tabs.TabLayout;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 
+import androidx.annotation.Nullable;
+import androidx.appcompat.app.ActionBarDrawerToggle;
+import androidx.appcompat.widget.Toolbar;
+import androidx.drawerlayout.widget.DrawerLayout;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentStatePagerAdapter;
+import androidx.lifecycle.ViewModelProviders;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+import androidx.viewpager.widget.ViewPager;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
-
-import static com.checkin.app.checkin.Data.Message.Constants.KEY_DATA;
 
 public class WaiterWorkActivity extends BaseAccountActivity implements WaiterTableFragment.WaiterTableInteraction {
     private static final String TAG = WaiterWorkActivity.class.getSimpleName();
@@ -79,16 +77,9 @@ public class WaiterWorkActivity extends BaseAccountActivity implements WaiterTab
     private final BroadcastReceiver mReceiver = new BroadcastReceiver() {
         @Override
         public void onReceive(Context context, Intent intent) {
-            MessageModel message;
-            try {
-                message = ((MessageModel) intent.getSerializableExtra(KEY_DATA));
-                if (message == null)
-                    return;
-            } catch (ClassCastException e) {
-                Log.e(TAG, "Invalid message object received.");
-                e.printStackTrace();
-                return;
-            }
+            MessageModel message = MessageUtils.parseMessage(intent);
+            if (message == null) return;
+
             EventBriefModel eventModel;
             BriefModel user;
             SessionOrderedItemModel orderedItemModel;
@@ -103,21 +94,25 @@ public class WaiterWorkActivity extends BaseAccountActivity implements WaiterTab
                         tableModel.setHost(user);
                     }
                     WaiterWorkActivity.this.addTable(tableModel);
+                    WaiterWorkActivity.this.updateTableStatus(tableModel.getPk());
                     break;
                 case WAITER_SESSION_NEW_ORDER:
                     orderedItemModel = message.getRawData().getSessionOrderedItem();
                     sessionPk = message.getTarget().getPk();
                     eventModel = EventBriefModel.getFromManagerEventModel(message.getRawData().getSessionEventBrief());
                     WaiterWorkActivity.this.addNewOrder(sessionPk, orderedItemModel, eventModel);
+                    WaiterWorkActivity.this.updateTableStatus(sessionPk);
                     break;
                 case WAITER_SESSION_COLLECT_CASH:
                     sessionPk = message.getObject().getPk();
                     WaiterWorkActivity.this.collectCash(sessionPk, message.getRawData().getSessionBillTotal(), message.getRawData().getSessionBillPaymentMode());
+                    WaiterWorkActivity.this.updateTableStatus(sessionPk);
                     break;
                 case WAITER_SESSION_EVENT_SERVICE:
                     sessionPk = message.getTarget().getPk();
                     eventModel = EventBriefModel.getFromManagerEventModel(message.getRawData().getSessionEventBrief());
                     WaiterWorkActivity.this.addNewServiceEvent(sessionPk, eventModel, message.getRawData().getSessionEventBrief().getStatus());
+                    WaiterWorkActivity.this.updateTableStatus(sessionPk);
                     break;
                 case WAITER_SESSION_HOST_ASSIGNED:
                     sessionPk = message.getTarget().getPk();
@@ -125,14 +120,15 @@ public class WaiterWorkActivity extends BaseAccountActivity implements WaiterTab
                     WaiterWorkActivity.this.updateTableHost(sessionPk, user);
                     break;
                 case WAITER_SESSION_MEMBER_CHANGE:
-                    sessionPk = message.getTarget().getPk();
+                    sessionPk = message.getObject().getPk();
                     int customerCount = message.getRawData().getSessionCustomerCount();
-                    WaiterWorkActivity.this.updateTableCount(sessionPk, customerCount);
+                    WaiterWorkActivity.this.updateTableCustomerCount(sessionPk, customerCount);
                     break;
                 case WAITER_SESSION_UPDATE_ORDER:
                     sessionPk = message.getTarget().getPk();
                     long eventId = message.getObject().getPk();
                     WaiterWorkActivity.this.updateEventStatus(sessionPk, eventId, message.getRawData().getSessionEventStatus());
+                    WaiterWorkActivity.this.updateTableStatus(sessionPk);
                     break;
                 case WAITER_SESSION_END:
                     sessionPk = message.getObject().getPk();
@@ -168,7 +164,8 @@ public class WaiterWorkActivity extends BaseAccountActivity implements WaiterTab
                             Locale.ENGLISH, getString(R.string.menu_waiter_orders_taken), data.formatOrdersTaken()));
                     menu.getItem(1).setTitle(String.format(
                             Locale.ENGLISH, getString(R.string.menu_waiter_total_tip), data.formatTotalTip(this)));
-                } catch (IndexOutOfBoundsException ignored) {}
+                } catch (IndexOutOfBoundsException ignored) {
+                }
             }
         });
     }
@@ -189,7 +186,12 @@ public class WaiterWorkActivity extends BaseAccountActivity implements WaiterTab
             if (listResource == null)
                 return;
             if (listResource.status == Status.SUCCESS && listResource.data != null) {
-                mFragmentAdapter.setTables(tabLayout, listResource.data);
+                stopRefreshing();
+                mFragmentAdapter.setTables(tabLayout, listResource.data, this);
+            } else if (listResource.status == Status.LOADING) {
+                startRefreshing();
+            } else {
+                stopRefreshing();
             }
         });
 
@@ -197,10 +199,20 @@ public class WaiterWorkActivity extends BaseAccountActivity implements WaiterTab
             if (qrResource == null)
                 return;
             if (qrResource.status == Status.SUCCESS && qrResource.data != null) {
-                mFragmentAdapter.addTable(tabLayout, new WaiterTableModel(qrResource.data.getSessionPk(), qrResource.data.getTable()));
-                mViewModel.updateResults();
+                mFragmentAdapter.addTable(
+                        tabLayout, new WaiterTableModel(qrResource.data.getSessionPk(), qrResource.data.getTable()), this);
             } else if (qrResource.status != Status.LOADING) {
                 Utils.toast(this, qrResource.message);
+            }
+        });
+
+        pagerTables.addOnPageChangeListener(new ViewPager.SimpleOnPageChangeListener() {
+            @Override
+            public void onPageSelected(int position) {
+                WaiterTableModel data = mFragmentAdapter.getTable(position);
+                if (data == null) return;
+                data.resetEventCount();
+                mFragmentAdapter.updateTableStatus(tabLayout, position);
             }
         });
     }
@@ -208,8 +220,8 @@ public class WaiterWorkActivity extends BaseAccountActivity implements WaiterTab
     private void setupShopAssignedTables() {
         final WaiterEndDrawerTableAdapter assignedTableAdapter = new WaiterEndDrawerTableAdapter();
         final WaiterEndDrawerTableAdapter unassignedTableAdapter = new WaiterEndDrawerTableAdapter();
-        rvAssignedTables.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false));
-        rvUnassignedTables.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false));
+        rvAssignedTables.setLayoutManager(new LinearLayoutManager(this, RecyclerView.VERTICAL, false));
+        rvUnassignedTables.setLayoutManager(new LinearLayoutManager(this, RecyclerView.VERTICAL, false));
 
         rvAssignedTables.setAdapter(assignedTableAdapter);
         rvUnassignedTables.setAdapter(unassignedTableAdapter);
@@ -230,6 +242,7 @@ public class WaiterWorkActivity extends BaseAccountActivity implements WaiterTab
     }
 
     private void setupUI() {
+        initRefreshScreen(R.id.sr_waiter_work);
         setSupportActionBar(toolbarWaiter);
 
         ActionBarDrawerToggle startToggle = new ActionBarDrawerToggle(this, drawerLayout, toolbarWaiter, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
@@ -241,9 +254,22 @@ public class WaiterWorkActivity extends BaseAccountActivity implements WaiterTab
         endToggle.syncState();
     }
 
+    @Override
+    protected void updateScreen() {
+        getAccountViewModel().updateResults();
+        mViewModel.updateResults();
+    }
 
     private void addTable(RestaurantTableModel tableModel) {
         mViewModel.addRestaurantTable(tableModel);
+    }
+
+    private void updateTableStatus(long sessionPk) {
+        int index = mFragmentAdapter.getTableIndex(sessionPk);
+        WaiterTableModel tableModel = mFragmentAdapter.getTable(index);
+        if (tableModel == null) return;
+        tableModel.increaseEventCount();
+        mFragmentAdapter.updateTableStatus(tabLayout, index);
     }
 
     private void addNewOrder(long sessionPk, SessionOrderedItemModel orderedItemModel, EventBriefModel eventBriefModel) {
@@ -255,7 +281,6 @@ public class WaiterWorkActivity extends BaseAccountActivity implements WaiterTab
             viewModel.addNewEvent(eventModel);
         }
     }
-
 
     private void collectCash(long sessionPk, double sessionBillTotal, ShopModel.PAYMENT_MODE sessionBillPaymentMode) {
         WaiterTableViewModel viewModel = mFragmentAdapter.getTableViewModel(sessionPk);
@@ -285,7 +310,7 @@ public class WaiterWorkActivity extends BaseAccountActivity implements WaiterTab
         }
     }
 
-    private void updateTableCount(long sessionPk, int customerCount) {
+    private void updateTableCustomerCount(long sessionPk, int customerCount) {
         WaiterTableViewModel viewModel = mFragmentAdapter.getTableViewModel(sessionPk);
         if (viewModel != null) {
             viewModel.updateMemberCount(customerCount);
@@ -307,15 +332,13 @@ public class WaiterWorkActivity extends BaseAccountActivity implements WaiterTab
         if (requestCode == REQUEST_QR_SCANNER && resultCode == RESULT_OK) {
             String qrData = data.getStringExtra(QRScannerActivity.KEY_QR_RESULT);
             mViewModel.processQr(qrData);
-        } else {
-            super.onActivityResult(requestCode, resultCode, data);
-        }
+        } else super.onActivityResult(requestCode, resultCode, data);
     }
 
     @Override
     protected void onResume() {
         super.onResume();
-        MESSAGE_TYPE[] types = new MESSAGE_TYPE[] {
+        MESSAGE_TYPE[] types = new MESSAGE_TYPE[]{
                 MESSAGE_TYPE.WAITER_SESSION_NEW, MESSAGE_TYPE.WAITER_SESSION_NEW_ORDER, MESSAGE_TYPE.WAITER_SESSION_COLLECT_CASH,
                 MESSAGE_TYPE.WAITER_SESSION_EVENT_SERVICE, MESSAGE_TYPE.WAITER_SESSION_HOST_ASSIGNED, MESSAGE_TYPE.WAITER_SESSION_MEMBER_CHANGE,
                 MESSAGE_TYPE.WAITER_SESSION_UPDATE_ORDER, MESSAGE_TYPE.WAITER_SESSION_END
@@ -349,12 +372,7 @@ public class WaiterWorkActivity extends BaseAccountActivity implements WaiterTab
         return new AccountModel.ACCOUNT_TYPE[]{AccountModel.ACCOUNT_TYPE.RESTAURANT_WAITER};
     }
 
-    @Override
-    public void onTableActiveEventCount(long sessionPk, int count) {
-        mFragmentAdapter.updateTabCount(tabLayout, sessionPk, count);
-    }
-
-    private class WaiterTablePagerAdapter extends FragmentStatePagerAdapter {
+    private static class WaiterTablePagerAdapter extends FragmentStatePagerAdapter {
         private List<WaiterTableFragment> mFragmentList = new ArrayList<>();
         private List<WaiterTableModel> mTableList = new ArrayList<>();
 
@@ -378,14 +396,17 @@ public class WaiterWorkActivity extends BaseAccountActivity implements WaiterTab
             return mFragmentList.size();
         }
 
-        void setTables(TabLayout tabLayout, List<WaiterTableModel> tableModels) {
-            for (WaiterTableModel tableModel: tableModels)
-                addTable(tabLayout, tableModel);
+        void setTables(TabLayout tabLayout, List<WaiterTableModel> tableModels, WaiterTableFragment.WaiterTableInteraction listener) {
+            mTableList.clear();
+            mFragmentList.clear();
+            notifyDataSetChanged();
+            for (WaiterTableModel tableModel : tableModels)
+                addTable(tabLayout, tableModel, listener);
         }
 
-        void addTable(TabLayout tabLayout, WaiterTableModel tableModel) {
+        void addTable(TabLayout tabLayout, WaiterTableModel tableModel, WaiterTableFragment.WaiterTableInteraction listener) {
             mTableList.add(tableModel);
-            mFragmentList.add(WaiterTableFragment.newInstance(tableModel.getPk(), WaiterWorkActivity.this));
+            mFragmentList.add(WaiterTableFragment.newInstance(tableModel.getPk(), listener));
             setTabCustomView(tabLayout, mTableList.size() - 1, tableModel);
             notifyDataSetChanged();
         }
@@ -415,24 +436,32 @@ public class WaiterWorkActivity extends BaseAccountActivity implements WaiterTab
             }
         }
 
-        void updateTabCount(TabLayout tabLayout, long tableId, int count) {
+        int getTableIndex(long tableId) {
             int index = -1;
-            String title = "";
-            for (int i = 0; i < mTableList.size(); i++) {
+            for (int i = 0, length = mTableList.size(); i < length; i++) {
                 if (mTableList.get(i).getPk() == tableId) {
                     index = i;
-                    title = mTableList.get(i).getTable();
                     break;
                 }
             }
-            if (index == -1)
-                return;
+            return index;
+        }
+
+        @Nullable
+        WaiterTableModel getTable(int index) {
+            if (index < 0)
+                return null;
+            return mTableList.get(index);
+        }
+
+        void updateTableStatus(TabLayout tabLayout, int index) {
             TabLayout.Tab tab = tabLayout.getTabAt(index);
+            WaiterTableModel data = mTableList.get(index);
             if (tab != null && tab.getCustomView() != null) {
-                if (count > 0) {
-                    this.updateTabView(tab.getCustomView(), title, String.valueOf(count));
+                if (data.getEventCount() > 0) {
+                    this.updateTabView(tab.getCustomView(), data.getTable(), data.formatEventCount());
                 } else {
-                    this.updateTabView(tab.getCustomView(), title, null);
+                    this.updateTabView(tab.getCustomView(), data.getTable(), null);
                 }
             }
         }

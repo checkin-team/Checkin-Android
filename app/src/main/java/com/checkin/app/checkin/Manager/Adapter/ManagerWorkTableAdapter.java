@@ -1,7 +1,5 @@
 package com.checkin.app.checkin.Manager.Adapter;
 
-import androidx.annotation.NonNull;
-import androidx.recyclerview.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -16,6 +14,8 @@ import com.checkin.app.checkin.Utility.Utils;
 
 import java.util.List;
 
+import androidx.annotation.NonNull;
+import androidx.recyclerview.widget.RecyclerView;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
@@ -43,10 +43,6 @@ public class ManagerWorkTableAdapter extends RecyclerView.Adapter<ManagerWorkTab
 
     public void updateSession(int position) {
         notifyItemChanged(position);
-    }
-
-    public void removeSession(int position) {
-        notifyItemRemoved(position);
     }
 
     @Override

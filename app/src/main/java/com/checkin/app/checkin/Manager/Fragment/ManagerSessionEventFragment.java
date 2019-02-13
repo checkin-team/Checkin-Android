@@ -1,12 +1,7 @@
 package com.checkin.app.checkin.Manager.Fragment;
 
-import androidx.lifecycle.ViewModelProviders;
 import android.content.Intent;
 import android.os.Bundle;
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
 import android.view.View;
 import android.widget.TextView;
 
@@ -22,6 +17,11 @@ import com.checkin.app.checkin.Utility.Utils;
 
 import java.util.Locale;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.lifecycle.ViewModelProviders;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 import butterknife.BindView;
 import butterknife.OnClick;
 
@@ -56,7 +56,7 @@ public class ManagerSessionEventFragment extends BaseFragment implements Manager
     }
 
     private void setupUi() {
-        rvMSEvent.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false));
+        rvMSEvent.setLayoutManager(new LinearLayoutManager(getContext(), RecyclerView.VERTICAL, false));
         mAdapter = new ManagerSessionEventAdapter(this);
         rvMSEvent.setAdapter(mAdapter);
         rvMSEvent.setNestedScrollingEnabled(false);
@@ -123,6 +123,11 @@ public class ManagerSessionEventFragment extends BaseFragment implements Manager
 
     @OnClick(R.id.btn_ms_event_menu)
     public void onListMenu() {
+        SessionBriefModel sessionBriefModel = mViewModel.getSessionData();
+        if (sessionBriefModel != null && sessionBriefModel.isRequestedCheckout()) {
+            Utils.toast(requireContext(), "Bill already approved for session.");
+            return;
+        }
         SessionMenuActivity.withSession(getContext(), mViewModel.getShopPk(), mViewModel.getSessionPk());
         mViewModel.updateResults();
     }
@@ -138,6 +143,7 @@ public class ManagerSessionEventFragment extends BaseFragment implements Manager
         intent.putExtra(ManagerSessionInvoiceActivity.TABLE_NAME, mTable)
                 .putExtra(ManagerSessionInvoiceActivity.KEY_SESSION, mViewModel.getSessionPk());
         startActivity(intent);
+        updateScreen();
     }
 
     @Override

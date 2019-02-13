@@ -1,9 +1,6 @@
 package com.checkin.app.checkin.Waiter.Fragment;
 
-import androidx.lifecycle.ViewModelProviders;
 import android.os.Bundle;
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
@@ -17,6 +14,9 @@ import com.checkin.app.checkin.Utility.Utils;
 import com.checkin.app.checkin.Waiter.WaiterTableViewModel;
 import com.checkin.app.checkin.Waiter.WaiterWorkViewModel;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.lifecycle.ViewModelProviders;
 import butterknife.BindView;
 import butterknife.OnClick;
 
@@ -49,7 +49,6 @@ public class WaiterTableFragment extends BaseFragment {
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
-        initRefreshScreen(R.id.sr_waiter_table);
         if (getArguments() == null)
             return;
 
@@ -63,18 +62,7 @@ public class WaiterTableFragment extends BaseFragment {
                 return;
             if (resource.status == Status.SUCCESS && resource.data != null) {
                 setupTableData(resource.data);
-                stopRefreshing();
-            } else if (resource.status == Status.LOADING)
-                startRefreshing();
-        });
-        mViewModel.getActiveTableEvents().observe(this, listResource -> {
-            if (listResource == null)
-                return;
-            if (listResource.status == Status.SUCCESS && listResource.data != null) {
-                mListener.onTableActiveEventCount(mViewModel.getSessionPk(), listResource.data.size());
-                stopRefreshing();
-            } else if (listResource.status == Status.LOADING)
-                startRefreshing();
+            }
         });
         mViewModel.getObservableData().observe(this, resource -> {
             if (resource == null)
@@ -108,7 +96,7 @@ public class WaiterTableFragment extends BaseFragment {
     }
 
     @Override
-    protected void updateScreen() {
+    public void updateScreen() {
         mViewModel.updateResults();
     }
 
@@ -127,6 +115,5 @@ public class WaiterTableFragment extends BaseFragment {
     }
 
     public interface WaiterTableInteraction {
-        void onTableActiveEventCount(long sessionPk, int count);
     }
 }

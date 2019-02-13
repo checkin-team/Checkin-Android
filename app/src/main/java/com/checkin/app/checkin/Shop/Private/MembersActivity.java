@@ -1,16 +1,17 @@
 package com.checkin.app.checkin.Shop.Private;
 
-import androidx.lifecycle.ViewModelProviders;
 import android.content.Intent;
 import android.os.Bundle;
-import androidx.appcompat.app.ActionBar;
 import android.view.View;
 
 import com.checkin.app.checkin.Data.Resource;
 import com.checkin.app.checkin.Misc.BaseActivity;
 import com.checkin.app.checkin.R;
 import com.checkin.app.checkin.Search.SearchActivity;
+import com.checkin.app.checkin.Utility.Utils;
 
+import androidx.appcompat.app.ActionBar;
+import androidx.lifecycle.ViewModelProviders;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 
@@ -35,7 +36,7 @@ public class MembersActivity extends BaseActivity implements ShopMembersListFrag
 
         actionBar.setDisplayHomeAsUpEnabled(true);
         actionBar.setHomeAsUpIndicator(R.drawable.ic_back_grey);
-        actionBar.setElevation(10);;
+        actionBar.setElevation(10);
 
         mViewModel = ViewModelProviders.of(this).get(MemberViewModel.class);
 
@@ -53,8 +54,12 @@ public class MembersActivity extends BaseActivity implements ShopMembersListFrag
                 return;
             if (listResource.status == Resource.Status.SUCCESS && listResource.data != null) {
                 stopRefreshing();
-            } else if (listResource.status == Resource.Status.LOADING)
+            } else if (listResource.status == Resource.Status.LOADING) {
                 startRefreshing();
+            } else {
+                stopRefreshing();
+                Utils.toast(this, listResource.message);
+            }
         });
         getSupportFragmentManager().beginTransaction()
                 .replace(R.id.container_members, mFragmentShopMembers)

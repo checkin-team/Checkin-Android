@@ -5,6 +5,7 @@ import com.checkin.app.checkin.Utility.Utils;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 import java.util.List;
+import java.util.Locale;
 
 public class ManagerStatsModel {
     @JsonProperty("revenue")
@@ -31,11 +32,11 @@ public class ManagerStatsModel {
     }
 
     public String getDayOrdersCount() {
-        return String.valueOf(countOrders.day);
+        return String.format(Locale.ENGLISH, "%.0f", countOrders.day);
     }
 
     public String getWeekOrdersCount() {
-        return String.valueOf(countOrders.week);
+        return String.format(Locale.ENGLISH, "%.0f", countOrders.week);
     }
 
     public long getAvgSessionTime() {

@@ -1,9 +1,6 @@
 package com.checkin.app.checkin.Session.ActiveSession;
 
 import android.app.Application;
-import androidx.lifecycle.LiveData;
-import androidx.lifecycle.MediatorLiveData;
-import androidx.annotation.NonNull;
 
 import com.checkin.app.checkin.Data.BaseViewModel;
 import com.checkin.app.checkin.Data.Converters;
@@ -17,6 +14,10 @@ import com.checkin.app.checkin.Shop.ShopModel;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 
 import java.util.List;
+
+import androidx.annotation.NonNull;
+import androidx.lifecycle.LiveData;
+import androidx.lifecycle.MediatorLiveData;
 
 public class ActiveSessionViewModel extends BaseViewModel {
     private final ActiveSessionRepository mRepository;
@@ -69,8 +70,7 @@ public class ActiveSessionViewModel extends BaseViewModel {
     public void requestCheckout(double tip, ShopModel.PAYMENT_MODE paymentMode) {
         ObjectNode data = Converters.objectMapper.createObjectNode()
                 .put("tip", tip)
-                .put("payment_mode", paymentMode.tag)
-                .put("message", "sent");
+                .put("payment_mode", paymentMode.tag);
         mData.addSource(mRepository.postRequestCheckout(data), mData::setValue);
     }
 

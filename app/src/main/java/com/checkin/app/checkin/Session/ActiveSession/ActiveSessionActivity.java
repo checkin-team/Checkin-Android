@@ -2,14 +2,10 @@ package com.checkin.app.checkin.Session.ActiveSession;
 
 import android.annotation.SuppressLint;
 import android.app.AlertDialog;
-import androidx.lifecycle.ViewModelProviders;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
-import androidx.annotation.Nullable;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
 import android.util.Log;
 import android.view.MotionEvent;
 import android.view.ViewGroup;
@@ -31,11 +27,13 @@ import com.checkin.app.checkin.Session.Model.ActiveSessionModel;
 import com.checkin.app.checkin.Session.Model.SessionCustomerModel;
 import com.checkin.app.checkin.Utility.Utils;
 
+import androidx.annotation.Nullable;
+import androidx.lifecycle.ViewModelProviders;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
-
-import static com.checkin.app.checkin.Data.Message.Constants.KEY_DATA;
 
 public class ActiveSessionActivity extends BaseActivity implements ActiveSessionMemberAdapter.SessionMemberInteraction {
     private static final String TAG = ActiveSessionActivity.class.getSimpleName();
@@ -61,16 +59,9 @@ public class ActiveSessionActivity extends BaseActivity implements ActiveSession
     private final BroadcastReceiver mReceiver = new BroadcastReceiver() {
         @Override
         public void onReceive(Context context, Intent intent) {
-            MessageModel message;
-            try {
-                message = ((MessageModel) intent.getSerializableExtra(KEY_DATA));
-                if (message == null)
-                    return;
-            } catch (ClassCastException e) {
-                Log.e(TAG, "Invalid message object received.");
-                e.printStackTrace();
-                return;
-            }
+            MessageModel message = MessageUtils.parseMessage(intent);
+            if (message == null) return;
+
             MessageObjectModel model;
             switch (message.getType()) {
                 case USER_SESSION_BILL_CHANGE:
@@ -142,7 +133,9 @@ public class ActiveSessionActivity extends BaseActivity implements ActiveSession
             switch (resource.status) {
                 case SUCCESS: {
                     Utils.toast(this, "Done!");
-                    mViewModel.updateUiSessionMember(Long.parseLong(resource.data.getPk()));
+                    if (resource.data != null)
+                        mViewModel.updateUiSessionMember(Long.parseLong(resource.data.getPk()));
+                    else mViewModel.updateResults();
                     break;
                 }
                 case LOADING:
@@ -207,7 +200,7 @@ public class ActiveSessionActivity extends BaseActivity implements ActiveSession
     @OnClick(R.id.btn_active_session_orders)
     public void onViewOrders() {
         startActivity(new Intent(this, ActiveSessionViewOrdersActivity.class));
-        updateScreen(); 
+        updateScreen();
     }
 
     @OnClick(R.id.tv_active_session_bill)

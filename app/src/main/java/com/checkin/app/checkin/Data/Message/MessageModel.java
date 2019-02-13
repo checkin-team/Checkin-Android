@@ -10,6 +10,7 @@ import android.text.Html;
 import android.text.TextUtils;
 
 import com.checkin.app.checkin.Data.Message.Constants.CHANNEL;
+import com.checkin.app.checkin.Data.Message.MessageObjectModel.MESSAGE_OBJECT_TYPE;
 import com.checkin.app.checkin.Manager.ManagerWorkActivity;
 import com.checkin.app.checkin.R;
 import com.checkin.app.checkin.Session.ActiveSession.ActiveSessionActivity;
@@ -148,11 +149,18 @@ public class MessageModel implements Serializable {
         ComponentName componentName = getTargetComponent(context);
         if (componentName != null)
             intent.setComponent(componentName);
-        addIntentExtra(intent, componentName != null ? componentName.getClass() : null);
+        addIntentExtra(intent, componentName != null ? componentName.getClassName() : null);
         return intent;
     }
 
-    private void addIntentExtra(Intent intent, @Nullable Class<?> classObj) {
+    private void addIntentExtra(Intent intent, @Nullable String className) {
+        if (className == null)
+            return;
+        if (isShopManagerNotification()) {
+            intent.putExtra(ManagerWorkActivity.KEY_RESTAURANT_PK, getShopPk());
+        } else if (isShopWaiterNotification()) {
+            intent.putExtra(WaiterWorkActivity.KEY_SHOP_PK, getShopPk());
+        }
     }
 
     @Nullable
@@ -194,12 +202,14 @@ public class MessageModel implements Serializable {
 
     protected boolean isOnlyUiUpdate() {
         switch (this.type) {
+            case USER_SESSION_ADDED_BY_OWNER:
             case USER_SESSION_BILL_CHANGE:
             case USER_SESSION_END:
             case USER_SESSION_MEMBER_ADD_REQUEST:
             case USER_SESSION_HOST_ASSIGNED:
             case USER_SESSION_ORDER_ACCEPTED:
             case USER_SESSION_ORDER_REJECTED:
+            case SHOP_MEMBER_ADDED:
             case MANAGER_SESSION_NEW:
             case MANAGER_SESSION_NEW_ORDER:
             case MANAGER_SESSION_EVENT_CONCERN:
@@ -235,5 +245,15 @@ public class MessageModel implements Serializable {
 
     private boolean isShopManagerNotification() {
         return this.type.id > 600 && this.type.id < 700;
+    }
+
+    private long getShopPk () {
+        if (target != null && target.getType() == MESSAGE_OBJECT_TYPE.RESTAURANT)
+            return target.getPk();
+        if (object != null  && object.getType() == MESSAGE_OBJECT_TYPE.RESTAURANT)
+            return object.getPk();
+        if (actor != null && actor.getType() == MESSAGE_OBJECT_TYPE.RESTAURANT)
+            return actor.getPk();
+        return -1;
     }
 }

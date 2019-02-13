@@ -1,11 +1,6 @@
 package com.checkin.app.checkin.Manager;
 
 import android.app.Application;
-import androidx.lifecycle.LiveData;
-import androidx.lifecycle.MediatorLiveData;
-import androidx.lifecycle.Transformations;
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 
 import com.checkin.app.checkin.Data.BaseViewModel;
 import com.checkin.app.checkin.Data.Converters;
@@ -23,6 +18,12 @@ import com.fasterxml.jackson.databind.node.ObjectNode;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.lifecycle.LiveData;
+import androidx.lifecycle.MediatorLiveData;
+import androidx.lifecycle.Transformations;
 
 import static com.checkin.app.checkin.Session.ActiveSession.Chat.SessionChatModel.CHAT_EVENT_TYPE.EVENT_MENU_ORDER_ITEM;
 import static com.checkin.app.checkin.Session.ActiveSession.Chat.SessionChatModel.CHAT_STATUS_TYPE.DONE;
@@ -238,7 +239,7 @@ public class ManagerSessionViewModel extends BaseViewModel {
         Resource<List<SessionOrderedItemModel>> resource = mOrdersData.getValue();
         if (resource == null || resource.data == null)
             return;
-        resource.data.add(orderedItemModel);
+        resource.data.add(0, orderedItemModel);
         mOrdersData.setValue(Resource.cloneResource(resource, resource.data));
     }
 
@@ -246,7 +247,7 @@ public class ManagerSessionViewModel extends BaseViewModel {
         Resource<List<ManagerSessionEventModel>> resource = mEventData.getValue();
         if (resource == null || resource.data == null)
             return;
-        resource.data.add(eventModel);
+        resource.data.add(0, eventModel);
         mEventData.setValue(Resource.cloneResource(resource, resource.data));
     }
 

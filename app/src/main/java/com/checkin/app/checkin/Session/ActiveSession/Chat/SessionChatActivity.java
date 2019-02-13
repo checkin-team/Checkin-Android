@@ -1,15 +1,10 @@
 package com.checkin.app.checkin.Session.ActiveSession.Chat;
 
-import androidx.lifecycle.ViewModelProviders;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
-import androidx.annotation.Nullable;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
 import android.text.TextUtils;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -31,11 +26,12 @@ import com.checkin.app.checkin.Session.ActiveSession.Chat.SessionChatDataModel.E
 import com.checkin.app.checkin.Session.ActiveSession.Chat.SessionChatDataModel.EVENT_REQUEST_SERVICE_TYPE;
 import com.checkin.app.checkin.Utility.Utils;
 
+import androidx.annotation.Nullable;
+import androidx.lifecycle.ViewModelProviders;
+import androidx.recyclerview.widget.RecyclerView;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
-
-import static com.checkin.app.checkin.Data.Message.Constants.KEY_DATA;
 
 public class SessionChatActivity extends BaseActivity implements ActiveSessionChatAdapter.SessionChatInteraction {
     private static final String TAG = SessionChatActivity.class.getSimpleName();
@@ -65,16 +61,9 @@ public class SessionChatActivity extends BaseActivity implements ActiveSessionCh
     private final BroadcastReceiver mReceiver = new BroadcastReceiver() {
         @Override
         public void onReceive(Context context, Intent intent) {
-            MessageModel message;
-            try {
-                message = ((MessageModel) intent.getSerializableExtra(KEY_DATA));
-                if (message == null)
-                    return;
-            } catch (ClassCastException e) {
-                Log.e(TAG, "Invalid message object received.");
-                e.printStackTrace();
-                return;
-            }
+            MessageModel message = MessageUtils.parseMessage(intent);
+            if (message == null) return;
+
             switch (message.getType()) {
                 case USER_SESSION_EVENT_NEW:
                     SessionChatActivity.this.addEvent(message.getRawData().getSessionEventDetail());
@@ -119,6 +108,8 @@ public class SessionChatActivity extends BaseActivity implements ActiveSessionCh
                     resetMessageState();
                     break;
                 }
+                case LOADING:
+                    break;
                 default: {
                     Utils.toast(this, resource.message);
                 }
@@ -136,7 +127,6 @@ public class SessionChatActivity extends BaseActivity implements ActiveSessionCh
 
         initRefreshScreen(R.id.sr_session_chat);
 
-        rvSessionChat.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, true));
         mChatAdapter = new ActiveSessionChatAdapter(null, this);
         rvSessionChat.setAdapter(mChatAdapter);
 
@@ -261,9 +251,9 @@ public class SessionChatActivity extends BaseActivity implements ActiveSessionCh
             case R.id.menu_quality:
                 mViewModel.raiseConcern(EVENT_CONCERN_TYPE.CONCERN_QUALITY, event.getPk());
                 return true;
-            case R.id.menu_remark:
-                mViewModel.raiseConcern(EVENT_CONCERN_TYPE.CONCERN_REMARK, event.getPk());
-                return true;
+//            case R.id.menu_remark:
+//                mViewModel.raiseConcern(EVENT_CONCERN_TYPE.CONCERN_REMARK, event.getPk());
+//                return true;
             default:
                 return false;
         }

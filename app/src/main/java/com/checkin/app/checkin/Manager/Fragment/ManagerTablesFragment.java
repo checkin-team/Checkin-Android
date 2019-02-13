@@ -1,15 +1,9 @@
 package com.checkin.app.checkin.Manager.Fragment;
 
-import androidx.lifecycle.ViewModelProviders;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.fragment.app.Fragment;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -21,13 +15,20 @@ import com.checkin.app.checkin.Data.Message.MessageUtils;
 import com.checkin.app.checkin.Data.Resource;
 import com.checkin.app.checkin.Manager.Adapter.ManagerWorkTableAdapter;
 import com.checkin.app.checkin.Manager.ManagerSessionActivity;
-import com.checkin.app.checkin.Manager.Model.ManagerWorkViewModel;
+import com.checkin.app.checkin.Manager.ManagerWorkViewModel;
 import com.checkin.app.checkin.Misc.BriefModel;
 import com.checkin.app.checkin.R;
+import com.checkin.app.checkin.Session.ActiveSession.Chat.SessionChatModel.CHAT_EVENT_TYPE;
 import com.checkin.app.checkin.Session.Model.EventBriefModel;
 import com.checkin.app.checkin.Session.Model.RestaurantTableModel;
 import com.checkin.app.checkin.Utility.Utils;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.fragment.app.Fragment;
+import androidx.lifecycle.ViewModelProviders;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.Unbinder;
@@ -71,6 +72,7 @@ public class ManagerTablesFragment extends Fragment implements ManagerWorkTableA
                 case MANAGER_SESSION_NEW:
                     String tableName = message.getRawData().getSessionTableName();
                     eventModel = EventBriefModel.getFromManagerEventModel(message.getRawData().getSessionEventBrief());
+                    eventModel.setType(CHAT_EVENT_TYPE.EVENT_SESSION_CHECKIN);
                     RestaurantTableModel tableModel = new RestaurantTableModel(message.getObject().getPk(), tableName, null, eventModel);
                     if (message.getActor().getType() == MessageObjectModel.MESSAGE_OBJECT_TYPE.RESTAURANT_MEMBER) {
                         user = message.getActor().getBriefModel();
@@ -112,14 +114,13 @@ public class ManagerTablesFragment extends Fragment implements ManagerWorkTableA
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         mAdapter = new ManagerWorkTableAdapter(this);
-        rvShopManagerTable.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false));
+        rvShopManagerTable.setLayoutManager(new LinearLayoutManager(getContext(), RecyclerView.VERTICAL, false));
         rvShopManagerTable.setAdapter(mAdapter);
 
         mViewModel = ViewModelProviders.of(requireActivity()).get(ManagerWorkViewModel.class);
         mViewModel.getActiveTables().observe(this, input -> {
-            if (input != null && input.data == null)
-                return;
-            if (input != null && input.data.size() > 0 && input.status == Resource.Status.SUCCESS) {
+            if (input == null) return;
+            if (input.status == Resource.Status.SUCCESS && input.data != null) {
                 mAdapter.setRestaurantTableList(input.data);
             }
         });
@@ -127,10 +128,8 @@ public class ManagerTablesFragment extends Fragment implements ManagerWorkTableA
             if (resource == null)
                 return;
             if (resource.status == Resource.Status.SUCCESS && resource.data != null) {
-                Utils.toast(requireContext(), resource.message);
-                int pos = mViewModel.getTablePositionWithPk(Long.valueOf(resource.data.getPk()));
-                if (pos > -1)
-                    mAdapter.removeSession(pos);
+                Utils.toast(requireContext(), resource.data.getDetail());
+                mViewModel.updateRemoveTable(Long.valueOf(resource.data.getPk()));
             } else if (resource.status != Resource.Status.LOADING) {
                 Utils.toast(requireContext(), "Error: " + resource.message);
             }
@@ -138,6 +137,7 @@ public class ManagerTablesFragment extends Fragment implements ManagerWorkTableA
     }
 
     private void addTable(RestaurantTableModel tableModel) {
+        tableModel.setEventCount(1);
         mViewModel.addRestaurantTable(tableModel);
     }
 
@@ -192,10 +192,12 @@ public class ManagerTablesFragment extends Fragment implements ManagerWorkTableA
         int pos = mViewModel.getTablePositionWithPk(tableModel.getPk());
         tableModel.setEventCount(0);
         mAdapter.updateSession(pos);
+        mViewModel.updateResults();
     }
 
     @Override
     public void onMarkSessionDone(RestaurantTableModel tableModel) {
         mViewModel.markSessionDone(tableModel.getPk());
+        mViewModel.updateResults();
     }
 }

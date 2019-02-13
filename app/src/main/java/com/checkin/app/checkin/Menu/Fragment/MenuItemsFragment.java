@@ -50,7 +50,7 @@ public class MenuItemsFragment extends Fragment implements MenuItemAdapter.OnIte
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         rvMenuItems.setAdapter(mAdapter);
-        rvMenuItems.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false));
+        rvMenuItems.setLayoutManager(new LinearLayoutManager(getContext(), RecyclerView.VERTICAL, false));
     }
 
     @Override

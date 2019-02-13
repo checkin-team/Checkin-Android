@@ -1,8 +1,6 @@
 package com.checkin.app.checkin.Waiter;
 
 import android.content.Context;
-import androidx.annotation.NonNull;
-import androidx.recyclerview.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -22,6 +20,8 @@ import com.checkin.app.checkin.Waiter.Model.WaiterEventModel;
 
 import java.util.List;
 
+import androidx.annotation.NonNull;
+import androidx.recyclerview.widget.RecyclerView;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
@@ -164,9 +164,12 @@ public class WaiterEventAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
     }
 
     class EventViewHolder extends RecyclerView.ViewHolder {
-        @BindView(R.id.im_waiter_event_type) ImageView imEventType;
-        @BindView(R.id.tv_waiter_event_message) TextView tvEventMessage;
-        @BindView(R.id.im_waiter_event_mark_done) ImageView imEventMarkDone;
+        @BindView(R.id.im_waiter_event_type)
+        ImageView imEventType;
+        @BindView(R.id.tv_waiter_event_message)
+        TextView tvEventMessage;
+        @BindView(R.id.im_waiter_event_mark_done)
+        ImageView imEventMarkDone;
 
         private WaiterEventModel mEventModel;
 
@@ -181,11 +184,10 @@ public class WaiterEventAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
             this.mEventModel = eventModel;
 
             tvEventMessage.setText(eventModel.getMessage());
+            imEventType.setImageResource(SessionEventBasicModel.getEventIcon(eventModel.getType(), eventModel.getService(), null));
             if (eventModel.getStatus() == SessionChatModel.CHAT_STATUS_TYPE.DONE || eventModel.getStatus() == SessionChatModel.CHAT_STATUS_TYPE.CANCELLED) {
                 imEventMarkDone.setVisibility(View.GONE);
                 ((FrameLayout) itemView).setForeground(itemView.getResources().getDrawable(R.color.translucent_white));
-            } else {
-                imEventType.setImageResource(SessionEventBasicModel.getEventIcon(eventModel.getType(), eventModel.getService(), null));
             }
         }
     }

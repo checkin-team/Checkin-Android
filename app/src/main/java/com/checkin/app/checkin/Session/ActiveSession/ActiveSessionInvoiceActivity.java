@@ -1,11 +1,6 @@
 package com.checkin.app.checkin.Session.ActiveSession;
 
-import androidx.lifecycle.ViewModelProviders;
 import android.os.Bundle;
-import androidx.annotation.Nullable;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
 import android.text.Editable;
 import android.widget.EditText;
 import android.widget.ImageView;
@@ -14,10 +9,16 @@ import android.widget.TextView;
 import com.checkin.app.checkin.Data.Resource;
 import com.checkin.app.checkin.Misc.BillHolder;
 import com.checkin.app.checkin.R;
+import com.checkin.app.checkin.Session.Model.SessionBillModel;
 import com.checkin.app.checkin.Session.Model.SessionInvoiceModel;
 import com.checkin.app.checkin.Shop.ShopModel;
 import com.checkin.app.checkin.Utility.Utils;
 
+import androidx.annotation.Nullable;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.lifecycle.ViewModelProviders;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
@@ -39,6 +40,7 @@ public class ActiveSessionInvoiceActivity extends AppCompatActivity {
 
     private ActiveSessionViewModel mViewModel;
     private InvoiceOrdersAdapter mAdapter;
+    private SessionBillModel mBillModel;
     private BillHolder mBillHolder;
 
     @Override
@@ -49,12 +51,14 @@ public class ActiveSessionInvoiceActivity extends AppCompatActivity {
         ButterKnife.bind(this);
 
         if (getSupportActionBar() != null) {
+            getSupportActionBar().setHomeAsUpIndicator(R.drawable.ic_back_grey);
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         }
 
-        rvOrderedItems.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false));
+        rvOrderedItems.setLayoutManager(new LinearLayoutManager(this, RecyclerView.VERTICAL, false));
         mAdapter = new InvoiceOrdersAdapter(null);
         rvOrderedItems.setAdapter(mAdapter);
+        mBillHolder = new BillHolder(findViewById(android.R.id.content));
 
         mViewModel = ViewModelProviders.of(this).get(ActiveSessionViewModel.class);
         mViewModel.fetchSessionInvoice();
@@ -85,11 +89,11 @@ public class ActiveSessionInvoiceActivity extends AppCompatActivity {
 
     private void setupUi(SessionInvoiceModel data) {
         mAdapter.setData(data.getOrderedItems());
+        mBillModel = data.getBill();
 
         if (data.getHost() != null)
             Utils.loadImageOrDefault(imWaiterPic, data.getHost().getDisplayPic(), R.drawable.ic_waiter);
 
-        mBillHolder = new BillHolder(findViewById(android.R.id.content));
         mBillHolder.bind(data.getBill());
 
         edInvoiceTip.setText(data.getBill().formatTip());
@@ -99,24 +103,21 @@ public class ActiveSessionInvoiceActivity extends AppCompatActivity {
 
     @OnTextChanged(value = R.id.ed_invoice_tip, callback = OnTextChanged.Callback.AFTER_TEXT_CHANGED)
     public void onTipChange(Editable editable) {
-        Double amount = 0d;
+        double amount = 0d;
         try {
-            amount = Double.valueOf(editable.toString());
+            amount = Double.parseDouble(editable.toString());
         } catch (NumberFormatException ignored) {
         }
-        tvInvoiceTip.setText(Utils.formatCurrencyAmount(this, amount));
+        if (mBillModel != null) {
+            mBillModel.giveTip(amount);
+            tvInvoiceTip.setText(Utils.formatCurrencyAmount(this, mBillModel.getTip()));
+            tvInvoiceTotal.setText(Utils.formatCurrencyAmount(this, mBillModel.getTotal()));
+        }
     }
 
     @OnClick(R.id.btn_invoice_request_checkout)
     public void onRequestCheckout() {
-        double tip;
-        try {
-            tip = Double.valueOf(edInvoiceTip.getText().toString());
-        } catch (NumberFormatException ignored) {
-            Utils.toast(this, "Provide valid tip amount!");
-            return;
-        }
-        mViewModel.requestCheckout(tip, ShopModel.PAYMENT_MODE.CASH);
+        mViewModel.requestCheckout(mBillModel.getTip(), ShopModel.PAYMENT_MODE.CASH);
     }
 
     @Override

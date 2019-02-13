@@ -59,9 +59,10 @@ public class AuthActivity extends AppCompatActivity implements AuthFragmentInter
     View mDarkBack;
 
     private CallbackManager mFacebookCallbackManager;
-    private PhoneAuth mPhoneAuth;
     private FirebaseAuth mAuth;
     private AuthViewModel mAuthViewModel;
+
+    private boolean isEulaAccepted = false;
     private boolean goBack = true;
 
     @SuppressLint("ClickableViewAccessibility")
@@ -199,10 +200,7 @@ public class AuthActivity extends AppCompatActivity implements AuthFragmentInter
 
     @OnClick(R.id.tv_read_eula)
     public void readEula() {
-        new EulaDialog(this, isAccepted -> {
-            if (!isAccepted)
-                finish();
-        }).show();
+        new EulaDialog(this, isAccepted -> isEulaAccepted = isAccepted).show();
     }
 
     @Override
@@ -211,9 +209,19 @@ public class AuthActivity extends AppCompatActivity implements AuthFragmentInter
         mAuthViewModel.register(firstName, lastName, gender, userName);
     }
 
+    private boolean canLogin() {
+        if (!isEulaAccepted) {
+            readEula();
+            return false;
+        }
+        return true;
+    }
+
     @Override
     public void onGoogleAuth() {
         Log.e(TAG, "GoogleAuth");
+        if (!canLogin())
+            return;
         showProgress();
 
         GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
@@ -228,6 +236,8 @@ public class AuthActivity extends AppCompatActivity implements AuthFragmentInter
     @Override
     public void onFacebookAuth(LoginResult loginResult) {
         Log.e(TAG, "FacebookAuth: " + loginResult);
+        if (!canLogin())
+            return;
         showProgress();
 
         AccessToken accessToken = loginResult.getAccessToken();
@@ -240,6 +250,8 @@ public class AuthActivity extends AppCompatActivity implements AuthFragmentInter
     @Override
     public void onPhoneAuth(String phoneNo) {
         Log.e(TAG, "Phone number: " + phoneNo);
+        if (!canLogin())
+            return;
         OtpVerificationDialog dialog = OtpVerificationDialog.Builder.with(this)
                 .setAuthCallback(this)
                 .build();

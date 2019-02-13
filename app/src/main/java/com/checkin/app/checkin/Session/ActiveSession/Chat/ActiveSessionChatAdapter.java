@@ -23,15 +23,24 @@ public class ActiveSessionChatAdapter extends RecyclerView.Adapter {
     private SessionChatInteraction mListener;
     @Nullable
     private ViewHolderMessageSent mSelectedViewHolder = null;
+    private RecyclerView mRecyclerView;
 
     public ActiveSessionChatAdapter(List<SessionChatModel> chats, SessionChatInteraction listener) {
         mChats = chats;
         mListener = listener;
     }
 
+    @Override
+    public void onAttachedToRecyclerView(@NonNull RecyclerView recyclerView) {
+        super.onAttachedToRecyclerView(recyclerView);
+        mRecyclerView = recyclerView;
+    }
+
     public void setData(List<SessionChatModel> data) {
         this.mChats = data;
         notifyDataSetChanged();
+        if (data.size() > 0)
+            mRecyclerView.scrollToPosition(data.size() - 1);
     }
 
     @Nullable

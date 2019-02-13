@@ -66,18 +66,23 @@ public abstract class BaseFragmentAdapterBottomNav extends FragmentStatePagerAda
             this.bindCustomView(itemView, pos);
 
             selectionHandlers.add(new TabSelectionHandler(pos, itemView));
-            viewPager.addOnPageChangeListener(new ViewPager.SimpleOnPageChangeListener() {
-                @Override
-                public void onPageSelected(int position) {
-                    onTabClick(position);
-                }
-            });
 
             TabLayout.Tab tab = tabLayout.getTabAt(pos);
             if (tab != null) {
                 tab.setCustomView(itemView);
             }
         }
+
+        viewPager.addOnPageChangeListener(new ViewPager.SimpleOnPageChangeListener() {
+            @Override
+            public void onPageSelected(int position) {
+                if (mSelectedPos != -1) {
+                    selectionHandlers.get(mSelectedPos).deselect();
+                }
+                mSelectedPos = position;
+                selectionHandlers.get(mSelectedPos).select();
+            }
+        });
     }
 
     protected void onTabClick(int position) {
@@ -96,16 +101,15 @@ public abstract class BaseFragmentAdapterBottomNav extends FragmentStatePagerAda
 
         @Override
         public void onClick(View v) {
-            if (mSelectedPos != -1) {
-                selectionHandlers.get(mSelectedPos).deselect();
-            }
-            mSelectedPos = mPos;
-            mView.setSelected(true);
-            onTabClick(mSelectedPos);
+            onTabClick(mPos);
         }
 
         void deselect() {
             mView.setSelected(false);
+        }
+
+        void select() {
+            mView.setSelected(true);
         }
     }
 }

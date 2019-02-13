@@ -6,62 +6,68 @@
     android:layout_height="match_parent"
     android:fitsSystemWindows="true">
 
-    <androidx.constraintlayout.widget.ConstraintLayout
+    <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+        android:id="@+id/sr_waiter_work"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-        <com.google.android.material.appbar.AppBarLayout
-            android:id="@+id/appbar_waiter"
+        <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="@color/white"
-            android:theme="@style/AppThemeWhiteActionBar.ActionBar"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent">
+            android:layout_height="match_parent">
 
-            <androidx.appcompat.widget.Toolbar
-                android:id="@+id/toolbar_waiter"
-                android:layout_width="match_parent"
-                android:layout_height="?android:attr/actionBarSize"
-                android:gravity="center_vertical"
-                app:layout_scrollFlags="snap"
-                app:titleTextColor="@color/brownish_grey"
-                app:popupTheme="@style/PopupOverlay" />
-
-            <com.google.android.material.tabs.TabLayout
-                android:id="@+id/tabs_waiter"
+            <com.google.android.material.appbar.AppBarLayout
+                android:id="@+id/appbar_waiter"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:background="@drawable/background_bottom_inner_shadow"
-                app:tabGravity="fill"
-                app:tabIndicatorColor="@color/primary_red"
-                app:tabMode="scrollable"
-                app:tabSelectedTextColor="@color/primary_red"
-                app:tabTextColor="@color/pinkish_grey" />
+                android:background="@color/white"
+                android:theme="@style/AppThemeWhiteActionBar.ActionBar"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent">
 
-        </com.google.android.material.appbar.AppBarLayout>
+                <androidx.appcompat.widget.Toolbar
+                    android:id="@+id/toolbar_waiter"
+                    android:layout_width="match_parent"
+                    android:layout_height="?android:attr/actionBarSize"
+                    android:gravity="center_vertical"
+                    app:layout_scrollFlags="snap"
+                    app:popupTheme="@style/PopupOverlay"
+                    app:titleTextColor="@color/brownish_grey" />
 
-        <com.checkin.app.checkin.Utility.DynamicSwipableViewPager
-            android:id="@+id/pager_waiter"
-            android:layout_width="0dp"
-            android:layout_height="0dp"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/appbar_waiter" />
+                <com.google.android.material.tabs.TabLayout
+                    android:id="@+id/tabs_waiter"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/background_bottom_inner_shadow"
+                    app:tabGravity="fill"
+                    app:tabIndicatorColor="@color/primary_red"
+                    app:tabMode="scrollable"
+                    app:tabSelectedTextColor="@color/primary_red"
+                    app:tabTextColor="@color/pinkish_grey" />
 
-        <ImageView
-            android:id="@+id/im_waiter_scanner"
-            android:layout_width="@dimen/size_fab"
-            android:layout_height="@dimen/size_fab"
-            android:layout_margin="@dimen/spacing_normal"
-            android:clickable="true"
-            android:focusable="true"
-            android:src="@drawable/btn_floating_qr_scanner"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent" />
+            </com.google.android.material.appbar.AppBarLayout>
 
-    </androidx.constraintlayout.widget.ConstraintLayout>
+            <com.checkin.app.checkin.Utility.DynamicSwipableViewPager
+                android:id="@+id/pager_waiter"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/appbar_waiter" />
+
+            <ImageView
+                android:id="@+id/im_waiter_scanner"
+                android:layout_width="@dimen/size_fab"
+                android:layout_height="@dimen/size_fab"
+                android:layout_margin="@dimen/spacing_normal"
+                android:clickable="true"
+                android:focusable="true"
+                android:src="@drawable/btn_floating_qr_scanner"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
 
     <include layout="@layout/incl_account_base" />
 
@@ -70,8 +76,8 @@
         android:layout_width="wrap_content"
         android:layout_height="match_parent"
         android:layout_gravity="end"
-        app:itemTextColor="@color/brownish_grey"
-        android:fitsSystemWindows="false">
+        android:fitsSystemWindows="false"
+        app:itemTextColor="@color/brownish_grey">
 
         <include layout="@layout/incl_waiter_drawer_tables" />
     </com.google.android.material.navigation.NavigationView>

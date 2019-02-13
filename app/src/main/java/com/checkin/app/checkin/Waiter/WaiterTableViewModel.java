@@ -1,10 +1,6 @@
 package com.checkin.app.checkin.Waiter;
 
 import android.app.Application;
-import androidx.lifecycle.LiveData;
-import androidx.lifecycle.MediatorLiveData;
-import androidx.lifecycle.Transformations;
-import androidx.annotation.NonNull;
 
 import com.checkin.app.checkin.Data.BaseViewModel;
 import com.checkin.app.checkin.Data.Converters;
@@ -19,6 +15,11 @@ import com.fasterxml.jackson.databind.node.ObjectNode;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import androidx.annotation.NonNull;
+import androidx.lifecycle.LiveData;
+import androidx.lifecycle.MediatorLiveData;
+import androidx.lifecycle.Transformations;
 
 public class WaiterTableViewModel extends BaseViewModel {
     private WaiterRepository mWaiterRepository;
@@ -127,7 +128,10 @@ public class WaiterTableViewModel extends BaseViewModel {
             }
         }
         if (pos > -1) {
-            listResource.data.get(pos).setStatus(CHAT_STATUS_TYPE.DONE);
+            WaiterEventModel eventModel = listResource.data.get(pos);
+            listResource.data.remove(pos);
+            eventModel.setStatus(CHAT_STATUS_TYPE.DONE);
+            listResource.data.add(0, eventModel);
         }
         mEventData.setValue(Resource.cloneResource(listResource, listResource.data));
     }
@@ -145,9 +149,11 @@ public class WaiterTableViewModel extends BaseViewModel {
         }
         if (pos > -1) {
             WaiterEventModel event = listResource.data.get(pos);
+            listResource.data.remove(pos);
             event.setStatus(status);
             if (event.getOrderedItem() != null)
                 event.getOrderedItem().setStatus(status.tag);
+            listResource.data.add(0, event);
         }
         mEventData.setValue(Resource.cloneResource(listResource, listResource.data));
     }
@@ -166,8 +172,10 @@ public class WaiterTableViewModel extends BaseViewModel {
         }
         if (pos > -1) {
             WaiterEventModel event = listResource.data.get(pos);
+            listResource.data.remove(pos);
             event.setStatus(data.getStatus());
             event.getOrderedItem().setStatus(data.getStatus().tag);
+            listResource.data.add(0, event);
         }
         mEventData.setValue(Resource.cloneResource(listResource, listResource.data));
     }
@@ -186,7 +194,7 @@ public class WaiterTableViewModel extends BaseViewModel {
         Resource<List<WaiterEventModel>> listResource = mEventData.getValue();
         if (listResource == null || listResource.data == null)
             return;
-        listResource.data.add(waiterEventModel);
+        listResource.data.add(0, waiterEventModel);
         mEventData.setValue(Resource.cloneResource(listResource, listResource.data));
     }
 

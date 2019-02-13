@@ -1,11 +1,9 @@
 package com.checkin.app.checkin.Manager;
 
-import androidx.lifecycle.ViewModelProviders;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
-import androidx.appcompat.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
@@ -13,6 +11,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.checkin.app.checkin.Data.Message.MessageModel;
+import com.checkin.app.checkin.Data.Message.MessageObjectModel.MESSAGE_OBJECT_TYPE;
 import com.checkin.app.checkin.Data.Message.MessageUtils;
 import com.checkin.app.checkin.Manager.Fragment.ManagerSessionEventFragment;
 import com.checkin.app.checkin.Manager.Fragment.ManagerSessionOrderFragment;
@@ -27,11 +26,12 @@ import com.checkin.app.checkin.Waiter.Model.OrderStatusModel;
 
 import java.util.Locale;
 
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.lifecycle.ViewModelProviders;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 
-import static com.checkin.app.checkin.Data.Message.Constants.KEY_DATA;
 import static com.checkin.app.checkin.Data.Message.MessageModel.MESSAGE_TYPE.MANAGER_SESSION_BILL_CHANGE;
 import static com.checkin.app.checkin.Data.Message.MessageModel.MESSAGE_TYPE.MANAGER_SESSION_CHECKOUT_REQUEST;
 import static com.checkin.app.checkin.Data.Message.MessageModel.MESSAGE_TYPE.MANAGER_SESSION_EVENT_CONCERN;
@@ -75,18 +75,14 @@ public class ManagerSessionActivity extends AppCompatActivity implements Manager
     private final BroadcastReceiver mReceiver = new BroadcastReceiver() {
         @Override
         public void onReceive(Context context, Intent intent) {
-            MessageModel message;
-            try {
-                message = ((MessageModel) intent.getSerializableExtra(KEY_DATA));
-                if (message == null)
-                    return;
-            } catch (ClassCastException e) {
-                Log.e(TAG, "Invalid message object received.");
-                e.printStackTrace();
-                return;
-            }
+            MessageModel message = MessageUtils.parseMessage(intent);
+            if (message == null) return;
 
-            long sessionPk = message.getTarget().getPk();
+            long sessionPk = 0;
+            if (message.getTarget() != null && message.getTarget().getType() == MESSAGE_OBJECT_TYPE.SESSION)
+                sessionPk = message.getTarget().getPk();
+            else if (message.getObject() != null && message.getObject().getType() == MESSAGE_OBJECT_TYPE.SESSION)
+                sessionPk = message.getObject().getPk();
             if (mViewModel.getSessionPk() != sessionPk)
                 return;
 

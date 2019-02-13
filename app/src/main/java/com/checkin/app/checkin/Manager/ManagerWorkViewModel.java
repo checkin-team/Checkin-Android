@@ -1,21 +1,20 @@
-package com.checkin.app.checkin.Manager.Model;
+package com.checkin.app.checkin.Manager;
 
 import android.app.Application;
-import androidx.lifecycle.LiveData;
-import androidx.lifecycle.MediatorLiveData;
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 
 import com.checkin.app.checkin.Data.BaseViewModel;
 import com.checkin.app.checkin.Data.Resource;
-import com.checkin.app.checkin.Manager.ManagerRepository;
-import com.checkin.app.checkin.Misc.BriefModel;
+import com.checkin.app.checkin.Manager.Model.ManagerStatsModel;
 import com.checkin.app.checkin.Misc.GenericDetailModel;
-import com.checkin.app.checkin.Session.Model.EventBriefModel;
 import com.checkin.app.checkin.Session.Model.RestaurantTableModel;
 import com.checkin.app.checkin.Waiter.WaiterRepository;
 
 import java.util.List;
+
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.lifecycle.LiveData;
+import androidx.lifecycle.MediatorLiveData;
 
 public class ManagerWorkViewModel extends BaseViewModel {
     private ManagerRepository mManagerRepository;
@@ -84,18 +83,6 @@ public class ManagerWorkViewModel extends BaseViewModel {
         return resource.data.get(position);
     }
 
-    public void updateEventCount(long sessionPk, EventBriefModel event) {
-        Resource<List<RestaurantTableModel>> resource = mActiveTablesData.getValue();
-        if (resource == null || resource.data == null)
-            return;
-        for (RestaurantTableModel table : resource.data) {
-            if (table.getPk() == sessionPk) {
-                table.setEvent(event);
-                break;
-            }
-        }
-    }
-
     public void addRestaurantTable(RestaurantTableModel tableModel) {
         Resource<List<RestaurantTableModel>> resource = mActiveTablesData.getValue();
         if (resource == null || resource.data == null)
@@ -104,25 +91,12 @@ public class ManagerWorkViewModel extends BaseViewModel {
         mActiveTablesData.setValue(Resource.cloneResource(resource, resource.data));
     }
 
-    public void updateShopTableHost(long sessionPk, BriefModel host) {
-        Resource<List<RestaurantTableModel>> resource = mActiveTablesData.getValue();
-        if (resource == null || resource.data == null)
-            return;
-        for (RestaurantTableModel table : resource.data) {
-            if (table.getPk() == sessionPk) {
-                table.setHost(host);
-                break;
-            }
-        }
-        mActiveTablesData.setValue(Resource.cloneResource(resource, resource.data));
-    }
-
     @Override
     public void updateResults() {
         fetchActiveTables(mShopPk);
     }
 
-    public void updateRemoveTable(Long sessionPk) {
+    public void updateRemoveTable(long sessionPk) {
         Resource<List<RestaurantTableModel>> resource = mActiveTablesData.getValue();
         if (resource == null || resource.data == null)
             return;

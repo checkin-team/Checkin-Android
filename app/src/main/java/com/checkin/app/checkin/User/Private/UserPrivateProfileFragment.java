@@ -1,13 +1,7 @@
 package com.checkin.app.checkin.User.Private;
 
-import androidx.lifecycle.ViewModelProviders;
 import android.content.Intent;
 import android.os.Bundle;
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.fragment.app.Fragment;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -22,6 +16,12 @@ import com.checkin.app.checkin.Utility.Utils;
 
 import java.io.File;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.fragment.app.Fragment;
+import androidx.lifecycle.ViewModelProviders;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
@@ -47,6 +47,7 @@ public class UserPrivateProfileFragment extends Fragment {
     RecyclerView rvRecentShops;
 
     private UserViewModel mViewModel;
+    @Nullable
     private UserModel mUserModel;
     private UserCheckinAdapter mUserCheckinAdapter;
 
@@ -124,6 +125,10 @@ public class UserPrivateProfileFragment extends Fragment {
                 startActivityForResult(intent, SelectCropImageActivity.RC_CROP_IMAGE);
                 break;
             case R.id.btn_user_private_edit:
+                if (mUserModel == null) {
+                    Utils.toast(requireContext(), R.string.error_unavailable_network);
+                    return;
+                }
                 String firstName = mUserModel.getFirstName();
                 String lastName = mUserModel.getLastName();
                 String userName = mUserModel.getUsername();

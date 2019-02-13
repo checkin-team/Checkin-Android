@@ -8,10 +8,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.os.Build;
-import androidx.annotation.NonNull;
-import androidx.annotation.RequiresApi;
-import androidx.core.app.NotificationCompat;
-import androidx.localbroadcastmanager.content.LocalBroadcastManager;
+import android.util.Log;
 
 import com.checkin.app.checkin.Data.Message.Constants.CHANNEL;
 import com.checkin.app.checkin.Data.Message.Constants.CHANNEL_GROUP;
@@ -23,9 +20,17 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.RequiresApi;
+import androidx.core.app.NotificationCompat;
+import androidx.localbroadcastmanager.content.LocalBroadcastManager;
+
 import static androidx.core.app.NotificationCompat.PRIORITY_LOW;
+import static com.checkin.app.checkin.Data.Message.Constants.KEY_DATA;
 
 public class MessageUtils {
+    private static final String TAG = MessageUtils.class.getSimpleName();
+
     @RequiresApi(api = Build.VERSION_CODES.O)
     private static void createChannels(NotificationManager notificationManager, CHANNEL_GROUP group, final int importance, CHANNEL... channelTypes) {
         List<NotificationChannel> channels = new ArrayList<>(channelTypes.length);
@@ -129,6 +134,16 @@ public class MessageUtils {
                 .setPriority(PRIORITY_LOW)
                 .setProgress(100, 0, false);
         return builder;
+    }
+
+    public static MessageModel parseMessage(Intent intent) {
+        try {
+            return ((MessageModel) intent.getSerializableExtra(KEY_DATA));
+        } catch (ClassCastException e) {
+            Log.e(TAG, "Invalid message object received.");
+            e.printStackTrace();
+            return null;
+        }
     }
 
     public static class NotificationUpdate implements ProgressRequestBody.UploadCallbacks {

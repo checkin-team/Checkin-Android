@@ -1,8 +1,9 @@
 package com.checkin.app.checkin.Home;
 
+import android.content.BroadcastReceiver;
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
-import android.view.Gravity;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
@@ -11,6 +12,8 @@ import android.widget.TextView;
 
 import com.checkin.app.checkin.Account.AccountModel;
 import com.checkin.app.checkin.Account.BaseAccountActivity;
+import com.checkin.app.checkin.Data.Message.MessageModel;
+import com.checkin.app.checkin.Data.Message.MessageUtils;
 import com.checkin.app.checkin.Data.Resource;
 import com.checkin.app.checkin.Misc.BaseFragmentAdapterBottomNav;
 import com.checkin.app.checkin.Misc.BlankFragment;
@@ -29,10 +32,12 @@ import com.google.android.material.tabs.TabLayout;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.ActionBarDrawerToggle;
+import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.lifecycle.ViewModelProviders;
+import androidx.viewpager.widget.ViewPager;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
@@ -59,6 +64,21 @@ public class HomeActivity extends BaseAccountActivity implements NavigationView.
     private HomeViewModel mViewModel;
     private UserViewModel mUserViewModel;
 
+    private BroadcastReceiver mReceiver = new BroadcastReceiver() {
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            MessageModel message = MessageUtils.parseMessage(intent);
+            if (message == null) return;
+
+            switch (message.getType()) {
+                case USER_SESSION_ADDED_BY_OWNER:
+                    mViewModel.updateResults();
+                    onSessionStatusClick();
+                    break;
+            }
+        }
+    };
+
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -74,6 +94,17 @@ public class HomeActivity extends BaseAccountActivity implements NavigationView.
         vpHome.setAdapter(adapter);
         vpHome.setEnabled(false);
         adapter.setupWithTab(tabLayout, vpHome);
+
+        vpHome.addOnPageChangeListener(new ViewPager.SimpleOnPageChangeListener() {
+            @Override
+            public void onPageSelected(int position) {
+                if (position == 1) {
+                    launchScanner();
+                    vpHome.setCurrentItem(0);
+                }
+            }
+        });
+
         getNavAccount().setNavigationItemSelectedListener(this);
 
         initRefreshScreen(R.id.sr_home);
@@ -103,14 +134,15 @@ public class HomeActivity extends BaseAccountActivity implements NavigationView.
                     Utils.loadImageOrDefault(imTabUserIcon, data.getProfilePic(), (data.getGender() == UserModel.GENDER.MALE) ? R.drawable.cover_unknown_male : R.drawable.cover_unknown_female);
                 }
                 stopRefreshing();
-            } else if (resource.status == Resource.Status.LOADING)
-                startRefreshing();
+            } else if (resource.status == Resource.Status.LOADING) startRefreshing();
+            else stopRefreshing();
         });
 
         mViewModel.getQrResult().observe(this, resource -> {
             if (resource == null) return;
             if (resource.status == Resource.Status.SUCCESS && resource.data != null) {
-                startActivity(new Intent(this, ActiveSessionActivity.class));
+                mViewModel.updateResults();
+                onSessionStatusClick();
                 Utils.toast(this, resource.data.getDetail());
             } else if (resource.status != Resource.Status.LOADING) {
                 Utils.toast(this, resource.message);
@@ -119,7 +151,6 @@ public class HomeActivity extends BaseAccountActivity implements NavigationView.
         mViewModel.getSessionStatus().observe(this, resource -> {
             if (resource == null)
                 return;
-            stopRefreshing();
             if (resource.status == Resource.Status.SUCCESS && resource.data != null) {
                 vSessionStatus.setVisibility(View.VISIBLE);
                 tvSessionStatus.setText(resource.data.getLiveStatus());
@@ -133,7 +164,7 @@ public class HomeActivity extends BaseAccountActivity implements NavigationView.
 
     @OnClick(R.id.iv_home_navigation)
     public void onViewClicked() {
-        drawerLayout.openDrawer(Gravity.START);
+        drawerLayout.openDrawer(GravityCompat.START);
     }
 
     @OnClick(R.id.container_home_session_status)
@@ -178,6 +209,24 @@ public class HomeActivity extends BaseAccountActivity implements NavigationView.
                 return true;
         }
         return false;
+    }
+
+    private void launchScanner() {
+        Intent intent = new Intent(this, QRScannerActivity.class);
+        startActivityForResult(intent, REQUEST_QR_SCANNER);
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        mViewModel.updateResults();
+        MessageUtils.registerLocalReceiver(this, mReceiver, MessageModel.MESSAGE_TYPE.USER_SESSION_ADDED_BY_OWNER);
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        MessageUtils.unregisterLocalReceiver(this, mReceiver);
     }
 
     private class HomeFragmentAdapter extends BaseFragmentAdapterBottomNav {
@@ -231,11 +280,8 @@ public class HomeActivity extends BaseAccountActivity implements NavigationView.
 
         @Override
         protected void onTabClick(int position) {
-            if (position == 1) {
-                Intent intent = new Intent(getApplicationContext(), QRScannerActivity.class);
-                startActivityForResult(intent, REQUEST_QR_SCANNER);
-                vpHome.setCurrentItem(0);
-            } else super.onTabClick(position);
+            if (position == 1) launchScanner();
+            else super.onTabClick(position);
         }
 
         @Nullable

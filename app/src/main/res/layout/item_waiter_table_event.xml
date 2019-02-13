@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content">
@@ -7,13 +8,13 @@
     <androidx.cardview.widget.CardView
         style="@style/GreyCardStyle"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="match_parent"
         android:layout_marginStart="@dimen/spacing_tiny"
         android:layout_marginTop="@dimen/spacing_normal"
         android:layout_marginEnd="@dimen/spacing_tiny"
         android:layout_marginBottom="@dimen/spacing_tiny">
 
-        <RelativeLayout
+        <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:paddingStart="@dimen/spacing_normal"
@@ -25,30 +26,38 @@
                 android:id="@+id/im_waiter_event_type"
                 android:layout_width="@dimen/size_icon_order_status"
                 android:layout_height="@dimen/size_icon_order_status"
-                android:layout_alignParentStart="true"
-                android:layout_centerInParent="true"
                 android:tint="@color/white"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
                 tools:src="@drawable/ic_session_event_request_waiter" />
 
             <TextView
                 android:id="@+id/tv_waiter_event_message"
                 style="@style/WhiteTextStyle"
-                android:layout_width="wrap_content"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_centerInParent="true"
-                tools:text="Random message" />
+                android:layout_marginStart="@dimen/spacing_tiny"
+                android:layout_marginEnd="@dimen/spacing_tiny"
+                android:textAlignment="center"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toStartOf="@id/im_waiter_event_mark_done"
+                app:layout_constraintStart_toEndOf="@id/im_waiter_event_type"
+                app:layout_constraintTop_toTopOf="parent"
+                tools:text="Random message veeeeery loooong... ??" />
 
             <ImageView
                 android:id="@+id/im_waiter_event_mark_done"
                 android:layout_width="@dimen/size_normal_button"
                 android:layout_height="@dimen/size_normal_button"
-                android:layout_alignParentEnd="true"
-                android:layout_centerInParent="true"
                 android:clickable="true"
                 android:focusable="true"
                 android:padding="@dimen/spacing_extra_small"
-                android:src="@drawable/ic_accept_green_white" />
+                android:src="@drawable/ic_accept_green_white"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
 
-        </RelativeLayout>
+        </androidx.constraintlayout.widget.ConstraintLayout>
     </androidx.cardview.widget.CardView>
 </FrameLayout>

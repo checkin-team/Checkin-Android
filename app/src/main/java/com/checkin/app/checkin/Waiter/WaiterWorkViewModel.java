@@ -1,10 +1,6 @@
 package com.checkin.app.checkin.Waiter;
 
 import android.app.Application;
-import androidx.lifecycle.LiveData;
-import androidx.lifecycle.MediatorLiveData;
-import androidx.lifecycle.Transformations;
-import androidx.annotation.NonNull;
 
 import com.checkin.app.checkin.Data.BaseViewModel;
 import com.checkin.app.checkin.Data.Converters;
@@ -19,6 +15,11 @@ import com.fasterxml.jackson.databind.node.ObjectNode;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import androidx.annotation.NonNull;
+import androidx.lifecycle.LiveData;
+import androidx.lifecycle.MediatorLiveData;
+import androidx.lifecycle.Transformations;
 
 public class WaiterWorkViewModel extends BaseViewModel {
     private WaiterRepository mWaiterRepository;
@@ -39,6 +40,7 @@ public class WaiterWorkViewModel extends BaseViewModel {
     public void updateResults() {
         fetchShopActiveTables(mShopPk);
         fetchWaiterStats();
+        fetchWaiterServedTables();
     }
 
     public void fetchWaiterServedTables() {
@@ -131,26 +133,22 @@ public class WaiterWorkViewModel extends BaseViewModel {
     public void markSessionEnd(long sessionPk) {
         Resource<List<RestaurantTableModel>> shopTableResource = mShopTables.getValue();
         if (shopTableResource != null && shopTableResource.data != null) {
-            int pos = -1;
             for (int i = 0, length = shopTableResource.data.size(); i < length; i++) {
-                if (shopTableResource.data.get(i).getPk() == sessionPk)
-                    pos = i;
-                if (pos > -1) {
-                    shopTableResource.data.remove(pos);
+                if (shopTableResource.data.get(i).getPk() == sessionPk) {
+                    shopTableResource.data.remove(i);
                     mShopTables.setValue(Resource.cloneResource(shopTableResource, shopTableResource.data));
+                    break;
                 }
             }
         }
 
         Resource<List<WaiterTableModel>> waiterTableResource = mWaiterTables.getValue();
         if (waiterTableResource != null && waiterTableResource.data != null) {
-            int pos = -1;
             for (int i = 0, length = waiterTableResource.data.size(); i < length; i++) {
-                if (waiterTableResource.data.get(i).getPk() == sessionPk)
-                    pos = i;
-                if (pos > -1) {
-                    waiterTableResource.data.remove(pos);
+                if (waiterTableResource.data.get(i).getPk() == sessionPk) {
+                    waiterTableResource.data.remove(i);
                     mWaiterTables.setValue(Resource.cloneResource(waiterTableResource, waiterTableResource.data));
+                    break;
                 }
             }
         }

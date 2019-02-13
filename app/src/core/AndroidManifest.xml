@@ -47,7 +47,8 @@
             android:theme="@style/AppTheme" />
         <activity
             android:name=".Session.ActiveSession.ActiveSessionActivity"
-            android:windowSoftInputMode="adjustNothing" />
+            android:windowSoftInputMode="adjustNothing"
+            android:screenOrientation="portrait"/>
         <activity
             android:name=".Shop.ShopJoin.BusinessFeaturesActivity"
             android:screenOrientation="portrait"

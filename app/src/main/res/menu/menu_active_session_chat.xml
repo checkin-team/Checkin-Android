@@ -11,5 +11,6 @@
         app:showAsAction="never" />
     <item android:id="@+id/menu_remark"
         android:title="Remark"
+        android:visible="false"
         app:showAsAction="never" />
 </menu>

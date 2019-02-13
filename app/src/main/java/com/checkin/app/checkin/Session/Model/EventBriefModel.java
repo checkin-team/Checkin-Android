@@ -7,6 +7,7 @@ import com.checkin.app.checkin.Session.ActiveSession.Chat.SessionChatModel.CHAT_
 import com.checkin.app.checkin.Utility.Utils;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
+import java.util.Calendar;
 import java.util.Date;
 
 public class EventBriefModel {
@@ -28,18 +29,20 @@ public class EventBriefModel {
     @JsonProperty("concern")
     private EVENT_CONCERN_TYPE concern;
 
-    public EventBriefModel() {}
+    public EventBriefModel() {
+    }
 
     public EventBriefModel(long pk, CHAT_EVENT_TYPE type, String message) {
         this.pk = pk;
         this.type = type;
         this.message = message;
-        this.timestamp = new Date();
+        this.timestamp = Calendar.getInstance().getTime();
     }
 
     public static EventBriefModel getFromManagerEventModel(ManagerSessionEventModel eventModel) {
         EventBriefModel result = new EventBriefModel(eventModel.getPk(), eventModel.getType(), eventModel.getMessage());
-        result.timestamp = eventModel.getModified();
+        if (eventModel.getModified() != null)
+            result.timestamp = eventModel.getModified();
         result.service = eventModel.getService();
         result.concern = eventModel.getConcern();
         return result;
@@ -60,6 +63,10 @@ public class EventBriefModel {
     @JsonProperty("type")
     public void setType(int event) {
         this.type = CHAT_EVENT_TYPE.getByTag(event);
+    }
+
+    public void setType(CHAT_EVENT_TYPE type) {
+        this.type = type;
     }
 
     public String formatTimestamp() {

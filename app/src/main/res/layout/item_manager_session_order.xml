@@ -19,8 +19,8 @@
         android:drawablePadding="@dimen/spacing_small"
         android:gravity="center_vertical|start"
         app:layout_constraintBottom_toBottomOf="@id/container_ms_order_status"
-        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toStartOf="@id/tv_ms_order_item_quantity"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         tools:text="Pizza" />
 
@@ -29,12 +29,13 @@
         style="@style/GreySmallTextStyle"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
+        android:paddingStart="@dimen/spacing_extra_tiny"
+        android:paddingEnd="@dimen/spacing_extra_tiny"
         app:layout_constraintBottom_toBottomOf="@id/container_ms_order_status"
         app:layout_constraintEnd_toStartOf="@id/container_ms_order_status"
         app:layout_constraintHorizontal_bias="0"
         app:layout_constraintStart_toEndOf="@id/tv_ms_order_item_name"
         app:layout_constraintTop_toTopOf="parent"
-        android:paddingStart="@dimen/spacing_extra_tiny"
         tools:text="QTY: 1" />
 
     <FrameLayout
@@ -42,6 +43,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:paddingStart="@dimen/spacing_extra_tiny"
+        android:paddingEnd="@dimen/spacing_extra_tiny"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 
@@ -127,10 +129,10 @@
     <LinearLayout
         android:id="@+id/container_ms_order_remarks"
         android:layout_width="0dp"
-        android:paddingTop="@dimen/spacing_small"
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/spacing_small"
         android:orientation="vertical"
+        android:paddingTop="@dimen/spacing_small"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent">

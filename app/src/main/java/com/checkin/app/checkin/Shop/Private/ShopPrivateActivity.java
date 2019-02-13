@@ -11,6 +11,7 @@ import com.checkin.app.checkin.Misc.BaseFragmentAdapterBottomNav;
 import com.checkin.app.checkin.Misc.BlankFragment;
 import com.checkin.app.checkin.R;
 import com.checkin.app.checkin.Utility.DynamicSwipableViewPager;
+import com.checkin.app.checkin.Utility.Utils;
 import com.google.android.material.tabs.TabLayout;
 
 import androidx.annotation.Nullable;
@@ -20,6 +21,7 @@ import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.lifecycle.ViewModelProviders;
+import androidx.viewpager.widget.ViewPager;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
@@ -45,15 +47,8 @@ public class ShopPrivateActivity extends BaseAccountActivity {
         ButterKnife.bind(this);
         initRefreshScreen(R.id.sr_shop_private);
 
-        ActionBarDrawerToggle startToggle = new ActionBarDrawerToggle(this, drawerRoot, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
-        drawerRoot.addDrawerListener(startToggle);
-        startToggle.syncState();
-
-        setUpMyViewPager(new NewShopPrivatePagerAdapter(getSupportFragmentManager()));
-
         mViewModel = ViewModelProviders.of(this).get(ShopProfileViewModel.class);
         long shopPk = getIntent().getLongExtra(KEY_SHOP_PK, 0);
-
         mViewModel.fetchShopDetails(shopPk);
 
         mViewModel.getShopData().observe(this, restaurantModelResource -> {
@@ -61,16 +56,37 @@ public class ShopPrivateActivity extends BaseAccountActivity {
                 return;
             if (restaurantModelResource.status == Resource.Status.SUCCESS && restaurantModelResource.data != null) {
                 stopRefreshing();
-            } else if (restaurantModelResource.status == Resource.Status.LOADING)
+            } else if (restaurantModelResource.status == Resource.Status.LOADING) {
                 startRefreshing();
+            } else {
+                stopRefreshing();
+                Utils.toast(this, restaurantModelResource.message);
+            }
         });
+
+        setup();
     }
 
-    private void setUpMyViewPager(NewShopPrivatePagerAdapter newShopPrivatePagerAdapter) {
+    private void setup() {
+        ActionBarDrawerToggle startToggle = new ActionBarDrawerToggle(this, drawerRoot, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
+        drawerRoot.addDrawerListener(startToggle);
+        startToggle.syncState();
+
+        ShopFragmentAdapter adapter = new ShopFragmentAdapter(getSupportFragmentManager());
         vpShopPrivate.setEnabled(false);
-        vpShopPrivate.setAdapter(newShopPrivatePagerAdapter);
+        vpShopPrivate.setAdapter(adapter);
         tabsShopPrivate.setupWithViewPager(vpShopPrivate);
-        newShopPrivatePagerAdapter.setupWithTab(tabsShopPrivate, vpShopPrivate);
+        adapter.setupWithTab(tabsShopPrivate, vpShopPrivate);
+        vpShopPrivate.addOnPageChangeListener(new ViewPager.SimpleOnPageChangeListener() {
+            @Override
+            public void onPageSelected(int position) {
+                if (position == 1) {
+                    launchMenu();
+                    vpShopPrivate.setCurrentItem(0);
+                }
+                super.onPageSelected(position);
+            }
+        });
     }
 
     @Override
@@ -98,8 +114,12 @@ public class ShopPrivateActivity extends BaseAccountActivity {
         drawerRoot.openDrawer(GravityCompat.START);
     }
 
-    private class NewShopPrivatePagerAdapter extends BaseFragmentAdapterBottomNav {
-        NewShopPrivatePagerAdapter(FragmentManager fm) {
+    private void launchMenu() {
+        SessionMenuActivity.withoutSession(getApplicationContext(), mViewModel.getShopPk());
+    }
+
+    private class ShopFragmentAdapter extends BaseFragmentAdapterBottomNav {
+        ShopFragmentAdapter(FragmentManager fm) {
             super(fm);
         }
 
@@ -133,10 +153,8 @@ public class ShopPrivateActivity extends BaseAccountActivity {
 
         @Override
         protected void onTabClick(int position) {
-            if (position == 1) {
-                SessionMenuActivity.withoutSession(getApplicationContext(), mViewModel.getShopPk());
-                vpShopPrivate.setCurrentItem(0);
-            } else super.onTabClick(position);
+            if (position == 1) launchMenu();
+            else super.onTabClick(position);
         }
     }
 

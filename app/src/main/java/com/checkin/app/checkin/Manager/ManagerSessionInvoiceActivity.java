@@ -86,7 +86,7 @@ public class ManagerSessionInvoiceActivity extends AppCompatActivity {
             if (resource == null)
                 return;
             if (resource.status == Resource.Status.SUCCESS && resource.data != null) {
-                Utils.toast(this, resource.message);
+                Utils.toast(this, resource.data.getDetail());
                 finish();
             } else if (resource.status != Resource.Status.LOADING) {
                 Utils.toast(this, "Error: " + resource.message);

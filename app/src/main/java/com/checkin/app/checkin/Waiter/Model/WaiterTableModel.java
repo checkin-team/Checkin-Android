@@ -9,6 +9,8 @@ public class WaiterTableModel {
     @JsonProperty("table")
     private String table;
 
+    private int eventCount;
+
     public WaiterTableModel() {}
 
     public WaiterTableModel(long pk, String table){
@@ -22,5 +24,25 @@ public class WaiterTableModel {
 
     public String getTable() {
         return table;
+    }
+
+    public int getEventCount() {
+        return eventCount;
+    }
+
+    public String formatEventCount() {
+        return String.valueOf(eventCount);
+    }
+
+    public void setEventCount(int eventCount) {
+        this.eventCount = eventCount;
+    }
+
+    public void resetEventCount() {
+        setEventCount(0);
+    }
+
+    public void increaseEventCount() {
+        this.eventCount += 1;
     }
 }
