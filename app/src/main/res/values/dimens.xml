@@ -1,4 +1,4 @@
-<resources>
+  <resources>
     <!-- font sizes -->
     <dimen name="font_largest">26sp</dimen>
     <dimen name="font_larger">22sp</dimen>

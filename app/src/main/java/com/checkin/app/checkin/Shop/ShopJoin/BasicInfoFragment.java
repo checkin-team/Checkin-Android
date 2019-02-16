@@ -12,10 +12,12 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.Toast;
 
 import com.checkin.app.checkin.Data.Resource;
 import com.checkin.app.checkin.Maps.MapsActivity;
+import com.checkin.app.checkin.Misc.DebouncedOnClickListener;
 import com.checkin.app.checkin.Misc.GenericDetailModel;
 import com.checkin.app.checkin.Misc.LocationModel;
 import com.checkin.app.checkin.R;
@@ -87,6 +89,16 @@ public class BasicInfoFragment extends Fragment {
                 Log.e(TAG, "Error: " + resource.message + ", data: " + resource.data);
             }
         });
+
+        ImageView imMaps = view.findViewById(R.id.im_maps);
+
+        imMaps.setOnClickListener(new DebouncedOnClickListener(2500) {
+           @Override
+           public void onDebouncedClick(View v) {
+               Intent intent = new Intent(getContext(), MapsActivity.class);
+               startActivityForResult(intent, MapsActivity.REQUEST_MAP_CODE);
+           }
+        });
     }
 
     @OnTextChanged(value = {R.id.et_name, R.id.et_gstin, R.id.et_location}, callback = OnTextChanged.Callback.AFTER_TEXT_CHANGED)
@@ -95,13 +107,6 @@ public class BasicInfoFragment extends Fragment {
         String gstin = etGstin.getText().toString();
         String locality = etLocality.getText().toString();
         mViewModel.updateShopJoin(name, gstin, locality);
-    }
-
-
-    @OnClick(R.id.im_maps)
-    public void onMapsClick() {
-        Intent intent = new Intent(getContext(), MapsActivity.class);
-        startActivityForResult(intent, MapsActivity.REQUEST_MAP_CODE);
     }
 
     @Override

@@ -1,5 +1,6 @@
 package com.checkin.app.checkin.Shop.ShopJoin;
 
+import androidx.appcompat.app.ActionBar;
 import androidx.lifecycle.ViewModelProviders;
 import android.content.ComponentName;
 import android.content.Intent;
@@ -38,6 +39,12 @@ public class ShopJoinActivity extends AppCompatActivity implements
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_shop_join);
         ButterKnife.bind(this);
+
+        ActionBar actionBar = getSupportActionBar();
+        if (actionBar != null) {
+            actionBar.setDisplayHomeAsUpEnabled(true);
+            actionBar.setHomeAsUpIndicator(R.drawable.ic_back_grey);
+        }
 
         mJoinViewModel = ViewModelProviders.of(this).get(JoinViewModel.class);
         mShopViewModel = ViewModelProviders.of(this).get(ShopProfileViewModel.class);

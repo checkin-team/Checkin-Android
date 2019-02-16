@@ -21,6 +21,8 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 
+import static android.content.pm.PackageManager.PERMISSION_GRANTED;
+
 public class QRScannerActivity extends AppCompatActivity implements QRScannerFragment.QRScannerInteraction {
     private static final String TAG = QRScannerActivity.class.getSimpleName();
     private static final int PERMISSION_REQUEST_CAMERA = 101;
@@ -48,7 +50,7 @@ public class QRScannerActivity extends AppCompatActivity implements QRScannerFra
     }
 
     private void checkValidCamera() {
-        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.CAMERA) != PackageManager.PERMISSION_GRANTED) {
+        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.CAMERA) != PERMISSION_GRANTED) {
             Log.e(TAG, "Camera permission missing");
             ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.CAMERA}, PERMISSION_REQUEST_CAMERA);
         }
@@ -92,7 +94,10 @@ public class QRScannerActivity extends AppCompatActivity implements QRScannerFra
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
         switch (requestCode) {
             case PERMISSION_REQUEST_CAMERA: {
+                if (grantResults[0] == PERMISSION_GRANTED)
                 Log.e(TAG, Arrays.toString(grantResults));
+                else
+                    finish();
             }
         }
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
