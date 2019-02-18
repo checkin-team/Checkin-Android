@@ -78,12 +78,16 @@ public class ActiveSessionActivity extends BaseActivity implements ActiveSession
                     break;
                 case USER_SESSION_MEMBER_ADDED:
                     model = message.getObject();
-                    SessionCustomerModel accCustomer = new SessionCustomerModel(model.getPk(), model.getBriefModel(), false, true);
-                    ActiveSessionActivity.this.addCustomer(accCustomer);
+                    ActiveSessionActivity.this.updateCustomer(model.getPk(),true);
                     break;
                 case USER_SESSION_END:
                     Utils.navigateBackToHome(getApplicationContext());
                     break;
+                case USER_SESSION_MEMBER_REMOVED:
+                    model = message.getObject();
+                    ActiveSessionActivity.this.updateCustomer(model.getPk(),false);
+                    break;
+
             }
         }
     };
@@ -133,10 +137,6 @@ public class ActiveSessionActivity extends BaseActivity implements ActiveSession
             switch (resource.status) {
                 case SUCCESS: {
                     Utils.toast(this, "Done!");
-//                    if (resource.data != null)
-////                        mViewModel.updateResults();
-//                        mViewModel.updateUiSessionMember(Long.parseLong(resource.data.getPk()));
-
                     break;
                 }
                 case LOADING:
@@ -169,7 +169,6 @@ public class ActiveSessionActivity extends BaseActivity implements ActiveSession
     }
 
     private void setupData(ActiveSessionModel data) {
-        Log.e("data====", data.getCustomers().size() + "");
         mSessionMembersAdapter.setUsers(data.getCustomers());
         tvBill.setText(data.formatBill(this));
         tvSessionLiveAt.setText(data.getRestaurant().getDisplayName());
@@ -191,6 +190,10 @@ public class ActiveSessionActivity extends BaseActivity implements ActiveSession
 
     private void addCustomer(SessionCustomerModel customer) {
         mViewModel.addCustomer(customer);
+    }
+
+    private void updateCustomer(long customer, boolean isAdded) {
+        mViewModel.updateCustomer(customer, isAdded);
     }
 
     @OnClick(R.id.btn_active_session_menu)

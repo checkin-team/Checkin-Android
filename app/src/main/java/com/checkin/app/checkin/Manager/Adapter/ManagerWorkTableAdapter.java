@@ -94,6 +94,7 @@ public class ManagerWorkTableAdapter extends RecyclerView.Adapter<ManagerWorkTab
                 tvShopManagerTableName.setText(host.getDisplayName());
                 Utils.loadImageOrDefault(ivShopManagerTableImage, host.getDisplayPic(), R.drawable.ic_waiter);
             } else {
+                ivShopManagerTableImage.setImageDrawable(ivShopManagerTableIcon.getContext().getResources().getDrawable(R.drawable.ic_waiter));
                 tvShopManagerTableName.setText(R.string.waiter_unassigned);
             }
 

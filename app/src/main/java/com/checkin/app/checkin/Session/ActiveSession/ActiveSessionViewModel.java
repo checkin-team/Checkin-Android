@@ -28,7 +28,6 @@ public class ActiveSessionViewModel extends BaseViewModel {
     private MediatorLiveData<Resource<GenericDetailModel>> mMemberUpdate = new MediatorLiveData<>();
 
     private long mShopPk = -1, mSessionPk = -1;
-    private boolean isAccepted;
 
     public ActiveSessionViewModel(@NonNull Application application) {
         super(application);
@@ -100,45 +99,15 @@ public class ActiveSessionViewModel extends BaseViewModel {
     }
 
     public void acceptSessionMember(String userId) {
-        isAccepted = true;
         mMemberUpdate.addSource(mRepository.acceptSessionMemberRequest(userId), mMemberUpdate::setValue);
     }
 
     public void removeSessionMember(String userId) {
-        isAccepted = false;
         mMemberUpdate.addSource(mRepository.deleteSessionMember(userId), mMemberUpdate::setValue);
     }
 
     public LiveData<Resource<GenericDetailModel>> getSessionMemberUpdate() {
         return mMemberUpdate;
-    }
-
-    public void updateUiSessionMember(long eventId) {
-        Resource<ActiveSessionModel> listResource = mSessionData.getValue();
-        if (listResource == null || listResource.data == null)
-            return;
-        int pos = -1;
-//        List<SessionCustomerModel> list= listResource.data.getCustomers();
-        for (int i = 0, count = listResource.data.getCustomers().size(); i < count; i++) {
-            if (Long.valueOf(listResource.data.getCustomers().get(i).getUser().getPk()) == eventId) {
-                Log.e("pos=====", pos + " == "+ i);
-                pos = i;
-                break;
-            }
-        }
-        if (pos > -1) {
-            if (isAccepted){
-                SessionCustomerModel customerModel = listResource.data.getCustomers().get(pos);
-                customerModel.setAccepted(true);
-                listResource.data.getCustomers().remove(pos);
-                listResource.data.getCustomers().add(customerModel);
-//                listResource.data.getCustomers().get(pos).setAccepted(true);
-            }else {
-                listResource.data.getCustomers().remove(pos);
-            }
-
-        }
-        mSessionData.setValue(Resource.cloneResource(listResource, listResource.data));
     }
 
     public void updateHost(BriefModel user) {
@@ -154,6 +123,29 @@ public class ActiveSessionViewModel extends BaseViewModel {
         if (resource == null || resource.data == null)
             return;
         resource.data.addCustomer(customer);
+        mSessionData.setValue(Resource.cloneResource(resource, resource.data));
+    }
+
+    public void updateCustomer(long pk, boolean isAdded) {
+        Resource<ActiveSessionModel> resource = mSessionData.getValue();
+        if (resource == null || resource.data == null)
+            return;
+        int pos = -1;
+        for (int i = 0, count = resource.data.getCustomers().size(); i < count; i++) {
+            if (Long.valueOf(resource.data.getCustomers().get(i).getUser().getPk()) == pk) {
+                pos = i;
+                break;
+            }
+        }
+
+        if (pos > -1) {
+            if (isAdded){
+                resource.data.getCustomers().get(pos).setAccepted(true);
+            }else {
+                resource.data.getCustomers().remove(pos);
+            }
+
+        }
         mSessionData.setValue(Resource.cloneResource(resource, resource.data));
     }
 }
