@@ -107,10 +107,14 @@ public class ManagerWorkTableAdapter extends RecyclerView.Adapter<ManagerWorkTab
             tvShopManagerTableNumber.setText(data.getTable());
             tvShopManagerTableDetail.setText(data.getEvent().getMessage());
 
-            if (data.isRequestedCheckout())
+            if (data.isRequestedCheckout()){
                 containerSessionEnd.setVisibility(View.VISIBLE);
-            else
+                containerSessionActive.setVisibility(View.GONE);
+            }else {
                 containerSessionActive.setVisibility(View.VISIBLE);
+                containerSessionEnd.setVisibility(View.GONE);
+            }
+
         }
 
         @OnClick(R.id.btn_manager_table_session_done)

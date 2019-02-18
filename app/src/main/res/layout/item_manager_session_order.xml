@@ -7,8 +7,8 @@
     android:layout_marginStart="@dimen/spacing_small"
     android:layout_marginTop="@dimen/spacing_normal"
     android:layout_marginEnd="@dimen/spacing_small"
-    android:background="@color/white"
-    android:paddingTop="@dimen/spacing_small">
+    android:layout_marginBottom="@dimen/spacing_small"
+    android:background="@color/white">
 
     <TextView
         android:id="@+id/tv_ms_order_item_name"
@@ -22,6 +22,7 @@
         app:layout_constraintEnd_toStartOf="@id/tv_ms_order_item_quantity"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0"
         tools:text="Pizza" />
 
     <TextView
@@ -95,14 +96,14 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="@dimen/spacing_extra_small"
-        android:layout_marginTop="@dimen/spacing_extra_small"
+        android:layout_marginTop="@dimen/spacing_normal"
         android:layout_marginEnd="@dimen/spacing_extra_small"
         android:orientation="horizontal"
         android:visibility="gone"
         app:layout_constraintBottom_toTopOf="@id/container_ms_order_remarks"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/container_ms_order_status">
+        app:layout_constraintTop_toBottomOf="@id/tv_ms_order_item_name">
 
         <LinearLayout
             android:id="@+id/container_ms_order_customizations_left"

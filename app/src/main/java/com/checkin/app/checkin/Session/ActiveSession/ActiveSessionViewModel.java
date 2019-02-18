@@ -1,6 +1,7 @@
 package com.checkin.app.checkin.Session.ActiveSession;
 
 import android.app.Application;
+import android.util.Log;
 
 import com.checkin.app.checkin.Data.BaseViewModel;
 import com.checkin.app.checkin.Data.Converters;
@@ -117,18 +118,25 @@ public class ActiveSessionViewModel extends BaseViewModel {
         if (listResource == null || listResource.data == null)
             return;
         int pos = -1;
-        List<SessionCustomerModel> list= listResource.data.getCustomers();
-        for (int i = 0, count = list.size(); i < count; i++) {
-            if (list.get(i).getPk() == eventId) {
+//        List<SessionCustomerModel> list= listResource.data.getCustomers();
+        for (int i = 0, count = listResource.data.getCustomers().size(); i < count; i++) {
+            if (Long.valueOf(listResource.data.getCustomers().get(i).getUser().getPk()) == eventId) {
+                Log.e("pos=====", pos + " == "+ i);
                 pos = i;
                 break;
             }
         }
         if (pos > -1) {
-            if (isAccepted)
-                list.get(pos).setAccepted(true);
-            else
-                list.remove(pos);
+            if (isAccepted){
+                SessionCustomerModel customerModel = listResource.data.getCustomers().get(pos);
+                customerModel.setAccepted(true);
+                listResource.data.getCustomers().remove(pos);
+                listResource.data.getCustomers().add(customerModel);
+//                listResource.data.getCustomers().get(pos).setAccepted(true);
+            }else {
+                listResource.data.getCustomers().remove(pos);
+            }
+
         }
         mSessionData.setValue(Resource.cloneResource(listResource, listResource.data));
     }

@@ -133,9 +133,10 @@ public class ActiveSessionActivity extends BaseActivity implements ActiveSession
             switch (resource.status) {
                 case SUCCESS: {
                     Utils.toast(this, "Done!");
-                    if (resource.data != null)
-                        mViewModel.updateUiSessionMember(Long.parseLong(resource.data.getPk()));
-                    else mViewModel.updateResults();
+//                    if (resource.data != null)
+////                        mViewModel.updateResults();
+//                        mViewModel.updateUiSessionMember(Long.parseLong(resource.data.getPk()));
+
                     break;
                 }
                 case LOADING:
@@ -168,6 +169,7 @@ public class ActiveSessionActivity extends BaseActivity implements ActiveSession
     }
 
     private void setupData(ActiveSessionModel data) {
+        Log.e("data====", data.getCustomers().size() + "");
         mSessionMembersAdapter.setUsers(data.getCustomers());
         tvBill.setText(data.formatBill(this));
         tvSessionLiveAt.setText(data.getRestaurant().getDisplayName());
