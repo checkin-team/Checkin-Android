@@ -25,6 +25,8 @@ import java.util.Locale;
 import androidx.annotation.Nullable;
 import androidx.core.app.NotificationCompat;
 
+import static com.checkin.app.checkin.Data.Message.Constants.CHANNEL.ACTIVE_SESSION;
+
 public class MessageModel implements Serializable {
     private MESSAGE_TYPE type;
 
@@ -136,7 +138,7 @@ public class MessageModel implements Serializable {
 
     protected CHANNEL getChannel() {
         if (isUserActiveSessionNotification())
-            return CHANNEL.ACTIVE_SESSION;
+            return ACTIVE_SESSION;
         if (isShopWaiterNotification())
             return CHANNEL.WAITER;
         if (isShopManagerNotification())
@@ -189,6 +191,7 @@ public class MessageModel implements Serializable {
     }
 
     private void addNotificationExtra(Context context, NotificationCompat.Builder builder, int notificationId) {
+        builder.setPriority(Notification.PRIORITY_HIGH);
     }
 
     void showNotification(Context context, NotificationManager notificationManager, int notificationId) {

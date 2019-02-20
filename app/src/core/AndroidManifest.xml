@@ -88,9 +88,6 @@
             android:theme="@style/SessionChatTheme"
             android:windowSoftInputMode="adjustResize" />
         <activity
-            android:name=".Session.ActiveSession.ActiveSessionViewOrdersActivity"
-            android:windowSoftInputMode="adjustNothing" />
-        <activity
             android:name=".Session.ActiveSession.ActiveSessionInvoiceActivity"
             android:label="Invoice"
             android:theme="@style/AppThemeWhiteActionBar" />

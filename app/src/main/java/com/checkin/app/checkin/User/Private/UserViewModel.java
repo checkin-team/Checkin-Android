@@ -4,6 +4,8 @@ import android.app.Application;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MediatorLiveData;
 import android.content.Context;
+import android.util.Log;
+
 import androidx.annotation.NonNull;
 import androidx.core.app.NotificationCompat;
 
@@ -58,9 +60,19 @@ public class UserViewModel extends BaseViewModel {
     }
 
     public void updateProfilePic(File pictureFile, Context context) {
-        NotificationCompat.Builder builder = MessageUtils.createUploadNotification(context);
-        MessageUtils.NotificationUpdate notificationUpdate = new MessageUtils.NotificationUpdate(context, builder);
-        doUploadImage(pictureFile, notificationUpdate);
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                NotificationCompat.Builder builder = MessageUtils.createUploadNotification(context);
+                MessageUtils.NotificationUpdate notificationUpdate = new MessageUtils.NotificationUpdate(context, builder);
+                try{
+                    Thread.sleep(1000);
+                }catch (InterruptedException e){
+                    Log.d("TAG", "sleep failure");
+                }
+                doUploadImage(pictureFile, notificationUpdate);
+            }
+        }).start();
     }
 
     private void doUploadImage(File pictureFile, ProgressRequestBody.UploadCallbacks listener) {

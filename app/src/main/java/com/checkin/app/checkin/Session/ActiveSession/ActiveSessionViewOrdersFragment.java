@@ -1,41 +1,52 @@
 package com.checkin.app.checkin.Session.ActiveSession;
 
-import androidx.lifecycle.ViewModelProviders;
 import android.os.Bundle;
-import androidx.annotation.Nullable;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
+import android.view.View;
 import android.widget.Toast;
 
 import com.checkin.app.checkin.Data.Resource;
-import com.checkin.app.checkin.Misc.BaseActivity;
+import com.checkin.app.checkin.Misc.BaseFragment;
 import com.checkin.app.checkin.R;
 import com.checkin.app.checkin.Session.Model.SessionOrderedItemModel;
 import com.checkin.app.checkin.Utility.Utils;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.lifecycle.ViewModelProviders;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 import butterknife.BindView;
-import butterknife.ButterKnife;
 import butterknife.OnClick;
 
-public class ActiveSessionViewOrdersActivity extends BaseActivity implements ActiveSessionOrdersAdapter.SessionOrdersInteraction {
+public class ActiveSessionViewOrdersFragment extends BaseFragment implements ActiveSessionOrdersAdapter.SessionOrdersInteraction {
+
     @BindView(R.id.rv_active_session_orders)
     RecyclerView rvOrders;
     private ActiveSessionOrdersAdapter mOrdersAdapter;
     private ActiveSessionOrdersViewModel mViewModel;
 
+    public static ActiveSessionViewOrdersFragment newInstance() {
+        return new ActiveSessionViewOrdersFragment();
+    }
+
+    public ActiveSessionViewOrdersFragment() {
+    }
+
     @Override
-    protected void onCreate(@Nullable Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+        setUpUi();
+        setData();
+    }
 
-        setContentView(R.layout.activity_active_session_view_orders);
-        ButterKnife.bind(this);
-
-        initRefreshScreen(R.id.sr_active_session_orders);
-
-        rvOrders.setLayoutManager(new LinearLayoutManager(this, RecyclerView.VERTICAL, false));
+    private void setUpUi() {
+        rvOrders.setLayoutManager(new LinearLayoutManager(getActivity(), RecyclerView.VERTICAL, false));
         mOrdersAdapter = new ActiveSessionOrdersAdapter(null, this);
         rvOrders.setAdapter(mOrdersAdapter);
+        initRefreshScreen(R.id.sr_active_session_orders);
+    }
 
+    private void setData() {
         mViewModel = ViewModelProviders.of(this).get(ActiveSessionOrdersViewModel.class);
 
         mViewModel.getSessionOrdersData().observe(this, listResource -> {
@@ -54,7 +65,7 @@ public class ActiveSessionViewOrdersActivity extends BaseActivity implements Act
                 return;
             switch (resource.status) {
                 case SUCCESS: {
-                    Toast.makeText(this, "Done!", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getActivity(), "Done!", Toast.LENGTH_SHORT).show();
                     mViewModel.getSessionOrdersData().observe(this, listResource -> {
                         if (listResource != null && listResource.status == Resource.Status.SUCCESS)
                             mOrdersAdapter.setData(listResource.data);
@@ -64,15 +75,15 @@ public class ActiveSessionViewOrdersActivity extends BaseActivity implements Act
                 case LOADING:
                     break;
                 default: {
-                    Utils.toast(this, resource.message);
+                    Utils.toast(getActivity(), resource.message);
                 }
             }
         });
     }
 
-    @OnClick(R.id.im_session_view_orders_back)
-    public void onBack(){
-        onBackPressed();
+    @Override
+    protected int getRootLayout() {
+        return R.layout.fragment_active_session_view_orders;
     }
 
     @Override
@@ -84,5 +95,10 @@ public class ActiveSessionViewOrdersActivity extends BaseActivity implements Act
     protected void updateScreen() {
         super.updateScreen();
         mViewModel.updateResults();
+    }
+
+    @OnClick(R.id.im_session_view_orders_back)
+    public void onBack(){
+        getActivity().finish();
     }
 }

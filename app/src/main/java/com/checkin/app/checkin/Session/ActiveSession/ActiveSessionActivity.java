@@ -9,6 +9,7 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.MotionEvent;
 import android.view.ViewGroup;
+import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -52,6 +53,8 @@ public class ActiveSessionActivity extends BaseActivity implements ActiveSession
     ImageView imWaiterPic;
     @BindView(R.id.container_as_actions_bottom)
     ViewGroup containerBottomActions;
+    @BindView(R.id.fl_view_orders)
+    FrameLayout flViewOrders;
 
     private ActiveSessionViewModel mViewModel;
     private ActiveSessionMemberAdapter mSessionMembersAdapter;
@@ -198,7 +201,7 @@ public class ActiveSessionActivity extends BaseActivity implements ActiveSession
 
     @OnClick(R.id.btn_active_session_orders)
     public void onViewOrders() {
-        startActivity(new Intent(this, ActiveSessionViewOrdersActivity.class));
+        getSupportFragmentManager().beginTransaction().replace(R.id.fl_view_orders,ActiveSessionViewOrdersFragment.newInstance()).commit();
     }
 
     @OnClick(R.id.tv_active_session_bill)
