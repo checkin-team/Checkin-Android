@@ -3,6 +3,7 @@ package com.checkin.app.checkin.Data.Message;
 import android.app.NotificationManager;
 import android.content.Context;
 import android.content.Intent;
+import android.text.Html;
 import android.util.Log;
 
 import com.checkin.app.checkin.Auth.DeviceTokenService;
@@ -11,11 +12,13 @@ import com.google.firebase.messaging.FirebaseMessagingService;
 import com.google.firebase.messaging.RemoteMessage;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.Map;
 
 public class AppMessagingService extends FirebaseMessagingService {
     private static final String TAG = AppMessagingService.class.getSimpleName();
     private NotificationManager mNotificationManager;
+    ArrayList<MessageModel> notificationString = new ArrayList<>();
 
     @Override
     public void onCreate() {
@@ -41,16 +44,33 @@ public class AppMessagingService extends FirebaseMessagingService {
             return;
         }
 
-        boolean shouldShowNotification;
+        boolean shouldShowNotification = false;
         if (data.shouldTryUpdateUi()) {
-            boolean result = MessageUtils.sendLocalBroadcast(this, data);
-            shouldShowNotification = data.shouldShowNotification();
-            if (data.isOnlyUiUpdate()) shouldShowNotification = !result && shouldShowNotification;
-        } else shouldShowNotification = true;
+            shouldShowNotification = !MessageUtils.sendLocalBroadcast(this, data) && data.shouldShowNotification();
+        }
 
         if (shouldShowNotification) {
-            int notificationId = Constants.getNotificationID();
-            data.showNotification(this, mNotificationManager, notificationId);
+//            int notificationId = Constants.getNotificationID();
+            int notificationId = 101;
+
+            if(notificationString.size()>0){
+                for(int i=0; i<notificationString.size() ; i++){
+                    if(notificationString.get(i).getTarget().getPk() == data.getTarget().getPk()){
+                        notificationString.add(data);
+                        data.showNotification(this, mNotificationManager, notificationId, notificationString);
+                        break;
+                    }else {
+                        data.showNotification(this, mNotificationManager, notificationId++, null);
+                        break;
+                    }
+
+                }
+            }else{
+                notificationString.add(data);
+                data.showNotification(this, mNotificationManager, notificationId, null);
+            }
+
+
         }
     }
 
