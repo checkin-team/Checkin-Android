@@ -8,7 +8,6 @@ import android.content.Context;
 import android.content.Intent;
 import android.text.Html;
 import android.text.TextUtils;
-import android.util.Log;
 
 import com.checkin.app.checkin.Data.Message.Constants.CHANNEL;
 import com.checkin.app.checkin.Data.Message.MessageObjectModel.MESSAGE_OBJECT_TYPE;
@@ -21,14 +20,12 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 
 import java.io.Serializable;
-import java.util.ArrayList;
 import java.util.Locale;
 
 import androidx.annotation.Nullable;
 import androidx.core.app.NotificationCompat;
 
 public class MessageModel implements Serializable {
-
     private MESSAGE_TYPE type;
 
     @JsonProperty("description")
@@ -126,7 +123,7 @@ public class MessageModel implements Serializable {
     }
 
     public String getDescription() {
-        return description;
+        return Html.fromHtml(description).toString();
     }
 
     public MessageObjectModel getObject() {
@@ -162,10 +159,12 @@ public class MessageModel implements Serializable {
     private void addIntentExtra(Intent intent, @Nullable String className) {
         if (className == null)
             return;
+        MessageObjectModel shopDetail = getShopDetail();
+        if (shopDetail == null) return;
         if (isShopManagerNotification()) {
-            intent.putExtra(ManagerWorkActivity.KEY_RESTAURANT_PK, getShopPk());
+            intent.putExtra(ManagerWorkActivity.KEY_RESTAURANT_PK, shopDetail.getPk());
         } else if (isShopWaiterNotification()) {
-            intent.putExtra(WaiterWorkActivity.KEY_SHOP_PK, getShopPk());
+            intent.putExtra(WaiterWorkActivity.KEY_SHOP_PK, shopDetail.getPk());
         }
     }
 
@@ -180,42 +179,65 @@ public class MessageModel implements Serializable {
         return null;
     }
 
-    private NotificationCompat.Builder getNotificationBuilder(Context context, int notificationId, ArrayList<MessageModel> messages) {
+    private NotificationCompat.Builder getNotificationBuilder(Context context, int notificationId) {
         CHANNEL channel = this.getChannel();
         MessageUtils.createRequiredChannel(channel, context);
-        NotificationCompat.InboxStyle style = new NotificationCompat.InboxStyle();
-        if(messages!=null){
-            for (MessageModel line : messages) {
-                style.addLine(line.getDescription());
-            }
-        }else {
-            style.addLine(Html.fromHtml(this.description).toString());
-        }
-
         NotificationCompat.Builder builder = new NotificationCompat.Builder(context, channel.id);
         builder.setContentTitle(context.getString(R.string.app_name))
-                .setContentTitle(String.valueOf(type))
+                .setContentText(getDescription())
                 .setSmallIcon(R.drawable.ic_logo_notification)
-                .setAutoCancel(true)
-                .setStyle(style);
+                .setAutoCancel(true);
         addNotificationExtra(context, builder, notificationId);
         return builder;
     }
 
     private void addNotificationExtra(Context context, NotificationCompat.Builder builder, int notificationId) {
+        tryGroupNotification(builder);
     }
 
-    void showNotification(Context context, NotificationManager notificationManager, int notificationId, ArrayList<MessageModel> messages) {
+    public Notification showNotification(Context context, NotificationManager notificationManager, int notificationId) {
         Intent intent = getNotificationIntent(context);
         PendingIntent pendingIntent = PendingIntent.getActivity(context, 0, intent, PendingIntent.FLAG_UPDATE_CURRENT);
-        Notification notification = getNotificationBuilder(context, notificationId, messages)
+        return getNotificationBuilder(context, notificationId)
                 .setContentIntent(pendingIntent)
                 .build();
-        notificationManager.notify(notificationId, notification);
     }
 
     protected boolean shouldShowNotification() {
         return !TextUtils.isEmpty(description) && !isOnlyUiUpdate();
+    }
+
+    private void tryGroupNotification(NotificationCompat.Builder builder) {
+        String group = getGroupKey();
+        if (group != null) {
+            builder.setGroup(group);
+        }
+    }
+
+    @Nullable
+    public String getGroupKey() {
+        if (isShopManagerNotification() || isShopWaiterNotification() || isUserActiveSessionNotification()) {
+            MessageObjectModel session = getSessionDetail();
+            if (session == null) return null;
+            return Constants.getNotificationGroup(session.getType(), session.getPk());
+        }
+        return null;
+    }
+
+    public int getGroupSummaryID() {
+        MessageObjectModel session =  getSessionDetail();
+        if (session == null)
+            return 0;
+        return Constants.getNotificationSummaryID(session.getType(), session.getPk());
+    }
+
+    public String getGroupTitle() {
+        MessageObjectModel objectModel;
+        objectModel = getSessionDetail();
+        if (objectModel != null)    return objectModel.getDisplayName();
+        objectModel = getShopDetail();
+        if (objectModel != null)    return objectModel.getDisplayName();
+        return "";
     }
 
     protected boolean isOnlyUiUpdate() {
@@ -265,13 +287,23 @@ public class MessageModel implements Serializable {
         return this.type.id > 600 && this.type.id < 700;
     }
 
-    private long getShopPk() {
+    @Nullable
+    private MessageObjectModel getShopDetail() {
         if (target != null && target.getType() == MESSAGE_OBJECT_TYPE.RESTAURANT)
-            return target.getPk();
+            return target;
         if (object != null && object.getType() == MESSAGE_OBJECT_TYPE.RESTAURANT)
-            return object.getPk();
+            return object;
         if (actor != null && actor.getType() == MESSAGE_OBJECT_TYPE.RESTAURANT)
-            return actor.getPk();
-        return -1;
+            return actor;
+        return null;
+    }
+
+    @Nullable
+    private MessageObjectModel getSessionDetail() {
+        if (target != null && target.getType() == MESSAGE_OBJECT_TYPE.SESSION)
+            return target;
+        if (object != null && object.getType() == MESSAGE_OBJECT_TYPE.SESSION)
+            return object;
+        return null;
     }
 }

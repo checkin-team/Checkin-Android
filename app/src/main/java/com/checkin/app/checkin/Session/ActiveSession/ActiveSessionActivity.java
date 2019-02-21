@@ -172,9 +172,9 @@ public class ActiveSessionActivity extends BaseActivity implements ActiveSession
         mSessionMembersAdapter.setUsers(data.getCustomers());
         tvBill.setText(data.formatBill(this));
         tvSessionLiveAt.setText(data.getRestaurant().getDisplayName());
-        if (data.gethost() != null) {
-            tvWaiterName.setText(data.gethost().getDisplayName());
-            Utils.loadImageOrDefault(imWaiterPic, data.gethost().getDisplayPic(), R.drawable.ic_waiter);
+        if (data.getHost() != null) {
+            tvWaiterName.setText(data.getHost().getDisplayName());
+            Utils.loadImageOrDefault(imWaiterPic, data.getHost().getDisplayPic(), R.drawable.ic_waiter);
         } else {
             tvWaiterName.setText(R.string.waiter_unassigned);
         }

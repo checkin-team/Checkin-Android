@@ -1,24 +1,29 @@
 package com.checkin.app.checkin.Data.Message;
 
+import android.app.Notification;
 import android.app.NotificationManager;
 import android.content.Context;
 import android.content.Intent;
-import android.text.Html;
+import android.os.Build;
+import android.service.notification.StatusBarNotification;
 import android.util.Log;
 
 import com.checkin.app.checkin.Auth.DeviceTokenService;
 import com.checkin.app.checkin.Data.Converters;
+import com.checkin.app.checkin.R;
 import com.google.firebase.messaging.FirebaseMessagingService;
 import com.google.firebase.messaging.RemoteMessage;
 
 import java.io.IOException;
-import java.util.ArrayList;
+import java.util.Locale;
 import java.util.Map;
+
+import androidx.annotation.RequiresApi;
+import androidx.core.app.NotificationCompat;
 
 public class AppMessagingService extends FirebaseMessagingService {
     private static final String TAG = AppMessagingService.class.getSimpleName();
     private NotificationManager mNotificationManager;
-    ArrayList<MessageModel> notificationString = new ArrayList<>();
 
     @Override
     public void onCreate() {
@@ -44,34 +49,49 @@ public class AppMessagingService extends FirebaseMessagingService {
             return;
         }
 
-        boolean shouldShowNotification = false;
+        boolean shouldShowNotification;
         if (data.shouldTryUpdateUi()) {
-            shouldShowNotification = !MessageUtils.sendLocalBroadcast(this, data) && data.shouldShowNotification();
-        }
+            boolean result = MessageUtils.sendLocalBroadcast(this, data);
+            shouldShowNotification = data.shouldShowNotification();
+            if (data.isOnlyUiUpdate()) shouldShowNotification = !result && shouldShowNotification;
+        } else shouldShowNotification = true;
 
         if (shouldShowNotification) {
-//            int notificationId = Constants.getNotificationID();
-            int notificationId = 101;
-
-            if(notificationString.size()>0){
-                for(int i=0; i<notificationString.size() ; i++){
-                    if(notificationString.get(i).getTarget().getPk() == data.getTarget().getPk()){
-                        notificationString.add(data);
-                        data.showNotification(this, mNotificationManager, notificationId, notificationString);
-                        break;
-                    }else {
-                        data.showNotification(this, mNotificationManager, notificationId++, null);
-                        break;
-                    }
-
-                }
-            }else{
-                notificationString.add(data);
-                data.showNotification(this, mNotificationManager, notificationId, null);
-            }
-
-
+            this.showNotification(data);
         }
+    }
+
+    @RequiresApi(Build.VERSION_CODES.M)
+    private void showGroupedNotifications(MessageModel data) {
+        String notifGroup = data.getGroupKey();
+        int notifCount = 0;
+        NotificationCompat.InboxStyle style = new NotificationCompat.InboxStyle();
+        for (StatusBarNotification statusBarNotification: mNotificationManager.getActiveNotifications()) {
+            if (statusBarNotification.getGroupKey().equals(notifGroup) && statusBarNotification.getTag() != null) {
+                style.addLine(statusBarNotification.getTag());
+                notifCount++;
+            }
+        }
+        style.setBigContentTitle(data.getGroupTitle())
+                .setSummaryText(String.format(Locale.getDefault(), "%d events", notifCount));
+        String groupTitle = String.format(Locale.getDefault(), "%s - %d events", data.getGroupTitle(), notifCount);
+        Notification summaryNotif = new NotificationCompat.Builder(this, data.getChannel().id)
+                .setContentTitle(this.getString(R.string.app_name))
+                .setContentText(groupTitle)
+                .setGroup(notifGroup)
+                .setStyle(style)
+                .build();
+
+        mNotificationManager.notify(Constants.NOTIFICATION_GROUP_SUMMARY, data.getGroupSummaryID(), summaryNotif);
+    }
+
+    private void showNotification(MessageModel data) {
+        int notificationId = Constants.getNotificationID();
+        Notification notification = data.showNotification(this, mNotificationManager, notificationId);
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M)
+            showGroupedNotifications(data);
+        mNotificationManager.notify(data.getDescription(), notificationId, notification);
     }
 
     @Override
