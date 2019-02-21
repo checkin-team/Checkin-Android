@@ -38,6 +38,9 @@ public class ActiveSessionModel {
     @JsonProperty("is_public")
     private boolean isPublic;
 
+    @JsonProperty("is_requested_checkout")
+    private boolean isRequestedCheckout;
+
     public ActiveSessionModel() {}
 
     public String getBill() {
@@ -90,5 +93,9 @@ public class ActiveSessionModel {
 
     public void setHost(BriefModel user) {
         this.host = user;
+    }
+
+    public boolean isRequestedCheckout() {
+        return isRequestedCheckout;
     }
 }
