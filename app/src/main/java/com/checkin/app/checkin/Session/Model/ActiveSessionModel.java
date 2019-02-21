@@ -71,7 +71,7 @@ public class ActiveSessionModel {
         return restaurant;
     }
 
-    public BriefModel gethost() {
+    public BriefModel getHost() {
         return host;
     }
 
@@ -97,5 +97,9 @@ public class ActiveSessionModel {
 
     public boolean isRequestedCheckout() {
         return isRequestedCheckout;
+    }
+
+    public void setRequestedCheckout(boolean requestedCheckout) {
+        isRequestedCheckout = requestedCheckout;
     }
 }

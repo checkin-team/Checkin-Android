@@ -181,6 +181,7 @@ public class MessageUtils {
 
         @Override
         public void onProgressUpdate(int percentage) {
+            Log.d("Update Status",percentage+"");
             builder.setProgress(100, percentage, false);
             notificationManager.notify(notificationId, builder.build());
         }

@@ -1,5 +1,6 @@
 package com.checkin.app.checkin.Account;
 
+import android.app.Activity;
 import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
@@ -19,6 +20,7 @@ import com.checkin.app.checkin.Account.AccountModel.ACCOUNT_TYPE;
 import com.checkin.app.checkin.Auth.AuthPreferences;
 import com.checkin.app.checkin.Data.Resource;
 import com.checkin.app.checkin.Home.HomeActivity;
+import com.checkin.app.checkin.Home.SplashActivity;
 import com.checkin.app.checkin.Manager.ManagerWorkActivity;
 import com.checkin.app.checkin.Misc.BaseActivity;
 import com.checkin.app.checkin.R;
@@ -111,6 +113,9 @@ public abstract class BaseAccountActivity extends BaseActivity {
             PreferenceManager.getDefaultSharedPreferences(this).edit()
                     .clear()
                     .apply();
+            Intent splashIntent =new Intent(this, SplashActivity.class);
+            splashIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+            startActivity(splashIntent);
             finish();
         } else {
             Utils.toast(this, "Unable to logout. Manually remove account from settings.");

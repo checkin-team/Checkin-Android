@@ -65,6 +65,7 @@ public class ActiveSessionActivity extends BaseActivity implements ActiveSession
 
     private ActiveSessionViewModel mViewModel;
     private ActiveSessionMemberAdapter mSessionMembersAdapter;
+    private ActiveSessionViewOrdersFragment mOrdersFragment;
 
     private final BroadcastReceiver mReceiver = new BroadcastReceiver() {
         @Override
@@ -88,12 +89,16 @@ public class ActiveSessionActivity extends BaseActivity implements ActiveSession
                     break;
                 case USER_SESSION_MEMBER_ADDED:
                     model = message.getObject();
-                    SessionCustomerModel accCustomer = new SessionCustomerModel(model.getPk(), model.getBriefModel(), false, true);
-                    ActiveSessionActivity.this.addCustomer(accCustomer);
+                    ActiveSessionActivity.this.updateCustomer(model.getPk(),true);
                     break;
                 case USER_SESSION_END:
                     Utils.navigateBackToHome(getApplicationContext());
                     break;
+                case USER_SESSION_MEMBER_REMOVED:
+                    model = message.getObject();
+                    ActiveSessionActivity.this.updateCustomer(model.getPk(),false);
+                    break;
+
             }
         }
     };
@@ -110,7 +115,8 @@ public class ActiveSessionActivity extends BaseActivity implements ActiveSession
         setupObservers();
 
         mViewModel.fetchActiveSessionDetail();
-        mViewModel.fetchSessionOrdersData();
+        mViewModel.fetchSessionOrders();
+        mOrdersFragment = ActiveSessionViewOrdersFragment.newInstance();
     }
 
     private void setupObservers() {
@@ -144,9 +150,6 @@ public class ActiveSessionActivity extends BaseActivity implements ActiveSession
             switch (resource.status) {
                 case SUCCESS: {
                     Utils.toast(this, "Done!");
-                    if (resource.data != null)
-                        mViewModel.updateUiSessionMember(Long.parseLong(resource.data.getPk()));
-                    else mViewModel.updateResults();
                     break;
                 }
                 case LOADING:
@@ -198,13 +201,12 @@ public class ActiveSessionActivity extends BaseActivity implements ActiveSession
     }
 
     private void setupData(ActiveSessionModel data) {
-
         mSessionMembersAdapter.setUsers(data.getCustomers());
         tvBill.setText(data.formatBill(this));
         tvSessionLiveAt.setText(data.getRestaurant().getDisplayName());
-        if (data.gethost() != null) {
-            tvWaiterName.setText(data.gethost().getDisplayName());
-            Utils.loadImageOrDefault(imWaiterPic, data.gethost().getDisplayPic(), R.drawable.ic_waiter);
+        if (data.getHost() != null) {
+            tvWaiterName.setText(data.getHost().getDisplayName());
+            Utils.loadImageOrDefault(imWaiterPic, data.getHost().getDisplayPic(), R.drawable.ic_waiter);
         } else {
             tvWaiterName.setText(R.string.waiter_unassigned);
         }
@@ -224,6 +226,10 @@ public class ActiveSessionActivity extends BaseActivity implements ActiveSession
         mViewModel.addCustomer(customer);
     }
 
+    private void updateCustomer(long customer, boolean isAdded) {
+        mViewModel.updateCustomer(customer, isAdded);
+    }
+
     @OnClick(R.id.btn_active_session_menu)
     public void onListMenu() {
         SessionMenuActivity.withSession(this, mViewModel.getShopPk(), null);
@@ -231,7 +237,9 @@ public class ActiveSessionActivity extends BaseActivity implements ActiveSession
 
     @OnClick(R.id.ll_active_session_orders)
     public void onViewOrders() {
-        startActivity(new Intent(this, ActiveSessionViewOrdersActivity.class));
+        getSupportFragmentManager().beginTransaction()
+                .replace(R.id.container_as_orders, mOrdersFragment)
+                .commit();
     }
 
     @OnClick(R.id.tv_active_session_bill)
@@ -284,7 +292,7 @@ public class ActiveSessionActivity extends BaseActivity implements ActiveSession
     @Override
     protected void onResume() {
         super.onResume();
-        MESSAGE_TYPE[] types = new MESSAGE_TYPE[] {
+        MESSAGE_TYPE[] types = new MESSAGE_TYPE[]{
                 MESSAGE_TYPE.USER_SESSION_BILL_CHANGE, MESSAGE_TYPE.USER_SESSION_HOST_ASSIGNED,
                 MESSAGE_TYPE.USER_SESSION_MEMBER_ADD_REQUEST, MESSAGE_TYPE.USER_SESSION_MEMBER_ADDED, MESSAGE_TYPE.USER_SESSION_END
         };

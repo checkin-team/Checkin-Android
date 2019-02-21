@@ -1,5 +1,7 @@
 package com.checkin.app.checkin.Session.Model;
 
+import android.util.Log;
+
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 public class SessionBillModel {
@@ -82,9 +84,12 @@ public class SessionBillModel {
     public void calculateDiscount(Double percent) {
         discountPercentage = percent;
 
-        double oldDiscount = discount;
-        discount = (subtotal * percent) / 100;
-        total -= (discount - oldDiscount);
+        if(discount!=null){
+            double oldDiscount = discount;
+            discount = (subtotal * percent) / 100;
+            total -= (discount - oldDiscount);
+        }
+
     }
 
     public Double getDiscountPercentage() {

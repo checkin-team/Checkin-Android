@@ -28,6 +28,7 @@ import com.checkin.app.checkin.Utility.Utils;
 
 import androidx.annotation.Nullable;
 import androidx.lifecycle.ViewModelProviders;
+import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -127,6 +128,7 @@ public class SessionChatActivity extends BaseActivity implements ActiveSessionCh
 
         initRefreshScreen(R.id.sr_session_chat);
 
+        rvSessionChat.setLayoutManager(new LinearLayoutManager(this, RecyclerView.VERTICAL, true));
         mChatAdapter = new ActiveSessionChatAdapter(null, this);
         rvSessionChat.setAdapter(mChatAdapter);
 

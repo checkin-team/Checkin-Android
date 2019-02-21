@@ -80,7 +80,7 @@ public class MessageModel implements Serializable {
         }
 
         public static MESSAGE_TYPE getById(int id) {
-            for (MESSAGE_TYPE type: MESSAGE_TYPE.values()) {
+            for (MESSAGE_TYPE type : MESSAGE_TYPE.values()) {
                 if (type.id == id)
                     return type;
             }
@@ -122,7 +122,7 @@ public class MessageModel implements Serializable {
     }
 
     public String getDescription() {
-        return description;
+        return Html.fromHtml(description).toString();
     }
 
     public MessageObjectModel getObject() {
@@ -158,10 +158,12 @@ public class MessageModel implements Serializable {
     private void addIntentExtra(Intent intent, @Nullable String className) {
         if (className == null)
             return;
+        MessageObjectModel shopDetail = getShopDetail();
+        if (shopDetail == null) return;
         if (isShopManagerNotification()) {
-            intent.putExtra(ManagerWorkActivity.KEY_RESTAURANT_PK, getShopPk());
+            intent.putExtra(ManagerWorkActivity.KEY_RESTAURANT_PK, shopDetail.getPk());
         } else if (isShopWaiterNotification()) {
-            intent.putExtra(WaiterWorkActivity.KEY_SHOP_PK, getShopPk());
+            intent.putExtra(WaiterWorkActivity.KEY_SHOP_PK, shopDetail.getPk());
         }
     }
 
@@ -181,7 +183,7 @@ public class MessageModel implements Serializable {
         MessageUtils.createRequiredChannel(channel, context);
         NotificationCompat.Builder builder = new NotificationCompat.Builder(context, channel.id);
         builder.setContentTitle(context.getString(R.string.app_name))
-                .setContentText(Html.fromHtml(this.description).toString())
+                .setContentText(getDescription())
                 .setSmallIcon(R.drawable.ic_logo_notification)
                 .setAutoCancel(true);
         addNotificationExtra(context, builder, notificationId);
@@ -189,19 +191,53 @@ public class MessageModel implements Serializable {
     }
 
     private void addNotificationExtra(Context context, NotificationCompat.Builder builder, int notificationId) {
+        if (isShopWaiterNotification() || isShopManagerNotification()) builder.setPriority(Notification.PRIORITY_HIGH);
+        tryGroupNotification(builder);
     }
 
-    void showNotification(Context context, NotificationManager notificationManager, int notificationId) {
+    public Notification showNotification(Context context, NotificationManager notificationManager, int notificationId) {
         Intent intent = getNotificationIntent(context);
         PendingIntent pendingIntent = PendingIntent.getActivity(context, 0, intent, PendingIntent.FLAG_UPDATE_CURRENT);
-        Notification notification = getNotificationBuilder(context, notificationId)
+        return getNotificationBuilder(context, notificationId)
                 .setContentIntent(pendingIntent)
                 .build();
-        notificationManager.notify(notificationId, notification);
     }
 
     protected boolean shouldShowNotification() {
         return !TextUtils.isEmpty(description) && !isOnlyUiUpdate();
+    }
+
+    private void tryGroupNotification(NotificationCompat.Builder builder) {
+        String group = getGroupKey();
+        if (group != null) {
+            builder.setGroup(group);
+        }
+    }
+
+    @Nullable
+    public String getGroupKey() {
+        if (isShopManagerNotification() || isShopWaiterNotification() || isUserActiveSessionNotification()) {
+            MessageObjectModel session = getSessionDetail();
+            if (session == null) return null;
+            return Constants.getNotificationGroup(session.getType(), session.getPk());
+        }
+        return null;
+    }
+
+    public int getGroupSummaryID() {
+        MessageObjectModel session =  getSessionDetail();
+        if (session == null)
+            return 0;
+        return Constants.getNotificationSummaryID(session.getType(), session.getPk());
+    }
+
+    public String getGroupTitle() {
+        MessageObjectModel objectModel;
+        objectModel = getSessionDetail();
+        if (objectModel != null)    return objectModel.getDisplayName();
+        objectModel = getShopDetail();
+        if (objectModel != null)    return objectModel.getDisplayName();
+        return "";
     }
 
     protected boolean isOnlyUiUpdate() {
@@ -251,13 +287,23 @@ public class MessageModel implements Serializable {
         return this.type.id > 600 && this.type.id < 700;
     }
 
-    private long getShopPk () {
+    @Nullable
+    private MessageObjectModel getShopDetail() {
         if (target != null && target.getType() == MESSAGE_OBJECT_TYPE.RESTAURANT)
-            return target.getPk();
-        if (object != null  && object.getType() == MESSAGE_OBJECT_TYPE.RESTAURANT)
-            return object.getPk();
+            return target;
+        if (object != null && object.getType() == MESSAGE_OBJECT_TYPE.RESTAURANT)
+            return object;
         if (actor != null && actor.getType() == MESSAGE_OBJECT_TYPE.RESTAURANT)
-            return actor.getPk();
-        return -1;
+            return actor;
+        return null;
+    }
+
+    @Nullable
+    private MessageObjectModel getSessionDetail() {
+        if (target != null && target.getType() == MESSAGE_OBJECT_TYPE.SESSION)
+            return target;
+        if (object != null && object.getType() == MESSAGE_OBJECT_TYPE.SESSION)
+            return object;
+        return null;
     }
 }

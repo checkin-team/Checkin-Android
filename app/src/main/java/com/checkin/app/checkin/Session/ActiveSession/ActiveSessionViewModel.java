@@ -1,6 +1,7 @@
 package com.checkin.app.checkin.Session.ActiveSession;
 
 import android.app.Application;
+import android.util.Log;
 
 import com.checkin.app.checkin.Data.BaseViewModel;
 import com.checkin.app.checkin.Data.Converters;
@@ -35,7 +36,6 @@ public class ActiveSessionViewModel extends BaseViewModel {
     private MediatorLiveData<Resource<List<SessionOrderedItemModel>>> mOrdersData = new MediatorLiveData<>();
 
     private long mShopPk = -1, mSessionPk = -1;
-    private boolean isAccepted;
 
     public ActiveSessionViewModel(@NonNull Application application) {
         super(application);
@@ -45,7 +45,6 @@ public class ActiveSessionViewModel extends BaseViewModel {
     @Override
     public void updateResults() {
         fetchActiveSessionDetail();
-        fetchSessionOrdersData();
     }
 
     public void fetchActiveSessionDetail() {
@@ -66,6 +65,18 @@ public class ActiveSessionViewModel extends BaseViewModel {
         ObjectNode data = Converters.objectMapper.createObjectNode();
         data.put("is_public", isPublic);
         mData.addSource(mRepository.putSelfPresence(data), mData::setValue);
+    }
+
+    public LiveData<Resource<List<SessionOrderedItemModel>>> getSessionOrdersData() {
+        return mOrdersData;
+    }
+
+    public void fetchSessionOrders() {
+        mOrdersData.addSource(mRepository.getSessionOrdersDetails(), mOrdersData::setValue);
+    }
+
+    public void deleteSessionOrder(long orderId) {
+        mData.addSource(mRepository.removeSessionOrder(orderId), mData::setValue);
     }
 
     public LiveData<Resource<SessionInvoiceModel>> getSessionInvoice() {
@@ -108,38 +119,15 @@ public class ActiveSessionViewModel extends BaseViewModel {
     }
 
     public void acceptSessionMember(String userId) {
-        isAccepted = true;
         mMemberUpdate.addSource(mRepository.acceptSessionMemberRequest(userId), mMemberUpdate::setValue);
     }
 
     public void removeSessionMember(String userId) {
-        isAccepted = false;
         mMemberUpdate.addSource(mRepository.deleteSessionMember(userId), mMemberUpdate::setValue);
     }
 
     public LiveData<Resource<GenericDetailModel>> getSessionMemberUpdate() {
         return mMemberUpdate;
-    }
-
-    public void updateUiSessionMember(long eventId) {
-        Resource<ActiveSessionModel> listResource = mSessionData.getValue();
-        if (listResource == null || listResource.data == null)
-            return;
-        int pos = -1;
-        List<SessionCustomerModel> list= listResource.data.getCustomers();
-        for (int i = 0, count = list.size(); i < count; i++) {
-            if (list.get(i).getPk() == eventId) {
-                pos = i;
-                break;
-            }
-        }
-        if (pos > -1) {
-            if (isAccepted)
-                list.get(pos).setAccepted(true);
-            else
-                list.remove(pos);
-        }
-        mSessionData.setValue(Resource.cloneResource(listResource, listResource.data));
     }
 
     public void updateHost(BriefModel user) {
@@ -157,6 +145,30 @@ public class ActiveSessionViewModel extends BaseViewModel {
         resource.data.addCustomer(customer);
         mSessionData.setValue(Resource.cloneResource(resource, resource.data));
     }
+
+    public void updateCustomer(long pk, boolean isAdded) {
+        Resource<ActiveSessionModel> resource = mSessionData.getValue();
+        if (resource == null || resource.data == null)
+            return;
+        int pos = -1;
+        for (int i = 0, count = resource.data.getCustomers().size(); i < count; i++) {
+            if (Long.valueOf(resource.data.getCustomers().get(i).getUser().getPk()) == pk) {
+                pos = i;
+                break;
+            }
+        }
+
+        if (pos > -1) {
+            if (isAdded){
+                resource.data.getCustomers().get(pos).setAccepted(true);
+            }else {
+                resource.data.getCustomers().remove(pos);
+            }
+
+        }
+        mSessionData.setValue(Resource.cloneResource(resource, resource.data));
+    }
+
 
     public void fetchSessionOrdersData() {
         mOrdersData.addSource(mRepository.getSessionOrdersDetails(),mOrdersData::setValue);
