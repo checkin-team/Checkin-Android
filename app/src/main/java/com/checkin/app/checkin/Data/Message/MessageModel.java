@@ -25,8 +25,6 @@ import java.util.Locale;
 import androidx.annotation.Nullable;
 import androidx.core.app.NotificationCompat;
 
-import static com.checkin.app.checkin.Data.Message.Constants.CHANNEL.ACTIVE_SESSION;
-
 public class MessageModel implements Serializable {
     private MESSAGE_TYPE type;
 
@@ -82,7 +80,7 @@ public class MessageModel implements Serializable {
         }
 
         public static MESSAGE_TYPE getById(int id) {
-            for (MESSAGE_TYPE type: MESSAGE_TYPE.values()) {
+            for (MESSAGE_TYPE type : MESSAGE_TYPE.values()) {
                 if (type.id == id)
                     return type;
             }
@@ -95,7 +93,8 @@ public class MessageModel implements Serializable {
     }
 
     @JsonCreator
-    public MessageModel() {}
+    public MessageModel() {
+    }
 
     @JsonProperty("type")
     public void setType(int type) {
@@ -138,7 +137,7 @@ public class MessageModel implements Serializable {
 
     protected CHANNEL getChannel() {
         if (isUserActiveSessionNotification())
-            return ACTIVE_SESSION;
+            return CHANNEL.ACTIVE_SESSION;
         if (isShopWaiterNotification())
             return CHANNEL.WAITER;
         if (isShopManagerNotification())
@@ -191,7 +190,7 @@ public class MessageModel implements Serializable {
     }
 
     private void addNotificationExtra(Context context, NotificationCompat.Builder builder, int notificationId) {
-        builder.setPriority(Notification.PRIORITY_HIGH);
+        if (isShopWaiterNotification() || isShopManagerNotification()) builder.setPriority(Notification.PRIORITY_HIGH);
     }
 
     void showNotification(Context context, NotificationManager notificationManager, int notificationId) {
@@ -254,10 +253,10 @@ public class MessageModel implements Serializable {
         return this.type.id > 600 && this.type.id < 700;
     }
 
-    private long getShopPk () {
+    private long getShopPk() {
         if (target != null && target.getType() == MESSAGE_OBJECT_TYPE.RESTAURANT)
             return target.getPk();
-        if (object != null  && object.getType() == MESSAGE_OBJECT_TYPE.RESTAURANT)
+        if (object != null && object.getType() == MESSAGE_OBJECT_TYPE.RESTAURANT)
             return object.getPk();
         if (actor != null && actor.getType() == MESSAGE_OBJECT_TYPE.RESTAURANT)
             return actor.getPk();

@@ -15,15 +15,16 @@ public abstract class DebouncedOnClickListener implements View.OnClickListener {
 
     public DebouncedOnClickListener(long minimumIntervalMsec) {
         this.minimumInterval = minimumIntervalMsec;
-        this.lastClickMap = new WeakHashMap<View, Long>();
+        this.lastClickMap = new WeakHashMap<>();
     }
 
-    @Override public void onClick(View clickedView) {
+    @Override
+    public void onClick(View clickedView) {
         Long previousClickTimestamp = lastClickMap.get(clickedView);
         long currentTimestamp = SystemClock.uptimeMillis();
 
         lastClickMap.put(clickedView, currentTimestamp);
-        if(previousClickTimestamp == null || Math.abs(currentTimestamp - previousClickTimestamp) > minimumInterval) {
+        if (previousClickTimestamp == null || Math.abs(currentTimestamp - previousClickTimestamp) > minimumInterval) {
             onDebouncedClick(clickedView);
         }
     }

@@ -1,4 +1,4 @@
-  <resources>
+<resources>
     <!-- font sizes -->
     <dimen name="font_largest">26sp</dimen>
     <dimen name="font_larger">22sp</dimen>
@@ -113,7 +113,7 @@
 
     <dimen name="height_horizontal_line">1dp</dimen>
     <dimen name="width_vertical_line">1dp</dimen>
-    
+
     <!-- Shop dimensions -->
     <dimen name="width_shop_finance_tax">160dp</dimen>
     <dimen name="height_rangebar_short">50dp</dimen>

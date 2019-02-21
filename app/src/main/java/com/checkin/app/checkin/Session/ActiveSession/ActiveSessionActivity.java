@@ -9,7 +9,6 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.MotionEvent;
 import android.view.ViewGroup;
-import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -53,11 +52,10 @@ public class ActiveSessionActivity extends BaseActivity implements ActiveSession
     ImageView imWaiterPic;
     @BindView(R.id.container_as_actions_bottom)
     ViewGroup containerBottomActions;
-    @BindView(R.id.fl_view_orders)
-    FrameLayout flViewOrders;
 
     private ActiveSessionViewModel mViewModel;
     private ActiveSessionMemberAdapter mSessionMembersAdapter;
+    private ActiveSessionViewOrdersFragment mOrdersFragment;
 
     private final BroadcastReceiver mReceiver = new BroadcastReceiver() {
         @Override
@@ -103,6 +101,8 @@ public class ActiveSessionActivity extends BaseActivity implements ActiveSession
         setupObservers();
 
         mViewModel.fetchActiveSessionDetail();
+        mViewModel.fetchSessionOrders();
+        mOrdersFragment = ActiveSessionViewOrdersFragment.newInstance();
     }
 
     private void setupObservers() {
@@ -201,7 +201,9 @@ public class ActiveSessionActivity extends BaseActivity implements ActiveSession
 
     @OnClick(R.id.btn_active_session_orders)
     public void onViewOrders() {
-        getSupportFragmentManager().beginTransaction().replace(R.id.fl_view_orders,ActiveSessionViewOrdersFragment.newInstance()).commit();
+        getSupportFragmentManager().beginTransaction()
+                .replace(R.id.container_as_orders, mOrdersFragment)
+                .commit();
     }
 
     @OnClick(R.id.tv_active_session_bill)
@@ -254,7 +256,7 @@ public class ActiveSessionActivity extends BaseActivity implements ActiveSession
     @Override
     protected void onResume() {
         super.onResume();
-        MESSAGE_TYPE[] types = new MESSAGE_TYPE[] {
+        MESSAGE_TYPE[] types = new MESSAGE_TYPE[]{
                 MESSAGE_TYPE.USER_SESSION_BILL_CHANGE, MESSAGE_TYPE.USER_SESSION_HOST_ASSIGNED,
                 MESSAGE_TYPE.USER_SESSION_MEMBER_ADD_REQUEST, MESSAGE_TYPE.USER_SESSION_MEMBER_ADDED, MESSAGE_TYPE.USER_SESSION_END
         };

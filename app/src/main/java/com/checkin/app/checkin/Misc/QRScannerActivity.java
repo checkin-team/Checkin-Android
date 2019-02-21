@@ -2,21 +2,17 @@ package com.checkin.app.checkin.Misc;
 
 import android.Manifest;
 import android.content.Intent;
-import android.content.pm.PackageManager;
 import android.os.Bundle;
-import androidx.annotation.NonNull;
-import androidx.core.app.ActivityCompat;
-import androidx.appcompat.app.ActionBar;
-import androidx.appcompat.app.AppCompatActivity;
-import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 
 import com.checkin.app.checkin.R;
 import com.google.zxing.Result;
 
-import java.util.Arrays;
-
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.ActionBar;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.ActivityCompat;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
@@ -28,7 +24,8 @@ public class QRScannerActivity extends AppCompatActivity implements QRScannerFra
     private static final int PERMISSION_REQUEST_CAMERA = 101;
     public static final String KEY_QR_RESULT = "qr.result";
 
-    @BindView(R.id.btn_flash_toggle) ImageView btnFlash;
+    @BindView(R.id.btn_flash_toggle)
+    ImageView btnFlash;
 
     private QRScannerFragment mScannerFragment;
 
@@ -51,7 +48,6 @@ public class QRScannerActivity extends AppCompatActivity implements QRScannerFra
 
     private void checkValidCamera() {
         if (ActivityCompat.checkSelfPermission(this, Manifest.permission.CAMERA) != PERMISSION_GRANTED) {
-            Log.e(TAG, "Camera permission missing");
             ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.CAMERA}, PERMISSION_REQUEST_CAMERA);
         }
     }
@@ -94,10 +90,7 @@ public class QRScannerActivity extends AppCompatActivity implements QRScannerFra
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
         switch (requestCode) {
             case PERMISSION_REQUEST_CAMERA: {
-                if (grantResults[0] == PERMISSION_GRANTED)
-                Log.e(TAG, Arrays.toString(grantResults));
-                else
-                    finish();
+                if (grantResults[0] != PERMISSION_GRANTED) finish();
             }
         }
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);

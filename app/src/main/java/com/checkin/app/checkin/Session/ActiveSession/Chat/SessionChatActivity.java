@@ -82,8 +82,6 @@ public class SessionChatActivity extends BaseActivity implements ActiveSessionCh
         setContentView(R.layout.activity_active_session_chat);
         ButterKnife.bind(this);
 
-        setupUi();
-
         mViewModel = ViewModelProviders.of(this).get(ActiveSessionChatViewModel.class);
 
         setupUi();

@@ -2,7 +2,6 @@ package com.checkin.app.checkin.Session.ActiveSession;
 
 import android.os.Bundle;
 import android.view.View;
-import android.widget.Toast;
 
 import com.checkin.app.checkin.Data.Resource;
 import com.checkin.app.checkin.Misc.BaseFragment;
@@ -19,11 +18,11 @@ import butterknife.BindView;
 import butterknife.OnClick;
 
 public class ActiveSessionViewOrdersFragment extends BaseFragment implements ActiveSessionOrdersAdapter.SessionOrdersInteraction {
-
     @BindView(R.id.rv_active_session_orders)
     RecyclerView rvOrders;
+
     private ActiveSessionOrdersAdapter mOrdersAdapter;
-    private ActiveSessionOrdersViewModel mViewModel;
+    private ActiveSessionViewModel mViewModel;
 
     public static ActiveSessionViewOrdersFragment newInstance() {
         return new ActiveSessionViewOrdersFragment();
@@ -47,7 +46,7 @@ public class ActiveSessionViewOrdersFragment extends BaseFragment implements Act
     }
 
     private void setData() {
-        mViewModel = ViewModelProviders.of(this).get(ActiveSessionOrdersViewModel.class);
+        mViewModel = ViewModelProviders.of(requireActivity()).get(ActiveSessionViewModel.class);
 
         mViewModel.getSessionOrdersData().observe(this, listResource -> {
             if (listResource == null)
@@ -65,17 +64,13 @@ public class ActiveSessionViewOrdersFragment extends BaseFragment implements Act
                 return;
             switch (resource.status) {
                 case SUCCESS: {
-                    Toast.makeText(getActivity(), "Done!", Toast.LENGTH_SHORT).show();
-                    mViewModel.getSessionOrdersData().observe(this, listResource -> {
-                        if (listResource != null && listResource.status == Resource.Status.SUCCESS)
-                            mOrdersAdapter.setData(listResource.data);
-                    });
+                    mViewModel.fetchSessionOrders();
                     break;
                 }
                 case LOADING:
                     break;
                 default: {
-                    Utils.toast(getActivity(), resource.message);
+                    Utils.toast(requireContext(), resource.message);
                 }
             }
         });
@@ -93,12 +88,12 @@ public class ActiveSessionViewOrdersFragment extends BaseFragment implements Act
 
     @Override
     protected void updateScreen() {
-        super.updateScreen();
-        mViewModel.updateResults();
+        mViewModel.fetchSessionOrders();
+
     }
 
     @OnClick(R.id.im_session_view_orders_back)
-    public void onBack(){
-        getActivity().finish();
+    public void onBack() {
+        if (getFragmentManager() != null) getFragmentManager().popBackStack();
     }
 }
