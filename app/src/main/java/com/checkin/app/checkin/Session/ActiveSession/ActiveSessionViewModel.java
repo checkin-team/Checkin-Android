@@ -11,6 +11,7 @@ import com.checkin.app.checkin.Misc.GenericDetailModel;
 import com.checkin.app.checkin.Session.Model.ActiveSessionModel;
 import com.checkin.app.checkin.Session.Model.SessionCustomerModel;
 import com.checkin.app.checkin.Session.Model.SessionInvoiceModel;
+import com.checkin.app.checkin.Session.Model.SessionOrderedItemModel;
 import com.checkin.app.checkin.Shop.ShopModel;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 
@@ -26,6 +27,7 @@ public class ActiveSessionViewModel extends BaseViewModel {
     private MediatorLiveData<Resource<ActiveSessionModel>> mSessionData = new MediatorLiveData<>();
     private MediatorLiveData<Resource<SessionInvoiceModel>> mInvoiceData = new MediatorLiveData<>();
     private MediatorLiveData<Resource<GenericDetailModel>> mMemberUpdate = new MediatorLiveData<>();
+    private MediatorLiveData<Resource<List<SessionOrderedItemModel>>> mOrdersData = new MediatorLiveData<>();
 
     private long mShopPk = -1, mSessionPk = -1;
 
@@ -57,6 +59,18 @@ public class ActiveSessionViewModel extends BaseViewModel {
         ObjectNode data = Converters.objectMapper.createObjectNode();
         data.put("is_public", isPublic);
         mData.addSource(mRepository.putSelfPresence(data), mData::setValue);
+    }
+
+    public LiveData<Resource<List<SessionOrderedItemModel>>> getSessionOrdersData() {
+        return mOrdersData;
+    }
+
+    public void fetchSessionOrders() {
+        mOrdersData.addSource(mRepository.getSessionOrdersDetails(), mOrdersData::setValue);
+    }
+
+    public void deleteSessionOrder(long orderId) {
+        mData.addSource(mRepository.removeSessionOrder(orderId), mData::setValue);
     }
 
     public LiveData<Resource<SessionInvoiceModel>> getSessionInvoice() {

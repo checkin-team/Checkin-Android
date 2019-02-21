@@ -55,6 +55,7 @@ public class ActiveSessionActivity extends BaseActivity implements ActiveSession
 
     private ActiveSessionViewModel mViewModel;
     private ActiveSessionMemberAdapter mSessionMembersAdapter;
+    private ActiveSessionViewOrdersFragment mOrdersFragment;
 
     private final BroadcastReceiver mReceiver = new BroadcastReceiver() {
         @Override
@@ -104,6 +105,8 @@ public class ActiveSessionActivity extends BaseActivity implements ActiveSession
         setupObservers();
 
         mViewModel.fetchActiveSessionDetail();
+        mViewModel.fetchSessionOrders();
+        mOrdersFragment = ActiveSessionViewOrdersFragment.newInstance();
     }
 
     private void setupObservers() {
@@ -203,7 +206,9 @@ public class ActiveSessionActivity extends BaseActivity implements ActiveSession
 
     @OnClick(R.id.btn_active_session_orders)
     public void onViewOrders() {
-        startActivity(new Intent(this, ActiveSessionViewOrdersActivity.class));
+        getSupportFragmentManager().beginTransaction()
+                .replace(R.id.container_as_orders, mOrdersFragment)
+                .commit();
     }
 
     @OnClick(R.id.tv_active_session_bill)
@@ -256,7 +261,7 @@ public class ActiveSessionActivity extends BaseActivity implements ActiveSession
     @Override
     protected void onResume() {
         super.onResume();
-        MESSAGE_TYPE[] types = new MESSAGE_TYPE[] {
+        MESSAGE_TYPE[] types = new MESSAGE_TYPE[]{
                 MESSAGE_TYPE.USER_SESSION_BILL_CHANGE, MESSAGE_TYPE.USER_SESSION_HOST_ASSIGNED,
                 MESSAGE_TYPE.USER_SESSION_MEMBER_ADD_REQUEST, MESSAGE_TYPE.USER_SESSION_MEMBER_ADDED, MESSAGE_TYPE.USER_SESSION_END
         };

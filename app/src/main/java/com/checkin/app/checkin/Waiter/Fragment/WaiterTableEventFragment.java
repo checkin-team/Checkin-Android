@@ -99,7 +99,6 @@ public class WaiterTableEventFragment extends BaseFragment implements WaiterEven
                 return;
             if (resource.status == Resource.Status.SUCCESS && resource.data != null) {
                 mViewModel.updateUiMarkEventDone(Long.valueOf(resource.data.getPk()));
-                Utils.toast(requireContext(), resource.message);
             } else if (resource.status != Resource.Status.LOADING)
                 Utils.toast(requireContext(), resource.message);
         });

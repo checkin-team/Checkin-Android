@@ -93,8 +93,7 @@ public class MessageModel implements Serializable {
     }
 
     @JsonCreator
-    public MessageModel() {
-    }
+    public MessageModel() {}
 
     @JsonProperty("type")
     public void setType(int type) {
@@ -192,6 +191,7 @@ public class MessageModel implements Serializable {
     }
 
     private void addNotificationExtra(Context context, NotificationCompat.Builder builder, int notificationId) {
+        if (isShopWaiterNotification() || isShopManagerNotification()) builder.setPriority(Notification.PRIORITY_HIGH);
         tryGroupNotification(builder);
     }
 

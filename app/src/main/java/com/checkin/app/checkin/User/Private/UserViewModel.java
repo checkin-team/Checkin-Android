@@ -1,11 +1,7 @@
 package com.checkin.app.checkin.User.Private;
 
 import android.app.Application;
-import androidx.lifecycle.LiveData;
-import androidx.lifecycle.MediatorLiveData;
 import android.content.Context;
-import androidx.annotation.NonNull;
-import androidx.core.app.NotificationCompat;
 
 import com.checkin.app.checkin.Data.BaseViewModel;
 import com.checkin.app.checkin.Data.Converters;
@@ -21,6 +17,11 @@ import com.fasterxml.jackson.databind.node.ObjectNode;
 
 import java.io.File;
 import java.util.List;
+
+import androidx.annotation.NonNull;
+import androidx.core.app.NotificationCompat;
+import androidx.lifecycle.LiveData;
+import androidx.lifecycle.MediatorLiveData;
 
 /**
  * Created by Jogi Miglani on 29-09-2018.
