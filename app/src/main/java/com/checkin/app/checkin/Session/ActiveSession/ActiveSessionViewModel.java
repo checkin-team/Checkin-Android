@@ -45,6 +45,7 @@ public class ActiveSessionViewModel extends BaseViewModel {
     @Override
     public void updateResults() {
         fetchActiveSessionDetail();
+        fetchSessionOrders();
     }
 
     public void fetchActiveSessionDetail() {
@@ -169,10 +170,6 @@ public class ActiveSessionViewModel extends BaseViewModel {
         mSessionData.setValue(Resource.cloneResource(resource, resource.data));
     }
 
-
-    public void fetchSessionOrdersData() {
-        mOrdersData.addSource(mRepository.getSessionOrdersDetails(),mOrdersData::setValue);
-    }
 
     public LiveData<Integer> getCountNewOrders() {
         return Transformations.map(mOrdersData, input -> {
