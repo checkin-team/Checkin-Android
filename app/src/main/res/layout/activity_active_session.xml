@@ -201,6 +201,8 @@
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toTopOf="parent" />
 
+
+
                     <RelativeLayout
                         android:id="@+id/container_session_order_actions"
                         android:layout_width="match_parent"
@@ -217,6 +219,23 @@
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toTopOf="parent"
                         app:layout_constraintVertical_weight="0.6">
+
+                        <TextView
+                            android:id="@+id/tv_session_checkout"
+                            style="@style/GreyTextStyle"
+                            android:layout_width="wrap_content"
+                            android:layout_height="match_parent"
+                            android:drawableStart="@drawable/ic_hourglass"
+                            android:drawablePadding="@dimen/spacing_small"
+                            android:gravity="center"
+                            android:text="Your checkout request has been sent. /n Waiter is coming to you soon"
+                            android:textSize="@dimen/font_small" />
+
+                        <RelativeLayout
+                            android:id="@+id/rl_container_session_orders"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:visibility="visible">
 
                         <TextView
                             android:id="@+id/title_orders_label"
@@ -344,6 +363,8 @@
 
                             </LinearLayout>
                         </LinearLayout>
+
+                        </RelativeLayout>
                     </RelativeLayout>
 
                     <androidx.constraintlayout.widget.ConstraintLayout

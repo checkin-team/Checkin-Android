@@ -2,8 +2,6 @@ package com.checkin.app.checkin.Manager.Fragment;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.os.Handler;
-import android.util.Log;
 import android.view.View;
 import android.widget.TextView;
 
@@ -21,9 +19,9 @@ import java.util.Locale;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.core.widget.NestedScrollView;
 import androidx.lifecycle.ViewModelProviders;
 import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.LinearSmoothScroller;
 import androidx.recyclerview.widget.RecyclerView;
 import butterknife.BindView;
 import butterknife.OnClick;
@@ -35,12 +33,12 @@ public class ManagerSessionEventFragment extends BaseFragment implements Manager
     TextView tvCustomerCount;
     @BindView(R.id.tv_ms_event_session_time)
     TextView tvSessionTime;
+    @BindView(R.id.nested_sv_ms_event)
+    NestedScrollView nestedSVEvent;
 
     private ManagerSessionViewModel mViewModel;
     private ManagerSessionEventAdapter mAdapter;
     private String mTable;
-    LinearLayoutManager linearLayoutManager;
-    RecyclerView.SmoothScroller smoothScroller;
 
     public static ManagerSessionEventFragment newInstance() {
         return new ManagerSessionEventFragment();
@@ -63,17 +61,11 @@ public class ManagerSessionEventFragment extends BaseFragment implements Manager
     }
 
     private void setupUi() {
-        linearLayoutManager = new LinearLayoutManager(getContext(), RecyclerView.VERTICAL, false);
-        rvMSEvent.setLayoutManager(linearLayoutManager);
+        rvMSEvent.setLayoutManager(new LinearLayoutManager(getContext(), RecyclerView.VERTICAL, false));
         mAdapter = new ManagerSessionEventAdapter(this);
         rvMSEvent.setAdapter(mAdapter);
         rvMSEvent.setNestedScrollingEnabled(false);
         initRefreshScreen(R.id.sr_manager_session_event);
-        smoothScroller = new LinearSmoothScroller(getContext()) {
-            @Override protected int getVerticalSnapPreference() {
-                return LinearSmoothScroller.SNAP_TO_START;
-            }
-        };
 
     }
 
@@ -103,27 +95,8 @@ public class ManagerSessionEventFragment extends BaseFragment implements Manager
             switch (listResource.status) {
                 case SUCCESS:
                     mAdapter.setData(listResource.data);
-//                    linearLayoutManager.scrollToPositionWithOffset(0,10);
-//                    smoothScroller.setTargetPosition(0);
-//                    linearLayoutManager.startSmoothScroll(smoothScroller);
-//                    linearLayoutManager.smoothScrollToPosition(rvMSEvent,null,1);
-
-                    /*rvMSEvent.post(new Runnable() {
-                        @Override
-                        public void run() {
-                            // Call smooth scroll
-                            rvMSEvent.smoothScrollToPosition(0);
-                        }
-                    });*/
-
-                    new Handler().postDelayed(new Runnable() {
-                        @Override
-                        public void run() {
-//                            rvMSEvent.smoothScrollToPosition(0);
-                            linearLayoutManager.scrollToPositionWithOffset(0,10);
-                        }
-                    }, 300);
                     stopRefreshing();
+                    nestedSVEvent.scrollTo(0,0);
                     break;
                 case LOADING:
                     startRefreshing();

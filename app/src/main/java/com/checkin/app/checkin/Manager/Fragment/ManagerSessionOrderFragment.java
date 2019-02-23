@@ -16,6 +16,7 @@ import com.checkin.app.checkin.Utility.Utils;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.core.widget.NestedScrollView;
 import androidx.lifecycle.ViewModelProviders;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -28,6 +29,9 @@ public class ManagerSessionOrderFragment extends BaseFragment implements Manager
     RecyclerView rvOrdersNew;
     @BindView(R.id.title_ms_new)
     TextView titleNewHeader;
+    @BindView(R.id.nested_sv_ms_order)
+    NestedScrollView nestedSVOrder;
+
 
     private ManagerOrdersInteraction mListener;
 
@@ -79,6 +83,7 @@ public class ManagerSessionOrderFragment extends BaseFragment implements Manager
                         mAdapterNew.setData(listResource.data);
                         titleNewHeader.setVisibility(View.VISIBLE);
                         rvOrdersNew.setVisibility(View.VISIBLE);
+                        nestedSVOrder.scrollTo(0,0);
                     } else {
                         titleNewHeader.setVisibility(View.GONE);
                         rvOrdersNew.setVisibility(View.GONE);
@@ -97,6 +102,7 @@ public class ManagerSessionOrderFragment extends BaseFragment implements Manager
                 case SUCCESS:
                     mAdapterAccepted.setData(listResource.data);
                     stopRefreshing();
+                    nestedSVOrder.scrollTo(0,0);
                     break;
                 case LOADING:
                     startRefreshing();
@@ -114,6 +120,7 @@ public class ManagerSessionOrderFragment extends BaseFragment implements Manager
             switch (resource.status) {
                 case SUCCESS: {
                     mViewModel.updateUiOrderStatus(resource.data);
+                    nestedSVOrder.scrollTo(0,0);
                     break;
                 }
                 case LOADING:

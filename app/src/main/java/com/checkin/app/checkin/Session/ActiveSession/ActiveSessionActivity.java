@@ -8,9 +8,11 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.MotionEvent;
+import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.checkin.app.checkin.Data.Message.MessageModel;
@@ -60,8 +62,10 @@ public class ActiveSessionActivity extends BaseActivity implements ActiveSession
     TextView tvCountOrdersInProgress;
     @BindView(R.id.tv_as_order_done_count)
     TextView tvCountOrdersDelivered;
-    @BindView(R.id.ll_active_session_orders)
-    LinearLayout llSessionOrders;
+    @BindView(R.id.tv_session_checkout)
+    TextView tvSessionCheckout;
+    @BindView(R.id.rl_container_session_orders)
+    RelativeLayout rlSessionOrders;
 
     private ActiveSessionViewModel mViewModel;
     private ActiveSessionMemberAdapter mSessionMembersAdapter;
@@ -190,7 +194,7 @@ public class ActiveSessionActivity extends BaseActivity implements ActiveSession
         mSessionMembersAdapter = new ActiveSessionMemberAdapter(null, this);
         rvMembers.setAdapter(mSessionMembersAdapter);
 
-        llSessionOrders.setEnabled(false);
+        rlSessionOrders.setEnabled(false);
         containerBottomActions.setOnTouchListener((v, event) -> {
             if (event.getAction() == MotionEvent.ACTION_UP)
                 openChat(SessionChatDataModel.EVENT_REQUEST_SERVICE_TYPE.SERVICE_NONE);
@@ -210,8 +214,14 @@ public class ActiveSessionActivity extends BaseActivity implements ActiveSession
         } else {
             tvWaiterName.setText(R.string.waiter_unassigned);
         }
-        if(!data.isRequestedCheckout())
-            llSessionOrders.setEnabled(true);
+        if(!data.isRequestedCheckout()){
+            rlSessionOrders.setEnabled(true);
+            rlSessionOrders.setVisibility(View.VISIBLE);
+        } else{
+            tvSessionCheckout.setVisibility(View.VISIBLE);
+            rlSessionOrders.setVisibility(View.GONE);
+        }
+
     }
 
     private void updateBill(double bill) {
@@ -235,7 +245,7 @@ public class ActiveSessionActivity extends BaseActivity implements ActiveSession
         SessionMenuActivity.withSession(this, mViewModel.getShopPk(), null);
     }
 
-    @OnClick(R.id.ll_active_session_orders)
+    @OnClick(R.id.rl_container_session_orders)
     public void onViewOrders() {
         getSupportFragmentManager().beginTransaction()
                 .replace(R.id.container_as_orders, mOrdersFragment)
