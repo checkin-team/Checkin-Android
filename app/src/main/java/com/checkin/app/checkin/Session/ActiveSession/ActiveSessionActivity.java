@@ -64,6 +64,8 @@ public class ActiveSessionActivity extends BaseActivity implements ActiveSession
     TextView tvCountOrdersDelivered;
     @BindView(R.id.tv_session_checkout)
     TextView tvSessionCheckout;
+    @BindView(R.id.btn_active_session_menu)
+    TextView btnSessionMenu;
     @BindView(R.id.rl_container_session_orders)
     RelativeLayout rlSessionOrders;
 
@@ -193,7 +195,7 @@ public class ActiveSessionActivity extends BaseActivity implements ActiveSession
         rvMembers.setLayoutManager(new LinearLayoutManager(this, RecyclerView.HORIZONTAL, false));
         mSessionMembersAdapter = new ActiveSessionMemberAdapter(null, this);
         rvMembers.setAdapter(mSessionMembersAdapter);
-
+        tvBill.setEnabled(false);
         rlSessionOrders.setEnabled(false);
         containerBottomActions.setOnTouchListener((v, event) -> {
             if (event.getAction() == MotionEvent.ACTION_UP)
@@ -207,6 +209,7 @@ public class ActiveSessionActivity extends BaseActivity implements ActiveSession
     private void setupData(ActiveSessionModel data) {
         mSessionMembersAdapter.setUsers(data.getCustomers());
         tvBill.setText(data.formatBill(this));
+        tvBill.setEnabled(true);
         tvSessionLiveAt.setText(data.getRestaurant().getDisplayName());
         if (data.getHost() != null) {
             tvWaiterName.setText(data.getHost().getDisplayName());
@@ -215,9 +218,11 @@ public class ActiveSessionActivity extends BaseActivity implements ActiveSession
             tvWaiterName.setText(R.string.waiter_unassigned);
         }
         if(!data.isRequestedCheckout()){
+            btnSessionMenu.setEnabled(true);
             rlSessionOrders.setEnabled(true);
             rlSessionOrders.setVisibility(View.VISIBLE);
         } else{
+            btnSessionMenu.setEnabled(false);
             tvSessionCheckout.setVisibility(View.VISIBLE);
             rlSessionOrders.setVisibility(View.GONE);
         }

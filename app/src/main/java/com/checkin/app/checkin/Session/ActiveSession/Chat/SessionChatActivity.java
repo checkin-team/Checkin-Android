@@ -147,6 +147,7 @@ public class SessionChatActivity extends BaseActivity implements ActiveSessionCh
         etMessage.setText("");
         etMessage.setHint(getResources().getString(R.string.title_how_can_we_assist_you));
         btnSendMsg.setTag(null);
+        btnSendMsg.setEnabled(true);
     }
 
     public void setMessage(String msg) {
@@ -195,12 +196,14 @@ public class SessionChatActivity extends BaseActivity implements ActiveSessionCh
     @OnClick(R.id.btn_chat_send_msg)
     public void sendMsg() {
         String msg = etMessage.getText().toString().trim();
+        btnSendMsg.setEnabled(false);
         if (!TextUtils.isEmpty(msg)) {
             if (btnSendMsg.getTag() == null)
                 btnSendMsg.setTag(EVENT_REQUEST_SERVICE_TYPE.SERVICE_NONE);
             mViewModel.sendMessage(msg, btnSendMsg.getTag());
         } else {
             Utils.toast(this, "Please enter the message.");
+            btnSendMsg.setEnabled(true);
         }
     }
 

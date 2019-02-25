@@ -39,8 +39,6 @@ public class ActiveSessionChatAdapter extends RecyclerView.Adapter {
     public void setData(List<SessionChatModel> data) {
         this.mChats = data;
         notifyDataSetChanged();
-//        if (data.size() > 0)
-//            mRecyclerView.scrollToPosition(data.size() - 1);
     }
 
     @Nullable

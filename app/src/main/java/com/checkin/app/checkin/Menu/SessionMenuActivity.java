@@ -10,6 +10,7 @@ import android.text.TextUtils;
 import android.util.Log;
 import android.view.Menu;
 import android.view.View;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 
@@ -62,6 +63,8 @@ public class SessionMenuActivity extends BaseActivity implements
     TextView tvCountItems;
     @BindView(R.id.tv_menu_subtotal)
     TextView tvCartSubtotal;
+    @BindView(R.id.btn_menu_cart_proceed)
+    Button btnCartProceed;
 
     private MenuGroupsFragment mMenuFragment;
     private MenuItemSearchFragment mSearchFragment;
@@ -262,8 +265,10 @@ public class SessionMenuActivity extends BaseActivity implements
     public void onProceedBtnClicked(View view) {
         if (mCartAdapter.getItemCount() > 0) {
             mViewModel.confirmOrder();
+            btnCartProceed.setEnabled(false);
         } else {
             Utils.toast(this, "Order something before proceeding!");
+            btnCartProceed.setEnabled(true);
         }
     }
 

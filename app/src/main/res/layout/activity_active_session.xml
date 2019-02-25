@@ -228,7 +228,8 @@
                             android:drawableStart="@drawable/ic_hourglass"
                             android:drawablePadding="@dimen/spacing_small"
                             android:gravity="center"
-                            android:text="Your checkout request has been sent. /n Waiter is coming to you soon"
+                            android:layout_centerInParent="true"
+                            android:text="@string/session_requested_checkout"
                             android:textSize="@dimen/font_small" />
 
                         <RelativeLayout

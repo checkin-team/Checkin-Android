@@ -216,7 +216,7 @@ public class MessageModel implements Serializable {
 
     @Nullable
     public String getGroupKey() {
-        if (isShopManagerNotification() || isShopWaiterNotification() || isUserActiveSessionNotification()) {
+        if (isGrouped()) {
             MessageObjectModel session = getSessionDetail();
             if (session == null) return null;
             return Constants.getNotificationGroup(session.getType(), session.getPk());
@@ -224,11 +224,22 @@ public class MessageModel implements Serializable {
         return null;
     }
 
+    public boolean isGrouped(){
+        if (isShopManagerNotification() || isShopWaiterNotification() || isUserActiveSessionNotification())
+            return true;
+        else
+            return false;
+    }
+
     public int getGroupSummaryID() {
         MessageObjectModel session =  getSessionDetail();
         if (session == null)
             return 0;
         return Constants.getNotificationSummaryID(session.getType(), session.getPk());
+    }
+
+    public Intent getGroupIntent(Context context) {
+        return getNotificationIntent(context);
     }
 
     public String getGroupTitle() {

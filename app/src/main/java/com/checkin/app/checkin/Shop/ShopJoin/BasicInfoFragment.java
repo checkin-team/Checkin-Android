@@ -101,6 +101,9 @@ public class BasicInfoFragment extends Fragment {
             }else if(resource.status == Resource.Status.LOADING){
                 if(mProgressDialog !=null)
                     mProgressDialog.show();
+            }else {
+                if (mProgressDialog != null && mProgressDialog.isShowing())
+                    mProgressDialog.dismiss();
             }
         });
 
