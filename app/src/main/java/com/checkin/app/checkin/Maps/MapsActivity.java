@@ -25,14 +25,19 @@ import com.google.android.gms.location.LocationCallback;
 import com.google.android.gms.location.LocationRequest;
 import com.google.android.gms.location.LocationResult;
 import com.google.android.gms.location.LocationServices;
-import com.google.android.gms.location.places.Place;
-import com.google.android.gms.location.places.ui.PlaceAutocomplete;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.CameraPosition;
 import com.google.android.gms.maps.model.LatLng;
+import com.google.android.libraries.places.api.Places;
+import com.google.android.libraries.places.api.model.Place;
+import com.google.android.libraries.places.widget.Autocomplete;
+import com.google.android.libraries.places.widget.model.AutocompleteActivityMode;
+
+import java.util.Arrays;
+import java.util.List;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -93,6 +98,8 @@ public class MapsActivity extends AppCompatActivity implements
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
                 .findFragmentById(R.id.map);
         ButterKnife.bind(this);
+
+        Places.initialize(getApplicationContext(), this.getResources().getString(R.string.google_maps_key));
 
         mLocationProviderClient = new FusedLocationProviderClient(this);
         mapFragment.getMapAsync(this);
@@ -252,7 +259,7 @@ public class MapsActivity extends AppCompatActivity implements
         Intent data = new Intent();
         data.putExtra(KEY_MAPS_LATITUDE, latLng.latitude);
         data.putExtra(KEY_MAPS_LONGITUDE, latLng.longitude);
-        data.putExtra(KEY_MAPS_ADDRESS, mAreaOutput );
+        data.putExtra(KEY_MAPS_ADDRESS, mAreaOutput);
         setResult(RESULT_OK, data);
         finish();
     }
@@ -297,7 +304,8 @@ public class MapsActivity extends AppCompatActivity implements
     public void openAutocompleteActivity() {
         if (checkPlayServices() && !isSearchOpened) {
             try {
-                Intent intent = new PlaceAutocomplete.IntentBuilder(PlaceAutocomplete.MODE_OVERLAY).build(this);
+                List<Place.Field> fields = Arrays.asList(Place.Field.ID, Place.Field.NAME);
+                Intent intent = new Autocomplete.IntentBuilder(AutocompleteActivityMode.OVERLAY, fields).build(this);
                 startActivityForResult(intent, REQUEST_CODE_AUTOCOMPLETE);
                 isSearchOpened = true;
             } catch (Exception e) {
@@ -316,7 +324,7 @@ public class MapsActivity extends AppCompatActivity implements
         if (requestCode == REQUEST_CODE_AUTOCOMPLETE) {
             if (resultCode == RESULT_OK) {
                 // Get the user's selected place from the Intent.
-                Place place = PlaceAutocomplete.getPlace(this, data);
+                Place place = Autocomplete.getPlaceFromIntent(data);
                 LatLng latLong = place.getLatLng();
                 Location location = new Location("");
                 location.setLatitude(latLong.latitude);
@@ -325,7 +333,7 @@ public class MapsActivity extends AppCompatActivity implements
             }
             isSearchOpened = false;
         } else {
-            Log.e(TAG, PlaceAutocomplete.getStatus(this, data).getStatusMessage());
+            Log.e(TAG, Autocomplete.getStatusFromIntent(data).getStatusMessage());
         }
     }
 
@@ -333,7 +341,7 @@ public class MapsActivity extends AppCompatActivity implements
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
         if (requestCode == PERMISSION_REQUEST_FINE_LOCATION) {
-            if (grantResults.length > 0 && grantResults[0]==PackageManager.PERMISSION_GRANTED)
+            if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED)
                 goToCurrentLocation();
         }
     }
