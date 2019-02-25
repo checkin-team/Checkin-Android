@@ -45,6 +45,26 @@ public class ManagerRepository extends BaseRepository {
         }.getAsLiveData();
     }
 
+    public LiveData<Resource<GenericDetailModel>> puSessionCheckout(long sessionId, ObjectNode data){
+        return new NetworkBoundResource<GenericDetailModel, GenericDetailModel>() {
+            @Override
+            protected boolean shouldUseLocalDb() {
+                return false;
+            }
+
+            @NonNull
+            @Override
+            protected LiveData<ApiResponse<GenericDetailModel>> createCall() {
+                return new RetrofitLiveData<>(mWebService.putSessionCheckout(sessionId,data));
+            }
+
+            @Override
+            protected void saveCallResult(GenericDetailModel data) {
+
+            }
+        }.getAsLiveData();
+    }
+
     public LiveData<Resource<ManagerSessionInvoiceModel>> getManagerSessionInvoice(long sessionId) {
         return new NetworkBoundResource<ManagerSessionInvoiceModel, ManagerSessionInvoiceModel>() {
             @Override

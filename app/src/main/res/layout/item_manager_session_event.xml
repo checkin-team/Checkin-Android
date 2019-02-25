@@ -68,15 +68,4 @@
         android:text="@string/label_done"
         android:visibility="gone"/>
 
-    <Button
-        android:id="@+id/btn_ms_event_approve"
-        style="@style/ButtonPositiveAction"
-        android:layout_width="@dimen/button_width_short"
-        android:layout_height="@dimen/button_height_short"
-        android:layout_marginEnd="@dimen/spacing_tiny"
-        android:gravity="center"
-        android:text="@string/title_approve"
-        android:textSize="@dimen/font_extra_small"
-        android:visibility="gone" />
-
 </LinearLayout>

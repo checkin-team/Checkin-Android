@@ -77,6 +77,7 @@ public class AppMessagingService extends FirebaseMessagingService {
         String groupTitle = String.format(Locale.getDefault(), "%s - %d events", data.getGroupTitle(), notifCount);
         Notification summaryNotif = new NotificationCompat.Builder(this, data.getChannel().id)
                 .setContentTitle(this.getString(R.string.app_name))
+                .setSmallIcon(R.drawable.ic_logo_notification)
                 .setContentText(groupTitle)
                 .setGroup(notifGroup)
                 .setStyle(style)

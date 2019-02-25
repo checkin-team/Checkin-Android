@@ -41,6 +41,7 @@ public class ManagerSessionViewModel extends BaseViewModel {
     private MediatorLiveData<Resource<List<ManagerSessionEventModel>>> mEventData = new MediatorLiveData<>();
     private MediatorLiveData<Resource<GenericDetailModel>> mDetailData = new MediatorLiveData<>();
     private MediatorLiveData<Resource<OrderStatusModel>> mOrderStatusData = new MediatorLiveData<>();
+    private MediatorLiveData<Resource<GenericDetailModel>> mSessionCheckoutData = new MediatorLiveData<>();
 
     private long mSessionPk;
     private long mShopPk;
@@ -50,6 +51,16 @@ public class ManagerSessionViewModel extends BaseViewModel {
         mManagerRepository = ManagerRepository.getInstance(application);
         mSessionRepository = SessionRepository.getInstance(application);
         mWaiterRepository = WaiterRepository.getInstance(application);
+    }
+
+    public void putSessionCheckout(long sessionId, String paymentMode){
+        ObjectNode data = Converters.objectMapper.createObjectNode();
+        data.put("payment_mode", paymentMode);
+        mSessionCheckoutData.addSource(mManagerRepository.puSessionCheckout(sessionId,data),mSessionCheckoutData::setValue);
+    }
+
+    public LiveData<Resource<GenericDetailModel>> putSessionCheckoutData(){
+        return mSessionCheckoutData;
     }
 
     @Override
@@ -63,7 +74,7 @@ public class ManagerSessionViewModel extends BaseViewModel {
         return mManagerRepository.getManagerSessionInvoice(sessionId);
     }
 
-    public void approveBill(double discountPercent) {
+    public void updateDiscount(double discountPercent) {
         ObjectNode data = Converters.objectMapper.createObjectNode();
         data.put("discount_percent", discountPercent);
         mDetailData.addSource(mManagerRepository.putManagerSessionApproveCheckout(mSessionPk, data), mDetailData::setValue);

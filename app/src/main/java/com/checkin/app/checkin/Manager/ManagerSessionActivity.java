@@ -72,6 +72,8 @@ public class ManagerSessionActivity extends AppCompatActivity implements Manager
     private ManagerSessionEventFragment mEventFragment;
     private ManagerSessionViewModel mViewModel;
 
+    private SessionBriefModel mSessionData;
+
     private final BroadcastReceiver mReceiver = new BroadcastReceiver() {
         @Override
         public void onReceive(Context context, Intent intent) {
@@ -211,6 +213,7 @@ public class ManagerSessionActivity extends AppCompatActivity implements Manager
     }
 
     private void setupData(SessionBriefModel data) {
+        mSessionData = data;
         tvCartItemPrice.setText(String.format(Locale.ENGLISH, Utils.getCurrencyFormat(this), data.formatBill()));
         if (data.getHost() != null) {
             tvWaiterName.setText(data.getHost().getDisplayName());
@@ -260,6 +263,15 @@ public class ManagerSessionActivity extends AppCompatActivity implements Manager
     protected void onPause() {
         super.onPause();
         MessageUtils.unregisterLocalReceiver(this, mReceiver);
+    }
+
+    @OnClick(R.id.tv_manager_session_bill)
+    public void onCheckSessionBill() {
+        Intent intent = new Intent(this, ManagerSessionInvoiceActivity.class);
+        intent.putExtra(ManagerSessionInvoiceActivity.TABLE_NAME, mSessionData.getTable())
+                .putExtra(ManagerSessionInvoiceActivity.KEY_SESSION, mViewModel.getSessionPk())
+                .putExtra(ManagerSessionInvoiceActivity.IS_REQUESTED_CHECKOUT, mSessionData.isRequestedCheckout());
+        startActivity(intent);
     }
 
     @OnClick(R.id.im_manager_session_back)
