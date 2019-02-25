@@ -1,10 +1,13 @@
 package com.checkin.app.checkin.Manager;
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.checkin.app.checkin.Data.Resource;
@@ -29,6 +32,7 @@ import butterknife.OnClick;
 public class ManagerSessionInvoiceActivity extends AppCompatActivity {
     public static final String KEY_SESSION = "com.checkin.app.checkin.Manager.key.session";
     public static final String TABLE_NAME = "com.checkin.app.checkin.Manager.table.name";
+    public static final String IS_REQUESTED_CHECKOUT = "com.checkin.app.checkin.Manager.session.is.requested.checkout";
 
     @BindView(R.id.rv_ms_invoice_ordered_items)
     RecyclerView rvOrderedItems;
@@ -44,11 +48,15 @@ public class ManagerSessionInvoiceActivity extends AppCompatActivity {
     TextView tvInvoiceTotal;
     @BindView(R.id.tv_invoice_discount)
     TextView tvInvoiceDiscount;
+    @BindView(R.id.ll_request_checkout_session_invoice)
+    LinearLayout llRequestedCheckoutView;
 
     private ManagerSessionViewModel mViewModel;
     private InvoiceOrdersAdapter mAdapter;
     private SessionBillModel mBillModel;
     private BillHolder mBillHolder;
+    private long keySession;
+    private boolean isRequestedCheckout;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -58,8 +66,10 @@ public class ManagerSessionInvoiceActivity extends AppCompatActivity {
 
         Intent intent = getIntent();
 
-        long keySession = intent.getLongExtra(KEY_SESSION, 0L);
+        keySession = intent.getLongExtra(KEY_SESSION, 0L);
         String tableName = intent.getStringExtra(TABLE_NAME);
+
+        updateRequestCheckoutStatus(intent.getBooleanExtra(IS_REQUESTED_CHECKOUT,false));
 
         mViewModel = ViewModelProviders.of(this).get(ManagerSessionViewModel.class);
 
@@ -87,9 +97,19 @@ public class ManagerSessionInvoiceActivity extends AppCompatActivity {
                 return;
             if (resource.status == Resource.Status.SUCCESS && resource.data != null) {
                 Utils.toast(this, resource.data.getDetail());
-                finish();
             } else if (resource.status != Resource.Status.LOADING) {
                 Utils.toast(this, "Error: " + resource.message);
+            }
+        });
+        mViewModel.putSessionCheckoutData().observe(ManagerSessionInvoiceActivity.this, input -> {
+            if (input == null)
+                return;
+            if (input.status == Resource.Status.SUCCESS && input.data != null) {
+                Utils.toast(ManagerSessionInvoiceActivity.this, input.data.getDetail());
+                if (isRequestedCheckout) finish();
+                else updateRequestCheckoutStatus(true);
+            } else if (input.status != Resource.Status.LOADING) {
+                Utils.toast(ManagerSessionInvoiceActivity.this, "Error: " + input.message);
             }
         });
         mBillHolder = new BillHolder(findViewById(android.R.id.content));
@@ -112,15 +132,33 @@ public class ManagerSessionInvoiceActivity extends AppCompatActivity {
                 updateDiscount();
                 break;
             case R.id.btn_ms_invoice_collect_cash:
-                approveBill();
+                alertDialogForCloseSession();
                 break;
         }
     }
 
-    private void approveBill() {
-        double percent = mBillModel.getDiscountPercentage();
-        mViewModel.approveBill(percent);
+    private void updateRequestCheckoutStatus(boolean isRequestedCheckout) {
+        this.isRequestedCheckout = isRequestedCheckout;
+        if (isRequestedCheckout) {
+            llRequestedCheckoutView.setVisibility(View.VISIBLE);
+            tvInvoiceChange.setVisibility(View.GONE);
+        } else {
+            llRequestedCheckoutView.setVisibility(View.GONE);
+            tvInvoiceChange.setVisibility(View.VISIBLE);
+        }
     }
+
+    private void alertDialogForCloseSession() {
+        AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(this);
+        alertDialogBuilder.setTitle("Are you sure to close session").setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int which) {
+                mViewModel.putSessionCheckout(keySession, "csh");
+            }
+        }).setNegativeButton("No", new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int which) {
+                dialog.cancel();
+            }
+        }).show();}
 
     private void updateDiscount() {
         Double percent = 0d;
@@ -129,6 +167,7 @@ public class ManagerSessionInvoiceActivity extends AppCompatActivity {
         } catch (NumberFormatException ignored) {
         }
         mBillModel.calculateDiscount(percent);
+        mViewModel.updateDiscount(percent);
         tvInvoiceDiscount.setText(Utils.formatCurrencyAmount(this, mBillModel.getDiscount()));
         tvInvoiceTotal.setText(Utils.formatCurrencyAmount(this, mBillModel.getTotal()));
     }

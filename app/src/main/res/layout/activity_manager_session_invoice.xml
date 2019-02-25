@@ -170,11 +170,45 @@
     </ScrollView>
 
     <LinearLayout
+        android:visibility="gone"
+        android:layout_marginStart="@dimen/spacing_huge"
+        android:layout_marginEnd="@dimen/spacing_huge"
+        android:layout_above="@id/payment_mode_container"
+        android:id="@+id/ll_request_checkout_session_invoice"
+        android:paddingTop="@dimen/spacing_normal"
+        android:paddingBottom="@dimen/spacing_normal"
+        android:gravity="center"
+        android:orientation="vertical"
+        android:layout_height="wrap_content"
+        android:background="@drawable/rounded_rectangle_two_side_grey"
+        android:layout_width="match_parent"
+        xmlns:android="http://schemas.android.com/apk/res/android">
+
+        <TextView
+            android:textColor="@color/primary_red"
+            android:text="Customer’s request for Checkout"
+            android:fontFamily="@font/arial_rounded_mt_bold"
+            android:textSize="@dimen/font_normal"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
+
+        <TextView
+            android:layout_marginTop="@dimen/spacing_extra_small"
+            android:text="Waiter notified to collect the cash"
+            style="@style/GreyTextStyle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
+
+    </LinearLayout>
+
+    <LinearLayout
         android:id="@+id/payment_mode_container"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
-        android:layout_margin="@dimen/spacing_normal"
+        android:layout_marginBottom="@dimen/spacing_normal"
+        android:layout_marginLeft="@dimen/spacing_normal"
+        android:layout_marginRight="@dimen/spacing_normal"
         android:background="@drawable/rounded_rectangle_light_grey"
         android:orientation="horizontal"
         android:padding="@dimen/spacing_small">
@@ -195,10 +229,16 @@
 
         <Button
             android:id="@+id/btn_ms_invoice_collect_cash"
-            style="@style/ButtonRedAlertAction"
             android:layout_width="wrap_content"
             android:layout_height="@dimen/button_height_short"
-            android:text="Collect Cash"
+            android:textSize="@dimen/font_normal"
+            android:paddingStart="@dimen/spacing_small"
+            android:paddingTop="@dimen/spacing_extra_small"
+            android:paddingEnd="@dimen/spacing_small"
+            android:paddingBottom="@dimen/spacing_extra_small"
+            android:textColor="@color/white"
+            android:background="@color/primary_red"
+            android:text="Close Session"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent" />

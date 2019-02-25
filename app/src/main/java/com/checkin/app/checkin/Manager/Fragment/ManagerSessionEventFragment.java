@@ -38,7 +38,6 @@ public class ManagerSessionEventFragment extends BaseFragment implements Manager
 
     private ManagerSessionViewModel mViewModel;
     private ManagerSessionEventAdapter mAdapter;
-    private String mTable;
 
     public static ManagerSessionEventFragment newInstance() {
         return new ManagerSessionEventFragment();
@@ -125,7 +124,6 @@ public class ManagerSessionEventFragment extends BaseFragment implements Manager
     }
 
     private void setupSessionData(SessionBriefModel data) {
-        mTable = data.getTable();
         tvCustomerCount.setText(data.formatCustomerCount());
         tvSessionTime.setText(String.format(Locale.ENGLISH, "Session Time: %s", data.formatTimeDuration()));
     }
@@ -144,15 +142,6 @@ public class ManagerSessionEventFragment extends BaseFragment implements Manager
     @Override
     public void onEventMarkDone(ManagerSessionEventModel eventModel) {
         mViewModel.markEventDone(eventModel.getPk());
-    }
-
-    @Override
-    public void onBillApprove() {
-        Intent intent = new Intent(requireContext(), ManagerSessionInvoiceActivity.class);
-        intent.putExtra(ManagerSessionInvoiceActivity.TABLE_NAME, mTable)
-                .putExtra(ManagerSessionInvoiceActivity.KEY_SESSION, mViewModel.getSessionPk());
-        startActivity(intent);
-        updateScreen();
     }
 
     @Override

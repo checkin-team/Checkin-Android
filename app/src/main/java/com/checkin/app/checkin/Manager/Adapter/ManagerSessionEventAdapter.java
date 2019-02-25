@@ -66,8 +66,6 @@ public class ManagerSessionEventAdapter extends RecyclerView.Adapter<ManagerSess
         TextView tvEventSubType;
         @BindView(R.id.btn_ms_event_done)
         TextView btnEventDone;
-        @BindView(R.id.btn_ms_event_approve)
-        Button btnEventApprove;
 
         private ManagerSessionEventModel mEventModel;
 
@@ -76,11 +74,9 @@ public class ManagerSessionEventAdapter extends RecyclerView.Adapter<ManagerSess
             ButterKnife.bind(this, itemView);
 
             btnEventDone.setOnClickListener(v -> mListener.onEventMarkDone(mEventModel));
-            btnEventApprove.setOnClickListener(v -> mListener.onBillApprove());
         }
 
         private void resetLayout() {
-            btnEventApprove.setVisibility(View.GONE);
             btnEventDone.setVisibility(View.GONE);
             tvEventSubType.setVisibility(View.GONE);
             tvEventSubType.setBackgroundColor(itemView.getContext().getResources().getColor(R.color.pinkish_grey));
@@ -96,7 +92,6 @@ public class ManagerSessionEventAdapter extends RecyclerView.Adapter<ManagerSess
             imEventType.setImageResource(SessionEventBasicModel.getEventIcon(eventModel.getType(), eventModel.getService(), eventModel.getConcern()));
 
             if (eventModel.getType() == EVENT_REQUEST_CHECKOUT && eventModel.getStatus() == CHAT_STATUS_TYPE.OPEN) {
-                btnEventApprove.setVisibility(View.VISIBLE);
                 btnEventDone.setVisibility(View.GONE);
             }
 
@@ -120,7 +115,5 @@ public class ManagerSessionEventAdapter extends RecyclerView.Adapter<ManagerSess
 
     public interface SessionEventInteraction {
         void onEventMarkDone(ManagerSessionEventModel eventModel);
-
-        void onBillApprove();
     }
 }

@@ -227,10 +227,10 @@ public interface WebApiService {
     @GET("sessions/{session_id}/events/manager/")
     Call<List<ManagerSessionEventModel>> getManagerSessionEvents(@Path("session_id") long sessionId);
 
-    @GET("sessions/{session_id}/manager/checkout/approve/")
+    @GET("sessions/{session_id}/manage/bill/")
     Call<ManagerSessionInvoiceModel> getManagerSessionInvoice(@Path("session_id") long sessionId);
 
-    @PUT("sessions/{session_id}/manager/checkout/approve/")
+    @PUT("sessions/{session_id}/manage/bill/")
     Call<GenericDetailModel> putManagerCheckoutApprove(@Path("session_id") long sessionId, @Body ObjectNode data);
 
     @POST("sessions/{session_id}/checkout/")
@@ -267,4 +267,7 @@ public interface WebApiService {
     @GET("search/restaurant/")
     Call<List<SearchResultShopModel>> getSearchShopResults(@Query("search") String query, @Query("has_nonveg") Boolean hasNonVeg, @Query("has_alcohol") Boolean hasAlcohol);
     // endregion
+
+    @PUT("sessions/{session_id}/checkout/")
+    Call<GenericDetailModel> putSessionCheckout(@Path("session_id") long sessionId, @Body ObjectNode data);
 }
