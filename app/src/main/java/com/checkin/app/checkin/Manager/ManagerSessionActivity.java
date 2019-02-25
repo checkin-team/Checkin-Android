@@ -222,7 +222,7 @@ public class ManagerSessionActivity extends AppCompatActivity implements Manager
         tvTable.setText(data.getTable());
     }
 
-    @OnClick(R.id.im_ms_bottom_swipe_up)
+    @OnClick(R.id.container_ms_bottom_actions)
     public void onSwipeUp() {
         setupOrdersListing();
     }

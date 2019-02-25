@@ -94,6 +94,9 @@ public class ActiveSessionViewOrdersFragment extends BaseFragment implements Act
 
     @OnClick(R.id.im_session_view_orders_back)
     public void onBack() {
-        if (getFragmentManager() != null) getFragmentManager().popBackStack();
+        if (getFragmentManager() != null)
+        getFragmentManager().beginTransaction()
+                .remove(this)
+                .commit();
     }
 }

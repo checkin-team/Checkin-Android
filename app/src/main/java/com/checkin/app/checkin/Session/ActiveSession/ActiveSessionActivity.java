@@ -8,8 +8,11 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.MotionEvent;
+import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.checkin.app.checkin.Data.Message.MessageModel;
@@ -52,6 +55,19 @@ public class ActiveSessionActivity extends BaseActivity implements ActiveSession
     ImageView imWaiterPic;
     @BindView(R.id.container_as_actions_bottom)
     ViewGroup containerBottomActions;
+
+    @BindView(R.id.tv_as_order_new_count)
+    TextView tvCountOrdersNew;
+    @BindView(R.id.tv_as_order_progress_count)
+    TextView tvCountOrdersInProgress;
+    @BindView(R.id.tv_as_order_done_count)
+    TextView tvCountOrdersDelivered;
+    @BindView(R.id.tv_session_checkout)
+    TextView tvSessionCheckout;
+    @BindView(R.id.btn_active_session_menu)
+    TextView btnSessionMenu;
+    @BindView(R.id.rl_container_session_orders)
+    RelativeLayout rlSessionOrders;
 
     private ActiveSessionViewModel mViewModel;
     private ActiveSessionMemberAdapter mSessionMembersAdapter;
@@ -149,6 +165,24 @@ public class ActiveSessionActivity extends BaseActivity implements ActiveSession
                 }
             }
         });
+
+        mViewModel.getCountNewOrders().observe(this, integer -> {
+            if (integer == null)
+                integer = 0;
+            tvCountOrdersNew.setTextColor(
+                    integer > 0 ? getResources().getColor(R.color.primary_red) : getResources().getColor(R.color.brownish_grey));
+            tvCountOrdersNew.setText(String.valueOf(integer));
+        });
+        mViewModel.getCountProgressOrders().observe(this, integer -> {
+            if (integer == null)
+                integer = 0;
+            tvCountOrdersInProgress.setText(String.valueOf(integer));
+        });
+        mViewModel.getCountDeliveredOrders().observe(this, integer -> {
+            if (integer == null)
+                integer = 0;
+            tvCountOrdersDelivered.setText(String.valueOf(integer));
+        });
     }
 
     @Override
@@ -161,7 +195,8 @@ public class ActiveSessionActivity extends BaseActivity implements ActiveSession
         rvMembers.setLayoutManager(new LinearLayoutManager(this, RecyclerView.HORIZONTAL, false));
         mSessionMembersAdapter = new ActiveSessionMemberAdapter(null, this);
         rvMembers.setAdapter(mSessionMembersAdapter);
-
+        tvBill.setEnabled(false);
+        rlSessionOrders.setEnabled(false);
         containerBottomActions.setOnTouchListener((v, event) -> {
             if (event.getAction() == MotionEvent.ACTION_UP)
                 openChat(SessionChatDataModel.EVENT_REQUEST_SERVICE_TYPE.SERVICE_NONE);
@@ -174,6 +209,7 @@ public class ActiveSessionActivity extends BaseActivity implements ActiveSession
     private void setupData(ActiveSessionModel data) {
         mSessionMembersAdapter.setUsers(data.getCustomers());
         tvBill.setText(data.formatBill(this));
+        tvBill.setEnabled(true);
         tvSessionLiveAt.setText(data.getRestaurant().getDisplayName());
         if (data.getHost() != null) {
             tvWaiterName.setText(data.getHost().getDisplayName());
@@ -181,6 +217,16 @@ public class ActiveSessionActivity extends BaseActivity implements ActiveSession
         } else {
             tvWaiterName.setText(R.string.waiter_unassigned);
         }
+        if(!data.isRequestedCheckout()){
+            btnSessionMenu.setEnabled(true);
+            rlSessionOrders.setEnabled(true);
+            rlSessionOrders.setVisibility(View.VISIBLE);
+        } else{
+            btnSessionMenu.setEnabled(false);
+            tvSessionCheckout.setVisibility(View.VISIBLE);
+            rlSessionOrders.setVisibility(View.GONE);
+        }
+
     }
 
     private void updateBill(double bill) {
@@ -204,7 +250,7 @@ public class ActiveSessionActivity extends BaseActivity implements ActiveSession
         SessionMenuActivity.withSession(this, mViewModel.getShopPk(), null);
     }
 
-    @OnClick(R.id.btn_active_session_orders)
+    @OnClick(R.id.rl_container_session_orders)
     public void onViewOrders() {
         getSupportFragmentManager().beginTransaction()
                 .replace(R.id.container_as_orders, mOrdersFragment)

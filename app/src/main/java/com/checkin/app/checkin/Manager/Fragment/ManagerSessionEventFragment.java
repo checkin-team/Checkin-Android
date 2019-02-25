@@ -19,6 +19,7 @@ import java.util.Locale;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.core.widget.NestedScrollView;
 import androidx.lifecycle.ViewModelProviders;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -32,6 +33,8 @@ public class ManagerSessionEventFragment extends BaseFragment implements Manager
     TextView tvCustomerCount;
     @BindView(R.id.tv_ms_event_session_time)
     TextView tvSessionTime;
+    @BindView(R.id.nested_sv_ms_event)
+    NestedScrollView nestedSVEvent;
 
     private ManagerSessionViewModel mViewModel;
     private ManagerSessionEventAdapter mAdapter;
@@ -41,6 +44,7 @@ public class ManagerSessionEventFragment extends BaseFragment implements Manager
         return new ManagerSessionEventFragment();
     }
 
+
     public ManagerSessionEventFragment() {
     }
 
@@ -48,6 +52,7 @@ public class ManagerSessionEventFragment extends BaseFragment implements Manager
     protected int getRootLayout() {
         return R.layout.fragment_manager_session_event;
     }
+
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
@@ -61,6 +66,7 @@ public class ManagerSessionEventFragment extends BaseFragment implements Manager
         rvMSEvent.setAdapter(mAdapter);
         rvMSEvent.setNestedScrollingEnabled(false);
         initRefreshScreen(R.id.sr_manager_session_event);
+
     }
 
     private void getData() {
@@ -90,6 +96,7 @@ public class ManagerSessionEventFragment extends BaseFragment implements Manager
                 case SUCCESS:
                     mAdapter.setData(listResource.data);
                     stopRefreshing();
+                    nestedSVEvent.scrollTo(0,0);
                     break;
                 case LOADING:
                     startRefreshing();
@@ -113,6 +120,8 @@ public class ManagerSessionEventFragment extends BaseFragment implements Manager
                 }
             }
         });
+
+
     }
 
     private void setupSessionData(SessionBriefModel data) {

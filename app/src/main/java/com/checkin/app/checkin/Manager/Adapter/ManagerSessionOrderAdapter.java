@@ -22,6 +22,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 
 import static com.checkin.app.checkin.Session.ActiveSession.Chat.SessionChatModel.CHAT_STATUS_TYPE.CANCELLED;
+import static com.checkin.app.checkin.Session.ActiveSession.Chat.SessionChatModel.CHAT_STATUS_TYPE.DONE;
 import static com.checkin.app.checkin.Session.ActiveSession.Chat.SessionChatModel.CHAT_STATUS_TYPE.IN_PROGRESS;
 import static com.checkin.app.checkin.Session.ActiveSession.Chat.SessionChatModel.CHAT_STATUS_TYPE.OPEN;
 
@@ -69,6 +70,8 @@ public class ManagerSessionOrderAdapter extends RecyclerView.Adapter<ManagerSess
         Button tvOrderConfirm;
         @BindView(R.id.btn_ms_order_cancel)
         Button tvOrderReject;
+        @BindView(R.id.btn_ms_order_done)
+        Button tvOrderDone;
         @BindView(R.id.tv_ms_order_remarks)
         TextView tvRemarks;
         @BindView(R.id.container_ms_order_customizations)
@@ -92,6 +95,7 @@ public class ManagerSessionOrderAdapter extends RecyclerView.Adapter<ManagerSess
 
             tvOrderConfirm.setOnClickListener(v -> mListener.onOrderStatusChange(mOrderModel, IN_PROGRESS));
             tvOrderReject.setOnClickListener(v -> mListener.onOrderStatusChange(mOrderModel, CANCELLED));
+            tvOrderDone.setOnClickListener(v -> mListener.onOrderStatusChange(mOrderModel, DONE));
         }
 
         void bindData(SessionOrderedItemModel order) {
@@ -126,6 +130,7 @@ public class ManagerSessionOrderAdapter extends RecyclerView.Adapter<ManagerSess
             if (order.getStatus() == OPEN) {
                 containerStatusOpen.setVisibility(View.VISIBLE);
                 tvOrderStatus.setVisibility(View.GONE);
+                tvOrderDone.setVisibility(View.GONE);
             } else {
                 containerStatusOpen.setVisibility(View.GONE);
                 tvOrderStatus.setVisibility(View.VISIBLE);
@@ -133,14 +138,20 @@ public class ManagerSessionOrderAdapter extends RecyclerView.Adapter<ManagerSess
                     case IN_PROGRESS:
                         tvOrderStatus.setText(R.string.status_order_in_progress);
                         tvOrderStatus.setBackgroundColor(tvOrderStatus.getContext().getResources().getColor(R.color.apple_green));
+                        tvOrderDone.setVisibility(View.VISIBLE);
+                        tvOrderStatus.setVisibility(View.GONE);
                         break;
                     case DONE:
                         tvOrderStatus.setText(R.string.status_order_delivered);
-                        tvOrderStatus.setBackgroundColor(tvOrderStatus.getContext().getResources().getColor(R.color.primary_red));
+                        tvOrderStatus.setBackgroundColor(tvOrderStatus.getContext().getResources().getColor(R.color.apple_green));
+                        tvOrderDone.setVisibility(View.GONE);
+                        tvOrderStatus.setVisibility(View.VISIBLE);
                         break;
                     case CANCELLED:
                         tvOrderStatus.setText(R.string.status_cancelled);
                         tvOrderStatus.setBackgroundColor(tvOrderStatus.getContext().getResources().getColor(R.color.primary_red));
+                        tvOrderDone.setVisibility(View.GONE);
+                        tvOrderStatus.setVisibility(View.VISIBLE);
                         break;
                 }
             }

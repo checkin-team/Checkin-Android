@@ -26,6 +26,7 @@ import androidx.lifecycle.MediatorLiveData;
 import androidx.lifecycle.Transformations;
 
 import static com.checkin.app.checkin.Session.ActiveSession.Chat.SessionChatModel.CHAT_EVENT_TYPE.EVENT_MENU_ORDER_ITEM;
+import static com.checkin.app.checkin.Session.ActiveSession.Chat.SessionChatModel.CHAT_STATUS_TYPE.CANCELLED;
 import static com.checkin.app.checkin.Session.ActiveSession.Chat.SessionChatModel.CHAT_STATUS_TYPE.DONE;
 import static com.checkin.app.checkin.Session.ActiveSession.Chat.SessionChatModel.CHAT_STATUS_TYPE.IN_PROGRESS;
 import static com.checkin.app.checkin.Session.ActiveSession.Chat.SessionChatModel.CHAT_STATUS_TYPE.OPEN;
@@ -161,7 +162,21 @@ public class ManagerSessionViewModel extends BaseViewModel {
             List<SessionOrderedItemModel> list = new ArrayList<>();
             if (input.status == Resource.Status.SUCCESS)
                 for (SessionOrderedItemModel data : input.data) {
-                    if (data.getStatus() != OPEN)
+                    if (data.getStatus() == IN_PROGRESS)
+                        list.add(data);
+                }
+            return Resource.cloneResource(input, list);
+        });
+    }
+
+    public LiveData<Resource<List<SessionOrderedItemModel>>> getDeliveredRejectedOrders() {
+        return Transformations.map(mOrdersData, input -> {
+            if (input == null || input.data == null)
+                return input;
+            List<SessionOrderedItemModel> list = new ArrayList<>();
+            if (input.status == Resource.Status.SUCCESS)
+                for (SessionOrderedItemModel data : input.data) {
+                    if (data.getStatus() == DONE || data.getStatus() == CANCELLED)
                         list.add(data);
                 }
             return Resource.cloneResource(input, list);

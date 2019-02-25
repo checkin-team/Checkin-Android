@@ -15,11 +15,17 @@ import com.checkin.app.checkin.Session.Model.SessionOrderedItemModel;
 import com.checkin.app.checkin.Shop.ShopModel;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import androidx.annotation.NonNull;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MediatorLiveData;
+import androidx.lifecycle.Transformations;
+
+import static com.checkin.app.checkin.Session.ActiveSession.Chat.SessionChatModel.CHAT_STATUS_TYPE.DONE;
+import static com.checkin.app.checkin.Session.ActiveSession.Chat.SessionChatModel.CHAT_STATUS_TYPE.IN_PROGRESS;
+import static com.checkin.app.checkin.Session.ActiveSession.Chat.SessionChatModel.CHAT_STATUS_TYPE.OPEN;
 
 public class ActiveSessionViewModel extends BaseViewModel {
     private final ActiveSessionRepository mRepository;
@@ -39,6 +45,7 @@ public class ActiveSessionViewModel extends BaseViewModel {
     @Override
     public void updateResults() {
         fetchActiveSessionDetail();
+        fetchSessionOrders();
     }
 
     public void fetchActiveSessionDetail() {
@@ -161,5 +168,42 @@ public class ActiveSessionViewModel extends BaseViewModel {
 
         }
         mSessionData.setValue(Resource.cloneResource(resource, resource.data));
+    }
+
+
+    public LiveData<Integer> getCountNewOrders() {
+        return Transformations.map(mOrdersData, input -> {
+            List<SessionOrderedItemModel> list = new ArrayList<>();
+            if (input.data != null) {
+                for (SessionOrderedItemModel item : input.data)
+                    if (item.getStatus() == OPEN)
+                        list.add(item);
+            }
+            return list.size();
+        });
+    }
+
+    public LiveData<Integer> getCountProgressOrders() {
+        return Transformations.map(mOrdersData, input -> {
+            List<SessionOrderedItemModel> list = new ArrayList<>();
+            if (input.data != null) {
+                for (SessionOrderedItemModel item : input.data)
+                    if (item.getStatus() == IN_PROGRESS)
+                        list.add(item);
+            }
+            return list.size();
+        });
+    }
+
+    public LiveData<Integer> getCountDeliveredOrders() {
+        return Transformations.map(mOrdersData, input -> {
+            List<SessionOrderedItemModel> list = new ArrayList<>();
+            if (input.data != null) {
+                for (SessionOrderedItemModel item : input.data)
+                    if (item.getStatus() == DONE)
+                        list.add(item);
+            }
+            return list.size();
+        });
     }
 }

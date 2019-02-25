@@ -2,6 +2,7 @@ package com.checkin.app.checkin.Data.Message;
 
 import android.app.Notification;
 import android.app.NotificationManager;
+import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Build;
@@ -64,34 +65,41 @@ public class AppMessagingService extends FirebaseMessagingService {
     @RequiresApi(Build.VERSION_CODES.M)
     private void showGroupedNotifications(MessageModel data) {
         String notifGroup = data.getGroupKey();
-        int notifCount = 0;
+        int notifCount = 1;
         NotificationCompat.InboxStyle style = new NotificationCompat.InboxStyle();
         for (StatusBarNotification statusBarNotification: mNotificationManager.getActiveNotifications()) {
-            if (statusBarNotification.getGroupKey().equals(notifGroup) && statusBarNotification.getTag() != null) {
+            if (statusBarNotification.getNotification().getGroup().equals(notifGroup) && statusBarNotification.getTag() != null) {
                 style.addLine(statusBarNotification.getTag());
                 notifCount++;
             }
         }
         style.setBigContentTitle(data.getGroupTitle())
-                .setSummaryText(String.format(Locale.getDefault(), "%d events", notifCount));
+                .setSummaryText(String.format(Locale.getDefault(), "%d events", notifCount))
+                .addLine(data.getDescription());
         String groupTitle = String.format(Locale.getDefault(), "%s - %d events", data.getGroupTitle(), notifCount);
+
+        Intent intent = data.getGroupIntent(this);
+        PendingIntent pendingIntent = PendingIntent.getActivity(this, 0, intent, PendingIntent.FLAG_UPDATE_CURRENT);
         Notification summaryNotif = new NotificationCompat.Builder(this, data.getChannel().id)
                 .setContentTitle(this.getString(R.string.app_name))
+                .setSmallIcon(R.drawable.ic_logo_notification)
                 .setContentText(groupTitle)
                 .setGroup(notifGroup)
+                .setGroupSummary(true)
                 .setStyle(style)
+                .setContentIntent(pendingIntent)
                 .build();
 
-        mNotificationManager.notify(Constants.NOTIFICATION_GROUP_SUMMARY, data.getGroupSummaryID(), summaryNotif);
+        mNotificationManager.notify(null, data.getGroupSummaryID(), summaryNotif);
     }
 
     private void showNotification(MessageModel data) {
         int notificationId = Constants.getNotificationID();
         Notification notification = data.showNotification(this, mNotificationManager, notificationId);
 
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M)
-            showGroupedNotifications(data);
         mNotificationManager.notify(data.getDescription(), notificationId, notification);
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M && data.isGrouped())
+            showGroupedNotifications(data);
     }
 
     @Override

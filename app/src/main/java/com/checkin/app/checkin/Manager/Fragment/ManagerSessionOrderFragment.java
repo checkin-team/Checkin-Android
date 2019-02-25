@@ -16,6 +16,7 @@ import com.checkin.app.checkin.Utility.Utils;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.core.widget.NestedScrollView;
 import androidx.lifecycle.ViewModelProviders;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -26,14 +27,24 @@ public class ManagerSessionOrderFragment extends BaseFragment implements Manager
     RecyclerView rvOrdersAccepted;
     @BindView(R.id.rv_ms_orders_new)
     RecyclerView rvOrdersNew;
+    @BindView(R.id.rv_ms_orders_delivered)
+    RecyclerView rvOrdersDelivered;
     @BindView(R.id.title_ms_new)
     TextView titleNewHeader;
+    @BindView(R.id.title_ms_in_progress)
+    TextView titleInProgressHeader;
+    @BindView(R.id.title_ms_delivered)
+    TextView titleDeliveredHeader;
+    @BindView(R.id.nested_sv_ms_order)
+    NestedScrollView nestedSVOrder;
+
 
     private ManagerOrdersInteraction mListener;
 
     private ManagerSessionViewModel mViewModel;
     private ManagerSessionOrderAdapter mAdapterNew;
     private ManagerSessionOrderAdapter mAdapterAccepted;
+    private ManagerSessionOrderAdapter mAdapterDeliveredRejected;
 
 
     public static ManagerSessionOrderFragment newInstance(ManagerOrdersInteraction listener) {
@@ -64,6 +75,10 @@ public class ManagerSessionOrderFragment extends BaseFragment implements Manager
         mAdapterAccepted = new ManagerSessionOrderAdapter(this);
         rvOrdersAccepted.setAdapter(mAdapterAccepted);
 
+        rvOrdersDelivered.setLayoutManager(new LinearLayoutManager(getContext(), RecyclerView.VERTICAL, false));
+        mAdapterDeliveredRejected = new ManagerSessionOrderAdapter(this);
+        rvOrdersDelivered.setAdapter(mAdapterDeliveredRejected);
+
         initRefreshScreen(R.id.sr_manager_session_orders);
     }
 
@@ -79,9 +94,7 @@ public class ManagerSessionOrderFragment extends BaseFragment implements Manager
                         mAdapterNew.setData(listResource.data);
                         titleNewHeader.setVisibility(View.VISIBLE);
                         rvOrdersNew.setVisibility(View.VISIBLE);
-                    } else {
-                        titleNewHeader.setVisibility(View.GONE);
-                        rvOrdersNew.setVisibility(View.GONE);
+                        nestedSVOrder.scrollTo(0, 0);
                     }
                     break;
                 default: {
@@ -95,8 +108,38 @@ public class ManagerSessionOrderFragment extends BaseFragment implements Manager
                 return;
             switch (listResource.status) {
                 case SUCCESS:
-                    mAdapterAccepted.setData(listResource.data);
+                    if(listResource.data.size()>0){
+                        mAdapterAccepted.setData(listResource.data);
+                        titleInProgressHeader.setVisibility(View.VISIBLE);
+                        rvOrdersAccepted.setVisibility(View.VISIBLE);
+                    }
+
                     stopRefreshing();
+                    nestedSVOrder.scrollTo(0, 0);
+                    break;
+                case LOADING:
+                    startRefreshing();
+                    break;
+                default: {
+                    Utils.toast(requireContext(), listResource.message);
+                    stopRefreshing();
+                }
+            }
+        });
+
+        mViewModel.getDeliveredRejectedOrders().observe(this, listResource -> {
+            if (listResource == null || listResource.data == null)
+                return;
+            switch (listResource.status) {
+                case SUCCESS:
+                    if (listResource.data.size() > 0) {
+                        titleDeliveredHeader.setVisibility(View.VISIBLE);
+                        rvOrdersDelivered.setVisibility(View.VISIBLE);
+                        mAdapterDeliveredRejected.setData(listResource.data);
+                    }
+
+                    stopRefreshing();
+                    nestedSVOrder.scrollTo(0, 0);
                     break;
                 case LOADING:
                     startRefreshing();
@@ -114,6 +157,7 @@ public class ManagerSessionOrderFragment extends BaseFragment implements Manager
             switch (resource.status) {
                 case SUCCESS: {
                     mViewModel.updateUiOrderStatus(resource.data);
+                    nestedSVOrder.scrollTo(0, 0);
                     break;
                 }
                 case LOADING:
