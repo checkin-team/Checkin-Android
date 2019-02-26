@@ -118,43 +118,6 @@ public class ManagerSessionActivity extends AppCompatActivity implements Manager
         }
     };
 
-    private void updateSessionHost(BriefModel user) {
-        SessionBriefModel data = mViewModel.getSessionData();
-        if (data != null) {
-            data.setHost(user);
-        }
-        mViewModel.updateSessionData(data);
-    }
-
-    private void addSessionEvent(ManagerSessionEventModel eventModel) {
-        mViewModel.addEventData(eventModel);
-    }
-
-    private void updateBill(double bill) {
-        SessionBriefModel data = mViewModel.getSessionData();
-        if (data != null) {
-            data.setBill(bill);
-        }
-        mViewModel.updateSessionData(data);
-    }
-
-    private void updateMemberCount(int count) {
-        SessionBriefModel data = mViewModel.getSessionData();
-        if (data != null) {
-            data.setCustomerCount(count);
-        }
-        mViewModel.updateSessionData(data);
-    }
-
-    private void updateOrderStatus(long orderPk, SessionChatModel.CHAT_STATUS_TYPE statusType) {
-        OrderStatusModel data = new OrderStatusModel(orderPk, statusType);
-        mViewModel.updateUiOrderStatus(data);
-    }
-
-    private void addNewOrder(SessionOrderedItemModel orderedItemModel) {
-        mViewModel.addOrderData(orderedItemModel);
-    }
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -224,6 +187,47 @@ public class ManagerSessionActivity extends AppCompatActivity implements Manager
         }
         tvTable.setText(data.getTable());
     }
+
+    // region UI-Update
+
+    private void updateSessionHost(BriefModel user) {
+        SessionBriefModel data = mViewModel.getSessionData();
+        if (data != null) {
+            data.setHost(user);
+        }
+        mViewModel.updateSessionData(data);
+    }
+
+    private void addSessionEvent(ManagerSessionEventModel eventModel) {
+        mViewModel.addEventData(eventModel);
+    }
+
+    private void updateBill(double bill) {
+        SessionBriefModel data = mViewModel.getSessionData();
+        if (data != null) {
+            data.setBill(bill);
+        }
+        mViewModel.updateSessionData(data);
+    }
+
+    private void updateMemberCount(int count) {
+        SessionBriefModel data = mViewModel.getSessionData();
+        if (data != null) {
+            data.setCustomerCount(count);
+        }
+        mViewModel.updateSessionData(data);
+    }
+
+    private void updateOrderStatus(long orderPk, SessionChatModel.CHAT_STATUS_TYPE statusType) {
+        OrderStatusModel data = new OrderStatusModel(orderPk, statusType);
+        mViewModel.updateUiOrderStatus(data);
+    }
+
+    private void addNewOrder(SessionOrderedItemModel orderedItemModel) {
+        mViewModel.addOrderData(orderedItemModel);
+    }
+
+    // endregion
 
     @OnClick(R.id.container_ms_bottom_actions)
     public void onSwipeUp() {

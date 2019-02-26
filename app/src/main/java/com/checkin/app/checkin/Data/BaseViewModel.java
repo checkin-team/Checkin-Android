@@ -1,14 +1,15 @@
 package com.checkin.app.checkin.Data;
 
 import android.app.Application;
-import androidx.lifecycle.AndroidViewModel;
-import androidx.lifecycle.LiveData;
-import androidx.lifecycle.MediatorLiveData;
-import androidx.annotation.NonNull;
 
 import com.fasterxml.jackson.databind.node.ObjectNode;
 
-public abstract class BaseViewModel extends AndroidViewModel{
+import androidx.annotation.NonNull;
+import androidx.lifecycle.AndroidViewModel;
+import androidx.lifecycle.LiveData;
+import androidx.lifecycle.MediatorLiveData;
+
+public abstract class BaseViewModel extends AndroidViewModel {
     protected MediatorLiveData<Resource<ObjectNode>> mData = new MediatorLiveData<>();
 
     public BaseViewModel(@NonNull Application application) {
@@ -24,5 +25,4 @@ public abstract class BaseViewModel extends AndroidViewModel{
     }
 
     public abstract void updateResults();
-
 }

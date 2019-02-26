@@ -56,7 +56,7 @@ public class MessageModel implements Serializable {
         USER_SESSION_MEMBER_ADD_REQUEST(302), USER_SESSION_ADDED_BY_OWNER(303), USER_SESSION_MEMBER_REMOVED(304),
         USER_SESSION_HOST_ASSIGNED(305), USER_SESSION_MEMBER_ADDED(306), USER_SESSION_END(309),
         USER_SESSION_BILL_CHANGE(311), USER_SESSION_EVENT_NEW(312), USER_SESSION_EVENT_UPDATE(313),
-        USER_SESSION_ORDER_ACCEPTED(315), USER_SESSION_ORDER_REJECTED(316),
+        USER_SESSION_ORDER_NEW(314), USER_SESSION_ORDER_ACCEPTED_REJECTED(315), USER_SESSION_UPDATE_ORDER(316),
 
         /* Restaurant */
 
@@ -66,12 +66,13 @@ public class MessageModel implements Serializable {
         // Manager
         MANAGER_SESSION_NEW(611), MANAGER_SESSION_MEMBER_CHANGE(612), MANAGER_SESSION_HOST_ASSIGNED(613),
         MANAGER_SESSION_NEW_ORDER(615), MANAGER_SESSION_UPDATE_ORDER(616), MANAGER_SESSION_EVENT_SERVICE(617),
-        MANAGER_SESSION_EVENT_CONCERN(618), MANAGER_SESSION_BILL_CHANGE(619), MANAGER_SESSION_CHECKOUT_REQUEST(625),
+        MANAGER_SESSION_EVENT_CONCERN(618), MANAGER_SESSION_EVENT_UPDATE(619), MANAGER_SESSION_ORDERS_PUSH(620),
+        MANAGER_SESSION_BILL_CHANGE(623), MANAGER_SESSION_CHECKOUT_REQUEST(625),
 
         // Waiter
         WAITER_SESSION_NEW(711), WAITER_SESSION_MEMBER_CHANGE(712), WAITER_SESSION_HOST_ASSIGNED(713),
         WAITER_SESSION_NEW_ORDER(715), WAITER_SESSION_UPDATE_ORDER(716), WAITER_SESSION_EVENT_SERVICE(717),
-        WAITER_SESSION_COLLECT_CASH(725), WAITER_SESSION_END(726);
+        WAITER_SESSION_EVENT_UPDATE(719), WAITER_SESSION_ORDERS_PUSH(720), WAITER_SESSION_COLLECT_CASH(725), WAITER_SESSION_END(726);
 
         public int id;
 
@@ -93,7 +94,8 @@ public class MessageModel implements Serializable {
     }
 
     @JsonCreator
-    public MessageModel() {}
+    public MessageModel() {
+    }
 
     @JsonProperty("type")
     public void setType(int type) {
@@ -191,7 +193,8 @@ public class MessageModel implements Serializable {
     }
 
     private void addNotificationExtra(Context context, NotificationCompat.Builder builder, int notificationId) {
-        if (isShopWaiterNotification() || isShopManagerNotification()) builder.setPriority(Notification.PRIORITY_HIGH);
+        if (isShopWaiterNotification() || isShopManagerNotification())
+            builder.setPriority(Notification.PRIORITY_HIGH);
         tryGroupNotification(builder);
     }
 
@@ -216,7 +219,7 @@ public class MessageModel implements Serializable {
 
     @Nullable
     public String getGroupKey() {
-        if (isGrouped()) {
+        if (isGroupedNotification()) {
             MessageObjectModel session = getSessionDetail();
             if (session == null) return null;
             return Constants.getNotificationGroup(session.getType(), session.getPk());
@@ -224,15 +227,12 @@ public class MessageModel implements Serializable {
         return null;
     }
 
-    public boolean isGrouped(){
-        if (isShopManagerNotification() || isShopWaiterNotification() || isUserActiveSessionNotification())
-            return true;
-        else
-            return false;
+    public boolean isGroupedNotification() {
+        return isShopManagerNotification() || isShopWaiterNotification() || isUserActiveSessionNotification();
     }
 
     public int getGroupSummaryID() {
-        MessageObjectModel session =  getSessionDetail();
+        MessageObjectModel session = getSessionDetail();
         if (session == null)
             return 0;
         return Constants.getNotificationSummaryID(session.getType(), session.getPk());
@@ -245,9 +245,9 @@ public class MessageModel implements Serializable {
     public String getGroupTitle() {
         MessageObjectModel objectModel;
         objectModel = getSessionDetail();
-        if (objectModel != null)    return objectModel.getDisplayName();
+        if (objectModel != null) return objectModel.getDisplayName();
         objectModel = getShopDetail();
-        if (objectModel != null)    return objectModel.getDisplayName();
+        if (objectModel != null) return objectModel.getDisplayName();
         return "";
     }
 
@@ -258,8 +258,7 @@ public class MessageModel implements Serializable {
             case USER_SESSION_END:
             case USER_SESSION_MEMBER_ADD_REQUEST:
             case USER_SESSION_HOST_ASSIGNED:
-            case USER_SESSION_ORDER_ACCEPTED:
-            case USER_SESSION_ORDER_REJECTED:
+            case USER_SESSION_ORDER_ACCEPTED_REJECTED:
             case SHOP_MEMBER_ADDED:
             case MANAGER_SESSION_NEW:
             case MANAGER_SESSION_NEW_ORDER:
@@ -277,9 +276,10 @@ public class MessageModel implements Serializable {
 
     boolean shouldTryUpdateUi() {
         switch (this.type) {
-            case USER_SESSION_ORDER_ACCEPTED:
-            case USER_SESSION_ORDER_REJECTED:
+            case USER_SESSION_ORDER_ACCEPTED_REJECTED:
             case SHOP_MEMBER_ADDED:
+            case MANAGER_SESSION_ORDERS_PUSH:
+            case WAITER_SESSION_ORDERS_PUSH:
                 return false;
             default:
                 return true;

@@ -67,7 +67,7 @@ public class AppMessagingService extends FirebaseMessagingService {
         String notifGroup = data.getGroupKey();
         int notifCount = 1;
         NotificationCompat.InboxStyle style = new NotificationCompat.InboxStyle();
-        for (StatusBarNotification statusBarNotification: mNotificationManager.getActiveNotifications()) {
+        for (StatusBarNotification statusBarNotification : mNotificationManager.getActiveNotifications()) {
             if (statusBarNotification.getNotification().getGroup().equals(notifGroup) && statusBarNotification.getTag() != null) {
                 style.addLine(statusBarNotification.getTag());
                 notifCount++;
@@ -98,7 +98,7 @@ public class AppMessagingService extends FirebaseMessagingService {
         Notification notification = data.showNotification(this, mNotificationManager, notificationId);
 
         mNotificationManager.notify(data.getDescription(), notificationId, notification);
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M && data.isGrouped())
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M && data.isGroupedNotification())
             showGroupedNotifications(data);
     }
 

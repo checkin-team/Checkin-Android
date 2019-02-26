@@ -1,13 +1,13 @@
 package com.checkin.app.checkin.Session.ActiveSession;
 
 import android.app.Application;
-import android.util.Log;
 
 import com.checkin.app.checkin.Data.BaseViewModel;
 import com.checkin.app.checkin.Data.Converters;
 import com.checkin.app.checkin.Data.Resource;
 import com.checkin.app.checkin.Misc.BriefModel;
 import com.checkin.app.checkin.Misc.GenericDetailModel;
+import com.checkin.app.checkin.Session.ActiveSession.Chat.SessionChatModel;
 import com.checkin.app.checkin.Session.Model.ActiveSessionModel;
 import com.checkin.app.checkin.Session.Model.SessionCustomerModel;
 import com.checkin.app.checkin.Session.Model.SessionInvoiceModel;
@@ -160,9 +160,9 @@ public class ActiveSessionViewModel extends BaseViewModel {
         }
 
         if (pos > -1) {
-            if (isAdded){
+            if (isAdded) {
                 resource.data.getCustomers().get(pos).setAccepted(true);
-            }else {
+            } else {
                 resource.data.getCustomers().remove(pos);
             }
 
@@ -205,5 +205,33 @@ public class ActiveSessionViewModel extends BaseViewModel {
             }
             return list.size();
         });
+    }
+
+    public void addNewOrder(SessionOrderedItemModel sessionOrderedItem) {
+        Resource<List<SessionOrderedItemModel>> listResource = mOrdersData.getValue();
+        if (listResource == null || listResource.data == null)
+            return;
+        listResource.data.add(0, sessionOrderedItem);
+        mOrdersData.setValue(Resource.cloneResource(listResource, listResource.data));
+    }
+
+    public void setRequestedCheckout(boolean isRequestedCheckout) {
+        Resource<ActiveSessionModel> resource = mSessionData.getValue();
+        if (resource == null || resource.data == null)
+            return;
+        resource.data.setRequestedCheckout(isRequestedCheckout);
+        mSessionData.setValue(Resource.cloneResource(resource, resource.data));
+    }
+
+    public void updateOrderStatus(long orderPk, SessionChatModel.CHAT_STATUS_TYPE sessionEventStatus) {
+        Resource<List<SessionOrderedItemModel>> listResource = mOrdersData.getValue();
+        if (listResource == null || listResource.data == null)
+            return;
+        for (SessionOrderedItemModel orderedItemModel : listResource.data) {
+            if (orderedItemModel.getPk() == orderPk) {
+                orderedItemModel.setStatus(sessionEventStatus.tag);
+            }
+        }
+        mOrdersData.setValue(Resource.cloneResource(listResource, listResource.data));
     }
 }

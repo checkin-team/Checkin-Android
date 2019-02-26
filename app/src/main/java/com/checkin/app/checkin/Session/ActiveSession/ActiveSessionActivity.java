@@ -11,7 +11,6 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
@@ -26,8 +25,10 @@ import com.checkin.app.checkin.R;
 import com.checkin.app.checkin.Search.SearchActivity;
 import com.checkin.app.checkin.Session.ActiveSession.Chat.SessionChatActivity;
 import com.checkin.app.checkin.Session.ActiveSession.Chat.SessionChatDataModel;
+import com.checkin.app.checkin.Session.ActiveSession.Chat.SessionChatModel;
 import com.checkin.app.checkin.Session.Model.ActiveSessionModel;
 import com.checkin.app.checkin.Session.Model.SessionCustomerModel;
+import com.checkin.app.checkin.Session.Model.SessionOrderedItemModel;
 import com.checkin.app.checkin.Utility.Utils;
 
 import androidx.annotation.Nullable;
@@ -80,6 +81,7 @@ public class ActiveSessionActivity extends BaseActivity implements ActiveSession
             if (message == null) return;
 
             MessageObjectModel model;
+            SessionChatModel event;
             switch (message.getType()) {
                 case USER_SESSION_BILL_CHANGE:
                     ActiveSessionActivity.this.updateBill(message.getRawData().getSessionBillTotal());
@@ -96,6 +98,18 @@ public class ActiveSessionActivity extends BaseActivity implements ActiveSession
                 case USER_SESSION_MEMBER_ADDED:
                     model = message.getObject();
                     ActiveSessionActivity.this.updateCustomer(model.getPk(),true);
+                    break;
+                case USER_SESSION_ORDER_NEW:
+                    ActiveSessionActivity.this.addNewOrder(message.getRawData().getSessionOrderedItem());
+                    break;
+                case USER_SESSION_EVENT_NEW:
+                    event = message.getRawData().getSessionEventDetail();
+                    if (event.getType() == SessionChatModel.CHAT_EVENT_TYPE.EVENT_REQUEST_CHECKOUT)
+                        ActiveSessionActivity.this.sessionRequestedCheckout();
+                    break;
+                case USER_SESSION_UPDATE_ORDER:
+                    long orderPk = message.getRawData().getSessionOrderId();
+                    ActiveSessionActivity.this.updateOrderStatus(orderPk, message.getRawData().getSessionEventStatus());
                     break;
                 case USER_SESSION_END:
                     Utils.navigateBackToHome(getApplicationContext());
@@ -229,6 +243,8 @@ public class ActiveSessionActivity extends BaseActivity implements ActiveSession
 
     }
 
+    // region UI-Update
+
     private void updateBill(double bill) {
         mViewModel.updateBill(bill);
     }
@@ -244,6 +260,22 @@ public class ActiveSessionActivity extends BaseActivity implements ActiveSession
     private void updateCustomer(long customer, boolean isAdded) {
         mViewModel.updateCustomer(customer, isAdded);
     }
+
+    private void updateOrderStatus(long orderPk, SessionChatModel.CHAT_STATUS_TYPE sessionEventStatus) {
+        mViewModel.updateOrderStatus(orderPk, sessionEventStatus);
+    }
+
+    private void sessionRequestedCheckout() {
+        mViewModel.setRequestedCheckout(true);
+    }
+
+    private void addNewOrder(SessionOrderedItemModel sessionOrderedItem) {
+        mViewModel.addNewOrder(sessionOrderedItem);
+    }
+
+    // endregion
+
+    // region Click Listeners
 
     @OnClick(R.id.btn_active_session_menu)
     public void onListMenu() {
@@ -279,6 +311,8 @@ public class ActiveSessionActivity extends BaseActivity implements ActiveSession
         openChat(SessionChatDataModel.EVENT_REQUEST_SERVICE_TYPE.SERVICE_BRING_COMMODITY);
     }
 
+    // endregion
+
     @Override
     public void onUnacceptedMemberClicked(SessionCustomerModel customerModel) {
         new AlertDialog.Builder(this)
@@ -308,8 +342,9 @@ public class ActiveSessionActivity extends BaseActivity implements ActiveSession
     protected void onResume() {
         super.onResume();
         MESSAGE_TYPE[] types = new MESSAGE_TYPE[]{
-                MESSAGE_TYPE.USER_SESSION_BILL_CHANGE, MESSAGE_TYPE.USER_SESSION_HOST_ASSIGNED,
-                MESSAGE_TYPE.USER_SESSION_MEMBER_ADD_REQUEST, MESSAGE_TYPE.USER_SESSION_MEMBER_ADDED, MESSAGE_TYPE.USER_SESSION_END
+                MESSAGE_TYPE.USER_SESSION_BILL_CHANGE, MESSAGE_TYPE.USER_SESSION_HOST_ASSIGNED, MESSAGE_TYPE.USER_SESSION_ORDER_NEW,
+                MESSAGE_TYPE.USER_SESSION_MEMBER_ADD_REQUEST, MESSAGE_TYPE.USER_SESSION_MEMBER_ADDED, MESSAGE_TYPE.USER_SESSION_END,
+                MESSAGE_TYPE.USER_SESSION_EVENT_NEW, MESSAGE_TYPE.USER_SESSION_UPDATE_ORDER
         };
         MessageUtils.registerLocalReceiver(this, mReceiver, types);
         updateScreen();
