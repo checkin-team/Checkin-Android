@@ -12,6 +12,7 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.checkin.app.checkin.Data.Resource;
+import com.checkin.app.checkin.Misc.BaseActivity;
 import com.checkin.app.checkin.Misc.GenericDetailModel;
 import com.checkin.app.checkin.R;
 import com.checkin.app.checkin.Shop.RestaurantModel;
@@ -23,7 +24,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 
-public class ShopJoinActivity extends AppCompatActivity implements
+public class ShopJoinActivity extends BaseActivity implements
         BasicInfoFragment.BasicInfoFragmentInteraction, EditAspectFragment.AspectFragmentInteraction {
     private static final String TAG = ShopJoinActivity.class.getSimpleName();
     public static final String KEY_SHOP_EMAIL = "shop_email";
@@ -31,8 +32,6 @@ public class ShopJoinActivity extends AppCompatActivity implements
 
     @BindView(R.id.btn_next) Button btnNext;
     @BindView(R.id.tv_title) TextView tvTitle;
-    @BindView(R.id.pb_shop_join)
-    ProgressBar pbShopJoin;
 
     private JoinViewModel mJoinViewModel;
     private ShopProfileViewModel mShopViewModel;
@@ -43,12 +42,13 @@ public class ShopJoinActivity extends AppCompatActivity implements
         setContentView(R.layout.activity_shop_join);
         ButterKnife.bind(this);
 
+        initProgressBar(R.id.pb_shop_join);
         ActionBar actionBar = getSupportActionBar();
         if (actionBar != null) {
             actionBar.setDisplayHomeAsUpEnabled(true);
             actionBar.setHomeAsUpIndicator(R.drawable.ic_back_grey);
         }
-        pbShopJoin.setVisibility(View.GONE);
+
         mJoinViewModel = ViewModelProviders.of(this).get(JoinViewModel.class);
         mShopViewModel = ViewModelProviders.of(this).get(ShopProfileViewModel.class);
 
@@ -72,12 +72,12 @@ public class ShopJoinActivity extends AppCompatActivity implements
             if (genericDetailModelResource == null)
                 return;
             if (genericDetailModelResource.status == Resource.Status.SUCCESS && genericDetailModelResource.data != null) {
-                pbShopJoin.setVisibility(View.GONE);
+                hideProgressBar();
                 btnNext.setActivated(true);
             } else if (genericDetailModelResource.status == Resource.Status.LOADING)  {
-                pbShopJoin.setVisibility(View.VISIBLE);
+                visibleProgressBar();
             }  else {
-                pbShopJoin.setVisibility(View.GONE);
+                hideProgressBar();
                 btnNext.setActivated(true);
             }
         });
