@@ -2,13 +2,12 @@ package com.checkin.app.checkin.User.Private;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.checkin.app.checkin.Data.Resource.Status;
+import com.checkin.app.checkin.Misc.BaseFragment;
 import com.checkin.app.checkin.Misc.SelectCropImageActivity;
 import com.checkin.app.checkin.R;
 import com.checkin.app.checkin.User.UserModel;
@@ -18,23 +17,18 @@ import java.io.File;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProviders;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import butterknife.BindView;
-import butterknife.ButterKnife;
 import butterknife.OnClick;
-import butterknife.Unbinder;
 
 import static android.app.Activity.RESULT_OK;
 import static com.checkin.app.checkin.User.Private.ProfileEditActivity.FIRST_NAME;
 import static com.checkin.app.checkin.User.Private.ProfileEditActivity.LAST_NAME;
 import static com.checkin.app.checkin.User.Private.ProfileEditActivity.USERNAME;
 
-public class UserPrivateProfileFragment extends Fragment {
-    private Unbinder unbinder;
-
+public class UserPrivateProfileFragment extends BaseFragment {
     @BindView(R.id.tv_user_private_checkins)
     TextView tvCheckins;
     @BindView(R.id.tv_user_private_display_name)
@@ -58,12 +52,9 @@ public class UserPrivateProfileFragment extends Fragment {
     public UserPrivateProfileFragment() {
     }
 
-    @Nullable
     @Override
-    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        final View view = inflater.inflate(R.layout.fragment_user_profile_private, container, false);
-        unbinder = ButterKnife.bind(this, view);
-        return view;
+    protected int getRootLayout() {
+        return R.layout.fragment_user_profile_private;
     }
 
     @Override
@@ -100,6 +91,19 @@ public class UserPrivateProfileFragment extends Fragment {
                 }
             }
         });
+
+        mViewModel.getImageUploadResult().observe(this, voidResource -> {
+            if (voidResource == null)
+                return;
+            switch (voidResource.status) {
+                case SUCCESS:
+                    mViewModel.updateResults();
+                    break;
+                case ERROR_UNKNOWN:
+                    Utils.toast(requireContext(), voidResource.message);
+                    break;
+            }
+        });
     }
 
     private void setupData(UserModel data) {
@@ -108,13 +112,6 @@ public class UserPrivateProfileFragment extends Fragment {
         Utils.loadImageOrDefault(imCover, data.getProfilePic(), (data.getGender() == UserModel.GENDER.MALE) ? R.drawable.cover_unknown_male : R.drawable.cover_unknown_female);
         tvCheckins.setText(data.formatCheckins());
         tvLocality.setText(data.getAddress());
-    }
-
-
-    @Override
-    public void onDestroyView() {
-        super.onDestroyView();
-        unbinder.unbind();
     }
 
     @OnClick({R.id.btn_user_private_add_logo, R.id.btn_user_private_edit})
@@ -154,5 +151,4 @@ public class UserPrivateProfileFragment extends Fragment {
             }
         }
     }
-
 }

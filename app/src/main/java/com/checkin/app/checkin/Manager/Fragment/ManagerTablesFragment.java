@@ -4,7 +4,6 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -33,7 +32,6 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.Unbinder;
 
-import static com.checkin.app.checkin.Data.Message.Constants.KEY_DATA;
 import static com.checkin.app.checkin.Data.Message.MessageModel.MESSAGE_TYPE.MANAGER_SESSION_CHECKOUT_REQUEST;
 import static com.checkin.app.checkin.Data.Message.MessageModel.MESSAGE_TYPE.MANAGER_SESSION_EVENT_CONCERN;
 import static com.checkin.app.checkin.Data.Message.MessageModel.MESSAGE_TYPE.MANAGER_SESSION_EVENT_SERVICE;
@@ -55,16 +53,8 @@ public class ManagerTablesFragment extends Fragment implements ManagerWorkTableA
     private final BroadcastReceiver mReceiver = new BroadcastReceiver() {
         @Override
         public void onReceive(Context context, Intent intent) {
-            MessageModel message;
-            try {
-                message = ((MessageModel) intent.getSerializableExtra(KEY_DATA));
-                if (message == null)
-                    return;
-            } catch (ClassCastException e) {
-                Log.e(TAG, "Invalid message object received.");
-                e.printStackTrace();
-                return;
-            }
+            MessageModel message = MessageUtils.parseMessage(intent);
+            if (message == null) return;
 
             EventBriefModel eventModel;
             BriefModel user;
@@ -136,6 +126,7 @@ public class ManagerTablesFragment extends Fragment implements ManagerWorkTableA
         });
     }
 
+    // region UI-Update
     private void addTable(RestaurantTableModel tableModel) {
         tableModel.setEventCount(1);
         mViewModel.addRestaurantTable(tableModel);
@@ -159,6 +150,7 @@ public class ManagerTablesFragment extends Fragment implements ManagerWorkTableA
             mAdapter.updateSession(pos);
         }
     }
+    // endregion
 
     @Override
     public void onResume() {
@@ -192,7 +184,6 @@ public class ManagerTablesFragment extends Fragment implements ManagerWorkTableA
         int pos = mViewModel.getTablePositionWithPk(tableModel.getPk());
         tableModel.setEventCount(0);
         mAdapter.updateSession(pos);
-        mViewModel.updateResults();
     }
 
     @Override

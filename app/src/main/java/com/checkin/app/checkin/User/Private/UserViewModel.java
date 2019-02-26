@@ -22,6 +22,7 @@ import androidx.annotation.NonNull;
 import androidx.core.app.NotificationCompat;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MediatorLiveData;
+import androidx.lifecycle.MutableLiveData;
 
 /**
  * Created by Jogi Miglani on 29-09-2018.
@@ -31,6 +32,7 @@ public class UserViewModel extends BaseViewModel {
     private UserRepository mRepository;
     private MediatorLiveData<Resource<UserModel>> mUserData = new MediatorLiveData<>();
     private MediatorLiveData<Resource<List<ShopCustomerModel>>> mUserRecentCheckinsData = new MediatorLiveData<>();
+    private MutableLiveData<Resource<Void>> mImageUploadResult = new MutableLiveData<>();
 
     public UserViewModel(@NonNull Application application) {
         super(application);
@@ -58,9 +60,31 @@ public class UserViewModel extends BaseViewModel {
         return mUserRecentCheckinsData;
     }
 
+    public LiveData<Resource<Void>> getImageUploadResult() {
+        return mImageUploadResult;
+    }
+
     public void updateProfilePic(File pictureFile, Context context) {
         NotificationCompat.Builder builder = MessageUtils.createUploadNotification(context);
-        MessageUtils.NotificationUpdate notificationUpdate = new MessageUtils.NotificationUpdate(context, builder);
+        MessageUtils.NotificationUpdate notificationUpdate = new MessageUtils.NotificationUpdate(context, builder) {
+            @Override
+            public void onProgressUpdate(int percentage) {
+                super.onProgressUpdate(percentage);
+                mImageUploadResult.setValue(Resource.loading(null));
+            }
+
+            @Override
+            public void onSuccess() {
+                super.onSuccess();
+                mImageUploadResult.setValue(Resource.success(null));
+            }
+
+            @Override
+            public void onFailure() {
+                super.onFailure();
+                mImageUploadResult.setValue(Resource.error("Unable to upload image", null));
+            }
+        };
         doUploadImage(pictureFile, notificationUpdate);
     }
 
@@ -74,5 +98,4 @@ public class UserViewModel extends BaseViewModel {
         data.put("last_name", lastName);
         mData.addSource(mRepository.postUserData(data), mData::setValue);
     }
-
 }

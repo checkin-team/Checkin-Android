@@ -62,6 +62,8 @@ public class WaiterTableFragment extends BaseFragment {
                 return;
             if (resource.status == Status.SUCCESS && resource.data != null) {
                 setupTableData(resource.data);
+            } else if (resource.status == Status.ERROR_NOT_FOUND) {
+                mListener.endSession(mViewModel.getSessionPk());
             }
         });
         mViewModel.getObservableData().observe(this, resource -> {
@@ -118,5 +120,6 @@ public class WaiterTableFragment extends BaseFragment {
     }
 
     public interface WaiterTableInteraction {
+        void endSession(long sessionPk);
     }
 }

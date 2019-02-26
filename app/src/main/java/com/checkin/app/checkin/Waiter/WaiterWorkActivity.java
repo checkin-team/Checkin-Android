@@ -126,6 +126,7 @@ public class WaiterWorkActivity extends BaseAccountActivity implements WaiterTab
                     WaiterWorkActivity.this.updateTableCustomerCount(sessionPk, customerCount);
                     break;
                 case WAITER_SESSION_UPDATE_ORDER:
+                case WAITER_SESSION_EVENT_UPDATE:
                     sessionPk = message.getTarget().getPk();
                     long eventId = message.getObject().getPk();
                     WaiterWorkActivity.this.updateEventStatus(sessionPk, eventId, message.getRawData().getSessionEventStatus());
@@ -261,6 +262,8 @@ public class WaiterWorkActivity extends BaseAccountActivity implements WaiterTab
         mViewModel.updateResults();
     }
 
+    // region UI-Update
+
     private void addTable(RestaurantTableModel tableModel) {
         mViewModel.addRestaurantTable(tableModel);
     }
@@ -322,9 +325,12 @@ public class WaiterWorkActivity extends BaseAccountActivity implements WaiterTab
         }
     }
 
-    private void endSession(long sessionPk) {
+    @Override
+    public void endSession(long sessionPk) {
         mViewModel.markSessionEnd(sessionPk);
     }
+
+    // endregion
 
     @OnClick(R.id.im_waiter_scanner)
     public void onClickScanner(View v) {
@@ -346,7 +352,7 @@ public class WaiterWorkActivity extends BaseAccountActivity implements WaiterTab
         MESSAGE_TYPE[] types = new MESSAGE_TYPE[]{
                 MESSAGE_TYPE.WAITER_SESSION_NEW, MESSAGE_TYPE.WAITER_SESSION_NEW_ORDER, MESSAGE_TYPE.WAITER_SESSION_COLLECT_CASH,
                 MESSAGE_TYPE.WAITER_SESSION_EVENT_SERVICE, MESSAGE_TYPE.WAITER_SESSION_HOST_ASSIGNED, MESSAGE_TYPE.WAITER_SESSION_MEMBER_CHANGE,
-                MESSAGE_TYPE.WAITER_SESSION_UPDATE_ORDER, MESSAGE_TYPE.WAITER_SESSION_END
+                MESSAGE_TYPE.WAITER_SESSION_UPDATE_ORDER, MESSAGE_TYPE.WAITER_SESSION_END, MESSAGE_TYPE.WAITER_SESSION_EVENT_UPDATE
         };
         MessageUtils.registerLocalReceiver(this, mReceiver, types);
     }

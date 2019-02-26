@@ -161,9 +161,11 @@ public class MessageModel implements Serializable {
         if (className == null)
             return;
         MessageObjectModel shopDetail = getShopDetail();
+        MessageObjectModel sessionDetail = getSessionDetail();
         if (shopDetail == null) return;
         if (isShopManagerNotification()) {
-            intent.putExtra(ManagerWorkActivity.KEY_RESTAURANT_PK, shopDetail.getPk());
+            intent.putExtra(ManagerWorkActivity.KEY_RESTAURANT_PK, shopDetail.getPk())
+                    .putExtra(ManagerWorkActivity.KEY_SESSION_PK, sessionDetail != null ? sessionDetail.getPk() : 0L);
         } else if (isShopWaiterNotification()) {
             intent.putExtra(WaiterWorkActivity.KEY_SHOP_PK, shopDetail.getPk());
         }
@@ -171,13 +173,14 @@ public class MessageModel implements Serializable {
 
     @Nullable
     private ComponentName getTargetComponent(Context context) {
+        ComponentName componentName = null;
         if (isUserActiveSessionNotification())
-            return new ComponentName(context, ActiveSessionActivity.class);
-        if (isShopWaiterNotification())
-            return new ComponentName(context, WaiterWorkActivity.class);
-        if (isShopManagerNotification())
-            return new ComponentName(context, ManagerWorkActivity.class);
-        return null;
+            componentName = new ComponentName(context, ActiveSessionActivity.class);
+        else if (isShopWaiterNotification())
+            componentName = new ComponentName(context, WaiterWorkActivity.class);
+        else if (isShopManagerNotification())
+            componentName = new ComponentName(context, ManagerWorkActivity.class);
+        return componentName;
     }
 
     private NotificationCompat.Builder getNotificationBuilder(Context context, int notificationId) {
@@ -261,11 +264,9 @@ public class MessageModel implements Serializable {
             case USER_SESSION_ORDER_ACCEPTED_REJECTED:
             case SHOP_MEMBER_ADDED:
             case MANAGER_SESSION_NEW:
-            case MANAGER_SESSION_NEW_ORDER:
             case MANAGER_SESSION_EVENT_CONCERN:
             case MANAGER_SESSION_CHECKOUT_REQUEST:
             case WAITER_SESSION_NEW:
-            case WAITER_SESSION_NEW_ORDER:
             case WAITER_SESSION_EVENT_SERVICE:
             case WAITER_SESSION_COLLECT_CASH:
                 return false;
@@ -299,7 +300,7 @@ public class MessageModel implements Serializable {
     }
 
     @Nullable
-    private MessageObjectModel getShopDetail() {
+    public MessageObjectModel getShopDetail() {
         if (target != null && target.getType() == MESSAGE_OBJECT_TYPE.RESTAURANT)
             return target;
         if (object != null && object.getType() == MESSAGE_OBJECT_TYPE.RESTAURANT)
@@ -310,7 +311,7 @@ public class MessageModel implements Serializable {
     }
 
     @Nullable
-    private MessageObjectModel getSessionDetail() {
+    public MessageObjectModel getSessionDetail() {
         if (target != null && target.getType() == MESSAGE_OBJECT_TYPE.SESSION)
             return target;
         if (object != null && object.getType() == MESSAGE_OBJECT_TYPE.SESSION)

@@ -4,7 +4,6 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -36,6 +35,7 @@ import static com.checkin.app.checkin.Data.Message.MessageModel.MESSAGE_TYPE.MAN
 import static com.checkin.app.checkin.Data.Message.MessageModel.MESSAGE_TYPE.MANAGER_SESSION_CHECKOUT_REQUEST;
 import static com.checkin.app.checkin.Data.Message.MessageModel.MESSAGE_TYPE.MANAGER_SESSION_EVENT_CONCERN;
 import static com.checkin.app.checkin.Data.Message.MessageModel.MESSAGE_TYPE.MANAGER_SESSION_EVENT_SERVICE;
+import static com.checkin.app.checkin.Data.Message.MessageModel.MESSAGE_TYPE.MANAGER_SESSION_EVENT_UPDATE;
 import static com.checkin.app.checkin.Data.Message.MessageModel.MESSAGE_TYPE.MANAGER_SESSION_HOST_ASSIGNED;
 import static com.checkin.app.checkin.Data.Message.MessageModel.MESSAGE_TYPE.MANAGER_SESSION_MEMBER_CHANGE;
 import static com.checkin.app.checkin.Data.Message.MessageModel.MESSAGE_TYPE.MANAGER_SESSION_NEW_ORDER;
@@ -114,6 +114,10 @@ public class ManagerSessionActivity extends AppCompatActivity implements Manager
                     long orderPk = message.getRawData().getSessionOrderId();
                     ManagerSessionActivity.this.updateOrderStatus(orderPk, message.getRawData().getSessionEventStatus());
                     break;
+                case MANAGER_SESSION_EVENT_UPDATE:
+                    long eventPk = message.getObject().getPk();
+                    ManagerSessionActivity.this.updateEventStatus(eventPk, message.getRawData().getSessionEventStatus());
+                    break;
             }
         }
     };
@@ -142,17 +146,17 @@ public class ManagerSessionActivity extends AppCompatActivity implements Manager
             if (resource == null) return;
             SessionBriefModel data = resource.data;
             switch (resource.status) {
-                case SUCCESS: {
+                case SUCCESS:
                     if (data == null)
                         return;
                     setupData(data);
-                }
-                case LOADING: {
+                case ERROR_NOT_FOUND:
+                    finish();
                     break;
-                }
-                default: {
-                    Log.e(resource.status.name(), resource.message == null ? "Null" : resource.message);
-                }
+                case LOADING:
+                    break;
+                default:
+                    Utils.toast(this, resource.message);
             }
         });
 
@@ -227,6 +231,10 @@ public class ManagerSessionActivity extends AppCompatActivity implements Manager
         mViewModel.addOrderData(orderedItemModel);
     }
 
+    private void updateEventStatus(long eventPk, SessionChatModel.CHAT_STATUS_TYPE sessionEventStatus) {
+        mViewModel.updateUiEventStatus(eventPk, sessionEventStatus);
+    }
+
     // endregion
 
     @OnClick(R.id.container_ms_bottom_actions)
@@ -258,7 +266,7 @@ public class ManagerSessionActivity extends AppCompatActivity implements Manager
         MessageModel.MESSAGE_TYPE[] types = new MessageModel.MESSAGE_TYPE[]{
                 MANAGER_SESSION_NEW_ORDER, MANAGER_SESSION_EVENT_SERVICE, MANAGER_SESSION_CHECKOUT_REQUEST,
                 MANAGER_SESSION_EVENT_CONCERN, MANAGER_SESSION_HOST_ASSIGNED, MANAGER_SESSION_BILL_CHANGE,
-                MANAGER_SESSION_MEMBER_CHANGE, MANAGER_SESSION_UPDATE_ORDER
+                MANAGER_SESSION_MEMBER_CHANGE, MANAGER_SESSION_UPDATE_ORDER, MANAGER_SESSION_EVENT_UPDATE
         };
         MessageUtils.registerLocalReceiver(this, mReceiver, types);
     }

@@ -1,5 +1,6 @@
 package com.checkin.app.checkin.Manager;
 
+import android.content.Intent;
 import android.os.Bundle;
 
 import com.checkin.app.checkin.Account.AccountModel;
@@ -29,6 +30,7 @@ public class ManagerWorkActivity extends BaseAccountActivity {
     private static final String TAG = ManagerWorkActivity.class.getSimpleName();
 
     public static final String KEY_RESTAURANT_PK = "manager.restaurant_pk";
+    public static final String KEY_SESSION_PK = "manager.session_pk";
 
     @BindView(R.id.pager_manager_work)
     DynamicSwipableViewPager pagerManager;
@@ -64,6 +66,14 @@ public class ManagerWorkActivity extends BaseAccountActivity {
 
         mViewModel = ViewModelProviders.of(this).get(ManagerWorkViewModel.class);
         mViewModel.fetchActiveTables(getIntent().getLongExtra(KEY_RESTAURANT_PK, 0L));
+
+        long sessionPk = getIntent().getLongExtra(KEY_SESSION_PK, 0L);
+        if (sessionPk > 0) {
+            Intent intent = new Intent(this, ManagerSessionActivity.class);
+            intent.putExtra(ManagerSessionActivity.KEY_SESSION_PK, sessionPk)
+                    .putExtra(ManagerSessionActivity.KEY_SHOP_PK, mViewModel.getShopPk());
+            startActivity(intent);
+        }
 
         mViewModel.getActiveTables().observe(this, listResource -> {
             if (listResource == null)
@@ -117,6 +127,18 @@ public class ManagerWorkActivity extends BaseAccountActivity {
         return new AccountModel.ACCOUNT_TYPE[]{AccountModel.ACCOUNT_TYPE.RESTAURANT_MANAGER};
     }
 
+    @Override
+    protected void updateScreen() {
+        getAccountViewModel().updateResults();
+        mViewModel.updateResults();
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        updateScreen();
+    }
+
     static class ManagerFragmentAdapter extends BaseFragmentAdapterBottomNav {
         public ManagerFragmentAdapter(FragmentManager fm) {
             super(fm);
@@ -161,11 +183,5 @@ public class ManagerWorkActivity extends BaseAccountActivity {
             }
             return null;
         }
-    }
-
-    @Override
-    protected void updateScreen() {
-        getAccountViewModel().updateResults();
-        mViewModel.updateResults();
     }
 }

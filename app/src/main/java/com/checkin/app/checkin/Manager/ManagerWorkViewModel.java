@@ -3,11 +3,13 @@ package com.checkin.app.checkin.Manager;
 import android.app.Application;
 
 import com.checkin.app.checkin.Data.BaseViewModel;
+import com.checkin.app.checkin.Data.Converters;
 import com.checkin.app.checkin.Data.Resource;
 import com.checkin.app.checkin.Manager.Model.ManagerStatsModel;
 import com.checkin.app.checkin.Misc.GenericDetailModel;
 import com.checkin.app.checkin.Session.Model.RestaurantTableModel;
 import com.checkin.app.checkin.Waiter.WaiterRepository;
+import com.fasterxml.jackson.databind.node.ObjectNode;
 
 import java.util.List;
 
@@ -46,7 +48,9 @@ public class ManagerWorkViewModel extends BaseViewModel {
     }
 
     public void markSessionDone(long sessionId) {
-        mDetailData.addSource(mManagerRepository.postSessionCheckout(sessionId), mDetailData::setValue);
+        ObjectNode data = Converters.objectMapper.createObjectNode();
+        data.put("payment_mode", "csh");
+        mDetailData.addSource(mManagerRepository.manageSessionCheckout(sessionId, data), mDetailData::setValue);
     }
 
     public LiveData<Resource<GenericDetailModel>> getDetailData() {

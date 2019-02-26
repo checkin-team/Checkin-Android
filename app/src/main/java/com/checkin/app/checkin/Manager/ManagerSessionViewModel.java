@@ -57,7 +57,7 @@ public class ManagerSessionViewModel extends BaseViewModel {
     public void putSessionCheckout(long sessionId, String paymentMode){
         ObjectNode data = Converters.objectMapper.createObjectNode();
         data.put("payment_mode", paymentMode);
-        mSessionCheckoutData.addSource(mManagerRepository.puSessionCheckout(sessionId,data),mSessionCheckoutData::setValue);
+        mSessionCheckoutData.addSource(mManagerRepository.manageSessionCheckout(sessionId,data),mSessionCheckoutData::setValue);
     }
 
     public LiveData<Resource<GenericDetailModel>> putSessionCheckoutData(){
@@ -225,7 +225,7 @@ public class ManagerSessionViewModel extends BaseViewModel {
         mOrdersData.setValue(Resource.cloneResource(listResource, listResource.data));
     }
 
-    public void updateUiEventStatus(long eventId) {
+    public void updateUiEventStatus(long eventId, SessionChatModel.CHAT_STATUS_TYPE status) {
         Resource<List<ManagerSessionEventModel>> listResource = mEventData.getValue();
         if (listResource == null || listResource.data == null)
             return;
@@ -238,7 +238,7 @@ public class ManagerSessionViewModel extends BaseViewModel {
         }
         if (pos > -1) {
             ManagerSessionEventModel eventModel = listResource.data.get(pos);
-            eventModel.setStatus(SessionChatModel.CHAT_STATUS_TYPE.DONE);
+            eventModel.setStatus(status);
             listResource.data.remove(pos);
             listResource.data.add(0, eventModel);
         }

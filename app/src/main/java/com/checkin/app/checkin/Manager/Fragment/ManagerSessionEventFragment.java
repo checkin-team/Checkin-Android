@@ -1,17 +1,16 @@
 package com.checkin.app.checkin.Manager.Fragment;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.TextView;
 
 import com.checkin.app.checkin.Manager.Adapter.ManagerSessionEventAdapter;
-import com.checkin.app.checkin.Manager.ManagerSessionInvoiceActivity;
 import com.checkin.app.checkin.Manager.ManagerSessionViewModel;
 import com.checkin.app.checkin.Manager.Model.ManagerSessionEventModel;
 import com.checkin.app.checkin.Menu.SessionMenuActivity;
 import com.checkin.app.checkin.Misc.BaseFragment;
 import com.checkin.app.checkin.R;
+import com.checkin.app.checkin.Session.ActiveSession.Chat.SessionChatModel;
 import com.checkin.app.checkin.Session.Model.SessionBriefModel;
 import com.checkin.app.checkin.Utility.Utils;
 
@@ -80,11 +79,6 @@ public class ManagerSessionEventFragment extends BaseFragment implements Manager
                         return;
                     setupSessionData(data);
                 }
-                case LOADING:
-                    break;
-                default: {
-                    Utils.toast(requireContext(), resource.message);
-                }
             }
         });
 
@@ -112,7 +106,7 @@ public class ManagerSessionEventFragment extends BaseFragment implements Manager
                 return;
             switch (resource.status) {
                 case SUCCESS:
-                    mViewModel.updateUiEventStatus(Long.valueOf(resource.data.getPk()));
+                    mViewModel.updateUiEventStatus(Long.valueOf(resource.data.getPk()), SessionChatModel.CHAT_STATUS_TYPE.DONE);
                     break;
                 default: {
                     Utils.toast(requireContext(), resource.message);
