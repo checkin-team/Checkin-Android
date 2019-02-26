@@ -1,6 +1,7 @@
 package com.checkin.app.checkin.Session.ActiveSession.Chat;
 
 import android.app.Application;
+import android.util.Log;
 
 import com.checkin.app.checkin.Data.BaseViewModel;
 import com.checkin.app.checkin.Data.Converters;
@@ -77,13 +78,11 @@ public class ActiveSessionChatViewModel extends BaseViewModel {
                 break;
             }
         }
-
         if (pos > -1) {
             SessionChatModel chatModel = listResource.data.get(pos);
             chatModel.setStatus(status.tag);
             listResource.data.remove(pos);
             listResource.data.add(0, chatModel);
-
             mChatData.setValue(Resource.cloneResource(listResource, listResource.data));
         }
     }

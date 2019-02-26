@@ -15,6 +15,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.ProgressBar;
 import android.widget.Toast;
 
 import com.checkin.app.checkin.Data.Resource;
@@ -27,7 +28,6 @@ import com.fasterxml.jackson.databind.JsonNode;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
-import butterknife.OnClick;
 import butterknife.OnTextChanged;
 import butterknife.Unbinder;
 
@@ -43,7 +43,6 @@ public class BasicInfoFragment extends Fragment {
 
     private JoinViewModel mViewModel;
     private BasicInfoFragmentInteraction mInteractionListener;
-    private ProgressDialog mProgressDialog;
 
     public static BasicInfoFragment newInstance(BasicInfoFragmentInteraction listener) {
         BasicInfoFragment fragment = new BasicInfoFragment();
@@ -61,10 +60,6 @@ public class BasicInfoFragment extends Fragment {
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
-        mProgressDialog = new ProgressDialog(getContext());
-        mProgressDialog.setMessage("Please wait...");
-        mProgressDialog.setCancelable(false);
-
         mViewModel = ViewModelProviders.of(getActivity()).get(JoinViewModel.class);
 
         mViewModel.getShopJoinModel().observe(this, model -> {
@@ -81,12 +76,8 @@ public class BasicInfoFragment extends Fragment {
             if (resource == null)
                 return;
             if (resource.status == Resource.Status.SUCCESS && resource.data != null) {
-                if (mProgressDialog != null && mProgressDialog.isShowing())
-                    mProgressDialog.dismiss();
                 mInteractionListener.onShopRegistered(resource.data);
             } else if (resource.status == Resource.Status.ERROR_INVALID_REQUEST) {
-                if (mProgressDialog != null && mProgressDialog.isShowing())
-                    mProgressDialog.dismiss();
                 JsonNode error = resource.getErrorBody();
                 if (error != null && error.has("gstin")) {
                     JsonNode gstinNode = error.get("gstin");
@@ -98,12 +89,6 @@ public class BasicInfoFragment extends Fragment {
                     Toast.makeText(getContext(), "Error!", Toast.LENGTH_SHORT).show();
                 }
                 Log.e(TAG, "Error: " + resource.message + ", data: " + resource.data);
-            }else if(resource.status == Resource.Status.LOADING){
-                if(mProgressDialog !=null)
-                    mProgressDialog.show();
-            }else {
-                if (mProgressDialog != null && mProgressDialog.isShowing())
-                    mProgressDialog.dismiss();
             }
         });
 

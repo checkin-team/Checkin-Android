@@ -8,6 +8,7 @@ import android.os.Bundle;
 import androidx.appcompat.app.AppCompatActivity;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.checkin.app.checkin.Data.Resource;
@@ -30,6 +31,8 @@ public class ShopJoinActivity extends AppCompatActivity implements
 
     @BindView(R.id.btn_next) Button btnNext;
     @BindView(R.id.tv_title) TextView tvTitle;
+    @BindView(R.id.pb_shop_join)
+    ProgressBar pbShopJoin;
 
     private JoinViewModel mJoinViewModel;
     private ShopProfileViewModel mShopViewModel;
@@ -45,7 +48,7 @@ public class ShopJoinActivity extends AppCompatActivity implements
             actionBar.setDisplayHomeAsUpEnabled(true);
             actionBar.setHomeAsUpIndicator(R.drawable.ic_back_grey);
         }
-
+        pbShopJoin.setVisibility(View.GONE);
         mJoinViewModel = ViewModelProviders.of(this).get(JoinViewModel.class);
         mShopViewModel = ViewModelProviders.of(this).get(ShopProfileViewModel.class);
 
@@ -62,6 +65,20 @@ public class ShopJoinActivity extends AppCompatActivity implements
                 finishSignup(pk);
             } else {
                 mShopViewModel.showError(resource.getErrorBody());
+            }
+        });
+
+        mJoinViewModel.getJoinResults().observe(this, genericDetailModelResource -> {
+            if (genericDetailModelResource == null)
+                return;
+            if (genericDetailModelResource.status == Resource.Status.SUCCESS && genericDetailModelResource.data != null) {
+                pbShopJoin.setVisibility(View.GONE);
+                btnNext.setActivated(true);
+            } else if (genericDetailModelResource.status == Resource.Status.LOADING)  {
+                pbShopJoin.setVisibility(View.VISIBLE);
+            }  else {
+                pbShopJoin.setVisibility(View.GONE);
+                btnNext.setActivated(true);
             }
         });
 
@@ -97,8 +114,11 @@ public class ShopJoinActivity extends AppCompatActivity implements
         if (mJoinViewModel.isRegistered()) {
             mShopViewModel.collectData();
         }
-        else
+        else{
             mJoinViewModel.registerNewBusiness();
+            btnNext.setActivated(false);
+        }
+
     }
 
     @Override

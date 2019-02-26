@@ -1,5 +1,6 @@
 package com.checkin.app.checkin.Session.ActiveSession.Chat;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -149,7 +150,6 @@ public class ActiveSessionChatAdapter extends RecyclerView.Adapter {
             else if (chat.getSender() == SessionChatModel.CHAT_SENDER_TYPE.SENDER_RESTAURANT)
                 tvSenderName.setText("Restaurant");
             tvChatTime.setText(chat.formatEventTime());
-
 
             imStatusDone.setActivated(chat.getStatus().tag >= CHAT_STATUS_TYPE.DONE.tag);
             imStatusProgress.setActivated(chat.getStatus().tag >= CHAT_STATUS_TYPE.IN_PROGRESS.tag);
