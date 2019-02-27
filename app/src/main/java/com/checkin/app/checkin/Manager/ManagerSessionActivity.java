@@ -44,8 +44,9 @@ import static com.checkin.app.checkin.Data.Message.MessageModel.MESSAGE_TYPE.MAN
 public class ManagerSessionActivity extends AppCompatActivity implements ManagerSessionOrderFragment.ManagerOrdersInteraction {
     private static final String TAG = ManagerSessionActivity.class.getSimpleName();
 
-    public static final String KEY_SESSION_PK = "manager.session_pk";
-    public static final String KEY_SHOP_PK = "manager.shop_pk";
+    public static final String KEY_SESSION_PK = "manager.session.session_pk";
+    public static final String KEY_SHOP_PK = "manager.session.shop_pk";
+    public static final String KEY_OPEN_ORDERS = "manager.session.open_orders";
 
     @BindView(R.id.tv_ms_order_new_count)
     TextView tvCountOrdersNew;
@@ -136,8 +137,8 @@ public class ManagerSessionActivity extends AppCompatActivity implements Manager
     }
 
     private void setupUi() {
-        long sessionId = getIntent().getLongExtra(KEY_SESSION_PK, 0);
-        long shopId = getIntent().getLongExtra(KEY_SHOP_PK, 0);
+        long sessionId = getIntent().getLongExtra(KEY_SESSION_PK, 0L);
+        long shopId = getIntent().getLongExtra(KEY_SHOP_PK, 0L);
         mViewModel.fetchSessionBriefData(sessionId);
         mViewModel.setShopPk(shopId);
         mViewModel.fetchSessionOrders();
@@ -177,6 +178,9 @@ public class ManagerSessionActivity extends AppCompatActivity implements Manager
                 integer = 0;
             tvCountOrdersDelivered.setText(String.valueOf(integer));
         });
+
+        boolean shouldOpenOrders = getIntent().getBooleanExtra(KEY_OPEN_ORDERS, false);
+        if (shouldOpenOrders) setupOrdersListing();
     }
 
     private void setupData(SessionBriefModel data) {
@@ -245,6 +249,7 @@ public class ManagerSessionActivity extends AppCompatActivity implements Manager
     private void setupOrdersListing() {
         getSupportFragmentManager().beginTransaction()
                 .replace(R.id.container_manager_session_fragment, mOrderFragment)
+                .addToBackStack(null)
                 .commit();
     }
 

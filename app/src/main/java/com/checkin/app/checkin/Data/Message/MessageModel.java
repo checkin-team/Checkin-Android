@@ -7,11 +7,13 @@ import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
+import android.os.Bundle;
 import android.text.Html;
 import android.text.TextUtils;
 
 import com.checkin.app.checkin.Data.Message.Constants.CHANNEL;
 import com.checkin.app.checkin.Data.Message.MessageObjectModel.MESSAGE_OBJECT_TYPE;
+import com.checkin.app.checkin.Manager.ManagerSessionActivity;
 import com.checkin.app.checkin.Manager.ManagerWorkActivity;
 import com.checkin.app.checkin.R;
 import com.checkin.app.checkin.Session.ActiveSession.ActiveSessionActivity;
@@ -168,10 +170,15 @@ public class MessageModel implements Serializable {
         MessageObjectModel sessionDetail = getSessionDetail();
         if (shopDetail == null) return;
         if (isShopManagerNotification()) {
+            Bundle bundle = new Bundle();
+            bundle.putLong(ManagerSessionActivity.KEY_SESSION_PK, sessionDetail != null ? sessionDetail.getPk() : 0L);
+            bundle.putBoolean(ManagerSessionActivity.KEY_OPEN_ORDERS, this.type == MANAGER_SESSION_ORDERS_PUSH);
             intent.putExtra(ManagerWorkActivity.KEY_RESTAURANT_PK, shopDetail.getPk())
-                    .putExtra(ManagerWorkActivity.KEY_SESSION_PK, sessionDetail != null ? sessionDetail.getPk() : 0L);
+                    .putExtra(ManagerWorkActivity.KEY_SESSION_BUNDLE, bundle);
+
         } else if (isShopWaiterNotification()) {
-            intent.putExtra(WaiterWorkActivity.KEY_SHOP_PK, shopDetail.getPk());
+            intent.putExtra(WaiterWorkActivity.KEY_SHOP_PK, shopDetail.getPk())
+                    .putExtra(WaiterWorkActivity.KEY_SESSION_PK, sessionDetail != null ? sessionDetail.getPk() : 0L);
         }
     }
 

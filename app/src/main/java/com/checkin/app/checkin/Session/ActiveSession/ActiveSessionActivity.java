@@ -353,6 +353,12 @@ public class ActiveSessionActivity extends BaseActivity implements ActiveSession
     }
 
     @Override
+    public void onBackPressed() {
+        if (!mOrdersFragment.onBackPressed())
+            super.onBackPressed();
+    }
+
+    @Override
     protected void onPause() {
         super.onPause();
         MessageUtils.unregisterLocalReceiver(this, mReceiver);

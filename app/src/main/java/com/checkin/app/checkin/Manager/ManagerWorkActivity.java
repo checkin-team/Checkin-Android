@@ -30,7 +30,7 @@ public class ManagerWorkActivity extends BaseAccountActivity {
     private static final String TAG = ManagerWorkActivity.class.getSimpleName();
 
     public static final String KEY_RESTAURANT_PK = "manager.restaurant_pk";
-    public static final String KEY_SESSION_PK = "manager.session_pk";
+    public static final String KEY_SESSION_BUNDLE = "manager.session_bundle";
 
     @BindView(R.id.pager_manager_work)
     DynamicSwipableViewPager pagerManager;
@@ -67,11 +67,12 @@ public class ManagerWorkActivity extends BaseAccountActivity {
         mViewModel = ViewModelProviders.of(this).get(ManagerWorkViewModel.class);
         mViewModel.fetchActiveTables(getIntent().getLongExtra(KEY_RESTAURANT_PK, 0L));
 
-        long sessionPk = getIntent().getLongExtra(KEY_SESSION_PK, 0L);
-        if (sessionPk > 0) {
+        Bundle sessionBundle = getIntent().getBundleExtra(KEY_SESSION_BUNDLE);
+        if (sessionBundle != null) {
             Intent intent = new Intent(this, ManagerSessionActivity.class);
-            intent.putExtra(ManagerSessionActivity.KEY_SESSION_PK, sessionPk)
-                    .putExtra(ManagerSessionActivity.KEY_SHOP_PK, mViewModel.getShopPk());
+            intent.putExtra(ManagerSessionActivity.KEY_SESSION_PK, sessionBundle.getLong(ManagerSessionActivity.KEY_SESSION_PK))
+                    .putExtra(ManagerSessionActivity.KEY_SHOP_PK, mViewModel.getShopPk())
+                    .putExtra(ManagerSessionActivity.KEY_OPEN_ORDERS, sessionBundle.getBoolean(ManagerSessionActivity.KEY_OPEN_ORDERS));
             startActivity(intent);
         }
 

@@ -1,8 +1,6 @@
 package com.checkin.app.checkin.Manager.Adapter;
 
 import android.content.Context;
-import androidx.annotation.NonNull;
-import androidx.recyclerview.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -18,6 +16,8 @@ import com.checkin.app.checkin.Utility.Utils;
 
 import java.util.List;
 
+import androidx.annotation.NonNull;
+import androidx.recyclerview.widget.RecyclerView;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
@@ -67,11 +67,11 @@ public class ManagerSessionOrderAdapter extends RecyclerView.Adapter<ManagerSess
         @BindView(R.id.tv_ms_order_item_quantity)
         TextView tvQuantity;
         @BindView(R.id.btn_ms_order_accept)
-        Button tvOrderConfirm;
+        Button btnOrderConfirm;
         @BindView(R.id.btn_ms_order_cancel)
-        Button tvOrderReject;
+        Button btnOrderReject;
         @BindView(R.id.btn_ms_order_done)
-        Button tvOrderDone;
+        Button btnOrderDone;
         @BindView(R.id.tv_ms_order_remarks)
         TextView tvRemarks;
         @BindView(R.id.container_ms_order_customizations)
@@ -93,12 +93,21 @@ public class ManagerSessionOrderAdapter extends RecyclerView.Adapter<ManagerSess
             super(itemView);
             ButterKnife.bind(this, itemView);
 
-            tvOrderConfirm.setOnClickListener(v -> mListener.onOrderStatusChange(mOrderModel, IN_PROGRESS));
-            tvOrderReject.setOnClickListener(v -> mListener.onOrderStatusChange(mOrderModel, CANCELLED));
-            tvOrderDone.setOnClickListener(v -> mListener.onOrderStatusChange(mOrderModel, DONE));
+            btnOrderConfirm.setOnClickListener(v -> mListener.onOrderStatusChange(mOrderModel, IN_PROGRESS));
+            btnOrderReject.setOnClickListener(v -> mListener.onOrderStatusChange(mOrderModel, CANCELLED));
+            btnOrderDone.setOnClickListener(v -> mListener.onOrderStatusChange(mOrderModel, DONE));
+        }
+
+        private void resetLayout() {
+            containerRemarks.setVisibility(View.GONE);
+            containerCustomizations.setVisibility(View.GONE);
+            containerStatusOpen.setVisibility(View.GONE);
+            tvOrderStatus.setVisibility(View.GONE);
+            btnOrderDone.setVisibility(View.GONE);
         }
 
         void bindData(SessionOrderedItemModel order) {
+            resetLayout();
             this.mOrderModel = order;
 
             tvItemName.setText(order.getItem().getName());
@@ -109,8 +118,7 @@ public class ManagerSessionOrderAdapter extends RecyclerView.Adapter<ManagerSess
             else
                 tvItemName.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ic_veg, 0, 0, 0);
 
-            if (order.getRemarks() == null) containerRemarks.setVisibility(View.GONE);
-            else {
+            if (order.getRemarks() != null) {
                 tvRemarks.setText(order.getRemarks());
                 containerRemarks.setVisibility(View.VISIBLE);
             }
@@ -123,35 +131,25 @@ public class ManagerSessionOrderAdapter extends RecyclerView.Adapter<ManagerSess
                     addCustomizations(
                             itemView.getContext(), order.getCustomizations().get(i), i % 2 == 0 ? containerCustomizationsLeft : containerCustomizationsRight);
                 }
-            } else {
-                containerCustomizations.setVisibility(View.GONE);
             }
 
             if (order.getStatus() == OPEN) {
                 containerStatusOpen.setVisibility(View.VISIBLE);
-                tvOrderStatus.setVisibility(View.GONE);
-                tvOrderDone.setVisibility(View.GONE);
             } else {
-                containerStatusOpen.setVisibility(View.GONE);
                 tvOrderStatus.setVisibility(View.VISIBLE);
                 switch (order.getStatus()) {
                     case IN_PROGRESS:
                         tvOrderStatus.setText(R.string.status_order_in_progress);
                         tvOrderStatus.setBackgroundColor(tvOrderStatus.getContext().getResources().getColor(R.color.apple_green));
-                        tvOrderDone.setVisibility(View.VISIBLE);
-                        tvOrderStatus.setVisibility(View.GONE);
+                        btnOrderDone.setVisibility(View.VISIBLE);
                         break;
                     case DONE:
                         tvOrderStatus.setText(R.string.status_order_delivered);
                         tvOrderStatus.setBackgroundColor(tvOrderStatus.getContext().getResources().getColor(R.color.apple_green));
-                        tvOrderDone.setVisibility(View.GONE);
-                        tvOrderStatus.setVisibility(View.VISIBLE);
                         break;
                     case CANCELLED:
                         tvOrderStatus.setText(R.string.status_cancelled);
                         tvOrderStatus.setBackgroundColor(tvOrderStatus.getContext().getResources().getColor(R.color.primary_red));
-                        tvOrderDone.setVisibility(View.GONE);
-                        tvOrderStatus.setVisibility(View.VISIBLE);
                         break;
                 }
             }
@@ -164,7 +162,6 @@ public class ManagerSessionOrderAdapter extends RecyclerView.Adapter<ManagerSess
             tvGroupName.setText(group.getName());
             tvFieldNames.setText(Utils.joinCollection(group.getCustomizationFields(), "\n"));
             container.addView(view);
-
         }
     }
 

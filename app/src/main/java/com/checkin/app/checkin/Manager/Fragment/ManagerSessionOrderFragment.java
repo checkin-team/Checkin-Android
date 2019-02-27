@@ -38,14 +38,12 @@ public class ManagerSessionOrderFragment extends BaseFragment implements Manager
     @BindView(R.id.nested_sv_ms_order)
     NestedScrollView nestedSVOrder;
 
-
     private ManagerOrdersInteraction mListener;
 
     private ManagerSessionViewModel mViewModel;
     private ManagerSessionOrderAdapter mAdapterNew;
     private ManagerSessionOrderAdapter mAdapterAccepted;
     private ManagerSessionOrderAdapter mAdapterDeliveredRejected;
-
 
     public static ManagerSessionOrderFragment newInstance(ManagerOrdersInteraction listener) {
         ManagerSessionOrderFragment fragment = new ManagerSessionOrderFragment();
@@ -95,11 +93,18 @@ public class ManagerSessionOrderFragment extends BaseFragment implements Manager
                         titleNewHeader.setVisibility(View.VISIBLE);
                         rvOrdersNew.setVisibility(View.VISIBLE);
                         nestedSVOrder.scrollTo(0, 0);
+                    } else {
+                        titleNewHeader.setVisibility(View.GONE);
+                        rvOrdersNew.setVisibility(View.GONE);
                     }
+                    stopRefreshing();
                     break;
-                default: {
+                case LOADING:
+                    startRefreshing();
+                    break;
+                default:
+                    stopRefreshing();
                     Utils.toast(requireContext(), listResource.message);
-                }
             }
         });
 
@@ -108,22 +113,16 @@ public class ManagerSessionOrderFragment extends BaseFragment implements Manager
                 return;
             switch (listResource.status) {
                 case SUCCESS:
-                    if(listResource.data.size()>0){
+                    if (listResource.data.size() > 0) {
                         mAdapterAccepted.setData(listResource.data);
                         titleInProgressHeader.setVisibility(View.VISIBLE);
                         rvOrdersAccepted.setVisibility(View.VISIBLE);
+                    } else {
+                        titleInProgressHeader.setVisibility(View.GONE);
+                        rvOrdersAccepted.setVisibility(View.GONE);
                     }
-
-                    stopRefreshing();
                     nestedSVOrder.scrollTo(0, 0);
                     break;
-                case LOADING:
-                    startRefreshing();
-                    break;
-                default: {
-                    Utils.toast(requireContext(), listResource.message);
-                    stopRefreshing();
-                }
             }
         });
 
@@ -136,18 +135,13 @@ public class ManagerSessionOrderFragment extends BaseFragment implements Manager
                         titleDeliveredHeader.setVisibility(View.VISIBLE);
                         rvOrdersDelivered.setVisibility(View.VISIBLE);
                         mAdapterDeliveredRejected.setData(listResource.data);
+                    } else {
+                        titleDeliveredHeader.setVisibility(View.GONE);
+                        rvOrdersDelivered.setVisibility(View.GONE);
                     }
-
                     stopRefreshing();
                     nestedSVOrder.scrollTo(0, 0);
                     break;
-                case LOADING:
-                    startRefreshing();
-                    break;
-                default: {
-                    Utils.toast(requireContext(), listResource.message);
-                    stopRefreshing();
-                }
             }
         });
 
@@ -178,9 +172,7 @@ public class ManagerSessionOrderFragment extends BaseFragment implements Manager
         if (getFragmentManager() != null) {
             if (getView() != null)
                 getView().startAnimation(AnimationUtils.loadAnimation(requireContext(), R.anim.slide_down));
-            getFragmentManager().beginTransaction()
-                    .remove(this)
-                    .commit();
+            getFragmentManager().popBackStack();
             return true;
         }
         return false;

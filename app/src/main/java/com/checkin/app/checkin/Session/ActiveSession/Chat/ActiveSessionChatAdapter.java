@@ -1,6 +1,5 @@
 package com.checkin.app.checkin.Session.ActiveSession.Chat;
 
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
