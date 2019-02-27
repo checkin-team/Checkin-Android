@@ -10,8 +10,10 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.checkin.app.checkin.Data.Message.MessageModel;
 import com.checkin.app.checkin.Data.Message.MessageModel.MESSAGE_TYPE;
@@ -68,6 +70,12 @@ public class ActiveSessionActivity extends BaseActivity implements ActiveSession
     TextView btnSessionMenu;
     @BindView(R.id.rl_container_session_orders)
     RelativeLayout rlSessionOrders;
+    @BindView(R.id.ll_call_waiter_button)
+    LinearLayout llCallWaiter;
+    @BindView(R.id.ll_table_cleaning_button)
+    LinearLayout llTableCleaning;
+    @BindView(R.id.ll_refill_glass_button)
+    LinearLayout llRefillGlass;
 
     private ActiveSessionViewModel mViewModel;
     private ActiveSessionMemberAdapter mSessionMembersAdapter;
@@ -212,7 +220,7 @@ public class ActiveSessionActivity extends BaseActivity implements ActiveSession
         rlSessionOrders.setEnabled(false);
         containerBottomActions.setOnTouchListener((v, event) -> {
             if (event.getAction() == MotionEvent.ACTION_UP)
-                openChat(SessionChatDataModel.EVENT_REQUEST_SERVICE_TYPE.SERVICE_NONE);
+                openChat(SessionChatDataModel.EVENT_REQUEST_SERVICE_TYPE.SERVICE_NONE, containerBottomActions);
             return true;
         });
 
@@ -285,32 +293,40 @@ public class ActiveSessionActivity extends BaseActivity implements ActiveSession
 
     @OnClick(R.id.rl_container_session_orders)
     public void onViewOrders() {
-        getSupportFragmentManager().beginTransaction()
-                .replace(R.id.container_as_orders, mOrdersFragment)
-                .addToBackStack(null)
-                .commit();
+        if (Utils.isNetworkConnected(this)) {
+            getSupportFragmentManager().beginTransaction()
+                    .replace(R.id.container_as_orders, mOrdersFragment)
+                    .addToBackStack(null)
+                    .commit();
+        }else {
+            Utils.toast(this,  R.string.error_unavailable_network);
+        }
     }
 
     @OnClick(R.id.tv_active_session_bill)
     public void openBillDetails() {
-        startActivity(new Intent(
-                this, ActiveSessionInvoiceActivity.class)
-                .putExtra(ActiveSessionInvoiceActivity.KEY_SESSION_REQUESTED_CHECKOUT, mViewModel.isRequestedCheckout()));
+        if (Utils.isNetworkConnected(this)) {
+            startActivity(new Intent(
+                    this, ActiveSessionInvoiceActivity.class)
+                    .putExtra(ActiveSessionInvoiceActivity.KEY_SESSION_REQUESTED_CHECKOUT, mViewModel.isRequestedCheckout()));
+        }else {
+            Utils.toast(this,  R.string.error_unavailable_network);
+        }
     }
 
     @OnClick(R.id.ll_call_waiter_button)
     public void openChatCallWaiter() {
-        openChat(SessionChatDataModel.EVENT_REQUEST_SERVICE_TYPE.SERVICE_CALL_WAITER);
+        openChat(SessionChatDataModel.EVENT_REQUEST_SERVICE_TYPE.SERVICE_CALL_WAITER, llCallWaiter);
     }
 
     @OnClick(R.id.ll_table_cleaning_button)
     public void openChatCleanContainer() {
-        openChat(SessionChatDataModel.EVENT_REQUEST_SERVICE_TYPE.SERVICE_CLEAN_TABLE);
+        openChat(SessionChatDataModel.EVENT_REQUEST_SERVICE_TYPE.SERVICE_CLEAN_TABLE, llTableCleaning);
     }
 
     @OnClick(R.id.ll_refill_glass_button)
     public void openChatRefillGlass() {
-        openChat(SessionChatDataModel.EVENT_REQUEST_SERVICE_TYPE.SERVICE_BRING_COMMODITY);
+        openChat(SessionChatDataModel.EVENT_REQUEST_SERVICE_TYPE.SERVICE_BRING_COMMODITY, llRefillGlass);
     }
 
     // endregion
@@ -333,7 +349,8 @@ public class ActiveSessionActivity extends BaseActivity implements ActiveSession
         }
     }
 
-    public void openChat(SessionChatDataModel.EVENT_REQUEST_SERVICE_TYPE service) {
+    public void openChat(SessionChatDataModel.EVENT_REQUEST_SERVICE_TYPE service, View view) {
+        view.setEnabled(false);
         Intent myIntent = new Intent(ActiveSessionActivity.this, SessionChatActivity.class);
 //        ActivityOptions options = ActivityOptions.makeCustomAnimation(ActiveSessionActivity.this, R.anim.slide_up, R.anim.slide_down);
         myIntent.putExtra(SessionChatActivity.KEY_SERVICE_TYPE, service.tag);
@@ -350,6 +367,7 @@ public class ActiveSessionActivity extends BaseActivity implements ActiveSession
         };
         MessageUtils.registerLocalReceiver(this, mReceiver, types);
         updateScreen();
+        viewEnable();
     }
 
     @Override
@@ -362,5 +380,12 @@ public class ActiveSessionActivity extends BaseActivity implements ActiveSession
     protected void onPause() {
         super.onPause();
         MessageUtils.unregisterLocalReceiver(this, mReceiver);
+    }
+
+    public void viewEnable(){
+        containerBottomActions.setEnabled(true);
+        llCallWaiter.setEnabled(true);
+        llTableCleaning.setEnabled(true);
+        llRefillGlass.setEnabled(true);
     }
 }

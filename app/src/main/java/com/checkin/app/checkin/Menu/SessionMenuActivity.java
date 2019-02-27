@@ -210,6 +210,7 @@ public class SessionMenuActivity extends BaseActivity implements
                 finish();
             } else {
                 Log.e(TAG, "MSG: " + resource.message);
+                btnCartProceed.setEnabled(true);
             }
         });
     }
@@ -264,8 +265,8 @@ public class SessionMenuActivity extends BaseActivity implements
     @OnClick(R.id.btn_menu_cart_proceed)
     public void onProceedBtnClicked(View view) {
         if (mCartAdapter.getItemCount() > 0) {
-            mViewModel.confirmOrder();
             btnCartProceed.setEnabled(false);
+            mViewModel.confirmOrder();
         } else {
             Utils.toast(this, "Order something before proceeding!");
             btnCartProceed.setEnabled(true);
