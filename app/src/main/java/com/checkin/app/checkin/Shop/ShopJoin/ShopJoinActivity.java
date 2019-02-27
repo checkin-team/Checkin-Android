@@ -8,9 +8,11 @@ import android.os.Bundle;
 import androidx.appcompat.app.AppCompatActivity;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.checkin.app.checkin.Data.Resource;
+import com.checkin.app.checkin.Misc.BaseActivity;
 import com.checkin.app.checkin.Misc.GenericDetailModel;
 import com.checkin.app.checkin.R;
 import com.checkin.app.checkin.Shop.RestaurantModel;
@@ -22,7 +24,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 
-public class ShopJoinActivity extends AppCompatActivity implements
+public class ShopJoinActivity extends BaseActivity implements
         BasicInfoFragment.BasicInfoFragmentInteraction, EditAspectFragment.AspectFragmentInteraction {
     private static final String TAG = ShopJoinActivity.class.getSimpleName();
     public static final String KEY_SHOP_EMAIL = "shop_email";
@@ -40,6 +42,7 @@ public class ShopJoinActivity extends AppCompatActivity implements
         setContentView(R.layout.activity_shop_join);
         ButterKnife.bind(this);
 
+        initProgressBar(R.id.pb_shop_join);
         ActionBar actionBar = getSupportActionBar();
         if (actionBar != null) {
             actionBar.setDisplayHomeAsUpEnabled(true);
@@ -62,6 +65,20 @@ public class ShopJoinActivity extends AppCompatActivity implements
                 finishSignup(pk);
             } else {
                 mShopViewModel.showError(resource.getErrorBody());
+            }
+        });
+
+        mJoinViewModel.getJoinResults().observe(this, genericDetailModelResource -> {
+            if (genericDetailModelResource == null)
+                return;
+            if (genericDetailModelResource.status == Resource.Status.SUCCESS && genericDetailModelResource.data != null) {
+                hideProgressBar();
+                btnNext.setActivated(true);
+            } else if (genericDetailModelResource.status == Resource.Status.LOADING)  {
+                visibleProgressBar();
+            }  else {
+                hideProgressBar();
+                btnNext.setActivated(true);
             }
         });
 
@@ -97,8 +114,11 @@ public class ShopJoinActivity extends AppCompatActivity implements
         if (mJoinViewModel.isRegistered()) {
             mShopViewModel.collectData();
         }
-        else
+        else{
             mJoinViewModel.registerNewBusiness();
+            btnNext.setActivated(false);
+        }
+
     }
 
     @Override

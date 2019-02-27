@@ -5,6 +5,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -68,10 +69,13 @@ public class SessionChatActivity extends BaseActivity implements ActiveSessionCh
             switch (message.getType()) {
                 case USER_SESSION_EVENT_NEW:
                     SessionChatActivity.this.addEvent(message.getRawData().getSessionEventDetail());
+                    break;
                 case USER_SESSION_EVENT_UPDATE:
                     SessionChatActivity.this.updateEvent(message.getObject(), message.getRawData().getSessionEventStatus());
+                    break;
                 case WAITER_SESSION_UPDATE_ORDER:
                     SessionChatActivity.this.updateEvent(message.getObject(), message.getRawData().getSessionEventStatus());
+                    break;
 
             }
         }
