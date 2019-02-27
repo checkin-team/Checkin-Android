@@ -1,6 +1,5 @@
 package com.checkin.app.checkin.Data.Message;
 
-import android.app.Notification;
 import android.app.NotificationChannel;
 import android.app.NotificationChannelGroup;
 import android.app.NotificationManager;
@@ -8,8 +7,6 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
-import android.media.AudioAttributes;
-import android.net.Uri;
 import android.os.Build;
 import android.util.Log;
 
@@ -35,82 +32,71 @@ public class MessageUtils {
     private static final String TAG = MessageUtils.class.getSimpleName();
 
     @RequiresApi(api = Build.VERSION_CODES.O)
-    private static void createChannels(Uri soundUri,NotificationManager notificationManager, CHANNEL_GROUP group, final int importance, CHANNEL... channelTypes) {
+    private static void createChannels(NotificationManager notificationManager, CHANNEL_GROUP group, final int importance, CHANNEL... channelTypes) {
         List<NotificationChannel> channels = new ArrayList<>(channelTypes.length);
-        for (CHANNEL channelType: channelTypes) {
+        for (CHANNEL channelType : channelTypes) {
             NotificationChannel channel = new NotificationChannel(channelType.id, channelType.title, importance);
             channel.setGroup(group.id);
-            if(soundUri != null){
-                AudioAttributes audioAttributes = new AudioAttributes.Builder()
-                        .setContentType(AudioAttributes.CONTENT_TYPE_SONIFICATION)
-                        .setUsage(AudioAttributes.USAGE_ALARM)
-                        .build();
-                channel.setSound(soundUri,audioAttributes);
-            }
             channels.add(channel);
         }
         notificationManager.createNotificationChannels(channels);
     }
 
-    public static Uri getNotificationRingtoneUri(Context context){
-        return Uri.parse("android.resource://" + context.getPackageName() + "/" + R.raw.tone_3);
-    }
-
     @RequiresApi(api = Build.VERSION_CODES.O)
     private static void createChannelGroups(NotificationManager notificationManager, CHANNEL_GROUP... channelGroups) {
         List<NotificationChannelGroup> groups = new ArrayList<>(channelGroups.length);
-        for (CHANNEL_GROUP channelGroup: channelGroups) {
+        for (CHANNEL_GROUP channelGroup : channelGroups) {
             groups.add(new NotificationChannelGroup(channelGroup.id, channelGroup.title));
         }
         notificationManager.createNotificationChannelGroups(groups);
     }
 
-    static void createDefaultChannels(NotificationManager notificationManager, Uri soundUri) {
+    static void createDefaultChannels(NotificationManager notificationManager) {
         if (notificationManager == null)
             return;
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
             createChannelGroups(notificationManager, CHANNEL_GROUP.DEFAULT_USER, CHANNEL_GROUP.RESTAURANT_CUSTOMER, CHANNEL_GROUP.MISC);
 
-            createChannels(soundUri,notificationManager, CHANNEL_GROUP.DEFAULT_USER, NotificationManager.IMPORTANCE_DEFAULT, CHANNEL.DEFAULT);
-            createChannels(soundUri,notificationManager, CHANNEL_GROUP.RESTAURANT_CUSTOMER, NotificationManager.IMPORTANCE_DEFAULT, CHANNEL.ACTIVE_SESSION);
-            createChannels(soundUri,notificationManager, CHANNEL_GROUP.MISC, NotificationManager.IMPORTANCE_LOW, CHANNEL.MEDIA_UPLOAD);
+            createChannels(notificationManager, CHANNEL_GROUP.DEFAULT_USER, NotificationManager.IMPORTANCE_DEFAULT, CHANNEL.DEFAULT);
+            createChannels(notificationManager, CHANNEL_GROUP.RESTAURANT_CUSTOMER, NotificationManager.IMPORTANCE_DEFAULT, CHANNEL.ACTIVE_SESSION);
+            createChannels(notificationManager, CHANNEL_GROUP.MISC, NotificationManager.IMPORTANCE_LOW, CHANNEL.MEDIA_UPLOAD);
         }
     }
 
-    public static void createManagerChannels(NotificationManager notificationManager,Uri soundUri) {
+    public static void createManagerChannels(NotificationManager notificationManager) {
         if (notificationManager == null)
             return;
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
             createChannelGroups(notificationManager, CHANNEL_GROUP.RESTAURANT_MEMBER);
 
-            createChannels(soundUri,notificationManager, CHANNEL_GROUP.RESTAURANT_MEMBER, NotificationManager.IMPORTANCE_HIGH, CHANNEL.MEMBER, CHANNEL.MANAGER);
+            createChannels(notificationManager, CHANNEL_GROUP.RESTAURANT_MEMBER, NotificationManager.IMPORTANCE_HIGH, CHANNEL.MEMBER, CHANNEL.MANAGER);
         }
     }
 
-    public static void createWaiterChannels(NotificationManager notificationManager,Uri soundUri) {
+    public static void createWaiterChannels(NotificationManager notificationManager) {
         if (notificationManager == null)
             return;
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
             createChannelGroups(notificationManager, CHANNEL_GROUP.RESTAURANT_MEMBER);
 
-            createChannels(soundUri,notificationManager, CHANNEL_GROUP.RESTAURANT_MEMBER, NotificationManager.IMPORTANCE_HIGH, CHANNEL.MEMBER, CHANNEL.WAITER);
+            createChannels(notificationManager, CHANNEL_GROUP.RESTAURANT_MEMBER, NotificationManager.IMPORTANCE_HIGH, CHANNEL.MEMBER, CHANNEL.WAITER);
         }
     }
 
-    public static void createAdminChannels(NotificationManager notificationManager,Uri soundUri) {
+    public static void createAdminChannels(NotificationManager notificationManager) {
         if (notificationManager == null)
             return;
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
             createChannelGroups(notificationManager, CHANNEL_GROUP.RESTAURANT_MEMBER);
 
-            createChannels(soundUri,notificationManager, CHANNEL_GROUP.RESTAURANT_MEMBER, NotificationManager.IMPORTANCE_DEFAULT, CHANNEL.MEMBER, CHANNEL.ADMIN);
+            createChannels(notificationManager, CHANNEL_GROUP.RESTAURANT_MEMBER, NotificationManager.IMPORTANCE_DEFAULT, CHANNEL.MEMBER, CHANNEL.ADMIN);
         }
     }
 
     public static void registerLocalReceiver(Context context, BroadcastReceiver receiver, @NonNull MESSAGE_TYPE... types) {
         IntentFilter intentFilter = new IntentFilter();
         intentFilter.addCategory(Constants.FCM_INTENT_CATEGORY);
-        for (MESSAGE_TYPE type: types)
+        for (MESSAGE_TYPE type : types)
             intentFilter.addAction(type.actionTag());
         LocalBroadcastManager.getInstance(context.getApplicationContext())
                 .registerReceiver(receiver, intentFilter);
@@ -122,7 +108,7 @@ public class MessageUtils {
         intentFilter.addDataScheme(Constants.FILTER_DATA_SCHEME);
         intentFilter.addDataAuthority(Constants.FILTER_DATA_HOST, "");
         intentFilter.addDataPath(String.format(Locale.ENGLISH, Constants.FILTER_DATA_TARGET_PATH, targetPk), 0);
-        for (MESSAGE_TYPE type: types)
+        for (MESSAGE_TYPE type : types)
             intentFilter.addAction(type.actionTag());
         LocalBroadcastManager.getInstance(context.getApplicationContext())
                 .registerReceiver(receiver, intentFilter);
@@ -160,23 +146,23 @@ public class MessageUtils {
         }
     }
 
-    public static void createRequiredChannel(CHANNEL channel, Context context, Uri soundUri) {
+    public static void createRequiredChannel(CHANNEL channel, Context context) {
         NotificationManager notificationManager = ((NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE));
         switch (channel) {
             case ADMIN:
             case MEMBER:
-                createAdminChannels(notificationManager,null);
+                createAdminChannels(notificationManager);
                 break;
             case WAITER:
-                createWaiterChannels(notificationManager,soundUri);
+                createWaiterChannels(notificationManager);
                 break;
             case MANAGER:
-                createManagerChannels(notificationManager,soundUri);
+                createManagerChannels(notificationManager);
                 break;
             case ACTIVE_SESSION:
             case MEDIA_UPLOAD:
             case DEFAULT:
-                createDefaultChannels(notificationManager,null);
+                createDefaultChannels(notificationManager);
         }
     }
 
@@ -195,7 +181,7 @@ public class MessageUtils {
 
         @Override
         public void onProgressUpdate(int percentage) {
-            Log.d("Update Status",percentage+"");
+            Log.d("Update Status", percentage + "");
             builder.setProgress(100, percentage, false);
             notificationManager.notify(notificationId, builder.build());
         }

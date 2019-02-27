@@ -1,13 +1,11 @@
 package com.checkin.app.checkin.Data.Message;
 
 import android.app.Notification;
-import android.app.NotificationChannel;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
-import android.media.AudioAttributes;
 import android.net.Uri;
 import android.text.Html;
 import android.text.TextUtils;
@@ -30,7 +28,6 @@ import androidx.core.app.NotificationCompat;
 
 import static com.checkin.app.checkin.Data.Message.MessageModel.MESSAGE_TYPE.MANAGER_SESSION_ORDERS_PUSH;
 import static com.checkin.app.checkin.Data.Message.MessageModel.MESSAGE_TYPE.WAITER_SESSION_ORDERS_PUSH;
-import static com.checkin.app.checkin.Data.Message.MessageUtils.getNotificationRingtoneUri;
 
 public class MessageModel implements Serializable {
     private MESSAGE_TYPE type;
@@ -188,17 +185,9 @@ public class MessageModel implements Serializable {
     }
 
     private NotificationCompat.Builder getNotificationBuilder(Context context, int notificationId) {
-        // TODO: 26-02-2019 This is used get uri address of ringtone file from raw folder. 
-        Uri soundUri = getNotificationRingtoneUri(context);
         CHANNEL channel = this.getChannel();
         NotificationCompat.Builder builder = new NotificationCompat.Builder(context, channel.id);
-        // TODO: 26-02-2019 This is used to check only message type MANAGER_SESSION_ORDERS_PUSH and WAITER_SESSION_ORDERS_PUSH
-        if (this.type == MANAGER_SESSION_ORDERS_PUSH || this.type == WAITER_SESSION_ORDERS_PUSH){
-            MessageUtils.createRequiredChannel(channel, context,soundUri);
-            // TODO: 26-02-2019 This is used to set sound uri.
-            builder.setSound(soundUri);
-        }else
-            MessageUtils.createRequiredChannel(channel, context,null);
+        MessageUtils.createRequiredChannel(channel, context);
         builder.setContentTitle(context.getString(R.string.app_name))
                 .setContentText(getDescription())
                 .setSmallIcon(R.drawable.ic_logo_notification)
@@ -210,6 +199,8 @@ public class MessageModel implements Serializable {
     private void addNotificationExtra(Context context, NotificationCompat.Builder builder, int notificationId) {
         if (isShopWaiterNotification() || isShopManagerNotification())
             builder.setPriority(Notification.PRIORITY_HIGH);
+        if (this.type == MANAGER_SESSION_ORDERS_PUSH || this.type == WAITER_SESSION_ORDERS_PUSH)
+            builder.setSound(Uri.parse("android.resource://" + context.getPackageName() + "/" + R.raw.notif_alert_orders));
         tryGroupNotification(builder);
     }
 
