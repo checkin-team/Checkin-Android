@@ -234,4 +234,11 @@ public class ActiveSessionViewModel extends BaseViewModel {
         }
         mOrdersData.setValue(Resource.cloneResource(listResource, listResource.data));
     }
+
+    public boolean isRequestedCheckout() {
+        Resource<ActiveSessionModel> resource = mSessionData.getValue();
+        if (resource == null || resource.data == null)
+            return false;
+        return resource.data.isRequestedCheckout();
+    }
 }

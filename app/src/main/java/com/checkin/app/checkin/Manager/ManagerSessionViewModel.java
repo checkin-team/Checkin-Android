@@ -78,7 +78,7 @@ public class ManagerSessionViewModel extends BaseViewModel {
     public void updateDiscount(double discountPercent) {
         ObjectNode data = Converters.objectMapper.createObjectNode();
         data.put("discount_percent", discountPercent);
-        mDetailData.addSource(mManagerRepository.putManagerSessionApproveCheckout(mSessionPk, data), mDetailData::setValue);
+        mDetailData.addSource(mManagerRepository.putManageSessionBill(mSessionPk, data), mDetailData::setValue);
     }
 
     public LiveData<Resource<GenericDetailModel>> getDetailData() {

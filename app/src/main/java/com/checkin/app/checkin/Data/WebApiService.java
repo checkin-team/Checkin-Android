@@ -231,7 +231,7 @@ public interface WebApiService {
     Call<ManagerSessionInvoiceModel> getManagerSessionInvoice(@Path("session_id") long sessionId);
 
     @PUT("sessions/{session_id}/manage/bill/")
-    Call<GenericDetailModel> putManagerCheckoutApprove(@Path("session_id") long sessionId, @Body ObjectNode data);
+    Call<GenericDetailModel> putManageSessionBill(@Path("session_id") long sessionId, @Body ObjectNode data);
 
     @PUT("sessions/{session_id}/checkout/")
     Call<GenericDetailModel> putSessionCheckout(@Path("session_id") long sessionId, @Body ObjectNode data);

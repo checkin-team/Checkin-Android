@@ -86,7 +86,7 @@ public class ManagerRepository extends BaseRepository {
         }.getAsLiveData();
     }
 
-    public LiveData<Resource<GenericDetailModel>> putManagerSessionApproveCheckout(long sessionId, ObjectNode data) {
+    public LiveData<Resource<GenericDetailModel>> putManageSessionBill(long sessionId, ObjectNode data) {
         return new NetworkBoundResource<GenericDetailModel, GenericDetailModel>() {
             @Override
             protected boolean shouldUseLocalDb() {
@@ -96,7 +96,7 @@ public class ManagerRepository extends BaseRepository {
             @NonNull
             @Override
             protected LiveData<ApiResponse<GenericDetailModel>> createCall() {
-                return new RetrofitLiveData<>(mWebService.putManagerCheckoutApprove(sessionId, data));
+                return new RetrofitLiveData<>(mWebService.putManageSessionBill(sessionId, data));
             }
 
             @Override

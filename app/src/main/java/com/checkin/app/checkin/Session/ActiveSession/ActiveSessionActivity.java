@@ -6,7 +6,6 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
@@ -159,7 +158,7 @@ public class ActiveSessionActivity extends BaseActivity implements ActiveSession
                 }
                 default: {
                     stopRefreshing();
-                    Log.e(resource.status.name(), resource.message == null ? "Null" : resource.message);
+                    Utils.toast(this, resource.message);
                 }
             }
         });
@@ -279,6 +278,8 @@ public class ActiveSessionActivity extends BaseActivity implements ActiveSession
 
     @OnClick(R.id.btn_active_session_menu)
     public void onListMenu() {
+        if (mViewModel.getSessionData().getValue() == null)
+            return;
         SessionMenuActivity.withSession(this, mViewModel.getShopPk(), null);
     }
 
@@ -286,6 +287,7 @@ public class ActiveSessionActivity extends BaseActivity implements ActiveSession
     public void onViewOrders() {
         getSupportFragmentManager().beginTransaction()
                 .replace(R.id.container_as_orders, mOrdersFragment)
+                .addToBackStack(null)
                 .commit();
     }
 
@@ -293,7 +295,7 @@ public class ActiveSessionActivity extends BaseActivity implements ActiveSession
     public void openBillDetails() {
         startActivity(new Intent(
                 this, ActiveSessionInvoiceActivity.class)
-                .putExtra(ActiveSessionInvoiceActivity.KEY_SESSION_PK, mViewModel.getSessionPk()));
+                .putExtra(ActiveSessionInvoiceActivity.KEY_SESSION_REQUESTED_CHECKOUT, mViewModel.isRequestedCheckout()));
     }
 
     @OnClick(R.id.ll_call_waiter_button)
