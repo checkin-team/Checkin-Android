@@ -6,6 +6,7 @@ import android.app.PendingIntent;
 import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
+import android.net.Uri;
 import android.text.Html;
 import android.text.TextUtils;
 
@@ -24,6 +25,9 @@ import java.util.Locale;
 
 import androidx.annotation.Nullable;
 import androidx.core.app.NotificationCompat;
+
+import static com.checkin.app.checkin.Data.Message.MessageModel.MESSAGE_TYPE.MANAGER_SESSION_ORDERS_PUSH;
+import static com.checkin.app.checkin.Data.Message.MessageModel.MESSAGE_TYPE.WAITER_SESSION_ORDERS_PUSH;
 
 public class MessageModel implements Serializable {
     private MESSAGE_TYPE type;
@@ -185,8 +189,8 @@ public class MessageModel implements Serializable {
 
     private NotificationCompat.Builder getNotificationBuilder(Context context, int notificationId) {
         CHANNEL channel = this.getChannel();
-        MessageUtils.createRequiredChannel(channel, context);
         NotificationCompat.Builder builder = new NotificationCompat.Builder(context, channel.id);
+        MessageUtils.createRequiredChannel(channel, context);
         builder.setContentTitle(context.getString(R.string.app_name))
                 .setContentText(getDescription())
                 .setSmallIcon(R.drawable.ic_logo_notification)
@@ -198,6 +202,8 @@ public class MessageModel implements Serializable {
     private void addNotificationExtra(Context context, NotificationCompat.Builder builder, int notificationId) {
         if (isShopWaiterNotification() || isShopManagerNotification())
             builder.setPriority(Notification.PRIORITY_HIGH);
+        if (this.type == MANAGER_SESSION_ORDERS_PUSH || this.type == WAITER_SESSION_ORDERS_PUSH)
+            builder.setSound(Uri.parse("android.resource://" + context.getPackageName() + "/" + R.raw.notif_alert_orders));
         tryGroupNotification(builder);
     }
 

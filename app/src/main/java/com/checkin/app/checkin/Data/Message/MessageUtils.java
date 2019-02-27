@@ -34,7 +34,7 @@ public class MessageUtils {
     @RequiresApi(api = Build.VERSION_CODES.O)
     private static void createChannels(NotificationManager notificationManager, CHANNEL_GROUP group, final int importance, CHANNEL... channelTypes) {
         List<NotificationChannel> channels = new ArrayList<>(channelTypes.length);
-        for (CHANNEL channelType: channelTypes) {
+        for (CHANNEL channelType : channelTypes) {
             NotificationChannel channel = new NotificationChannel(channelType.id, channelType.title, importance);
             channel.setGroup(group.id);
             channels.add(channel);
@@ -45,7 +45,7 @@ public class MessageUtils {
     @RequiresApi(api = Build.VERSION_CODES.O)
     private static void createChannelGroups(NotificationManager notificationManager, CHANNEL_GROUP... channelGroups) {
         List<NotificationChannelGroup> groups = new ArrayList<>(channelGroups.length);
-        for (CHANNEL_GROUP channelGroup: channelGroups) {
+        for (CHANNEL_GROUP channelGroup : channelGroups) {
             groups.add(new NotificationChannelGroup(channelGroup.id, channelGroup.title));
         }
         notificationManager.createNotificationChannelGroups(groups);
@@ -96,7 +96,7 @@ public class MessageUtils {
     public static void registerLocalReceiver(Context context, BroadcastReceiver receiver, @NonNull MESSAGE_TYPE... types) {
         IntentFilter intentFilter = new IntentFilter();
         intentFilter.addCategory(Constants.FCM_INTENT_CATEGORY);
-        for (MESSAGE_TYPE type: types)
+        for (MESSAGE_TYPE type : types)
             intentFilter.addAction(type.actionTag());
         LocalBroadcastManager.getInstance(context.getApplicationContext())
                 .registerReceiver(receiver, intentFilter);
@@ -108,7 +108,7 @@ public class MessageUtils {
         intentFilter.addDataScheme(Constants.FILTER_DATA_SCHEME);
         intentFilter.addDataAuthority(Constants.FILTER_DATA_HOST, "");
         intentFilter.addDataPath(String.format(Locale.ENGLISH, Constants.FILTER_DATA_TARGET_PATH, targetPk), 0);
-        for (MESSAGE_TYPE type: types)
+        for (MESSAGE_TYPE type : types)
             intentFilter.addAction(type.actionTag());
         LocalBroadcastManager.getInstance(context.getApplicationContext())
                 .registerReceiver(receiver, intentFilter);
@@ -181,7 +181,7 @@ public class MessageUtils {
 
         @Override
         public void onProgressUpdate(int percentage) {
-            Log.d("Update Status",percentage+"");
+            Log.d("Update Status", percentage + "");
             builder.setProgress(100, percentage, false);
             notificationManager.notify(notificationId, builder.build());
         }

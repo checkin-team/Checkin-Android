@@ -22,6 +22,8 @@ import java.util.Map;
 import androidx.annotation.RequiresApi;
 import androidx.core.app.NotificationCompat;
 
+import static com.checkin.app.checkin.Data.Message.MessageUtils.getNotificationRingtoneUri;
+
 public class AppMessagingService extends FirebaseMessagingService {
     private static final String TAG = AppMessagingService.class.getSimpleName();
     private NotificationManager mNotificationManager;
@@ -30,7 +32,7 @@ public class AppMessagingService extends FirebaseMessagingService {
     public void onCreate() {
         super.onCreate();
         mNotificationManager = ((NotificationManager) this.getSystemService(Context.NOTIFICATION_SERVICE));
-        MessageUtils.createDefaultChannels(mNotificationManager);
+        MessageUtils.createDefaultChannels(mNotificationManager,getNotificationRingtoneUri(this));
     }
 
     @Override
