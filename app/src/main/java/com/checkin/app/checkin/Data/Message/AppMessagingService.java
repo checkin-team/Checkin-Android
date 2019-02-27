@@ -68,11 +68,14 @@ public class AppMessagingService extends FirebaseMessagingService {
         int notifCount = 1;
         NotificationCompat.InboxStyle style = new NotificationCompat.InboxStyle();
         for (StatusBarNotification statusBarNotification : mNotificationManager.getActiveNotifications()) {
+            if (statusBarNotification.getNotification().getGroup() == null) continue;
             if (statusBarNotification.getNotification().getGroup().equals(notifGroup) && statusBarNotification.getTag() != null) {
                 style.addLine(statusBarNotification.getTag());
                 notifCount++;
             }
         }
+        if (notifCount == 1) return;
+
         style.setBigContentTitle(data.getGroupTitle())
                 .setSummaryText(String.format(Locale.getDefault(), "%d events", notifCount))
                 .addLine(data.getDescription());
@@ -87,6 +90,7 @@ public class AppMessagingService extends FirebaseMessagingService {
                 .setGroup(notifGroup)
                 .setGroupSummary(true)
                 .setStyle(style)
+                .setSound(null)
                 .setContentIntent(pendingIntent)
                 .build();
 

@@ -26,7 +26,7 @@ import java.util.Locale;
  * sends the result to the ResultReceiver.
  */
 public class FetchAddressIntentService extends IntentService {
-    private static final String TAG = "FetchAddressIS";
+    private static final String TAG = FetchAddressIntentService.class.getSimpleName();
 
     /**
      * The receiver where results are forwarded from this service.
@@ -138,13 +138,8 @@ public class FetchAddressIntentService extends IntentService {
     private void deliverResultToReceiver(int resultCode, String message, Address address) {
         try {
             Bundle bundle = new Bundle();
+            bundle.putParcelable(AppUtils.LocationConstants.LOCATION_DATA_ADDRESS_BUNDLE, address);
             bundle.putString(AppUtils.LocationConstants.RESULT_DATA_KEY, message);
-
-            bundle.putString(AppUtils.LocationConstants.LOCATION_DATA_AREA, address.getSubLocality());
-
-            bundle.putString(AppUtils.LocationConstants.LOCATION_DATA_CITY, address.getLocality());
-            bundle.putString(AppUtils.LocationConstants.LOCATION_DATA_STREET, address.getAddressLine(0));
-
             mReceiver.send(resultCode, bundle);
         } catch (Exception e) {
             e.printStackTrace();

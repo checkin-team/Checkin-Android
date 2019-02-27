@@ -86,7 +86,7 @@ public class AuthActivity extends AppCompatActivity implements AuthFragmentInter
 
         FirebaseUser user = mAuth.getCurrentUser();
         if (user != null && !PreferenceManager.getDefaultSharedPreferences(getApplicationContext()).getBoolean(Constants.SP_SYNC_DEVICE_TOKEN, false)) {
-            Log.e(TAG, "User already exists.");
+            Log.v(TAG, "User already exists.");
         }
 
         mAuthViewModel = ViewModelProviders.of(this).get(AuthViewModel.class);
@@ -209,7 +209,6 @@ public class AuthActivity extends AppCompatActivity implements AuthFragmentInter
 
     @Override
     public void onUserInfoProcess(String firstName, String lastName, String userName, GENDER gender) {
-        Log.e(TAG, "Username: " + userName + "First name: " + firstName + " | Last name: " + lastName + " | Gender: " + gender.name());
         mAuthViewModel.register(firstName, lastName, gender, userName);
     }
 
@@ -223,7 +222,6 @@ public class AuthActivity extends AppCompatActivity implements AuthFragmentInter
 
     @Override
     public void onGoogleAuth() {
-        Log.e(TAG, "GoogleAuth");
         if (!canLogin())
             return;
         showProgress();
@@ -239,7 +237,6 @@ public class AuthActivity extends AppCompatActivity implements AuthFragmentInter
 
     @Override
     public void onFacebookAuth(LoginResult loginResult) {
-        Log.e(TAG, "FacebookAuth: " + loginResult);
         if (!canLogin())
             return;
         showProgress();
@@ -253,7 +250,6 @@ public class AuthActivity extends AppCompatActivity implements AuthFragmentInter
 
     @Override
     public void onPhoneAuth(String phoneNo) {
-        Log.e(TAG, "Phone number: " + phoneNo);
         if (!canLogin())
             return;
         OtpVerificationDialog dialog = OtpVerificationDialog.Builder.with(this)

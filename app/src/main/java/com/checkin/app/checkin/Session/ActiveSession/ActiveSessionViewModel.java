@@ -211,6 +211,10 @@ public class ActiveSessionViewModel extends BaseViewModel {
         Resource<List<SessionOrderedItemModel>> listResource = mOrdersData.getValue();
         if (listResource == null || listResource.data == null)
             return;
+        for (SessionOrderedItemModel orderedItemModel : listResource.data) {
+            if (orderedItemModel.getPk() == sessionOrderedItem.getPk())
+                return;
+        }
         listResource.data.add(0, sessionOrderedItem);
         mOrdersData.setValue(Resource.cloneResource(listResource, listResource.data));
     }
@@ -230,6 +234,7 @@ public class ActiveSessionViewModel extends BaseViewModel {
         for (SessionOrderedItemModel orderedItemModel : listResource.data) {
             if (orderedItemModel.getPk() == orderPk) {
                 orderedItemModel.setStatus(sessionEventStatus.tag);
+                break;
             }
         }
         mOrdersData.setValue(Resource.cloneResource(listResource, listResource.data));

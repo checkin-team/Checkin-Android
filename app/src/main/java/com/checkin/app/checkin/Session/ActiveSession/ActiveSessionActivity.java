@@ -13,7 +13,6 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.checkin.app.checkin.Data.Message.MessageModel;
 import com.checkin.app.checkin.Data.Message.MessageModel.MESSAGE_TYPE;
@@ -41,8 +40,6 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 
 public class ActiveSessionActivity extends BaseActivity implements ActiveSessionMemberAdapter.SessionMemberInteraction {
-    private static final String TAG = ActiveSessionActivity.class.getSimpleName();
-
     private static final int RC_SEARCH_MEMBER = 201;
 
     @BindView(R.id.rv_session_members)
@@ -104,7 +101,7 @@ public class ActiveSessionActivity extends BaseActivity implements ActiveSession
                     break;
                 case USER_SESSION_MEMBER_ADDED:
                     model = message.getObject();
-                    ActiveSessionActivity.this.updateCustomer(model.getPk(),true);
+                    ActiveSessionActivity.this.updateCustomer(model.getPk(), true);
                     break;
                 case USER_SESSION_ORDER_NEW:
                     ActiveSessionActivity.this.addNewOrder(message.getRawData().getSessionOrderedItem());
@@ -123,7 +120,7 @@ public class ActiveSessionActivity extends BaseActivity implements ActiveSession
                     break;
                 case USER_SESSION_MEMBER_REMOVED:
                     model = message.getObject();
-                    ActiveSessionActivity.this.updateCustomer(model.getPk(),false);
+                    ActiveSessionActivity.this.updateCustomer(model.getPk(), false);
                     break;
 
             }
@@ -164,9 +161,13 @@ public class ActiveSessionActivity extends BaseActivity implements ActiveSession
                     startRefreshing();
                     break;
                 }
+                case ERROR_NOT_FOUND:
+                    finish();
+                    break;
                 default: {
                     stopRefreshing();
                     Utils.toast(this, resource.message);
+                    break;
                 }
             }
         });
@@ -238,11 +239,11 @@ public class ActiveSessionActivity extends BaseActivity implements ActiveSession
         } else {
             tvWaiterName.setText(R.string.waiter_unassigned);
         }
-        if(!data.isRequestedCheckout()){
+        if (!data.isRequestedCheckout()) {
             btnSessionMenu.setEnabled(true);
             rlSessionOrders.setEnabled(true);
             rlSessionOrders.setVisibility(View.VISIBLE);
-        } else{
+        } else {
             btnSessionMenu.setEnabled(false);
             tvSessionCheckout.setVisibility(View.VISIBLE);
             rlSessionOrders.setVisibility(View.GONE);
@@ -286,7 +287,7 @@ public class ActiveSessionActivity extends BaseActivity implements ActiveSession
 
     @OnClick(R.id.btn_active_session_menu)
     public void onListMenu() {
-        if (mViewModel.getSessionData().getValue() == null)
+        if (mViewModel.getSessionData().getValue() == null || mViewModel.getSessionData().getValue().data == null)
             return;
         SessionMenuActivity.withSession(this, mViewModel.getShopPk(), null);
     }
@@ -298,8 +299,8 @@ public class ActiveSessionActivity extends BaseActivity implements ActiveSession
                     .replace(R.id.container_as_orders, mOrdersFragment)
                     .addToBackStack(null)
                     .commit();
-        }else {
-            Utils.toast(this,  R.string.error_unavailable_network);
+        } else {
+            Utils.toast(this, R.string.error_unavailable_network);
         }
     }
 
@@ -309,8 +310,8 @@ public class ActiveSessionActivity extends BaseActivity implements ActiveSession
             startActivity(new Intent(
                     this, ActiveSessionInvoiceActivity.class)
                     .putExtra(ActiveSessionInvoiceActivity.KEY_SESSION_REQUESTED_CHECKOUT, mViewModel.isRequestedCheckout()));
-        }else {
-            Utils.toast(this,  R.string.error_unavailable_network);
+        } else {
+            Utils.toast(this, R.string.error_unavailable_network);
         }
     }
 
@@ -367,7 +368,7 @@ public class ActiveSessionActivity extends BaseActivity implements ActiveSession
         };
         MessageUtils.registerLocalReceiver(this, mReceiver, types);
         updateScreen();
-        viewEnable();
+        resetEnableViews();
     }
 
     @Override
@@ -382,7 +383,7 @@ public class ActiveSessionActivity extends BaseActivity implements ActiveSession
         MessageUtils.unregisterLocalReceiver(this, mReceiver);
     }
 
-    public void viewEnable(){
+    public void resetEnableViews() {
         containerBottomActions.setEnabled(true);
         llCallWaiter.setEnabled(true);
         llTableCleaning.setEnabled(true);

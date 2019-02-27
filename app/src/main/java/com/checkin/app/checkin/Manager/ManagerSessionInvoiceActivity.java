@@ -1,7 +1,6 @@
 package com.checkin.app.checkin.Manager;
 
 import android.app.AlertDialog;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
@@ -69,7 +68,7 @@ public class ManagerSessionInvoiceActivity extends AppCompatActivity {
         keySession = intent.getLongExtra(KEY_SESSION, 0L);
         String tableName = intent.getStringExtra(TABLE_NAME);
 
-        updateRequestCheckoutStatus(intent.getBooleanExtra(IS_REQUESTED_CHECKOUT,false));
+        updateRequestCheckoutStatus(intent.getBooleanExtra(IS_REQUESTED_CHECKOUT, false));
 
         mViewModel = ViewModelProviders.of(this).get(ManagerSessionViewModel.class);
 
@@ -98,7 +97,7 @@ public class ManagerSessionInvoiceActivity extends AppCompatActivity {
             if (resource.status == Resource.Status.SUCCESS && resource.data != null) {
                 Utils.toast(this, resource.data.getDetail());
             } else if (resource.status != Resource.Status.LOADING) {
-                Utils.toast(this, "Error: " + resource.message);
+                Utils.toast(this, resource.message);
             }
         });
         mViewModel.putSessionCheckoutData().observe(ManagerSessionInvoiceActivity.this, input -> {
@@ -149,21 +148,16 @@ public class ManagerSessionInvoiceActivity extends AppCompatActivity {
     }
 
     private void alertDialogForCloseSession() {
-        AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(this);
-        alertDialogBuilder.setTitle("Are you sure to close session").setPositiveButton("Yes", new DialogInterface.OnClickListener() {
-            public void onClick(DialogInterface dialog, int which) {
-                mViewModel.putSessionCheckout(keySession, "csh");
-            }
-        }).setNegativeButton("No", new DialogInterface.OnClickListener() {
-            public void onClick(DialogInterface dialog, int which) {
-                dialog.cancel();
-            }
-        }).show();}
+        new AlertDialog.Builder(this).setTitle("Are you sure you want to close session?")
+                .setPositiveButton("Yes", (dialog, which) -> mViewModel.putSessionCheckout(keySession, "csh"))
+                .setNegativeButton("No", (dialog, which) -> dialog.cancel())
+                .show();
+    }
 
     private void updateDiscount() {
-        Double percent = 0d;
+        double percent = 0d;
         try {
-            percent = Double.valueOf(edInvoiceDiscount.getText().toString());
+            percent = Double.parseDouble(edInvoiceDiscount.getText().toString());
         } catch (NumberFormatException ignored) {
         }
         mBillModel.calculateDiscount(percent);

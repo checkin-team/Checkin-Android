@@ -130,9 +130,9 @@ public class ManagerSessionActivity extends AppCompatActivity implements Manager
         ButterKnife.bind(this);
 
         mViewModel = ViewModelProviders.of(this).get(ManagerSessionViewModel.class);
-        setupUi();
         mOrderFragment = ManagerSessionOrderFragment.newInstance(this);
         mEventFragment = ManagerSessionEventFragment.newInstance();
+        setupUi();
         setupEventListing();
     }
 
@@ -151,6 +151,7 @@ public class ManagerSessionActivity extends AppCompatActivity implements Manager
                     if (data == null)
                         return;
                     setupData(data);
+                    break;
                 case ERROR_NOT_FOUND:
                     finish();
                     break;
@@ -274,6 +275,7 @@ public class ManagerSessionActivity extends AppCompatActivity implements Manager
                 MANAGER_SESSION_MEMBER_CHANGE, MANAGER_SESSION_UPDATE_ORDER, MANAGER_SESSION_EVENT_UPDATE
         };
         MessageUtils.registerLocalReceiver(this, mReceiver, types);
+        mViewModel.fetchSessionBriefData();
     }
 
     @Override

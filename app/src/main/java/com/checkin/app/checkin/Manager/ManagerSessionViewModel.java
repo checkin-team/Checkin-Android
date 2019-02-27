@@ -54,13 +54,13 @@ public class ManagerSessionViewModel extends BaseViewModel {
         mWaiterRepository = WaiterRepository.getInstance(application);
     }
 
-    public void putSessionCheckout(long sessionId, String paymentMode){
+    public void putSessionCheckout(long sessionId, String paymentMode) {
         ObjectNode data = Converters.objectMapper.createObjectNode();
         data.put("payment_mode", paymentMode);
-        mSessionCheckoutData.addSource(mManagerRepository.manageSessionCheckout(sessionId,data),mSessionCheckoutData::setValue);
+        mSessionCheckoutData.addSource(mManagerRepository.manageSessionCheckout(sessionId, data), mSessionCheckoutData::setValue);
     }
 
-    public LiveData<Resource<GenericDetailModel>> putSessionCheckoutData(){
+    public LiveData<Resource<GenericDetailModel>> putSessionCheckoutData() {
         return mSessionCheckoutData;
     }
 
@@ -68,6 +68,7 @@ public class ManagerSessionViewModel extends BaseViewModel {
     public void updateResults() {
         fetchSessionOrders();
         fetchSessionEvents();
+        fetchSessionBriefData(mSessionPk);
     }
 
     public LiveData<Resource<ManagerSessionInvoiceModel>> getSessionInvoice(long sessionId) {
@@ -88,6 +89,10 @@ public class ManagerSessionViewModel extends BaseViewModel {
     public void fetchSessionBriefData(long sessionId) {
         mSessionPk = sessionId;
         mBriefData.addSource(mSessionRepository.getSessionBriefDetail(sessionId), mBriefData::setValue);
+    }
+
+    public void fetchSessionBriefData() {
+        fetchSessionBriefData(mSessionPk);
     }
 
     public void fetchSessionOrders() {
@@ -265,6 +270,9 @@ public class ManagerSessionViewModel extends BaseViewModel {
         Resource<List<SessionOrderedItemModel>> resource = mOrdersData.getValue();
         if (resource == null || resource.data == null)
             return;
+        for (SessionOrderedItemModel iterOrder: resource.data) {
+            if (iterOrder.getPk() == orderedItemModel.getPk()) return;
+        }
         resource.data.add(0, orderedItemModel);
         mOrdersData.setValue(Resource.cloneResource(resource, resource.data));
     }
@@ -273,6 +281,9 @@ public class ManagerSessionViewModel extends BaseViewModel {
         Resource<List<ManagerSessionEventModel>> resource = mEventData.getValue();
         if (resource == null || resource.data == null)
             return;
+        for (ManagerSessionEventModel iterEvent: resource.data) {
+            if (iterEvent.getPk() == eventModel.getPk()) return;
+        }
         resource.data.add(0, eventModel);
         mEventData.setValue(Resource.cloneResource(resource, resource.data));
     }

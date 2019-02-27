@@ -1,8 +1,6 @@
 package com.checkin.app.checkin.Auth;
 
 import android.os.Bundle;
-import androidx.annotation.NonNull;
-import androidx.fragment.app.Fragment;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -20,6 +18,8 @@ import com.facebook.login.widget.LoginButton;
 
 import java.util.Arrays;
 
+import androidx.annotation.NonNull;
+import androidx.fragment.app.Fragment;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
@@ -62,7 +62,6 @@ public class AuthOptionsFragment extends Fragment {
 
                 @Override
                 public void onCancel() {
-                    Log.v(TAG, "Facebook login cancelled.");
                 }
 
                 @Override

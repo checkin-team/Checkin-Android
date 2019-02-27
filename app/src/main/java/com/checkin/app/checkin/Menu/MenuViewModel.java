@@ -1,13 +1,7 @@
 package com.checkin.app.checkin.Menu;
 
 import android.app.Application;
-import androidx.lifecycle.LiveData;
-import androidx.lifecycle.MediatorLiveData;
-import androidx.lifecycle.MutableLiveData;
-import androidx.lifecycle.Transformations;
 import android.os.Handler;
-import androidx.annotation.NonNull;
-import android.util.Log;
 
 import com.checkin.app.checkin.Data.BaseViewModel;
 import com.checkin.app.checkin.Data.Resource;
@@ -21,6 +15,12 @@ import com.fasterxml.jackson.databind.node.ArrayNode;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+
+import androidx.annotation.NonNull;
+import androidx.lifecycle.LiveData;
+import androidx.lifecycle.MediatorLiveData;
+import androidx.lifecycle.MutableLiveData;
+import androidx.lifecycle.Transformations;
 
 public class MenuViewModel extends BaseViewModel {
     private final String TAG = MenuViewModel.class.getSimpleName();
@@ -154,7 +154,6 @@ public class MenuViewModel extends BaseViewModel {
         try {
             mCurrentItem.setValue(item.clone());
         } catch (CloneNotSupportedException e) {
-            Log.e(TAG, "Couldn't clone OrderedItem!");
         }
     }
 
@@ -237,7 +236,6 @@ public class MenuViewModel extends BaseViewModel {
         List<OrderedItemModel> items = mOrderedItems.getValue();
         boolean result = false;
         if (items == null) {
-            Log.e(TAG, "updateOrderedItem - No items in Cart!!!");
             return result;
         }
         OrderedItemModel orderedItem = null;
@@ -249,14 +247,12 @@ public class MenuViewModel extends BaseViewModel {
                     try {
                         orderedItem = listItem.clone();
                     } catch (CloneNotSupportedException e) {
-                        Log.e(TAG, "Couldn't clone OrderedItem!");
                     }
                     break;
                 }
             }
         }
         if (cartCount == 0) {
-            Log.e(TAG, "Didn't find item in cart!!");
             return result;
         }
         if (item.isComplexItem() && cartCount != count) {
@@ -274,7 +270,6 @@ public class MenuViewModel extends BaseViewModel {
     private void updateCart() {
         OrderedItemModel item = mCurrentItem.getValue();
         if (item == null) {
-            Log.e(TAG, "Current Item is NULL!");
             return;
         }
         List<OrderedItemModel> orderedItems = mOrderedItems.getValue();

@@ -1,11 +1,8 @@
 package com.checkin.app.checkin.Shop.Private.Edit;
 
-import androidx.lifecycle.ViewModelProviders;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.os.Bundle;
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.fragment.app.Fragment;
 import android.text.Editable;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -17,8 +14,8 @@ import android.widget.ImageButton;
 import com.checkin.app.checkin.Auth.OtpVerificationDialog;
 import com.checkin.app.checkin.Data.Resource;
 import com.checkin.app.checkin.R;
-import com.checkin.app.checkin.Shop.RestaurantModel;
 import com.checkin.app.checkin.Shop.Private.ShopProfileViewModel;
+import com.checkin.app.checkin.Shop.RestaurantModel;
 import com.checkin.app.checkin.Utility.MultiSpinner;
 import com.checkin.app.checkin.Utility.PrefixEditText;
 import com.checkin.app.checkin.Utility.TimeEditText;
@@ -28,6 +25,10 @@ import com.google.firebase.FirebaseException;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.PhoneAuthCredential;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.fragment.app.Fragment;
+import androidx.lifecycle.ViewModelProviders;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
@@ -228,6 +229,15 @@ public class EditBasicFragment extends Fragment implements OtpVerificationDialog
     public void onDestroy() {
         super.onDestroy();
         unbinder.unbind();
+    }
+
+    @Override
+    public void onAttach(Context context) {
+        super.onAttach(context);
+        try {
+            mListener = ((BasicFragmentInteraction) context);
+        } catch (ClassCastException ignored) {
+        }
     }
 
     public interface BasicFragmentInteraction {

@@ -1,21 +1,26 @@
 package com.checkin.app.checkin.Shop.ShopJoin;
 
+import android.text.TextUtils;
+
 import com.checkin.app.checkin.Misc.LocationModel;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 @JsonInclude(JsonInclude.Include.NON_NULL)
 public class ShopJoinModel {
-    // TODO: Send city, pin-code, etc with location.
+    @JsonProperty("name")
+    private String name;
+    @JsonProperty("gstin")
+    private String gstin;
+    @JsonProperty("location")
+    private LocationModel location;
+    @JsonProperty("phone_token")
+    private String phoneToken;
+    @JsonProperty("email")
+    private String email;
 
-    @JsonProperty("name") private String name;
-    @JsonProperty("gstin") private String gstin;
-    @JsonProperty("location") private LocationModel location;
-    @JsonProperty("locality") private String locality;
-    @JsonProperty("phone_token") private String phoneToken;
-    @JsonProperty("email") private String email;
-
-    ShopJoinModel() {}
+    ShopJoinModel() {
+    }
 
     public void setName(String name) {
         this.name = name;
@@ -30,7 +35,8 @@ public class ShopJoinModel {
     }
 
     public void setLocality(String locality) {
-        this.locality = locality;
+        if (this.location == null) this.location = new LocationModel(locality);
+        else this.location.setLocality(locality);
     }
 
     public void setPhoneToken(String phoneToken) {
@@ -50,6 +56,6 @@ public class ShopJoinModel {
     }
 
     public boolean isValidLocality() {
-        return locality != null && !locality.isEmpty();
+        return location != null && !TextUtils.isEmpty(location.getLocality());
     }
 }

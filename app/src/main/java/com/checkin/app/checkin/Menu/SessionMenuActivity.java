@@ -7,7 +7,6 @@ import android.os.Bundle;
 import android.speech.RecognizerIntent;
 import android.text.InputType;
 import android.text.TextUtils;
-import android.util.Log;
 import android.view.Menu;
 import android.view.View;
 import android.widget.Button;
@@ -208,8 +207,8 @@ public class SessionMenuActivity extends BaseActivity implements
             if (resource.status == Status.SUCCESS) {
                 Utils.toast(this, "Confirmed orders!");
                 finish();
+            } else if (resource.status == Status.LOADING) {
             } else {
-                Log.e(TAG, "MSG: " + resource.message);
                 btnCartProceed.setEnabled(true);
             }
         });

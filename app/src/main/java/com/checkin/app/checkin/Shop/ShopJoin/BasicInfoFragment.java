@@ -1,13 +1,9 @@
 package com.checkin.app.checkin.Shop.ShopJoin;
 
-import androidx.lifecycle.ViewModelProviders;
-
-import android.app.ProgressDialog;
+import android.content.Context;
 import android.content.Intent;
+import android.location.Address;
 import android.os.Bundle;
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.fragment.app.Fragment;
 import android.text.Editable;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -15,7 +11,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
 import android.widget.ImageView;
-import android.widget.ProgressBar;
 import android.widget.Toast;
 
 import com.checkin.app.checkin.Data.Resource;
@@ -26,6 +21,10 @@ import com.checkin.app.checkin.Misc.LocationModel;
 import com.checkin.app.checkin.R;
 import com.fasterxml.jackson.databind.JsonNode;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.fragment.app.Fragment;
+import androidx.lifecycle.ViewModelProviders;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnTextChanged;
@@ -37,9 +36,12 @@ public class BasicInfoFragment extends Fragment {
     private static final String TAG = BasicInfoFragment.class.getSimpleName();
     private Unbinder unbinder;
 
-    @BindView(R.id.et_location) EditText etLocality;
-    @BindView(R.id.et_name) EditText etName;
-    @BindView(R.id.et_gstin) EditText etGstin;
+    @BindView(R.id.et_location)
+    EditText etLocality;
+    @BindView(R.id.et_name)
+    EditText etName;
+    @BindView(R.id.et_gstin)
+    EditText etGstin;
 
     private JoinViewModel mViewModel;
     private BasicInfoFragmentInteraction mInteractionListener;
@@ -53,14 +55,14 @@ public class BasicInfoFragment extends Fragment {
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        final View view =inflater.inflate(R.layout.fragment_shop_join_basic_info,container,false);
+        final View view = inflater.inflate(R.layout.fragment_shop_join_basic_info, container, false);
         unbinder = ButterKnife.bind(this, view);
         return view;
     }
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
-        mViewModel = ViewModelProviders.of(getActivity()).get(JoinViewModel.class);
+        mViewModel = ViewModelProviders.of(requireActivity()).get(JoinViewModel.class);
 
         mViewModel.getShopJoinModel().observe(this, model -> {
             if (model == null)
@@ -95,11 +97,11 @@ public class BasicInfoFragment extends Fragment {
         ImageView imMaps = view.findViewById(R.id.im_maps);
 
         imMaps.setOnClickListener(new DebouncedOnClickListener(2500) {
-           @Override
-           public void onDebouncedClick(View v) {
-               Intent intent = new Intent(getContext(), MapsActivity.class);
-               startActivityForResult(intent, MapsActivity.REQUEST_MAP_CODE);
-           }
+            @Override
+            public void onDebouncedClick(View v) {
+                Intent intent = new Intent(getContext(), MapsActivity.class);
+                startActivityForResult(intent, MapsActivity.REQUEST_MAP_CODE);
+            }
         });
     }
 
@@ -115,12 +117,19 @@ public class BasicInfoFragment extends Fragment {
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         if (requestCode == MapsActivity.REQUEST_MAP_CODE && resultCode == RESULT_OK) {
-            double latitude = data.getDoubleExtra(MapsActivity.KEY_MAPS_LATITUDE,0);
-            double longitude = data.getDoubleExtra(MapsActivity.KEY_MAPS_LONGITUDE, 0);
-            mViewModel.setLocation(new LocationModel(latitude, longitude));
-            String address = data.getStringExtra(MapsActivity.KEY_MAPS_ADDRESS);
-            if (address != null && !address.isEmpty())
-                etLocality.setText(address);
+            Address address = data.getParcelableExtra(MapsActivity.KEY_MAPS_ADDRESS);
+            LocationModel location = new LocationModel(address);
+            mViewModel.setLocation(location);
+            etLocality.setText(location.toString());
+        }
+    }
+
+    @Override
+    public void onAttach(Context context) {
+        super.onAttach(context);
+        try {
+            this.mInteractionListener = ((BasicInfoFragmentInteraction) context);
+        } catch (ClassCastException ignored) {
         }
     }
 
@@ -132,6 +141,7 @@ public class BasicInfoFragment extends Fragment {
 
     interface BasicInfoFragmentInteraction {
         void onShopRegistered(GenericDetailModel details);
+
         void onBasicDataValidStatus(boolean isValid);
     }
 }

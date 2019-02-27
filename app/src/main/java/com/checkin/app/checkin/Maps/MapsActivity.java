@@ -2,9 +2,9 @@ package com.checkin.app.checkin.Maps;
 
 import android.Manifest;
 import android.app.AlertDialog;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.location.Address;
 import android.location.Location;
 import android.os.Build;
 import android.os.Bundle;
@@ -71,10 +71,7 @@ public class MapsActivity extends AppCompatActivity implements
     /**
      * The formatted location address.
      */
-    protected String mAddressOutput;
-    protected String mAreaOutput;
-    protected String mCityOutput;
-    protected String mStreetOutput;
+    protected Address mAddress;
     @BindView(R.id.btn_done)
     ImageView btnDone;
 
@@ -109,22 +106,16 @@ public class MapsActivity extends AppCompatActivity implements
             // Otherwise, prompt user to get valid Play Services APK.
             if (!AppUtils.isLocationEnabled(this)) {
                 // notify user
-                AlertDialog.Builder dialog = new AlertDialog.Builder(this);
-                dialog.setMessage("Location not enabled!");
-                dialog.setPositiveButton("Open location settings", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface paramDialogInterface, int paramInt) {
-                        Intent myIntent = new Intent(Settings.ACTION_LOCATION_SOURCE_SETTINGS);
-                        startActivity(myIntent);
-                    }
-                });
-                dialog.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+                new AlertDialog.Builder(this)
+                        .setMessage("Location not enabled!")
+                        .setPositiveButton("Open location settings", (paramDialogInterface, paramInt) -> {
+                            Intent myIntent = new Intent(Settings.ACTION_LOCATION_SOURCE_SETTINGS);
+                            startActivity(myIntent);
 
-                    @Override
-                    public void onClick(DialogInterface paramDialogInterface, int paramInt) {
-                    }
-                });
-                dialog.show();
+                        })
+                        .setNegativeButton("Cancel", (paramDialogInterface, paramInt) -> {
+                        })
+                        .show();
             }
             buildGoogleApiClient();
         } else {
@@ -143,7 +134,6 @@ public class MapsActivity extends AppCompatActivity implements
      */
     @Override
     public void onMapReady(GoogleMap googleMap) {
-        Log.d(TAG, "OnMapReady");
         mMap = googleMap;
         mMap.getUiSettings().setZoomControlsEnabled(false);
         mMap.getUiSettings().setMyLocationButtonEnabled(true);
@@ -192,7 +182,6 @@ public class MapsActivity extends AppCompatActivity implements
     public void onConnectionFailed(@NonNull ConnectionResult connectionResult) {
         Toast.makeText(this, "Unable to connect", Toast.LENGTH_SHORT).show();
     }
-
 
     protected synchronized void buildGoogleApiClient() {
         mGoogleApiClient = new GoogleApiClient.Builder(this)
@@ -254,12 +243,11 @@ public class MapsActivity extends AppCompatActivity implements
 
     @OnClick(R.id.btn_done)
     public void onDoneClick(View v) {
-        Log.e(TAG, "onClicked");
         LatLng latLng = mMap.getCameraPosition().target;
         Intent data = new Intent();
         data.putExtra(KEY_MAPS_LATITUDE, latLng.latitude);
         data.putExtra(KEY_MAPS_LONGITUDE, latLng.longitude);
-        data.putExtra(KEY_MAPS_ADDRESS, mAreaOutput);
+        data.putExtra(KEY_MAPS_ADDRESS, mAddress);
         setResult(RESULT_OK, data);
         finish();
     }
@@ -278,11 +266,7 @@ public class MapsActivity extends AppCompatActivity implements
         @Override
         protected void onReceiveResult(int resultCode, Bundle resultData) {
             if (resultCode == AppUtils.LocationConstants.SUCCESS_RESULT) {
-                mAddressOutput = resultData.getString(AppUtils.LocationConstants.RESULT_DATA_KEY);
-                mAreaOutput = resultData.getString(AppUtils.LocationConstants.LOCATION_DATA_AREA);
-                mCityOutput = resultData.getString(AppUtils.LocationConstants.LOCATION_DATA_CITY);
-                mStreetOutput = resultData.getString(AppUtils.LocationConstants.LOCATION_DATA_STREET);
-                Log.i(TAG, "Add: " + mAddressOutput + ", Area: " + mAreaOutput + ", City: " + mCityOutput + ", Street: " + mStreetOutput);
+                mAddress = resultData.getParcelable(AppUtils.LocationConstants.LOCATION_DATA_ADDRESS_BUNDLE);
             }
         }
     }
@@ -304,7 +288,7 @@ public class MapsActivity extends AppCompatActivity implements
     public void openAutocompleteActivity() {
         if (checkPlayServices() && !isSearchOpened) {
             try {
-                List<Place.Field> fields = Arrays.asList(Place.Field.ID, Place.Field.NAME);
+                List<Place.Field> fields = Arrays.asList(Place.Field.NAME, Place.Field.LAT_LNG);
                 Intent intent = new Autocomplete.IntentBuilder(AutocompleteActivityMode.OVERLAY, fields).build(this);
                 startActivityForResult(intent, REQUEST_CODE_AUTOCOMPLETE);
                 isSearchOpened = true;
@@ -326,10 +310,12 @@ public class MapsActivity extends AppCompatActivity implements
                 // Get the user's selected place from the Intent.
                 Place place = Autocomplete.getPlaceFromIntent(data);
                 LatLng latLong = place.getLatLng();
-                Location location = new Location("");
-                location.setLatitude(latLong.latitude);
-                location.setLongitude(latLong.longitude);
-                changeMap(location);
+                if (latLong != null) {
+                    Location location = new Location("");
+                    location.setLatitude(latLong.latitude);
+                    location.setLongitude(latLong.longitude);
+                    changeMap(location);
+                }
             }
             isSearchOpened = false;
         } else {

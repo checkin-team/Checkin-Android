@@ -1,6 +1,10 @@
 package com.checkin.app.checkin.Data.Message;
 
+import android.content.Context;
+import android.net.Uri;
+
 import com.checkin.app.checkin.Data.Message.MessageObjectModel.MESSAGE_OBJECT_TYPE;
+import com.checkin.app.checkin.R;
 
 import java.util.Locale;
 import java.util.concurrent.atomic.AtomicInteger;
@@ -50,6 +54,7 @@ public class Constants {
 
         // Restaurant Member group
         MEMBER("channel.restaurant_member", "Restaurant Member"),
+        ORDERS("channel.restaurant.orders", "Restaurant New Orders"),
         ADMIN("channel.restaurant_admin", "Restaurant Admin"),
         MANAGER("channel.restaurant_manager", "Restaurant Manager"),
         WAITER("channel.restaurant_waiter", "Restaurant Waiter"),
@@ -63,5 +68,9 @@ public class Constants {
             this.id = id;
             this.title = title;
         }
+    }
+
+    public static Uri getAlertOrdersSoundUri(Context context) {
+        return Uri.parse("android.resource://" + context.getPackageName() + "/" + R.raw.notif_alert_orders);
     }
 }

@@ -6,7 +6,6 @@ import android.app.PendingIntent;
 import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
-import android.net.Uri;
 import android.os.Bundle;
 import android.text.Html;
 import android.text.TextUtils;
@@ -143,6 +142,8 @@ public class MessageModel implements Serializable {
     }
 
     protected CHANNEL getChannel() {
+        if (this.type == MANAGER_SESSION_ORDERS_PUSH || this.type == WAITER_SESSION_ORDERS_PUSH)
+            return CHANNEL.ORDERS;
         if (isUserActiveSessionNotification())
             return CHANNEL.ACTIVE_SESSION;
         if (isShopWaiterNotification())
@@ -175,7 +176,6 @@ public class MessageModel implements Serializable {
             bundle.putBoolean(ManagerSessionActivity.KEY_OPEN_ORDERS, this.type == MANAGER_SESSION_ORDERS_PUSH);
             intent.putExtra(ManagerWorkActivity.KEY_RESTAURANT_PK, shopDetail.getPk())
                     .putExtra(ManagerWorkActivity.KEY_SESSION_BUNDLE, bundle);
-
         } else if (isShopWaiterNotification()) {
             intent.putExtra(WaiterWorkActivity.KEY_SHOP_PK, shopDetail.getPk())
                     .putExtra(WaiterWorkActivity.KEY_SESSION_PK, sessionDetail != null ? sessionDetail.getPk() : 0L);
@@ -210,7 +210,7 @@ public class MessageModel implements Serializable {
         if (isShopWaiterNotification() || isShopManagerNotification())
             builder.setPriority(Notification.PRIORITY_HIGH);
         if (this.type == MANAGER_SESSION_ORDERS_PUSH || this.type == WAITER_SESSION_ORDERS_PUSH)
-            builder.setSound(Uri.parse("android.resource://" + context.getPackageName() + "/" + R.raw.notif_alert_orders));
+            builder.setSound(Constants.getAlertOrdersSoundUri(context));
         tryGroupNotification(builder);
     }
 
@@ -255,7 +255,24 @@ public class MessageModel implements Serializable {
     }
 
     public Intent getGroupIntent(Context context) {
-        return getNotificationIntent(context);
+        Intent intent = new Intent();
+        ComponentName componentName = getTargetComponent(context);
+        if (componentName != null) {
+            intent.setComponent(componentName);
+            MessageObjectModel shopDetail = getShopDetail();
+            MessageObjectModel sessionDetail = getSessionDetail();
+            if (shopDetail == null) return intent;
+            if (isShopManagerNotification()) {
+                Bundle bundle = new Bundle();
+                bundle.putLong(ManagerSessionActivity.KEY_SESSION_PK, sessionDetail != null ? sessionDetail.getPk() : 0L);
+                intent.putExtra(ManagerWorkActivity.KEY_RESTAURANT_PK, shopDetail.getPk())
+                        .putExtra(ManagerWorkActivity.KEY_SESSION_BUNDLE, bundle);
+            } else if (isShopWaiterNotification()) {
+                intent.putExtra(WaiterWorkActivity.KEY_SHOP_PK, shopDetail.getPk())
+                        .putExtra(WaiterWorkActivity.KEY_SESSION_PK, sessionDetail != null ? sessionDetail.getPk() : 0L);
+            }
+        }
+        return intent;
     }
 
     public String getGroupTitle() {

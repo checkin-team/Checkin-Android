@@ -4,7 +4,7 @@ import static java.util.concurrent.TimeUnit.MILLISECONDS;
 import static java.util.concurrent.TimeUnit.MINUTES;
 
 public class Constants {
-    public static final String API_VERSION = "0.4.0";
+    public static final String API_VERSION = "0.7.4";
     public static final String API_PROTOCOL = "https://";
     public static final String API_HOST = "api.check-in.in";
 
