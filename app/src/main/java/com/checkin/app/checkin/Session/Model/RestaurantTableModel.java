@@ -86,4 +86,8 @@ public class RestaurantTableModel {
     public void addEventCount() {
         this.eventCount++;
     }
+
+    public void setRequestedCheckout(boolean requestedCheckout) {
+        isRequestedCheckout = requestedCheckout;
+    }
 }

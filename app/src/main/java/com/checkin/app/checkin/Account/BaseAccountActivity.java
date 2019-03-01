@@ -1,6 +1,5 @@
 package com.checkin.app.checkin.Account;
 
-import android.app.Activity;
 import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
@@ -19,7 +18,6 @@ import android.widget.TextView;
 import com.checkin.app.checkin.Account.AccountModel.ACCOUNT_TYPE;
 import com.checkin.app.checkin.Auth.AuthPreferences;
 import com.checkin.app.checkin.Data.Resource;
-import com.checkin.app.checkin.Home.HomeActivity;
 import com.checkin.app.checkin.Home.SplashActivity;
 import com.checkin.app.checkin.Manager.ManagerWorkActivity;
 import com.checkin.app.checkin.Misc.BaseActivity;
@@ -84,7 +82,7 @@ public abstract class BaseAccountActivity extends BaseActivity {
                 List<AccountModel> accounts = listResource.data;
                 mAccountAdapter.setData(accounts);
 
-                for (ACCOUNT_TYPE accountType: accountTypes) {
+                for (ACCOUNT_TYPE accountType : accountTypes) {
                     AccountModel account = AccountModel.getByAccountType(accounts, accountType);
                     if (account != null) {
                         mViewModel.setCurrentAccount(account);
@@ -113,7 +111,7 @@ public abstract class BaseAccountActivity extends BaseActivity {
             PreferenceManager.getDefaultSharedPreferences(this).edit()
                     .clear()
                     .apply();
-            Intent splashIntent =new Intent(this, SplashActivity.class);
+            Intent splashIntent = new Intent(this, SplashActivity.class);
             splashIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
             startActivity(splashIntent);
             finish();
@@ -150,10 +148,14 @@ public abstract class BaseAccountActivity extends BaseActivity {
     }
 
     public static class AccountHeaderViewHolder implements AdapterView.OnItemSelectedListener {
-        @BindView(R.id.tv_context) TextView tvDisplayName;
-        @BindView(R.id.im_context) ImageView imDisplayPic;
-        @BindView(R.id.tv_account_desc) TextView tvAccountDesc;
-        @BindView(R.id.account_selector) Spinner vAccountSelector;
+        @BindView(R.id.tv_context)
+        TextView tvDisplayName;
+        @BindView(R.id.im_context)
+        ImageView imDisplayPic;
+        @BindView(R.id.tv_account_desc)
+        TextView tvAccountDesc;
+        @BindView(R.id.account_selector)
+        Spinner vAccountSelector;
 
         private BaseAccountActivity mBaseActivity;
         private final View mHeaderView;
@@ -194,8 +196,12 @@ public abstract class BaseAccountActivity extends BaseActivity {
         @Override
         public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
             AccountModel account = mBaseActivity.mAccountAdapter.getItem(position);
-            mBaseActivity.mViewModel.setCurrentAccount(account);
-            switchAccount(mBaseActivity.getApplicationContext(), account);
+            if (account == null) return;
+            AccountModel currAccount = mBaseActivity.mViewModel.getCurrentAccount().getValue();
+            if (!account.equals(currAccount)) {
+                mBaseActivity.mViewModel.setCurrentAccount(account);
+                switchAccount(mBaseActivity.getApplicationContext(), account);
+            }
         }
 
         void switchAccount(Context context, AccountModel account) {
@@ -204,33 +210,26 @@ public abstract class BaseAccountActivity extends BaseActivity {
                     .putLong(Constants.SP_LAST_ACCOUNT_PK, Long.valueOf(account.getTargetPk()))
                     .apply();
 
+            Intent intent;
             switch (account.getAccountType()) {
                 case USER:
-                    if (mBaseActivity.getClass() != HomeActivity.class){
-                        Utils.navigateBackToHome(context);
-                    }
+                    Utils.navigateBackToHome(context);
                     break;
                 case SHOP_OWNER:
                 case SHOP_ADMIN:
-                    if (mBaseActivity.getClass() != ShopPrivateActivity.class) {
-                        Intent intent = Intent.makeRestartActivityTask(new ComponentName(context, ShopPrivateActivity.class));
-                        intent.putExtra(ShopPrivateActivity.KEY_SHOP_PK, Long.valueOf(account.getTargetPk()));
-                        context.startActivity(intent);
-                    }
+                    intent = Intent.makeRestartActivityTask(new ComponentName(context, ShopPrivateActivity.class));
+                    intent.putExtra(ShopPrivateActivity.KEY_SHOP_PK, Long.valueOf(account.getTargetPk()));
+                    context.startActivity(intent);
                     break;
                 case RESTAURANT_MANAGER:
-                    if (mBaseActivity.getClass() != ManagerWorkActivity.class) {
-                        Intent intent = Intent.makeRestartActivityTask(new ComponentName(context, ManagerWorkActivity.class));
-                        intent.putExtra(ManagerWorkActivity.KEY_RESTAURANT_PK, Long.valueOf(account.getTargetPk()));
-                        context.startActivity(intent);
-                    }
+                    intent = Intent.makeRestartActivityTask(new ComponentName(context, ManagerWorkActivity.class));
+                    intent.putExtra(ManagerWorkActivity.KEY_RESTAURANT_PK, Long.valueOf(account.getTargetPk()));
+                    context.startActivity(intent);
                     break;
                 case RESTAURANT_WAITER:
-                    if (mBaseActivity.getClass() != WaiterWorkActivity.class) {
-                        Intent intent = Intent.makeRestartActivityTask(new ComponentName(context, WaiterWorkActivity.class));
-                        intent.putExtra(WaiterWorkActivity.KEY_SHOP_PK, Long.valueOf(account.getTargetPk()));
-                        context.startActivity(intent);
-                    }
+                    intent = Intent.makeRestartActivityTask(new ComponentName(context, WaiterWorkActivity.class));
+                    intent.putExtra(WaiterWorkActivity.KEY_SHOP_PK, Long.valueOf(account.getTargetPk()));
+                    context.startActivity(intent);
                 case RESTAURANT_COOK:
                     break;
             }

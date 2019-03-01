@@ -3,11 +3,13 @@ package com.checkin.app.checkin.Misc;
 import android.location.Address;
 
 import com.checkin.app.checkin.Data.Converters;
+import com.fasterxml.jackson.annotation.JsonAutoDetect;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 
 import androidx.annotation.NonNull;
 
+@JsonAutoDetect(fieldVisibility = JsonAutoDetect.Visibility.NONE, getterVisibility = JsonAutoDetect.Visibility.NONE, isGetterVisibility = JsonAutoDetect.Visibility.NONE)
 public class LocationModel {
     @JsonProperty("latitude")
     private double latitude;

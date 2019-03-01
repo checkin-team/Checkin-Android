@@ -108,4 +108,16 @@ public class AccountModel {
     public String toString() {
         return getName();
     }
+
+    @Override
+    public boolean equals(@Nullable Object obj) {
+        if (obj == null)
+            return false;
+        try {
+            AccountModel acc = ((AccountModel) obj);
+            return acc.accountType == this.accountType && acc.targetPk.equalsIgnoreCase(this.targetPk);
+        } catch (ClassCastException ignored) {
+            return false;
+        }
+    }
 }

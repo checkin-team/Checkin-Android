@@ -49,8 +49,6 @@ import static com.checkin.app.checkin.Menu.Fragment.MenuGroupsFragment.KEY_SESSI
 public class SessionMenuActivity extends BaseActivity implements
         MenuItemInteraction, ItemCustomizationFragment.ItemCustomizationInteraction,
         MenuCartAdapter.MenuCartInteraction, MenuFilterFragment.MenuFilterInteraction {
-    private static final String TAG = SessionMenuActivity.class.getSimpleName();
-
     private static final String KEY_RESTAURANT_PK = "menu.shop_pk";
     private static final String KEY_SESSION_PK = "menu.session_pk";
 
@@ -209,6 +207,7 @@ public class SessionMenuActivity extends BaseActivity implements
                 finish();
             } else if (resource.status == Status.LOADING) {
             } else {
+                Utils.toast(this, resource.message);
                 btnCartProceed.setEnabled(true);
             }
         });

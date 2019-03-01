@@ -23,8 +23,6 @@ import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.Transformations;
 
 public class MenuViewModel extends BaseViewModel {
-    private final String TAG = MenuViewModel.class.getSimpleName();
-
     private MenuRepository mRepository;
 
     private MediatorLiveData<Resource<MenuModel>> mMenuData = new MediatorLiveData<>();
@@ -40,6 +38,7 @@ public class MenuViewModel extends BaseViewModel {
     private final Handler mHandler = new Handler();
     private Runnable mRunnable;
     private Long mSessionPk;
+    private long mShopPk;
 
     public MenuViewModel(@NonNull Application application) {
         super(application);
@@ -48,9 +47,11 @@ public class MenuViewModel extends BaseViewModel {
 
     @Override
     public void updateResults() {
+        fetchAvailableMenu(mShopPk);
     }
 
     public void fetchAvailableMenu(long shopId) {
+        mShopPk = shopId;
         mMenuData.addSource(mRepository.getAvailableMenu(shopId), mMenuData::setValue);
         resetMenuGroups();
 
@@ -364,7 +365,7 @@ public class MenuViewModel extends BaseViewModel {
                 return Resource.errorNotFound(null);
             Collections.sort(items, (o1, o2) -> {
                 int diff = (int) (o1.getTypeCosts().get(0) - o2.getTypeCosts().get(0));
-                return low2high ?  diff : -diff;
+                return low2high ? diff : -diff;
             });
             return Resource.cloneResource(input, items);
         });

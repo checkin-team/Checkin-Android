@@ -156,10 +156,8 @@ public class MessageModel implements Serializable {
     }
 
     private Intent getNotificationIntent(Context context) {
-        Intent intent = new Intent();
         ComponentName componentName = getTargetComponent(context);
-        if (componentName != null)
-            intent.setComponent(componentName);
+        Intent intent = Intent.makeRestartActivityTask(componentName);
         addIntentExtra(intent, componentName != null ? componentName.getClassName() : null);
         return intent;
     }

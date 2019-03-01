@@ -7,7 +7,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 public class MenuItemBriefModel {
 
     @JsonProperty("pk")
-    private Integer pk;
+    private long pk;
 
     @JsonProperty("name")
     private String name;
@@ -18,7 +18,7 @@ public class MenuItemBriefModel {
     public MenuItemBriefModel() {
     }
 
-    public void setPk(Integer pk) {
+    public void setPk(long pk) {
         this.pk = pk;
     }
 
@@ -30,7 +30,7 @@ public class MenuItemBriefModel {
         isVegetarian = vegetarian;
     }
 
-    public Integer getPk() {
+    public long getPk() {
         return pk;
     }
 

@@ -178,6 +178,7 @@ public class ActiveSessionActivity extends BaseActivity implements ActiveSession
             switch (resource.status) {
                 case SUCCESS: {
                     Utils.toast(this, "Done!");
+                    mViewModel.fetchActiveSessionDetail();
                     break;
                 }
                 case LOADING:
@@ -287,9 +288,8 @@ public class ActiveSessionActivity extends BaseActivity implements ActiveSession
 
     @OnClick(R.id.btn_active_session_menu)
     public void onListMenu() {
-        if (mViewModel.getSessionData().getValue() == null || mViewModel.getSessionData().getValue().data == null)
-            return;
-        SessionMenuActivity.withSession(this, mViewModel.getShopPk(), null);
+        if (mViewModel.getShopPk() > 0)
+            SessionMenuActivity.withSession(this, mViewModel.getShopPk(), null);
     }
 
     @OnClick(R.id.rl_container_session_orders)

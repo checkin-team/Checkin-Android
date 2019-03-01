@@ -1,9 +1,6 @@
 package com.checkin.app.checkin.Menu;
 
 import android.content.Context;
-import androidx.annotation.NonNull;
-import com.google.android.material.snackbar.Snackbar;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -14,11 +11,13 @@ import com.checkin.app.checkin.Menu.Model.ItemCustomizationFieldModel;
 import com.checkin.app.checkin.Menu.Model.ItemCustomizationGroupModel;
 import com.checkin.app.checkin.R;
 import com.golovin.fluentstackbar.FluentSnackbar;
+import com.google.android.material.snackbar.Snackbar;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 
+import androidx.annotation.NonNull;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
@@ -27,8 +26,10 @@ import butterknife.ButterKnife;
  */
 
 public class ItemCustomizationGroupHolder implements ItemCustomizationFieldHolder.CustomizationFieldInteraction {
-    @BindView(R.id.tv_menu_customization_group_name) TextView tvGroupName;
-    @BindView(R.id.list_menu_customization_fields) LinearLayout vListFields;
+    @BindView(R.id.tv_menu_customization_group_name)
+    TextView tvGroupName;
+    @BindView(R.id.list_menu_customization_fields)
+    LinearLayout vListFields;
 
     private ItemCustomizationGroupModel mGroup;
     private final ViewGroup mView;
@@ -41,7 +42,7 @@ public class ItemCustomizationGroupHolder implements ItemCustomizationFieldHolde
         ButterKnife.bind(this, mView);
         mInteractionListener = interactionListener;
         tvGroupName.setText(String.format(Locale.ENGLISH, "%s (%d/%d)", mGroup.getName(), mGroup.getMinSelection(), mGroup.getMaxSelection()));
-        for (ItemCustomizationFieldModel field: mGroup.getCustomizationFields()) {
+        for (ItemCustomizationFieldModel field : mGroup.getCustomizationFields()) {
             vListFields.addView(new ItemCustomizationFieldHolder(field, context, this).getView());
         }
     }
@@ -49,15 +50,12 @@ public class ItemCustomizationGroupHolder implements ItemCustomizationFieldHolde
     @Override
     public void onSelect(ItemCustomizationFieldHolder holder) {
         if (selectedFields.size() >= mGroup.getMaxSelection()) {
-            if(mGroup.getMaxSelection() == 1) {
+            if (mGroup.getMaxSelection() == 1) {
                 selectedFields.get(0).setChecked(false);
-                selectedFields.remove(0);
                 holder.setChecked(true);
-                Log.e("onSelect", "replaced");
                 selectedFields.add(holder);
                 mInteractionListener.onFieldClick(holder.getField(), true);
-            }
-            else {
+            } else {
                 holder.setChecked(false);
                 FluentSnackbar.create(mView)
                         .create("Cannot select more than " + mGroup.getMaxSelection())
@@ -67,12 +65,10 @@ public class ItemCustomizationGroupHolder implements ItemCustomizationFieldHolde
                         .show();
             }
         } else {
-            Log.e("onSelect", "added");
             selectedFields.add(holder);
             holder.setChecked(true);
             mInteractionListener.onFieldClick(holder.getField(), true);
         }
-        Log.e("onSelect", "SIZE: " + selectedFields.size());
     }
 
     @Override
@@ -80,8 +76,6 @@ public class ItemCustomizationGroupHolder implements ItemCustomizationFieldHolde
         selectedFields.remove(holder);
         holder.setChecked(false);
         mInteractionListener.onFieldClick(holder.getField(), false);
-        Log.e("onSelect", "removed - " +selectedFields.size());
-
     }
 
     public View getView() {

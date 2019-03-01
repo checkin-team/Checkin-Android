@@ -137,6 +137,8 @@ public class ManagerTablesFragment extends Fragment implements ManagerWorkTableA
         RestaurantTableModel table = mViewModel.getTableWithPosition(pos);
         if (table != null) {
             table.setEvent(event);
+            if (event.getType() == CHAT_EVENT_TYPE.EVENT_REQUEST_CHECKOUT)
+                table.setRequestedCheckout(true);
             table.addEventCount();
             mAdapter.updateSession(pos);
         }
