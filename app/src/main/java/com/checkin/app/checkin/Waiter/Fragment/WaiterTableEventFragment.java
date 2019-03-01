@@ -16,6 +16,7 @@ import com.checkin.app.checkin.Waiter.WaiterTableViewModel;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.core.widget.NestedScrollView;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProviders;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -29,6 +30,9 @@ public class WaiterTableEventFragment extends BaseFragment implements WaiterEven
     RecyclerView rvEventsDone;
     @BindView(R.id.title_waiter_delivered)
     TextView tvDelivered;
+    @BindView(R.id.nested_sv_ws_event)
+    NestedScrollView nestedSVEvent;
+
 
     private WaiterEventAdapter mActiveAdapter;
     private WaiterEventAdapter mDoneAdapter;
@@ -73,6 +77,7 @@ public class WaiterTableEventFragment extends BaseFragment implements WaiterEven
                 return;
             if (listResource.status == Resource.Status.SUCCESS && listResource.data != null) {
                 mActiveAdapter.setData(listResource.data);
+                nestedSVEvent.scrollTo(0,0);
             }
         });
         mViewModel.getDeliveredTableEvents().observe(this, listResource -> {
@@ -83,6 +88,7 @@ public class WaiterTableEventFragment extends BaseFragment implements WaiterEven
                     tvDelivered.setVisibility(View.VISIBLE);
                     rvEventsDone.setVisibility(View.VISIBLE);
                     mDoneAdapter.setData(listResource.data);
+                    nestedSVEvent.scrollTo(0,0);
                 }
             }
         });
@@ -99,7 +105,6 @@ public class WaiterTableEventFragment extends BaseFragment implements WaiterEven
                 return;
             if (resource.status == Resource.Status.SUCCESS && resource.data != null) {
                 mViewModel.updateUiMarkEventDone(Long.valueOf(resource.data.getPk()));
-                Utils.toast(requireContext(), resource.message);
             } else if (resource.status != Resource.Status.LOADING)
                 Utils.toast(requireContext(), resource.message);
         });

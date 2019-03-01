@@ -1,5 +1,5 @@
 <resources xmlns:tools="http://schemas.android.com/tools">
-    <string name="app_name">Check-In</string>
+    <string name="app_name">Checkin</string>
     <string name="account_type">com.checkin.accounts</string>
 
     <string name="navigation_drawer_open">Open navigation drawer</string>
@@ -158,6 +158,7 @@
     <string name="your_friends_can_join_by_scanning_qr_code">Your friends can join your session by scanning the QR Code</string>
     <string name="recommendation_coming_soon">Recommendation of dishes coming soon</string>
     <string name="pending_request">(Pending Request)</string>
+    <string name="session_requested_checkout">Your checkout request has been sent.\n Waiter is coming to you soon</string>
 
     <string name="status_order_open">Not Accepted</string>
     <string name="status_order_cancelled">Order Cancelled</string>

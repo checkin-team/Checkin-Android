@@ -47,13 +47,18 @@
 
     </androidx.cardview.widget.CardView>
 
-    <TextView
+    <CheckedTextView
         android:id="@+id/tv_read_eula"
         style="@style/RedSmallTextStyle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginBottom="@dimen/spacing_small"
+        android:checked="false"
+        android:drawableStart="@drawable/checkbox_selector"
+        android:drawablePadding="@dimen/spacing_extra_small"
+        android:gravity="center"
         android:text="Read EULA"
+        android:textAlignment="center"
         app:layout_constraintBottom_toTopOf="@id/tv_tag_line"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />

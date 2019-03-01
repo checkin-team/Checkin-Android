@@ -1,9 +1,7 @@
 package com.checkin.app.checkin.Maps;
 
 import android.content.Context;
-import android.os.Build;
 import android.provider.Settings;
-import android.text.TextUtils;
 
 
 public class AppUtils {
@@ -19,6 +17,7 @@ public class AppUtils {
         public static final String LOCATION_DATA_AREA = "LOCATION_DATA_AREA";
         public static final String LOCATION_DATA_CITY = "LOCATION_DATA_CITY";
         public static final String LOCATION_DATA_STREET = "LOCATION_DATA_STREET";
+        public static final String LOCATION_DATA_ADDRESS_BUNDLE = "LOCATION_DATA_ADDRESS_BUNDLE";
     }
 
     public static boolean isLocationEnabled(Context context) {
@@ -31,5 +30,4 @@ public class AppUtils {
         }
         return locationMode != Settings.Secure.LOCATION_MODE_OFF;
     }
-
 }

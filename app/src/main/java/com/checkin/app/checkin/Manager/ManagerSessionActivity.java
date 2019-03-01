@@ -4,7 +4,6 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -36,6 +35,7 @@ import static com.checkin.app.checkin.Data.Message.MessageModel.MESSAGE_TYPE.MAN
 import static com.checkin.app.checkin.Data.Message.MessageModel.MESSAGE_TYPE.MANAGER_SESSION_CHECKOUT_REQUEST;
 import static com.checkin.app.checkin.Data.Message.MessageModel.MESSAGE_TYPE.MANAGER_SESSION_EVENT_CONCERN;
 import static com.checkin.app.checkin.Data.Message.MessageModel.MESSAGE_TYPE.MANAGER_SESSION_EVENT_SERVICE;
+import static com.checkin.app.checkin.Data.Message.MessageModel.MESSAGE_TYPE.MANAGER_SESSION_EVENT_UPDATE;
 import static com.checkin.app.checkin.Data.Message.MessageModel.MESSAGE_TYPE.MANAGER_SESSION_HOST_ASSIGNED;
 import static com.checkin.app.checkin.Data.Message.MessageModel.MESSAGE_TYPE.MANAGER_SESSION_MEMBER_CHANGE;
 import static com.checkin.app.checkin.Data.Message.MessageModel.MESSAGE_TYPE.MANAGER_SESSION_NEW_ORDER;
@@ -44,8 +44,9 @@ import static com.checkin.app.checkin.Data.Message.MessageModel.MESSAGE_TYPE.MAN
 public class ManagerSessionActivity extends AppCompatActivity implements ManagerSessionOrderFragment.ManagerOrdersInteraction {
     private static final String TAG = ManagerSessionActivity.class.getSimpleName();
 
-    public static final String KEY_SESSION_PK = "manager.session_pk";
-    public static final String KEY_SHOP_PK = "manager.shop_pk";
+    public static final String KEY_SESSION_PK = "manager.session.session_pk";
+    public static final String KEY_SHOP_PK = "manager.session.shop_pk";
+    public static final String KEY_OPEN_ORDERS = "manager.session.open_orders";
 
     @BindView(R.id.tv_ms_order_new_count)
     TextView tvCountOrdersNew;
@@ -71,6 +72,8 @@ public class ManagerSessionActivity extends AppCompatActivity implements Manager
     private ManagerSessionOrderFragment mOrderFragment;
     private ManagerSessionEventFragment mEventFragment;
     private ManagerSessionViewModel mViewModel;
+
+    private SessionBriefModel mSessionData;
 
     private final BroadcastReceiver mReceiver = new BroadcastReceiver() {
         @Override
@@ -112,9 +115,89 @@ public class ManagerSessionActivity extends AppCompatActivity implements Manager
                     long orderPk = message.getRawData().getSessionOrderId();
                     ManagerSessionActivity.this.updateOrderStatus(orderPk, message.getRawData().getSessionEventStatus());
                     break;
+                case MANAGER_SESSION_EVENT_UPDATE:
+                    long eventPk = message.getObject().getPk();
+                    ManagerSessionActivity.this.updateEventStatus(eventPk, message.getRawData().getSessionEventStatus());
+                    break;
             }
         }
     };
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_manager_session);
+        ButterKnife.bind(this);
+
+        mViewModel = ViewModelProviders.of(this).get(ManagerSessionViewModel.class);
+        mOrderFragment = ManagerSessionOrderFragment.newInstance(this);
+        mEventFragment = ManagerSessionEventFragment.newInstance();
+        setupUi();
+        setupEventListing();
+    }
+
+    private void setupUi() {
+        long sessionId = getIntent().getLongExtra(KEY_SESSION_PK, 0L);
+        long shopId = getIntent().getLongExtra(KEY_SHOP_PK, 0L);
+        mViewModel.fetchSessionBriefData(sessionId);
+        mViewModel.setShopPk(shopId);
+        mViewModel.fetchSessionOrders();
+
+        mViewModel.getSessionBriefData().observe(this, resource -> {
+            if (resource == null) return;
+            SessionBriefModel data = resource.data;
+            switch (resource.status) {
+                case SUCCESS:
+                    if (data == null)
+                        return;
+                    setupData(data);
+                    break;
+                case ERROR_NOT_FOUND:
+                    finish();
+                    break;
+                case LOADING:
+                    break;
+                default:
+                    Utils.toast(this, resource.message);
+            }
+        });
+
+        mViewModel.getCountNewOrders().observe(this, integer -> {
+            if (integer == null)
+                integer = 0;
+            tvCountOrdersNew.setTextColor(
+                    integer > 0 ? getResources().getColor(R.color.primary_red) : getResources().getColor(R.color.brownish_grey));
+            tvCountOrdersNew.setText(String.valueOf(integer));
+        });
+        mViewModel.getCountProgressOrders().observe(this, integer -> {
+            if (integer == null)
+                integer = 0;
+            tvCountOrdersInProgress.setText(String.valueOf(integer));
+        });
+        mViewModel.getCountDeliveredOrders().observe(this, integer -> {
+            if (integer == null)
+                integer = 0;
+            tvCountOrdersDelivered.setText(String.valueOf(integer));
+        });
+
+        boolean shouldOpenOrders = getIntent().getBooleanExtra(KEY_OPEN_ORDERS, false);
+        if (shouldOpenOrders) setupOrdersListing();
+    }
+
+    private void setupData(SessionBriefModel data) {
+        mSessionData = data;
+        tvCartItemPrice.setText(String.format(Locale.ENGLISH, Utils.getCurrencyFormat(this), data.formatBill()));
+        if (data.getHost() != null) {
+            tvWaiterName.setText(data.getHost().getDisplayName());
+            Utils.loadImageOrDefault(imWaiterPic, data.getHost().getDisplayPic(), R.drawable.ic_waiter);
+        } else {
+            imWaiterPic.setImageResource(R.drawable.ic_waiter);
+            tvWaiterName.setText(R.string.waiter_unassigned);
+        }
+        tvTable.setText(data.getTable());
+    }
+
+    // region UI-Update
 
     private void updateSessionHost(BriefModel user) {
         SessionBriefModel data = mViewModel.getSessionData();
@@ -153,76 +236,13 @@ public class ManagerSessionActivity extends AppCompatActivity implements Manager
         mViewModel.addOrderData(orderedItemModel);
     }
 
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_manager_session);
-        ButterKnife.bind(this);
-
-        mViewModel = ViewModelProviders.of(this).get(ManagerSessionViewModel.class);
-        setupUi();
-        mOrderFragment = ManagerSessionOrderFragment.newInstance(this);
-        mEventFragment = ManagerSessionEventFragment.newInstance();
-        setupEventListing();
+    private void updateEventStatus(long eventPk, SessionChatModel.CHAT_STATUS_TYPE sessionEventStatus) {
+        mViewModel.updateUiEventStatus(eventPk, sessionEventStatus);
     }
 
-    private void setupUi() {
-        long sessionId = getIntent().getLongExtra(KEY_SESSION_PK, 0);
-        long shopId = getIntent().getLongExtra(KEY_SHOP_PK, 0);
-        mViewModel.fetchSessionBriefData(sessionId);
-        mViewModel.setShopPk(shopId);
-        mViewModel.fetchSessionOrders();
+    // endregion
 
-        mViewModel.getSessionBriefData().observe(this, resource -> {
-            if (resource == null) return;
-            SessionBriefModel data = resource.data;
-            switch (resource.status) {
-                case SUCCESS: {
-                    if (data == null)
-                        return;
-                    setupData(data);
-                }
-                case LOADING: {
-                    break;
-                }
-                default: {
-                    Log.e(resource.status.name(), resource.message == null ? "Null" : resource.message);
-                }
-            }
-        });
-
-        mViewModel.getCountNewOrders().observe(this, integer -> {
-            if (integer == null)
-                integer = 0;
-            tvCountOrdersNew.setTextColor(
-                    integer > 0 ? getResources().getColor(R.color.primary_red) : getResources().getColor(R.color.brownish_grey));
-            tvCountOrdersNew.setText(String.valueOf(integer));
-        });
-        mViewModel.getCountProgressOrders().observe(this, integer -> {
-            if (integer == null)
-                integer = 0;
-            tvCountOrdersInProgress.setText(String.valueOf(integer));
-        });
-        mViewModel.getCountDeliveredOrders().observe(this, integer -> {
-            if (integer == null)
-                integer = 0;
-            tvCountOrdersDelivered.setText(String.valueOf(integer));
-        });
-    }
-
-    private void setupData(SessionBriefModel data) {
-        tvCartItemPrice.setText(String.format(Locale.ENGLISH, Utils.getCurrencyFormat(this), data.formatBill()));
-        if (data.getHost() != null) {
-            tvWaiterName.setText(data.getHost().getDisplayName());
-            Utils.loadImageOrDefault(imWaiterPic, data.getHost().getDisplayPic(), R.drawable.ic_waiter);
-        } else {
-            imWaiterPic.setImageResource(R.drawable.ic_waiter);
-            tvWaiterName.setText(R.string.waiter_unassigned);
-        }
-        tvTable.setText(data.getTable());
-    }
-
-    @OnClick(R.id.im_ms_bottom_swipe_up)
+    @OnClick(R.id.container_ms_bottom_actions)
     public void onSwipeUp() {
         setupOrdersListing();
     }
@@ -230,6 +250,7 @@ public class ManagerSessionActivity extends AppCompatActivity implements Manager
     private void setupOrdersListing() {
         getSupportFragmentManager().beginTransaction()
                 .replace(R.id.container_manager_session_fragment, mOrderFragment)
+                .addToBackStack(null)
                 .commit();
     }
 
@@ -251,15 +272,26 @@ public class ManagerSessionActivity extends AppCompatActivity implements Manager
         MessageModel.MESSAGE_TYPE[] types = new MessageModel.MESSAGE_TYPE[]{
                 MANAGER_SESSION_NEW_ORDER, MANAGER_SESSION_EVENT_SERVICE, MANAGER_SESSION_CHECKOUT_REQUEST,
                 MANAGER_SESSION_EVENT_CONCERN, MANAGER_SESSION_HOST_ASSIGNED, MANAGER_SESSION_BILL_CHANGE,
-                MANAGER_SESSION_MEMBER_CHANGE, MANAGER_SESSION_UPDATE_ORDER
+                MANAGER_SESSION_MEMBER_CHANGE, MANAGER_SESSION_UPDATE_ORDER, MANAGER_SESSION_EVENT_UPDATE
         };
         MessageUtils.registerLocalReceiver(this, mReceiver, types);
+        mViewModel.fetchSessionBriefData();
     }
 
     @Override
     protected void onPause() {
         super.onPause();
         MessageUtils.unregisterLocalReceiver(this, mReceiver);
+    }
+
+    @OnClick(R.id.tv_manager_session_bill)
+    public void onCheckSessionBill() {
+        if (mSessionData == null) return;
+        Intent intent = new Intent(this, ManagerSessionInvoiceActivity.class);
+        intent.putExtra(ManagerSessionInvoiceActivity.TABLE_NAME, mSessionData.getTable())
+                .putExtra(ManagerSessionInvoiceActivity.KEY_SESSION, mViewModel.getSessionPk())
+                .putExtra(ManagerSessionInvoiceActivity.IS_REQUESTED_CHECKOUT, mSessionData.isRequestedCheckout());
+        startActivity(intent);
     }
 
     @OnClick(R.id.im_manager_session_back)

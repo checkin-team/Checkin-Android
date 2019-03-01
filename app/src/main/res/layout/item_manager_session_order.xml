@@ -7,8 +7,8 @@
     android:layout_marginStart="@dimen/spacing_small"
     android:layout_marginTop="@dimen/spacing_normal"
     android:layout_marginEnd="@dimen/spacing_small"
-    android:background="@color/white"
-    android:paddingTop="@dimen/spacing_small">
+    android:layout_marginBottom="@dimen/spacing_small"
+    android:background="@color/white">
 
     <TextView
         android:id="@+id/tv_ms_order_item_name"
@@ -17,11 +17,13 @@
         android:layout_height="wrap_content"
         android:drawableStart="@drawable/ic_veg"
         android:drawablePadding="@dimen/spacing_small"
-        android:gravity="center_vertical|start"
+        android:gravity="center|start"
+        android:minHeight="@dimen/size_small_button"
         app:layout_constraintBottom_toBottomOf="@id/container_ms_order_status"
         app:layout_constraintEnd_toStartOf="@id/tv_ms_order_item_quantity"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0"
         tools:text="Pizza" />
 
     <TextView
@@ -29,6 +31,7 @@
         style="@style/GreySmallTextStyle"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
+        android:gravity="center"
         android:paddingStart="@dimen/spacing_extra_tiny"
         android:paddingEnd="@dimen/spacing_extra_tiny"
         app:layout_constraintBottom_toBottomOf="@id/container_ms_order_status"
@@ -47,18 +50,35 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 
-        <TextView
-            android:id="@+id/tv_ms_order_status"
-            style="@style/WhiteSmallTextStyle"
-            android:layout_width="@dimen/width_manager_order_item_status"
-            android:layout_height="wrap_content"
-            android:background="@color/primary_red"
-            android:paddingTop="@dimen/spacing_tiny"
-            android:paddingBottom="@dimen/spacing_tiny"
-            android:textAlignment="center"
-            android:textAllCaps="true"
-            android:textSize="@dimen/font_extra_small"
-            tools:text="In Progress" />
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+
+            <TextView
+                android:id="@+id/tv_ms_order_status"
+                style="@style/WhiteSmallTextStyle"
+                android:layout_width="@dimen/width_manager_order_item_status"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:background="@color/primary_red"
+                android:paddingTop="@dimen/spacing_tiny"
+                android:paddingBottom="@dimen/spacing_tiny"
+                android:textAlignment="center"
+                android:textAllCaps="true"
+                android:textSize="@dimen/font_extra_small"
+                tools:text="In Progress" />
+
+            <Button
+                android:id="@+id/btn_ms_order_done"
+                style="@style/ButtonPositiveAction"
+                android:layout_width="@dimen/button_width_short"
+                android:layout_height="@dimen/size_small_button"
+                android:layout_marginStart="@dimen/spacing_tiny"
+                android:gravity="center"
+                android:text="@string/title_done"
+                android:textSize="@dimen/font_extra_small" />
+
+        </LinearLayout>
 
         <LinearLayout
             android:id="@+id/container_ms_order_status_open"
@@ -95,14 +115,14 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="@dimen/spacing_extra_small"
-        android:layout_marginTop="@dimen/spacing_extra_small"
+        android:layout_marginTop="@dimen/spacing_normal"
         android:layout_marginEnd="@dimen/spacing_extra_small"
         android:orientation="horizontal"
         android:visibility="gone"
         app:layout_constraintBottom_toTopOf="@id/container_ms_order_remarks"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/container_ms_order_status">
+        app:layout_constraintTop_toBottomOf="@id/tv_ms_order_item_name">
 
         <LinearLayout
             android:id="@+id/container_ms_order_customizations_left"
@@ -132,10 +152,11 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/spacing_small"
         android:orientation="vertical"
-        android:paddingTop="@dimen/spacing_small"
+        android:paddingTop="@dimen/spacing_normal"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent">
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="parent">
 
         <include layout="@layout/incl_horizontal_line" />
 

@@ -2,6 +2,8 @@ package com.checkin.app.checkin.Session.ActiveSession;
 
 import android.os.Bundle;
 import android.text.Editable;
+import android.util.Log;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -25,7 +27,7 @@ import butterknife.OnClick;
 import butterknife.OnTextChanged;
 
 public class ActiveSessionInvoiceActivity extends AppCompatActivity {
-    public static final String KEY_SESSION_PK = "invoice.session_pk";
+    public static final String KEY_SESSION_REQUESTED_CHECKOUT = "invoice.session..requested_checkout";
 
     @BindView(R.id.rv_invoice_ordered_items)
     RecyclerView rvOrderedItems;
@@ -37,6 +39,8 @@ public class ActiveSessionInvoiceActivity extends AppCompatActivity {
     TextView tvInvoiceTotal;
     @BindView(R.id.ed_invoice_tip)
     EditText edInvoiceTip;
+    @BindView(R.id.btn_invoice_request_checkout)
+    Button btnRequestCheckout;
 
     private ActiveSessionViewModel mViewModel;
     private InvoiceOrdersAdapter mAdapter;
@@ -76,6 +80,7 @@ public class ActiveSessionInvoiceActivity extends AppCompatActivity {
             switch (objectNodeResource.status) {
                 case SUCCESS: {
                     Utils.toast(this, "Done!");
+                    finish();
                     break;
                 }
                 case LOADING:
@@ -99,6 +104,16 @@ public class ActiveSessionInvoiceActivity extends AppCompatActivity {
         edInvoiceTip.setText(data.getBill().formatTip());
         // Total
         tvInvoiceTotal.setText(Utils.formatCurrencyAmount(this, data.getBill().getTotal()));
+
+        boolean isRequestedCheckout = getIntent().getBooleanExtra(KEY_SESSION_REQUESTED_CHECKOUT, false);
+        Log.e("value=====", !isRequestedCheckout + "");
+        edInvoiceTip.setEnabled(!isRequestedCheckout);
+        btnRequestCheckout.setEnabled(!isRequestedCheckout);
+        if(isRequestedCheckout){
+            edInvoiceTip.setBackground(getResources().getDrawable(R.drawable.bordered_text_light_grey));
+            edInvoiceTip.setPadding(15,0,0,0);
+            btnRequestCheckout.setText("Requested Checkout");
+        }
     }
 
     @OnTextChanged(value = R.id.ed_invoice_tip, callback = OnTextChanged.Callback.AFTER_TEXT_CHANGED)

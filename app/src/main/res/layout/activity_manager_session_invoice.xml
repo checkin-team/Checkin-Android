@@ -19,7 +19,7 @@
         android:id="@+id/container_ms_session_invoice"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_above="@+id/payment_mode_container"
+        android:layout_above="@+id/ll_request_checkout_session_invoice"
         android:layout_below="@+id/title_bill_details"
         android:fillViewport="true"
         android:scrollbars="none">
@@ -56,9 +56,9 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:text="Discount"
+                    app:layout_constraintBottom_toBottomOf="@id/ed_ms_invoice_discount"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="@id/ed_ms_invoice_discount"
-                    app:layout_constraintBottom_toBottomOf="@id/ed_ms_invoice_discount"/>
+                    app:layout_constraintTop_toTopOf="@id/ed_ms_invoice_discount" />
 
                 <EditText
                     android:id="@+id/ed_ms_invoice_discount"
@@ -170,11 +170,46 @@
     </ScrollView>
 
     <LinearLayout
+        android:id="@+id/ll_request_checkout_session_invoice"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_above="@id/payment_mode_container"
+        android:layout_marginStart="@dimen/spacing_huge"
+        android:layout_marginEnd="@dimen/spacing_huge"
+        android:layout_marginTop="@dimen/spacing_small"
+        android:background="@drawable/rounded_rectangle_two_side_grey"
+        android:gravity="center"
+        android:orientation="vertical"
+        android:paddingTop="@dimen/spacing_normal"
+        android:paddingBottom="@dimen/spacing_normal"
+        android:visibility="gone">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/arial_rounded_mt_bold"
+            android:text="Customer’s request for Checkout"
+            android:textColor="@color/primary_red"
+            android:textSize="@dimen/font_normal" />
+
+        <TextView
+            style="@style/GreyTextStyle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/spacing_extra_small"
+            android:text="Waiter notified to collect the cash" />
+
+    </LinearLayout>
+
+
+    <LinearLayout
         android:id="@+id/payment_mode_container"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
-        android:layout_margin="@dimen/spacing_normal"
+        android:layout_marginLeft="@dimen/spacing_normal"
+        android:layout_marginRight="@dimen/spacing_normal"
+        android:layout_marginBottom="@dimen/spacing_normal"
         android:background="@drawable/rounded_rectangle_light_grey"
         android:orientation="horizontal"
         android:padding="@dimen/spacing_small">
@@ -195,10 +230,16 @@
 
         <Button
             android:id="@+id/btn_ms_invoice_collect_cash"
-            style="@style/ButtonRedAlertAction"
             android:layout_width="wrap_content"
             android:layout_height="@dimen/button_height_short"
-            android:text="Collect Cash"
+            android:background="@color/primary_red"
+            android:paddingStart="@dimen/spacing_small"
+            android:paddingTop="@dimen/spacing_extra_small"
+            android:paddingEnd="@dimen/spacing_small"
+            android:paddingBottom="@dimen/spacing_extra_small"
+            android:text="Close Session"
+            android:textColor="@color/white"
+            android:textSize="@dimen/font_normal"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent" />

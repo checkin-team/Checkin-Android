@@ -116,4 +116,9 @@ public class MenuGroupsFragment extends BaseFragment {
     public void scrollToCategory(String title) {
         rvGroupsList.smoothScrollToPosition(mAdapter.getCategoryPosition(title));
     }
+
+    @Override
+    protected void updateScreen() {
+        mViewModel.updateResults();
+    }
 }

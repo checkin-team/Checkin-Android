@@ -7,6 +7,7 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.media.AudioAttributes;
 import android.os.Build;
 import android.util.Log;
 
@@ -32,20 +33,20 @@ public class MessageUtils {
     private static final String TAG = MessageUtils.class.getSimpleName();
 
     @RequiresApi(api = Build.VERSION_CODES.O)
-    private static void createChannels(NotificationManager notificationManager, CHANNEL_GROUP group, final int importance, CHANNEL... channelTypes) {
+    private static List<NotificationChannel> createChannels(CHANNEL_GROUP group, final int importance, CHANNEL... channelTypes) {
         List<NotificationChannel> channels = new ArrayList<>(channelTypes.length);
-        for (CHANNEL channelType: channelTypes) {
+        for (CHANNEL channelType : channelTypes) {
             NotificationChannel channel = new NotificationChannel(channelType.id, channelType.title, importance);
             channel.setGroup(group.id);
             channels.add(channel);
         }
-        notificationManager.createNotificationChannels(channels);
+        return channels;
     }
 
     @RequiresApi(api = Build.VERSION_CODES.O)
     private static void createChannelGroups(NotificationManager notificationManager, CHANNEL_GROUP... channelGroups) {
         List<NotificationChannelGroup> groups = new ArrayList<>(channelGroups.length);
-        for (CHANNEL_GROUP channelGroup: channelGroups) {
+        for (CHANNEL_GROUP channelGroup : channelGroups) {
             groups.add(new NotificationChannelGroup(channelGroup.id, channelGroup.title));
         }
         notificationManager.createNotificationChannelGroups(groups);
@@ -57,9 +58,12 @@ public class MessageUtils {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
             createChannelGroups(notificationManager, CHANNEL_GROUP.DEFAULT_USER, CHANNEL_GROUP.RESTAURANT_CUSTOMER, CHANNEL_GROUP.MISC);
 
-            createChannels(notificationManager, CHANNEL_GROUP.DEFAULT_USER, NotificationManager.IMPORTANCE_DEFAULT, CHANNEL.DEFAULT);
-            createChannels(notificationManager, CHANNEL_GROUP.RESTAURANT_CUSTOMER, NotificationManager.IMPORTANCE_DEFAULT, CHANNEL.ACTIVE_SESSION);
-            createChannels(notificationManager, CHANNEL_GROUP.MISC, NotificationManager.IMPORTANCE_LOW, CHANNEL.MEDIA_UPLOAD);
+            List<NotificationChannel> channels;
+            channels = createChannels(CHANNEL_GROUP.DEFAULT_USER, NotificationManager.IMPORTANCE_DEFAULT, CHANNEL.DEFAULT);
+            channels.addAll(createChannels(CHANNEL_GROUP.RESTAURANT_CUSTOMER, NotificationManager.IMPORTANCE_DEFAULT, CHANNEL.ACTIVE_SESSION));
+            channels.addAll(createChannels(CHANNEL_GROUP.MISC, NotificationManager.IMPORTANCE_LOW, CHANNEL.MEDIA_UPLOAD));
+
+            notificationManager.createNotificationChannels(channels);
         }
     }
 
@@ -69,7 +73,9 @@ public class MessageUtils {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
             createChannelGroups(notificationManager, CHANNEL_GROUP.RESTAURANT_MEMBER);
 
-            createChannels(notificationManager, CHANNEL_GROUP.RESTAURANT_MEMBER, NotificationManager.IMPORTANCE_HIGH, CHANNEL.MEMBER, CHANNEL.MANAGER);
+            List<NotificationChannel> channels;
+            channels = createChannels(CHANNEL_GROUP.RESTAURANT_MEMBER, NotificationManager.IMPORTANCE_HIGH, CHANNEL.MEMBER, CHANNEL.MANAGER);
+            notificationManager.createNotificationChannels(channels);
         }
     }
 
@@ -79,7 +85,9 @@ public class MessageUtils {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
             createChannelGroups(notificationManager, CHANNEL_GROUP.RESTAURANT_MEMBER);
 
-            createChannels(notificationManager, CHANNEL_GROUP.RESTAURANT_MEMBER, NotificationManager.IMPORTANCE_HIGH, CHANNEL.MEMBER, CHANNEL.WAITER);
+            List<NotificationChannel> channels;
+            channels = createChannels(CHANNEL_GROUP.RESTAURANT_MEMBER, NotificationManager.IMPORTANCE_HIGH, CHANNEL.MEMBER, CHANNEL.WAITER);
+            notificationManager.createNotificationChannels(channels);
         }
     }
 
@@ -89,14 +97,40 @@ public class MessageUtils {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
             createChannelGroups(notificationManager, CHANNEL_GROUP.RESTAURANT_MEMBER);
 
-            createChannels(notificationManager, CHANNEL_GROUP.RESTAURANT_MEMBER, NotificationManager.IMPORTANCE_DEFAULT, CHANNEL.MEMBER, CHANNEL.ADMIN);
+            List<NotificationChannel> channels;
+            channels = createChannels(CHANNEL_GROUP.RESTAURANT_MEMBER, NotificationManager.IMPORTANCE_DEFAULT, CHANNEL.MEMBER, CHANNEL.ADMIN);
+            notificationManager.createNotificationChannels(channels);
+        }
+    }
+
+    public static void createOrderChannels(Context context, NotificationManager notificationManager) {
+        if (notificationManager == null)
+            return;
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            createChannelGroups(notificationManager, CHANNEL_GROUP.RESTAURANT_MEMBER);
+
+            AudioAttributes audioAttributes = new AudioAttributes.Builder()
+                    .setUsage(AudioAttributes.USAGE_NOTIFICATION)
+                    .setContentType(AudioAttributes.CONTENT_TYPE_SONIFICATION)
+                    .build();
+            List<NotificationChannel> channels;
+            channels = createChannels(CHANNEL_GROUP.RESTAURANT_MEMBER, NotificationManager.IMPORTANCE_HIGH, CHANNEL.ORDERS);
+
+            for (NotificationChannel channel: channels) {
+                channel.setSound(Constants.getAlertOrdersSoundUri(context), audioAttributes);
+                channel.enableVibration(true);
+                channel.enableLights(true);
+                channel.setBypassDnd(true);
+            }
+
+            notificationManager.createNotificationChannels(channels);
         }
     }
 
     public static void registerLocalReceiver(Context context, BroadcastReceiver receiver, @NonNull MESSAGE_TYPE... types) {
         IntentFilter intentFilter = new IntentFilter();
         intentFilter.addCategory(Constants.FCM_INTENT_CATEGORY);
-        for (MESSAGE_TYPE type: types)
+        for (MESSAGE_TYPE type : types)
             intentFilter.addAction(type.actionTag());
         LocalBroadcastManager.getInstance(context.getApplicationContext())
                 .registerReceiver(receiver, intentFilter);
@@ -108,7 +142,7 @@ public class MessageUtils {
         intentFilter.addDataScheme(Constants.FILTER_DATA_SCHEME);
         intentFilter.addDataAuthority(Constants.FILTER_DATA_HOST, "");
         intentFilter.addDataPath(String.format(Locale.ENGLISH, Constants.FILTER_DATA_TARGET_PATH, targetPk), 0);
-        for (MESSAGE_TYPE type: types)
+        for (MESSAGE_TYPE type : types)
             intentFilter.addAction(type.actionTag());
         LocalBroadcastManager.getInstance(context.getApplicationContext())
                 .registerReceiver(receiver, intentFilter);
@@ -159,6 +193,9 @@ public class MessageUtils {
             case MANAGER:
                 createManagerChannels(notificationManager);
                 break;
+            case ORDERS:
+                createOrderChannels(context, notificationManager);
+                break;
             case ACTIVE_SESSION:
             case MEDIA_UPLOAD:
             case DEFAULT:
@@ -181,6 +218,7 @@ public class MessageUtils {
 
         @Override
         public void onProgressUpdate(int percentage) {
+            Log.d("Update Status", percentage + "");
             builder.setProgress(100, percentage, false);
             notificationManager.notify(notificationId, builder.build());
         }

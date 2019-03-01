@@ -1,13 +1,7 @@
 package com.checkin.app.checkin.Menu;
 
 import android.app.Application;
-import androidx.lifecycle.LiveData;
-import androidx.lifecycle.MediatorLiveData;
-import androidx.lifecycle.MutableLiveData;
-import androidx.lifecycle.Transformations;
 import android.os.Handler;
-import androidx.annotation.NonNull;
-import android.util.Log;
 
 import com.checkin.app.checkin.Data.BaseViewModel;
 import com.checkin.app.checkin.Data.Resource;
@@ -22,9 +16,13 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-public class MenuViewModel extends BaseViewModel {
-    private final String TAG = MenuViewModel.class.getSimpleName();
+import androidx.annotation.NonNull;
+import androidx.lifecycle.LiveData;
+import androidx.lifecycle.MediatorLiveData;
+import androidx.lifecycle.MutableLiveData;
+import androidx.lifecycle.Transformations;
 
+public class MenuViewModel extends BaseViewModel {
     private MenuRepository mRepository;
 
     private MediatorLiveData<Resource<MenuModel>> mMenuData = new MediatorLiveData<>();
@@ -40,6 +38,7 @@ public class MenuViewModel extends BaseViewModel {
     private final Handler mHandler = new Handler();
     private Runnable mRunnable;
     private Long mSessionPk;
+    private long mShopPk;
 
     public MenuViewModel(@NonNull Application application) {
         super(application);
@@ -48,9 +47,11 @@ public class MenuViewModel extends BaseViewModel {
 
     @Override
     public void updateResults() {
+        fetchAvailableMenu(mShopPk);
     }
 
     public void fetchAvailableMenu(long shopId) {
+        mShopPk = shopId;
         mMenuData.addSource(mRepository.getAvailableMenu(shopId), mMenuData::setValue);
         resetMenuGroups();
 
@@ -154,7 +155,6 @@ public class MenuViewModel extends BaseViewModel {
         try {
             mCurrentItem.setValue(item.clone());
         } catch (CloneNotSupportedException e) {
-            Log.e(TAG, "Couldn't clone OrderedItem!");
         }
     }
 
@@ -237,7 +237,6 @@ public class MenuViewModel extends BaseViewModel {
         List<OrderedItemModel> items = mOrderedItems.getValue();
         boolean result = false;
         if (items == null) {
-            Log.e(TAG, "updateOrderedItem - No items in Cart!!!");
             return result;
         }
         OrderedItemModel orderedItem = null;
@@ -249,14 +248,12 @@ public class MenuViewModel extends BaseViewModel {
                     try {
                         orderedItem = listItem.clone();
                     } catch (CloneNotSupportedException e) {
-                        Log.e(TAG, "Couldn't clone OrderedItem!");
                     }
                     break;
                 }
             }
         }
         if (cartCount == 0) {
-            Log.e(TAG, "Didn't find item in cart!!");
             return result;
         }
         if (item.isComplexItem() && cartCount != count) {
@@ -274,7 +271,6 @@ public class MenuViewModel extends BaseViewModel {
     private void updateCart() {
         OrderedItemModel item = mCurrentItem.getValue();
         if (item == null) {
-            Log.e(TAG, "Current Item is NULL!");
             return;
         }
         List<OrderedItemModel> orderedItems = mOrderedItems.getValue();
@@ -369,7 +365,7 @@ public class MenuViewModel extends BaseViewModel {
                 return Resource.errorNotFound(null);
             Collections.sort(items, (o1, o2) -> {
                 int diff = (int) (o1.getTypeCosts().get(0) - o2.getTypeCosts().get(0));
-                return low2high ?  diff : -diff;
+                return low2high ? diff : -diff;
             });
             return Resource.cloneResource(input, items);
         });

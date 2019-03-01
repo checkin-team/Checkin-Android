@@ -15,7 +15,7 @@ public class OrderedItemModel implements Cloneable {
     private static final String TAG = OrderedItemModel.class.getSimpleName();
 
     @JsonProperty("pk")
-    private String pk;
+    private long pk;
 
     @JsonProperty("item")
     private MenuItemModel item;
@@ -99,7 +99,7 @@ public class OrderedItemModel implements Cloneable {
     }
 
     public void removeCustomizationField(ItemCustomizationFieldModel field) {
-        if (selectedFields == null)
+        if (selectedFields == null || field == null)
             Log.e(TAG, "Trying to remove from empty selected fields.");
         selectedFields.remove(field);
     }
@@ -122,17 +122,17 @@ public class OrderedItemModel implements Cloneable {
     }
 
     @JsonProperty("customizations")
-    public List<String> getCustomizations() {
+    public List<Long> getCustomizations() {
         if (selectedFields == null)
             return new ArrayList<>();
-        List<String> result = new ArrayList<>();
+        List<Long> result = new ArrayList<>();
         for (ItemCustomizationFieldModel field: this.selectedFields)
             result.add(field.getPk());
         return result;
     }
 
     @JsonProperty("item")
-    public String getItem() {
+    public long getItem() {
         return item.getPk();
     }
 
@@ -144,21 +144,7 @@ public class OrderedItemModel implements Cloneable {
         return Constants.DEFAULT_ORDER_CANCEL_DURATION - ((new Date()).getTime() - ordered.getTime());
     }
 
-    @Override
-    public boolean equals(Object obj) {
-        if (!(obj instanceof OrderedItemModel)) {
-            return false;
-        }
-        if (item.equals(((OrderedItemModel) obj).getItemModel()) && this.typeIndex == ((OrderedItemModel) obj).getTypeIndex()) {
-            if (this.selectedFields == null && ((OrderedItemModel) obj).getSelectedFields() == null)
-                return true;
-            if (this.selectedFields != null && ((OrderedItemModel) obj).getSelectedFields() != null)
-                return this.selectedFields.equals(((OrderedItemModel) obj).getSelectedFields());
-        }
-        return false;
-    }
-
-    public String getPk() {
+    public long getPk() {
         return pk;
     }
 
@@ -199,8 +185,21 @@ public class OrderedItemModel implements Cloneable {
     }
 
     @Override
+    public boolean equals(Object obj) {
+        if (!(obj instanceof OrderedItemModel)) {
+            return false;
+        }
+        if (item.equals(((OrderedItemModel) obj).getItemModel()) && this.typeIndex == ((OrderedItemModel) obj).getTypeIndex()) {
+            if (this.selectedFields == null && ((OrderedItemModel) obj).getSelectedFields() == null)
+                return true;
+            if (this.selectedFields != null && ((OrderedItemModel) obj).getSelectedFields() != null)
+                return this.selectedFields.equals(((OrderedItemModel) obj).getSelectedFields());
+        }
+        return false;
+    }
+
+    @Override
     public OrderedItemModel clone() throws CloneNotSupportedException {
         return ((OrderedItemModel) super.clone());
     }
-
 }

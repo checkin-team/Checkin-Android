@@ -141,4 +141,8 @@ public class SessionOrderedItemModel implements Serializable {
     public String formatQuantityItemType() {
         return String.format(Locale.ENGLISH, "%d %s", quantity, itemType);
     }
+
+    public void setPk(int pk) {
+        this.pk = pk;
+    }
 }

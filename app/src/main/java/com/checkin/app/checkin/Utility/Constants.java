@@ -1,12 +1,14 @@
 package com.checkin.app.checkin.Utility;
 
+import com.checkin.app.checkin.BuildConfig;
+
 import static java.util.concurrent.TimeUnit.MILLISECONDS;
 import static java.util.concurrent.TimeUnit.MINUTES;
 
 public class Constants {
-    public static final String API_VERSION = "0.4.0";
+    public static final String API_VERSION = "0.8.0";
     public static final String API_PROTOCOL = "https://";
-    public static final String API_HOST = "api.check-in.in";
+    public static final String API_HOST = getApiHost();
 
     public static final String ACCOUNT_TYPE = "com.checkin.accounts";
     public static final String ACCOUNT_UID = "account_uid";
@@ -30,4 +32,10 @@ public class Constants {
     public final static String EXPAND_TEXT ="....";
 
     private Constants() {}
+
+    private static String getApiHost() {
+        if (!BuildConfig.DEBUG && BuildConfig.BUILD_TYPE.equalsIgnoreCase("release"))
+            return "api.check-in.in";
+        return "dev.api.check-in.in";
+    }
 }

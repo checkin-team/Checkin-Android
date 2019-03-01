@@ -7,6 +7,8 @@ import androidx.fragment.app.FragmentTransaction;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 import androidx.appcompat.app.AppCompatActivity;
 import android.util.Log;
+import android.view.View;
+import android.widget.ProgressBar;
 
 import com.checkin.app.checkin.Data.Resource.Status;
 
@@ -21,6 +23,8 @@ public class BaseActivity extends AppCompatActivity {
 
     @Nullable
     private SwipeRefreshLayout swipeRefreshLayout;
+    @Nullable
+    private ProgressBar progressBar;
 
     public void init(@IdRes int groupId, boolean isNetworkRequired) {
         if (mFragment != null) {
@@ -76,5 +80,18 @@ public class BaseActivity extends AppCompatActivity {
     protected void stopRefreshing() {
         if (swipeRefreshLayout != null)
             swipeRefreshLayout.setRefreshing(false);
+    }
+
+    protected void initProgressBar(@IdRes int viewId){
+        progressBar = findViewById(viewId);
+        progressBar.setVisibility(View.GONE);
+    }
+
+    protected void visibleProgressBar(){
+        progressBar.setVisibility(View.VISIBLE);
+    }
+
+    protected void hideProgressBar(){
+        progressBar.setVisibility(View.GONE);
     }
 }

@@ -1,42 +1,42 @@
 package com.checkin.app.checkin.Data;
 
+import android.content.Context;
+
+import com.checkin.app.checkin.Menu.Model.ItemCustomizationFieldModel;
+import com.checkin.app.checkin.Menu.Model.ItemCustomizationGroupModel;
+import com.checkin.app.checkin.Menu.Model.MenuGroupModel;
+import com.checkin.app.checkin.Menu.Model.MenuItemModel;
+import com.checkin.app.checkin.Menu.Model.MenuModel;
+import com.checkin.app.checkin.MyObjectBox;
+
 import javax.inject.Singleton;
+
+import io.objectbox.Box;
+import io.objectbox.BoxStore;
 
 @Singleton
 public class AppDatabase {
-//    private static BoxStore mBoxStore;
-//
-//    private static BoxStore getBoxStore(final Context context) {
-//        if (mBoxStore == null) {
-//            synchronized (AppDatabase.class) {
-//                if (mBoxStore == null) {
-//                    mBoxStore = MyObjectBox.builder().androidContext(context).buildDefault();
-//                }
-//            }
-//        }
-//        return mBoxStore;
-//    }
-//
-//    private AppDatabase() {
-//    }
+    private static BoxStore mBoxStore;
 
-//    public static Box<NotificationModel> getNotifModel(final Context context) {
-//        return getBoxStore(context).boxFor(NotificationModel.class);
-//    }
+    private static BoxStore getBoxStore(final Context context) {
+        if (mBoxStore == null) {
+            synchronized (AppDatabase.class) {
+                if (mBoxStore == null) {
+                    mBoxStore = MyObjectBox.builder().androidContext(context).buildDefault();
+                }
+            }
+        }
+        return mBoxStore;
+    }
 
-    /*public static Box<UserModel> getUserModel(final Context context) {
-        return getBoxStore(context).boxFor(UserModel.class);
-    }*/
+    private AppDatabase() {
+    }
 
-    /*public static Box<RestaurantModel> getShopModel(final Context context) {
-        return getBoxStore(context).boxFor(RestaurantModel.class);
-    }*/
-
-    /*public static Box<ItemCustomizationFieldModel> getItemCustomizationFieldModel(final Context context) {
+    public static Box<ItemCustomizationFieldModel> getMenuItemCustomizationFieldModel(final Context context) {
         return getBoxStore(context).boxFor(ItemCustomizationFieldModel.class);
     }
 
-    public static Box<ItemCustomizationGroupModel> getItemCustomizationGroupModel(final Context context) {
+    public static Box<ItemCustomizationGroupModel> getMenuItemCustomizationGroupModel(final Context context) {
         return getBoxStore(context).boxFor(ItemCustomizationGroupModel.class);
     }
 
@@ -50,5 +50,9 @@ public class AppDatabase {
 
     public static Box<MenuModel> getMenuModel(final Context context) {
         return getBoxStore(context).boxFor(MenuModel.class);
-    }*/
+    }
+
+    public static void init(final Context context) {
+        getBoxStore(context);
+    }
 }

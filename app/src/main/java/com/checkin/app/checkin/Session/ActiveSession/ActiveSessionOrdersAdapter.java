@@ -1,8 +1,6 @@
 package com.checkin.app.checkin.Session.ActiveSession;
 
 import android.content.Context;
-import androidx.annotation.NonNull;
-import androidx.recyclerview.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -17,6 +15,8 @@ import com.checkin.app.checkin.Utility.Utils;
 
 import java.util.List;
 
+import androidx.annotation.NonNull;
+import androidx.recyclerview.widget.RecyclerView;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
@@ -89,7 +89,14 @@ public class ActiveSessionOrdersAdapter extends RecyclerView.Adapter<ActiveSessi
             imCancelOrder.setOnClickListener(v -> mListener.onCancelOrder(mOrderModel));
         }
 
+        private void resetLayout() {
+            imCancelOrder.setVisibility(View.GONE);
+            containerRemarks.setVisibility(View.GONE);
+            containerCustomizations.setVisibility(View.GONE);
+        }
+
         void bindData(SessionOrderedItemModel order) {
+            resetLayout();
             this.mOrderModel = order;
 
             tvItemName.setText(order.getItem().getName());
@@ -97,11 +104,9 @@ public class ActiveSessionOrdersAdapter extends RecyclerView.Adapter<ActiveSessi
             tvElapsedTime.setText(order.formatElapsedTime());
             tvPrice.setText(Utils.formatCurrencyAmount(itemView.getContext(), order.getCost()));
 
-            if (!order.canCancel()) imCancelOrder.setVisibility(View.GONE);
-            else imCancelOrder.setVisibility(View.VISIBLE);
+            if (order.canCancel()) imCancelOrder.setVisibility(View.VISIBLE);
 
-            if (order.getRemarks() == null) containerRemarks.setVisibility(View.GONE);
-            else{
+            if (order.getRemarks() != null) {
                 containerRemarks.setVisibility(View.VISIBLE);
                 tvRemarks.setText(order.getRemarks());
             }
@@ -137,8 +142,6 @@ public class ActiveSessionOrdersAdapter extends RecyclerView.Adapter<ActiveSessi
                     addCustomizations(
                             itemView.getContext(), order.getCustomizations().get(i), i % 2 == 0 ? containerCustomizationsLeft : containerCustomizationsRight);
                 }
-            } else {
-                containerCustomizations.setVisibility(View.GONE);
             }
         }
 

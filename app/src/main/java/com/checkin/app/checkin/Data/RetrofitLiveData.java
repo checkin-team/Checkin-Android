@@ -1,9 +1,9 @@
 package com.checkin.app.checkin.Data;
 
-import androidx.lifecycle.LiveData;
-import androidx.annotation.NonNull;
 import android.util.Log;
 
+import androidx.annotation.NonNull;
+import androidx.lifecycle.LiveData;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -31,7 +31,7 @@ public class RetrofitLiveData<T> extends LiveData<ApiResponse<T>> {
     protected void onActive() {
         super.onActive();
         if (!mCall.isCanceled() && !mCall.isExecuted()) {
-            Log.e("Http calls", "Call enqueued");
+            Log.d("Http calls", "Call enqueued");
             mCall.enqueue(mCallback);
         }
     }
@@ -46,7 +46,7 @@ public class RetrofitLiveData<T> extends LiveData<ApiResponse<T>> {
 
     public void cancel() {
         if (!mCall.isCanceled())
-            Log.e("Http Calls", "Call cancelled!");
+            Log.d("Http Calls", "Call cancelled!");
             mCall.cancel();
     }
 }

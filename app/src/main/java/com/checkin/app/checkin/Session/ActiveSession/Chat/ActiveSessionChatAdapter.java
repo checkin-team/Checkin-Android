@@ -39,8 +39,6 @@ public class ActiveSessionChatAdapter extends RecyclerView.Adapter {
     public void setData(List<SessionChatModel> data) {
         this.mChats = data;
         notifyDataSetChanged();
-        if (data.size() > 0)
-            mRecyclerView.scrollToPosition(data.size() - 1);
     }
 
     @Nullable
@@ -151,7 +149,6 @@ public class ActiveSessionChatAdapter extends RecyclerView.Adapter {
             else if (chat.getSender() == SessionChatModel.CHAT_SENDER_TYPE.SENDER_RESTAURANT)
                 tvSenderName.setText("Restaurant");
             tvChatTime.setText(chat.formatEventTime());
-
 
             imStatusDone.setActivated(chat.getStatus().tag >= CHAT_STATUS_TYPE.DONE.tag);
             imStatusProgress.setActivated(chat.getStatus().tag >= CHAT_STATUS_TYPE.IN_PROGRESS.tag);

@@ -227,14 +227,14 @@ public interface WebApiService {
     @GET("sessions/{session_id}/events/manager/")
     Call<List<ManagerSessionEventModel>> getManagerSessionEvents(@Path("session_id") long sessionId);
 
-    @GET("sessions/{session_id}/manager/checkout/approve/")
+    @GET("sessions/{session_id}/manage/bill/")
     Call<ManagerSessionInvoiceModel> getManagerSessionInvoice(@Path("session_id") long sessionId);
 
-    @PUT("sessions/{session_id}/manager/checkout/approve/")
-    Call<GenericDetailModel> putManagerCheckoutApprove(@Path("session_id") long sessionId, @Body ObjectNode data);
+    @PUT("sessions/{session_id}/manage/bill/")
+    Call<GenericDetailModel> putManageSessionBill(@Path("session_id") long sessionId, @Body ObjectNode data);
 
-    @POST("sessions/{session_id}/checkout/")
-    Call<GenericDetailModel> postSessionCheckout(@Path("session_id") long sessionId);
+    @PUT("sessions/{session_id}/checkout/")
+    Call<GenericDetailModel> putSessionCheckout(@Path("session_id") long sessionId, @Body ObjectNode data);
 
     // endregion
 

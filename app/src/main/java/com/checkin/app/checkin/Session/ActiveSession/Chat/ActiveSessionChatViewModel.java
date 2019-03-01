@@ -77,13 +77,11 @@ public class ActiveSessionChatViewModel extends BaseViewModel {
                 break;
             }
         }
-
         if (pos > -1) {
             SessionChatModel chatModel = listResource.data.get(pos);
             chatModel.setStatus(status.tag);
             listResource.data.remove(pos);
             listResource.data.add(0, chatModel);
-
             mChatData.setValue(Resource.cloneResource(listResource, listResource.data));
         }
     }

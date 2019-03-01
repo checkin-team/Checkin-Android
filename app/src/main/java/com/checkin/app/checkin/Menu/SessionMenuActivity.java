@@ -7,9 +7,9 @@ import android.os.Bundle;
 import android.speech.RecognizerIntent;
 import android.text.InputType;
 import android.text.TextUtils;
-import android.util.Log;
 import android.view.Menu;
 import android.view.View;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 
@@ -49,8 +49,6 @@ import static com.checkin.app.checkin.Menu.Fragment.MenuGroupsFragment.KEY_SESSI
 public class SessionMenuActivity extends BaseActivity implements
         MenuItemInteraction, ItemCustomizationFragment.ItemCustomizationInteraction,
         MenuCartAdapter.MenuCartInteraction, MenuFilterFragment.MenuFilterInteraction {
-    private static final String TAG = SessionMenuActivity.class.getSimpleName();
-
     private static final String KEY_RESTAURANT_PK = "menu.shop_pk";
     private static final String KEY_SESSION_PK = "menu.session_pk";
 
@@ -62,6 +60,8 @@ public class SessionMenuActivity extends BaseActivity implements
     TextView tvCountItems;
     @BindView(R.id.tv_menu_subtotal)
     TextView tvCartSubtotal;
+    @BindView(R.id.btn_menu_cart_proceed)
+    Button btnCartProceed;
 
     private MenuGroupsFragment mMenuFragment;
     private MenuItemSearchFragment mSearchFragment;
@@ -205,8 +205,10 @@ public class SessionMenuActivity extends BaseActivity implements
             if (resource.status == Status.SUCCESS) {
                 Utils.toast(this, "Confirmed orders!");
                 finish();
+            } else if (resource.status == Status.LOADING) {
             } else {
-                Log.e(TAG, "MSG: " + resource.message);
+                Utils.toast(this, resource.message);
+                btnCartProceed.setEnabled(true);
             }
         });
     }
@@ -261,9 +263,11 @@ public class SessionMenuActivity extends BaseActivity implements
     @OnClick(R.id.btn_menu_cart_proceed)
     public void onProceedBtnClicked(View view) {
         if (mCartAdapter.getItemCount() > 0) {
+            btnCartProceed.setEnabled(false);
             mViewModel.confirmOrder();
         } else {
             Utils.toast(this, "Order something before proceeding!");
+            btnCartProceed.setEnabled(true);
         }
     }
 

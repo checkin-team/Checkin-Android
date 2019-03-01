@@ -1,7 +1,6 @@
 package com.checkin.app.checkin.Utility;
 
 import android.animation.Animator;
-import android.animation.AnimatorListenerAdapter;
 import android.animation.AnimatorSet;
 import android.animation.ArgbEvaluator;
 import android.animation.ObjectAnimator;
@@ -24,7 +23,6 @@ import android.net.NetworkInfo;
 import android.os.Build;
 import android.provider.MediaStore;
 import android.util.Log;
-import android.util.SparseArray;
 import android.view.View;
 import android.view.ViewAnimationUtils;
 import android.view.ViewGroup;
@@ -90,44 +88,6 @@ public class Utils {
         context.startActivity(Intent.makeRestartActivityTask(new ComponentName(context, HomeActivity.class)));
     }
 
-    public static void animateShow(View view, float y) {
-        // TODO: Have to remove / change this stupid method! (while working on HomeActivity)
-        view.animate()
-                .translationY(y - y)
-                .alpha(1.0f)
-                .setListener(new AnimatorListenerAdapter() {
-                    @Override
-                    public void onAnimationEnd(Animator animation) {
-                        super.onAnimationEnd(animation);
-                    }
-                });
-    }
-
-    public static void animateHide(final View view) {
-        view.animate()
-                .alpha(0.0f)
-                .setListener(new AnimatorListenerAdapter() {
-                    @Override
-                    public void onAnimationEnd(Animator animation) {
-                        view.setVisibility(View.GONE);
-                        super.onAnimationEnd(animation);
-                    }
-                });
-    }
-
-    public static void animateHide(final View view, float y) {
-        view.animate()
-                .translationY(y)
-                .alpha(0.0f)
-                .setListener(new AnimatorListenerAdapter() {
-                    @Override
-                    public void onAnimationEnd(Animator animation) {
-                        super.onAnimationEnd(animation);
-                        view.clearAnimation();
-                    }
-                });
-    }
-
     /**
      * Helper method to animate the change of view dimensions.
      *
@@ -165,7 +125,6 @@ public class Utils {
                 animatorSet.play(widthTick);
         } else animatorSet.play(heightTick);
         animatorSet.setInterpolator(new AccelerateDecelerateInterpolator());
-//        animatorSet.start();
         return animatorSet;
     }
 
@@ -336,14 +295,6 @@ public class Utils {
 
     public interface MatchResultFunction {
         String apply(MatchResult match);
-    }
-
-    public static <T> List<T> sparseArrayAsList(SparseArray<T> sparseArray) {
-        if (sparseArray == null) return null;
-        List<T> arrayList = new ArrayList<T>(sparseArray.size());
-        for (int i = 0; i < sparseArray.size(); i++)
-            arrayList.add(sparseArray.valueAt(i));
-        return arrayList;
     }
 
     public static String joinCollection(Collection<?> words, CharSequence delimiter) {

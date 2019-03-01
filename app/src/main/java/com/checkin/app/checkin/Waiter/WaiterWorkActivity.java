@@ -57,6 +57,7 @@ public class WaiterWorkActivity extends BaseAccountActivity implements WaiterTab
     private static final String TAG = WaiterWorkActivity.class.getSimpleName();
 
     public static final String KEY_SHOP_PK = "waiter.shop_pk";
+    public static final String KEY_SESSION_PK = "waiter.session_pk";
     private static final int REQUEST_QR_SCANNER = 121;
 
     @BindView(R.id.toolbar_waiter)
@@ -126,6 +127,7 @@ public class WaiterWorkActivity extends BaseAccountActivity implements WaiterTab
                     WaiterWorkActivity.this.updateTableCustomerCount(sessionPk, customerCount);
                     break;
                 case WAITER_SESSION_UPDATE_ORDER:
+                case WAITER_SESSION_EVENT_UPDATE:
                     sessionPk = message.getTarget().getPk();
                     long eventId = message.getObject().getPk();
                     WaiterWorkActivity.this.updateEventStatus(sessionPk, eventId, message.getRawData().getSessionEventStatus());
@@ -172,7 +174,7 @@ public class WaiterWorkActivity extends BaseAccountActivity implements WaiterTab
     }
 
     private void fetchData() {
-        long shopPk = getIntent().getLongExtra(KEY_SHOP_PK, 0);
+        long shopPk = getIntent().getLongExtra(KEY_SHOP_PK, 0L);
         mViewModel.fetchShopActiveTables(shopPk);
         mViewModel.fetchWaiterServedTables();
         mViewModel.fetchWaiterStats();
@@ -182,6 +184,7 @@ public class WaiterWorkActivity extends BaseAccountActivity implements WaiterTab
         mFragmentAdapter = new WaiterTablePagerAdapter(getSupportFragmentManager());
         pagerTables.setAdapter(mFragmentAdapter);
         tabLayout.setupWithViewPager(pagerTables);
+        long sessionPk = getIntent().getLongExtra(KEY_SESSION_PK, 0L);
 
         mViewModel.getWaiterTables().observe(this, listResource -> {
             if (listResource == null)
@@ -189,6 +192,8 @@ public class WaiterWorkActivity extends BaseAccountActivity implements WaiterTab
             if (listResource.status == Status.SUCCESS && listResource.data != null) {
                 stopRefreshing();
                 mFragmentAdapter.setTables(tabLayout, listResource.data, this);
+                int index = mFragmentAdapter.getTableIndex(sessionPk);
+                if (index > 0) pagerTables.setCurrentItem(index, true);
             } else if (listResource.status == Status.LOADING) {
                 startRefreshing();
             } else {
@@ -261,6 +266,8 @@ public class WaiterWorkActivity extends BaseAccountActivity implements WaiterTab
         mViewModel.updateResults();
     }
 
+    // region UI-Update
+
     private void addTable(RestaurantTableModel tableModel) {
         mViewModel.addRestaurantTable(tableModel);
     }
@@ -322,9 +329,12 @@ public class WaiterWorkActivity extends BaseAccountActivity implements WaiterTab
         }
     }
 
-    private void endSession(long sessionPk) {
+    @Override
+    public void endSession(long sessionPk) {
         mViewModel.markSessionEnd(sessionPk);
     }
+
+    // endregion
 
     @OnClick(R.id.im_waiter_scanner)
     public void onClickScanner(View v) {
@@ -346,7 +356,7 @@ public class WaiterWorkActivity extends BaseAccountActivity implements WaiterTab
         MESSAGE_TYPE[] types = new MESSAGE_TYPE[]{
                 MESSAGE_TYPE.WAITER_SESSION_NEW, MESSAGE_TYPE.WAITER_SESSION_NEW_ORDER, MESSAGE_TYPE.WAITER_SESSION_COLLECT_CASH,
                 MESSAGE_TYPE.WAITER_SESSION_EVENT_SERVICE, MESSAGE_TYPE.WAITER_SESSION_HOST_ASSIGNED, MESSAGE_TYPE.WAITER_SESSION_MEMBER_CHANGE,
-                MESSAGE_TYPE.WAITER_SESSION_UPDATE_ORDER, MESSAGE_TYPE.WAITER_SESSION_END
+                MESSAGE_TYPE.WAITER_SESSION_UPDATE_ORDER, MESSAGE_TYPE.WAITER_SESSION_END, MESSAGE_TYPE.WAITER_SESSION_EVENT_UPDATE
         };
         MessageUtils.registerLocalReceiver(this, mReceiver, types);
     }
@@ -463,6 +473,7 @@ public class WaiterWorkActivity extends BaseAccountActivity implements WaiterTab
 
         int getTableIndex(long tableId) {
             int index = -1;
+            if (tableId == 0) return index;
             for (int i = 0, length = mTableList.size(); i < length; i++) {
                 if (mTableList.get(i).getPk() == tableId) {
                     index = i;

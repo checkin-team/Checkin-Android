@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layer-list xmlns:android="http://schemas.android.com/apk/res/android">
+    <item>
+        <shape>
+            <solid
+                android:color="@color/white_three"/>
+            <corners
+                android:topLeftRadius="@dimen/card_corner_radius"
+                android:topRightRadius="@dimen/card_corner_radius"/>
+        </shape>
+    </item>
+    <item
+        android:top="2dp" android:left="2dp" android:right="2dp">
+        <shape
+            android:shape="rectangle" android:thickness="@dimen/spacing_small">
+            <solid
+                android:color="@color/white" >
+            </solid>
+            <corners
+                android:topLeftRadius="@dimen/card_corner_radius"
+                android:topRightRadius="@dimen/card_corner_radius"/>
+        </shape>
+    </item>
+</layer-list>

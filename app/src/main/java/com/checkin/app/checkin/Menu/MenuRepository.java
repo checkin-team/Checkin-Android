@@ -1,17 +1,18 @@
 package com.checkin.app.checkin.Menu;
 
 import android.app.Application;
-import androidx.lifecycle.LiveData;
 import android.content.Context;
-import androidx.annotation.NonNull;
 
 import com.checkin.app.checkin.Data.ApiClient;
 import com.checkin.app.checkin.Data.ApiResponse;
+import com.checkin.app.checkin.Data.AppDatabase;
 import com.checkin.app.checkin.Data.NetworkBoundResource;
+import com.checkin.app.checkin.Data.ObjectBoxInstanceLiveData;
 import com.checkin.app.checkin.Data.Resource;
 import com.checkin.app.checkin.Data.RetrofitLiveData;
 import com.checkin.app.checkin.Data.WebApiService;
 import com.checkin.app.checkin.Menu.Model.MenuModel;
+import com.checkin.app.checkin.Menu.Model.MenuModel_;
 import com.checkin.app.checkin.Menu.Model.OrderedItemModel;
 import com.fasterxml.jackson.databind.node.ArrayNode;
 
@@ -19,20 +20,38 @@ import java.util.List;
 
 import javax.inject.Singleton;
 
+import androidx.annotation.NonNull;
+import androidx.lifecycle.LiveData;
+import io.objectbox.Box;
+
 @Singleton
 public class MenuRepository {
     private static MenuRepository INSTANCE;
+    private Box<MenuModel> mMenuBox;
     private WebApiService mWebService;
 
     private MenuRepository(Context context) {
         mWebService = ApiClient.getApiService(context);
+        mMenuBox = AppDatabase.getMenuModel(context);
     }
 
     public LiveData<Resource<MenuModel>> getAvailableMenu(final long shopId) {
         return new NetworkBoundResource<MenuModel, MenuModel>() {
             @Override
             protected boolean shouldUseLocalDb() {
-                return false;
+                return true;
+            }
+
+            @Override
+            protected boolean shouldFetch(MenuModel data) {
+                return true;
+            }
+
+            @Override
+            protected LiveData<MenuModel> loadFromDb() {
+                return new ObjectBoxInstanceLiveData<>(mMenuBox
+                        .query().equal(MenuModel_.restaurantPk, shopId)
+                        .build());
             }
 
             @NonNull
@@ -42,7 +61,12 @@ public class MenuRepository {
             }
 
             @Override
-            protected void saveCallResult(MenuModel data) {}
+            protected void saveCallResult(MenuModel data) {
+                if (data != null) {
+                    data.setRestaurantPk(shopId);
+                    mMenuBox.put(data);
+                }
+            }
         }.getAsLiveData();
     }
 

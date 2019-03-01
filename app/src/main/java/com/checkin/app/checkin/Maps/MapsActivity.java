@@ -1,12 +1,12 @@
 package com.checkin.app.checkin.Maps;
 
 import android.Manifest;
-import android.annotation.SuppressLint;
 import android.app.AlertDialog;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.location.Address;
 import android.location.Location;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.ResultReceiver;
@@ -25,14 +25,19 @@ import com.google.android.gms.location.LocationCallback;
 import com.google.android.gms.location.LocationRequest;
 import com.google.android.gms.location.LocationResult;
 import com.google.android.gms.location.LocationServices;
-import com.google.android.gms.location.places.Place;
-import com.google.android.gms.location.places.ui.PlaceAutocomplete;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.CameraPosition;
 import com.google.android.gms.maps.model.LatLng;
+import com.google.android.libraries.places.api.Places;
+import com.google.android.libraries.places.api.model.Place;
+import com.google.android.libraries.places.widget.Autocomplete;
+import com.google.android.libraries.places.widget.model.AutocompleteActivityMode;
+
+import java.util.Arrays;
+import java.util.List;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -66,10 +71,7 @@ public class MapsActivity extends AppCompatActivity implements
     /**
      * The formatted location address.
      */
-    protected String mAddressOutput;
-    protected String mAreaOutput;
-    protected String mCityOutput;
-    protected String mStreetOutput;
+    protected Address mAddress;
     @BindView(R.id.btn_done)
     ImageView btnDone;
 
@@ -94,6 +96,8 @@ public class MapsActivity extends AppCompatActivity implements
                 .findFragmentById(R.id.map);
         ButterKnife.bind(this);
 
+        Places.initialize(getApplicationContext(), this.getResources().getString(R.string.google_maps_key));
+
         mLocationProviderClient = new FusedLocationProviderClient(this);
         mapFragment.getMapAsync(this);
         mResultReceiver = new AddressResultReceiver(new Handler());
@@ -102,22 +106,16 @@ public class MapsActivity extends AppCompatActivity implements
             // Otherwise, prompt user to get valid Play Services APK.
             if (!AppUtils.isLocationEnabled(this)) {
                 // notify user
-                AlertDialog.Builder dialog = new AlertDialog.Builder(this);
-                dialog.setMessage("Location not enabled!");
-                dialog.setPositiveButton("Open location settings", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface paramDialogInterface, int paramInt) {
-                        Intent myIntent = new Intent(Settings.ACTION_LOCATION_SOURCE_SETTINGS);
-                        startActivity(myIntent);
-                    }
-                });
-                dialog.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+                new AlertDialog.Builder(this)
+                        .setMessage("Location not enabled!")
+                        .setPositiveButton("Open location settings", (paramDialogInterface, paramInt) -> {
+                            Intent myIntent = new Intent(Settings.ACTION_LOCATION_SOURCE_SETTINGS);
+                            startActivity(myIntent);
 
-                    @Override
-                    public void onClick(DialogInterface paramDialogInterface, int paramInt) {
-                    }
-                });
-                dialog.show();
+                        })
+                        .setNegativeButton("Cancel", (paramDialogInterface, paramInt) -> {
+                        })
+                        .show();
             }
             buildGoogleApiClient();
         } else {
@@ -136,7 +134,6 @@ public class MapsActivity extends AppCompatActivity implements
      */
     @Override
     public void onMapReady(GoogleMap googleMap) {
-        Log.d(TAG, "OnMapReady");
         mMap = googleMap;
         mMap.getUiSettings().setZoomControlsEnabled(false);
         mMap.getUiSettings().setMyLocationButtonEnabled(true);
@@ -153,15 +150,19 @@ public class MapsActivity extends AppCompatActivity implements
     public void onConnected(Bundle bundle) {
         if (
                 ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED &&
-                ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+                        ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
             ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, PERMISSION_REQUEST_FINE_LOCATION);
             return;
         }
         goToCurrentLocation();
     }
 
-    @SuppressLint("MissingPermission")
     private void goToCurrentLocation() {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            if (checkSelfPermission(Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && checkSelfPermission(Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+                return;
+            }
+        }
         mMap.setMyLocationEnabled(true);
         LocationRequest locationRequest = new LocationRequest();
         locationRequest.setInterval(10000);
@@ -181,7 +182,6 @@ public class MapsActivity extends AppCompatActivity implements
     public void onConnectionFailed(@NonNull ConnectionResult connectionResult) {
         Toast.makeText(this, "Unable to connect", Toast.LENGTH_SHORT).show();
     }
-
 
     protected synchronized void buildGoogleApiClient() {
         mGoogleApiClient = new GoogleApiClient.Builder(this)
@@ -243,12 +243,11 @@ public class MapsActivity extends AppCompatActivity implements
 
     @OnClick(R.id.btn_done)
     public void onDoneClick(View v) {
-        Log.e(TAG, "onClicked");
         LatLng latLng = mMap.getCameraPosition().target;
         Intent data = new Intent();
         data.putExtra(KEY_MAPS_LATITUDE, latLng.latitude);
         data.putExtra(KEY_MAPS_LONGITUDE, latLng.longitude);
-        data.putExtra(KEY_MAPS_ADDRESS, mAreaOutput );
+        data.putExtra(KEY_MAPS_ADDRESS, mAddress);
         setResult(RESULT_OK, data);
         finish();
     }
@@ -267,11 +266,7 @@ public class MapsActivity extends AppCompatActivity implements
         @Override
         protected void onReceiveResult(int resultCode, Bundle resultData) {
             if (resultCode == AppUtils.LocationConstants.SUCCESS_RESULT) {
-                mAddressOutput = resultData.getString(AppUtils.LocationConstants.RESULT_DATA_KEY);
-                mAreaOutput = resultData.getString(AppUtils.LocationConstants.LOCATION_DATA_AREA);
-                mCityOutput = resultData.getString(AppUtils.LocationConstants.LOCATION_DATA_CITY);
-                mStreetOutput = resultData.getString(AppUtils.LocationConstants.LOCATION_DATA_STREET);
-                Log.i(TAG, "Add: " + mAddressOutput + ", Area: " + mAreaOutput + ", City: " + mCityOutput + ", Street: " + mStreetOutput);
+                mAddress = resultData.getParcelable(AppUtils.LocationConstants.LOCATION_DATA_ADDRESS_BUNDLE);
             }
         }
     }
@@ -293,7 +288,8 @@ public class MapsActivity extends AppCompatActivity implements
     public void openAutocompleteActivity() {
         if (checkPlayServices() && !isSearchOpened) {
             try {
-                Intent intent = new PlaceAutocomplete.IntentBuilder(PlaceAutocomplete.MODE_OVERLAY).build(this);
+                List<Place.Field> fields = Arrays.asList(Place.Field.NAME, Place.Field.LAT_LNG);
+                Intent intent = new Autocomplete.IntentBuilder(AutocompleteActivityMode.OVERLAY, fields).build(this);
                 startActivityForResult(intent, REQUEST_CODE_AUTOCOMPLETE);
                 isSearchOpened = true;
             } catch (Exception e) {
@@ -312,16 +308,18 @@ public class MapsActivity extends AppCompatActivity implements
         if (requestCode == REQUEST_CODE_AUTOCOMPLETE) {
             if (resultCode == RESULT_OK) {
                 // Get the user's selected place from the Intent.
-                Place place = PlaceAutocomplete.getPlace(this, data);
+                Place place = Autocomplete.getPlaceFromIntent(data);
                 LatLng latLong = place.getLatLng();
-                Location location = new Location("");
-                location.setLatitude(latLong.latitude);
-                location.setLongitude(latLong.longitude);
-                changeMap(location);
+                if (latLong != null) {
+                    Location location = new Location("");
+                    location.setLatitude(latLong.latitude);
+                    location.setLongitude(latLong.longitude);
+                    changeMap(location);
+                }
             }
             isSearchOpened = false;
         } else {
-            Log.e(TAG, PlaceAutocomplete.getStatus(this, data).getStatusMessage());
+            Log.e(TAG, Autocomplete.getStatusFromIntent(data).getStatusMessage());
         }
     }
 
@@ -329,7 +327,7 @@ public class MapsActivity extends AppCompatActivity implements
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
         if (requestCode == PERMISSION_REQUEST_FINE_LOCATION) {
-            if (grantResults.length > 0 && grantResults[0]==PackageManager.PERMISSION_GRANTED)
+            if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED)
                 goToCurrentLocation();
         }
     }

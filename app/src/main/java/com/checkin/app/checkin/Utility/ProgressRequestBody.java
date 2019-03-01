@@ -1,12 +1,11 @@
 package com.checkin.app.checkin.Utility;
 
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-
 import com.checkin.app.checkin.BuildConfig;
 
 import java.io.IOException;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import okhttp3.MediaType;
 import okhttp3.RequestBody;
 import okio.Buffer;
@@ -67,7 +66,7 @@ public class ProgressRequestBody extends RequestBody {
 
             if (mUpdateProgressFlag) {
                 int progress = (int) (100 * bytesUploaded / contentLength());
-                if (progress > lastProgress + 1)
+                if (progress > lastProgress)
                     mListener.onProgressUpdate(progress);
                 lastProgress = progress;
             }

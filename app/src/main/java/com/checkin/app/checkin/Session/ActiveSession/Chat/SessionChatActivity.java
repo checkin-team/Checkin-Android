@@ -5,6 +5,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -28,6 +29,7 @@ import com.checkin.app.checkin.Utility.Utils;
 
 import androidx.annotation.Nullable;
 import androidx.lifecycle.ViewModelProviders;
+import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -67,10 +69,13 @@ public class SessionChatActivity extends BaseActivity implements ActiveSessionCh
             switch (message.getType()) {
                 case USER_SESSION_EVENT_NEW:
                     SessionChatActivity.this.addEvent(message.getRawData().getSessionEventDetail());
+                    break;
                 case USER_SESSION_EVENT_UPDATE:
                     SessionChatActivity.this.updateEvent(message.getObject(), message.getRawData().getSessionEventStatus());
+                    break;
                 case WAITER_SESSION_UPDATE_ORDER:
                     SessionChatActivity.this.updateEvent(message.getObject(), message.getRawData().getSessionEventStatus());
+                    break;
 
             }
         }
@@ -127,6 +132,7 @@ public class SessionChatActivity extends BaseActivity implements ActiveSessionCh
 
         initRefreshScreen(R.id.sr_session_chat);
 
+        rvSessionChat.setLayoutManager(new LinearLayoutManager(this, RecyclerView.VERTICAL, true));
         mChatAdapter = new ActiveSessionChatAdapter(null, this);
         rvSessionChat.setAdapter(mChatAdapter);
 
@@ -145,6 +151,7 @@ public class SessionChatActivity extends BaseActivity implements ActiveSessionCh
         etMessage.setText("");
         etMessage.setHint(getResources().getString(R.string.title_how_can_we_assist_you));
         btnSendMsg.setTag(null);
+        btnSendMsg.setEnabled(true);
     }
 
     public void setMessage(String msg) {
@@ -193,12 +200,14 @@ public class SessionChatActivity extends BaseActivity implements ActiveSessionCh
     @OnClick(R.id.btn_chat_send_msg)
     public void sendMsg() {
         String msg = etMessage.getText().toString().trim();
+        btnSendMsg.setEnabled(false);
         if (!TextUtils.isEmpty(msg)) {
             if (btnSendMsg.getTag() == null)
                 btnSendMsg.setTag(EVENT_REQUEST_SERVICE_TYPE.SERVICE_NONE);
             mViewModel.sendMessage(msg, btnSendMsg.getTag());
         } else {
             Utils.toast(this, "Please enter the message.");
+            btnSendMsg.setEnabled(true);
         }
     }
 

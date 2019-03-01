@@ -1,17 +1,28 @@
 package com.checkin.app.checkin.Menu.Model;
 
+import com.checkin.app.checkin.Data.AppDatabase;
 import com.fasterxml.jackson.annotation.JsonAutoDetect;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
-import java.util.ArrayList;
 import java.util.List;
+
+import io.objectbox.annotation.Backlink;
+import io.objectbox.annotation.Entity;
+import io.objectbox.annotation.Id;
+import io.objectbox.relation.ToMany;
+import io.objectbox.relation.ToOne;
 
 /**
  * Created by Bhavik Patel on 11/08/2018.
  */
 
-@JsonAutoDetect(fieldVisibility = JsonAutoDetect.Visibility.NONE)
+@JsonAutoDetect(fieldVisibility = JsonAutoDetect.Visibility.NONE, getterVisibility = JsonAutoDetect.Visibility.NONE, isGetterVisibility = JsonAutoDetect.Visibility.NONE)
+@Entity
 public class ItemCustomizationGroupModel {
+    @Id(assignable = true)
+    @JsonProperty("pk")
+    private long pk;
+
     @JsonProperty("name")
     private String name;
 
@@ -21,8 +32,10 @@ public class ItemCustomizationGroupModel {
     @JsonProperty("max_select")
     private int maxSelection = 1;
 
-    @JsonProperty("fields")
-    private List<ItemCustomizationFieldModel> customizationFields;
+    @Backlink(to = "group")
+    private ToMany<ItemCustomizationFieldModel> customizationFields;
+
+    private ToOne<MenuItemModel> menuItem;
 
     public ItemCustomizationGroupModel() {}
 
@@ -61,8 +74,34 @@ public class ItemCustomizationGroupModel {
     }
 
     public void addCustomizationField(String name, double cost) {
-        if (customizationFields == null)
-            customizationFields = new ArrayList<>();
         customizationFields.add(new ItemCustomizationFieldModel(true, name, cost));
+    }
+
+    public long getPk() {
+        return pk;
+    }
+
+    public void setPk(long pk) {
+        this.pk = pk;
+    }
+
+    @JsonProperty("fields")
+    public void setCustomizationFields(List<ItemCustomizationFieldModel> customizationFields) {
+        AppDatabase.getMenuItemCustomizationGroupModel(null).attach(this);
+        AppDatabase.getMenuItemCustomizationFieldModel(null).put(customizationFields);
+        this.customizationFields.addAll(customizationFields);
+        AppDatabase.getMenuItemCustomizationGroupModel(null).put(this);
+    }
+
+    public void setCustomizationFields(ToMany<ItemCustomizationFieldModel> customizationFields) {
+        this.customizationFields = customizationFields;
+    }
+
+    public ToOne<MenuItemModel> getMenuItem() {
+        return menuItem;
+    }
+
+    public void setMenuItem(ToOne<MenuItemModel> menuItem) {
+        this.menuItem = menuItem;
     }
 }

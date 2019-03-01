@@ -92,7 +92,7 @@
                     android:id="@+id/ed_invoice_tip"
                     style="@style/GreyTextStyle"
                     android:layout_width="@dimen/width_input_small"
-                    android:layout_height="wrap_content"
+                    android:layout_height="@dimen/button_height_short"
                     android:layout_marginEnd="@dimen/spacing_normal"
                     android:background="@drawable/rounded_rectangle_white"
                     android:inputType="numberDecimal"

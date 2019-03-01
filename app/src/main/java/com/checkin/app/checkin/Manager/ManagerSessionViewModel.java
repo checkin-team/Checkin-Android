@@ -26,6 +26,7 @@ import androidx.lifecycle.MediatorLiveData;
 import androidx.lifecycle.Transformations;
 
 import static com.checkin.app.checkin.Session.ActiveSession.Chat.SessionChatModel.CHAT_EVENT_TYPE.EVENT_MENU_ORDER_ITEM;
+import static com.checkin.app.checkin.Session.ActiveSession.Chat.SessionChatModel.CHAT_STATUS_TYPE.CANCELLED;
 import static com.checkin.app.checkin.Session.ActiveSession.Chat.SessionChatModel.CHAT_STATUS_TYPE.DONE;
 import static com.checkin.app.checkin.Session.ActiveSession.Chat.SessionChatModel.CHAT_STATUS_TYPE.IN_PROGRESS;
 import static com.checkin.app.checkin.Session.ActiveSession.Chat.SessionChatModel.CHAT_STATUS_TYPE.OPEN;
@@ -41,6 +42,7 @@ public class ManagerSessionViewModel extends BaseViewModel {
     private MediatorLiveData<Resource<List<ManagerSessionEventModel>>> mEventData = new MediatorLiveData<>();
     private MediatorLiveData<Resource<GenericDetailModel>> mDetailData = new MediatorLiveData<>();
     private MediatorLiveData<Resource<OrderStatusModel>> mOrderStatusData = new MediatorLiveData<>();
+    private MediatorLiveData<Resource<GenericDetailModel>> mSessionCheckoutData = new MediatorLiveData<>();
 
     private long mSessionPk;
     private long mShopPk;
@@ -52,10 +54,21 @@ public class ManagerSessionViewModel extends BaseViewModel {
         mWaiterRepository = WaiterRepository.getInstance(application);
     }
 
+    public void putSessionCheckout(long sessionId, String paymentMode) {
+        ObjectNode data = Converters.objectMapper.createObjectNode();
+        data.put("payment_mode", paymentMode);
+        mSessionCheckoutData.addSource(mManagerRepository.manageSessionCheckout(sessionId, data), mSessionCheckoutData::setValue);
+    }
+
+    public LiveData<Resource<GenericDetailModel>> putSessionCheckoutData() {
+        return mSessionCheckoutData;
+    }
+
     @Override
     public void updateResults() {
         fetchSessionOrders();
         fetchSessionEvents();
+        fetchSessionBriefData(mSessionPk);
     }
 
     public LiveData<Resource<ManagerSessionInvoiceModel>> getSessionInvoice(long sessionId) {
@@ -63,10 +76,10 @@ public class ManagerSessionViewModel extends BaseViewModel {
         return mManagerRepository.getManagerSessionInvoice(sessionId);
     }
 
-    public void approveBill(double discountPercent) {
+    public void updateDiscount(double discountPercent) {
         ObjectNode data = Converters.objectMapper.createObjectNode();
         data.put("discount_percent", discountPercent);
-        mDetailData.addSource(mManagerRepository.putManagerSessionApproveCheckout(mSessionPk, data), mDetailData::setValue);
+        mDetailData.addSource(mManagerRepository.putManageSessionBill(mSessionPk, data), mDetailData::setValue);
     }
 
     public LiveData<Resource<GenericDetailModel>> getDetailData() {
@@ -76,6 +89,10 @@ public class ManagerSessionViewModel extends BaseViewModel {
     public void fetchSessionBriefData(long sessionId) {
         mSessionPk = sessionId;
         mBriefData.addSource(mSessionRepository.getSessionBriefDetail(sessionId), mBriefData::setValue);
+    }
+
+    public void fetchSessionBriefData() {
+        fetchSessionBriefData(mSessionPk);
     }
 
     public void fetchSessionOrders() {
@@ -161,7 +178,21 @@ public class ManagerSessionViewModel extends BaseViewModel {
             List<SessionOrderedItemModel> list = new ArrayList<>();
             if (input.status == Resource.Status.SUCCESS)
                 for (SessionOrderedItemModel data : input.data) {
-                    if (data.getStatus() != OPEN)
+                    if (data.getStatus() == IN_PROGRESS)
+                        list.add(data);
+                }
+            return Resource.cloneResource(input, list);
+        });
+    }
+
+    public LiveData<Resource<List<SessionOrderedItemModel>>> getDeliveredRejectedOrders() {
+        return Transformations.map(mOrdersData, input -> {
+            if (input == null || input.data == null)
+                return input;
+            List<SessionOrderedItemModel> list = new ArrayList<>();
+            if (input.status == Resource.Status.SUCCESS)
+                for (SessionOrderedItemModel data : input.data) {
+                    if (data.getStatus() == DONE || data.getStatus() == CANCELLED)
                         list.add(data);
                 }
             return Resource.cloneResource(input, list);
@@ -199,7 +230,7 @@ public class ManagerSessionViewModel extends BaseViewModel {
         mOrdersData.setValue(Resource.cloneResource(listResource, listResource.data));
     }
 
-    public void updateUiEventStatus(long eventId) {
+    public void updateUiEventStatus(long eventId, SessionChatModel.CHAT_STATUS_TYPE status) {
         Resource<List<ManagerSessionEventModel>> listResource = mEventData.getValue();
         if (listResource == null || listResource.data == null)
             return;
@@ -212,7 +243,7 @@ public class ManagerSessionViewModel extends BaseViewModel {
         }
         if (pos > -1) {
             ManagerSessionEventModel eventModel = listResource.data.get(pos);
-            eventModel.setStatus(SessionChatModel.CHAT_STATUS_TYPE.DONE);
+            eventModel.setStatus(status);
             listResource.data.remove(pos);
             listResource.data.add(0, eventModel);
         }
@@ -239,6 +270,9 @@ public class ManagerSessionViewModel extends BaseViewModel {
         Resource<List<SessionOrderedItemModel>> resource = mOrdersData.getValue();
         if (resource == null || resource.data == null)
             return;
+        for (SessionOrderedItemModel iterOrder: resource.data) {
+            if (iterOrder.getPk() == orderedItemModel.getPk()) return;
+        }
         resource.data.add(0, orderedItemModel);
         mOrdersData.setValue(Resource.cloneResource(resource, resource.data));
     }
@@ -247,6 +281,9 @@ public class ManagerSessionViewModel extends BaseViewModel {
         Resource<List<ManagerSessionEventModel>> resource = mEventData.getValue();
         if (resource == null || resource.data == null)
             return;
+        for (ManagerSessionEventModel iterEvent: resource.data) {
+            if (iterEvent.getPk() == eventModel.getPk()) return;
+        }
         resource.data.add(0, eventModel);
         mEventData.setValue(Resource.cloneResource(resource, resource.data));
     }

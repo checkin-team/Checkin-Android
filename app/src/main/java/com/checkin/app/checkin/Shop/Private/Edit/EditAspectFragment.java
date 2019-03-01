@@ -1,5 +1,6 @@
 package com.checkin.app.checkin.Shop.Private.Edit;
 
+import android.content.Context;
 import android.os.Bundle;
 import android.text.InputType;
 import android.view.LayoutInflater;
@@ -189,6 +190,16 @@ public class EditAspectFragment extends Fragment implements MultiSpinner.MultiSp
         super.onDestroy();
         unbinder.unbind();
     }
+
+    @Override
+    public void onAttach(Context context) {
+        super.onAttach(context);
+        try {
+            mListener = ((AspectFragmentInteraction) context);
+        } catch (ClassCastException ignored) {
+        }
+    }
+
 
     @OnClick({R.id.cb_choice_cash, R.id.cb_choice_card, R.id.cb_choice_paytm})
     public void onPaymentChoice(CompoundButton cb) {

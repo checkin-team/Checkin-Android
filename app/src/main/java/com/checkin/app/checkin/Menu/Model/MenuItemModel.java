@@ -1,7 +1,7 @@
 package com.checkin.app.checkin.Menu.Model;
 
-import androidx.annotation.NonNull;
-
+import com.checkin.app.checkin.Data.AppDatabase;
+import com.checkin.app.checkin.Data.Converters;
 import com.checkin.app.checkin.Menu.Adapter.MenuItemAdapter;
 import com.fasterxml.jackson.annotation.JsonAutoDetect;
 import com.fasterxml.jackson.annotation.JsonIgnore;
@@ -10,36 +10,45 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import java.util.ArrayList;
 import java.util.List;
 
+import androidx.annotation.NonNull;
+import io.objectbox.annotation.Backlink;
+import io.objectbox.annotation.Convert;
+import io.objectbox.annotation.Entity;
+import io.objectbox.annotation.Id;
 import io.objectbox.annotation.Transient;
+import io.objectbox.relation.ToMany;
+import io.objectbox.relation.ToOne;
 
 /**
  * Created by shivanshs9 on 6/5/18.
  */
 
 @JsonAutoDetect(fieldVisibility = JsonAutoDetect.Visibility.NONE, getterVisibility = JsonAutoDetect.Visibility.NONE, isGetterVisibility = JsonAutoDetect.Visibility.NONE)
+@Entity
 public class MenuItemModel {
+    @Id(assignable = true)
     @JsonProperty("pk")
-    private String pk;
+    private long pk;
 
     @JsonProperty("name")
     private String name;
 
-//    @Convert(converter = Converters.ListConverter.class, dbType = String.class)
+    @Convert(converter = Converters.ListConverter.class, dbType = String.class)
     @JsonProperty("types")
-    private List<String> types;
+    private List<String> typeNames;
 
-//    @Convert(converter = Converters.ListConverter.class, dbType = String.class)
+    @Convert(converter = Converters.ListConverter.class, dbType = String.class)
     @JsonProperty("costs")
-    private List<Double> costs;
+    private List<Double> typeCosts;
 
     @JsonProperty("description")
     private String description;
 
-//    @Convert(converter = Converters.ListConverter.class, dbType = String.class)
+    @Convert(converter = Converters.ListConverter.class, dbType = String.class)
     @JsonProperty("tags")
     private List<String> tags;
 
-//    @Convert(converter = Converters.ListConverter.class, dbType = String.class)
+    @Convert(converter = Converters.ListConverter.class, dbType = String.class)
     @JsonProperty("available_meals")
     private List<AVAILABLE_MEAL> availableMeals;
 
@@ -49,8 +58,11 @@ public class MenuItemModel {
     @JsonProperty("image")
     private String image;
 
-    @JsonProperty("customizations")
-    private List<ItemCustomizationGroupModel> customizationGroups;
+    @Backlink(to = "menuItem")
+    private ToMany<ItemCustomizationGroupModel> customizationGroups;
+
+    @JsonIgnore
+    private ToOne<MenuGroupModel> group;
 
     @JsonIgnore
     @Transient
@@ -76,18 +88,10 @@ public class MenuItemModel {
 
     public MenuItemModel() {}
 
-    public String getDescription() {
-        return description;
-    }
-
-    public void setDescription(String description) {
-        this.description = description;
-    }
-
     public MenuItemModel(MenuItemModel item) {
         this.name = item.getName();
-        this.types = item.types;
-        this.costs = item.costs;
+        this.typeNames = item.typeNames;
+        this.typeCosts = item.typeCosts;
         this.isVegetarian = item.isVegetarian();
     }
 
@@ -99,15 +103,43 @@ public class MenuItemModel {
         return customizationGroups != null && !customizationGroups.isEmpty();
     }
 
-    /*@JsonProperty("customizations")
+    @JsonProperty("customizations")
     public void setCustomizationGroups(List<ItemCustomizationGroupModel> customizationGroups) {
         AppDatabase.getMenuItemModel(null).attach(this);
-        AppDatabase.getItemCustomizationGroupModel(null).put(customizationGroups);
+        AppDatabase.getMenuItemCustomizationGroupModel(null).put(customizationGroups);
         this.customizationGroups.addAll(customizationGroups);
         AppDatabase.getMenuItemModel(null).put(this);
-    }*/
+    }
 
-    public String getPk() {
+    public void setPk(long pk) {
+        this.pk = pk;
+    }
+
+    public List<String> getTags() {
+        return tags;
+    }
+
+    public void setTags(List<String> tags) {
+        this.tags = tags;
+    }
+
+    public ToOne<MenuGroupModel> getGroup() {
+        return group;
+    }
+
+    public void setGroup(ToOne<MenuGroupModel> group) {
+        this.group = group;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
+    public long getPk() {
         return pk;
     }
 
@@ -124,19 +156,19 @@ public class MenuItemModel {
     }
 
     public List<String> getTypeNames() {
-        return types;
+        return typeNames;
     }
 
     public void setTypeName(List<String> typeName) {
-        this.types = typeName;
+        this.typeNames = typeName;
     }
 
     public List<Double> getTypeCosts() {
-        return costs;
+        return typeCosts;
     }
 
     public void setTypeCost(List<Double> typeCost) {
-        this.costs = typeCost;
+        this.typeCosts = typeCost;
     }
 
     public String getImage() {
@@ -149,6 +181,10 @@ public class MenuItemModel {
 
     public boolean hasAvailableMeal(AVAILABLE_MEAL availableMeal) {
         return availableMeals.contains(availableMeal);
+    }
+
+    public ToMany<ItemCustomizationGroupModel> getCustomizationGroups() {
+        return customizationGroups;
     }
 
     public List<AVAILABLE_MEAL> getAvailableMeals() {
@@ -169,7 +205,7 @@ public class MenuItemModel {
     }
 
     public boolean isComplexItem() {
-        return hasCustomizations() || types.size() > 1;
+        return hasCustomizations() || typeNames.size() > 1;
     }
 
     @NonNull
@@ -192,7 +228,7 @@ public class MenuItemModel {
 
     @Override
     public boolean equals(Object obj) {
-        return obj instanceof MenuItemModel && this.pk.equals(((MenuItemModel) obj).getPk());
+        return obj instanceof MenuItemModel && this.pk == ((MenuItemModel) obj).getPk();
     }
 
 }

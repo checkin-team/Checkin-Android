@@ -113,11 +113,12 @@
 
     <dimen name="height_horizontal_line">1dp</dimen>
     <dimen name="width_vertical_line">1dp</dimen>
-    
+
     <!-- Shop dimensions -->
     <dimen name="width_shop_finance_tax">160dp</dimen>
     <dimen name="height_rangebar_short">50dp</dimen>
     <dimen name="padding_rangebar_bottom">15dp</dimen>
+    <dimen name="negative_margin_top">-6dp</dimen>
 
     <!--Waiter dimensions-->
     <dimen name="width_waiter_collect_cash">250dp</dimen>
