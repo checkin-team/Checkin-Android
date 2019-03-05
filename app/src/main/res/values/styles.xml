@@ -10,6 +10,11 @@
         <item name="fontFamily">@font/arial_rounded_mt_bold</item>
     </style>
 
+    <style name="MyCheckBox" parent="Theme.AppCompat.Light">
+        <item name="colorControlNormal">@color/brownish_grey</item>
+        <item name="colorControlActivated">@color/primary_red</item>
+    </style>
+
     <style name="appbar_main" parent="AppTheme.AppBarOverlay">
         <item name="android:homeAsUpIndicator">@drawable/ic_back_grey</item>
     </style>

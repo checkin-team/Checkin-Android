@@ -6,6 +6,7 @@
     android:layout_height="match_parent"
     android:background="@color/white"
     android:orientation="vertical"
+    android:id="@+id/root_auth"
     tools:context=".Auth.AuthActivity">
 
     <ImageView
@@ -47,21 +48,41 @@
 
     </androidx.cardview.widget.CardView>
 
-    <CheckedTextView
-        android:id="@+id/tv_read_eula"
-        style="@style/RedSmallTextStyle"
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/ll_eula"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginBottom="@dimen/spacing_small"
-        android:checked="false"
-        android:drawableStart="@drawable/checkbox_selector"
-        android:drawablePadding="@dimen/spacing_extra_small"
-        android:gravity="center"
-        android:text="@string/license_agreement"
-        android:textAlignment="center"
+        android:orientation="horizontal"
         app:layout_constraintBottom_toTopOf="@id/tv_tag_line"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
+        app:layout_constraintStart_toStartOf="parent">
+
+        <CheckBox
+            android:id="@+id/cb_read_eula"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:checked="false"
+            android:theme="@style/MyCheckBox"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@+id/tv_read_eula"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <CheckedTextView
+            android:id="@+id/tv_read_eula"
+            style="@style/RedSmallTextStyle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:text="@string/license_agreement"
+            android:textAlignment="center"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toEndOf="@id/cb_read_eula"
+            app:layout_constraintTop_toTopOf="parent" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
     <TextView
         android:id="@+id/tv_tag_line"
@@ -81,7 +102,7 @@
         android:layout_height="wrap_content"
         android:progress="25"
         android:visibility="gone"
-        app:layout_constraintBottom_toTopOf="@id/tv_read_eula"
+        app:layout_constraintBottom_toTopOf="@id/ll_eula"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/cv_container" />

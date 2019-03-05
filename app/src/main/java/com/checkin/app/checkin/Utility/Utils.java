@@ -5,6 +5,7 @@ import android.animation.AnimatorSet;
 import android.animation.ArgbEvaluator;
 import android.animation.ObjectAnimator;
 import android.animation.ValueAnimator;
+import android.app.Activity;
 import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
@@ -33,6 +34,7 @@ import android.widget.Toast;
 
 import com.checkin.app.checkin.Home.HomeActivity;
 import com.checkin.app.checkin.R;
+import com.google.android.material.snackbar.Snackbar;
 import com.google.android.material.tabs.TabLayout;
 
 import java.lang.reflect.Field;
@@ -52,6 +54,7 @@ import androidx.annotation.DrawableRes;
 import androidx.annotation.NonNull;
 import androidx.annotation.RequiresApi;
 import androidx.annotation.StringRes;
+import androidx.constraintlayout.widget.ConstraintLayout;
 
 /**
  * Created by shivanshs9 on 12/5/18.
@@ -86,6 +89,11 @@ public class Utils {
 
     public static void navigateBackToHome(Context context) {
         context.startActivity(Intent.makeRestartActivityTask(new ComponentName(context, HomeActivity.class)));
+    }
+
+    public static void showSnackbar(Activity activity, String message){
+        ConstraintLayout mRootAuthView = activity.findViewById(R.id.root_auth);
+        Snackbar.make(mRootAuthView,message,Snackbar.LENGTH_SHORT).show();
     }
 
     /**

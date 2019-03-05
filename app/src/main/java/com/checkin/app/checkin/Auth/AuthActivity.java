@@ -7,11 +7,13 @@ import android.animation.AnimatorListenerAdapter;
 import android.annotation.SuppressLint;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.preference.PreferenceManager;
 import android.util.Log;
 import android.view.View;
+import android.widget.CheckBox;
 import android.widget.CheckedTextView;
 import android.widget.ProgressBar;
 import android.widget.Toast;
@@ -31,6 +33,7 @@ import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
 import com.google.android.gms.common.api.ApiException;
 import com.google.android.gms.tasks.Task;
+import com.google.android.material.snackbar.Snackbar;
 import com.google.firebase.FirebaseException;
 import com.google.firebase.auth.AuthCredential;
 import com.google.firebase.auth.FacebookAuthProvider;
@@ -43,6 +46,7 @@ import java.util.Locale;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 import androidx.lifecycle.ViewModelProviders;
@@ -60,6 +64,8 @@ public class AuthActivity extends AppCompatActivity implements AuthFragmentInter
     View mDarkBack;
     @BindView(R.id.tv_read_eula)
     CheckedTextView ctvReadEula;
+    @BindView(R.id.cb_read_eula)
+    CheckBox cbReadEula;
 
     private CallbackManager mFacebookCallbackManager;
     private FirebaseAuth mAuth;
@@ -125,8 +131,12 @@ public class AuthActivity extends AppCompatActivity implements AuthFragmentInter
             }
         });
 
-        mDarkBack.setOnTouchListener((v, event) -> true);
-        eulaDialog = new EulaDialog(this, ctvReadEula::setChecked);
+        mDarkBack.setOnTouchListener((v, event) -> {
+            return true;
+        });
+        eulaDialog = new EulaDialog(this, checked -> {
+            cbReadEula.setChecked(checked);
+        });
     }
 
     private void showProgress() {
@@ -213,8 +223,11 @@ public class AuthActivity extends AppCompatActivity implements AuthFragmentInter
     }
 
     private boolean canLogin() {
-        if (!ctvReadEula.isChecked()) {
-            Utils.toast(this, "Need to accept EULA.");
+        if (!cbReadEula.isChecked()) {
+            if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP)
+                Utils.showSnackbar(this,"Need to accept Terms & Condition.");
+            else
+                Utils.toast(this, "Need to accept Terms & Condition");
             return false;
         }
         return true;

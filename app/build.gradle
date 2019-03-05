@@ -83,7 +83,7 @@ dependencies {
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.1.2-alpha01'
     implementation 'com.google.android.gms:play-services-auth:16.0.1'
     // FireBase libraries
-    implementation 'com.google.firebase:firebase-core:16.0.6'
+    implementation 'com.google.firebase:firebase-core:16.0.7'
     implementation 'com.google.firebase:firebase-auth:16.1.0'
     implementation 'com.google.firebase:firebase-messaging:17.4.0'
     // Facebook SDK
@@ -116,7 +116,7 @@ dependencies {
     )
     implementation 'com.squareup.retrofit2:retrofit:' + versions.retrofit
     implementation 'com.squareup.retrofit2:converter-jackson:' + versions.retrofit
-    implementation 'com.squareup.okhttp3:logging-interceptor:3.10.0'
+    implementation 'com.squareup.okhttp3:logging-interceptor:3.13.1'
     // ObjectBox components
     implementation 'io.objectbox:objectbox-android:' + versions.objectBox
     annotationProcessor 'io.objectbox:objectbox-processor:' + versions.objectBox
