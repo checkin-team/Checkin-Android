@@ -37,6 +37,7 @@ public class MenuModel {
     @JsonProperty("groups")
     public void setGroups(List<MenuGroupModel> groups) {
         AppDatabase.getMenuModel(null).attach(this);
+        AppDatabase.getMenuGroupModel(null).remove(this.groups);
         AppDatabase.getMenuGroupModel(null).put(groups);
         this.groups.addAll(groups);
         AppDatabase.getMenuModel(null).put(this);

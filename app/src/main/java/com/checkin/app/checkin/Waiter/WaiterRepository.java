@@ -1,9 +1,7 @@
 package com.checkin.app.checkin.Waiter;
 
 import android.app.Application;
-import androidx.lifecycle.LiveData;
 import android.content.Context;
-import androidx.annotation.NonNull;
 
 import com.checkin.app.checkin.Data.ApiClient;
 import com.checkin.app.checkin.Data.ApiResponse;
@@ -13,6 +11,7 @@ import com.checkin.app.checkin.Data.Resource;
 import com.checkin.app.checkin.Data.RetrofitLiveData;
 import com.checkin.app.checkin.Data.WebApiService;
 import com.checkin.app.checkin.Misc.GenericDetailModel;
+import com.checkin.app.checkin.Session.Model.CheckoutStatusModel;
 import com.checkin.app.checkin.Session.Model.QRResultModel;
 import com.checkin.app.checkin.Session.Model.RestaurantTableModel;
 import com.checkin.app.checkin.Waiter.Model.OrderStatusModel;
@@ -22,6 +21,9 @@ import com.checkin.app.checkin.Waiter.Model.WaiterTableModel;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 
 import java.util.List;
+
+import androidx.annotation.NonNull;
+import androidx.lifecycle.LiveData;
 
 /**
  * Created by Shivansh Saini on 24/01/2019.
@@ -173,8 +175,8 @@ public class WaiterRepository extends BaseRepository {
         }.getAsLiveData();
     }
 
-    public LiveData<Resource<ObjectNode>> postSessionRequestCheckout(long sessionId, ObjectNode data) {
-        return new NetworkBoundResource<ObjectNode, ObjectNode>() {
+    public LiveData<Resource<CheckoutStatusModel>> postSessionRequestCheckout(long sessionId, ObjectNode data) {
+        return new NetworkBoundResource<CheckoutStatusModel, CheckoutStatusModel>() {
             @Override
             protected boolean shouldUseLocalDb() {
                 return false;
@@ -182,12 +184,12 @@ public class WaiterRepository extends BaseRepository {
 
             @NonNull
             @Override
-            protected LiveData<ApiResponse<ObjectNode>> createCall() {
+            protected LiveData<ApiResponse<CheckoutStatusModel>> createCall() {
                 return new RetrofitLiveData<>(mWebService.postSessionRequestCheckout(sessionId, data));
             }
 
             @Override
-            protected void saveCallResult(ObjectNode data) {
+            protected void saveCallResult(CheckoutStatusModel data) {
 
             }
         }.getAsLiveData();

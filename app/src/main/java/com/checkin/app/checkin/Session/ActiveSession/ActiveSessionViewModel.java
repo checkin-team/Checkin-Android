@@ -9,6 +9,7 @@ import com.checkin.app.checkin.Misc.BriefModel;
 import com.checkin.app.checkin.Misc.GenericDetailModel;
 import com.checkin.app.checkin.Session.ActiveSession.Chat.SessionChatModel;
 import com.checkin.app.checkin.Session.Model.ActiveSessionModel;
+import com.checkin.app.checkin.Session.Model.CheckoutStatusModel;
 import com.checkin.app.checkin.Session.Model.SessionCustomerModel;
 import com.checkin.app.checkin.Session.Model.SessionInvoiceModel;
 import com.checkin.app.checkin.Session.Model.SessionOrderedItemModel;
@@ -34,6 +35,7 @@ public class ActiveSessionViewModel extends BaseViewModel {
     private MediatorLiveData<Resource<SessionInvoiceModel>> mInvoiceData = new MediatorLiveData<>();
     private MediatorLiveData<Resource<GenericDetailModel>> mMemberUpdate = new MediatorLiveData<>();
     private MediatorLiveData<Resource<List<SessionOrderedItemModel>>> mOrdersData = new MediatorLiveData<>();
+    private MediatorLiveData<Resource<CheckoutStatusModel>> mCheckoutData = new MediatorLiveData<>();
 
     private long mShopPk = -1, mSessionPk = -1;
 
@@ -92,7 +94,11 @@ public class ActiveSessionViewModel extends BaseViewModel {
         ObjectNode data = Converters.objectMapper.createObjectNode()
                 .put("tip", tip)
                 .put("payment_mode", paymentMode.tag);
-        mData.addSource(mRepository.postRequestCheckout(data), mData::setValue);
+        mCheckoutData.addSource(mRepository.postRequestCheckout(data), mCheckoutData::setValue);
+    }
+
+    public LiveData<Resource<CheckoutStatusModel>> getCheckoutData() {
+        return mCheckoutData;
     }
 
     public void setShopPk(long shopPk) {

@@ -13,6 +13,7 @@ import com.checkin.app.checkin.Data.WebApiService;
 import com.checkin.app.checkin.Manager.Model.ManagerSessionInvoiceModel;
 import com.checkin.app.checkin.Manager.Model.ManagerStatsModel;
 import com.checkin.app.checkin.Misc.GenericDetailModel;
+import com.checkin.app.checkin.Session.Model.CheckoutStatusModel;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 
 import androidx.annotation.NonNull;
@@ -46,8 +47,8 @@ public class ManagerRepository extends BaseRepository {
         }.getAsLiveData();
     }
 
-    public LiveData<Resource<GenericDetailModel>> manageSessionCheckout(long sessionId, ObjectNode data){
-        return new NetworkBoundResource<GenericDetailModel, GenericDetailModel>() {
+    public LiveData<Resource<CheckoutStatusModel>> manageSessionCheckout(long sessionId, ObjectNode data){
+        return new NetworkBoundResource<CheckoutStatusModel, CheckoutStatusModel>() {
             @Override
             protected boolean shouldUseLocalDb() {
                 return false;
@@ -55,12 +56,12 @@ public class ManagerRepository extends BaseRepository {
 
             @NonNull
             @Override
-            protected LiveData<ApiResponse<GenericDetailModel>> createCall() {
+            protected LiveData<ApiResponse<CheckoutStatusModel>> createCall() {
                 return new RetrofitLiveData<>(mWebService.putSessionCheckout(sessionId,data));
             }
 
             @Override
-            protected void saveCallResult(GenericDetailModel data) {
+            protected void saveCallResult(CheckoutStatusModel data) {
 
             }
         }.getAsLiveData();

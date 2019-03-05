@@ -54,7 +54,6 @@ public class ManagerSessionInvoiceActivity extends AppCompatActivity {
     private InvoiceOrdersAdapter mAdapter;
     private SessionBillModel mBillModel;
     private BillHolder mBillHolder;
-    private long keySession;
     private boolean isRequestedCheckout;
 
     @Override
@@ -65,7 +64,7 @@ public class ManagerSessionInvoiceActivity extends AppCompatActivity {
 
         Intent intent = getIntent();
 
-        keySession = intent.getLongExtra(KEY_SESSION, 0L);
+        long keySession = intent.getLongExtra(KEY_SESSION, 0L);
         String tableName = intent.getStringExtra(TABLE_NAME);
 
         updateRequestCheckoutStatus(intent.getBooleanExtra(IS_REQUESTED_CHECKOUT, false));
@@ -100,15 +99,15 @@ public class ManagerSessionInvoiceActivity extends AppCompatActivity {
                 Utils.toast(this, resource.message);
             }
         });
-        mViewModel.putSessionCheckoutData().observe(ManagerSessionInvoiceActivity.this, input -> {
+        mViewModel.getCheckoutData().observe(ManagerSessionInvoiceActivity.this, input -> {
             if (input == null)
                 return;
             if (input.status == Resource.Status.SUCCESS && input.data != null) {
-                Utils.toast(ManagerSessionInvoiceActivity.this, input.data.getDetail());
-                if (isRequestedCheckout) finish();
+                Utils.toast(ManagerSessionInvoiceActivity.this, input.data.getMessage());
+                if (input.data.isCheckout()) finish();
                 else updateRequestCheckoutStatus(true);
             } else if (input.status != Resource.Status.LOADING) {
-                Utils.toast(ManagerSessionInvoiceActivity.this, "Error: " + input.message);
+                Utils.toast(this, input.message);
             }
         });
         mBillHolder = new BillHolder(findViewById(android.R.id.content));
@@ -148,10 +147,13 @@ public class ManagerSessionInvoiceActivity extends AppCompatActivity {
     }
 
     private void alertDialogForCloseSession() {
-        new AlertDialog.Builder(this).setTitle("Are you sure you want to close session?")
-                .setPositiveButton("Yes", (dialog, which) -> mViewModel.putSessionCheckout(keySession, "csh"))
-                .setNegativeButton("No", (dialog, which) -> dialog.cancel())
-                .show();
+        AlertDialog.Builder builder = new AlertDialog.Builder(this).setTitle("Are you sure you want to close session?")
+                .setPositiveButton("Close session", (dialog, which) -> mViewModel.putSessionCheckout())
+                .setNegativeButton("No", (dialog, which) -> dialog.cancel());
+        if (!isRequestedCheckout) {
+            builder.setNeutralButton("Notify waiter", ((dialogInterface, i) -> mViewModel.requestSessionCheckout()));
+        }
+        builder.show();
     }
 
     private void updateDiscount() {

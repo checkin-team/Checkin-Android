@@ -7,6 +7,7 @@ import com.checkin.app.checkin.Data.Converters;
 import com.checkin.app.checkin.Data.Resource;
 import com.checkin.app.checkin.Misc.GenericDetailModel;
 import com.checkin.app.checkin.Session.ActiveSession.Chat.SessionChatModel.CHAT_STATUS_TYPE;
+import com.checkin.app.checkin.Session.Model.CheckoutStatusModel;
 import com.checkin.app.checkin.Session.Model.SessionBriefModel;
 import com.checkin.app.checkin.Session.SessionRepository;
 import com.checkin.app.checkin.Waiter.Model.OrderStatusModel;
@@ -29,6 +30,8 @@ public class WaiterTableViewModel extends BaseViewModel {
     private MediatorLiveData<Resource<List<WaiterEventModel>>> mEventData = new MediatorLiveData<>();
     private MediatorLiveData<Resource<GenericDetailModel>> mEventUpdate = new MediatorLiveData<>();
     private MediatorLiveData<Resource<OrderStatusModel>> mOrderStatus = new MediatorLiveData<>();
+    private MediatorLiveData<Resource<CheckoutStatusModel>> mCheckoutData = new MediatorLiveData<>();
+
 
     private long mSessionPk;
 
@@ -86,7 +89,11 @@ public class WaiterTableViewModel extends BaseViewModel {
     public void requestSessionCheckout() {
         ObjectNode data = Converters.objectMapper.createObjectNode();
         data.put("payment_mode", "csh");
-        mData.addSource(mWaiterRepository.postSessionRequestCheckout(mSessionPk, data), mData::setValue);
+        mCheckoutData.addSource(mWaiterRepository.postSessionRequestCheckout(mSessionPk, data), mCheckoutData::setValue);
+    }
+
+    public LiveData<Resource<CheckoutStatusModel>> getCheckoutData() {
+        return mCheckoutData;
     }
 
     public long getSessionPk() {
@@ -114,6 +121,7 @@ public class WaiterTableViewModel extends BaseViewModel {
     @Override
     public void updateResults() {
         fetchSessionDetail(mSessionPk);
+        fetchTableEvents();
     }
 
     public void updateUiMarkEventDone(long eventId) {
@@ -194,6 +202,10 @@ public class WaiterTableViewModel extends BaseViewModel {
         Resource<List<WaiterEventModel>> listResource = mEventData.getValue();
         if (listResource == null || listResource.data == null)
             return;
+        for (WaiterEventModel event : listResource.data) {
+            if (event.getPk() == waiterEventModel.getPk())
+                return;
+        }
         listResource.data.add(0, waiterEventModel);
         mEventData.setValue(Resource.cloneResource(listResource, listResource.data));
     }

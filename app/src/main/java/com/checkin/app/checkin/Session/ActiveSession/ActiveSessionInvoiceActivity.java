@@ -74,19 +74,25 @@ public class ActiveSessionInvoiceActivity extends AppCompatActivity {
             }
         });
 
-        mViewModel.getObservableData().observe(this, objectNodeResource -> {
-            if (objectNodeResource == null)
+        mViewModel.getCheckoutData().observe(this, statusModelResource -> {
+            if (statusModelResource == null)
                 return;
-            switch (objectNodeResource.status) {
+            switch (statusModelResource.status) {
                 case SUCCESS: {
-                    Utils.toast(this, "Done!");
-                    finish();
+                    if (statusModelResource.data != null) {
+                        Utils.toast(this, statusModelResource.data.getMessage());
+                        if (statusModelResource.data.isCheckout()) {
+                            Utils.navigateBackToHome(getApplicationContext());
+                        } else {
+                            finish();
+                        }
+                    }
                     break;
                 }
                 case LOADING:
                     break;
                 default: {
-                    Utils.toast(this, objectNodeResource.message);
+                    Utils.toast(this, statusModelResource.message);
                 }
             }
         });

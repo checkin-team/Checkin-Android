@@ -26,7 +26,7 @@ public class Constants {
     public static final String LAST_NOTIF_ID = "last_notif_id";
     public static final int NEW_NOTIF_RANGE = 2;//number of days
 
-    public static final long DEFAULT_ORDER_CANCEL_DURATION = MILLISECONDS.convert(3, MINUTES);
+    public static final long DEFAULT_ORDER_CANCEL_DURATION = MILLISECONDS.convert(5, MINUTES);
     public static final long DEFAULT_OTP_AUTO_RETRIEVAL_TIMEOUT = MILLISECONDS.convert(1, MINUTES);
 
     public final static String EXPAND_TEXT ="....";

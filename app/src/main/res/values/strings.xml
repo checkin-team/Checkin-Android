@@ -196,5 +196,6 @@
     <string name="coming_soon">Feature coming soon.</string>
     <string name="menu_waiter_orders_taken">Orders Taken: %s</string>
     <string name="menu_waiter_total_tip">Total Tip: %s</string>
+    <string name="license_agreement"><u>Agree to T&amp;C.</u></string>
 
 </resources>
