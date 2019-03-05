@@ -6,7 +6,7 @@ import com.checkin.app.checkin.Data.BaseViewModel;
 import com.checkin.app.checkin.Data.Converters;
 import com.checkin.app.checkin.Data.Resource;
 import com.checkin.app.checkin.Manager.Model.ManagerStatsModel;
-import com.checkin.app.checkin.Misc.GenericDetailModel;
+import com.checkin.app.checkin.Session.Model.CheckoutStatusModel;
 import com.checkin.app.checkin.Session.Model.RestaurantTableModel;
 import com.checkin.app.checkin.Waiter.WaiterRepository;
 import com.fasterxml.jackson.databind.node.ObjectNode;
@@ -24,7 +24,7 @@ public class ManagerWorkViewModel extends BaseViewModel {
 
     private MediatorLiveData<Resource<List<RestaurantTableModel>>> mActiveTablesData = new MediatorLiveData<>();
     private MediatorLiveData<Resource<ManagerStatsModel>> mStatsData = new MediatorLiveData<>();
-    private MediatorLiveData<Resource<GenericDetailModel>> mDetailData = new MediatorLiveData<>();
+    private MediatorLiveData<Resource<CheckoutStatusModel>> mCheckoutData = new MediatorLiveData<>();
 
     private long mShopPk;
 
@@ -50,11 +50,11 @@ public class ManagerWorkViewModel extends BaseViewModel {
     public void markSessionDone(long sessionId) {
         ObjectNode data = Converters.objectMapper.createObjectNode();
         data.put("payment_mode", "csh");
-        mDetailData.addSource(mManagerRepository.manageSessionCheckout(sessionId, data), mDetailData::setValue);
+        mCheckoutData.addSource(mManagerRepository.manageSessionCheckout(sessionId, data), mCheckoutData::setValue);
     }
 
-    public LiveData<Resource<GenericDetailModel>> getDetailData() {
-        return mDetailData;
+    public LiveData<Resource<CheckoutStatusModel>> getCheckoutData() {
+        return mCheckoutData;
     }
 
     public LiveData<Resource<ManagerStatsModel>> getRestaurantStatistics() {

@@ -97,6 +97,8 @@ public class WaiterEventAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
         ViewGroup containerStatusProgress;
         @BindView(R.id.im_waiter_order_mark_done)
         ImageView imOrderMarkDone;
+        @BindView(R.id.im_waiter_order_mark_cancel)
+        ImageView imOrderMarkCancel;
         @BindView(R.id.tv_waiter_order_cancel)
         TextView tvOrderCancel;
         @BindView(R.id.tv_waiter_order_accept)
@@ -111,6 +113,7 @@ public class WaiterEventAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
             imOrderMarkDone.setOnClickListener(v -> mListener.onOrderMarkDone(mOrderedItem));
             tvOrderAccept.setOnClickListener(v -> mListener.onOrderAccept(mOrderedItem));
             tvOrderCancel.setOnClickListener(v -> mListener.onOrderCancel(mOrderedItem));
+            imOrderMarkCancel.setOnClickListener(view -> mListener.onOrderCancel(mOrderedItem));
         }
 
         public void bindData(SessionOrderedItemModel order) {

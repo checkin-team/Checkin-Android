@@ -32,8 +32,13 @@ public class ManagerWorkTableAdapter extends RecyclerView.Adapter<ManagerWorkTab
     @NonNull
     @Override
     public ShopManagerTableHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_shop_manager_table, parent, false);
+        View view = LayoutInflater.from(parent.getContext()).inflate(viewType, parent, false);
         return new ShopManagerTableHolder(view);
+    }
+
+    @Override
+    public int getItemViewType(int position) {
+        return R.layout.item_shop_manager_table;
     }
 
     @Override

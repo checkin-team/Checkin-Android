@@ -114,12 +114,15 @@ public class ManagerTablesFragment extends Fragment implements ManagerWorkTableA
                 mAdapter.setRestaurantTableList(input.data);
             }
         });
-        mViewModel.getDetailData().observe(this, resource -> {
+        mViewModel.getCheckoutData().observe(this, resource -> {
             if (resource == null)
                 return;
             if (resource.status == Resource.Status.SUCCESS && resource.data != null) {
-                Utils.toast(requireContext(), resource.data.getDetail());
-                mViewModel.updateRemoveTable(Long.valueOf(resource.data.getPk()));
+                Utils.toast(requireContext(), resource.data.getMessage());
+                if (resource.data.isCheckout())
+                    mViewModel.updateRemoveTable(resource.data.getSessionPk());
+                else
+                    mViewModel.updateResults();
             } else if (resource.status != Resource.Status.LOADING) {
                 Utils.toast(requireContext(), "Error: " + resource.message);
             }

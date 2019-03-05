@@ -183,6 +183,8 @@ public class ActiveSessionActivity extends BaseActivity implements ActiveSession
                 }
                 case LOADING:
                     break;
+                case ERROR_NOT_FOUND:
+                    mViewModel.fetchActiveSessionDetail();
                 default: {
                     Utils.toast(this, resource.message);
                 }

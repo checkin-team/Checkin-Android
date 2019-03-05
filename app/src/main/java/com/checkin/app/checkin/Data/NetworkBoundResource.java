@@ -41,9 +41,7 @@ public abstract class NetworkBoundResource<ResultType, RequestType> {
         if (useDb) {
             // we re-attach dbSource as a new source,
             // it will dispatch its latest value quickly
-            mResult.addSource(dbSource, newData -> {
-                mResult.setValue(Resource.loading(newData));
-            });
+            mResult.addSource(dbSource, newData -> mResult.setValue(Resource.loading(newData)));
         }
         mResult.addSource(apiResponse, response -> {
             mResult.removeSource(apiResponse);
@@ -59,9 +57,7 @@ public abstract class NetworkBoundResource<ResultType, RequestType> {
                 if (!response.isSuccessful()) {
                     onFetchFailed(response);
                     if (useDb) {
-                        mResult.addSource(dbSource, newData -> {
-                            mResult.setValue(Resource.error(resource.message, newData));
-                        });
+                        mResult.addSource(dbSource, newData -> mResult.setValue(Resource.error(resource.message, newData)));
                     }
                 }
             }

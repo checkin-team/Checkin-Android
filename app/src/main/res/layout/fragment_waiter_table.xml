@@ -59,7 +59,7 @@
 
         <Button
             android:id="@+id/btn_waiter_table_checkout"
-            style="@style/ButtonNeutralAction"
+            style="@style/ButtonRedAlertAction"
             android:layout_width="wrap_content"
             android:layout_height="@dimen/button_height_normal"
             android:text="Checkout" />

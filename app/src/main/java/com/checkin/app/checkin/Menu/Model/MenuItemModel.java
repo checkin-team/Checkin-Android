@@ -106,6 +106,7 @@ public class MenuItemModel {
     @JsonProperty("customizations")
     public void setCustomizationGroups(List<ItemCustomizationGroupModel> customizationGroups) {
         AppDatabase.getMenuItemModel(null).attach(this);
+        AppDatabase.getMenuItemCustomizationGroupModel(null).remove(this.customizationGroups);
         AppDatabase.getMenuItemCustomizationGroupModel(null).put(customizationGroups);
         this.customizationGroups.addAll(customizationGroups);
         AppDatabase.getMenuItemModel(null).put(this);

@@ -57,7 +57,7 @@
         android:drawableStart="@drawable/checkbox_selector"
         android:drawablePadding="@dimen/spacing_extra_small"
         android:gravity="center"
-        android:text="Read EULA"
+        android:text="@string/license_agreement"
         android:textAlignment="center"
         app:layout_constraintBottom_toTopOf="@id/tv_tag_line"
         app:layout_constraintEnd_toEndOf="parent"

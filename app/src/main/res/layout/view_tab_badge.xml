@@ -23,7 +23,7 @@
         android:layout_width="@dimen/size_small_icon"
         android:layout_height="@dimen/size_small_icon"
         android:layout_marginStart="@dimen/spacing_extra_small"
-        android:background="@drawable/shape_oval_green"
+        android:background="@drawable/shape_oval_red"
         android:textAlignment="center"
         android:textSize="@dimen/font_normal"
         tools:text="2" />

@@ -12,6 +12,7 @@ import com.checkin.app.checkin.Search.SearchResultPeopleModel;
 import com.checkin.app.checkin.Search.SearchResultShopModel;
 import com.checkin.app.checkin.Session.ActiveSession.Chat.SessionChatModel;
 import com.checkin.app.checkin.Session.Model.ActiveSessionModel;
+import com.checkin.app.checkin.Session.Model.CheckoutStatusModel;
 import com.checkin.app.checkin.Session.Model.QRResultModel;
 import com.checkin.app.checkin.Session.Model.RestaurantTableModel;
 import com.checkin.app.checkin.Session.Model.SessionBasicModel;
@@ -176,7 +177,7 @@ public interface WebApiService {
     Call<ObjectNode> postCustomerRequestService(@Body ObjectNode data);
 
     @POST("sessions/active/request/checkout/")
-    Call<ObjectNode> postCustomerRequestCheckout(@Body ObjectNode data);
+    Call<CheckoutStatusModel> postCustomerRequestCheckout(@Body ObjectNode data);
 
     @GET("sessions/active/invoice/")
     Call<SessionInvoiceModel> getActiveSessionInvoice();
@@ -215,7 +216,7 @@ public interface WebApiService {
     Call<WaiterStatsModel> getRestaurantWaiterStats(@Path("restaurant_id") long restaurantId);
 
     @POST("sessions/{session_id}/request/checkout/")
-    Call<ObjectNode> postSessionRequestCheckout(@Path("session_id") long sessionId, @Body ObjectNode data);
+    Call<CheckoutStatusModel> postSessionRequestCheckout(@Path("session_id") long sessionId, @Body ObjectNode data);
 
     // endregion
 
@@ -234,7 +235,7 @@ public interface WebApiService {
     Call<GenericDetailModel> putManageSessionBill(@Path("session_id") long sessionId, @Body ObjectNode data);
 
     @PUT("sessions/{session_id}/checkout/")
-    Call<GenericDetailModel> putSessionCheckout(@Path("session_id") long sessionId, @Body ObjectNode data);
+    Call<CheckoutStatusModel> putSessionCheckout(@Path("session_id") long sessionId, @Body ObjectNode data);
 
     // endregion
 

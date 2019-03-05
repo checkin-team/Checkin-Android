@@ -9,6 +9,7 @@ import com.checkin.app.checkin.Manager.Model.ManagerSessionEventModel;
 import com.checkin.app.checkin.Manager.Model.ManagerSessionInvoiceModel;
 import com.checkin.app.checkin.Misc.GenericDetailModel;
 import com.checkin.app.checkin.Session.ActiveSession.Chat.SessionChatModel;
+import com.checkin.app.checkin.Session.Model.CheckoutStatusModel;
 import com.checkin.app.checkin.Session.Model.SessionBriefModel;
 import com.checkin.app.checkin.Session.Model.SessionOrderedItemModel;
 import com.checkin.app.checkin.Session.SessionRepository;
@@ -42,7 +43,7 @@ public class ManagerSessionViewModel extends BaseViewModel {
     private MediatorLiveData<Resource<List<ManagerSessionEventModel>>> mEventData = new MediatorLiveData<>();
     private MediatorLiveData<Resource<GenericDetailModel>> mDetailData = new MediatorLiveData<>();
     private MediatorLiveData<Resource<OrderStatusModel>> mOrderStatusData = new MediatorLiveData<>();
-    private MediatorLiveData<Resource<GenericDetailModel>> mSessionCheckoutData = new MediatorLiveData<>();
+    private MediatorLiveData<Resource<CheckoutStatusModel>> mCheckoutData = new MediatorLiveData<>();
 
     private long mSessionPk;
     private long mShopPk;
@@ -54,14 +55,14 @@ public class ManagerSessionViewModel extends BaseViewModel {
         mWaiterRepository = WaiterRepository.getInstance(application);
     }
 
-    public void putSessionCheckout(long sessionId, String paymentMode) {
+    public void putSessionCheckout() {
         ObjectNode data = Converters.objectMapper.createObjectNode();
-        data.put("payment_mode", paymentMode);
-        mSessionCheckoutData.addSource(mManagerRepository.manageSessionCheckout(sessionId, data), mSessionCheckoutData::setValue);
+        data.put("payment_mode", "csh");
+        mCheckoutData.addSource(mManagerRepository.manageSessionCheckout(mSessionPk, data), mCheckoutData::setValue);
     }
 
-    public LiveData<Resource<GenericDetailModel>> putSessionCheckoutData() {
-        return mSessionCheckoutData;
+    public LiveData<Resource<CheckoutStatusModel>> getCheckoutData() {
+        return mCheckoutData;
     }
 
     @Override
@@ -80,6 +81,12 @@ public class ManagerSessionViewModel extends BaseViewModel {
         ObjectNode data = Converters.objectMapper.createObjectNode();
         data.put("discount_percent", discountPercent);
         mDetailData.addSource(mManagerRepository.putManageSessionBill(mSessionPk, data), mDetailData::setValue);
+    }
+
+    public void requestSessionCheckout() {
+        ObjectNode data = Converters.objectMapper.createObjectNode();
+        data.put("payment_mode", "csh");
+        mCheckoutData.addSource(mWaiterRepository.postSessionRequestCheckout(mSessionPk, data), mCheckoutData::setValue);
     }
 
     public LiveData<Resource<GenericDetailModel>> getDetailData() {

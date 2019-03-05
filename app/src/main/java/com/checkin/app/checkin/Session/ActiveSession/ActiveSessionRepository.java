@@ -1,9 +1,7 @@
 package com.checkin.app.checkin.Session.ActiveSession;
 
 import android.app.Application;
-import androidx.lifecycle.LiveData;
 import android.content.Context;
-import androidx.annotation.NonNull;
 
 import com.checkin.app.checkin.Data.ApiClient;
 import com.checkin.app.checkin.Data.ApiResponse;
@@ -15,11 +13,15 @@ import com.checkin.app.checkin.Data.WebApiService;
 import com.checkin.app.checkin.Misc.GenericDetailModel;
 import com.checkin.app.checkin.Session.ActiveSession.Chat.SessionChatModel;
 import com.checkin.app.checkin.Session.Model.ActiveSessionModel;
+import com.checkin.app.checkin.Session.Model.CheckoutStatusModel;
 import com.checkin.app.checkin.Session.Model.SessionInvoiceModel;
 import com.checkin.app.checkin.Session.Model.SessionOrderedItemModel;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 
 import java.util.List;
+
+import androidx.annotation.NonNull;
+import androidx.lifecycle.LiveData;
 
 /**
  * Created by Bhavik Patel on 04/08/2018.
@@ -230,8 +232,8 @@ public class ActiveSessionRepository extends BaseRepository {
         }.getAsLiveData();
     }
 
-    public LiveData<Resource<ObjectNode>> postRequestCheckout(ObjectNode data) {
-        return new NetworkBoundResource<ObjectNode, ObjectNode>() {
+    public LiveData<Resource<CheckoutStatusModel>> postRequestCheckout(ObjectNode data) {
+        return new NetworkBoundResource<CheckoutStatusModel, CheckoutStatusModel>() {
             @Override
             protected boolean shouldUseLocalDb() {
                 return false;
@@ -239,12 +241,12 @@ public class ActiveSessionRepository extends BaseRepository {
 
             @NonNull
             @Override
-            protected LiveData<ApiResponse<ObjectNode>> createCall() {
+            protected LiveData<ApiResponse<CheckoutStatusModel>> createCall() {
                 return new RetrofitLiveData<>(mWebService.postCustomerRequestCheckout(data));
             }
 
             @Override
-            protected void saveCallResult(ObjectNode data) {
+            protected void saveCallResult(CheckoutStatusModel data) {
             }
         }.getAsLiveData();
     }
