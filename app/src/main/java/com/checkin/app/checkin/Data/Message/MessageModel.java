@@ -72,7 +72,7 @@ public class MessageModel implements Serializable {
         MANAGER_SESSION_NEW(611), MANAGER_SESSION_MEMBER_CHANGE(612), MANAGER_SESSION_HOST_ASSIGNED(613),
         MANAGER_SESSION_NEW_ORDER(615), MANAGER_SESSION_UPDATE_ORDER(616), MANAGER_SESSION_EVENT_SERVICE(617),
         MANAGER_SESSION_EVENT_CONCERN(618), MANAGER_SESSION_EVENT_UPDATE(619), MANAGER_SESSION_ORDERS_PUSH(620),
-        MANAGER_SESSION_BILL_CHANGE(623), MANAGER_SESSION_CHECKOUT_REQUEST(625),
+        MANAGER_SESSION_BILL_CHANGE(623), MANAGER_SESSION_CHECKOUT_REQUEST(625), MANAGER_SESSION_END(626),
 
         // Waiter
         WAITER_SESSION_NEW(711), WAITER_SESSION_MEMBER_CHANGE(712), WAITER_SESSION_HOST_ASSIGNED(713),
@@ -207,6 +207,7 @@ public class MessageModel implements Serializable {
     private void addNotificationExtra(Context context, NotificationCompat.Builder builder, int notificationId) {
         if (isShopWaiterNotification() || isShopManagerNotification())
             builder.setPriority(Notification.PRIORITY_HIGH);
+
         if (this.type == MANAGER_SESSION_ORDERS_PUSH || this.type == WAITER_SESSION_ORDERS_PUSH)
             builder.setSound(Constants.getAlertOrdersSoundUri(context));
         tryGroupNotification(builder);

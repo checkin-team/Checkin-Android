@@ -113,6 +113,9 @@ public class WaiterWorkViewModel extends BaseViewModel {
         Resource<List<RestaurantTableModel>> resource = mShopTables.getValue();
         if (resource == null || resource.data == null)
             return;
+
+        if (resource.data.contains(tableModel))
+            return;
         resource.data.add(tableModel);
         mShopTables.setValue(Resource.cloneResource(resource, resource.data));
     }
@@ -152,5 +155,17 @@ public class WaiterWorkViewModel extends BaseViewModel {
                 }
             }
         }
+    }
+
+    public void addWaiterTable(WaiterTableModel tableModel) {
+        Resource<List<WaiterTableModel>> waiterTableResource = mWaiterTables.getValue();
+        if (waiterTableResource == null || waiterTableResource.data == null)
+            return;
+
+        if (waiterTableResource.data.contains(tableModel))
+            return;
+
+        waiterTableResource.data.add(tableModel);
+        mWaiterTables.setValue(Resource.cloneResource(waiterTableResource, waiterTableResource.data));
     }
 }

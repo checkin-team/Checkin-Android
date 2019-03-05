@@ -90,4 +90,14 @@ public class RestaurantTableModel {
     public void setRequestedCheckout(boolean requestedCheckout) {
         isRequestedCheckout = requestedCheckout;
     }
+
+    @Override
+    public boolean equals(@Nullable Object obj) {
+        try {
+            RestaurantTableModel table = ((RestaurantTableModel) obj);
+            return table != null && table.getPk() == this.getPk();
+        } catch (ClassCastException ignored) {
+            return false;
+        }
+    }
 }
