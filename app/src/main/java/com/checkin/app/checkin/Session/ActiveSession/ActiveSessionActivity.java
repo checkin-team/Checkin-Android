@@ -371,7 +371,6 @@ public class ActiveSessionActivity extends BaseActivity implements ActiveSession
         MessageUtils.registerLocalReceiver(this, mReceiver, types);
         updateScreen();
         resetEnableViews();
-        Utils.hideSoftKeyboard(this);
     }
 
     @Override

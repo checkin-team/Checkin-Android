@@ -18,6 +18,7 @@ import javax.net.ssl.HttpsURLConnection;
 
 import dagger.Module;
 import dagger.Provides;
+import okhttp3.Cache;
 import okhttp3.Interceptor;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
@@ -29,6 +30,7 @@ import retrofit2.converter.jackson.JacksonConverterFactory;
 import static com.checkin.app.checkin.Utility.Constants.API_HOST;
 import static com.checkin.app.checkin.Utility.Constants.API_PROTOCOL;
 import static com.checkin.app.checkin.Utility.Utils.isNetworkConnected;
+import static com.facebook.FacebookSdk.getCacheDir;
 
 @Module
 public class ApiClient {
@@ -48,6 +50,9 @@ public class ApiClient {
     private static WebApiService sApiService;
 
     private OkHttpClient provideClient(final Context context) {
+        int cacheSize = 10 * 1024 * 1024; // 10 MB
+        Cache cache = new Cache(getCacheDir(), cacheSize);
+
         final OkHttpClient.Builder httpClientBuilder = new OkHttpClient.Builder();
         handleNetworkInterceptor(httpClientBuilder, context);
         handleHeadersInterceptor(httpClientBuilder, context);
@@ -55,7 +60,8 @@ public class ApiClient {
         httpClientBuilder
                 .connectTimeout(15, TimeUnit.SECONDS)
                 .readTimeout(30, TimeUnit.SECONDS)
-                .writeTimeout(30, TimeUnit.SECONDS);
+                .writeTimeout(30, TimeUnit.SECONDS)
+                .cache(cache);
         if (BuildConfig.DEBUG) {
             // Logging interceptor
             HttpLoggingInterceptor loggingInterceptor = new HttpLoggingInterceptor(message -> Log.e("HTTP logging: ", message));
