@@ -5,7 +5,7 @@
   "entities": [
     {
       "id": "16:2304185258920652715",
-      "lastPropertyId": "5:8629907366672562523",
+      "lastPropertyId": "6:6991398721053845164",
       "name": "MenuGroupModel",
       "properties": [
         {
@@ -27,18 +27,18 @@
         {
           "id": "5:8629907366672562523",
           "name": "icon"
+        },
+        {
+          "id": "6:6991398721053845164",
+          "indexId": "13:8652006727545222733",
+          "name": "menuId"
         }
       ],
-      "relations": [
-        {
-          "id": "2:2525365679390465930",
-          "name": "items"
-        }
-      ]
+      "relations": []
     },
     {
       "id": "17:4640836545269477801",
-      "lastPropertyId": "4:8895726188210551706",
+      "lastPropertyId": "5:9101401991107749500",
       "name": "ItemCustomizationGroupModel",
       "properties": [
         {
@@ -56,18 +56,18 @@
         {
           "id": "4:8895726188210551706",
           "name": "maxSelection"
+        },
+        {
+          "id": "5:9101401991107749500",
+          "indexId": "14:3661154700385426973",
+          "name": "menuItemId"
         }
       ],
-      "relations": [
-        {
-          "id": "3:3495919967642879635",
-          "name": "customizationFields"
-        }
-      ]
+      "relations": []
     },
     {
       "id": "18:8562419578927800035",
-      "lastPropertyId": "4:7811856212933169619",
+      "lastPropertyId": "5:3602570634923630077",
       "name": "ItemCustomizationFieldModel",
       "properties": [
         {
@@ -85,13 +85,18 @@
         {
           "id": "4:7811856212933169619",
           "name": "cost"
+        },
+        {
+          "id": "5:3602570634923630077",
+          "indexId": "15:3860196780846305571",
+          "name": "groupId"
         }
       ],
       "relations": []
     },
     {
       "id": "19:7181022702862943602",
-      "lastPropertyId": "11:7583116003586545231",
+      "lastPropertyId": "12:7913119623590446023",
       "name": "MenuItemModel",
       "properties": [
         {
@@ -129,14 +134,14 @@
         {
           "id": "11:7583116003586545231",
           "name": "typeCosts"
+        },
+        {
+          "id": "12:7913119623590446023",
+          "indexId": "16:3961878181504181650",
+          "name": "groupId"
         }
       ],
-      "relations": [
-        {
-          "id": "4:2442588998346403966",
-          "name": "customizationGroups"
-        }
-      ]
+      "relations": []
     },
     {
       "id": "20:2752911192166673003",
@@ -156,16 +161,11 @@
           "name": "restaurantPk"
         }
       ],
-      "relations": [
-        {
-          "id": "5:7294562391163822078",
-          "name": "groups"
-        }
-      ]
+      "relations": []
     }
   ],
   "lastEntityId": "20:2752911192166673003",
-  "lastIndexId": "12:2683301455753137868",
+  "lastIndexId": "16:3961878181504181650",
   "lastRelationId": "5:7294562391163822078",
   "lastSequenceId": "0:0",
   "modelVersion": 4,
@@ -329,7 +329,11 @@
     2544857255928118178
   ],
   "retiredRelationUids": [
-    1392243414364918450
+    1392243414364918450,
+    2525365679390465930,
+    3495919967642879635,
+    7294562391163822078,
+    2442588998346403966
   ],
   "version": 1
 }

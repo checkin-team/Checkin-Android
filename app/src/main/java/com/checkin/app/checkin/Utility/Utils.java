@@ -5,6 +5,7 @@ import android.animation.AnimatorSet;
 import android.animation.ArgbEvaluator;
 import android.animation.ObjectAnimator;
 import android.animation.ValueAnimator;
+import android.app.Activity;
 import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
@@ -21,17 +22,20 @@ import android.graphics.drawable.LayerDrawable;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.Build;
+import android.os.IBinder;
 import android.provider.MediaStore;
 import android.util.Log;
 import android.view.View;
 import android.view.ViewAnimationUtils;
 import android.view.ViewGroup;
 import android.view.animation.AccelerateDecelerateInterpolator;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.checkin.app.checkin.Home.HomeActivity;
+import com.checkin.app.checkin.Maps.AppUtils;
 import com.checkin.app.checkin.R;
 import com.google.android.material.tabs.TabLayout;
 
@@ -509,5 +513,19 @@ public class Utils {
         bitmapDrawable.setBounds(0, 0, widthInPixels, heightInPixels);
 
         return bitmapDrawable;
+    }
+
+    public static void hideSoftKeyboard(Activity activity) {
+            if (activity != null) {
+                InputMethodManager inputMethodManager = (InputMethodManager) activity
+                        .getSystemService(Activity.INPUT_METHOD_SERVICE);
+                View view = activity.getCurrentFocus();
+                if (view != null) {
+                    IBinder binder = view.getWindowToken();
+                    if (binder != null) {
+                        inputMethodManager.hideSoftInputFromWindow(binder, 0);
+                    }
+                }
+            }
     }
 }

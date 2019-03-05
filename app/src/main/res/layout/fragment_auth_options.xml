@@ -20,6 +20,7 @@
         android:textColor="@color/pinkish_grey"
         android:textAlignment="center"
         android:textSize="@dimen/font_normal"
+        android:maxLength="13"
         android:text="@string/prefix_country_code"
         android:background="@drawable/background_textbox"
         app:layout_constraintEnd_toEndOf="parent"

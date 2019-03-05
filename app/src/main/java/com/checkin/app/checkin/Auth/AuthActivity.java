@@ -12,6 +12,7 @@ import android.os.Handler;
 import android.preference.PreferenceManager;
 import android.util.Log;
 import android.view.View;
+import android.view.WindowManager;
 import android.widget.CheckedTextView;
 import android.widget.ProgressBar;
 import android.widget.Toast;
@@ -200,6 +201,11 @@ public class AuthActivity extends AppCompatActivity implements AuthFragmentInter
                         mDarkBack.setVisibility(View.GONE);
                     }
                 });
+    }
+
+    @OnClick(R.id.parent_layout)
+    public void outClick(){
+        Utils.hideSoftKeyboard(this);
     }
 
     @OnClick(R.id.tv_read_eula)

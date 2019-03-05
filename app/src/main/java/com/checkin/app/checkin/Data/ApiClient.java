@@ -3,6 +3,7 @@ package com.checkin.app.checkin.Data;
 import android.accounts.AccountManager;
 import android.content.Context;
 import android.os.Build;
+import androidx.annotation.NonNull;
 import android.util.Log;
 
 import com.checkin.app.checkin.Auth.AuthPreferences;
@@ -15,7 +16,6 @@ import java.util.concurrent.TimeUnit;
 
 import javax.net.ssl.HttpsURLConnection;
 
-import androidx.annotation.NonNull;
 import dagger.Module;
 import dagger.Provides;
 import okhttp3.Interceptor;
@@ -70,7 +70,9 @@ public class ApiClient {
             Request.Builder requestBuilder = chain.request().newBuilder()
                     .addHeader("Accept", getAcceptHeader())
                     .addHeader("User-Agent", getUserAgentHeader());
+            Log.e("ApiClient", "Starting request");
             String authToken = AuthPreferences.getAuthToken(context);
+            Log.e("ApiClient", "Ending request");
             if (authToken != null)
                 requestBuilder.addHeader("Authorization", "Token " + authToken);
             Request request = requestBuilder.build();
