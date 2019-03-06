@@ -7,6 +7,8 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.View;
+import android.view.ViewTreeObserver;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.TextView;
 
 import com.checkin.app.checkin.Account.AccountModel;
@@ -171,6 +173,11 @@ public class WaiterWorkActivity extends BaseAccountActivity implements WaiterTab
                 }
             }
         });
+    }
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
     }
 
     private void fetchData() {
