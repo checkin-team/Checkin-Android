@@ -62,6 +62,7 @@ public class WaiterTableFragment extends BaseFragment implements KeyboardVisibil
     private WaiterWorkViewModel mWorkViewModel;
 
     private long shopPk;
+    private SessionContactModel mSessionContactData;
 
     public static WaiterTableFragment newInstance(long tableNumber, WaiterTableInteraction listener) {
         WaiterTableFragment fragment = new WaiterTableFragment();
@@ -116,6 +117,19 @@ public class WaiterTableFragment extends BaseFragment implements KeyboardVisibil
                 Utils.toast(requireContext(), "User contact details added successfully.");
             else if (input.status != Status.LOADING && input.message != null)
                 Utils.toast(requireContext(), input.message);
+        });
+
+        mViewModel.getSessionContact();
+
+        mViewModel.getSessionContactListData().observe(this, input -> {
+            if (input == null)
+                return;
+            if (input.status == Status.SUCCESS && input.data != null){
+                if (input.data.size() > 0){
+                    mSessionContactData = input.data.get(input.data.size() - 1);
+                }
+            }else if (input.status != Status.LOADING && input.message != null)
+                Utils.toast(requireContext(),input.message);
         });
     }
 
@@ -190,6 +204,16 @@ public class WaiterTableFragment extends BaseFragment implements KeyboardVisibil
         EditText etPhone = mDialog.findViewById(R.id.et_contact_phone);
         EditText etEmail = mDialog.findViewById(R.id.et_contact_email);
         TextView btnDone = mDialog.findViewById(R.id.btn_contact_done);
+
+        if (mSessionContactData != null){
+            String email = mSessionContactData.getEmail();
+            String phone = mSessionContactData.getPhone();
+
+            if (email != null)
+                etEmail.setText(email);
+            else if (phone != null)
+                etPhone.setText(phone);
+        }
 
         etPhone.addTextChangedListener(new TextWatcher() {
             @Override
