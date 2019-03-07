@@ -11,7 +11,9 @@ import com.checkin.app.checkin.Session.Model.CheckoutStatusModel;
 import com.checkin.app.checkin.Session.Model.SessionBriefModel;
 import com.checkin.app.checkin.Session.SessionRepository;
 import com.checkin.app.checkin.Waiter.Model.OrderStatusModel;
+import com.checkin.app.checkin.Waiter.Model.SessionContactModel;
 import com.checkin.app.checkin.Waiter.Model.WaiterEventModel;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 
 import java.util.ArrayList;
@@ -31,6 +33,8 @@ public class WaiterTableViewModel extends BaseViewModel {
     private MediatorLiveData<Resource<GenericDetailModel>> mEventUpdate = new MediatorLiveData<>();
     private MediatorLiveData<Resource<OrderStatusModel>> mOrderStatus = new MediatorLiveData<>();
     private MediatorLiveData<Resource<CheckoutStatusModel>> mCheckoutData = new MediatorLiveData<>();
+    private MediatorLiveData<Resource<List<SessionContactModel>>> mContactListData = new MediatorLiveData<>();
+    private MediatorLiveData<Resource<SessionContactModel>> mContactData = new MediatorLiveData<>();
 
 
     private long mSessionPk;
@@ -68,6 +72,27 @@ public class WaiterTableViewModel extends BaseViewModel {
             }
             return input;
         });
+    }
+
+    public void postSessionContact(String email, String phone){
+        ObjectNode data = Converters.objectMapper.createObjectNode();
+        if (phone != null)
+            data.put("phone",phone);
+        else
+            data.put("email",email);
+        mContactData.addSource(mWaiterRepository.postSessionContact(mSessionPk,data),mContactData::setValue);
+    }
+
+    public LiveData<Resource<SessionContactModel>> getSessionContactData(){
+        return mContactData;
+    }
+
+    public void getSessionContact(){
+        mContactListData.addSource(mWaiterRepository.getSessionContact(mSessionPk),mContactListData::setValue);
+    }
+
+    public LiveData<Resource<List<SessionContactModel>>> getSessionContactListData(){
+        return mContactListData;
     }
 
     public LiveData<Resource<List<WaiterEventModel>>> getDeliveredTableEvents() {

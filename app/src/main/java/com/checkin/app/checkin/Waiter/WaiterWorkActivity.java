@@ -1,5 +1,6 @@
 package com.checkin.app.checkin.Waiter;
 
+import android.app.Dialog;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
