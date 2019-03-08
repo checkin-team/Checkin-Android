@@ -33,6 +33,7 @@ import butterknife.ButterKnife;
 import butterknife.Unbinder;
 
 import static com.checkin.app.checkin.Data.Message.MessageModel.MESSAGE_TYPE.MANAGER_SESSION_CHECKOUT_REQUEST;
+import static com.checkin.app.checkin.Data.Message.MessageModel.MESSAGE_TYPE.MANAGER_SESSION_END;
 import static com.checkin.app.checkin.Data.Message.MessageModel.MESSAGE_TYPE.MANAGER_SESSION_EVENT_CONCERN;
 import static com.checkin.app.checkin.Data.Message.MessageModel.MESSAGE_TYPE.MANAGER_SESSION_EVENT_SERVICE;
 import static com.checkin.app.checkin.Data.Message.MessageModel.MESSAGE_TYPE.MANAGER_SESSION_HOST_ASSIGNED;
@@ -80,6 +81,9 @@ public class ManagerTablesFragment extends Fragment implements ManagerWorkTableA
                 case MANAGER_SESSION_HOST_ASSIGNED:
                     user = message.getObject().getBriefModel();
                     ManagerTablesFragment.this.updateSessionHost(message.getTarget().getPk(), user);
+                    break;
+                case MANAGER_SESSION_END:
+                    ManagerTablesFragment.this.removeTable(message.getSessionDetail().getPk());
                     break;
             }
         }
@@ -155,6 +159,10 @@ public class ManagerTablesFragment extends Fragment implements ManagerWorkTableA
             mAdapter.updateSession(pos);
         }
     }
+
+    private void removeTable(long sessionPk){
+        mViewModel.updateRemoveTable(sessionPk);
+    }
     // endregion
 
     @Override
@@ -162,7 +170,7 @@ public class ManagerTablesFragment extends Fragment implements ManagerWorkTableA
         super.onResume();
         MessageModel.MESSAGE_TYPE[] types = new MessageModel.MESSAGE_TYPE[] {
                 MANAGER_SESSION_NEW, MANAGER_SESSION_NEW_ORDER, MANAGER_SESSION_EVENT_SERVICE, MANAGER_SESSION_CHECKOUT_REQUEST,
-                MANAGER_SESSION_EVENT_CONCERN, MANAGER_SESSION_HOST_ASSIGNED
+                MANAGER_SESSION_EVENT_CONCERN, MANAGER_SESSION_HOST_ASSIGNED, MANAGER_SESSION_END
         };
         MessageUtils.registerLocalReceiver(requireContext(), mReceiver, types);
     }

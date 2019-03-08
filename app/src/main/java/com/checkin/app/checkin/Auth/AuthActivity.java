@@ -212,6 +212,11 @@ public class AuthActivity extends AppCompatActivity implements AuthFragmentInter
                 });
     }
 
+    @OnClick(R.id.parent_layout)
+    public void outClick(){
+        Utils.hideSoftKeyboard(this);
+    }
+
     @OnClick(R.id.tv_read_eula)
     public void readEula() {
         eulaDialog.show();

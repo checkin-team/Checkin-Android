@@ -30,7 +30,6 @@ public class WaiterTableFragment extends BaseFragment {
 
     private WaiterTableInteraction mListener;
     private WaiterTableViewModel mViewModel;
-    private WaiterWorkViewModel mWorkViewModel;
 
     private long shopPk;
 
@@ -56,7 +55,6 @@ public class WaiterTableFragment extends BaseFragment {
         shopPk = ViewModelProviders.of(requireActivity()).get(WaiterWorkViewModel.class).getShopPk();
 
         mViewModel = ViewModelProviders.of(this).get(WaiterTableViewModel.class);
-        mWorkViewModel = ViewModelProviders.of(requireActivity()).get(WaiterWorkViewModel.class);
         mViewModel.fetchSessionDetail(getArguments().getLong(KEY_WAITER_TABLE_ID, 0));
 
         mViewModel.getSessionDetail().observe(this, resource -> {
@@ -72,10 +70,10 @@ public class WaiterTableFragment extends BaseFragment {
             if (resource == null)
                 return;
             if (resource.status == Status.SUCCESS && resource.data != null) {
-                if (resource.data.isCheckout()) {
-                    mWorkViewModel.markSessionEnd(resource.data.getSessionPk());
-                }
                 Utils.toast(requireContext(), resource.data.getMessage());
+                if (resource.data.isCheckout()) {
+                    mListener.endSession(mViewModel.getSessionPk());
+                }
             } else if (resource.status != Status.LOADING && resource.message != null) {
                 Utils.toast(requireContext(), resource.message);
             }

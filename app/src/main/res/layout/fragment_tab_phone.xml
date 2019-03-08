@@ -15,6 +15,7 @@
         android:layout_marginTop="@dimen/spacing_extra_large"
         android:hint="Business Phone Number"
         android:inputType="phone"
+        android:maxLength="13"
         android:text="@string/prefix_country_code"
         style="@style/InputTextStyle"
         app:layout_constraintEnd_toEndOf="parent"

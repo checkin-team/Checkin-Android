@@ -75,6 +75,7 @@ public class WaiterWorkActivity extends BaseAccountActivity implements WaiterTab
 
     private WaiterWorkViewModel mViewModel;
     private WaiterTablePagerAdapter mFragmentAdapter;
+    private long sessionPk;
 
     private final BroadcastReceiver mReceiver = new BroadcastReceiver() {
         @Override
@@ -184,7 +185,7 @@ public class WaiterWorkActivity extends BaseAccountActivity implements WaiterTab
         mFragmentAdapter = new WaiterTablePagerAdapter(getSupportFragmentManager());
         pagerTables.setAdapter(mFragmentAdapter);
         tabLayout.setupWithViewPager(pagerTables);
-        long sessionPk = getIntent().getLongExtra(KEY_SESSION_PK, 0L);
+        sessionPk = getIntent().getLongExtra(KEY_SESSION_PK, 0L);
 
         mViewModel.getWaiterTables().observe(this, listResource -> {
             if (listResource == null)
@@ -205,8 +206,7 @@ public class WaiterWorkActivity extends BaseAccountActivity implements WaiterTab
             if (qrResource == null)
                 return;
             if (qrResource.status == Status.SUCCESS && qrResource.data != null) {
-                mFragmentAdapter.addTable(
-                        tabLayout, new WaiterTableModel(qrResource.data.getSessionPk(), qrResource.data.getTable()), this);
+                addWaiterTable(qrResource.data.getSessionPk(), qrResource.data.getTable());
             } else if (qrResource.status != Status.LOADING) {
                 Utils.toast(this, qrResource.message);
             }
@@ -221,6 +221,12 @@ public class WaiterWorkActivity extends BaseAccountActivity implements WaiterTab
                 mFragmentAdapter.updateTableStatus(tabLayout, position);
             }
         });
+    }
+
+    private void addWaiterTable(long sessionPk, String table) {
+        this.sessionPk = sessionPk;
+        WaiterTableModel tableModel = new WaiterTableModel(sessionPk, table);
+        mViewModel.addWaiterTable(tableModel);
     }
 
     private void setupShopAssignedTables() {

@@ -2,6 +2,8 @@ package com.checkin.app.checkin.Waiter.Model;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 
+import androidx.annotation.Nullable;
+
 public class WaiterTableModel {
     @JsonProperty("pk")
     private long pk;
@@ -45,4 +47,15 @@ public class WaiterTableModel {
     public void increaseEventCount() {
         this.eventCount += 1;
     }
+
+    @Override
+    public boolean equals(@Nullable Object obj) {
+        try {
+            WaiterTableModel table = ((WaiterTableModel) obj);
+            return table != null && table.getPk() == this.getPk();
+        } catch (ClassCastException ignored) {
+            return false;
+        }
+    }
+
 }

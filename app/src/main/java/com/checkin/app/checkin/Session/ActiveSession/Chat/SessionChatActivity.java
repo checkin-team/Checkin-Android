@@ -299,7 +299,10 @@ public class SessionChatActivity extends BaseActivity implements ActiveSessionCh
     public void onBackPressed() {
         if (mChatAdapter.getSelectedEvent() != null) {
             mChatAdapter.resetSelectedEvent();
-        } else super.onBackPressed();
+        } else{
+            Utils.hideSoftKeyboard(this);
+            super.onBackPressed();
+        }
     }
 
     @Override
