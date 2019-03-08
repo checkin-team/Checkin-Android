@@ -5,6 +5,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.CheckBox;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
@@ -12,11 +13,11 @@ import com.checkin.app.checkin.Menu.Model.ItemCustomizationGroupModel;
 import com.checkin.app.checkin.R;
 import com.checkin.app.checkin.Session.ActiveSession.Chat.SessionChatModel;
 import com.checkin.app.checkin.Session.Model.SessionOrderedItemModel;
+import com.checkin.app.checkin.Utility.HeaderFooterRecyclerViewAdapter;
 import com.checkin.app.checkin.Utility.Utils;
 
 import java.util.List;
 
-import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -26,12 +27,14 @@ import static com.checkin.app.checkin.Session.ActiveSession.Chat.SessionChatMode
 import static com.checkin.app.checkin.Session.ActiveSession.Chat.SessionChatModel.CHAT_STATUS_TYPE.IN_PROGRESS;
 import static com.checkin.app.checkin.Session.ActiveSession.Chat.SessionChatModel.CHAT_STATUS_TYPE.OPEN;
 
-public class ManagerSessionOrderAdapter extends RecyclerView.Adapter<ManagerSessionOrderAdapter.ViewHolder> {
+public class ManagerSessionOrderAdapter extends HeaderFooterRecyclerViewAdapter {
     private List<SessionOrderedItemModel> mOrders;
     private SessionOrdersInteraction mListener;
+    boolean mShowFooter;
 
-    public ManagerSessionOrderAdapter(SessionOrdersInteraction ordersInterface) {
+    public ManagerSessionOrderAdapter(SessionOrdersInteraction ordersInterface, boolean showFooter) {
         mListener = ordersInterface;
+        mShowFooter = showFooter;
     }
 
     public void setData(List<SessionOrderedItemModel> data) {
@@ -39,37 +42,62 @@ public class ManagerSessionOrderAdapter extends RecyclerView.Adapter<ManagerSess
         notifyDataSetChanged();
     }
 
-    @NonNull
     @Override
-    public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(parent.getContext()).inflate(viewType, parent, false);
+    public boolean useHeader() {
+        return false;
+    }
+
+    @Override
+    public boolean useFooter() {
+        if (mShowFooter)
+            return true;
+        else
+            return false;
+    }
+
+    @Override
+    public RecyclerView.ViewHolder onCreateFooterViewHolder(ViewGroup parent, int viewType) {
+        final View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_manager_session_confirm_order, parent, false);
+        return new FooterViewHolder(view);
+    }
+
+    @Override
+    public RecyclerView.ViewHolder onCreateBasicItemViewHolder(ViewGroup parent, int viewType) {
+        final View view = LayoutInflater.from(parent.getContext()).inflate(viewType, parent, false);
         return new ViewHolder(view);
     }
 
     @Override
-    public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
-        holder.bindData(mOrders.get(position));
+    public void onBindBasicItemView(RecyclerView.ViewHolder holder, int position) {
+        ((ViewHolder) holder).bindData(mOrders.get(position));
     }
 
     @Override
-    public int getItemCount() {
+    public int getBasicItemCount() {
         return mOrders != null ? mOrders.size() : 0;
     }
 
     @Override
-    public int getItemViewType(final int position) {
+    public int getBasicItemType(int position) {
         return R.layout.item_manager_session_order;
     }
 
-    class ViewHolder extends RecyclerView.ViewHolder {
+    class FooterViewHolder extends RecyclerView.ViewHolder {
+        FooterViewHolder(View view) {
+            super(view);
+            view.findViewById(R.id.btn_ms_order_confirm).setOnClickListener((v) -> mListener.confirmNewOrders());
+        }
+    }
+
+    public class ViewHolder extends RecyclerView.ViewHolder {
         @BindView(R.id.tv_ms_order_item_name)
         TextView tvItemName;
         @BindView(R.id.tv_ms_order_item_quantity)
         TextView tvQuantity;
-        @BindView(R.id.btn_ms_order_accept)
-        Button btnOrderConfirm;
-        @BindView(R.id.btn_ms_order_cancel)
-        Button btnOrderReject;
+        @BindView(R.id.cb_ms_order_accept)
+        CheckBox cbOrderAccept;
+        @BindView(R.id.tv_ms_price)
+        TextView tvPrice;
         @BindView(R.id.btn_ms_order_done)
         Button btnOrderDone;
         @BindView(R.id.tv_ms_order_remarks)
@@ -93,8 +121,8 @@ public class ManagerSessionOrderAdapter extends RecyclerView.Adapter<ManagerSess
             super(itemView);
             ButterKnife.bind(this, itemView);
 
-            btnOrderConfirm.setOnClickListener(v -> mListener.onOrderStatusChange(mOrderModel, IN_PROGRESS));
-            btnOrderReject.setOnClickListener(v -> mListener.onOrderStatusChange(mOrderModel, CANCELLED));
+//            btnOrderConfirm.setOnClickListener(v -> mListener.onOrderStatusChange(mOrderModel, IN_PROGRESS));
+//            btnOrderReject.setOnClickListener(v -> mListener.onOrderStatusChange(mOrderModel, CANCELLED));
             btnOrderDone.setOnClickListener(v -> mListener.onOrderStatusChange(mOrderModel, DONE));
         }
 
@@ -133,8 +161,14 @@ public class ManagerSessionOrderAdapter extends RecyclerView.Adapter<ManagerSess
                 }
             }
 
+            cbOrderAccept.setOnCheckedChangeListener((buttonView, isChecked) -> {
+                if (isChecked) mListener.onSelectDeselect(mOrderModel,IN_PROGRESS);
+                else mListener.onSelectDeselect(mOrderModel,CANCELLED);
+            });
+
             if (order.getStatus() == OPEN) {
                 containerStatusOpen.setVisibility(View.VISIBLE);
+                tvPrice.setText(Utils.formatCurrencyAmount(itemView.getContext(), order.getCost()));
             } else {
                 tvOrderStatus.setVisibility(View.VISIBLE);
                 switch (order.getStatus()) {
@@ -166,6 +200,8 @@ public class ManagerSessionOrderAdapter extends RecyclerView.Adapter<ManagerSess
     }
 
     public interface SessionOrdersInteraction {
+        void confirmNewOrders();
+        void onSelectDeselect(SessionOrderedItemModel orderedItem, SessionChatModel.CHAT_STATUS_TYPE statusType);
         void onOrderStatusChange(SessionOrderedItemModel orderedItem, SessionChatModel.CHAT_STATUS_TYPE statusType);
     }
 }

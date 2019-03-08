@@ -10,6 +10,7 @@ import com.checkin.app.checkin.Data.NetworkBoundResource;
 import com.checkin.app.checkin.Data.Resource;
 import com.checkin.app.checkin.Data.RetrofitLiveData;
 import com.checkin.app.checkin.Data.WebApiService;
+import com.checkin.app.checkin.Manager.Model.ManagerSessionOrderStatusModel;
 import com.checkin.app.checkin.Misc.GenericDetailModel;
 import com.checkin.app.checkin.Session.Model.CheckoutStatusModel;
 import com.checkin.app.checkin.Session.Model.QRResultModel;
@@ -18,6 +19,7 @@ import com.checkin.app.checkin.Waiter.Model.OrderStatusModel;
 import com.checkin.app.checkin.Waiter.Model.WaiterEventModel;
 import com.checkin.app.checkin.Waiter.Model.WaiterStatsModel;
 import com.checkin.app.checkin.Waiter.Model.WaiterTableModel;
+import com.fasterxml.jackson.databind.node.ArrayNode;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 
 import java.util.List;
@@ -194,6 +196,29 @@ public class WaiterRepository extends BaseRepository {
             }
         }.getAsLiveData();
     }
+
+    public LiveData<Resource<ArrayNode>> postNewOrdersStatus(final List<ManagerSessionOrderStatusModel> orders) {
+        return new NetworkBoundResource<ArrayNode, ArrayNode>() {
+            @Override
+            protected boolean shouldUseLocalDb() {
+                return false;
+            }
+
+            @NonNull
+            @Override
+            protected LiveData<ApiResponse<ArrayNode>> createCall() {
+                return new RetrofitLiveData<>(mWebService.postChangeOrderStatusList(orders));
+            }
+
+            @Override
+            protected void saveCallResult(ArrayNode data) {
+
+            }
+        }.getAsLiveData();
+    }
+
+
+
 
     public static WaiterRepository getInstance(Application application) {
         if (INSTANCE == null) {

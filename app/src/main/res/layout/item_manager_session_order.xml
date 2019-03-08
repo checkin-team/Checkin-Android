@@ -4,31 +4,29 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_marginStart="@dimen/spacing_small"
-    android:layout_marginTop="@dimen/spacing_normal"
-    android:layout_marginEnd="@dimen/spacing_small"
     android:layout_marginBottom="@dimen/spacing_small"
-    android:background="@color/white">
+    android:padding="@dimen/spacing_tiny">
 
     <TextView
         android:id="@+id/tv_ms_order_item_name"
-        style="@style/GreySmallTextStyle"
+        style="@style/RedTitleStyle"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:drawableStart="@drawable/ic_veg"
         android:drawablePadding="@dimen/spacing_small"
         android:gravity="center|start"
         android:minHeight="@dimen/size_small_button"
+        android:textSize="@dimen/font_normal"
         app:layout_constraintBottom_toBottomOf="@id/container_ms_order_status"
         app:layout_constraintEnd_toStartOf="@id/tv_ms_order_item_quantity"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0"
-        tools:text="Pizza" />
+        tools:text="Pizza " />
 
     <TextView
         android:id="@+id/tv_ms_order_item_quantity"
-        style="@style/GreySmallTextStyle"
+        style="@style/RedSmallTextStyle"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:gravity="center"
@@ -36,10 +34,9 @@
         android:paddingEnd="@dimen/spacing_extra_tiny"
         app:layout_constraintBottom_toBottomOf="@id/container_ms_order_status"
         app:layout_constraintEnd_toStartOf="@id/container_ms_order_status"
-        app:layout_constraintHorizontal_bias="0"
         app:layout_constraintStart_toEndOf="@id/tv_ms_order_item_name"
         app:layout_constraintTop_toTopOf="parent"
-        tools:text="QTY: 1" />
+        tools:text="QTY: 1 " />
 
     <FrameLayout
         android:id="@+id/container_ms_order_status"
@@ -66,7 +63,8 @@
                 android:textAlignment="center"
                 android:textAllCaps="true"
                 android:textSize="@dimen/font_extra_small"
-                tools:text="In Progress" />
+                tools:text="In Progress"
+                android:visibility="gone"/>
 
             <Button
                 android:id="@+id/btn_ms_order_done"
@@ -76,7 +74,8 @@
                 android:layout_marginStart="@dimen/spacing_tiny"
                 android:gravity="center"
                 android:text="@string/title_done"
-                android:textSize="@dimen/font_extra_small" />
+                android:textSize="@dimen/font_extra_small"
+                android:visibility="gone"/>
 
         </LinearLayout>
 
@@ -85,26 +84,22 @@
             android:layout_width="wrap_content"
             android:layout_height="@dimen/size_small_button"
             android:orientation="horizontal"
-            android:visibility="gone">
+            android:visibility="visible">
 
-            <Button
-                android:id="@+id/btn_ms_order_accept"
-                style="@style/ButtonPositiveAction"
-                android:layout_width="@dimen/button_width_short"
-                android:layout_height="match_parent"
-                android:layout_marginEnd="@dimen/spacing_tiny"
-                android:gravity="center"
-                android:text="@string/confirm"
-                android:textSize="@dimen/font_extra_small" />
+            <TextView
+                android:id="@+id/tv_ms_price"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                tools:text="$ 130.00"/>
 
-            <Button
-                android:id="@+id/btn_ms_order_cancel"
-                style="@style/ButtonNeutralAction"
-                android:layout_width="@dimen/button_width_short"
-                android:layout_height="match_parent"
-                android:gravity="center"
-                android:text="@string/reject"
-                android:textSize="@dimen/font_extra_small" />
+            <CheckBox
+                android:id="@+id/cb_ms_order_accept"
+                android:layout_width="@dimen/size_small_button"
+                android:layout_height="@dimen/size_small_button"
+                android:layout_marginStart="@dimen/spacing_small"
+                android:layout_weight="0"
+                android:checked="true"
+                android:button="@drawable/checkbox_selector" />
 
         </LinearLayout>
 
@@ -161,7 +156,7 @@
         <include layout="@layout/incl_horizontal_line" />
 
         <TextView
-            style="@style/RedSmallTextStyle"
+            style="@style/GreySmallTextStyle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="@dimen/spacing_normal"
@@ -170,7 +165,7 @@
 
         <TextView
             android:id="@+id/tv_ms_order_remarks"
-            style="@style/GreySmallTextStyle"
+            style="@style/RedSmallTextStyle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="@dimen/spacing_normal"

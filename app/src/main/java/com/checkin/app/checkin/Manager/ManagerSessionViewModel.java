@@ -1,12 +1,15 @@
 package com.checkin.app.checkin.Manager;
 
 import android.app.Application;
+import android.util.Log;
+import android.view.animation.Transformation;
 
 import com.checkin.app.checkin.Data.BaseViewModel;
 import com.checkin.app.checkin.Data.Converters;
 import com.checkin.app.checkin.Data.Resource;
 import com.checkin.app.checkin.Manager.Model.ManagerSessionEventModel;
 import com.checkin.app.checkin.Manager.Model.ManagerSessionInvoiceModel;
+import com.checkin.app.checkin.Manager.Model.ManagerSessionOrderStatusModel;
 import com.checkin.app.checkin.Misc.GenericDetailModel;
 import com.checkin.app.checkin.Session.ActiveSession.Chat.SessionChatModel;
 import com.checkin.app.checkin.Session.Model.CheckoutStatusModel;
@@ -15,6 +18,7 @@ import com.checkin.app.checkin.Session.Model.SessionOrderedItemModel;
 import com.checkin.app.checkin.Session.SessionRepository;
 import com.checkin.app.checkin.Waiter.Model.OrderStatusModel;
 import com.checkin.app.checkin.Waiter.WaiterRepository;
+import com.fasterxml.jackson.databind.node.ArrayNode;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 
 import java.util.ArrayList;
@@ -24,6 +28,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MediatorLiveData;
+import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.Transformations;
 
 import static com.checkin.app.checkin.Session.ActiveSession.Chat.SessionChatModel.CHAT_EVENT_TYPE.EVENT_MENU_ORDER_ITEM;
@@ -44,6 +49,9 @@ public class ManagerSessionViewModel extends BaseViewModel {
     private MediatorLiveData<Resource<GenericDetailModel>> mDetailData = new MediatorLiveData<>();
     private MediatorLiveData<Resource<OrderStatusModel>> mOrderStatusData = new MediatorLiveData<>();
     private MediatorLiveData<Resource<CheckoutStatusModel>> mCheckoutData = new MediatorLiveData<>();
+
+    private MutableLiveData<List<ManagerSessionOrderStatusModel>> mNewOrderStatus = new MutableLiveData<>();
+    private MediatorLiveData<Resource<ArrayNode>> mResultOrderStatus = new MediatorLiveData<>();
 
     private long mSessionPk;
     private long mShopPk;
@@ -169,11 +177,18 @@ public class ManagerSessionViewModel extends BaseViewModel {
             if (input == null || input.data == null)
                 return input;
             List<SessionOrderedItemModel> list = new ArrayList<>();
+            List<ManagerSessionOrderStatusModel> listNewOrderStatus = new ArrayList<>();
+            ManagerSessionOrderStatusModel item;
+
             if (input.status == Resource.Status.SUCCESS)
                 for (SessionOrderedItemModel data : input.data) {
-                    if (data.getStatus() == OPEN)
+                    if (data.getStatus() == OPEN){
                         list.add(data);
+                        item = new ManagerSessionOrderStatusModel(data.getPk(),IN_PROGRESS.tag);
+                        listNewOrderStatus.add(item);
+                    }
                 }
+            mNewOrderStatus.setValue(listNewOrderStatus);
             return Resource.cloneResource(input, list);
         });
     }
@@ -210,6 +225,26 @@ public class ManagerSessionViewModel extends BaseViewModel {
         ObjectNode data = Converters.objectMapper.createObjectNode();
         data.put("status", statusType);
         mOrderStatusData.addSource(mWaiterRepository.changeOrderStatus(orderId, data), mOrderStatusData::setValue);
+    }
+
+    public void updateOrderStatusNew(int orderId, int statusType) {
+
+        List<ManagerSessionOrderStatusModel> listNewOrderStatus = mNewOrderStatus.getValue();
+        for(ManagerSessionOrderStatusModel item : listNewOrderStatus){
+            if(item.getPk() == orderId) {
+                item.setStatus(statusType);
+                break;
+            }
+        }
+        mNewOrderStatus.setValue(listNewOrderStatus);
+    }
+
+    public void confirmOrderStatus() {
+        mResultOrderStatus.addSource(mWaiterRepository.postNewOrdersStatus(mNewOrderStatus.getValue()), mResultOrderStatus::setValue);
+    }
+
+    public LiveData<Resource<ArrayNode>> getResultOrderStatus() {
+        return mResultOrderStatus;
     }
 
     public LiveData<Resource<OrderStatusModel>> getOrderStatusData() {

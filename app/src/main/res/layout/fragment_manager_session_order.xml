@@ -40,7 +40,9 @@
                     android:layout_height="wrap_content"
                     android:nestedScrollingEnabled="false"
                     android:paddingBottom="@dimen/spacing_normal"
-                    android:visibility="gone"/>
+                    android:visibility="gone"
+                    android:background="@color/lightest_grey"
+                    android:layout_margin="@dimen/spacing_small" />
 
                 <TextView
                     android:id="@+id/title_ms_new"
@@ -60,7 +62,9 @@
                     android:layout_height="wrap_content"
                     android:nestedScrollingEnabled="false"
                     android:paddingBottom="@dimen/spacing_small"
-                    android:visibility="gone" />
+                    android:visibility="gone"
+                    android:background="@color/lightest_grey"
+                    android:layout_margin="@dimen/spacing_small"/>
 
                 <TextView
                     android:id="@+id/title_ms_delivered"
@@ -80,7 +84,9 @@
                     android:layout_height="wrap_content"
                     android:nestedScrollingEnabled="false"
                     android:paddingBottom="@dimen/spacing_small"
-                    android:visibility="gone" />
+                    android:visibility="gone"
+                    android:background="@color/lightest_grey"
+                    android:layout_margin="@dimen/spacing_small"/>
 
             </LinearLayout>
         </androidx.core.widget.NestedScrollView>
