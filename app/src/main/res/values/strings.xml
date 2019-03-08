@@ -197,5 +197,7 @@
     <string name="menu_waiter_orders_taken">Orders Taken: %s</string>
     <string name="menu_waiter_total_tip">Total Tip: %s</string>
     <string name="license_agreement"><u>Agree to T&amp;C.</u></string>
+    <string name="no_order">relax!\nwe will\nnotify about</string>
+    <string name="activate_fetch_live_order">activate!\nto fetch\n<font color="#af1014">live orders</font></string>
 
 </resources>
