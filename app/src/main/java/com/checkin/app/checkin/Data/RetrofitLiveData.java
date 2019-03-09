@@ -8,20 +8,9 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class RetrofitLiveData<T> extends LiveData<ApiResponse<T>> {
+public class RetrofitLiveData<T> extends LiveData<ApiResponse<T>> implements Callback<T> {
     private final Call<T> mCall;
-
-    private final Callback<T> mCallback = new Callback<T>() {
-        @Override
-        public void onResponse(@NonNull Call<T> call, @NonNull Response<T> response) {
-            postValue(new ApiResponse<>(response));
-        }
-
-        @Override
-        public void onFailure(@NonNull Call<T> call, @NonNull Throwable t) {
-            postValue(new ApiResponse<>(t));
-        }
-    };
+    private boolean mResponseDispatched = false;
 
     public RetrofitLiveData(Call<T> call) {
         mCall = call;
@@ -30,23 +19,40 @@ public class RetrofitLiveData<T> extends LiveData<ApiResponse<T>> {
     @Override
     protected void onActive() {
         super.onActive();
-        if (!mCall.isCanceled() && !mCall.isExecuted()) {
-            Log.d("Http calls", "Call enqueued");
-            mCall.enqueue(mCallback);
+        if (!mResponseDispatched) {
+            if (!mCall.isExecuted() && !mCall.isCanceled())
+                mCall.enqueue(this);
+            else
+                mCall.clone().enqueue(this);
         }
     }
 
     @Override
     protected void onInactive() {
         super.onInactive();
-        if (!hasObservers()) {
+        if (shouldCancel()) {
             cancel();
         }
     }
 
-    public void cancel() {
+    protected void cancel() {
         if (!mCall.isCanceled())
             Log.d("Http Calls", "Call cancelled!");
-            mCall.cancel();
+        mCall.cancel();
+    }
+
+    protected boolean shouldCancel() {
+        return !hasObservers();
+    }
+
+    @Override
+    public void onResponse(@NonNull Call<T> call, @NonNull Response<T> response) {
+        postValue(new ApiResponse<>(response));
+        mResponseDispatched = true;
+    }
+
+    @Override
+    public void onFailure(@NonNull Call<T> call, @NonNull Throwable t) {
+        postValue(new ApiResponse<>(t));
     }
 }

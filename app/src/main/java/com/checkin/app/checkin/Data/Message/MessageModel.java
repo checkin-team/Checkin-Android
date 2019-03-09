@@ -192,7 +192,7 @@ public class MessageModel implements Serializable {
         return componentName;
     }
 
-    private NotificationCompat.Builder getNotificationBuilder(Context context, int notificationId) {
+    private NotificationCompat.Builder getNotificationBuilder(Context context, PendingIntent pendingIntent) {
         CHANNEL channel = this.getChannel();
         NotificationCompat.Builder builder = new NotificationCompat.Builder(context, channel.id);
         MessageUtils.createRequiredChannel(channel, context);
@@ -200,23 +200,24 @@ public class MessageModel implements Serializable {
                 .setContentText(getDescription())
                 .setSmallIcon(R.drawable.ic_logo_notification)
                 .setAutoCancel(true);
-        addNotificationExtra(context, builder, notificationId);
+        addNotificationExtra(context, builder, pendingIntent);
         return builder;
     }
 
-    private void addNotificationExtra(Context context, NotificationCompat.Builder builder, int notificationId) {
+    private void addNotificationExtra(Context context, NotificationCompat.Builder builder, PendingIntent pendingIntent) {
         if (isShopWaiterNotification() || isShopManagerNotification())
             builder.setPriority(Notification.PRIORITY_HIGH);
-
-        if (this.type == MANAGER_SESSION_ORDERS_PUSH || this.type == WAITER_SESSION_ORDERS_PUSH)
-            builder.setSound(Constants.getAlertOrdersSoundUri(context));
+        if (this.type == MANAGER_SESSION_ORDERS_PUSH || this.type == WAITER_SESSION_ORDERS_PUSH) {
+            builder.setSound(Constants.getAlertOrdersSoundUri(context))
+                    .setFullScreenIntent(pendingIntent,true);
+        }
         tryGroupNotification(builder);
     }
 
     public Notification showNotification(Context context, NotificationManager notificationManager, int notificationId) {
         Intent intent = getNotificationIntent(context);
         PendingIntent pendingIntent = PendingIntent.getActivity(context, 0, intent, PendingIntent.FLAG_UPDATE_CURRENT);
-        return getNotificationBuilder(context, notificationId)
+        return getNotificationBuilder(context, pendingIntent)
                 .setContentIntent(pendingIntent)
                 .build();
     }
