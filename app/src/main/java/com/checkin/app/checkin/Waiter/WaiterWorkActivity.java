@@ -1,6 +1,5 @@
 package com.checkin.app.checkin.Waiter;
 
-import android.app.Dialog;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
@@ -8,8 +7,6 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.View;
-import android.view.ViewTreeObserver;
-import android.view.inputmethod.InputMethodManager;
 import android.widget.TextView;
 
 import com.checkin.app.checkin.Account.AccountModel;

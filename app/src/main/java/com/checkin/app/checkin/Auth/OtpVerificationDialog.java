@@ -4,8 +4,6 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.os.CountDownTimer;
-import androidx.annotation.NonNull;
-import androidx.appcompat.app.AlertDialog;
 import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
@@ -21,6 +19,8 @@ import com.google.firebase.FirebaseNetworkException;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.PhoneAuthCredential;
 
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AlertDialog;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
@@ -29,9 +29,6 @@ import butterknife.Unbinder;
 public class OtpVerificationDialog extends AlertDialog {
     private static final String TAG = OtpVerificationDialog.class.getSimpleName();
 
-    private Unbinder unbinder;
-
-    private ViewGroup contentView;
     @BindView(R.id.ed_otp)
     EditText edOtp;
     @BindView(R.id.tv_remaining_time)
@@ -76,8 +73,8 @@ public class OtpVerificationDialog extends AlertDialog {
     }
 
     private void init() {
-        contentView = ((ViewGroup) getLayoutInflater().inflate(R.layout.fragment_otp_verification, null));
-        unbinder = ButterKnife.bind(this, contentView);
+        ViewGroup contentView = ((ViewGroup) getLayoutInflater().inflate(R.layout.fragment_otp_verification, null));
+        Unbinder unbinder = ButterKnife.bind(this, contentView);
 
         setView(contentView);
 
@@ -165,8 +162,8 @@ public class OtpVerificationDialog extends AlertDialog {
     }
 
     private void updateTimeout(long time) {
-        long min = time/1000/60;
-        long sec = time/1000-min*60;
+        long min = time / 1000 / 60;
+        long sec = time / 1000 - min * 60;
         if (time > 0L) {
             tvRemainingTime.setText(Utils.formatTime(min, sec));
         } else {
@@ -179,7 +176,7 @@ public class OtpVerificationDialog extends AlertDialog {
         private final Activity mActivity;
         private AuthCallback mCallback;
 
-        protected Builder (Activity activity) {
+        protected Builder(Activity activity) {
             mActivity = activity;
         }
 
@@ -199,7 +196,9 @@ public class OtpVerificationDialog extends AlertDialog {
 
     public interface AuthCallback {
         void onSuccessVerification(DialogInterface dialog, PhoneAuthCredential credential);
+
         void onCancelVerification(DialogInterface dialog);
+
         void onFailedVerification(DialogInterface dialog, FirebaseException exception);
     }
 }

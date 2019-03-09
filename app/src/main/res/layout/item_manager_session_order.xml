@@ -75,7 +75,7 @@
                 android:layout_height="@dimen/size_small_button"
                 android:layout_marginStart="@dimen/spacing_tiny"
                 android:gravity="center"
-                android:text="@string/title_done"
+                android:text="@string/label_done"
                 android:textSize="@dimen/font_extra_small" />
 
         </LinearLayout>

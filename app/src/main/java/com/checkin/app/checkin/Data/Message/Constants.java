@@ -19,8 +19,8 @@ public class Constants {
     public static final String FORMAT_NOTIFICATION_GROUP = "com.checkin.message.group.%s_%d";
     public static final String NOTIFICATION_GROUP_SUMMARY = "com.checkin.message.group.summary";
 
-    public static final String FORMAT_SP_KEY_NOTIFICATION_ENABLED = "com.checkin.app.checkin.Data.Message.notif.%s";
-    public static final String SP_NOTIFICATION_TABLE = "com.checkin.app.checkin.Data.Message.notification";
+    public static final String FORMAT_SP_KEY_NOTIFICATION_CHANNEL = "com.checkin.app.checkin.Data.Message.notif.%s";
+    public static final String SP_TABLE_NOTIFICATION = "com.checkin.app.checkin.Data.Message.notification";
 
     private final static AtomicInteger atomicInteger = new AtomicInteger(100);
 

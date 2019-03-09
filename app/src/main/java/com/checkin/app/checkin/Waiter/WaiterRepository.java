@@ -58,8 +58,8 @@ public class WaiterRepository extends BaseRepository {
         }.getAsLiveData();
     }
 
-    public LiveData<Resource<SessionContactModel>> postSessionContact(long sessionId,ObjectNode data){
-        return new NetworkBoundResource<SessionContactModel,SessionContactModel>(){
+    public LiveData<Resource<ObjectNode>> postSessionContact(long sessionId, SessionContactModel data) {
+        return new NetworkBoundResource<ObjectNode, ObjectNode>() {
             @Override
             protected boolean shouldUseLocalDb() {
                 return false;
@@ -67,19 +67,19 @@ public class WaiterRepository extends BaseRepository {
 
             @NonNull
             @Override
-            protected LiveData<ApiResponse<SessionContactModel>> createCall() {
-                return new RetrofitLiveData<>(mWebService.postSessionContact(sessionId,data));
+            protected LiveData<ApiResponse<ObjectNode>> createCall() {
+                return new RetrofitLiveData<>(mWebService.postSessionContact(sessionId, data));
             }
 
             @Override
-            protected void saveCallResult(SessionContactModel data) {
+            protected void saveCallResult(ObjectNode data) {
 
             }
         }.getAsLiveData();
     }
 
-    public LiveData<Resource<List<SessionContactModel>>> getSessionContact(long sessionId){
-        return new NetworkBoundResource<List<SessionContactModel>,List<SessionContactModel>>(){
+    public LiveData<Resource<List<SessionContactModel>>> getSessionContacts(long sessionId) {
+        return new NetworkBoundResource<List<SessionContactModel>, List<SessionContactModel>>() {
             @Override
             protected boolean shouldUseLocalDb() {
                 return false;
@@ -88,7 +88,7 @@ public class WaiterRepository extends BaseRepository {
             @NonNull
             @Override
             protected LiveData<ApiResponse<List<SessionContactModel>>> createCall() {
-                return new RetrofitLiveData<>(mWebService.getSessionContact(sessionId));
+                return new RetrofitLiveData<>(mWebService.getSessionContactList(sessionId));
             }
 
             @Override

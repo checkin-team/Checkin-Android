@@ -1,97 +1,83 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:tools="http://schemas.android.com/tools"
-    android:background="@drawable/background_margin_dialog"
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:paddingStart="@dimen/spacing_gigantic"
-    android:paddingEnd="@dimen/spacing_gigantic"
-    android:paddingTop="@dimen/spacing_normal"
-    android:paddingBottom="@dimen/spacing_normal"
     android:layout_height="wrap_content"
-    android:orientation="vertical">
+    android:layout_gravity="center"
+    android:layout_marginStart="@dimen/spacing_small"
+    android:layout_marginEnd="@dimen/spacing_small"
+    android:background="@drawable/bordered_card_white"
+    android:orientation="vertical"
+    android:paddingStart="@dimen/spacing_gigantic"
+    android:paddingTop="@dimen/spacing_normal"
+    android:paddingEnd="@dimen/spacing_gigantic"
+    android:paddingBottom="@dimen/spacing_normal">
 
     <TextView
-        android:textStyle="bold"
-        android:layout_gravity="center_horizontal"
-        android:textSize="@dimen/font_normal"
-        android:text="Add contact details for bill"
+        style="@style/RedHeadingStyle"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content" />
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:text="Add contact details for bill" />
 
     <EditText
         android:id="@+id/et_contact_phone"
-        android:padding="@dimen/spacing_small"
-        android:textColor="@color/brownish_grey"
-        android:background="@drawable/background_rounded_border"
+        style="@style/InputTextStyle"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/spacing_large"
         android:gravity="center_horizontal"
         android:hint="Phone No."
-        android:textColorHint="@color/lightest_grey"
         android:imeOptions="actionNext"
         android:inputType="phone"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:importantForAutofill="no"
-        tools:targetApi="o" />
+        android:padding="@dimen/spacing_small" />
 
     <LinearLayout
-        android:gravity="center"
-        android:layout_marginTop="@dimen/spacing_normal"
-        android:layout_gravity="center"
-        android:orientation="horizontal"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_marginTop="@dimen/spacing_normal"
+        android:gravity="center"
+        android:orientation="horizontal">
 
         <View
-            android:background="@color/pinkish_grey"
             android:layout_width="@dimen/spacing_gigantic"
-            android:layout_height="@dimen/height_horizontal_line"/>
+            android:layout_height="@dimen/height_horizontal_line"
+            android:background="@color/pinkish_grey" />
 
         <TextView
+            style="@style/RedSmallTextStyle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:layout_marginStart="@dimen/spacing_tiny"
             android:layout_marginEnd="@dimen/spacing_tiny"
-            style="@style/RedTitleStyle"
-            android:text="OR"
-            android:textSize="@dimen/spacing_extra_small"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
+            android:text="OR" />
 
         <View
-            android:background="@color/pinkish_grey"
             android:layout_width="@dimen/spacing_gigantic"
-            android:layout_height="@dimen/height_horizontal_line"/>
+            android:layout_height="@dimen/height_horizontal_line"
+            android:background="@color/pinkish_grey" />
 
     </LinearLayout>
 
     <EditText
-        android:textColor="@color/brownish_grey"
         android:id="@+id/et_contact_email"
-        android:padding="@dimen/spacing_small"
-        android:background="@drawable/background_rounded_border"
+        style="@style/InputTextStyle"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/spacing_normal"
         android:gravity="center_horizontal"
         android:hint="Email"
-        android:textColorHint="@color/lightest_grey"
         android:imeOptions="actionNext"
-        android:inputType="phone"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:importantForAutofill="no"
-        tools:targetApi="o" />
+        android:inputType="textEmailAddress"
+        android:padding="@dimen/spacing_small" />
 
-    <TextView
+    <Button
         android:id="@+id/btn_contact_done"
-        android:layout_marginTop="@dimen/spacing_large"
-        android:layout_gravity="center_horizontal"
-        android:paddingStart="@dimen/size_normal_button"
-        android:paddingEnd="@dimen/size_normal_button"
-        android:paddingTop="@dimen/spacing_extra_small"
-        android:paddingBottom="@dimen/spacing_extra_small"
-        android:text="Done"
-        android:textSize="@dimen/font_normal"
         style="@style/ButtonRedAlertAction"
-        android:textColor="@android:color/white"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content" />
+        android:layout_width="@dimen/button_width_normal"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="@dimen/spacing_normal"
+        android:text="@string/label_done" />
 
 </LinearLayout>

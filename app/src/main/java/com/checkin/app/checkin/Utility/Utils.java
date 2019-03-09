@@ -27,6 +27,7 @@ import android.view.View;
 import android.view.ViewAnimationUtils;
 import android.view.ViewGroup;
 import android.view.animation.AccelerateDecelerateInterpolator;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -291,6 +292,14 @@ public class Utils {
         long min = time % 60;
 
         return String.format(Locale.ENGLISH, "%02d:%02d", hour, min);
+    }
+
+    public static void showSoftKeyboard(Context context) {
+        if (context == null)
+            return;
+        InputMethodManager imm = (InputMethodManager) context.getSystemService(Context.INPUT_METHOD_SERVICE);
+        if (imm != null)
+            imm.toggleSoftInput(InputMethodManager.SHOW_FORCED, 0);
     }
 
     public interface MatchResultFunction {

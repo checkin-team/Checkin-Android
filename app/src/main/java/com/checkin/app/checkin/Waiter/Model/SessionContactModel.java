@@ -12,6 +12,14 @@ public class SessionContactModel {
     @JsonProperty("email")
     private String email;
 
+    public SessionContactModel() {
+    }
+
+    public SessionContactModel(String phone, String email) {
+        this.phone = phone;
+        this.email = email;
+    }
+
     public long getPk() {
         return pk;
     }

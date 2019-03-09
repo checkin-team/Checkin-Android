@@ -28,9 +28,9 @@ import androidx.core.app.NotificationCompat;
 import androidx.localbroadcastmanager.content.LocalBroadcastManager;
 
 import static androidx.core.app.NotificationCompat.PRIORITY_LOW;
-import static com.checkin.app.checkin.Data.Message.Constants.FORMAT_SP_KEY_NOTIFICATION_ENABLED;
+import static com.checkin.app.checkin.Data.Message.Constants.FORMAT_SP_KEY_NOTIFICATION_CHANNEL;
 import static com.checkin.app.checkin.Data.Message.Constants.KEY_DATA;
-import static com.checkin.app.checkin.Data.Message.Constants.SP_NOTIFICATION_TABLE;
+import static com.checkin.app.checkin.Data.Message.Constants.SP_TABLE_NOTIFICATION;
 
 public class MessageUtils {
     private static final String TAG = MessageUtils.class.getSimpleName();
@@ -207,17 +207,17 @@ public class MessageUtils {
     }
 
     public static void setEnableNotification(Context context, boolean status, CHANNEL... channels) {
-        SharedPreferences sharedPreferences = context.getSharedPreferences(SP_NOTIFICATION_TABLE, Context.MODE_PRIVATE);
+        SharedPreferences sharedPreferences = context.getSharedPreferences(SP_TABLE_NOTIFICATION, Context.MODE_PRIVATE);
         SharedPreferences.Editor editor = sharedPreferences.edit();
         for (CHANNEL channel : channels) {
-            editor.putBoolean(String.format(Locale.ENGLISH, FORMAT_SP_KEY_NOTIFICATION_ENABLED, channel), status);
+            editor.putBoolean(String.format(Locale.ENGLISH, FORMAT_SP_KEY_NOTIFICATION_CHANNEL, channel), status);
         }
         editor.apply();
     }
 
     public static boolean isNotificationEnabled(Context context, CHANNEL channel) {
-        SharedPreferences sharedPreferences = context.getSharedPreferences(SP_NOTIFICATION_TABLE, Context.MODE_PRIVATE);
-        return sharedPreferences.getBoolean(String.format(Locale.ENGLISH, FORMAT_SP_KEY_NOTIFICATION_ENABLED, channel), true);
+        SharedPreferences sharedPreferences = context.getSharedPreferences(SP_TABLE_NOTIFICATION, Context.MODE_PRIVATE);
+        return sharedPreferences.getBoolean(String.format(Locale.ENGLISH, FORMAT_SP_KEY_NOTIFICATION_CHANNEL, channel), true);
     }
 
     public static class NotificationUpdate implements ProgressRequestBody.UploadCallbacks {

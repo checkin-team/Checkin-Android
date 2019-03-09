@@ -271,8 +271,8 @@ public interface WebApiService {
     // endregion
 
     @POST("sessions/{session_id}/contacts/")
-    Call<SessionContactModel> postSessionContact(@Path("session_id") long sessionId, @Body ObjectNode data);
+    Call<ObjectNode> postSessionContact(@Path("session_id") long sessionId, @Body SessionContactModel data);
 
     @GET("sessions/{session_id}/contacts/")
-    Call<List<SessionContactModel>> getSessionContact(@Path("session_id") long sessionId);
+    Call<List<SessionContactModel>> getSessionContactList(@Path("session_id") long sessionId);
 }
