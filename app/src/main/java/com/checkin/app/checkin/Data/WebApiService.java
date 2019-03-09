@@ -28,6 +28,7 @@ import com.checkin.app.checkin.Shop.ShopJoin.ShopJoinModel;
 import com.checkin.app.checkin.User.ShopCustomerModel;
 import com.checkin.app.checkin.User.UserModel;
 import com.checkin.app.checkin.Waiter.Model.OrderStatusModel;
+import com.checkin.app.checkin.Waiter.Model.SessionContactModel;
 import com.checkin.app.checkin.Waiter.Model.WaiterEventModel;
 import com.checkin.app.checkin.Waiter.Model.WaiterStatsModel;
 import com.checkin.app.checkin.Waiter.Model.WaiterTableModel;
@@ -271,4 +272,10 @@ public interface WebApiService {
     @GET("search/restaurant/")
     Call<List<SearchResultShopModel>> getSearchShopResults(@Query("search") String query, @Query("has_nonveg") Boolean hasNonVeg, @Query("has_alcohol") Boolean hasAlcohol);
     // endregion
+
+    @POST("sessions/{session_id}/contacts/")
+    Call<ObjectNode> postSessionContact(@Path("session_id") long sessionId, @Body SessionContactModel data);
+
+    @GET("sessions/{session_id}/contacts/")
+    Call<List<SessionContactModel>> getSessionContactList(@Path("session_id") long sessionId);
 }

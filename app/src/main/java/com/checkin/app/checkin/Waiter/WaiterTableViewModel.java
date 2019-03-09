@@ -11,6 +11,7 @@ import com.checkin.app.checkin.Session.Model.CheckoutStatusModel;
 import com.checkin.app.checkin.Session.Model.SessionBriefModel;
 import com.checkin.app.checkin.Session.SessionRepository;
 import com.checkin.app.checkin.Waiter.Model.OrderStatusModel;
+import com.checkin.app.checkin.Waiter.Model.SessionContactModel;
 import com.checkin.app.checkin.Waiter.Model.WaiterEventModel;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 
@@ -31,7 +32,7 @@ public class WaiterTableViewModel extends BaseViewModel {
     private MediatorLiveData<Resource<GenericDetailModel>> mEventUpdate = new MediatorLiveData<>();
     private MediatorLiveData<Resource<OrderStatusModel>> mOrderStatus = new MediatorLiveData<>();
     private MediatorLiveData<Resource<CheckoutStatusModel>> mCheckoutData = new MediatorLiveData<>();
-
+    private MediatorLiveData<Resource<List<SessionContactModel>>> mContactListData = new MediatorLiveData<>();
 
     private long mSessionPk;
 
@@ -68,6 +69,18 @@ public class WaiterTableViewModel extends BaseViewModel {
             }
             return input;
         });
+    }
+
+    public void postSessionContact(String email, String phone) {
+        mData.addSource(mWaiterRepository.postSessionContact(mSessionPk, new SessionContactModel(phone, email)), mData::setValue);
+    }
+
+    public void fetchSessionContacts() {
+        mContactListData.addSource(mWaiterRepository.getSessionContacts(mSessionPk), mContactListData::setValue);
+    }
+
+    public LiveData<Resource<List<SessionContactModel>>> getSessionContactListData() {
+        return mContactListData;
     }
 
     public LiveData<Resource<List<WaiterEventModel>>> getDeliveredTableEvents() {

@@ -2,21 +2,26 @@ package com.checkin.app.checkin.Manager;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.widget.TextView;
 
 import com.checkin.app.checkin.Account.AccountModel;
 import com.checkin.app.checkin.Account.BaseAccountActivity;
 import com.checkin.app.checkin.Data.Resource;
 import com.checkin.app.checkin.Manager.Fragment.ManagerStatsFragment;
+import com.checkin.app.checkin.Manager.Fragment.ManagerTablesActivateFragment;
 import com.checkin.app.checkin.Manager.Fragment.ManagerTablesFragment;
 import com.checkin.app.checkin.Misc.BaseFragmentAdapterBottomNav;
 import com.checkin.app.checkin.R;
+import com.checkin.app.checkin.Shop.ShopPreferences;
 import com.checkin.app.checkin.Utility.DynamicSwipableViewPager;
 import com.checkin.app.checkin.Utility.Utils;
 import com.google.android.material.tabs.TabLayout;
 
+import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.ActionBarDrawerToggle;
+import androidx.appcompat.widget.SwitchCompat;
 import androidx.appcompat.widget.Toolbar;
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.fragment.app.Fragment;
@@ -26,8 +31,7 @@ import androidx.viewpager.widget.ViewPager;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
-public class ManagerWorkActivity extends BaseAccountActivity {
-    private static final String TAG = ManagerWorkActivity.class.getSimpleName();
+public class ManagerWorkActivity extends BaseAccountActivity implements ManagerTablesActivateFragment.LiveOrdersInteraction {
 
     public static final String KEY_RESTAURANT_PK = "manager.restaurant_pk";
     public static final String KEY_SESSION_BUNDLE = "manager.session_bundle";
@@ -40,8 +44,10 @@ public class ManagerWorkActivity extends BaseAccountActivity {
     DrawerLayout drawerLayout;
     @BindView(R.id.toolbar_manager_work)
     Toolbar toolbar;
-
-    private ManagerWorkViewModel mViewModel;
+    @BindView(R.id.tv_action_bar_title)
+    TextView tvActionBarTitle;
+    @BindView(R.id.sw_live_order)
+    SwitchCompat swLiveOrdersToggle;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -49,13 +55,10 @@ public class ManagerWorkActivity extends BaseAccountActivity {
         setContentView(R.layout.activity_manager_work);
         ButterKnife.bind(this);
 
-        initRefreshScreen(R.id.sr_manager_work);
-
         setSupportActionBar(toolbar);
         ActionBar actionBar = getSupportActionBar();
 
         if (actionBar != null) {
-            actionBar.setTitle("Live Orders");
             actionBar.setElevation(getResources().getDimension(R.dimen.card_elevation));
             actionBar.setDisplayHomeAsUpEnabled(true);
 
@@ -64,7 +67,7 @@ public class ManagerWorkActivity extends BaseAccountActivity {
             startToggle.syncState();
         }
 
-        mViewModel = ViewModelProviders.of(this).get(ManagerWorkViewModel.class);
+        ManagerWorkViewModel mViewModel = ViewModelProviders.of(this).get(ManagerWorkViewModel.class);
         mViewModel.fetchActiveTables(getIntent().getLongExtra(KEY_RESTAURANT_PK, 0L));
 
         Bundle sessionBundle = getIntent().getBundleExtra(KEY_SESSION_BUNDLE);
@@ -76,36 +79,31 @@ public class ManagerWorkActivity extends BaseAccountActivity {
             startActivity(intent);
         }
 
-        mViewModel.getActiveTables().observe(this, listResource -> {
-            if (listResource == null)
-                return;
-            if (listResource.status == Resource.Status.SUCCESS && listResource.data != null) {
-                stopRefreshing();
-            } else if (listResource.status == Resource.Status.LOADING)
-                startRefreshing();
-            else {
-                Utils.toast(this, listResource.message);
-                stopRefreshing();
-            }
-        });
-
         pagerManager.setEnabled(false);
         ManagerFragmentAdapter pagerAdapter = new ManagerFragmentAdapter(getSupportFragmentManager());
         pagerManager.setAdapter(pagerAdapter);
+        tabLayout.setupWithViewPager(pagerManager);
+        pagerAdapter.setupWithTab(tabLayout, pagerManager);
         pagerManager.addOnPageChangeListener(new ViewPager.SimpleOnPageChangeListener() {
             @Override
             public void onPageSelected(int position) {
                 if (actionBar != null) {
                     if (position == 0) {
-                        actionBar.setTitle("Live Orders");
+                        tvActionBarTitle.setText("Live Orders");
                     } else if (position == 1) {
-                        actionBar.setTitle("Statistics");
+                        tvActionBarTitle.setText("Statistics");
                     }
                 }
             }
         });
-        tabLayout.setupWithViewPager(pagerManager);
-        pagerAdapter.setupWithTab(tabLayout, pagerManager);
+
+        swLiveOrdersToggle.setOnCheckedChangeListener((buttonView, isChecked) -> {
+            pagerAdapter.setActivated(isChecked);
+            pagerAdapter.setupWithTab(tabLayout, pagerManager);
+            ShopPreferences.setManagerLiveOrdersActivated(this, isChecked);
+        });
+
+        setLiveOrdersActivation(ShopPreferences.isManagerLiveOrdersActivated(this));
     }
 
     @Override
@@ -129,18 +127,18 @@ public class ManagerWorkActivity extends BaseAccountActivity {
     }
 
     @Override
-    protected void updateScreen() {
-        getAccountViewModel().updateResults();
-        mViewModel.updateResults();
-    }
-
-    @Override
-    protected void onResume() {
-        super.onResume();
-        updateScreen();
+    public void setLiveOrdersActivation(boolean isActivated) {
+        swLiveOrdersToggle.setChecked(isActivated);
     }
 
     static class ManagerFragmentAdapter extends BaseFragmentAdapterBottomNav {
+
+        private boolean isActivated = true;
+
+        private ManagerTablesFragment mTableFragment = ManagerTablesFragment.newInstance();
+        private ManagerTablesActivateFragment mActiveTableFragment = ManagerTablesActivateFragment.newInstance();
+
+
         public ManagerFragmentAdapter(FragmentManager fm) {
             super(fm);
         }
@@ -161,7 +159,10 @@ public class ManagerWorkActivity extends BaseAccountActivity {
         public Fragment getItem(int position) {
             switch (position) {
                 case 0:
-                    return ManagerTablesFragment.newInstance();
+                    if (isActivated)
+                        return mTableFragment;
+                    else
+                        return mActiveTableFragment;
                 case 1:
                     return ManagerStatsFragment.newInstance();
             }
@@ -183,6 +184,19 @@ public class ManagerWorkActivity extends BaseAccountActivity {
                     return "Stats";
             }
             return null;
+        }
+
+        @Override
+        public int getItemPosition(@NonNull Object object) {
+            if (object.getClass() == ManagerStatsFragment.class)
+                return super.getItemPosition(object);
+            else
+                return POSITION_NONE;
+        }
+
+        void setActivated(boolean isChecked) {
+            isActivated = isChecked;
+            notifyDataSetChanged();
         }
     }
 }

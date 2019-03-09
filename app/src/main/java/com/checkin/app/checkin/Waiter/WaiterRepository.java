@@ -15,6 +15,7 @@ import com.checkin.app.checkin.Session.Model.CheckoutStatusModel;
 import com.checkin.app.checkin.Session.Model.QRResultModel;
 import com.checkin.app.checkin.Session.Model.RestaurantTableModel;
 import com.checkin.app.checkin.Waiter.Model.OrderStatusModel;
+import com.checkin.app.checkin.Waiter.Model.SessionContactModel;
 import com.checkin.app.checkin.Waiter.Model.WaiterEventModel;
 import com.checkin.app.checkin.Waiter.Model.WaiterStatsModel;
 import com.checkin.app.checkin.Waiter.Model.WaiterTableModel;
@@ -52,6 +53,46 @@ public class WaiterRepository extends BaseRepository {
 
             @Override
             protected void saveCallResult(List<WaiterTableModel> data) {
+
+            }
+        }.getAsLiveData();
+    }
+
+    public LiveData<Resource<ObjectNode>> postSessionContact(long sessionId, SessionContactModel data) {
+        return new NetworkBoundResource<ObjectNode, ObjectNode>() {
+            @Override
+            protected boolean shouldUseLocalDb() {
+                return false;
+            }
+
+            @NonNull
+            @Override
+            protected LiveData<ApiResponse<ObjectNode>> createCall() {
+                return new RetrofitLiveData<>(mWebService.postSessionContact(sessionId, data));
+            }
+
+            @Override
+            protected void saveCallResult(ObjectNode data) {
+
+            }
+        }.getAsLiveData();
+    }
+
+    public LiveData<Resource<List<SessionContactModel>>> getSessionContacts(long sessionId) {
+        return new NetworkBoundResource<List<SessionContactModel>, List<SessionContactModel>>() {
+            @Override
+            protected boolean shouldUseLocalDb() {
+                return false;
+            }
+
+            @NonNull
+            @Override
+            protected LiveData<ApiResponse<List<SessionContactModel>>> createCall() {
+                return new RetrofitLiveData<>(mWebService.getSessionContactList(sessionId));
+            }
+
+            @Override
+            protected void saveCallResult(List<SessionContactModel> data) {
 
             }
         }.getAsLiveData();

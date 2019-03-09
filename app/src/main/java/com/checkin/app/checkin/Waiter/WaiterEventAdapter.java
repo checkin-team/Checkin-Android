@@ -1,6 +1,8 @@
 package com.checkin.app.checkin.Waiter;
 
+import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -113,7 +115,21 @@ public class WaiterEventAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
             imOrderMarkDone.setOnClickListener(v -> mListener.onOrderMarkDone(mOrderedItem));
             tvOrderAccept.setOnClickListener(v -> mListener.onOrderAccept(mOrderedItem));
             tvOrderCancel.setOnClickListener(v -> mListener.onOrderCancel(mOrderedItem));
-            imOrderMarkCancel.setOnClickListener(view -> mListener.onOrderCancel(mOrderedItem));
+            imOrderMarkCancel.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(view.getContext());
+                    alertDialogBuilder.setMessage("Are you sure want to cancel?").setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+                        public void onClick(DialogInterface dialog, int which) {
+                            mListener.onOrderCancel(mOrderedItem);
+                        }
+                    }).setNegativeButton("No", new DialogInterface.OnClickListener() {
+                        public void onClick(DialogInterface dialog, int which) {
+                            dialog.dismiss();
+                        }
+                    }).show();
+                }
+            });
         }
 
         public void bindData(SessionOrderedItemModel order) {

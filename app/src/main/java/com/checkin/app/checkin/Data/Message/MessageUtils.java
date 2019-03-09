@@ -7,6 +7,7 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.content.SharedPreferences;
 import android.media.AudioAttributes;
 import android.os.Build;
 import android.util.Log;
@@ -27,7 +28,9 @@ import androidx.core.app.NotificationCompat;
 import androidx.localbroadcastmanager.content.LocalBroadcastManager;
 
 import static androidx.core.app.NotificationCompat.PRIORITY_LOW;
+import static com.checkin.app.checkin.Data.Message.Constants.FORMAT_SP_KEY_NOTIFICATION_CHANNEL;
 import static com.checkin.app.checkin.Data.Message.Constants.KEY_DATA;
+import static com.checkin.app.checkin.Data.Message.Constants.SP_TABLE_NOTIFICATION;
 
 public class MessageUtils {
     private static final String TAG = MessageUtils.class.getSimpleName();
@@ -116,7 +119,7 @@ public class MessageUtils {
             List<NotificationChannel> channels;
             channels = createChannels(CHANNEL_GROUP.RESTAURANT_MEMBER, NotificationManager.IMPORTANCE_HIGH, CHANNEL.ORDERS);
 
-            for (NotificationChannel channel: channels) {
+            for (NotificationChannel channel : channels) {
                 channel.setSound(Constants.getAlertOrdersSoundUri(context), audioAttributes);
                 channel.enableVibration(true);
                 channel.enableLights(true);
@@ -201,6 +204,20 @@ public class MessageUtils {
             case DEFAULT:
                 createDefaultChannels(notificationManager);
         }
+    }
+
+    public static void setEnableNotification(Context context, boolean status, CHANNEL... channels) {
+        SharedPreferences sharedPreferences = context.getSharedPreferences(SP_TABLE_NOTIFICATION, Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+        for (CHANNEL channel : channels) {
+            editor.putBoolean(String.format(Locale.ENGLISH, FORMAT_SP_KEY_NOTIFICATION_CHANNEL, channel), status);
+        }
+        editor.apply();
+    }
+
+    public static boolean isNotificationEnabled(Context context, CHANNEL channel) {
+        SharedPreferences sharedPreferences = context.getSharedPreferences(SP_TABLE_NOTIFICATION, Context.MODE_PRIVATE);
+        return sharedPreferences.getBoolean(String.format(Locale.ENGLISH, FORMAT_SP_KEY_NOTIFICATION_CHANNEL, channel), true);
     }
 
     public static class NotificationUpdate implements ProgressRequestBody.UploadCallbacks {

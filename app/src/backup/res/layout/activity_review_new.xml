@@ -253,7 +253,7 @@
                     android:layout_margin="@dimen/spacing_normal"
                     android:background="@drawable/rounded_rectangle_brownish_grey"
                     android:gravity="center"
-                    android:text="@string/title_done"
+                    android:text="@string/label_done"
                     android:textColor="@color/white"
                     android:textSize="@dimen/font_normal" />
 

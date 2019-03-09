@@ -190,7 +190,6 @@
     <string name="title_ambience">Ambience</string>
     <string name="title_service_hospitality">Service/Hospitality</string>
     <string name="add_image">Add Images</string>
-    <string name="title_done">Done</string>
     <string name="title_request">Request</string>
     <string name="title_approve">Approve</string>
     <string name="coming_soon">Feature coming soon.</string>
@@ -198,5 +197,7 @@
     <string name="menu_waiter_total_tip">Total Tip: %s</string>
     <string name="license_agreement"><u>Agree to Terms &amp; Condition.</u></string>
     <string name="error_required_agree_eula"><![CDATA[Need to accept Terms & Condition]]></string>
+    <string name="no_order">relax!\nwe will\nnotify about</string>
+    <string name="activate_fetch_live_order">activate!\nto fetch\n<font color="#af1014">live orders</font></string>
 
 </resources>

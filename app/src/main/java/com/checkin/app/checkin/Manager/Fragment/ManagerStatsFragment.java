@@ -10,6 +10,7 @@ import com.checkin.app.checkin.Data.Resource;
 import com.checkin.app.checkin.Manager.Adapter.ManagerStatsOrderAdapter;
 import com.checkin.app.checkin.Manager.Model.ManagerStatsModel;
 import com.checkin.app.checkin.Manager.ManagerWorkViewModel;
+import com.checkin.app.checkin.Misc.BaseFragment;
 import com.checkin.app.checkin.R;
 import com.checkin.app.checkin.Utility.Utils;
 
@@ -25,8 +26,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.Unbinder;
 
-public class ManagerStatsFragment extends Fragment {
-    private Unbinder unbinder;
+public class ManagerStatsFragment extends BaseFragment {
 
     @BindView(R.id.rv_manager_stats_trending_orders)
     RecyclerView rvTrendingOrders;
@@ -44,37 +44,42 @@ public class ManagerStatsFragment extends Fragment {
     TextView tvServingTime;
 
     private ManagerStatsOrderAdapter mAdapter;
+    private ManagerWorkViewModel mViewModel;
 
     public ManagerStatsFragment() {
+    }
+
+    @Override
+    protected int getRootLayout() {
+        return R.layout.fragment_shop_manager_statistics;
     }
 
     public static ManagerStatsFragment newInstance() {
         return new ManagerStatsFragment();
     }
 
-    @Nullable
-    @Override
-    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_shop_manager_statistics, container, false);
-        unbinder = ButterKnife.bind(this, view);
-        return view;
-    }
-
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
-        super.onViewCreated(view, savedInstanceState);
+
+        initRefreshScreen(R.id.sr_manager_stats);
 
         mAdapter = new ManagerStatsOrderAdapter();
         rvTrendingOrders.setLayoutManager(new LinearLayoutManager(getContext(), RecyclerView.VERTICAL, false));
         rvTrendingOrders.setAdapter(mAdapter);
 
-        ManagerWorkViewModel viewModel = ViewModelProviders.of(requireActivity()).get(ManagerWorkViewModel.class);
-        viewModel.fetchStatistics();
-        viewModel.getRestaurantStatistics().observe(this, input -> {
+        mViewModel = ViewModelProviders.of(requireActivity()).get(ManagerWorkViewModel.class);
+        mViewModel.fetchStatistics();
+        mViewModel.getRestaurantStatistics().observe(this, input -> {
             if (input == null)
                 return;
             if (input.status == Resource.Status.SUCCESS && input.data != null) {
                 setupData(input.data);
+                stopRefreshing();
+            } else if (input.status == Resource.Status.LOADING)
+                startRefreshing();
+            else {
+                stopRefreshing();
+                Utils.toast(requireContext(),input.message);
             }
         });
     }
@@ -91,8 +96,7 @@ public class ManagerStatsFragment extends Fragment {
     }
 
     @Override
-    public void onDestroyView() {
-        super.onDestroyView();
-        unbinder.unbind();
+    protected void updateScreen() {
+        mViewModel.fetchStatistics();
     }
 }

@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:orientation="vertical"
+    android:gravity="center"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <LinearLayout
+        android:gravity="center"
+        android:layout_gravity="center"
+        android:visibility="visible"
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        tools:ignore="UselessParent">
+
+        <ImageView
+            android:contentDescription="@null"
+            android:src="@drawable/ic_activate_fetch_orders"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+
+        <LinearLayout
+            android:layout_marginStart="@dimen/spacing_large"
+            android:layout_gravity="center_vertical"
+            android:orientation="vertical"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+
+            <TextView
+                android:textAllCaps="true"
+                android:lineSpacingExtra="3dp"
+                android:textSize="@dimen/font_extra_large"
+                android:textColor="@color/pinkish_grey"
+                android:text="@string/activate_fetch_live_order"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+
+            <Button
+                android:id="@+id/btn_live_order_activate"
+                android:layout_gravity="center"
+                android:layout_marginTop="10dp"
+                android:paddingStart="14dp"
+                android:paddingEnd="14dp"
+                android:background="@drawable/bordered_card_rouge"
+                android:textAllCaps="true"
+                android:fontFamily="@font/lucida_grande"
+                android:text="Activate"
+                android:textColor="@color/white"
+                android:textSize="@dimen/font_extra_large"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+</LinearLayout>

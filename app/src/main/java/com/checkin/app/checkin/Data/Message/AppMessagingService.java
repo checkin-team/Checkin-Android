@@ -22,6 +22,8 @@ import java.util.Map;
 import androidx.annotation.RequiresApi;
 import androidx.core.app.NotificationCompat;
 
+import static com.checkin.app.checkin.Data.Message.MessageUtils.isNotificationEnabled;
+
 public class AppMessagingService extends FirebaseMessagingService {
     private static final String TAG = AppMessagingService.class.getSimpleName();
     private NotificationManager mNotificationManager;
@@ -98,12 +100,14 @@ public class AppMessagingService extends FirebaseMessagingService {
     }
 
     private void showNotification(MessageModel data) {
-        int notificationId = Constants.getNotificationID();
-        Notification notification = data.showNotification(this, mNotificationManager, notificationId);
+        if (isNotificationEnabled(getApplicationContext(), data.getChannel())) {
+            int notificationId = Constants.getNotificationID();
+            Notification notification = data.showNotification(this, mNotificationManager, notificationId);
 
-        mNotificationManager.notify(data.getDescription(), notificationId, notification);
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M && data.isGroupedNotification())
-            showGroupedNotifications(data);
+            mNotificationManager.notify(data.getDescription(), notificationId, notification);
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M && data.isGroupedNotification())
+                showGroupedNotifications(data);
+        }
     }
 
     @Override

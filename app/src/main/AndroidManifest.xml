@@ -71,7 +71,6 @@
             </intent-filter>
         </activity>
 
-
         <service
             android:name=".Auth.AuthenticatorService"
             android:enabled="true"

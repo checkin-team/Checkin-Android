@@ -19,6 +19,9 @@ public class Constants {
     public static final String FORMAT_NOTIFICATION_GROUP = "com.checkin.message.group.%s_%d";
     public static final String NOTIFICATION_GROUP_SUMMARY = "com.checkin.message.group.summary";
 
+    public static final String FORMAT_SP_KEY_NOTIFICATION_CHANNEL = "com.checkin.app.checkin.Data.Message.notif.%s";
+    public static final String SP_TABLE_NOTIFICATION = "com.checkin.app.checkin.Data.Message.notification";
+
     private final static AtomicInteger atomicInteger = new AtomicInteger(100);
 
     public static int getNotificationID() {
@@ -31,6 +34,10 @@ public class Constants {
 
     public static int getNotificationSummaryID(MESSAGE_OBJECT_TYPE type, long objectPk) {
         return ((int) ((type.id + objectPk) % 100));
+    }
+
+    public static Uri getAlertOrdersSoundUri(Context context) {
+        return Uri.parse("android.resource://" + context.getPackageName() + "/" + R.raw.notif_alert_orders);
     }
 
     public enum CHANNEL_GROUP {
@@ -68,9 +75,5 @@ public class Constants {
             this.id = id;
             this.title = title;
         }
-    }
-
-    public static Uri getAlertOrdersSoundUri(Context context) {
-        return Uri.parse("android.resource://" + context.getPackageName() + "/" + R.raw.notif_alert_orders);
     }
 }

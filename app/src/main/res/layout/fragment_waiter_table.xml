@@ -8,69 +8,152 @@
     android:paddingTop="@dimen/spacing_normal"
     android:paddingEnd="@dimen/spacing_normal">
 
-    <androidx.cardview.widget.CardView
-        android:id="@+id/container_waiter_member_details"
-        style="@style/WhiteCardStyle"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
-
-        <androidx.constraintlayout.widget.ConstraintLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:paddingStart="@dimen/spacing_normal"
-            android:paddingTop="@dimen/spacing_extra_small"
-            android:paddingEnd="@dimen/spacing_normal"
-            android:paddingBottom="@dimen/spacing_extra_small">
-
-            <ImageView
-                android:id="@+id/im_waiter_table_members"
-                android:layout_width="@dimen/size_image_small"
-                android:layout_height="@dimen/size_image_small"
-                android:layout_marginEnd="@dimen/spacing_small"
-                android:src="@drawable/fore_male_grey"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
-
-            <TextView
-                android:id="@+id/tv_waiter_table_members_count"
-                style="@style/GreyTitleStyle"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="@dimen/spacing_small"
-                android:textSize="@dimen/font_largest"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintStart_toEndOf="@id/im_waiter_table_members"
-                app:layout_constraintTop_toTopOf="parent"
-                tools:text="0" />
-
-        </androidx.constraintlayout.widget.ConstraintLayout>
-
-    </androidx.cardview.widget.CardView>
-
     <LinearLayout
-        android:id="@+id/container_waiter_table_actions"
-        android:layout_width="wrap_content"
+        android:id="@+id/ll_header"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 
-        <Button
-            android:id="@+id/btn_waiter_table_checkout"
-            style="@style/ButtonRedAlertAction"
+        <androidx.cardview.widget.CardView
+            android:id="@+id/container_waiter_member_details"
+            style="@style/WhiteCardStyle"
             android:layout_width="wrap_content"
-            android:layout_height="@dimen/button_height_normal"
-            android:text="Checkout" />
+            android:layout_height="@dimen/height_waiter_session_member_details"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
 
-        <ImageButton
-            android:id="@+id/btn_waiter_table_menu"
+            <FrameLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:id="@+id/container_waiter_members"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:paddingStart="@dimen/spacing_normal"
+                    android:paddingTop="@dimen/spacing_extra_small"
+                    android:paddingEnd="@dimen/spacing_normal"
+                    android:paddingBottom="@dimen/spacing_extra_small">
+
+                    <ImageView
+                        android:id="@+id/im_waiter_table_members"
+                        android:layout_width="@dimen/size_image_small"
+                        android:layout_height="@dimen/size_image_small"
+                        android:layout_marginEnd="@dimen/spacing_small"
+                        android:src="@drawable/fore_male_grey"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                    <TextView
+                        android:id="@+id/tv_waiter_table_members_count"
+                        style="@style/GreyTitleStyle"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="@dimen/spacing_small"
+                        android:textSize="@dimen/font_largest"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintStart_toEndOf="@id/im_waiter_table_members"
+                        app:layout_constraintTop_toTopOf="parent"
+                        tools:text="0" />
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:id="@+id/container_waiter_no_member"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:background="@color/white"
+                    android:clickable="true"
+                    android:focusable="true"
+                    android:paddingStart="@dimen/spacing_normal"
+                    android:paddingTop="@dimen/spacing_extra_small"
+                    android:paddingEnd="@dimen/spacing_normal"
+                    android:paddingBottom="@dimen/spacing_extra_small"
+                    android:visibility="gone">
+
+                    <ImageView
+                        android:id="@+id/im_waiter_contact_email"
+                        android:layout_width="@dimen/size_small_icon"
+                        android:layout_height="@dimen/size_small_icon"
+                        android:contentDescription="@null"
+                        android:src="@drawable/ic_email_grey"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+
+                    <ImageView
+                        android:layout_width="@dimen/size_small_icon"
+                        android:layout_height="@dimen/size_small_icon"
+                        android:contentDescription="@null"
+                        android:src="@drawable/ic_call_grey"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                    <TextView
+                        style="@style/GreySmallTextStyle"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Add Details"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@id/im_waiter_contact_email" />
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
+            </FrameLayout>
+
+        </androidx.cardview.widget.CardView>
+
+        <Space
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_weight="1" />
+
+        <LinearLayout
+            android:id="@+id/container_waiter_table_actions"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="@dimen/spacing_normal"
-            android:background="@color/transparent"
-            android:src="@drawable/ic_action_show_menu" />
+            android:orientation="horizontal"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <TextView
+                android:id="@+id/tv_waiter_session_bill"
+                style="@style/GreyTextStyle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginEnd="@dimen/spacing_normal"
+                android:background="@drawable/bordered_rectangle_brownish_grey"
+                android:drawableEnd="@drawable/ic_cart_grey"
+                android:drawablePadding="@dimen/spacing_extra_small"
+                android:gravity="center"
+                android:padding="@dimen/spacing_extra_small"
+                android:textSize="@dimen/font_large"
+                tools:text="$ 420" />
+
+            <Button
+                android:id="@+id/btn_waiter_table_checkout"
+                style="@style/ButtonRedAlertAction"
+                android:layout_width="wrap_content"
+                android:layout_height="@dimen/button_height_normal"
+                android:layout_gravity="center_vertical"
+                android:text="Checkout" />
+
+            <ImageButton
+                android:id="@+id/btn_waiter_table_menu"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:layout_marginStart="@dimen/spacing_normal"
+                android:background="@color/transparent"
+                android:src="@drawable/ic_action_show_menu" />
+
+        </LinearLayout>
+
     </LinearLayout>
 
     <FrameLayout
@@ -81,6 +164,6 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/container_waiter_member_details" />
+        app:layout_constraintTop_toBottomOf="@id/ll_header" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
