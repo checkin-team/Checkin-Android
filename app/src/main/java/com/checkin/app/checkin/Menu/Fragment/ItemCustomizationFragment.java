@@ -3,12 +3,7 @@ package com.checkin.app.checkin.Menu.Fragment;
 import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
 import android.annotation.SuppressLint;
-import androidx.lifecycle.ViewModelProviders;
 import android.os.Bundle;
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import com.google.android.material.snackbar.Snackbar;
-import androidx.fragment.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
@@ -27,8 +22,12 @@ import com.checkin.app.checkin.Menu.Model.ItemCustomizationFieldModel;
 import com.checkin.app.checkin.Menu.Model.ItemCustomizationGroupModel;
 import com.checkin.app.checkin.Menu.Model.MenuItemModel;
 import com.checkin.app.checkin.R;
-import com.golovin.fluentstackbar.FluentSnackbar;
+import com.checkin.app.checkin.Utility.Utils;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.fragment.app.Fragment;
+import androidx.lifecycle.ViewModelProviders;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
@@ -193,12 +192,7 @@ public class ItemCustomizationFragment extends Fragment implements ItemCustomiza
     @OnClick(R.id.btn_menu_customization_done)
     public void onDoneClick() {
         if (!mViewModel.canOrder() && getView() != null) {
-            FluentSnackbar.create(getView())
-                    .create("Not all required customizations are selected.")
-                    .warningBackgroundColor()
-                    .textColorRes(R.color.brownish_grey)
-                    .duration(Snackbar.LENGTH_SHORT)
-                    .show();
+            Utils.warningSnack(getView(), "Not all required customizations are selected.");
             return;
         }
         mInteractionListener.onCustomizationDone();

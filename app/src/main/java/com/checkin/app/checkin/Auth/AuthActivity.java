@@ -7,7 +7,6 @@ import android.animation.AnimatorListenerAdapter;
 import android.annotation.SuppressLint;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.preference.PreferenceManager;
@@ -33,7 +32,6 @@ import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
 import com.google.android.gms.common.api.ApiException;
 import com.google.android.gms.tasks.Task;
-import com.google.android.material.snackbar.Snackbar;
 import com.google.firebase.FirebaseException;
 import com.google.firebase.auth.AuthCredential;
 import com.google.firebase.auth.FacebookAuthProvider;
@@ -46,7 +44,6 @@ import java.util.Locale;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 import androidx.lifecycle.ViewModelProviders;
@@ -212,9 +209,11 @@ public class AuthActivity extends AppCompatActivity implements AuthFragmentInter
                 });
     }
 
-    @OnClick(R.id.parent_layout)
-    public void outClick(){
-        Utils.hideSoftKeyboard(this);
+    @Override
+    public void onWindowFocusChanged(boolean hasFocus) {
+        super.onWindowFocusChanged(hasFocus);
+        if (hasFocus)
+            Utils.hideSoftKeyboard(this);
     }
 
     @OnClick(R.id.tv_read_eula)
@@ -229,10 +228,7 @@ public class AuthActivity extends AppCompatActivity implements AuthFragmentInter
 
     private boolean canLogin() {
         if (!cbReadEula.isChecked()) {
-            if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP)
-                Utils.showSnackbar(this,"Need to accept Terms & Condition.");
-            else
-                Utils.toast(this, "Need to accept Terms & Condition");
+            Utils.errorSnack(this, "Need to accept Terms & Condition.");
             return false;
         }
         return true;

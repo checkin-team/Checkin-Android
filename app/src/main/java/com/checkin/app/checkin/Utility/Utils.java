@@ -35,8 +35,8 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.checkin.app.checkin.Home.HomeActivity;
-import com.checkin.app.checkin.Maps.AppUtils;
 import com.checkin.app.checkin.R;
+import com.golovin.fluentstackbar.FluentSnackbar;
 import com.google.android.material.snackbar.Snackbar;
 import com.google.android.material.tabs.TabLayout;
 
@@ -57,7 +57,6 @@ import androidx.annotation.DrawableRes;
 import androidx.annotation.NonNull;
 import androidx.annotation.RequiresApi;
 import androidx.annotation.StringRes;
-import androidx.constraintlayout.widget.ConstraintLayout;
 
 /**
  * Created by shivanshs9 on 12/5/18.
@@ -92,11 +91,6 @@ public class Utils {
 
     public static void navigateBackToHome(Context context) {
         context.startActivity(Intent.makeRestartActivityTask(new ComponentName(context, HomeActivity.class)));
-    }
-
-    public static void showSnackbar(Activity activity, String message){
-        ConstraintLayout mRootAuthView = activity.findViewById(R.id.root_auth);
-        Snackbar.make(mRootAuthView,message,Snackbar.LENGTH_SHORT).show();
     }
 
     /**
@@ -523,16 +517,56 @@ public class Utils {
     }
 
     public static void hideSoftKeyboard(Activity activity) {
-            if (activity != null) {
-                InputMethodManager inputMethodManager = (InputMethodManager) activity
-                        .getSystemService(Activity.INPUT_METHOD_SERVICE);
-                View view = activity.getCurrentFocus();
-                if (view != null) {
-                    IBinder binder = view.getWindowToken();
-                    if (binder != null) {
-                        inputMethodManager.hideSoftInputFromWindow(binder, 0);
-                    }
-                }
+        if (activity == null)
+            return;
+        InputMethodManager imm = (InputMethodManager) activity
+                .getSystemService(Activity.INPUT_METHOD_SERVICE);
+        View view = activity.getCurrentFocus();
+        if (view != null && imm != null) {
+            IBinder binder = view.getWindowToken();
+            if (binder != null) {
+                imm.hideSoftInputFromWindow(binder, 0);
             }
+        }
+    }
+
+    public static FluentSnackbar.Builder snack(View view, String msg) {
+        return FluentSnackbar.create(view)
+                .create(msg)
+                .duration(Snackbar.LENGTH_SHORT);
+    }
+
+    public static FluentSnackbar.Builder snack(Activity activity, String msg) {
+        return FluentSnackbar.create(activity)
+                .create(msg)
+                .duration(Snackbar.LENGTH_SHORT);
+    }
+
+    public static void errorSnack(View view, String msg) {
+        snack(view, msg)
+                .errorBackgroundColor()
+                .textColorRes(R.color.white)
+                .show();
+    }
+
+    public static void warningSnack(View view, String msg) {
+        snack(view, msg)
+                .warningBackgroundColor()
+                .textColorRes(R.color.brownish_grey)
+                .show();
+    }
+
+    public static void errorSnack(Activity activity, String msg) {
+        snack(activity, msg)
+                .errorBackgroundColor()
+                .textColorRes(R.color.white)
+                .show();
+    }
+
+    public static void warningSnack(Activity activity, String msg) {
+        snack(activity, msg)
+                .warningBackgroundColor()
+                .textColorRes(R.color.brownish_grey)
+                .show();
     }
 }
