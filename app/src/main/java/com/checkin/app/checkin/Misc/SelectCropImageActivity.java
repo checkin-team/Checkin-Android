@@ -1,20 +1,30 @@
 package com.checkin.app.checkin.Misc;
 
 import android.app.Activity;
+import android.content.ContentUris;
+import android.content.Context;
 import android.content.Intent;
+import android.database.Cursor;
 import android.graphics.Bitmap;
+import android.graphics.Matrix;
+import android.media.ExifInterface;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
+import android.os.Environment;
+import android.provider.DocumentsContract;
 import android.provider.MediaStore;
-import androidx.appcompat.app.AppCompatActivity;
 import android.util.Log;
 
 import com.checkin.app.checkin.R;
+import com.checkin.app.checkin.Utility.Utils;
 import com.lyft.android.scissors.CropView;
 
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
+
+import androidx.appcompat.app.AppCompatActivity;
 
 public class SelectCropImageActivity extends AppCompatActivity {
     private static final String TAG = SelectCropImageActivity.class.getSimpleName();
@@ -83,7 +93,9 @@ public class SelectCropImageActivity extends AppCompatActivity {
             Uri uri = data.getData();
             try {
                 Bitmap bitmap = MediaStore.Images.Media.getBitmap(getContentResolver(), uri);
-                cropView.setImageBitmap(bitmap);
+                String imageAbsolutePath = Utils.getPath(this,uri);
+                Bitmap mFinalBitmap = Utils.modifyOrientation(bitmap,imageAbsolutePath);;
+                cropView.setImageBitmap(mFinalBitmap);
             } catch (IOException e) {
                 e.printStackTrace();
             }
