@@ -4,7 +4,6 @@ import com.checkin.app.checkin.Account.AccountModel;
 import com.checkin.app.checkin.Auth.AuthResultModel;
 import com.checkin.app.checkin.Manager.Model.ManagerSessionEventModel;
 import com.checkin.app.checkin.Manager.Model.ManagerSessionInvoiceModel;
-import com.checkin.app.checkin.Manager.Model.ManagerSessionOrderStatusModel;
 import com.checkin.app.checkin.Manager.Model.ManagerStatsModel;
 import com.checkin.app.checkin.Menu.Model.MenuModel;
 import com.checkin.app.checkin.Menu.Model.OrderedItemModel;
@@ -211,7 +210,7 @@ public interface WebApiService {
     Call<OrderStatusModel> postChangeOrderStatus(@Path("order_id") long orderId, @Body ObjectNode data);
 
     @POST("sessions/manage/orders/status/")
-    Call<ArrayNode> postChangeOrderStatusList(@Body List<ManagerSessionOrderStatusModel> msOrderStatus);
+    Call<List<OrderStatusModel>> postChangeOrderStatusList(@Body List<OrderStatusModel> msOrderStatus);
 
     @PUT("sessions/manage/events/{event_id}/done/")
     Call<GenericDetailModel> putSessionEventDone(@Path("event_id") long eventId);

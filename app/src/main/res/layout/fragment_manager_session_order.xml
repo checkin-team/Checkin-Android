@@ -2,8 +2,8 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
-    android:background="@color/white">
+    android:background="@color/white"
+    android:orientation="vertical">
 
     <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
         android:id="@+id/sr_manager_session_orders"
@@ -23,28 +23,6 @@
                 android:orientation="vertical">
 
                 <TextView
-                    android:id="@+id/title_ms_in_progress"
-                    style="@style/RedSmallTextStyle"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:background="@color/pinkish_grey"
-                    android:gravity="center"
-                    android:padding="@dimen/spacing_small"
-                    android:text="@string/status_order_in_progress"
-                    android:textAllCaps="true"
-                    android:visibility="gone" />
-
-                <androidx.recyclerview.widget.RecyclerView
-                    android:id="@+id/rv_ms_orders_accepted"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:nestedScrollingEnabled="false"
-                    android:paddingBottom="@dimen/spacing_normal"
-                    android:visibility="gone"
-                    android:background="@color/lightest_grey"
-                    android:layout_margin="@dimen/spacing_small" />
-
-                <TextView
                     android:id="@+id/title_ms_new"
                     style="@style/RedSmallTextStyle"
                     android:layout_width="match_parent"
@@ -60,11 +38,32 @@
                     android:id="@+id/rv_ms_orders_new"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:layout_margin="@dimen/spacing_small"
+                    android:background="@color/lightest_grey"
                     android:nestedScrollingEnabled="false"
                     android:paddingBottom="@dimen/spacing_small"
-                    android:visibility="gone"
-                    android:background="@color/lightest_grey"
-                    android:layout_margin="@dimen/spacing_small"/>
+                    android:visibility="gone" />
+
+                <TextView
+                    android:id="@+id/title_ms_in_progress"
+                    style="@style/RedSmallTextStyle"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@color/pinkish_grey"
+                    android:gravity="center"
+                    android:padding="@dimen/spacing_small"
+                    android:text="@string/status_order_in_progress"
+                    android:textAllCaps="true"
+                    android:visibility="gone" />
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/rv_ms_orders_accepted"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="@dimen/spacing_small"
+                    android:nestedScrollingEnabled="false"
+                    android:paddingBottom="@dimen/spacing_normal"
+                    android:visibility="gone" />
 
                 <TextView
                     android:id="@+id/title_ms_delivered"
@@ -82,11 +81,10 @@
                     android:id="@+id/rv_ms_orders_delivered"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:layout_margin="@dimen/spacing_small"
                     android:nestedScrollingEnabled="false"
                     android:paddingBottom="@dimen/spacing_small"
-                    android:visibility="gone"
-                    android:background="@color/lightest_grey"
-                    android:layout_margin="@dimen/spacing_small"/>
+                    android:visibility="gone" />
 
             </LinearLayout>
         </androidx.core.widget.NestedScrollView>

@@ -91,7 +91,7 @@ public class ManagerWorkViewModel extends BaseViewModel {
         Resource<List<RestaurantTableModel>> resource = mActiveTablesData.getValue();
         if (resource == null || resource.data == null)
             return;
-        resource.data.add(tableModel);
+        resource.data.add(0, tableModel);
         mActiveTablesData.setValue(Resource.cloneResource(resource, resource.data));
     }
 

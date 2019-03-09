@@ -32,10 +32,10 @@
         android:gravity="center"
         android:paddingStart="@dimen/spacing_extra_tiny"
         android:paddingEnd="@dimen/spacing_extra_tiny"
-        app:layout_constraintBottom_toBottomOf="@id/container_ms_order_status"
+        app:layout_constraintBottom_toBottomOf="@id/tv_ms_order_item_name"
         app:layout_constraintEnd_toStartOf="@id/container_ms_order_status"
         app:layout_constraintStart_toEndOf="@id/tv_ms_order_item_name"
-        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintTop_toTopOf="@id/tv_ms_order_item_name"
         tools:text="QTY: 1 " />
 
     <FrameLayout
@@ -63,8 +63,8 @@
                 android:textAlignment="center"
                 android:textAllCaps="true"
                 android:textSize="@dimen/font_extra_small"
-                tools:text="In Progress"
-                android:visibility="gone"/>
+                android:visibility="gone"
+                tools:text="In Progress" />
 
             <Button
                 android:id="@+id/btn_ms_order_done"
@@ -75,7 +75,7 @@
                 android:gravity="center"
                 android:text="@string/title_done"
                 android:textSize="@dimen/font_extra_small"
-                android:visibility="gone"/>
+                android:visibility="gone" />
 
         </LinearLayout>
 
@@ -84,22 +84,21 @@
             android:layout_width="wrap_content"
             android:layout_height="@dimen/size_small_button"
             android:orientation="horizontal"
-            android:visibility="visible">
+            android:visibility="gone">
 
             <TextView
                 android:id="@+id/tv_ms_price"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                tools:text="$ 130.00"/>
+                tools:text="$ 130.00" />
 
             <CheckBox
                 android:id="@+id/cb_ms_order_accept"
                 android:layout_width="@dimen/size_small_button"
                 android:layout_height="@dimen/size_small_button"
                 android:layout_marginStart="@dimen/spacing_small"
-                android:layout_weight="0"
-                android:checked="true"
-                android:button="@drawable/checkbox_selector" />
+                android:button="@drawable/checkbox_selector"
+                android:checked="true" />
 
         </LinearLayout>
 

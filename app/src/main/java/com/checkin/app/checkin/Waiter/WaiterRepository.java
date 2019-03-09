@@ -10,7 +10,6 @@ import com.checkin.app.checkin.Data.NetworkBoundResource;
 import com.checkin.app.checkin.Data.Resource;
 import com.checkin.app.checkin.Data.RetrofitLiveData;
 import com.checkin.app.checkin.Data.WebApiService;
-import com.checkin.app.checkin.Manager.Model.ManagerSessionOrderStatusModel;
 import com.checkin.app.checkin.Misc.GenericDetailModel;
 import com.checkin.app.checkin.Session.Model.CheckoutStatusModel;
 import com.checkin.app.checkin.Session.Model.QRResultModel;
@@ -19,7 +18,6 @@ import com.checkin.app.checkin.Waiter.Model.OrderStatusModel;
 import com.checkin.app.checkin.Waiter.Model.WaiterEventModel;
 import com.checkin.app.checkin.Waiter.Model.WaiterStatsModel;
 import com.checkin.app.checkin.Waiter.Model.WaiterTableModel;
-import com.fasterxml.jackson.databind.node.ArrayNode;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 
 import java.util.List;
@@ -197,8 +195,8 @@ public class WaiterRepository extends BaseRepository {
         }.getAsLiveData();
     }
 
-    public LiveData<Resource<ArrayNode>> postNewOrdersStatus(final List<ManagerSessionOrderStatusModel> orders) {
-        return new NetworkBoundResource<ArrayNode, ArrayNode>() {
+    public LiveData<Resource<List<OrderStatusModel>>> postOrderListStatus(final List<OrderStatusModel> orders) {
+        return new NetworkBoundResource<List<OrderStatusModel>, List<OrderStatusModel>>() {
             @Override
             protected boolean shouldUseLocalDb() {
                 return false;
@@ -206,19 +204,16 @@ public class WaiterRepository extends BaseRepository {
 
             @NonNull
             @Override
-            protected LiveData<ApiResponse<ArrayNode>> createCall() {
+            protected LiveData<ApiResponse<List<OrderStatusModel>>> createCall() {
                 return new RetrofitLiveData<>(mWebService.postChangeOrderStatusList(orders));
             }
 
             @Override
-            protected void saveCallResult(ArrayNode data) {
+            protected void saveCallResult(List<OrderStatusModel> data) {
 
             }
         }.getAsLiveData();
     }
-
-
-
 
     public static WaiterRepository getInstance(Application application) {
         if (INSTANCE == null) {

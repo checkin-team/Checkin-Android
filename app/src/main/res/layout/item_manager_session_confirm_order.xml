@@ -1,15 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical" android:layout_width="match_parent"
-    android:layout_height="wrap_content">
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical">
 
     <Button
         android:id="@+id/btn_ms_order_confirm"
+        style="@style/ButtonRedAlertAction"
         android:layout_width="@dimen/button_width_wide"
         android:layout_height="@dimen/button_height_normal"
-        style="@style/ButtonRedAlertAction"
-        android:text="@string/confirm"
         android:layout_gravity="center"
-        android:textColor="@color/white"/>
+        android:text="@string/confirm"
+        android:textColor="@color/white" />
 
 </LinearLayout>

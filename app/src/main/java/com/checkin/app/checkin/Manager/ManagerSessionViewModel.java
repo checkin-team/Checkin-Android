@@ -1,15 +1,12 @@
 package com.checkin.app.checkin.Manager;
 
 import android.app.Application;
-import android.util.Log;
-import android.view.animation.Transformation;
 
 import com.checkin.app.checkin.Data.BaseViewModel;
 import com.checkin.app.checkin.Data.Converters;
 import com.checkin.app.checkin.Data.Resource;
 import com.checkin.app.checkin.Manager.Model.ManagerSessionEventModel;
 import com.checkin.app.checkin.Manager.Model.ManagerSessionInvoiceModel;
-import com.checkin.app.checkin.Manager.Model.ManagerSessionOrderStatusModel;
 import com.checkin.app.checkin.Misc.GenericDetailModel;
 import com.checkin.app.checkin.Session.ActiveSession.Chat.SessionChatModel;
 import com.checkin.app.checkin.Session.Model.CheckoutStatusModel;
@@ -18,7 +15,6 @@ import com.checkin.app.checkin.Session.Model.SessionOrderedItemModel;
 import com.checkin.app.checkin.Session.SessionRepository;
 import com.checkin.app.checkin.Waiter.Model.OrderStatusModel;
 import com.checkin.app.checkin.Waiter.WaiterRepository;
-import com.fasterxml.jackson.databind.node.ArrayNode;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 
 import java.util.ArrayList;
@@ -50,8 +46,8 @@ public class ManagerSessionViewModel extends BaseViewModel {
     private MediatorLiveData<Resource<OrderStatusModel>> mOrderStatusData = new MediatorLiveData<>();
     private MediatorLiveData<Resource<CheckoutStatusModel>> mCheckoutData = new MediatorLiveData<>();
 
-    private MutableLiveData<List<ManagerSessionOrderStatusModel>> mNewOrderStatus = new MutableLiveData<>();
-    private MediatorLiveData<Resource<ArrayNode>> mResultOrderStatus = new MediatorLiveData<>();
+    private MutableLiveData<List<OrderStatusModel>> mNewOrderStatus = new MutableLiveData<>();
+    private MediatorLiveData<Resource<List<OrderStatusModel>>> mResultOrderStatus = new MediatorLiveData<>();
 
     private long mSessionPk;
     private long mShopPk;
@@ -177,15 +173,13 @@ public class ManagerSessionViewModel extends BaseViewModel {
             if (input == null || input.data == null)
                 return input;
             List<SessionOrderedItemModel> list = new ArrayList<>();
-            List<ManagerSessionOrderStatusModel> listNewOrderStatus = new ArrayList<>();
-            ManagerSessionOrderStatusModel item;
+            List<OrderStatusModel> listNewOrderStatus = new ArrayList<>();
 
             if (input.status == Resource.Status.SUCCESS)
                 for (SessionOrderedItemModel data : input.data) {
-                    if (data.getStatus() == OPEN){
+                    if (data.getStatus() == OPEN) {
                         list.add(data);
-                        item = new ManagerSessionOrderStatusModel(data.getPk(),IN_PROGRESS.tag);
-                        listNewOrderStatus.add(item);
+                        listNewOrderStatus.add(new OrderStatusModel(data.getPk(), IN_PROGRESS));
                     }
                 }
             mNewOrderStatus.setValue(listNewOrderStatus);
@@ -228,10 +222,11 @@ public class ManagerSessionViewModel extends BaseViewModel {
     }
 
     public void updateOrderStatusNew(int orderId, int statusType) {
-
-        List<ManagerSessionOrderStatusModel> listNewOrderStatus = mNewOrderStatus.getValue();
-        for(ManagerSessionOrderStatusModel item : listNewOrderStatus){
-            if(item.getPk() == orderId) {
+        List<OrderStatusModel> listNewOrderStatus = mNewOrderStatus.getValue();
+        if (listNewOrderStatus == null)
+            return;
+        for (OrderStatusModel item : listNewOrderStatus) {
+            if (item.getPk() == orderId) {
                 item.setStatus(statusType);
                 break;
             }
@@ -240,17 +235,16 @@ public class ManagerSessionViewModel extends BaseViewModel {
     }
 
     public void confirmOrderStatus() {
-        mResultOrderStatus.addSource(mWaiterRepository.postNewOrdersStatus(mNewOrderStatus.getValue()), mResultOrderStatus::setValue);
+        mResultOrderStatus.addSource(mWaiterRepository.postOrderListStatus(mNewOrderStatus.getValue()), mResultOrderStatus::setValue);
     }
 
-    public LiveData<Resource<ArrayNode>> getResultOrderStatus() {
+    public LiveData<Resource<List<OrderStatusModel>>> getOrderListStatusData() {
         return mResultOrderStatus;
     }
 
     public LiveData<Resource<OrderStatusModel>> getOrderStatusData() {
         return mOrderStatusData;
     }
-
 
     public void updateUiOrderStatus(OrderStatusModel data) {
         Resource<List<SessionOrderedItemModel>> listResource = mOrdersData.getValue();
@@ -265,7 +259,27 @@ public class ManagerSessionViewModel extends BaseViewModel {
         }
         if (pos > -1) {
             SessionOrderedItemModel eventModel = listResource.data.get(pos);
-            eventModel.setStatus(data.getStatus().tag);
+            eventModel.setStatus(data.getStatus());
+            listResource.data.remove(pos);
+            listResource.data.add(0, eventModel);
+        }
+        mOrdersData.setValue(Resource.cloneResource(listResource, listResource.data));
+    }
+
+    public void updateUiOrderListStatus(OrderStatusModel data) {
+        Resource<List<SessionOrderedItemModel>> listResource = mOrdersData.getValue();
+        if (listResource == null || listResource.data == null)
+            return;
+        int pos = -1;
+        for (int i = 0, count = listResource.data.size(); i < count; i++) {
+            if (listResource.data.get(i).getPk() == data.getPk()) {
+                pos = i;
+                break;
+            }
+        }
+        if (pos > -1) {
+            SessionOrderedItemModel eventModel = listResource.data.get(pos);
+            eventModel.setStatus(data.getStatus());
             listResource.data.remove(pos);
             listResource.data.add(0, eventModel);
         }
@@ -312,7 +326,7 @@ public class ManagerSessionViewModel extends BaseViewModel {
         Resource<List<SessionOrderedItemModel>> resource = mOrdersData.getValue();
         if (resource == null || resource.data == null)
             return;
-        for (SessionOrderedItemModel iterOrder: resource.data) {
+        for (SessionOrderedItemModel iterOrder : resource.data) {
             if (iterOrder.getPk() == orderedItemModel.getPk()) return;
         }
         resource.data.add(0, orderedItemModel);
@@ -323,7 +337,7 @@ public class ManagerSessionViewModel extends BaseViewModel {
         Resource<List<ManagerSessionEventModel>> resource = mEventData.getValue();
         if (resource == null || resource.data == null)
             return;
-        for (ManagerSessionEventModel iterEvent: resource.data) {
+        for (ManagerSessionEventModel iterEvent : resource.data) {
             if (iterEvent.getPk() == eventModel.getPk()) return;
         }
         resource.data.add(0, eventModel);

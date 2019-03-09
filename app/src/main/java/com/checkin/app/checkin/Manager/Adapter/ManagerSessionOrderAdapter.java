@@ -30,7 +30,7 @@ import static com.checkin.app.checkin.Session.ActiveSession.Chat.SessionChatMode
 public class ManagerSessionOrderAdapter extends HeaderFooterRecyclerViewAdapter {
     private List<SessionOrderedItemModel> mOrders;
     private SessionOrdersInteraction mListener;
-    boolean mShowFooter;
+    private boolean mShowFooter;
 
     public ManagerSessionOrderAdapter(SessionOrdersInteraction ordersInterface, boolean showFooter) {
         mListener = ordersInterface;
@@ -121,9 +121,11 @@ public class ManagerSessionOrderAdapter extends HeaderFooterRecyclerViewAdapter 
             super(itemView);
             ButterKnife.bind(this, itemView);
 
-//            btnOrderConfirm.setOnClickListener(v -> mListener.onOrderStatusChange(mOrderModel, IN_PROGRESS));
-//            btnOrderReject.setOnClickListener(v -> mListener.onOrderStatusChange(mOrderModel, CANCELLED));
             btnOrderDone.setOnClickListener(v -> mListener.onOrderStatusChange(mOrderModel, DONE));
+            cbOrderAccept.setOnCheckedChangeListener((buttonView, isChecked) -> {
+                if (isChecked) mListener.onSelectDeselect(mOrderModel, IN_PROGRESS);
+                else mListener.onSelectDeselect(mOrderModel, CANCELLED);
+            });
         }
 
         private void resetLayout() {
@@ -161,28 +163,22 @@ public class ManagerSessionOrderAdapter extends HeaderFooterRecyclerViewAdapter 
                 }
             }
 
-            cbOrderAccept.setOnCheckedChangeListener((buttonView, isChecked) -> {
-                if (isChecked) mListener.onSelectDeselect(mOrderModel,IN_PROGRESS);
-                else mListener.onSelectDeselect(mOrderModel,CANCELLED);
-            });
-
             if (order.getStatus() == OPEN) {
                 containerStatusOpen.setVisibility(View.VISIBLE);
                 tvPrice.setText(Utils.formatCurrencyAmount(itemView.getContext(), order.getCost()));
             } else {
-                tvOrderStatus.setVisibility(View.VISIBLE);
                 switch (order.getStatus()) {
                     case IN_PROGRESS:
-                        tvOrderStatus.setText(R.string.status_order_in_progress);
-                        tvOrderStatus.setBackgroundColor(tvOrderStatus.getContext().getResources().getColor(R.color.apple_green));
                         btnOrderDone.setVisibility(View.VISIBLE);
                         break;
                     case DONE:
                         tvOrderStatus.setText(R.string.status_order_delivered);
+                        tvOrderStatus.setVisibility(View.VISIBLE);
                         tvOrderStatus.setBackgroundColor(tvOrderStatus.getContext().getResources().getColor(R.color.apple_green));
                         break;
                     case CANCELLED:
                         tvOrderStatus.setText(R.string.status_cancelled);
+                        tvOrderStatus.setVisibility(View.VISIBLE);
                         tvOrderStatus.setBackgroundColor(tvOrderStatus.getContext().getResources().getColor(R.color.primary_red));
                         break;
                 }
@@ -201,7 +197,9 @@ public class ManagerSessionOrderAdapter extends HeaderFooterRecyclerViewAdapter 
 
     public interface SessionOrdersInteraction {
         void confirmNewOrders();
+
         void onSelectDeselect(SessionOrderedItemModel orderedItem, SessionChatModel.CHAT_STATUS_TYPE statusType);
+
         void onOrderStatusChange(SessionOrderedItemModel orderedItem, SessionChatModel.CHAT_STATUS_TYPE statusType);
     }
 }

@@ -162,6 +162,22 @@ public class ManagerSessionOrderFragment extends BaseFragment implements Manager
             }
         });
 
+        mViewModel.getOrderListStatusData().observe(this, listResource -> {
+            if (listResource == null)
+                return;
+            switch (listResource.status) {
+                case SUCCESS: {
+                    mViewModel.fetchSessionOrders();
+                    nestedSVOrder.scrollTo(0, 0);
+                    break;
+                }
+                case LOADING:
+                    break;
+                default: {
+                    Utils.toast(requireContext(), listResource.message);
+                }
+            }
+        });
     }
 
     @Override

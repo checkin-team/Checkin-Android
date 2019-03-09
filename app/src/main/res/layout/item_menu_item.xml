@@ -8,11 +8,14 @@
 
     <TextView
         android:id="@+id/tv_menu_item_name"
-        android:layout_width="wrap_content"
+        style="@style/GreyHeadingStyle"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="@dimen/spacing_small"
         android:layout_marginTop="@dimen/spacing_small"
-        style="@style/GreyHeadingStyle"
+        android:layout_marginEnd="@dimen/spacing_small"
+        android:gravity="start"
+        app:layout_constraintEnd_toStartOf="@id/container_menu_quantity_picker"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         tools:text="ITEM TITLE" />
@@ -21,10 +24,10 @@
         android:id="@+id/tv_menu_item_price"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:textColor="@color/pinkish_grey"
-        android:textSize="@dimen/font_normal"
         android:layout_marginStart="@dimen/spacing_small"
         android:layout_marginBottom="@dimen/spacing_small"
+        android:textColor="@color/pinkish_grey"
+        android:textSize="@dimen/font_normal"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         tools:text="@string/format_currency_rupee" />
@@ -33,36 +36,36 @@
         android:id="@+id/container_menu_quantity_picker"
         android:layout_width="110dp"
         android:layout_height="50dp"
-        android:layout_marginBottom="@dimen/spacing_small"
-        android:layout_marginEnd="@dimen/spacing_small"
         android:layout_marginTop="@dimen/spacing_small"
+        android:layout_marginEnd="@dimen/spacing_small"
+        android:layout_marginBottom="@dimen/spacing_small"
         android:background="@drawable/background_menu_quantity_selection"
+        android:clickable="true"
+        android:focusable="true"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        android:clickable="true"
-        android:focusable="true">
+        app:layout_constraintTop_toTopOf="parent">
 
         <Button
             android:id="@+id/btn_menu_item_add"
+            style="@style/WhiteTextStyle"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            style="@style/WhiteTextStyle"
-            android:textAllCaps="false"
-            android:text="Add"
             android:background="@drawable/btn_menu_item_add"
+            android:text="Add"
+            android:textAllCaps="false"
             android:visibility="gone" />
 
         <com.checkin.app.checkin.Utility.QuantityPickerView
             android:id="@+id/qp_menu_item_quantity"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_marginEnd="@dimen/spacing_tiny"
-            android:layout_marginStart="@dimen/spacing_tiny"
             android:layout_gravity="center"
-            app:dsv_orientation="horizontal"
+            android:layout_marginStart="@dimen/spacing_tiny"
+            android:layout_marginEnd="@dimen/spacing_tiny"
             android:clickable="false"
-            android:focusable="false"/>
+            android:focusable="false"
+            app:dsv_orientation="horizontal" />
     </FrameLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
