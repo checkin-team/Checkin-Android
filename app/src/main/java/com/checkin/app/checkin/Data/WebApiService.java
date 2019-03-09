@@ -209,6 +209,9 @@ public interface WebApiService {
     @POST("sessions/manage/orders/{order_id}/status/")
     Call<OrderStatusModel> postChangeOrderStatus(@Path("order_id") long orderId, @Body ObjectNode data);
 
+    @POST("sessions/manage/orders/status/")
+    Call<List<OrderStatusModel>> postChangeOrderStatusList(@Body List<OrderStatusModel> msOrderStatus);
+
     @PUT("sessions/manage/events/{event_id}/done/")
     Call<GenericDetailModel> putSessionEventDone(@Path("event_id") long eventId);
 

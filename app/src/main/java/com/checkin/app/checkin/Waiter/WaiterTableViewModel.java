@@ -182,7 +182,7 @@ public class WaiterTableViewModel extends BaseViewModel {
             WaiterEventModel event = listResource.data.get(pos);
             listResource.data.remove(pos);
             event.setStatus(data.getStatus());
-            event.getOrderedItem().setStatus(data.getStatus().tag);
+            event.getOrderedItem().setStatus(data.getStatus());
             listResource.data.add(0, event);
         }
         mEventData.setValue(Resource.cloneResource(listResource, listResource.data));

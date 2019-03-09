@@ -66,15 +66,15 @@ public class ManagerSessionOrderFragment extends BaseFragment implements Manager
 
     private void setupUi() {
         rvOrdersNew.setLayoutManager(new LinearLayoutManager(getContext(), RecyclerView.VERTICAL, false));
-        mAdapterNew = new ManagerSessionOrderAdapter(this);
+        mAdapterNew = new ManagerSessionOrderAdapter(this, true);
         rvOrdersNew.setAdapter(mAdapterNew);
 
         rvOrdersAccepted.setLayoutManager(new LinearLayoutManager(getContext(), RecyclerView.VERTICAL, false));
-        mAdapterAccepted = new ManagerSessionOrderAdapter(this);
+        mAdapterAccepted = new ManagerSessionOrderAdapter(this, false);
         rvOrdersAccepted.setAdapter(mAdapterAccepted);
 
         rvOrdersDelivered.setLayoutManager(new LinearLayoutManager(getContext(), RecyclerView.VERTICAL, false));
-        mAdapterDeliveredRejected = new ManagerSessionOrderAdapter(this);
+        mAdapterDeliveredRejected = new ManagerSessionOrderAdapter(this, false);
         rvOrdersDelivered.setAdapter(mAdapterDeliveredRejected);
 
         initRefreshScreen(R.id.sr_manager_session_orders);
@@ -161,6 +161,23 @@ public class ManagerSessionOrderFragment extends BaseFragment implements Manager
                 }
             }
         });
+
+        mViewModel.getOrderListStatusData().observe(this, listResource -> {
+            if (listResource == null)
+                return;
+            switch (listResource.status) {
+                case SUCCESS: {
+                    mViewModel.fetchSessionOrders();
+                    nestedSVOrder.scrollTo(0, 0);
+                    break;
+                }
+                case LOADING:
+                    break;
+                default: {
+                    Utils.toast(requireContext(), listResource.message);
+                }
+            }
+        });
     }
 
     @Override
@@ -176,6 +193,17 @@ public class ManagerSessionOrderFragment extends BaseFragment implements Manager
             return true;
         }
         return false;
+    }
+
+
+    @Override
+    public void confirmNewOrders() {
+        mViewModel.confirmOrderStatus();
+    }
+
+    @Override
+    public void onSelectDeselect(SessionOrderedItemModel orderedItem, SessionChatModel.CHAT_STATUS_TYPE statusType) {
+        mViewModel.updateOrderStatusNew(orderedItem.getPk(), statusType.tag);
     }
 
     @Override

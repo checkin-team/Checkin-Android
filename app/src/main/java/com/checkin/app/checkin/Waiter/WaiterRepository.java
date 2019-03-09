@@ -195,6 +195,26 @@ public class WaiterRepository extends BaseRepository {
         }.getAsLiveData();
     }
 
+    public LiveData<Resource<List<OrderStatusModel>>> postOrderListStatus(final List<OrderStatusModel> orders) {
+        return new NetworkBoundResource<List<OrderStatusModel>, List<OrderStatusModel>>() {
+            @Override
+            protected boolean shouldUseLocalDb() {
+                return false;
+            }
+
+            @NonNull
+            @Override
+            protected LiveData<ApiResponse<List<OrderStatusModel>>> createCall() {
+                return new RetrofitLiveData<>(mWebService.postChangeOrderStatusList(orders));
+            }
+
+            @Override
+            protected void saveCallResult(List<OrderStatusModel> data) {
+
+            }
+        }.getAsLiveData();
+    }
+
     public static WaiterRepository getInstance(Application application) {
         if (INSTANCE == null) {
             synchronized (WaiterRepository.class) {
