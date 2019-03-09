@@ -174,11 +174,6 @@ public class WaiterWorkActivity extends BaseAccountActivity implements WaiterTab
         });
     }
 
-    @Override
-    public void onBackPressed() {
-        super.onBackPressed();
-    }
-
     private void fetchData() {
         long shopPk = getIntent().getLongExtra(KEY_SHOP_PK, 0L);
         mViewModel.fetchShopActiveTables(shopPk);

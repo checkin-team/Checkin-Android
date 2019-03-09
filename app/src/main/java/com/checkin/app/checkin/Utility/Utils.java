@@ -21,12 +21,12 @@ import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.ColorDrawable;
 import android.graphics.drawable.Drawable;
 import android.graphics.drawable.LayerDrawable;
+import android.media.ExifInterface;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Environment;
-import android.os.IBinder;
 import android.provider.DocumentsContract;
 import android.provider.MediaStore;
 import android.util.Log;
@@ -63,7 +63,6 @@ import androidx.annotation.DrawableRes;
 import androidx.annotation.NonNull;
 import androidx.annotation.RequiresApi;
 import androidx.annotation.StringRes;
-import androidx.exifinterface.media.ExifInterface;
 
 /**
  * Created by shivanshs9 on 12/5/18.
@@ -305,6 +304,32 @@ public class Utils {
         return String.format(Locale.ENGLISH, "%02d:%02d", hour, min);
     }
 
+    public static void hideSoftKeyboard(Activity activity) {
+        if (activity == null)
+            return;
+        InputMethodManager imm = (InputMethodManager) activity.getSystemService(Context.INPUT_METHOD_SERVICE);
+        View view = activity.getCurrentFocus();
+        if (view != null && imm != null)
+            imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
+    }
+
+    public static void showSoftKeyboard(Activity activity) {
+        if (activity == null)
+            return;
+        InputMethodManager imm = (InputMethodManager) activity.getSystemService(Context.INPUT_METHOD_SERVICE);
+        View view = activity.getCurrentFocus();
+        if (view != null && imm != null)
+            imm.showSoftInput(view, InputMethodManager.SHOW_IMPLICIT);
+    }
+
+    public static void hideSoftKeyboard(Context context) {
+        if (context == null)
+            return;
+        InputMethodManager imm = (InputMethodManager) context.getSystemService(Context.INPUT_METHOD_SERVICE);
+        if (imm != null)
+            imm.toggleSoftInput(InputMethodManager.HIDE_IMPLICIT_ONLY, 0);
+    }
+
     public static void showSoftKeyboard(Context context) {
         if (context == null)
             return;
@@ -529,20 +554,6 @@ public class Utils {
         bitmapDrawable.setBounds(0, 0, widthInPixels, heightInPixels);
 
         return bitmapDrawable;
-    }
-
-    public static void hideSoftKeyboard(Activity activity) {
-        if (activity == null)
-            return;
-        InputMethodManager imm = (InputMethodManager) activity
-                .getSystemService(Activity.INPUT_METHOD_SERVICE);
-        View view = activity.getCurrentFocus();
-        if (view != null && imm != null) {
-            IBinder binder = view.getWindowToken();
-            if (binder != null) {
-                imm.hideSoftInputFromWindow(binder, 0);
-            }
-        }
     }
 
     public static FluentSnackbar.Builder snack(View view, String msg) {

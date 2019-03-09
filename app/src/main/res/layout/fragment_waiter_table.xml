@@ -4,15 +4,16 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:paddingStart="@dimen/spacing_normal"
-    android:paddingTop="@dimen/spacing_normal"
-    android:paddingEnd="@dimen/spacing_normal">
+    android:paddingStart="@dimen/spacing_small"
+    android:paddingTop="@dimen/spacing_small"
+    android:paddingEnd="@dimen/spacing_small">
 
     <LinearLayout
         android:id="@+id/ll_header"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
+        android:padding="@dimen/spacing_extra_small"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
@@ -82,7 +83,6 @@
                         android:src="@drawable/ic_email_grey"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toTopOf="parent" />
-
 
                     <ImageView
                         android:layout_width="@dimen/size_small_icon"

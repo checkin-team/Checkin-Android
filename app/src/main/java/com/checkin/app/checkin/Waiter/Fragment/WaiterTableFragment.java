@@ -6,6 +6,7 @@ import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.util.Patterns;
+import android.view.KeyEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
@@ -130,6 +131,16 @@ public class WaiterTableFragment extends BaseFragment {
         final EditText etEmail = mContactAddDialog.findViewById(R.id.et_contact_email);
         final Button btnDone = mContactAddDialog.findViewById(R.id.btn_contact_done);
 
+        mContactAddDialog.setOnShowListener(dialogInterface -> Utils.showSoftKeyboard(requireContext()));
+        mContactAddDialog.setOnCancelListener(dialogInterface -> Utils.hideSoftKeyboard(requireContext()));
+        mContactAddDialog.setOnKeyListener((dialog, keyCode, event) -> {
+            if (keyCode == KeyEvent.KEYCODE_BACK) {
+                dialog.cancel();
+                return true;
+            }
+            return false;
+        });
+
         btnDone.setOnClickListener(v -> {
             String phone = etPhone.getText().toString();
             String email = etEmail.getText().toString();
@@ -216,7 +227,6 @@ public class WaiterTableFragment extends BaseFragment {
 
     private void showAddContactDialog() {
         mContactAddDialog.show();
-        Utils.showSoftKeyboard(requireContext());
     }
 
     @Override

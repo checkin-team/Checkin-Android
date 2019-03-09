@@ -209,13 +209,6 @@ public class AuthActivity extends AppCompatActivity implements AuthFragmentInter
                 });
     }
 
-    @Override
-    public void onWindowFocusChanged(boolean hasFocus) {
-        super.onWindowFocusChanged(hasFocus);
-        if (hasFocus)
-            Utils.hideSoftKeyboard(this);
-    }
-
     @OnClick(R.id.tv_read_eula)
     public void readEula() {
         eulaDialog.show();
@@ -228,6 +221,7 @@ public class AuthActivity extends AppCompatActivity implements AuthFragmentInter
 
     private boolean canLogin() {
         if (!cbReadEula.isChecked()) {
+            Utils.hideSoftKeyboard(this);
             Utils.errorSnack(this, "Need to accept Terms & Condition.");
             return false;
         }

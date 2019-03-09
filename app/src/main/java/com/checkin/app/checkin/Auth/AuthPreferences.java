@@ -4,9 +4,10 @@ import android.accounts.Account;
 import android.accounts.AccountManager;
 import android.content.Context;
 import android.os.Build;
-import androidx.annotation.Nullable;
 
 import com.checkin.app.checkin.Utility.Constants;
+
+import androidx.annotation.Nullable;
 
 public class AuthPreferences {
     public static String getAuthToken(Context context) {
@@ -30,7 +31,7 @@ public class AuthPreferences {
 
     public static boolean removeCurrentAccount(Context context) {
         Account account = getCurrentAccount(context);
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP_MR1) {
+        if (account != null && Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP_MR1) {
             return AccountManager.get(context).removeAccountExplicitly(account);
         }
         return false;
