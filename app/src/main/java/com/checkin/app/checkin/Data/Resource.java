@@ -1,13 +1,14 @@
 package com.checkin.app.checkin.Data;
 
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 import android.util.Log;
 
 import com.checkin.app.checkin.Utility.NoConnectivityException;
 import com.fasterxml.jackson.databind.JsonNode;
 
 import java.io.IOException;
+
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 
 import static java.net.HttpURLConnection.HTTP_BAD_REQUEST;
 import static java.net.HttpURLConnection.HTTP_FORBIDDEN;
@@ -31,6 +32,7 @@ public class Resource<T> {
         ERROR_INVALID_REQUEST,
         ERROR_FORBIDDEN,
         ERROR_UNAUTHORIZED,
+        ERROR_CANCELLED,
         ERROR_UNKNOWN,
     }
 
