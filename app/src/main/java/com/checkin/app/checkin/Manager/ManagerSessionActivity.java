@@ -111,10 +111,10 @@ public class ManagerSessionActivity extends AppCompatActivity implements Manager
                 case MANAGER_SESSION_MEMBER_CHANGE:
                     ManagerSessionActivity.this.updateMemberCount(message.getRawData().getSessionCustomerCount());
                     break;
-                case MANAGER_SESSION_UPDATE_ORDER:
+               /* case MANAGER_SESSION_UPDATE_ORDER:
                     long orderPk = message.getRawData().getSessionOrderId();
                     ManagerSessionActivity.this.updateOrderStatus(orderPk, message.getRawData().getSessionEventStatus());
-                    break;
+                    break;*/
                 case MANAGER_SESSION_EVENT_UPDATE:
                     long eventPk = message.getObject().getPk();
                     ManagerSessionActivity.this.updateEventStatus(eventPk, message.getRawData().getSessionEventStatus());

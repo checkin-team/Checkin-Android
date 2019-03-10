@@ -13,7 +13,6 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        android:padding="@dimen/spacing_extra_small"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
@@ -34,9 +33,9 @@
                     android:id="@+id/container_waiter_members"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:paddingStart="@dimen/spacing_normal"
+                    android:paddingStart="@dimen/spacing_small"
                     android:paddingTop="@dimen/spacing_extra_small"
-                    android:paddingEnd="@dimen/spacing_normal"
+                    android:paddingEnd="@dimen/spacing_small"
                     android:paddingBottom="@dimen/spacing_extra_small">
 
                     <ImageView
@@ -53,8 +52,8 @@
                         style="@style/GreyTitleStyle"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginStart="@dimen/spacing_small"
-                        android:textSize="@dimen/font_largest"
+                        android:layout_marginStart="@dimen/spacing_extra_small"
+                        android:textSize="@dimen/font_larger"
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintStart_toEndOf="@id/im_waiter_table_members"
                         app:layout_constraintTop_toTopOf="parent"
@@ -126,14 +125,14 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
-                android:layout_marginEnd="@dimen/spacing_normal"
+                android:layout_marginEnd="@dimen/spacing_extra_small"
                 android:background="@drawable/bordered_rectangle_brownish_grey"
                 android:drawableEnd="@drawable/ic_cart_grey"
                 android:drawablePadding="@dimen/spacing_extra_small"
                 android:gravity="center"
                 android:padding="@dimen/spacing_extra_small"
                 android:textSize="@dimen/font_large"
-                tools:text="$ 420" />
+                tools:text="$ 4206.00" />
 
             <Button
                 android:id="@+id/btn_waiter_table_checkout"
@@ -148,7 +147,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_vertical"
-                android:layout_marginStart="@dimen/spacing_normal"
+                android:layout_marginStart="@dimen/spacing_extra_small"
                 android:background="@color/transparent"
                 android:src="@drawable/ic_action_show_menu" />
 
