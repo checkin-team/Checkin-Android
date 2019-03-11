@@ -108,6 +108,22 @@ public class WaiterTableEventFragment extends BaseFragment implements WaiterEven
             } else if (resource.status != Resource.Status.LOADING)
                 Utils.toast(requireContext(), resource.message);
         });
+
+        mViewModel.getOrderListStatusData().observe(this, listResource -> {
+            if (listResource == null)
+                return;
+            switch (listResource.status) {
+                case SUCCESS: {
+                    mViewModel.updateUiOrderListStatus(listResource.data);
+                    break;
+                }
+                case LOADING:
+                    break;
+                default: {
+                    Utils.toast(requireContext(), listResource.message);
+                }
+            }
+        });
     }
 
     @Override
@@ -122,11 +138,13 @@ public class WaiterTableEventFragment extends BaseFragment implements WaiterEven
 
     @Override
     public void onOrderAccept(SessionOrderedItemModel orderedItemModel) {
-        mViewModel.updateOrderStatus(orderedItemModel.getPk(), SessionChatModel.CHAT_STATUS_TYPE.IN_PROGRESS);
+        mViewModel.updateOrderStatusNew(orderedItemModel.getPk(), SessionChatModel.CHAT_STATUS_TYPE.IN_PROGRESS.tag);
+        mViewModel.confirmOrderStatusWaiter();
     }
 
     @Override
     public void onOrderCancel(SessionOrderedItemModel orderedItemModel) {
-        mViewModel.updateOrderStatus(orderedItemModel.getPk(), SessionChatModel.CHAT_STATUS_TYPE.CANCELLED);
+        mViewModel.updateOrderStatusNew(orderedItemModel.getPk(), SessionChatModel.CHAT_STATUS_TYPE.IN_PROGRESS.tag);
+        mViewModel.confirmOrderStatusWaiter();
     }
 }

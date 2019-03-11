@@ -9,6 +9,7 @@ import com.checkin.app.checkin.Misc.GenericDetailModel;
 import com.checkin.app.checkin.Session.ActiveSession.Chat.SessionChatModel.CHAT_STATUS_TYPE;
 import com.checkin.app.checkin.Session.Model.CheckoutStatusModel;
 import com.checkin.app.checkin.Session.Model.SessionBriefModel;
+import com.checkin.app.checkin.Session.Model.SessionOrderedItemModel;
 import com.checkin.app.checkin.Session.SessionRepository;
 import com.checkin.app.checkin.Waiter.Model.OrderStatusModel;
 import com.checkin.app.checkin.Waiter.Model.SessionContactModel;
@@ -21,7 +22,10 @@ import java.util.List;
 import androidx.annotation.NonNull;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MediatorLiveData;
+import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.Transformations;
+
+import static com.checkin.app.checkin.Session.ActiveSession.Chat.SessionChatModel.CHAT_STATUS_TYPE.IN_PROGRESS;
 
 public class WaiterTableViewModel extends BaseViewModel {
     private WaiterRepository mWaiterRepository;
@@ -33,6 +37,9 @@ public class WaiterTableViewModel extends BaseViewModel {
     private MediatorLiveData<Resource<OrderStatusModel>> mOrderStatus = new MediatorLiveData<>();
     private MediatorLiveData<Resource<CheckoutStatusModel>> mCheckoutData = new MediatorLiveData<>();
     private MediatorLiveData<Resource<List<SessionContactModel>>> mContactListData = new MediatorLiveData<>();
+
+    private MutableLiveData<List<OrderStatusModel>> mNewOrderStatus = new MutableLiveData<>();
+    private MediatorLiveData<Resource<List<OrderStatusModel>>> mResultOrderStatus = new MediatorLiveData<>();
 
     private long mSessionPk;
 
@@ -60,11 +67,17 @@ public class WaiterTableViewModel extends BaseViewModel {
             if (input == null || input.data == null)
                 return input;
             List<WaiterEventModel> result = new ArrayList<>();
+            List<OrderStatusModel> listNewOrderStatus = new ArrayList<>();
+
             if (input.status == Resource.Status.SUCCESS) {
                 for (WaiterEventModel eventModel : input.data) {
                     if (eventModel.getStatus() == CHAT_STATUS_TYPE.OPEN || eventModel.getStatus() == CHAT_STATUS_TYPE.IN_PROGRESS)
                         result.add(eventModel);
+
+//                    if (eventModel.getStatus() == CHAT_STATUS_TYPE.OPEN)
+//                        listNewOrderStatus.add(new OrderStatusModel(eventModel.getPk(), IN_PROGRESS));
                 }
+//                mNewOrderStatus.setValue(listNewOrderStatus);
                 return Resource.cloneResource(input, result);
             }
             return input;
@@ -121,6 +134,23 @@ public class WaiterTableViewModel extends BaseViewModel {
 
     public LiveData<Resource<OrderStatusModel>> getOrderStatus() {
         return mOrderStatus;
+    }
+
+    public void updateOrderStatusNew(int orderId, int statusType) {
+        List<OrderStatusModel> listNewOrderStatus = new ArrayList<>();
+        OrderStatusModel item = new OrderStatusModel();
+        item.setPk(orderId);
+        item.setStatus(statusType);
+        listNewOrderStatus.add(item);
+        mNewOrderStatus.setValue(listNewOrderStatus);
+    }
+
+    public void confirmOrderStatusWaiter() {
+        mResultOrderStatus.addSource(mWaiterRepository.postOrderListStatus(mNewOrderStatus.getValue()), mResultOrderStatus::setValue);
+    }
+
+    public LiveData<Resource<List<OrderStatusModel>>> getOrderListStatusData() {
+        return mResultOrderStatus;
     }
 
     public void markEventDone(long eventId) {
@@ -196,6 +226,29 @@ public class WaiterTableViewModel extends BaseViewModel {
             listResource.data.remove(pos);
             event.setStatus(data.getStatus());
             event.getOrderedItem().setStatus(data.getStatus());
+            listResource.data.add(0, event);
+        }
+        mEventData.setValue(Resource.cloneResource(listResource, listResource.data));
+    }
+
+    public void updateUiOrderListStatus(List<OrderStatusModel> data) {
+        Resource<List<WaiterEventModel>> listResource = mEventData.getValue();
+        if (listResource == null || listResource.data == null)
+            return;
+
+        int pos = -1;
+        for (int i = 0, count = listResource.data.size(); i < count; i++) {
+            WaiterEventModel eventModel = listResource.data.get(i);
+            if (eventModel.getOrderedItem() != null && eventModel.getOrderedItem().getPk() == data.get(0).getPk()) {
+                pos = i;
+                break;
+            }
+        }
+        if (pos > -1) {
+            WaiterEventModel event = listResource.data.get(pos);
+            listResource.data.remove(pos);
+            event.setStatus(data.get(0).getStatus());
+            event.getOrderedItem().setStatus(data.get(0).getStatus());
             listResource.data.add(0, event);
         }
         mEventData.setValue(Resource.cloneResource(listResource, listResource.data));

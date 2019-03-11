@@ -4,6 +4,7 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.View;
@@ -87,6 +88,7 @@ public class WaiterWorkActivity extends BaseAccountActivity implements WaiterTab
             BriefModel user;
             SessionOrderedItemModel orderedItemModel;
             long sessionPk;
+            Log.e(TAG, " =========== " + message.getType());
             switch (message.getType()) {
                 case WAITER_SESSION_NEW:
                     String tableName = message.getRawData().getSessionTableName();
