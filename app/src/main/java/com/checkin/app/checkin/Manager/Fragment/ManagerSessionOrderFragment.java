@@ -167,7 +167,7 @@ public class ManagerSessionOrderFragment extends BaseFragment implements Manager
                 return;
             switch (listResource.status) {
                 case SUCCESS: {
-                    mViewModel.fetchSessionOrders();
+                    mViewModel.updateUiOrderListStatus(listResource.data);
                     nestedSVOrder.scrollTo(0, 0);
                     break;
                 }

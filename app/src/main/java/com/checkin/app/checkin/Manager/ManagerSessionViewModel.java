@@ -266,22 +266,20 @@ public class ManagerSessionViewModel extends BaseViewModel {
         mOrdersData.setValue(Resource.cloneResource(listResource, listResource.data));
     }
 
-    public void updateUiOrderListStatus(OrderStatusModel data) {
+    public void updateUiOrderListStatus(List<OrderStatusModel> data) {
         Resource<List<SessionOrderedItemModel>> listResource = mOrdersData.getValue();
         if (listResource == null || listResource.data == null)
             return;
-        int pos = -1;
+
         for (int i = 0, count = listResource.data.size(); i < count; i++) {
-            if (listResource.data.get(i).getPk() == data.getPk()) {
-                pos = i;
-                break;
+            for(int j=0, size = data.size(); j<size; j++ ){
+                if (listResource.data.get(i).getPk() == data.get(j).getPk()) {
+                    SessionOrderedItemModel eventModel = listResource.data.get(i);
+                    eventModel.setStatus(data.get(j).getStatus());
+                    listResource.data.remove(i);
+                    listResource.data.add(j, eventModel);
+                }
             }
-        }
-        if (pos > -1) {
-            SessionOrderedItemModel eventModel = listResource.data.get(pos);
-            eventModel.setStatus(data.getStatus());
-            listResource.data.remove(pos);
-            listResource.data.add(0, eventModel);
         }
         mOrdersData.setValue(Resource.cloneResource(listResource, listResource.data));
     }
