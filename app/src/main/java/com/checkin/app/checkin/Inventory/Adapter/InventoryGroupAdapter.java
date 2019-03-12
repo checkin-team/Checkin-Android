@@ -1,29 +1,28 @@
-package com.checkin.app.checkin.Menu.Adapter;
+package com.checkin.app.checkin.Inventory.Adapter;
 
 import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
 import android.animation.AnimatorSet;
 import android.animation.ValueAnimator;
 import android.os.Build;
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import com.google.android.material.tabs.TabLayout;
-import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentManager;
-import androidx.fragment.app.FragmentStatePagerAdapter;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewConfiguration;
 import android.view.ViewGroup;
+import android.widget.CompoundButton;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.Switch;
 import android.widget.TextView;
 
+import com.checkin.app.checkin.Inventory.Fragment.InventoryItemsFragment;
+import com.checkin.app.checkin.Inventory.InventoryMenuItemInteraction;
+import com.checkin.app.checkin.Inventory.Model.InventoryGroupModel;
+import com.checkin.app.checkin.Inventory.Model.InventoryItemModel;
 import com.checkin.app.checkin.Menu.Fragment.MenuItemsFragment;
 import com.checkin.app.checkin.Menu.MenuItemInteraction;
 import com.checkin.app.checkin.Menu.Model.MenuGroupModel;
@@ -32,40 +31,46 @@ import com.checkin.app.checkin.R;
 import com.checkin.app.checkin.Utility.DynamicSwipableViewPager;
 import com.checkin.app.checkin.Utility.GlideApp;
 import com.checkin.app.checkin.Utility.Utils;
+import com.google.android.material.tabs.TabLayout;
 
 import java.util.ArrayList;
 import java.util.List;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentStatePagerAdapter;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
-/**
- * Created by shivanshs9 on 6/5/18.
- */
+public class InventoryGroupAdapter extends RecyclerView.Adapter<InventoryGroupAdapter.GroupViewHolder> {
+    private static final String TAG = InventoryGroupAdapter.class.getSimpleName();
 
-public class MenuGroupAdapter extends RecyclerView.Adapter<MenuGroupAdapter.GroupViewHolder> {
-    private static final String TAG = MenuGroupAdapter.class.getSimpleName();
-
-    private List<MenuGroupModel> mGroupList;
+    private List<InventoryGroupModel> mGroupList;
     private GroupViewHolder mPrevExpandedViewHolder;
     private RecyclerView mRecyclerView;
     private FragmentManager mFragmentManager;
+    private GroupInteraction mGroupListener;
 
     @Nullable
-    private MenuItemInteraction mListener;
+    private InventoryMenuItemInteraction mListener;
     private boolean mIsSessionActive = true;
 
-    public MenuGroupAdapter(List<MenuGroupModel> groupsList, FragmentManager fragmentManager, @Nullable MenuItemInteraction listener) {
+    public InventoryGroupAdapter(List<InventoryGroupModel> groupsList, FragmentManager fragmentManager, @Nullable InventoryMenuItemInteraction listener, GroupInteraction groupListener) {
         this.mGroupList = groupsList;
         this.mFragmentManager = fragmentManager;
         this.mListener = listener;
+        this.mGroupListener = groupListener;
     }
 
     public void setSessionActive(boolean value) {
         mIsSessionActive = value;
     }
 
-    public void setGroupList(List<MenuGroupModel> mGroupList) {
+    public void setGroupList(List<InventoryGroupModel> mGroupList) {
         this.mGroupList = mGroupList;
         notifyDataSetChanged();
     }
@@ -90,6 +95,7 @@ public class MenuGroupAdapter extends RecyclerView.Adapter<MenuGroupAdapter.Grou
             @Override
             public boolean onInterceptTouchEvent(RecyclerView rv, MotionEvent e) {
                 View v = rv.findChildViewUnder(e.getX(), e.getY());
+
                 if (v == null)
                     return false;
                 GroupViewHolder holder = ((GroupViewHolder) rv.findContainingViewHolder(v));
@@ -129,7 +135,7 @@ public class MenuGroupAdapter extends RecyclerView.Adapter<MenuGroupAdapter.Grou
     public int getCategoryPosition(@NonNull String category) {
         int i = 0;
         if (mGroupList != null) {
-            for (MenuGroupModel groupModel : mGroupList) {
+            for (InventoryGroupModel groupModel : mGroupList) {
                 if (category.contentEquals(groupModel.getCategory()))
                     break;
                 i++;
@@ -170,14 +176,21 @@ public class MenuGroupAdapter extends RecyclerView.Adapter<MenuGroupAdapter.Grou
     }
 
     public class GroupViewHolder extends RecyclerView.ViewHolder {
-        @BindView(R.id.tv_menu_group_name) TextView tvGroupName;
-        @BindView(R.id.im_menu_group_icon) ImageView imGroupIcon;
+        @BindView(R.id.tv_menu_group_name)
+        TextView tvGroupName;
+        @BindView(R.id.im_menu_group_icon)
+        ImageView imGroupIcon;
 
-        @BindView(R.id.tabs_menu_sub_groups) TabLayout vTabs;
-        @BindView(R.id.pager_menu_items) DynamicSwipableViewPager vPager;
-        @BindView(R.id.container_menu_sub_groups) ViewGroup vSubGroupWrapper;
+        @BindView(R.id.tabs_menu_sub_groups)
+        TabLayout vTabs;
+        @BindView(R.id.pager_menu_items)
+        DynamicSwipableViewPager vPager;
+        @BindView(R.id.container_menu_sub_groups)
+        ViewGroup vSubGroupWrapper;
+        @BindView(R.id.switch_menu_group_availability)
+        Switch switchGroupAvailability;
 
-        private MenuGroupModel mMenuGroup;
+        private InventoryGroupModel mMenuGroup;
 
         protected boolean isExpanded = false;
 
@@ -203,11 +216,17 @@ public class MenuGroupAdapter extends RecyclerView.Adapter<MenuGroupAdapter.Grou
                     expandView(this);
                 }
             });
+
+            switchGroupAvailability.setOnClickListener(v -> {
+
+                mGroupListener.onGroupAvailability(mMenuGroup.getItems(), switchGroupAvailability.isChecked());
+            });
         }
 
-        void bindData(final MenuGroupModel menuGroup) {
+        void bindData(final InventoryGroupModel menuGroup) {
             mMenuGroup = menuGroup;
 
+            switchGroupAvailability.setVisibility(View.VISIBLE);
             tvGroupName.setText(menuGroup.getName());
             GlideApp.with(itemView).load(menuGroup.getIcon()).into(imGroupIcon);
             SubGroupPagerAdapter pagerAdapter = new SubGroupPagerAdapter(menuGroup);
@@ -218,6 +237,7 @@ public class MenuGroupAdapter extends RecyclerView.Adapter<MenuGroupAdapter.Grou
                 vTabs.setVisibility(View.GONE);
             }
             vPager.setAdapter(pagerAdapter);
+            switchGroupAvailability.setChecked(menuGroup.groupIsAvailable());
         }
 
         void showMenu(View view) {
@@ -267,9 +287,9 @@ public class MenuGroupAdapter extends RecyclerView.Adapter<MenuGroupAdapter.Grou
     }
 
     public class SubGroupPagerAdapter extends FragmentStatePagerAdapter {
-        private List<List<MenuItemModel>> mListItems;
+        private List<List<InventoryItemModel>> mListItems;
 
-        SubGroupPagerAdapter(MenuGroupModel menuGroup) {
+        SubGroupPagerAdapter(InventoryGroupModel menuGroup) {
             super(mFragmentManager);
             mListItems = new ArrayList<>();
             if (menuGroup.hasSubGroups()) {
@@ -278,11 +298,19 @@ public class MenuGroupAdapter extends RecyclerView.Adapter<MenuGroupAdapter.Grou
             } else {
                 mListItems.add(menuGroup.getItems());
             }
+
+            /*if(menuGroup.hasUnavailable()){
+                InventoryGroupModel item = new InventoryGroupModel();
+                item.setName("Unavailable Items");
+                mGroupList.add(0,item);
+//                mListItems.add(0,menuGroup.getUnavailableItems());
+            }*/
+
         }
 
         @Override
         public Fragment getItem(int position) {
-            return MenuItemsFragment.newInstance(mListItems.get(position), mListener, mIsSessionActive);
+            return InventoryItemsFragment.newInstance(mListItems.get(position), mListener, mIsSessionActive);
         }
 
         @Override
@@ -301,5 +329,9 @@ public class MenuGroupAdapter extends RecyclerView.Adapter<MenuGroupAdapter.Grou
             }
             return "";
         }
+    }
+
+    public interface GroupInteraction {
+        void onGroupAvailability(List<InventoryItemModel> items, boolean isChecked);
     }
 }

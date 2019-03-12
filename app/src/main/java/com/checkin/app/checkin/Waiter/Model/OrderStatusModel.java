@@ -10,6 +10,7 @@ public class OrderStatusModel {
     private long pk;
     private SessionChatModel.CHAT_STATUS_TYPE status;
     private String detail;
+    private boolean isAvailable;
 
     public OrderStatusModel() {
     }
@@ -28,7 +29,7 @@ public class OrderStatusModel {
         return status.tag;
     }
 
-    public void setPk(int pk) {
+    public void setPk(long pk) {
         this.pk = pk;
     }
 
@@ -44,5 +45,14 @@ public class OrderStatusModel {
 
     public String getDetail() {
         return detail;
+    }
+
+    public boolean isAvailable() {
+        return isAvailable;
+    }
+
+    @JsonProperty("is_available")
+    public void setAvailable(boolean available) {
+        isAvailable = available;
     }
 }

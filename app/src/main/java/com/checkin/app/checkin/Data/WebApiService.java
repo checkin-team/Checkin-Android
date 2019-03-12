@@ -2,6 +2,8 @@ package com.checkin.app.checkin.Data;
 
 import com.checkin.app.checkin.Account.AccountModel;
 import com.checkin.app.checkin.Auth.AuthResultModel;
+import com.checkin.app.checkin.Inventory.Model.InventoryAvailabilityModel;
+import com.checkin.app.checkin.Inventory.Model.InventoryModel;
 import com.checkin.app.checkin.Manager.Model.ManagerSessionEventModel;
 import com.checkin.app.checkin.Manager.Model.ManagerSessionInvoiceModel;
 import com.checkin.app.checkin.Manager.Model.ManagerStatsModel;
@@ -258,6 +260,12 @@ public interface WebApiService {
 
     @POST("sessions/{session_id}/manage/order/")
     Call<ArrayNode> postSessionManagerOrders(@Path("session_id") long sessionId, @Body List<OrderedItemModel> orderedItemModels);
+
+    @GET("menus/restaurants/{restaurant_id}/manage/available/")
+    Call<InventoryModel> getAvailableRestaurantMenu(@Path("restaurant_id") long restaurantId);
+
+    @POST("menus/restaurants/{restaurant_id}/manage/items/")
+    Call<List<InventoryAvailabilityModel>> postChangeMenuAvailability(@Path("restaurant_id") long restaurantId, @Body List<InventoryAvailabilityModel> msOrderStatus);
 
     // endregion
 

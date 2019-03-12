@@ -1,0 +1,53 @@
+package com.checkin.app.checkin.Inventory.Model;
+
+import com.fasterxml.jackson.annotation.JsonProperty;
+
+public class InventoryItemCustomizationFieldModel {
+
+    @JsonProperty("pk")
+    private long pk;
+
+    @JsonProperty("name")
+    private String name;
+
+    @JsonProperty("is_vegetarian")
+    private boolean isVegetarian;
+
+    @JsonProperty("cost")
+    private double cost;
+
+    public InventoryItemCustomizationFieldModel() {
+    }
+
+    public long getPk() {
+        return pk;
+    }
+
+    public void setPk(long pk) {
+        this.pk = pk;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public boolean isVegetarian() {
+        return isVegetarian;
+    }
+
+    public void setVegetarian(boolean vegetarian) {
+        isVegetarian = vegetarian;
+    }
+
+    public double getCost() {
+        return cost;
+    }
+
+    public void setCost(double cost) {
+        this.cost = cost;
+    }
+}

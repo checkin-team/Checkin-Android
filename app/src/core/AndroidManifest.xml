@@ -41,6 +41,11 @@
             android:theme="@style/SessionTheme"
             android:windowSoftInputMode="adjustPan" />
         <activity
+            android:name=".Inventory.InventoryActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/SessionTheme"
+            android:windowSoftInputMode="adjustPan" />
+        <activity
             android:name=".Waiter.WaiterWorkActivity"
             android:label="Waiter"
             android:screenOrientation="portrait"

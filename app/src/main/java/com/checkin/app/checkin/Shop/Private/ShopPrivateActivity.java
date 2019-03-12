@@ -1,11 +1,13 @@
 package com.checkin.app.checkin.Shop.Private;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.widget.ImageView;
 
 import com.checkin.app.checkin.Account.AccountModel;
 import com.checkin.app.checkin.Account.BaseAccountActivity;
 import com.checkin.app.checkin.Data.Resource;
+import com.checkin.app.checkin.Inventory.InventoryActivity;
 import com.checkin.app.checkin.Menu.SessionMenuActivity;
 import com.checkin.app.checkin.Misc.BaseFragmentAdapterBottomNav;
 import com.checkin.app.checkin.Misc.BlankFragment;
@@ -115,7 +117,9 @@ public class ShopPrivateActivity extends BaseAccountActivity {
     }
 
     private void launchMenu() {
-        SessionMenuActivity.withoutSession(getApplicationContext(), mViewModel.getShopPk());
+        Intent intent = new Intent(this, InventoryActivity.class);
+        intent.putExtra(InventoryActivity.KEY_INVENTORY_RESTAURANT_PK,mViewModel.getShopPk());
+        startActivity(intent);
     }
 
     private class ShopFragmentAdapter extends BaseFragmentAdapterBottomNav {
