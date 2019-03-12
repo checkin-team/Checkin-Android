@@ -309,4 +309,14 @@ public class ManagerSessionActivity extends AppCompatActivity implements Manager
                 break;
         }
     }
+
+    @Override
+    public void onGenerateBillClick() {
+        if (mSessionData == null) return;
+        Intent intent = new Intent(this, ManagerSessionInvoiceActivity.class);
+        intent.putExtra(ManagerSessionInvoiceActivity.TABLE_NAME, mSessionData.getTable())
+                .putExtra(ManagerSessionInvoiceActivity.KEY_SESSION, mViewModel.getSessionPk())
+                .putExtra(ManagerSessionInvoiceActivity.IS_REQUESTED_CHECKOUT, mSessionData.isRequestedCheckout());
+        startActivity(intent);
+    }
 }
