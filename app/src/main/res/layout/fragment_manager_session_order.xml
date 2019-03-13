@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/white"
@@ -10,83 +10,132 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-        <androidx.core.widget.NestedScrollView
-            android:id="@+id/nested_sv_ms_order"
+        <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:fillViewport="true"
-            android:scrollbars="none">
+            android:layout_height="match_parent">
 
-            <LinearLayout
+            <androidx.core.widget.NestedScrollView
+                android:id="@+id/nested_sv_ms_order"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="vertical">
+                android:fillViewport="true"
+                android:scrollbars="none">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:id="@+id/title_ms_new"
+                        style="@style/RedSmallTextStyle"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:background="@color/pinkish_grey"
+                        android:gravity="center"
+                        android:padding="@dimen/spacing_small"
+                        android:text="@string/label_new"
+                        android:textAllCaps="true"
+                        android:visibility="gone" />
+
+                    <androidx.recyclerview.widget.RecyclerView
+                        android:id="@+id/rv_ms_orders_new"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="@dimen/spacing_small"
+                        android:background="@color/lightest_grey"
+                        android:nestedScrollingEnabled="false"
+                        android:paddingBottom="@dimen/spacing_small"
+                        android:visibility="gone" />
+
+                    <TextView
+                        android:id="@+id/title_ms_in_progress"
+                        style="@style/RedSmallTextStyle"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:background="@color/pinkish_grey"
+                        android:gravity="center"
+                        android:padding="@dimen/spacing_small"
+                        android:text="@string/status_order_in_progress"
+                        android:textAllCaps="true"
+                        android:visibility="gone" />
+
+                    <androidx.recyclerview.widget.RecyclerView
+                        android:id="@+id/rv_ms_orders_accepted"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="@dimen/spacing_small"
+                        android:nestedScrollingEnabled="false"
+                        android:paddingBottom="@dimen/spacing_normal"
+                        android:visibility="gone" />
+
+                    <TextView
+                        android:id="@+id/title_ms_delivered"
+                        style="@style/RedSmallTextStyle"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:background="@color/pinkish_grey"
+                        android:gravity="center"
+                        android:padding="@dimen/spacing_small"
+                        android:text="Delivered / Rejected"
+                        android:textAllCaps="true"
+                        android:visibility="gone" />
+
+                    <androidx.recyclerview.widget.RecyclerView
+                        android:id="@+id/rv_ms_orders_delivered"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="@dimen/spacing_small"
+                        android:nestedScrollingEnabled="false"
+                        android:paddingBottom="@dimen/spacing_small"
+                        android:visibility="gone" />
+
+                </LinearLayout>
+
+            </androidx.core.widget.NestedScrollView>
+
+            <RelativeLayout
+                android:id="@+id/rl_container_generate_bill"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_alignParentBottom="true"
+                android:background="@color/brownish_grey"
+                android:paddingTop="@dimen/spacing_small"
+                android:paddingBottom="@dimen/spacing_small"
+                android:paddingStart="@dimen/spacing_large"
+                android:paddingEnd="@dimen/spacing_large">
+
+                <ImageView
+                    android:id="@+id/iv_cash"
+                    android:layout_width="@dimen/size_small_icon"
+                    android:layout_height="@dimen/size_small_icon"
+                    android:layout_centerVertical="true"
+                    android:contentDescription="@null"
+                    android:src="@drawable/ic_cash_white" />
 
                 <TextView
-                    android:id="@+id/title_ms_new"
-                    style="@style/RedSmallTextStyle"
-                    android:layout_width="match_parent"
+                    android:textSize="@dimen/font_normal"
+                    style="@style/WhiteTitleStyle"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:background="@color/pinkish_grey"
-                    android:gravity="center"
-                    android:padding="@dimen/spacing_small"
-                    android:text="@string/label_new"
-                    android:textAllCaps="true"
-                    android:visibility="gone" />
+                    android:layout_centerVertical="true"
+                    android:layout_marginStart="@dimen/spacing_large"
+                    android:layout_toEndOf="@+id/iv_cash"
+                    android:text="Generate Bill" />
 
-                <androidx.recyclerview.widget.RecyclerView
-                    android:id="@+id/rv_ms_orders_new"
-                    android:layout_width="match_parent"
+                <ImageView
+                    android:id="@+id/iv_generate_bill"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_margin="@dimen/spacing_small"
-                    android:background="@color/lightest_grey"
-                    android:nestedScrollingEnabled="false"
-                    android:paddingBottom="@dimen/spacing_small"
-                    android:visibility="gone" />
+                    android:layout_alignParentEnd="true"
+                    android:layout_centerVertical="true"
+                    android:background="@drawable/ic_swipe_up"
+                    android:contentDescription="@null" />
 
-                <TextView
-                    android:id="@+id/title_ms_in_progress"
-                    style="@style/RedSmallTextStyle"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:background="@color/pinkish_grey"
-                    android:gravity="center"
-                    android:padding="@dimen/spacing_small"
-                    android:text="@string/status_order_in_progress"
-                    android:textAllCaps="true"
-                    android:visibility="gone" />
+            </RelativeLayout>
 
-                <androidx.recyclerview.widget.RecyclerView
-                    android:id="@+id/rv_ms_orders_accepted"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_margin="@dimen/spacing_small"
-                    android:nestedScrollingEnabled="false"
-                    android:paddingBottom="@dimen/spacing_normal"
-                    android:visibility="gone" />
+        </RelativeLayout>
 
-                <TextView
-                    android:id="@+id/title_ms_delivered"
-                    style="@style/RedSmallTextStyle"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:background="@color/pinkish_grey"
-                    android:gravity="center"
-                    android:padding="@dimen/spacing_small"
-                    android:text="Delivered / Rejected"
-                    android:textAllCaps="true"
-                    android:visibility="gone" />
-
-                <androidx.recyclerview.widget.RecyclerView
-                    android:id="@+id/rv_ms_orders_delivered"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_margin="@dimen/spacing_small"
-                    android:nestedScrollingEnabled="false"
-                    android:paddingBottom="@dimen/spacing_small"
-                    android:visibility="gone" />
-
-            </LinearLayout>
-        </androidx.core.widget.NestedScrollView>
     </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
-</LinearLayout>
+
+</RelativeLayout>

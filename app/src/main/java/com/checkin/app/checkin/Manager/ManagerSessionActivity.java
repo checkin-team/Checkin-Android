@@ -10,6 +10,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.checkin.app.checkin.Data.Message.MessageModel;
+import com.checkin.app.checkin.Data.Message.MessageObjectModel;
 import com.checkin.app.checkin.Data.Message.MessageObjectModel.MESSAGE_OBJECT_TYPE;
 import com.checkin.app.checkin.Data.Message.MessageUtils;
 import com.checkin.app.checkin.Manager.Fragment.ManagerSessionEventFragment;
@@ -81,12 +82,8 @@ public class ManagerSessionActivity extends AppCompatActivity implements Manager
             MessageModel message = MessageUtils.parseMessage(intent);
             if (message == null) return;
 
-            long sessionPk = 0;
-            if (message.getTarget() != null && message.getTarget().getType() == MESSAGE_OBJECT_TYPE.SESSION)
-                sessionPk = message.getTarget().getPk();
-            else if (message.getObject() != null && message.getObject().getType() == MESSAGE_OBJECT_TYPE.SESSION)
-                sessionPk = message.getObject().getPk();
-            if (mViewModel.getSessionPk() != sessionPk)
+            MessageObjectModel session = message.getSessionDetail();
+            if (session != null && session.getPk() != mViewModel.getSessionPk())
                 return;
 
             BriefModel user;
@@ -308,5 +305,15 @@ public class ManagerSessionActivity extends AppCompatActivity implements Manager
                 setupOrdersListing();
                 break;
         }
+    }
+
+    @Override
+    public void onGenerateBillClick() {
+        if (mSessionData == null) return;
+        Intent intent = new Intent(this, ManagerSessionInvoiceActivity.class);
+        intent.putExtra(ManagerSessionInvoiceActivity.TABLE_NAME, mSessionData.getTable())
+                .putExtra(ManagerSessionInvoiceActivity.KEY_SESSION, mViewModel.getSessionPk())
+                .putExtra(ManagerSessionInvoiceActivity.IS_REQUESTED_CHECKOUT, mSessionData.isRequestedCheckout());
+        startActivity(intent);
     }
 }

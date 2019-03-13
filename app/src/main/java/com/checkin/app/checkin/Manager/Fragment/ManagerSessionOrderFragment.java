@@ -4,6 +4,8 @@ import android.annotation.SuppressLint;
 import android.os.Bundle;
 import android.view.View;
 import android.view.animation.AnimationUtils;
+import android.widget.ImageView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.checkin.app.checkin.Manager.Adapter.ManagerSessionOrderAdapter;
@@ -20,7 +22,9 @@ import androidx.core.widget.NestedScrollView;
 import androidx.lifecycle.ViewModelProviders;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 import butterknife.BindView;
+import butterknife.OnClick;
 
 public class ManagerSessionOrderFragment extends BaseFragment implements ManagerSessionOrderAdapter.SessionOrdersInteraction {
     @BindView(R.id.rv_ms_orders_accepted)
@@ -37,6 +41,14 @@ public class ManagerSessionOrderFragment extends BaseFragment implements Manager
     TextView titleDeliveredHeader;
     @BindView(R.id.nested_sv_ms_order)
     NestedScrollView nestedSVOrder;
+    @BindView(R.id.sr_manager_session_orders)
+    SwipeRefreshLayout srManagerSessionOrders;
+    @BindView(R.id.iv_cash)
+    ImageView ivCash;
+    @BindView(R.id.iv_generate_bill)
+    ImageView ivGenerateBill;
+    @BindView(R.id.rl_container_generate_bill)
+    RelativeLayout rlContainerGenerateBill;
 
     private ManagerOrdersInteraction mListener;
 
@@ -211,7 +223,20 @@ public class ManagerSessionOrderFragment extends BaseFragment implements Manager
         mViewModel.updateOrderStatus(orderedItem.getPk(), statusType.tag);
     }
 
+    @OnClick({R.id.iv_generate_bill, R.id.rl_container_generate_bill})
+    public void onViewClicked(View view) {
+        switch (view.getId()) {
+            case R.id.iv_generate_bill:
+                mListener.onGenerateBillClick();
+                break;
+            case R.id.rl_container_generate_bill:
+                mListener.onGenerateBillClick();
+                break;
+        }
+    }
+
     public interface ManagerOrdersInteraction {
+        void onGenerateBillClick();
     }
 }
 

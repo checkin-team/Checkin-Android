@@ -65,6 +65,10 @@ public class ManagerTablesFragment extends BaseFragment implements ManagerWorkTa
             MessageModel message = MessageUtils.parseMessage(intent);
             if (message == null) return;
 
+            MessageObjectModel shop = message.getShopDetail();
+            if (shop != null && shop.getPk() != mViewModel.getShopPk())
+                return;
+
             EventBriefModel eventModel;
             BriefModel user;
             switch (message.getType()) {
