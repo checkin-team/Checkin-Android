@@ -92,6 +92,7 @@
                     app:layout_constraintTop_toTopOf="@id/ed_ms_invoice_discount" />
 
                 <include
+                    android:id="@+id/incl_discount_dotted_view"
                     layout="@layout/incl_dotted_view"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -134,6 +135,83 @@
                     app:layout_constraintEnd_toEndOf="@id/ed_ms_invoice_discount"
                     app:layout_constraintStart_toStartOf="@id/ed_ms_invoice_discount"
                     app:layout_constraintTop_toBottomOf="@id/tv_ms_invoice_change" />
+
+                <TextView
+                    style="@style/GreyHeadingStyle"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="Send Bill"
+                    android:visibility="visible"
+                    app:layout_constraintBottom_toBottomOf="@+id/ed_ms_invoice_contact"
+                    app:layout_constraintStart_toStartOf="parent" />
+
+                <EditText
+                    android:layout_marginTop="@dimen/spacing_small"
+                    android:id="@+id/ed_ms_invoice_contact"
+                    style="@style/GreyTextStyle"
+                    android:layout_width="@dimen/button_width_wide"
+                    android:layout_height="@dimen/height_input_large"
+                    android:layout_marginEnd="@dimen/spacing_large"
+                    android:background="@drawable/bordered_card_white"
+                    android:enabled="false"
+                    android:visibility="visible"
+                    android:importantForAutofill="no"
+                    android:inputType="text"
+                    android:paddingStart="@dimen/spacing_normal"
+                    android:paddingTop="@dimen/spacing_extra_small"
+                    android:paddingEnd="@dimen/spacing_normal"
+                    android:hint="Phone/Email"
+                    android:paddingBottom="@dimen/spacing_extra_small"
+                    android:textSize="@dimen/font_heading"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/btn_ms_invoice_save_change"
+                    tools:ignore="LabelFor,UnusedAttribute" />
+
+                <include
+                    android:id="@+id/incl_contact_dotted_view"
+                    layout="@layout/incl_dotted_view"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/ed_ms_invoice_contact"
+                    android:layout_gravity="end"
+                    android:layout_marginTop="@dimen/spacing_extra_small"
+                    app:layout_constraintEnd_toEndOf="@id/ed_ms_invoice_contact"
+                    app:layout_constraintStart_toStartOf="@id/ed_ms_invoice_contact"
+                    app:layout_constraintTop_toBottomOf="@id/ed_ms_invoice_contact" />
+
+                <TextView
+                    android:id="@+id/tv_ms_invoice_contact_change"
+                    style="@style/RedSmallTextStyle"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="end"
+                    android:layout_marginTop="@dimen/spacing_normal"
+                    android:text="@string/change"
+                    android:visibility="visible"
+                    app:layout_constraintEnd_toEndOf="@id/ed_ms_invoice_contact"
+                    app:layout_constraintStart_toStartOf="@id/ed_ms_invoice_contact"
+                    app:layout_constraintTop_toBottomOf="@id/ed_ms_invoice_contact" />
+
+                <Button
+                    android:id="@+id/btn_ms_invoice_contact_save_change"
+                    style="@style/ButtonRedAlertAction"
+                    android:layout_width="wrap_content"
+                    android:layout_height="@dimen/button_height_short"
+                    android:layout_marginTop="@dimen/spacing_normal"
+                    android:layout_marginBottom="@dimen/spacing_small"
+                    android:gravity="center"
+                    android:paddingStart="@dimen/spacing_small"
+                    android:paddingTop="@dimen/spacing_extra_small"
+                    android:paddingEnd="@dimen/spacing_small"
+                    android:paddingBottom="@dimen/spacing_extra_small"
+                    android:text="Save Changes"
+                    android:textColor="@color/white"
+                    android:textSize="@dimen/font_extra_small"
+                    android:visibility="gone"
+                    app:layout_constraintEnd_toEndOf="@id/ed_ms_invoice_contact"
+                    app:layout_constraintStart_toStartOf="@id/ed_ms_invoice_contact"
+                    app:layout_constraintTop_toBottomOf="@id/tv_ms_invoice_contact_change" />
 
             </androidx.constraintlayout.widget.ConstraintLayout>
 

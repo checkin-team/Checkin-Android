@@ -14,6 +14,7 @@ import com.checkin.app.checkin.Session.Model.SessionBriefModel;
 import com.checkin.app.checkin.Session.Model.SessionOrderedItemModel;
 import com.checkin.app.checkin.Session.SessionRepository;
 import com.checkin.app.checkin.Waiter.Model.OrderStatusModel;
+import com.checkin.app.checkin.Waiter.Model.SessionContactModel;
 import com.checkin.app.checkin.Waiter.WaiterRepository;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 
@@ -45,6 +46,7 @@ public class ManagerSessionViewModel extends BaseViewModel {
     private MediatorLiveData<Resource<GenericDetailModel>> mDetailData = new MediatorLiveData<>();
     private MediatorLiveData<Resource<OrderStatusModel>> mOrderStatusData = new MediatorLiveData<>();
     private MediatorLiveData<Resource<CheckoutStatusModel>> mCheckoutData = new MediatorLiveData<>();
+    private MediatorLiveData<Resource<List<SessionContactModel>>> mContactListData = new MediatorLiveData<>();
 
     private MutableLiveData<List<OrderStatusModel>> mNewOrderStatus = new MutableLiveData<>();
     private MediatorLiveData<Resource<List<OrderStatusModel>>> mResultOrderStatus = new MediatorLiveData<>();
@@ -354,5 +356,22 @@ public class ManagerSessionViewModel extends BaseViewModel {
 
     public void updateSessionData(SessionBriefModel data) {
         mBriefData.setValue(Resource.success(data));
+    }
+
+    public void postSessionContact(String email, String phone) {
+        SessionContactModel sessionContactModel = new SessionContactModel();
+        if (email != null)
+            sessionContactModel.setEmail(email);
+        if (phone != null)
+            sessionContactModel.setPhone(phone);
+        mData.addSource(mWaiterRepository.postSessionContact(mSessionPk, sessionContactModel), mData::setValue);
+    }
+
+    public void fetchSessionContacts() {
+        mContactListData.addSource(mWaiterRepository.getSessionContacts(mSessionPk), mContactListData::setValue);
+    }
+
+    public LiveData<Resource<List<SessionContactModel>>> getSessionContactListData() {
+        return mContactListData;
     }
 }

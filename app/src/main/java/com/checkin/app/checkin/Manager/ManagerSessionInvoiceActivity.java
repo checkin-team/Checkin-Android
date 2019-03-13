@@ -3,6 +3,8 @@ package com.checkin.app.checkin.Manager;
 import android.app.AlertDialog;
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.TextUtils;
+import android.util.Patterns;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -16,6 +18,7 @@ import com.checkin.app.checkin.R;
 import com.checkin.app.checkin.Session.ActiveSession.InvoiceOrdersAdapter;
 import com.checkin.app.checkin.Session.Model.SessionBillModel;
 import com.checkin.app.checkin.Utility.Utils;
+import com.checkin.app.checkin.Waiter.Model.SessionContactModel;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.ActionBar;
@@ -49,6 +52,12 @@ public class ManagerSessionInvoiceActivity extends AppCompatActivity {
     TextView tvInvoiceDiscount;
     @BindView(R.id.ll_request_checkout_session_invoice)
     LinearLayout llRequestedCheckoutView;
+    @BindView(R.id.ed_ms_invoice_contact)
+    EditText edMsInvoiceContact;
+    @BindView(R.id.tv_ms_invoice_contact_change)
+    TextView tvMsInvoiceContactChange;
+    @BindView(R.id.btn_ms_invoice_contact_save_change)
+    Button btnMsInvoiceContactSaveChange;
 
     private ManagerSessionViewModel mViewModel;
     private InvoiceOrdersAdapter mAdapter;
@@ -110,7 +119,41 @@ public class ManagerSessionInvoiceActivity extends AppCompatActivity {
                 Utils.toast(this, input.message);
             }
         });
+
+        mViewModel.fetchSessionContacts();
+
+        mViewModel.getSessionContactListData().observe(this, input -> {
+            if (input == null)
+                return;
+            if (input.status == Resource.Status.SUCCESS && input.data != null) {
+                if (input.data.size() > 0) {
+                    setupContactData(input.data.get(input.data.size() - 1));
+                }
+            } else if (input.status != Resource.Status.LOADING && input.message != null)
+                Utils.toast(this, input.message);
+        });
+
+        mViewModel.getObservableData().observe(this, input -> {
+            if (input == null)
+                return;
+            if (input.status == Resource.Status.SUCCESS && input.data != null){
+                Utils.toast(this,"Contact updated successfully.");
+            }else if (input.status != Resource.Status.LOADING && input.message != null)
+                Utils.toast(this, input.message);
+        });
+
         mBillHolder = new BillHolder(findViewById(android.R.id.content));
+    }
+
+    private void setupContactData(SessionContactModel sessionContactModel) {
+        String email = sessionContactModel.getEmail();
+        String phone = sessionContactModel.getPhone();
+
+        if (email != null)
+            edMsInvoiceContact.setText(email);
+        else
+            edMsInvoiceContact.setText(phone);
+
     }
 
     @Override
@@ -119,7 +162,7 @@ public class ManagerSessionInvoiceActivity extends AppCompatActivity {
         return true;
     }
 
-    @OnClick({R.id.tv_ms_invoice_change, R.id.btn_ms_invoice_save_change, R.id.btn_ms_invoice_collect_cash})
+    @OnClick({R.id.tv_ms_invoice_change, R.id.btn_ms_invoice_save_change, R.id.btn_ms_invoice_collect_cash,R.id.tv_ms_invoice_contact_change, R.id.btn_ms_invoice_contact_save_change})
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.tv_ms_invoice_change:
@@ -132,7 +175,39 @@ public class ManagerSessionInvoiceActivity extends AppCompatActivity {
             case R.id.btn_ms_invoice_collect_cash:
                 alertDialogForCloseSession();
                 break;
+            case R.id.tv_ms_invoice_contact_change:
+                setUpContactUi(true, View.GONE, View.VISIBLE);
+                break;
+            case R.id.btn_ms_invoice_contact_save_change:
+                setUpContactUi(false, View.VISIBLE, View.GONE);
+                saveContact();
+                break;
         }
+    }
+
+    private void saveContact() {
+        String contact = edMsInvoiceContact.getText().toString();
+
+        if (TextUtils.isEmpty(contact)) {
+            Utils.toast(this, "Please enter at least phone number or email.");
+            return;
+        }if (Patterns.PHONE.matcher(contact).matches())
+            if (!TextUtils.isEmpty(contact) && !Patterns.PHONE.matcher(contact).matches())
+                Utils.toast(this, "Please enter valid phone number.");
+            else
+                mViewModel.postSessionContact(null, contact);
+        else{
+            if (!TextUtils.isEmpty(contact) && !Patterns.EMAIL_ADDRESS.matcher(contact).matches())
+                Utils.toast(this, "Please enter valid email.");
+            else
+                mViewModel.postSessionContact(contact, null);
+        }
+    }
+
+    private void setUpContactUi(boolean enableOrDisabled, int visibilityChange, int visibilitySave) {
+        edMsInvoiceContact.setEnabled(enableOrDisabled);
+        tvMsInvoiceContactChange.setVisibility(visibilityChange);
+        btnMsInvoiceContactSaveChange.setVisibility(visibilitySave);
     }
 
     private void updateRequestCheckoutStatus(boolean isRequestedCheckout) {
