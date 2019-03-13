@@ -176,10 +176,10 @@ public class ManagerSessionInvoiceActivity extends AppCompatActivity {
                 alertDialogForCloseSession();
                 break;
             case R.id.tv_ms_invoice_contact_change:
-                setUpContactUi(true, View.GONE, View.VISIBLE);
+                setUpContactUi(true,  R.drawable.bordered_card_white, View.GONE, View.VISIBLE);
                 break;
             case R.id.btn_ms_invoice_contact_save_change:
-                setUpContactUi(false, View.VISIBLE, View.GONE);
+                setUpContactUi(false,  R.drawable.bordered_text_light_grey, View.VISIBLE, View.GONE);
                 saveContact();
                 break;
         }
@@ -197,8 +197,9 @@ public class ManagerSessionInvoiceActivity extends AppCompatActivity {
         }
     }
 
-    private void setUpContactUi(boolean enableOrDisabled, int visibilityChange, int visibilitySave) {
+    private void setUpContactUi(boolean enableOrDisabled, int drawable, int visibilityChange, int visibilitySave) {
         edMsInvoiceContact.setEnabled(enableOrDisabled);
+        edMsInvoiceContact.setBackground(ContextCompat.getDrawable(this, drawable));
         tvMsInvoiceContactChange.setVisibility(visibilityChange);
         btnMsInvoiceContactSaveChange.setVisibility(visibilitySave);
     }
