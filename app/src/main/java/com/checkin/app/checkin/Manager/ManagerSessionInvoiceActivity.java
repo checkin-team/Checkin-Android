@@ -136,9 +136,9 @@ public class ManagerSessionInvoiceActivity extends AppCompatActivity {
         mViewModel.getObservableData().observe(this, input -> {
             if (input == null)
                 return;
-            if (input.status == Resource.Status.SUCCESS && input.data != null){
-                Utils.toast(this,"Contact updated successfully.");
-            }else if (input.status != Resource.Status.LOADING && input.message != null)
+            if (input.status == Resource.Status.SUCCESS && input.data != null) {
+                Utils.toast(this, "Contact updated successfully.");
+            } else if (input.status != Resource.Status.LOADING && input.message != null)
                 Utils.toast(this, input.message);
         });
 
@@ -149,10 +149,10 @@ public class ManagerSessionInvoiceActivity extends AppCompatActivity {
         String email = sessionContactModel.getEmail();
         String phone = sessionContactModel.getPhone();
 
-        if (email != null)
-            edMsInvoiceContact.setText(email);
-        else
+        if (phone != null)
             edMsInvoiceContact.setText(phone);
+        else if (email != null)
+            edMsInvoiceContact.setText(email);
 
     }
 
@@ -162,7 +162,7 @@ public class ManagerSessionInvoiceActivity extends AppCompatActivity {
         return true;
     }
 
-    @OnClick({R.id.tv_ms_invoice_change, R.id.btn_ms_invoice_save_change, R.id.btn_ms_invoice_collect_cash,R.id.tv_ms_invoice_contact_change, R.id.btn_ms_invoice_contact_save_change})
+    @OnClick({R.id.tv_ms_invoice_change, R.id.btn_ms_invoice_save_change, R.id.btn_ms_invoice_collect_cash, R.id.tv_ms_invoice_contact_change, R.id.btn_ms_invoice_contact_save_change})
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.tv_ms_invoice_change:
@@ -188,19 +188,12 @@ public class ManagerSessionInvoiceActivity extends AppCompatActivity {
     private void saveContact() {
         String contact = edMsInvoiceContact.getText().toString();
 
-        if (TextUtils.isEmpty(contact)) {
+        if (!TextUtils.isEmpty(contact) && Patterns.PHONE.matcher(contact).matches())
+            mViewModel.postSessionContact(null, contact);
+        else if (!TextUtils.isEmpty(contact) && Patterns.EMAIL_ADDRESS.matcher(contact).matches()) {
+            mViewModel.postSessionContact(contact, null);
+        } else {
             Utils.toast(this, "Please enter at least phone number or email.");
-            return;
-        }if (Patterns.PHONE.matcher(contact).matches())
-            if (!TextUtils.isEmpty(contact) && !Patterns.PHONE.matcher(contact).matches())
-                Utils.toast(this, "Please enter valid phone number.");
-            else
-                mViewModel.postSessionContact(null, contact);
-        else{
-            if (!TextUtils.isEmpty(contact) && !Patterns.EMAIL_ADDRESS.matcher(contact).matches())
-                Utils.toast(this, "Please enter valid email.");
-            else
-                mViewModel.postSessionContact(contact, null);
         }
     }
 
