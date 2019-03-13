@@ -83,6 +83,10 @@ public class WaiterWorkActivity extends BaseAccountActivity implements WaiterTab
             MessageModel message = MessageUtils.parseMessage(intent);
             if (message == null) return;
 
+            MessageObjectModel shop = message.getShopDetail();
+            if (shop != null && shop.getPk() != mViewModel.getShopPk())
+                return;
+
             EventBriefModel eventModel;
             BriefModel user;
             SessionOrderedItemModel orderedItemModel;
