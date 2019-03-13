@@ -4,6 +4,7 @@ import android.content.Context;
 
 import com.checkin.app.checkin.Misc.BriefModel;
 import com.checkin.app.checkin.Utility.Utils;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 import java.util.Date;
@@ -13,6 +14,7 @@ import java.util.List;
  * Created by Bhavik Patel on 04/08/2018.
  */
 
+@JsonIgnoreProperties(ignoreUnknown = true)
 public class ActiveSessionModel {
     @JsonProperty("pk")
     private int pk;

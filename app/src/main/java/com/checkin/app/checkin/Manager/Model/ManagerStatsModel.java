@@ -2,11 +2,13 @@ package com.checkin.app.checkin.Manager.Model;
 
 import com.checkin.app.checkin.Menu.Model.MenuItemBriefModel;
 import com.checkin.app.checkin.Utility.Utils;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 import java.util.List;
 import java.util.Locale;
 
+@JsonIgnoreProperties(ignoreUnknown = true)
 public class ManagerStatsModel {
     @JsonProperty("revenue")
     private StatsDuration revenue;

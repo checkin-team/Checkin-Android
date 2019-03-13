@@ -1,10 +1,12 @@
 package com.checkin.app.checkin.Shop.Private.Invoice;
 
 import com.checkin.app.checkin.Misc.BriefModel;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 import java.util.Date;
 
+@JsonIgnoreProperties(ignoreUnknown = true)
 public class ShopSessionFeedbackModel {
     @JsonProperty("pk")
     private long pk;

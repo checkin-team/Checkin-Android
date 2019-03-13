@@ -3,9 +3,10 @@ package com.checkin.app.checkin.Utility;
 import android.content.Context;
 import android.util.AttributeSet;
 import android.view.KeyEvent;
-import android.widget.EditText;
 
-public class SingleBackEditText extends EditText {
+import androidx.appcompat.widget.AppCompatEditText;
+
+public class SingleBackEditText extends AppCompatEditText {
 
     public SingleBackEditText(Context context) {
         super(context);
@@ -17,10 +18,6 @@ public class SingleBackEditText extends EditText {
 
     public SingleBackEditText(Context context, AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
-    }
-
-    public SingleBackEditText(Context context, AttributeSet attrs, int defStyleAttr, int defStyleRes) {
-        super(context, attrs, defStyleAttr, defStyleRes);
     }
 
     @Override

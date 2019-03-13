@@ -2,11 +2,13 @@ package com.checkin.app.checkin.Session.Model;
 
 import com.checkin.app.checkin.Misc.BriefModel;
 import com.checkin.app.checkin.Utility.Utils;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 import java.util.Calendar;
 import java.util.Date;
 
+@JsonIgnoreProperties(ignoreUnknown = true)
 public class SessionBriefModel {
     @JsonProperty("pk")
     private long pk;

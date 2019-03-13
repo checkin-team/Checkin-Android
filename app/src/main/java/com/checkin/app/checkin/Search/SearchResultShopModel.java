@@ -1,11 +1,13 @@
 package com.checkin.app.checkin.Search;
 
 import com.checkin.app.checkin.Utility.Utils;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 import java.util.List;
 import java.util.Locale;
 
+@JsonIgnoreProperties(ignoreUnknown = true)
 public class SearchResultShopModel extends SearchResultModel{
     @JsonProperty("rating")
     private float rating;

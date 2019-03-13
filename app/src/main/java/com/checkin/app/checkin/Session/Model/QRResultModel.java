@@ -2,8 +2,10 @@ package com.checkin.app.checkin.Session.Model;
 
 import androidx.annotation.Nullable;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
+@JsonIgnoreProperties(ignoreUnknown = true)
 public class QRResultModel {
     @JsonProperty("session_pk")
     private long sessionPk;

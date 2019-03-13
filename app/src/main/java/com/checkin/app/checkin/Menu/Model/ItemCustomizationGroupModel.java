@@ -2,6 +2,7 @@ package com.checkin.app.checkin.Menu.Model;
 
 import com.checkin.app.checkin.Data.AppDatabase;
 import com.fasterxml.jackson.annotation.JsonAutoDetect;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 import java.util.List;
@@ -16,6 +17,7 @@ import io.objectbox.relation.ToOne;
  * Created by Bhavik Patel on 11/08/2018.
  */
 
+@JsonIgnoreProperties(ignoreUnknown = true)
 @JsonAutoDetect(fieldVisibility = JsonAutoDetect.Visibility.NONE, getterVisibility = JsonAutoDetect.Visibility.NONE, isGetterVisibility = JsonAutoDetect.Visibility.NONE)
 @Entity
 public class ItemCustomizationGroupModel {

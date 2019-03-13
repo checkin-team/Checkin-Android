@@ -5,6 +5,7 @@ import com.checkin.app.checkin.Data.Converters;
 import com.checkin.app.checkin.Menu.Adapter.MenuItemAdapter;
 import com.fasterxml.jackson.annotation.JsonAutoDetect;
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 import java.util.ArrayList;
@@ -23,6 +24,7 @@ import io.objectbox.relation.ToOne;
  * Created by shivanshs9 on 6/5/18.
  */
 
+@JsonIgnoreProperties(ignoreUnknown = true)
 @JsonAutoDetect(fieldVisibility = JsonAutoDetect.Visibility.NONE, getterVisibility = JsonAutoDetect.Visibility.NONE, isGetterVisibility = JsonAutoDetect.Visibility.NONE)
 @Entity
 public class MenuItemModel {

@@ -5,6 +5,7 @@ import com.checkin.app.checkin.Menu.Model.MenuItemModel;
 import com.checkin.app.checkin.Session.ActiveSession.Chat.SessionChatModel.CHAT_STATUS_TYPE;
 import com.checkin.app.checkin.Utility.Constants;
 import com.checkin.app.checkin.Utility.Utils;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 import java.io.Serializable;
@@ -13,6 +14,7 @@ import java.util.Date;
 import java.util.List;
 import java.util.Locale;
 
+@JsonIgnoreProperties(ignoreUnknown = true)
 public class SessionOrderedItemModel implements Serializable {
     @JsonProperty("pk")
     private int pk;

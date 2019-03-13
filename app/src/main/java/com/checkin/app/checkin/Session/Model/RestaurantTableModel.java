@@ -3,10 +3,12 @@ package com.checkin.app.checkin.Session.Model;
 import androidx.annotation.Nullable;
 
 import com.checkin.app.checkin.Misc.BriefModel;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 import java.util.Date;
 
+@JsonIgnoreProperties(ignoreUnknown = true)
 public class RestaurantTableModel {
     @JsonProperty("pk")
     private long pk;

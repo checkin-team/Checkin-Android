@@ -1,10 +1,12 @@
 package com.checkin.app.checkin.Session.Model;
 
 import com.checkin.app.checkin.Misc.BriefModel;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 import java.util.Locale;
 
+@JsonIgnoreProperties(ignoreUnknown = true)
 public class SessionBasicModel {
     @JsonProperty("pk")
     private long pk;

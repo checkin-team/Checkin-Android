@@ -1,11 +1,13 @@
 package com.checkin.app.checkin.Search;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 /**
  * Created by Jogi Miglani on 26-10-2018.
  */
 
+@JsonIgnoreProperties(ignoreUnknown = true)
 public class SearchResultModel {
     public static final int TYPE_PEOPLE = 1, TYPE_RESTAURANT = 2;
 

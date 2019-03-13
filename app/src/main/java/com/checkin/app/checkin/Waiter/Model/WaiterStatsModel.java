@@ -3,8 +3,10 @@ package com.checkin.app.checkin.Waiter.Model;
 import android.content.Context;
 
 import com.checkin.app.checkin.Utility.Utils;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
+@JsonIgnoreProperties(ignoreUnknown = true)
 public class WaiterStatsModel {
     @JsonProperty("tip_for_day")
     private double tipOfDay;

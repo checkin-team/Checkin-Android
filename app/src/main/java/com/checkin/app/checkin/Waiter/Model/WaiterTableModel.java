@@ -1,9 +1,11 @@
 package com.checkin.app.checkin.Waiter.Model;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 import androidx.annotation.Nullable;
 
+@JsonIgnoreProperties(ignoreUnknown = true)
 public class WaiterTableModel {
     @JsonProperty("pk")
     private long pk;

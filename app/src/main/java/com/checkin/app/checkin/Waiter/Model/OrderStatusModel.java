@@ -2,8 +2,10 @@ package com.checkin.app.checkin.Waiter.Model;
 
 import com.checkin.app.checkin.Session.ActiveSession.Chat.SessionChatModel;
 import com.fasterxml.jackson.annotation.JsonAutoDetect;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
+@JsonIgnoreProperties(ignoreUnknown = true)
 @JsonAutoDetect(fieldVisibility = JsonAutoDetect.Visibility.NONE, getterVisibility = JsonAutoDetect.Visibility.NONE, setterVisibility = JsonAutoDetect.Visibility.NONE)
 public class OrderStatusModel {
     @JsonProperty("pk")

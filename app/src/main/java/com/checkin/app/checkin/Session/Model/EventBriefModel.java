@@ -5,11 +5,13 @@ import com.checkin.app.checkin.Session.ActiveSession.Chat.SessionChatDataModel.E
 import com.checkin.app.checkin.Session.ActiveSession.Chat.SessionChatDataModel.EVENT_REQUEST_SERVICE_TYPE;
 import com.checkin.app.checkin.Session.ActiveSession.Chat.SessionChatModel.CHAT_EVENT_TYPE;
 import com.checkin.app.checkin.Utility.Utils;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 import java.util.Calendar;
 import java.util.Date;
 
+@JsonIgnoreProperties(ignoreUnknown = true)
 public class EventBriefModel {
     @JsonProperty("pk")
     private long pk;
