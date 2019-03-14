@@ -6,7 +6,6 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.checkin.app.checkin.Inventory.Adapter.InventoryItemAdapter;
-import com.checkin.app.checkin.Inventory.InventoryMenuItemInteraction;
 import com.checkin.app.checkin.Inventory.Model.InventoryItemModel;
 import com.checkin.app.checkin.R;
 
@@ -21,23 +20,25 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.Unbinder;
 
-public class InventoryItemsFragment extends Fragment implements InventoryItemAdapter.OnItemInteractionListener {
+public class InventoryItemsFragment extends Fragment {
     private Unbinder unbinder;
 
-    @BindView(R.id.rv_menu_items) RecyclerView rvMenuItems;
+    @BindView(R.id.rv_menu_items)
+    RecyclerView rvMenuItems;
 
     private InventoryItemAdapter mAdapter;
     @Nullable
-    private InventoryMenuItemInteraction mListener;
+    private InventoryItemAdapter.OnItemInteractionListener mListener;
 
-    public static InventoryItemsFragment newInstance(List<InventoryItemModel> menuItems, InventoryMenuItemInteraction listener, boolean isSessionActive) {
+    public static InventoryItemsFragment newInstance(List<InventoryItemModel> menuItems, InventoryItemAdapter.OnItemInteractionListener listener, boolean isSessionActive) {
         InventoryItemsFragment fragment = new InventoryItemsFragment();
         fragment.mListener = listener;
-        fragment.mAdapter = new InventoryItemAdapter(menuItems, fragment, isSessionActive, listener);
+        fragment.mAdapter = new InventoryItemAdapter(menuItems, listener, isSessionActive);
         return fragment;
     }
 
-    public InventoryItemsFragment() {}
+    public InventoryItemsFragment() {
+    }
 
     @Nullable
     @Override
@@ -57,37 +58,5 @@ public class InventoryItemsFragment extends Fragment implements InventoryItemAda
     public void onDestroy() {
         super.onDestroy();
         unbinder.unbind();
-    }
-
-    @Override
-    public boolean onItemAdded(InventoryItemModel item) {
-        if (mListener != null) {
-            return mListener.onMenuItemAdded(item);
-        }
-        return false;
-    }
-
-    @Override
-    public boolean onItemLongPress(InventoryItemModel item) {
-        if (mListener != null) {
-            mListener.onMenuItemShowInfo(item);
-        }
-        return true;
-    }
-
-    @Override
-    public boolean onItemChanged(InventoryItemModel item, int count) {
-        if (mListener != null) {
-            return mListener.onMenuItemChanged(item, count);
-        }
-        return false;
-    }
-
-    @Override
-    public int orderedItemCount(InventoryItemModel item) {
-        if (mListener != null) {
-            return mListener.getItemOrderedCount(item);
-        }
-        return 0;
     }
 }

@@ -33,28 +33,27 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:layout_marginStart="@dimen/spacing_small"
-                android:textAlignment="center"
                 android:layout_weight="1"
+                android:textAlignment="center"
                 tools:text="GROUP TITLE" />
 
             <Switch
                 android:id="@+id/switch_menu_group_availability"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginStart="@dimen/spacing_tiny"
                 android:layout_marginTop="@dimen/spacing_small"
                 android:layout_marginEnd="@dimen/spacing_small"
                 android:layout_marginBottom="@dimen/spacing_small"
-                android:layout_marginStart="@dimen/spacing_tiny"
-                android:layout_gravity="center"
                 android:clickable="false"
                 android:splitTrack="false"
                 android:switchTextAppearance="@style/SwitchTextAppearance"
                 android:thumb="@drawable/ic_switch_toggle"
                 android:track="@drawable/rectangle_white_three"
-                android:visibility="gone"/>
+                android:visibility="gone" />
 
         </LinearLayout>
-
 
 
         <LinearLayout

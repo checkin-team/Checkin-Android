@@ -5,28 +5,20 @@ import android.animation.AnimatorListenerAdapter;
 import android.animation.AnimatorSet;
 import android.animation.ValueAnimator;
 import android.os.Build;
-import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewConfiguration;
 import android.view.ViewGroup;
-import android.widget.CompoundButton;
-import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.Switch;
 import android.widget.TextView;
 
 import com.checkin.app.checkin.Inventory.Fragment.InventoryItemsFragment;
-import com.checkin.app.checkin.Inventory.InventoryMenuItemInteraction;
 import com.checkin.app.checkin.Inventory.Model.InventoryGroupModel;
 import com.checkin.app.checkin.Inventory.Model.InventoryItemModel;
-import com.checkin.app.checkin.Menu.Fragment.MenuItemsFragment;
-import com.checkin.app.checkin.Menu.MenuItemInteraction;
-import com.checkin.app.checkin.Menu.Model.MenuGroupModel;
-import com.checkin.app.checkin.Menu.Model.MenuItemModel;
 import com.checkin.app.checkin.R;
 import com.checkin.app.checkin.Utility.DynamicSwipableViewPager;
 import com.checkin.app.checkin.Utility.GlideApp;
@@ -56,10 +48,10 @@ public class InventoryGroupAdapter extends RecyclerView.Adapter<InventoryGroupAd
     private GroupInteraction mGroupListener;
 
     @Nullable
-    private InventoryMenuItemInteraction mListener;
+    private InventoryItemAdapter.OnItemInteractionListener mListener;
     private boolean mIsSessionActive = true;
 
-    public InventoryGroupAdapter(List<InventoryGroupModel> groupsList, FragmentManager fragmentManager, @Nullable InventoryMenuItemInteraction listener, GroupInteraction groupListener) {
+    public InventoryGroupAdapter(List<InventoryGroupModel> groupsList, FragmentManager fragmentManager, @Nullable InventoryItemAdapter.OnItemInteractionListener listener, GroupInteraction groupListener) {
         this.mGroupList = groupsList;
         this.mFragmentManager = fragmentManager;
         this.mListener = listener;
@@ -202,6 +194,7 @@ public class InventoryGroupAdapter extends RecyclerView.Adapter<InventoryGroupAd
             }
             vPager.setEnabled(false);
 
+            switchGroupAvailability.setVisibility(View.VISIBLE);
             itemView.setOnClickListener(view -> {
                 if (!this.isExpanded) {
                     contractView(mPrevExpandedViewHolder);
@@ -217,18 +210,15 @@ public class InventoryGroupAdapter extends RecyclerView.Adapter<InventoryGroupAd
                 }
             });
 
-            switchGroupAvailability.setOnClickListener(v -> {
-
-                mGroupListener.onGroupAvailability(mMenuGroup.getItems(), switchGroupAvailability.isChecked());
-            });
+            switchGroupAvailability.setOnClickListener(view -> mGroupListener.onGroupAvailability(mMenuGroup.getItems(), switchGroupAvailability.isChecked()));
         }
 
         void bindData(final InventoryGroupModel menuGroup) {
             mMenuGroup = menuGroup;
 
-            switchGroupAvailability.setVisibility(View.VISIBLE);
             tvGroupName.setText(menuGroup.getName());
-            GlideApp.with(itemView).load(menuGroup.getIcon()).into(imGroupIcon);
+            if (menuGroup.getIcon() != null)
+                GlideApp.with(itemView).load(menuGroup.getIcon()).into(imGroupIcon);
             SubGroupPagerAdapter pagerAdapter = new SubGroupPagerAdapter(menuGroup);
             if (menuGroup.hasSubGroups()) {
                 vTabs.setVisibility(View.VISIBLE);
@@ -237,7 +227,7 @@ public class InventoryGroupAdapter extends RecyclerView.Adapter<InventoryGroupAd
                 vTabs.setVisibility(View.GONE);
             }
             vPager.setAdapter(pagerAdapter);
-            switchGroupAvailability.setChecked(menuGroup.groupIsAvailable());
+            switchGroupAvailability.setChecked(menuGroup.isGroupAvailable());
         }
 
         void showMenu(View view) {
@@ -298,14 +288,6 @@ public class InventoryGroupAdapter extends RecyclerView.Adapter<InventoryGroupAd
             } else {
                 mListItems.add(menuGroup.getItems());
             }
-
-            /*if(menuGroup.hasUnavailable()){
-                InventoryGroupModel item = new InventoryGroupModel();
-                item.setName("Unavailable Items");
-                mGroupList.add(0,item);
-//                mListItems.add(0,menuGroup.getUnavailableItems());
-            }*/
-
         }
 
         @Override

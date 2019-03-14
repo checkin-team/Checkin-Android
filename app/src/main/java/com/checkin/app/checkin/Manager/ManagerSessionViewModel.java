@@ -266,26 +266,6 @@ public class ManagerSessionViewModel extends BaseViewModel {
         mOrdersData.setValue(Resource.cloneResource(listResource, listResource.data));
     }
 
-    public void updateUiOrderListStatus(OrderStatusModel data) {
-        Resource<List<SessionOrderedItemModel>> listResource = mOrdersData.getValue();
-        if (listResource == null || listResource.data == null)
-            return;
-        int pos = -1;
-        for (int i = 0, count = listResource.data.size(); i < count; i++) {
-            if (listResource.data.get(i).getPk() == data.getPk()) {
-                pos = i;
-                break;
-            }
-        }
-        if (pos > -1) {
-            SessionOrderedItemModel eventModel = listResource.data.get(pos);
-            eventModel.setStatus(data.getStatus());
-            listResource.data.remove(pos);
-            listResource.data.add(0, eventModel);
-        }
-        mOrdersData.setValue(Resource.cloneResource(listResource, listResource.data));
-    }
-
     public void updateUiEventStatus(long eventId, SessionChatModel.CHAT_STATUS_TYPE status) {
         Resource<List<ManagerSessionEventModel>> listResource = mEventData.getValue();
         if (listResource == null || listResource.data == null)

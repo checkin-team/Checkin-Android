@@ -1,9 +1,11 @@
 package com.checkin.app.checkin.Inventory.Model;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 import java.util.List;
 
+@JsonIgnoreProperties(ignoreUnknown = true)
 public class InventoryModel {
 
     @JsonProperty("pk")
@@ -37,8 +39,6 @@ public class InventoryModel {
     public List<InventoryGroupModel> getGroups() {
         return groups;
     }
-
-
 
     public void setGroups(List<InventoryGroupModel> groups) {
         this.groups = groups;

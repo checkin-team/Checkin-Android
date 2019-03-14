@@ -1,16 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/drawer_menu"
+    android:id="@+id/drawer_inventory"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:fitsSystemWindows="true"
     android:orientation="vertical">
 
     <FrameLayout
-        android:id="@+id/root_menu"
+        android:id="@+id/root_inventory"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
@@ -24,7 +22,7 @@
                 android:layout_height="match_parent">
 
                 <androidx.appcompat.widget.Toolbar
-                    android:id="@+id/toolbar_menu"
+                    android:id="@+id/toolbar_inventory"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:background="@color/primary_red"
@@ -39,7 +37,7 @@
                     android:background="@drawable/ic_search" />
 
                 <TextView
-                    android:id="@+id/tv_menu_title"
+                    android:id="@+id/tv_inventory_title"
                     style="@style/WhiteTitleStyle"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -62,7 +60,7 @@
             android:layout_marginTop="?android:attr/actionBarSize" />
 
         <FrameLayout
-            android:id="@+id/container_menu_fragment"
+            android:id="@+id/container_inventory_fragment"
             android:layout_width="match_parent"
             android:layout_height="match_parent" />
     </FrameLayout>

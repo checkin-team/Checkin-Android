@@ -1,7 +1,9 @@
 package com.checkin.app.checkin.Inventory.Model;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
+@JsonIgnoreProperties(ignoreUnknown = true)
 public class InventoryItemCustomizationFieldModel {
 
     @JsonProperty("pk")

@@ -1,13 +1,12 @@
 package com.checkin.app.checkin.Inventory.Model;
 
-import com.checkin.app.checkin.Menu.Model.MenuItemModel;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import io.objectbox.annotation.Transient;
-
+@JsonIgnoreProperties(ignoreUnknown = true)
 public class InventoryGroupModel {
 
     @JsonProperty("pk")
@@ -30,9 +29,14 @@ public class InventoryGroupModel {
 
     private List<InventoryItemModel> vegItems;
     private List<InventoryItemModel> nonVegItems;
-    private List<InventoryItemModel> unvailableItems;
 
     public InventoryGroupModel() {
+    }
+
+    public InventoryGroupModel(String name, String category, List<InventoryItemModel> items) {
+        this.name = name;
+        this.category = category;
+        this.items = items;
     }
 
     public long getPk() {
@@ -87,7 +91,7 @@ public class InventoryGroupModel {
         if (nonVegItems != null)
             return nonVegItems;
         nonVegItems = new ArrayList<>();
-        for (InventoryItemModel item: items) {
+        for (InventoryItemModel item : items) {
             if (!item.isVegetarian())
                 nonVegItems.add(item);
         }
@@ -98,37 +102,22 @@ public class InventoryGroupModel {
         if (vegItems != null)
             return vegItems;
         vegItems = new ArrayList<>();
-        for (InventoryItemModel item: items) {
+        for (InventoryItemModel item : items) {
             if (item.isVegetarian())
                 vegItems.add(item);
         }
         return vegItems;
     }
 
-    public List<InventoryItemModel> getUnavailableItems(){
-        unvailableItems = new ArrayList<>();
-        for (InventoryItemModel item: items) {
-            if (!item.isAvailable())
-                unvailableItems.add(item);
-        }
-        if (unvailableItems != null)
-            return unvailableItems;
-       return unvailableItems;
-    }
-
     public boolean hasSubGroups() {
         return getVegItems().size() > 0 && getNonVegItems().size() > 0;
     }
 
-    public boolean hasUnavailable(){
-        return getUnavailableItems().size()>0;
-    }
-
-    public boolean groupIsAvailable(){
-            for (InventoryItemModel item : items) {
-                if (item.isAvailable())
-                    return true;
-            }
+    public boolean isGroupAvailable() {
+        for (InventoryItemModel item : items) {
+            if (item.isAvailable())
+                return true;
+        }
         return false;
     }
 }
