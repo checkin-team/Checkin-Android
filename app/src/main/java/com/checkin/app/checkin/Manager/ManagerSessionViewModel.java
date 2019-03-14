@@ -274,7 +274,7 @@ public class ManagerSessionViewModel extends BaseViewModel {
             return;
 
         for (int i = 0, count = listResource.data.size(); i < count; i++) {
-            for(int j=0, size = data.size(); j<size; j++ ){
+            for (int j = 0, size = data.size(); j < size; j++) {
                 if (listResource.data.get(i).getPk() == data.get(j).getPk()) {
                     SessionOrderedItemModel eventModel = listResource.data.get(i);
                     eventModel.setStatus(data.get(j).getStatus());

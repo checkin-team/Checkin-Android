@@ -144,7 +144,7 @@ public class WaiterTableEventFragment extends BaseFragment implements WaiterEven
 
     @Override
     public void onOrderCancel(SessionOrderedItemModel orderedItemModel) {
-        mViewModel.updateOrderStatusNew(orderedItemModel.getPk(), SessionChatModel.CHAT_STATUS_TYPE.IN_PROGRESS.tag);
+        mViewModel.updateOrderStatusNew(orderedItemModel.getPk(), SessionChatModel.CHAT_STATUS_TYPE.CANCELLED.tag);
         mViewModel.confirmOrderStatusWaiter();
     }
 }
