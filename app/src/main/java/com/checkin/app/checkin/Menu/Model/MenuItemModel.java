@@ -2,12 +2,14 @@ package com.checkin.app.checkin.Menu.Model;
 
 import com.checkin.app.checkin.Data.AppDatabase;
 import com.checkin.app.checkin.Data.Converters;
+import com.checkin.app.checkin.Inventory.Adapter.InventoryItemAdapter;
 import com.checkin.app.checkin.Menu.Adapter.MenuItemAdapter;
 import com.fasterxml.jackson.annotation.JsonAutoDetect;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -27,7 +29,7 @@ import io.objectbox.relation.ToOne;
 @JsonIgnoreProperties(ignoreUnknown = true)
 @JsonAutoDetect(fieldVisibility = JsonAutoDetect.Visibility.NONE, getterVisibility = JsonAutoDetect.Visibility.NONE, isGetterVisibility = JsonAutoDetect.Visibility.NONE)
 @Entity
-public class MenuItemModel {
+public class MenuItemModel implements Serializable {
     @Id(assignable = true)
     @JsonProperty("pk")
     private long pk;
@@ -69,6 +71,10 @@ public class MenuItemModel {
     @JsonIgnore
     @Transient
     private MenuItemAdapter.ItemViewHolder holder;
+
+    @JsonIgnore
+    @Transient
+    private InventoryItemAdapter.ItemViewHolder inventoryHolder;
 
     public enum AVAILABLE_MEAL {
         BREAKFAST("brkfst"), LUNCH("lunch"), DINNER("dinner"),

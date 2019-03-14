@@ -70,7 +70,8 @@ public class BaseActivity extends AppCompatActivity {
         swipeRefreshLayout.setOnRefreshListener(this::updateScreen);
     }
 
-    protected void updateScreen() {}
+    protected void updateScreen() {
+    }
 
     protected void startRefreshing() {
         if (swipeRefreshLayout != null)
