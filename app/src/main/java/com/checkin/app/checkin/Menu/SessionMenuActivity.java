@@ -11,6 +11,7 @@ import android.view.Menu;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.TextView;
 
 import com.checkin.app.checkin.Data.Resource.Status;
@@ -27,6 +28,7 @@ import com.checkin.app.checkin.Misc.BaseActivity;
 import com.checkin.app.checkin.R;
 import com.checkin.app.checkin.Utility.EndDrawerToggle;
 import com.checkin.app.checkin.Utility.Utils;
+import com.google.android.material.navigation.NavigationView;
 import com.miguelcatalan.materialsearchview.MaterialSearchView;
 
 import java.util.ArrayList;
@@ -34,6 +36,7 @@ import java.util.Locale;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AlertDialog;
+import androidx.appcompat.widget.AppCompatImageButton;
 import androidx.appcompat.widget.Toolbar;
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.fragment.app.Fragment;
@@ -51,7 +54,7 @@ public class SessionMenuActivity extends BaseActivity implements
         MenuCartAdapter.MenuCartInteraction, MenuFilterFragment.MenuFilterInteraction {
     private static final String KEY_RESTAURANT_PK = "menu.shop_pk";
     private static final String KEY_SESSION_PK = "menu.session_pk";
-
+    private static final String SESSION_ARG = "session_arg";
     @BindView(R.id.view_menu_search)
     MaterialSearchView vMenuSearch;
     @BindView(R.id.rv_menu_cart)
@@ -62,15 +65,16 @@ public class SessionMenuActivity extends BaseActivity implements
     TextView tvCartSubtotal;
     @BindView(R.id.btn_menu_cart_proceed)
     Button btnCartProceed;
-
+    @BindView(R.id.btn_menu_search)
+    ImageButton btnMenuSearch;
+    @BindView(R.id.nav_menu_cart)
+    NavigationView navMenuCart;
     private MenuGroupsFragment mMenuFragment;
     private MenuItemSearchFragment mSearchFragment;
     private MenuFilterFragment mFilterFragment;
     private MenuViewModel mViewModel;
     private MenuCartAdapter mCartAdapter;
     private SESSION_STATUS mSessionStatus;
-
-    private static final String SESSION_ARG = "session_arg";
 
     public static void withSession(Context context, Long restaurantPk, @Nullable Long sessionPk) {
         Intent intent = new Intent(context, SessionMenuActivity.class);
@@ -165,15 +169,22 @@ public class SessionMenuActivity extends BaseActivity implements
             getSupportActionBar().setElevation(0);
         }
 
+        EndDrawerToggle endToggle = null;
+
         if (isSessionActive()) {
             DrawerLayout drawerLayout = findViewById(R.id.drawer_menu);
-            EndDrawerToggle endToggle = new EndDrawerToggle(
+            endToggle = new EndDrawerToggle(
                     this, drawerLayout, toolbar, R.string.menu_drawer_open, R.string.menu_drawer_close, R.drawable.ic_cart_white);
             drawerLayout.addDrawerListener(endToggle);
             endToggle.syncState();
         } else {
             findViewById(R.id.nav_menu_cart).setVisibility(View.GONE);
         }
+
+        assert endToggle != null;
+        AppCompatImageButton mButton = endToggle.getToggleButton();
+
+        Utils.multipleAppIntro(SessionMenuActivity.this, mButton, "Checkout your order here.", btnMenuSearch, "Search your food item here.");
     }
 
     private void setupCart() {

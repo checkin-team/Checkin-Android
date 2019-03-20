@@ -41,6 +41,9 @@ import android.widget.Toast;
 
 import com.checkin.app.checkin.Home.HomeActivity;
 import com.checkin.app.checkin.R;
+import com.getkeepsafe.taptargetview.TapTarget;
+import com.getkeepsafe.taptargetview.TapTargetSequence;
+import com.getkeepsafe.taptargetview.TapTargetView;
 import com.golovin.fluentstackbar.FluentSnackbar;
 import com.google.android.material.snackbar.Snackbar;
 import com.google.android.material.tabs.TabLayout;
@@ -751,5 +754,52 @@ public class Utils {
      */
     public static boolean isMediaDocument(Uri uri) {
         return "com.android.providers.media.documents".equals(uri.getAuthority());
+    }
+
+    public static void multipleAppIntro(Activity activity,View viewFirst, String messageFirst,View viewSecond, String messageSecond){
+        TapTargetSequence sequence = new TapTargetSequence(activity)
+                .targets(TapTarget.forView(viewFirst, messageFirst)
+                        .outerCircleAlpha(0.7f)
+                        .outerCircleColor(R.color.primary_red)
+                        .drawShadow(true)
+                        .cancelable(true)
+                        .targetRadius(60)).listener(new TapTargetSequence.Listener() {
+                    @Override
+                    public void onSequenceFinish() {
+
+                    }
+
+                    @Override
+                    public void onSequenceStep(TapTarget lastTarget, boolean targetClicked) {
+
+                    }
+
+                    @Override
+                    public void onSequenceCanceled(TapTarget lastTarget) {
+
+                    }
+                });
+
+        singleAppIntro(activity,viewSecond,messageSecond,sequence);
+    }
+
+    public static void singleAppIntro(Activity activity,View view, String message,TapTargetSequence sequence){
+        TapTargetView
+                .showFor(activity, TapTarget
+                        .forView(view,message)
+                        .outerCircleAlpha(0.7f)
+                        .outerCircleColor(R.color.primary_red)
+                        .drawShadow(true)
+                        .cancelable(true)
+                        .targetRadius(60),new TapTargetView.Listener(){
+                    @Override
+                    public void onTargetClick(TapTargetView view) {
+                        super.onTargetClick(view);
+                        if (sequence !=null)
+                            sequence.start();
+                        else
+                            view.dismiss(true);
+                    }
+                });
     }
 }

@@ -14,7 +14,6 @@ import com.checkin.app.checkin.Manager.ManagerWorkActivity;
 import com.checkin.app.checkin.Shop.Private.ShopPrivateActivity;
 import com.checkin.app.checkin.Utility.Constants;
 import com.checkin.app.checkin.Waiter.WaiterWorkActivity;
-
 import androidx.appcompat.app.AppCompatActivity;
 
 public class SplashActivity extends AppCompatActivity {
@@ -23,6 +22,10 @@ public class SplashActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
+        goForScreens();
+    }
+
+    private void goForScreens() {
         SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
 
         Account account = AuthPreferences.getCurrentAccount(this);

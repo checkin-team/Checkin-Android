@@ -13,6 +13,8 @@ import androidx.appcompat.graphics.drawable.DrawerArrowDrawable;
 import androidx.appcompat.widget.AppCompatImageButton;
 import androidx.appcompat.widget.Toolbar;
 import androidx.appcompat.widget.Toolbar.LayoutParams;
+
+import android.graphics.drawable.Drawable;
 import android.view.View;
 
 import com.checkin.app.checkin.R;
@@ -40,6 +42,10 @@ public class EndDrawerToggle implements DrawerLayout.DrawerListener {
         toolbar.addView(toggleButton, new LayoutParams(GravityCompat.END));
         toggleButton.setImageDrawable(activity.getResources().getDrawable(toggleButtonDrawable));
         toggleButton.setOnClickListener(v -> toggle());
+    }
+
+    public AppCompatImageButton getToggleButton(){
+        return toggleButton;
     }
 
     public void syncState() {

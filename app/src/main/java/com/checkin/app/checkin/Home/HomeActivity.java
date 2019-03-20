@@ -3,7 +3,9 @@ package com.checkin.app.checkin.Home;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Typeface;
 import android.os.Bundle;
+import android.os.Handler;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
@@ -26,6 +28,8 @@ import com.checkin.app.checkin.User.Private.UserViewModel;
 import com.checkin.app.checkin.User.UserModel;
 import com.checkin.app.checkin.Utility.DynamicSwipableViewPager;
 import com.checkin.app.checkin.Utility.Utils;
+import com.getkeepsafe.taptargetview.TapTarget;
+import com.getkeepsafe.taptargetview.TapTargetView;
 import com.google.android.material.navigation.NavigationView;
 import com.google.android.material.tabs.TabLayout;
 
@@ -103,6 +107,11 @@ public class HomeActivity extends BaseAccountActivity implements NavigationView.
                     vpHome.setCurrentItem(0);
                 }
             }
+        });
+
+        new Handler().post(() -> {
+            View QRTab = tabLayout.getTabAt(1).getCustomView();
+            Utils.singleAppIntro(HomeActivity.this,QRTab,"Scan the QR code to order your food.",null);
         });
 
         getNavAccount().setNavigationItemSelectedListener(this);
