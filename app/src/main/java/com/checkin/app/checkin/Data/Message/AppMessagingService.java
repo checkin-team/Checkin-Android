@@ -94,7 +94,9 @@ public class AppMessagingService extends FirebaseMessagingService {
                 .setStyle(style)
                 .setSound(null)
                 .setContentIntent(pendingIntent)
+                .setAutoCancel(true)
                 .build();
+
 
         mNotificationManager.notify(null, data.getGroupSummaryID(), summaryNotif);
     }
