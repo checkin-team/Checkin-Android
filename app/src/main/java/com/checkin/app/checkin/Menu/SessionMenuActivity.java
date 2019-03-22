@@ -27,6 +27,8 @@ import com.checkin.app.checkin.Menu.Model.OrderedItemModel;
 import com.checkin.app.checkin.Misc.BaseActivity;
 import com.checkin.app.checkin.R;
 import com.checkin.app.checkin.Utility.EndDrawerToggle;
+import com.checkin.app.checkin.Utility.OnBoardingUtils;
+import com.checkin.app.checkin.Utility.OnBoardingUtils.OnBoardingModel;
 import com.checkin.app.checkin.Utility.Utils;
 import com.google.android.material.navigation.NavigationView;
 import com.miguelcatalan.materialsearchview.MaterialSearchView;
@@ -36,7 +38,6 @@ import java.util.Locale;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AlertDialog;
-import androidx.appcompat.widget.AppCompatImageButton;
 import androidx.appcompat.widget.Toolbar;
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.fragment.app.Fragment;
@@ -177,14 +178,15 @@ public class SessionMenuActivity extends BaseActivity implements
                     this, drawerLayout, toolbar, R.string.menu_drawer_open, R.string.menu_drawer_close, R.drawable.ic_cart_white);
             drawerLayout.addDrawerListener(endToggle);
             endToggle.syncState();
+            explainMenu(endToggle);
         } else {
             findViewById(R.id.nav_menu_cart).setVisibility(View.GONE);
         }
+    }
 
-        assert endToggle != null;
-        AppCompatImageButton mButton = endToggle.getToggleButton();
-
-        Utils.multipleAppIntro(SessionMenuActivity.this, mButton, "Checkout your order here.", btnMenuSearch, "Search your food item here.");
+    private void explainMenu(EndDrawerToggle toggle) {
+        View cartButton = toggle.getToggleButton();
+        OnBoardingUtils.animateOnBoarding(this, new OnBoardingModel("Search for food item here.", btnMenuSearch), new OnBoardingModel("Checkout your order here.", cartButton));
     }
 
     private void setupCart() {

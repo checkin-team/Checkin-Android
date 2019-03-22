@@ -5,21 +5,12 @@ import android.animation.AnimatorListenerAdapter;
 import android.animation.AnimatorSet;
 import android.animation.ValueAnimator;
 import android.os.Build;
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import com.google.android.material.tabs.TabLayout;
-import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentManager;
-import androidx.fragment.app.FragmentStatePagerAdapter;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewConfiguration;
 import android.view.ViewGroup;
-import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -29,13 +20,22 @@ import com.checkin.app.checkin.Menu.MenuItemInteraction;
 import com.checkin.app.checkin.Menu.Model.MenuGroupModel;
 import com.checkin.app.checkin.Menu.Model.MenuItemModel;
 import com.checkin.app.checkin.R;
+import com.checkin.app.checkin.Utility.AnimUtils;
 import com.checkin.app.checkin.Utility.DynamicSwipableViewPager;
 import com.checkin.app.checkin.Utility.GlideApp;
 import com.checkin.app.checkin.Utility.Utils;
+import com.google.android.material.tabs.TabLayout;
 
 import java.util.ArrayList;
 import java.util.List;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentStatePagerAdapter;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
@@ -170,12 +170,17 @@ public class MenuGroupAdapter extends RecyclerView.Adapter<MenuGroupAdapter.Grou
     }
 
     public class GroupViewHolder extends RecyclerView.ViewHolder {
-        @BindView(R.id.tv_menu_group_name) TextView tvGroupName;
-        @BindView(R.id.im_menu_group_icon) ImageView imGroupIcon;
+        @BindView(R.id.tv_menu_group_name)
+        TextView tvGroupName;
+        @BindView(R.id.im_menu_group_icon)
+        ImageView imGroupIcon;
 
-        @BindView(R.id.tabs_menu_sub_groups) TabLayout vTabs;
-        @BindView(R.id.pager_menu_items) DynamicSwipableViewPager vPager;
-        @BindView(R.id.container_menu_sub_groups) ViewGroup vSubGroupWrapper;
+        @BindView(R.id.tabs_menu_sub_groups)
+        TabLayout vTabs;
+        @BindView(R.id.pager_menu_items)
+        DynamicSwipableViewPager vPager;
+        @BindView(R.id.container_menu_sub_groups)
+        ViewGroup vSubGroupWrapper;
 
         private MenuGroupModel mMenuGroup;
 
@@ -224,11 +229,11 @@ public class MenuGroupAdapter extends RecyclerView.Adapter<MenuGroupAdapter.Grou
             LinearLayout.LayoutParams layoutParams = (LinearLayout.LayoutParams) tvGroupName.getLayoutParams();
             layoutParams.gravity = Gravity.TOP;
             tvGroupName.setLayoutParams(layoutParams);
-            Animator sizeChangeAnim = Utils.changeViewSize(view, Utils.NO_CHANGE, (int) view.getResources().getDimension(R.dimen.height_menu_group_expanded));
-            Animator hideImageAnim = Utils.hideView(imGroupIcon);
-            Animator showMenuAnim = Utils.showView(vSubGroupWrapper);
+            Animator sizeChangeAnim = AnimUtils.changeViewSize(view, AnimUtils.NO_CHANGE, (int) view.getResources().getDimension(R.dimen.height_menu_group_expanded));
+            Animator hideImageAnim = AnimUtils.hideView(imGroupIcon);
+            Animator showMenuAnim = AnimUtils.showView(vSubGroupWrapper);
             ValueAnimator scrollAnimator = ValueAnimator.ofInt(1, 2, 3, 4);
-            scrollAnimator.setDuration(Utils.DEFAULT_DURATION).addUpdateListener(animation ->
+            scrollAnimator.setDuration(AnimUtils.DEFAULT_DURATION).addUpdateListener(animation ->
                     ((LinearLayoutManager) mRecyclerView.getLayoutManager()).scrollToPositionWithOffset(getAdapterPosition(), 0));
             AnimatorSet animatorSet = new AnimatorSet();
             animatorSet.playTogether(sizeChangeAnim, hideImageAnim, showMenuAnim, scrollAnimator);
@@ -246,9 +251,9 @@ public class MenuGroupAdapter extends RecyclerView.Adapter<MenuGroupAdapter.Grou
             LinearLayout.LayoutParams layoutParams = (LinearLayout.LayoutParams) tvGroupName.getLayoutParams();
             layoutParams.gravity = Gravity.CENTER;
             tvGroupName.setLayoutParams(layoutParams);
-            Animator sizeChangeAnim = Utils.changeViewSize(view, Utils.NO_CHANGE, (int) view.getResources().getDimension(R.dimen.height_menu_group_collapsed));
-            Animator showImageAnim = Utils.showView(imGroupIcon);
-            Animator hideMenuAnim = Utils.hideView(vSubGroupWrapper);
+            Animator sizeChangeAnim = AnimUtils.changeViewSize(view, AnimUtils.NO_CHANGE, (int) view.getResources().getDimension(R.dimen.height_menu_group_collapsed));
+            Animator showImageAnim = AnimUtils.showView(imGroupIcon);
+            Animator hideMenuAnim = AnimUtils.hideView(vSubGroupWrapper);
             AnimatorSet animatorSet = new AnimatorSet();
             animatorSet.playTogether(sizeChangeAnim, showImageAnim, hideMenuAnim);
             isExpanded = false;

@@ -1,16 +1,10 @@
 package com.checkin.app.checkin.Utility;
 
-import android.animation.Animator;
-import android.animation.AnimatorSet;
-import android.animation.ArgbEvaluator;
-import android.animation.ObjectAnimator;
-import android.animation.ValueAnimator;
 import android.app.Activity;
 import android.content.ComponentName;
 import android.content.ContentUris;
 import android.content.Context;
 import android.content.Intent;
-import android.content.res.ColorStateList;
 import android.content.res.Resources;
 import android.database.Cursor;
 import android.graphics.Bitmap;
@@ -18,7 +12,6 @@ import android.graphics.Canvas;
 import android.graphics.Matrix;
 import android.graphics.Typeface;
 import android.graphics.drawable.BitmapDrawable;
-import android.graphics.drawable.ColorDrawable;
 import android.graphics.drawable.Drawable;
 import android.graphics.drawable.LayerDrawable;
 import android.media.ExifInterface;
@@ -27,13 +20,13 @@ import android.net.NetworkInfo;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Environment;
+import android.os.Handler;
+import android.os.Looper;
 import android.provider.DocumentsContract;
 import android.provider.MediaStore;
 import android.util.Log;
 import android.view.View;
-import android.view.ViewAnimationUtils;
 import android.view.ViewGroup;
-import android.view.animation.AccelerateDecelerateInterpolator;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -41,9 +34,6 @@ import android.widget.Toast;
 
 import com.checkin.app.checkin.Home.HomeActivity;
 import com.checkin.app.checkin.R;
-import com.getkeepsafe.taptargetview.TapTarget;
-import com.getkeepsafe.taptargetview.TapTargetSequence;
-import com.getkeepsafe.taptargetview.TapTargetView;
 import com.golovin.fluentstackbar.FluentSnackbar;
 import com.google.android.material.snackbar.Snackbar;
 import com.google.android.material.tabs.TabLayout;
@@ -64,17 +54,18 @@ import java.util.regex.Matcher;
 
 import androidx.annotation.DrawableRes;
 import androidx.annotation.NonNull;
-import androidx.annotation.RequiresApi;
 import androidx.annotation.StringRes;
 
 /**
  * Created by shivanshs9 on 12/5/18.
  */
 
-public class Utils {
-    public static final int NO_CHANGE = -1;
-    public static final long DEFAULT_DURATION = 300L;
+public final class Utils {
+    private static final Handler sHandler = new Handler(Looper.getMainLooper());
 
+    /* ============================================================
+     * Display
+     * ============================================================ */
     public static int dpToPx(int dp) {
         return (int) (dp * Resources.getSystem().getDisplayMetrics().density);
     }
@@ -102,158 +93,9 @@ public class Utils {
         context.startActivity(Intent.makeRestartActivityTask(new ComponentName(context, HomeActivity.class)));
     }
 
-    /**
-     * Helper method to animate the change of view dimensions.
-     *
-     * @param view      View to animate.
-     * @param newWidth  New width, the view should have. If width shouldn't change, pass Utils.NO_CHANGE.
-     * @param newHeight New height, the view should have. If height shouldn't change, pass Utils.NO_CHANGE.
-     */
-    public static Animator changeViewSize(@NonNull View view, int newWidth, int newHeight) {
-        if (newWidth == NO_CHANGE && newHeight == NO_CHANGE)
-            return null;
-        return changeViewSize(view, newWidth, newHeight, DEFAULT_DURATION);
-    }
-
-    public static Animator changeViewSize(final View view, int newWidth, int newHeight, long duration) {
-        ValueAnimator heightTick, widthTick;
-        heightTick = ValueAnimator.ofInt(view.getHeight(), newHeight).setDuration(duration);
-        widthTick = ValueAnimator.ofInt(view.getWidth(), newWidth).setDuration(duration);
-
-        heightTick.addUpdateListener(valueAnimator -> {
-            view.getLayoutParams().height = (int) valueAnimator.getAnimatedValue();
-
-            // Request force layout validation.
-            view.requestLayout();
-        });
-        widthTick.addUpdateListener(valueAnimator -> {
-            view.getLayoutParams().width = (int) valueAnimator.getAnimatedValue();
-            view.requestLayout();
-        });
-
-        AnimatorSet animatorSet = new AnimatorSet();
-        if (newWidth != NO_CHANGE) {
-            if (newHeight != NO_CHANGE)
-                animatorSet.playTogether(heightTick, widthTick);
-            else
-                animatorSet.play(widthTick);
-        } else animatorSet.play(heightTick);
-        animatorSet.setInterpolator(new AccelerateDecelerateInterpolator());
-        return animatorSet;
-    }
-
-    public static Animator hideView(@NonNull View view) {
-        return animateAlpha(view, 0.0f, DEFAULT_DURATION);
-    }
-
-    public static Animator showView(@NonNull View view) {
-        return animateAlpha(view, 1.0f, DEFAULT_DURATION);
-    }
-
-    public static Animator animateAlpha(final View view, float finalAlpha, long duration) {
-        final ValueAnimator animator = ValueAnimator.ofFloat(view.getAlpha(), finalAlpha).setDuration(duration);
-        animator.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
-            @Override
-            public void onAnimationUpdate(ValueAnimator valueAnimator) {
-                float value = (float) animator.getAnimatedValue();
-                view.setAlpha(value);
-            }
-        });
-        return animator;
-    }
-
-    public static Animator createRotationAnimator(final View view, float targetDegrees) {
-        float initialDegrees = view.getRotation();
-        final Animator rotate = ObjectAnimator.ofFloat(view, "rotation", initialDegrees, targetDegrees);
-        rotate.setDuration(DEFAULT_DURATION);
-        rotate.setInterpolator(new AccelerateDecelerateInterpolator());
-        return rotate;
-    }
-
-    @RequiresApi(Build.VERSION_CODES.LOLLIPOP)
-    public static Animator createTintAnimator(final ImageView view, int initialColor, int finalColor) {
-        ColorStateList tintList = view.getImageTintList();
-        initialColor = (tintList != null) ? tintList.getDefaultColor() : initialColor;
-        final ValueAnimator animator = ValueAnimator.ofObject(new ArgbEvaluator(), initialColor, finalColor);
-        animator.setDuration(DEFAULT_DURATION);
-        animator.setInterpolator(new AccelerateDecelerateInterpolator());
-        animator.addUpdateListener(new ObjectAnimator.AnimatorUpdateListener() {
-            @Override
-            public void onAnimationUpdate(ValueAnimator animation) {
-                int animatedValue = (int) animation.getAnimatedValue();
-                view.setImageTintList(ColorStateList.valueOf(animatedValue));
-            }
-        });
-        return animator;
-    }
-
-    public static Animator createImageColorSourceAnimator(final ImageView view, int initialColor, int finalColor) {
-        Drawable drawable = view.getDrawable();
-        initialColor = drawable != null ? ((ColorDrawable) drawable).getColor() : initialColor;
-        final ValueAnimator animator = ValueAnimator.ofObject(new ArgbEvaluator(), initialColor, finalColor);
-        animator.setDuration(DEFAULT_DURATION);
-        animator.setInterpolator(new AccelerateDecelerateInterpolator());
-        animator.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
-            @Override
-            public void onAnimationUpdate(ValueAnimator animation) {
-                int animatedValue = (int) animation.getAnimatedValue();
-                view.setImageDrawable(new ColorDrawable(animatedValue));
-            }
-        });
-        return animator;
-    }
-
-    public static Animator createTextColorAnimator(final TextView view, int initialColor, int finalColor) {
-        initialColor = initialColor != 0 ? initialColor : view.getCurrentTextColor();
-        final ValueAnimator animator = ValueAnimator.ofObject(new ArgbEvaluator(), initialColor, finalColor);
-        animator.setDuration(DEFAULT_DURATION);
-        animator.setInterpolator(new AccelerateDecelerateInterpolator());
-        animator.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
-            @Override
-            public void onAnimationUpdate(ValueAnimator animation) {
-                view.setTextColor((int) animation.getAnimatedValue());
-            }
-        });
-        return animator;
-    }
-
-    public static Animator createCircularRevealAnimator(final ClipRevealFrame view, int x, int y, float startRadius, float endRadius) {
-
-        final Animator reveal;
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-            reveal = ViewAnimationUtils.createCircularReveal(view, x, y, startRadius, endRadius);
-        } else {
-            view.setClipOutLines(true);
-            view.setClipCenter(x, y);
-            reveal = ObjectAnimator.ofFloat(view, "ClipRadius", startRadius, endRadius);
-            reveal.addListener(new Animator.AnimatorListener() {
-                @Override
-                public void onAnimationStart(Animator animation) {
-
-                }
-
-                @Override
-                public void onAnimationEnd(Animator animation) {
-                    view.setClipOutLines(false);
-                }
-
-                @Override
-                public void onAnimationCancel(Animator animation) {
-
-                }
-
-                @Override
-                public void onAnimationRepeat(Animator animation) {
-
-                }
-            });
-        }
-        reveal.setDuration(DEFAULT_DURATION);
-        reveal.setInterpolator(new AccelerateDecelerateInterpolator());
-        return reveal;
-    }
-
-
+    /* ============================================================
+     * General
+     * ============================================================ */
     public static int[] range(int start, int stop) {
         return range(start, stop, 1);
     }
@@ -266,22 +108,6 @@ public class Utils {
         return ar;
     }
 
-    public static String replaceAll(String text, Matcher matcher, @NonNull MatchResultFunction replacer) {
-        matcher.reset();
-        boolean result = matcher.find();
-        if (result) {
-            StringBuffer sb = new StringBuffer();
-            do {
-                String replacement = replacer.apply(matcher);
-                matcher.appendReplacement(sb, replacement);
-                result = matcher.find();
-            } while (result);
-            matcher.appendTail(sb);
-            return sb.toString();
-        }
-        return text;
-    }
-
     public static <T> T getOrDefault(Map<?, T> map, Object key, T defaultValue) {
         if (map == null)
             return defaultValue;
@@ -291,66 +117,14 @@ public class Utils {
                 : defaultValue;
     }
 
-    public static String formatCount(long count) {
-        String res;
-        if (count > 1000)
-            res = String.valueOf(count / 1000) + "k";
-        else
-            res = String.valueOf(count);
-        return res;
-    }
-
-    public static String formatTime(long time) {
-        long hour = time / 60;
-        long min = time % 60;
-
-        return String.format(Locale.ENGLISH, "%02d:%02d", hour, min);
-    }
-
-    public static void hideSoftKeyboard(Activity activity) {
-        if (activity == null)
-            return;
-        InputMethodManager imm = (InputMethodManager) activity.getSystemService(Context.INPUT_METHOD_SERVICE);
-        View view = activity.getCurrentFocus();
-        if (view != null && imm != null)
-            imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
-    }
-
-    public static void showSoftKeyboard(Activity activity) {
-        if (activity == null)
-            return;
-        InputMethodManager imm = (InputMethodManager) activity.getSystemService(Context.INPUT_METHOD_SERVICE);
-        View view = activity.getCurrentFocus();
-        if (view != null && imm != null)
-            imm.showSoftInput(view, InputMethodManager.SHOW_IMPLICIT);
-    }
-
-    public static void hideSoftKeyboard(Context context) {
-        if (context == null)
-            return;
-        InputMethodManager imm = (InputMethodManager) context.getSystemService(Context.INPUT_METHOD_SERVICE);
-        if (imm != null)
-            imm.toggleSoftInput(InputMethodManager.HIDE_IMPLICIT_ONLY, 0);
-    }
-
-    public static void showSoftKeyboard(Context context) {
-        if (context == null)
-            return;
-        InputMethodManager imm = (InputMethodManager) context.getSystemService(Context.INPUT_METHOD_SERVICE);
-        if (imm != null)
-            imm.toggleSoftInput(InputMethodManager.SHOW_FORCED, 0);
-    }
-
-    public interface MatchResultFunction {
-        String apply(MatchResult match);
-    }
-
-    public static String joinCollection(Collection<?> words, CharSequence delimiter) {
-        StringBuilder wordList = new StringBuilder();
-        for (Object word : words) {
-            wordList.append(word.toString()).append(delimiter);
-        }
-        return new String(wordList.delete(wordList.length() - delimiter.length(), wordList.length()));
+    public static void setKeyboardVisibility(final View v, final boolean show) {
+        if (v == null) return;
+        final InputMethodManager imm = (InputMethodManager) v.getContext().getApplicationContext().getSystemService(Activity.INPUT_METHOD_SERVICE);
+        if (imm == null) return;
+        sHandler.post(() -> {
+            if (show) imm.showSoftInput(v, InputMethodManager.SHOW_FORCED);
+            else imm.hideSoftInputFromWindow(v.getWindowToken(), 0);
+        });
     }
 
     public static <T> boolean equalsObjectField(@NonNull Object obj, String field, @NonNull T value) {
@@ -376,53 +150,6 @@ public class Utils {
         return res;
     }
 
-    public static String formatTime(long min, long sec) {
-        String res;
-        if (min == 0)
-            res = String.format(Locale.ENGLISH, "%02d seconds", sec);
-        else
-            res = String.format(Locale.ENGLISH, "%02d:%02d minutes", min, sec);
-        return res;
-    }
-
-    public static void toast(@NonNull Context context, String msg) {
-        Toast.makeText(context.getApplicationContext(), msg, Toast.LENGTH_SHORT).show();
-    }
-
-    public static void toast(@NonNull Context context, @StringRes int msgRes) {
-        Toast.makeText(context.getApplicationContext(), msgRes, Toast.LENGTH_SHORT).show();
-    }
-
-
-    public static List<MediaImage> getImagesList(Context context) {
-        List<MediaImage> imageList = null;
-        final String[] projection = new String[]{
-                MediaStore.Images.Media.TITLE,
-                MediaStore.Images.Media.DATA,
-                MediaStore.Images.Media.DATE_MODIFIED,
-        };
-        final String sortOrder = MediaStore.Images.Media.DATE_MODIFIED + " DESC";
-        Cursor cursor = context.getContentResolver().query(
-                MediaStore.Images.Media.EXTERNAL_CONTENT_URI,
-                projection,
-                null,
-                null,
-                sortOrder
-        );
-        assert cursor != null;
-        int column_data = cursor.getColumnIndex(MediaStore.Images.Media.DATA);
-        int column_title = cursor.getColumnIndex(MediaStore.Images.Media.TITLE);
-        String imagePath, imageTitle;
-        imageList = new ArrayList<>();
-        while (cursor.moveToNext()) {
-            imagePath = cursor.getString(column_data);
-            imageTitle = cursor.getString(column_title);
-            imageList.add(new MediaImage(imageTitle, imagePath));
-        }
-        cursor.close();
-        return imageList;
-    }
-
     public static boolean isNetworkConnected(Context context) {
         ConnectivityManager connectivityManager = (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
         NetworkInfo networkInfo = null;
@@ -430,6 +157,58 @@ public class Utils {
             networkInfo = connectivityManager.getActiveNetworkInfo();
         }
         return (networkInfo != null && networkInfo.isConnected());
+    }
+
+    /* ============================================================
+     * Text
+     * ============================================================ */
+    public static String replaceAll(String text, Matcher matcher, @NonNull MatchResultFunction replacer) {
+        matcher.reset();
+        boolean result = matcher.find();
+        if (result) {
+            StringBuffer sb = new StringBuffer();
+            do {
+                String replacement = replacer.apply(matcher);
+                matcher.appendReplacement(sb, replacement);
+                result = matcher.find();
+            } while (result);
+            matcher.appendTail(sb);
+            return sb.toString();
+        }
+        return text;
+    }
+
+    public static String formatCount(long count) {
+        String res;
+        if (count > 1000)
+            res = String.valueOf(count / 1000) + "k";
+        else
+            res = String.valueOf(count);
+        return res;
+    }
+
+    public static String formatTime(long time) {
+        long hour = time / 60;
+        long min = time % 60;
+
+        return String.format(Locale.getDefault(), "%02d:%02d", hour, min);
+    }
+
+    public static String joinCollection(Collection<?> words, CharSequence delimiter) {
+        StringBuilder wordList = new StringBuilder();
+        for (Object word : words) {
+            wordList.append(word.toString()).append(delimiter);
+        }
+        return new String(wordList.delete(wordList.length() - delimiter.length(), wordList.length()));
+    }
+
+    public static String formatTime(long min, long sec) {
+        String res;
+        if (min == 0)
+            res = String.format(Locale.ENGLISH, "%02d seconds", sec);
+        else
+            res = String.format(Locale.ENGLISH, "%02d:%02d minutes", min, sec);
+        return res;
     }
 
     public static String getCurrencyFormat(Context context) {
@@ -515,6 +294,57 @@ public class Utils {
         return "Now";
     }
 
+    /* ============================================================
+     * UI
+     * ============================================================ */
+    public static void toast(@NonNull Context context, String msg) {
+        Toast.makeText(context.getApplicationContext(), msg, Toast.LENGTH_SHORT).show();
+    }
+
+    public static void toast(@NonNull Context context, @StringRes int msgRes) {
+        Toast.makeText(context.getApplicationContext(), msgRes, Toast.LENGTH_SHORT).show();
+    }
+
+    public static FluentSnackbar.Builder snack(View view, String msg) {
+        return FluentSnackbar.create(view)
+                .create(msg)
+                .duration(Snackbar.LENGTH_SHORT);
+    }
+
+    public static FluentSnackbar.Builder snack(Activity activity, String msg) {
+        return FluentSnackbar.create(activity)
+                .create(msg)
+                .duration(Snackbar.LENGTH_SHORT);
+    }
+
+    public static void errorSnack(View view, String msg) {
+        snack(view, msg)
+                .errorBackgroundColor()
+                .textColorRes(R.color.white)
+                .show();
+    }
+
+    public static void warningSnack(View view, String msg) {
+        snack(view, msg)
+                .warningBackgroundColor()
+                .textColorRes(R.color.brownish_grey)
+                .show();
+    }
+
+    public static void errorSnack(Activity activity, String msg) {
+        snack(activity, msg)
+                .errorBackgroundColor()
+                .textColorRes(R.color.white)
+                .show();
+    }
+
+    public static void warningSnack(Activity activity, String msg) {
+        snack(activity, msg)
+                .warningBackgroundColor()
+                .textColorRes(R.color.brownish_grey)
+                .show();
+    }
+
     public static void loadImageOrDefault(ImageView imageView, String url, @DrawableRes int defaultDrawable) {
         if (url != null) {
             GlideApp.with(imageView.getContext())
@@ -559,46 +389,9 @@ public class Utils {
         return bitmapDrawable;
     }
 
-    public static FluentSnackbar.Builder snack(View view, String msg) {
-        return FluentSnackbar.create(view)
-                .create(msg)
-                .duration(Snackbar.LENGTH_SHORT);
-    }
-
-    public static FluentSnackbar.Builder snack(Activity activity, String msg) {
-        return FluentSnackbar.create(activity)
-                .create(msg)
-                .duration(Snackbar.LENGTH_SHORT);
-    }
-
-    public static void errorSnack(View view, String msg) {
-        snack(view, msg)
-                .errorBackgroundColor()
-                .textColorRes(R.color.white)
-                .show();
-    }
-
-    public static void warningSnack(View view, String msg) {
-        snack(view, msg)
-                .warningBackgroundColor()
-                .textColorRes(R.color.brownish_grey)
-                .show();
-    }
-
-    public static void errorSnack(Activity activity, String msg) {
-        snack(activity, msg)
-                .errorBackgroundColor()
-                .textColorRes(R.color.white)
-                .show();
-    }
-
-    public static void warningSnack(Activity activity, String msg) {
-        snack(activity, msg)
-                .warningBackgroundColor()
-                .textColorRes(R.color.brownish_grey)
-                .show();
-    }
-
+    /* ============================================================
+     * Bitmap
+     * ============================================================ */
     public static Bitmap modifyOrientation(Bitmap bitmap, String image_absolute_path) throws IOException {
         ExifInterface ei = new ExifInterface(image_absolute_path);
         int orientation = ei.getAttributeInt(ExifInterface.TAG_ORIENTATION, ExifInterface.ORIENTATION_NORMAL);
@@ -634,6 +427,38 @@ public class Utils {
         Matrix matrix = new Matrix();
         matrix.preScale(horizontal ? -1 : 1, vertical ? -1 : 1);
         return Bitmap.createBitmap(bitmap, 0, 0, bitmap.getWidth(), bitmap.getHeight(), matrix, true);
+    }
+
+    /* ============================================================
+     * File
+     * ============================================================ */
+    public static List<MediaImage> getImagesList(Context context) {
+        List<MediaImage> imageList = null;
+        final String[] projection = new String[]{
+                MediaStore.Images.Media.TITLE,
+                MediaStore.Images.Media.DATA,
+                MediaStore.Images.Media.DATE_MODIFIED,
+        };
+        final String sortOrder = MediaStore.Images.Media.DATE_MODIFIED + " DESC";
+        Cursor cursor = context.getContentResolver().query(
+                MediaStore.Images.Media.EXTERNAL_CONTENT_URI,
+                projection,
+                null,
+                null,
+                sortOrder
+        );
+        assert cursor != null;
+        int column_data = cursor.getColumnIndex(MediaStore.Images.Media.DATA);
+        int column_title = cursor.getColumnIndex(MediaStore.Images.Media.TITLE);
+        String imagePath, imageTitle;
+        imageList = new ArrayList<>();
+        while (cursor.moveToNext()) {
+            imagePath = cursor.getString(column_data);
+            imageTitle = cursor.getString(column_title);
+            imageList.add(new MediaImage(imageTitle, imagePath));
+        }
+        cursor.close();
+        return imageList;
     }
 
     public static String getPath(final Context context, final Uri uri) {
@@ -708,8 +533,8 @@ public class Utils {
      * @param selectionArgs (Optional) Selection arguments used in the query.
      * @return The value of the _data column, which is typically a file path.
      */
-    public static String getDataColumn(Context context, Uri uri, String selection,
-                                       String[] selectionArgs) {
+    private static String getDataColumn(Context context, Uri uri, String selection,
+                                        String[] selectionArgs) {
 
         Cursor cursor = null;
         final String column = "_data";
@@ -756,50 +581,7 @@ public class Utils {
         return "com.android.providers.media.documents".equals(uri.getAuthority());
     }
 
-    public static void multipleAppIntro(Activity activity,View viewFirst, String messageFirst,View viewSecond, String messageSecond){
-        TapTargetSequence sequence = new TapTargetSequence(activity)
-                .targets(TapTarget.forView(viewFirst, messageFirst)
-                        .outerCircleAlpha(0.7f)
-                        .outerCircleColor(R.color.primary_red)
-                        .drawShadow(true)
-                        .cancelable(true)
-                        .targetRadius(60)).listener(new TapTargetSequence.Listener() {
-                    @Override
-                    public void onSequenceFinish() {
-
-                    }
-
-                    @Override
-                    public void onSequenceStep(TapTarget lastTarget, boolean targetClicked) {
-
-                    }
-
-                    @Override
-                    public void onSequenceCanceled(TapTarget lastTarget) {
-
-                    }
-                });
-
-        singleAppIntro(activity,viewSecond,messageSecond,sequence);
-    }
-
-    public static void singleAppIntro(Activity activity,View view, String message,TapTargetSequence sequence){
-        TapTargetView
-                .showFor(activity, TapTarget
-                        .forView(view,message)
-                        .outerCircleAlpha(0.7f)
-                        .outerCircleColor(R.color.primary_red)
-                        .drawShadow(true)
-                        .cancelable(true)
-                        .targetRadius(60),new TapTargetView.Listener(){
-                    @Override
-                    public void onTargetClick(TapTargetView view) {
-                        super.onTargetClick(view);
-                        if (sequence !=null)
-                            sequence.start();
-                        else
-                            view.dismiss(true);
-                    }
-                });
+    public interface MatchResultFunction {
+        String apply(MatchResult match);
     }
 }

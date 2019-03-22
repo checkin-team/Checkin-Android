@@ -131,8 +131,8 @@ public class WaiterTableFragment extends BaseFragment {
         final EditText etEmail = mContactAddDialog.findViewById(R.id.et_contact_email);
         final Button btnDone = mContactAddDialog.findViewById(R.id.btn_contact_done);
 
-        mContactAddDialog.setOnShowListener(dialogInterface -> Utils.showSoftKeyboard(requireContext()));
-        mContactAddDialog.setOnCancelListener(dialogInterface -> Utils.hideSoftKeyboard(requireContext()));
+        mContactAddDialog.setOnShowListener(dialogInterface -> Utils.setKeyboardVisibility(etPhone, true));
+        mContactAddDialog.setOnCancelListener(dialogInterface -> Utils.setKeyboardVisibility(etPhone, false));
         mContactAddDialog.setOnKeyListener((dialog, keyCode, event) -> {
             if (keyCode == KeyEvent.KEYCODE_BACK) {
                 dialog.cancel();

@@ -60,10 +60,6 @@
     <string name="title_create_business_account">Create Business Account</string>
     <string name="prefix_country_code">+91</string>
 
-
-    <string name="com.twitter.sdk.android.CONSUMER_KEY">vOWuRU7yx1Uf3xjaMIpSShUXX</string>
-    <string name="com.twitter.sdk.android.CONSUMER_SECRET">DESPxLsIghIAkFiDKN3ljZPzY0WLWgc1VcYAwAku1tq0NMxtr0</string>
-
     <!--notification-->
     <string name="notif_appbar_title">NOTIFICATIONS</string>
     <string name="notif_heading_unseen">New</string>

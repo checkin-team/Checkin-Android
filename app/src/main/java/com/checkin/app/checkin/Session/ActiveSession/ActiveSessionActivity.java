@@ -5,9 +5,7 @@ import android.app.AlertDialog;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
-import android.graphics.Typeface;
 import android.os.Bundle;
-import android.os.Handler;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
@@ -20,7 +18,6 @@ import com.checkin.app.checkin.Data.Message.MessageModel;
 import com.checkin.app.checkin.Data.Message.MessageModel.MESSAGE_TYPE;
 import com.checkin.app.checkin.Data.Message.MessageObjectModel;
 import com.checkin.app.checkin.Data.Message.MessageUtils;
-import com.checkin.app.checkin.Home.HomeActivity;
 import com.checkin.app.checkin.Menu.SessionMenuActivity;
 import com.checkin.app.checkin.Misc.BaseActivity;
 import com.checkin.app.checkin.Misc.BriefModel;
@@ -32,9 +29,8 @@ import com.checkin.app.checkin.Session.ActiveSession.Chat.SessionChatModel;
 import com.checkin.app.checkin.Session.Model.ActiveSessionModel;
 import com.checkin.app.checkin.Session.Model.SessionCustomerModel;
 import com.checkin.app.checkin.Session.Model.SessionOrderedItemModel;
+import com.checkin.app.checkin.Utility.OnBoardingUtils;
 import com.checkin.app.checkin.Utility.Utils;
-import com.getkeepsafe.taptargetview.TapTarget;
-import com.getkeepsafe.taptargetview.TapTargetView;
 
 import androidx.annotation.Nullable;
 import androidx.lifecycle.ViewModelProviders;
@@ -147,7 +143,7 @@ public class ActiveSessionActivity extends BaseActivity implements ActiveSession
         mViewModel.fetchSessionOrders();
         mOrdersFragment = ActiveSessionViewOrdersFragment.newInstance();
 
-        Utils.singleAppIntro(ActiveSessionActivity.this,containerBottomActions,"Do your interaction here.",null);
+        explainSession();
     }
 
     private void setupObservers() {
@@ -236,6 +232,10 @@ public class ActiveSessionActivity extends BaseActivity implements ActiveSession
         });
 
         initRefreshScreen(R.id.sr_active_session);
+    }
+
+    private void explainSession() {
+        OnBoardingUtils.animateOnBoarding(this, new OnBoardingUtils.OnBoardingModel("Interact with waiter here!", containerBottomActions));
     }
 
     private void setupData(ActiveSessionModel data) {
