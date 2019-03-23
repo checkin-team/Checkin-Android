@@ -22,6 +22,15 @@ public class Constants {
     public static final String FORMAT_SP_KEY_NOTIFICATION_CHANNEL = "com.checkin.app.checkin.Data.Message.notif.%s";
     public static final String SP_TABLE_NOTIFICATION = "com.checkin.app.checkin.Data.Message.notification";
 
+    public static String STARTFOREGROUND_ACTION = "ActiveSessionNotification.startforeground";
+    public static String STOPFOREGROUND_ACTION = "ActiveSessionNotification.stopforeground";
+    public static String MENU_ACTION = "ActiveSessionNotification.menu";
+
+
+    public interface NOTIFICATION_ID {
+        public static int FOREGROUND_SERVICE = 501;
+    }
+
     private final static AtomicInteger atomicInteger = new AtomicInteger(100);
 
     public static int getNotificationID() {

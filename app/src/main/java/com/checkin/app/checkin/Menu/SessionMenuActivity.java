@@ -1,18 +1,22 @@
 package com.checkin.app.checkin.Menu;
 
 import android.annotation.SuppressLint;
+import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.os.Bundle;
 import android.speech.RecognizerIntent;
 import android.text.InputType;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.Menu;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 
+import com.checkin.app.checkin.Data.Message.Constants;
 import com.checkin.app.checkin.Data.Resource.Status;
 import com.checkin.app.checkin.Menu.Adapter.MenuCartAdapter;
 import com.checkin.app.checkin.Menu.Fragment.ItemCustomizationFragment;
@@ -25,6 +29,7 @@ import com.checkin.app.checkin.Menu.Model.MenuItemModel;
 import com.checkin.app.checkin.Menu.Model.OrderedItemModel;
 import com.checkin.app.checkin.Misc.BaseActivity;
 import com.checkin.app.checkin.R;
+import com.checkin.app.checkin.Session.ActiveSession.ActiveSessionActivity;
 import com.checkin.app.checkin.Utility.EndDrawerToggle;
 import com.checkin.app.checkin.Utility.Utils;
 import com.miguelcatalan.materialsearchview.MaterialSearchView;
@@ -38,6 +43,7 @@ import androidx.appcompat.widget.Toolbar;
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProviders;
+import androidx.localbroadcastmanager.content.LocalBroadcastManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import butterknife.BindView;
@@ -49,8 +55,8 @@ import static com.checkin.app.checkin.Menu.Fragment.MenuGroupsFragment.KEY_SESSI
 public class SessionMenuActivity extends BaseActivity implements
         MenuItemInteraction, ItemCustomizationFragment.ItemCustomizationInteraction,
         MenuCartAdapter.MenuCartInteraction, MenuFilterFragment.MenuFilterInteraction {
-    private static final String KEY_RESTAURANT_PK = "menu.shop_pk";
-    private static final String KEY_SESSION_PK = "menu.session_pk";
+    public static final String KEY_RESTAURANT_PK = "menu.shop_pk";
+    public static final String KEY_SESSION_PK = "menu.session_pk";
 
     @BindView(R.id.view_menu_search)
     MaterialSearchView vMenuSearch;
@@ -70,7 +76,7 @@ public class SessionMenuActivity extends BaseActivity implements
     private MenuCartAdapter mCartAdapter;
     private SESSION_STATUS mSessionStatus;
 
-    private static final String SESSION_ARG = "session_arg";
+    public static final String SESSION_ARG = "session_arg";
 
     public static void withSession(Context context, Long restaurantPk, @Nullable Long sessionPk) {
         Intent intent = new Intent(context, SessionMenuActivity.class);
@@ -101,7 +107,6 @@ public class SessionMenuActivity extends BaseActivity implements
 
         Bundle args = getIntent().getBundleExtra(SESSION_ARG);
         mSessionStatus = (SESSION_STATUS) args.getSerializable(KEY_SESSION_STATUS);
-
         mViewModel = ViewModelProviders.of(this).get(MenuViewModel.class);
         mViewModel.fetchAvailableMenu(args.getLong(KEY_RESTAURANT_PK));
         long sessionPk = args.getLong(KEY_SESSION_PK, 0L);

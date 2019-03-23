@@ -4,14 +4,18 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.checkin.app.checkin.Account.AccountModel;
 import com.checkin.app.checkin.Account.BaseAccountActivity;
+import com.checkin.app.checkin.Data.Message.ActiveSessionNotification;
+import com.checkin.app.checkin.Data.Message.Constants;
 import com.checkin.app.checkin.Data.Message.MessageModel;
 import com.checkin.app.checkin.Data.Message.MessageUtils;
 import com.checkin.app.checkin.Data.Resource;
@@ -154,8 +158,19 @@ public class HomeActivity extends BaseAccountActivity implements NavigationView.
             if (resource.status == Resource.Status.SUCCESS && resource.data != null) {
                 vSessionStatus.setVisibility(View.VISIBLE);
                 tvSessionStatus.setText(resource.data.getLiveStatus());
+
+                Intent serviceIntent = new Intent(this, ActiveSessionNotification.class);
+                serviceIntent.setAction(Constants.STARTFOREGROUND_ACTION);
+                serviceIntent.putExtra("restaurant_name",resource.data.getRestaurant().getDisplayName());
+                serviceIntent.putExtra("restaurant_pic",resource.data.getRestaurant().getDisplayPic());
+                serviceIntent.putExtra("restaurant_pk",resource.data.getRestaurant().getPk());
+                serviceIntent.putExtra("session_pk",resource.data.getPk());
+                startService(serviceIntent);
             } else if (resource.status == Resource.Status.ERROR_NOT_FOUND) {
                 vSessionStatus.setVisibility(View.GONE);
+                Intent serviceIntent = new Intent(this, ActiveSessionNotification.class);
+                serviceIntent.setAction(Constants.STOPFOREGROUND_ACTION);
+                startService(serviceIntent);
             }
         });
 
