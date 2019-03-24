@@ -6,6 +6,7 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
@@ -29,8 +30,11 @@ import com.checkin.app.checkin.Session.ActiveSession.Chat.SessionChatModel;
 import com.checkin.app.checkin.Session.Model.ActiveSessionModel;
 import com.checkin.app.checkin.Session.Model.SessionCustomerModel;
 import com.checkin.app.checkin.Session.Model.SessionOrderedItemModel;
+import com.checkin.app.checkin.Utility.OnBoardingPreference;
 import com.checkin.app.checkin.Utility.OnBoardingUtils;
 import com.checkin.app.checkin.Utility.Utils;
+import com.getkeepsafe.taptargetview.TapTarget;
+import com.getkeepsafe.taptargetview.TapTargetSequence;
 
 import androidx.annotation.Nullable;
 import androidx.lifecycle.ViewModelProviders;
@@ -40,9 +44,9 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 
-public class ActiveSessionActivity extends BaseActivity implements ActiveSessionMemberAdapter.SessionMemberInteraction {
+public class ActiveSessionActivity extends BaseActivity implements ActiveSessionMemberAdapter.SessionMemberInteraction, TapTargetSequence.Listener {
+    public static final String SP_INERACT_WITH_US = "sp.interact.with.us";
     private static final int RC_SEARCH_MEMBER = 201;
-
     @BindView(R.id.rv_session_members)
     RecyclerView rvMembers;
     @BindView(R.id.tv_active_session_bill)
@@ -55,7 +59,6 @@ public class ActiveSessionActivity extends BaseActivity implements ActiveSession
     ImageView imWaiterPic;
     @BindView(R.id.container_as_actions_bottom)
     ViewGroup containerBottomActions;
-
     @BindView(R.id.tv_as_order_new_count)
     TextView tvCountOrdersNew;
     @BindView(R.id.tv_as_order_progress_count)
@@ -74,11 +77,9 @@ public class ActiveSessionActivity extends BaseActivity implements ActiveSession
     LinearLayout llTableCleaning;
     @BindView(R.id.ll_refill_glass_button)
     LinearLayout llRefillGlass;
-
+    @BindView(R.id.tv_interact_with_us)
+    TextView tvInteractWithUs;
     private ActiveSessionViewModel mViewModel;
-    private ActiveSessionMemberAdapter mSessionMembersAdapter;
-    private ActiveSessionViewOrdersFragment mOrdersFragment;
-
     private final BroadcastReceiver mReceiver = new BroadcastReceiver() {
         @Override
         public void onReceive(Context context, Intent intent) {
@@ -127,12 +128,17 @@ public class ActiveSessionActivity extends BaseActivity implements ActiveSession
             }
         }
     };
+    private ActiveSessionMemberAdapter mSessionMembersAdapter;
+    private ActiveSessionViewOrdersFragment mOrdersFragment;
+    private TapTargetSequence.Listener mListener;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_active_session);
         ButterKnife.bind(this);
+
+        mListener = this;
 
         mViewModel = ViewModelProviders.of(this).get(ActiveSessionViewModel.class);
 
@@ -143,7 +149,9 @@ public class ActiveSessionActivity extends BaseActivity implements ActiveSession
         mViewModel.fetchSessionOrders();
         mOrdersFragment = ActiveSessionViewOrdersFragment.newInstance();
 
-        explainSession();
+        boolean isOnBoarding = OnBoardingPreference.readOnBoardingPreference(this, SP_INERACT_WITH_US);
+        if (isOnBoarding)
+            explainSession();
     }
 
     private void setupObservers() {
@@ -235,7 +243,7 @@ public class ActiveSessionActivity extends BaseActivity implements ActiveSession
     }
 
     private void explainSession() {
-        OnBoardingUtils.animateOnBoarding(this, new OnBoardingUtils.OnBoardingModel("Interact with waiter here!", containerBottomActions));
+        OnBoardingUtils.animateOnBoardingListener(this, mListener, new OnBoardingUtils.OnBoardingModel("Interact with waiter here!", tvInteractWithUs));
     }
 
     private void setupData(ActiveSessionModel data) {
@@ -397,5 +405,22 @@ public class ActiveSessionActivity extends BaseActivity implements ActiveSession
         llCallWaiter.setEnabled(true);
         llTableCleaning.setEnabled(true);
         llRefillGlass.setEnabled(true);
+    }
+
+    @Override
+    public void onSequenceFinish() {
+        Log.d("active session finish", "finish");
+        OnBoardingPreference.writeOnBoardingPreference(this, SP_INERACT_WITH_US);
+    }
+
+    @Override
+    public void onSequenceStep(TapTarget lastTarget, boolean targetClicked) {
+        Log.d("active session target", lastTarget.toString());
+        Log.d("active session click", targetClicked + "");
+    }
+
+    @Override
+    public void onSequenceCanceled(TapTarget lastTarget) {
+
     }
 }

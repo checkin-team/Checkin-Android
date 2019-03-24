@@ -17,6 +17,10 @@ public final class OnBoardingUtils {
         sHandler.post(() -> showOnBoarding(activity, models).start());
     }
 
+    public static void animateOnBoardingListener(Activity activity, TapTargetSequence.Listener listener, OnBoardingModel... models) {
+        sHandler.post(() -> showOnBoarding(activity, listener,models).start());
+    }
+
     public static TapTargetSequence showOnBoarding(Activity activity, OnBoardingModel... models) {
         return showOnBoarding(activity, null, models);
     }
