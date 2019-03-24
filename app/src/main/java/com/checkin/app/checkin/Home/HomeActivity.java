@@ -4,12 +4,10 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.checkin.app.checkin.Account.AccountModel;
@@ -45,6 +43,11 @@ import androidx.viewpager.widget.ViewPager;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+
+import static com.checkin.app.checkin.Data.Message.ActiveSessionNotification.ACTIVE_RESTAURANT_LOGO;
+import static com.checkin.app.checkin.Data.Message.ActiveSessionNotification.ACTIVE_RESTAURANT_NAME;
+import static com.checkin.app.checkin.Data.Message.ActiveSessionNotification.ACTIVE_RESTAURANT_PK;
+import static com.checkin.app.checkin.Data.Message.ActiveSessionNotification.ACTIVE_SESSION_PK;
 
 public class HomeActivity extends BaseAccountActivity implements NavigationView.OnNavigationItemSelectedListener {
     private static final int REQUEST_QR_SCANNER = 212;
@@ -161,10 +164,10 @@ public class HomeActivity extends BaseAccountActivity implements NavigationView.
 
                 Intent serviceIntent = new Intent(this, ActiveSessionNotification.class);
                 serviceIntent.setAction(Constants.STARTFOREGROUND_ACTION);
-                serviceIntent.putExtra("restaurant_name",resource.data.getRestaurant().getDisplayName());
-                serviceIntent.putExtra("restaurant_pic",resource.data.getRestaurant().getDisplayPic());
-                serviceIntent.putExtra("restaurant_pk",resource.data.getRestaurant().getPk());
-                serviceIntent.putExtra("session_pk",resource.data.getPk());
+                serviceIntent.putExtra(ACTIVE_RESTAURANT_NAME,resource.data.getRestaurant().getDisplayName());
+                serviceIntent.putExtra(ACTIVE_RESTAURANT_LOGO,resource.data.getRestaurant().getDisplayPic());
+                serviceIntent.putExtra(ACTIVE_RESTAURANT_PK,resource.data.getRestaurant().getPk());
+                serviceIntent.putExtra(ACTIVE_SESSION_PK,resource.data.getPk());
                 startService(serviceIntent);
             } else if (resource.status == Resource.Status.ERROR_NOT_FOUND) {
                 vSessionStatus.setVisibility(View.GONE);

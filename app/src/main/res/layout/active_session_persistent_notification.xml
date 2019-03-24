@@ -12,7 +12,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/spacing_small"
-        android:layout_marginBottom="@dimen/spacing_small"
+        android:layout_marginBottom="@dimen/spacing_extra_small"
         android:drawableStart="@drawable/ic_active_session_logo"
         android:drawablePadding="@dimen/spacing_small"
         android:text="@string/app_name" />
@@ -73,7 +73,7 @@
             android:orientation="vertical"
             android:layout_alignParentEnd="true"
             android:layout_marginStart="@dimen/spacing_tiny"
-            android:paddingBottom="@dimen/spacing_normal"
+            android:paddingBottom="@dimen/spacing_small"
             android:paddingEnd="@dimen/spacing_normal">
 
             <ImageView
