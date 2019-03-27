@@ -10,11 +10,15 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.os.IBinder;
 import android.widget.RemoteViews;
+
+import com.bumptech.glide.request.target.NotificationTarget;
 import com.checkin.app.checkin.Menu.Fragment.MenuGroupsFragment;
 import com.checkin.app.checkin.Menu.SessionMenuActivity;
 import com.checkin.app.checkin.R;
 import com.checkin.app.checkin.Session.ActiveSession.ActiveSessionActivity;
+import com.checkin.app.checkin.Utility.GlideApp;
 import com.squareup.picasso.Picasso;
+
 import androidx.annotation.Nullable;
 import androidx.core.app.NotificationCompat;
 
@@ -31,6 +35,7 @@ public class ActiveSessionNotification extends Service {
     public static final String ACTIVE_SESSION_PK = "active.session_pk";
     Notification notification;
     long restaurant_pk, session_pk;
+    private NotificationTarget notificationTarget;
 
     @Nullable
     @Override
@@ -41,8 +46,8 @@ public class ActiveSessionNotification extends Service {
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
         if (intent.getAction().equals(Constants.STARTFOREGROUND_ACTION)) {
-            if(notification == null)
-            showNotification(intent);
+            if (notification == null)
+                showNotification(intent);
 
         } else if (intent.getAction().equals(Constants.STOPFOREGROUND_ACTION)) {
             stopForeground(true);
@@ -75,11 +80,7 @@ public class ActiveSessionNotification extends Service {
         bigViews.setOnClickPendingIntent(R.id.ll_as_noti_live_container, pendingIntent);
         bigViews.setOnClickPendingIntent(R.id.ll_menu, pMenuIntent);
 
-        String NOTIFICATION_CHANNEL_NAME = getString(R.string.app_name);
-        String NOTIFICATION_CHANNEL_ID = "session channel name";
-        String NOTIFICATION_CHANNEL_D = "session channel description";
-
-        notification = new NotificationCompat.Builder(this, NOTIFICATION_CHANNEL_ID)
+        notification = new NotificationCompat.Builder(this, Constants.CHANNEL.ACTIVE_SESSION_PERSISTENT.id)
                 .setSmallIcon(R.drawable.ic_logo_notification)
                 .setContentTitle("Live")
                 .setContentText(restaurant_name)
@@ -89,35 +90,24 @@ public class ActiveSessionNotification extends Service {
                 .addAction(R.id.ll_menu, "Menu", pMenuIntent)
                 .build();
 
-        Picasso
-                .with(this)
+        notificationTarget = new NotificationTarget(
+                this,
+                R.id.im_as_noti_restaurant_logo,
+                bigViews,
+                notification,
+                Constants.NOTIFICATION_ID.FOREGROUND_SERVICE);
+
+        GlideApp
+                .with(getApplicationContext())
+                .asBitmap()
                 .load(restaurant_logo)
-                .into(bigViews, R.id.im_as_noti_restaurant_logo, Constants.NOTIFICATION_ID.FOREGROUND_SERVICE, notification);
+                .into(notificationTarget);
 
-        /*try {
-            Bitmap  bitmap = Glide.with(getApplicationContext())
-                    .asBitmap()
-                    .load(restaurant_logo)
-                    .submit(Target.SIZE_ORIGINAL,Target.SIZE_ORIGINAL)
-                    .get();
-
-            bigViews.setImageViewBitmap(R.id.im_as_noti_restaurant_logo, bitmap);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }*/
-
-
-        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.O) {
-            NotificationChannel channel = new NotificationChannel(NOTIFICATION_CHANNEL_ID, NOTIFICATION_CHANNEL_NAME, NotificationManager.IMPORTANCE_DEFAULT);
-            channel.setDescription(NOTIFICATION_CHANNEL_D);
-            channel.setLockscreenVisibility(Notification.VISIBILITY_PUBLIC);
-            NotificationManager notificationManager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
-            notificationManager.createNotificationChannel(channel);
-        }
+        MessageUtils.createRequiredChannel(Constants.CHANNEL.ACTIVE_SESSION_PERSISTENT, this);
         startForeground(Constants.NOTIFICATION_ID.FOREGROUND_SERVICE, notification);
     }
 
-    private void openMenu(){
+    private void openMenu() {
         Intent menuIntent = new Intent(this, SessionMenuActivity.class);
         Bundle args = new Bundle();
         args.putSerializable(KEY_SESSION_STATUS, MenuGroupsFragment.SESSION_STATUS.ACTIVE);

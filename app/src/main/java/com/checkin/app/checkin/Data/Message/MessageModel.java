@@ -28,6 +28,7 @@ import java.util.Locale;
 import androidx.annotation.Nullable;
 import androidx.core.app.NotificationCompat;
 
+import static com.checkin.app.checkin.Data.Message.Constants.CHANNEL.ACTIVE_SESSION_PERSISTENT;
 import static com.checkin.app.checkin.Data.Message.MessageModel.MESSAGE_TYPE.MANAGER_SESSION_ORDERS_PUSH;
 import static com.checkin.app.checkin.Data.Message.MessageModel.MESSAGE_TYPE.WAITER_SESSION_ORDERS_PUSH;
 

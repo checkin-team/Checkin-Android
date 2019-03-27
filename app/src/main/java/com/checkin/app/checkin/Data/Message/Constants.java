@@ -67,6 +67,7 @@ public class Constants {
         DEFAULT("channel.default", "Default"),
         // User group
         ACTIVE_SESSION("channel.active_session", "Active Session"),
+        ACTIVE_SESSION_PERSISTENT("channel.active_session_PERSISTENT", "Active Session Persistent"),
 
         // Restaurant Member group
         MEMBER("channel.restaurant_member", "Restaurant Member"),

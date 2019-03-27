@@ -1,5 +1,6 @@
 package com.checkin.app.checkin.Data.Message;
 
+import android.app.Notification;
 import android.app.NotificationChannel;
 import android.app.NotificationChannelGroup;
 import android.app.NotificationManager;
@@ -64,6 +65,7 @@ public class MessageUtils {
             List<NotificationChannel> channels;
             channels = createChannels(CHANNEL_GROUP.DEFAULT_USER, NotificationManager.IMPORTANCE_DEFAULT, CHANNEL.DEFAULT);
             channels.addAll(createChannels(CHANNEL_GROUP.RESTAURANT_CUSTOMER, NotificationManager.IMPORTANCE_DEFAULT, CHANNEL.ACTIVE_SESSION));
+            channels.addAll(createChannels(CHANNEL_GROUP.RESTAURANT_CUSTOMER, NotificationManager.IMPORTANCE_DEFAULT, CHANNEL.ACTIVE_SESSION_PERSISTENT));
             channels.addAll(createChannels(CHANNEL_GROUP.MISC, NotificationManager.IMPORTANCE_LOW, CHANNEL.MEDIA_UPLOAD));
 
             notificationManager.createNotificationChannels(channels);
@@ -103,6 +105,22 @@ public class MessageUtils {
             List<NotificationChannel> channels;
             channels = createChannels(CHANNEL_GROUP.RESTAURANT_MEMBER, NotificationManager.IMPORTANCE_DEFAULT, CHANNEL.MEMBER, CHANNEL.ADMIN);
             notificationManager.createNotificationChannels(channels);
+        }
+    }
+
+    public static void createActiveCustomerChannels(NotificationManager notificationManager) {
+        if (notificationManager == null)
+            return;
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            createChannelGroups(notificationManager, CHANNEL_GROUP.RESTAURANT_CUSTOMER);
+
+            List<NotificationChannel> channels;
+            channels = createChannels(CHANNEL_GROUP.RESTAURANT_CUSTOMER, NotificationManager.IMPORTANCE_DEFAULT, CHANNEL.ACTIVE_SESSION_PERSISTENT);
+            notificationManager.createNotificationChannels(channels);
+
+//            channels.get(0).setDescription(NOTIFICATION_CHANNEL_D);
+            channels.get(0).setLockscreenVisibility(Notification.VISIBILITY_PUBLIC);
+
         }
     }
 
@@ -199,10 +217,14 @@ public class MessageUtils {
             case ORDERS:
                 createOrderChannels(context, notificationManager);
                 break;
+            case ACTIVE_SESSION_PERSISTENT:
+                createActiveCustomerChannels(notificationManager);
+                break;
             case ACTIVE_SESSION:
             case MEDIA_UPLOAD:
             case DEFAULT:
                 createDefaultChannels(notificationManager);
+
         }
     }
 
