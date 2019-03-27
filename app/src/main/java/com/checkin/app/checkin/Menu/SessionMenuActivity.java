@@ -28,7 +28,6 @@ import com.checkin.app.checkin.Menu.Model.OrderedItemModel;
 import com.checkin.app.checkin.Misc.BaseActivity;
 import com.checkin.app.checkin.R;
 import com.checkin.app.checkin.Utility.EndDrawerToggle;
-import com.checkin.app.checkin.Utility.OnBoardingPreference;
 import com.checkin.app.checkin.Utility.OnBoardingUtils;
 import com.checkin.app.checkin.Utility.OnBoardingUtils.OnBoardingModel;
 import com.checkin.app.checkin.Utility.Utils;
@@ -56,8 +55,7 @@ import static com.checkin.app.checkin.Menu.Fragment.MenuGroupsFragment.KEY_SESSI
 
 public class SessionMenuActivity extends BaseActivity implements
         MenuItemInteraction, ItemCustomizationFragment.ItemCustomizationInteraction,
-        MenuCartAdapter.MenuCartInteraction, MenuFilterFragment.MenuFilterInteraction,
-        TapTargetSequence.Listener {
+        MenuCartAdapter.MenuCartInteraction, MenuFilterFragment.MenuFilterInteraction {
     public static final String SP_Menu = "sp_menu";
     private static final String KEY_RESTAURANT_PK = "menu.shop_pk";
     private static final String KEY_SESSION_PK = "menu.session_pk";
@@ -110,8 +108,6 @@ public class SessionMenuActivity extends BaseActivity implements
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_session_menu);
         ButterKnife.bind(this);
-
-        mListener = this;
 
         Bundle args = getIntent().getBundleExtra(SESSION_ARG);
         mSessionStatus = (SESSION_STATUS) args.getSerializable(KEY_SESSION_STATUS);
@@ -187,9 +183,7 @@ public class SessionMenuActivity extends BaseActivity implements
                     this, drawerLayout, toolbar, R.string.menu_drawer_open, R.string.menu_drawer_close, R.drawable.ic_cart_white);
             drawerLayout.addDrawerListener(endToggle);
             endToggle.syncState();
-            boolean isOnBoarding = OnBoardingPreference.readOnBoardingPreference(this, SP_Menu);
-            if (isOnBoarding)
-                explainMenu(endToggle);
+            explainMenu(endToggle);
         } else {
             findViewById(R.id.nav_menu_cart).setVisibility(View.GONE);
         }
@@ -197,7 +191,7 @@ public class SessionMenuActivity extends BaseActivity implements
 
     private void explainMenu(EndDrawerToggle toggle) {
         View cartButton = toggle.getToggleButton();
-        OnBoardingUtils.animateOnBoardingListener(this, mListener, new OnBoardingModel("Search for food item here.", btnMenuSearch), new OnBoardingModel("Checkout your order here.", cartButton));
+        OnBoardingUtils.conditionalOnBoarding(this,SP_Menu,true, new OnBoardingModel("Search for food item here.", btnMenuSearch), new OnBoardingModel("Checkout your order here.", cartButton));
     }
 
     private void setupCart() {
@@ -432,22 +426,5 @@ public class SessionMenuActivity extends BaseActivity implements
     @Override
     public void resetFilters() {
         vMenuSearch.closeSearch();
-    }
-
-    @Override
-    public void onSequenceFinish() {
-        Log.d("menu finish","finish");
-        OnBoardingPreference.writeOnBoardingPreference(this, SP_Menu);
-    }
-
-    @Override
-    public void onSequenceStep(TapTarget lastTarget, boolean targetClicked) {
-        Log.d("menu target",lastTarget.toString());
-        Log.d("menu click",targetClicked+"");
-    }
-
-    @Override
-    public void onSequenceCanceled(TapTarget lastTarget) {
-
     }
 }

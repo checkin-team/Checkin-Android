@@ -1,8 +1,11 @@
 package com.checkin.app.checkin.Utility;
 
 import android.app.Activity;
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.os.Handler;
 import android.os.Looper;
+import android.preference.PreferenceManager;
 import android.view.View;
 
 import com.checkin.app.checkin.R;
@@ -12,13 +15,47 @@ import com.getkeepsafe.taptargetview.TapTargetSequence;
 public final class OnBoardingUtils {
     private static final Handler sHandler = new Handler(Looper.getMainLooper());
     private static final float ALPHA_TAP_BACKGROUND = 0.67f;
+    private static final String SP_ONBOARDING_TABLE_NAME = "onboarding";
+
+    public static SharedPreferences getPreferences(Context context) {
+        return context.getSharedPreferences(SP_ONBOARDING_TABLE_NAME, Context.MODE_PRIVATE);
+    }
+
+    public static boolean isOnBoardingShown(Context context, String spKey) {
+        return getPreferences(context).getBoolean(spKey, false);
+    }
+
+    public static void setOnBoardingIsShown(Context context, String spKey, boolean isShown) {
+        getPreferences(context).edit().putBoolean(spKey,isShown).apply();
+    }
+
+    public static void conditionalOnBoarding(Activity activity, String spKey, boolean isShown, OnBoardingModel... models) {
+        TapTargetSequence.Listener listener = new TapTargetSequence.Listener() {
+            @Override
+            public void onSequenceFinish() {
+                setOnBoardingIsShown(activity,spKey,isShown);
+            }
+
+            @Override
+            public void onSequenceStep(TapTarget lastTarget, boolean targetClicked) {
+
+            }
+
+            @Override
+            public void onSequenceCanceled(TapTarget lastTarget) {
+
+            }
+        };
+        if (!isOnBoardingShown(activity.getApplicationContext(), spKey))
+            animateOnBoardingListener(activity, listener, models);
+    }
 
     public static void animateOnBoarding(Activity activity, OnBoardingModel... models) {
         sHandler.post(() -> showOnBoarding(activity, models).start());
     }
 
     public static void animateOnBoardingListener(Activity activity, TapTargetSequence.Listener listener, OnBoardingModel... models) {
-        sHandler.post(() -> showOnBoarding(activity, listener,models).start());
+        sHandler.post(() -> showOnBoarding(activity, listener, models).start());
     }
 
     public static TapTargetSequence showOnBoarding(Activity activity, OnBoardingModel... models) {

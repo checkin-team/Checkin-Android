@@ -26,7 +26,6 @@ import com.checkin.app.checkin.User.Private.UserPrivateProfileFragment;
 import com.checkin.app.checkin.User.Private.UserViewModel;
 import com.checkin.app.checkin.User.UserModel;
 import com.checkin.app.checkin.Utility.DynamicSwipableViewPager;
-import com.checkin.app.checkin.Utility.OnBoardingPreference;
 import com.checkin.app.checkin.Utility.OnBoardingUtils;
 import com.checkin.app.checkin.Utility.OnBoardingUtils.OnBoardingModel;
 import com.checkin.app.checkin.Utility.Utils;
@@ -48,9 +47,9 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 
-public class HomeActivity extends BaseAccountActivity implements NavigationView.OnNavigationItemSelectedListener, TapTargetSequence.Listener {
+public class HomeActivity extends BaseAccountActivity implements NavigationView.OnNavigationItemSelectedListener {
+    public static final String SP_QR_SCANNER = "qrscanner";
     private static final int REQUEST_QR_SCANNER = 212;
-
     @BindView(R.id.drawer_home)
     DrawerLayout drawerLayout;
     @BindView(R.id.iv_home_navigation)
@@ -59,20 +58,14 @@ public class HomeActivity extends BaseAccountActivity implements NavigationView.
     TabLayout tabLayout;
     @BindView(R.id.vp_home)
     DynamicSwipableViewPager vpHome;
-
     @BindView(R.id.container_home_session_status)
     ViewGroup vSessionStatus;
     @BindView(R.id.tv_home_session_active_status)
     TextView tvSessionStatus;
-
     ImageView imTabUserIcon;
-
     private HomeViewModel mViewModel;
     private UserViewModel mUserViewModel;
-
     private TapTargetSequence.Listener mListener;
-    public static final String SP_QR_SCANNER = "qrscanner";
-
     private BroadcastReceiver mReceiver = new BroadcastReceiver() {
         @Override
         public void onReceive(Context context, Intent intent) {
@@ -93,8 +86,6 @@ public class HomeActivity extends BaseAccountActivity implements NavigationView.
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
         ButterKnife.bind(this);
-
-        mListener = this;
 
         ActionBarDrawerToggle startToggle = new ActionBarDrawerToggle(this, drawerLayout, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
         drawerLayout.addDrawerListener(startToggle);
@@ -119,10 +110,7 @@ public class HomeActivity extends BaseAccountActivity implements NavigationView.
         initRefreshScreen(R.id.sr_home);
         getNavAccount().setNavigationItemSelectedListener(this);
         setup();
-
-        boolean isOnBoarding = OnBoardingPreference.readOnBoardingPreference(this, SP_QR_SCANNER);
-        if (isOnBoarding)
-            explainQr();
+        explainQr();
     }
 
     @Override
@@ -179,7 +167,7 @@ public class HomeActivity extends BaseAccountActivity implements NavigationView.
         TabLayout.Tab tab = tabLayout.getTabAt(1);
         if (tab != null) {
             View qrView = tab.getCustomView();
-            OnBoardingUtils.animateOnBoardingListener(this, mListener, new OnBoardingModel("Scan Checkin QR!", qrView));
+            OnBoardingUtils.conditionalOnBoarding(this,SP_QR_SCANNER,true, new OnBoardingModel("Scan Checkin QR!", qrView));
         }
     }
 
@@ -248,23 +236,6 @@ public class HomeActivity extends BaseAccountActivity implements NavigationView.
     protected void onPause() {
         super.onPause();
         MessageUtils.unregisterLocalReceiver(this, mReceiver);
-    }
-
-    @Override
-    public void onSequenceFinish() {
-        Log.d("home finish","finish");
-        OnBoardingPreference.writeOnBoardingPreference(this, SP_QR_SCANNER);
-    }
-
-    @Override
-    public void onSequenceStep(TapTarget lastTarget, boolean targetClicked) {
-        Log.d("home target",lastTarget.toString());
-        Log.d("home click",targetClicked+"");
-    }
-
-    @Override
-    public void onSequenceCanceled(TapTarget lastTarget) {
-
     }
 
     private class HomeFragmentAdapter extends BaseFragmentAdapterBottomNav {

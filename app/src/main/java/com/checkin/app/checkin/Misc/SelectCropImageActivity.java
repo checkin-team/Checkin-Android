@@ -33,6 +33,7 @@ public class SelectCropImageActivity extends AppCompatActivity {
     public static final String KEY_CROP_ASPECT_RATIO = "aspect_ratio";
 
     public static final int RC_CROP_IMAGE = 1000;
+    private static final long MAX_FILZE_SIZE_IN_BYTES = 4 * 1024 * 1024;
     private static final int RC_PICK_IMAGE = 100;
     private File mRectangleFile;
 
@@ -64,7 +65,12 @@ public class SelectCropImageActivity extends AppCompatActivity {
             } catch (IOException e) {
                 e.printStackTrace();
             }
-            setResult(Activity.RESULT_OK, getImageIntent());
+
+            long cropFileSizeInByte = mRectangleFile.length();
+            if (cropFileSizeInByte <= MAX_FILZE_SIZE_IN_BYTES)
+                setResult(Activity.RESULT_OK, getImageIntent());
+            else
+                Utils.toast(this,"File size is larger than 4MB.");
             finish();
         });
     }

@@ -30,7 +30,6 @@ import com.checkin.app.checkin.Session.ActiveSession.Chat.SessionChatModel;
 import com.checkin.app.checkin.Session.Model.ActiveSessionModel;
 import com.checkin.app.checkin.Session.Model.SessionCustomerModel;
 import com.checkin.app.checkin.Session.Model.SessionOrderedItemModel;
-import com.checkin.app.checkin.Utility.OnBoardingPreference;
 import com.checkin.app.checkin.Utility.OnBoardingUtils;
 import com.checkin.app.checkin.Utility.Utils;
 import com.getkeepsafe.taptargetview.TapTarget;
@@ -44,7 +43,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 
-public class ActiveSessionActivity extends BaseActivity implements ActiveSessionMemberAdapter.SessionMemberInteraction, TapTargetSequence.Listener {
+public class ActiveSessionActivity extends BaseActivity implements ActiveSessionMemberAdapter.SessionMemberInteraction {
     public static final String SP_INERACT_WITH_US = "sp.interact.with.us";
     private static final int RC_SEARCH_MEMBER = 201;
     @BindView(R.id.rv_session_members)
@@ -130,15 +129,12 @@ public class ActiveSessionActivity extends BaseActivity implements ActiveSession
     };
     private ActiveSessionMemberAdapter mSessionMembersAdapter;
     private ActiveSessionViewOrdersFragment mOrdersFragment;
-    private TapTargetSequence.Listener mListener;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_active_session);
         ButterKnife.bind(this);
-
-        mListener = this;
 
         mViewModel = ViewModelProviders.of(this).get(ActiveSessionViewModel.class);
 
@@ -148,10 +144,7 @@ public class ActiveSessionActivity extends BaseActivity implements ActiveSession
         mViewModel.fetchActiveSessionDetail();
         mViewModel.fetchSessionOrders();
         mOrdersFragment = ActiveSessionViewOrdersFragment.newInstance();
-
-        boolean isOnBoarding = OnBoardingPreference.readOnBoardingPreference(this, SP_INERACT_WITH_US);
-        if (isOnBoarding)
-            explainSession();
+        explainSession();
     }
 
     private void setupObservers() {
@@ -243,7 +236,7 @@ public class ActiveSessionActivity extends BaseActivity implements ActiveSession
     }
 
     private void explainSession() {
-        OnBoardingUtils.animateOnBoardingListener(this, mListener, new OnBoardingUtils.OnBoardingModel("Interact with waiter here!", tvInteractWithUs));
+        OnBoardingUtils.conditionalOnBoarding(this,SP_INERACT_WITH_US,true, new OnBoardingUtils.OnBoardingModel("Interact with waiter here!", tvInteractWithUs));
     }
 
     private void setupData(ActiveSessionModel data) {
@@ -405,22 +398,5 @@ public class ActiveSessionActivity extends BaseActivity implements ActiveSession
         llCallWaiter.setEnabled(true);
         llTableCleaning.setEnabled(true);
         llRefillGlass.setEnabled(true);
-    }
-
-    @Override
-    public void onSequenceFinish() {
-        Log.d("active session finish", "finish");
-        OnBoardingPreference.writeOnBoardingPreference(this, SP_INERACT_WITH_US);
-    }
-
-    @Override
-    public void onSequenceStep(TapTarget lastTarget, boolean targetClicked) {
-        Log.d("active session target", lastTarget.toString());
-        Log.d("active session click", targetClicked + "");
-    }
-
-    @Override
-    public void onSequenceCanceled(TapTarget lastTarget) {
-
     }
 }
