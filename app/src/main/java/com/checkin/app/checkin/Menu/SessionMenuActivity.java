@@ -7,7 +7,6 @@ import android.os.Bundle;
 import android.speech.RecognizerIntent;
 import android.text.InputType;
 import android.text.TextUtils;
-import android.util.Log;
 import android.view.Menu;
 import android.view.View;
 import android.widget.Button;
@@ -31,8 +30,6 @@ import com.checkin.app.checkin.Utility.EndDrawerToggle;
 import com.checkin.app.checkin.Utility.OnBoardingUtils;
 import com.checkin.app.checkin.Utility.OnBoardingUtils.OnBoardingModel;
 import com.checkin.app.checkin.Utility.Utils;
-import com.getkeepsafe.taptargetview.TapTarget;
-import com.getkeepsafe.taptargetview.TapTargetSequence;
 import com.google.android.material.navigation.NavigationView;
 import com.miguelcatalan.materialsearchview.MaterialSearchView;
 
@@ -56,10 +53,12 @@ import static com.checkin.app.checkin.Menu.Fragment.MenuGroupsFragment.KEY_SESSI
 public class SessionMenuActivity extends BaseActivity implements
         MenuItemInteraction, ItemCustomizationFragment.ItemCustomizationInteraction,
         MenuCartAdapter.MenuCartInteraction, MenuFilterFragment.MenuFilterInteraction {
-    public static final String SP_Menu = "sp_menu";
+    public static final String SP_MENU_SEARCH = "sp.menu.search";
+    public static final String SP_MENU_CART = "sp.menu.cart";
     private static final String KEY_RESTAURANT_PK = "menu.shop_pk";
     private static final String KEY_SESSION_PK = "menu.session_pk";
     private static final String SESSION_ARG = "session_arg";
+    private static SessionMenuActivity.onBackPressListener mOnBackPressListener = null;
     @BindView(R.id.view_menu_search)
     MaterialSearchView vMenuSearch;
     @BindView(R.id.rv_menu_cart)
@@ -80,7 +79,7 @@ public class SessionMenuActivity extends BaseActivity implements
     private MenuViewModel mViewModel;
     private MenuCartAdapter mCartAdapter;
     private SESSION_STATUS mSessionStatus;
-    private TapTargetSequence.Listener mListener;
+    private EndDrawerToggle endToggle = null;
 
     public static void withSession(Context context, Long restaurantPk, @Nullable Long sessionPk) {
         Intent intent = new Intent(context, SessionMenuActivity.class);
@@ -101,6 +100,15 @@ public class SessionMenuActivity extends BaseActivity implements
         intent.putExtra(SESSION_ARG, args);
         intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
         context.startActivity(intent);
+    }
+
+    public static void setOnBackListener(Context context) {
+        if (context instanceof onBackPressListener) {
+            mOnBackPressListener = (onBackPressListener) context;
+        } else {
+            throw new ClassCastException(context.toString()
+                    + " must implement ActiveSessionActivity.OnItemSelectedListener");
+        }
     }
 
     @Override
@@ -175,23 +183,20 @@ public class SessionMenuActivity extends BaseActivity implements
             getSupportActionBar().setElevation(0);
         }
 
-        EndDrawerToggle endToggle = null;
-
         if (isSessionActive()) {
             DrawerLayout drawerLayout = findViewById(R.id.drawer_menu);
             endToggle = new EndDrawerToggle(
                     this, drawerLayout, toolbar, R.string.menu_drawer_open, R.string.menu_drawer_close, R.drawable.ic_cart_white);
             drawerLayout.addDrawerListener(endToggle);
             endToggle.syncState();
-            explainMenu(endToggle);
+            explainMenu();
         } else {
             findViewById(R.id.nav_menu_cart).setVisibility(View.GONE);
         }
     }
 
-    private void explainMenu(EndDrawerToggle toggle) {
-        View cartButton = toggle.getToggleButton();
-        OnBoardingUtils.conditionalOnBoarding(this,SP_Menu,true, new OnBoardingModel("Search for food item here.", btnMenuSearch), new OnBoardingModel("Checkout your order here.", cartButton));
+    private void explainMenu() {
+        OnBoardingUtils.conditionalOnBoarding(this, SP_MENU_SEARCH, true, new OnBoardingModel("Search for food item here.", btnMenuSearch));
     }
 
     private void setupCart() {
@@ -206,6 +211,7 @@ public class SessionMenuActivity extends BaseActivity implements
             if (count > 0) {
                 tvCountItems.setText(Utils.formatCount(count));
                 tvCountItems.setVisibility(View.VISIBLE);
+                explainCartMenu(endToggle);
             } else {
                 tvCountItems.setVisibility(View.GONE);
             }
@@ -229,6 +235,11 @@ public class SessionMenuActivity extends BaseActivity implements
                 btnCartProceed.setEnabled(true);
             }
         });
+    }
+
+    private void explainCartMenu(EndDrawerToggle toggle) {
+        View cartButton = toggle.getToggleButton();
+        OnBoardingUtils.conditionalOnBoarding(this, SP_MENU_CART, true, new OnBoardingModel("Checkout your order here.", cartButton));
     }
 
     private void setupSearch() {
@@ -303,6 +314,7 @@ public class SessionMenuActivity extends BaseActivity implements
             super.onBackPressed();
         }
         mViewModel.clearFilters();
+        mOnBackPressListener.onBackPress();
     }
 
     public void closeSearch() {
@@ -426,5 +438,9 @@ public class SessionMenuActivity extends BaseActivity implements
     @Override
     public void resetFilters() {
         vMenuSearch.closeSearch();
+    }
+
+    public interface onBackPressListener {
+        void onBackPress();
     }
 }

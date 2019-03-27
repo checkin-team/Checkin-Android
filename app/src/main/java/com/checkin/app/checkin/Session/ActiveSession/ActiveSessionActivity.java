@@ -6,7 +6,6 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
@@ -32,8 +31,6 @@ import com.checkin.app.checkin.Session.Model.SessionCustomerModel;
 import com.checkin.app.checkin.Session.Model.SessionOrderedItemModel;
 import com.checkin.app.checkin.Utility.OnBoardingUtils;
 import com.checkin.app.checkin.Utility.Utils;
-import com.getkeepsafe.taptargetview.TapTarget;
-import com.getkeepsafe.taptargetview.TapTargetSequence;
 
 import androidx.annotation.Nullable;
 import androidx.lifecycle.ViewModelProviders;
@@ -43,8 +40,10 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 
-public class ActiveSessionActivity extends BaseActivity implements ActiveSessionMemberAdapter.SessionMemberInteraction {
+public class ActiveSessionActivity extends BaseActivity implements
+        ActiveSessionMemberAdapter.SessionMemberInteraction, SessionMenuActivity.onBackPressListener {
     public static final String SP_INERACT_WITH_US = "sp.interact.with.us";
+    public static final String SP_MENU = "sp.menu";
     private static final int RC_SEARCH_MEMBER = 201;
     @BindView(R.id.rv_session_members)
     RecyclerView rvMembers;
@@ -236,8 +235,10 @@ public class ActiveSessionActivity extends BaseActivity implements ActiveSession
     }
 
     private void explainSession() {
-        OnBoardingUtils.conditionalOnBoarding(this,SP_INERACT_WITH_US,true, new OnBoardingUtils.OnBoardingModel("Interact with waiter here!", tvInteractWithUs));
+        OnBoardingUtils.conditionalOnBoarding(this, SP_MENU, true, new OnBoardingUtils.OnBoardingModel("Checkout your menu here!", btnSessionMenu));
     }
+
+    // region UI-Update
 
     private void setupData(ActiveSessionModel data) {
         mSessionMembersAdapter.setUsers(data.getCustomers());
@@ -261,8 +262,6 @@ public class ActiveSessionActivity extends BaseActivity implements ActiveSession
         }
 
     }
-
-    // region UI-Update
 
     private void updateBill(double bill) {
         mViewModel.updateBill(bill);
@@ -288,18 +287,19 @@ public class ActiveSessionActivity extends BaseActivity implements ActiveSession
         mViewModel.setRequestedCheckout(true);
     }
 
-    private void addNewOrder(SessionOrderedItemModel sessionOrderedItem) {
-        mViewModel.addNewOrder(sessionOrderedItem);
-    }
-
     // endregion
 
     // region Click Listeners
+
+    private void addNewOrder(SessionOrderedItemModel sessionOrderedItem) {
+        mViewModel.addNewOrder(sessionOrderedItem);
+    }
 
     @OnClick(R.id.btn_active_session_menu)
     public void onListMenu() {
         if (mViewModel.getShopPk() > 0)
             SessionMenuActivity.withSession(this, mViewModel.getShopPk(), null);
+        SessionMenuActivity.setOnBackListener(this);
     }
 
     @OnClick(R.id.rl_container_session_orders)
@@ -398,5 +398,10 @@ public class ActiveSessionActivity extends BaseActivity implements ActiveSession
         llCallWaiter.setEnabled(true);
         llTableCleaning.setEnabled(true);
         llRefillGlass.setEnabled(true);
+    }
+
+    @Override
+    public void onBackPress() {
+        OnBoardingUtils.conditionalOnBoarding(this, SP_INERACT_WITH_US, true, new OnBoardingUtils.OnBoardingModel("Interact with waiter here!", tvInteractWithUs));
     }
 }

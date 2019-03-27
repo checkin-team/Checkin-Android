@@ -6,6 +6,7 @@ import android.content.SharedPreferences;
 import android.os.Handler;
 import android.os.Looper;
 import android.preference.PreferenceManager;
+import android.util.Log;
 import android.view.View;
 
 import com.checkin.app.checkin.R;
@@ -31,6 +32,8 @@ public final class OnBoardingUtils {
 
     public static void conditionalOnBoarding(Activity activity, String spKey, boolean isShown, OnBoardingModel... models) {
         TapTargetSequence.Listener listener = new TapTargetSequence.Listener() {
+            int currView = 0;
+
             @Override
             public void onSequenceFinish() {
                 setOnBoardingIsShown(activity,spKey,isShown);
@@ -38,12 +41,11 @@ public final class OnBoardingUtils {
 
             @Override
             public void onSequenceStep(TapTarget lastTarget, boolean targetClicked) {
-
+                models[currView++].view.performClick();
             }
 
             @Override
             public void onSequenceCanceled(TapTarget lastTarget) {
-
             }
         };
         if (!isOnBoardingShown(activity.getApplicationContext(), spKey))

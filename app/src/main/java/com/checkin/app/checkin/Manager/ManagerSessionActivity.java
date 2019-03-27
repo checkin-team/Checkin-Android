@@ -16,6 +16,7 @@ import com.checkin.app.checkin.Data.Message.MessageUtils;
 import com.checkin.app.checkin.Manager.Fragment.ManagerSessionEventFragment;
 import com.checkin.app.checkin.Manager.Fragment.ManagerSessionOrderFragment;
 import com.checkin.app.checkin.Manager.Model.ManagerSessionEventModel;
+import com.checkin.app.checkin.Menu.SessionMenuActivity;
 import com.checkin.app.checkin.Misc.BriefModel;
 import com.checkin.app.checkin.R;
 import com.checkin.app.checkin.Session.ActiveSession.Chat.SessionChatModel;
@@ -42,7 +43,8 @@ import static com.checkin.app.checkin.Data.Message.MessageModel.MESSAGE_TYPE.MAN
 import static com.checkin.app.checkin.Data.Message.MessageModel.MESSAGE_TYPE.MANAGER_SESSION_NEW_ORDER;
 import static com.checkin.app.checkin.Data.Message.MessageModel.MESSAGE_TYPE.MANAGER_SESSION_UPDATE_ORDER;
 
-public class ManagerSessionActivity extends AppCompatActivity implements ManagerSessionOrderFragment.ManagerOrdersInteraction {
+public class ManagerSessionActivity extends AppCompatActivity implements
+        ManagerSessionOrderFragment.ManagerOrdersInteraction, SessionMenuActivity.onBackPressListener {
     private static final String TAG = ManagerSessionActivity.class.getSimpleName();
 
     public static final String KEY_SESSION_PK = "manager.session.session_pk";
@@ -131,6 +133,7 @@ public class ManagerSessionActivity extends AppCompatActivity implements Manager
         mEventFragment = ManagerSessionEventFragment.newInstance();
         setupUi();
         setupEventListing();
+        SessionMenuActivity.setOnBackListener(this);
     }
 
     private void setupUi() {
@@ -315,5 +318,10 @@ public class ManagerSessionActivity extends AppCompatActivity implements Manager
                 .putExtra(ManagerSessionInvoiceActivity.KEY_SESSION, mViewModel.getSessionPk())
                 .putExtra(ManagerSessionInvoiceActivity.IS_REQUESTED_CHECKOUT, mSessionData.isRequestedCheckout());
         startActivity(intent);
+    }
+
+    @Override
+    public void onBackPress() {
+        /*This needs to be changed.*/
     }
 }
