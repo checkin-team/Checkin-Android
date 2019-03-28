@@ -22,11 +22,11 @@ public class Constants {
     public static final String FORMAT_SP_KEY_NOTIFICATION_CHANNEL = "com.checkin.app.checkin.Data.Message.notif.%s";
     public static final String SP_TABLE_NOTIFICATION = "com.checkin.app.checkin.Data.Message.notification";
 
-    public static String START_FOREGROUND_ACTION = "ActiveSessionService.startforeground";
-    public static String STOP_FOREGROUND_ACTION = "ActiveSessionService.stopforeground";
-    public static String MENU_ACTION = "ActiveSessionService.menu";
+    public static final String START_FOREGROUND_ACTION = "ActiveSessionService.startforeground";
+    public static final String STOP_FOREGROUND_ACTION = "ActiveSessionService.stopforeground";
+    public static final String MENU_ACTION = "ActiveSessionService.menu";
 
-    public static int FOREGROUND_SERVICE = 501;
+    public static final int FOREGROUND_SERVICE = 501;
 
 
     private final static AtomicInteger atomicInteger = new AtomicInteger(100);
