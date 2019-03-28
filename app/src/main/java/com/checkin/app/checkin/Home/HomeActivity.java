@@ -12,7 +12,7 @@ import android.widget.TextView;
 
 import com.checkin.app.checkin.Account.AccountModel;
 import com.checkin.app.checkin.Account.BaseAccountActivity;
-import com.checkin.app.checkin.Data.Message.ActiveSessionNotification;
+import com.checkin.app.checkin.Data.Message.ActiveSessionNotificationService;
 import com.checkin.app.checkin.Data.Message.Constants;
 import com.checkin.app.checkin.Data.Message.MessageModel;
 import com.checkin.app.checkin.Data.Message.MessageUtils;
@@ -44,10 +44,8 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 
-import static com.checkin.app.checkin.Data.Message.ActiveSessionNotification.ACTIVE_RESTAURANT_LOGO;
-import static com.checkin.app.checkin.Data.Message.ActiveSessionNotification.ACTIVE_RESTAURANT_NAME;
-import static com.checkin.app.checkin.Data.Message.ActiveSessionNotification.ACTIVE_RESTAURANT_PK;
-import static com.checkin.app.checkin.Data.Message.ActiveSessionNotification.ACTIVE_SESSION_PK;
+import static com.checkin.app.checkin.Data.Message.ActiveSessionNotificationService.ACTIVE_RESTAURANT;
+import static com.checkin.app.checkin.Data.Message.ActiveSessionNotificationService.ACTIVE_SESSION_PK;
 
 public class HomeActivity extends BaseAccountActivity implements NavigationView.OnNavigationItemSelectedListener {
     private static final int REQUEST_QR_SCANNER = 212;
@@ -162,17 +160,16 @@ public class HomeActivity extends BaseAccountActivity implements NavigationView.
                 vSessionStatus.setVisibility(View.VISIBLE);
                 tvSessionStatus.setText(resource.data.getLiveStatus());
 
-                Intent serviceIntent = new Intent(this, ActiveSessionNotification.class);
-                serviceIntent.setAction(Constants.STARTFOREGROUND_ACTION);
-                serviceIntent.putExtra(ACTIVE_RESTAURANT_NAME,resource.data.getRestaurant().getDisplayName());
-                serviceIntent.putExtra(ACTIVE_RESTAURANT_LOGO,resource.data.getRestaurant().getDisplayPic());
-                serviceIntent.putExtra(ACTIVE_RESTAURANT_PK,resource.data.getRestaurant().getPk());
+                Intent serviceIntent = new Intent(this, ActiveSessionNotificationService.class);
+                serviceIntent.setAction(Constants.START_FOREGROUND_ACTION);
+                serviceIntent.putExtra(ACTIVE_RESTAURANT,resource.data.getRestaurant());
                 serviceIntent.putExtra(ACTIVE_SESSION_PK,resource.data.getPk());
                 startService(serviceIntent);
+
             } else if (resource.status == Resource.Status.ERROR_NOT_FOUND) {
                 vSessionStatus.setVisibility(View.GONE);
-                Intent serviceIntent = new Intent(this, ActiveSessionNotification.class);
-                serviceIntent.setAction(Constants.STOPFOREGROUND_ACTION);
+                Intent serviceIntent = new Intent(this, ActiveSessionNotificationService.class);
+                serviceIntent.setAction(Constants.STOP_FOREGROUND_ACTION);
                 startService(serviceIntent);
             }
         });

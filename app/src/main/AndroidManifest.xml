@@ -87,7 +87,7 @@
 
         <service android:name=".Maps.FetchAddressIntentService" />
         <service android:name=".Auth.DeviceTokenService" />
-        <service android:name=".Data.Message.ActiveSessionNotification"/>
+        <service android:name=".Data.Message.ActiveSessionNotificationService"/>
 
         <meta-data
             android:name="com.facebook.sdk.ApplicationId"

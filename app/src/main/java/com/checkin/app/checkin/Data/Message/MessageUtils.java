@@ -118,7 +118,6 @@ public class MessageUtils {
             channels = createChannels(CHANNEL_GROUP.RESTAURANT_CUSTOMER, NotificationManager.IMPORTANCE_DEFAULT, CHANNEL.ACTIVE_SESSION_PERSISTENT);
             notificationManager.createNotificationChannels(channels);
 
-//            channels.get(0).setDescription(NOTIFICATION_CHANNEL_D);
             channels.get(0).setLockscreenVisibility(Notification.VISIBILITY_PUBLIC);
 
         }
