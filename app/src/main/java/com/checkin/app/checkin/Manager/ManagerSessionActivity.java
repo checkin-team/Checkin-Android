@@ -44,7 +44,7 @@ import static com.checkin.app.checkin.Data.Message.MessageModel.MESSAGE_TYPE.MAN
 import static com.checkin.app.checkin.Data.Message.MessageModel.MESSAGE_TYPE.MANAGER_SESSION_UPDATE_ORDER;
 
 public class ManagerSessionActivity extends AppCompatActivity implements
-        ManagerSessionOrderFragment.ManagerOrdersInteraction, SessionMenuActivity.onBackPressListener {
+        ManagerSessionOrderFragment.ManagerOrdersInteraction {
     private static final String TAG = ManagerSessionActivity.class.getSimpleName();
 
     public static final String KEY_SESSION_PK = "manager.session.session_pk";
@@ -133,7 +133,6 @@ public class ManagerSessionActivity extends AppCompatActivity implements
         mEventFragment = ManagerSessionEventFragment.newInstance();
         setupUi();
         setupEventListing();
-        SessionMenuActivity.setOnBackListener(this);
     }
 
     private void setupUi() {
@@ -318,10 +317,5 @@ public class ManagerSessionActivity extends AppCompatActivity implements
                 .putExtra(ManagerSessionInvoiceActivity.KEY_SESSION, mViewModel.getSessionPk())
                 .putExtra(ManagerSessionInvoiceActivity.IS_REQUESTED_CHECKOUT, mSessionData.isRequestedCheckout());
         startActivity(intent);
-    }
-
-    @Override
-    public void onBackPress() {
-        /*This needs to be changed.*/
     }
 }

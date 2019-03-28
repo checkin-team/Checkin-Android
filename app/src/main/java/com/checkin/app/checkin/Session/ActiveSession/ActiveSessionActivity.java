@@ -41,8 +41,9 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 
 public class ActiveSessionActivity extends BaseActivity implements
-        ActiveSessionMemberAdapter.SessionMemberInteraction, SessionMenuActivity.onBackPressListener {
-    public static final String SP_INERACT_WITH_US = "sp.interact.with.us";
+        ActiveSessionMemberAdapter.SessionMemberInteraction {
+    public static final String KEY_SP_INTERACT_WITH_US = "sp.interact.with.us";
+    public static final String KEY_INTERACT_WITH_US = "interact.with.us";
     public static final String SP_MENU = "sp.menu";
     private static final int RC_SEARCH_MEMBER = 201;
     @BindView(R.id.rv_session_members)
@@ -299,7 +300,6 @@ public class ActiveSessionActivity extends BaseActivity implements
     public void onListMenu() {
         if (mViewModel.getShopPk() > 0)
             SessionMenuActivity.withSession(this, mViewModel.getShopPk(), null);
-        SessionMenuActivity.setOnBackListener(this);
     }
 
     @OnClick(R.id.rl_container_session_orders)
@@ -379,6 +379,8 @@ public class ActiveSessionActivity extends BaseActivity implements
         MessageUtils.registerLocalReceiver(this, mReceiver, types);
         updateScreen();
         resetEnableViews();
+        if (OnBoardingUtils.isOnBoardingShown(this,KEY_INTERACT_WITH_US))
+            OnBoardingUtils.conditionalOnBoarding(this, KEY_SP_INTERACT_WITH_US, true, new OnBoardingUtils.OnBoardingModel("Interact with waiter here!", tvInteractWithUs));
     }
 
     @Override
@@ -398,10 +400,5 @@ public class ActiveSessionActivity extends BaseActivity implements
         llCallWaiter.setEnabled(true);
         llTableCleaning.setEnabled(true);
         llRefillGlass.setEnabled(true);
-    }
-
-    @Override
-    public void onBackPress() {
-        OnBoardingUtils.conditionalOnBoarding(this, SP_INERACT_WITH_US, true, new OnBoardingUtils.OnBoardingModel("Interact with waiter here!", tvInteractWithUs));
     }
 }

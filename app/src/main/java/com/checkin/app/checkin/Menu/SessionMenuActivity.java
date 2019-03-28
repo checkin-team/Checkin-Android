@@ -49,6 +49,7 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 
 import static com.checkin.app.checkin.Menu.Fragment.MenuGroupsFragment.KEY_SESSION_STATUS;
+import static com.checkin.app.checkin.Session.ActiveSession.ActiveSessionActivity.KEY_INTERACT_WITH_US;
 
 public class SessionMenuActivity extends BaseActivity implements
         MenuItemInteraction, ItemCustomizationFragment.ItemCustomizationInteraction,
@@ -58,7 +59,6 @@ public class SessionMenuActivity extends BaseActivity implements
     private static final String KEY_RESTAURANT_PK = "menu.shop_pk";
     private static final String KEY_SESSION_PK = "menu.session_pk";
     private static final String SESSION_ARG = "session_arg";
-    private static SessionMenuActivity.onBackPressListener mOnBackPressListener = null;
     @BindView(R.id.view_menu_search)
     MaterialSearchView vMenuSearch;
     @BindView(R.id.rv_menu_cart)
@@ -102,20 +102,13 @@ public class SessionMenuActivity extends BaseActivity implements
         context.startActivity(intent);
     }
 
-    public static void setOnBackListener(Context context) {
-        if (context instanceof onBackPressListener) {
-            mOnBackPressListener = (onBackPressListener) context;
-        } else {
-            throw new ClassCastException(context.toString()
-                    + " must implement ActiveSessionActivity.OnItemSelectedListener");
-        }
-    }
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_session_menu);
         ButterKnife.bind(this);
+
+        OnBoardingUtils.setOnBoardingIsShown(this,KEY_INTERACT_WITH_US,true);
 
         Bundle args = getIntent().getBundleExtra(SESSION_ARG);
         mSessionStatus = (SESSION_STATUS) args.getSerializable(KEY_SESSION_STATUS);
@@ -314,7 +307,6 @@ public class SessionMenuActivity extends BaseActivity implements
             super.onBackPressed();
         }
         mViewModel.clearFilters();
-        mOnBackPressListener.onBackPress();
     }
 
     public void closeSearch() {
@@ -438,9 +430,5 @@ public class SessionMenuActivity extends BaseActivity implements
     @Override
     public void resetFilters() {
         vMenuSearch.closeSearch();
-    }
-
-    public interface onBackPressListener {
-        void onBackPress();
     }
 }
