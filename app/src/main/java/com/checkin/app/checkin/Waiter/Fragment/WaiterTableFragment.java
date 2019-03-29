@@ -42,6 +42,8 @@ public class WaiterTableFragment extends BaseFragment {
     TextView tvSessionBill;
     @BindView(R.id.container_waiter_no_member)
     ViewGroup containerWaiterAddContact;
+    @BindView(R.id.container_waiter_members_count)
+    ViewGroup containerMembersCount;
 
     private WaiterTableInteraction mListener;
     private WaiterTableViewModel mViewModel;
@@ -178,9 +180,11 @@ public class WaiterTableFragment extends BaseFragment {
     private void setupTableData(SessionBriefModel data) {
         if (data.getCustomerCount() > 0) {
             containerWaiterAddContact.setVisibility(View.GONE);
+            containerMembersCount.setVisibility(View.VISIBLE);
             tvMembersCount.setText(data.formatCustomerCount());
         } else {
             containerWaiterAddContact.setVisibility(View.VISIBLE);
+            containerMembersCount.setVisibility(View.GONE);
         }
 
         tvSessionBill.setText(Utils.formatCurrencyAmount(requireContext(), data.getBill()));

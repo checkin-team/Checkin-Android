@@ -21,22 +21,20 @@
             android:id="@+id/container_waiter_member_details"
             style="@style/WhiteCardStyle"
             android:layout_width="wrap_content"
-            android:layout_height="@dimen/height_waiter_session_member_details"
+            android:layout_height="wrap_content"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent">
+            app:layout_constraintTop_toTopOf="parent"
+            android:minHeight="@dimen/height_waiter_session_member_details">
 
             <FrameLayout
                 android:layout_width="match_parent"
-                android:layout_height="match_parent">
+                android:layout_height="wrap_content">
 
                 <androidx.constraintlayout.widget.ConstraintLayout
-                    android:id="@+id/container_waiter_members"
+                    android:id="@+id/container_waiter_members_count"
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:paddingStart="@dimen/spacing_small"
-                    android:paddingTop="@dimen/spacing_extra_small"
-                    android:paddingEnd="@dimen/spacing_small"
-                    android:paddingBottom="@dimen/spacing_extra_small">
+                    android:layout_height="wrap_content"
+                    android:padding="@dimen/spacing_tiny">
 
                     <ImageView
                         android:id="@+id/im_waiter_table_members"
@@ -64,14 +62,13 @@
                 <androidx.constraintlayout.widget.ConstraintLayout
                     android:id="@+id/container_waiter_no_member"
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent"
+                    android:layout_height="wrap_content"
                     android:background="@color/white"
                     android:clickable="true"
                     android:focusable="true"
                     android:paddingStart="@dimen/spacing_normal"
-                    android:paddingTop="@dimen/spacing_extra_small"
                     android:paddingEnd="@dimen/spacing_normal"
-                    android:paddingBottom="@dimen/spacing_extra_small"
+                    android:paddingTop="@dimen/spacing_tiny"
                     android:visibility="gone">
 
                     <ImageView
@@ -84,6 +81,7 @@
                         app:layout_constraintTop_toTopOf="parent" />
 
                     <ImageView
+                        android:id="@+id/im_waiter_contact_phone"
                         android:layout_width="@dimen/size_small_icon"
                         android:layout_height="@dimen/size_small_icon"
                         android:contentDescription="@null"
@@ -96,10 +94,11 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="Add Details"
+                        android:layout_marginTop="@dimen/spacing_extra_tiny"
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toBottomOf="@id/im_waiter_contact_email" />
+                        app:layout_constraintTop_toBottomOf="@id/im_waiter_contact_phone" />
 
                 </androidx.constraintlayout.widget.ConstraintLayout>
             </FrameLayout>
@@ -140,6 +139,8 @@
                 android:layout_width="wrap_content"
                 android:layout_height="@dimen/button_height_normal"
                 android:layout_gravity="center_vertical"
+                android:paddingStart="@dimen/spacing_tiny"
+                android:paddingEnd="@dimen/spacing_tiny"
                 android:text="Checkout" />
 
             <ImageButton
