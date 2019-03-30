@@ -118,7 +118,7 @@ public class WaiterRepository extends BaseRepository {
         }.getAsLiveData();
     }
 
-    public LiveData<Resource<List<RestaurantTableModel>>> getShopActiveTables(long shopId) {
+    /*public LiveData<Resource<List<RestaurantTableModel>>> getShopActiveTables(long shopId) {
         return new NetworkBoundResource<List<RestaurantTableModel>, List<RestaurantTableModel>>() {
             @Override
             protected boolean shouldUseLocalDb() {
@@ -129,6 +129,26 @@ public class WaiterRepository extends BaseRepository {
             @Override
             protected LiveData<ApiResponse<List<RestaurantTableModel>>> createCall() {
                 return new RetrofitLiveData<>(mWebService.getRestaurantActiveTables(shopId));
+            }
+
+            @Override
+            protected void saveCallResult(List<RestaurantTableModel> data) {
+
+            }
+        }.getAsLiveData();
+    }*/
+
+    public LiveData<Resource<List<RestaurantTableModel>>> getShopTables(long shopId) {
+        return new NetworkBoundResource<List<RestaurantTableModel>, List<RestaurantTableModel>>() {
+            @Override
+            protected boolean shouldUseLocalDb() {
+                return false;
+            }
+
+            @NonNull
+            @Override
+            protected LiveData<ApiResponse<List<RestaurantTableModel>>> createCall() {
+                return new RetrofitLiveData<>(mWebService.getRestaurantTables(shopId));
             }
 
             @Override

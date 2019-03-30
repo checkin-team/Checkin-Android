@@ -7,6 +7,7 @@ import android.widget.TextView;
 
 import com.checkin.app.checkin.R;
 import com.checkin.app.checkin.Session.Model.RestaurantTableModel;
+import com.checkin.app.checkin.Session.Model.TableSessionModel;
 
 import java.util.List;
 
@@ -20,7 +21,7 @@ public class WaiterEndDrawerTableAdapter extends RecyclerView.Adapter<WaiterEndD
     private List<RestaurantTableModel> mData;
     private WaiterWorkActivity mListener;
 
-    WaiterEndDrawerTableAdapter(WaiterWorkActivity listener){
+    WaiterEndDrawerTableAdapter(WaiterWorkActivity listener) {
         this.mListener = listener;
     }
 
@@ -50,6 +51,10 @@ public class WaiterEndDrawerTableAdapter extends RecyclerView.Adapter<WaiterEndD
         return R.layout.item_waiter_active_table;
     }
 
+    interface OnWaiterEndDrawerTableListener {
+        void onWaiterEndDrawerTable(RestaurantTableModel restaurantTableModel);
+    }
+
     class ViewHolder extends RecyclerView.ViewHolder {
         @BindView(R.id.tv_waiter_table_name)
         TextView tvName;
@@ -70,21 +75,23 @@ public class WaiterEndDrawerTableAdapter extends RecyclerView.Adapter<WaiterEndD
         }
 
         public void bindData(RestaurantTableModel tableModel) {
+            TableSessionModel tableSessionModel = tableModel.getTableSessionModel();
             tvName.setText(tableModel.getTable());
-            if (tableModel.getHost() != null) {
-                tvHost.setText(tableModel.getHost().getDisplayName());
-                viewMask.setVisibility(View.VISIBLE);
+            if (tableSessionModel != null) {
+                if (tableSessionModel.getHost() != null) {
+                    tvHost.setText(tableSessionModel.getHost().getDisplayName());
+                    viewMask.setVisibility(View.VISIBLE);
+                } else {
+                    tvHost.setText("Standard");
+                }
+                tvTimestamp.setText(tableSessionModel.getEvent().formatElapsedTime());
             } else {
-                tvHost.setText("Standard");
+                tvHost.setVisibility(View.GONE);
+                tvTimestamp.setVisibility(View.GONE);
             }
-            tvTimestamp.setText(tableModel.getEvent().formatElapsedTime());
             cvWaiterTable.setOnClickListener(view -> {
                 mListener.onWaiterEndDrawerTable(tableModel);
             });
         }
-    }
-
-    interface OnWaiterEndDrawerTableListener{
-        void onWaiterEndDrawerTable(RestaurantTableModel restaurantTableModel);
     }
 }

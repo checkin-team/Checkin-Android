@@ -14,22 +14,40 @@ public class RestaurantTableModel {
     @JsonProperty("table")
     private String table;
 
+    @Nullable
     @JsonProperty("session")
-    private WaiterEndSessionModel waiterEndSessionModel;
+    private TableSessionModel tableSessionModel;
 
     private int eventCount;
 
     public RestaurantTableModel() {
     }
 
-    public RestaurantTableModel(long qrPk, String table, @Nullable WaiterEndSessionModel waiterEndSessionModel) {
+    public RestaurantTableModel(long qrPk, String table, @Nullable TableSessionModel tableSessionModel) {
         this.qrPk = qrPk;
         this.table = table;
-        this.waiterEndSessionModel = waiterEndSessionModel;
+        this.tableSessionModel = tableSessionModel;
+    }
+
+    public long getQrPk() {
+        return qrPk;
+    }
+
+    public void setQrPk(long qrPk) {
+        this.qrPk = qrPk;
     }
 
     public String getTable() {
         return table;
+    }
+
+    @Nullable
+    public TableSessionModel getTableSessionModel() {
+        return tableSessionModel;
+    }
+
+    public void setTableSessionModel(@Nullable TableSessionModel tableSessionModel) {
+        this.tableSessionModel = tableSessionModel;
     }
 
     public int getEventCount() {

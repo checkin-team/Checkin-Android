@@ -24,6 +24,7 @@ import com.checkin.app.checkin.Session.ActiveSession.Chat.SessionChatModel;
 import com.checkin.app.checkin.Session.Model.EventBriefModel;
 import com.checkin.app.checkin.Session.Model.RestaurantTableModel;
 import com.checkin.app.checkin.Session.Model.SessionOrderedItemModel;
+import com.checkin.app.checkin.Session.Model.TableSessionModel;
 import com.checkin.app.checkin.Shop.ShopModel;
 import com.checkin.app.checkin.Utility.DynamicSwipableViewPager;
 import com.checkin.app.checkin.Utility.EndDrawerToggle;
@@ -100,13 +101,23 @@ public class WaiterWorkActivity extends BaseAccountActivity implements
                 case WAITER_SESSION_NEW:
                     String tableName = message.getRawData().getSessionTableName();
                     eventModel = EventBriefModel.getFromManagerEventModel(message.getRawData().getSessionEventBrief());
-                    RestaurantTableModel tableModel = new RestaurantTableModel(message.getObject().getPk(), tableName, null, eventModel);
+                    TableSessionModel tableSession = new RestaurantTableModel().getTableSessionModel();
+                    if (tableSession != null) {
+                        tableSession.setEvent(eventModel);
+                    }
+                    //RestaurantTableModel tableModel = new RestaurantTableModel(message.getObject().getPk(), tableName, null, eventModel);
+                    RestaurantTableModel tableModel = new RestaurantTableModel(message.getObject().getPk(), tableName,tableSession);
+                    TableSessionModel tableSessionModel = tableModel.getTableSessionModel();
                     if (message.getActor().getType() == MessageObjectModel.MESSAGE_OBJECT_TYPE.RESTAURANT_MEMBER) {
                         user = message.getActor().getBriefModel();
-                        tableModel.setHost(user);
+                        if (tableSessionModel != null) {
+                            tableSessionModel.setHost(user);
+                        }
                     }
                     WaiterWorkActivity.this.addTable(tableModel);
-                    WaiterWorkActivity.this.updateTableStatus(tableModel.getPk());
+                    if (tableSessionModel != null) {
+                        WaiterWorkActivity.this.updateTableStatus(tableSessionModel.getPk());
+                    }
                     break;
                 case WAITER_SESSION_NEW_ORDER:
                     orderedItemModel = message.getRawData().getSessionOrderedItem();
@@ -185,7 +196,7 @@ public class WaiterWorkActivity extends BaseAccountActivity implements
 
     private void fetchData() {
         long shopPk = getIntent().getLongExtra(KEY_SHOP_PK, 0L);
-        mViewModel.fetchShopActiveTables(shopPk);
+        mViewModel.fetchShopTables(shopPk);
         mViewModel.fetchWaiterServedTables();
         mViewModel.fetchWaiterStats();
     }
@@ -263,13 +274,12 @@ public class WaiterWorkActivity extends BaseAccountActivity implements
             if (listResource.status == Status.SUCCESS && listResource.data != null)
                 unassignedTableAdapter.setData(listResource.data);
         });
-        // TODO: 30/3/19 This needs to be changed after some time.
-//        mViewModel.getShopUnassignedTables().observe(this, listResource -> {
-//            if (listResource == null)
-//                return;
-//            if (listResource.status == Status.SUCCESS && listResource.data != null)
-//                unassignedTableAdapter.setData(listResource.data);
-//        });
+        mViewModel.getShopInactiveTables().observe(this, listResource -> {
+            if (listResource == null)
+                return;
+            if (listResource.status == Status.SUCCESS && listResource.data != null)
+                unassignedTableAdapter.setData(listResource.data);
+        });
     }
 
     private void setupUI() {

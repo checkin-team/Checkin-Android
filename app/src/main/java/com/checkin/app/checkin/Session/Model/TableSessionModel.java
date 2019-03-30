@@ -9,7 +9,7 @@ import java.util.Date;
 import androidx.annotation.Nullable;
 
 @JsonIgnoreProperties(ignoreUnknown = true)
-public class WaiterEndSessionModel {
+public class TableSessionModel {
     @JsonProperty("pk")
     private long pk;
 
@@ -62,7 +62,7 @@ public class WaiterEndSessionModel {
     @Override
     public boolean equals(@Nullable Object obj) {
         try {
-            WaiterEndSessionModel table = ((WaiterEndSessionModel) obj);
+            TableSessionModel table = ((TableSessionModel) obj);
             return table != null && table.getPk() == this.getPk();
         } catch (ClassCastException ignored) {
             return false;

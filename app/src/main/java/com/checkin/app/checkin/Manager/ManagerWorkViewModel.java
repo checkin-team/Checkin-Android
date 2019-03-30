@@ -8,6 +8,7 @@ import com.checkin.app.checkin.Data.Resource;
 import com.checkin.app.checkin.Manager.Model.ManagerStatsModel;
 import com.checkin.app.checkin.Session.Model.CheckoutStatusModel;
 import com.checkin.app.checkin.Session.Model.RestaurantTableModel;
+import com.checkin.app.checkin.Session.Model.TableSessionModel;
 import com.checkin.app.checkin.Waiter.WaiterRepository;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 
@@ -36,7 +37,8 @@ public class ManagerWorkViewModel extends BaseViewModel {
 
     public void fetchActiveTables(long restaurantId) {
         mShopPk = restaurantId;
-        mActiveTablesData.addSource(mWaiterRepository.getShopActiveTables(restaurantId), mActiveTablesData::setValue);
+        //mActiveTablesData.addSource(mWaiterRepository.getShopActiveTables(restaurantId), mActiveTablesData::setValue);
+        mActiveTablesData.addSource(mWaiterRepository.getShopTables(restaurantId), mActiveTablesData::setValue);
     }
 
     public void fetchStatistics() {
@@ -70,7 +72,8 @@ public class ManagerWorkViewModel extends BaseViewModel {
         if (resource == null || resource.data == null)
             return -1;
         for (int i = 0; i < resource.data.size(); i++) {
-            if (resource.data.get(i).getPk() == sessionPk) {
+            TableSessionModel tableSessionModel = resource.data.get(i).getTableSessionModel();
+            if (tableSessionModel != null && tableSessionModel.getPk() == sessionPk) {
                 return i;
             }
         }
@@ -106,7 +109,8 @@ public class ManagerWorkViewModel extends BaseViewModel {
             return;
         int pos = -1;
         for (int i = 0; i < resource.data.size(); i++) {
-            if (resource.data.get(i).getPk() == sessionPk) {
+            TableSessionModel tableSessionModel = resource.data.get(i).getTableSessionModel();
+            if (tableSessionModel != null && tableSessionModel.getPk() == sessionPk) {
                 pos = i;
                 break;
             }

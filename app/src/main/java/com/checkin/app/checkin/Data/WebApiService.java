@@ -204,7 +204,7 @@ public interface WebApiService {
     Call<List<RestaurantTableModel>> getRestaurantActiveTables(@Path("restaurant_id") long restaurantId);*/
 
     @GET("sessions/active/restaurants/{restaurant_id}/tables/")
-    Call<List<RestaurantTableModel>> getRestaurantActiveTables(@Path("restaurant_id") long restaurantId);
+    Call<List<RestaurantTableModel>> getRestaurantTables(@Path("restaurant_id") long restaurantId);
 
     @GET("sessions/{session_id}/events/waiter/")
     Call<List<WaiterEventModel>> getWaiterSessionEvents(@Path("session_id") long sessionId);
