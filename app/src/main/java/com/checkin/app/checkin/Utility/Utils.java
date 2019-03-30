@@ -6,9 +6,11 @@ import android.animation.ArgbEvaluator;
 import android.animation.ObjectAnimator;
 import android.animation.ValueAnimator;
 import android.app.Activity;
+import android.app.AlertDialog;
 import android.content.ComponentName;
 import android.content.ContentUris;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.res.ColorStateList;
 import android.content.res.Resources;
@@ -41,6 +43,7 @@ import android.widget.Toast;
 
 import com.checkin.app.checkin.Home.HomeActivity;
 import com.checkin.app.checkin.R;
+import com.checkin.app.checkin.Waiter.WaiterWorkActivity;
 import com.golovin.fluentstackbar.FluentSnackbar;
 import com.google.android.material.snackbar.Snackbar;
 import com.google.android.material.tabs.TabLayout;
@@ -93,6 +96,23 @@ public class Utils {
                 }
             }
         }
+    }
+
+    public static void createDialogTable(Context context){
+        AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(context);
+        alertDialogBuilder.setTitle("Table").setMessage("Perform your action here.").setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int which) {
+                if (context instanceof WaiterWorkActivity){
+                    ((WaiterWorkActivity) context).performAction();
+                }
+            }
+        }).setNegativeButton("No", new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int which) {
+                if (context instanceof WaiterWorkActivity){
+                    ((WaiterWorkActivity) context).performAction();
+                }
+            }
+        }).show();
     }
 
     public static void navigateBackToHome(Context context) {

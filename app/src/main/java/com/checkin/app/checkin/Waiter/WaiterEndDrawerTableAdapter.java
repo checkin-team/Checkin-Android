@@ -1,7 +1,5 @@
 package com.checkin.app.checkin.Waiter;
 
-import androidx.annotation.NonNull;
-import androidx.recyclerview.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -12,11 +10,19 @@ import com.checkin.app.checkin.Session.Model.RestaurantTableModel;
 
 import java.util.List;
 
+import androidx.annotation.NonNull;
+import androidx.cardview.widget.CardView;
+import androidx.recyclerview.widget.RecyclerView;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
 public class WaiterEndDrawerTableAdapter extends RecyclerView.Adapter<WaiterEndDrawerTableAdapter.ViewHolder> {
     private List<RestaurantTableModel> mData;
+    private WaiterWorkActivity mListener;
+
+    WaiterEndDrawerTableAdapter(WaiterWorkActivity listener){
+        this.mListener = listener;
+    }
 
     @NonNull
     @Override
@@ -53,6 +59,10 @@ public class WaiterEndDrawerTableAdapter extends RecyclerView.Adapter<WaiterEndD
         TextView tvTimestamp;
         @BindView(R.id.view_waiter_table_mask)
         View viewMask;
+        @BindView(R.id.container_waiter_table_name)
+        CardView cvWaiterTableName;
+        @BindView(R.id.container_waiter_table)
+        CardView cvWaiterTable;
 
         ViewHolder(View v) {
             super(v);
@@ -68,6 +78,13 @@ public class WaiterEndDrawerTableAdapter extends RecyclerView.Adapter<WaiterEndD
                 tvHost.setText("Standard");
             }
             tvTimestamp.setText(tableModel.getEvent().formatElapsedTime());
+            cvWaiterTable.setOnClickListener(view -> {
+                mListener.onWaiterEndDrawerTable(tableModel);
+            });
         }
+    }
+
+    interface OnWaiterEndDrawerTableListener{
+        void onWaiterEndDrawerTable(RestaurantTableModel restaurantTableModel);
     }
 }

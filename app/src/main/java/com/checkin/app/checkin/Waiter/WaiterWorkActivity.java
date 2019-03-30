@@ -54,7 +54,8 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 
-public class WaiterWorkActivity extends BaseAccountActivity implements WaiterTableFragment.WaiterTableInteraction {
+public class WaiterWorkActivity extends BaseAccountActivity implements
+        WaiterTableFragment.WaiterTableInteraction, WaiterEndDrawerTableAdapter.OnWaiterEndDrawerTableListener {
     private static final String TAG = WaiterWorkActivity.class.getSimpleName();
 
     public static final String KEY_SHOP_PK = "waiter.shop_pk";
@@ -73,6 +74,8 @@ public class WaiterWorkActivity extends BaseAccountActivity implements WaiterTab
     RecyclerView rvAssignedTables;
     @BindView(R.id.rv_waiter_drawer_unassigned_tables)
     RecyclerView rvUnassignedTables;
+    @BindView(R.id.rv_waiter_drawer_inactive_tables)
+    RecyclerView rvInactiveTables;
 
     private WaiterWorkViewModel mViewModel;
     private WaiterTablePagerAdapter mFragmentAdapter;
@@ -236,13 +239,16 @@ public class WaiterWorkActivity extends BaseAccountActivity implements WaiterTab
     }
 
     private void setupShopAssignedTables() {
-        final WaiterEndDrawerTableAdapter assignedTableAdapter = new WaiterEndDrawerTableAdapter();
-        final WaiterEndDrawerTableAdapter unassignedTableAdapter = new WaiterEndDrawerTableAdapter();
+        final WaiterEndDrawerTableAdapter assignedTableAdapter = new WaiterEndDrawerTableAdapter(this);
+        final WaiterEndDrawerTableAdapter unassignedTableAdapter = new WaiterEndDrawerTableAdapter(this);
+        final WaiterEndDrawerTableAdapter inactiveTableAdapter = new WaiterEndDrawerTableAdapter(this);
         rvAssignedTables.setLayoutManager(new LinearLayoutManager(this, RecyclerView.VERTICAL, false));
         rvUnassignedTables.setLayoutManager(new LinearLayoutManager(this, RecyclerView.VERTICAL, false));
+        rvInactiveTables.setLayoutManager(new LinearLayoutManager(this, RecyclerView.VERTICAL, false));
 
         rvAssignedTables.setAdapter(assignedTableAdapter);
         rvUnassignedTables.setAdapter(unassignedTableAdapter);
+        rvInactiveTables.setAdapter(inactiveTableAdapter);
 
         mViewModel.getShopAssignedTables().observe(this, listResource -> {
             if (listResource == null)
@@ -257,6 +263,13 @@ public class WaiterWorkActivity extends BaseAccountActivity implements WaiterTab
             if (listResource.status == Status.SUCCESS && listResource.data != null)
                 unassignedTableAdapter.setData(listResource.data);
         });
+        // TODO: 30/3/19 This needs to be changed after some time.
+//        mViewModel.getShopUnassignedTables().observe(this, listResource -> {
+//            if (listResource == null)
+//                return;
+//            if (listResource.status == Status.SUCCESS && listResource.data != null)
+//                unassignedTableAdapter.setData(listResource.data);
+//        });
     }
 
     private void setupUI() {
@@ -397,6 +410,14 @@ public class WaiterWorkActivity extends BaseAccountActivity implements WaiterTab
     @Override
     protected AccountModel.ACCOUNT_TYPE[] getAccountTypes() {
         return new AccountModel.ACCOUNT_TYPE[]{AccountModel.ACCOUNT_TYPE.RESTAURANT_WAITER};
+    }
+
+    @Override
+    public void onWaiterEndDrawerTable(RestaurantTableModel restaurantTableModel) {
+        Log.d("Table Model",restaurantTableModel.toString());
+    }
+
+    public void performAction() {
     }
 
     private static class WaiterTablePagerAdapter extends FragmentStatePagerAdapter {
