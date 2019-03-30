@@ -10,6 +10,7 @@ import com.checkin.app.checkin.Misc.BriefModel;
 import com.checkin.app.checkin.R;
 import com.checkin.app.checkin.Session.ActiveSession.Chat.SessionEventBasicModel;
 import com.checkin.app.checkin.Session.Model.RestaurantTableModel;
+import com.checkin.app.checkin.Session.Model.TableSessionModel;
 import com.checkin.app.checkin.Utility.Utils;
 
 import java.util.List;
@@ -93,34 +94,35 @@ public class ManagerWorkTableAdapter extends RecyclerView.Adapter<ManagerWorkTab
         public void bindData(RestaurantTableModel data) {
             mTableModel = data;
 
-            BriefModel host = data.getHost();
+            TableSessionModel tableSessionModel = data.getTableSessionModel();
 
-            if (host != null){
-                tvShopManagerTableName.setText(host.getDisplayName());
-                Utils.loadImageOrDefault(ivShopManagerTableImage, host.getDisplayPic(), R.drawable.ic_waiter);
-            } else {
-                ivShopManagerTableImage.setImageDrawable(ivShopManagerTableIcon.getContext().getResources().getDrawable(R.drawable.ic_waiter));
-                tvShopManagerTableName.setText(R.string.waiter_unassigned);
+            if (tableSessionModel != null){
+                BriefModel host = tableSessionModel.getHost();
+                if (host != null){
+                    tvShopManagerTableName.setText(host.getDisplayName());
+                    Utils.loadImageOrDefault(ivShopManagerTableImage, host.getDisplayPic(), R.drawable.ic_waiter);
+                } else {
+                    ivShopManagerTableImage.setImageDrawable(ivShopManagerTableIcon.getContext().getResources().getDrawable(R.drawable.ic_waiter));
+                    tvShopManagerTableName.setText(R.string.waiter_unassigned);
+                }
+                if (data.getEventCount() > 0) {
+                    tvEventBadge.setText(data.formatEventCount());
+                    tvEventBadge.setVisibility(View.VISIBLE);
+                } else tvEventBadge.setVisibility(View.GONE);
+                ivShopManagerTableIcon.setImageResource(SessionEventBasicModel.getEventIcon(
+                        tableSessionModel.getEvent().getType(), tableSessionModel.getEvent().getService(), tableSessionModel.getEvent().getConcern()));
+                tvShopManagerTableTime.setText(tableSessionModel.getEvent().formatTimestamp());
+                tvShopManagerTableNumber.setText(data.getTable());
+                tvShopManagerTableDetail.setText(tableSessionModel.getEvent().getMessage());
+
+                if (tableSessionModel.isRequestedCheckout()){
+                    containerSessionEnd.setVisibility(View.VISIBLE);
+                    containerSessionActive.setVisibility(View.GONE);
+                }else {
+                    containerSessionActive.setVisibility(View.VISIBLE);
+                    containerSessionEnd.setVisibility(View.GONE);
+                }
             }
-
-            if (data.getEventCount() > 0) {
-                tvEventBadge.setText(data.formatEventCount());
-                tvEventBadge.setVisibility(View.VISIBLE);
-            } else tvEventBadge.setVisibility(View.GONE);
-            ivShopManagerTableIcon.setImageResource(SessionEventBasicModel.getEventIcon(
-                    data.getEvent().getType(), data.getEvent().getService(), data.getEvent().getConcern()));
-            tvShopManagerTableTime.setText(data.getEvent().formatTimestamp());
-            tvShopManagerTableNumber.setText(data.getTable());
-            tvShopManagerTableDetail.setText(data.getEvent().getMessage());
-
-            if (data.isRequestedCheckout()){
-                containerSessionEnd.setVisibility(View.VISIBLE);
-                containerSessionActive.setVisibility(View.GONE);
-            }else {
-                containerSessionActive.setVisibility(View.VISIBLE);
-                containerSessionEnd.setVisibility(View.GONE);
-            }
-
         }
 
         @OnClick(R.id.btn_manager_table_session_done)

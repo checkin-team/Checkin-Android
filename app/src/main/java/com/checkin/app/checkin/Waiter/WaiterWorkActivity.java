@@ -1,5 +1,6 @@
 package com.checkin.app.checkin.Waiter;
 
+import android.app.AlertDialog;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
@@ -24,6 +25,7 @@ import com.checkin.app.checkin.Session.ActiveSession.Chat.SessionChatModel;
 import com.checkin.app.checkin.Session.Model.EventBriefModel;
 import com.checkin.app.checkin.Session.Model.RestaurantTableModel;
 import com.checkin.app.checkin.Session.Model.SessionOrderedItemModel;
+import com.checkin.app.checkin.Session.Model.TableSessionModel;
 import com.checkin.app.checkin.Shop.ShopModel;
 import com.checkin.app.checkin.Utility.DynamicSwipableViewPager;
 import com.checkin.app.checkin.Utility.EndDrawerToggle;
@@ -54,11 +56,11 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 
-public class WaiterWorkActivity extends BaseAccountActivity implements WaiterTableFragment.WaiterTableInteraction {
-    private static final String TAG = WaiterWorkActivity.class.getSimpleName();
-
+public class WaiterWorkActivity extends BaseAccountActivity implements
+        WaiterTableFragment.WaiterTableInteraction, WaiterEndDrawerTableAdapter.OnTableClickListener {
     public static final String KEY_SHOP_PK = "waiter.shop_pk";
     public static final String KEY_SESSION_PK = "waiter.session_pk";
+    private static final String TAG = WaiterWorkActivity.class.getSimpleName();
     private static final int REQUEST_QR_SCANNER = 121;
 
     @BindView(R.id.toolbar_waiter)
@@ -73,11 +75,11 @@ public class WaiterWorkActivity extends BaseAccountActivity implements WaiterTab
     RecyclerView rvAssignedTables;
     @BindView(R.id.rv_waiter_drawer_unassigned_tables)
     RecyclerView rvUnassignedTables;
+    @BindView(R.id.rv_waiter_drawer_inactive_tables)
+    RecyclerView rvInactiveTables;
 
     private WaiterWorkViewModel mViewModel;
     private WaiterTablePagerAdapter mFragmentAdapter;
-    private long sessionPk;
-
     private final BroadcastReceiver mReceiver = new BroadcastReceiver() {
         @Override
         public void onReceive(Context context, Intent intent) {
@@ -97,13 +99,22 @@ public class WaiterWorkActivity extends BaseAccountActivity implements WaiterTab
                 case WAITER_SESSION_NEW:
                     String tableName = message.getRawData().getSessionTableName();
                     eventModel = EventBriefModel.getFromManagerEventModel(message.getRawData().getSessionEventBrief());
-                    RestaurantTableModel tableModel = new RestaurantTableModel(message.getObject().getPk(), tableName, null, eventModel);
+                    TableSessionModel tableSession = new RestaurantTableModel().getTableSessionModel();
+                    if (tableSession != null) {
+                        tableSession.setEvent(eventModel);
+                    }
+                    RestaurantTableModel tableModel = new RestaurantTableModel(message.getObject().getPk(), tableName, tableSession);
+                    TableSessionModel tableSessionModel = tableModel.getTableSessionModel();
                     if (message.getActor().getType() == MessageObjectModel.MESSAGE_OBJECT_TYPE.RESTAURANT_MEMBER) {
                         user = message.getActor().getBriefModel();
-                        tableModel.setHost(user);
+                        if (tableSessionModel != null) {
+                            tableSessionModel.setHost(user);
+                        }
                     }
                     WaiterWorkActivity.this.addTable(tableModel);
-                    WaiterWorkActivity.this.updateTableStatus(tableModel.getPk());
+                    if (tableSessionModel != null) {
+                        WaiterWorkActivity.this.updateTableStatus(tableSessionModel.getPk());
+                    }
                     break;
                 case WAITER_SESSION_NEW_ORDER:
                     orderedItemModel = message.getRawData().getSessionOrderedItem();
@@ -147,6 +158,7 @@ public class WaiterWorkActivity extends BaseAccountActivity implements WaiterTab
             }
         }
     };
+    private long sessionPk;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -160,6 +172,17 @@ public class WaiterWorkActivity extends BaseAccountActivity implements WaiterTab
         setupTableFragments();
         fetchData();
         setupDrawer();
+
+        mViewModel.getNewWaiterSession().observe(this, resource -> {
+            if (resource == null)
+                return;
+            if (resource.status == Status.SUCCESS && resource.data != null) {
+                //Utils.toast(this, resource.data.toString());
+                updateScreen();
+            } else if (resource.status != Status.LOADING) {
+                Utils.toast(this, resource.message);
+            }
+        });
     }
 
     private void setupDrawer() {
@@ -182,7 +205,7 @@ public class WaiterWorkActivity extends BaseAccountActivity implements WaiterTab
 
     private void fetchData() {
         long shopPk = getIntent().getLongExtra(KEY_SHOP_PK, 0L);
-        mViewModel.fetchShopActiveTables(shopPk);
+        mViewModel.fetchShopTables(shopPk);
         mViewModel.fetchWaiterServedTables();
         mViewModel.fetchWaiterStats();
     }
@@ -236,13 +259,16 @@ public class WaiterWorkActivity extends BaseAccountActivity implements WaiterTab
     }
 
     private void setupShopAssignedTables() {
-        final WaiterEndDrawerTableAdapter assignedTableAdapter = new WaiterEndDrawerTableAdapter();
-        final WaiterEndDrawerTableAdapter unassignedTableAdapter = new WaiterEndDrawerTableAdapter();
+        final WaiterEndDrawerTableAdapter assignedTableAdapter = new WaiterEndDrawerTableAdapter(this);
+        final WaiterEndDrawerTableAdapter unassignedTableAdapter = new WaiterEndDrawerTableAdapter(this);
+        final WaiterEndDrawerTableAdapter inactiveTableAdapter = new WaiterEndDrawerTableAdapter(this);
         rvAssignedTables.setLayoutManager(new LinearLayoutManager(this, RecyclerView.VERTICAL, false));
         rvUnassignedTables.setLayoutManager(new LinearLayoutManager(this, RecyclerView.VERTICAL, false));
+        rvInactiveTables.setLayoutManager(new LinearLayoutManager(this, RecyclerView.VERTICAL, false));
 
         rvAssignedTables.setAdapter(assignedTableAdapter);
         rvUnassignedTables.setAdapter(unassignedTableAdapter);
+        rvInactiveTables.setAdapter(inactiveTableAdapter);
 
         mViewModel.getShopAssignedTables().observe(this, listResource -> {
             if (listResource == null)
@@ -256,6 +282,12 @@ public class WaiterWorkActivity extends BaseAccountActivity implements WaiterTab
                 return;
             if (listResource.status == Status.SUCCESS && listResource.data != null)
                 unassignedTableAdapter.setData(listResource.data);
+        });
+        mViewModel.getShopInactiveTables().observe(this, listResource -> {
+            if (listResource == null)
+                return;
+            if (listResource.status == Status.SUCCESS && listResource.data != null)
+                inactiveTableAdapter.setData(listResource.data);
         });
     }
 
@@ -397,6 +429,26 @@ public class WaiterWorkActivity extends BaseAccountActivity implements WaiterTab
     @Override
     protected AccountModel.ACCOUNT_TYPE[] getAccountTypes() {
         return new AccountModel.ACCOUNT_TYPE[]{AccountModel.ACCOUNT_TYPE.RESTAURANT_WAITER};
+    }
+
+    @Override
+    public void onTableClick(RestaurantTableModel restaurantTableModel) {
+        if (restaurantTableModel != null) {
+            newWaiterSessionDialog(restaurantTableModel.getQrPk(), restaurantTableModel.getTable());
+        } else {
+            Log.d(TAG, "RestaurantTableModel is null.");
+        }
+    }
+
+    private void newWaiterSessionDialog(long qrPk, String tableName) {
+        AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(this);
+        alertDialogBuilder
+                .setTitle(tableName)
+                .setMessage("Do you want to be host of this table?")
+                .setPositiveButton("Yes", (dialog, which) -> {
+                    mViewModel.sendNewWaiterSession(qrPk);
+                }).setNegativeButton("No", (dialog, which) -> dialog.cancel())
+                .show();
     }
 
     private static class WaiterTablePagerAdapter extends FragmentStatePagerAdapter {
