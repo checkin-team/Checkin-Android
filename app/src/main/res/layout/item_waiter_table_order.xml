@@ -133,7 +133,7 @@
 
                 <View
                     android:layout_width="match_parent"
-                    android:layout_height="1.5dp"
+                    android:layout_height="@dimen/height_horizontal_view"
                     android:background="@drawable/background_bottom_inner_shadow"
                     android:layout_marginTop="@dimen/spacing_normal"/>
 
