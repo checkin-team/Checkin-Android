@@ -2,6 +2,7 @@ package com.checkin.app.checkin.Search;
 
 import androidx.lifecycle.ViewModelProviders;
 import android.content.Intent;
+import android.os.Build;
 import android.os.Bundle;
 import androidx.annotation.Nullable;
 import com.google.android.material.tabs.TabLayout;
@@ -115,7 +116,7 @@ public class SearchActivity extends AppCompatActivity implements SearchResultInt
 
     private void setupSearch() {
         vSearch.setStartFromRight(false);
-        vSearch.setBackIcon(getDrawable(R.drawable.ic_back_grey));
+        vSearch.setBackIcon(getResources().getDrawable(R.drawable.ic_back_grey));
         vSearch.setOnQueryTextListener(new MaterialSearchView.OnQueryTextListener() {
             @Override
             public boolean onQueryTextSubmit(String query) {
