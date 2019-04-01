@@ -23,7 +23,7 @@ public class SingleBackEditText extends AppCompatEditText {
     @Override
     public boolean onKeyPreIme(int keyCode, KeyEvent event) {
         if (keyCode == KeyEvent.KEYCODE_BACK) {
-            Utils.hideSoftKeyboard(getContext());
+            Utils.setKeyboardVisibility(this, false);
         }
         return false;
     }

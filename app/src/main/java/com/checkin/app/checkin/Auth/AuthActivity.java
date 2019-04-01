@@ -221,7 +221,7 @@ public class AuthActivity extends AppCompatActivity implements AuthFragmentInter
 
     private boolean canLogin() {
         if (!cbReadEula.isChecked()) {
-            Utils.hideSoftKeyboard(this);
+            Utils.setKeyboardVisibility(cbReadEula, false);
             Utils.errorSnack(this, "Need to accept Terms & Condition.");
             return false;
         }

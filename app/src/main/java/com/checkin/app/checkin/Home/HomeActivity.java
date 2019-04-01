@@ -4,6 +4,7 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
@@ -27,7 +28,11 @@ import com.checkin.app.checkin.User.Private.UserPrivateProfileFragment;
 import com.checkin.app.checkin.User.Private.UserViewModel;
 import com.checkin.app.checkin.User.UserModel;
 import com.checkin.app.checkin.Utility.DynamicSwipableViewPager;
+import com.checkin.app.checkin.Utility.OnBoardingUtils;
+import com.checkin.app.checkin.Utility.OnBoardingUtils.OnBoardingModel;
 import com.checkin.app.checkin.Utility.Utils;
+import com.getkeepsafe.taptargetview.TapTarget;
+import com.getkeepsafe.taptargetview.TapTargetSequence;
 import com.google.android.material.navigation.NavigationView;
 import com.google.android.material.tabs.TabLayout;
 
@@ -48,8 +53,8 @@ import static com.checkin.app.checkin.Data.Message.ActiveSessionNotificationServ
 import static com.checkin.app.checkin.Data.Message.ActiveSessionNotificationService.ACTIVE_SESSION_PK;
 
 public class HomeActivity extends BaseAccountActivity implements NavigationView.OnNavigationItemSelectedListener {
+    public static final String SP_QR_SCANNER = "qrscanner";
     private static final int REQUEST_QR_SCANNER = 212;
-
     @BindView(R.id.drawer_home)
     DrawerLayout drawerLayout;
     @BindView(R.id.iv_home_navigation)
@@ -58,17 +63,14 @@ public class HomeActivity extends BaseAccountActivity implements NavigationView.
     TabLayout tabLayout;
     @BindView(R.id.vp_home)
     DynamicSwipableViewPager vpHome;
-
     @BindView(R.id.container_home_session_status)
     ViewGroup vSessionStatus;
     @BindView(R.id.tv_home_session_active_status)
     TextView tvSessionStatus;
-
     ImageView imTabUserIcon;
-
     private HomeViewModel mViewModel;
     private UserViewModel mUserViewModel;
-
+    private TapTargetSequence.Listener mListener;
     private BroadcastReceiver mReceiver = new BroadcastReceiver() {
         @Override
         public void onReceive(Context context, Intent intent) {
@@ -110,11 +112,10 @@ public class HomeActivity extends BaseAccountActivity implements NavigationView.
             }
         });
 
-        getNavAccount().setNavigationItemSelectedListener(this);
-
         initRefreshScreen(R.id.sr_home);
-
+        getNavAccount().setNavigationItemSelectedListener(this);
         setup();
+        explainQr();
     }
 
     @Override
@@ -175,6 +176,14 @@ public class HomeActivity extends BaseAccountActivity implements NavigationView.
         });
 
         mViewModel.fetchSessionStatus();
+    }
+
+    private void explainQr() {
+        TabLayout.Tab tab = tabLayout.getTabAt(1);
+        if (tab != null) {
+            View qrView = tab.getCustomView();
+            OnBoardingUtils.conditionalOnBoarding(this,SP_QR_SCANNER,true, new OnBoardingModel("Scan Checkin QR!", qrView));
+        }
     }
 
     @OnClick(R.id.iv_home_navigation)

@@ -119,6 +119,7 @@ public class UserPrivateProfileFragment extends BaseFragment {
         switch (view.getId()) {
             case R.id.btn_user_private_add_logo:
                 Intent intent = new Intent(requireContext(), SelectCropImageActivity.class);
+                intent.putExtra(SelectCropImageActivity.KEY_FILE_SIZE_IN_MB,4L);
                 startActivityForResult(intent, SelectCropImageActivity.RC_CROP_IMAGE);
                 break;
             case R.id.btn_user_private_edit:

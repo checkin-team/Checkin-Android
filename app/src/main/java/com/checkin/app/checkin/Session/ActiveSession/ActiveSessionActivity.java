@@ -29,6 +29,7 @@ import com.checkin.app.checkin.Session.ActiveSession.Chat.SessionChatModel;
 import com.checkin.app.checkin.Session.Model.ActiveSessionModel;
 import com.checkin.app.checkin.Session.Model.SessionCustomerModel;
 import com.checkin.app.checkin.Session.Model.SessionOrderedItemModel;
+import com.checkin.app.checkin.Utility.OnBoardingUtils;
 import com.checkin.app.checkin.Utility.Utils;
 
 import androidx.annotation.Nullable;
@@ -39,9 +40,12 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 
-public class ActiveSessionActivity extends BaseActivity implements ActiveSessionMemberAdapter.SessionMemberInteraction {
+public class ActiveSessionActivity extends BaseActivity implements
+        ActiveSessionMemberAdapter.SessionMemberInteraction {
+    public static final String KEY_SP_INTERACT_WITH_US = "sp.interact.with.us";
+    public static final String KEY_INTERACT_WITH_US = "interact.with.us";
+    public static final String SP_MENU = "sp.menu";
     private static final int RC_SEARCH_MEMBER = 201;
-
     @BindView(R.id.rv_session_members)
     RecyclerView rvMembers;
     @BindView(R.id.tv_active_session_bill)
@@ -54,7 +58,6 @@ public class ActiveSessionActivity extends BaseActivity implements ActiveSession
     ImageView imWaiterPic;
     @BindView(R.id.container_as_actions_bottom)
     ViewGroup containerBottomActions;
-
     @BindView(R.id.tv_as_order_new_count)
     TextView tvCountOrdersNew;
     @BindView(R.id.tv_as_order_progress_count)
@@ -73,11 +76,9 @@ public class ActiveSessionActivity extends BaseActivity implements ActiveSession
     LinearLayout llTableCleaning;
     @BindView(R.id.ll_refill_glass_button)
     LinearLayout llRefillGlass;
-
+    @BindView(R.id.tv_interact_with_us)
+    TextView tvInteractWithUs;
     private ActiveSessionViewModel mViewModel;
-    private ActiveSessionMemberAdapter mSessionMembersAdapter;
-    private ActiveSessionViewOrdersFragment mOrdersFragment;
-
     private final BroadcastReceiver mReceiver = new BroadcastReceiver() {
         @Override
         public void onReceive(Context context, Intent intent) {
@@ -126,6 +127,8 @@ public class ActiveSessionActivity extends BaseActivity implements ActiveSession
             }
         }
     };
+    private ActiveSessionMemberAdapter mSessionMembersAdapter;
+    private ActiveSessionViewOrdersFragment mOrdersFragment;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -141,6 +144,7 @@ public class ActiveSessionActivity extends BaseActivity implements ActiveSession
         mViewModel.fetchActiveSessionDetail();
         mViewModel.fetchSessionOrders();
         mOrdersFragment = ActiveSessionViewOrdersFragment.newInstance();
+        explainSession();
     }
 
     private void setupObservers() {
@@ -231,6 +235,12 @@ public class ActiveSessionActivity extends BaseActivity implements ActiveSession
         initRefreshScreen(R.id.sr_active_session);
     }
 
+    private void explainSession() {
+        OnBoardingUtils.conditionalOnBoarding(this, SP_MENU, true, new OnBoardingUtils.OnBoardingModel("Checkout your menu here!", btnSessionMenu));
+    }
+
+    // region UI-Update
+
     private void setupData(ActiveSessionModel data) {
         mSessionMembersAdapter.setUsers(data.getCustomers());
         tvBill.setText(data.formatBill(this));
@@ -253,8 +263,6 @@ public class ActiveSessionActivity extends BaseActivity implements ActiveSession
         }
 
     }
-
-    // region UI-Update
 
     private void updateBill(double bill) {
         mViewModel.updateBill(bill);
@@ -280,13 +288,13 @@ public class ActiveSessionActivity extends BaseActivity implements ActiveSession
         mViewModel.setRequestedCheckout(true);
     }
 
-    private void addNewOrder(SessionOrderedItemModel sessionOrderedItem) {
-        mViewModel.addNewOrder(sessionOrderedItem);
-    }
-
     // endregion
 
     // region Click Listeners
+
+    private void addNewOrder(SessionOrderedItemModel sessionOrderedItem) {
+        mViewModel.addNewOrder(sessionOrderedItem);
+    }
 
     @OnClick(R.id.btn_active_session_menu)
     public void onListMenu() {
@@ -371,6 +379,8 @@ public class ActiveSessionActivity extends BaseActivity implements ActiveSession
         MessageUtils.registerLocalReceiver(this, mReceiver, types);
         updateScreen();
         resetEnableViews();
+        if (OnBoardingUtils.isOnBoardingShown(this,KEY_INTERACT_WITH_US))
+            OnBoardingUtils.conditionalOnBoarding(this, KEY_SP_INTERACT_WITH_US, true, new OnBoardingUtils.OnBoardingModel("Interact with waiter here!", tvInteractWithUs));
     }
 
     @Override
