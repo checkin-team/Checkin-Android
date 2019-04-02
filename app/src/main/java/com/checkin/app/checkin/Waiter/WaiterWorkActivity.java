@@ -90,7 +90,6 @@ public class WaiterWorkActivity extends BaseAccountActivity implements WaiterTab
             if (shop != null && shop.getPk() != mViewModel.getShopPk())
                 return;
 
-
             EventBriefModel eventModel;
             BriefModel user;
             SessionOrderedItemModel orderedItemModel;
@@ -164,7 +163,7 @@ public class WaiterWorkActivity extends BaseAccountActivity implements WaiterTab
         setupDrawer();
 
         if(getIntent().getAction()!= null && getIntent().getAction().equals(ACTION_NEW_TABLE)){
-            processQrId(getIntent().getStringExtra(KEY_SESSION_QR_ID));
+            mViewModel.processQrAction(getIntent().getStringExtra(KEY_SESSION_QR_ID));
         }
     }
 
