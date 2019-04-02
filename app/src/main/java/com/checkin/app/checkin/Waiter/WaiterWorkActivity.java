@@ -31,7 +31,6 @@ import com.checkin.app.checkin.Utility.DynamicSwipableViewPager;
 import com.checkin.app.checkin.Utility.EndDrawerToggle;
 import com.checkin.app.checkin.Utility.Utils;
 import com.checkin.app.checkin.Waiter.Fragment.WaiterTableFragment;
-import com.checkin.app.checkin.Waiter.Model.QRDataModel;
 import com.checkin.app.checkin.Waiter.Model.WaiterEventModel;
 import com.checkin.app.checkin.Waiter.Model.WaiterStatsModel;
 import com.checkin.app.checkin.Waiter.Model.WaiterTableModel;
@@ -104,7 +103,6 @@ public class WaiterWorkActivity extends BaseAccountActivity implements
                     if (tableSession != null) {
                         tableSession.setEvent(eventModel);
                     }
-                    //RestaurantTableModel tableModel = new RestaurantTableModel(message.getObject().getPk(), tableName, null, eventModel);
                     RestaurantTableModel tableModel = new RestaurantTableModel(message.getObject().getPk(), tableName, tableSession);
                     TableSessionModel tableSessionModel = tableModel.getTableSessionModel();
                     if (message.getActor().getType() == MessageObjectModel.MESSAGE_OBJECT_TYPE.RESTAURANT_MEMBER) {
@@ -447,9 +445,7 @@ public class WaiterWorkActivity extends BaseAccountActivity implements
                 .setTitle(tableName)
                 .setMessage("Do you want to be host of this table?")
                 .setPositiveButton("Yes", (dialog, which) -> {
-                    QRDataModel qrDataModel = new QRDataModel();
-                    qrDataModel.setQr(qrPk);
-                    mViewModel.postNewWaiterSession(qrDataModel);
+                    mViewModel.sendNewWaiterSession(qrPk);
                 }).setNegativeButton("No", (dialog, which) -> dialog.cancel())
                 .show();
     }

@@ -30,10 +30,8 @@ import com.checkin.app.checkin.Shop.ShopJoin.ShopJoinModel;
 import com.checkin.app.checkin.User.ShopCustomerModel;
 import com.checkin.app.checkin.User.UserModel;
 import com.checkin.app.checkin.Waiter.Model.OrderStatusModel;
-import com.checkin.app.checkin.Waiter.Model.QRDataModel;
 import com.checkin.app.checkin.Waiter.Model.SessionContactModel;
 import com.checkin.app.checkin.Waiter.Model.WaiterEventModel;
-import com.checkin.app.checkin.Waiter.Model.WaiterSessionCreateModel;
 import com.checkin.app.checkin.Waiter.Model.WaiterStatsModel;
 import com.checkin.app.checkin.Waiter.Model.WaiterTableModel;
 import com.fasterxml.jackson.databind.node.ArrayNode;
@@ -288,7 +286,4 @@ public interface WebApiService {
 
     @GET("sessions/{session_id}/contacts/")
     Call<List<SessionContactModel>> getSessionContactList(@Path("session_id") long sessionId);
-
-    @POST("sessions/waiter/new/")
-    Call<WaiterSessionCreateModel> postNewWaiterSession(@Body QRDataModel qrDataModel);
 }

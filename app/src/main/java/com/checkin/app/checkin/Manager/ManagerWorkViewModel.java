@@ -25,7 +25,7 @@ public class ManagerWorkViewModel extends BaseViewModel {
     private ManagerRepository mManagerRepository;
     private WaiterRepository mWaiterRepository;
 
-    private MediatorLiveData<Resource<List<RestaurantTableModel>>> mActiveTablesData = new MediatorLiveData<>();
+    private MediatorLiveData<Resource<List<RestaurantTableModel>>> mTablesData = new MediatorLiveData<>();
     private MediatorLiveData<Resource<ManagerStatsModel>> mStatsData = new MediatorLiveData<>();
     private MediatorLiveData<Resource<CheckoutStatusModel>> mCheckoutData = new MediatorLiveData<>();
 
@@ -39,20 +39,15 @@ public class ManagerWorkViewModel extends BaseViewModel {
 
     public void fetchActiveTables(long restaurantId) {
         mShopPk = restaurantId;
-        //mActiveTablesData.addSource(mWaiterRepository.getShopActiveTables(restaurantId), mActiveTablesData::setValue);
-        mActiveTablesData.addSource(mWaiterRepository.getShopTables(restaurantId), mActiveTablesData::setValue);
+        mTablesData.addSource(mWaiterRepository.getShopTables(restaurantId), mTablesData::setValue);
     }
 
     public void fetchStatistics() {
         mStatsData.addSource(mManagerRepository.getManagerStats(mShopPk), mStatsData::setValue);
     }
 
-    /*public LiveData<Resource<List<RestaurantTableModel>>> getActiveTables() {
-        return mActiveTablesData;
-    }*/
-
     public LiveData<Resource<List<RestaurantTableModel>>> getActiveTables() {
-        return Transformations.map(mActiveTablesData, input -> {
+        return Transformations.map(mTablesData, input -> {
             if (input == null || input.data == null || input.status != Resource.Status.SUCCESS)
                 return input;
 
@@ -85,7 +80,7 @@ public class ManagerWorkViewModel extends BaseViewModel {
     }
 
     public int getTablePositionWithPk(long sessionPk) {
-        Resource<List<RestaurantTableModel>> resource = mActiveTablesData.getValue();
+        Resource<List<RestaurantTableModel>> resource = mTablesData.getValue();
         if (resource == null || resource.data == null)
             return -1;
         for (int i = 0; i < resource.data.size(); i++) {
@@ -99,7 +94,7 @@ public class ManagerWorkViewModel extends BaseViewModel {
 
     @Nullable
     public RestaurantTableModel getTableWithPosition(int position) {
-        Resource<List<RestaurantTableModel>> resource = mActiveTablesData.getValue();
+        Resource<List<RestaurantTableModel>> resource = mTablesData.getValue();
         if (resource == null || resource.data == null)
             return null;
         if (position >= resource.data.size())
@@ -108,11 +103,11 @@ public class ManagerWorkViewModel extends BaseViewModel {
     }
 
     public void addRestaurantTable(RestaurantTableModel tableModel) {
-        Resource<List<RestaurantTableModel>> resource = mActiveTablesData.getValue();
+        Resource<List<RestaurantTableModel>> resource = mTablesData.getValue();
         if (resource == null || resource.data == null)
             return;
         resource.data.add(0, tableModel);
-        mActiveTablesData.setValue(Resource.cloneResource(resource, resource.data));
+        mTablesData.setValue(Resource.cloneResource(resource, resource.data));
     }
 
     @Override
@@ -121,7 +116,7 @@ public class ManagerWorkViewModel extends BaseViewModel {
     }
 
     public void updateRemoveTable(long sessionPk) {
-        Resource<List<RestaurantTableModel>> resource = mActiveTablesData.getValue();
+        Resource<List<RestaurantTableModel>> resource = mTablesData.getValue();
         if (resource == null || resource.data == null)
             return;
         int pos = -1;
@@ -134,7 +129,7 @@ public class ManagerWorkViewModel extends BaseViewModel {
         }
         if (pos > -1) {
             resource.data.remove(pos);
-            mActiveTablesData.setValue(Resource.cloneResource(resource, resource.data));
+            mTablesData.setValue(Resource.cloneResource(resource, resource.data));
         }
     }
 }

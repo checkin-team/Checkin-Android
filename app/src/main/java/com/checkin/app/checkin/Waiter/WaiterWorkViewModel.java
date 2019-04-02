@@ -10,8 +10,6 @@ import com.checkin.app.checkin.Misc.BriefModel;
 import com.checkin.app.checkin.Session.Model.QRResultModel;
 import com.checkin.app.checkin.Session.Model.RestaurantTableModel;
 import com.checkin.app.checkin.Session.Model.TableSessionModel;
-import com.checkin.app.checkin.Waiter.Model.QRDataModel;
-import com.checkin.app.checkin.Waiter.Model.WaiterSessionCreateModel;
 import com.checkin.app.checkin.Waiter.Model.WaiterStatsModel;
 import com.checkin.app.checkin.Waiter.Model.WaiterTableModel;
 import com.fasterxml.jackson.databind.node.ObjectNode;
@@ -31,7 +29,6 @@ public class WaiterWorkViewModel extends BaseViewModel {
     private MediatorLiveData<Resource<List<WaiterTableModel>>> mWaiterTables = new MediatorLiveData<>();
     private MediatorLiveData<Resource<QRResultModel>> mQrResult = new MediatorLiveData<>();
     private MediatorLiveData<Resource<WaiterStatsModel>> mWaiterStats = new MediatorLiveData<>();
-    private MediatorLiveData<Resource<WaiterSessionCreateModel>> mWaiterSessionCreate = new MediatorLiveData<>();
 
     private long mShopPk;
 
@@ -47,12 +44,14 @@ public class WaiterWorkViewModel extends BaseViewModel {
         fetchWaiterServedTables();
     }
 
-    public void postNewWaiterSession(QRDataModel qrDataModel){
-        mWaiterSessionCreate.addSource(mWaiterRepository.postNewWaiterSession(qrDataModel), mWaiterSessionCreate::setValue);
+    public void sendNewWaiterSession(long qrPk){
+        ObjectNode requestJson = Converters.objectMapper.createObjectNode();
+        requestJson.put("qr", qrPk);
+        mQrResult.addSource(mWaiterRepository.newWaiterSession(requestJson), mQrResult::setValue);
     }
 
-    public LiveData<Resource<WaiterSessionCreateModel>> getNewWaiterSession(){
-        return mWaiterSessionCreate;
+    public LiveData<Resource<QRResultModel>> getNewWaiterSession(){
+        return mQrResult;
     }
 
     public void fetchWaiterServedTables() {
