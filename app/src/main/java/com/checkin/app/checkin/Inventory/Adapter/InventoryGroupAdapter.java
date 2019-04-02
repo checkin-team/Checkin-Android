@@ -20,6 +20,7 @@ import com.checkin.app.checkin.Inventory.Fragment.InventoryItemsFragment;
 import com.checkin.app.checkin.Inventory.Model.InventoryGroupModel;
 import com.checkin.app.checkin.Inventory.Model.InventoryItemModel;
 import com.checkin.app.checkin.R;
+import com.checkin.app.checkin.Utility.AnimUtils;
 import com.checkin.app.checkin.Utility.DynamicSwipableViewPager;
 import com.checkin.app.checkin.Utility.GlideApp;
 import com.checkin.app.checkin.Utility.Utils;
@@ -234,11 +235,11 @@ public class InventoryGroupAdapter extends RecyclerView.Adapter<InventoryGroupAd
             LinearLayout.LayoutParams layoutParams = (LinearLayout.LayoutParams) tvGroupName.getLayoutParams();
             layoutParams.gravity = Gravity.TOP;
             tvGroupName.setLayoutParams(layoutParams);
-            Animator sizeChangeAnim = Utils.changeViewSize(view, Utils.NO_CHANGE, (int) view.getResources().getDimension(R.dimen.height_menu_group_expanded));
-            Animator hideImageAnim = Utils.hideView(imGroupIcon);
-            Animator showMenuAnim = Utils.showView(vSubGroupWrapper);
+            Animator sizeChangeAnim = AnimUtils.changeViewSize(view, AnimUtils.NO_CHANGE, (int) view.getResources().getDimension(R.dimen.height_menu_group_expanded));
+            Animator hideImageAnim = AnimUtils.hideView(imGroupIcon);
+            Animator showMenuAnim = AnimUtils.showView(vSubGroupWrapper);
             ValueAnimator scrollAnimator = ValueAnimator.ofInt(1, 2, 3, 4);
-            scrollAnimator.setDuration(Utils.DEFAULT_DURATION).addUpdateListener(animation ->
+            scrollAnimator.setDuration(AnimUtils.DEFAULT_DURATION).addUpdateListener(animation ->
                     ((LinearLayoutManager) mRecyclerView.getLayoutManager()).scrollToPositionWithOffset(getAdapterPosition(), 0));
             AnimatorSet animatorSet = new AnimatorSet();
             animatorSet.playTogether(sizeChangeAnim, hideImageAnim, showMenuAnim, scrollAnimator);
@@ -256,9 +257,9 @@ public class InventoryGroupAdapter extends RecyclerView.Adapter<InventoryGroupAd
             LinearLayout.LayoutParams layoutParams = (LinearLayout.LayoutParams) tvGroupName.getLayoutParams();
             layoutParams.gravity = Gravity.CENTER;
             tvGroupName.setLayoutParams(layoutParams);
-            Animator sizeChangeAnim = Utils.changeViewSize(view, Utils.NO_CHANGE, (int) view.getResources().getDimension(R.dimen.height_menu_group_collapsed));
-            Animator showImageAnim = Utils.showView(imGroupIcon);
-            Animator hideMenuAnim = Utils.hideView(vSubGroupWrapper);
+            Animator sizeChangeAnim = AnimUtils.changeViewSize(view, AnimUtils.NO_CHANGE, (int) view.getResources().getDimension(R.dimen.height_menu_group_collapsed));
+            Animator showImageAnim = AnimUtils.showView(imGroupIcon);
+            Animator hideMenuAnim = AnimUtils.hideView(vSubGroupWrapper);
             AnimatorSet animatorSet = new AnimatorSet();
             animatorSet.playTogether(sizeChangeAnim, showImageAnim, hideMenuAnim);
             isExpanded = false;

@@ -22,6 +22,13 @@ public class Constants {
     public static final String FORMAT_SP_KEY_NOTIFICATION_CHANNEL = "com.checkin.app.checkin.Data.Message.notif.%s";
     public static final String SP_TABLE_NOTIFICATION = "com.checkin.app.checkin.Data.Message.notification";
 
+    public static final String START_FOREGROUND_ACTION = "ActiveSessionService.startforeground";
+    public static final String STOP_FOREGROUND_ACTION = "ActiveSessionService.stopforeground";
+    public static final String MENU_ACTION = "ActiveSessionService.menu";
+
+    public static final int FOREGROUND_SERVICE = 501;
+
+
     private final static AtomicInteger atomicInteger = new AtomicInteger(100);
 
     public static int getNotificationID() {
@@ -58,6 +65,7 @@ public class Constants {
         DEFAULT("channel.default", "Default"),
         // User group
         ACTIVE_SESSION("channel.active_session", "Active Session"),
+        ACTIVE_SESSION_PERSISTENT("channel.active_session_persistent", "Active Session Persistent"),
 
         // Restaurant Member group
         MEMBER("channel.restaurant_member", "Restaurant Member"),

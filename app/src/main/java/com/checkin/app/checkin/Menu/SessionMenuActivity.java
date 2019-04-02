@@ -1,18 +1,23 @@
 package com.checkin.app.checkin.Menu;
 
 import android.annotation.SuppressLint;
+import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.os.Bundle;
 import android.speech.RecognizerIntent;
 import android.text.InputType;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.Menu;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.TextView;
 
+import com.checkin.app.checkin.Data.Message.Constants;
 import com.checkin.app.checkin.Data.Resource.Status;
 import com.checkin.app.checkin.Menu.Adapter.MenuCartAdapter;
 import com.checkin.app.checkin.Menu.Fragment.ItemCustomizationFragment;
@@ -25,8 +30,12 @@ import com.checkin.app.checkin.Menu.Model.MenuItemModel;
 import com.checkin.app.checkin.Menu.Model.OrderedItemModel;
 import com.checkin.app.checkin.Misc.BaseActivity;
 import com.checkin.app.checkin.R;
+import com.checkin.app.checkin.Session.ActiveSession.ActiveSessionActivity;
 import com.checkin.app.checkin.Utility.EndDrawerToggle;
+import com.checkin.app.checkin.Utility.OnBoardingUtils;
+import com.checkin.app.checkin.Utility.OnBoardingUtils.OnBoardingModel;
 import com.checkin.app.checkin.Utility.Utils;
+import com.google.android.material.navigation.NavigationView;
 import com.miguelcatalan.materialsearchview.MaterialSearchView;
 
 import java.util.ArrayList;
@@ -38,6 +47,7 @@ import androidx.appcompat.widget.Toolbar;
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProviders;
+import androidx.localbroadcastmanager.content.LocalBroadcastManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import butterknife.BindView;
@@ -45,12 +55,17 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 
 import static com.checkin.app.checkin.Menu.Fragment.MenuGroupsFragment.KEY_SESSION_STATUS;
+import static com.checkin.app.checkin.Session.ActiveSession.ActiveSessionActivity.KEY_INTERACT_WITH_US;
 
 public class SessionMenuActivity extends BaseActivity implements
         MenuItemInteraction, ItemCustomizationFragment.ItemCustomizationInteraction,
         MenuCartAdapter.MenuCartInteraction, MenuFilterFragment.MenuFilterInteraction {
-    private static final String KEY_RESTAURANT_PK = "menu.shop_pk";
-    private static final String KEY_SESSION_PK = "menu.session_pk";
+    public static final String SP_MENU_SEARCH = "sp.menu.search";
+    public static final String SP_MENU_CART = "sp.menu.cart";
+
+    public static final String KEY_RESTAURANT_PK = "menu.shop_pk";
+    public static final String KEY_SESSION_PK = "menu.session_pk";
+    public static final String SESSION_ARG = "session_arg";
 
     @BindView(R.id.view_menu_search)
     MaterialSearchView vMenuSearch;
@@ -62,6 +77,10 @@ public class SessionMenuActivity extends BaseActivity implements
     TextView tvCartSubtotal;
     @BindView(R.id.btn_menu_cart_proceed)
     Button btnCartProceed;
+    @BindView(R.id.btn_menu_search)
+    ImageButton btnMenuSearch;
+    @BindView(R.id.nav_menu_cart)
+    NavigationView navMenuCart;
 
     private MenuGroupsFragment mMenuFragment;
     private MenuItemSearchFragment mSearchFragment;
@@ -69,8 +88,7 @@ public class SessionMenuActivity extends BaseActivity implements
     private MenuViewModel mViewModel;
     private MenuCartAdapter mCartAdapter;
     private SESSION_STATUS mSessionStatus;
-
-    private static final String SESSION_ARG = "session_arg";
+    private EndDrawerToggle endToggle = null;
 
     public static void withSession(Context context, Long restaurantPk, @Nullable Long sessionPk) {
         Intent intent = new Intent(context, SessionMenuActivity.class);
@@ -99,9 +117,10 @@ public class SessionMenuActivity extends BaseActivity implements
         setContentView(R.layout.activity_session_menu);
         ButterKnife.bind(this);
 
+        OnBoardingUtils.setOnBoardingIsShown(this,KEY_INTERACT_WITH_US,true);
+
         Bundle args = getIntent().getBundleExtra(SESSION_ARG);
         mSessionStatus = (SESSION_STATUS) args.getSerializable(KEY_SESSION_STATUS);
-
         mViewModel = ViewModelProviders.of(this).get(MenuViewModel.class);
         mViewModel.fetchAvailableMenu(args.getLong(KEY_RESTAURANT_PK));
         long sessionPk = args.getLong(KEY_SESSION_PK, 0L);
@@ -167,13 +186,18 @@ public class SessionMenuActivity extends BaseActivity implements
 
         if (isSessionActive()) {
             DrawerLayout drawerLayout = findViewById(R.id.drawer_menu);
-            EndDrawerToggle endToggle = new EndDrawerToggle(
+            endToggle = new EndDrawerToggle(
                     this, drawerLayout, toolbar, R.string.menu_drawer_open, R.string.menu_drawer_close, R.drawable.ic_cart_white);
             drawerLayout.addDrawerListener(endToggle);
             endToggle.syncState();
+            explainMenu();
         } else {
             findViewById(R.id.nav_menu_cart).setVisibility(View.GONE);
         }
+    }
+
+    private void explainMenu() {
+        OnBoardingUtils.conditionalOnBoarding(this, SP_MENU_SEARCH, true, new OnBoardingModel("Search for food item here.", btnMenuSearch));
     }
 
     private void setupCart() {
@@ -188,6 +212,7 @@ public class SessionMenuActivity extends BaseActivity implements
             if (count > 0) {
                 tvCountItems.setText(Utils.formatCount(count));
                 tvCountItems.setVisibility(View.VISIBLE);
+                explainCartMenu(endToggle);
             } else {
                 tvCountItems.setVisibility(View.GONE);
             }
@@ -211,6 +236,11 @@ public class SessionMenuActivity extends BaseActivity implements
                 btnCartProceed.setEnabled(true);
             }
         });
+    }
+
+    private void explainCartMenu(EndDrawerToggle toggle) {
+        View cartButton = toggle.getToggleButton();
+        OnBoardingUtils.conditionalOnBoarding(this, SP_MENU_CART, true, new OnBoardingModel("Checkout your order here.", cartButton));
     }
 
     private void setupSearch() {
