@@ -98,23 +98,6 @@ public class Utils {
         }
     }
 
-    public static void createDialogTable(Context context){
-        AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(context);
-        alertDialogBuilder.setTitle("Table").setMessage("Perform your action here.").setPositiveButton("Yes", new DialogInterface.OnClickListener() {
-            public void onClick(DialogInterface dialog, int which) {
-                if (context instanceof WaiterWorkActivity){
-                    ((WaiterWorkActivity) context).performAction();
-                }
-            }
-        }).setNegativeButton("No", new DialogInterface.OnClickListener() {
-            public void onClick(DialogInterface dialog, int which) {
-                if (context instanceof WaiterWorkActivity){
-                    ((WaiterWorkActivity) context).performAction();
-                }
-            }
-        }).show();
-    }
-
     public static void navigateBackToHome(Context context) {
         context.startActivity(Intent.makeRestartActivityTask(new ComponentName(context, HomeActivity.class)));
     }

@@ -12,12 +12,14 @@ import com.checkin.app.checkin.Session.Model.TableSessionModel;
 import com.checkin.app.checkin.Waiter.WaiterRepository;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MediatorLiveData;
+import androidx.lifecycle.Transformations;
 
 public class ManagerWorkViewModel extends BaseViewModel {
     private ManagerRepository mManagerRepository;
@@ -45,8 +47,23 @@ public class ManagerWorkViewModel extends BaseViewModel {
         mStatsData.addSource(mManagerRepository.getManagerStats(mShopPk), mStatsData::setValue);
     }
 
-    public LiveData<Resource<List<RestaurantTableModel>>> getActiveTables() {
+    /*public LiveData<Resource<List<RestaurantTableModel>>> getActiveTables() {
         return mActiveTablesData;
+    }*/
+
+    public LiveData<Resource<List<RestaurantTableModel>>> getActiveTables() {
+        return Transformations.map(mActiveTablesData, input -> {
+            if (input == null || input.data == null || input.status != Resource.Status.SUCCESS)
+                return input;
+
+            List<RestaurantTableModel> result = new ArrayList<>();
+            for (int i = 0, length = input.data.size(); i < length; i++) {
+                RestaurantTableModel tableModel = input.data.get(i);
+                if (tableModel.getTableSessionModel() != null)
+                    result.add(tableModel);
+            }
+            return Resource.cloneResource(input, result);
+        });
     }
 
     public void markSessionDone(long sessionId) {

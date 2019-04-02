@@ -5,6 +5,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import com.checkin.app.checkin.Misc.DebouncedOnClickListener;
 import com.checkin.app.checkin.R;
 import com.checkin.app.checkin.Session.Model.RestaurantTableModel;
 import com.checkin.app.checkin.Session.Model.TableSessionModel;
@@ -51,8 +52,8 @@ public class WaiterEndDrawerTableAdapter extends RecyclerView.Adapter<WaiterEndD
         return R.layout.item_waiter_active_table;
     }
 
-    interface OnWaiterEndDrawerTableListener {
-        void onWaiterEndDrawerTable(RestaurantTableModel restaurantTableModel);
+    interface OnTableClickListener {
+        void onTableClick(RestaurantTableModel restaurantTableModel);
     }
 
     class ViewHolder extends RecyclerView.ViewHolder {
@@ -76,8 +77,8 @@ public class WaiterEndDrawerTableAdapter extends RecyclerView.Adapter<WaiterEndD
 
         public void bindData(RestaurantTableModel tableModel) {
             TableSessionModel tableSessionModel = tableModel.getTableSessionModel();
-            tvName.setText(tableModel.getTable());
             if (tableSessionModel != null) {
+                tvName.setText(tableModel.getTable());
                 if (tableSessionModel.getHost() != null) {
                     tvHost.setText(tableSessionModel.getHost().getDisplayName());
                     viewMask.setVisibility(View.VISIBLE);
@@ -85,13 +86,19 @@ public class WaiterEndDrawerTableAdapter extends RecyclerView.Adapter<WaiterEndD
                     tvHost.setText("Standard");
                 }
                 tvTimestamp.setText(tableSessionModel.getEvent().formatElapsedTime());
+                cvWaiterTableName.setVisibility(View.VISIBLE);
+                tvTimestamp.setVisibility(View.VISIBLE);
             } else {
-                tvHost.setVisibility(View.GONE);
-                tvTimestamp.setVisibility(View.GONE);
+                tvHost.setText(tableModel.getTable());
+                cvWaiterTableName.setVisibility(View.GONE);
+                tvTimestamp.setVisibility(View.INVISIBLE);
+                cvWaiterTable.setOnClickListener(new DebouncedOnClickListener(2000) {
+                    @Override
+                    public void onDebouncedClick(View v) {
+                        mListener.onTableClick(tableModel);
+                    }
+                });
             }
-            cvWaiterTable.setOnClickListener(view -> {
-                mListener.onWaiterEndDrawerTable(tableModel);
-            });
         }
     }
 }

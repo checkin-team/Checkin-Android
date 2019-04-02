@@ -15,8 +15,10 @@ import com.checkin.app.checkin.Session.Model.CheckoutStatusModel;
 import com.checkin.app.checkin.Session.Model.QRResultModel;
 import com.checkin.app.checkin.Session.Model.RestaurantTableModel;
 import com.checkin.app.checkin.Waiter.Model.OrderStatusModel;
+import com.checkin.app.checkin.Waiter.Model.QRDataModel;
 import com.checkin.app.checkin.Waiter.Model.SessionContactModel;
 import com.checkin.app.checkin.Waiter.Model.WaiterEventModel;
+import com.checkin.app.checkin.Waiter.Model.WaiterSessionCreateModel;
 import com.checkin.app.checkin.Waiter.Model.WaiterStatsModel;
 import com.checkin.app.checkin.Waiter.Model.WaiterTableModel;
 import com.fasterxml.jackson.databind.node.ObjectNode;
@@ -271,6 +273,26 @@ public class WaiterRepository extends BaseRepository {
 
             @Override
             protected void saveCallResult(List<OrderStatusModel> data) {
+
+            }
+        }.getAsLiveData();
+    }
+
+    public LiveData<Resource<WaiterSessionCreateModel>> postNewWaiterSession(QRDataModel qrDataModel) {
+        return new NetworkBoundResource<WaiterSessionCreateModel, WaiterSessionCreateModel>() {
+            @Override
+            protected boolean shouldUseLocalDb() {
+                return false;
+            }
+
+            @NonNull
+            @Override
+            protected LiveData<ApiResponse<WaiterSessionCreateModel>> createCall() {
+                return new RetrofitLiveData<>(mWebService.postNewWaiterSession(qrDataModel));
+            }
+
+            @Override
+            protected void saveCallResult(WaiterSessionCreateModel data) {
 
             }
         }.getAsLiveData();
