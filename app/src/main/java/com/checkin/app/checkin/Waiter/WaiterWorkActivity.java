@@ -59,6 +59,8 @@ public class WaiterWorkActivity extends BaseAccountActivity implements WaiterTab
 
     public static final String KEY_SHOP_PK = "waiter.shop_pk";
     public static final String KEY_SESSION_PK = "waiter.session_pk";
+    public static final String ACTION_NEW_TABLE= "waiter.new_table";
+    public static final String KEY_SESSION_QR_ID = "waiter.session_qr_id";
     private static final int REQUEST_QR_SCANNER = 121;
 
     @BindView(R.id.toolbar_waiter)
@@ -88,11 +90,11 @@ public class WaiterWorkActivity extends BaseAccountActivity implements WaiterTab
             if (shop != null && shop.getPk() != mViewModel.getShopPk())
                 return;
 
+
             EventBriefModel eventModel;
             BriefModel user;
             SessionOrderedItemModel orderedItemModel;
             long sessionPk;
-            Log.e(TAG, " =========== " + message.getType());
             switch (message.getType()) {
                 case WAITER_SESSION_NEW:
                     String tableName = message.getRawData().getSessionTableName();
@@ -160,6 +162,10 @@ public class WaiterWorkActivity extends BaseAccountActivity implements WaiterTab
         setupTableFragments();
         fetchData();
         setupDrawer();
+
+        if(getIntent().getAction()!= null && getIntent().getAction().equals(ACTION_NEW_TABLE)){
+            processQrId(getIntent().getStringExtra(KEY_SESSION_QR_ID));
+        }
     }
 
     private void setupDrawer() {
@@ -280,6 +286,10 @@ public class WaiterWorkActivity extends BaseAccountActivity implements WaiterTab
 
     // region UI-Update
 
+    private void processQrId(String qrId){
+        mViewModel.processQr(qrId);
+    }
+
     private void addTable(RestaurantTableModel tableModel) {
         mViewModel.addRestaurantTable(tableModel);
     }
@@ -358,7 +368,7 @@ public class WaiterWorkActivity extends BaseAccountActivity implements WaiterTab
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         if (requestCode == REQUEST_QR_SCANNER && resultCode == RESULT_OK) {
             String qrData = data.getStringExtra(QRScannerActivity.KEY_QR_RESULT);
-            mViewModel.processQr(qrData);
+            processQrId(qrData);
         } else super.onActivityResult(requestCode, resultCode, data);
     }
 

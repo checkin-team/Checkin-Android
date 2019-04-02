@@ -48,6 +48,9 @@ public class MessageDataModel implements Serializable {
     @JsonProperty("session__event")
     private ManagerSessionEventModel sessionEventBrief;
 
+    @JsonProperty("session__qr_id")
+    private String sessionQRId;
+
     @JsonCreator
     public MessageDataModel() {
     }
@@ -90,6 +93,14 @@ public class MessageDataModel implements Serializable {
 
     public long getSessionOrderId() {
         return sessionOrderId;
+    }
+
+    public String getSessionQRId() {
+        return sessionQRId;
+    }
+
+    public void setSessionQRId(String sessionQRId) {
+        this.sessionQRId = sessionQRId;
     }
 
     public static class MessageDataDeserializer extends JsonDeserializer<MessageDataModel> {
