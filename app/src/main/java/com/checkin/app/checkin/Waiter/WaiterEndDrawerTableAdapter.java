@@ -76,12 +76,14 @@ public class WaiterEndDrawerTableAdapter extends RecyclerView.Adapter<WaiterEndD
             super(v);
             ButterKnife.bind(this, v);
 
-            cvWaiterTable.setOnClickListener(new DebouncedOnClickListener(2000) {
-                @Override
-                public void onDebouncedClick(View v) {
-                    mListener.onTableClick(mRestaurantTable);
-                }
-            });
+            if(mRestaurantTable != null){
+                cvWaiterTable.setOnClickListener(new DebouncedOnClickListener(2000) {
+                    @Override
+                    public void onDebouncedClick(View v) {
+                        mListener.onTableClick(mRestaurantTable);
+                    }
+                });
+            }
         }
 
         public void bindData(RestaurantTableModel tableModel) {
