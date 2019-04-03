@@ -284,11 +284,6 @@ public class WaiterWorkActivity extends BaseAccountActivity implements WaiterTab
     }
 
     // region UI-Update
-
-    private void processQrId(String qrId){
-        mViewModel.processQr(qrId);
-    }
-
     private void addTable(RestaurantTableModel tableModel) {
         mViewModel.addRestaurantTable(tableModel);
     }
@@ -367,7 +362,7 @@ public class WaiterWorkActivity extends BaseAccountActivity implements WaiterTab
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         if (requestCode == REQUEST_QR_SCANNER && resultCode == RESULT_OK) {
             String qrData = data.getStringExtra(QRScannerActivity.KEY_QR_RESULT);
-            processQrId(qrData);
+            mViewModel.processQr(qrData);
         } else super.onActivityResult(requestCode, resultCode, data);
     }
 
