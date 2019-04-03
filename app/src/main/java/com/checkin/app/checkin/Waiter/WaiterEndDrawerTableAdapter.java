@@ -76,14 +76,13 @@ public class WaiterEndDrawerTableAdapter extends RecyclerView.Adapter<WaiterEndD
             super(v);
             ButterKnife.bind(this, v);
 
-            if(mRestaurantTable != null){
-                cvWaiterTable.setOnClickListener(new DebouncedOnClickListener(2000) {
-                    @Override
-                    public void onDebouncedClick(View v) {
+            cvWaiterTable.setOnClickListener(new DebouncedOnClickListener(2000) {
+                @Override
+                public void onDebouncedClick(View v) {
+                    if (mRestaurantTable != null)
                         mListener.onTableClick(mRestaurantTable);
-                    }
-                });
-            }
+                }
+            });
         }
 
         public void bindData(RestaurantTableModel tableModel) {
@@ -94,6 +93,7 @@ public class WaiterEndDrawerTableAdapter extends RecyclerView.Adapter<WaiterEndD
                     tvHost.setText(tableSessionModel.getHost().getDisplayName());
                     viewMask.setVisibility(View.VISIBLE);
                 } else {
+                    this.mRestaurantTable = tableModel;
                     tvHost.setText("Standard");
                 }
                 tvTimestamp.setText(tableSessionModel.getEvent().formatElapsedTime());

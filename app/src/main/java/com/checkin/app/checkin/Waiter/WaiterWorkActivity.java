@@ -177,7 +177,8 @@ public class WaiterWorkActivity extends BaseAccountActivity implements
             if (resource == null)
                 return;
             if (resource.status == Status.SUCCESS && resource.data != null) {
-                Utils.toast(this, resource.data.toString());
+                //Utils.toast(this, resource.data.toString());
+                updateScreen();
             } else if (resource.status != Status.LOADING) {
                 Utils.toast(this, resource.message);
             }
