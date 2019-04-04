@@ -1,3 +1,4 @@
+[![Codacy Badge](https://api.codacy.com/project/badge/Grade/dc1f262bc68c4573b3cc0accc971a55f)](https://app.codacy.com/app/checkin-team/Checkin-Android?utm_source=github.com&utm_medium=referral&utm_content=checkin-team/Checkin-Android&utm_campaign=Badge_Grade_Dashboard)
 # Check-Out! [![Build Status](https://travis-ci.com/shivanshs9/Check-Out.svg?token=krgm6p5sHAL3i37CW8cZ&branch=master)](https://travis-ci.com/shivanshs9/Check-Out)
 A budding startup project, named **Check-Out**! This repository contains the android project.
 
