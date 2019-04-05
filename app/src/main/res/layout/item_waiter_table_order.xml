@@ -21,9 +21,7 @@
                 android:id="@+id/food_details_container"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:background="@drawable/background_bottom_inner_shadow"
-                android:orientation="vertical"
-                android:paddingBottom="@dimen/spacing_normal">
+                android:orientation="vertical">
 
                 <TextView
                     android:id="@+id/tv_waiter_order_time"
@@ -132,7 +130,17 @@
                         tools:text="requested no cheese" />
 
                 </LinearLayout>
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/height_horizontal_view"
+                    android:background="@drawable/background_bottom_inner_shadow"
+                    android:layout_marginTop="@dimen/spacing_normal"/>
+
+
             </LinearLayout>
+
+
 
             <RelativeLayout
                 android:id="@+id/container_waiter_order_status_progress"

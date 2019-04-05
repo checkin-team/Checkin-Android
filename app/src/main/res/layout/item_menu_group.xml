@@ -74,7 +74,7 @@
                 android:visibility="gone"
                 app:tabBackground="@drawable/selector_tab_rounded_rouge"
                 app:tabGravity="fill"
-                app:tabIndicatorColor="@color/transparent"
+                app:tabIndicator="@null"
                 app:tabMode="fixed"
                 app:tabSelectedTextColor="@color/white"
                 app:tabTextColor="@color/brownish_grey">

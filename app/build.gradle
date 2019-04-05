@@ -25,6 +25,8 @@ android {
         versionName versions.publishVersion
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
 
+        multiDexEnabled true
+
         javaCompileOptions {
             annotationProcessorOptions {
                 arguments = [
@@ -84,9 +86,9 @@ dependencies {
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.1.2-alpha01'
     implementation 'com.google.android.gms:play-services-auth:16.0.1'
     // FireBase libraries
-    implementation 'com.google.firebase:firebase-core:16.0.7'
-    implementation 'com.google.firebase:firebase-auth:16.1.0'
-    implementation 'com.google.firebase:firebase-messaging:17.4.0'
+    implementation 'com.google.firebase:firebase-core:16.0.8'
+    implementation 'com.google.firebase:firebase-auth:16.2.0'
+    implementation 'com.google.firebase:firebase-messaging:17.5.0'
     // Facebook SDK
     implementation 'com.facebook.android:facebook-android-sdk:4.37.0'
     implementation 'com.facebook.android:facebook-login:4.37.0'
@@ -117,13 +119,20 @@ dependencies {
     )
     implementation 'com.squareup.retrofit2:retrofit:' + versions.retrofit
     implementation 'com.squareup.retrofit2:converter-jackson:' + versions.retrofit
-    implementation 'com.squareup.okhttp3:logging-interceptor:3.13.1'
+//    implementation 'com.squareup.okhttp3:logging-interceptor:3.13.1'
+
+    // Include okhttp library of lower version because 3.13.x supports only API 21+
+    //noinspection GradleDependency
+    implementation "com.squareup.okhttp3:okhttp:3.12.0"
+    //noinspection GradleDependency
+    implementation 'com.squareup.okhttp3:logging-interceptor:3.12.0'
+
     // ObjectBox components
     implementation 'io.objectbox:objectbox-android:' + versions.objectBox
     annotationProcessor 'io.objectbox:objectbox-processor:' + versions.objectBox
     // Lifecycle components
-    implementation 'androidx.lifecycle:lifecycle-extensions:2.1.0-alpha02'
-    annotationProcessor 'androidx.lifecycle:lifecycle-compiler:2.1.0-alpha02'
+    implementation 'androidx.lifecycle:lifecycle-extensions:2.1.0-alpha04'
+    annotationProcessor 'androidx.lifecycle:lifecycle-compiler:2.1.0-alpha04'
     // Dagger components
     implementation 'com.google.dagger:dagger:' + versions.dagger
     annotationProcessor 'com.google.dagger:dagger-compiler:' + versions.dagger
@@ -132,11 +141,14 @@ dependencies {
 
     // Google Maps
     implementation 'com.google.android.gms:play-services-maps:16.1.0'
-    implementation 'com.google.android.libraries.places:places:1.0.0'
+    implementation 'com.google.android.libraries.places:places:1.1.0'
     implementation 'com.google.android.gms:play-services-location:16.0.0'
 
     // Onboarding Screens
     implementation 'com.getkeepsafe.taptargetview:taptargetview:1.12.0'
+
+    //Multidex
+    implementation 'com.android.support:multidex:1.0.3'
 }
 
 apply plugin: 'com.google.gms.google-services'

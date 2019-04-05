@@ -8,5 +8,5 @@
     <item
         android:gravity="bottom"
         android:drawable="@drawable/gradient_bottom_strip" />
-    
+
 </layer-list>
