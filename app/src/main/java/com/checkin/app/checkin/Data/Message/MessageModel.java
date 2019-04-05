@@ -170,11 +170,11 @@ public class MessageModel implements Serializable {
             builder.setSound(Constants.getAlertOrdersSoundUri(context))
                     .setFullScreenIntent(pendingIntent, true);
         }
-        if(this.type == WAITER_SESSION_NEW){
-            Intent waiterIntent = new Intent(context,WaiterWorkActivity.class);
+        if (this.type == WAITER_SESSION_NEW) {
+            Intent waiterIntent = new Intent(context, WaiterWorkActivity.class);
             waiterIntent.setAction(ACTION_NEW_TABLE);
-            waiterIntent.putExtra(KEY_SESSION_QR_ID,getRawData().getSessionQRId());
-            PendingIntent waiterPendingIntent= PendingIntent.getActivity(context, 0, waiterIntent, PendingIntent.FLAG_UPDATE_CURRENT);
+            waiterIntent.putExtra(KEY_SESSION_QR_ID, getRawData().getSessionQRId());
+            PendingIntent waiterPendingIntent = PendingIntent.getActivity(context, 0, waiterIntent, PendingIntent.FLAG_UPDATE_CURRENT);
             builder.addAction(R.drawable.ic_action_show_menu, "Take Order", waiterPendingIntent);
         }
         tryGroupNotification(builder);

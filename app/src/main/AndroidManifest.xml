@@ -31,7 +31,7 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         tools:replace="android:theme"
-        android:name=".ApplicationCheckin">
+        android:name=".CheckinApplication">
         <activity
             android:name=".Home.SplashActivity"
             android:theme="@style/Theme.AppCompat.Light.NoActionBar">

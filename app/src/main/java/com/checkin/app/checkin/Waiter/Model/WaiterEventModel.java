@@ -54,6 +54,11 @@ public class WaiterEventModel {
         return status;
     }
 
+    @JsonProperty("status")
+    public void setStatus(int status) {
+        this.status = CHAT_STATUS_TYPE.getByTag(status);
+    }
+
     public void setStatus(CHAT_STATUS_TYPE status) {
         this.status = status;
     }
@@ -90,10 +95,5 @@ public class WaiterEventModel {
 
     public void setOrderedItem(SessionOrderedItemModel orderedItemModel) {
         this.orderedItem = orderedItemModel;
-    }
-
-    @JsonProperty("status")
-    public void setStatus(int status) {
-        this.status = CHAT_STATUS_TYPE.getByTag(status);
     }
 }

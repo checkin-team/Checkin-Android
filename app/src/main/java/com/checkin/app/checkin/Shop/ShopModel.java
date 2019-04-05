@@ -133,6 +133,16 @@ public class ShopModel {
         return paymentModes;
     }
 
+    @JsonProperty("payment_mode")
+    public void setPaymentModes(String... paymentModes) {
+        this.paymentModes = new PAYMENT_MODE[paymentModes.length];
+        int i = 0;
+        for (String mode : paymentModes) {
+            this.paymentModes[i] = PAYMENT_MODE.getByTag(mode);
+            i++;
+        }
+    }
+
     public void setPaymentModes(PAYMENT_MODE... paymentModes) {
         this.paymentModes = paymentModes;
     }
@@ -162,16 +172,6 @@ public class ShopModel {
             msg = "Shop isn't currently serving customers.";
         }
         return msg;
-    }
-
-    @JsonProperty("payment_mode")
-    public void setPaymentModes(String... paymentModes) {
-        this.paymentModes = new PAYMENT_MODE[paymentModes.length];
-        int i = 0;
-        for (String mode : paymentModes) {
-            this.paymentModes[i] = PAYMENT_MODE.getByTag(mode);
-            i++;
-        }
     }
 
     public LocationModel getLocation() {

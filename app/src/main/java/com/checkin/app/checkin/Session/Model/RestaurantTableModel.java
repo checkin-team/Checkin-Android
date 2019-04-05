@@ -1,48 +1,41 @@
 package com.checkin.app.checkin.Session.Model;
 
-import com.checkin.app.checkin.Misc.BriefModel;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
-
-import java.util.Date;
 
 import androidx.annotation.Nullable;
 
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class RestaurantTableModel {
-    @JsonProperty("pk")
-    private long pk;
+    public static final long NO_QR_ID = -1;
+
+    @JsonProperty("qr_pk")
+    private long qrPk;
 
     @JsonProperty("table")
     private String table;
 
     @Nullable
-    @JsonProperty("host")
-    private BriefModel host;
-
-    @JsonProperty("event")
-    private EventBriefModel event;
-
-    @JsonProperty("created")
-    private Date created;
-
-    @JsonProperty("is_accepted_checkout")
-    private boolean isRequestedCheckout;
+    @JsonProperty("session")
+    private TableSessionModel tableSession;
 
     private int eventCount;
 
     public RestaurantTableModel() {
     }
 
-    public RestaurantTableModel(long pk, String table, @Nullable BriefModel host, EventBriefModel event) {
-        this.pk = pk;
+    public RestaurantTableModel(long qrPk, String table, @Nullable TableSessionModel tableSessionModel) {
+        this.qrPk = qrPk;
         this.table = table;
-        this.host = host;
-        this.event = event;
+        this.tableSession = tableSessionModel;
     }
 
-    public long getPk() {
-        return pk;
+    public long getQrPk() {
+        return qrPk;
+    }
+
+    public void setQrPk(long qrPk) {
+        this.qrPk = qrPk;
     }
 
     public String getTable() {
@@ -50,32 +43,12 @@ public class RestaurantTableModel {
     }
 
     @Nullable
-    public BriefModel getHost() {
-        return host;
+    public TableSessionModel getTableSession() {
+        return tableSession;
     }
 
-    public void setHost(@Nullable BriefModel host) {
-        this.host = host;
-    }
-
-    public EventBriefModel getEvent() {
-        return event;
-    }
-
-    public void setEvent(EventBriefModel event) {
-        this.event = event;
-    }
-
-    public Date getCreated() {
-        return created;
-    }
-
-    public boolean isRequestedCheckout() {
-        return isRequestedCheckout;
-    }
-
-    public void setRequestedCheckout(boolean requestedCheckout) {
-        isRequestedCheckout = requestedCheckout;
+    public void setTableSession(@Nullable TableSessionModel tableSessionModel) {
+        this.tableSession = tableSessionModel;
     }
 
     public int getEventCount() {
@@ -94,11 +67,15 @@ public class RestaurantTableModel {
         this.eventCount++;
     }
 
+    public boolean isSessionActive() {
+        return tableSession != null;
+    }
+
     @Override
     public boolean equals(@Nullable Object obj) {
         try {
             RestaurantTableModel table = ((RestaurantTableModel) obj);
-            return table != null && table.getPk() == this.getPk();
+            return table != null && table.getQrPk() == this.getQrPk();
         } catch (ClassCastException ignored) {
             return false;
         }

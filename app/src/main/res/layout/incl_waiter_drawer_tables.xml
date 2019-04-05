@@ -57,6 +57,20 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/spacing_small" />
 
+            <TextView
+                style="@style/GreyTextStyle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/spacing_large"
+                android:text="Inactive Tables"
+                android:textSize="@dimen/font_heading" />
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/rv_waiter_drawer_inactive_tables"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/spacing_small" />
+
         </LinearLayout>
 
     </androidx.core.widget.NestedScrollView>

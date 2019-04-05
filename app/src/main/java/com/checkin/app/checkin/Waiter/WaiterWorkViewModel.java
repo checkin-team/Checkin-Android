@@ -9,6 +9,7 @@ import com.checkin.app.checkin.Data.Resource.Status;
 import com.checkin.app.checkin.Misc.BriefModel;
 import com.checkin.app.checkin.Session.Model.QRResultModel;
 import com.checkin.app.checkin.Session.Model.RestaurantTableModel;
+import com.checkin.app.checkin.Session.Model.TableSessionModel;
 import com.checkin.app.checkin.Waiter.Model.WaiterStatsModel;
 import com.checkin.app.checkin.Waiter.Model.WaiterTableModel;
 import com.fasterxml.jackson.databind.node.ObjectNode;
@@ -38,7 +39,7 @@ public class WaiterWorkViewModel extends BaseViewModel {
 
     @Override
     public void updateResults() {
-        fetchShopActiveTables(mShopPk);
+        fetchShopTables(mShopPk);
         fetchWaiterStats();
         fetchWaiterServedTables();
     }
@@ -51,9 +52,9 @@ public class WaiterWorkViewModel extends BaseViewModel {
         mWaiterStats.addSource(mWaiterRepository.getWaiterStats(mShopPk), mWaiterStats::setValue);
     }
 
-    public void fetchShopActiveTables(long shopId) {
+    public void fetchShopTables(long shopId) {
         mShopPk = shopId;
-        mShopTables.addSource(mWaiterRepository.getShopActiveTables(shopId), mShopTables::setValue);
+        mShopTables.addSource(mWaiterRepository.getShopTables(shopId), mShopTables::setValue);
     }
 
     public LiveData<Resource<List<RestaurantTableModel>>> getShopAssignedTables() {
@@ -64,7 +65,7 @@ public class WaiterWorkViewModel extends BaseViewModel {
             List<RestaurantTableModel> result = new ArrayList<>();
             for (int i = 0, length = input.data.size(); i < length; i++) {
                 RestaurantTableModel tableModel = input.data.get(i);
-                if (tableModel.getHost() != null)
+                if (tableModel.isSessionActive() && tableModel.getTableSession().hasHost())
                     result.add(tableModel);
             }
             return Resource.cloneResource(input, result);
@@ -80,7 +81,23 @@ public class WaiterWorkViewModel extends BaseViewModel {
             List<RestaurantTableModel> result = new ArrayList<>();
             for (int i = 0, length = input.data.size(); i < length; i++) {
                 RestaurantTableModel tableModel = input.data.get(i);
-                if (tableModel.getHost() == null)
+                if (tableModel.isSessionActive() && !tableModel.getTableSession().hasHost())
+                    result.add(tableModel);
+            }
+            return Resource.cloneResource(input, result);
+        });
+    }
+
+    public LiveData<Resource<List<RestaurantTableModel>>> getShopInactiveTables() {
+        return Transformations.map(mShopTables, input -> {
+            if (input == null || input.data == null || input.status != Status.SUCCESS)
+                return input;
+
+
+            List<RestaurantTableModel> result = new ArrayList<>();
+            for (int i = 0, length = input.data.size(); i < length; i++) {
+                RestaurantTableModel tableModel = input.data.get(i);
+                if (!tableModel.isSessionActive())
                     result.add(tableModel);
             }
             return Resource.cloneResource(input, result);
@@ -99,15 +116,15 @@ public class WaiterWorkViewModel extends BaseViewModel {
         return mQrResult;
     }
 
-    public void processQr(String data) {
+    public void processQrPk(long qrPk) {
         ObjectNode requestJson = Converters.objectMapper.createObjectNode();
-        requestJson.put("data", data);
+        requestJson.put("qr", qrPk);
         mQrResult.addSource(mWaiterRepository.newWaiterSession(requestJson), mQrResult::setValue);
     }
 
-    public void processQrAction(String data) {
+    public void processQr(String data) {
         ObjectNode requestJson = Converters.objectMapper.createObjectNode();
-        requestJson.put("qr", data);
+        requestJson.put("data", data);
         mQrResult.addSource(mWaiterRepository.newWaiterSession(requestJson), mQrResult::setValue);
     }
 
@@ -122,7 +139,12 @@ public class WaiterWorkViewModel extends BaseViewModel {
 
         if (resource.data.contains(tableModel))
             return;
-        resource.data.add(tableModel);
+        for (RestaurantTableModel table : resource.data) {
+            if (tableModel.getQrPk() == RestaurantTableModel.NO_QR_ID ? tableModel.getTable().equals(table.getTable()) : table.getQrPk() == tableModel.getQrPk()) {
+                table.setTableSession(tableModel.getTableSession());
+                break;
+            }
+        }
         mShopTables.setValue(Resource.cloneResource(resource, resource.data));
     }
 
@@ -131,8 +153,8 @@ public class WaiterWorkViewModel extends BaseViewModel {
         if (resource == null || resource.data == null)
             return;
         for (RestaurantTableModel table : resource.data) {
-            if (table.getPk() == sessionPk) {
-                table.setHost(host);
+            if (table.isSessionActive() && table.getTableSession().getPk() == sessionPk) {
+                table.getTableSession().setHost(host);
                 break;
             }
         }
@@ -143,8 +165,9 @@ public class WaiterWorkViewModel extends BaseViewModel {
         Resource<List<RestaurantTableModel>> shopTableResource = mShopTables.getValue();
         if (shopTableResource != null && shopTableResource.data != null) {
             for (int i = 0, length = shopTableResource.data.size(); i < length; i++) {
-                if (shopTableResource.data.get(i).getPk() == sessionPk) {
-                    shopTableResource.data.remove(i);
+                TableSessionModel sessionModel = shopTableResource.data.get(i).getTableSession();
+                if (sessionModel != null && sessionModel.getPk() == sessionPk) {
+                    shopTableResource.data.get(i).setTableSession(null);
                     mShopTables.setValue(Resource.cloneResource(shopTableResource, shopTableResource.data));
                     break;
                 }

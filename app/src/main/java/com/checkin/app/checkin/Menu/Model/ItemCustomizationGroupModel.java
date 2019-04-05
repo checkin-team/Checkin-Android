@@ -76,6 +76,15 @@ public class ItemCustomizationGroupModel {
         return customizationFields;
     }
 
+    @JsonProperty("fields")
+    public void setCustomizationFields(List<ItemCustomizationFieldModel> customizationFields) {
+        AppDatabase.getMenuItemCustomizationGroupModel(null).attach(this);
+        AppDatabase.getMenuItemCustomizationFieldModel(null).remove(this.customizationFields);
+        AppDatabase.getMenuItemCustomizationFieldModel(null).put(customizationFields);
+        this.customizationFields.addAll(customizationFields);
+        AppDatabase.getMenuItemCustomizationGroupModel(null).put(this);
+    }
+
     public void setCustomizationFields(ToMany<ItemCustomizationFieldModel> customizationFields) {
         this.customizationFields = customizationFields;
     }
@@ -90,15 +99,6 @@ public class ItemCustomizationGroupModel {
 
     public void setPk(long pk) {
         this.pk = pk;
-    }
-
-    @JsonProperty("fields")
-    public void setCustomizationFields(List<ItemCustomizationFieldModel> customizationFields) {
-        AppDatabase.getMenuItemCustomizationGroupModel(null).attach(this);
-        AppDatabase.getMenuItemCustomizationFieldModel(null).remove(this.customizationFields);
-        AppDatabase.getMenuItemCustomizationFieldModel(null).put(customizationFields);
-        this.customizationFields.addAll(customizationFields);
-        AppDatabase.getMenuItemCustomizationGroupModel(null).put(this);
     }
 
     public ToOne<MenuItemModel> getMenuItem() {

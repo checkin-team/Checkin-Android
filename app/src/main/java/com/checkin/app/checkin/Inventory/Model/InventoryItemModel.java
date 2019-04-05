@@ -91,6 +91,10 @@ public class InventoryItemModel {
         return availableMeals;
     }
 
+    public void setAvailableMeals(List<AVAILABLE_MEAL> availableMeals) {
+        this.availableMeals = availableMeals;
+    }
+
     @JsonProperty("available_meals")
     public void setAvailableMeals(String[] availableMeals) {
         List<AVAILABLE_MEAL> result = new ArrayList<>();
@@ -98,10 +102,6 @@ public class InventoryItemModel {
             result.add(AVAILABLE_MEAL.getByTag(meal));
         }
         this.availableMeals = result;
-    }
-
-    public void setAvailableMeals(List<AVAILABLE_MEAL> availableMeals) {
-        this.availableMeals = availableMeals;
     }
 
     public boolean isVegetarian() {
