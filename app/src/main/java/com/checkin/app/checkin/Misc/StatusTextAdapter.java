@@ -1,8 +1,5 @@
 package com.checkin.app.checkin.Misc;
 
-import androidx.annotation.DrawableRes;
-import androidx.annotation.NonNull;
-import androidx.recyclerview.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -11,6 +8,10 @@ import com.checkin.app.checkin.R;
 
 import java.util.Arrays;
 import java.util.List;
+
+import androidx.annotation.DrawableRes;
+import androidx.annotation.NonNull;
+import androidx.recyclerview.widget.RecyclerView;
 
 public class StatusTextAdapter extends RecyclerView.Adapter<StatusTextViewHolder> {
     private List<String> mData;

@@ -34,7 +34,8 @@ public class RestaurantModel extends ShopModel {
     @JsonProperty("no_reviews")
     private long reviews;
 
-    public RestaurantModel() {}
+    public RestaurantModel() {
+    }
 
     public RestaurantModel(long pk) {
         super(pk);
@@ -93,7 +94,9 @@ public class RestaurantModel extends ShopModel {
     }
 
     @JsonIgnore
-    public long getReviews() { return reviews; }
+    public long getReviews() {
+        return reviews;
+    }
 
     public String formatFollowers() {
         return Utils.formatCount(followers);
@@ -103,5 +106,7 @@ public class RestaurantModel extends ShopModel {
         return Utils.formatCount(checkins);
     }
 
-    public String formatReviews() { return Utils.formatCount(reviews); }
+    public String formatReviews() {
+        return Utils.formatCount(reviews);
+    }
 }

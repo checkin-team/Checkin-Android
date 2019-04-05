@@ -38,8 +38,7 @@ public abstract class BaseFragmentAdapterBottomNav extends FragmentStatePagerAda
         if (getPageTitle(position) != null) {
             tvTitle.setText(getPageTitle(position));
             tvTitle.setVisibility(View.VISIBLE);
-        }
-        else
+        } else
             tvTitle.setVisibility(View.GONE);
     }
 
@@ -93,7 +92,7 @@ public abstract class BaseFragmentAdapterBottomNav extends FragmentStatePagerAda
         private int mPos;
         private View mView;
 
-        TabSelectionHandler(int pos, View  view) {
+        TabSelectionHandler(int pos, View view) {
             mPos = pos;
             mView = view;
             mView.setOnClickListener(this);

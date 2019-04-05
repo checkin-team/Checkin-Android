@@ -1,12 +1,13 @@
 package com.checkin.app.checkin.Data;
 
-import androidx.lifecycle.LiveData;
-import androidx.lifecycle.MediatorLiveData;
 import android.os.AsyncTask;
+import android.util.Log;
+
 import androidx.annotation.MainThread;
 import androidx.annotation.NonNull;
 import androidx.annotation.WorkerThread;
-import android.util.Log;
+import androidx.lifecycle.LiveData;
+import androidx.lifecycle.MediatorLiveData;
 
 // ResultType: Type for the Resource data
 // RequestType: Type for the API response
@@ -133,11 +134,11 @@ public abstract class NetworkBoundResource<ResultType, RequestType> {
         return mResult;
     }
 
-    protected void setVal(Object val) {
-        this.val = val;
-    }
-
     protected Object getVal() {
         return val;
+    }
+
+    protected void setVal(Object val) {
+        this.val = val;
     }
 }

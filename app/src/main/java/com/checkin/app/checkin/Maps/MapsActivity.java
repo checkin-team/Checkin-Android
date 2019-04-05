@@ -51,30 +51,28 @@ public class MapsActivity extends AppCompatActivity implements
         GoogleApiClient.ConnectionCallbacks,
         GoogleApiClient.OnConnectionFailedListener {
 
+    public static final int REQUEST_MAP_CODE = 2500;
+    private final static int PLAY_SERVICES_RESOLUTION_REQUEST = 9000;
+    private static final int REQUEST_CODE_AUTOCOMPLETE = 5000;
+    private static final int PERMISSION_REQUEST_FINE_LOCATION = 1000;
     private static String TAG = MapsActivity.class.getSimpleName();
     public static final String KEY_MAPS_LATITUDE = TAG + ".latitude";
     public static final String KEY_MAPS_LONGITUDE = TAG + ".longitude";
     public static final String KEY_MAPS_ADDRESS = TAG + ".address";
-    private final static int PLAY_SERVICES_RESOLUTION_REQUEST = 9000;
-    private static final int REQUEST_CODE_AUTOCOMPLETE = 5000;
-    private static final int PERMISSION_REQUEST_FINE_LOCATION = 1000;
-    public static final int REQUEST_MAP_CODE = 2500;
-    private GoogleMap mMap;
-    private GoogleApiClient mGoogleApiClient;
-    private FusedLocationProviderClient mLocationProviderClient;
-    private LatLng mCenterLatLong;
-
-    /**
-     * Receiver registered with this activity to get the response from FetchAddressIntentService.
-     */
-    private AddressResultReceiver mResultReceiver;
     /**
      * The formatted location address.
      */
     protected Address mAddress;
     @BindView(R.id.btn_done)
     ImageView btnDone;
-
+    private GoogleMap mMap;
+    private GoogleApiClient mGoogleApiClient;
+    private FusedLocationProviderClient mLocationProviderClient;
+    private LatLng mCenterLatLong;
+    /**
+     * Receiver registered with this activity to get the response from FetchAddressIntentService.
+     */
+    private AddressResultReceiver mResultReceiver;
     private boolean isSearchOpened = false;
 
     private LocationCallback mLocationCallback = new LocationCallback() {
@@ -253,25 +251,6 @@ public class MapsActivity extends AppCompatActivity implements
     }
 
     /**
-     * Receiver for data sent from FetchAddressIntentService.
-     */
-    class AddressResultReceiver extends ResultReceiver {
-        AddressResultReceiver(Handler handler) {
-            super(handler);
-        }
-
-        /**
-         * Receives data sent from FetchAddressIntentService and updates the UI in MainActivity.
-         */
-        @Override
-        protected void onReceiveResult(int resultCode, Bundle resultData) {
-            if (resultCode == AppUtils.LocationConstants.SUCCESS_RESULT) {
-                mAddress = resultData.getParcelable(AppUtils.LocationConstants.LOCATION_DATA_ADDRESS_BUNDLE);
-            }
-        }
-    }
-
-    /**
      * Creates an intent, adds location data to it as an extra, and starts the intent service for
      * fetching an address.
      */
@@ -329,6 +308,25 @@ public class MapsActivity extends AppCompatActivity implements
         if (requestCode == PERMISSION_REQUEST_FINE_LOCATION) {
             if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED)
                 goToCurrentLocation();
+        }
+    }
+
+    /**
+     * Receiver for data sent from FetchAddressIntentService.
+     */
+    class AddressResultReceiver extends ResultReceiver {
+        AddressResultReceiver(Handler handler) {
+            super(handler);
+        }
+
+        /**
+         * Receives data sent from FetchAddressIntentService and updates the UI in MainActivity.
+         */
+        @Override
+        protected void onReceiveResult(int resultCode, Bundle resultData) {
+            if (resultCode == AppUtils.LocationConstants.SUCCESS_RESULT) {
+                mAddress = resultData.getParcelable(AppUtils.LocationConstants.LOCATION_DATA_ADDRESS_BUNDLE);
+            }
         }
     }
 }

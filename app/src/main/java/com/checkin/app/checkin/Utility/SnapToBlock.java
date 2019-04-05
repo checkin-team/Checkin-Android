@@ -10,6 +10,12 @@ package com.checkin.app.checkin.Utility;
 
 import android.annotation.TargetApi;
 import android.os.Build;
+import android.util.DisplayMetrics;
+import android.util.Log;
+import android.view.View;
+import android.view.animation.Interpolator;
+import android.widget.Scroller;
+
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.core.view.ViewCompat;
@@ -19,42 +25,8 @@ import androidx.recyclerview.widget.LinearSmoothScroller;
 import androidx.recyclerview.widget.OrientationHelper;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.recyclerview.widget.SnapHelper;
-import android.util.DisplayMetrics;
-import android.util.Log;
-import android.view.View;
-import android.view.animation.Interpolator;
-import android.widget.Scroller;
 
 public class SnapToBlock extends SnapHelper {
-    private RecyclerView mRecyclerView;
-
-    // Total number of ic_ordered_items in a block of view in the RecyclerView
-    private int mBlockSize;
-
-    // Maximum number of positions to move on a fling.
-    private int mMaxPositionsToMove;
-
-    // Width of a RecyclerView item if orientation is horizontal or height of the item if vertical.
-    private int mItemDimension;
-
-    // Maxim blocks to move during most vigorous fling.
-    private final int mMaxFlingBlocks;
-
-    // Callback interface when blocks are snapped.
-    private SnapBlockCallback mSnapBlockCallback;
-
-    // When snapping, used to determine direction of snap.
-    private int mPriorFirstPosition = RecyclerView.NO_POSITION;
-
-    // Our btn_private_deselected scroller
-    private Scroller mScroller;
-
-    // Horizontal/vertical layout helper
-    private OrientationHelper mOrientationHelper;
-
-    // LTR/RTL helper
-    private LayoutDirectionHelper mLayoutDirectionHelper;
-
     // Borrowed from ViewPager.java
     private static final Interpolator sInterpolator = new Interpolator() {
         public float getInterpolation(float t) {
@@ -64,6 +36,28 @@ public class SnapToBlock extends SnapHelper {
             return t * t * t + 1.0f;
         }
     };
+    private static final float MILLISECONDS_PER_INCH = 100f;
+    @SuppressWarnings("unused")
+    private static final String TAG = "SnapToBlock";
+    // Maxim blocks to move during most vigorous fling.
+    private final int mMaxFlingBlocks;
+    private RecyclerView mRecyclerView;
+    // Total number of ic_ordered_items in a block of view in the RecyclerView
+    private int mBlockSize;
+    // Maximum number of positions to move on a fling.
+    private int mMaxPositionsToMove;
+    // Width of a RecyclerView item if orientation is horizontal or height of the item if vertical.
+    private int mItemDimension;
+    // Callback interface when blocks are snapped.
+    private SnapBlockCallback mSnapBlockCallback;
+    // When snapping, used to determine direction of snap.
+    private int mPriorFirstPosition = RecyclerView.NO_POSITION;
+    // Our btn_private_deselected scroller
+    private Scroller mScroller;
+    // Horizontal/vertical layout helper
+    private OrientationHelper mOrientationHelper;
+    // LTR/RTL helper
+    private LayoutDirectionHelper mLayoutDirectionHelper;
 
     public SnapToBlock(int maxFlingBlocks) {
         super();
@@ -256,6 +250,13 @@ public class SnapToBlock extends SnapHelper {
         mSnapBlockCallback = callback;
     }
 
+    public interface SnapBlockCallback {
+        void onBlockSnap(int snapPosition);
+
+        void onBlockSnapped(int snapPosition);
+
+    }
+
     /*
         Helper class that handles calculations for LTR and RTL layouts.
      */
@@ -353,15 +354,4 @@ public class SnapToBlock extends SnapHelper {
             return mIsRTL ? velocityNegative : !velocityNegative;
         }
     }
-
-    public interface SnapBlockCallback {
-        void onBlockSnap(int snapPosition);
-
-        void onBlockSnapped(int snapPosition);
-
-    }
-
-    private static final float MILLISECONDS_PER_INCH = 100f;
-    @SuppressWarnings("unused")
-    private static final String TAG = "SnapToBlock";
 }

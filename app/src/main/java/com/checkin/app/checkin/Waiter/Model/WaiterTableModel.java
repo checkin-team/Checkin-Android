@@ -15,9 +15,10 @@ public class WaiterTableModel {
 
     private int eventCount;
 
-    public WaiterTableModel() {}
+    public WaiterTableModel() {
+    }
 
-    public WaiterTableModel(long pk, String table){
+    public WaiterTableModel(long pk, String table) {
         this.pk = pk;
         this.table = table;
     }
@@ -34,12 +35,12 @@ public class WaiterTableModel {
         return eventCount;
     }
 
-    public String formatEventCount() {
-        return eventCount > 0 ? String.valueOf(eventCount) : null;
-    }
-
     public void setEventCount(int eventCount) {
         this.eventCount = eventCount;
+    }
+
+    public String formatEventCount() {
+        return eventCount > 0 ? String.valueOf(eventCount) : null;
     }
 
     public void resetEventCount() {

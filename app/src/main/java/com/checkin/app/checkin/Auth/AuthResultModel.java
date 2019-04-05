@@ -11,7 +11,8 @@ public class AuthResultModel {
     @JsonProperty("token")
     private String token;
 
-    public AuthResultModel() {}
+    public AuthResultModel() {
+    }
 
     public long getUserId() {
         return userId;

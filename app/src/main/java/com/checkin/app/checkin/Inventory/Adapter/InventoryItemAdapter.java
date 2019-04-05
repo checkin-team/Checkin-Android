@@ -56,6 +56,12 @@ public class InventoryItemAdapter extends RecyclerView.Adapter<InventoryItemAdap
         return mItemsList != null ? mItemsList.size() : 0;
     }
 
+    public interface OnItemInteractionListener {
+        boolean onMenuItemShowInfo(InventoryItemModel item);
+
+        void onClickItemAvailability(InventoryItemModel mItem, boolean isChecked);
+    }
+
     public class ItemViewHolder extends RecyclerView.ViewHolder {
         @BindView(R.id.tv_menu_item_name)
         TextView tvItemName;
@@ -94,11 +100,5 @@ public class InventoryItemAdapter extends RecyclerView.Adapter<InventoryItemAdap
 
             switchItemAvailability.setChecked(menuItem.isAvailable());
         }
-    }
-
-    public interface OnItemInteractionListener {
-        boolean onMenuItemShowInfo(InventoryItemModel item);
-
-        void onClickItemAvailability(InventoryItemModel mItem, boolean isChecked);
     }
 }

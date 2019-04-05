@@ -20,10 +20,9 @@ import butterknife.OnClick;
 import static android.content.pm.PackageManager.PERMISSION_GRANTED;
 
 public class QRScannerActivity extends AppCompatActivity implements QRScannerFragment.QRScannerInteraction {
+    public static final String KEY_QR_RESULT = "qr.result";
     private static final String TAG = QRScannerActivity.class.getSimpleName();
     private static final int PERMISSION_REQUEST_CAMERA = 101;
-    public static final String KEY_QR_RESULT = "qr.result";
-
     @BindView(R.id.btn_flash_toggle)
     ImageView btnFlash;
 

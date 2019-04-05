@@ -1,8 +1,5 @@
 package com.checkin.app.checkin.Menu.Adapter;
 
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.recyclerview.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -20,6 +17,9 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.recyclerview.widget.RecyclerView;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
@@ -59,15 +59,31 @@ public class MenuCartAdapter extends RecyclerView.Adapter<MenuCartAdapter.ViewHo
         notifyDataSetChanged();
     }
 
+    public interface MenuCartInteraction {
+        void onOrderedItemRemark(OrderedItemModel item);
+
+        void onOrderedItemRemoved(OrderedItemModel item);
+
+        void onOrderedItemChanged(OrderedItemModel item, int count);
+    }
+
     class ViewHolder extends RecyclerView.ViewHolder implements DiscreteScrollView.ScrollStateChangeListener {
-        @BindView(R.id.btn_menu_cart_item_edit) ImageButton btnItemEdit;
-        @BindView(R.id.btn_menu_cart_item_remove) ImageButton btnItemRemove;
-        @BindView(R.id.tv_menu_cart_item_name) TextView tvItemName;
-        @BindView(R.id.tv_menu_cart_item_price) TextView tvItemPrice;
-        @BindView(R.id.tv_menu_cart_item_extra) TextView tvItemExtra;
-        @BindView(R.id.qp_menu_cart_item_quantity) QuantityPickerView qpItemQuantity;
-        @BindView(R.id.sr_menu_cart_item) SwipeRevealLayout srCartItem;
-        @BindView(R.id.container_menu_cart_item) ViewGroup containerMenuCartItem;
+        @BindView(R.id.btn_menu_cart_item_edit)
+        ImageButton btnItemEdit;
+        @BindView(R.id.btn_menu_cart_item_remove)
+        ImageButton btnItemRemove;
+        @BindView(R.id.tv_menu_cart_item_name)
+        TextView tvItemName;
+        @BindView(R.id.tv_menu_cart_item_price)
+        TextView tvItemPrice;
+        @BindView(R.id.tv_menu_cart_item_extra)
+        TextView tvItemExtra;
+        @BindView(R.id.qp_menu_cart_item_quantity)
+        QuantityPickerView qpItemQuantity;
+        @BindView(R.id.sr_menu_cart_item)
+        SwipeRevealLayout srCartItem;
+        @BindView(R.id.container_menu_cart_item)
+        ViewGroup containerMenuCartItem;
 
         private OrderedItemModel mItem;
         private int scrollPos;
@@ -122,11 +138,5 @@ public class MenuCartAdapter extends RecyclerView.Adapter<MenuCartAdapter.ViewHo
         @Override
         public void onScroll(float scrollPosition, int currentPosition, int newPosition, @Nullable RecyclerView.ViewHolder currentHolder, @Nullable RecyclerView.ViewHolder newCurrent) {
         }
-    }
-
-    public interface MenuCartInteraction {
-        void onOrderedItemRemark(OrderedItemModel item);
-        void onOrderedItemRemoved(OrderedItemModel item);
-        void onOrderedItemChanged(OrderedItemModel item, int count);
     }
 }

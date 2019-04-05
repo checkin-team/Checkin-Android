@@ -34,6 +34,8 @@ import static com.facebook.FacebookSdk.getCacheDir;
 
 @Module
 public class ApiClient {
+    private static WebApiService sApiService;
+
     private static String getBaseUrl() {
         return API_PROTOCOL + API_HOST + "/";
     }
@@ -47,7 +49,17 @@ public class ApiClient {
         return "application/json; version=" + Constants.API_VERSION;
     }
 
-    private static WebApiService sApiService;
+    @Provides
+    public static WebApiService getApiService(Context context) {
+        if (sApiService == null) {
+            synchronized (ApiClient.class) {
+                if (sApiService == null) {
+                    sApiService = new ApiClient().provideRetrofit(context).create(WebApiService.class);
+                }
+            }
+        }
+        return sApiService;
+    }
 
     private OkHttpClient provideClient(final Context context) {
         int cacheSize = 10 * 1024 * 1024; // 10 MB
@@ -88,7 +100,6 @@ public class ApiClient {
         });
     }
 
-
     private void handleNetworkInterceptor(OkHttpClient.Builder clientBuilder, Context context) {
         clientBuilder.addInterceptor(new NetworkConnectionInterceptor() {
             @Override
@@ -109,18 +120,6 @@ public class ApiClient {
                 .addConverterFactory(JacksonConverterFactory.create(Converters.objectMapper))
                 .client(provideClient(context))
                 .build();
-    }
-
-    @Provides
-    public static WebApiService getApiService(Context context) {
-        if (sApiService == null) {
-            synchronized (ApiClient.class) {
-                if (sApiService == null) {
-                    sApiService = new ApiClient().provideRetrofit(context).create(WebApiService.class);
-                }
-            }
-        }
-        return sApiService;
     }
 
     public static abstract class NetworkConnectionInterceptor implements Interceptor {

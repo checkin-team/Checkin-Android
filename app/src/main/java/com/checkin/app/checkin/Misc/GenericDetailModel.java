@@ -20,7 +20,8 @@ public class GenericDetailModel {
     @JsonIgnore
     private File image;
 
-    public GenericDetailModel() {}
+    public GenericDetailModel() {
+    }
 
     public GenericDetailModel(ObjectNode data) {
         this.pk = data.get("pk").asText();
@@ -35,12 +36,16 @@ public class GenericDetailModel {
         return pk;
     }
 
-    public void setIdentifier(int identifier) {
-        this.identifier = identifier;
+    public void setPk(String pk) {
+        this.pk = pk;
     }
 
     public int getIdentifier() {
         return this.identifier;
+    }
+
+    public void setIdentifier(int identifier) {
+        this.identifier = identifier;
     }
 
     public File getImage() {
@@ -49,10 +54,6 @@ public class GenericDetailModel {
 
     public void setImage(File image) {
         this.image = image;
-    }
-
-    public void setPk(String pk) {
-        this.pk = pk;
     }
 
     @Override

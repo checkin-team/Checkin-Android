@@ -5,7 +5,7 @@ import android.view.MotionEvent;
 import android.view.View;
 
 public abstract class DragTouchListener implements View.OnTouchListener {
-    private static final String TAG= DragTouchListener.class.getSimpleName();
+    private static final String TAG = DragTouchListener.class.getSimpleName();
     private static final int INVALID_POINTER_ID = -1;
     private int mActivePointerId = INVALID_POINTER_ID;
     private float mLastTouchX;
@@ -69,7 +69,9 @@ public abstract class DragTouchListener implements View.OnTouchListener {
         }
         return false;
     }
-    public abstract  boolean shouldDrag();
+
+    public abstract boolean shouldDrag();
+
     public abstract boolean onDragX(final float dx);
 
     public abstract boolean onDragY(final float dy);

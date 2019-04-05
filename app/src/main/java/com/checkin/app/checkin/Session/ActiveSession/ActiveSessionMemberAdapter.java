@@ -65,6 +65,10 @@ public class ActiveSessionMemberAdapter extends HeaderFooterRecyclerViewAdapter 
         notifyDataSetChanged();
     }
 
+    public interface SessionMemberInteraction {
+        void onUnacceptedMemberClicked(SessionCustomerModel customerModel);
+    }
+
     class ItemViewHolder extends RecyclerView.ViewHolder {
         @BindView(R.id.im_as_member_user)
         CircleImageView imUser;
@@ -92,9 +96,5 @@ public class ActiveSessionMemberAdapter extends HeaderFooterRecyclerViewAdapter 
             if (!customer.isAccepted()) tvPendingRequest.setVisibility(View.VISIBLE);
             else tvPendingRequest.setVisibility(View.INVISIBLE);
         }
-    }
-
-    public interface SessionMemberInteraction {
-        void onUnacceptedMemberClicked(SessionCustomerModel customerModel);
     }
 }

@@ -20,7 +20,6 @@ import android.content.Context;
 import android.graphics.Color;
 import android.graphics.Rect;
 import android.graphics.Typeface;
-import androidx.appcompat.widget.AppCompatTextView;
 import android.text.InputType;
 import android.text.Spannable;
 import android.text.SpannableString;
@@ -38,16 +37,17 @@ import android.view.inputmethod.InputMethodManager;
 
 import java.util.Locale;
 
+import androidx.appcompat.widget.AppCompatTextView;
+
 /**
  * A custom EditText (actually derived from TextView) to input time in 24h format.
- *
+ * <p>
  * Features:
- * - It always shows the currently set time, so it's never empty. 
+ * - It always shows the currently set time, so it's never empty.
  * - Both virtual and physical keyboards can be used.
  * - The current digit is highlighted; when a number on the keyboard is pressed, the digit is replaced.
  * - Back key moves the cursor backward.
  * - Space key moves the cursor forward.
- *
  */
 public class TimeEditText extends AppCompatTextView {
 
@@ -80,14 +80,26 @@ public class TimeEditText extends AppCompatTextView {
      * @return the current hour (from 0 to 23)
      */
     public long getHour() {
-        return digits[0]*10+digits[1];
+        return digits[0] * 10 + digits[1];
+    }
+
+    private void setHour(long hour) {
+        hour = hour % 24;
+        digits[0] = hour / 10;
+        digits[1] = hour % 10;
     }
 
     /**
      * @return the current minute (from 0 to 59)
      */
     public long getMinutes() {
-        return digits[2]*10+digits[3];
+        return digits[2] * 10 + digits[3];
+    }
+
+    private void setMinutes(long min) {
+        min = min % 60;
+        digits[2] = min / 10;
+        digits[3] = min % 10;
     }
 
     /**
@@ -99,6 +111,7 @@ public class TimeEditText extends AppCompatTextView {
 
     /**
      * Set the current time
+     *
      * @param totalTime total time in minutes (hour * 60 + minutes)
      */
     public void setTotalTime(long totalTime) {
@@ -109,29 +122,19 @@ public class TimeEditText extends AppCompatTextView {
         updateText();
     }
 
-    private void setHour(long hour) {
-        hour = hour % 24;
-        digits[0] = hour/10;
-        digits[1] = hour%10;
-    }
-
     /**
      * Set the current hour
+     *
      * @param hour hour (from 0 to 23)
      */
     public void updateHour(long hour) {
-       setHour(hour);
-       updateText();
-    }
-
-    private void setMinutes(long min) {
-        min = min % 60;
-        digits[2] = min/10;
-        digits[3] = min%10;
+        setHour(hour);
+        updateText();
     }
 
     /**
      * Set the current minute
+     *
      * @param min minutes (from 0 to 59)
      */
     public void updateMinutes(long min) {
@@ -148,14 +151,14 @@ public class TimeEditText extends AppCompatTextView {
     }
 
     private void updateText() {
-        int bold = currentPosition > 1 ? currentPosition+1 : currentPosition;
+        int bold = currentPosition > 1 ? currentPosition + 1 : currentPosition;
         int color = getTextColors().getDefaultColor();
         Spannable text = new SpannableString(String.format(Locale.ENGLISH, "%02d:%02d", getHour(), getMinutes()));
         if (bold >= 0) {
             text.setSpan(new ForegroundColorSpan(color & 0xFFFFFF | 0xA0000000), 0, 5, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
-            text.setSpan(new StyleSpan(Typeface.BOLD), bold, bold+1, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
-            text.setSpan(new ForegroundColorSpan(Color.BLACK), bold, bold+1, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
-            text.setSpan(new BackgroundColorSpan(0x40808080), bold, bold+1, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
+            text.setSpan(new StyleSpan(Typeface.BOLD), bold, bold + 1, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
+            text.setSpan(new ForegroundColorSpan(Color.BLACK), bold, bold + 1, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
+            text.setSpan(new BackgroundColorSpan(0x40808080), bold, bold + 1, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
         }
         setText(text);
     }
@@ -165,7 +168,7 @@ public class TimeEditText extends AppCompatTextView {
         if (event.getAction() == MotionEvent.ACTION_UP) {
             requestFocusFromTouch();
             InputMethodManager imm = (InputMethodManager) getContext().getSystemService(Context.INPUT_METHOD_SERVICE);
-            imm.showSoftInput(this,0);
+            imm.showSoftInput(this, 0);
             if (currentPosition == POSITION_NONE) {
                 currentPosition = 0;
                 updateText();
@@ -180,21 +183,21 @@ public class TimeEditText extends AppCompatTextView {
 
         if (keyCode == KeyEvent.KEYCODE_DEL) {
             // moves cursor backward
-            currentPosition = currentPosition >= 0 ? (currentPosition+3)%4 : 3;
+            currentPosition = currentPosition >= 0 ? (currentPosition + 3) % 4 : 3;
             updateText();
             return true;
         }
 
         if (keyCode == KeyEvent.KEYCODE_SPACE) {
             // moves cursor forward
-            currentPosition = (currentPosition+1)%4;
+            currentPosition = (currentPosition + 1) % 4;
             updateText();
             return true;
         }
 
         if (keyCode == KeyEvent.KEYCODE_ENTER) {
             View v = focusSearch(FOCUS_DOWN);
-            boolean next = v!=null;
+            boolean next = v != null;
             if (next) {
                 next = v.requestFocus(FOCUS_DOWN);
             }
@@ -213,16 +216,16 @@ public class TimeEditText extends AppCompatTextView {
             boolean valid = false;
 
             switch (currentPosition) {
-                case 0:	// first hour digit must be 0-2
+                case 0:    // first hour digit must be 0-2
                     valid = n <= 2;
                     break;
-                case 1:	// second hour digit must be 0-3 if first digit is 2
+                case 1:    // second hour digit must be 0-3 if first digit is 2
                     valid = digits[0] < 2 || n <= 3;
                     break;
-                case 2:	// first minute digit must be 0-6
+                case 2:    // first minute digit must be 0-6
                     valid = n < 6;
                     break;
-                case 3:	// second minuti digit always valid (0-9)
+                case 3:    // second minuti digit always valid (0-9)
                     valid = true;
                     break;
             }
@@ -233,7 +236,7 @@ public class TimeEditText extends AppCompatTextView {
                 }
 
                 digits[currentPosition] = n;
-                currentPosition = currentPosition < 3 ? currentPosition+1 : POSITION_NONE;	// if it is the last digit, hide cursor
+                currentPosition = currentPosition < 3 ? currentPosition + 1 : POSITION_NONE;    // if it is the last digit, hide cursor
                 updateText();
             }
 
@@ -278,9 +281,9 @@ public class TimeEditText extends AppCompatTextView {
                     hideKeyboard();
                     currentPosition = POSITION_NONE;
                     updateText();
-                } else if (actionCode == EditorInfo.IME_ACTION_NEXT){
+                } else if (actionCode == EditorInfo.IME_ACTION_NEXT) {
                     View v = focusSearch(FOCUS_DOWN);
-                    if (v!=null) {
+                    if (v != null) {
                         v.requestFocus(FOCUS_DOWN);
                     }
                 }

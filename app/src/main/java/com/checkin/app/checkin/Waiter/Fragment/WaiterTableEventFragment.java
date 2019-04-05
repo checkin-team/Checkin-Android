@@ -38,11 +38,11 @@ public class WaiterTableEventFragment extends BaseFragment implements WaiterEven
     private WaiterEventAdapter mDoneAdapter;
     private WaiterTableViewModel mViewModel;
 
-    public static WaiterTableEventFragment newInstance() {
-        return new WaiterTableEventFragment();
+    public WaiterTableEventFragment() {
     }
 
-    public WaiterTableEventFragment() {
+    public static WaiterTableEventFragment newInstance() {
+        return new WaiterTableEventFragment();
     }
 
     @Override
@@ -77,7 +77,7 @@ public class WaiterTableEventFragment extends BaseFragment implements WaiterEven
                 return;
             if (listResource.status == Resource.Status.SUCCESS && listResource.data != null) {
                 mActiveAdapter.setData(listResource.data);
-                nestedSVEvent.scrollTo(0,0);
+                nestedSVEvent.scrollTo(0, 0);
             }
         });
         mViewModel.getDeliveredTableEvents().observe(this, listResource -> {
@@ -88,7 +88,7 @@ public class WaiterTableEventFragment extends BaseFragment implements WaiterEven
                     tvDelivered.setVisibility(View.VISIBLE);
                     rvEventsDone.setVisibility(View.VISIBLE);
                     mDoneAdapter.setData(listResource.data);
-                    nestedSVEvent.scrollTo(0,0);
+                    nestedSVEvent.scrollTo(0, 0);
                 }
             }
         });

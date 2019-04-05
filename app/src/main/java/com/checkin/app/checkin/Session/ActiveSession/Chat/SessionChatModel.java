@@ -1,13 +1,13 @@
 package com.checkin.app.checkin.Session.ActiveSession.Chat;
 
-import androidx.annotation.Nullable;
-
 import com.checkin.app.checkin.Misc.BriefModel;
 import com.checkin.app.checkin.Utility.Utils;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 import java.io.Serializable;
 import java.util.Date;
+
+import androidx.annotation.Nullable;
 
 /**
  * Created by ACER on 1/2/2019.
@@ -43,6 +43,103 @@ public class SessionChatModel implements Serializable {
     private Date modified;
 
     public SessionChatModel() {
+    }
+
+    @JsonProperty("sender")
+    public void setSender(int tag) {
+        this.sender = CHAT_SENDER_TYPE.getByTag(tag);
+    }
+
+    public int getPk() {
+        return pk;
+    }
+
+    public void setPk(int pk) {
+        this.pk = pk;
+    }
+
+    public CHAT_EVENT_TYPE getType() {
+        return type;
+    }
+
+    @JsonProperty("type")
+    public void setType(int tag) {
+        this.type = CHAT_EVENT_TYPE.getByTag(tag);
+    }
+
+    public String getMessage() {
+        return message;
+    }
+
+    public void setMessage(String message) {
+        this.message = message;
+    }
+
+    public CHAT_STATUS_TYPE getStatus() {
+        return status;
+    }
+
+    @JsonProperty("status")
+    public void setStatus(int status) {
+        this.status = CHAT_STATUS_TYPE.getByTag(status);
+    }
+
+    public SessionChatDataModel getData() {
+        return data;
+    }
+
+    public void setData(SessionChatDataModel data) {
+        this.data = data;
+    }
+
+    public CHAT_SENDER_TYPE getSender() {
+        return sender;
+    }
+
+    public void setSender(CHAT_SENDER_TYPE sender) {
+        this.sender = sender;
+    }
+
+    @Nullable
+    public BriefModel getUser() {
+        return user;
+    }
+
+    public void setUser(@Nullable BriefModel user) {
+        this.user = user;
+    }
+
+    public Date getCreated() {
+        return created;
+    }
+
+    public void setCreated(Date created) {
+        this.created = created;
+    }
+
+    public Date getModified() {
+        return modified;
+    }
+
+    public void setModified(Date modified) {
+        this.modified = modified;
+    }
+
+    public boolean allowConcernRaise() {
+        return (this.type == CHAT_EVENT_TYPE.EVENT_MENU_ORDER_ITEM || this.type == CHAT_EVENT_TYPE.EVENT_REQUEST_SERVICE)
+                && this.status != CHAT_STATUS_TYPE.CANCELLED;
+    }
+
+    public String formatEventTime() {
+        return Utils.formatDateTo24HoursTime(modified);
+    }
+
+    public boolean isOfAnyType(CHAT_EVENT_TYPE... types) {
+        for (CHAT_EVENT_TYPE type : types) {
+            if (type == this.type)
+                return true;
+        }
+        return false;
     }
 
     public enum CHAT_EVENT_TYPE {
@@ -99,102 +196,5 @@ public class SessionChatModel implements Serializable {
             }
             return NONE;
         }
-    }
-
-    @JsonProperty("type")
-    public void setType(int tag) {
-        this.type = CHAT_EVENT_TYPE.getByTag(tag);
-    }
-
-    @JsonProperty("sender")
-    public void setSender(int tag) {
-        this.sender = CHAT_SENDER_TYPE.getByTag(tag);
-    }
-
-    @JsonProperty("status")
-    public void setStatus(int status) {
-        this.status = CHAT_STATUS_TYPE.getByTag(status);
-    }
-
-    public int getPk() {
-        return pk;
-    }
-
-    public CHAT_EVENT_TYPE getType() {
-        return type;
-    }
-
-    public String getMessage() {
-        return message;
-    }
-
-    public CHAT_STATUS_TYPE getStatus() {
-        return status;
-    }
-
-    public SessionChatDataModel getData() {
-        return data;
-    }
-
-    public CHAT_SENDER_TYPE getSender() {
-        return sender;
-    }
-
-    @Nullable
-    public BriefModel getUser() {
-        return user;
-    }
-
-    public Date getCreated() {
-        return created;
-    }
-
-    public Date getModified() {
-        return modified;
-    }
-
-    public void setPk(int pk) {
-        this.pk = pk;
-    }
-
-    public void setMessage(String message) {
-        this.message = message;
-    }
-
-    public void setData(SessionChatDataModel data) {
-        this.data = data;
-    }
-
-    public void setSender(CHAT_SENDER_TYPE sender) {
-        this.sender = sender;
-    }
-
-    public void setUser(@Nullable BriefModel user) {
-        this.user = user;
-    }
-
-    public void setCreated(Date created) {
-        this.created = created;
-    }
-
-    public void setModified(Date modified) {
-        this.modified = modified;
-    }
-
-    public boolean allowConcernRaise() {
-        return (this.type == CHAT_EVENT_TYPE.EVENT_MENU_ORDER_ITEM || this.type == CHAT_EVENT_TYPE.EVENT_REQUEST_SERVICE)
-                && this.status != CHAT_STATUS_TYPE.CANCELLED;
-    }
-
-    public String formatEventTime() {
-        return Utils.formatDateTo24HoursTime(modified);
-    }
-
-    public boolean isOfAnyType(CHAT_EVENT_TYPE... types) {
-        for (CHAT_EVENT_TYPE type: types) {
-            if (type == this.type)
-                return true;
-        }
-        return false;
     }
 }

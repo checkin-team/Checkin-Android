@@ -1,7 +1,5 @@
 package com.checkin.app.checkin.Search;
 
-import androidx.annotation.NonNull;
-import androidx.recyclerview.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -13,6 +11,8 @@ import com.checkin.app.checkin.Utility.Utils;
 
 import java.util.List;
 
+import androidx.annotation.NonNull;
+import androidx.recyclerview.widget.RecyclerView;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
@@ -24,7 +24,7 @@ import static com.checkin.app.checkin.Search.SearchResultModel.TYPE_RESTAURANT;
  * Created by Jogi Miglani on 28-10-2018.
  */
 
-public class SearchResultAdapter <S extends SearchResultModel>  extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
+public class SearchResultAdapter<S extends SearchResultModel> extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
     private SearchResultInteraction mListener;
     private List<S> mData;
 

@@ -28,7 +28,6 @@ import java.util.Locale;
 import androidx.annotation.Nullable;
 import androidx.core.app.NotificationCompat;
 
-import static com.checkin.app.checkin.Data.Message.Constants.CHANNEL.ACTIVE_SESSION_PERSISTENT;
 import static com.checkin.app.checkin.Data.Message.MessageModel.MESSAGE_TYPE.MANAGER_SESSION_ORDERS_PUSH;
 import static com.checkin.app.checkin.Data.Message.MessageModel.MESSAGE_TYPE.WAITER_SESSION_ORDERS_PUSH;
 
@@ -55,59 +54,8 @@ public class MessageModel implements Serializable {
     @JsonProperty("data")
     private MessageDataModel data;
 
-    public enum MESSAGE_TYPE {
-        NONE(0),
-
-        /* Users */
-
-        // Active Session
-        USER_SESSION_MEMBER_ADD_REQUEST(302), USER_SESSION_ADDED_BY_OWNER(303), USER_SESSION_MEMBER_REMOVED(304),
-        USER_SESSION_HOST_ASSIGNED(305), USER_SESSION_MEMBER_ADDED(306), USER_SESSION_END(309),
-        USER_SESSION_BILL_CHANGE(311), USER_SESSION_EVENT_NEW(312), USER_SESSION_EVENT_UPDATE(313),
-        USER_SESSION_ORDER_NEW(314), USER_SESSION_ORDER_ACCEPTED_REJECTED(315), USER_SESSION_UPDATE_ORDER(316),
-
-        /* Restaurant */
-
-        // Members
-        SHOP_MEMBER_ADDED(505),
-
-        // Manager
-        MANAGER_SESSION_NEW(611), MANAGER_SESSION_MEMBER_CHANGE(612), MANAGER_SESSION_HOST_ASSIGNED(613),
-        MANAGER_SESSION_NEW_ORDER(615), MANAGER_SESSION_UPDATE_ORDER(616), MANAGER_SESSION_EVENT_SERVICE(617),
-        MANAGER_SESSION_EVENT_CONCERN(618), MANAGER_SESSION_EVENT_UPDATE(619), MANAGER_SESSION_ORDERS_PUSH(620),
-        MANAGER_SESSION_BILL_CHANGE(623), MANAGER_SESSION_CHECKOUT_REQUEST(625), MANAGER_SESSION_END(626),
-
-        // Waiter
-        WAITER_SESSION_NEW(711), WAITER_SESSION_MEMBER_CHANGE(712), WAITER_SESSION_HOST_ASSIGNED(713),
-        WAITER_SESSION_NEW_ORDER(715), WAITER_SESSION_UPDATE_ORDER(716), WAITER_SESSION_EVENT_SERVICE(717),
-        WAITER_SESSION_EVENT_UPDATE(719), WAITER_SESSION_ORDERS_PUSH(720), WAITER_SESSION_COLLECT_CASH(725), WAITER_SESSION_END(726);
-
-        public int id;
-
-        MESSAGE_TYPE(int id) {
-            this.id = id;
-        }
-
-        public static MESSAGE_TYPE getById(int id) {
-            for (MESSAGE_TYPE type : MESSAGE_TYPE.values()) {
-                if (type.id == id)
-                    return type;
-            }
-            return NONE;
-        }
-
-        public String actionTag() {
-            return String.format(Locale.ENGLISH, "CHECKIN.MESSAGE_TYPE.%d", id);
-        }
-    }
-
     @JsonCreator
     public MessageModel() {
-    }
-
-    @JsonProperty("type")
-    public void setType(int type) {
-        this.type = MESSAGE_TYPE.getById(type);
     }
 
     public MessageObjectModel getTarget() {
@@ -116,6 +64,11 @@ public class MessageModel implements Serializable {
 
     public MESSAGE_TYPE getType() {
         return type;
+    }
+
+    @JsonProperty("type")
+    public void setType(int type) {
+        this.type = MESSAGE_TYPE.getById(type);
     }
 
     @JsonProperty("data")
@@ -212,7 +165,7 @@ public class MessageModel implements Serializable {
             builder.setPriority(Notification.PRIORITY_HIGH);
         if (this.type == MANAGER_SESSION_ORDERS_PUSH || this.type == WAITER_SESSION_ORDERS_PUSH) {
             builder.setSound(Constants.getAlertOrdersSoundUri(context))
-                    .setFullScreenIntent(pendingIntent,true);
+                    .setFullScreenIntent(pendingIntent, true);
         }
         tryGroupNotification(builder);
     }
@@ -350,5 +303,51 @@ public class MessageModel implements Serializable {
         if (object != null && object.getType() == MESSAGE_OBJECT_TYPE.SESSION)
             return object;
         return null;
+    }
+
+    public enum MESSAGE_TYPE {
+        NONE(0),
+
+        /* Users */
+
+        // Active Session
+        USER_SESSION_MEMBER_ADD_REQUEST(302), USER_SESSION_ADDED_BY_OWNER(303), USER_SESSION_MEMBER_REMOVED(304),
+        USER_SESSION_HOST_ASSIGNED(305), USER_SESSION_MEMBER_ADDED(306), USER_SESSION_END(309),
+        USER_SESSION_BILL_CHANGE(311), USER_SESSION_EVENT_NEW(312), USER_SESSION_EVENT_UPDATE(313),
+        USER_SESSION_ORDER_NEW(314), USER_SESSION_ORDER_ACCEPTED_REJECTED(315), USER_SESSION_UPDATE_ORDER(316),
+
+        /* Restaurant */
+
+        // Members
+        SHOP_MEMBER_ADDED(505),
+
+        // Manager
+        MANAGER_SESSION_NEW(611), MANAGER_SESSION_MEMBER_CHANGE(612), MANAGER_SESSION_HOST_ASSIGNED(613),
+        MANAGER_SESSION_NEW_ORDER(615), MANAGER_SESSION_UPDATE_ORDER(616), MANAGER_SESSION_EVENT_SERVICE(617),
+        MANAGER_SESSION_EVENT_CONCERN(618), MANAGER_SESSION_EVENT_UPDATE(619), MANAGER_SESSION_ORDERS_PUSH(620),
+        MANAGER_SESSION_BILL_CHANGE(623), MANAGER_SESSION_CHECKOUT_REQUEST(625), MANAGER_SESSION_END(626),
+
+        // Waiter
+        WAITER_SESSION_NEW(711), WAITER_SESSION_MEMBER_CHANGE(712), WAITER_SESSION_HOST_ASSIGNED(713),
+        WAITER_SESSION_NEW_ORDER(715), WAITER_SESSION_UPDATE_ORDER(716), WAITER_SESSION_EVENT_SERVICE(717),
+        WAITER_SESSION_EVENT_UPDATE(719), WAITER_SESSION_ORDERS_PUSH(720), WAITER_SESSION_COLLECT_CASH(725), WAITER_SESSION_END(726);
+
+        public int id;
+
+        MESSAGE_TYPE(int id) {
+            this.id = id;
+        }
+
+        public static MESSAGE_TYPE getById(int id) {
+            for (MESSAGE_TYPE type : MESSAGE_TYPE.values()) {
+                if (type.id == id)
+                    return type;
+            }
+            return NONE;
+        }
+
+        public String actionTag() {
+            return String.format(Locale.ENGLISH, "CHECKIN.MESSAGE_TYPE.%d", id);
+        }
     }
 }

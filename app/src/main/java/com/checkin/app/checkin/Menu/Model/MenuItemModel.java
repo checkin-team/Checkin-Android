@@ -76,25 +76,8 @@ public class MenuItemModel implements Serializable {
     @Transient
     private InventoryItemAdapter.ItemViewHolder inventoryHolder;
 
-    public enum AVAILABLE_MEAL {
-        BREAKFAST("brkfst"), LUNCH("lunch"), DINNER("dinner"),
-        NIGHTLIFE("nhtlfe");
-
-        public String tag;
-        AVAILABLE_MEAL(String tag) {
-            this.tag = tag;
-        }
-
-        public static AVAILABLE_MEAL getByTag(String tag) {
-            for (AVAILABLE_MEAL meal: AVAILABLE_MEAL.values()) {
-                if (meal.tag.equals(tag))
-                    return meal;
-            }
-            return BREAKFAST;
-        }
+    public MenuItemModel() {
     }
-
-    public MenuItemModel() {}
 
     public MenuItemModel(MenuItemModel item) {
         this.name = item.getName();
@@ -109,19 +92,6 @@ public class MenuItemModel implements Serializable {
 
     public boolean hasCustomizations() {
         return customizationGroups != null && !customizationGroups.isEmpty();
-    }
-
-    @JsonProperty("customizations")
-    public void setCustomizationGroups(List<ItemCustomizationGroupModel> customizationGroups) {
-        AppDatabase.getMenuItemModel(null).attach(this);
-        AppDatabase.getMenuItemCustomizationGroupModel(null).remove(this.customizationGroups);
-        AppDatabase.getMenuItemCustomizationGroupModel(null).put(customizationGroups);
-        this.customizationGroups.addAll(customizationGroups);
-        AppDatabase.getMenuItemModel(null).put(this);
-    }
-
-    public void setPk(long pk) {
-        this.pk = pk;
     }
 
     public List<String> getTags() {
@@ -150,6 +120,10 @@ public class MenuItemModel implements Serializable {
 
     public long getPk() {
         return pk;
+    }
+
+    public void setPk(long pk) {
+        this.pk = pk;
     }
 
     public String getName() {
@@ -196,21 +170,30 @@ public class MenuItemModel implements Serializable {
         return customizationGroups;
     }
 
-    public List<AVAILABLE_MEAL> getAvailableMeals() {
-        return availableMeals;
+    @JsonProperty("customizations")
+    public void setCustomizationGroups(List<ItemCustomizationGroupModel> customizationGroups) {
+        AppDatabase.getMenuItemModel(null).attach(this);
+        AppDatabase.getMenuItemCustomizationGroupModel(null).remove(this.customizationGroups);
+        AppDatabase.getMenuItemCustomizationGroupModel(null).put(customizationGroups);
+        this.customizationGroups.addAll(customizationGroups);
+        AppDatabase.getMenuItemModel(null).put(this);
     }
 
-    public void setAvailableMeals(List<AVAILABLE_MEAL> availableMeals) {
-        this.availableMeals = availableMeals;
+    public List<AVAILABLE_MEAL> getAvailableMeals() {
+        return availableMeals;
     }
 
     @JsonProperty("available_meals")
     public void setAvailableMeals(String[] availableMeals) {
         List<AVAILABLE_MEAL> result = new ArrayList<>();
-        for (String meal: availableMeals) {
+        for (String meal : availableMeals) {
             result.add(AVAILABLE_MEAL.getByTag(meal));
         }
         this.availableMeals = result;
+    }
+
+    public void setAvailableMeals(List<AVAILABLE_MEAL> availableMeals) {
+        this.availableMeals = availableMeals;
     }
 
     public boolean isComplexItem() {
@@ -238,6 +221,25 @@ public class MenuItemModel implements Serializable {
     @Override
     public boolean equals(Object obj) {
         return obj instanceof MenuItemModel && this.pk == ((MenuItemModel) obj).getPk();
+    }
+
+    public enum AVAILABLE_MEAL {
+        BREAKFAST("brkfst"), LUNCH("lunch"), DINNER("dinner"),
+        NIGHTLIFE("nhtlfe");
+
+        public String tag;
+
+        AVAILABLE_MEAL(String tag) {
+            this.tag = tag;
+        }
+
+        public static AVAILABLE_MEAL getByTag(String tag) {
+            for (AVAILABLE_MEAL meal : AVAILABLE_MEAL.values()) {
+                if (meal.tag.equals(tag))
+                    return meal;
+            }
+            return BREAKFAST;
+        }
     }
 
 }

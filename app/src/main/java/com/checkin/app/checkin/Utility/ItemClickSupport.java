@@ -1,9 +1,10 @@
 package com.checkin.app.checkin.Utility;
 
-import androidx.recyclerview.widget.RecyclerView;
 import android.view.View;
 
 import com.checkin.app.checkin.R;
+
+import androidx.recyclerview.widget.RecyclerView;
 
 public class ItemClickSupport {
     private final RecyclerView mRecyclerView;

@@ -379,7 +379,7 @@ public class ActiveSessionActivity extends BaseActivity implements
         MessageUtils.registerLocalReceiver(this, mReceiver, types);
         updateScreen();
         resetEnableViews();
-        if (OnBoardingUtils.isOnBoardingShown(this,KEY_INTERACT_WITH_US))
+        if (OnBoardingUtils.isOnBoardingShown(this, KEY_INTERACT_WITH_US))
             OnBoardingUtils.conditionalOnBoarding(this, KEY_SP_INTERACT_WITH_US, true, new OnBoardingUtils.OnBoardingModel("Interact with waiter here!", tvInteractWithUs));
     }
 

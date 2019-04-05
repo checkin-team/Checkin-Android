@@ -21,11 +21,22 @@ import retrofit2.Call;
 
 @Singleton
 public class AuthRepository extends BaseRepository {
-    private final WebApiService mWebService;
     private static AuthRepository INSTANCE;
+    private final WebApiService mWebService;
 
     private AuthRepository(Context context) {
         mWebService = ApiClient.getApiService(context);
+    }
+
+    public static AuthRepository getInstance(Application application) {
+        if (INSTANCE == null) {
+            synchronized (AuthRepository.class) {
+                if (INSTANCE == null) {
+                    INSTANCE = new AuthRepository(application.getApplicationContext());
+                }
+            }
+        }
+        return INSTANCE;
     }
 
     public LiveData<Resource<AuthResultModel>> login(final ObjectNode credentials) {
@@ -70,16 +81,5 @@ public class AuthRepository extends BaseRepository {
         ObjectNode data = Converters.objectMapper.createObjectNode();
         data.put("device_token", token);
         return mWebService.postFCMToken(data);
-    }
-
-    public static AuthRepository getInstance(Application application) {
-        if (INSTANCE == null) {
-            synchronized (AuthRepository.class) {
-                if (INSTANCE == null) {
-                    INSTANCE = new AuthRepository(application.getApplicationContext());
-                }
-            }
-        }
-        return INSTANCE;
     }
 }

@@ -43,10 +43,15 @@ public class ActiveSessionModel {
     @JsonProperty("is_requested_checkout")
     private boolean isRequestedCheckout;
 
-    public ActiveSessionModel() {}
+    public ActiveSessionModel() {
+    }
 
     public String getBill() {
         return bill;
+    }
+
+    public void setBill(String bill) {
+        this.bill = bill;
     }
 
     public int getPk() {
@@ -77,6 +82,10 @@ public class ActiveSessionModel {
         return host;
     }
 
+    public void setHost(BriefModel user) {
+        this.host = user;
+    }
+
     public boolean isCheckinPublic() {
         return isPublic;
     }
@@ -85,16 +94,8 @@ public class ActiveSessionModel {
         return Integer.valueOf(restaurant.getPk());
     }
 
-    public void setBill(String bill) {
-        this.bill = bill;
-    }
-
     public String formatBill(Context context) {
         return Utils.formatCurrencyAmount(context, bill);
-    }
-
-    public void setHost(BriefModel user) {
-        this.host = user;
     }
 
     public boolean isRequestedCheckout() {

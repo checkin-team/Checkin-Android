@@ -51,18 +51,18 @@ public class PrefixEditText extends androidx.appcompat.widget.AppCompatEditText 
                 String string = s.toString();
                 int fl = prefix.length();
                 int sl = string.length();
-                if(sl < fl){
+                if (sl < fl) {
                     String in = prefix;
                     setText(in);
                     setSelection(in.length());
-                }else {
-                    String cek = string.substring(0,fl);
-                    if(!cek.equals(prefix)) {
-                        if(string.matches(rubah(prefix))) {
+                } else {
+                    String cek = string.substring(0, fl);
+                    if (!cek.equals(prefix)) {
+                        if (string.matches(rubah(prefix))) {
                             String in = prefix + string.replace(prefix, "");
                             setText(in);
                             setSelection(in.length());
-                        }else{
+                        } else {
                             String in = prefix + fix;
                             setText(in);
                             setSelection(in.length());

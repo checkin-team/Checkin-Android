@@ -62,6 +62,11 @@ public class OrderedItemModel implements Cloneable {
         return this.cost;
     }
 
+    @JsonProperty("cost")
+    public void setCost(double cost) {
+        this.cost = cost;
+    }
+
     public void updateCost() {
         double base = item.getTypeCosts().get(typeIndex);
         double extra = 0;
@@ -73,13 +78,12 @@ public class OrderedItemModel implements Cloneable {
         this.cost = (base + extra) * quantity;
     }
 
-    @JsonProperty("cost")
-    public void setCost(double cost) {
-        this.cost = cost;
-    }
-
     public int getTypeIndex() {
         return typeIndex;
+    }
+
+    public void setTypeIndex(int typeIndex) {
+        this.typeIndex = typeIndex;
     }
 
     public String getTypeName() {
@@ -106,10 +110,6 @@ public class OrderedItemModel implements Cloneable {
         selectedFields.remove(field);
     }
 
-    public void setTypeIndex(int typeIndex) {
-        this.typeIndex = typeIndex;
-    }
-
     public int getQuantity() {
         return quantity;
     }
@@ -128,7 +128,7 @@ public class OrderedItemModel implements Cloneable {
         if (selectedFields == null)
             return new ArrayList<>();
         List<Long> result = new ArrayList<>();
-        for (ItemCustomizationFieldModel field: this.selectedFields)
+        for (ItemCustomizationFieldModel field : this.selectedFields)
             result.add(field.getPk());
         return result;
     }
@@ -170,12 +170,12 @@ public class OrderedItemModel implements Cloneable {
         return true;
     }
 
-    public void setRemarks(String remarks) {
-        this.remarks = remarks;
-    }
-
     public String getRemarks() {
         return remarks;
+    }
+
+    public void setRemarks(String remarks) {
+        this.remarks = remarks;
     }
 
     public int getChangeCount() {

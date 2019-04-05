@@ -63,25 +63,8 @@ public class ShopModel {
     protected long openingHour;
     protected long closingHour;
 
-    public enum PAYMENT_MODE {
-        CASH("csh"), PAYTM("ptm"), CARD("crd");
-
-        public String tag;
-
-        PAYMENT_MODE(String tag) {
-            this.tag = tag;
-        }
-
-        public static PAYMENT_MODE getByTag(String tag) {
-            for (PAYMENT_MODE mode : PAYMENT_MODE.values()) {
-                if (mode.tag.contentEquals(tag))
-                    return mode;
-            }
-            return CASH;
-        }
+    public ShopModel() {
     }
-
-    public ShopModel() {}
 
     public ShopModel(long pk) {
         this.pk = pk;
@@ -150,6 +133,10 @@ public class ShopModel {
         return paymentModes;
     }
 
+    public void setPaymentModes(PAYMENT_MODE... paymentModes) {
+        this.paymentModes = paymentModes;
+    }
+
     @JsonProperty("payment_mode")
     public String[] serializePaymentModes() {
         if (paymentModes == null)
@@ -187,10 +174,6 @@ public class ShopModel {
         }
     }
 
-    public void setPaymentModes(PAYMENT_MODE... paymentModes) {
-        this.paymentModes = paymentModes;
-    }
-
     public LocationModel getLocation() {
         return location;
     }
@@ -215,22 +198,22 @@ public class ShopModel {
         this.nonWorkingDays = nonWorkingDays;
     }
 
-    public void setOpeningHour(long openingHour) {
-        this.openingHour = openingHour;
-    }
-
     @JsonIgnore
     public long getOpeningHour() {
         return this.openingHour;
     }
 
-    public void setClosingHour(long closingHour) {
-        this.closingHour = closingHour;
+    public void setOpeningHour(long openingHour) {
+        this.openingHour = openingHour;
     }
 
     @JsonIgnore
     public long getClosingHour() {
         return this.closingHour;
+    }
+
+    public void setClosingHour(long closingHour) {
+        this.closingHour = closingHour;
     }
 
     @JsonProperty("working_timerange")
@@ -252,5 +235,23 @@ public class ShopModel {
         }
         this.openingHour = data.get("lower").asLong(0);
         this.closingHour = data.get("upper").asLong(0);
+    }
+
+    public enum PAYMENT_MODE {
+        CASH("csh"), PAYTM("ptm"), CARD("crd");
+
+        public String tag;
+
+        PAYMENT_MODE(String tag) {
+            this.tag = tag;
+        }
+
+        public static PAYMENT_MODE getByTag(String tag) {
+            for (PAYMENT_MODE mode : PAYMENT_MODE.values()) {
+                if (mode.tag.contentEquals(tag))
+                    return mode;
+            }
+            return CASH;
+        }
     }
 }

@@ -39,7 +39,8 @@ public class ItemCustomizationGroupModel {
 
     private ToOne<MenuItemModel> menuItem;
 
-    public ItemCustomizationGroupModel() {}
+    public ItemCustomizationGroupModel() {
+    }
 
     public ItemCustomizationGroupModel(int minSelection, int maxSelection, String name) {
         this.minSelection = minSelection;
@@ -75,6 +76,10 @@ public class ItemCustomizationGroupModel {
         return customizationFields;
     }
 
+    public void setCustomizationFields(ToMany<ItemCustomizationFieldModel> customizationFields) {
+        this.customizationFields = customizationFields;
+    }
+
     public void addCustomizationField(String name, double cost) {
         customizationFields.add(new ItemCustomizationFieldModel(true, name, cost));
     }
@@ -94,10 +99,6 @@ public class ItemCustomizationGroupModel {
         AppDatabase.getMenuItemCustomizationFieldModel(null).put(customizationFields);
         this.customizationFields.addAll(customizationFields);
         AppDatabase.getMenuItemCustomizationGroupModel(null).put(this);
-    }
-
-    public void setCustomizationFields(ToMany<ItemCustomizationFieldModel> customizationFields) {
-        this.customizationFields = customizationFields;
     }
 
     public ToOne<MenuItemModel> getMenuItem() {

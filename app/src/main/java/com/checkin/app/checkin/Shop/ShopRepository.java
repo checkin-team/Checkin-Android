@@ -1,9 +1,7 @@
 package com.checkin.app.checkin.Shop;
 
 import android.app.Application;
-import androidx.lifecycle.LiveData;
 import android.content.Context;
-import androidx.annotation.NonNull;
 
 import com.checkin.app.checkin.Data.ApiClient;
 import com.checkin.app.checkin.Data.ApiResponse;
@@ -13,14 +11,16 @@ import com.checkin.app.checkin.Data.Resource;
 import com.checkin.app.checkin.Data.RetrofitLiveData;
 import com.checkin.app.checkin.Data.WebApiService;
 import com.checkin.app.checkin.Misc.GenericDetailModel;
-import com.checkin.app.checkin.Shop.ShopJoin.ShopJoinModel;
 import com.checkin.app.checkin.Shop.Private.MemberModel;
+import com.checkin.app.checkin.Shop.ShopJoin.ShopJoinModel;
 import com.checkin.app.checkin.Utility.ProgressRequestBody;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 
 import java.io.File;
 import java.util.List;
 
+import androidx.annotation.NonNull;
+import androidx.lifecycle.LiveData;
 import okhttp3.MediaType;
 import okhttp3.MultipartBody;
 import okhttp3.RequestBody;
@@ -32,8 +32,8 @@ import retrofit2.Call;
 
 public class ShopRepository extends BaseRepository {
 
-    private final WebApiService mWebService;
     private static ShopRepository INSTANCE;
+    private final WebApiService mWebService;
 
     private ShopRepository(Context context) {
         mWebService = ApiClient.getApiService(context);
@@ -111,7 +111,7 @@ public class ShopRepository extends BaseRepository {
     }
 
     public LiveData<Resource<RestaurantModel>> getShopModel(long shopId) {
-        return new NetworkBoundResource<RestaurantModel, RestaurantModel> () {
+        return new NetworkBoundResource<RestaurantModel, RestaurantModel>() {
 
             @Override
             protected boolean shouldUseLocalDb() {
@@ -125,12 +125,13 @@ public class ShopRepository extends BaseRepository {
             }
 
             @Override
-            protected void saveCallResult(RestaurantModel data) {  }
+            protected void saveCallResult(RestaurantModel data) {
+            }
         }.getAsLiveData();
     }
 
     public LiveData<Resource<RestaurantModel>> getShopManageModel(long shopId) {
-        return new NetworkBoundResource<RestaurantModel, RestaurantModel> () {
+        return new NetworkBoundResource<RestaurantModel, RestaurantModel>() {
 
             @Override
             protected boolean shouldUseLocalDb() {
@@ -144,7 +145,8 @@ public class ShopRepository extends BaseRepository {
             }
 
             @Override
-            protected void saveCallResult(RestaurantModel data) {  }
+            protected void saveCallResult(RestaurantModel data) {
+            }
         }.getAsLiveData();
     }
 
@@ -198,11 +200,12 @@ public class ShopRepository extends BaseRepository {
             @NonNull
             @Override
             protected LiveData<ApiResponse<ObjectNode>> createCall() {
-                return new RetrofitLiveData<>(mWebService.postRestaurantMember(shopId,data));
+                return new RetrofitLiveData<>(mWebService.postRestaurantMember(shopId, data));
             }
 
             @Override
-            protected void saveCallResult(ObjectNode data) { }
+            protected void saveCallResult(ObjectNode data) {
+            }
         }.getAsLiveData();
     }
 
@@ -220,7 +223,8 @@ public class ShopRepository extends BaseRepository {
             }
 
             @Override
-            protected void saveCallResult(ObjectNode data) { }
+            protected void saveCallResult(ObjectNode data) {
+            }
         }.getAsLiveData();
     }
 
@@ -238,7 +242,8 @@ public class ShopRepository extends BaseRepository {
             }
 
             @Override
-            protected void saveCallResult(ObjectNode data) { }
+            protected void saveCallResult(ObjectNode data) {
+            }
         }.getAsLiveData();
     }
 
@@ -266,14 +271,14 @@ public class ShopRepository extends BaseRepository {
         RequestBody requestFile = RequestBody.create(MediaType.parse("image/jpeg"), pic);
         ProgressRequestBody requestBody = new ProgressRequestBody(requestFile, listener);
         final MultipartBody.Part body = MultipartBody.Part.createFormData("logo", "cover.jpg", requestBody);
-        return mWebService.postRestaurantLogo(mShopPk,body);
+        return mWebService.postRestaurantLogo(mShopPk, body);
     }
 
     public Call<GenericDetailModel> postRestaurantCover(long mShopPk, int index, File pic, ProgressRequestBody.UploadCallbacks listener) {
         RequestBody requestFile = RequestBody.create(MediaType.parse("image/jpeg"), pic);
         ProgressRequestBody requestBody = new ProgressRequestBody(requestFile, listener);
         final MultipartBody.Part body = MultipartBody.Part.createFormData("image", "cover.jpg", requestBody);
-        return mWebService.postRestaurantCover(mShopPk,index,body);
+        return mWebService.postRestaurantCover(mShopPk, index, body);
     }
 
 }

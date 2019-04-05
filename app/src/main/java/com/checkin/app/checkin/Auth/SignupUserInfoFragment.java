@@ -1,9 +1,6 @@
 package com.checkin.app.checkin.Auth;
 
-import androidx.lifecycle.ViewModelProviders;
 import android.os.Bundle;
-import androidx.annotation.NonNull;
-import androidx.fragment.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -15,6 +12,9 @@ import com.checkin.app.checkin.R;
 import com.checkin.app.checkin.User.UserModel.GENDER;
 import com.fasterxml.jackson.databind.JsonNode;
 
+import androidx.annotation.NonNull;
+import androidx.fragment.app.Fragment;
+import androidx.lifecycle.ViewModelProviders;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
@@ -22,10 +22,7 @@ import butterknife.Unbinder;
 
 
 public class SignupUserInfoFragment extends Fragment {
-    private AuthFragmentInteraction fragmentInteraction;
-    private Unbinder unbinder;
-    private GENDER genderChosen = null;
-
+    public static final String KEY_NAME = "name";
     @BindView(R.id.ed_firstname)
     EditText edFirstName;
     @BindView(R.id.ed_lastname)
@@ -36,10 +33,12 @@ public class SignupUserInfoFragment extends Fragment {
     FrameLayout imFemale;
     @BindView(R.id.ed_Username)
     EditText edUsername;
+    private AuthFragmentInteraction fragmentInteraction;
+    private Unbinder unbinder;
+    private GENDER genderChosen = null;
 
-    public static final String KEY_NAME = "name";
-
-    public SignupUserInfoFragment() {}
+    public SignupUserInfoFragment() {
+    }
 
     public static SignupUserInfoFragment newInstance(AuthFragmentInteraction fragmentInteraction) {
         SignupUserInfoFragment fragment = new SignupUserInfoFragment();

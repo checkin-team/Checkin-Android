@@ -14,6 +14,7 @@ import com.checkin.app.checkin.Manager.ManagerWorkActivity;
 import com.checkin.app.checkin.Shop.Private.ShopPrivateActivity;
 import com.checkin.app.checkin.Utility.Constants;
 import com.checkin.app.checkin.Waiter.WaiterWorkActivity;
+
 import androidx.appcompat.app.AppCompatActivity;
 
 public class SplashActivity extends AppCompatActivity {

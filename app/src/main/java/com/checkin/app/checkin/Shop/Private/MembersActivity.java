@@ -16,9 +16,8 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 
 public class MembersActivity extends BaseActivity implements ShopMembersListFragment.MemberListInteraction, MemberAssignRoleFragment.AssignRoleInteraction {
-    private static final String TAG = MembersActivity.class.getSimpleName();
-
     public static final String KEY_SHOP_PK = "shop_members.pk";
+    private static final String TAG = MembersActivity.class.getSimpleName();
     private static final int REQUEST_PICK_USER = 10;
 
     private ShopMembersListFragment mFragmentShopMembers;

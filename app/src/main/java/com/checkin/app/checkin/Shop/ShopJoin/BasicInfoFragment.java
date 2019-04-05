@@ -34,15 +34,13 @@ import static android.app.Activity.RESULT_OK;
 
 public class BasicInfoFragment extends Fragment {
     private static final String TAG = BasicInfoFragment.class.getSimpleName();
-    private Unbinder unbinder;
-
     @BindView(R.id.et_location)
     EditText etLocality;
     @BindView(R.id.et_name)
     EditText etName;
     @BindView(R.id.et_gstin)
     EditText etGstin;
-
+    private Unbinder unbinder;
     private JoinViewModel mViewModel;
     private BasicInfoFragmentInteraction mInteractionListener;
 

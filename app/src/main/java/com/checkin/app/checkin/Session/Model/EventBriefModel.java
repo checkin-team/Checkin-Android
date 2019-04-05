@@ -54,6 +54,10 @@ public class EventBriefModel {
         return type;
     }
 
+    public void setType(CHAT_EVENT_TYPE type) {
+        this.type = type;
+    }
+
     public String getMessage() {
         return message;
     }
@@ -65,10 +69,6 @@ public class EventBriefModel {
     @JsonProperty("type")
     public void setType(int event) {
         this.type = CHAT_EVENT_TYPE.getByTag(event);
-    }
-
-    public void setType(CHAT_EVENT_TYPE type) {
-        this.type = type;
     }
 
     public String formatTimestamp() {

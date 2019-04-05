@@ -7,13 +7,14 @@ import com.checkin.app.checkin.R;
  */
 
 public class RestaurantResultFragment extends BaseResultFragment<SearchResultShopModel> {
+    public RestaurantResultFragment() {
+    }
+
     public static RestaurantResultFragment newInstance(SearchResultInteraction listener) {
         RestaurantResultFragment fragment = new RestaurantResultFragment();
         fragment.mListener = listener;
         return fragment;
     }
-
-    public RestaurantResultFragment() {}
 
     @Override
     protected int getLayoutRes() {

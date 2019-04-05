@@ -51,6 +51,14 @@ public class ProgressRequestBody extends RequestBody {
         bufferedSink.flush();
     }
 
+    public interface UploadCallbacks {
+        void onProgressUpdate(int percentage);
+
+        void onSuccess();
+
+        void onFailure();
+    }
+
     final class ProgressSink extends ForwardingSink {
         private long bytesUploaded = 0;
         private int lastProgress = 0;
@@ -74,11 +82,5 @@ public class ProgressRequestBody extends RequestBody {
             if (bytesUploaded == contentLength())
                 mUpdateProgressFlag = true;
         }
-    }
-
-    public interface UploadCallbacks {
-        void onProgressUpdate(int percentage);
-        void onSuccess();
-        void onFailure();
     }
 }

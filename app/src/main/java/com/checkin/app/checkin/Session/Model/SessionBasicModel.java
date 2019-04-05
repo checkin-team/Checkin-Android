@@ -14,7 +14,8 @@ public class SessionBasicModel {
     @JsonProperty("restaurant")
     private BriefModel restaurant;
 
-    public SessionBasicModel() {}
+    public SessionBasicModel() {
+    }
 
     public long getPk() {
         return pk;

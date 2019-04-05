@@ -31,7 +31,8 @@ public class SessionBriefModel {
     @JsonProperty("is_accepted_checkout")
     private boolean isRequestedCheckout;
 
-    public SessionBriefModel() {}
+    public SessionBriefModel() {
+    }
 
     public long getPk() {
         return pk;
@@ -41,12 +42,24 @@ public class SessionBriefModel {
         return host;
     }
 
+    public void setHost(BriefModel host) {
+        this.host = host;
+    }
+
     public int getCustomerCount() {
         return customerCount;
     }
 
+    public void setCustomerCount(int customerCount) {
+        this.customerCount = customerCount;
+    }
+
     public double getBill() {
         return bill;
+    }
+
+    public void setBill(double bill) {
+        this.bill = bill;
     }
 
     public String formatBill() {
@@ -61,7 +74,7 @@ public class SessionBriefModel {
         return String.valueOf(customerCount);
     }
 
-    public String formatTimeDuration(){
+    public String formatTimeDuration() {
         return Utils.formatTimeDuration(Calendar.getInstance().getTime().getTime() - created.getTime());
     }
 
@@ -73,19 +86,7 @@ public class SessionBriefModel {
         return isRequestedCheckout;
     }
 
-    public void setBill(double bill) {
-        this.bill = bill;
-    }
-
     public void setRequestedCheckout(boolean requestedCheckout) {
         this.isRequestedCheckout = requestedCheckout;
-    }
-
-    public void setHost(BriefModel host) {
-        this.host = host;
-    }
-
-    public void setCustomerCount(int customerCount) {
-        this.customerCount = customerCount;
     }
 }

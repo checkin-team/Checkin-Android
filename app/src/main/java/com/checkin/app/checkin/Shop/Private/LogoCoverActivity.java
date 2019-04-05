@@ -23,12 +23,10 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 
 public class LogoCoverActivity extends AppCompatActivity implements ShopCoverAdapter.ShopCoverInteraction {
-    private static final String TAG = LogoCoverActivity.class.getSimpleName();
-
     public static final String KEY_SHOP_PK = "shop.pk";
     public static final String KEY_SHOP_COVERS = "shop.covers";
     public static final String KEY_SHOP_LOGO = "shop.logo";
-
+    private static final String TAG = LogoCoverActivity.class.getSimpleName();
     private static final int RC_COVER_BASE = 100;
     private static final int RC_LOGO = 50;
 

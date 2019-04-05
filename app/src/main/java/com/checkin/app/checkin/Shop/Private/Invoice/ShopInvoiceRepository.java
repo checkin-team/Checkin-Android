@@ -1,9 +1,7 @@
 package com.checkin.app.checkin.Shop.Private.Invoice;
 
 import android.app.Application;
-import androidx.lifecycle.LiveData;
 import android.content.Context;
-import androidx.annotation.NonNull;
 
 import com.checkin.app.checkin.Data.ApiClient;
 import com.checkin.app.checkin.Data.ApiResponse;
@@ -14,12 +12,26 @@ import com.checkin.app.checkin.Data.WebApiService;
 
 import java.util.List;
 
+import androidx.annotation.NonNull;
+import androidx.lifecycle.LiveData;
+
 public class ShopInvoiceRepository {
-    private final WebApiService mWebService;
     private static ShopInvoiceRepository INSTANCE;
+    private final WebApiService mWebService;
 
     public ShopInvoiceRepository(Context context) {
         mWebService = ApiClient.getApiService(context);
+    }
+
+    public static ShopInvoiceRepository getInstance(Application application) {
+        if (INSTANCE == null) {
+            synchronized (ShopInvoiceRepository.class) {
+                if (INSTANCE == null) {
+                    INSTANCE = new ShopInvoiceRepository(application.getApplicationContext());
+                }
+            }
+        }
+        return INSTANCE;
     }
 
     public LiveData<Resource<List<RestaurantSessionModel>>> getRestaurantSessions(long restaurantId, String fromDate, String toDate) {
@@ -65,16 +77,5 @@ public class ShopInvoiceRepository {
 
     public LiveData<Resource<List<RestaurantSessionModel>>> getRestaurantSessions(long restaurantId) {
         return getRestaurantSessions(restaurantId, null, null);
-    }
-
-    public static ShopInvoiceRepository getInstance(Application application) {
-        if (INSTANCE == null) {
-            synchronized (ShopInvoiceRepository.class) {
-                if (INSTANCE == null) {
-                    INSTANCE = new ShopInvoiceRepository(application.getApplicationContext());
-                }
-            }
-        }
-        return INSTANCE;
     }
 }

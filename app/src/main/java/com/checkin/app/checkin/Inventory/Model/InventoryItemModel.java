@@ -9,40 +9,32 @@ import java.util.ArrayList;
 import java.util.List;
 
 @JsonIgnoreProperties(ignoreUnknown = true)
-public class InventoryItemModel{
-
-    @JsonProperty("pk")
-    private long pk;
-
-    @JsonProperty("name")
-    private String name;
-
-    @JsonProperty("types")
-    private List<String> typeNames;
-
-    @JsonProperty("costs")
-    private List<Double> typeCosts;
-
-    @JsonProperty("description")
-    private String description;
-
-    @JsonProperty("tags")
-    private List<String> tags;
-
-    @JsonProperty("is_available")
-    private boolean isAvailable;
-
-    @JsonProperty("available_meals")
-    private List<AVAILABLE_MEAL> availableMeals;
-
-    @JsonProperty("is_vegetarian")
-    private boolean isVegetarian;
-
-    @JsonProperty("image")
-    private String image;
+public class InventoryItemModel {
 
     @JsonProperty("customizations")
     public List<InventoryItemCustomizationGroupModel> customizations;
+    @JsonProperty("pk")
+    private long pk;
+    @JsonProperty("name")
+    private String name;
+    @JsonProperty("types")
+    private List<String> typeNames;
+    @JsonProperty("costs")
+    private List<Double> typeCosts;
+    @JsonProperty("description")
+    private String description;
+    @JsonProperty("tags")
+    private List<String> tags;
+    @JsonProperty("is_available")
+    private boolean isAvailable;
+    @JsonProperty("available_meals")
+    private List<AVAILABLE_MEAL> availableMeals;
+    @JsonProperty("is_vegetarian")
+    private boolean isVegetarian;
+    @JsonProperty("image")
+    private String image;
+    @JsonIgnore
+    private InventoryItemAdapter.ItemViewHolder holder;
 
     public InventoryItemModel() {
     }
@@ -99,6 +91,15 @@ public class InventoryItemModel{
         return availableMeals;
     }
 
+    @JsonProperty("available_meals")
+    public void setAvailableMeals(String[] availableMeals) {
+        List<AVAILABLE_MEAL> result = new ArrayList<>();
+        for (String meal : availableMeals) {
+            result.add(AVAILABLE_MEAL.getByTag(meal));
+        }
+        this.availableMeals = result;
+    }
+
     public void setAvailableMeals(List<AVAILABLE_MEAL> availableMeals) {
         this.availableMeals = availableMeals;
     }
@@ -136,13 +137,9 @@ public class InventoryItemModel{
     }
 
     @JsonIgnore
-    private InventoryItemAdapter.ItemViewHolder holder;
-
-    @JsonIgnore
     public void setItemHolder(InventoryItemAdapter.ItemViewHolder holder) {
         this.holder = holder;
     }
-
 
     public boolean hasCustomizations() {
         return customizations != null && !customizations.isEmpty();
@@ -157,26 +154,18 @@ public class InventoryItemModel{
         NIGHTLIFE("nhtlfe");
 
         public String tag;
+
         AVAILABLE_MEAL(String tag) {
             this.tag = tag;
         }
 
         public static AVAILABLE_MEAL getByTag(String tag) {
-            for (AVAILABLE_MEAL meal: AVAILABLE_MEAL.values()) {
+            for (AVAILABLE_MEAL meal : AVAILABLE_MEAL.values()) {
                 if (meal.tag.equals(tag))
                     return meal;
             }
             return BREAKFAST;
         }
-    }
-
-    @JsonProperty("available_meals")
-    public void setAvailableMeals(String[] availableMeals) {
-        List<AVAILABLE_MEAL> result = new ArrayList<>();
-        for (String meal: availableMeals) {
-            result.add(AVAILABLE_MEAL.getByTag(meal));
-        }
-        this.availableMeals = result;
     }
 
 

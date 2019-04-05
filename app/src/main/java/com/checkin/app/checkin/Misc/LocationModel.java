@@ -35,7 +35,8 @@ public class LocationModel {
     @JsonProperty("locality")
     private String locality;
 
-    public LocationModel() {}
+    public LocationModel() {
+    }
 
     public LocationModel(double latitude, double longitude) {
         this.latitude = latitude;

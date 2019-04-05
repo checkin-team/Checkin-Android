@@ -2,11 +2,6 @@ package com.checkin.app.checkin.Shop.ShopJoin;
 
 import android.content.Intent;
 import android.os.Bundle;
-import androidx.annotation.NonNull;
-import androidx.viewpager.widget.PagerAdapter;
-import androidx.viewpager.widget.ViewPager;
-import androidx.appcompat.app.ActionBar;
-import androidx.appcompat.app.AppCompatActivity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -20,13 +15,20 @@ import com.rd.animation.type.AnimationType;
 import java.util.ArrayList;
 import java.util.List;
 
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.ActionBar;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.viewpager.widget.PagerAdapter;
+import androidx.viewpager.widget.ViewPager;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 
 public class BusinessFeaturesActivity extends AppCompatActivity {
-    @BindView(R.id.piv_features) PageIndicatorView vPageIndicator;
-    @BindView(R.id.pager) ViewPager vPager;
+    @BindView(R.id.piv_features)
+    PageIndicatorView vPageIndicator;
+    @BindView(R.id.pager)
+    ViewPager vPager;
 
     @Override
     public boolean onSupportNavigateUp() {
@@ -72,6 +74,7 @@ public class BusinessFeaturesActivity extends AppCompatActivity {
         public boolean isViewFromObject(@NonNull View view, @NonNull Object object) {
             return view.equals(object);
         }
+
         @NonNull
         @Override
         public Object instantiateItem(@NonNull ViewGroup container, int position) {
@@ -103,9 +106,12 @@ public class BusinessFeaturesActivity extends AppCompatActivity {
         }
 
         class ViewHolder {
-            @BindView(R.id.tv_feature_title) TextView tvTitle;
-            @BindView(R.id.tv_feature_subtitle) TextView tvSubTitle;
-            @BindView(R.id.im_feature) ImageView imFeature;
+            @BindView(R.id.tv_feature_title)
+            TextView tvTitle;
+            @BindView(R.id.tv_feature_subtitle)
+            TextView tvSubTitle;
+            @BindView(R.id.im_feature)
+            ImageView imFeature;
 
             ViewHolder(@NonNull View view) {
                 ButterKnife.bind(this, view);

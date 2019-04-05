@@ -1,7 +1,5 @@
 package com.checkin.app.checkin.Shop.Private.Invoice;
 
-import androidx.annotation.NonNull;
-import androidx.recyclerview.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -14,6 +12,8 @@ import com.checkin.app.checkin.Utility.Utils;
 import java.util.List;
 import java.util.Locale;
 
+import androidx.annotation.NonNull;
+import androidx.recyclerview.widget.RecyclerView;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
@@ -45,6 +45,10 @@ public class ShopInvoiceSessionAdapter extends RecyclerView.Adapter<ShopInvoiceS
     void setSessionData(List<RestaurantSessionModel> data) {
         this.mData = data;
         notifyDataSetChanged();
+    }
+
+    public interface ShopInvoiceInteraction {
+        void onClickSession(RestaurantSessionModel data);
     }
 
     class ShopInvoiceHolder extends RecyclerView.ViewHolder {
@@ -85,9 +89,5 @@ public class ShopInvoiceSessionAdapter extends RecyclerView.Adapter<ShopInvoiceS
             tvItemCount.setText(String.format(Locale.ENGLISH, " | %d item(s)", data.getCountOrders()));
             tvTable.setText(data.getTable());
         }
-    }
-
-    public interface ShopInvoiceInteraction {
-        void onClickSession(RestaurantSessionModel data);
     }
 }

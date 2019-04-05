@@ -41,15 +41,12 @@ import butterknife.Unbinder;
 
 public class EditAspectFragment extends Fragment implements MultiSpinner.MultiSpinnerListener {
     private static final String TAG = EditAspectFragment.class.getSimpleName();
-    private Unbinder unbinder;
-
     @BindView(R.id.cb_choice_paytm)
     CompoundButton cbChoicePaytm;
     @BindView(R.id.cb_choice_card)
     CompoundButton cbChoiceCard;
     @BindView(R.id.cb_choice_cash)
     CompoundButton cbChoiceCash;
-
     @BindView(R.id.rb_alcohol_yes)
     CompoundButton rbChoiceAlcoholYes;
     @BindView(R.id.rb_alcohol_no)
@@ -62,14 +59,13 @@ public class EditAspectFragment extends Fragment implements MultiSpinner.MultiSp
     CompoundButton rbChoiceNonVeg;
     @BindView(R.id.rb_veg)
     CompoundButton rbChoiceVeg;
-
     @BindView(R.id.rv_additional_data)
     RecyclerView rvExtraData;
     @BindView(R.id.spinner_cuisines)
     MultiSpinner vCuisines;
     @BindView(R.id.spinner_categories)
     MultiSpinner vCategories;
-
+    private Unbinder unbinder;
     private AdditionalDataAdapter mAdapter;
     private ShopProfileViewModel mViewModel;
     private AspectFragmentInteraction mListener;
@@ -158,6 +154,17 @@ public class EditAspectFragment extends Fragment implements MultiSpinner.MultiSp
             rbChoiceDeliveryNo.setChecked(true);
     }
 
+    private PAYMENT_MODE[] getPaymentModes() {
+        List<PAYMENT_MODE> modes = new ArrayList<>();
+        if (cbChoiceCash.isChecked())
+            modes.add(PAYMENT_MODE.CASH);
+        if (cbChoiceCard.isChecked())
+            modes.add(PAYMENT_MODE.CARD);
+        if (cbChoicePaytm.isChecked())
+            modes.add(PAYMENT_MODE.PAYTM);
+        return modes.toArray(new PAYMENT_MODE[]{});
+    }
+
     private void setPaymentModes(PAYMENT_MODE[] modes) {
         for (PAYMENT_MODE mode : modes) {
             switch (mode) {
@@ -172,17 +179,6 @@ public class EditAspectFragment extends Fragment implements MultiSpinner.MultiSp
                     break;
             }
         }
-    }
-
-    private PAYMENT_MODE[] getPaymentModes() {
-        List<PAYMENT_MODE> modes = new ArrayList<>();
-        if (cbChoiceCash.isChecked())
-            modes.add(PAYMENT_MODE.CASH);
-        if (cbChoiceCard.isChecked())
-            modes.add(PAYMENT_MODE.CARD);
-        if (cbChoicePaytm.isChecked())
-            modes.add(PAYMENT_MODE.PAYTM);
-        return modes.toArray(new PAYMENT_MODE[]{});
     }
 
     @Override
@@ -233,13 +229,13 @@ public class EditAspectFragment extends Fragment implements MultiSpinner.MultiSp
             setupAddDialog();
         }
 
+        public List<String> getData() {
+            return mData;
+        }
+
         public void setData(List<String> data) {
             mData = data;
             notifyDataSetChanged();
-        }
-
-        public List<String> getData() {
-            return mData;
         }
 
         public void addData(String data) {

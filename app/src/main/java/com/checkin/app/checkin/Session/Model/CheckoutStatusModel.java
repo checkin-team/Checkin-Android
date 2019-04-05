@@ -14,7 +14,8 @@ public class CheckoutStatusModel {
     @JsonProperty("detail")
     private String message;
 
-    public CheckoutStatusModel() {}
+    public CheckoutStatusModel() {
+    }
 
     public long getSessionPk() {
         return sessionPk;

@@ -38,26 +38,6 @@ public class UserModel {
     @JsonProperty("count_checkins")
     private long countCheckins;
 
-    public enum GENDER {
-        MALE('m'), FEMALE('f');
-
-        public final char tag;
-
-        GENDER(char tag) {
-            this.tag = tag;
-        }//constructor of enum
-
-        public static GENDER getByTag(char tag) {
-            switch (tag) {
-                case 'm':
-                    return MALE;
-                case 'f':
-                    return FEMALE;
-            }
-            return GENDER.MALE;
-        }
-    }
-
     public UserModel() {
     }
 
@@ -120,6 +100,26 @@ public class UserModel {
 
     void setId(long id) {
         this.id = id;
+    }
+
+    public enum GENDER {
+        MALE('m'), FEMALE('f');
+
+        public final char tag;
+
+        GENDER(char tag) {
+            this.tag = tag;
+        }//constructor of enum
+
+        public static GENDER getByTag(char tag) {
+            switch (tag) {
+                case 'm':
+                    return MALE;
+                case 'f':
+                    return FEMALE;
+            }
+            return GENDER.MALE;
+        }
     }
 }
 

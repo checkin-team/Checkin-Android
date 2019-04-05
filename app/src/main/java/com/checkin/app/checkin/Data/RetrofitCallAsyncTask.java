@@ -19,7 +19,7 @@ public class RetrofitCallAsyncTask<T> extends AsyncTask<Call<T>, Void, Void> {
     @SafeVarargs
     @Override
     protected final Void doInBackground(Call<T>... calls) {
-        for (Call call: calls) {
+        for (Call call : calls) {
             try {
                 Response response = call.execute();
                 if (mListener != null) {

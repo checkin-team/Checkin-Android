@@ -1,13 +1,13 @@
 package com.checkin.app.checkin.Session.ActiveSession.Chat;
 
-import androidx.annotation.DrawableRes;
-import androidx.annotation.Nullable;
-
 import com.checkin.app.checkin.R;
 import com.checkin.app.checkin.Session.ActiveSession.Chat.SessionChatDataModel.EVENT_CONCERN_TYPE;
 import com.checkin.app.checkin.Session.ActiveSession.Chat.SessionChatDataModel.EVENT_REQUEST_SERVICE_TYPE;
 import com.checkin.app.checkin.Session.ActiveSession.Chat.SessionChatModel.CHAT_EVENT_TYPE;
 import com.fasterxml.jackson.annotation.JsonProperty;
+
+import androidx.annotation.DrawableRes;
+import androidx.annotation.Nullable;
 
 public class SessionEventBasicModel {
     @JsonProperty("pk")
@@ -22,32 +22,7 @@ public class SessionEventBasicModel {
     @JsonProperty("status")
     private SessionChatModel.CHAT_STATUS_TYPE status;
 
-    public SessionEventBasicModel() {}
-
-    public int getPk() {
-        return pk;
-    }
-
-    public CHAT_EVENT_TYPE getType() {
-        return type;
-    }
-
-    public String getMessage() {
-        return message;
-    }
-
-    public SessionChatModel.CHAT_STATUS_TYPE getStatus() {
-        return status;
-    }
-
-    @JsonProperty("type")
-    public void setType(int type) {
-        this.type = CHAT_EVENT_TYPE.getByTag(type);
-    }
-
-    @JsonProperty("status")
-    public void setStatus(int status) {
-        this.status = SessionChatModel.CHAT_STATUS_TYPE.getByTag(status);
+    public SessionEventBasicModel() {
     }
 
     @DrawableRes
@@ -82,5 +57,31 @@ public class SessionEventBasicModel {
             default:
                 return R.drawable.ic_session_event_custom;
         }
+    }
+
+    public int getPk() {
+        return pk;
+    }
+
+    public CHAT_EVENT_TYPE getType() {
+        return type;
+    }
+
+    @JsonProperty("type")
+    public void setType(int type) {
+        this.type = CHAT_EVENT_TYPE.getByTag(type);
+    }
+
+    public String getMessage() {
+        return message;
+    }
+
+    public SessionChatModel.CHAT_STATUS_TYPE getStatus() {
+        return status;
+    }
+
+    @JsonProperty("status")
+    public void setStatus(int status) {
+        this.status = SessionChatModel.CHAT_STATUS_TYPE.getByTag(status);
     }
 }

@@ -11,12 +11,12 @@ public abstract class DebouncedOnClickListener implements View.OnClickListener {
     private final long minimumInterval;
     private Map<View, Long> lastClickMap;
 
-    public abstract void onDebouncedClick(View v);
-
     public DebouncedOnClickListener(long minimumIntervalMsec) {
         this.minimumInterval = minimumIntervalMsec;
         this.lastClickMap = new WeakHashMap<>();
     }
+
+    public abstract void onDebouncedClick(View v);
 
     @Override
     public void onClick(View clickedView) {

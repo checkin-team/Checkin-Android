@@ -7,13 +7,14 @@ import com.checkin.app.checkin.R;
  */
 
 public class PeopleResultFragment extends BaseResultFragment<SearchResultPeopleModel> {
+    public PeopleResultFragment() {
+    }
+
     public static PeopleResultFragment newInstance(SearchResultInteraction listener) {
         PeopleResultFragment fragment = new PeopleResultFragment();
         fragment.mListener = listener;
         return fragment;
     }
-
-    public PeopleResultFragment() {}
 
     @Override
     protected int getLayoutRes() {

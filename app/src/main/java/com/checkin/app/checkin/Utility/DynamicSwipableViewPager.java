@@ -1,15 +1,16 @@
 package com.checkin.app.checkin.Utility;
 
 import android.content.Context;
-import androidx.viewpager.widget.ViewPager;
 import android.util.AttributeSet;
 import android.view.MotionEvent;
+
+import androidx.viewpager.widget.ViewPager;
 
 /**
  * Created by shivanshs9 on 11/5/18.
  */
 
-public class DynamicSwipableViewPager extends ViewPager{
+public class DynamicSwipableViewPager extends ViewPager {
     private boolean mEnabled = true;
 
     public DynamicSwipableViewPager(Context context) {

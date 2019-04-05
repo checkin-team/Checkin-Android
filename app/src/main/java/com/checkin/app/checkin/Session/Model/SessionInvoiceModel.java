@@ -20,7 +20,8 @@ public class SessionInvoiceModel {
     @JsonProperty("host")
     private BriefModel host;
 
-    public SessionInvoiceModel(){}
+    public SessionInvoiceModel() {
+    }
 
     public long getPk() {
         return pk;

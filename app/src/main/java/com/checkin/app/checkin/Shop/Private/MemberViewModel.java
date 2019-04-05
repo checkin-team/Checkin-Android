@@ -1,10 +1,6 @@
 package com.checkin.app.checkin.Shop.Private;
 
 import android.app.Application;
-import androidx.lifecycle.LiveData;
-import androidx.lifecycle.MediatorLiveData;
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 
 import com.checkin.app.checkin.Data.BaseViewModel;
 import com.checkin.app.checkin.Data.Resource;
@@ -13,13 +9,19 @@ import com.fasterxml.jackson.databind.node.ObjectNode;
 
 import java.util.List;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.lifecycle.LiveData;
+import androidx.lifecycle.MediatorLiveData;
+
 public class MemberViewModel extends BaseViewModel {
     private ShopRepository mRepository;
     private MediatorLiveData<Resource<List<MemberModel>>> mShopMembers = new MediatorLiveData<>();
     private MediatorLiveData<Resource<ObjectNode>> mRemovedMember = new MediatorLiveData<>();
 
     private long mShopPk;
-    @Nullable private MemberModel mCurrentMember;
+    @Nullable
+    private MemberModel mCurrentMember;
 
     public MemberViewModel(@NonNull Application application) {
         super(application);

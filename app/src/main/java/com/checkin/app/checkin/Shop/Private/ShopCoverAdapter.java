@@ -2,8 +2,6 @@ package com.checkin.app.checkin.Shop.Private;
 
 import android.graphics.drawable.Drawable;
 import android.graphics.drawable.LayerDrawable;
-import androidx.annotation.NonNull;
-import androidx.recyclerview.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -13,6 +11,8 @@ import android.widget.TextView;
 import com.checkin.app.checkin.R;
 import com.checkin.app.checkin.Utility.Utils;
 
+import androidx.annotation.NonNull;
+import androidx.recyclerview.widget.RecyclerView;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
@@ -47,6 +47,12 @@ public class ShopCoverAdapter extends RecyclerView.Adapter<ShopCoverAdapter.View
         return mCoverUrls.length;
     }
 
+    public interface ShopCoverInteraction {
+        void onCoverRemove(int index);
+
+        void onCoverChange(int index);
+    }
+
     class ViewHolder extends RecyclerView.ViewHolder {
         @BindView(R.id.im_sc_cover)
         ImageView imCover;
@@ -68,11 +74,5 @@ public class ShopCoverAdapter extends RecyclerView.Adapter<ShopCoverAdapter.View
             btnRemove.setOnClickListener(v -> mListener.onCoverRemove(index));
             imCover.setOnClickListener(v -> mListener.onCoverChange(index));
         }
-    }
-
-    public interface ShopCoverInteraction {
-        void onCoverRemove(int index);
-
-        void onCoverChange(int index);
     }
 }

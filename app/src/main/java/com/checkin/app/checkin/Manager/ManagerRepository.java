@@ -20,14 +20,25 @@ import androidx.annotation.NonNull;
 import androidx.lifecycle.LiveData;
 
 public class ManagerRepository extends BaseRepository {
-    private final WebApiService mWebService;
     private static ManagerRepository INSTANCE;
+    private final WebApiService mWebService;
 
     private ManagerRepository(Context context) {
         mWebService = ApiClient.getApiService(context);
     }
 
-    public LiveData<Resource<ManagerStatsModel>> getManagerStats(long restaurantId){
+    public static ManagerRepository getInstance(Application application) {
+        if (INSTANCE == null) {
+            synchronized (ManagerRepository.class) {
+                if (INSTANCE == null) {
+                    INSTANCE = new ManagerRepository(application.getApplicationContext());
+                }
+            }
+        }
+        return INSTANCE;
+    }
+
+    public LiveData<Resource<ManagerStatsModel>> getManagerStats(long restaurantId) {
         return new NetworkBoundResource<ManagerStatsModel, ManagerStatsModel>() {
             @Override
             protected boolean shouldUseLocalDb() {
@@ -47,7 +58,7 @@ public class ManagerRepository extends BaseRepository {
         }.getAsLiveData();
     }
 
-    public LiveData<Resource<CheckoutStatusModel>> manageSessionCheckout(long sessionId, ObjectNode data){
+    public LiveData<Resource<CheckoutStatusModel>> manageSessionCheckout(long sessionId, ObjectNode data) {
         return new NetworkBoundResource<CheckoutStatusModel, CheckoutStatusModel>() {
             @Override
             protected boolean shouldUseLocalDb() {
@@ -57,7 +68,7 @@ public class ManagerRepository extends BaseRepository {
             @NonNull
             @Override
             protected LiveData<ApiResponse<CheckoutStatusModel>> createCall() {
-                return new RetrofitLiveData<>(mWebService.putSessionCheckout(sessionId,data));
+                return new RetrofitLiveData<>(mWebService.putSessionCheckout(sessionId, data));
             }
 
             @Override
@@ -105,16 +116,5 @@ public class ManagerRepository extends BaseRepository {
 
             }
         }.getAsLiveData();
-    }
-
-    public static ManagerRepository getInstance(Application application) {
-        if (INSTANCE == null) {
-            synchronized (ManagerRepository.class) {
-                if (INSTANCE == null) {
-                    INSTANCE = new ManagerRepository(application.getApplicationContext());
-                }
-            }
-        }
-        return INSTANCE;
     }
 }

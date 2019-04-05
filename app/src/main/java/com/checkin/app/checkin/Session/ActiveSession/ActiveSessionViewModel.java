@@ -101,20 +101,20 @@ public class ActiveSessionViewModel extends BaseViewModel {
         return mCheckoutData;
     }
 
-    public void setShopPk(long shopPk) {
-        mShopPk = shopPk;
-    }
-
     public long getShopPk() {
         return mShopPk;
     }
 
-    public void setSessionPk(long sessionPk) {
-        mSessionPk = sessionPk;
+    public void setShopPk(long shopPk) {
+        mShopPk = shopPk;
     }
 
     public long getSessionPk() {
         return mSessionPk;
+    }
+
+    public void setSessionPk(long sessionPk) {
+        mSessionPk = sessionPk;
     }
 
     public void updateBill(double bill) {
@@ -225,14 +225,6 @@ public class ActiveSessionViewModel extends BaseViewModel {
         mOrdersData.setValue(Resource.cloneResource(listResource, listResource.data));
     }
 
-    public void setRequestedCheckout(boolean isRequestedCheckout) {
-        Resource<ActiveSessionModel> resource = mSessionData.getValue();
-        if (resource == null || resource.data == null)
-            return;
-        resource.data.setRequestedCheckout(isRequestedCheckout);
-        mSessionData.setValue(Resource.cloneResource(resource, resource.data));
-    }
-
     public void updateOrderStatus(long orderPk, SessionChatModel.CHAT_STATUS_TYPE sessionEventStatus) {
         Resource<List<SessionOrderedItemModel>> listResource = mOrdersData.getValue();
         if (listResource == null || listResource.data == null)
@@ -251,5 +243,13 @@ public class ActiveSessionViewModel extends BaseViewModel {
         if (resource == null || resource.data == null)
             return false;
         return resource.data.isRequestedCheckout();
+    }
+
+    public void setRequestedCheckout(boolean isRequestedCheckout) {
+        Resource<ActiveSessionModel> resource = mSessionData.getValue();
+        if (resource == null || resource.data == null)
+            return;
+        resource.data.setRequestedCheckout(isRequestedCheckout);
+        mSessionData.setValue(Resource.cloneResource(resource, resource.data));
     }
 }

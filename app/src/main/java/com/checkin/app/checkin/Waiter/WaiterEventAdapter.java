@@ -74,6 +74,16 @@ public class WaiterEventAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
         return mData != null ? mData.size() : 0;
     }
 
+    public interface WaiterEventInteraction {
+        void onEventMarkDone(WaiterEventModel eventModel);
+
+        void onOrderMarkDone(SessionOrderedItemModel orderedItemModel);
+
+        void onOrderAccept(SessionOrderedItemModel orderedItemModel);
+
+        void onOrderCancel(SessionOrderedItemModel orderedItemModel);
+    }
+
     class OrderedItemViewHolder extends RecyclerView.ViewHolder {
         @BindView(R.id.tv_waiter_order_item_name)
         TextView tvItemName;
@@ -115,20 +125,13 @@ public class WaiterEventAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
             imOrderMarkDone.setOnClickListener(v -> mListener.onOrderMarkDone(mOrderedItem));
             tvOrderAccept.setOnClickListener(v -> mListener.onOrderAccept(mOrderedItem));
             tvOrderCancel.setOnClickListener(v -> mListener.onOrderCancel(mOrderedItem));
-            imOrderMarkCancel.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(view.getContext());
-                    alertDialogBuilder.setMessage("Are you sure want to cancel?").setPositiveButton("Yes", new DialogInterface.OnClickListener() {
-                        public void onClick(DialogInterface dialog, int which) {
-                            mListener.onOrderCancel(mOrderedItem);
-                        }
-                    }).setNegativeButton("No", new DialogInterface.OnClickListener() {
-                        public void onClick(DialogInterface dialog, int which) {
-                            dialog.dismiss();
-                        }
-                    }).show();
-                }
+            imOrderMarkCancel.setOnClickListener(view -> {
+                AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(view.getContext());
+                alertDialogBuilder.setMessage("Are you sure want to cancel?").setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int which) {
+                        mListener.onOrderCancel(mOrderedItem);
+                    }
+                }).setNegativeButton("No", (dialog, which) -> dialog.dismiss()).show();
             });
         }
 
@@ -209,15 +212,5 @@ public class WaiterEventAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
                 ((FrameLayout) itemView).setForeground(itemView.getResources().getDrawable(R.color.translucent_white));
             }
         }
-    }
-
-    public interface WaiterEventInteraction {
-        void onEventMarkDone(WaiterEventModel eventModel);
-
-        void onOrderMarkDone(SessionOrderedItemModel orderedItemModel);
-
-        void onOrderAccept(SessionOrderedItemModel orderedItemModel);
-
-        void onOrderCancel(SessionOrderedItemModel orderedItemModel);
     }
 }

@@ -25,8 +25,6 @@ import butterknife.ButterKnife;
 import butterknife.Unbinder;
 
 public class ShopSessionDetailFragment extends Fragment {
-    private Unbinder unbinder;
-
     @BindView(R.id.rv_shop_session_orders)
     RecyclerView rvSessionOrders;
     @BindView(R.id.tv_shop_session_total_time)
@@ -35,17 +33,17 @@ public class ShopSessionDetailFragment extends Fragment {
     TextView tvPreparationTime;
     @BindView(R.id.tv_shop_session_bill_total)
     TextView tvBillTotal;
-
+    private Unbinder unbinder;
     private BillHolder mBillHolder;
     private InvoiceOrdersAdapter mOrdersAdapter;
     private ShopSessionViewModel mViewModel;
 
 
-    public static ShopSessionDetailFragment newInstance() {
-        return new ShopSessionDetailFragment();
+    public ShopSessionDetailFragment() {
     }
 
-    public ShopSessionDetailFragment() {
+    public static ShopSessionDetailFragment newInstance() {
+        return new ShopSessionDetailFragment();
     }
 
     @Nullable

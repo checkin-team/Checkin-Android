@@ -57,6 +57,8 @@ public abstract class PhoneAuth extends PhoneAuthProvider.OnVerificationStateCha
     }
 
     protected abstract void onVerificationSuccess(PhoneAuthCredential credential);
+
     protected abstract void onVerificationError(FirebaseException e);
+
     protected abstract void onOtpRetrievalTimedOut();
 }

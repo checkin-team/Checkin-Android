@@ -19,30 +19,6 @@ import static com.checkin.app.checkin.Utility.Constants.EXPAND_TEXT;
 
 public class TextLineWrapper {
 
-    public static class MySpannable extends ClickableSpan {
-
-        private boolean isUnderline = false;
-
-        /**
-         * Constructor
-         */
-        MySpannable(boolean isUnderline) {
-            this.isUnderline = isUnderline;
-        }
-
-        @Override
-        public void updateDrawState(TextPaint ds) {
-            ds.setUnderlineText(isUnderline);
-            ds.setColor(Color.parseColor("#343434"));
-        }
-
-        @Override
-        public void onClick(View widget) {
-
-        }
-    }
-
-
     public static void makeTextViewResizable(final TextView tv, final int maxLine, final boolean viewMore) {
         if (tv.getTag() == null) {
             tv.setTag(tv.getText());
@@ -85,7 +61,7 @@ public class TextLineWrapper {
         if (str.contains(spanableText)) {
 
 
-            ssb.setSpan(new MySpannable(false){
+            ssb.setSpan(new MySpannable(false) {
                 @Override
                 public void onClick(View widget) {
                     tv.setLayoutParams(tv.getLayoutParams());
@@ -102,5 +78,28 @@ public class TextLineWrapper {
         }
         return ssb;
 
+    }
+
+    public static class MySpannable extends ClickableSpan {
+
+        private boolean isUnderline = false;
+
+        /**
+         * Constructor
+         */
+        MySpannable(boolean isUnderline) {
+            this.isUnderline = isUnderline;
+        }
+
+        @Override
+        public void updateDrawState(TextPaint ds) {
+            ds.setUnderlineText(isUnderline);
+            ds.setColor(Color.parseColor("#343434"));
+        }
+
+        @Override
+        public void onClick(View widget) {
+
+        }
     }
 }

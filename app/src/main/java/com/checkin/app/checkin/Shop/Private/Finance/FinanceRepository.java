@@ -1,9 +1,7 @@
 package com.checkin.app.checkin.Shop.Private.Finance;
 
 import android.app.Application;
-import androidx.lifecycle.LiveData;
 import android.content.Context;
-import androidx.annotation.NonNull;
 
 import com.checkin.app.checkin.Data.ApiClient;
 import com.checkin.app.checkin.Data.ApiResponse;
@@ -13,12 +11,15 @@ import com.checkin.app.checkin.Data.RetrofitLiveData;
 import com.checkin.app.checkin.Data.WebApiService;
 import com.checkin.app.checkin.Misc.GenericDetailModel;
 
+import androidx.annotation.NonNull;
+import androidx.lifecycle.LiveData;
+
 public class FinanceRepository {
 
-    private final WebApiService mWebService;
     private static FinanceRepository INSTANCE;
+    private final WebApiService mWebService;
 
-    public FinanceRepository(Context context){
+    public FinanceRepository(Context context) {
         mWebService = ApiClient.getApiService(context);
     }
 
@@ -33,8 +34,8 @@ public class FinanceRepository {
         return INSTANCE;
     }
 
-    public LiveData<Resource<FinanceModel>> getRestaurantFinanceById(long restaurantId){
-        return new NetworkBoundResource<FinanceModel, FinanceModel>(){
+    public LiveData<Resource<FinanceModel>> getRestaurantFinanceById(long restaurantId) {
+        return new NetworkBoundResource<FinanceModel, FinanceModel>() {
 
             @Override
             protected boolean shouldUseLocalDb() {
@@ -54,8 +55,8 @@ public class FinanceRepository {
         }.getAsLiveData();
     }
 
-    public LiveData<Resource<GenericDetailModel>> setRestaurantFinanceById(FinanceModel financeModel, long restaurantId){
-        return new NetworkBoundResource<GenericDetailModel, GenericDetailModel>(){
+    public LiveData<Resource<GenericDetailModel>> setRestaurantFinanceById(FinanceModel financeModel, long restaurantId) {
+        return new NetworkBoundResource<GenericDetailModel, GenericDetailModel>() {
 
             @Override
             protected boolean shouldUseLocalDb() {
@@ -65,7 +66,7 @@ public class FinanceRepository {
             @NonNull
             @Override
             protected LiveData<ApiResponse<GenericDetailModel>> createCall() {
-                return new RetrofitLiveData<>(mWebService.setRestaurantFinanceById(financeModel,restaurantId));
+                return new RetrofitLiveData<>(mWebService.setRestaurantFinanceById(financeModel, restaurantId));
             }
 
             @Override

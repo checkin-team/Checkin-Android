@@ -25,30 +25,17 @@ public class MessageObjectModel implements Serializable {
     @JsonProperty("display_pic_url")
     private String displayPicUrl;
 
-    public enum MESSAGE_OBJECT_TYPE {
-        NONE(0), USER(1), SESSION(2), REVIEW(3), FRIENDSHIP_REQUEST(4),
-        RESTAURANT(5), ORDER_ITEM(6), SESSION_EVENT(7), RESTAURANT_CUSTOMER(8),
-        RESTAURANT_MEMBER(9);
-
-        int id;
-        MESSAGE_OBJECT_TYPE(int id) {
-            this.id = id;
-        }
-
-        static MESSAGE_OBJECT_TYPE getById(int id) {
-            for (MESSAGE_OBJECT_TYPE type: MESSAGE_OBJECT_TYPE.values()) {
-                if (type.id == id)
-                    return type;
-            }
-            return NONE;
-        }
-    }
-
     @JsonCreator
-    public MessageObjectModel() {}
+    public MessageObjectModel() {
+    }
 
     public MESSAGE_OBJECT_TYPE getType() {
         return type;
+    }
+
+    @JsonProperty("type")
+    public void setType(int type) {
+        this.type = MESSAGE_OBJECT_TYPE.getById(type);
     }
 
     public String getDisplayName() {
@@ -67,9 +54,24 @@ public class MessageObjectModel implements Serializable {
         return new BriefModel(pk, displayName, displayPicUrl);
     }
 
-    @JsonProperty("type")
-    public void setType(int type) {
-        this.type = MESSAGE_OBJECT_TYPE.getById(type);
+    public enum MESSAGE_OBJECT_TYPE {
+        NONE(0), USER(1), SESSION(2), REVIEW(3), FRIENDSHIP_REQUEST(4),
+        RESTAURANT(5), ORDER_ITEM(6), SESSION_EVENT(7), RESTAURANT_CUSTOMER(8),
+        RESTAURANT_MEMBER(9);
+
+        int id;
+
+        MESSAGE_OBJECT_TYPE(int id) {
+            this.id = id;
+        }
+
+        static MESSAGE_OBJECT_TYPE getById(int id) {
+            for (MESSAGE_OBJECT_TYPE type : MESSAGE_OBJECT_TYPE.values()) {
+                if (type.id == id)
+                    return type;
+            }
+            return NONE;
+        }
     }
 
     public static class MessageObjectDeserializer extends JsonDeserializer<MessageObjectModel> {

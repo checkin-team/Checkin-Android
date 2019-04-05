@@ -10,7 +10,8 @@ public class SessionChatCancelerModel {
     @JsonProperty("sender")
     private int sender;
 
-    public SessionChatCancelerModel(){}
+    public SessionChatCancelerModel() {
+    }
 
     public int getPk() {
         return pk;

@@ -1,8 +1,9 @@
 package com.checkin.app.checkin.Utility;
 
+import android.view.View;
+
 import androidx.recyclerview.widget.OrientationHelper;
 import androidx.recyclerview.widget.RecyclerView;
-import android.view.View;
 
 public class RecyclerViewPositionHelper {
 

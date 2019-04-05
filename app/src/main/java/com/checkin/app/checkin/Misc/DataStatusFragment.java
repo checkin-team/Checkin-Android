@@ -2,9 +2,6 @@ package com.checkin.app.checkin.Misc;
 
 
 import android.os.Bundle;
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.fragment.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -15,6 +12,9 @@ import com.checkin.app.checkin.Data.Resource;
 import com.checkin.app.checkin.R;
 import com.checkin.app.checkin.Utility.Utils;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.fragment.app.Fragment;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.Unbinder;
@@ -24,9 +24,7 @@ import butterknife.Unbinder;
  * Use the {@link DataStatusFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class DataStatusFragment extends Fragment{
-    private Unbinder unbinder;
-
+public class DataStatusFragment extends Fragment {
     @BindView(R.id.container_progress)
     ViewGroup containerProgress;
     @BindView(R.id.container_error)
@@ -35,6 +33,7 @@ public class DataStatusFragment extends Fragment{
     ProgressBar mProgressBar;
     @BindView(R.id.tv_error)
     TextView tvErrorMsg;
+    private Unbinder unbinder;
     private boolean isNetworkRequired;
 
     public DataStatusFragment() {

@@ -28,6 +28,18 @@ public class InventoryRepository {
         mWebService = ApiClient.getApiService(context);
     }
 
+    public static InventoryRepository getInstance(Application application) {
+        if (INSTANCE == null) {
+            synchronized (com.checkin.app.checkin.Menu.MenuRepository.class) {
+                if (INSTANCE == null) {
+                    Context context = application.getApplicationContext();
+                    INSTANCE = new InventoryRepository(context);
+                }
+            }
+        }
+        return INSTANCE;
+    }
+
     public LiveData<Resource<InventoryModel>> getAvailableRestaurantMenu(final long restaurantId) {
         return new NetworkBoundResource<InventoryModel, InventoryModel>() {
             @Override
@@ -66,17 +78,5 @@ public class InventoryRepository {
 
             }
         }.getAsLiveData();
-    }
-
-    public static InventoryRepository getInstance(Application application) {
-        if (INSTANCE == null) {
-            synchronized (com.checkin.app.checkin.Menu.MenuRepository.class) {
-                if (INSTANCE == null) {
-                    Context context = application.getApplicationContext();
-                    INSTANCE = new InventoryRepository(context);
-                }
-            }
-        }
-        return INSTANCE;
     }
 }

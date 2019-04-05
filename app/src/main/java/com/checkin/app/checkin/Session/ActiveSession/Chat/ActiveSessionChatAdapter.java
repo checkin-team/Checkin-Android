@@ -89,6 +89,10 @@ public class ActiveSessionChatAdapter extends RecyclerView.Adapter {
         return mChats != null ? mChats.size() : 0;
     }
 
+    public interface SessionChatInteraction {
+        void onSelectionChange(@Nullable SessionChatModel chatModel);
+    }
+
     class ViewHolderMessageSent extends RecyclerView.ViewHolder {
         @BindView(R.id.tv_chat_msg)
         TextView tvChatMsg;
@@ -198,9 +202,5 @@ public class ActiveSessionChatAdapter extends RecyclerView.Adapter {
         void bindData(SessionChatModel chat) {
             tvChatMsg.setText(chat.getMessage());
         }
-    }
-
-    public interface SessionChatInteraction {
-        void onSelectionChange(@Nullable SessionChatModel chatModel);
     }
 }

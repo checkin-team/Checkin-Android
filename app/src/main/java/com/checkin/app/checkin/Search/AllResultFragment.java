@@ -7,13 +7,14 @@ import com.checkin.app.checkin.R;
  */
 
 public class AllResultFragment extends BaseResultFragment<SearchResultModel> {
+    public AllResultFragment() {
+    }
+
     public static AllResultFragment newInstance(SearchResultInteraction listener) {
         AllResultFragment fragment = new AllResultFragment();
         fragment.mListener = listener;
         return fragment;
     }
-
-    public AllResultFragment() {}
 
     @Override
     protected int getLayoutRes() {

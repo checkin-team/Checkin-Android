@@ -19,9 +19,8 @@ import retrofit2.Callback;
 import retrofit2.Response;
 
 public class DeviceTokenService extends IntentService implements OnSuccessListener<InstanceIdResult>, Callback<ObjectNode> {
-    private static final String TAG = DeviceTokenService.class.getSimpleName();
-
     public static final String KEY_TOKEN = "device_token";
+    private static final String TAG = DeviceTokenService.class.getSimpleName();
 
     public DeviceTokenService() {
         super(TAG);

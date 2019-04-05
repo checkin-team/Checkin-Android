@@ -39,8 +39,6 @@ import butterknife.Unbinder;
 
 public class ItemCustomizationFragment extends Fragment implements ItemCustomizationGroupHolder.CustomizationGroupInteraction {
     private static final String TAG = ItemCustomizationFragment.class.getSimpleName();
-    private Unbinder unbinder;
-
     @BindView(R.id.container_menu_customization)
     ViewGroup vMenuCustomizations;
     @BindView(R.id.dark_back_menu_customization)
@@ -71,7 +69,7 @@ public class ItemCustomizationFragment extends Fragment implements ItemCustomiza
     LinearLayout listCustomizations;
     @BindView(R.id.sv_menu_customization)
     ViewGroup svContainerCustomization;
-
+    private Unbinder unbinder;
     private MenuViewModel mViewModel;
     private MenuItemModel mItem;
     private ItemCustomizationInteraction mInteractionListener;

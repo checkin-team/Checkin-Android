@@ -2,9 +2,6 @@ package com.checkin.app.checkin.Menu.Fragment;
 
 import android.annotation.SuppressLint;
 import android.os.Bundle;
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.fragment.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -17,14 +14,15 @@ import com.checkin.app.checkin.Inventory.Model.InventoryItemModel;
 import com.checkin.app.checkin.Menu.Model.MenuItemModel;
 import com.checkin.app.checkin.R;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.fragment.app.Fragment;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.Unbinder;
 
 
 public class MenuInfoFragment extends Fragment {
-    private Unbinder unbinder;
-
     @BindView(R.id.dark_back_menu_info)
     ViewGroup vDarkBack;
     @BindView(R.id.container_menu_info)
@@ -33,7 +31,7 @@ public class MenuInfoFragment extends Fragment {
     TextView tvMenuItemInfo;
     @BindView(R.id.im_menu_info_image)
     ImageView imMenuItemInfo;
-
+    private Unbinder unbinder;
     private MenuItemModel item;
     private InventoryItemModel inventoryItem;
 

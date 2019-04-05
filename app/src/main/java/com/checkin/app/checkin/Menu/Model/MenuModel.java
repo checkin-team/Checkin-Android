@@ -30,10 +30,15 @@ public class MenuModel {
     @JsonIgnore
     private long restaurantPk;
 
-    public MenuModel() {}
+    public MenuModel() {
+    }
 
     public String getName() {
         return name;
+    }
+
+    public List<MenuGroupModel> getGroups() {
+        return groups;
     }
 
     @JsonProperty("groups")
@@ -45,12 +50,12 @@ public class MenuModel {
         AppDatabase.getMenuModel(null).put(this);
     }
 
-    public List<MenuGroupModel> getGroups() {
-        return groups;
-    }
-
     public long getPk() {
         return pk;
+    }
+
+    public void setPk(long pk) {
+        this.pk = pk;
     }
 
     public long getRestaurantPk() {
@@ -59,9 +64,5 @@ public class MenuModel {
 
     public void setRestaurantPk(long restaurantPk) {
         this.restaurantPk = restaurantPk;
-    }
-
-    public void setPk(long pk) {
-        this.pk = pk;
     }
 }

@@ -1,23 +1,26 @@
 package com.checkin.app.checkin.Data;
 
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 import android.util.Log;
 
 import com.fasterxml.jackson.databind.JsonNode;
 
 import java.io.IOException;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import retrofit2.Response;
 
 import static java.net.HttpURLConnection.HTTP_CLIENT_TIMEOUT;
 
 public class ApiResponse<T> {
     private final int mStatusCode;
+    @Nullable
+    private final T data;
+    @Nullable
+    private final String errorMessage;
+    @Nullable
+    private final Throwable errorThrowable;
     private Response<T> mResponse;
-    @Nullable private final T data;
-    @Nullable private final String errorMessage;
-    @Nullable private final Throwable errorThrowable;
 
     public ApiResponse(Throwable error) {
         mResponse = null;

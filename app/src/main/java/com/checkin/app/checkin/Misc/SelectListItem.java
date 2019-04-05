@@ -6,7 +6,7 @@ public class SelectListItem {
     private String desc;
     private Object data;
 
-    public SelectListItem(String imageUrl, String title, String  desc, Object data) {
+    public SelectListItem(String imageUrl, String title, String desc, Object data) {
         this.imageUrl = imageUrl;
         this.title = title;
         this.desc = desc;

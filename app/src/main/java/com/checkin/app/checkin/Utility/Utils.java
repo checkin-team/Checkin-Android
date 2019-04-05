@@ -1,5 +1,6 @@
 package com.checkin.app.checkin.Utility;
 
+import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.ComponentName;
 import android.content.ContentUris;
@@ -56,12 +57,28 @@ import androidx.annotation.DrawableRes;
 import androidx.annotation.NonNull;
 import androidx.annotation.StringRes;
 
+import static android.os.Build.*;
+
 /**
  * Created by shivanshs9 on 12/5/18.
  */
 
 public final class Utils {
     private static final Handler sHandler = new Handler(Looper.getMainLooper());
+
+    /* ============================================================
+     * Android
+     * ============================================================ */
+    public static final boolean isPOrLater = VERSION.SDK_INT >= VERSION_CODES.P;
+    public static final boolean isOOrLater = isPOrLater || VERSION.SDK_INT >= VERSION_CODES.O;
+    public static final boolean isNougatMR1OrLater = isOOrLater || VERSION.SDK_INT >= VERSION_CODES.N_MR1;
+    public static final boolean isNougatOrLater = isNougatMR1OrLater || VERSION.SDK_INT >= VERSION_CODES.N;
+    public static final boolean isMarshMallowOrLater = isNougatOrLater || VERSION.SDK_INT >= VERSION_CODES.M;
+    public static final boolean isLolliPopOrLater = isMarshMallowOrLater || VERSION.SDK_INT >= VERSION_CODES.LOLLIPOP;
+    public static final boolean isKitKatOrLater = isLolliPopOrLater || VERSION.SDK_INT >= VERSION_CODES.KITKAT;
+    public static final boolean isJellyBeanMR2OrLater = isKitKatOrLater || VERSION.SDK_INT >= VERSION_CODES.JELLY_BEAN_MR2;
+    public static final boolean isJellyBeanMR1OrLater = isJellyBeanMR2OrLater || VERSION.SDK_INT >= VERSION_CODES.JELLY_BEAN_MR1;
+
 
     /* ============================================================
      * Display
@@ -461,12 +478,10 @@ public final class Utils {
         return imageList;
     }
 
+    @SuppressLint("NewApi")
     public static String getPath(final Context context, final Uri uri) {
-
-        final boolean isKitKat = Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT;
-
         // DocumentProvider
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
+        if (isKitKatOrLater) {
             if (DocumentsContract.isDocumentUri(context, uri)) {
                 // ExternalStorageProvider
                 if (isExternalStorageDocument(uri)) {
@@ -513,14 +528,14 @@ public final class Utils {
                 }
             }
         }
-            // MediaStore (and general)
-            else if ("content".equalsIgnoreCase(uri.getScheme())) {
-                return getDataColumn(context, uri, null, null);
-            }
-            // File
-            else if ("file".equalsIgnoreCase(uri.getScheme())) {
-                return uri.getPath();
-            }
+        // MediaStore (and general)
+        else if ("content".equalsIgnoreCase(uri.getScheme())) {
+            return getDataColumn(context, uri, null, null);
+        }
+        // File
+        else if ("file".equalsIgnoreCase(uri.getScheme())) {
+            return uri.getPath();
+        }
 
 
         return null;

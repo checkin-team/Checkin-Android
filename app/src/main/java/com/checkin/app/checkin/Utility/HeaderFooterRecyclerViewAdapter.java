@@ -15,9 +15,10 @@ package com.checkin.app.checkin.Utility;
  * limitations under the License.
  */
 
+import android.view.ViewGroup;
+
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
-import android.view.ViewGroup;
 
 /**
  * Created by sebnapi on 08.11.14.

@@ -23,19 +23,16 @@ import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.Transformations;
 
 public class MenuViewModel extends BaseViewModel {
+    private final Handler mHandler = new Handler();
     private MenuRepository mRepository;
-
     private MediatorLiveData<Resource<MenuModel>> mMenuData = new MediatorLiveData<>();
     private MediatorLiveData<Resource<List<MenuGroupModel>>> mOriginalMenuGroups = new MediatorLiveData<>();
     private MediatorLiveData<Resource<List<MenuGroupModel>>> mMenuGroups = new MediatorLiveData<>();
     private MediatorLiveData<Resource<List<MenuItemModel>>> mMenuItems = new MediatorLiveData<>();
     private MediatorLiveData<Resource<ArrayNode>> mResultOrder = new MediatorLiveData<>();
-
     private MutableLiveData<List<OrderedItemModel>> mOrderedItems = new MutableLiveData<>();
     private MutableLiveData<OrderedItemModel> mCurrentItem = new MutableLiveData<>();
     private MutableLiveData<String> mFilteredString = new MutableLiveData<>();
-
-    private final Handler mHandler = new Handler();
     private Runnable mRunnable;
     private Long mSessionPk;
     private long mShopPk;
@@ -172,18 +169,6 @@ public class MenuViewModel extends BaseViewModel {
         mCurrentItem.setValue(item);
     }
 
-    public void setQuantity(int quantity) {
-        OrderedItemModel item = mCurrentItem.getValue();
-        if (item == null) return;
-        if (quantity != item.getQuantity()) {
-            item.setQuantity(quantity);
-            mCurrentItem.setValue(item);
-        }
-        if (quantity == 0) {
-            removeItem(item);
-        }
-    }
-
     public void changeQuantity(int diff) {
         OrderedItemModel item = mCurrentItem.getValue();
         if (item == null) return;
@@ -211,6 +196,18 @@ public class MenuViewModel extends BaseViewModel {
 
     public LiveData<Integer> getQuantity() {
         return Transformations.map(mCurrentItem, orderedItem -> (orderedItem != null) ? orderedItem.getQuantity() : 0);
+    }
+
+    public void setQuantity(int quantity) {
+        OrderedItemModel item = mCurrentItem.getValue();
+        if (item == null) return;
+        if (quantity != item.getQuantity()) {
+            item.setQuantity(quantity);
+            mCurrentItem.setValue(item);
+        }
+        if (quantity == 0) {
+            removeItem(item);
+        }
     }
 
     public void orderItem() {

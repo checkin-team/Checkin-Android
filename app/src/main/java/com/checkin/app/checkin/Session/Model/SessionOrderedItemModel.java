@@ -53,6 +53,10 @@ public class SessionOrderedItemModel implements Serializable {
         return pk;
     }
 
+    public void setPk(int pk) {
+        this.pk = pk;
+    }
+
     public MenuItemModel getItem() {
         return item;
     }
@@ -81,6 +85,28 @@ public class SessionOrderedItemModel implements Serializable {
         return customizations;
     }
 
+    @JsonProperty("customizations")
+    public void setCustomizations(List<SessionOrderCustomizationModel> customizations) {
+        List<ItemCustomizationGroupModel> groupModels = new ArrayList<>();
+        for (SessionOrderCustomizationModel customizationModel : customizations) {
+            int index = -1;
+            for (int i = 0; i < groupModels.size(); i++) {
+                if (groupModels.get(i).getName().equalsIgnoreCase(customizationModel.getGroup())) {
+                    index = i;
+                    break;
+                }
+            }
+            if (index > -1)
+                groupModels.get(index).addCustomizationField(customizationModel.getName(), customizationModel.getCost());
+            else {
+                ItemCustomizationGroupModel group = new ItemCustomizationGroupModel(0, 0, customizationModel.getGroup());
+                group.addCustomizationField(customizationModel.getName(), customizationModel.getCost());
+                groupModels.add(group);
+            }
+        }
+        this.customizations = groupModels;
+    }
+
     public String getRemarks() {
         return remarks;
     }
@@ -101,35 +127,13 @@ public class SessionOrderedItemModel implements Serializable {
         return (getRemainingCancelTime() >= 0) && (status == CHAT_STATUS_TYPE.IN_PROGRESS || status == CHAT_STATUS_TYPE.OPEN);
     }
 
+    public CHAT_STATUS_TYPE getStatus() {
+        return status;
+    }
+
     @JsonProperty("status")
     public void setStatus(int tag) {
         this.status = CHAT_STATUS_TYPE.getByTag(tag);
-    }
-
-    @JsonProperty("customizations")
-    public void setCustomizations(List<SessionOrderCustomizationModel> customizations) {
-        List<ItemCustomizationGroupModel> groupModels = new ArrayList<>();
-        for (SessionOrderCustomizationModel customizationModel: customizations) {
-            int index = -1;
-            for (int i = 0; i < groupModels.size(); i++) {
-                if (groupModels.get(i).getName().equalsIgnoreCase(customizationModel.getGroup())) {
-                    index = i;
-                    break;
-                }
-            }
-            if (index > -1)
-                groupModels.get(index).addCustomizationField(customizationModel.getName(), customizationModel.getCost());
-            else {
-                ItemCustomizationGroupModel group = new ItemCustomizationGroupModel(0, 0, customizationModel.getGroup());
-                group.addCustomizationField(customizationModel.getName(), customizationModel.getCost());
-                groupModels.add(group);
-            }
-        }
-        this.customizations = groupModels;
-    }
-
-    public CHAT_STATUS_TYPE getStatus() {
-        return status;
     }
 
     public String formatElapsedTime() {
@@ -142,9 +146,5 @@ public class SessionOrderedItemModel implements Serializable {
 
     public String formatQuantityItemType() {
         return String.format(Locale.ENGLISH, "%d %s", quantity, itemType);
-    }
-
-    public void setPk(int pk) {
-        this.pk = pk;
     }
 }

@@ -31,9 +31,10 @@ public class Constants {
     public static final long DEFAULT_ORDER_CANCEL_DURATION = MILLISECONDS.convert(5, MINUTES);
     public static final long DEFAULT_OTP_AUTO_RETRIEVAL_TIMEOUT = MILLISECONDS.convert(1, MINUTES);
 
-    public final static String EXPAND_TEXT ="....";
+    public final static String EXPAND_TEXT = "....";
 
-    private Constants() {}
+    private Constants() {
+    }
 
     private static String getApiHost() {
         if (!BuildConfig.DEBUG && BuildConfig.BUILD_TYPE.equalsIgnoreCase("release"))

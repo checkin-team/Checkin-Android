@@ -1,11 +1,6 @@
 package com.checkin.app.checkin.Menu.Fragment;
 
 import android.os.Bundle;
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.fragment.app.Fragment;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -17,18 +12,25 @@ import com.checkin.app.checkin.R;
 
 import java.util.List;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.Unbinder;
 
 public class MenuItemsFragment extends Fragment implements MenuItemAdapter.OnItemInteractionListener {
+    @BindView(R.id.rv_menu_items)
+    RecyclerView rvMenuItems;
     private Unbinder unbinder;
-
-    @BindView(R.id.rv_menu_items) RecyclerView rvMenuItems;
-
     private MenuItemAdapter mAdapter;
     @Nullable
     private MenuItemInteraction mListener;
+
+    public MenuItemsFragment() {
+    }
 
     public static MenuItemsFragment newInstance(List<MenuItemModel> menuItems, MenuItemInteraction listener, boolean isSessionActive) {
         MenuItemsFragment fragment = new MenuItemsFragment();
@@ -36,8 +38,6 @@ public class MenuItemsFragment extends Fragment implements MenuItemAdapter.OnIte
         fragment.mListener = listener;
         return fragment;
     }
-
-    public MenuItemsFragment() {}
 
     @Nullable
     @Override

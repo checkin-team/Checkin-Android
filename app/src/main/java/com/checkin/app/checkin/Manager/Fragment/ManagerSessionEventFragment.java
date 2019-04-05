@@ -38,12 +38,11 @@ public class ManagerSessionEventFragment extends BaseFragment implements Manager
     private ManagerSessionViewModel mViewModel;
     private ManagerSessionEventAdapter mAdapter;
 
-    public static ManagerSessionEventFragment newInstance() {
-        return new ManagerSessionEventFragment();
+    public ManagerSessionEventFragment() {
     }
 
-
-    public ManagerSessionEventFragment() {
+    public static ManagerSessionEventFragment newInstance() {
+        return new ManagerSessionEventFragment();
     }
 
     @Override
@@ -89,7 +88,7 @@ public class ManagerSessionEventFragment extends BaseFragment implements Manager
                 case SUCCESS:
                     mAdapter.setData(listResource.data);
                     stopRefreshing();
-                    nestedSVEvent.scrollTo(0,0);
+                    nestedSVEvent.scrollTo(0, 0);
                     break;
                 case LOADING:
                     startRefreshing();

@@ -19,7 +19,8 @@ public class SessionOrderCustomizationModel {
     @JsonProperty("group")
     private String group;
 
-    public SessionOrderCustomizationModel() {}
+    public SessionOrderCustomizationModel() {
+    }
 
     public int getPk() {
         return pk;

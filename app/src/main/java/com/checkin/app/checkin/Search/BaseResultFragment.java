@@ -23,14 +23,12 @@ import butterknife.ButterKnife;
 import butterknife.Unbinder;
 
 public abstract class BaseResultFragment<S extends SearchResultModel> extends BaseSearchFragment implements ItemClickSupport.OnItemClickListener, ItemClickSupport.OnItemLongClickListener {
-    private Unbinder unbinder;
-
-    @BindView(R.id.rv_results)
-    RecyclerView rvResults;
-
     protected SearchResultAdapter<S> mAdapter;
     protected SearchViewModel mViewModel;
     protected SearchResultInteraction mListener;
+    @BindView(R.id.rv_results)
+    RecyclerView rvResults;
+    private Unbinder unbinder;
 
     @Nullable
     @Override

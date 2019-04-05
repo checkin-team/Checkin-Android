@@ -1,7 +1,5 @@
 package com.checkin.app.checkin.Misc;
 
-import androidx.annotation.NonNull;
-import androidx.viewpager.widget.PagerAdapter;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
@@ -12,6 +10,9 @@ import com.checkin.app.checkin.Utility.GlideApp;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+
+import androidx.annotation.NonNull;
+import androidx.viewpager.widget.PagerAdapter;
 
 public class CoverPagerAdapter extends PagerAdapter {
     private List<String> mData;

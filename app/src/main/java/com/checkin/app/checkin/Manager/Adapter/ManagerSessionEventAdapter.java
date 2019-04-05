@@ -3,7 +3,6 @@ package com.checkin.app.checkin.Manager.Adapter;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -55,6 +54,10 @@ public class ManagerSessionEventAdapter extends RecyclerView.Adapter<ManagerSess
     @Override
     public int getItemViewType(final int position) {
         return R.layout.item_manager_session_event;
+    }
+
+    public interface SessionEventInteraction {
+        void onEventMarkDone(ManagerSessionEventModel eventModel);
     }
 
     class ViewHolder extends RecyclerView.ViewHolder {
@@ -111,9 +114,5 @@ public class ManagerSessionEventAdapter extends RecyclerView.Adapter<ManagerSess
                     break;
             }
         }
-    }
-
-    public interface SessionEventInteraction {
-        void onEventMarkDone(ManagerSessionEventModel eventModel);
     }
 }

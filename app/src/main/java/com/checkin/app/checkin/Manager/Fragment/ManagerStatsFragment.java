@@ -1,15 +1,13 @@
 package com.checkin.app.checkin.Manager.Fragment;
 
 import android.os.Bundle;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.checkin.app.checkin.Data.Resource;
 import com.checkin.app.checkin.Manager.Adapter.ManagerStatsOrderAdapter;
-import com.checkin.app.checkin.Manager.Model.ManagerStatsModel;
 import com.checkin.app.checkin.Manager.ManagerWorkViewModel;
+import com.checkin.app.checkin.Manager.Model.ManagerStatsModel;
 import com.checkin.app.checkin.Misc.BaseFragment;
 import com.checkin.app.checkin.R;
 import com.checkin.app.checkin.Utility.Utils;
@@ -18,13 +16,10 @@ import java.util.Locale;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProviders;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import butterknife.BindView;
-import butterknife.ButterKnife;
-import butterknife.Unbinder;
 
 public class ManagerStatsFragment extends BaseFragment {
 
@@ -49,13 +44,13 @@ public class ManagerStatsFragment extends BaseFragment {
     public ManagerStatsFragment() {
     }
 
+    public static ManagerStatsFragment newInstance() {
+        return new ManagerStatsFragment();
+    }
+
     @Override
     protected int getRootLayout() {
         return R.layout.fragment_shop_manager_statistics;
-    }
-
-    public static ManagerStatsFragment newInstance() {
-        return new ManagerStatsFragment();
     }
 
     @Override
@@ -79,7 +74,7 @@ public class ManagerStatsFragment extends BaseFragment {
                 startRefreshing();
             else {
                 stopRefreshing();
-                Utils.toast(requireContext(),input.message);
+                Utils.toast(requireContext(), input.message);
             }
         });
     }

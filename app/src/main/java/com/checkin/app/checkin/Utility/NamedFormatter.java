@@ -8,10 +8,12 @@ import static com.checkin.app.checkin.Utility.Utils.replaceAll;
 public class NamedFormatter {
     private static final Pattern RE = Pattern.compile(
             "\\\\(.)" +         // Treat any character after a backslash literally
-            "|" +
-            "(%\\(([^)]+)\\))"  // Look for %(keys) to replace
+                    "|" +
+                    "(%\\(([^)]+)\\))"  // Look for %(keys) to replace
     );
-    NamedFormatter() {}
+
+    NamedFormatter() {
+    }
 
     public static String format(String fmt, Map<String, String> values) {
         return replaceAll(fmt, RE.matcher(fmt), matchResult -> matchResult.group(1) != null ?

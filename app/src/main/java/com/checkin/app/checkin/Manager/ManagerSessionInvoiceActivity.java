@@ -176,10 +176,10 @@ public class ManagerSessionInvoiceActivity extends AppCompatActivity {
                 alertDialogForCloseSession();
                 break;
             case R.id.tv_ms_invoice_contact_change:
-                setUpContactUi(true,  R.drawable.bordered_card_white, View.GONE, View.VISIBLE);
+                setUpContactUi(true, R.drawable.bordered_card_white, View.GONE, View.VISIBLE);
                 break;
             case R.id.btn_ms_invoice_contact_save_change:
-                setUpContactUi(false,  R.drawable.bordered_text_light_grey, View.VISIBLE, View.GONE);
+                setUpContactUi(false, R.drawable.bordered_text_light_grey, View.VISIBLE, View.GONE);
                 saveContact();
                 break;
         }

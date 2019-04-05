@@ -33,7 +33,18 @@ public class WaiterEventModel {
     @JsonProperty("ordered_item")
     private SessionOrderedItemModel orderedItem;
 
-    public WaiterEventModel() {}
+    public WaiterEventModel() {
+    }
+
+    public static WaiterEventModel fromEventBriefModel(EventBriefModel eventBriefModel) {
+        WaiterEventModel result = new WaiterEventModel();
+        result.pk = eventBriefModel.getPk();
+        result.type = eventBriefModel.getType();
+        result.message = eventBriefModel.getMessage();
+        result.service = eventBriefModel.getService();
+        result.modified = eventBriefModel.getTimestamp();
+        return result;
+    }
 
     public long getPk() {
         return pk;
@@ -43,8 +54,17 @@ public class WaiterEventModel {
         return status;
     }
 
+    public void setStatus(CHAT_STATUS_TYPE status) {
+        this.status = status;
+    }
+
     public CHAT_EVENT_TYPE getType() {
         return type;
+    }
+
+    @JsonProperty("type")
+    public void setType(int type) {
+        this.type = CHAT_EVENT_TYPE.getByTag(type);
     }
 
     public String getMessage() {
@@ -59,40 +79,21 @@ public class WaiterEventModel {
         return service;
     }
 
-    public SessionOrderedItemModel getOrderedItem() {
-        return orderedItem;
-    }
-
-    @JsonProperty("status")
-    public void setStatus(int status) {
-        this.status = CHAT_STATUS_TYPE.getByTag(status);
-    }
-
-    public void setStatus(CHAT_STATUS_TYPE status) {
-        this.status = status;
-    }
-
-    @JsonProperty("type")
-    public void setType(int type) {
-        this.type = CHAT_EVENT_TYPE.getByTag(type);
-    }
-
     @JsonProperty("service")
     public void setService(int service) {
         this.service = EVENT_REQUEST_SERVICE_TYPE.getByTag(service);
     }
 
-    public static WaiterEventModel fromEventBriefModel(EventBriefModel eventBriefModel) {
-        WaiterEventModel result = new WaiterEventModel();
-        result.pk = eventBriefModel.getPk();
-        result.type = eventBriefModel.getType();
-        result.message = eventBriefModel.getMessage();
-        result.service = eventBriefModel.getService();
-        result.modified = eventBriefModel.getTimestamp();
-        return result;
+    public SessionOrderedItemModel getOrderedItem() {
+        return orderedItem;
     }
 
     public void setOrderedItem(SessionOrderedItemModel orderedItemModel) {
         this.orderedItem = orderedItemModel;
+    }
+
+    @JsonProperty("status")
+    public void setStatus(int status) {
+        this.status = CHAT_STATUS_TYPE.getByTag(status);
     }
 }

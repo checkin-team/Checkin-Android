@@ -1,12 +1,13 @@
 package com.checkin.app.checkin.Shop.Private.Invoice;
 
 import android.app.Application;
-import androidx.lifecycle.LiveData;
-import androidx.lifecycle.MediatorLiveData;
-import androidx.annotation.NonNull;
 
 import com.checkin.app.checkin.Data.BaseViewModel;
 import com.checkin.app.checkin.Data.Resource;
+
+import androidx.annotation.NonNull;
+import androidx.lifecycle.LiveData;
+import androidx.lifecycle.MediatorLiveData;
 
 public class ShopSessionViewModel extends BaseViewModel {
     private ShopInvoiceRepository mRepository;

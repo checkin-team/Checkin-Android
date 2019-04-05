@@ -57,6 +57,15 @@ public class MenuGroupModel {
         return items;
     }
 
+    @JsonProperty("items")
+    public void setItems(List<MenuItemModel> items) {
+        AppDatabase.getMenuGroupModel(null).attach(this);
+        AppDatabase.getMenuItemModel(null).remove(this.items);
+        AppDatabase.getMenuItemModel(null).put(items);
+        this.items.addAll(items);
+        AppDatabase.getMenuGroupModel(null).put(this);
+    }
+
     public String getName() {
         return name;
     }
@@ -73,20 +82,11 @@ public class MenuGroupModel {
         return icon;
     }
 
-    @JsonProperty("items")
-    public void setItems(List<MenuItemModel> items) {
-        AppDatabase.getMenuGroupModel(null).attach(this);
-        AppDatabase.getMenuItemModel(null).remove(this.items);
-        AppDatabase.getMenuItemModel(null).put(items);
-        this.items.addAll(items);
-        AppDatabase.getMenuGroupModel(null).put(this);
-    }
-
     public List<MenuItemModel> getNonVegItems() {
         if (nonVegItems != null)
             return nonVegItems;
         nonVegItems = new ArrayList<>();
-        for (MenuItemModel item: items) {
+        for (MenuItemModel item : items) {
             if (!item.isVegetarian())
                 nonVegItems.add(item);
         }
@@ -97,7 +97,7 @@ public class MenuGroupModel {
         if (vegItems != null)
             return vegItems;
         vegItems = new ArrayList<>();
-        for (MenuItemModel item: items) {
+        for (MenuItemModel item : items) {
             if (item.isVegetarian())
                 vegItems.add(item);
         }

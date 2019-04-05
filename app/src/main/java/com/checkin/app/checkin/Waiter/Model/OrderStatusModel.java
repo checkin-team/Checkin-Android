@@ -26,13 +26,13 @@ public class OrderStatusModel {
         return pk;
     }
 
+    public void setPk(long pk) {
+        this.pk = pk;
+    }
+
     @JsonProperty("status")
     public int getStatus() {
         return status.tag;
-    }
-
-    public void setPk(long pk) {
-        this.pk = pk;
     }
 
     @JsonProperty("status")
@@ -40,13 +40,13 @@ public class OrderStatusModel {
         this.status = SessionChatModel.CHAT_STATUS_TYPE.getByTag(status);
     }
 
+    public String getDetail() {
+        return detail;
+    }
+
     @JsonProperty("detail")
     public void setDetail(String detail) {
         this.detail = detail;
-    }
-
-    public String getDetail() {
-        return detail;
     }
 
     public boolean isAvailable() {

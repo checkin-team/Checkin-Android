@@ -1,15 +1,15 @@
 package com.checkin.app.checkin.Shop.Private.Invoice;
 
 import android.os.Bundle;
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.fragment.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
 import com.checkin.app.checkin.R;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.fragment.app.Fragment;
 import butterknife.ButterKnife;
 import butterknife.Unbinder;
 
@@ -19,11 +19,12 @@ public class ShopSessionFeedbackFragment extends Fragment {
     private ShopSessionViewModel mViewModel;
     private ShopSessionFeedbackAdapter mAdapter;
 
+    public ShopSessionFeedbackFragment() {
+    }
+
     public static ShopSessionFeedbackFragment newInstance() {
         return new ShopSessionFeedbackFragment();
     }
-
-    public ShopSessionFeedbackFragment() {}
 
     @Nullable
     @Override

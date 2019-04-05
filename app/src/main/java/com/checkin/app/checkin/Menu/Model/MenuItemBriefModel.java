@@ -20,14 +20,6 @@ public class MenuItemBriefModel {
     public MenuItemBriefModel() {
     }
 
-    public void setPk(long pk) {
-        this.pk = pk;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
     public void setVegetarian(boolean vegetarian) {
         isVegetarian = vegetarian;
     }
@@ -36,8 +28,16 @@ public class MenuItemBriefModel {
         return pk;
     }
 
+    public void setPk(long pk) {
+        this.pk = pk;
+    }
+
     public String getName() {
         return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
     }
 
     public boolean getIsVegetarian() {

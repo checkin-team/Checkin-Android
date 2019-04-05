@@ -24,6 +24,17 @@ public class AccountRepository extends BaseRepository {
         mWebService = ApiClient.getApiService(context);
     }
 
+    public static AccountRepository getInstance(Application application) {
+        if (INSTANCE == null) {
+            synchronized (AccountRepository.class) {
+                if (INSTANCE == null) {
+                    INSTANCE = new AccountRepository(application.getApplicationContext());
+                }
+            }
+        }
+        return INSTANCE;
+    }
+
     public LiveData<Resource<List<AccountModel>>> getSelfAccounts() {
         return new NetworkBoundResource<List<AccountModel>, List<AccountModel>>() {
             @Override
@@ -42,16 +53,5 @@ public class AccountRepository extends BaseRepository {
 
             }
         }.getAsLiveData();
-    }
-
-    public static AccountRepository getInstance(Application application) {
-        if (INSTANCE == null) {
-            synchronized (AccountRepository.class) {
-                if (INSTANCE == null) {
-                    INSTANCE = new AccountRepository(application.getApplicationContext());
-                }
-            }
-        }
-        return INSTANCE;
     }
 }

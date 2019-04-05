@@ -13,16 +13,11 @@ import com.yarolegovich.discretescrollview.DiscreteScrollView;
 import java.util.concurrent.Callable;
 
 public class QuantityPickerView extends DiscreteScrollView {
-    private Callable<Void> mCallable;
-    private float mDownX;
     private static final int MAX_CLICK_DURATION = 200;
     private static final int MAX_CLICK_DISTANCE = 10;
+    private Callable<Void> mCallable;
+    private float mDownX;
     private long startClickTime;
-
-    public enum Direction {
-        NONE, START, END
-    }
-
     private Direction mDisabledScrollDirection = Direction.NONE;
 
     public QuantityPickerView(Context context) {
@@ -101,5 +96,9 @@ public class QuantityPickerView extends DiscreteScrollView {
             }
         }
         return super.onTouchEvent(e);
+    }
+
+    public enum Direction {
+        NONE, START, END
     }
 }

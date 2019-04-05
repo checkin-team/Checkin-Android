@@ -21,23 +21,21 @@ import butterknife.ButterKnife;
 import butterknife.Unbinder;
 
 public class InventoryItemsFragment extends Fragment {
-    private Unbinder unbinder;
-
     @BindView(R.id.rv_menu_items)
     RecyclerView rvMenuItems;
-
+    private Unbinder unbinder;
     private InventoryItemAdapter mAdapter;
     @Nullable
     private InventoryItemAdapter.OnItemInteractionListener mListener;
+
+    public InventoryItemsFragment() {
+    }
 
     public static InventoryItemsFragment newInstance(List<InventoryItemModel> menuItems, InventoryItemAdapter.OnItemInteractionListener listener, boolean isSessionActive) {
         InventoryItemsFragment fragment = new InventoryItemsFragment();
         fragment.mListener = listener;
         fragment.mAdapter = new InventoryItemAdapter(menuItems, listener, isSessionActive);
         return fragment;
-    }
-
-    public InventoryItemsFragment() {
     }
 
     @Nullable

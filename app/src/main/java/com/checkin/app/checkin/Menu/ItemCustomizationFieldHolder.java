@@ -1,7 +1,6 @@
 package com.checkin.app.checkin.Menu;
 
 import android.content.Context;
-import androidx.annotation.NonNull;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -15,6 +14,7 @@ import com.checkin.app.checkin.Utility.Utils;
 
 import java.util.Locale;
 
+import androidx.annotation.NonNull;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
@@ -26,14 +26,16 @@ import butterknife.ButterKnife;
 public class ItemCustomizationFieldHolder {
     private static final int TYPE_VEG = R.drawable.ic_veg;
     private static final int TYPE_NON_VEG = R.drawable.ic_non_veg;
-
-    @BindView(R.id.im_menu_customization_field_type) ImageView imFieldType;
-    @BindView(R.id.tv_menu_customization_field_name) TextView tvFieldName;
-    @BindView(R.id.tv_menu_customization_field_cost) TextView tvFieldCost;
-    @BindView(R.id.cb_menu_customization_field) CheckBox cbFieldSelect;
-
     private final ViewGroup mView;
     private final ItemCustomizationFieldModel mField;
+    @BindView(R.id.im_menu_customization_field_type)
+    ImageView imFieldType;
+    @BindView(R.id.tv_menu_customization_field_name)
+    TextView tvFieldName;
+    @BindView(R.id.tv_menu_customization_field_cost)
+    TextView tvFieldCost;
+    @BindView(R.id.cb_menu_customization_field)
+    CheckBox cbFieldSelect;
 
     ItemCustomizationFieldHolder(@NonNull ItemCustomizationFieldModel customizationField, Context context, @NonNull CustomizationFieldInteraction interactionListener) {
         mField = customizationField;
@@ -63,6 +65,7 @@ public class ItemCustomizationFieldHolder {
 
     public interface CustomizationFieldInteraction {
         void onSelect(ItemCustomizationFieldHolder holder);
+
         void onDeselect(ItemCustomizationFieldHolder holder);
     }
 }

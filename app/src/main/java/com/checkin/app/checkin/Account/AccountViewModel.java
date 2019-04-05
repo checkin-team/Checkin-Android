@@ -31,12 +31,12 @@ public class AccountViewModel extends BaseViewModel {
         mAccounts.addSource(mRepository.getSelfAccounts(), mAccounts::setValue);
     }
 
-    public void setCurrentAccount(AccountModel account) {
-        mCurrentAccount.setValue(account);
-    }
-
     public LiveData<AccountModel> getCurrentAccount() {
         return mCurrentAccount;
+    }
+
+    public void setCurrentAccount(AccountModel account) {
+        mCurrentAccount.setValue(account);
     }
 
     @Override

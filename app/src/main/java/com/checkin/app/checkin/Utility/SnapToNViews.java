@@ -1,12 +1,13 @@
 package com.checkin.app.checkin.Utility;
 
+import android.util.Log;
+import android.view.MotionEvent;
+import android.view.View;
+
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.recyclerview.widget.RecyclerView.LayoutManager;
-import android.util.Log;
-import android.view.MotionEvent;
-import android.view.View;
 
 public class SnapToNViews extends StartSnapHelper {
     private int mViewsToSnap;
@@ -23,7 +24,7 @@ public class SnapToNViews extends StartSnapHelper {
     public void attachToRecyclerView(@NonNull final RecyclerView recyclerView)
             throws IllegalStateException {
         recyclerView.setOnTouchListener((view, motionEvent) -> {
-            switch(motionEvent.getAction()) {
+            switch (motionEvent.getAction()) {
                 case MotionEvent.ACTION_DOWN:
                     setOrigPos((LinearLayoutManager) recyclerView.getLayoutManager());
                     break;

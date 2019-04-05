@@ -4,12 +4,6 @@ package com.checkin.app.checkin.Shop.ShopJoin;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
-import androidx.annotation.Nullable;
-import com.google.android.material.tabs.TabLayout;
-import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentManager;
-import androidx.fragment.app.FragmentStatePagerAdapter;
-import androidx.appcompat.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
 import android.widget.Toast;
@@ -17,17 +11,25 @@ import android.widget.Toast;
 import com.checkin.app.checkin.Auth.OtpVerificationDialog;
 import com.checkin.app.checkin.R;
 import com.checkin.app.checkin.Utility.DynamicSwipableViewPager;
+import com.google.android.material.tabs.TabLayout;
 import com.google.firebase.FirebaseException;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.PhoneAuthCredential;
 
+import androidx.annotation.Nullable;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentStatePagerAdapter;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
 public class ContactVerifyActivity extends AppCompatActivity implements TabPhoneFragment.PhoneInteraction, TabEmailFragment.EmailInteraction, OtpVerificationDialog.AuthCallback {
     private static final String TAG = ContactVerifyActivity.class.getSimpleName();
-    @BindView(R.id.tabs) TabLayout vTabs;
-    @BindView(R.id.pager) DynamicSwipableViewPager vPager;
+    @BindView(R.id.tabs)
+    TabLayout vTabs;
+    @BindView(R.id.pager)
+    DynamicSwipableViewPager vPager;
 
     private FirebaseAuth mAuth;
     private String mEmail;
@@ -41,7 +43,7 @@ public class ContactVerifyActivity extends AppCompatActivity implements TabPhone
         vPager.setAdapter(new TabAdapter(getSupportFragmentManager()));
         vPager.setEnabled(false);
         vTabs.setupWithViewPager(vPager);
-        for (View v: vTabs.getTouchables()) {
+        for (View v : vTabs.getTouchables()) {
             v.setClickable(false);
         }
 
@@ -75,7 +77,7 @@ public class ContactVerifyActivity extends AppCompatActivity implements TabPhone
                 });
             } else {
                 Log.e(TAG, "Authentication failed", task.getException());
-                Toast.makeText(getApplicationContext(),R.string.error_authentication,Toast.LENGTH_SHORT).show();
+                Toast.makeText(getApplicationContext(), R.string.error_authentication, Toast.LENGTH_SHORT).show();
             }
         });
         dialog.dismiss();

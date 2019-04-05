@@ -24,11 +24,11 @@ public class ActiveSessionViewOrdersFragment extends BaseFragment implements Act
     private ActiveSessionOrdersAdapter mOrdersAdapter;
     private ActiveSessionViewModel mViewModel;
 
-    public static ActiveSessionViewOrdersFragment newInstance() {
-        return new ActiveSessionViewOrdersFragment();
+    public ActiveSessionViewOrdersFragment() {
     }
 
-    public ActiveSessionViewOrdersFragment() {
+    public static ActiveSessionViewOrdersFragment newInstance() {
+        return new ActiveSessionViewOrdersFragment();
     }
 
     @Override

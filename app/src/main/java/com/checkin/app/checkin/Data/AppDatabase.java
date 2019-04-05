@@ -18,6 +18,9 @@ import io.objectbox.BoxStore;
 public class AppDatabase {
     private static BoxStore mBoxStore;
 
+    private AppDatabase() {
+    }
+
     private static BoxStore getBoxStore(final Context context) {
         if (mBoxStore == null) {
             synchronized (AppDatabase.class) {
@@ -27,9 +30,6 @@ public class AppDatabase {
             }
         }
         return mBoxStore;
-    }
-
-    private AppDatabase() {
     }
 
     public static Box<ItemCustomizationFieldModel> getMenuItemCustomizationFieldModel(final Context context) {

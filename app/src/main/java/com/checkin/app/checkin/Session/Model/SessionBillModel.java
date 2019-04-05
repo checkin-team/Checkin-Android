@@ -25,7 +25,8 @@ public class SessionBillModel {
 
     private Double discountPercentage;
 
-    public SessionBillModel(){}
+    public SessionBillModel() {
+    }
 
     public Double getSubtotal() {
         return subtotal;
@@ -43,6 +44,11 @@ public class SessionBillModel {
         return discount;
     }
 
+    @JsonProperty("discount")
+    public void setDiscount(Double discount) {
+        this.discount = (discount > 0) ? discount : null;
+    }
+
     public Double getOffers() {
         return offers;
     }
@@ -50,11 +56,6 @@ public class SessionBillModel {
     @JsonProperty("offers")
     public void setOffers(Double offers) {
         this.offers = (offers > 0) ? offers : null;
-    }
-
-    @JsonProperty("discount")
-    public void setDiscount(Double discount) {
-        this.discount = (discount > 0) ? discount : null;
     }
 
     public String formatSubTotal() {
@@ -84,7 +85,7 @@ public class SessionBillModel {
     public void calculateDiscount(Double percent) {
         discountPercentage = percent;
 
-        if(discount!=null){
+        if (discount != null) {
             double oldDiscount = discount;
             discount = (subtotal * percent) / 100;
             total -= (discount - oldDiscount);

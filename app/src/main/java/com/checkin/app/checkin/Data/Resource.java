@@ -18,37 +18,17 @@ import static java.net.HttpURLConnection.HTTP_UNAUTHORIZED;
 // A generic class that describes data with a status.
 public class Resource<T> {
     private static final String TAG = Resource.class.getSimpleName();
-    @NonNull public final Status status;
-    @Nullable public final T data;
-    @Nullable public final String message;
-
-    public enum Status {
-        NO_REQUEST,
-        SUCCESS,
-        LOADING,
-        ERROR_RESPONSE_INVALID,
-        ERROR_DISCONNECTED,
-        ERROR_NOT_FOUND,
-        ERROR_INVALID_REQUEST,
-        ERROR_FORBIDDEN,
-        ERROR_UNAUTHORIZED,
-        ERROR_CANCELLED,
-        ERROR_UNKNOWN,
-    }
+    @NonNull
+    public final Status status;
+    @Nullable
+    public final T data;
+    @Nullable
+    public final String message;
 
     private Resource(@NonNull Status status, @Nullable T data, @Nullable String message) {
         this.status = status;
         this.data = data;
         this.message = message;
-    }
-
-    public JsonNode getErrorBody() {
-        try {
-            return Converters.objectMapper.readTree(message);
-        } catch (IOException | NullPointerException e) {
-            Log.e(TAG, "message not a valid JSON data\n" + message);
-        }
-        return null;
     }
 
     @NonNull
@@ -101,8 +81,7 @@ public class Resource<T> {
             resource = error(Status.ERROR_UNAUTHORIZED, apiResponse.getErrorMessage(), apiResponse.getData());
         } else if (apiResponse.hasStatus(HTTP_FORBIDDEN)) {
             resource = error(Status.ERROR_FORBIDDEN, apiResponse.getErrorMessage(), apiResponse.getData());
-        }
-        else {
+        } else {
             resource = error(Status.ERROR_UNKNOWN, apiResponse.getErrorMessage(), apiResponse.getData());
         }
         return resource;
@@ -110,5 +89,28 @@ public class Resource<T> {
 
     public static <X, T> Resource<X> cloneResource(Resource<T> resource, X data) {
         return new Resource<>(resource.status, data, resource.message);
+    }
+
+    public JsonNode getErrorBody() {
+        try {
+            return Converters.objectMapper.readTree(message);
+        } catch (IOException | NullPointerException e) {
+            Log.e(TAG, "message not a valid JSON data\n" + message);
+        }
+        return null;
+    }
+
+    public enum Status {
+        NO_REQUEST,
+        SUCCESS,
+        LOADING,
+        ERROR_RESPONSE_INVALID,
+        ERROR_DISCONNECTED,
+        ERROR_NOT_FOUND,
+        ERROR_INVALID_REQUEST,
+        ERROR_FORBIDDEN,
+        ERROR_UNAUTHORIZED,
+        ERROR_CANCELLED,
+        ERROR_UNKNOWN,
     }
 }

@@ -4,7 +4,6 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
@@ -31,7 +30,6 @@ import com.checkin.app.checkin.Utility.DynamicSwipableViewPager;
 import com.checkin.app.checkin.Utility.OnBoardingUtils;
 import com.checkin.app.checkin.Utility.OnBoardingUtils.OnBoardingModel;
 import com.checkin.app.checkin.Utility.Utils;
-import com.getkeepsafe.taptargetview.TapTarget;
 import com.getkeepsafe.taptargetview.TapTargetSequence;
 import com.google.android.material.navigation.NavigationView;
 import com.google.android.material.tabs.TabLayout;
@@ -163,8 +161,8 @@ public class HomeActivity extends BaseAccountActivity implements NavigationView.
 
                 Intent serviceIntent = new Intent(this, ActiveSessionNotificationService.class);
                 serviceIntent.setAction(Constants.START_FOREGROUND_ACTION);
-                serviceIntent.putExtra(ACTIVE_RESTAURANT,resource.data.getRestaurant());
-                serviceIntent.putExtra(ACTIVE_SESSION_PK,resource.data.getPk());
+                serviceIntent.putExtra(ACTIVE_RESTAURANT, resource.data.getRestaurant());
+                serviceIntent.putExtra(ACTIVE_SESSION_PK, resource.data.getPk());
                 startService(serviceIntent);
 
             } else if (resource.status == Resource.Status.ERROR_NOT_FOUND) {
@@ -182,7 +180,7 @@ public class HomeActivity extends BaseAccountActivity implements NavigationView.
         TabLayout.Tab tab = tabLayout.getTabAt(1);
         if (tab != null) {
             View qrView = tab.getCustomView();
-            OnBoardingUtils.conditionalOnBoarding(this,SP_QR_SCANNER,true, new OnBoardingModel("Scan Checkin QR!", qrView));
+            OnBoardingUtils.conditionalOnBoarding(this, SP_QR_SCANNER, true, new OnBoardingModel("Scan Checkin QR!", qrView));
         }
     }
 

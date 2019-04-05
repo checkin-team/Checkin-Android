@@ -1,8 +1,6 @@
 package com.checkin.app.checkin.Shop.ShopJoin;
 
 import android.os.Bundle;
-import androidx.annotation.NonNull;
-import androidx.fragment.app.Fragment;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.LayoutInflater;
@@ -13,14 +11,18 @@ import android.widget.EditText;
 
 import com.checkin.app.checkin.R;
 
+import androidx.annotation.NonNull;
+import androidx.fragment.app.Fragment;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import butterknife.Unbinder;
 
 public class TabPhoneFragment extends Fragment {
-    @BindView(R.id.ed_phone) EditText edPhone;
-    @BindView(R.id.btn_next) Button btnNext;
+    @BindView(R.id.ed_phone)
+    EditText edPhone;
+    @BindView(R.id.btn_next)
+    Button btnNext;
 
     private Unbinder unbinder;
     private PhoneInteraction mListener;
@@ -37,7 +39,7 @@ public class TabPhoneFragment extends Fragment {
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        View view =  inflater.inflate(R.layout.fragment_tab_phone, container, false);
+        View view = inflater.inflate(R.layout.fragment_tab_phone, container, false);
         unbinder = ButterKnife.bind(this, view);
 
         edPhone.addTextChangedListener(new TextWatcher() {
@@ -56,8 +58,9 @@ public class TabPhoneFragment extends Fragment {
         });
         return view;
     }
+
     @OnClick(R.id.btn_next)
-    public void proceed(View view){
+    public void proceed(View view) {
         if (view.isActivated()) {
             mListener.onPhoneEntered(edPhone.getText().toString());
         }

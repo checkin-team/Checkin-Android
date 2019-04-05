@@ -56,6 +56,10 @@ public class ActiveSessionOrdersAdapter extends RecyclerView.Adapter<ActiveSessi
         return R.layout.item_active_session_order;
     }
 
+    public interface SessionOrdersInteraction {
+        void onCancelOrder(SessionOrderedItemModel orderedItem);
+    }
+
     class ViewHolder extends RecyclerView.ViewHolder {
         @BindView(R.id.tv_order_item_name)
         TextView tvItemName;
@@ -153,9 +157,5 @@ public class ActiveSessionOrdersAdapter extends RecyclerView.Adapter<ActiveSessi
             tvFieldNames.setText(Utils.joinCollection(group.getCustomizationFields(), "\n"));
             container.addView(view);
         }
-    }
-
-    public interface SessionOrdersInteraction {
-        void onCancelOrder(SessionOrderedItemModel orderedItem);
     }
 }

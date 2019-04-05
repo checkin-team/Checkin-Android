@@ -1,10 +1,11 @@
 package com.checkin.app.checkin.Utility;
 
 import android.content.Context;
-import androidx.core.view.GestureDetectorCompat;
 import android.view.GestureDetector.SimpleOnGestureListener;
 import android.view.MotionEvent;
 import android.view.View;
+
+import androidx.core.view.GestureDetectorCompat;
 
 public class SwipeTouchListener implements View.OnTouchListener {
     private final Context mContext;

@@ -35,6 +35,18 @@ public class MenuRepository {
         mMenuBox = AppDatabase.getMenuModel(context);
     }
 
+    public static MenuRepository getInstance(Application application) {
+        if (INSTANCE == null) {
+            synchronized (MenuRepository.class) {
+                if (INSTANCE == null) {
+                    Context context = application.getApplicationContext();
+                    INSTANCE = new MenuRepository(context);
+                }
+            }
+        }
+        return INSTANCE;
+    }
+
     public LiveData<Resource<MenuModel>> getAvailableMenu(final long shopId) {
         return new NetworkBoundResource<MenuModel, MenuModel>() {
             @Override
@@ -108,17 +120,5 @@ public class MenuRepository {
 
             }
         }.getAsLiveData();
-    }
-
-    public static MenuRepository getInstance(Application application) {
-        if (INSTANCE == null) {
-            synchronized (MenuRepository.class) {
-                if (INSTANCE == null) {
-                    Context context = application.getApplicationContext();
-                    INSTANCE = new MenuRepository(context);
-                }
-            }
-        }
-        return INSTANCE;
     }
 }

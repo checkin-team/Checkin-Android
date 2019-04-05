@@ -144,16 +144,16 @@ public class ShopProfileViewModel extends BaseViewModel {
         return mShopPk;
     }
 
+    public void setShopPk(long shopPk) {
+        mShopPk = shopPk;
+    }
+
     public void useShop(RestaurantModel restaurantModel) {
         mShopData.setValue(Resource.success(restaurantModel));
     }
 
     public void removeCoverImage(int index) {
         mData.addSource(mRepository.deleteRestaurantCover(mShopPk, index), mData::setValue);
-    }
-
-    public void setShopPk(long shopPk) {
-        mShopPk = shopPk;
     }
 
     @Override

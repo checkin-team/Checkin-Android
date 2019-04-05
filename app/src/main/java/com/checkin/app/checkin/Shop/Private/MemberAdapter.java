@@ -1,7 +1,5 @@
 package com.checkin.app.checkin.Shop.Private;
 
-import androidx.annotation.NonNull;
-import androidx.recyclerview.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -14,6 +12,8 @@ import com.checkin.app.checkin.Utility.GlideApp;
 
 import java.util.List;
 
+import androidx.annotation.NonNull;
+import androidx.recyclerview.widget.RecyclerView;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
@@ -73,10 +73,17 @@ public class MemberAdapter extends RecyclerView.Adapter<MemberAdapter.ViewHolder
         return mMembers != null ? mMembers.size() : 0;
     }
 
-    class ViewHolder extends RecyclerView.ViewHolder{
-        @BindView(R.id.im_display_pic) ImageView imDisplayPic;
-        @BindView(R.id.tv_display_name) TextView tvDisplayName;
-        @BindView(R.id.btn_role_edit) Button btnMemberRole;
+    public interface OnMemberInteractionListener {
+        void onAssignRole(MemberModel member, int position);
+    }
+
+    class ViewHolder extends RecyclerView.ViewHolder {
+        @BindView(R.id.im_display_pic)
+        ImageView imDisplayPic;
+        @BindView(R.id.tv_display_name)
+        TextView tvDisplayName;
+        @BindView(R.id.btn_role_edit)
+        Button btnMemberRole;
 
         ViewHolder(View v) {
             super(v);
@@ -99,12 +106,8 @@ public class MemberAdapter extends RecyclerView.Adapter<MemberAdapter.ViewHolder
             else if (member.isCook()) val = "Cook";
             btnMemberRole.setText(val);
 
-            btnMemberRole.setOnClickListener(v -> mItemListener.onAssignRole(member,getAdapterPosition()));
+            btnMemberRole.setOnClickListener(v -> mItemListener.onAssignRole(member, getAdapterPosition()));
         }
 
-    }
-
-    public interface OnMemberInteractionListener{
-        void onAssignRole(MemberModel member, int position);
     }
 }

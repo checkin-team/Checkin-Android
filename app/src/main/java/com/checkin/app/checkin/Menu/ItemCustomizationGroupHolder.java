@@ -26,13 +26,12 @@ import butterknife.ButterKnife;
  */
 
 public class ItemCustomizationGroupHolder implements ItemCustomizationFieldHolder.CustomizationFieldInteraction {
+    private final ViewGroup mView;
     @BindView(R.id.tv_menu_customization_group_name)
     TextView tvGroupName;
     @BindView(R.id.list_menu_customization_fields)
     LinearLayout vListFields;
-
     private ItemCustomizationGroupModel mGroup;
-    private final ViewGroup mView;
     private List<ItemCustomizationFieldHolder> selectedFields = new ArrayList<>();
     private CustomizationGroupInteraction mInteractionListener;
 

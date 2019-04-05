@@ -1,36 +1,35 @@
 package com.checkin.app.checkin.Shop.Private.Edit;
 
-import androidx.lifecycle.ViewModelProviders;
 import android.os.Bundle;
-import androidx.annotation.Nullable;
-import com.google.android.material.tabs.TabLayout;
-import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentManager;
-import androidx.fragment.app.FragmentPagerAdapter;
-import androidx.viewpager.widget.ViewPager;
-import androidx.appcompat.app.ActionBar;
-import androidx.appcompat.app.AppCompatActivity;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.Toast;
 
 import com.checkin.app.checkin.Data.Resource;
 import com.checkin.app.checkin.R;
-import com.checkin.app.checkin.Shop.RestaurantModel;
 import com.checkin.app.checkin.Shop.Private.ShopProfileViewModel;
+import com.checkin.app.checkin.Shop.RestaurantModel;
 import com.checkin.app.checkin.Utility.Utils;
+import com.google.android.material.tabs.TabLayout;
 
+import androidx.annotation.Nullable;
+import androidx.appcompat.app.ActionBar;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentPagerAdapter;
+import androidx.lifecycle.ViewModelProviders;
+import androidx.viewpager.widget.ViewPager;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
 public class EditProfileActivity extends AppCompatActivity implements EditAspectFragment.AspectFragmentInteraction, EditBasicFragment.BasicFragmentInteraction {
-    private static final String TAG = EditProfileActivity.class.getSimpleName();
-
-    @BindView(R.id.container) ViewPager mViewPager;
-    @BindView(R.id.tabs) TabLayout vTabs;
-
     public static final String KEY_SHOP_PK = "shop_edit.pk";
-
+    private static final String TAG = EditProfileActivity.class.getSimpleName();
+    @BindView(R.id.container)
+    ViewPager mViewPager;
+    @BindView(R.id.tabs)
+    TabLayout vTabs;
     private ShopProfileViewModel mViewModel;
     private boolean isBasicValid = true;
     private boolean isAspectValid = true;

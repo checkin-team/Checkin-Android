@@ -1,7 +1,5 @@
 package com.checkin.app.checkin.Shop.Private.Invoice;
 
-import androidx.annotation.NonNull;
-import androidx.recyclerview.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -14,14 +12,16 @@ import com.checkin.app.checkin.R;
 
 import java.util.List;
 
+import androidx.annotation.NonNull;
+import androidx.recyclerview.widget.RecyclerView;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
 public class ShopSessionFeedbackAdapter extends RecyclerView.Adapter<ShopSessionFeedbackAdapter.ShopInvoiceFeedbackHolder> {
-    private List<ShopSessionFeedbackModel> mList;
     public ImageThumbnailInteraction mListener;
+    private List<ShopSessionFeedbackModel> mList;
 
-    ShopSessionFeedbackAdapter(ImageThumbnailInteraction listener){
+    ShopSessionFeedbackAdapter(ImageThumbnailInteraction listener) {
         mListener = listener;
     }
 
@@ -40,7 +40,7 @@ public class ShopSessionFeedbackAdapter extends RecyclerView.Adapter<ShopSession
 
     @Override
     public int getItemCount() {
-        return mList != null ? mList.size():0;
+        return mList != null ? mList.size() : 0;
     }
 
     public void setData(List<ShopSessionFeedbackModel> data) {
@@ -66,7 +66,7 @@ public class ShopSessionFeedbackAdapter extends RecyclerView.Adapter<ShopSession
 
         ShopInvoiceFeedbackHolder(View itemView) {
             super(itemView);
-            ButterKnife.bind(this,itemView);
+            ButterKnife.bind(this, itemView);
 
             seekbarFood.setEnabled(false);
             seekbarHospitality.setEnabled(false);

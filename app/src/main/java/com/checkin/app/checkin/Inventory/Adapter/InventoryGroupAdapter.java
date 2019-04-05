@@ -168,12 +168,16 @@ public class InventoryGroupAdapter extends RecyclerView.Adapter<InventoryGroupAd
         }
     }
 
+    public interface GroupInteraction {
+        void onGroupAvailability(List<InventoryItemModel> items, boolean isChecked);
+    }
+
     public class GroupViewHolder extends RecyclerView.ViewHolder {
+        protected boolean isExpanded = false;
         @BindView(R.id.tv_menu_group_name)
         TextView tvGroupName;
         @BindView(R.id.im_menu_group_icon)
         ImageView imGroupIcon;
-
         @BindView(R.id.tabs_menu_sub_groups)
         TabLayout vTabs;
         @BindView(R.id.pager_menu_items)
@@ -182,10 +186,7 @@ public class InventoryGroupAdapter extends RecyclerView.Adapter<InventoryGroupAd
         ViewGroup vSubGroupWrapper;
         @BindView(R.id.switch_menu_group_availability)
         Switch switchGroupAvailability;
-
         private InventoryGroupModel mMenuGroup;
-
-        protected boolean isExpanded = false;
 
         GroupViewHolder(View itemView) {
             super(itemView);
@@ -312,9 +313,5 @@ public class InventoryGroupAdapter extends RecyclerView.Adapter<InventoryGroupAd
             }
             return "";
         }
-    }
-
-    public interface GroupInteraction {
-        void onGroupAvailability(List<InventoryItemModel> items, boolean isChecked);
     }
 }

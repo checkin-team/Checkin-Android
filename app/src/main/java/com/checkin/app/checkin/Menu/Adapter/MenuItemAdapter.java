@@ -1,8 +1,5 @@
 package com.checkin.app.checkin.Menu.Adapter;
 
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.recyclerview.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -21,6 +18,9 @@ import com.yarolegovich.discretescrollview.DiscreteScrollView;
 import java.util.List;
 import java.util.Locale;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.recyclerview.widget.RecyclerView;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
@@ -64,12 +64,27 @@ public class MenuItemAdapter extends RecyclerView.Adapter<MenuItemAdapter.ItemVi
         return mItemsList != null ? mItemsList.size() : 0;
     }
 
+    public interface OnItemInteractionListener {
+        boolean onItemAdded(MenuItemModel item);
+
+        boolean onItemLongPress(MenuItemModel item);
+
+        boolean onItemChanged(MenuItemModel item, int count);
+
+        int orderedItemCount(MenuItemModel item);
+    }
+
     public class ItemViewHolder extends RecyclerView.ViewHolder implements DiscreteScrollView.ScrollStateChangeListener<TextBaseAdapter.TextViewHolder> {
-        @BindView(R.id.tv_menu_item_name) TextView tvItemName;
-        @BindView(R.id.container_menu_quantity_picker) ViewGroup containerQp;
-        @BindView(R.id.qp_menu_item_quantity) QuantityPickerView qpItemQuantity;
-        @BindView(R.id.tv_menu_item_price) TextView tvItemPrices;
-        @BindView(R.id.btn_menu_item_add) Button btnItemAdd;
+        @BindView(R.id.tv_menu_item_name)
+        TextView tvItemName;
+        @BindView(R.id.container_menu_quantity_picker)
+        ViewGroup containerQp;
+        @BindView(R.id.qp_menu_item_quantity)
+        QuantityPickerView qpItemQuantity;
+        @BindView(R.id.tv_menu_item_price)
+        TextView tvItemPrices;
+        @BindView(R.id.btn_menu_item_add)
+        Button btnItemAdd;
 
         private MenuItemModel mItem;
         private int scrollPos = 1;
@@ -180,12 +195,5 @@ public class MenuItemAdapter extends RecyclerView.Adapter<MenuItemAdapter.ItemVi
         private void disallowDecreaseCount() {
             Utils.toast(itemView.getContext(), "Not allowed to change item count from here - use cart.");
         }
-    }
-
-    public interface OnItemInteractionListener {
-        boolean onItemAdded(MenuItemModel item);
-        boolean onItemLongPress(MenuItemModel item);
-        boolean onItemChanged(MenuItemModel item, int count);
-        int orderedItemCount(MenuItemModel item);
     }
 }

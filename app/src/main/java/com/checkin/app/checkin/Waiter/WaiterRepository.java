@@ -31,11 +31,22 @@ import androidx.lifecycle.LiveData;
  */
 
 public class WaiterRepository extends BaseRepository {
-    private final WebApiService mWebService;
     private static WaiterRepository INSTANCE;
+    private final WebApiService mWebService;
 
     private WaiterRepository(Context context) {
         mWebService = ApiClient.getApiService(context);
+    }
+
+    public static WaiterRepository getInstance(Application application) {
+        if (INSTANCE == null) {
+            synchronized (WaiterRepository.class) {
+                if (INSTANCE == null) {
+                    INSTANCE = new WaiterRepository(application.getApplicationContext());
+                }
+            }
+        }
+        return INSTANCE;
     }
 
     public LiveData<Resource<List<WaiterTableModel>>> getWaiterServedTables() {
@@ -254,16 +265,5 @@ public class WaiterRepository extends BaseRepository {
 
             }
         }.getAsLiveData();
-    }
-
-    public static WaiterRepository getInstance(Application application) {
-        if (INSTANCE == null) {
-            synchronized (WaiterRepository.class) {
-                if (INSTANCE == null) {
-                    INSTANCE = new WaiterRepository(application.getApplicationContext());
-                }
-            }
-        }
-        return INSTANCE;
     }
 }

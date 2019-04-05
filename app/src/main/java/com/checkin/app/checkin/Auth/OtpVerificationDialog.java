@@ -28,21 +28,6 @@ import butterknife.Unbinder;
 
 public class OtpVerificationDialog extends AlertDialog {
     private static final String TAG = OtpVerificationDialog.class.getSimpleName();
-
-    @BindView(R.id.ed_otp)
-    EditText edOtp;
-    @BindView(R.id.tv_remaining_time)
-    TextView tvRemainingTime;
-    @BindView(R.id.btn_resend_otp)
-    Button btnResendOtp;
-
-    private Activity mActivity;
-    private PhoneAuth mPhoneAuth;
-    private AuthCallback mListener;
-    private FirebaseAuth mAuth;
-
-    private String mPhoneNo;
-
     private final AuthCallback defaultAuthCallback = new AuthCallback() {
         @Override
         public void onSuccessVerification(DialogInterface dialog, PhoneAuthCredential credential) {
@@ -58,6 +43,17 @@ public class OtpVerificationDialog extends AlertDialog {
             dialog.dismiss();
         }
     };
+    @BindView(R.id.ed_otp)
+    EditText edOtp;
+    @BindView(R.id.tv_remaining_time)
+    TextView tvRemainingTime;
+    @BindView(R.id.btn_resend_otp)
+    Button btnResendOtp;
+    private Activity mActivity;
+    private PhoneAuth mPhoneAuth;
+    private AuthCallback mListener;
+    private FirebaseAuth mAuth;
+    private String mPhoneNo;
 
     OtpVerificationDialog(@NonNull Context context, AuthCallback authCallback) {
         super(context);
@@ -172,6 +168,14 @@ public class OtpVerificationDialog extends AlertDialog {
         }
     }
 
+    public interface AuthCallback {
+        void onSuccessVerification(DialogInterface dialog, PhoneAuthCredential credential);
+
+        void onCancelVerification(DialogInterface dialog);
+
+        void onFailedVerification(DialogInterface dialog, FirebaseException exception);
+    }
+
     public static class Builder {
         private final Activity mActivity;
         private AuthCallback mCallback;
@@ -192,13 +196,5 @@ public class OtpVerificationDialog extends AlertDialog {
         public OtpVerificationDialog build() {
             return new OtpVerificationDialog(mActivity, mCallback);
         }
-    }
-
-    public interface AuthCallback {
-        void onSuccessVerification(DialogInterface dialog, PhoneAuthCredential credential);
-
-        void onCancelVerification(DialogInterface dialog);
-
-        void onFailedVerification(DialogInterface dialog, FirebaseException exception);
     }
 }

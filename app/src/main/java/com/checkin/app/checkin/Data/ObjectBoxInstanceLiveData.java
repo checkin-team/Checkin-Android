@@ -1,17 +1,14 @@
 package com.checkin.app.checkin.Data;
 
-import androidx.lifecycle.LiveData;
-
 import java.util.List;
 
+import androidx.lifecycle.LiveData;
 import io.objectbox.query.Query;
 import io.objectbox.reactive.DataObserver;
 import io.objectbox.reactive.DataSubscription;
 
-public class ObjectBoxInstanceLiveData <T> extends LiveData<T> {
+public class ObjectBoxInstanceLiveData<T> extends LiveData<T> {
     private final Query<T> query;
-    private DataSubscription subscription;
-
     private final DataObserver<List<T>> listener = data -> {
         try {
             postValue(data.get(0));
@@ -19,6 +16,7 @@ public class ObjectBoxInstanceLiveData <T> extends LiveData<T> {
             postValue(null);
         }
     };
+    private DataSubscription subscription;
 
     public ObjectBoxInstanceLiveData(Query<T> query) {
         this.query = query;

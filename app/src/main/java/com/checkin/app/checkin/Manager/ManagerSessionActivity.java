@@ -11,12 +11,10 @@ import android.widget.TextView;
 
 import com.checkin.app.checkin.Data.Message.MessageModel;
 import com.checkin.app.checkin.Data.Message.MessageObjectModel;
-import com.checkin.app.checkin.Data.Message.MessageObjectModel.MESSAGE_OBJECT_TYPE;
 import com.checkin.app.checkin.Data.Message.MessageUtils;
 import com.checkin.app.checkin.Manager.Fragment.ManagerSessionEventFragment;
 import com.checkin.app.checkin.Manager.Fragment.ManagerSessionOrderFragment;
 import com.checkin.app.checkin.Manager.Model.ManagerSessionEventModel;
-import com.checkin.app.checkin.Menu.SessionMenuActivity;
 import com.checkin.app.checkin.Misc.BriefModel;
 import com.checkin.app.checkin.R;
 import com.checkin.app.checkin.Session.ActiveSession.Chat.SessionChatModel;
@@ -45,12 +43,10 @@ import static com.checkin.app.checkin.Data.Message.MessageModel.MESSAGE_TYPE.MAN
 
 public class ManagerSessionActivity extends AppCompatActivity implements
         ManagerSessionOrderFragment.ManagerOrdersInteraction {
-    private static final String TAG = ManagerSessionActivity.class.getSimpleName();
-
     public static final String KEY_SESSION_PK = "manager.session.session_pk";
     public static final String KEY_SHOP_PK = "manager.session.shop_pk";
     public static final String KEY_OPEN_ORDERS = "manager.session.open_orders";
-
+    private static final String TAG = ManagerSessionActivity.class.getSimpleName();
     @BindView(R.id.tv_ms_order_new_count)
     TextView tvCountOrdersNew;
     @BindView(R.id.tv_ms_order_progress_count)
@@ -75,9 +71,6 @@ public class ManagerSessionActivity extends AppCompatActivity implements
     private ManagerSessionOrderFragment mOrderFragment;
     private ManagerSessionEventFragment mEventFragment;
     private ManagerSessionViewModel mViewModel;
-
-    private SessionBriefModel mSessionData;
-
     private final BroadcastReceiver mReceiver = new BroadcastReceiver() {
         @Override
         public void onReceive(Context context, Intent intent) {
@@ -121,6 +114,7 @@ public class ManagerSessionActivity extends AppCompatActivity implements
             }
         }
     };
+    private SessionBriefModel mSessionData;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

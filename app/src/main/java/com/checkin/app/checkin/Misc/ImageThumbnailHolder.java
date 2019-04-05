@@ -1,8 +1,6 @@
 package com.checkin.app.checkin.Misc;
 
 import android.graphics.drawable.Drawable;
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.FrameLayout;
@@ -14,6 +12,8 @@ import com.bumptech.glide.request.transition.Transition;
 import com.checkin.app.checkin.R;
 import com.checkin.app.checkin.Utility.GlideApp;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 

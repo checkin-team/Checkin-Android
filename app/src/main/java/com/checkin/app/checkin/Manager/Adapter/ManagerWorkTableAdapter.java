@@ -52,12 +52,18 @@ public class ManagerWorkTableAdapter extends RecyclerView.Adapter<ManagerWorkTab
 
     @Override
     public int getItemCount() {
-        return mList !=null ? mList.size() : 0;
+        return mList != null ? mList.size() : 0;
     }
 
     public void setRestaurantTableList(List<RestaurantTableModel> mList) {
         this.mList = mList;
         notifyDataSetChanged();
+    }
+
+    public interface ManagerTableInteraction {
+        void onClickTable(RestaurantTableModel tableModel);
+
+        void onMarkSessionDone(RestaurantTableModel tableModel);
     }
 
     class ShopManagerTableHolder extends RecyclerView.ViewHolder {
@@ -85,7 +91,7 @@ public class ManagerWorkTableAdapter extends RecyclerView.Adapter<ManagerWorkTab
 
         ShopManagerTableHolder(View itemView) {
             super(itemView);
-            ButterKnife.bind(this,itemView);
+            ButterKnife.bind(this, itemView);
 
             itemView.setOnClickListener(v -> mListener.onClickTable(mTableModel));
         }
@@ -95,7 +101,7 @@ public class ManagerWorkTableAdapter extends RecyclerView.Adapter<ManagerWorkTab
 
             BriefModel host = data.getHost();
 
-            if (host != null){
+            if (host != null) {
                 tvShopManagerTableName.setText(host.getDisplayName());
                 Utils.loadImageOrDefault(ivShopManagerTableImage, host.getDisplayPic(), R.drawable.ic_waiter);
             } else {
@@ -113,10 +119,10 @@ public class ManagerWorkTableAdapter extends RecyclerView.Adapter<ManagerWorkTab
             tvShopManagerTableNumber.setText(data.getTable());
             tvShopManagerTableDetail.setText(data.getEvent().getMessage());
 
-            if (data.isRequestedCheckout()){
+            if (data.isRequestedCheckout()) {
                 containerSessionEnd.setVisibility(View.VISIBLE);
                 containerSessionActive.setVisibility(View.GONE);
-            }else {
+            } else {
                 containerSessionActive.setVisibility(View.VISIBLE);
                 containerSessionEnd.setVisibility(View.GONE);
             }
@@ -127,10 +133,5 @@ public class ManagerWorkTableAdapter extends RecyclerView.Adapter<ManagerWorkTab
         public void onClickSessionEnd(View v) {
             mListener.onMarkSessionDone(mTableModel);
         }
-    }
-
-    public interface ManagerTableInteraction {
-        void onClickTable(RestaurantTableModel tableModel);
-        void onMarkSessionDone(RestaurantTableModel tableModel);
     }
 }

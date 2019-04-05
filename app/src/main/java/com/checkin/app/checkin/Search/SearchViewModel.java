@@ -1,12 +1,7 @@
 package com.checkin.app.checkin.Search;
 
 import android.app.Application;
-import androidx.lifecycle.LiveData;
-import androidx.lifecycle.MediatorLiveData;
-import androidx.lifecycle.Transformations;
 import android.os.Handler;
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 
 import com.checkin.app.checkin.Data.BaseViewModel;
 import com.checkin.app.checkin.Data.Resource;
@@ -16,21 +11,30 @@ import com.checkin.app.checkin.Data.SingleSourceMediatorLiveData;
 import java.util.ArrayList;
 import java.util.List;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.lifecycle.LiveData;
+import androidx.lifecycle.MediatorLiveData;
+import androidx.lifecycle.Transformations;
+
 /**
  * Created by Jogi Miglani on 29-10-2018.
  */
 
 public class SearchViewModel extends BaseViewModel {
+    private final Handler mHandler = new Handler();
     private SearchRepository mRepository;
-
     @Nullable
     private SingleSourceMediatorLiveData<Resource<List<SearchResultPeopleModel>>> mPeopleResults;
     @Nullable
     private SingleSourceMediatorLiveData<Resource<List<SearchResultShopModel>>> mShopResults;
     private MediatorLiveData<Resource<List<SearchResultModel>>> mResults = new MediatorLiveData<>();
-
-    private final Handler mHandler = new Handler();
     private Runnable mRunnable;
+
+    public SearchViewModel(@NonNull Application application) {
+        super(application);
+        mRepository = new SearchRepository(application.getApplicationContext());
+    }
 
     private void combineResults() {
         Resource<List<SearchResultPeopleModel>> resourcePeople = null;
@@ -57,11 +61,6 @@ public class SearchViewModel extends BaseViewModel {
             result = Resource.success(data);
         }
         mResults.setValue(result);
-    }
-
-    public SearchViewModel(@NonNull Application application) {
-        super(application);
-        mRepository = new SearchRepository(application.getApplicationContext());
     }
 
     @Override

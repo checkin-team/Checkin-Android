@@ -8,7 +8,7 @@ import java.util.List;
 import java.util.Locale;
 
 @JsonIgnoreProperties(ignoreUnknown = true)
-public class SearchResultShopModel extends SearchResultModel{
+public class SearchResultShopModel extends SearchResultModel {
     @JsonProperty("rating")
     private float rating;
 

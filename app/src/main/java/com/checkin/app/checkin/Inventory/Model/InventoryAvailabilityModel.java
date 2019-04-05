@@ -41,11 +41,11 @@ public class InventoryAvailabilityModel {
         isAvailable = available;
     }
 
-    public void setDetail(String detail) {
-        this.detail = detail;
-    }
-
     public String getDetail() {
         return detail;
+    }
+
+    public void setDetail(String detail) {
+        this.detail = detail;
     }
 }

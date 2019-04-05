@@ -29,14 +29,17 @@ import butterknife.Unbinder;
 public class AuthOptionsFragment extends Fragment {
     private static final String TAG = AuthOptionsFragment.class.getSimpleName();
 
-    @BindView(R.id.ed_phone) EditText edPhone;
-    @BindView(R.id.btn_login_fb) LoginButton btnLoginFb;
+    @BindView(R.id.ed_phone)
+    EditText edPhone;
+    @BindView(R.id.btn_login_fb)
+    LoginButton btnLoginFb;
 
     private Unbinder unbinder;
     private AuthFragmentInteraction mInteractionListener;
     private CallbackManager mFacebookCallbackManager;
 
-    public AuthOptionsFragment() {}
+    public AuthOptionsFragment() {
+    }
 
     public static AuthOptionsFragment newInstance(AuthFragmentInteraction fragmentInteraction, CallbackManager callbackManager) {
         AuthOptionsFragment instance = new AuthOptionsFragment();

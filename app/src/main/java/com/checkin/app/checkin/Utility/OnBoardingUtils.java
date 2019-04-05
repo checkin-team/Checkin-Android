@@ -5,8 +5,6 @@ import android.content.Context;
 import android.content.SharedPreferences;
 import android.os.Handler;
 import android.os.Looper;
-import android.preference.PreferenceManager;
-import android.util.Log;
 import android.view.View;
 
 import com.checkin.app.checkin.R;
@@ -27,7 +25,7 @@ public final class OnBoardingUtils {
     }
 
     public static void setOnBoardingIsShown(Context context, String spKey, boolean isShown) {
-        getPreferences(context).edit().putBoolean(spKey,isShown).apply();
+        getPreferences(context).edit().putBoolean(spKey, isShown).apply();
     }
 
     public static void conditionalOnBoarding(Activity activity, String spKey, boolean isShown, OnBoardingModel... models) {
@@ -36,7 +34,7 @@ public final class OnBoardingUtils {
 
             @Override
             public void onSequenceFinish() {
-                setOnBoardingIsShown(activity,spKey,isShown);
+                setOnBoardingIsShown(activity, spKey, isShown);
             }
 
             @Override

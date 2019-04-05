@@ -1,16 +1,17 @@
 package com.checkin.app.checkin.Misc;
 
 import android.annotation.SuppressLint;
-import androidx.annotation.IdRes;
-import androidx.annotation.Nullable;
-import androidx.fragment.app.FragmentTransaction;
-import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
-import androidx.appcompat.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
 import android.widget.ProgressBar;
 
 import com.checkin.app.checkin.Data.Resource.Status;
+
+import androidx.annotation.IdRes;
+import androidx.annotation.Nullable;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.FragmentTransaction;
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 @SuppressLint("Registered")
 public class BaseActivity extends AppCompatActivity {
@@ -83,16 +84,16 @@ public class BaseActivity extends AppCompatActivity {
             swipeRefreshLayout.setRefreshing(false);
     }
 
-    protected void initProgressBar(@IdRes int viewId){
+    protected void initProgressBar(@IdRes int viewId) {
         progressBar = findViewById(viewId);
         progressBar.setVisibility(View.GONE);
     }
 
-    protected void visibleProgressBar(){
+    protected void visibleProgressBar() {
         progressBar.setVisibility(View.VISIBLE);
     }
 
-    protected void hideProgressBar(){
+    protected void hideProgressBar() {
         progressBar.setVisibility(View.GONE);
     }
 }

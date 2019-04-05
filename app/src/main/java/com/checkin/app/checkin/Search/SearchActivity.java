@@ -1,55 +1,52 @@
 package com.checkin.app.checkin.Search;
 
-import androidx.lifecycle.ViewModelProviders;
 import android.content.Intent;
-import android.os.Build;
 import android.os.Bundle;
-import androidx.annotation.Nullable;
-import com.google.android.material.tabs.TabLayout;
-import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentManager;
-import androidx.fragment.app.FragmentPagerAdapter;
-import androidx.viewpager.widget.ViewPager;
-import androidx.appcompat.app.AppCompatActivity;
 import android.view.View;
 
 import com.checkin.app.checkin.R;
 import com.checkin.app.checkin.Utility.Utils;
+import com.google.android.material.tabs.TabLayout;
 import com.miguelcatalan.materialsearchview.MaterialSearchView;
 
 import java.util.ArrayList;
 import java.util.List;
 
+import androidx.annotation.Nullable;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentPagerAdapter;
+import androidx.lifecycle.ViewModelProviders;
+import androidx.viewpager.widget.ViewPager;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 
 public class SearchActivity extends AppCompatActivity implements SearchResultInteraction {
-    private static final String TAG = SearchActivity.class.getSimpleName();
-
     public static final String KEY_RESULT_PK = "result.pk";
     public static final String KEY_RESULT_NAME = "result.name";
     public static final String KEY_RESULT_IMAGE = "result.image";
     public static final String KEY_RESULT_TYPE = "result.type";
-
     public static final String KEY_SEARCH_MODE = "search.mode";
     public static final int MODE_SELECT = 1;
     public static final int MODE_SEARCH = 2;
-
     public static final String KEY_SEARCH_TYPE = "search.type";
     public static final int TYPE_ALL = 0;
     public static final int TYPE_PEOPLE = 1;
     public static final int TYPE_RESTAURANT = 2;
-
     // TODO: Apply search filters!
     public static final String KEY_SEARCH_FILTER = "search.filter";
     public static final int FILTER_ALL = 0;
     public static final int FILTER_CONNECTED = 1;
     public static final int FILTER_NOT_CONNECTED = 2;
-
-    @BindView(R.id.pager_search_type) ViewPager vPagerSearchType;
-    @BindView(R.id.search_view) MaterialSearchView vSearch;
-    @BindView(R.id.tabs_search) TabLayout vTabs;
+    private static final String TAG = SearchActivity.class.getSimpleName();
+    @BindView(R.id.pager_search_type)
+    ViewPager vPagerSearchType;
+    @BindView(R.id.search_view)
+    MaterialSearchView vSearch;
+    @BindView(R.id.tabs_search)
+    TabLayout vTabs;
 
     private ResultTypePagerAdapter mResultTypeAdapter;
     private SearchViewModel mViewModel;

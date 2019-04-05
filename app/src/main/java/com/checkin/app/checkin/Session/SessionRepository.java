@@ -23,11 +23,22 @@ import androidx.annotation.NonNull;
 import androidx.lifecycle.LiveData;
 
 public class SessionRepository extends BaseRepository {
-    private final WebApiService mWebService;
     private static SessionRepository INSTANCE;
+    private final WebApiService mWebService;
 
     private SessionRepository(Context context) {
         mWebService = ApiClient.getApiService(context);
+    }
+
+    public static SessionRepository getInstance(Application application) {
+        if (INSTANCE == null) {
+            synchronized (SessionRepository.class) {
+                if (INSTANCE == null) {
+                    INSTANCE = new SessionRepository(application.getApplicationContext());
+                }
+            }
+        }
+        return INSTANCE;
     }
 
     public LiveData<Resource<SessionBasicModel>> getActiveSessionCheck() {
@@ -49,7 +60,6 @@ public class SessionRepository extends BaseRepository {
             }
         }.getAsLiveData();
     }
-
 
     public LiveData<Resource<QRResultModel>> newCustomerSession(final ObjectNode data) {
         return new NetworkBoundResource<QRResultModel, QRResultModel>() {
@@ -110,6 +120,7 @@ public class SessionRepository extends BaseRepository {
             }
         }.getAsLiveData();
     }
+
     public LiveData<Resource<List<ManagerSessionEventModel>>> getSessionEvents(long sessionId) {
         return new NetworkBoundResource<List<ManagerSessionEventModel>, List<ManagerSessionEventModel>>() {
 
@@ -128,16 +139,5 @@ public class SessionRepository extends BaseRepository {
             protected void saveCallResult(List<ManagerSessionEventModel> data) {
             }
         }.getAsLiveData();
-    }
-
-    public static SessionRepository getInstance(Application application) {
-        if (INSTANCE == null) {
-            synchronized (SessionRepository.class) {
-                if (INSTANCE == null) {
-                    INSTANCE = new SessionRepository(application.getApplicationContext());
-                }
-            }
-        }
-        return INSTANCE;
     }
 }

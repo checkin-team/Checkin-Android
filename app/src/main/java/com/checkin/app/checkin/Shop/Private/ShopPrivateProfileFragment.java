@@ -33,10 +33,7 @@ import butterknife.OnClick;
 import butterknife.Unbinder;
 
 public class ShopPrivateProfileFragment extends Fragment {
-    private Unbinder unbinder;
-
     public static final String KEY_SHOP_PK = "shop_private.pk";
-
     @BindView(R.id.indicator_shop_private_top_cover)
     PageIndicatorView indicatorTopCover;
     @BindView(R.id.btn_shop_private_add_logo)
@@ -53,7 +50,7 @@ public class ShopPrivateProfileFragment extends Fragment {
     TextView tvShopName;
     @BindView(R.id.rv_shop_private_extra_data)
     RecyclerView rvAdditionalData;
-
+    private Unbinder unbinder;
     private ShopProfileViewModel mViewModel;
     private CoverPagerAdapter mCoverPagerAdapter;
     private StatusTextAdapter mExtraDataAdapter;

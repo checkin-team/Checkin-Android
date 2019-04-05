@@ -1,7 +1,5 @@
 package com.checkin.app.checkin.Menu.Adapter;
 
-import androidx.annotation.NonNull;
-import androidx.recyclerview.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -11,10 +9,12 @@ import com.checkin.app.checkin.R;
 
 import java.util.List;
 
+import androidx.annotation.NonNull;
+import androidx.recyclerview.widget.RecyclerView;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
-public class FilterCategoryAdapter extends RecyclerView.Adapter<FilterCategoryAdapter.ViewHolder>{
+public class FilterCategoryAdapter extends RecyclerView.Adapter<FilterCategoryAdapter.ViewHolder> {
     private List<String> mCategories;
     private CategoryInteraction mListener;
 
@@ -45,7 +45,7 @@ public class FilterCategoryAdapter extends RecyclerView.Adapter<FilterCategoryAd
         return R.layout.item_menu_filter_category;
     }
 
-    public void setCategories(List<String> categories){
+    public void setCategories(List<String> categories) {
         this.mCategories = categories;
         notifyDataSetChanged();
     }
@@ -54,8 +54,13 @@ public class FilterCategoryAdapter extends RecyclerView.Adapter<FilterCategoryAd
         return mCategories.get(position);
     }
 
-    public class ViewHolder extends RecyclerView.ViewHolder{
-        @BindView(R.id.btn_filter_category) Button btnFilterCategory;
+    public interface CategoryInteraction {
+        void onClick(String category);
+    }
+
+    public class ViewHolder extends RecyclerView.ViewHolder {
+        @BindView(R.id.btn_filter_category)
+        Button btnFilterCategory;
 
         public ViewHolder(View itemView) {
             super(itemView);
@@ -66,9 +71,5 @@ public class FilterCategoryAdapter extends RecyclerView.Adapter<FilterCategoryAd
             btnFilterCategory.setText(title);
             btnFilterCategory.setOnClickListener(view -> mListener.onClick(title));
         }
-    }
-
-    public interface CategoryInteraction {
-        void onClick(String category);
     }
 }

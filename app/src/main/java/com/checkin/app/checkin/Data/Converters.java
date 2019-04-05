@@ -1,7 +1,5 @@
 package com.checkin.app.checkin.Data;
 
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 import android.util.Log;
 
 import com.checkin.app.checkin.User.UserModel.GENDER;
@@ -14,16 +12,41 @@ import java.io.IOException;
 import java.util.List;
 import java.util.Map;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import io.objectbox.converter.PropertyConverter;
 
 public class Converters {
-    private static final String TAG = Converters.class.getSimpleName();
     public static final ObjectMapper objectMapper = new ObjectMapper();
+    private static final String TAG = Converters.class.getSimpleName();
+
+    public static JsonNode getJsonNode(@NonNull String json) {
+        try {
+            return objectMapper.readTree(json);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
+    @Nullable
+    public static <T> T getObjectFromJson(String json, TypeReference typeReference) {
+        T res;
+        try {
+            res = objectMapper.readValue(json, typeReference);
+        } catch (IOException exception) {
+            res = null;
+            Log.e(TAG, "JSON invalid! " + json);
+        }
+        return res;
+    }
+
     public static class MapConverter<X, Y> implements PropertyConverter<Map<X, Y>, String> {
 
         @Override
         public Map<X, Y> convertToEntityProperty(String databaseValue) {
-            TypeReference type = new TypeReference<Map<X, Y>>() {};
+            TypeReference type = new TypeReference<Map<X, Y>>() {
+            };
             return getObjectFromJson(databaseValue, type);
         }
 
@@ -42,7 +65,8 @@ public class Converters {
 
         @Override
         public List<T> convertToEntityProperty(String databaseValue) {
-            TypeReference type = new TypeReference<List<T>>() {};
+            TypeReference type = new TypeReference<List<T>>() {
+            };
             return getObjectFromJson(databaseValue, type);
         }
 
@@ -73,26 +97,5 @@ public class Converters {
             }
             return null;
         }
-    }
-
-    public static JsonNode getJsonNode(@NonNull String json) {
-        try {
-            return objectMapper.readTree(json);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        return null;
-    }
-
-    @Nullable
-    public static <T> T getObjectFromJson(String json, TypeReference typeReference) {
-        T res;
-        try {
-            res = objectMapper.readValue(json, typeReference);
-        } catch (IOException exception) {
-            res = null;
-            Log.e(TAG, "JSON invalid! " + json);
-        }
-        return res;
     }
 }

@@ -18,7 +18,8 @@ public class ShopCustomerModel {
     @JsonProperty("no_visits")
     private int countVisits;
 
-    public ShopCustomerModel() {}
+    public ShopCustomerModel() {
+    }
 
     public BriefModel getShop() {
         return shop;

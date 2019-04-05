@@ -1,10 +1,6 @@
 package com.checkin.app.checkin.Waiter.Fragment;
 
-import androidx.lifecycle.ViewModelProviders;
 import android.os.Bundle;
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.fragment.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -15,23 +11,25 @@ import com.checkin.app.checkin.R;
 import com.checkin.app.checkin.Utility.Utils;
 import com.checkin.app.checkin.Waiter.WaiterTableViewModel;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.fragment.app.Fragment;
+import androidx.lifecycle.ViewModelProviders;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.Unbinder;
 
 public class WaiterTableCollectCashFragment extends Fragment {
-    private Unbinder unbinder;
-
     @BindView(R.id.tv_waiter_table_bill)
     TextView tvWaiterTableBill;
-
+    private Unbinder unbinder;
     private WaiterTableViewModel mViewModel;
+
+    public WaiterTableCollectCashFragment() {
+    }
 
     public static WaiterTableCollectCashFragment newInstance() {
         return new WaiterTableCollectCashFragment();
-    }
-
-    public WaiterTableCollectCashFragment() {
     }
 
     @Nullable

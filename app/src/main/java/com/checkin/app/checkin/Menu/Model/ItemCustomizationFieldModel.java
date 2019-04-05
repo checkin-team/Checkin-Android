@@ -31,7 +31,8 @@ public class ItemCustomizationFieldModel {
 
     private ToOne<ItemCustomizationGroupModel> group;
 
-    public ItemCustomizationFieldModel() {}
+    public ItemCustomizationFieldModel() {
+    }
 
     public ItemCustomizationFieldModel(boolean isVegetarian, String name, double cost) {
         this.isVegetarian = isVegetarian;
@@ -41,6 +42,10 @@ public class ItemCustomizationFieldModel {
 
     public long getPk() {
         return pk;
+    }
+
+    public void setPk(long pk) {
+        this.pk = pk;
     }
 
     public String getName() {
@@ -62,10 +67,6 @@ public class ItemCustomizationFieldModel {
     @Override
     public String toString() {
         return getName();
-    }
-
-    public void setPk(long pk) {
-        this.pk = pk;
     }
 
     public ToOne<ItemCustomizationGroupModel> getGroup() {

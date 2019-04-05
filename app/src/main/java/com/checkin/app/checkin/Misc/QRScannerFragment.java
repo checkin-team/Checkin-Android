@@ -1,9 +1,6 @@
 package com.checkin.app.checkin.Misc;
 
 import android.os.Bundle;
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.fragment.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -13,6 +10,9 @@ import com.google.zxing.Result;
 
 import java.util.Collections;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.fragment.app.Fragment;
 import me.dm7.barcodescanner.zxing.ZXingScannerView;
 
 public class QRScannerFragment extends Fragment implements ZXingScannerView.ResultHandler {
@@ -98,6 +98,7 @@ public class QRScannerFragment extends Fragment implements ZXingScannerView.Resu
 
     public interface QRScannerInteraction {
         void onScannedResult(Result result);
+
         void updateFlashState(boolean isActivated);
     }
 }

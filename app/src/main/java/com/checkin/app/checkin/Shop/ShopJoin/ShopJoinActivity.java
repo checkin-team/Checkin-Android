@@ -1,37 +1,36 @@
 package com.checkin.app.checkin.Shop.ShopJoin;
 
-import androidx.appcompat.app.ActionBar;
-import androidx.lifecycle.ViewModelProviders;
 import android.content.ComponentName;
 import android.content.Intent;
 import android.os.Bundle;
-import androidx.appcompat.app.AppCompatActivity;
 import android.view.View;
 import android.widget.Button;
-import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.checkin.app.checkin.Data.Resource;
 import com.checkin.app.checkin.Misc.BaseActivity;
 import com.checkin.app.checkin.Misc.GenericDetailModel;
 import com.checkin.app.checkin.R;
-import com.checkin.app.checkin.Shop.RestaurantModel;
 import com.checkin.app.checkin.Shop.Private.Edit.EditAspectFragment;
 import com.checkin.app.checkin.Shop.Private.ShopPrivateActivity;
 import com.checkin.app.checkin.Shop.Private.ShopProfileViewModel;
+import com.checkin.app.checkin.Shop.RestaurantModel;
 
+import androidx.appcompat.app.ActionBar;
+import androidx.lifecycle.ViewModelProviders;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 
 public class ShopJoinActivity extends BaseActivity implements
         BasicInfoFragment.BasicInfoFragmentInteraction, EditAspectFragment.AspectFragmentInteraction {
-    private static final String TAG = ShopJoinActivity.class.getSimpleName();
     public static final String KEY_SHOP_EMAIL = "shop_email";
     public static final String KEY_SHOP_PHONE_TOKEN = "shop_phone";
-
-    @BindView(R.id.btn_next) Button btnNext;
-    @BindView(R.id.tv_title) TextView tvTitle;
+    private static final String TAG = ShopJoinActivity.class.getSimpleName();
+    @BindView(R.id.btn_next)
+    Button btnNext;
+    @BindView(R.id.tv_title)
+    TextView tvTitle;
 
     private JoinViewModel mJoinViewModel;
     private ShopProfileViewModel mShopViewModel;
@@ -74,9 +73,9 @@ public class ShopJoinActivity extends BaseActivity implements
             if (genericDetailModelResource.status == Resource.Status.SUCCESS && genericDetailModelResource.data != null) {
                 hideProgressBar();
                 btnNext.setActivated(true);
-            } else if (genericDetailModelResource.status == Resource.Status.LOADING)  {
+            } else if (genericDetailModelResource.status == Resource.Status.LOADING) {
                 visibleProgressBar();
-            }  else {
+            } else {
                 hideProgressBar();
                 btnNext.setActivated(true);
             }
@@ -113,8 +112,7 @@ public class ShopJoinActivity extends BaseActivity implements
             return;
         if (mJoinViewModel.isRegistered()) {
             mShopViewModel.collectData();
-        }
-        else{
+        } else {
             mJoinViewModel.registerNewBusiness();
             btnNext.setActivated(false);
         }

@@ -1,16 +1,16 @@
 package com.checkin.app.checkin.Misc;
 
 import android.os.Bundle;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
+
 import androidx.annotation.IdRes;
 import androidx.annotation.LayoutRes;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
-
 import butterknife.ButterKnife;
 import butterknife.Unbinder;
 
@@ -20,7 +20,8 @@ public abstract class BaseFragment extends Fragment {
     @Nullable
     private SwipeRefreshLayout swipeRefreshLayout;
 
-    public BaseFragment() {}
+    public BaseFragment() {
+    }
 
     @LayoutRes
     protected abstract int getRootLayout();
@@ -40,7 +41,8 @@ public abstract class BaseFragment extends Fragment {
         swipeRefreshLayout.setOnRefreshListener(this::updateScreen);
     }
 
-    protected void updateScreen() {}
+    protected void updateScreen() {
+    }
 
     protected void startRefreshing() {
         if (swipeRefreshLayout != null)

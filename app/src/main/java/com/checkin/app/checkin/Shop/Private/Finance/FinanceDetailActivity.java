@@ -1,10 +1,6 @@
 package com.checkin.app.checkin.Shop.Private.Finance;
 
-import androidx.lifecycle.ViewModelProviders;
 import android.os.Bundle;
-import androidx.annotation.Nullable;
-import androidx.appcompat.app.ActionBar;
-import androidx.appcompat.app.AppCompatActivity;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.Button;
@@ -16,6 +12,10 @@ import com.checkin.app.checkin.R;
 import com.checkin.app.checkin.Utility.Utils;
 import com.fasterxml.jackson.databind.JsonNode;
 
+import androidx.annotation.Nullable;
+import androidx.appcompat.app.ActionBar;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.lifecycle.ViewModelProviders;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;

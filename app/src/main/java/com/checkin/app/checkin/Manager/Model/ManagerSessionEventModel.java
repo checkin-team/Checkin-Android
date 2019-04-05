@@ -12,7 +12,8 @@ public class ManagerSessionEventModel extends WaiterEventModel implements Serial
     @JsonProperty("concern")
     private EVENT_CONCERN_TYPE concern;
 
-    public ManagerSessionEventModel() {}
+    public ManagerSessionEventModel() {
+    }
 
     public EVENT_CONCERN_TYPE getConcern() {
         return concern;

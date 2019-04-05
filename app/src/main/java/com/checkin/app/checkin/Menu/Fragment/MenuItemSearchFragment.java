@@ -26,23 +26,21 @@ import butterknife.Unbinder;
 
 public class MenuItemSearchFragment extends BaseSearchFragment implements MenuItemAdapter.OnItemInteractionListener {
     private static final String TAG = MenuItemSearchFragment.class.getSimpleName();
-    private Unbinder unbinder;
-
     @BindView(R.id.rv_menu_items)
     RecyclerView rvMenuItems;
-
+    private Unbinder unbinder;
     private MenuViewModel mViewModel;
     private MenuItemAdapter mAdapter;
     private MenuItemInteraction mListener;
+
+    public MenuItemSearchFragment() {
+    }
 
     public static MenuItemSearchFragment newInstance(MenuItemInteraction listener, boolean isSessionActive) {
         MenuItemSearchFragment fragment = new MenuItemSearchFragment();
         fragment.mListener = listener;
         fragment.mAdapter = new MenuItemAdapter(null, fragment, isSessionActive);
         return fragment;
-    }
-
-    public MenuItemSearchFragment() {
     }
 
     @Nullable

@@ -1,12 +1,12 @@
 package com.checkin.app.checkin.Session.Model;
 
-import androidx.annotation.Nullable;
-
 import com.checkin.app.checkin.Misc.BriefModel;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 import java.util.Date;
+
+import androidx.annotation.Nullable;
 
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class RestaurantTableModel {
@@ -31,7 +31,8 @@ public class RestaurantTableModel {
 
     private int eventCount;
 
-    public RestaurantTableModel() {}
+    public RestaurantTableModel() {
+    }
 
     public RestaurantTableModel(long pk, String table, @Nullable BriefModel host, EventBriefModel event) {
         this.pk = pk;
@@ -53,6 +54,10 @@ public class RestaurantTableModel {
         return host;
     }
 
+    public void setHost(@Nullable BriefModel host) {
+        this.host = host;
+    }
+
     public EventBriefModel getEvent() {
         return event;
     }
@@ -69,28 +74,24 @@ public class RestaurantTableModel {
         return isRequestedCheckout;
     }
 
-    public int getEventCount() {
-        return eventCount;
+    public void setRequestedCheckout(boolean requestedCheckout) {
+        isRequestedCheckout = requestedCheckout;
     }
 
-    public String formatEventCount() {
-        return String.valueOf(eventCount);
+    public int getEventCount() {
+        return eventCount;
     }
 
     public void setEventCount(int eventCount) {
         this.eventCount = eventCount;
     }
 
-    public void setHost(@Nullable BriefModel host) {
-        this.host = host;
+    public String formatEventCount() {
+        return String.valueOf(eventCount);
     }
 
     public void addEventCount() {
         this.eventCount++;
-    }
-
-    public void setRequestedCheckout(boolean requestedCheckout) {
-        isRequestedCheckout = requestedCheckout;
     }
 
     @Override

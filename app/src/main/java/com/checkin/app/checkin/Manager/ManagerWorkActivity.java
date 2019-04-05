@@ -6,7 +6,6 @@ import android.widget.TextView;
 
 import com.checkin.app.checkin.Account.AccountModel;
 import com.checkin.app.checkin.Account.BaseAccountActivity;
-import com.checkin.app.checkin.Data.Resource;
 import com.checkin.app.checkin.Manager.Fragment.ManagerStatsFragment;
 import com.checkin.app.checkin.Manager.Fragment.ManagerTablesActivateFragment;
 import com.checkin.app.checkin.Manager.Fragment.ManagerTablesFragment;
@@ -14,7 +13,6 @@ import com.checkin.app.checkin.Misc.BaseFragmentAdapterBottomNav;
 import com.checkin.app.checkin.R;
 import com.checkin.app.checkin.Shop.ShopPreferences;
 import com.checkin.app.checkin.Utility.DynamicSwipableViewPager;
-import com.checkin.app.checkin.Utility.Utils;
 import com.google.android.material.tabs.TabLayout;
 
 import androidx.annotation.NonNull;

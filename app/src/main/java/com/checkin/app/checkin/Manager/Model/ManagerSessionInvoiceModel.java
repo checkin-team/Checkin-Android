@@ -9,7 +9,8 @@ public class ManagerSessionInvoiceModel extends SessionInvoiceModel {
     @JsonProperty("discount_percent")
     private double discountPercentage;
 
-    public ManagerSessionInvoiceModel() {}
+    public ManagerSessionInvoiceModel() {
+    }
 
     public double getDiscountPercent() {
         return discountPercentage;

@@ -27,27 +27,16 @@ public class AccountModel {
 
     private ObjectNode detail;
 
-    public enum ACCOUNT_TYPE {
-        USER(201),
-        SHOP_OWNER(202), SHOP_ADMIN(203),
-        RESTAURANT_MANAGER(204), RESTAURANT_WAITER(205), RESTAURANT_COOK(206);
-
-        public final int id;
-
-        ACCOUNT_TYPE(int id) {
-            this.id = id;
-        }
-
-        public static ACCOUNT_TYPE getById(int id) {
-            for (ACCOUNT_TYPE type : ACCOUNT_TYPE.values()) {
-                if (type.id == id)
-                    return type;
-            }
-            return USER;
-        }
+    AccountModel() {
     }
 
-    AccountModel() {
+    @Nullable
+    public static AccountModel getByAccountType(@NonNull List<AccountModel> accounts, ACCOUNT_TYPE accountType) {
+        for (AccountModel item : accounts) {
+            if (item.getAccountType() == accountType)
+                return item;
+        }
+        return null;
     }
 
     public String getId() {
@@ -60,6 +49,11 @@ public class AccountModel {
 
     public ACCOUNT_TYPE getAccountType() {
         return accountType;
+    }
+
+    @JsonProperty("acc_type")
+    public void setAccountType(int accType) {
+        this.accountType = ACCOUNT_TYPE.getById(accType);
     }
 
     public String formatAccountType() {
@@ -88,22 +82,8 @@ public class AccountModel {
         return detail;
     }
 
-    @JsonProperty("acc_type")
-    public void setAccountType(int accType) {
-        this.accountType = ACCOUNT_TYPE.getById(accType);
-    }
-
     public String getTargetPk() {
         return targetPk;
-    }
-
-    @Nullable
-    public static AccountModel getByAccountType(@NonNull List<AccountModel> accounts, ACCOUNT_TYPE accountType) {
-        for (AccountModel item : accounts) {
-            if (item.getAccountType() == accountType)
-                return item;
-        }
-        return null;
     }
 
     @Override
@@ -120,6 +100,26 @@ public class AccountModel {
             return acc.accountType == this.accountType && acc.targetPk.equalsIgnoreCase(this.targetPk);
         } catch (ClassCastException ignored) {
             return false;
+        }
+    }
+
+    public enum ACCOUNT_TYPE {
+        USER(201),
+        SHOP_OWNER(202), SHOP_ADMIN(203),
+        RESTAURANT_MANAGER(204), RESTAURANT_WAITER(205), RESTAURANT_COOK(206);
+
+        public final int id;
+
+        ACCOUNT_TYPE(int id) {
+            this.id = id;
+        }
+
+        public static ACCOUNT_TYPE getById(int id) {
+            for (ACCOUNT_TYPE type : ACCOUNT_TYPE.values()) {
+                if (type.id == id)
+                    return type;
+            }
+            return USER;
         }
     }
 }

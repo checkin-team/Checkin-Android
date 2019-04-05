@@ -29,8 +29,8 @@ import androidx.lifecycle.LiveData;
 
 public class ActiveSessionRepository extends BaseRepository {
 
-    private final WebApiService mWebService;
     private static ActiveSessionRepository INSTANCE;
+    private final WebApiService mWebService;
 
     private ActiveSessionRepository(Context context) {
         mWebService = ApiClient.getApiService(context);
@@ -51,10 +51,13 @@ public class ActiveSessionRepository extends BaseRepository {
         return new NetworkBoundResource<ActiveSessionModel, ActiveSessionModel>() {
 
             @Override
-            protected void saveCallResult(ActiveSessionModel data) {}
+            protected void saveCallResult(ActiveSessionModel data) {
+            }
 
             @Override
-            protected boolean shouldUseLocalDb() {return false;}
+            protected boolean shouldUseLocalDb() {
+                return false;
+            }
 
             @NonNull
             @Override
@@ -108,7 +111,9 @@ public class ActiveSessionRepository extends BaseRepository {
         return new NetworkBoundResource<List<SessionOrderedItemModel>, List<SessionOrderedItemModel>>() {
 
             @Override
-            protected boolean shouldUseLocalDb() {return false;}
+            protected boolean shouldUseLocalDb() {
+                return false;
+            }
 
             @NonNull
             @Override
@@ -117,7 +122,8 @@ public class ActiveSessionRepository extends BaseRepository {
             }
 
             @Override
-            protected void saveCallResult(List<SessionOrderedItemModel> data) {}
+            protected void saveCallResult(List<SessionOrderedItemModel> data) {
+            }
         }.getAsLiveData();
     }
 
@@ -154,7 +160,8 @@ public class ActiveSessionRepository extends BaseRepository {
             }
 
             @Override
-            protected void saveCallResult(ObjectNode data) { }
+            protected void saveCallResult(ObjectNode data) {
+            }
         }.getAsLiveData();
     }
 
@@ -162,7 +169,9 @@ public class ActiveSessionRepository extends BaseRepository {
         return new NetworkBoundResource<List<SessionChatModel>, List<SessionChatModel>>() {
 
             @Override
-            protected boolean shouldUseLocalDb() {return false;}
+            protected boolean shouldUseLocalDb() {
+                return false;
+            }
 
             @NonNull
             @Override
@@ -171,7 +180,8 @@ public class ActiveSessionRepository extends BaseRepository {
             }
 
             @Override
-            protected void saveCallResult(List<SessionChatModel> data) {}
+            protected void saveCallResult(List<SessionChatModel> data) {
+            }
         }.getAsLiveData();
     }
 

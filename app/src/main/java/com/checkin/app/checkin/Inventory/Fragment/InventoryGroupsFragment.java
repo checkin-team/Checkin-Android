@@ -34,9 +34,7 @@ public class InventoryGroupsFragment extends BaseFragment implements InventoryGr
     @Nullable
     private InventoryItemAdapter.OnItemInteractionListener mListener;
 
-    @Override
-    protected int getRootLayout() {
-        return R.layout.fragment_menu_groups;
+    public InventoryGroupsFragment() {
     }
 
     public static InventoryGroupsFragment newInstance(InventoryItemAdapter.OnItemInteractionListener listener) {
@@ -45,7 +43,9 @@ public class InventoryGroupsFragment extends BaseFragment implements InventoryGr
         return fragment;
     }
 
-    public InventoryGroupsFragment() {
+    @Override
+    protected int getRootLayout() {
+        return R.layout.fragment_menu_groups;
     }
 
     @Override

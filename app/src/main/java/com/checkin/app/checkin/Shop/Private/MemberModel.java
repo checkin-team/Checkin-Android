@@ -30,7 +30,8 @@ public class MemberModel {
     @JsonProperty("is_waiter")
     private boolean isWaiter;
 
-    public MemberModel() {}
+    public MemberModel() {
+    }
 
     public MemberModel(long userPk, String userName, String userPic) {
         user = new BriefModel(userPk, userName, userPic);
@@ -40,20 +41,41 @@ public class MemberModel {
         return user;
     }
 
+    @JsonProperty("user")
+    public void setUser(BriefModel user) {
+        this.user = user;
+    }
+
     public boolean isOwner() {
         return isOwner;
+    }
+
+    public void setOwner(boolean owner) {
+        isOwner = owner;
     }
 
     public boolean isAdmin() {
         return isAdmin;
     }
 
+    public void setAdmin(boolean admin) {
+        isAdmin = admin;
+    }
+
     public boolean isManager() {
         return isManager;
     }
 
+    public void setManager(boolean manager) {
+        isManager = manager;
+    }
+
     public boolean isCook() {
         return isCook;
+    }
+
+    public void setCook(boolean cook) {
+        isCook = cook;
     }
 
     public boolean isWaiter() {
@@ -64,27 +86,6 @@ public class MemberModel {
         isWaiter = waiter;
     }
 
-    public void setCook(boolean cook) {
-        isCook = cook;
-    }
-
-    public void setManager(boolean manager) {
-        isManager = manager;
-    }
-
-    public void setAdmin(boolean admin) {
-        isAdmin = admin;
-    }
-
-    public void setOwner(boolean owner) {
-        isOwner = owner;
-    }
-
-    @JsonProperty("user")
-    public void setUser(BriefModel user) {
-        this.user = user;
-    }
-
     @JsonProperty("user")
     public long getUserId() {
         return Long.valueOf(user.getPk());
@@ -92,7 +93,7 @@ public class MemberModel {
 
     public void assignRoles(CharSequence[] roles) {
         resetRoles();
-        for (CharSequence charSequence: roles) {
+        for (CharSequence charSequence : roles) {
             char role = charSequence.charAt(0);
             switch (role) {
                 case ROLE_OWNER:

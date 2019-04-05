@@ -3,9 +3,6 @@ package com.checkin.app.checkin.Utility;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.res.TypedArray;
-import androidx.annotation.Nullable;
-import androidx.appcompat.app.AlertDialog;
-import androidx.appcompat.widget.AppCompatSpinner;
 import android.util.AttributeSet;
 import android.widget.ArrayAdapter;
 
@@ -13,6 +10,10 @@ import com.checkin.app.checkin.R;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import androidx.annotation.Nullable;
+import androidx.appcompat.app.AlertDialog;
+import androidx.appcompat.widget.AppCompatSpinner;
 
 public class MultiSpinner extends AppCompatSpinner implements
         DialogInterface.OnMultiChoiceClickListener, DialogInterface.OnCancelListener {
@@ -62,7 +63,7 @@ public class MultiSpinner extends AppCompatSpinner implements
     }
 
     public CharSequence[] getSelectedValues() {
-        return getSelectedValuesInternal().toArray(new CharSequence[] {});
+        return getSelectedValuesInternal().toArray(new CharSequence[]{});
     }
 
     public void selectValues(Object[] selectedValues) {

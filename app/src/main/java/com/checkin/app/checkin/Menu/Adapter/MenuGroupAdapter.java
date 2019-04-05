@@ -170,21 +170,18 @@ public class MenuGroupAdapter extends RecyclerView.Adapter<MenuGroupAdapter.Grou
     }
 
     public class GroupViewHolder extends RecyclerView.ViewHolder {
+        protected boolean isExpanded = false;
         @BindView(R.id.tv_menu_group_name)
         TextView tvGroupName;
         @BindView(R.id.im_menu_group_icon)
         ImageView imGroupIcon;
-
         @BindView(R.id.tabs_menu_sub_groups)
         TabLayout vTabs;
         @BindView(R.id.pager_menu_items)
         DynamicSwipableViewPager vPager;
         @BindView(R.id.container_menu_sub_groups)
         ViewGroup vSubGroupWrapper;
-
         private MenuGroupModel mMenuGroup;
-
-        protected boolean isExpanded = false;
 
         GroupViewHolder(View itemView) {
             super(itemView);

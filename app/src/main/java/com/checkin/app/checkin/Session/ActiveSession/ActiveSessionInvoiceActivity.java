@@ -115,9 +115,9 @@ public class ActiveSessionInvoiceActivity extends AppCompatActivity {
         Log.e("value=====", !isRequestedCheckout + "");
         edInvoiceTip.setEnabled(!isRequestedCheckout);
         btnRequestCheckout.setEnabled(!isRequestedCheckout);
-        if(isRequestedCheckout){
+        if (isRequestedCheckout) {
             edInvoiceTip.setBackground(getResources().getDrawable(R.drawable.bordered_text_light_grey));
-            edInvoiceTip.setPadding(15,0,0,0);
+            edInvoiceTip.setPadding(15, 0, 0, 0);
             btnRequestCheckout.setText("Requested Checkout");
         }
     }

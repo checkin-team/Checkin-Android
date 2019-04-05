@@ -19,22 +19,20 @@ import butterknife.ButterKnife;
 import butterknife.Unbinder;
 
 public class ShopMembersListFragment extends Fragment implements MemberAdapter.OnMemberInteractionListener {
-    private Unbinder unbinder;
-
     @BindView(R.id.rv_shop_members)
     RecyclerView rvShopMembers;
-
+    private Unbinder unbinder;
     private MemberAdapter mAdapter;
     private MemberViewModel mViewModel;
     private MemberListInteraction mListener;
+
+    public ShopMembersListFragment() {
+    }
 
     public static ShopMembersListFragment newInstance(MemberListInteraction listener) {
         ShopMembersListFragment fragment = new ShopMembersListFragment();
         fragment.mListener = listener;
         return fragment;
-    }
-
-    public ShopMembersListFragment() {
     }
 
     @Override

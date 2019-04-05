@@ -24,7 +24,8 @@ public class SessionCustomerModel {
     @JsonProperty("is_accepted")
     private boolean isAccepted;
 
-    public SessionCustomerModel() {}
+    public SessionCustomerModel() {
+    }
 
     public SessionCustomerModel(long pk, BriefModel user, boolean isOwner, boolean isAccepted) {
         this.pk = pk;

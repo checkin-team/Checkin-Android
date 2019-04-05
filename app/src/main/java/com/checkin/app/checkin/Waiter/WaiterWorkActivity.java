@@ -55,10 +55,9 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 
 public class WaiterWorkActivity extends BaseAccountActivity implements WaiterTableFragment.WaiterTableInteraction {
-    private static final String TAG = WaiterWorkActivity.class.getSimpleName();
-
     public static final String KEY_SHOP_PK = "waiter.shop_pk";
     public static final String KEY_SESSION_PK = "waiter.session_pk";
+    private static final String TAG = WaiterWorkActivity.class.getSimpleName();
     private static final int REQUEST_QR_SCANNER = 121;
 
     @BindView(R.id.toolbar_waiter)
@@ -76,8 +75,6 @@ public class WaiterWorkActivity extends BaseAccountActivity implements WaiterTab
 
     private WaiterWorkViewModel mViewModel;
     private WaiterTablePagerAdapter mFragmentAdapter;
-    private long sessionPk;
-
     private final BroadcastReceiver mReceiver = new BroadcastReceiver() {
         @Override
         public void onReceive(Context context, Intent intent) {
@@ -147,6 +144,7 @@ public class WaiterWorkActivity extends BaseAccountActivity implements WaiterTab
             }
         }
     };
+    private long sessionPk;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

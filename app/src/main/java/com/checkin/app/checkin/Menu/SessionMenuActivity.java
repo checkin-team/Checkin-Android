@@ -1,15 +1,12 @@
 package com.checkin.app.checkin.Menu;
 
 import android.annotation.SuppressLint;
-import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
-import android.content.IntentFilter;
 import android.os.Bundle;
 import android.speech.RecognizerIntent;
 import android.text.InputType;
 import android.text.TextUtils;
-import android.util.Log;
 import android.view.Menu;
 import android.view.View;
 import android.widget.Button;
@@ -17,7 +14,6 @@ import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.TextView;
 
-import com.checkin.app.checkin.Data.Message.Constants;
 import com.checkin.app.checkin.Data.Resource.Status;
 import com.checkin.app.checkin.Menu.Adapter.MenuCartAdapter;
 import com.checkin.app.checkin.Menu.Fragment.ItemCustomizationFragment;
@@ -30,7 +26,6 @@ import com.checkin.app.checkin.Menu.Model.MenuItemModel;
 import com.checkin.app.checkin.Menu.Model.OrderedItemModel;
 import com.checkin.app.checkin.Misc.BaseActivity;
 import com.checkin.app.checkin.R;
-import com.checkin.app.checkin.Session.ActiveSession.ActiveSessionActivity;
 import com.checkin.app.checkin.Utility.EndDrawerToggle;
 import com.checkin.app.checkin.Utility.OnBoardingUtils;
 import com.checkin.app.checkin.Utility.OnBoardingUtils.OnBoardingModel;
@@ -47,7 +42,6 @@ import androidx.appcompat.widget.Toolbar;
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProviders;
-import androidx.localbroadcastmanager.content.LocalBroadcastManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import butterknife.BindView;
@@ -117,7 +111,7 @@ public class SessionMenuActivity extends BaseActivity implements
         setContentView(R.layout.activity_session_menu);
         ButterKnife.bind(this);
 
-        OnBoardingUtils.setOnBoardingIsShown(this,KEY_INTERACT_WITH_US,true);
+        OnBoardingUtils.setOnBoardingIsShown(this, KEY_INTERACT_WITH_US, true);
 
         Bundle args = getIntent().getBundleExtra(SESSION_ARG);
         mSessionStatus = (SESSION_STATUS) args.getSerializable(KEY_SESSION_STATUS);

@@ -24,20 +24,20 @@ public class SearchResultModel {
         return imageUrl;
     }
 
-    public String getName() {
-        return name;
-    }
-
-    public Long getPk() {
-        return pk;
-    }
-
     public void setImageUrl(String imageUrl) {
         this.imageUrl = imageUrl;
     }
 
+    public String getName() {
+        return name;
+    }
+
     public void setName(String name) {
         this.name = name;
+    }
+
+    public Long getPk() {
+        return pk;
     }
 
     public int getType() {

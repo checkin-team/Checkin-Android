@@ -21,27 +21,18 @@ import androidx.recyclerview.widget.RecyclerView;
 import butterknife.BindView;
 
 public class MenuGroupsFragment extends BaseFragment {
+    public static final String KEY_SESSION_STATUS = "menu.status";
     @BindView(R.id.rv_menu_groups)
     RecyclerView rvGroupsList;
     @BindView(R.id.tv_menu_current_category)
     TextView tvCurrentCategory;
-
     private MenuViewModel mViewModel;
     private MenuGroupAdapter mAdapter;
-
     @Nullable
     private MenuItemInteraction mListener;
     private boolean mIsSessionActive = true;
 
-    public static final String KEY_SESSION_STATUS = "menu.status";
-
-    public enum SESSION_STATUS {
-        ACTIVE, INACTIVE
-    }
-
-    @Override
-    protected int getRootLayout() {
-        return R.layout.fragment_menu_groups;
+    public MenuGroupsFragment() {
     }
 
     public static MenuGroupsFragment newInstance(SESSION_STATUS sessionStatus, MenuItemInteraction listener) {
@@ -51,7 +42,9 @@ public class MenuGroupsFragment extends BaseFragment {
         return fragment;
     }
 
-    public MenuGroupsFragment() {
+    @Override
+    protected int getRootLayout() {
+        return R.layout.fragment_menu_groups;
     }
 
     @Override
@@ -122,5 +115,9 @@ public class MenuGroupsFragment extends BaseFragment {
     @Override
     protected void updateScreen() {
         mViewModel.updateResults();
+    }
+
+    public enum SESSION_STATUS {
+        ACTIVE, INACTIVE
     }
 }

@@ -1,9 +1,9 @@
 package com.checkin.app.checkin.Session.ActiveSession.Chat;
 
-import androidx.annotation.Nullable;
-
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
+
+import androidx.annotation.Nullable;
 
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class SessionChatDataModel {
@@ -34,6 +34,46 @@ public class SessionChatDataModel {
     @Nullable
     @JsonProperty("event")
     private SessionEventBasicModel event;
+
+    public SessionChatDataModel() {
+    }
+
+    public int getUser() {
+        return user;
+    }
+
+    public int getOrderedItem() {
+        return orderedItem;
+    }
+
+    @Nullable
+    public SessionChatCancelerModel getCanceler() {
+        return canceler;
+    }
+
+    @JsonProperty("service")
+    public void setType(int tag) {
+        this.service = EVENT_REQUEST_SERVICE_TYPE.getByTag(tag);
+    }
+
+    @Nullable
+    public EVENT_REQUEST_SERVICE_TYPE getService() {
+        return service;
+    }
+
+    @Nullable
+    public EVENT_CONCERN_TYPE getConcern() {
+        return concern;
+    }
+
+    public void setConcern(int concern) {
+        this.concern = EVENT_CONCERN_TYPE.getByTag(concern);
+    }
+
+    @Nullable
+    public SessionEventBasicModel getEvent() {
+        return event;
+    }
 
     public enum EVENT_REQUEST_SERVICE_TYPE {
         SERVICE_NONE(0), SERVICE_CALL_WAITER(1), SERVICE_CLEAN_TABLE(2), SERVICE_BRING_COMMODITY(3);
@@ -67,45 +107,5 @@ public class SessionChatDataModel {
                     return type;
             return CONCERN_NONE;
         }
-    }
-
-    public SessionChatDataModel() {
-    }
-
-    public int getUser() {
-        return user;
-    }
-
-    public int getOrderedItem() {
-        return orderedItem;
-    }
-
-    @Nullable
-    public SessionChatCancelerModel getCanceler() {
-        return canceler;
-    }
-
-    @JsonProperty("service")
-    public void setType(int tag) {
-        this.service = EVENT_REQUEST_SERVICE_TYPE.getByTag(tag);
-    }
-
-    @Nullable
-    public EVENT_REQUEST_SERVICE_TYPE getService() {
-        return service;
-    }
-
-    @Nullable
-    public EVENT_CONCERN_TYPE getConcern() {
-        return concern;
-    }
-
-    @Nullable
-    public SessionEventBasicModel getEvent() {
-        return event;
-    }
-
-    public void setConcern(int concern) {
-        this.concern = EVENT_CONCERN_TYPE.getByTag(concern);
     }
 }

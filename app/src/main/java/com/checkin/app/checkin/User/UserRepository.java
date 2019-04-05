@@ -1,9 +1,7 @@
 package com.checkin.app.checkin.User;
 
 import android.app.Application;
-import androidx.lifecycle.LiveData;
 import android.content.Context;
-import androidx.annotation.NonNull;
 
 import com.checkin.app.checkin.Data.ApiClient;
 import com.checkin.app.checkin.Data.ApiResponse;
@@ -19,20 +17,33 @@ import com.fasterxml.jackson.databind.node.ObjectNode;
 import java.io.File;
 import java.util.List;
 
+import androidx.annotation.NonNull;
+import androidx.lifecycle.LiveData;
 import okhttp3.MediaType;
 import okhttp3.MultipartBody;
 import okhttp3.RequestBody;
 import retrofit2.Call;
 
 public class UserRepository extends BaseRepository {
-    private final WebApiService mWebService;
     private static UserRepository INSTANCE = null;
+    private final WebApiService mWebService;
 
     private UserRepository(Context context) {
         mWebService = ApiClient.getApiService(context);
     }
 
-    public LiveData<Resource<List<ShopCustomerModel>>> getUserRecentCheckins(){
+    public static UserRepository getInstance(Application application) {
+        if (INSTANCE == null) {
+            synchronized (UserRepository.class) {
+                if (INSTANCE == null) {
+                    INSTANCE = new UserRepository(application.getApplicationContext());
+                }
+            }
+        }
+        return INSTANCE;
+    }
+
+    public LiveData<Resource<List<ShopCustomerModel>>> getUserRecentCheckins() {
         return new NetworkBoundResource<List<ShopCustomerModel>, List<ShopCustomerModel>>() {
             @Override
             protected boolean shouldUseLocalDb() {
@@ -73,7 +84,6 @@ public class UserRepository extends BaseRepository {
     }
 
     /**
-     *
      * @param userPk - 0 for self, non-zero for others.
      * @return
      */
@@ -124,16 +134,5 @@ public class UserRepository extends BaseRepository {
         ProgressRequestBody requestBody = new ProgressRequestBody(requestFile, listener);
         final MultipartBody.Part body = MultipartBody.Part.createFormData("profile_pic", "profile.jpg", requestBody);
         return mWebService.postUserProfilePic(body);
-    }
-
-    public static UserRepository getInstance(Application application) {
-        if (INSTANCE == null) {
-            synchronized (UserRepository.class) {
-                if (INSTANCE == null) {
-                    INSTANCE = new UserRepository(application.getApplicationContext());
-                }
-            }
-        }
-        return INSTANCE;
     }
 }

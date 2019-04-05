@@ -4,10 +4,7 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.LinearLayout;
 
 import com.checkin.app.checkin.Data.Message.MessageModel;
@@ -29,15 +26,10 @@ import java.util.List;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProviders;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
-import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 import butterknife.BindView;
-import butterknife.ButterKnife;
-import butterknife.OnClick;
-import butterknife.Unbinder;
 
 import static com.checkin.app.checkin.Data.Message.MessageModel.MESSAGE_TYPE.MANAGER_SESSION_CHECKOUT_REQUEST;
 import static com.checkin.app.checkin.Data.Message.MessageModel.MESSAGE_TYPE.MANAGER_SESSION_END;
@@ -56,9 +48,6 @@ public class ManagerTablesFragment extends BaseFragment implements ManagerWorkTa
 
     private ManagerWorkTableAdapter mAdapter;
     private ManagerWorkViewModel mViewModel;
-
-    private List<RestaurantTableModel> mListData;
-
     private final BroadcastReceiver mReceiver = new BroadcastReceiver() {
         @Override
         public void onReceive(Context context, Intent intent) {
@@ -100,8 +89,13 @@ public class ManagerTablesFragment extends BaseFragment implements ManagerWorkTa
             }
         }
     };
+    private List<RestaurantTableModel> mListData;
 
     public ManagerTablesFragment() {
+    }
+
+    public static ManagerTablesFragment newInstance() {
+        return new ManagerTablesFragment();
     }
 
     @Override
@@ -109,17 +103,12 @@ public class ManagerTablesFragment extends BaseFragment implements ManagerWorkTa
         return R.layout.fragment_shop_manager_table;
     }
 
-    public static ManagerTablesFragment newInstance() {
-        return new ManagerTablesFragment();
-    }
-
-    private void updateUi(List<RestaurantTableModel> data){
-        if(data.size() > 0){
+    private void updateUi(List<RestaurantTableModel> data) {
+        if (data.size() > 0) {
             mAdapter.setRestaurantTableList(data);
             rvShopManagerTable.setVisibility(View.VISIBLE);
             llNoLiveOrders.setVisibility(View.GONE);
-        }
-        else{
+        } else {
             rvShopManagerTable.setVisibility(View.GONE);
             llNoLiveOrders.setVisibility(View.VISIBLE);
         }
@@ -145,7 +134,7 @@ public class ManagerTablesFragment extends BaseFragment implements ManagerWorkTa
                 startRefreshing();
             else {
                 stopRefreshing();
-                Utils.toast(requireContext(),input.message);
+                Utils.toast(requireContext(), input.message);
             }
         });
         mViewModel.getCheckoutData().observe(this, resource -> {
@@ -190,7 +179,7 @@ public class ManagerTablesFragment extends BaseFragment implements ManagerWorkTa
         }
     }
 
-    private void removeTable(long sessionPk){
+    private void removeTable(long sessionPk) {
         mViewModel.updateRemoveTable(sessionPk);
     }
     // endregion
@@ -198,7 +187,7 @@ public class ManagerTablesFragment extends BaseFragment implements ManagerWorkTa
     @Override
     public void onResume() {
         super.onResume();
-        MessageModel.MESSAGE_TYPE[] types = new MessageModel.MESSAGE_TYPE[] {
+        MessageModel.MESSAGE_TYPE[] types = new MessageModel.MESSAGE_TYPE[]{
                 MANAGER_SESSION_NEW, MANAGER_SESSION_NEW_ORDER, MANAGER_SESSION_EVENT_SERVICE, MANAGER_SESSION_CHECKOUT_REQUEST,
                 MANAGER_SESSION_EVENT_CONCERN, MANAGER_SESSION_HOST_ASSIGNED, MANAGER_SESSION_END
         };

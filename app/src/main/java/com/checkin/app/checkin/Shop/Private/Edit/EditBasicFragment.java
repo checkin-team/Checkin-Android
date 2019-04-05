@@ -39,20 +39,27 @@ import static android.view.View.GONE;
 
 public class EditBasicFragment extends Fragment implements OtpVerificationDialog.AuthCallback {
     private static final String TAG = EditBasicFragment.class.getSimpleName();
+    @BindView(R.id.et_name)
+    EditText etName;
+    @BindView(R.id.et_phone)
+    PrefixEditText etPhone;
+    @BindView(R.id.spinner_non_working_days)
+    MultiSpinner vNonWorkingDays;
+    @BindView(R.id.et_website)
+    EditText etWebsite;
+    @BindView(R.id.et_tag_line)
+    EditText etTagLine;
+    @BindView(R.id.et_email)
+    EditText etEmail;
+    @BindView(R.id.et_opening_time)
+    TimeEditText etOpeningTime;
+    @BindView(R.id.et_closing_time)
+    TimeEditText etClosingTime;
+    @BindView(R.id.btn_verify_phone)
+    ImageButton btnVerifyPhone;
+    @BindView(R.id.btn_verify_email)
+    ImageButton btnVerifyEmail;
     private Unbinder unbinder;
-
-    @BindView(R.id.et_name) EditText etName;
-    @BindView(R.id.et_phone) PrefixEditText etPhone;
-    @BindView(R.id.spinner_non_working_days) MultiSpinner vNonWorkingDays;
-    @BindView(R.id.et_website) EditText etWebsite;
-    @BindView(R.id.et_tag_line) EditText etTagLine;
-    @BindView(R.id.et_email) EditText etEmail;
-    @BindView(R.id.et_opening_time) TimeEditText etOpeningTime;
-    @BindView(R.id.et_closing_time) TimeEditText etClosingTime;
-
-    @BindView(R.id.btn_verify_phone) ImageButton btnVerifyPhone;
-    @BindView(R.id.btn_verify_email) ImageButton btnVerifyEmail;
-
     private BasicFragmentInteraction mListener;
     private ShopProfileViewModel mViewModel;
     private FirebaseAuth mAuth;
@@ -242,6 +249,7 @@ public class EditBasicFragment extends Fragment implements OtpVerificationDialog
 
     public interface BasicFragmentInteraction {
         void updateShopBasics(RestaurantModel shop);
+
         void onBasicDataValidStatus(boolean isValid);
     }
 }

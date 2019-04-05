@@ -2,14 +2,7 @@ package com.checkin.app.checkin.Menu.Fragment;
 
 import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
-import androidx.lifecycle.ViewModelProviders;
 import android.os.Bundle;
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.fragment.app.Fragment;
-import androidx.recyclerview.widget.GridLayoutManager;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
@@ -23,6 +16,13 @@ import com.checkin.app.checkin.Menu.Model.MenuItemModel.AVAILABLE_MEAL;
 import com.checkin.app.checkin.R;
 import com.checkin.app.checkin.Utility.Utils;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.fragment.app.Fragment;
+import androidx.lifecycle.ViewModelProviders;
+import androidx.recyclerview.widget.GridLayoutManager;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
@@ -30,15 +30,19 @@ import butterknife.Unbinder;
 
 public class MenuFilterFragment extends Fragment {
     private static final String TAG = MenuFilterFragment.class.getSimpleName();
+    @BindView(R.id.dark_back_menu_filter)
+    ViewGroup vDarkBack;
+    @BindView(R.id.container_filter)
+    ViewGroup containerFilter;
+    @BindView(R.id.rv_menu_categories)
+    RecyclerView rvFilterCategories;
+    @BindView(R.id.btn_filter_toggle)
+    ImageButton btnFilterToggle;
+    @BindView(R.id.tv_menu_filter_title)
+    TextView tvFilterTitle;
+    @BindView(R.id.tv_menu_filter_clear)
+    TextView tvFilterClear;
     private Unbinder unbinder;
-
-    @BindView(R.id.dark_back_menu_filter) ViewGroup vDarkBack;
-    @BindView(R.id.container_filter) ViewGroup containerFilter;
-    @BindView(R.id.rv_menu_categories) RecyclerView rvFilterCategories;
-    @BindView(R.id.btn_filter_toggle) ImageButton btnFilterToggle;
-    @BindView(R.id.tv_menu_filter_title) TextView tvFilterTitle;
-    @BindView(R.id.tv_menu_filter_clear) TextView tvFilterClear;
-
     private MenuViewModel mViewModel;
     private FilterCategoryAdapter mAdapter;
     private boolean isFilterShown = false;
@@ -93,8 +97,7 @@ public class MenuFilterFragment extends Fragment {
                 tvFilterClear.setVisibility(View.GONE);
                 tvFilterTitle.setText("Filters");
                 btnFilterToggle.setActivated(false);
-            }
-            else {
+            } else {
                 tvFilterTitle.setText(value);
                 tvFilterClear.setVisibility(View.VISIBLE);
                 btnFilterToggle.setActivated(true);
@@ -182,6 +185,7 @@ public class MenuFilterFragment extends Fragment {
                     public void onAnimationStart(Animator animation) {
                         containerFilter.setVisibility(View.VISIBLE);
                     }
+
                     @Override
                     public void onAnimationEnd(Animator animation) {
                         containerFilter.setRotation(0);
@@ -238,9 +242,13 @@ public class MenuFilterFragment extends Fragment {
 
     public interface MenuFilterInteraction {
         void onShowFilter();
+
         void onHideFilter();
+
         void filterByCategory(String category);
+
         void sortItems();
+
         void resetFilters();
     }
 }

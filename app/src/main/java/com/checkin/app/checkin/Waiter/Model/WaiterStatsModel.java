@@ -14,7 +14,8 @@ public class WaiterStatsModel {
     @JsonProperty("orders_for_day")
     private int orderOfDay;
 
-    public WaiterStatsModel() {}
+    public WaiterStatsModel() {
+    }
 
     public double getTipOfDay() {
         return tipOfDay;

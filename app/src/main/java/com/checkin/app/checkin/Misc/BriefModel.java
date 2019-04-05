@@ -14,7 +14,8 @@ public class BriefModel implements Serializable {
     @JsonProperty("display_pic_url")
     private String displayPic;
 
-    public BriefModel() {}
+    public BriefModel() {
+    }
 
     public BriefModel(String pk, String displayName, String displayPic) {
         this.pk = pk;
@@ -40,12 +41,12 @@ public class BriefModel implements Serializable {
         return displayName;
     }
 
-    public String formatRestaurantName() {
-        return "You are live at "+ displayName;
-    }
-
     public void setDisplayName(String displayName) {
         this.displayName = displayName;
+    }
+
+    public String formatRestaurantName() {
+        return "You are live at " + displayName;
     }
 
     public String getDisplayPic() {

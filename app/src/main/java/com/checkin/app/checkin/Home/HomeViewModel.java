@@ -1,9 +1,6 @@
 package com.checkin.app.checkin.Home;
 
 import android.app.Application;
-import androidx.annotation.NonNull;
-import androidx.lifecycle.LiveData;
-import androidx.lifecycle.MediatorLiveData;
 
 import com.checkin.app.checkin.Data.BaseViewModel;
 import com.checkin.app.checkin.Data.Converters;
@@ -12,6 +9,10 @@ import com.checkin.app.checkin.Session.Model.QRResultModel;
 import com.checkin.app.checkin.Session.Model.SessionBasicModel;
 import com.checkin.app.checkin.Session.SessionRepository;
 import com.fasterxml.jackson.databind.node.ObjectNode;
+
+import androidx.annotation.NonNull;
+import androidx.lifecycle.LiveData;
+import androidx.lifecycle.MediatorLiveData;
 
 public class HomeViewModel extends BaseViewModel {
     private SessionRepository mSessionRepository;

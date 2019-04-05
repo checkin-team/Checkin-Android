@@ -8,7 +8,6 @@ import com.checkin.app.checkin.Account.AccountModel;
 import com.checkin.app.checkin.Account.BaseAccountActivity;
 import com.checkin.app.checkin.Data.Resource;
 import com.checkin.app.checkin.Inventory.InventoryActivity;
-import com.checkin.app.checkin.Menu.SessionMenuActivity;
 import com.checkin.app.checkin.Misc.BaseFragmentAdapterBottomNav;
 import com.checkin.app.checkin.Misc.BlankFragment;
 import com.checkin.app.checkin.R;
@@ -30,6 +29,7 @@ import butterknife.OnClick;
 
 public class ShopPrivateActivity extends BaseAccountActivity {
 
+    public static final String KEY_SHOP_PK = "shop_private.pk";
     @BindView(R.id.vp_shop_private)
     DynamicSwipableViewPager vpShopPrivate;
     @BindView(R.id.drawer_shop_private)
@@ -38,9 +38,7 @@ public class ShopPrivateActivity extends BaseAccountActivity {
     TabLayout tabsShopPrivate;
     @BindView(R.id.iv_shop_profile_navigation)
     ImageView ivShopProfileNavigation;
-
     private ShopProfileViewModel mViewModel;
-    public static final String KEY_SHOP_PK = "shop_private.pk";
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -118,8 +116,14 @@ public class ShopPrivateActivity extends BaseAccountActivity {
 
     private void launchMenu() {
         Intent intent = new Intent(this, InventoryActivity.class);
-        intent.putExtra(InventoryActivity.KEY_INVENTORY_RESTAURANT_PK,mViewModel.getShopPk());
+        intent.putExtra(InventoryActivity.KEY_INVENTORY_RESTAURANT_PK, mViewModel.getShopPk());
         startActivity(intent);
+    }
+
+    @Override
+    protected void updateScreen() {
+        getAccountViewModel().updateResults();
+        mViewModel.updateResults();
     }
 
     private class ShopFragmentAdapter extends BaseFragmentAdapterBottomNav {
@@ -160,11 +164,5 @@ public class ShopPrivateActivity extends BaseAccountActivity {
             if (position == 1) launchMenu();
             else super.onTabClick(position);
         }
-    }
-
-    @Override
-    protected void updateScreen() {
-        getAccountViewModel().updateResults();
-        mViewModel.updateResults();
     }
 }

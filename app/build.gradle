@@ -1,5 +1,6 @@
 apply plugin: 'com.android.application'
 apply plugin: 'io.objectbox'
+apply plugin: 'com.google.gms.google-services'
 apply from: '../versions.gradle'
 
 def keystoreProperties = new Properties()
@@ -27,6 +28,10 @@ android {
 
         multiDexEnabled true
 
+        resValue "string", "build_time", buildTime()
+        resValue "string", "build_host", hostName()
+        resValue "string", "build_revision", revision()
+
         javaCompileOptions {
             annotationProcessorOptions {
                 arguments = [
@@ -46,12 +51,14 @@ android {
             debuggable true
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
             signingConfig signingConfigs.config
+            versionNameSuffix ' - ' + revision()
         }
         staging {
             minifyEnabled true
             shrinkResources true
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
             signingConfig signingConfigs.config
+            versionNameSuffix ' - ' + revision()
         }
     }
     compileOptions {
@@ -69,6 +76,11 @@ android {
             dimension "feature"
         }
     }
+
+    lintOptions {
+        abortOnError false
+        disable 'MissingTranslation', 'ExtraTranslation'
+    }
 }
 
 dependencies {
@@ -82,8 +94,8 @@ dependencies {
     implementation 'androidx.exifinterface:exifinterface:1.0.0'
 
     testImplementation 'junit:junit:4.12'
-    androidTestImplementation 'androidx.test:runner:1.1.2-alpha01'
-    androidTestImplementation 'androidx.test.espresso:espresso-core:3.1.2-alpha01'
+    androidTestImplementation 'androidx.test:runner:1.2.0-alpha03'
+    androidTestImplementation 'androidx.test.espresso:espresso-core:3.2.0-alpha03'
     implementation 'com.google.android.gms:play-services-auth:16.0.1'
     // FireBase libraries
     implementation 'com.google.firebase:firebase-core:16.0.8'
@@ -151,4 +163,19 @@ dependencies {
     implementation 'com.android.support:multidex:1.0.3'
 }
 
-apply plugin: 'com.google.gms.google-services'
+static def buildTime() {
+    return new Date().format("yyyy-MM-dd", TimeZone.getTimeZone("UTC"))
+}
+
+static def hostName() {
+    return "${System.getProperty("user.name")}@${InetAddress.localHost.hostName}"
+}
+
+def revision() {
+    def code = new ByteArrayOutputStream()
+    exec {
+        commandLine 'git', 'rev-parse', '--short', 'HEAD'
+        standardOutput = code
+    }
+    return code.toString().trim()
+}

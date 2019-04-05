@@ -1,10 +1,6 @@
 package com.checkin.app.checkin.Shop.Private;
 
-import androidx.lifecycle.ViewModelProviders;
 import android.os.Bundle;
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.fragment.app.DialogFragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -20,22 +16,27 @@ import com.checkin.app.checkin.Utility.GlideApp;
 import com.checkin.app.checkin.Utility.MultiSpinner;
 import com.checkin.app.checkin.Utility.Utils;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.fragment.app.DialogFragment;
+import androidx.lifecycle.ViewModelProviders;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import butterknife.Unbinder;
 
 public class MemberAssignRoleFragment extends DialogFragment {
-    private static final String TAG = MemberAssignRoleFragment.class.getSimpleName();
-    private Unbinder unbinder;
-
     public static final int POSITION_NEW_MEMBER = -1;
-
-    @BindView(R.id.tv_user_name) TextView tvUserName;
-    @BindView(R.id.im_user_pic) ImageView imUserPic;
-    @BindView(R.id.spinner_roles) MultiSpinner vSpinnerRoles;
-    @BindView(R.id.btn_remove) Button btnRemove;
-
+    private static final String TAG = MemberAssignRoleFragment.class.getSimpleName();
+    @BindView(R.id.tv_user_name)
+    TextView tvUserName;
+    @BindView(R.id.im_user_pic)
+    ImageView imUserPic;
+    @BindView(R.id.spinner_roles)
+    MultiSpinner vSpinnerRoles;
+    @BindView(R.id.btn_remove)
+    Button btnRemove;
+    private Unbinder unbinder;
     private int mPosition;
     private AssignRoleInteraction mListener;
     private MemberViewModel mViewModel;
@@ -107,19 +108,19 @@ public class MemberAssignRoleFragment extends DialogFragment {
         mViewModel = ViewModelProviders.of(requireActivity()).get(MemberViewModel.class);
 
         mViewModel.getObservableData().observe(this, resource -> {
-           if (resource == null)
-               return;
-           if (resource.status == Status.SUCCESS) {
-               if (isNewMember()) {
-                   mListener.onNewMember(mViewModel.getCurrentMember());
-               } else {
-                   mListener.onUpdateMember(mViewModel.getCurrentMember(), mPosition);
-               }
-               this.finishDialog();
-           } else if (resource.message != null) {
-               Utils.toast(requireContext(), resource.message);
-           }
-           mViewModel.resetObservableData();
+            if (resource == null)
+                return;
+            if (resource.status == Status.SUCCESS) {
+                if (isNewMember()) {
+                    mListener.onNewMember(mViewModel.getCurrentMember());
+                } else {
+                    mListener.onUpdateMember(mViewModel.getCurrentMember(), mPosition);
+                }
+                this.finishDialog();
+            } else if (resource.message != null) {
+                Utils.toast(requireContext(), resource.message);
+            }
+            mViewModel.resetObservableData();
         });
 
         mViewModel.getRemovedMemberData().observe(this, resource -> {
@@ -128,7 +129,7 @@ public class MemberAssignRoleFragment extends DialogFragment {
             if (resource.status == Status.SUCCESS) {
                 mListener.onRemoveMember(mViewModel.getCurrentMember(), mPosition);
                 this.finishDialog();
-            } else if (resource.message != null){
+            } else if (resource.message != null) {
                 Utils.toast(requireContext(), resource.message);
             }
             mViewModel.resetRemovedMemberData();
@@ -169,8 +170,11 @@ public class MemberAssignRoleFragment extends DialogFragment {
 
     public interface AssignRoleInteraction {
         void onNewMember(MemberModel member);
+
         void onUpdateMember(MemberModel member, int position);
+
         void onRemoveMember(MemberModel member, int position);
+
         void onCancel();
     }
 }

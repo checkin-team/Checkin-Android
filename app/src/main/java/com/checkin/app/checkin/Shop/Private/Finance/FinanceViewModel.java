@@ -1,13 +1,14 @@
 package com.checkin.app.checkin.Shop.Private.Finance;
 
 import android.app.Application;
-import androidx.lifecycle.LiveData;
-import androidx.lifecycle.MediatorLiveData;
-import androidx.annotation.NonNull;
 
 import com.checkin.app.checkin.Data.BaseViewModel;
 import com.checkin.app.checkin.Data.Resource;
 import com.checkin.app.checkin.Misc.GenericDetailModel;
+
+import androidx.annotation.NonNull;
+import androidx.lifecycle.LiveData;
+import androidx.lifecycle.MediatorLiveData;
 
 public class FinanceViewModel extends BaseViewModel {
     private FinanceRepository financeRepository;
@@ -21,13 +22,13 @@ public class FinanceViewModel extends BaseViewModel {
         financeRepository = FinanceRepository.getInstance(application);
     }
 
-    public void getRestaurantFinanceById(long restaurantId){
+    public void getRestaurantFinanceById(long restaurantId) {
         this.restaurantId = restaurantId;
         LiveData<Resource<FinanceModel>> mLiveData = financeRepository.getRestaurantFinanceById(restaurantId);
-        mGetFinanceMediatorLiveData.addSource(mLiveData,mGetFinanceMediatorLiveData::setValue);
+        mGetFinanceMediatorLiveData.addSource(mLiveData, mGetFinanceMediatorLiveData::setValue);
     }
 
-    public LiveData<Resource<FinanceModel>> getRestaurantFinanceModel(){
+    public LiveData<Resource<FinanceModel>> getRestaurantFinanceModel() {
         return mGetFinanceMediatorLiveData;
     }
 
@@ -40,12 +41,12 @@ public class FinanceViewModel extends BaseViewModel {
         }
     }
 
-    private void setRestaurantFinanceById(FinanceModel financeModel, long restaurantId){
-        LiveData<Resource<GenericDetailModel>> mLiveData = financeRepository.setRestaurantFinanceById(financeModel,restaurantId);
-        mSetFinanceMediatorLiveData.addSource(mLiveData,mSetFinanceMediatorLiveData::setValue);
+    private void setRestaurantFinanceById(FinanceModel financeModel, long restaurantId) {
+        LiveData<Resource<GenericDetailModel>> mLiveData = financeRepository.setRestaurantFinanceById(financeModel, restaurantId);
+        mSetFinanceMediatorLiveData.addSource(mLiveData, mSetFinanceMediatorLiveData::setValue);
     }
 
-    LiveData<Resource<GenericDetailModel>> getUpdateFinanceData(){
+    LiveData<Resource<GenericDetailModel>> getUpdateFinanceData() {
         return mSetFinanceMediatorLiveData;
     }
 

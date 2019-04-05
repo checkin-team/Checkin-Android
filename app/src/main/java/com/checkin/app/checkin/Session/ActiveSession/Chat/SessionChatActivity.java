@@ -35,10 +35,8 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 
 public class SessionChatActivity extends BaseActivity implements ActiveSessionChatAdapter.SessionChatInteraction {
-    private static final String TAG = SessionChatActivity.class.getSimpleName();
-
     public static final String KEY_SERVICE_TYPE = "session_chat.service";
-
+    private static final String TAG = SessionChatActivity.class.getSimpleName();
     @BindView(R.id.bottom_expand_menu)
     ViewGroup bottomExpandedMenu;
     @BindView(R.id.container_session_actions)
@@ -298,7 +296,7 @@ public class SessionChatActivity extends BaseActivity implements ActiveSessionCh
     public void onBackPressed() {
         if (mChatAdapter.getSelectedEvent() != null) {
             mChatAdapter.resetSelectedEvent();
-        } else{
+        } else {
             Utils.setKeyboardVisibility(etMessage, false);
             super.onBackPressed();
         }

@@ -148,6 +148,7 @@ public abstract class BaseAccountActivity extends BaseActivity {
     }
 
     public static class AccountHeaderViewHolder implements AdapterView.OnItemSelectedListener {
+        private final View mHeaderView;
         @BindView(R.id.tv_context)
         TextView tvDisplayName;
         @BindView(R.id.im_context)
@@ -156,9 +157,7 @@ public abstract class BaseAccountActivity extends BaseActivity {
         TextView tvAccountDesc;
         @BindView(R.id.account_selector)
         Spinner vAccountSelector;
-
         private BaseAccountActivity mBaseActivity;
-        private final View mHeaderView;
 
         public AccountHeaderViewHolder(BaseAccountActivity baseAccountActivity, @LayoutRes int headerLayout) {
             mBaseActivity = baseAccountActivity;

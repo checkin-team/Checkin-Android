@@ -49,10 +49,7 @@ public class ManagerSessionOrderAdapter extends HeaderFooterRecyclerViewAdapter 
 
     @Override
     public boolean useFooter() {
-        if (mShowFooter)
-            return true;
-        else
-            return false;
+        return mShowFooter;
     }
 
     @Override
@@ -80,6 +77,14 @@ public class ManagerSessionOrderAdapter extends HeaderFooterRecyclerViewAdapter 
     @Override
     public int getBasicItemType(int position) {
         return R.layout.item_manager_session_order;
+    }
+
+    public interface SessionOrdersInteraction {
+        void confirmNewOrders();
+
+        void onSelectDeselect(SessionOrderedItemModel orderedItem, SessionChatModel.CHAT_STATUS_TYPE statusType);
+
+        void onOrderStatusChange(SessionOrderedItemModel orderedItem, SessionChatModel.CHAT_STATUS_TYPE statusType);
     }
 
     class FooterViewHolder extends RecyclerView.ViewHolder {
@@ -193,13 +198,5 @@ public class ManagerSessionOrderAdapter extends HeaderFooterRecyclerViewAdapter 
             tvFieldNames.setText(Utils.joinCollection(group.getCustomizationFields(), "\n"));
             container.addView(view);
         }
-    }
-
-    public interface SessionOrdersInteraction {
-        void confirmNewOrders();
-
-        void onSelectDeselect(SessionOrderedItemModel orderedItem, SessionChatModel.CHAT_STATUS_TYPE statusType);
-
-        void onOrderStatusChange(SessionOrderedItemModel orderedItem, SessionChatModel.CHAT_STATUS_TYPE statusType);
     }
 }

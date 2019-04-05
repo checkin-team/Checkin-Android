@@ -1,7 +1,6 @@
 package com.checkin.app.checkin.Misc;
 
 import android.content.Context;
-import androidx.annotation.NonNull;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -14,15 +13,12 @@ import com.checkin.app.checkin.Utility.GlideApp;
 
 import java.util.List;
 
+import androidx.annotation.NonNull;
+
 public class SelectListViewAdapter extends ArrayAdapter<SelectListItem> {
 
     public SelectListViewAdapter(Context context, List<SelectListItem> items) {
         super(context, R.layout.item_select_layout, items);
-    }
-
-    private static class ViewHolder {
-        ImageView imImage;
-        TextView tvText;
     }
 
     @NonNull
@@ -34,7 +30,7 @@ public class SelectListViewAdapter extends ArrayAdapter<SelectListItem> {
             convertView = LayoutInflater.from(getContext()).inflate(R.layout.item_select_layout, parent, false);
             holder = new ViewHolder();
             holder.tvText = convertView.findViewById(R.id.tv_text);
-            holder.imImage= convertView.findViewById(R.id.im_image);
+            holder.imImage = convertView.findViewById(R.id.im_image);
             convertView.setTag(holder);
         } else
             holder = (ViewHolder) convertView.getTag();
@@ -45,5 +41,10 @@ public class SelectListViewAdapter extends ArrayAdapter<SelectListItem> {
         }
 
         return convertView;
+    }
+
+    private static class ViewHolder {
+        ImageView imImage;
+        TextView tvText;
     }
 }
