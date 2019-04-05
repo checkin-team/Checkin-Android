@@ -80,6 +80,8 @@ public class WaiterWorkActivity extends BaseAccountActivity implements
 
     private WaiterWorkViewModel mViewModel;
     private WaiterTablePagerAdapter mFragmentAdapter;
+    private long sessionPk;
+
     private final BroadcastReceiver mReceiver = new BroadcastReceiver() {
         @Override
         public void onReceive(Context context, Intent intent) {
@@ -94,27 +96,18 @@ public class WaiterWorkActivity extends BaseAccountActivity implements
             BriefModel user;
             SessionOrderedItemModel orderedItemModel;
             long sessionPk;
-            Log.e(TAG, " =========== " + message.getType());
             switch (message.getType()) {
                 case WAITER_SESSION_NEW:
                     String tableName = message.getRawData().getSessionTableName();
                     eventModel = EventBriefModel.getFromManagerEventModel(message.getRawData().getSessionEventBrief());
-                    TableSessionModel tableSession = new RestaurantTableModel().getTableSessionModel();
-                    if (tableSession != null) {
-                        tableSession.setEvent(eventModel);
-                    }
-                    RestaurantTableModel tableModel = new RestaurantTableModel(message.getObject().getPk(), tableName, tableSession);
-                    TableSessionModel tableSessionModel = tableModel.getTableSessionModel();
+                    TableSessionModel sessionModel = new TableSessionModel(message.getObject().getPk(), null, eventModel);
+                    RestaurantTableModel tableModel = new RestaurantTableModel(RestaurantTableModel.NO_QR_ID, tableName, sessionModel);
                     if (message.getActor().getType() == MessageObjectModel.MESSAGE_OBJECT_TYPE.RESTAURANT_MEMBER) {
                         user = message.getActor().getBriefModel();
-                        if (tableSessionModel != null) {
-                            tableSessionModel.setHost(user);
-                        }
+                        sessionModel.setHost(user);
                     }
                     WaiterWorkActivity.this.addTable(tableModel);
-                    if (tableSessionModel != null) {
-                        WaiterWorkActivity.this.updateTableStatus(tableSessionModel.getPk());
-                    }
+                    WaiterWorkActivity.this.updateTableStatus(sessionModel.getPk());
                     break;
                 case WAITER_SESSION_NEW_ORDER:
                     orderedItemModel = message.getRawData().getSessionOrderedItem();
@@ -158,7 +151,6 @@ public class WaiterWorkActivity extends BaseAccountActivity implements
             }
         }
     };
-    private long sessionPk;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -172,17 +164,6 @@ public class WaiterWorkActivity extends BaseAccountActivity implements
         setupTableFragments();
         fetchData();
         setupDrawer();
-
-        mViewModel.getNewWaiterSession().observe(this, resource -> {
-            if (resource == null)
-                return;
-            if (resource.status == Status.SUCCESS && resource.data != null) {
-                //Utils.toast(this, resource.data.toString());
-                updateScreen();
-            } else if (resource.status != Status.LOADING) {
-                Utils.toast(this, resource.message);
-            }
-        });
     }
 
     private void setupDrawer() {
@@ -446,7 +427,7 @@ public class WaiterWorkActivity extends BaseAccountActivity implements
                 .setTitle(tableName)
                 .setMessage("Do you want to be host of this table?")
                 .setPositiveButton("Yes", (dialog, which) -> {
-                    mViewModel.sendNewWaiterSession(qrPk);
+                    mViewModel.processQrPk(qrPk);
                 }).setNegativeButton("No", (dialog, which) -> dialog.cancel())
                 .show();
     }

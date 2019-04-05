@@ -86,21 +86,21 @@ public class WaiterEndDrawerTableAdapter extends RecyclerView.Adapter<WaiterEndD
         }
 
         public void bindData(RestaurantTableModel tableModel) {
-            TableSessionModel tableSessionModel = tableModel.getTableSessionModel();
+            this.mRestaurantTable = tableModel;
+
+            TableSessionModel tableSessionModel = tableModel.getTableSession();
             if (tableSessionModel != null) {
                 tvName.setText(tableModel.getTable());
                 if (tableSessionModel.getHost() != null) {
                     tvHost.setText(tableSessionModel.getHost().getDisplayName());
                     viewMask.setVisibility(View.VISIBLE);
                 } else {
-                    this.mRestaurantTable = tableModel;
                     tvHost.setText("Standard");
                 }
                 tvTimestamp.setText(tableSessionModel.getEvent().formatElapsedTime());
                 cvWaiterTableName.setVisibility(View.VISIBLE);
                 tvTimestamp.setVisibility(View.VISIBLE);
             } else {
-                this.mRestaurantTable = tableModel;
                 tvHost.setText(tableModel.getTable());
                 cvWaiterTableName.setVisibility(View.GONE);
                 tvTimestamp.setVisibility(View.INVISIBLE);

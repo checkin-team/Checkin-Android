@@ -26,6 +26,16 @@ public class TableSessionModel {
     @JsonProperty("is_accepted_checkout")
     private boolean isRequestedCheckout;
 
+    public TableSessionModel() {
+    }
+
+    public TableSessionModel(long pk, @Nullable BriefModel host, EventBriefModel event) {
+        this.pk = pk;
+        this.host = host;
+        this.event = event;
+    }
+
+
     public long getPk() {
         return pk;
     }
@@ -33,6 +43,10 @@ public class TableSessionModel {
     @Nullable
     public BriefModel getHost() {
         return host;
+    }
+
+    public boolean hasHost() {
+        return host != null;
     }
 
     public EventBriefModel getEvent() {

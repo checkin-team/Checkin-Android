@@ -7,6 +7,7 @@ import androidx.annotation.Nullable;
 
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class RestaurantTableModel {
+    public static final long NO_QR_ID = -1;
 
     @JsonProperty("qr_pk")
     private long qrPk;
@@ -16,7 +17,7 @@ public class RestaurantTableModel {
 
     @Nullable
     @JsonProperty("session")
-    private TableSessionModel tableSessionModel;
+    private TableSessionModel tableSession;
 
     private int eventCount;
 
@@ -26,7 +27,7 @@ public class RestaurantTableModel {
     public RestaurantTableModel(long qrPk, String table, @Nullable TableSessionModel tableSessionModel) {
         this.qrPk = qrPk;
         this.table = table;
-        this.tableSessionModel = tableSessionModel;
+        this.tableSession = tableSessionModel;
     }
 
     public long getQrPk() {
@@ -42,12 +43,12 @@ public class RestaurantTableModel {
     }
 
     @Nullable
-    public TableSessionModel getTableSessionModel() {
-        return tableSessionModel;
+    public TableSessionModel getTableSession() {
+        return tableSession;
     }
 
-    public void setTableSessionModel(@Nullable TableSessionModel tableSessionModel) {
-        this.tableSessionModel = tableSessionModel;
+    public void setTableSession(@Nullable TableSessionModel tableSessionModel) {
+        this.tableSession = tableSessionModel;
     }
 
     public int getEventCount() {
@@ -64,5 +65,9 @@ public class RestaurantTableModel {
 
     public void addEventCount() {
         this.eventCount++;
+    }
+
+    public boolean isSessionActive() {
+        return tableSession != null;
     }
 }

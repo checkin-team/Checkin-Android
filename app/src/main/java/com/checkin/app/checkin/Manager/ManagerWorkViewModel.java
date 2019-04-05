@@ -54,7 +54,7 @@ public class ManagerWorkViewModel extends BaseViewModel {
             List<RestaurantTableModel> result = new ArrayList<>();
             for (int i = 0, length = input.data.size(); i < length; i++) {
                 RestaurantTableModel tableModel = input.data.get(i);
-                if (tableModel.getTableSessionModel() != null)
+                if (tableModel.getTableSession() != null)
                     result.add(tableModel);
             }
             return Resource.cloneResource(input, result);
@@ -84,7 +84,7 @@ public class ManagerWorkViewModel extends BaseViewModel {
         if (resource == null || resource.data == null)
             return -1;
         for (int i = 0; i < resource.data.size(); i++) {
-            TableSessionModel tableSessionModel = resource.data.get(i).getTableSessionModel();
+            TableSessionModel tableSessionModel = resource.data.get(i).getTableSession();
             if (tableSessionModel != null && tableSessionModel.getPk() == sessionPk) {
                 return i;
             }
@@ -121,7 +121,7 @@ public class ManagerWorkViewModel extends BaseViewModel {
             return;
         int pos = -1;
         for (int i = 0; i < resource.data.size(); i++) {
-            TableSessionModel tableSessionModel = resource.data.get(i).getTableSessionModel();
+            TableSessionModel tableSessionModel = resource.data.get(i).getTableSession();
             if (tableSessionModel != null && tableSessionModel.getPk() == sessionPk) {
                 pos = i;
                 break;

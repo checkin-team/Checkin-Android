@@ -4,10 +4,7 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.LinearLayout;
 
 import com.checkin.app.checkin.Data.Message.MessageModel;
@@ -30,15 +27,10 @@ import java.util.List;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProviders;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
-import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 import butterknife.BindView;
-import butterknife.ButterKnife;
-import butterknife.OnClick;
-import butterknife.Unbinder;
 
 import static com.checkin.app.checkin.Data.Message.MessageModel.MESSAGE_TYPE.MANAGER_SESSION_CHECKOUT_REQUEST;
 import static com.checkin.app.checkin.Data.Message.MessageModel.MESSAGE_TYPE.MANAGER_SESSION_END;
@@ -77,15 +69,15 @@ public class ManagerTablesFragment extends BaseFragment implements ManagerWorkTa
                     String tableName = message.getRawData().getSessionTableName();
                     eventModel = EventBriefModel.getFromManagerEventModel(message.getRawData().getSessionEventBrief());
                     eventModel.setType(CHAT_EVENT_TYPE.EVENT_SESSION_CHECKIN);
-                    TableSessionModel tableSessionModel = new RestaurantTableModel().getTableSessionModel();
+                    TableSessionModel tableSessionModel = new RestaurantTableModel().getTableSession();
                     if (tableSessionModel != null) {
                         tableSessionModel.setEvent(eventModel);
                     }
                     RestaurantTableModel tableModel = new RestaurantTableModel(message.getObject().getPk(), tableName,tableSessionModel);
                     if (message.getActor().getType() == MessageObjectModel.MESSAGE_OBJECT_TYPE.RESTAURANT_MEMBER) {
                         user = message.getActor().getBriefModel();
-                        if (tableModel.getTableSessionModel() != null) {
-                            tableModel.getTableSessionModel().setHost(user);
+                        if (tableModel.getTableSession() != null) {
+                            tableModel.getTableSession().setHost(user);
                         }
                     }
                     ManagerTablesFragment.this.addTable(tableModel);
@@ -180,7 +172,7 @@ public class ManagerTablesFragment extends BaseFragment implements ManagerWorkTa
         int pos = mViewModel.getTablePositionWithPk(sessionPk);
         RestaurantTableModel table = mViewModel.getTableWithPosition(pos);
         if (table != null) {
-            TableSessionModel tableSessionModel = table.getTableSessionModel();
+            TableSessionModel tableSessionModel = table.getTableSession();
             if (tableSessionModel != null){
                 tableSessionModel.setEvent(event);
                 if (event.getType() == CHAT_EVENT_TYPE.EVENT_REQUEST_CHECKOUT)
@@ -195,7 +187,7 @@ public class ManagerTablesFragment extends BaseFragment implements ManagerWorkTa
         int pos = mViewModel.getTablePositionWithPk(sessionPk);
         RestaurantTableModel table = mViewModel.getTableWithPosition(pos);
         if (table != null) {
-            TableSessionModel tableSessionModel = table.getTableSessionModel();
+            TableSessionModel tableSessionModel = table.getTableSession();
             if (tableSessionModel != null) {
                 tableSessionModel.setHost(user);
             }
@@ -233,13 +225,13 @@ public class ManagerTablesFragment extends BaseFragment implements ManagerWorkTa
 
     @Override
     public void onClickTable(RestaurantTableModel tableModel) {
-        if (tableModel.getTableSessionModel() != null){
+        if (tableModel.getTableSession() != null){
             Intent intent = new Intent(getContext(), ManagerSessionActivity.class);
-            intent.putExtra(ManagerSessionActivity.KEY_SESSION_PK, tableModel.getTableSessionModel().getPk())
+            intent.putExtra(ManagerSessionActivity.KEY_SESSION_PK, tableModel.getTableSession().getPk())
                     .putExtra(ManagerSessionActivity.KEY_SHOP_PK, mViewModel.getShopPk());
             startActivity(intent);
 
-            int pos = mViewModel.getTablePositionWithPk(tableModel.getTableSessionModel().getPk());
+            int pos = mViewModel.getTablePositionWithPk(tableModel.getTableSession().getPk());
             tableModel.setEventCount(0);
             mAdapter.updateSession(pos);
         }
@@ -247,8 +239,8 @@ public class ManagerTablesFragment extends BaseFragment implements ManagerWorkTa
 
     @Override
     public void onMarkSessionDone(RestaurantTableModel tableModel) {
-        if (tableModel.getTableSessionModel() != null){
-            mViewModel.markSessionDone(tableModel.getTableSessionModel().getPk());
+        if (tableModel.getTableSession() != null){
+            mViewModel.markSessionDone(tableModel.getTableSession().getPk());
             mViewModel.updateResults();
         }
     }

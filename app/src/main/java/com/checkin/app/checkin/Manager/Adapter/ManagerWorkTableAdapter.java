@@ -94,7 +94,7 @@ public class ManagerWorkTableAdapter extends RecyclerView.Adapter<ManagerWorkTab
         public void bindData(RestaurantTableModel data) {
             mTableModel = data;
 
-            TableSessionModel tableSessionModel = data.getTableSessionModel();
+            TableSessionModel tableSessionModel = data.getTableSession();
 
             if (tableSessionModel != null){
                 BriefModel host = tableSessionModel.getHost();
