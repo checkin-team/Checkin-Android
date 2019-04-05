@@ -97,7 +97,6 @@ public class AppMessagingService extends FirebaseMessagingService {
                 .setAutoCancel(true)
                 .build();
 
-
         mNotificationManager.notify(null, data.getGroupSummaryID(), summaryNotif);
     }
 

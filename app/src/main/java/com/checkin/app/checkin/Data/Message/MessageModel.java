@@ -29,7 +29,10 @@ import androidx.annotation.Nullable;
 import androidx.core.app.NotificationCompat;
 
 import static com.checkin.app.checkin.Data.Message.MessageModel.MESSAGE_TYPE.MANAGER_SESSION_ORDERS_PUSH;
+import static com.checkin.app.checkin.Data.Message.MessageModel.MESSAGE_TYPE.WAITER_SESSION_NEW;
 import static com.checkin.app.checkin.Data.Message.MessageModel.MESSAGE_TYPE.WAITER_SESSION_ORDERS_PUSH;
+import static com.checkin.app.checkin.Waiter.WaiterWorkActivity.ACTION_NEW_TABLE;
+import static com.checkin.app.checkin.Waiter.WaiterWorkActivity.KEY_SESSION_QR_ID;
 
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class MessageModel implements Serializable {
@@ -166,6 +169,13 @@ public class MessageModel implements Serializable {
         if (this.type == MANAGER_SESSION_ORDERS_PUSH || this.type == WAITER_SESSION_ORDERS_PUSH) {
             builder.setSound(Constants.getAlertOrdersSoundUri(context))
                     .setFullScreenIntent(pendingIntent, true);
+        }
+        if(this.type == WAITER_SESSION_NEW){
+            Intent waiterIntent = new Intent(context,WaiterWorkActivity.class);
+            waiterIntent.setAction(ACTION_NEW_TABLE);
+            waiterIntent.putExtra(KEY_SESSION_QR_ID,getRawData().getSessionQRId());
+            PendingIntent waiterPendingIntent= PendingIntent.getActivity(context, 0, waiterIntent, PendingIntent.FLAG_UPDATE_CURRENT);
+            builder.addAction(R.drawable.ic_action_show_menu, "Take Order", waiterPendingIntent);
         }
         tryGroupNotification(builder);
     }

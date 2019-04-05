@@ -105,6 +105,12 @@ public class WaiterWorkViewModel extends BaseViewModel {
         mQrResult.addSource(mWaiterRepository.newWaiterSession(requestJson), mQrResult::setValue);
     }
 
+    public void processQrAction(String data) {
+        ObjectNode requestJson = Converters.objectMapper.createObjectNode();
+        requestJson.put("qr", data);
+        mQrResult.addSource(mWaiterRepository.newWaiterSession(requestJson), mQrResult::setValue);
+    }
+
     public long getShopPk() {
         return mShopPk;
     }
