@@ -71,6 +71,7 @@ public class WaiterTableFragment extends BaseFragment {
             return;
 
         buildContactAddDialog();
+        mContactAddDialog.setOnDismissListener(dialogInterface -> Utils.setKeyboardVisibility(tvSessionBill, false));
 
         shopPk = ViewModelProviders.of(requireActivity()).get(WaiterWorkViewModel.class).getShopPk();
 
