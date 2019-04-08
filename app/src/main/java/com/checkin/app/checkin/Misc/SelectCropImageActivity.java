@@ -1,9 +1,12 @@
 package com.checkin.app.checkin.Misc;
 
+import android.Manifest;
 import android.app.Activity;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
 import android.provider.MediaStore;
 import android.util.Log;
@@ -16,10 +19,14 @@ import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.ActivityCompat;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+
+import static android.content.pm.PackageManager.PERMISSION_GRANTED;
 
 public class SelectCropImageActivity extends AppCompatActivity {
     public static final String KEY_IMAGE = "select_crop.image";
@@ -28,6 +35,8 @@ public class SelectCropImageActivity extends AppCompatActivity {
     public static final int RC_CROP_IMAGE = 1000;
     private static final String TAG = SelectCropImageActivity.class.getSimpleName();
     private static final int RC_PICK_IMAGE = 100;
+    private static final int PERMISSION_REQUEST_READ_EXTERNAL = 201;
+
 
     private static final long ONE_BYTES_IN_MB = 1024 * 1024;
     @BindView(R.id.crop_view)
@@ -45,10 +54,17 @@ public class SelectCropImageActivity extends AppCompatActivity {
         long fileSizeInMB = getIntent().getLongExtra(KEY_FILE_SIZE_IN_MB, 0);
         maxFileSizeInBytes = fileSizeInMB * ONE_BYTES_IN_MB;
         float viewportRatio = getIntent().getFloatExtra(KEY_CROP_ASPECT_RATIO, 0.81f);
-
+        checkPermissionExternalStorage();
         cropView.setViewportRatio(viewportRatio);
 
-        init();
+    }
+
+    private void checkPermissionExternalStorage() {
+        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.WRITE_EXTERNAL_STORAGE) != PERMISSION_GRANTED) {
+            ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE}, PERMISSION_REQUEST_READ_EXTERNAL);
+        }else {
+            init();
+        }
     }
 
     private void init() {
@@ -116,5 +132,19 @@ public class SelectCropImageActivity extends AppCompatActivity {
                 e.printStackTrace();
             }
         }
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        switch (requestCode) {
+            case PERMISSION_REQUEST_READ_EXTERNAL: {
+                if (grantResults[0] == PERMISSION_GRANTED)
+                    init();
+                else
+                    finish();
+            }
+            break;
+        }
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
     }
 }
