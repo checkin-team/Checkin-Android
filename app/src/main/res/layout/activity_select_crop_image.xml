@@ -25,6 +25,7 @@
         android:focusable="true"
         android:padding="@dimen/spacing_normal"
         android:src="@drawable/ic_tick"
+        android:visibility="gone"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent" />
 </FrameLayout>

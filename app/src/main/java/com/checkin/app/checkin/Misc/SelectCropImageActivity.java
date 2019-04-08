@@ -10,6 +10,8 @@ import android.os.Build;
 import android.os.Bundle;
 import android.provider.MediaStore;
 import android.util.Log;
+import android.view.View;
+import android.widget.ImageView;
 
 import com.checkin.app.checkin.R;
 import com.checkin.app.checkin.Utility.Utils;
@@ -41,6 +43,8 @@ public class SelectCropImageActivity extends AppCompatActivity {
     private static final long ONE_BYTES_IN_MB = 1024 * 1024;
     @BindView(R.id.crop_view)
     CropView cropView;
+    @BindView(R.id.btn_image_crop_done)
+    ImageView imageCropDone;
 
     private File mRectangleFile;
     private long maxFileSizeInBytes;
@@ -127,6 +131,7 @@ public class SelectCropImageActivity extends AppCompatActivity {
                 Bitmap bitmap = MediaStore.Images.Media.getBitmap(getContentResolver(), uri);
                 String imageAbsolutePath = Utils.getPath(this, uri);
                 Bitmap mFinalBitmap = Utils.modifyOrientation(bitmap, imageAbsolutePath);
+                imageCropDone.setVisibility(View.VISIBLE);
                 cropView.setImageBitmap(mFinalBitmap);
             } catch (IOException e) {
                 e.printStackTrace();
