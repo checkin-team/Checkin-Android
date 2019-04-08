@@ -221,7 +221,7 @@ public class WaiterTableFragment extends BaseFragment {
 
     @OnClick(R.id.btn_waiter_table_menu)
     public void onClickMenu() {
-        SessionMenuActivity.withSession(requireContext(), shopPk, mViewModel.getSessionPk());
+        SessionMenuActivity.startWithSession(requireContext(), shopPk, mViewModel.getSessionPk());
     }
 
     @OnClick(R.id.container_waiter_no_member)

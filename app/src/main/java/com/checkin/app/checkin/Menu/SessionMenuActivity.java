@@ -84,7 +84,11 @@ public class SessionMenuActivity extends BaseActivity implements
     private SESSION_STATUS mSessionStatus;
     private EndDrawerToggle endToggle = null;
 
-    public static void withSession(Context context, Long restaurantPk, @Nullable Long sessionPk) {
+    public static void startWithSession(Context context, Long restaurantPk, @Nullable Long sessionPk) {
+        context.startActivity(withSession(context, restaurantPk, sessionPk));
+    }
+
+    public static Intent withSession(Context context, Long restaurantPk, @Nullable Long sessionPk) {
         Intent intent = new Intent(context, SessionMenuActivity.class);
         Bundle args = new Bundle();
         args.putSerializable(KEY_SESSION_STATUS, SESSION_STATUS.ACTIVE);
@@ -92,7 +96,7 @@ public class SessionMenuActivity extends BaseActivity implements
         if (sessionPk != null)
             args.putLong(KEY_SESSION_PK, sessionPk);
         intent.putExtra(SESSION_ARG, args);
-        context.startActivity(intent);
+        return intent;
     }
 
     public static void withoutSession(Context context, long restaurantPk) {

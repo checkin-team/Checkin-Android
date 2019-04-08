@@ -128,7 +128,7 @@ public class ManagerSessionEventFragment extends BaseFragment implements Manager
             Utils.toast(requireContext(), "Bill already approved for session.");
             return;
         }
-        SessionMenuActivity.withSession(getContext(), mViewModel.getShopPk(), mViewModel.getSessionPk());
+        SessionMenuActivity.startWithSession(getContext(), mViewModel.getShopPk(), mViewModel.getSessionPk());
         mViewModel.updateResults();
     }
 

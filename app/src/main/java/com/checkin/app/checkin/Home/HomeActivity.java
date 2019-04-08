@@ -47,7 +47,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 
-import static com.checkin.app.checkin.Data.Message.ActiveSessionNotificationService.ACTIVE_RESTAURANT;
+import static com.checkin.app.checkin.Data.Message.ActiveSessionNotificationService.ACTIVE_RESTAURANT_DETAIL;
 import static com.checkin.app.checkin.Data.Message.ActiveSessionNotificationService.ACTIVE_SESSION_PK;
 
 public class HomeActivity extends BaseAccountActivity implements NavigationView.OnNavigationItemSelectedListener {
@@ -160,15 +160,15 @@ public class HomeActivity extends BaseAccountActivity implements NavigationView.
                 tvSessionStatus.setText(resource.data.getLiveStatus());
 
                 Intent serviceIntent = new Intent(this, ActiveSessionNotificationService.class);
-                serviceIntent.setAction(Constants.START_FOREGROUND_ACTION);
-                serviceIntent.putExtra(ACTIVE_RESTAURANT, resource.data.getRestaurant());
+                serviceIntent.setAction(Constants.SERVICE_ACTION_FOREGROUND_START);
+                serviceIntent.putExtra(ACTIVE_RESTAURANT_DETAIL, resource.data.getRestaurant());
                 serviceIntent.putExtra(ACTIVE_SESSION_PK, resource.data.getPk());
                 startService(serviceIntent);
 
             } else if (resource.status == Resource.Status.ERROR_NOT_FOUND) {
                 vSessionStatus.setVisibility(View.GONE);
                 Intent serviceIntent = new Intent(this, ActiveSessionNotificationService.class);
-                serviceIntent.setAction(Constants.STOP_FOREGROUND_ACTION);
+                serviceIntent.setAction(Constants.SERVICE_ACTION_FOREGROUND_STOP);
                 startService(serviceIntent);
             }
         });

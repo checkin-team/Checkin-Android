@@ -299,7 +299,7 @@ public class ActiveSessionActivity extends BaseActivity implements
     @OnClick(R.id.btn_active_session_menu)
     public void onListMenu() {
         if (mViewModel.getShopPk() > 0)
-            SessionMenuActivity.withSession(this, mViewModel.getShopPk(), null);
+            SessionMenuActivity.startWithSession(this, mViewModel.getShopPk(), null);
     }
 
     @OnClick(R.id.rl_container_session_orders)
