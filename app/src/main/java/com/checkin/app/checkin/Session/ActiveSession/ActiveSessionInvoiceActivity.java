@@ -1,5 +1,6 @@
 package com.checkin.app.checkin.Session.ActiveSession;
 
+import android.app.Activity;
 import android.os.Bundle;
 import android.text.Editable;
 import android.util.Log;
@@ -10,6 +11,7 @@ import android.widget.TextView;
 
 import com.checkin.app.checkin.Data.Resource;
 import com.checkin.app.checkin.Misc.BillHolder;
+import com.checkin.app.checkin.Session.Paytm.PaytmPayment;
 import com.checkin.app.checkin.R;
 import com.checkin.app.checkin.Session.Model.SessionBillModel;
 import com.checkin.app.checkin.Session.Model.SessionInvoiceModel;
@@ -46,6 +48,7 @@ public class ActiveSessionInvoiceActivity extends AppCompatActivity {
     private InvoiceOrdersAdapter mAdapter;
     private SessionBillModel mBillModel;
     private BillHolder mBillHolder;
+    private PaytmPayment paytmPayment;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -96,6 +99,27 @@ public class ActiveSessionInvoiceActivity extends AppCompatActivity {
                 }
             }
         });
+
+        mViewModel.getChecksum().observe(this, checksumModelResource -> {
+            paytmPayment.initializePayment("",this);
+        });
+
+        paytmPayment = new PaytmPayment() {
+            @Override
+            protected void onPaytmTransactionResponse(Bundle inResponse) {
+
+            }
+
+            @Override
+            protected void onPaytmTransactionCancel(Bundle inResponse, String msg) {
+
+            }
+
+            @Override
+            protected void onPaytmError(String inErrorMessage) {
+
+            }
+        };
     }
 
     private void setupUi(SessionInvoiceModel data) {
@@ -112,7 +136,6 @@ public class ActiveSessionInvoiceActivity extends AppCompatActivity {
         tvInvoiceTotal.setText(Utils.formatCurrencyAmount(this, data.getBill().getTotal()));
 
         boolean isRequestedCheckout = getIntent().getBooleanExtra(KEY_SESSION_REQUESTED_CHECKOUT, false);
-        Log.e("value=====", !isRequestedCheckout + "");
         edInvoiceTip.setEnabled(!isRequestedCheckout);
         btnRequestCheckout.setEnabled(!isRequestedCheckout);
         if (isRequestedCheckout) {
