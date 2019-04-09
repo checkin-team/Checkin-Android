@@ -71,6 +71,7 @@ public class WaiterTableFragment extends BaseFragment {
             return;
 
         buildContactAddDialog();
+        mContactAddDialog.setOnDismissListener(dialogInterface -> Utils.setKeyboardVisibility(tvSessionBill, false));
 
         shopPk = ViewModelProviders.of(requireActivity()).get(WaiterWorkViewModel.class).getShopPk();
 
@@ -221,7 +222,7 @@ public class WaiterTableFragment extends BaseFragment {
 
     @OnClick(R.id.btn_waiter_table_menu)
     public void onClickMenu() {
-        SessionMenuActivity.withSession(requireContext(), shopPk, mViewModel.getSessionPk());
+        SessionMenuActivity.startWithSession(requireContext(), shopPk, mViewModel.getSessionPk());
     }
 
     @OnClick(R.id.container_waiter_no_member)
