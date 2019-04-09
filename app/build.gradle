@@ -161,6 +161,10 @@ dependencies {
 
     // Multidex
     implementation 'com.android.support:multidex:1.0.3'
+
+    implementation('com.paytm:pgplussdk:1.3.3') {
+        transitive = true;
+    }
 }
 
 static def buildTime() {
@@ -169,6 +173,8 @@ static def buildTime() {
 
 static def hostName() {
     return "${System.getProperty("user.name")}@${InetAddress.localHost.hostName}"
+
+
 }
 
 def revision() {
