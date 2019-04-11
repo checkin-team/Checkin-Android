@@ -102,7 +102,7 @@
                             android:textColor="@color/white"
                             android:layout_marginBottom="@dimen/spacing_tiny"
                             android:textSize="@dimen/font_extra_small"
-                            android:visibility="gone"
+                            android:visibility="visible"
                             tools:text="62" />
 
                         <TextView
@@ -117,7 +117,8 @@
                             android:gravity="center"
                             android:padding="@dimen/spacing_extra_small"
                             android:textSize="@dimen/font_large"
-                            tools:text="$ 4206.00" />
+                            tools:text="$ 4206.00"
+                            android:visibility="gone"/>
 
                     </LinearLayout>
 

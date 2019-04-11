@@ -1,12 +1,15 @@
 package com.checkin.app.checkin.Manager;
 
 import android.app.Application;
+import android.util.Log;
 
 import com.checkin.app.checkin.Data.BaseViewModel;
 import com.checkin.app.checkin.Data.Converters;
 import com.checkin.app.checkin.Data.Resource;
 import com.checkin.app.checkin.Manager.Model.ManagerStatsModel;
+import com.checkin.app.checkin.Session.ActiveSession.Chat.SessionChatModel;
 import com.checkin.app.checkin.Session.Model.CheckoutStatusModel;
+import com.checkin.app.checkin.Session.Model.EventBriefModel;
 import com.checkin.app.checkin.Session.Model.RestaurantTableModel;
 import com.checkin.app.checkin.Session.Model.TableSessionModel;
 import com.checkin.app.checkin.Waiter.WaiterRepository;
@@ -131,5 +134,30 @@ public class ManagerWorkViewModel extends BaseViewModel {
             resource.data.remove(pos);
             mTablesData.setValue(Resource.cloneResource(resource, resource.data));
         }
+    }
+
+    public void updateTable(long sessionPk, EventBriefModel event) {
+        Resource<List<RestaurantTableModel>> listResource = mTablesData.getValue();
+        if (listResource == null || listResource.data == null)
+            return;
+        int pos = 0;
+        for (int i = 0; i < listResource.data.size(); i++) {
+            TableSessionModel tableSessionModel = listResource.data.get(i).getTableSession();
+            if (tableSessionModel != null && tableSessionModel.getPk() == sessionPk) {
+                pos = i;
+                RestaurantTableModel table = listResource.data.get(pos);
+                if (table != null) {
+                        tableSessionModel.setEvent(event);
+                        if (event.getType() == SessionChatModel.CHAT_EVENT_TYPE.EVENT_REQUEST_CHECKOUT)
+                            tableSessionModel.setRequestedCheckout(true);
+                    table.addEventCount();
+                    listResource.data.remove(pos);
+                    listResource.data.add(0,table);
+                    mTablesData.setValue(Resource.cloneResource(listResource, listResource.data));
+                }
+            }
+        }
+
+
     }
 }

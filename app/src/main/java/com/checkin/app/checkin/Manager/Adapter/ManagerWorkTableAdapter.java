@@ -24,8 +24,6 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 import de.hdodenhof.circleimageview.CircleImageView;
 
-import static com.checkin.app.checkin.Session.ActiveSession.Chat.SessionChatDataModel.EVENT_REQUEST_SERVICE_TYPE.SERVICE_NONE;
-
 public class ManagerWorkTableAdapter extends RecyclerView.Adapter<ManagerWorkTableAdapter.ShopManagerTableHolder> {
     private List<RestaurantTableModel> mList;
     private ManagerTableInteraction mListener;
@@ -117,24 +115,22 @@ public class ManagerWorkTableAdapter extends RecyclerView.Adapter<ManagerWorkTab
                     ivShopManagerTableImage.setImageDrawable(ivShopManagerTableIcon.getContext().getResources().getDrawable(R.drawable.ic_waiter));
                     tvShopManagerTableName.setText(R.string.waiter_unassigned);
                 }
-                if(tableSessionModel.getEvent().getService() == SERVICE_NONE){
-                    tvEventBadge.setVisibility(View.GONE);
-                    tvShopManagerTableBill.setVisibility(View.VISIBLE);
-                    tvShopManagerTableBill.setText(Utils.formatCurrencyAmount(tvShopManagerTableBill.getContext(), tableSessionModel.getBill()));
-                    tvShopManagerTableDetail.setText(String.format(Locale.ENGLISH, "Session Time: %s", tableSessionModel.formatTimeDuration()));
-                    ivShopManagerTableIcon.setImageResource(R.drawable.ic_clock);
-                }else {
+                if (data.getEventCount() > 0) {
+                    tvEventBadge.setText(data.formatEventCount());
+                    tvEventBadge.setVisibility(View.VISIBLE);
                     tvShopManagerTableDetail.setText(tableSessionModel.getEvent().getMessage());
                     ivShopManagerTableIcon.setImageResource(SessionEventBasicModel.getEventIcon(
                             tableSessionModel.getEvent().getType(), tableSessionModel.getEvent().getService(), tableSessionModel.getEvent().getConcern()));
-                    if (data.getEventCount() > 0) {
-                        tvEventBadge.setText(data.formatEventCount());
-                        tvEventBadge.setVisibility(View.VISIBLE);
-                    } else tvEventBadge.setVisibility(View.GONE);
+                } else{
+                    tvEventBadge.setVisibility(View.GONE);
+                    tvShopManagerTableBill.setText(Utils.formatCurrencyAmount(tvShopManagerTableBill.getContext(), tableSessionModel.getBill()));
+                    tvShopManagerTableDetail.setText(String.format(Locale.ENGLISH, "Session Time: %s", tableSessionModel.formatTimeDuration()));
+                    ivShopManagerTableIcon.setImageResource(R.drawable.ic_clock);
                 }
-
                 tvShopManagerTableTime.setText(tableSessionModel.getEvent().formatTimestamp());
                 tvShopManagerTableNumber.setText(data.getTable());
+
+
 
                 if (tableSessionModel.isRequestedCheckout()) {
                     containerSessionEnd.setVisibility(View.VISIBLE);

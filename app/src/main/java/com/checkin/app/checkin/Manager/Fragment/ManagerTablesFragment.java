@@ -166,18 +166,7 @@ public class ManagerTablesFragment extends BaseFragment implements ManagerWorkTa
     }
 
     private void updateSessionEventCount(long sessionPk, EventBriefModel event) {
-        int pos = mViewModel.getTablePositionWithPk(sessionPk);
-        RestaurantTableModel table = mViewModel.getTableWithPosition(pos);
-        if (table != null) {
-            TableSessionModel tableSessionModel = table.getTableSession();
-            if (tableSessionModel != null) {
-                tableSessionModel.setEvent(event);
-                if (event.getType() == CHAT_EVENT_TYPE.EVENT_REQUEST_CHECKOUT)
-                    tableSessionModel.setRequestedCheckout(true);
-            }
-            table.addEventCount();
-            mAdapter.updateSession(pos);
-        }
+        mViewModel.updateTable(sessionPk,event);
     }
 
     private void updateSessionHost(long sessionPk, BriefModel user) {
