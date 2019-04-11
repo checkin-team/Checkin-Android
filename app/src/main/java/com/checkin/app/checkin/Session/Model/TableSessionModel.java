@@ -1,9 +1,11 @@
 package com.checkin.app.checkin.Session.Model;
 
 import com.checkin.app.checkin.Misc.BriefModel;
+import com.checkin.app.checkin.Utility.Utils;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
+import java.util.Calendar;
 import java.util.Date;
 
 import androidx.annotation.Nullable;
@@ -25,6 +27,9 @@ public class TableSessionModel {
 
     @JsonProperty("is_accepted_checkout")
     private boolean isRequestedCheckout;
+
+    @JsonProperty("bill")
+    private double bill;
 
     public TableSessionModel() {
     }
@@ -71,6 +76,18 @@ public class TableSessionModel {
 
     public Date getCreated() {
         return created;
+    }
+
+    public String formatTimeDuration() {
+        return Utils.formatTimeDuration(Calendar.getInstance().getTime().getTime() - created.getTime());
+    }
+
+    public double getBill() {
+        return bill;
+    }
+
+    public void setBill(double bill) {
+        this.bill = bill;
     }
 
     @Override
