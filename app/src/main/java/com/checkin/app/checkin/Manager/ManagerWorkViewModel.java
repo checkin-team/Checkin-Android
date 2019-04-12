@@ -1,7 +1,6 @@
 package com.checkin.app.checkin.Manager;
 
 import android.app.Application;
-import android.util.Log;
 
 import com.checkin.app.checkin.Data.BaseViewModel;
 import com.checkin.app.checkin.Data.Converters;

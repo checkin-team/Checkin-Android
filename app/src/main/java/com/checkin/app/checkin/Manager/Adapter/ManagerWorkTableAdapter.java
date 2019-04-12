@@ -1,6 +1,5 @@
 package com.checkin.app.checkin.Manager.Adapter;
 
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -118,12 +117,14 @@ public class ManagerWorkTableAdapter extends RecyclerView.Adapter<ManagerWorkTab
                 if (data.getEventCount() > 0) {
                     tvEventBadge.setText(data.formatEventCount());
                     tvEventBadge.setVisibility(View.VISIBLE);
+                    tvShopManagerTableBill.setVisibility(View.GONE);
                     tvShopManagerTableDetail.setText(tableSessionModel.getEvent().getMessage());
                     ivShopManagerTableIcon.setImageResource(SessionEventBasicModel.getEventIcon(
                             tableSessionModel.getEvent().getType(), tableSessionModel.getEvent().getService(), tableSessionModel.getEvent().getConcern()));
                 } else{
                     tvEventBadge.setVisibility(View.GONE);
                     tvShopManagerTableBill.setText(Utils.formatCurrencyAmount(tvShopManagerTableBill.getContext(), tableSessionModel.getBill()));
+                    tvShopManagerTableBill.setVisibility(View.VISIBLE);
                     tvShopManagerTableDetail.setText(String.format(Locale.ENGLISH, "Session Time: %s", tableSessionModel.formatTimeDuration()));
                     ivShopManagerTableIcon.setImageResource(R.drawable.ic_clock);
                 }
