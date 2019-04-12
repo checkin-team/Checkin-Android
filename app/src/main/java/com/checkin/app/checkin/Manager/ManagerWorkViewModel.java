@@ -41,7 +41,7 @@ public class ManagerWorkViewModel extends BaseViewModel {
 
     public void fetchActiveTables(long restaurantId) {
         mShopPk = restaurantId;
-        mTablesData.addSource(mWaiterRepository.getShopTables(restaurantId), mTablesData::setValue);
+        mTablesData.addSource(mWaiterRepository.getShopTables(restaurantId,true), mTablesData::setValue);
     }
 
     public void fetchStatistics() {

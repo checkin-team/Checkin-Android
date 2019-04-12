@@ -54,7 +54,7 @@ public class WaiterWorkViewModel extends BaseViewModel {
 
     public void fetchShopTables(long shopId) {
         mShopPk = shopId;
-        mShopTables.addSource(mWaiterRepository.getShopTables(shopId), mShopTables::setValue);
+        mShopTables.addSource(mWaiterRepository.getShopTables(shopId,false), mShopTables::setValue);
     }
 
     public LiveData<Resource<List<RestaurantTableModel>>> getShopAssignedTables() {
