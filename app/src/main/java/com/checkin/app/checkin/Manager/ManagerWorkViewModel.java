@@ -48,19 +48,7 @@ public class ManagerWorkViewModel extends BaseViewModel {
         mStatsData.addSource(mManagerRepository.getManagerStats(mShopPk), mStatsData::setValue);
     }
 
-    public LiveData<Resource<List<RestaurantTableModel>>> getActiveTables() {
-        return Transformations.map(mTablesData, input -> {
-            if (input == null || input.data == null || input.status != Resource.Status.SUCCESS)
-                return input;
-
-            List<RestaurantTableModel> result = new ArrayList<>();
-            for (int i = 0, length = input.data.size(); i < length; i++) {
-                RestaurantTableModel tableModel = input.data.get(i);
-                if (tableModel.getTableSession() != null)
-                    result.add(tableModel);
-            }
-            return Resource.cloneResource(input, result);
-        });
+    public LiveData<Resource<List<RestaurantTableModel>>> getActiveTables() { return mTablesData;
     }
 
     public void markSessionDone(long sessionId) {
