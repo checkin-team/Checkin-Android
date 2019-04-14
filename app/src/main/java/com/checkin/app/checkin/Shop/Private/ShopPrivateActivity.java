@@ -1,12 +1,7 @@
 package com.checkin.app.checkin.Shop.Private;
 
-import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
-import android.view.GestureDetector;
-import android.view.MotionEvent;
-import android.view.View;
 import android.widget.ImageView;
 
 import com.checkin.app.checkin.Account.AccountModel;
@@ -27,13 +22,12 @@ import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.lifecycle.ViewModelProviders;
-import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 import androidx.viewpager.widget.ViewPager;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 
-public class ShopPrivateActivity extends BaseAccountActivity implements ShopPrivateProfileFragment.onSwipeGesture {
+public class ShopPrivateActivity extends BaseAccountActivity {
 
     public static final String KEY_SHOP_PK = "shop_private.pk";
     @BindView(R.id.vp_shop_private)
@@ -44,10 +38,7 @@ public class ShopPrivateActivity extends BaseAccountActivity implements ShopPriv
     TabLayout tabsShopPrivate;
     @BindView(R.id.iv_shop_profile_navigation)
     ImageView ivShopProfileNavigation;
-    @BindView(R.id.sr_shop_private)
-    SwipeRefreshLayout swipeRefreshLayout;
     private ShopProfileViewModel mViewModel;
-
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -81,7 +72,7 @@ public class ShopPrivateActivity extends BaseAccountActivity implements ShopPriv
         drawerRoot.addDrawerListener(startToggle);
         startToggle.syncState();
 
-        ShopFragmentAdapter adapter = new ShopFragmentAdapter(getSupportFragmentManager(), this);
+        ShopFragmentAdapter adapter = new ShopFragmentAdapter(getSupportFragmentManager());
         vpShopPrivate.setEnabled(false);
         vpShopPrivate.setAdapter(adapter);
         tabsShopPrivate.setupWithViewPager(vpShopPrivate);
@@ -135,24 +126,9 @@ public class ShopPrivateActivity extends BaseAccountActivity implements ShopPriv
         mViewModel.updateResults();
     }
 
-    @Override
-    public void onSwipeLeft() {
-        swipeRefreshLayout.setRefreshing(false);
-                Log.e("swipe==", "inside====");
-    }
-
-    @Override
-    public void onSwipeRight() {
-        swipeRefreshLayout.setRefreshing(false);
-//        Log.e("swipe==", "inside==== ri");
-
-    }
-
     private class ShopFragmentAdapter extends BaseFragmentAdapterBottomNav {
-        ShopPrivateProfileFragment.onSwipeGesture mSwipeGesture;
-        ShopFragmentAdapter(FragmentManager fm, ShopPrivateProfileFragment.onSwipeGesture swipeGesture) {
+        ShopFragmentAdapter(FragmentManager fm) {
             super(fm);
-            mSwipeGesture = swipeGesture;
         }
 
         @Override
@@ -171,7 +147,7 @@ public class ShopPrivateActivity extends BaseAccountActivity implements ShopPriv
         public Fragment getItem(int position) {
             switch (position) {
                 case 0:
-                    return ShopPrivateProfileFragment.newInstance(mSwipeGesture);
+                    return ShopPrivateProfileFragment.newInstance();
                 case 1:
                     return BlankFragment.newInstance();
             }
