@@ -6,6 +6,7 @@ import android.widget.TextView;
 
 import com.checkin.app.checkin.Account.AccountModel;
 import com.checkin.app.checkin.Account.BaseAccountActivity;
+import com.checkin.app.checkin.Data.Resource;
 import com.checkin.app.checkin.Manager.Fragment.ManagerStatsFragment;
 import com.checkin.app.checkin.Manager.Fragment.ManagerTablesActivateFragment;
 import com.checkin.app.checkin.Manager.Fragment.ManagerTablesFragment;
@@ -13,6 +14,7 @@ import com.checkin.app.checkin.Misc.BaseFragmentAdapterBottomNav;
 import com.checkin.app.checkin.R;
 import com.checkin.app.checkin.Shop.ShopPreferences;
 import com.checkin.app.checkin.Utility.DynamicSwipableViewPager;
+import com.checkin.app.checkin.Utility.Utils;
 import com.google.android.material.tabs.TabLayout;
 
 import androidx.annotation.NonNull;
@@ -46,6 +48,7 @@ public class ManagerWorkActivity extends BaseAccountActivity implements ManagerT
     TextView tvActionBarTitle;
     @BindView(R.id.sw_live_order)
     SwitchCompat swLiveOrdersToggle;
+    ManagerWorkViewModel mViewModel;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -65,7 +68,9 @@ public class ManagerWorkActivity extends BaseAccountActivity implements ManagerT
             startToggle.syncState();
         }
 
-        ManagerWorkViewModel mViewModel = ViewModelProviders.of(this).get(ManagerWorkViewModel.class);
+        mViewModel = ViewModelProviders.of(this).get(ManagerWorkViewModel.class);
+        initRefreshScreen(R.id.sr_manager_work);
+
         mViewModel.fetchActiveTables(getIntent().getLongExtra(KEY_RESTAURANT_PK, 0L));
 
         Bundle sessionBundle = getIntent().getBundleExtra(KEY_SESSION_BUNDLE);
@@ -102,6 +107,18 @@ public class ManagerWorkActivity extends BaseAccountActivity implements ManagerT
         });
 
         setLiveOrdersActivation(ShopPreferences.isManagerLiveOrdersActivated(this));
+
+        mViewModel.getActiveTables().observe(this, input -> {
+            if (input == null) return;
+            if (input.status == Resource.Status.SUCCESS && input.data != null) {
+                stopRefreshing();
+            } else if (input.status == Resource.Status.LOADING)
+                startRefreshing();
+            else {
+                stopRefreshing();
+                Utils.toast(this, input.message);
+            }
+        });
     }
 
     @Override
@@ -196,5 +213,12 @@ public class ManagerWorkActivity extends BaseAccountActivity implements ManagerT
             isActivated = isChecked;
             notifyDataSetChanged();
         }
+    }
+
+    @Override
+    protected void updateScreen() {
+        super.updateScreen();
+        getAccountViewModel().updateResults();
+        mViewModel.updateResults();
     }
 }
