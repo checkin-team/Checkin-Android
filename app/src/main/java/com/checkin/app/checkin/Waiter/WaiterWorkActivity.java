@@ -170,9 +170,6 @@ public class WaiterWorkActivity extends BaseAccountActivity implements
 
         if (getIntent().getAction() != null && getIntent().getAction().equals(ACTION_NEW_TABLE)) {
             mViewModel.processQrPk(getIntent().getLongExtra(KEY_SESSION_QR_ID, 0L));
-            NotificationManager notificationManager = (NotificationManager)getSystemService(Context.NOTIFICATION_SERVICE);
-            notificationManager.cancel(getIntent().getIntExtra("notiId",0));
-
         }
     }
 
