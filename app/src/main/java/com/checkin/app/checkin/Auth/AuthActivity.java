@@ -15,6 +15,7 @@ import android.view.View;
 import android.widget.CheckBox;
 import android.widget.CheckedTextView;
 import android.widget.ProgressBar;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.checkin.app.checkin.Home.HomeActivity;
@@ -60,9 +61,7 @@ public class AuthActivity extends AppCompatActivity implements AuthFragmentInter
     @BindView(R.id.dark_back)
     View mDarkBack;
     @BindView(R.id.tv_read_eula)
-    CheckedTextView ctvReadEula;
-    @BindView(R.id.cb_read_eula)
-    CheckBox cbReadEula;
+    TextView cbReadEula;
 
     private CallbackManager mFacebookCallbackManager;
     private FirebaseAuth mAuth;
@@ -130,9 +129,6 @@ public class AuthActivity extends AppCompatActivity implements AuthFragmentInter
 
         mDarkBack.setOnTouchListener((v, event) -> {
             return true;
-        });
-        eulaDialog = new EulaDialog(this, checked -> {
-            cbReadEula.setChecked(checked);
         });
     }
 
@@ -211,6 +207,7 @@ public class AuthActivity extends AppCompatActivity implements AuthFragmentInter
 
     @OnClick(R.id.tv_read_eula)
     public void readEula() {
+        eulaDialog = new EulaDialog(this);
         eulaDialog.show();
     }
 
@@ -219,19 +216,8 @@ public class AuthActivity extends AppCompatActivity implements AuthFragmentInter
         mAuthViewModel.register(firstName, lastName, gender, userName);
     }
 
-    private boolean canLogin() {
-        if (!cbReadEula.isChecked()) {
-            Utils.setKeyboardVisibility(cbReadEula, false);
-            Utils.errorSnack(this, "Need to accept Terms & Condition.");
-            return false;
-        }
-        return true;
-    }
-
     @Override
     public void onGoogleAuth() {
-        if (!canLogin())
-            return;
         showProgress();
 
         GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
@@ -245,8 +231,6 @@ public class AuthActivity extends AppCompatActivity implements AuthFragmentInter
 
     @Override
     public void onFacebookAuth(LoginResult loginResult) {
-        if (!canLogin())
-            return;
         showProgress();
 
         AccessToken accessToken = loginResult.getAccessToken();
@@ -258,8 +242,6 @@ public class AuthActivity extends AppCompatActivity implements AuthFragmentInter
 
     @Override
     public void onPhoneAuth(String phoneNo) {
-        if (!canLogin())
-            return;
         OtpVerificationDialog dialog = OtpVerificationDialog.Builder.with(this)
                 .setAuthCallback(this)
                 .build();

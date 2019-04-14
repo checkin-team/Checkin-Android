@@ -58,19 +58,18 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent">
 
-        <CheckBox
+        <TextView
             android:id="@+id/cb_read_eula"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:checked="false"
-            android:theme="@style/MyCheckBox"
+            android:text="By signing in, you agree to the "
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toStartOf="@+id/tv_read_eula"
+            app:layout_constraintEnd_toStartOf="@id/tv_read_eula"
             app:layout_constraintHorizontal_bias="0.5"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
-        <CheckedTextView
+        <TextView
             android:id="@+id/tv_read_eula"
             style="@style/RedSmallTextStyle"
             android:layout_width="wrap_content"

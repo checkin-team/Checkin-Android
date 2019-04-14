@@ -13,11 +13,11 @@ public class EulaDialog {
     private String message;
     private AlertDialog alertDialog;
 
-    public EulaDialog(@NonNull Context context, EulaListener listener) {
-        buildDialog(context, listener);
+    public EulaDialog(@NonNull Context context) {
+        buildDialog(context);
     }
 
-    private void buildDialog(Context context, EulaListener listener) {
+    private void buildDialog(Context context) {
         try {
             InputStream inputStream = context.getAssets().open("eula.txt");
             int size = inputStream.available();
@@ -33,23 +33,12 @@ public class EulaDialog {
             alertDialog = new AlertDialog.Builder(context)
                     .setTitle("EULA")
                     .setMessage(Html.fromHtml(message))
-                    .setPositiveButton("Agree", ((dialogInterface, i) -> {
-                        listener.onChoose(true);
-                        dialogInterface.dismiss();
-                    }))
-                    .setNegativeButton("Disagree", ((dialogInterface, i) -> {
-                        listener.onChoose(false);
-                        dialogInterface.dismiss();
-                    })).create();
+                    .create();
         }
     }
 
     public void show() {
         if (alertDialog != null)
             alertDialog.show();
-    }
-
-    public interface EulaListener {
-        void onChoose(boolean isAccepted);
     }
 }
