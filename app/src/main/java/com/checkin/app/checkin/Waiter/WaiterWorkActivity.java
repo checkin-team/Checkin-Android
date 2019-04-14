@@ -6,7 +6,6 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.View;
@@ -45,6 +44,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.widget.Toolbar;
+import androidx.cardview.widget.CardView;
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
@@ -81,6 +81,7 @@ public class WaiterWorkActivity extends BaseAccountActivity implements
     @BindView(R.id.rv_waiter_drawer_inactive_tables)
     RecyclerView rvInactiveTables;
 
+    private CardView cvInactiveTable;
     private WaiterWorkViewModel mViewModel;
     private WaiterTablePagerAdapter mFragmentAdapter;
     private final BroadcastReceiver mReceiver = new BroadcastReceiver() {
@@ -222,6 +223,8 @@ public class WaiterWorkActivity extends BaseAccountActivity implements
         });
 
         mViewModel.getQrResult().observe(this, qrResource -> {
+            if(cvInactiveTable!=null)
+            cvInactiveTable.setEnabled(true);
             if (qrResource == null)
                 return;
             if (qrResource.status == Status.SUCCESS && qrResource.data != null) {
@@ -421,17 +424,19 @@ public class WaiterWorkActivity extends BaseAccountActivity implements
     }
 
     @Override
-    public void onTableClick(RestaurantTableModel restaurantTableModel) {
-        newWaiterSessionDialog(restaurantTableModel.getQrPk(), restaurantTableModel.getTable());
+    public void onTableClick(RestaurantTableModel restaurantTableModel, CardView cvWaiterTable) {
+        newWaiterSessionDialog(restaurantTableModel.getQrPk(), restaurantTableModel.getTable(), cvWaiterTable);
     }
 
-    private void newWaiterSessionDialog(long qrPk, String tableName) {
+    private void newWaiterSessionDialog(long qrPk, String tableName, CardView view) {
         AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(this);
         alertDialogBuilder
                 .setTitle(tableName)
                 .setMessage("Do you want to be host of this table?")
                 .setPositiveButton("Yes", (dialog, which) -> {
                     mViewModel.processQrPk(qrPk);
+                    cvInactiveTable = view;
+                    view.setEnabled(false);
                 }).setNegativeButton("No", (dialog, which) -> dialog.cancel())
                 .show();
     }

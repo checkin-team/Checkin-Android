@@ -1,8 +1,10 @@
 package com.checkin.app.checkin.Shop.Private;
 
+import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
@@ -55,12 +57,16 @@ public class ShopPrivateProfileFragment extends Fragment {
     private CoverPagerAdapter mCoverPagerAdapter;
     private StatusTextAdapter mExtraDataAdapter;
     private Intent mImageChangeIntent;
+    float upX, downX;
+    private onSwipeGesture mSwipeGesture;
 
     public ShopPrivateProfileFragment() {
     }
 
-    public static Fragment newInstance() {
-        return new ShopPrivateProfileFragment();
+    public static Fragment newInstance(onSwipeGesture swipeGesture) {
+        ShopPrivateProfileFragment fragment = new ShopPrivateProfileFragment();
+        fragment.mSwipeGesture = swipeGesture;
+        return fragment;
     }
 
     @Nullable
@@ -71,6 +77,7 @@ public class ShopPrivateProfileFragment extends Fragment {
         return view;
     }
 
+    @SuppressLint("ClickableViewAccessibility")
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
@@ -97,6 +104,33 @@ public class ShopPrivateProfileFragment extends Fragment {
                 // LOADING
             } else {
                 Utils.toast(requireContext(), "Error!\n" + shopResource.message);
+            }
+        });
+
+        vpImage.setOnTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View v, MotionEvent event) {
+                switch(event.getAction()){
+                    case MotionEvent.ACTION_DOWN:{
+                        downX = event.getX();}
+                    case MotionEvent.ACTION_UP:{
+                        float upX = event.getX();
+
+                        float deltaX = downX - upX;
+
+                        if(Math.abs(deltaX)>0){
+                            if(deltaX>=0){
+                                mSwipeGesture.onSwipeRight();
+                                return true;
+                            }else{
+                                mSwipeGesture.onSwipeLeft();
+                                return  true;
+                            }
+                        }
+                    }
+                }
+
+                return false;
             }
         });
     }
@@ -160,5 +194,10 @@ public class ShopPrivateProfileFragment extends Fragment {
                 startActivity(intent);
                 break;
         }
+    }
+
+    interface onSwipeGesture{
+        void onSwipeLeft();
+        void onSwipeRight();
     }
 }
