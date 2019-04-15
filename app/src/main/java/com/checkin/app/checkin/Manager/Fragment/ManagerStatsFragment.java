@@ -56,8 +56,6 @@ public class ManagerStatsFragment extends BaseFragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
 
-        initRefreshScreen(R.id.sr_manager_stats);
-
         mAdapter = new ManagerStatsOrderAdapter();
         rvTrendingOrders.setLayoutManager(new LinearLayoutManager(getContext(), RecyclerView.VERTICAL, false));
         rvTrendingOrders.setAdapter(mAdapter);
@@ -69,11 +67,7 @@ public class ManagerStatsFragment extends BaseFragment {
                 return;
             if (input.status == Resource.Status.SUCCESS && input.data != null) {
                 setupData(input.data);
-                stopRefreshing();
-            } else if (input.status == Resource.Status.LOADING)
-                startRefreshing();
-            else {
-                stopRefreshing();
+            } else if (input.status != Resource.Status.LOADING) {
                 Utils.toast(requireContext(), input.message);
             }
         });
@@ -88,10 +82,5 @@ public class ManagerStatsFragment extends BaseFragment {
         tvServingTime.setText(data.formatAvgServingTime());
 
         mAdapter.setData(data.getTrendingOrders());
-    }
-
-    @Override
-    protected void updateScreen() {
-        mViewModel.fetchStatistics();
     }
 }

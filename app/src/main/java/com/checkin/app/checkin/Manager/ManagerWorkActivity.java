@@ -146,6 +146,14 @@ public class ManagerWorkActivity extends BaseAccountActivity implements ManagerT
         swLiveOrdersToggle.setChecked(isActivated);
     }
 
+    @Override
+    protected void updateScreen() {
+        super.updateScreen();
+        getAccountViewModel().updateResults();
+        mViewModel.updateResults();
+        mViewModel.fetchStatistics();
+    }
+
     static class ManagerFragmentAdapter extends BaseFragmentAdapterBottomNav {
 
         private boolean isActivated = true;
@@ -213,12 +221,5 @@ public class ManagerWorkActivity extends BaseAccountActivity implements ManagerT
             isActivated = isChecked;
             notifyDataSetChanged();
         }
-    }
-
-    @Override
-    protected void updateScreen() {
-        super.updateScreen();
-        getAccountViewModel().updateResults();
-        mViewModel.updateResults();
     }
 }
