@@ -14,6 +14,7 @@ import com.checkin.app.checkin.Session.Model.TableSessionModel;
 import com.checkin.app.checkin.Utility.Utils;
 
 import java.util.List;
+import java.util.Locale;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
@@ -79,6 +80,8 @@ public class ManagerWorkTableAdapter extends RecyclerView.Adapter<ManagerWorkTab
         TextView tvShopManagerTableNumber;
         @BindView(R.id.tv_shop_manager_table_detail)
         TextView tvShopManagerTableDetail;
+        @BindView(R.id.tv_shop_manager_session_table_bill)
+        TextView tvShopManagerTableBill;
         @BindView(R.id.tv_shop_manager_table_event_badge)
         TextView tvEventBadge;
         @BindView(R.id.iv_shop_manager_table_icon)
@@ -114,12 +117,21 @@ public class ManagerWorkTableAdapter extends RecyclerView.Adapter<ManagerWorkTab
                 if (data.getEventCount() > 0) {
                     tvEventBadge.setText(data.formatEventCount());
                     tvEventBadge.setVisibility(View.VISIBLE);
-                } else tvEventBadge.setVisibility(View.GONE);
-                ivShopManagerTableIcon.setImageResource(SessionEventBasicModel.getEventIcon(
-                        tableSessionModel.getEvent().getType(), tableSessionModel.getEvent().getService(), tableSessionModel.getEvent().getConcern()));
+                    tvShopManagerTableBill.setVisibility(View.GONE);
+                    tvShopManagerTableDetail.setText(tableSessionModel.getEvent().getMessage());
+                    ivShopManagerTableIcon.setImageResource(SessionEventBasicModel.getEventIcon(
+                            tableSessionModel.getEvent().getType(), tableSessionModel.getEvent().getService(), tableSessionModel.getEvent().getConcern()));
+                } else{
+                    tvEventBadge.setVisibility(View.GONE);
+                    tvShopManagerTableBill.setText(Utils.formatCurrencyAmount(tvShopManagerTableBill.getContext(), tableSessionModel.getBill()));
+                    tvShopManagerTableBill.setVisibility(View.VISIBLE);
+                    tvShopManagerTableDetail.setText(String.format(Locale.ENGLISH, "Session Time: %s", tableSessionModel.formatTimeDuration()));
+                    ivShopManagerTableIcon.setImageResource(R.drawable.ic_clock);
+                }
                 tvShopManagerTableTime.setText(tableSessionModel.getEvent().formatTimestamp());
                 tvShopManagerTableNumber.setText(data.getTable());
-                tvShopManagerTableDetail.setText(tableSessionModel.getEvent().getMessage());
+
+
 
                 if (tableSessionModel.isRequestedCheckout()) {
                     containerSessionEnd.setVisibility(View.VISIBLE);

@@ -90,6 +90,7 @@
                             android:layout_marginStart="@dimen/spacing_tiny"
                             android:layout_marginEnd="@dimen/spacing_tiny"
                             android:layout_weight="1"
+                            android:layout_gravity="center"
                             tools:text="Join the table @4.30 pm." />
 
                         <TextView
@@ -101,7 +102,24 @@
                             android:textColor="@color/white"
                             android:layout_marginBottom="@dimen/spacing_tiny"
                             android:textSize="@dimen/font_extra_small"
+                            android:visibility="visible"
                             tools:text="62" />
+
+                        <TextView
+                            android:id="@+id/tv_shop_manager_session_table_bill"
+                            style="@style/GreyTextStyle"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center"
+                            android:layout_marginEnd="@dimen/spacing_extra_small"
+                            android:background="@drawable/bordered_rectangle_brownish_grey"
+                            android:drawablePadding="@dimen/spacing_extra_small"
+                            android:gravity="center"
+                            android:padding="@dimen/spacing_extra_small"
+                            android:textSize="@dimen/font_large"
+                            tools:text="$ 4206.00"
+                            android:visibility="gone"/>
+
                     </LinearLayout>
 
                     <LinearLayout

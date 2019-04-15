@@ -2,7 +2,6 @@ package com.checkin.app.checkin.Session.ActiveSession;
 
 import android.os.Bundle;
 import android.text.Editable;
-import android.util.Log;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
@@ -112,7 +111,6 @@ public class ActiveSessionInvoiceActivity extends AppCompatActivity {
         tvInvoiceTotal.setText(Utils.formatCurrencyAmount(this, data.getBill().getTotal()));
 
         boolean isRequestedCheckout = getIntent().getBooleanExtra(KEY_SESSION_REQUESTED_CHECKOUT, false);
-        Log.e("value=====", !isRequestedCheckout + "");
         edInvoiceTip.setEnabled(!isRequestedCheckout);
         btnRequestCheckout.setEnabled(!isRequestedCheckout);
         if (isRequestedCheckout) {

@@ -201,7 +201,7 @@ public interface WebApiService {
     Call<QRResultModel> postNewWaiterSession(@Body ObjectNode data);
 
     @GET("restaurants/{restaurant_id}/tables/")
-    Call<List<RestaurantTableModel>> getRestaurantTables(@Path("restaurant_id") long restaurantId);
+    Call<List<RestaurantTableModel>> getRestaurantTables(@Path("restaurant_id") long restaurantId, @Query("active") boolean query);
 
     @GET("sessions/{session_id}/events/waiter/")
     Call<List<WaiterEventModel>> getWaiterSessionEvents(@Path("session_id") long sessionId);

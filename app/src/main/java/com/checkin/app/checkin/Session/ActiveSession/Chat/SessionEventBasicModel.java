@@ -9,6 +9,8 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import androidx.annotation.DrawableRes;
 import androidx.annotation.Nullable;
 
+import static com.checkin.app.checkin.Session.ActiveSession.Chat.SessionChatDataModel.EVENT_REQUEST_SERVICE_TYPE.SERVICE_NONE;
+
 public class SessionEventBasicModel {
     @JsonProperty("pk")
     private int pk;
