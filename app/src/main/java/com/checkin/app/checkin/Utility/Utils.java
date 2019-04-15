@@ -25,6 +25,7 @@ import android.os.Handler;
 import android.os.Looper;
 import android.provider.DocumentsContract;
 import android.provider.MediaStore;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
@@ -311,7 +312,8 @@ public final class Utils {
      * UI
      * ============================================================ */
     public static void toast(@NonNull Context context, String msg) {
-        Toast.makeText(context.getApplicationContext(), msg, Toast.LENGTH_SHORT).show();
+        if (!TextUtils.isEmpty(msg))
+            Toast.makeText(context.getApplicationContext(), msg, Toast.LENGTH_SHORT).show();
     }
 
     public static void toast(@NonNull Context context, @StringRes int msgRes) {

@@ -164,7 +164,6 @@ public class HomeActivity extends BaseAccountActivity implements NavigationView.
                 serviceIntent.putExtra(ACTIVE_RESTAURANT_DETAIL, resource.data.getRestaurant());
                 serviceIntent.putExtra(ACTIVE_SESSION_PK, resource.data.getPk());
                 startService(serviceIntent);
-
             } else if (resource.status == Resource.Status.ERROR_NOT_FOUND) {
                 vSessionStatus.setVisibility(View.GONE);
                 Intent serviceIntent = new Intent(this, ActiveSessionNotificationService.class);

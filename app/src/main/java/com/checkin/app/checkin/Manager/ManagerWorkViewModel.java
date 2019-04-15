@@ -14,7 +14,7 @@ import com.checkin.app.checkin.Session.Model.TableSessionModel;
 import com.checkin.app.checkin.Waiter.WaiterRepository;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 
-import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 import androidx.annotation.NonNull;
@@ -41,7 +41,7 @@ public class ManagerWorkViewModel extends BaseViewModel {
 
     public void fetchActiveTables(long restaurantId) {
         mShopPk = restaurantId;
-        mTablesData.addSource(mWaiterRepository.getShopTables(restaurantId,true), mTablesData::setValue);
+        mTablesData.addSource(mWaiterRepository.getShopTables(restaurantId, true), mTablesData::setValue);
     }
 
     public void fetchStatistics() {
@@ -53,13 +53,8 @@ public class ManagerWorkViewModel extends BaseViewModel {
             if (input == null || input.data == null || input.status != Resource.Status.SUCCESS)
                 return input;
 
-            List<RestaurantTableModel> result = new ArrayList<>();
-            for (int i = 0, length = input.data.size(); i < length; i++) {
-                RestaurantTableModel tableModel = input.data.get(i);
-                if (tableModel.getTableSession() != null)
-                    result.add(tableModel);
-            }
-            return Resource.cloneResource(input, result);
+            Collections.sort(input.data, (t1, t2) -> t2.getTableSession().getEvent().getTimestamp().compareTo(t1.getTableSession().getEvent().getTimestamp()));
+            return Resource.cloneResource(input, input.data);
         });
     }
 
@@ -108,6 +103,7 @@ public class ManagerWorkViewModel extends BaseViewModel {
         Resource<List<RestaurantTableModel>> resource = mTablesData.getValue();
         if (resource == null || resource.data == null)
             return;
+
         resource.data.add(0, tableModel);
         mTablesData.setValue(Resource.cloneResource(resource, resource.data));
     }
@@ -146,17 +142,15 @@ public class ManagerWorkViewModel extends BaseViewModel {
                 pos = i;
                 RestaurantTableModel table = listResource.data.get(pos);
                 if (table != null) {
-                        tableSessionModel.setEvent(event);
-                        if (event.getType() == SessionChatModel.CHAT_EVENT_TYPE.EVENT_REQUEST_CHECKOUT)
-                            tableSessionModel.setRequestedCheckout(true);
+                    tableSessionModel.setEvent(event);
+                    if (event.getType() == SessionChatModel.CHAT_EVENT_TYPE.EVENT_REQUEST_CHECKOUT)
+                        tableSessionModel.setRequestedCheckout(true);
                     table.addEventCount();
                     listResource.data.remove(pos);
-                    listResource.data.add(0,table);
+                    listResource.data.add(0, table);
                     mTablesData.setValue(Resource.cloneResource(listResource, listResource.data));
                 }
             }
         }
-
-
     }
 }

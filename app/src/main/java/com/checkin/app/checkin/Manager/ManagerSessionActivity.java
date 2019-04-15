@@ -269,6 +269,7 @@ public class ManagerSessionActivity extends AppCompatActivity implements
         };
         MessageUtils.registerLocalReceiver(this, mReceiver, types);
         mViewModel.fetchSessionBriefData();
+        MessageUtils.dismissNotification(this, MessageObjectModel.MESSAGE_OBJECT_TYPE.SESSION, mViewModel.getSessionPk());
     }
 
     @Override

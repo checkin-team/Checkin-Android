@@ -15,6 +15,8 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 
+import com.checkin.app.checkin.Data.Message.MessageObjectModel;
+import com.checkin.app.checkin.Data.Message.MessageUtils;
 import com.checkin.app.checkin.Data.Resource.Status;
 import com.checkin.app.checkin.Menu.SessionMenuActivity;
 import com.checkin.app.checkin.Misc.BaseFragment;
@@ -237,6 +239,7 @@ public class WaiterTableFragment extends BaseFragment {
     @Override
     public void onResume() {
         super.onResume();
+        MessageUtils.dismissNotification(requireContext(), MessageObjectModel.MESSAGE_OBJECT_TYPE.SESSION, mViewModel.getSessionPk());
         updateScreen();
     }
 

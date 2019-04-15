@@ -99,4 +99,8 @@ public class TableSessionModel {
             return false;
         }
     }
+
+    public void setCreated(Date created) {
+        this.created = created;
+    }
 }

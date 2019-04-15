@@ -1,5 +1,6 @@
 package com.checkin.app.checkin.Data.Message;
 
+import android.annotation.SuppressLint;
 import android.app.Notification;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
@@ -12,6 +13,7 @@ import android.util.Log;
 import com.checkin.app.checkin.Auth.DeviceTokenService;
 import com.checkin.app.checkin.Data.Converters;
 import com.checkin.app.checkin.R;
+import com.checkin.app.checkin.Utility.Utils;
 import com.google.firebase.messaging.FirebaseMessagingService;
 import com.google.firebase.messaging.RemoteMessage;
 
@@ -72,7 +74,7 @@ public class AppMessagingService extends FirebaseMessagingService {
         for (StatusBarNotification statusBarNotification : mNotificationManager.getActiveNotifications()) {
             if (statusBarNotification.getNotification().getGroup() == null) continue;
             if (statusBarNotification.getNotification().getGroup().equals(notifGroup) && statusBarNotification.getTag() != null) {
-                style.addLine(statusBarNotification.getTag());
+                style.addLine(statusBarNotification.getNotification().extras.getString(Notification.EXTRA_TEXT, ""));
                 notifCount++;
             }
         }
@@ -97,16 +99,22 @@ public class AppMessagingService extends FirebaseMessagingService {
                 .setAutoCancel(true)
                 .build();
 
-        mNotificationManager.notify(null, data.getGroupSummaryID(), summaryNotif);
+        String notifTag = data.getNotificationTag();
+        int notifId = data.getGroupSummaryID();
+        mNotificationManager.notify(notifTag, notifId, summaryNotif);
+        MessageUtils.saveNotificationId(notifTag, notifId);
     }
 
+    @SuppressLint("NewApi")
     private void showNotification(MessageModel data) {
         if (isNotificationEnabled(getApplicationContext(), data.getChannel())) {
             int notificationId = Constants.getNotificationID();
-            Notification notification = data.showNotification(this, mNotificationManager, notificationId);
+            Notification notification = data.showNotification(this);
 
-            mNotificationManager.notify(data.getDescription(), notificationId, notification);
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M && data.isGroupedNotification())
+            String notifTag = data.getNotificationTag();
+            mNotificationManager.notify(notifTag, notificationId, notification);
+            MessageUtils.saveNotificationId(notifTag, notificationId);
+            if (Utils.isMarshMallowOrLater && data.isGroupedNotification())
                 showGroupedNotifications(data);
         }
     }

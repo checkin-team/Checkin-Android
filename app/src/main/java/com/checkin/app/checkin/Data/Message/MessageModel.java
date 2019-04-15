@@ -1,7 +1,6 @@
 package com.checkin.app.checkin.Data.Message;
 
 import android.app.Notification;
-import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.content.ComponentName;
 import android.content.Context;
@@ -25,6 +24,7 @@ import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import java.io.Serializable;
 import java.util.Locale;
 
+import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.core.app.NotificationCompat;
 
@@ -180,7 +180,7 @@ public class MessageModel implements Serializable {
         tryGroupNotification(builder);
     }
 
-    public Notification showNotification(Context context, NotificationManager notificationManager, int notificationId) {
+    public Notification showNotification(Context context) {
         Intent intent = getNotificationIntent(context);
         PendingIntent pendingIntent = PendingIntent.getActivity(context, 0, intent, PendingIntent.FLAG_UPDATE_CURRENT);
         return getNotificationBuilder(context, pendingIntent)
@@ -209,14 +209,24 @@ public class MessageModel implements Serializable {
         return null;
     }
 
+    @NonNull
+    public String getNotificationTag() {
+        MessageObjectModel session = getSessionDetail();
+        if (session != null)
+            return Constants.getNotificationTag(session.getType(), session.getPk());
+        MessageObjectModel objectModel = object != null ? object : target;
+        if (objectModel != null)
+            return Constants.getNotificationTag(objectModel.getType(), objectModel.getPk());
+        return Constants.getNotificationTag(MESSAGE_OBJECT_TYPE.NONE, 0);
+    }
+
     public boolean isGroupedNotification() {
         return isShopManagerNotification() || isShopWaiterNotification() || isUserActiveSessionNotification();
     }
 
     public int getGroupSummaryID() {
         MessageObjectModel session = getSessionDetail();
-        if (session == null)
-            return 0;
+        if (session == null) return 0;
         return Constants.getNotificationSummaryID(session.getType(), session.getPk());
     }
 

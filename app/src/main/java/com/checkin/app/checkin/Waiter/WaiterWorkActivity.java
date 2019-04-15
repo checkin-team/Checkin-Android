@@ -221,6 +221,7 @@ public class WaiterWorkActivity extends BaseAccountActivity implements
                 return;
             if (qrResource.status == Status.SUCCESS && qrResource.data != null) {
                 addWaiterTable(qrResource.data.getSessionPk(), qrResource.data.getTable());
+                mViewModel.fetchShopTables(mViewModel.getShopPk());
             } else if (qrResource.status != Status.LOADING) {
                 Utils.toast(this, qrResource.message);
             }
@@ -232,6 +233,7 @@ public class WaiterWorkActivity extends BaseAccountActivity implements
                 WaiterTableModel data = mFragmentAdapter.getTable(position);
                 if (data == null) return;
                 data.resetEventCount();
+                MessageUtils.dismissNotification(WaiterWorkActivity.this, MessageObjectModel.MESSAGE_OBJECT_TYPE.SESSION, data.getPk());
                 mFragmentAdapter.updateTableStatus(tabLayout, position);
             }
         });

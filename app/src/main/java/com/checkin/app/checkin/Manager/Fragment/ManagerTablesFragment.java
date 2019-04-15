@@ -23,6 +23,7 @@ import com.checkin.app.checkin.Session.Model.RestaurantTableModel;
 import com.checkin.app.checkin.Session.Model.TableSessionModel;
 import com.checkin.app.checkin.Utility.Utils;
 
+import java.util.Calendar;
 import java.util.List;
 
 import androidx.annotation.NonNull;
@@ -66,10 +67,10 @@ public class ManagerTablesFragment extends BaseFragment implements ManagerWorkTa
                     String tableName = message.getRawData().getSessionTableName();
                     eventModel = EventBriefModel.getFromManagerEventModel(message.getRawData().getSessionEventBrief());
                     eventModel.setType(CHAT_EVENT_TYPE.EVENT_SESSION_CHECKIN);
-                    TableSessionModel tableSessionModel = new RestaurantTableModel().getTableSession();
-                    if (tableSessionModel != null) {
-                        tableSessionModel.setEvent(eventModel);
-                    }
+                    MessageObjectModel sessionData = message.getSessionDetail();
+                    assert sessionData != null;
+                    TableSessionModel tableSessionModel = new TableSessionModel(sessionData.getPk(), null, eventModel);
+                    tableSessionModel.setCreated(Calendar.getInstance().getTime());
                     RestaurantTableModel tableModel = new RestaurantTableModel(message.getObject().getPk(), tableName, tableSessionModel);
                     if (message.getActor().getType() == MessageObjectModel.MESSAGE_OBJECT_TYPE.RESTAURANT_MEMBER) {
                         user = message.getActor().getBriefModel();
@@ -133,8 +134,9 @@ public class ManagerTablesFragment extends BaseFragment implements ManagerWorkTa
             if (input.status == Resource.Status.SUCCESS && input.data != null) {
                 mListData = input.data;
                 updateUi(mListData);
-            } else {
+            } else if (input.status != Resource.Status.LOADING) {
                 Utils.toast(requireContext(), input.message);
+
             }
         });
         mViewModel.getCheckoutData().observe(this, resource -> {
@@ -147,7 +149,7 @@ public class ManagerTablesFragment extends BaseFragment implements ManagerWorkTa
                 else
                     mViewModel.updateResults();
             } else if (resource.status != Resource.Status.LOADING) {
-                Utils.toast(requireContext(), "Error: " + resource.message);
+                Utils.toast(requireContext(), resource.message);
             }
         });
     }
@@ -159,7 +161,7 @@ public class ManagerTablesFragment extends BaseFragment implements ManagerWorkTa
     }
 
     private void updateSessionEventCount(long sessionPk, EventBriefModel event) {
-        mViewModel.updateTable(sessionPk,event);
+        mViewModel.updateTable(sessionPk, event);
     }
 
     private void updateSessionHost(long sessionPk, BriefModel user) {
@@ -187,7 +189,7 @@ public class ManagerTablesFragment extends BaseFragment implements ManagerWorkTa
                 MANAGER_SESSION_EVENT_CONCERN, MANAGER_SESSION_HOST_ASSIGNED, MANAGER_SESSION_END
         };
         MessageUtils.registerLocalReceiver(requireContext(), mReceiver, types);
-        updateScreen();
+        mViewModel.updateResults();
     }
 
     @Override

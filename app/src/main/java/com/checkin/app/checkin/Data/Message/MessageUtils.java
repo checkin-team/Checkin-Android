@@ -11,6 +11,8 @@ import android.content.IntentFilter;
 import android.content.SharedPreferences;
 import android.media.AudioAttributes;
 import android.os.Build;
+import android.os.Handler;
+import android.os.Looper;
 import android.util.Log;
 
 import com.checkin.app.checkin.Data.Message.Constants.CHANNEL;
@@ -18,10 +20,13 @@ import com.checkin.app.checkin.Data.Message.Constants.CHANNEL_GROUP;
 import com.checkin.app.checkin.Data.Message.MessageModel.MESSAGE_TYPE;
 import com.checkin.app.checkin.R;
 import com.checkin.app.checkin.Utility.ProgressRequestBody;
+import com.checkin.app.checkin.Utility.Utils;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
+import java.util.Map;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.RequiresApi;
@@ -35,6 +40,9 @@ import static com.checkin.app.checkin.Data.Message.Constants.SP_TABLE_NOTIFICATI
 
 public class MessageUtils {
     private static final String TAG = MessageUtils.class.getSimpleName();
+
+    private static final Map<String, List<Integer>> notifTagToIds = new HashMap<>();
+    private static final Handler sHandler = new Handler(Looper.myLooper());
 
     @RequiresApi(api = Build.VERSION_CODES.O)
     private static List<NotificationChannel> createChannels(CHANNEL_GROUP group, final int importance, CHANNEL... channelTypes) {
@@ -239,6 +247,28 @@ public class MessageUtils {
     public static boolean isNotificationEnabled(Context context, CHANNEL channel) {
         SharedPreferences sharedPreferences = context.getSharedPreferences(SP_TABLE_NOTIFICATION, Context.MODE_PRIVATE);
         return sharedPreferences.getBoolean(String.format(Locale.ENGLISH, FORMAT_SP_KEY_NOTIFICATION_CHANNEL, channel), true);
+    }
+
+    public static void dismissNotification(Context context, MessageObjectModel.MESSAGE_OBJECT_TYPE objectType, long objectPk) {
+        final String notifTag = Constants.getNotificationTag(objectType, objectPk);
+        sHandler.post(() -> {
+            NotificationManager notificationManager = ((NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE));
+            if (notificationManager == null) return;
+            List<Integer> notifIdList = Utils.getOrDefault(notifTagToIds, notifTag, null);
+            if (notifIdList != null) {
+                for (int notifId : notifIdList)
+                    notificationManager.cancel(notifTag, notifId);
+            }
+            notifTagToIds.remove(notifTag);
+        });
+    }
+
+    protected static void saveNotificationId(String notifTag, final int notificationId) {
+        sHandler.post(() -> {
+            List<Integer> notifIdList = Utils.getOrDefault(notifTagToIds, notifTag, new ArrayList<>());
+            notifIdList.add(notificationId);
+            notifTagToIds.put(notifTag, notifIdList);
+        });
     }
 
     public static class NotificationUpdate implements ProgressRequestBody.UploadCallbacks {
