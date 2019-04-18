@@ -117,6 +117,12 @@
             android:theme="@style/AppThemeWhiteActionBar"/>
         <activity android:name=".Shop.Private.ShopPrivateActivity"
             android:screenOrientation="portrait"/>
+        <activity android:name=".Session.ActiveSession.ActiveSessionPaymentOptions"
+            android:label="Payment Mode"
+            android:theme="@style/AppThemeWhiteActionBar" />
+        <activity android:name=".Session.ActiveSession.ActiveSessionPromoDetails"
+            android:label="Promo Code"
+            android:theme="@style/AppThemeWhiteActionBar" />
 
         <service android:name=".Data.Message.AppMessagingService">
             <intent-filter>

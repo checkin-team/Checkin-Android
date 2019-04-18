@@ -1,10 +1,12 @@
 package com.checkin.app.checkin.Waiter;
 
+import android.annotation.SuppressLint;
 import android.app.AlertDialog;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.View;
@@ -33,6 +35,7 @@ import com.checkin.app.checkin.Waiter.Fragment.WaiterTableFragment;
 import com.checkin.app.checkin.Waiter.Model.WaiterEventModel;
 import com.checkin.app.checkin.Waiter.Model.WaiterStatsModel;
 import com.checkin.app.checkin.Waiter.Model.WaiterTableModel;
+import com.google.android.material.navigation.NavigationView;
 import com.google.android.material.tabs.TabLayout;
 
 import java.util.ArrayList;
@@ -78,6 +81,8 @@ public class WaiterWorkActivity extends BaseAccountActivity implements
     RecyclerView rvUnassignedTables;
     @BindView(R.id.rv_waiter_drawer_inactive_tables)
     RecyclerView rvInactiveTables;
+    @BindView(R.id.nav_waiter_end)
+    NavigationView navDrawerEnd;
 
     private WaiterWorkViewModel mViewModel;
     private WaiterTablePagerAdapter mFragmentAdapter;
@@ -417,8 +422,10 @@ public class WaiterWorkActivity extends BaseAccountActivity implements
         return new AccountModel.ACCOUNT_TYPE[]{AccountModel.ACCOUNT_TYPE.RESTAURANT_WAITER};
     }
 
+    @SuppressLint("WrongConstant")
     @Override
     public void onTableClick(RestaurantTableModel restaurantTableModel) {
+        drawerLayout.closeDrawer(Gravity.END,false);
         newWaiterSessionDialog(restaurantTableModel.getQrPk(), restaurantTableModel.getTable());
     }
 

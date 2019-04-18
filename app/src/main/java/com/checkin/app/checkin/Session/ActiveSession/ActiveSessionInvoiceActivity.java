@@ -1,5 +1,6 @@
 package com.checkin.app.checkin.Session.ActiveSession;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.text.Editable;
 import android.widget.Button;
@@ -25,6 +26,8 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 import butterknife.OnTextChanged;
 
+import static com.checkin.app.checkin.Session.ActiveSession.ActiveSessionPaymentOptions.KEY_PAYMENT_MODE_RESULT;
+
 public class ActiveSessionInvoiceActivity extends AppCompatActivity {
     public static final String KEY_SESSION_REQUESTED_CHECKOUT = "invoice.session..requested_checkout";
 
@@ -45,6 +48,10 @@ public class ActiveSessionInvoiceActivity extends AppCompatActivity {
     private InvoiceOrdersAdapter mAdapter;
     private SessionBillModel mBillModel;
     private BillHolder mBillHolder;
+
+    private static final int REQUEST_PAYMENT_MODE = 141;
+    SessionBillModel.PAYMENT_MODES selectedMode = SessionBillModel.PAYMENT_MODES.CASH;
+
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -136,12 +143,29 @@ public class ActiveSessionInvoiceActivity extends AppCompatActivity {
 
     @OnClick(R.id.btn_invoice_request_checkout)
     public void onRequestCheckout() {
-        mViewModel.requestCheckout(mBillModel.getTip(), ShopModel.PAYMENT_MODE.CASH);
+        mViewModel.requestCheckout(mBillModel.getTip(), selectedMode);
+    }
+
+    @OnClick(R.id.payment_mode_change_container)
+    public void onPaymentModeClick(){
+        Intent intent = new Intent(this, ActiveSessionPaymentOptions.class);
+        startActivityForResult(intent, REQUEST_PAYMENT_MODE);
     }
 
     @Override
     public boolean onSupportNavigateUp() {
         finish();
         return true;
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+
+        if (requestCode == REQUEST_PAYMENT_MODE && resultCode == RESULT_OK) {
+            if (data != null) {
+                selectedMode = (SessionBillModel.PAYMENT_MODES) data.getSerializableExtra(KEY_PAYMENT_MODE_RESULT);
+            }
+        }
     }
 }

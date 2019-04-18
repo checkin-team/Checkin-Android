@@ -1,7 +1,6 @@
 package com.checkin.app.checkin.Session.ActiveSession;
 
 import android.app.Application;
-
 import com.checkin.app.checkin.Data.BaseViewModel;
 import com.checkin.app.checkin.Data.Converters;
 import com.checkin.app.checkin.Data.Resource;
@@ -10,10 +9,10 @@ import com.checkin.app.checkin.Misc.GenericDetailModel;
 import com.checkin.app.checkin.Session.ActiveSession.Chat.SessionChatModel;
 import com.checkin.app.checkin.Session.Model.ActiveSessionModel;
 import com.checkin.app.checkin.Session.Model.CheckoutStatusModel;
+import com.checkin.app.checkin.Session.Model.SessionBillModel;
 import com.checkin.app.checkin.Session.Model.SessionCustomerModel;
 import com.checkin.app.checkin.Session.Model.SessionInvoiceModel;
 import com.checkin.app.checkin.Session.Model.SessionOrderedItemModel;
-import com.checkin.app.checkin.Shop.ShopModel;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 
 import java.util.ArrayList;
@@ -90,12 +89,17 @@ public class ActiveSessionViewModel extends BaseViewModel {
         mInvoiceData.addSource(mRepository.getActiveSessionInvoice(), mInvoiceData::setValue);
     }
 
-    public void requestCheckout(double tip, ShopModel.PAYMENT_MODE paymentMode) {
+    public void requestCheckout(double tip, SessionBillModel.PAYMENT_MODES paymentMode) {
+
+
+    }
+
+/*public void requestCheckout(double tip, ShopModel.PAYMENT_MODE paymentMode) {
         ObjectNode data = Converters.objectMapper.createObjectNode()
                 .put("tip", tip)
                 .put("payment_mode", paymentMode.tag);
         mCheckoutData.addSource(mRepository.postRequestCheckout(data), mCheckoutData::setValue);
-    }
+}*/
 
     public LiveData<Resource<CheckoutStatusModel>> getCheckoutData() {
         return mCheckoutData;

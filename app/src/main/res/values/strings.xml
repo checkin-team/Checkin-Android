@@ -166,6 +166,9 @@
     <string name="heading_shop_finance_tax">Tax Details</string>
     <string name="description_shop_finance_tax_change">**Contact us for changes in tax.**</string>
     <string name="title_table_status">Table Status</string>
+    <string name="label_payable_amount">Payable Amount</string>
+    <string name="select">Select</string>
+    <string name="link">Link</string>
 
     <!--Manager Orders-->
     <string name="label_orders">Orders</string>
