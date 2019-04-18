@@ -10,10 +10,10 @@ import android.widget.TextView;
 
 import com.checkin.app.checkin.Data.Resource;
 import com.checkin.app.checkin.Misc.BillHolder;
+import com.checkin.app.checkin.Session.Paytm.PaytmPayment;
 import com.checkin.app.checkin.R;
 import com.checkin.app.checkin.Session.Model.SessionBillModel;
 import com.checkin.app.checkin.Session.Model.SessionInvoiceModel;
-import com.checkin.app.checkin.Shop.ShopModel;
 import com.checkin.app.checkin.Utility.Utils;
 
 import androidx.annotation.Nullable;
@@ -48,6 +48,7 @@ public class ActiveSessionInvoiceActivity extends AppCompatActivity {
     private InvoiceOrdersAdapter mAdapter;
     private SessionBillModel mBillModel;
     private BillHolder mBillHolder;
+    private PaytmPayment paytmPayment;
 
     private static final int REQUEST_PAYMENT_MODE = 141;
     SessionBillModel.PAYMENT_MODES selectedMode = SessionBillModel.PAYMENT_MODES.CASH;
@@ -102,6 +103,27 @@ public class ActiveSessionInvoiceActivity extends AppCompatActivity {
                 }
             }
         });
+
+        mViewModel.getChecksum().observe(this, checksumModelResource -> {
+            paytmPayment.initializePayment("",this);
+        });
+
+        paytmPayment = new PaytmPayment() {
+            @Override
+            protected void onPaytmTransactionResponse(Bundle inResponse) {
+
+            }
+
+            @Override
+            protected void onPaytmTransactionCancel(Bundle inResponse, String msg) {
+
+            }
+
+            @Override
+            protected void onPaytmError(String inErrorMessage) {
+
+            }
+        };
     }
 
     private void setupUi(SessionInvoiceModel data) {

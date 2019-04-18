@@ -11,6 +11,7 @@ import com.checkin.app.checkin.Data.Resource;
 import com.checkin.app.checkin.Data.RetrofitLiveData;
 import com.checkin.app.checkin.Data.WebApiService;
 import com.checkin.app.checkin.Misc.GenericDetailModel;
+import com.checkin.app.checkin.Session.Paytm.ChecksumModel;
 import com.checkin.app.checkin.Session.ActiveSession.Chat.SessionChatModel;
 import com.checkin.app.checkin.Session.Model.ActiveSessionModel;
 import com.checkin.app.checkin.Session.Model.CheckoutStatusModel;
@@ -295,6 +296,26 @@ public class ActiveSessionRepository extends BaseRepository {
 
             @Override
             protected void saveCallResult(GenericDetailModel data) {
+            }
+        }.getAsLiveData();
+    }
+
+    public LiveData<Resource<ChecksumModel>> postPaytmChecksum(ObjectNode data) {
+        return new NetworkBoundResource<ChecksumModel, ChecksumModel>() {
+
+            @Override
+            protected void saveCallResult(ChecksumModel data) {
+            }
+
+            @Override
+            protected boolean shouldUseLocalDb() {
+                return false;
+            }
+
+            @NonNull
+            @Override
+            protected LiveData<ApiResponse<ChecksumModel>> createCall() {
+                return new RetrofitLiveData<>(mWebService.getPaytmChecksum());
             }
         }.getAsLiveData();
     }

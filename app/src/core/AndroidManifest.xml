@@ -124,6 +124,9 @@
             android:label="Promo Code"
             android:theme="@style/AppThemeWhiteActionBar" />
 
+        <activity android:name=".Session.Paytm.PaytmPayment"
+            android:screenOrientation="portrait"/>
+
         <service android:name=".Data.Message.AppMessagingService">
             <intent-filter>
                 <action android:name="com.google.firebase.MESSAGING_EVENT" />

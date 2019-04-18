@@ -6,6 +6,8 @@ import com.checkin.app.checkin.Data.Converters;
 import com.checkin.app.checkin.Data.Resource;
 import com.checkin.app.checkin.Misc.BriefModel;
 import com.checkin.app.checkin.Misc.GenericDetailModel;
+import com.checkin.app.checkin.Session.Paytm.ChecksumModel;
+import com.checkin.app.checkin.Session.Paytm.PaytmModel;
 import com.checkin.app.checkin.Session.ActiveSession.Chat.SessionChatModel;
 import com.checkin.app.checkin.Session.Model.ActiveSessionModel;
 import com.checkin.app.checkin.Session.Model.CheckoutStatusModel;
@@ -35,6 +37,7 @@ public class ActiveSessionViewModel extends BaseViewModel {
     private MediatorLiveData<Resource<GenericDetailModel>> mMemberUpdate = new MediatorLiveData<>();
     private MediatorLiveData<Resource<List<SessionOrderedItemModel>>> mOrdersData = new MediatorLiveData<>();
     private MediatorLiveData<Resource<CheckoutStatusModel>> mCheckoutData = new MediatorLiveData<>();
+    private MediatorLiveData<Resource<ChecksumModel>> mChecksumData = new MediatorLiveData<>();
 
     private long mShopPk = -1, mSessionPk = -1;
 
@@ -255,5 +258,18 @@ public class ActiveSessionViewModel extends BaseViewModel {
             return;
         resource.data.setRequestedCheckout(isRequestedCheckout);
         mSessionData.setValue(Resource.cloneResource(resource, resource.data));
+    }
+
+
+    public void generateCheksum(PaytmModel paytmModel) {
+        ObjectNode data = Converters.objectMapper.createObjectNode()
+                .put("order_id", "")
+                .put("customer_id", "")
+                .put("amount", "");
+        mChecksumData.addSource(mRepository.postPaytmChecksum(data), mChecksumData::setValue);
+    }
+
+    public LiveData<Resource<ChecksumModel>> getChecksum() {
+        return mChecksumData;
     }
 }

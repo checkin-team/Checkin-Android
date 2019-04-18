@@ -10,6 +10,7 @@ import com.checkin.app.checkin.Manager.Model.ManagerStatsModel;
 import com.checkin.app.checkin.Menu.Model.MenuModel;
 import com.checkin.app.checkin.Menu.Model.OrderedItemModel;
 import com.checkin.app.checkin.Misc.GenericDetailModel;
+import com.checkin.app.checkin.Session.Paytm.ChecksumModel;
 import com.checkin.app.checkin.Search.SearchResultPeopleModel;
 import com.checkin.app.checkin.Search.SearchResultShopModel;
 import com.checkin.app.checkin.Session.ActiveSession.Chat.SessionChatModel;
@@ -286,4 +287,9 @@ public interface WebApiService {
 
     @GET("sessions/{session_id}/contacts/")
     Call<List<SessionContactModel>> getSessionContactList(@Path("session_id") long sessionId);
+
+    //checksum
+
+    @GET("")
+    Call<ChecksumModel> getPaytmChecksum();
 }
