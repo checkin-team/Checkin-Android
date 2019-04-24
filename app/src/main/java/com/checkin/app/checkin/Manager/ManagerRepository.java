@@ -58,7 +58,7 @@ public class ManagerRepository extends BaseRepository {
         }.getAsLiveData();
     }
 
-    public LiveData<Resource<CheckoutStatusModel>> manageSessionCheckout(long sessionId, ObjectNode data) {
+    public LiveData<Resource<CheckoutStatusModel>> manageSessionCheckout(long sessionId) {
         return new NetworkBoundResource<CheckoutStatusModel, CheckoutStatusModel>() {
             @Override
             protected boolean shouldUseLocalDb() {
@@ -68,7 +68,7 @@ public class ManagerRepository extends BaseRepository {
             @NonNull
             @Override
             protected LiveData<ApiResponse<CheckoutStatusModel>> createCall() {
-                return new RetrofitLiveData<>(mWebService.putSessionCheckout(sessionId, data));
+                return new RetrofitLiveData<>(mWebService.putSessionCheckout(sessionId));
             }
 
             @Override

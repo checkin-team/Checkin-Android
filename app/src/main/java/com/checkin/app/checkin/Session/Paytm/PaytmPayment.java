@@ -5,8 +5,6 @@ import android.os.Bundle;
 import android.util.Log;
 
 import com.checkin.app.checkin.R;
-import com.checkin.app.checkin.Utility.Constants;
-import com.checkin.app.checkin.Utility.Utils;
 import com.paytm.pgsdk.PaytmOrder;
 import com.paytm.pgsdk.PaytmPGService;
 import com.paytm.pgsdk.PaytmPaymentTransactionCallback;
@@ -16,21 +14,23 @@ import java.util.HashMap;
 public abstract class PaytmPayment {
 
 
-    public void initializePayment(String checksumHash, Activity activity){
+    public void initializePayment(PaytmModel paytmModel, Activity activity){
         PaytmPGService Service = PaytmPGService.getStagingService();
 
-        PaytmModel paytmModel = new PaytmModel();
         HashMap<String, String> paramMap = new HashMap<>();
-        paramMap.put("MID", Constants.PAYTM_M_ID);
+        paramMap.put("MID", paytmModel.getMerchantId());
         paramMap.put("ORDER_ID", paytmModel.getOrderId());
         paramMap.put("CUST_ID", paytmModel.getCustId());
-        paramMap.put("CHANNEL_ID", paytmModel.getChannelId());
-        paramMap.put("TXN_AMOUNT", paytmModel.getTxnAmount());
+        paramMap.put("MOBILE_NO" , paytmModel.getPhone());
+        paramMap.put("EMAIL" , paytmModel.getEmail());
+        paramMap.put("CHANNEL_ID", "WAP");
+        paramMap.put("TXN_AMOUNT", paytmModel.getAmount());
         paramMap.put("WEBSITE", paytmModel.getWebsite());
         paramMap.put("INDUSTRY_TYPE_ID", paytmModel.getIndustryTypeId());
-        paramMap.put("CALLBACK_URL", paytmModel.getCallBackUrl());
-        paramMap.put("CHECKSUMHASH", checksumHash);
+        paramMap.put("CALLBACK_URL", paytmModel.getCallbackURL());
+        paramMap.put("CHECKSUMHASH", paytmModel.getChecksumHash());
 
+        Log.e("checksumhash", paytmModel.getChecksumHash() + "");
         PaytmOrder order = new PaytmOrder(paramMap);
         Service.initialize(order, null);
 

@@ -119,22 +119,4 @@ public class SessionBillModel {
         if (this.offers != null)
             this.total -= this.offers;
     }
-
-    public enum PAYMENT_MODES {
-        CASH("csh"), PAYTM("ptm"), GOOGLE_PAY("gpay"), CREDIT_DEBIT("credit_debit"), NET_BANKING("net_banking");
-
-        public String tag;
-
-        PAYMENT_MODES(String tag) {
-            this.tag = tag;
-        }
-
-        public static PAYMENT_MODES getByTag(String tag) {
-            for (PAYMENT_MODES mode : PAYMENT_MODES.values()) {
-                if (mode.tag.contentEquals(tag))
-                    return mode;
-            }
-            return CASH;
-        }
-    }
 }

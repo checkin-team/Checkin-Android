@@ -1,6 +1,8 @@
 package com.checkin.app.checkin.Session.ActiveSession;
 
 import android.app.Application;
+import android.os.Bundle;
+
 import com.checkin.app.checkin.Data.BaseViewModel;
 import com.checkin.app.checkin.Data.Converters;
 import com.checkin.app.checkin.Data.Resource;
@@ -15,6 +17,7 @@ import com.checkin.app.checkin.Session.Model.SessionBillModel;
 import com.checkin.app.checkin.Session.Model.SessionCustomerModel;
 import com.checkin.app.checkin.Session.Model.SessionInvoiceModel;
 import com.checkin.app.checkin.Session.Model.SessionOrderedItemModel;
+import com.checkin.app.checkin.Shop.ShopModel;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 
 import java.util.ArrayList;
@@ -37,9 +40,10 @@ public class ActiveSessionViewModel extends BaseViewModel {
     private MediatorLiveData<Resource<GenericDetailModel>> mMemberUpdate = new MediatorLiveData<>();
     private MediatorLiveData<Resource<List<SessionOrderedItemModel>>> mOrdersData = new MediatorLiveData<>();
     private MediatorLiveData<Resource<CheckoutStatusModel>> mCheckoutData = new MediatorLiveData<>();
-    private MediatorLiveData<Resource<ChecksumModel>> mChecksumData = new MediatorLiveData<>();
+    private MediatorLiveData<Resource<PaytmModel>> mPaytmData = new MediatorLiveData<>();
 
     private long mShopPk = -1, mSessionPk = -1;
+    private String paytmChecksum, paytmCustId;
 
     public ActiveSessionViewModel(@NonNull Application application) {
         super(application);
@@ -92,17 +96,41 @@ public class ActiveSessionViewModel extends BaseViewModel {
         mInvoiceData.addSource(mRepository.getActiveSessionInvoice(), mInvoiceData::setValue);
     }
 
-    public void requestCheckout(double tip, SessionBillModel.PAYMENT_MODES paymentMode) {
-
-
-    }
-
-/*public void requestCheckout(double tip, ShopModel.PAYMENT_MODE paymentMode) {
+    public void requestCheckout(double tip, ShopModel.PAYMENT_MODE paymentMode, boolean override) {
         ObjectNode data = Converters.objectMapper.createObjectNode()
                 .put("tip", tip)
-                .put("payment_mode", paymentMode.tag);
+                .put("payment_mode", paymentMode.tag)
+                .put("override", override);
         mCheckoutData.addSource(mRepository.postRequestCheckout(data), mCheckoutData::setValue);
-}*/
+    }
+
+    public void requestPaytmDetails(){
+        mPaytmData.addSource(mRepository.postPaytmDetailRequest(), mPaytmData::setValue);
+    }
+
+    public LiveData<Resource<PaytmModel>> getPaytmDetails() {
+        return mPaytmData;
+    }
+
+    public void setChecksumCustId(String checksum, String custId){
+        paytmChecksum = checksum;
+        paytmCustId = custId;
+    }
+
+    public void postPaytmCallback(Bundle bundle) {
+        ObjectNode data = Converters.objectMapper.createObjectNode()
+                .put("MID", bundle.getString("MID"))
+                .put("ORDERID", bundle.getString("ORDERID"))
+                .put("CUST_ID", paytmCustId)
+                .put("CHECKSUMHASH", paytmChecksum)
+                .put("TXNAMOUNT", bundle.getString("TXNAMOUNT"))
+                .put("TXNID", bundle.getString("RESPCODE"))
+                .put("RESPCODE", bundle.getString("RESPCODE"))
+                .put("STATUS", bundle.getString("STATUS"))
+                .put("RESPMSG", bundle.getString("RESPMSG"))
+                .put("channel_id", "WAP");
+        mData.addSource(mRepository.postPaytmResult(data), mData::setValue);
+    }
 
     public LiveData<Resource<CheckoutStatusModel>> getCheckoutData() {
         return mCheckoutData;
@@ -261,15 +289,4 @@ public class ActiveSessionViewModel extends BaseViewModel {
     }
 
 
-    public void generateCheksum(PaytmModel paytmModel) {
-        ObjectNode data = Converters.objectMapper.createObjectNode()
-                .put("order_id", "")
-                .put("customer_id", "")
-                .put("amount", "");
-        mChecksumData.addSource(mRepository.postPaytmChecksum(data), mChecksumData::setValue);
-    }
-
-    public LiveData<Resource<ChecksumModel>> getChecksum() {
-        return mChecksumData;
-    }
 }

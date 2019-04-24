@@ -10,7 +10,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
-public class ActiveSessionPromoDetails extends BaseActivity {
+public class ActiveSessionPromoActivity extends BaseActivity {
 
     @BindView(R.id.rv_available_promos)
     RecyclerView rvPromos;
@@ -19,7 +19,7 @@ public class ActiveSessionPromoDetails extends BaseActivity {
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        setContentView(R.layout.activity_active_session_promo_detail);
+        setContentView(R.layout.activity_active_session_promo);
         ButterKnife.bind(this);
 
         if (getSupportActionBar() != null) {

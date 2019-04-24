@@ -33,11 +33,13 @@ public class Constants {
 
     public final static String EXPAND_TEXT = "....";
 
-    //Paytm details
+    /*//Paytm details
     public static final String PAYTM_M_ID = "mUsdOB28426623954609";
     public static final String PAYTM_CHANNEL_ID = "WAP";
     public static final String PAYTM_INDUSTRY_TYPE_ID = "Retail";
     public static final String PAYTM_WEBSITE = "WEBSTAGING";
+    public static final String PAYTM_CALLBACK_URL = "https://securegw-stage.paytm.in/theia/paytmCallback?ORDER_ID=";*/
+
     public static final String PAYTM_CALLBACK_URL = "https://securegw-stage.paytm.in/theia/paytmCallback?ORDER_ID=";
 
     private Constants() {

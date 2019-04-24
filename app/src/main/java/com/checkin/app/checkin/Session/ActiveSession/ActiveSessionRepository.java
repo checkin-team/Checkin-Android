@@ -17,6 +17,7 @@ import com.checkin.app.checkin.Session.Model.ActiveSessionModel;
 import com.checkin.app.checkin.Session.Model.CheckoutStatusModel;
 import com.checkin.app.checkin.Session.Model.SessionInvoiceModel;
 import com.checkin.app.checkin.Session.Model.SessionOrderedItemModel;
+import com.checkin.app.checkin.Session.Paytm.PaytmModel;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 
 import java.util.List;
@@ -262,6 +263,44 @@ public class ActiveSessionRepository extends BaseRepository {
         }.getAsLiveData();
     }
 
+    public LiveData<Resource<PaytmModel>> postPaytmDetailRequest() {
+        return new NetworkBoundResource<PaytmModel, PaytmModel>() {
+            @Override
+            protected boolean shouldUseLocalDb() {
+                return false;
+            }
+
+            @NonNull
+            @Override
+            protected LiveData<ApiResponse<PaytmModel>> createCall() {
+                return new RetrofitLiveData<>(mWebService.postPaytmRequest());
+            }
+
+            @Override
+            protected void saveCallResult(PaytmModel data) {
+            }
+        }.getAsLiveData();
+    }
+
+    public LiveData<Resource<ObjectNode>> postPaytmResult(ObjectNode data) {
+        return new NetworkBoundResource<ObjectNode, ObjectNode>() {
+            @Override
+            protected boolean shouldUseLocalDb() {
+                return false;
+            }
+
+            @NonNull
+            @Override
+            protected LiveData<ApiResponse<ObjectNode>> createCall() {
+                return new RetrofitLiveData<>(mWebService.postPaytmCallback(data));
+            }
+
+            @Override
+            protected void saveCallResult(ObjectNode data) {
+            }
+        }.getAsLiveData();
+    }
+
     public LiveData<Resource<GenericDetailModel>> acceptSessionMemberRequest(String userId) {
         return new NetworkBoundResource<GenericDetailModel, GenericDetailModel>() {
             @Override
@@ -296,26 +335,6 @@ public class ActiveSessionRepository extends BaseRepository {
 
             @Override
             protected void saveCallResult(GenericDetailModel data) {
-            }
-        }.getAsLiveData();
-    }
-
-    public LiveData<Resource<ChecksumModel>> postPaytmChecksum(ObjectNode data) {
-        return new NetworkBoundResource<ChecksumModel, ChecksumModel>() {
-
-            @Override
-            protected void saveCallResult(ChecksumModel data) {
-            }
-
-            @Override
-            protected boolean shouldUseLocalDb() {
-                return false;
-            }
-
-            @NonNull
-            @Override
-            protected LiveData<ApiResponse<ChecksumModel>> createCall() {
-                return new RetrofitLiveData<>(mWebService.getPaytmChecksum());
             }
         }.getAsLiveData();
     }

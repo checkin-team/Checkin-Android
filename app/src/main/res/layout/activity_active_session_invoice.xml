@@ -112,7 +112,7 @@
                 android:background="@color/white_three" />
 
             <LinearLayout
-                android:id="@+id/ll_promo_code"
+                android:id="@+id/promo_code_apply_container"
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/button_height_medium"
                 android:gravity="center"
@@ -120,6 +120,7 @@
                 android:paddingEnd="@dimen/spacing_small">
 
                 <TextView
+                    android:id="@+id/tv_promo_code"
                     style="@style/RedTitleStyle"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -198,12 +199,14 @@
             android:visibility="gone">
 
             <TextView
+                android:id="@+id/tv_saving_info_label"
                 style="@style/GreyTextStyle"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="You're saving  " />
 
             <TextView
+                android:id="@+id/tv_saving_percent"
                 style="@style/GreyTextStyle"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -223,18 +226,20 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent">
 
-            <!--<TextView
-                style="@style/GreyTextStyle"
+            <Button
+                android:id="@+id/btn_select_payment_mode"
+                style="@style/RedSmallTextStyle"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:drawableStart="@drawable/ic_cash_grey"
-                android:drawablePadding="@dimen/spacing_small"
-                android:text="Via Cash"
+                android:text="Select \n Payment Mode"
+                android:textSize="@dimen/font_small"
+                android:padding="@dimen/spacing_small"
+                android:background="@drawable/background_textbox"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toStartOf="@id/btn_invoice_request_checkout"
                 app:layout_constraintHorizontal_bias="0.25"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />-->
+                app:layout_constraintTop_toTopOf="parent" />
 
 
             <LinearLayout
@@ -245,6 +250,7 @@
                 android:layout_marginEnd="@dimen/spacing_small"
                 android:layout_weight="0.5"
                 android:orientation="vertical"
+                android:visibility="gone"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toStartOf="@id/btn_invoice_request_checkout"
                 app:layout_constraintHorizontal_bias="0.25"
@@ -252,6 +258,7 @@
                 app:layout_constraintTop_toTopOf="parent">
 
                 <TextView
+                    android:id="@+id/tv_as_payment_mode"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
