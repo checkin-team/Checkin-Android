@@ -2,7 +2,6 @@ package com.checkin.app.checkin.Session.Paytm;
 
 import android.app.Activity;
 import android.os.Bundle;
-import android.util.Log;
 
 import com.checkin.app.checkin.R;
 import com.paytm.pgsdk.PaytmOrder;
@@ -30,7 +29,6 @@ public abstract class PaytmPayment {
         paramMap.put("CALLBACK_URL", paytmModel.getCallbackURL());
         paramMap.put("CHECKSUMHASH", paytmModel.getChecksumHash());
 
-        Log.e("checksumhash", paytmModel.getChecksumHash() + "");
         PaytmOrder order = new PaytmOrder(paramMap);
         Service.initialize(order, null);
 

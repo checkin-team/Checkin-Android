@@ -3,7 +3,6 @@ package com.checkin.app.checkin.Session.ActiveSession;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.Editable;
-import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
@@ -135,8 +134,8 @@ public class ActiveSessionInvoiceActivity extends AppCompatActivity {
             switch (paytmModelResource.status) {
                 case SUCCESS: {
                     PaytmModel paytmModel = paytmModelResource.data;
-                    if (paytmModel!= null){
-                        mViewModel.setChecksumCustId(paytmModel.getChecksumHash(),paytmModel.getCustId());
+                    if (paytmModel != null) {
+                        mViewModel.setChecksumCustId(paytmModel.getChecksumHash(), paytmModel.getCustId());
                         paytmPayment.initializePayment(paytmModel, this);
                     }
 
@@ -154,18 +153,17 @@ public class ActiveSessionInvoiceActivity extends AppCompatActivity {
         paytmPayment = new PaytmPayment() {
             @Override
             protected void onPaytmTransactionResponse(Bundle inResponse) {
-                Log.e("OnSuccess===", inResponse.toString() + "=====");
                 mViewModel.postPaytmCallback(inResponse);
             }
 
             @Override
             protected void onPaytmTransactionCancel(Bundle inResponse, String msg) {
-                Utils.toast(ActiveSessionInvoiceActivity.this,msg);
+                Utils.toast(ActiveSessionInvoiceActivity.this, msg);
             }
 
             @Override
             protected void onPaytmError(String inErrorMessage) {
-                Utils.toast(ActiveSessionInvoiceActivity.this,inErrorMessage);
+                Utils.toast(ActiveSessionInvoiceActivity.this, inErrorMessage);
             }
         };
 
@@ -173,7 +171,7 @@ public class ActiveSessionInvoiceActivity extends AppCompatActivity {
             if (objectNodeResource == null)
                 return;
             if (objectNodeResource.status == Resource.Status.SUCCESS && objectNodeResource.data != null) {
-                Utils.toast(this,objectNodeResource.message);
+                Utils.toast(this, objectNodeResource.message);
             }
         });
     }
@@ -217,9 +215,10 @@ public class ActiveSessionInvoiceActivity extends AppCompatActivity {
 
     @OnClick(R.id.btn_invoice_request_checkout)
     public void onRequestCheckout() {
-        mViewModel.requestCheckout(mBillModel.getTip(), selectedMode, false);
-
-
+        if (selectedMode != null)
+            mViewModel.requestCheckout(mBillModel.getTip(), selectedMode, false);
+        else
+            Utils.toast(this, "Please select the Payment Mode.");
     }
 
     @OnClick(R.id.payment_mode_change_container)
@@ -252,12 +251,12 @@ public class ActiveSessionInvoiceActivity extends AppCompatActivity {
                         paymentModeChangeContainer.setVisibility(View.VISIBLE);
                         selectedMode = (ShopModel.PAYMENT_MODE) data.getSerializableExtra(KEY_PAYMENT_MODE_RESULT);
 //                        tvPaymentMode.setText(ShopModel.getPaymentMode(selectedMode));
-                        if(selectedMode.equals(CASH)){
+                        if (selectedMode.equals(CASH)) {
                             tvPaymentMode.setText("via Cash");
-                        }else {
+                        } else {
                             setTotalAmount();
                         }
-                        tvPaymentMode.setCompoundDrawablesWithIntrinsicBounds(ShopModel.getPaymentModeIcon(selectedMode),0,0,0);
+                        tvPaymentMode.setCompoundDrawablesWithIntrinsicBounds(ShopModel.getPaymentModeIcon(selectedMode), 0, 0, 0);
                     }
                 }
                 break;
@@ -265,12 +264,12 @@ public class ActiveSessionInvoiceActivity extends AppCompatActivity {
     }
 
     @OnTextChanged(R.id.tv_invoice_total)
-    public void setTotalAmount(){
-        if(selectedMode!= null && selectedMode.equals(PAYTM))
-        tvPaymentMode.setText(tvInvoiceTotal.getText().toString());
+    public void setTotalAmount() {
+        if (selectedMode != null && selectedMode.equals(PAYTM))
+            tvPaymentMode.setText(tvInvoiceTotal.getText().toString());
     }
 
-    private void setDiscountInfo(String label, String offPercent){
+    private void setDiscountInfo(String label, String offPercent) {
         savingInfoContainer.setVisibility(View.VISIBLE);
         tvSavingInfoLabel.setText(label);
         tvSavingPercent.setText(offPercent);
