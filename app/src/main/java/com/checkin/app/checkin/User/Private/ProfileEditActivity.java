@@ -162,7 +162,6 @@ public class ProfileEditActivity extends AppCompatActivity implements OtpVerific
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case R.id.menu_item_done: {
-                Toast.makeText(this, "Done", Toast.LENGTH_SHORT).show();
                 String name = etName.getText().toString();
                 String firstName="",lastName="";
                 if(name.split("\\w+").length>1){
