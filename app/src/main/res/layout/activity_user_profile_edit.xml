@@ -22,13 +22,14 @@
         android:layout_marginTop="@dimen/spacing_small"
         android:text="Name"
         android:textColor="@color/pinkish_grey"
-        android:textSize="@dimen/font_large" />
+        android:textSize="@dimen/font_normal" />
 
     <EditText
         android:id="@+id/et_edit_profile_name"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:inputType="textPersonName"
+        android:textSize="@dimen/font_normal"
         android:textColor="@color/brownish_grey" />
 
     <TextView
@@ -37,13 +38,14 @@
         android:layout_marginTop="@dimen/spacing_normal"
         android:text="City"
         android:textColor="@color/pinkish_grey"
-        android:textSize="@dimen/font_large" />
+        android:textSize="@dimen/font_normal" />
 
     <EditText
         android:id="@+id/et_edit_profile_city"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:inputType="textPersonName"
+        android:textSize="@dimen/font_normal"
         android:textColor="@color/brownish_grey" />
 
     <TextView
@@ -52,13 +54,14 @@
         android:layout_marginTop="@dimen/spacing_normal"
         android:text="Country"
         android:textColor="@color/pinkish_grey"
-        android:textSize="@dimen/font_large" />
+        android:textSize="@dimen/font_normal" />
 
     <EditText
         android:id="@+id/et_edit_profile_country"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:inputType="textPersonName"
+        android:textSize="@dimen/font_normal"
         android:textColor="@color/brownish_grey" />
 
     <TextView
@@ -67,13 +70,14 @@
         android:layout_marginTop="@dimen/spacing_normal"
         android:text="Bio"
         android:textColor="@color/pinkish_grey"
-        android:textSize="@dimen/font_large" />
+        android:textSize="@dimen/font_normal" />
 
     <EditText
         android:id="@+id/et_edit_profile_bio"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:inputType="textPersonName"
+        android:textSize="@dimen/font_normal"
         android:textColor="@color/brownish_grey" />
 
     <Space
@@ -131,7 +135,7 @@
             android:layout_marginTop="@dimen/spacing_normal"
             android:text="Phone Number"
             android:textColor="@color/brownish_grey"
-            android:textSize="@dimen/font_large" />
+            android:textSize="@dimen/font_normal" />
 
         <RelativeLayout
             android:layout_width="match_parent"
@@ -145,6 +149,7 @@
                 android:maxLength="13"
                 android:textColor="@color/brownish_grey"
                 android:enabled="false"
+                android:textSize="@dimen/font_normal"
                 tools:text="1234567890" />
 
             <TextView
@@ -170,7 +175,7 @@
             android:layout_marginTop="@dimen/spacing_normal"
             android:text="Email"
             android:textColor="@color/brownish_grey"
-            android:textSize="@dimen/font_large" />
+            android:textSize="@dimen/font_normal" />
 
         <RelativeLayout
             android:layout_width="match_parent"
@@ -182,6 +187,7 @@
                 android:layout_height="wrap_content"
                 android:inputType="none"
                 android:textColor="@color/brownish_grey"
+                android:textSize="@dimen/font_normal"
                 android:paddingEnd="@dimen/spacing_huge" />
 
             <TextView

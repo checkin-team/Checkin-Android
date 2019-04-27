@@ -25,9 +25,6 @@ import butterknife.BindView;
 import butterknife.OnClick;
 
 import static android.app.Activity.RESULT_OK;
-import static com.checkin.app.checkin.User.Private.ProfileEditActivity.FULL_NAME;
-import static com.checkin.app.checkin.User.Private.ProfileEditActivity.LAST_NAME;
-import static com.checkin.app.checkin.User.Private.ProfileEditActivity.USERNAME;
 
 public class UserPrivateProfileFragment extends BaseFragment {
     @BindView(R.id.tv_user_private_checkins)

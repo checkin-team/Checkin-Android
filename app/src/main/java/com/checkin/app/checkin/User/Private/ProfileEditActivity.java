@@ -63,6 +63,12 @@ public class ProfileEditActivity extends AppCompatActivity implements OtpVerific
             actionBar.setElevation(10);
         }
 
+        getData();
+
+        mAuth = FirebaseAuth.getInstance();
+    }
+
+    private void getData(){
         mUserViewModel = ViewModelProviders.of(this).get(UserViewModel.class);
         mUserViewModel.fetchUserData();
         mUserViewModel.getUserData().observe(this, userModelResource -> {
@@ -82,7 +88,6 @@ public class ProfileEditActivity extends AppCompatActivity implements OtpVerific
             }
         });
 
-        mAuth = FirebaseAuth.getInstance();
     }
 
 
