@@ -190,6 +190,8 @@ public class ManagerTablesFragment extends BaseFragment implements ManagerWorkTa
         };
         MessageUtils.registerLocalReceiver(requireContext(), mReceiver, types);
         mViewModel.updateResults();
+//        MessageUtils.dismissNotification(this, MessageObjectModel.MESSAGE_OBJECT_TYPE.SESSION, mViewModel.getSessionPk());
+
     }
 
     @Override

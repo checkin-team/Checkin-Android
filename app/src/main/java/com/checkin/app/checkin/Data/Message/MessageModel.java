@@ -268,7 +268,6 @@ public class MessageModel implements Serializable {
             case USER_SESSION_MEMBER_ADD_REQUEST:
             case USER_SESSION_HOST_ASSIGNED:
             case USER_SESSION_ORDER_ACCEPTED_REJECTED:
-            case SHOP_MEMBER_ADDED:
             case MANAGER_SESSION_NEW:
             case MANAGER_SESSION_EVENT_CONCERN:
             case MANAGER_SESSION_CHECKOUT_REQUEST:
@@ -284,7 +283,6 @@ public class MessageModel implements Serializable {
     boolean shouldTryUpdateUi() {
         switch (this.type) {
             case USER_SESSION_ORDER_ACCEPTED_REJECTED:
-            case SHOP_MEMBER_ADDED:
             case MANAGER_SESSION_ORDERS_PUSH:
             case WAITER_SESSION_ORDERS_PUSH:
                 return false;
