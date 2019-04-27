@@ -11,7 +11,6 @@ import com.checkin.app.checkin.Data.Resource;
 import com.checkin.app.checkin.Data.RetrofitLiveData;
 import com.checkin.app.checkin.Data.WebApiService;
 import com.checkin.app.checkin.Misc.GenericDetailModel;
-import com.checkin.app.checkin.Session.Paytm.ChecksumModel;
 import com.checkin.app.checkin.Session.ActiveSession.Chat.SessionChatModel;
 import com.checkin.app.checkin.Session.Model.ActiveSessionModel;
 import com.checkin.app.checkin.Session.Model.CheckoutStatusModel;
