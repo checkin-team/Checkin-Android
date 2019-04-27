@@ -92,10 +92,13 @@ public class UserViewModel extends BaseViewModel {
         new RetrofitCallAsyncTask<GenericDetailModel>(listener).execute(mRepository.postUserProfilePic(pictureFile, listener));
     }
 
-    public void postUserData(String firstName, String lastName) {
+    public void postUserData(String firstName, String lastName, String phone_token, String bio) {
         ObjectNode data = Converters.objectMapper.createObjectNode();
         data.put("first_name", firstName);
         data.put("last_name", lastName);
+        data.put("phone_token", phone_token);
+        data.put("bio", bio);
+        data.put("is_public", true);
         mData.addSource(mRepository.postUserData(data), mData::setValue);
     }
 }

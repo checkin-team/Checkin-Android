@@ -1,8 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:tools="http://schemas.android.com/tools"
+    android:fillViewport="true"
+    android:scrollbars="none">
+
+
+
+<LinearLayout
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
     android:orientation="vertical"
     android:paddingStart="@dimen/spacing_normal"
     android:paddingEnd="@dimen/spacing_normal">
@@ -10,57 +19,85 @@
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/spacing_small"
+        android:text="Name"
         android:textColor="@color/pinkish_grey"
-        android:textSize="@dimen/font_large"
-        android:layout_marginTop="38dp"
-        android:text="First Name"/>
+        android:textSize="@dimen/font_large" />
 
     <EditText
-        android:id="@+id/et_first_name"
-        android:textColor="@color/brownish_grey"
+        android:id="@+id/et_edit_profile_name"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:inputType="textPersonName" />
+        android:inputType="textPersonName"
+        android:textColor="@color/brownish_grey" />
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:textColor="@color/pinkish_grey"
-        android:textSize="@dimen/font_large"
         android:layout_marginTop="@dimen/spacing_normal"
-        android:text="Last Name"/>
+        android:text="City"
+        android:textColor="@color/pinkish_grey"
+        android:textSize="@dimen/font_large" />
 
     <EditText
-        android:id="@+id/et_last_name"
-        android:textColor="@color/brownish_grey"
+        android:id="@+id/et_edit_profile_city"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:inputType="textPersonName" />
+        android:inputType="textPersonName"
+        android:textColor="@color/brownish_grey" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/spacing_normal"
+        android:text="Country"
+        android:textColor="@color/pinkish_grey"
+        android:textSize="@dimen/font_large" />
+
+    <EditText
+        android:id="@+id/et_edit_profile_country"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:inputType="textPersonName"
+        android:textColor="@color/brownish_grey" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/spacing_normal"
+        android:text="Bio"
+        android:textColor="@color/pinkish_grey"
+        android:textSize="@dimen/font_large" />
+
+    <EditText
+        android:id="@+id/et_edit_profile_bio"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:inputType="textPersonName"
+        android:textColor="@color/brownish_grey" />
 
     <Space
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_weight="1"/>
+        android:layout_weight="1" />
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical"
-        android:background="@drawable/bordered_card_brownish_grey"
-        android:layout_marginBottom="@dimen/spacing_large">
+        android:layout_marginBottom="@dimen/spacing_large"
+        android:orientation="vertical">
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="@dimen/spacing_normal"
-            android:textColor="@color/white"
-            android:textSize="@dimen/font_larger"
             android:layout_marginTop="@dimen/spacing_small"
+            android:layout_marginBottom="@dimen/spacing_small"
             android:text="Personal Information"
-            android:layout_gravity="center"
-            android:textAlignment="center"/>
+            android:textAlignment="center"
+            android:textColor="@color/pinkish_grey"
+            android:textSize="@dimen/font_larger" />
 
-        <LinearLayout
+        <!--<LinearLayout
             android:layout_gravity="center"
             android:gravity="center_horizontal"
             android:orientation="horizontal"
@@ -86,18 +123,93 @@
                 android:textSize="@dimen/font_small"
                 android:layout_gravity="center"/>
 
-        </LinearLayout>
+        </LinearLayout>-->
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textColor="@color/white"
-            android:textSize="@dimen/font_small"
-            android:layout_marginTop="@dimen/spacing_small"
-            android:text="This information won't be shared on your profile."
+            android:layout_marginTop="@dimen/spacing_normal"
+            android:text="Phone Number"
+            android:textColor="@color/brownish_grey"
+            android:textSize="@dimen/font_large" />
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <EditText
+                android:id="@+id/et_edit_profile_phone"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:inputType="phone"
+                android:maxLength="13"
+                android:textColor="@color/brownish_grey"
+                android:enabled="false"
+                tools:text="1234567890" />
+
+            <TextView
+                android:id="@+id/tv_edit_save_phone"
+                style="@style/RedSmallTextStyle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignBaseline="@id/et_edit_profile_phone"
+                android:layout_alignBottom="@id/et_edit_profile_phone"
+                android:layout_alignParentEnd="true"
+                android:paddingEnd="@dimen/spacing_tiny"
+                android:clickable="true"
+                android:focusable="true"
+                android:text="@string/btn_edit"
+                android:textSize="@dimen/font_normal" />
+
+
+        </RelativeLayout>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/spacing_normal"
+            android:text="Email"
+            android:textColor="@color/brownish_grey"
+            android:textSize="@dimen/font_large" />
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <EditText
+                android:id="@+id/et_edit_profile_email"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:inputType="none"
+                android:textColor="@color/brownish_grey"
+                android:paddingEnd="@dimen/spacing_huge" />
+
+            <TextView
+                android:id="@+id/tv_edit_save_email"
+                style="@style/RedSmallTextStyle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignBaseline="@id/et_edit_profile_email"
+                android:layout_alignBottom="@id/et_edit_profile_email"
+                android:layout_alignParentEnd="true"
+                android:paddingEnd="@dimen/spacing_tiny"
+                android:clickable="true"
+                android:focusable="true"
+                android:text="@string/btn_edit"
+                android:textSize="@dimen/font_normal" />
+
+        </RelativeLayout>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:layout_gravity="center"
+            android:layout_marginTop="@dimen/spacing_normal"
+            android:layout_marginBottom="@dimen/spacing_small"
+            android:text="This information won't be shared on your profile."
             android:textAlignment="center"
-            android:layout_marginBottom="@dimen/spacing_small"/>
+            android:textColor="@color/pinkish_grey"
+            android:textSize="@dimen/font_small" />
 
     </LinearLayout>
 
@@ -230,3 +342,5 @@
     </LinearLayout>-->
 
 </LinearLayout>
+
+</ScrollView>

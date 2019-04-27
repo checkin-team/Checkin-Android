@@ -1,9 +1,7 @@
 package com.checkin.app.checkin.User.Private;
 
-import android.Manifest;
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -27,7 +25,7 @@ import butterknife.BindView;
 import butterknife.OnClick;
 
 import static android.app.Activity.RESULT_OK;
-import static com.checkin.app.checkin.User.Private.ProfileEditActivity.FIRST_NAME;
+import static com.checkin.app.checkin.User.Private.ProfileEditActivity.FULL_NAME;
 import static com.checkin.app.checkin.User.Private.ProfileEditActivity.LAST_NAME;
 import static com.checkin.app.checkin.User.Private.ProfileEditActivity.USERNAME;
 
@@ -126,21 +124,8 @@ public class UserPrivateProfileFragment extends BaseFragment {
                 startActivityForResult(intent, SelectCropImageActivity.RC_CROP_IMAGE);
                 break;
             case R.id.btn_user_private_edit:
-                if (mUserModel == null) {
-                    Utils.toast(requireContext(), R.string.error_unavailable_network);
-                    return;
-                }
-                String firstName = mUserModel.getFirstName();
-                String lastName = mUserModel.getLastName();
-                String userName = mUserModel.getUsername();
-                if (firstName != null && lastName != null && userName != null) {
                     Intent editProfileIntent = new Intent(requireContext(), ProfileEditActivity.class);
-                    editProfileIntent.putExtra(FIRST_NAME, firstName);
-                    editProfileIntent.putExtra(LAST_NAME, lastName);
-                    editProfileIntent.putExtra(USERNAME, userName);
                     startActivity(editProfileIntent);
-                }
-                mViewModel.fetchUserData();
                 break;
         }
     }
