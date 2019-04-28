@@ -55,7 +55,7 @@ public class WaiterEndDrawerTableAdapter extends RecyclerView.Adapter<WaiterEndD
     }
 
     interface OnTableClickListener {
-        void onTableClick(RestaurantTableModel restaurantTableModel);
+        void onTableClick(RestaurantTableModel restaurantTableModel, CardView cvWaiterTable);
     }
 
     class ViewHolder extends RecyclerView.ViewHolder {
@@ -82,7 +82,7 @@ public class WaiterEndDrawerTableAdapter extends RecyclerView.Adapter<WaiterEndD
                 @Override
                 public void onDebouncedClick(View v) {
                     if (mListener != null && mRestaurantTable != null)
-                        mListener.onTableClick(mRestaurantTable);
+                        mListener.onTableClick(mRestaurantTable,cvWaiterTable);
                 }
             });
         }

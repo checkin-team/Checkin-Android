@@ -151,7 +151,7 @@ public class MessageModel implements Serializable {
         return componentName;
     }
 
-    private NotificationCompat.Builder getNotificationBuilder(Context context, PendingIntent pendingIntent) {
+    private NotificationCompat.Builder getNotificationBuilder(Context context, PendingIntent pendingIntent, int notificationId) {
         CHANNEL channel = this.getChannel();
         NotificationCompat.Builder builder = new NotificationCompat.Builder(context, channel.id);
         MessageUtils.createRequiredChannel(channel, context);
@@ -159,11 +159,11 @@ public class MessageModel implements Serializable {
                 .setContentText(getDescription())
                 .setSmallIcon(R.drawable.ic_logo_notification)
                 .setAutoCancel(true);
-        addNotificationExtra(context, builder, pendingIntent);
+        addNotificationExtra(context, builder, pendingIntent,notificationId);
         return builder;
     }
 
-    private void addNotificationExtra(Context context, NotificationCompat.Builder builder, PendingIntent pendingIntent) {
+    private void addNotificationExtra(Context context, NotificationCompat.Builder builder, PendingIntent pendingIntent, int notificationId) {
         if (isShopWaiterNotification() || isShopManagerNotification())
             builder.setPriority(Notification.PRIORITY_HIGH);
         if (this.type == MANAGER_SESSION_ORDERS_PUSH || this.type == WAITER_SESSION_ORDERS_PUSH) {
@@ -174,6 +174,7 @@ public class MessageModel implements Serializable {
             Intent waiterIntent = new Intent(context, WaiterWorkActivity.class);
             waiterIntent.setAction(ACTION_NEW_TABLE);
             waiterIntent.putExtra(KEY_SESSION_QR_ID, getRawData().getSessionQRId());
+            waiterIntent.putExtra("notiId", notificationId);
             PendingIntent waiterPendingIntent = PendingIntent.getActivity(context, 0, waiterIntent, PendingIntent.FLAG_UPDATE_CURRENT);
             builder.addAction(R.drawable.ic_action_show_menu, "Take Order", waiterPendingIntent);
         }
@@ -183,7 +184,7 @@ public class MessageModel implements Serializable {
     public Notification showNotification(Context context) {
         Intent intent = getNotificationIntent(context);
         PendingIntent pendingIntent = PendingIntent.getActivity(context, 0, intent, PendingIntent.FLAG_UPDATE_CURRENT);
-        return getNotificationBuilder(context, pendingIntent)
+        return getNotificationBuilder(context, pendingIntent, notificationId)
                 .setContentIntent(pendingIntent)
                 .build();
     }

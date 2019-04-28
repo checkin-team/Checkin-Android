@@ -10,13 +10,13 @@
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="wrap_content">
 
         <androidx.cardview.widget.CardView
             android:id="@+id/container_waiter_table_name"
             style="@style/GreyCardStyle"
             android:layout_width="wrap_content"
-            android:layout_height="0dp"
+            android:layout_height="@dimen/button_height_medium"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintBottom_toBottomOf="parent">
@@ -28,9 +28,7 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:paddingStart="@dimen/spacing_normal"
-                android:paddingTop="@dimen/spacing_small"
                 android:paddingEnd="@dimen/spacing_normal"
-                android:paddingBottom="@dimen/spacing_small"
                 tools:text="Table" />
         </androidx.cardview.widget.CardView>
 
