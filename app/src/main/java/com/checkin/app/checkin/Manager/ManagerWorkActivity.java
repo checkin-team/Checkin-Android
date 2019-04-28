@@ -222,4 +222,11 @@ public class ManagerWorkActivity extends BaseAccountActivity implements ManagerT
             notifyDataSetChanged();
         }
     }
+
+    @Override
+    protected void updateScreen() {
+        super.updateScreen();
+        getAccountViewModel().updateResults();
+        mViewModel.updateResults();
+    }
 }

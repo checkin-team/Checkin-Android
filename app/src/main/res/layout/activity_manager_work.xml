@@ -10,66 +10,66 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-        <RelativeLayout
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <androidx.appcompat.widget.Toolbar
+            android:id="@+id/toolbar_manager_work"
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_height="?attr/actionBarSize"
+            android:theme="@style/AppThemeWhiteActionBar.ActionBar"
+            app:titleTextColor="@color/brownish_grey">
 
-            <androidx.appcompat.widget.Toolbar
-                android:id="@+id/toolbar_manager_work"
+            <FrameLayout
+                android:visibility="visible"
+                android:background="@android:color/transparent"
                 android:layout_width="match_parent"
-                android:layout_height="?attr/actionBarSize"
-                android:theme="@style/AppThemeWhiteActionBar.ActionBar"
-                app:titleTextColor="@color/brownish_grey">
+                android:layout_height="?attr/actionBarSize">
 
-                <FrameLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="?attr/actionBarSize"
+                <TextView
+                    android:id="@+id/tv_action_bar_title"
+                    android:layout_gravity="center_vertical"
+                    android:text="Live Orders"
+                    style="@style/GreyTitleStyle"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
+
+                <androidx.appcompat.widget.SwitchCompat
+                    android:id="@+id/sw_live_order"
+                    android:gravity="center_vertical"
                     android:background="@android:color/transparent"
-                    android:visibility="visible">
+                    android:layout_gravity="end|center_vertical"
+                    android:layout_width="wrap_content"
+                    app:switchMinWidth="@dimen/spacing_gigantic"
+                    android:thumb="@drawable/switch_selector"
+                    android:layout_height="wrap_content"
+                    android:theme="@style/MySwitch"
+                    android:checked="true"/>
 
-                    <TextView
-                        android:id="@+id/tv_action_bar_title"
-                        style="@style/GreyTitleStyle"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="center_vertical"
-                        android:text="Live Orders" />
+            </FrameLayout>
 
-                    <androidx.appcompat.widget.SwitchCompat
-                        android:id="@+id/sw_live_order"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="end|center_vertical"
-                        android:background="@android:color/transparent"
-                        android:checked="true"
-                        android:gravity="center_vertical"
-                        android:theme="@style/MySwitch"
-                        android:thumb="@drawable/switch_selector"
-                        app:switchMinWidth="@dimen/spacing_gigantic" />
+        </androidx.appcompat.widget.Toolbar>
 
-                </FrameLayout>
+        <com.checkin.app.checkin.Utility.DynamicSwipableViewPager
+            android:id="@+id/pager_manager_work"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_above="@+id/tabs_manager_work"
+            android:layout_below="@+id/toolbar_manager_work" />
 
-            </androidx.appcompat.widget.Toolbar>
+        <com.google.android.material.tabs.TabLayout
+            android:id="@+id/tabs_manager_work"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:background="@drawable/background_tab_bottom_shadowed"
+            app:tabGravity="fill"
+            app:tabIndicatorColor="@android:color/transparent"
+            app:tabIndicatorHeight="0dp"
+            app:tabMode="fixed" />
 
-            <com.checkin.app.checkin.Utility.DynamicSwipableViewPager
-                android:id="@+id/pager_manager_work"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_above="@+id/tabs_manager_work"
-                android:layout_below="@+id/toolbar_manager_work" />
-
-            <com.google.android.material.tabs.TabLayout
-                android:id="@+id/tabs_manager_work"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_alignParentBottom="true"
-                android:background="@drawable/background_tab_bottom_shadowed"
-                app:tabGravity="fill"
-                app:tabIndicatorColor="@android:color/transparent"
-                app:tabIndicatorHeight="0dp"
-                app:tabMode="fixed" />
-
-        </RelativeLayout>
+    </RelativeLayout>
 
     </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
 

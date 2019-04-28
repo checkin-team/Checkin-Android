@@ -124,6 +124,8 @@ public class ManagerTablesFragment extends BaseFragment implements ManagerWorkTa
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+
+
         mAdapter = new ManagerWorkTableAdapter(this);
         rvShopManagerTable.setLayoutManager(new LinearLayoutManager(getContext(), RecyclerView.VERTICAL, false));
         rvShopManagerTable.setAdapter(mAdapter);
@@ -196,6 +198,12 @@ public class ManagerTablesFragment extends BaseFragment implements ManagerWorkTa
     public void onPause() {
         super.onPause();
         MessageUtils.unregisterLocalReceiver(requireContext(), mReceiver);
+    }
+
+    @Override
+    protected void updateScreen() {
+        super.updateScreen();
+        mViewModel.updateResults();
     }
 
     @Override

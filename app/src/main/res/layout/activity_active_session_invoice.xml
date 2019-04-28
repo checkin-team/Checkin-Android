@@ -109,9 +109,11 @@
             <View
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/thickness_line"
-                android:background="@color/white_three" />
+                android:background="@color/white_three"
+                android:visibility="gone"/>
 
             <LinearLayout
+                android:visibility="gone"
                 android:id="@+id/promo_code_apply_container"
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/button_height_medium"
