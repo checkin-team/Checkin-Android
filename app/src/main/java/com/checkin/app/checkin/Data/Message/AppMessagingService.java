@@ -109,7 +109,7 @@ public class AppMessagingService extends FirebaseMessagingService {
     private void showNotification(MessageModel data) {
         if (isNotificationEnabled(getApplicationContext(), data.getChannel())) {
             int notificationId = Constants.getNotificationID();
-            Notification notification = data.showNotification(this);
+            Notification notification = data.showNotification(this, notificationId);
 
             String notifTag = data.getNotificationTag();
             mNotificationManager.notify(notifTag, notificationId, notification);

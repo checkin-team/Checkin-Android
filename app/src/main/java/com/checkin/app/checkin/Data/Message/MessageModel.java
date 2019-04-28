@@ -181,7 +181,7 @@ public class MessageModel implements Serializable {
         tryGroupNotification(builder);
     }
 
-    public Notification showNotification(Context context) {
+    public Notification showNotification(Context context, int notificationId) {
         Intent intent = getNotificationIntent(context);
         PendingIntent pendingIntent = PendingIntent.getActivity(context, 0, intent, PendingIntent.FLAG_UPDATE_CURRENT);
         return getNotificationBuilder(context, pendingIntent, notificationId)

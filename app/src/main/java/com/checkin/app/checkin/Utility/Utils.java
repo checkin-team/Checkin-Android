@@ -2,9 +2,11 @@ package com.checkin.app.checkin.Utility;
 
 import android.annotation.SuppressLint;
 import android.app.Activity;
+import android.app.AlertDialog;
 import android.content.ComponentName;
 import android.content.ContentUris;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.res.Resources;
 import android.database.Cursor;
@@ -36,6 +38,7 @@ import android.widget.Toast;
 
 import com.checkin.app.checkin.Home.HomeActivity;
 import com.checkin.app.checkin.R;
+import com.checkin.app.checkin.Waiter.WaiterWorkActivity;
 import com.golovin.fluentstackbar.FluentSnackbar;
 import com.google.android.material.snackbar.Snackbar;
 import com.google.android.material.tabs.TabLayout;
