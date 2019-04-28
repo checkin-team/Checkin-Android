@@ -260,6 +260,8 @@ public class ActiveSessionInvoiceActivity extends AppCompatActivity {
                     }
                 }
                 break;
+                default:
+                    break;
         }
     }
 
@@ -269,7 +271,7 @@ public class ActiveSessionInvoiceActivity extends AppCompatActivity {
             tvPaymentMode.setText(tvInvoiceTotal.getText().toString());
     }
 
-    private void setDiscountInfo(String label, String offPercent) {
+   /* private void setDiscountInfo(String label, String offPercent) {
         savingInfoContainer.setVisibility(View.VISIBLE);
         tvSavingInfoLabel.setText(label);
         tvSavingPercent.setText(offPercent);
@@ -280,5 +282,5 @@ public class ActiveSessionInvoiceActivity extends AppCompatActivity {
                 .setPositiveButton("Yes", (dialog, which) -> onRequestCheckout())
                 .setNegativeButton("No", (dialog, which) -> dialog.cancel());
         builder.show();
-    }
+    }*/
 }
