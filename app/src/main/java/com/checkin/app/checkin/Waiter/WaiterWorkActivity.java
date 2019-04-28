@@ -11,6 +11,7 @@ import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.checkin.app.checkin.Account.AccountModel;
@@ -85,6 +86,8 @@ public class WaiterWorkActivity extends BaseAccountActivity implements
     RecyclerView rvInactiveTables;
     @BindView(R.id.nav_waiter_end)
     NavigationView navDrawerEnd;
+    @BindView(R.id.im_waiter_scanner)
+    ImageView imWaiterScanner;
 
     private CardView cvInactiveTable;
     private WaiterWorkViewModel mViewModel;
@@ -227,6 +230,7 @@ public class WaiterWorkActivity extends BaseAccountActivity implements
         mViewModel.getQrResult().observe(this, qrResource -> {
             if(cvInactiveTable!=null)
             cvInactiveTable.setEnabled(true);
+            imWaiterScanner.setEnabled(true);
             if (qrResource == null)
                 return;
             if (qrResource.status == Status.SUCCESS && qrResource.data != null) {
@@ -387,6 +391,7 @@ public class WaiterWorkActivity extends BaseAccountActivity implements
         if (requestCode == REQUEST_QR_SCANNER && resultCode == RESULT_OK) {
             String qrData = data.getStringExtra(QRScannerActivity.KEY_QR_RESULT);
             mViewModel.processQr(qrData);
+            imWaiterScanner.setEnabled(false);
         } else super.onActivityResult(requestCode, resultCode, data);
     }
 

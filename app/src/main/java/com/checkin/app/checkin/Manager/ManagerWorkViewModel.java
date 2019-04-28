@@ -147,10 +147,12 @@ public class ManagerWorkViewModel extends BaseViewModel {
                         tableSessionModel.setRequestedCheckout(true);
                     table.addEventCount();
                     listResource.data.remove(pos);
-                    listResource.data.add(0, table);
+                    listResource.data.add(0,table);
                     mTablesData.setValue(Resource.cloneResource(listResource, listResource.data));
                 }
             }
         }
+
+
     }
 }
