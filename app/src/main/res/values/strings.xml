@@ -49,6 +49,7 @@
 
     <string name="btn_cancel">Cancel</string>
     <string name="btn_save">Save</string>
+    <string name="btn_edit">Edit</string>
     <string name="btn_remove">Remove</string>
     <string name="item_non_cancelable">Non-Cancelable</string>
     <string name="title_activity_shop_login">ShopLogin</string>
