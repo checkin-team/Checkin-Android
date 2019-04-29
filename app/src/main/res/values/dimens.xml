@@ -133,4 +133,7 @@
     <dimen name="height_input_large">35dp</dimen>
 
     <dimen name="height_horizontal_view">1.5dp</dimen>
+
+    <!--Payment Mode-->
+    <dimen name="payment_card_logo">140dp</dimen>
 </resources>

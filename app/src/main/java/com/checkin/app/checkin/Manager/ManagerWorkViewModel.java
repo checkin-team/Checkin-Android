@@ -61,7 +61,7 @@ public class ManagerWorkViewModel extends BaseViewModel {
     public void markSessionDone(long sessionId) {
         ObjectNode data = Converters.objectMapper.createObjectNode();
         data.put("payment_mode", "csh");
-        mCheckoutData.addSource(mManagerRepository.manageSessionCheckout(sessionId, data), mCheckoutData::setValue);
+        mCheckoutData.addSource(mManagerRepository.manageSessionCheckout(sessionId), mCheckoutData::setValue);
     }
 
     public LiveData<Resource<CheckoutStatusModel>> getCheckoutData() {
