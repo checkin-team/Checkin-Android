@@ -109,7 +109,8 @@
             <View
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/thickness_line"
-                android:background="@color/white_three" />
+                android:background="@color/white_three"
+                android:visibility="gone"/>
 
             <LinearLayout
                 android:id="@+id/promo_code_apply_container"
@@ -117,7 +118,8 @@
                 android:layout_height="@dimen/button_height_medium"
                 android:gravity="center"
                 android:paddingStart="@dimen/spacing_small"
-                android:paddingEnd="@dimen/spacing_small">
+                android:paddingEnd="@dimen/spacing_small"
+                android:visibility="gone">
 
                 <TextView
                     android:id="@+id/tv_promo_code"
