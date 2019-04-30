@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/button_height_medium">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            style="@style/RedHeadingStyle"
+            android:background="@drawable/ic_promo"
+            android:paddingStart="@dimen/spacing_gigantic"
+            android:paddingEnd="@dimen/spacing_small"
+            android:textSize="@dimen/font_normal"
+            android:gravity="center"
+            tools:text="CHECKOUT" />
+
+        <TextView
+            style="@style/RedSmallTextStyle"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_gravity="end"
+            android:gravity="center_vertical"
+            android:text="Apply"
+            android:layout_alignParentEnd="true"
+            android:textSize="@dimen/font_normal" />
+    </RelativeLayout>
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        style="@style/GreyTextStyle"
+        android:layout_marginTop="@dimen/spacing_extra_small"
+        tools:text="Get 40% discount upto on your first 3 orders."/>
+
+</LinearLayout>

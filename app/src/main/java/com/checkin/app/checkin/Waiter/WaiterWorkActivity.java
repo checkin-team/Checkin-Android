@@ -1,10 +1,12 @@
 package com.checkin.app.checkin.Waiter;
 
+import android.annotation.SuppressLint;
 import android.app.AlertDialog;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.View;
@@ -20,11 +22,11 @@ import com.checkin.app.checkin.Data.Resource.Status;
 import com.checkin.app.checkin.Misc.BriefModel;
 import com.checkin.app.checkin.Misc.QRScannerActivity;
 import com.checkin.app.checkin.R;
-import com.checkin.app.checkin.Session.ActiveSession.Chat.SessionChatModel;
-import com.checkin.app.checkin.Session.Model.EventBriefModel;
-import com.checkin.app.checkin.Session.Model.RestaurantTableModel;
-import com.checkin.app.checkin.Session.Model.SessionOrderedItemModel;
-import com.checkin.app.checkin.Session.Model.TableSessionModel;
+import com.checkin.app.checkin.session.activesession.chat.SessionChatModel;
+import com.checkin.app.checkin.session.model.EventBriefModel;
+import com.checkin.app.checkin.session.model.RestaurantTableModel;
+import com.checkin.app.checkin.session.model.SessionOrderedItemModel;
+import com.checkin.app.checkin.session.model.TableSessionModel;
 import com.checkin.app.checkin.Shop.ShopModel;
 import com.checkin.app.checkin.Utility.DynamicSwipableViewPager;
 import com.checkin.app.checkin.Utility.EndDrawerToggle;
@@ -33,6 +35,7 @@ import com.checkin.app.checkin.Waiter.Fragment.WaiterTableFragment;
 import com.checkin.app.checkin.Waiter.Model.WaiterEventModel;
 import com.checkin.app.checkin.Waiter.Model.WaiterStatsModel;
 import com.checkin.app.checkin.Waiter.Model.WaiterTableModel;
+import com.google.android.material.navigation.NavigationView;
 import com.google.android.material.tabs.TabLayout;
 
 import java.util.ArrayList;
@@ -78,6 +81,8 @@ public class WaiterWorkActivity extends BaseAccountActivity implements
     RecyclerView rvUnassignedTables;
     @BindView(R.id.rv_waiter_drawer_inactive_tables)
     RecyclerView rvInactiveTables;
+    @BindView(R.id.nav_waiter_end)
+    NavigationView navDrawerEnd;
 
     private WaiterWorkViewModel mViewModel;
     private WaiterTablePagerAdapter mFragmentAdapter;
@@ -417,8 +422,10 @@ public class WaiterWorkActivity extends BaseAccountActivity implements
         return new AccountModel.ACCOUNT_TYPE[]{AccountModel.ACCOUNT_TYPE.RESTAURANT_WAITER};
     }
 
+    @SuppressLint("WrongConstant")
     @Override
     public void onTableClick(RestaurantTableModel restaurantTableModel) {
+        drawerLayout.closeDrawer(Gravity.END,false);
         newWaiterSessionDialog(restaurantTableModel.getQrPk(), restaurantTableModel.getTable());
     }
 

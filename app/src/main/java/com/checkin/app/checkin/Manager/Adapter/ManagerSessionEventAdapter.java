@@ -8,8 +8,8 @@ import android.widget.TextView;
 
 import com.checkin.app.checkin.Manager.Model.ManagerSessionEventModel;
 import com.checkin.app.checkin.R;
-import com.checkin.app.checkin.Session.ActiveSession.Chat.SessionChatModel.CHAT_STATUS_TYPE;
-import com.checkin.app.checkin.Session.ActiveSession.Chat.SessionEventBasicModel;
+import com.checkin.app.checkin.session.activesession.chat.SessionChatModel.CHAT_STATUS_TYPE;
+import com.checkin.app.checkin.session.activesession.chat.SessionEventBasicModel;
 
 import java.util.List;
 
@@ -18,8 +18,8 @@ import androidx.recyclerview.widget.RecyclerView;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
-import static com.checkin.app.checkin.Session.ActiveSession.Chat.SessionChatModel.CHAT_EVENT_TYPE.EVENT_REQUEST_CHECKOUT;
-import static com.checkin.app.checkin.Session.ActiveSession.Chat.SessionChatModel.CHAT_EVENT_TYPE.EVENT_REQUEST_SERVICE;
+import static com.checkin.app.checkin.session.activesession.chat.SessionChatModel.CHAT_EVENT_TYPE.EVENT_REQUEST_CHECKOUT;
+import static com.checkin.app.checkin.session.activesession.chat.SessionChatModel.CHAT_EVENT_TYPE.EVENT_REQUEST_SERVICE;
 
 public class ManagerSessionEventAdapter extends RecyclerView.Adapter<ManagerSessionEventAdapter.ViewHolder> {
     private List<ManagerSessionEventModel> mEvent;

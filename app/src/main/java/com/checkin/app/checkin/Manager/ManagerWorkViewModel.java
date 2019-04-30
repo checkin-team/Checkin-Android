@@ -6,11 +6,11 @@ import com.checkin.app.checkin.Data.BaseViewModel;
 import com.checkin.app.checkin.Data.Converters;
 import com.checkin.app.checkin.Data.Resource;
 import com.checkin.app.checkin.Manager.Model.ManagerStatsModel;
-import com.checkin.app.checkin.Session.ActiveSession.Chat.SessionChatModel;
-import com.checkin.app.checkin.Session.Model.CheckoutStatusModel;
-import com.checkin.app.checkin.Session.Model.EventBriefModel;
-import com.checkin.app.checkin.Session.Model.RestaurantTableModel;
-import com.checkin.app.checkin.Session.Model.TableSessionModel;
+import com.checkin.app.checkin.session.activesession.chat.SessionChatModel;
+import com.checkin.app.checkin.session.model.CheckoutStatusModel;
+import com.checkin.app.checkin.session.model.EventBriefModel;
+import com.checkin.app.checkin.session.model.RestaurantTableModel;
+import com.checkin.app.checkin.session.model.TableSessionModel;
 import com.checkin.app.checkin.Waiter.WaiterRepository;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 
@@ -61,7 +61,7 @@ public class ManagerWorkViewModel extends BaseViewModel {
     public void markSessionDone(long sessionId) {
         ObjectNode data = Converters.objectMapper.createObjectNode();
         data.put("payment_mode", "csh");
-        mCheckoutData.addSource(mManagerRepository.manageSessionCheckout(sessionId, data), mCheckoutData::setValue);
+        mCheckoutData.addSource(mManagerRepository.manageSessionCheckout(sessionId), mCheckoutData::setValue);
     }
 
     public LiveData<Resource<CheckoutStatusModel>> getCheckoutData() {

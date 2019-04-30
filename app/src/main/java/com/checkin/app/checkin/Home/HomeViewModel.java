@@ -5,9 +5,9 @@ import android.app.Application;
 import com.checkin.app.checkin.Data.BaseViewModel;
 import com.checkin.app.checkin.Data.Converters;
 import com.checkin.app.checkin.Data.Resource;
-import com.checkin.app.checkin.Session.Model.QRResultModel;
-import com.checkin.app.checkin.Session.Model.SessionBasicModel;
-import com.checkin.app.checkin.Session.SessionRepository;
+import com.checkin.app.checkin.session.model.QRResultModel;
+import com.checkin.app.checkin.session.model.SessionBasicModel;
+import com.checkin.app.checkin.session.SessionRepository;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 
 import androidx.annotation.NonNull;

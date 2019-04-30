@@ -14,7 +14,7 @@ import com.checkin.app.checkin.Data.Message.MessageObjectModel.MESSAGE_OBJECT_TY
 import com.checkin.app.checkin.Manager.ManagerSessionActivity;
 import com.checkin.app.checkin.Manager.ManagerWorkActivity;
 import com.checkin.app.checkin.R;
-import com.checkin.app.checkin.Session.ActiveSession.ActiveSessionActivity;
+import com.checkin.app.checkin.session.activesession.ActiveSessionActivity;
 import com.checkin.app.checkin.Waiter.WaiterWorkActivity;
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
@@ -268,7 +268,6 @@ public class MessageModel implements Serializable {
             case USER_SESSION_MEMBER_ADD_REQUEST:
             case USER_SESSION_HOST_ASSIGNED:
             case USER_SESSION_ORDER_ACCEPTED_REJECTED:
-            case SHOP_MEMBER_ADDED:
             case MANAGER_SESSION_NEW:
             case MANAGER_SESSION_EVENT_CONCERN:
             case MANAGER_SESSION_CHECKOUT_REQUEST:
@@ -284,7 +283,6 @@ public class MessageModel implements Serializable {
     boolean shouldTryUpdateUi() {
         switch (this.type) {
             case USER_SESSION_ORDER_ACCEPTED_REJECTED:
-            case SHOP_MEMBER_ADDED:
             case MANAGER_SESSION_ORDERS_PUSH:
             case WAITER_SESSION_ORDERS_PUSH:
                 return false;

@@ -49,6 +49,7 @@
 
     <string name="btn_cancel">Cancel</string>
     <string name="btn_save">Save</string>
+    <string name="btn_edit">Edit</string>
     <string name="btn_remove">Remove</string>
     <string name="item_non_cancelable">Non-Cancelable</string>
     <string name="title_activity_shop_login">ShopLogin</string>
@@ -166,6 +167,9 @@
     <string name="heading_shop_finance_tax">Tax Details</string>
     <string name="description_shop_finance_tax_change">**Contact us for changes in tax.**</string>
     <string name="title_table_status">Table Status</string>
+    <string name="label_payable_amount">Payable Amount</string>
+    <string name="select">Select</string>
+    <string name="link">Link</string>
 
     <!--Manager Orders-->
     <string name="label_orders">Orders</string>

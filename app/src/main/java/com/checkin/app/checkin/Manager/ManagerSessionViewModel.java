@@ -8,11 +8,11 @@ import com.checkin.app.checkin.Data.Resource;
 import com.checkin.app.checkin.Manager.Model.ManagerSessionEventModel;
 import com.checkin.app.checkin.Manager.Model.ManagerSessionInvoiceModel;
 import com.checkin.app.checkin.Misc.GenericDetailModel;
-import com.checkin.app.checkin.Session.ActiveSession.Chat.SessionChatModel;
-import com.checkin.app.checkin.Session.Model.CheckoutStatusModel;
-import com.checkin.app.checkin.Session.Model.SessionBriefModel;
-import com.checkin.app.checkin.Session.Model.SessionOrderedItemModel;
-import com.checkin.app.checkin.Session.SessionRepository;
+import com.checkin.app.checkin.session.activesession.chat.SessionChatModel;
+import com.checkin.app.checkin.session.model.CheckoutStatusModel;
+import com.checkin.app.checkin.session.model.SessionBriefModel;
+import com.checkin.app.checkin.session.model.SessionOrderedItemModel;
+import com.checkin.app.checkin.session.SessionRepository;
 import com.checkin.app.checkin.Waiter.Model.OrderStatusModel;
 import com.checkin.app.checkin.Waiter.Model.SessionContactModel;
 import com.checkin.app.checkin.Waiter.WaiterRepository;
@@ -28,11 +28,11 @@ import androidx.lifecycle.MediatorLiveData;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.Transformations;
 
-import static com.checkin.app.checkin.Session.ActiveSession.Chat.SessionChatModel.CHAT_EVENT_TYPE.EVENT_MENU_ORDER_ITEM;
-import static com.checkin.app.checkin.Session.ActiveSession.Chat.SessionChatModel.CHAT_STATUS_TYPE.CANCELLED;
-import static com.checkin.app.checkin.Session.ActiveSession.Chat.SessionChatModel.CHAT_STATUS_TYPE.DONE;
-import static com.checkin.app.checkin.Session.ActiveSession.Chat.SessionChatModel.CHAT_STATUS_TYPE.IN_PROGRESS;
-import static com.checkin.app.checkin.Session.ActiveSession.Chat.SessionChatModel.CHAT_STATUS_TYPE.OPEN;
+import static com.checkin.app.checkin.session.activesession.chat.SessionChatModel.CHAT_EVENT_TYPE.EVENT_MENU_ORDER_ITEM;
+import static com.checkin.app.checkin.session.activesession.chat.SessionChatModel.CHAT_STATUS_TYPE.CANCELLED;
+import static com.checkin.app.checkin.session.activesession.chat.SessionChatModel.CHAT_STATUS_TYPE.DONE;
+import static com.checkin.app.checkin.session.activesession.chat.SessionChatModel.CHAT_STATUS_TYPE.IN_PROGRESS;
+import static com.checkin.app.checkin.session.activesession.chat.SessionChatModel.CHAT_STATUS_TYPE.OPEN;
 
 
 public class ManagerSessionViewModel extends BaseViewModel {
@@ -64,7 +64,7 @@ public class ManagerSessionViewModel extends BaseViewModel {
     public void putSessionCheckout() {
         ObjectNode data = Converters.objectMapper.createObjectNode();
         data.put("payment_mode", "csh");
-        mCheckoutData.addSource(mManagerRepository.manageSessionCheckout(mSessionPk, data), mCheckoutData::setValue);
+        mCheckoutData.addSource(mManagerRepository.manageSessionCheckout(mSessionPk), mCheckoutData::setValue);
     }
 
     public LiveData<Resource<CheckoutStatusModel>> getCheckoutData() {

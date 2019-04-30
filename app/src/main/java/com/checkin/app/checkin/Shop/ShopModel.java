@@ -2,11 +2,17 @@ package com.checkin.app.checkin.Shop;
 
 import com.checkin.app.checkin.Data.Converters;
 import com.checkin.app.checkin.Misc.LocationModel;
+import com.checkin.app.checkin.R;
 import com.fasterxml.jackson.annotation.JsonAutoDetect;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.databind.node.ObjectNode;
+
+import androidx.annotation.DrawableRes;
+
+import static com.checkin.app.checkin.Shop.ShopModel.PAYMENT_MODE.CASH;
+import static com.checkin.app.checkin.Shop.ShopModel.PAYMENT_MODE.PAYTM;
 
 @JsonInclude(value = JsonInclude.Include.NON_NULL)
 @JsonAutoDetect(fieldVisibility = JsonAutoDetect.Visibility.NONE, getterVisibility = JsonAutoDetect.Visibility.NONE, isGetterVisibility = JsonAutoDetect.Visibility.NONE)
@@ -252,6 +258,29 @@ public class ShopModel {
                     return mode;
             }
             return CASH;
+        }
+    }
+
+    public static String getPaymentMode(PAYMENT_MODE paymentMode) {
+        switch (paymentMode) {
+            case CASH:
+                return "via Cash";
+            case PAYTM:
+                return "via Paytm";
+            default:
+                return "via Cash";
+        }
+    }
+
+    @DrawableRes
+    public static int getPaymentModeIcon(PAYMENT_MODE paymentMode) {
+        switch (paymentMode) {
+            case CASH:
+                return R.drawable.ic_cash_grey;
+            case PAYTM:
+                return R.drawable.ic_paytm_logo;
+            default:
+                return R.drawable.ic_cash_grey;
         }
     }
 }

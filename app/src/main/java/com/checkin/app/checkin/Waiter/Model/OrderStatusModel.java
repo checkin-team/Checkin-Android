@@ -1,6 +1,6 @@
 package com.checkin.app.checkin.Waiter.Model;
 
-import com.checkin.app.checkin.Session.ActiveSession.Chat.SessionChatModel;
+import com.checkin.app.checkin.session.activesession.chat.SessionChatModel;
 import com.fasterxml.jackson.annotation.JsonAutoDetect;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;

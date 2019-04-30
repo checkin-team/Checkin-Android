@@ -12,15 +12,16 @@ import com.checkin.app.checkin.Menu.Model.OrderedItemModel;
 import com.checkin.app.checkin.Misc.GenericDetailModel;
 import com.checkin.app.checkin.Search.SearchResultPeopleModel;
 import com.checkin.app.checkin.Search.SearchResultShopModel;
-import com.checkin.app.checkin.Session.ActiveSession.Chat.SessionChatModel;
-import com.checkin.app.checkin.Session.Model.ActiveSessionModel;
-import com.checkin.app.checkin.Session.Model.CheckoutStatusModel;
-import com.checkin.app.checkin.Session.Model.QRResultModel;
-import com.checkin.app.checkin.Session.Model.RestaurantTableModel;
-import com.checkin.app.checkin.Session.Model.SessionBasicModel;
-import com.checkin.app.checkin.Session.Model.SessionBriefModel;
-import com.checkin.app.checkin.Session.Model.SessionInvoiceModel;
-import com.checkin.app.checkin.Session.Model.SessionOrderedItemModel;
+import com.checkin.app.checkin.session.activesession.chat.SessionChatModel;
+import com.checkin.app.checkin.session.model.ActiveSessionModel;
+import com.checkin.app.checkin.session.model.CheckoutStatusModel;
+import com.checkin.app.checkin.session.model.QRResultModel;
+import com.checkin.app.checkin.session.model.RestaurantTableModel;
+import com.checkin.app.checkin.session.model.SessionBasicModel;
+import com.checkin.app.checkin.session.model.SessionBriefModel;
+import com.checkin.app.checkin.session.model.SessionInvoiceModel;
+import com.checkin.app.checkin.session.model.SessionOrderedItemModel;
+import com.checkin.app.checkin.session.paytm.PaytmModel;
 import com.checkin.app.checkin.Shop.Private.Finance.FinanceModel;
 import com.checkin.app.checkin.Shop.Private.Invoice.RestaurantSessionModel;
 import com.checkin.app.checkin.Shop.Private.Invoice.ShopSessionDetailModel;
@@ -182,6 +183,9 @@ public interface WebApiService {
     @POST("sessions/active/request/checkout/")
     Call<CheckoutStatusModel> postCustomerRequestCheckout(@Body ObjectNode data);
 
+    @POST("sessions/active/pay/paytm/")
+    Call<PaytmModel> postPaytmRequest();
+
     @GET("sessions/active/invoice/")
     Call<SessionInvoiceModel> getActiveSessionInvoice();
 
@@ -240,8 +244,8 @@ public interface WebApiService {
     @PUT("sessions/{session_id}/manage/bill/")
     Call<GenericDetailModel> putManageSessionBill(@Path("session_id") long sessionId, @Body ObjectNode data);
 
-    @PUT("sessions/{session_id}/checkout/")
-    Call<CheckoutStatusModel> putSessionCheckout(@Path("session_id") long sessionId, @Body ObjectNode data);
+    @POST("sessions/{session_id}/checkout/")
+    Call<CheckoutStatusModel> putSessionCheckout(@Path("session_id") long sessionId);
 
     // endregion
 
@@ -286,4 +290,8 @@ public interface WebApiService {
 
     @GET("sessions/{session_id}/contacts/")
     Call<List<SessionContactModel>> getSessionContactList(@Path("session_id") long sessionId);
+
+    // region payments
+    @POST("payments/callback/paytm/")
+    Call<ObjectNode> postPaytmCallback(@Body ObjectNode data);
 }

@@ -122,7 +122,7 @@
 
                     </LinearLayout>
 
-                    <LinearLayout
+                    <RelativeLayout
                         android:id="@+id/container_manager_table_end"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
@@ -131,10 +131,20 @@
                         app:layout_constraintStart_toEndOf="@id/container_manager_table_event_icon"
                         app:layout_constraintTop_toTopOf="parent">
 
-                        <Space
-                            android:layout_width="0dp"
+                        <TextView
+                            android:id="@+id/tv_shop_manager_session_table_bill_checkout"
+                            style="@style/GreyTextStyle"
+                            android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_weight="1" />
+                            android:layout_gravity="center"
+                            android:layout_marginEnd="@dimen/spacing_extra_small"
+                            android:background="@drawable/bordered_rectangle_brownish_grey"
+                            android:drawablePadding="@dimen/spacing_extra_small"
+                            android:gravity="center"
+                            android:layout_alignParentStart="true"
+                            android:padding="@dimen/spacing_extra_small"
+                            android:textSize="@dimen/font_large"
+                            tools:text="$ 4206.00" />
 
                         <Button
                             android:id="@+id/btn_manager_table_session_done"
@@ -142,8 +152,9 @@
                             android:layout_width="wrap_content"
                             android:layout_height="@dimen/button_height_normal"
                             android:text="End\nSession"
+                           android:layout_alignParentEnd="true"
                             android:textAllCaps="false" />
-                    </LinearLayout>
+                    </RelativeLayout>
 
                 </androidx.constraintlayout.widget.ConstraintLayout>
 

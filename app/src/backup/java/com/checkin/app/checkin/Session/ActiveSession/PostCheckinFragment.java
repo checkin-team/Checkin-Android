@@ -1,4 +1,4 @@
-package com.checkin.app.checkin.Session.ActiveSession;
+package com.checkin.app.checkin.session.activesession;
 
 import android.os.Bundle;
 import androidx.annotation.NonNull;

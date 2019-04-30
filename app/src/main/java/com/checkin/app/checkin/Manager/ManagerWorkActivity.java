@@ -154,6 +154,13 @@ public class ManagerWorkActivity extends BaseAccountActivity implements ManagerT
         mViewModel.fetchStatistics();
     }
 
+    @Override
+    protected void onResume() {
+        super.onResume();
+//        MessageUtils.dismissNotification(this, MessageObjectModel.MESSAGE_OBJECT_TYPE.SESSION, mViewModel.getSessionPk());
+
+    }
+
     static class ManagerFragmentAdapter extends BaseFragmentAdapterBottomNav {
 
         private boolean isActivated = true;

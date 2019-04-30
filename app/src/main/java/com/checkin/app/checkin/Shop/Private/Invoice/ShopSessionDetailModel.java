@@ -1,8 +1,8 @@
 package com.checkin.app.checkin.Shop.Private.Invoice;
 
 import com.checkin.app.checkin.Misc.BriefModel;
-import com.checkin.app.checkin.Session.Model.SessionBillModel;
-import com.checkin.app.checkin.Session.Model.SessionOrderedItemModel;
+import com.checkin.app.checkin.session.model.SessionBillModel;
+import com.checkin.app.checkin.session.model.SessionOrderedItemModel;
 import com.checkin.app.checkin.Utility.Utils;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonInclude;

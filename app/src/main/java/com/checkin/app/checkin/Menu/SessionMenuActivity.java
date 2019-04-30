@@ -49,7 +49,7 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 
 import static com.checkin.app.checkin.Menu.Fragment.MenuGroupsFragment.KEY_SESSION_STATUS;
-import static com.checkin.app.checkin.Session.ActiveSession.ActiveSessionActivity.KEY_INTERACT_WITH_US;
+import static com.checkin.app.checkin.session.activesession.ActiveSessionActivity.KEY_INTERACT_WITH_US;
 
 public class SessionMenuActivity extends BaseActivity implements
         MenuItemInteraction, ItemCustomizationFragment.ItemCustomizationInteraction,

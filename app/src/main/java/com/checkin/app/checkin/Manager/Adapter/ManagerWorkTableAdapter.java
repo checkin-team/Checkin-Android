@@ -8,9 +8,9 @@ import android.widget.TextView;
 
 import com.checkin.app.checkin.Misc.BriefModel;
 import com.checkin.app.checkin.R;
-import com.checkin.app.checkin.Session.ActiveSession.Chat.SessionEventBasicModel;
-import com.checkin.app.checkin.Session.Model.RestaurantTableModel;
-import com.checkin.app.checkin.Session.Model.TableSessionModel;
+import com.checkin.app.checkin.session.activesession.chat.SessionEventBasicModel;
+import com.checkin.app.checkin.session.model.RestaurantTableModel;
+import com.checkin.app.checkin.session.model.TableSessionModel;
 import com.checkin.app.checkin.Utility.Utils;
 
 import java.util.List;
@@ -84,6 +84,8 @@ public class ManagerWorkTableAdapter extends RecyclerView.Adapter<ManagerWorkTab
         TextView tvShopManagerTableBill;
         @BindView(R.id.tv_shop_manager_table_event_badge)
         TextView tvEventBadge;
+        @BindView(R.id.tv_shop_manager_session_table_bill_checkout)
+        TextView tvShopManagerTableBillCheckout;
         @BindView(R.id.iv_shop_manager_table_icon)
         ImageView ivShopManagerTableIcon;
         @BindView(R.id.container_manager_table_active)
@@ -131,14 +133,15 @@ public class ManagerWorkTableAdapter extends RecyclerView.Adapter<ManagerWorkTab
                 tvShopManagerTableTime.setText(tableSessionModel.getEvent().formatTimestamp());
                 tvShopManagerTableNumber.setText(data.getTable());
 
-
-
                 if (tableSessionModel.isRequestedCheckout()) {
                     containerSessionEnd.setVisibility(View.VISIBLE);
+                    tvShopManagerTableBillCheckout.setText(Utils.formatCurrencyAmount(tvShopManagerTableBill.getContext(), tableSessionModel.getBill()));
                     containerSessionActive.setVisibility(View.GONE);
+                    ivShopManagerTableIcon.setVisibility(View.GONE);
                 } else {
                     containerSessionActive.setVisibility(View.VISIBLE);
                     containerSessionEnd.setVisibility(View.GONE);
+                    ivShopManagerTableIcon.setVisibility(View.VISIBLE);
                 }
             }
         }

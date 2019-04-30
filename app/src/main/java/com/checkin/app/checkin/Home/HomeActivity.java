@@ -21,7 +21,7 @@ import com.checkin.app.checkin.Misc.BaseFragmentAdapterBottomNav;
 import com.checkin.app.checkin.Misc.BlankFragment;
 import com.checkin.app.checkin.Misc.QRScannerActivity;
 import com.checkin.app.checkin.R;
-import com.checkin.app.checkin.Session.ActiveSession.ActiveSessionActivity;
+import com.checkin.app.checkin.session.activesession.ActiveSessionActivity;
 import com.checkin.app.checkin.Shop.ShopJoin.BusinessFeaturesActivity;
 import com.checkin.app.checkin.User.Private.UserPrivateProfileFragment;
 import com.checkin.app.checkin.User.Private.UserViewModel;
@@ -79,6 +79,9 @@ public class HomeActivity extends BaseAccountActivity implements NavigationView.
                 case USER_SESSION_ADDED_BY_OWNER:
                     mViewModel.updateResults();
                     onSessionStatusClick();
+                    break;
+                case SHOP_MEMBER_ADDED:
+                    getAccountViewModel().updateResults();
                     break;
             }
         }
@@ -241,7 +244,12 @@ public class HomeActivity extends BaseAccountActivity implements NavigationView.
     protected void onResume() {
         super.onResume();
         mViewModel.updateResults();
-        MessageUtils.registerLocalReceiver(this, mReceiver, MessageModel.MESSAGE_TYPE.USER_SESSION_ADDED_BY_OWNER);
+
+        MessageModel.MESSAGE_TYPE[] types = new MessageModel.MESSAGE_TYPE[]{
+                MessageModel.MESSAGE_TYPE.USER_SESSION_ADDED_BY_OWNER, MessageModel.MESSAGE_TYPE.SHOP_MEMBER_ADDED
+        };
+
+        MessageUtils.registerLocalReceiver(this, mReceiver, types);
     }
 
     @Override
