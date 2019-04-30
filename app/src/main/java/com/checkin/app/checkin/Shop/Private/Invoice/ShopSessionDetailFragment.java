@@ -9,7 +9,7 @@ import android.widget.TextView;
 import com.checkin.app.checkin.Data.Resource;
 import com.checkin.app.checkin.Misc.BillHolder;
 import com.checkin.app.checkin.R;
-import com.checkin.app.checkin.Session.ActiveSession.InvoiceOrdersAdapter;
+import com.checkin.app.checkin.session.activesession.InvoiceOrdersAdapter;
 import com.checkin.app.checkin.Utility.Utils;
 
 import java.util.Locale;

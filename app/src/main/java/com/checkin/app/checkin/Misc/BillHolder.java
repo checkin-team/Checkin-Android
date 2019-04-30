@@ -6,7 +6,7 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.checkin.app.checkin.R;
-import com.checkin.app.checkin.Session.Model.SessionBillModel;
+import com.checkin.app.checkin.session.model.SessionBillModel;
 import com.checkin.app.checkin.Utility.Utils;
 
 import butterknife.BindView;

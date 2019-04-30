@@ -13,7 +13,7 @@ import com.checkin.app.checkin.Data.WebApiService;
 import com.checkin.app.checkin.Manager.Model.ManagerSessionInvoiceModel;
 import com.checkin.app.checkin.Manager.Model.ManagerStatsModel;
 import com.checkin.app.checkin.Misc.GenericDetailModel;
-import com.checkin.app.checkin.Session.Model.CheckoutStatusModel;
+import com.checkin.app.checkin.session.model.CheckoutStatusModel;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 
 import androidx.annotation.NonNull;

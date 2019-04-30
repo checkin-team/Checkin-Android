@@ -76,7 +76,7 @@
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme" />
         <activity
-            android:name=".Session.ActiveSession.ActiveSessionActivity"
+            android:name=".session.activesession.ActiveSessionActivity"
             android:windowSoftInputMode="adjustNothing" />
         <activity
             android:name=".Shop.ShopJoin.BusinessFeaturesActivity"
@@ -142,17 +142,17 @@
             android:label="Image"
             android:theme="@style/AppThemeWhiteActionBar" />
         <activity
-            android:name=".Session.ActiveSession.Chat.SessionChatActivity"
+            android:name=".session.activesession.chat.SessionChatActivity"
             android:label="Chat with Us"
             android:windowSoftInputMode="adjustResize"/>
         <activity
-            android:name=".Session.ActiveSession.ActiveSessionViewOrdersActivity"
+            android:name=".session.activesession.ActiveSessionViewOrdersActivity"
             android:windowSoftInputMode="adjustNothing" />
         <activity android:name=".Review.NewReview.NewReviewActivity"
             android:theme="@style/AppThemeWhiteActionBar"
             android:label="Write a Review"/>
         <activity
-            android:name=".Session.ActiveSession.ActiveSessionInvoiceActivity"
+            android:name=".session.activesession.ActiveSessionInvoiceActivity"
             android:label="Invoice"
             android:theme="@style/AppThemeWhiteActionBar" />
         <activity

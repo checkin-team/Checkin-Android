@@ -1,4 +1,4 @@
-package com.checkin.app.checkin.Session.Model;
+package com.checkin.app.checkin.session.model;
 
 import com.checkin.app.checkin.Misc.BriefModel;
 import com.fasterxml.jackson.annotation.JsonProperty;

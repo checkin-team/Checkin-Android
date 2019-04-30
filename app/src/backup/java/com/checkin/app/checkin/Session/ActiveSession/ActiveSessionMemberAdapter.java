@@ -1,4 +1,4 @@
-package com.checkin.app.checkin.Session.ActiveSession;
+package com.checkin.app.checkin.session.activesession;
 
 import androidx.recyclerview.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -7,7 +7,7 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.checkin.app.checkin.R;
-import com.checkin.app.checkin.Session.Model.SessionCustomerModel;
+import com.checkin.app.checkin.session.model.SessionCustomerModel;
 import com.checkin.app.checkin.Utility.HeaderFooterRecyclerViewAdapter;
 import com.checkin.app.checkin.Utility.Utils;
 

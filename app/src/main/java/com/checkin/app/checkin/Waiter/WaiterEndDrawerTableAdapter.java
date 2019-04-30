@@ -7,8 +7,8 @@ import android.widget.TextView;
 
 import com.checkin.app.checkin.Misc.DebouncedOnClickListener;
 import com.checkin.app.checkin.R;
-import com.checkin.app.checkin.Session.Model.RestaurantTableModel;
-import com.checkin.app.checkin.Session.Model.TableSessionModel;
+import com.checkin.app.checkin.session.model.RestaurantTableModel;
+import com.checkin.app.checkin.session.model.TableSessionModel;
 
 import java.util.List;
 

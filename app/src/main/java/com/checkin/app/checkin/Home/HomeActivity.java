@@ -21,7 +21,7 @@ import com.checkin.app.checkin.Misc.BaseFragmentAdapterBottomNav;
 import com.checkin.app.checkin.Misc.BlankFragment;
 import com.checkin.app.checkin.Misc.QRScannerActivity;
 import com.checkin.app.checkin.R;
-import com.checkin.app.checkin.Session.ActiveSession.ActiveSessionActivity;
+import com.checkin.app.checkin.session.activesession.ActiveSessionActivity;
 import com.checkin.app.checkin.Shop.ShopJoin.BusinessFeaturesActivity;
 import com.checkin.app.checkin.User.Private.UserPrivateProfileFragment;
 import com.checkin.app.checkin.User.Private.UserViewModel;
@@ -49,7 +49,6 @@ import butterknife.OnClick;
 
 import static com.checkin.app.checkin.Data.Message.ActiveSessionNotificationService.ACTIVE_RESTAURANT_DETAIL;
 import static com.checkin.app.checkin.Data.Message.ActiveSessionNotificationService.ACTIVE_SESSION_PK;
-import static com.checkin.app.checkin.Data.Message.MessageModel.MESSAGE_TYPE.SHOP_MEMBER_ADDED;
 
 public class HomeActivity extends BaseAccountActivity implements NavigationView.OnNavigationItemSelectedListener {
     public static final String SP_QR_SCANNER = "qrscanner";

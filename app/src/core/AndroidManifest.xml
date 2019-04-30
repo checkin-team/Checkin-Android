@@ -51,7 +51,7 @@
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme" />
         <activity
-            android:name=".Session.ActiveSession.ActiveSessionActivity"
+            android:name=".session.activesession.ActiveSessionActivity"
             android:windowSoftInputMode="adjustNothing"
             android:screenOrientation="portrait"/>
         <activity
@@ -88,12 +88,12 @@
             android:label="Image"
             android:theme="@style/AppThemeWhiteActionBar" />
         <activity
-            android:name=".Session.ActiveSession.Chat.SessionChatActivity"
+            android:name=".session.activesession.chat.SessionChatActivity"
             android:label="Chat with Us"
             android:theme="@style/SessionChatTheme"
             android:windowSoftInputMode="adjustResize" />
         <activity
-            android:name=".Session.ActiveSession.ActiveSessionInvoiceActivity"
+            android:name=".session.activesession.ActiveSessionInvoiceActivity"
             android:label="Invoice"
             android:theme="@style/AppThemeWhiteActionBar" />
         <activity
@@ -117,7 +117,7 @@
             android:theme="@style/AppThemeWhiteActionBar"/>
         <activity android:name=".Shop.Private.ShopPrivateActivity"
             android:screenOrientation="portrait"/>
-        <activity android:name=".Session.ActiveSession.ActiveSessionPaymentOptions"
+        <activity android:name=".session.activesession.ActiveSessionPaymentOptions"
             android:label="Payment Mode"
             android:theme="@style/AppThemeWhiteActionBar" />
 

@@ -1,4 +1,4 @@
-package com.checkin.app.checkin.Session.ActiveSession;
+package com.checkin.app.checkin.session.activesession;
 
 import android.app.Application;
 import androidx.lifecycle.LiveData;
@@ -8,7 +8,7 @@ import androidx.annotation.NonNull;
 import com.checkin.app.checkin.Data.BaseViewModel;
 import com.checkin.app.checkin.Data.Converters;
 import com.checkin.app.checkin.Data.Resource;
-import com.checkin.app.checkin.Session.Model.SessionInvoiceModel;
+import com.checkin.app.checkin.session.model.SessionInvoiceModel;
 import com.checkin.app.checkin.Shop.ShopModel;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 

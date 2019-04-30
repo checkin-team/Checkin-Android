@@ -1,4 +1,4 @@
-package com.checkin.app.checkin.Session;
+package com.checkin.app.checkin.session;
 
 import android.app.Application;
 import androidx.lifecycle.LiveData;
@@ -12,9 +12,9 @@ import com.checkin.app.checkin.Data.NetworkBoundResource;
 import com.checkin.app.checkin.Data.Resource;
 import com.checkin.app.checkin.Data.RetrofitLiveData;
 import com.checkin.app.checkin.Data.WebApiService;
-import com.checkin.app.checkin.Session.Model.QRResultModel;
-import com.checkin.app.checkin.Session.Model.SessionBriefModel;
-import com.checkin.app.checkin.Session.Model.SessionOrderedItemModel;
+import com.checkin.app.checkin.session.model.QRResultModel;
+import com.checkin.app.checkin.session.model.SessionBriefModel;
+import com.checkin.app.checkin.session.model.SessionOrderedItemModel;
 import com.checkin.app.checkin.Shop.RecentCheckin.Model.RecentCheckinModel;
 import com.checkin.app.checkin.Waiter.Model.WaiterEventModel;
 import com.fasterxml.jackson.databind.node.ObjectNode;

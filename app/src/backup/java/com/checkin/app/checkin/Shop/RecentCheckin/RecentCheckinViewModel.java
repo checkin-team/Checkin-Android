@@ -7,7 +7,7 @@ import androidx.annotation.NonNull;
 
 import com.checkin.app.checkin.Data.BaseViewModel;
 import com.checkin.app.checkin.Data.Resource;
-import com.checkin.app.checkin.Session.SessionRepository;
+import com.checkin.app.checkin.session.SessionRepository;
 import com.checkin.app.checkin.Shop.RecentCheckin.Model.RecentCheckinModel;
 
 public class RecentCheckinViewModel extends BaseViewModel {

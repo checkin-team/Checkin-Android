@@ -12,8 +12,8 @@ import com.checkin.app.checkin.Manager.Adapter.ManagerSessionOrderAdapter;
 import com.checkin.app.checkin.Manager.ManagerSessionViewModel;
 import com.checkin.app.checkin.Misc.BaseFragment;
 import com.checkin.app.checkin.R;
-import com.checkin.app.checkin.Session.ActiveSession.Chat.SessionChatModel;
-import com.checkin.app.checkin.Session.Model.SessionOrderedItemModel;
+import com.checkin.app.checkin.session.activesession.chat.SessionChatModel;
+import com.checkin.app.checkin.session.model.SessionOrderedItemModel;
 import com.checkin.app.checkin.Utility.Utils;
 
 import androidx.annotation.NonNull;

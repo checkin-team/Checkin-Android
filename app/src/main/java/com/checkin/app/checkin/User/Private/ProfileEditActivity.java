@@ -119,10 +119,12 @@ public class ProfileEditActivity extends AppCompatActivity implements OtpVerific
         etPhone.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+                //beforeTextChanged code
             }
 
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
+                //onTextChanged code
             }
 
             @Override
@@ -163,7 +165,8 @@ public class ProfileEditActivity extends AppCompatActivity implements OtpVerific
         switch (item.getItemId()) {
             case R.id.menu_item_done: {
                 String name = etName.getText().toString();
-                String firstName="",lastName="";
+                String firstName="";
+                String lastName="";
                 if(name.split("\\w+").length>1){
 
                     lastName = name.substring(name.lastIndexOf(" ")+1);

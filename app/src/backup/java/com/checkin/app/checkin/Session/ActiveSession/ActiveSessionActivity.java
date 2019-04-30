@@ -1,4 +1,4 @@
-package com.checkin.app.checkin.Session.ActiveSession;
+package com.checkin.app.checkin.session.activesession;
 
 import android.annotation.SuppressLint;
 import android.app.AlertDialog;
@@ -26,9 +26,9 @@ import com.checkin.app.checkin.Data.Message.MessageUtils;
 import com.checkin.app.checkin.Menu.SessionMenuActivity;
 import com.checkin.app.checkin.R;
 import com.checkin.app.checkin.Search.SearchActivity;
-import com.checkin.app.checkin.Session.ActiveSession.Chat.SessionChatActivity;
-import com.checkin.app.checkin.Session.ActiveSession.Chat.SessionChatDataModel;
-import com.checkin.app.checkin.Session.Model.SessionCustomerModel;
+import com.checkin.app.checkin.session.activesession.chat.SessionChatActivity;
+import com.checkin.app.checkin.session.activesession.chat.SessionChatDataModel;
+import com.checkin.app.checkin.session.model.SessionCustomerModel;
 import com.checkin.app.checkin.Utility.Constants;
 import com.checkin.app.checkin.Utility.Utils;
 
