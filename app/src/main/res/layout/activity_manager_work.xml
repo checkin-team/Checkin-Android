@@ -69,10 +69,66 @@
                 app:tabIndicatorHeight="0dp"
                 app:tabMode="fixed" />
 
+            <ImageView
+                android:id="@+id/im_manager_initiate_session"
+                style="@style/LogoImageStyle"
+                android:layout_above="@+id/tabs_manager_work"
+                android:layout_alignParentEnd="true"
+                android:layout_margin="@dimen/spacing_normal"
+                android:background="@drawable/ic_floating_oval"
+                android:padding="16dp"
+                android:src="@drawable/ic_plus_red" />
+
+            <LinearLayout
+                android:id="@+id/ll_manager_tables_container"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_alignParentBottom="true"
+                android:background="@color/translucent_brownish_grey"
+                android:fitsSystemWindows="true"
+                android:gravity="bottom|center"
+                android:orientation="vertical"
+                android:visibility="gone">
+
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@color/white"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:gravity="center"
+                        android:paddingTop="@dimen/spacing_normal"
+                        android:paddingBottom="@dimen/spacing_extra_small"
+                        android:text="SELECT THE TABLE"
+                        android:textStyle="bold" />
+
+                    <View
+                        android:layout_width="@dimen/button_width_normal"
+                        android:layout_height="8dp"
+                        android:layout_gravity="center"
+                        android:background="@drawable/ic_line_fwd_arrow" />
+
+                    <androidx.recyclerview.widget.RecyclerView
+                        android:id="@+id/rv_mw_table"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="16dp"
+                        android:layout_marginBottom="16dp" />
+
+                </LinearLayout>
+
+            </LinearLayout>
+
         </RelativeLayout>
 
     </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
 
     <include layout="@layout/incl_account_base" />
+
 
 </androidx.drawerlayout.widget.DrawerLayout>

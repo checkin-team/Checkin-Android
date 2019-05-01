@@ -247,6 +247,9 @@ public interface WebApiService {
     @POST("sessions/{session_id}/checkout/")
     Call<CheckoutStatusModel> putSessionCheckout(@Path("session_id") long sessionId);
 
+    @POST("sessions/manage/new/")
+    Call<QRResultModel> postManageInitiateSession(@Body ObjectNode data);
+
     // endregion
 
     // region MENU
