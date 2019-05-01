@@ -14,6 +14,7 @@ import com.checkin.app.checkin.Manager.Model.ManagerSessionInvoiceModel;
 import com.checkin.app.checkin.Manager.Model.ManagerStatsModel;
 import com.checkin.app.checkin.Misc.GenericDetailModel;
 import com.checkin.app.checkin.session.model.CheckoutStatusModel;
+import com.checkin.app.checkin.session.model.QRResultModel;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 
 import androidx.annotation.NonNull;
@@ -113,6 +114,26 @@ public class ManagerRepository extends BaseRepository {
 
             @Override
             protected void saveCallResult(GenericDetailModel data) {
+
+            }
+        }.getAsLiveData();
+    }
+
+    public LiveData<Resource<QRResultModel>> managerInitiateSession(ObjectNode requestJson) {
+        return new NetworkBoundResource<QRResultModel, QRResultModel>() {
+            @Override
+            protected boolean shouldUseLocalDb() {
+                return false;
+            }
+
+            @NonNull
+            @Override
+            protected LiveData<ApiResponse<QRResultModel>> createCall() {
+                return new RetrofitLiveData<>(mWebService.postManageInitiateSession(requestJson));
+            }
+
+            @Override
+            protected void saveCallResult(QRResultModel data) {
 
             }
         }.getAsLiveData();

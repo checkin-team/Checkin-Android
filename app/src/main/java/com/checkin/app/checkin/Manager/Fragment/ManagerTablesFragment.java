@@ -11,6 +11,7 @@ import com.checkin.app.checkin.Data.Message.MessageModel;
 import com.checkin.app.checkin.Data.Message.MessageObjectModel;
 import com.checkin.app.checkin.Data.Message.MessageUtils;
 import com.checkin.app.checkin.Data.Resource;
+import com.checkin.app.checkin.Manager.Adapter.ManagerInactiveTableAdapter;
 import com.checkin.app.checkin.Manager.Adapter.ManagerWorkTableAdapter;
 import com.checkin.app.checkin.Manager.ManagerSessionActivity;
 import com.checkin.app.checkin.Manager.ManagerWorkViewModel;
@@ -22,6 +23,7 @@ import com.checkin.app.checkin.session.model.EventBriefModel;
 import com.checkin.app.checkin.session.model.RestaurantTableModel;
 import com.checkin.app.checkin.session.model.TableSessionModel;
 import com.checkin.app.checkin.Utility.Utils;
+import com.google.android.material.bottomsheet.BottomSheetBehavior;
 
 import java.util.Calendar;
 import java.util.List;
@@ -32,6 +34,7 @@ import androidx.lifecycle.ViewModelProviders;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import butterknife.BindView;
+import butterknife.OnClick;
 
 import static com.checkin.app.checkin.Data.Message.MessageModel.MESSAGE_TYPE.MANAGER_SESSION_CHECKOUT_REQUEST;
 import static com.checkin.app.checkin.Data.Message.MessageModel.MESSAGE_TYPE.MANAGER_SESSION_END;
@@ -152,6 +155,15 @@ public class ManagerTablesFragment extends BaseFragment implements ManagerWorkTa
                 Utils.toast(requireContext(), resource.message);
             }
         });
+        mViewModel.getSessionInitiated().observe(this,qrResultModelResource -> {
+            if (qrResultModelResource == null) return;
+            if (qrResultModelResource.status == Resource.Status.SUCCESS && qrResultModelResource.data != null) {
+                mViewModel.fetchActiveTables(mViewModel.getShopPk());
+            } else {
+                Utils.toast(requireContext(), qrResultModelResource.message);
+
+            }
+        });
     }
 
     // region UI-Update
@@ -221,4 +233,6 @@ public class ManagerTablesFragment extends BaseFragment implements ManagerWorkTa
             mViewModel.updateResults();
         }
     }
+
+
 }

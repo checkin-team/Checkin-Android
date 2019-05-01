@@ -130,6 +130,7 @@ public class ManagerWorkTableAdapter extends RecyclerView.Adapter<ManagerWorkTab
                     tvShopManagerTableDetail.setText(String.format(Locale.ENGLISH, "Session Time: %s", tableSessionModel.formatTimeDuration()));
                     ivShopManagerTableIcon.setImageResource(R.drawable.ic_clock);
                 }
+                if(tableSessionModel.getEvent() != null)
                 tvShopManagerTableTime.setText(tableSessionModel.getEvent().formatTimestamp());
                 tvShopManagerTableNumber.setText(data.getTable());
 

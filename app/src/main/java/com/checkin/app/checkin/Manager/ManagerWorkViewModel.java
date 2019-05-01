@@ -9,11 +9,13 @@ import com.checkin.app.checkin.Manager.Model.ManagerStatsModel;
 import com.checkin.app.checkin.session.activesession.chat.SessionChatModel;
 import com.checkin.app.checkin.session.model.CheckoutStatusModel;
 import com.checkin.app.checkin.session.model.EventBriefModel;
+import com.checkin.app.checkin.session.model.QRResultModel;
 import com.checkin.app.checkin.session.model.RestaurantTableModel;
 import com.checkin.app.checkin.session.model.TableSessionModel;
 import com.checkin.app.checkin.Waiter.WaiterRepository;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
@@ -30,6 +32,7 @@ public class ManagerWorkViewModel extends BaseViewModel {
     private MediatorLiveData<Resource<List<RestaurantTableModel>>> mTablesData = new MediatorLiveData<>();
     private MediatorLiveData<Resource<ManagerStatsModel>> mStatsData = new MediatorLiveData<>();
     private MediatorLiveData<Resource<CheckoutStatusModel>> mCheckoutData = new MediatorLiveData<>();
+    private MediatorLiveData<Resource<QRResultModel>> mQrResult = new MediatorLiveData<>();
 
     private long mShopPk;
 
@@ -41,7 +44,7 @@ public class ManagerWorkViewModel extends BaseViewModel {
 
     public void fetchActiveTables(long restaurantId) {
         mShopPk = restaurantId;
-        mTablesData.addSource(mWaiterRepository.getShopTables(restaurantId, true), mTablesData::setValue);
+        mTablesData.addSource(mWaiterRepository.getShopTables(restaurantId, false), mTablesData::setValue);
     }
 
     public void fetchStatistics() {
@@ -53,8 +56,37 @@ public class ManagerWorkViewModel extends BaseViewModel {
             if (input == null || input.data == null || input.status != Resource.Status.SUCCESS)
                 return input;
 
-            Collections.sort(input.data, (t1, t2) -> t2.getTableSession().getEvent().getTimestamp().compareTo(t1.getTableSession().getEvent().getTimestamp()));
-            return Resource.cloneResource(input, input.data);
+            List<RestaurantTableModel> result = new ArrayList<>();
+            for (int i = 0, length = input.data.size(); i < length; i++) {
+                RestaurantTableModel tableModel = input.data.get(i);
+                if (tableModel.getTableSession() != null)
+                    result.add(tableModel);
+            }
+
+
+            Collections.sort(result, (t1, t2) -> {
+                if (t2.getTableSession().getEvent() != null && t1.getTableSession().getEvent() !=null) {
+                    return t2.getTableSession().getEvent().getTimestamp().compareTo(t1.getTableSession().getEvent().getTimestamp());
+                }else {
+                    return t2.getTableSession().getCreated().compareTo(t1.getTableSession().getCreated());
+                }
+            });
+            return Resource.cloneResource(input, result);
+        });
+    }
+
+    public LiveData<Resource<List<RestaurantTableModel>>> getInactiveTables() {
+        return Transformations.map(mTablesData, input -> {
+            if (input == null || input.data == null || input.status != Resource.Status.SUCCESS)
+                return input;
+
+            List<RestaurantTableModel> result = new ArrayList<>();
+            for (int i = 0, length = input.data.size(); i < length; i++) {
+                RestaurantTableModel tableModel = input.data.get(i);
+                if (tableModel.getTableSession() == null)
+                    result.add(tableModel);
+            }
+            return Resource.cloneResource(input, result);
         });
     }
 
@@ -152,5 +184,15 @@ public class ManagerWorkViewModel extends BaseViewModel {
                 }
             }
         }
+    }
+
+    public void processQrPk(long qrPk) {
+        ObjectNode requestJson = Converters.objectMapper.createObjectNode();
+        requestJson.put("qr", qrPk);
+        mQrResult.addSource(mManagerRepository.managerInitiateSession(requestJson), mQrResult::setValue);
+    }
+
+    public LiveData<Resource<QRResultModel>> getSessionInitiated() {
+        return mQrResult;
     }
 }
