@@ -99,7 +99,8 @@ public class WaiterEndDrawerTableAdapter extends RecyclerView.Adapter<WaiterEndD
                 } else {
                     tvHost.setText("Standard");
                 }
-                tvTimestamp.setText(tableSessionModel.getEvent().formatElapsedTime());
+                if (tableSessionModel.getEvent() != null)
+                    tvTimestamp.setText(tableSessionModel.getEvent().formatElapsedTime());
                 cvWaiterTableName.setVisibility(View.VISIBLE);
                 tvTimestamp.setVisibility(View.VISIBLE);
             } else {

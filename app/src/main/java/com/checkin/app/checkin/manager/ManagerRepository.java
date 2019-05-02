@@ -1,4 +1,4 @@
-package com.checkin.app.checkin.Manager;
+package com.checkin.app.checkin.manager;
 
 import android.app.Application;
 import android.content.Context;
@@ -10,8 +10,8 @@ import com.checkin.app.checkin.Data.NetworkBoundResource;
 import com.checkin.app.checkin.Data.Resource;
 import com.checkin.app.checkin.Data.RetrofitLiveData;
 import com.checkin.app.checkin.Data.WebApiService;
-import com.checkin.app.checkin.Manager.Model.ManagerSessionInvoiceModel;
-import com.checkin.app.checkin.Manager.Model.ManagerStatsModel;
+import com.checkin.app.checkin.manager.model.ManagerSessionInvoiceModel;
+import com.checkin.app.checkin.manager.model.ManagerStatsModel;
 import com.checkin.app.checkin.Misc.GenericDetailModel;
 import com.checkin.app.checkin.session.model.CheckoutStatusModel;
 import com.checkin.app.checkin.session.model.QRResultModel;
@@ -134,7 +134,7 @@ public class ManagerRepository extends BaseRepository {
 
             @Override
             protected void saveCallResult(QRResultModel data) {
-
+                //saveCallResult code
             }
         }.getAsLiveData();
     }

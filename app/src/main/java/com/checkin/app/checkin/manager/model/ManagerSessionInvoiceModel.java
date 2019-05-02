@@ -1,4 +1,4 @@
-package com.checkin.app.checkin.Manager.Model;
+package com.checkin.app.checkin.manager.model;
 
 import com.checkin.app.checkin.session.model.SessionInvoiceModel;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;

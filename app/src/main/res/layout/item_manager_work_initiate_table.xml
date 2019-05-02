@@ -11,7 +11,7 @@
         android:layout_height="wrap_content"
         style="@style/RedSmallTextStyle"
         android:textSize="@dimen/font_normal"
-        android:padding="@dimen/spacing_extra_small"
+        android:padding="@dimen/spacing_small"
         android:text="2"
         android:gravity="center"/>
 
