@@ -1,11 +1,11 @@
-package com.checkin.app.checkin.Manager;
+package com.checkin.app.checkin.manager;
 
 import android.app.Application;
 
 import com.checkin.app.checkin.Data.BaseViewModel;
 import com.checkin.app.checkin.Data.Converters;
 import com.checkin.app.checkin.Data.Resource;
-import com.checkin.app.checkin.Manager.Model.ManagerStatsModel;
+import com.checkin.app.checkin.manager.model.ManagerStatsModel;
 import com.checkin.app.checkin.session.activesession.chat.SessionChatModel;
 import com.checkin.app.checkin.session.model.CheckoutStatusModel;
 import com.checkin.app.checkin.session.model.EventBriefModel;
@@ -57,7 +57,7 @@ public class ManagerWorkViewModel extends BaseViewModel {
                 return input;
 
             List<RestaurantTableModel> result = new ArrayList<>();
-            for (int i = 0, length = input.data.size(); i < length; i++) {
+            for (int i = 0; i < input.data.size(); i++) {
                 RestaurantTableModel tableModel = input.data.get(i);
                 if (tableModel.getTableSession() != null)
                     result.add(tableModel);
@@ -65,11 +65,11 @@ public class ManagerWorkViewModel extends BaseViewModel {
 
 
             Collections.sort(result, (t1, t2) -> {
-                if (t2.getTableSession().getEvent() != null && t1.getTableSession().getEvent() !=null) {
-                    return t2.getTableSession().getEvent().getTimestamp().compareTo(t1.getTableSession().getEvent().getTimestamp());
-                }else {
-                    return t2.getTableSession().getCreated().compareTo(t1.getTableSession().getCreated());
-                }
+                    if (t2.getTableSession().getEvent() != null && t1.getTableSession().getEvent() !=null) {
+                        return t2.getTableSession().getEvent().getTimestamp().compareTo(t1.getTableSession().getEvent().getTimestamp());
+                    }else {
+                        return t2.getTableSession().getCreated().compareTo(t1.getTableSession().getCreated());
+                    }
             });
             return Resource.cloneResource(input, result);
         });
@@ -81,7 +81,7 @@ public class ManagerWorkViewModel extends BaseViewModel {
                 return input;
 
             List<RestaurantTableModel> result = new ArrayList<>();
-            for (int i = 0, length = input.data.size(); i < length; i++) {
+            for (int i = 0; i < input.data.size(); i++) {
                 RestaurantTableModel tableModel = input.data.get(i);
                 if (tableModel.getTableSession() == null)
                     result.add(tableModel);

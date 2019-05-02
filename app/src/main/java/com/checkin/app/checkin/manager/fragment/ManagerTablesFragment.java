@@ -1,4 +1,4 @@
-package com.checkin.app.checkin.Manager.Fragment;
+package com.checkin.app.checkin.manager.fragment;
 
 import android.content.BroadcastReceiver;
 import android.content.Context;
@@ -11,10 +11,9 @@ import com.checkin.app.checkin.Data.Message.MessageModel;
 import com.checkin.app.checkin.Data.Message.MessageObjectModel;
 import com.checkin.app.checkin.Data.Message.MessageUtils;
 import com.checkin.app.checkin.Data.Resource;
-import com.checkin.app.checkin.Manager.Adapter.ManagerInactiveTableAdapter;
-import com.checkin.app.checkin.Manager.Adapter.ManagerWorkTableAdapter;
-import com.checkin.app.checkin.Manager.ManagerSessionActivity;
-import com.checkin.app.checkin.Manager.ManagerWorkViewModel;
+import com.checkin.app.checkin.manager.adapter.ManagerWorkTableAdapter;
+import com.checkin.app.checkin.manager.ManagerSessionActivity;
+import com.checkin.app.checkin.manager.ManagerWorkViewModel;
 import com.checkin.app.checkin.Misc.BaseFragment;
 import com.checkin.app.checkin.Misc.BriefModel;
 import com.checkin.app.checkin.R;
@@ -23,7 +22,6 @@ import com.checkin.app.checkin.session.model.EventBriefModel;
 import com.checkin.app.checkin.session.model.RestaurantTableModel;
 import com.checkin.app.checkin.session.model.TableSessionModel;
 import com.checkin.app.checkin.Utility.Utils;
-import com.google.android.material.bottomsheet.BottomSheetBehavior;
 
 import java.util.Calendar;
 import java.util.List;
@@ -34,7 +32,6 @@ import androidx.lifecycle.ViewModelProviders;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import butterknife.BindView;
-import butterknife.OnClick;
 
 import static com.checkin.app.checkin.Data.Message.MessageModel.MESSAGE_TYPE.MANAGER_SESSION_CHECKOUT_REQUEST;
 import static com.checkin.app.checkin.Data.Message.MessageModel.MESSAGE_TYPE.MANAGER_SESSION_END;

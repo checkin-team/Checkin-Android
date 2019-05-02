@@ -1,4 +1,4 @@
-package com.checkin.app.checkin.Manager;
+package com.checkin.app.checkin.manager;
 
 import android.app.AlertDialog;
 import android.content.Intent;
@@ -9,10 +9,10 @@ import android.widget.TextView;
 import com.checkin.app.checkin.Account.AccountModel;
 import com.checkin.app.checkin.Account.BaseAccountActivity;
 import com.checkin.app.checkin.Data.Resource;
-import com.checkin.app.checkin.Manager.Adapter.ManagerInactiveTableAdapter;
-import com.checkin.app.checkin.Manager.Fragment.ManagerStatsFragment;
-import com.checkin.app.checkin.Manager.Fragment.ManagerTablesActivateFragment;
-import com.checkin.app.checkin.Manager.Fragment.ManagerTablesFragment;
+import com.checkin.app.checkin.manager.adapter.ManagerInactiveTableAdapter;
+import com.checkin.app.checkin.manager.fragment.ManagerStatsFragment;
+import com.checkin.app.checkin.manager.fragment.ManagerTablesActivateFragment;
+import com.checkin.app.checkin.manager.fragment.ManagerTablesFragment;
 import com.checkin.app.checkin.Misc.BaseFragmentAdapterBottomNav;
 import com.checkin.app.checkin.R;
 import com.checkin.app.checkin.Shop.ShopPreferences;
@@ -193,13 +193,14 @@ public class ManagerWorkActivity extends BaseAccountActivity implements ManagerT
         if (mInactiveAdapter.getItemCount() > 0)
             managerTablesContainer.setVisibility(View.VISIBLE);
         else
-            Utils.toast(this,"No tables are Inactive.");
+            Utils.toast(this, "No tables are Inactive.");
     }
 
     @Override
     public void onClickInactiveTable(RestaurantTableModel tableModel) {
         managerTablesContainer.setVisibility(View.GONE);
-        AlertDialog.Builder builder = new AlertDialog.Builder(this).setTitle("Do you want to initiate the session?")
+        AlertDialog.Builder builder = new AlertDialog.Builder(this).setTitle(tableModel.getTable())
+                .setMessage("Do you want to initiate the session?")
                 .setPositiveButton("Done", (dialog, which) -> mViewModel.processQrPk(tableModel.getQrPk()))
                 .setNegativeButton("Cancel", (dialog, which) -> dialog.cancel());
         builder.show();
@@ -272,5 +273,13 @@ public class ManagerWorkActivity extends BaseAccountActivity implements ManagerT
             isActivated = isChecked;
             notifyDataSetChanged();
         }
+    }
+
+    @Override
+    public void onBackPressed() {
+        if (managerTablesContainer.getVisibility() == View.VISIBLE)
+            managerTablesContainer.setVisibility(View.GONE);
+        else
+            super.onBackPressed();
     }
 }

@@ -1,4 +1,4 @@
-package com.checkin.app.checkin.Manager.Adapter;
+package com.checkin.app.checkin.manager.adapter;
 
 import android.view.LayoutInflater;
 import android.view.View;
@@ -6,7 +6,7 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.checkin.app.checkin.Manager.Model.ManagerSessionEventModel;
+import com.checkin.app.checkin.manager.model.ManagerSessionEventModel;
 import com.checkin.app.checkin.R;
 import com.checkin.app.checkin.session.activesession.chat.SessionChatModel.CHAT_STATUS_TYPE;
 import com.checkin.app.checkin.session.activesession.chat.SessionEventBasicModel;
