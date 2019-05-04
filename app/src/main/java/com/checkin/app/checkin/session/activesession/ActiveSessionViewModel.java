@@ -2,29 +2,30 @@ package com.checkin.app.checkin.session.activesession;
 
 import android.app.Application;
 import android.os.Bundle;
+import android.text.TextUtils;
+
+import androidx.annotation.NonNull;
+import androidx.lifecycle.LiveData;
+import androidx.lifecycle.MediatorLiveData;
+import androidx.lifecycle.Transformations;
 
 import com.checkin.app.checkin.Data.BaseViewModel;
 import com.checkin.app.checkin.Data.Converters;
 import com.checkin.app.checkin.Data.Resource;
 import com.checkin.app.checkin.Misc.BriefModel;
 import com.checkin.app.checkin.Misc.GenericDetailModel;
-import com.checkin.app.checkin.session.paytm.PaytmModel;
+import com.checkin.app.checkin.Misc.paytm.PaytmModel;
+import com.checkin.app.checkin.Shop.ShopModel;
 import com.checkin.app.checkin.session.activesession.chat.SessionChatModel;
 import com.checkin.app.checkin.session.model.ActiveSessionModel;
 import com.checkin.app.checkin.session.model.CheckoutStatusModel;
 import com.checkin.app.checkin.session.model.SessionCustomerModel;
 import com.checkin.app.checkin.session.model.SessionInvoiceModel;
 import com.checkin.app.checkin.session.model.SessionOrderedItemModel;
-import com.checkin.app.checkin.Shop.ShopModel;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 
 import java.util.ArrayList;
 import java.util.List;
-
-import androidx.annotation.NonNull;
-import androidx.lifecycle.LiveData;
-import androidx.lifecycle.MediatorLiveData;
-import androidx.lifecycle.Transformations;
 
 import static com.checkin.app.checkin.session.activesession.chat.SessionChatModel.CHAT_STATUS_TYPE.DONE;
 import static com.checkin.app.checkin.session.activesession.chat.SessionChatModel.CHAT_STATUS_TYPE.IN_PROGRESS;
@@ -41,7 +42,6 @@ public class ActiveSessionViewModel extends BaseViewModel {
     private MediatorLiveData<Resource<PaytmModel>> mPaytmData = new MediatorLiveData<>();
 
     private long mShopPk = -1, mSessionPk = -1;
-    private String paytmChecksum, paytmCustId;
 
     public ActiveSessionViewModel(@NonNull Application application) {
         super(application);
@@ -102,7 +102,7 @@ public class ActiveSessionViewModel extends BaseViewModel {
         mCheckoutData.addSource(mRepository.postRequestCheckout(data), mCheckoutData::setValue);
     }
 
-    public void requestPaytmDetails(){
+    public void requestPaytmDetails() {
         mPaytmData.addSource(mRepository.postPaytmDetailRequest(), mPaytmData::setValue);
     }
 
@@ -110,19 +110,18 @@ public class ActiveSessionViewModel extends BaseViewModel {
         return mPaytmData;
     }
 
-    public void setChecksumCustId(String checksum, String custId){
-        paytmChecksum = checksum;
-        paytmCustId = custId;
-    }
-
     public void postPaytmCallback(Bundle bundle) {
+        if (mPaytmData.getValue() == null || mPaytmData.getValue().data == null)
+            return;
+        PaytmModel paytmModel = mPaytmData.getValue().data;
+        String txnId = bundle.getString("BANKTXNID");
         ObjectNode data = Converters.objectMapper.createObjectNode()
                 .put("MID", bundle.getString("MID"))
                 .put("ORDERID", bundle.getString("ORDERID"))
-                .put("CUST_ID", paytmCustId)
-                .put("CHECKSUMHASH", paytmChecksum)
+                .put("CUST_ID", paytmModel.getCustomerId())
+                .put("CHECKSUMHASH", paytmModel.getChecksumHash())
                 .put("TXNAMOUNT", bundle.getString("TXNAMOUNT"))
-                .put("TXNID", bundle.getString("RESPCODE"))
+                .put("TXNID", TextUtils.isEmpty(txnId) ? "123" : txnId)
                 .put("RESPCODE", bundle.getString("RESPCODE"))
                 .put("STATUS", bundle.getString("STATUS"))
                 .put("RESPMSG", bundle.getString("RESPMSG"))
