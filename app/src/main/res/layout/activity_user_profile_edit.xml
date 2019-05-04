@@ -80,11 +80,6 @@
         android:textSize="@dimen/font_normal"
         android:textColor="@color/brownish_grey" />
 
-    <Space
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="1" />
-
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -94,7 +89,7 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/spacing_small"
+            android:layout_marginTop="@dimen/spacing_normal"
             android:layout_marginBottom="@dimen/spacing_small"
             android:text="Personal Information"
             android:textAlignment="center"
@@ -132,7 +127,7 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/spacing_normal"
+            android:layout_marginTop="@dimen/spacing_small"
             android:text="Phone Number"
             android:textColor="@color/brownish_grey"
             android:textSize="@dimen/font_normal" />
@@ -168,6 +163,17 @@
 
 
         </RelativeLayout>
+
+        <TextView
+            android:id="@+id/tv_error_phone_number"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            style="@style/RedSmallTextStyle"
+            android:gravity="center"
+            android:layout_gravity="center"
+            android:visibility="gone"
+            android:drawablePadding="@dimen/spacing_extra_small"
+            android:drawableStart="@drawable/ic_error_exclamation"/>
 
         <TextView
             android:layout_width="wrap_content"
@@ -218,134 +224,6 @@
             android:textSize="@dimen/font_small" />
 
     </LinearLayout>
-
-    <!--<LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:layout_marginTop="@dimen/spacing_large">
-
-        <LinearLayout
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:orientation="vertical">
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textColor="@color/pinkish_grey"
-                android:textSize="@dimen/font_large"
-                android:layout_marginTop="@dimen/spacing_normal"
-                android:text="First Name"/>
-
-            <EditText
-                android:id="@+id/et_first_name"
-                android:textColor="@color/brownish_grey"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:inputType="textPersonName" />
-
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:orientation="vertical">
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textColor="@color/pinkish_grey"
-                android:textSize="@dimen/font_large"
-                android:layout_marginTop="@dimen/spacing_normal"
-                android:text="Last Name"/>
-
-            <EditText
-                android:id="@+id/et_last_name"
-                android:textColor="@color/brownish_grey"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:inputType="textPersonName" />
-        </LinearLayout>
-
-    </LinearLayout>
-
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textColor="@color/pinkish_grey"
-        android:textSize="@dimen/font_large"
-        android:layout_marginTop="@dimen/spacing_normal"
-        android:text="Location"/>
-
-    <EditText
-        android:id="@+id/et_location"
-        android:textColor="@color/brownish_grey"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:inputType="text" />
-
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textColor="@color/pinkish_grey"
-        android:textSize="@dimen/font_large"
-        android:layout_marginTop="@dimen/spacing_normal"
-        android:text="Bio"/>
-
-    <EditText
-        android:textColor="@color/brownish_grey"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:imeOptions="actionNext"
-        android:id="@+id/et_bio"
-        android:maxLines="3" />
-
-    <Space
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="1"/>
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="vertical"
-        android:background="@drawable/bordered_card_brownish_grey"
-        android:layout_marginBottom="@dimen/spacing_large">
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="@dimen/spacing_normal"
-            android:textColor="@color/white"
-            android:textSize="@dimen/font_larger"
-            android:layout_marginTop="@dimen/spacing_small"
-            android:text="Personal Information"
-            android:layout_gravity="center"
-            android:textAlignment="center"/>
-
-        <TextView
-            android:id="@+id/tv_username"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Username: "
-            android:textColor="@color/white"
-            android:textSize="@dimen/font_small"
-            android:layout_gravity="center"/>
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textColor="@color/white"
-            android:textSize="@dimen/font_small"
-            android:layout_marginTop="@dimen/spacing_small"
-            android:text="This information won't be shared on your profile."
-            android:layout_gravity="center"
-            android:textAlignment="center"
-            android:layout_marginBottom="@dimen/spacing_small"/>
-
-    </LinearLayout>-->
 
 </LinearLayout>
 

@@ -42,17 +42,18 @@
                 android:paddingEnd="@dimen/spacing_normal"
                 android:paddingBottom="@dimen/spacing_extra_small" />
 
-            <include layout="@layout/incl_horizontal_line" />
+
 
             <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/container_invoice_tip_waiter"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"
                 android:paddingStart="@dimen/spacing_normal"
-                android:paddingTop="@dimen/spacing_small"
                 android:paddingEnd="@dimen/spacing_small"
                 android:paddingBottom="@dimen/spacing_small">
 
+                <include layout="@layout/incl_horizontal_line" />
                 <LinearLayout
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -228,7 +229,7 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent">
 
-            <Button
+            <!--<Button
                 android:id="@+id/btn_select_payment_mode"
                 style="@style/RedSmallTextStyle"
                 android:layout_width="wrap_content"
@@ -241,7 +242,7 @@
                 app:layout_constraintEnd_toStartOf="@id/btn_invoice_request_checkout"
                 app:layout_constraintHorizontal_bias="0.25"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
+                app:layout_constraintTop_toTopOf="parent" />-->
 
 
             <LinearLayout
@@ -252,7 +253,7 @@
                 android:layout_marginEnd="@dimen/spacing_small"
                 android:layout_weight="0.5"
                 android:orientation="vertical"
-                android:visibility="gone"
+                android:visibility="visible"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toStartOf="@id/btn_invoice_request_checkout"
                 app:layout_constraintHorizontal_bias="0.25"
@@ -271,17 +272,18 @@
                     android:textColor="@color/brownish_grey"
                     android:textSize="@dimen/font_small" />
 
-                <ImageView
-                    android:layout_width="120dp"
-                    android:layout_height="@dimen/height_horizontal_view"
-                    android:layout_gravity="center"
-                    android:src="@drawable/ic_line_dash_white"
-                    android:tint="@color/white" />
+                <include
+                    layout="@layout/incl_dotted_view"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/spacing_extra_tiny"
+                    android:layout_gravity="center"/>
 
                 <TextView
                     style="@style/RedSmallTextStyle"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/spacing_extra_tiny"
                     android:layout_gravity="center"
                     android:text="@string/change" />
 

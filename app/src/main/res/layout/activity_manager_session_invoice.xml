@@ -301,7 +301,8 @@
             android:layout_marginStart="@dimen/spacing_large"
             android:drawableStart="@drawable/ic_cash_grey"
             android:drawablePadding="@dimen/spacing_small"
-            android:text="Via Cash" />
+            android:text="Via Cash"
+            android:visibility="gone"/>
 
         <Space
             android:layout_width="0dp"

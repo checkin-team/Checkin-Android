@@ -110,8 +110,8 @@ public class UserRepository extends BaseRepository {
         }.getAsLiveData();
     }
 
-    public LiveData<Resource<ObjectNode>> postUserData(ObjectNode objectNode) {
-        return new NetworkBoundResource<ObjectNode, ObjectNode>() {
+    public LiveData<Resource<UserModel>> postUserData(ObjectNode objectNode) {
+        return new NetworkBoundResource<UserModel, UserModel>() {
             @Override
             protected boolean shouldUseLocalDb() {
                 return false;
@@ -119,12 +119,12 @@ public class UserRepository extends BaseRepository {
 
             @NonNull
             @Override
-            protected LiveData<ApiResponse<ObjectNode>> createCall() {
+            protected LiveData<ApiResponse<UserModel>> createCall() {
                 return new RetrofitLiveData<>(mWebService.postUserData(objectNode));
             }
 
             @Override
-            protected void saveCallResult(ObjectNode data) {
+            protected void saveCallResult(UserModel data) {
             }
         }.getAsLiveData();
     }
