@@ -95,12 +95,11 @@ public class ActiveSessionInvoiceActivity extends AppCompatActivity {
             getSupportActionBar().setHomeAsUpIndicator(R.drawable.ic_back_grey);
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         }
+        prefs = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
 
-        String paymentTag = PreferenceManager.getDefaultSharedPreferences(getApplicationContext())
-                .getString(Constants.SP_LAST_USED_PAYMENT_MODE, PAYTM.tag);
+        String paymentTag = prefs.getString(Constants.SP_LAST_USED_PAYMENT_MODE, PAYTM.tag);
         selectedMode = ShopModel.PAYMENT_MODE.getByTag(paymentTag);
 
-        setPaymentModeUpdates();
         rvOrderedItems.setLayoutManager(new LinearLayoutManager(this, RecyclerView.VERTICAL, false));
         mAdapter = new InvoiceOrdersAdapter(null);
         rvOrderedItems.setAdapter(mAdapter);
@@ -181,13 +180,17 @@ public class ActiveSessionInvoiceActivity extends AppCompatActivity {
                 edInvoiceTip.setPadding(15, 0, 0, 0);
                 btnRequestCheckout.setText("Requested Checkout");
             } else {
-                btnRequestCheckout.setText("Request Checkout");
+                setPaymentModeUpdates();
             }
         });
 
         mViewModel.getObservableData().observe(this, resource -> {
             if (resource == null)
                 return;
+
+            if (resource.status == Resource.Status.SUCCESS && resource.data != null)
+                Utils.navigateBackToHome(getApplicationContext());
+
             Utils.toast(this, resource.message);
         });
     }
