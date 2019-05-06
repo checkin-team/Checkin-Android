@@ -123,7 +123,7 @@ public class ActiveSessionViewModel extends BaseViewModel {
                 .put("MID", bundle.getString("MID"))
                 .put("ORDERID", bundle.getString("ORDERID"))
                 .put("CUST_ID", paytmModel.getCustomerId())
-                .put("CHECKSUMHASH", paytmModel.getChecksumHash())
+                .put("CHECKSUMHASH", bundle.getString("CHECKSUMHASH"))
                 .put("TXNAMOUNT", bundle.getString("TXNAMOUNT"))
                 .put("TXNID", bundle.getString("TXNID"))
                 .put("RESPCODE", bundle.getString("RESPCODE"))
