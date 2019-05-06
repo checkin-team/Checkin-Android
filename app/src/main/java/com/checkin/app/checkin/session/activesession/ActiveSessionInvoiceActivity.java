@@ -21,7 +21,6 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.checkin.app.checkin.Data.Resource;
 import com.checkin.app.checkin.Misc.BillHolder;
-import com.checkin.app.checkin.Misc.paytm.PaytmModel;
 import com.checkin.app.checkin.Misc.paytm.PaytmPayment;
 import com.checkin.app.checkin.R;
 import com.checkin.app.checkin.Shop.ShopModel;
@@ -97,9 +96,8 @@ public class ActiveSessionInvoiceActivity extends AppCompatActivity {
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         }
 
-        prefs = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
-
-        String paymentTag = prefs.getString(Constants.SP_LAST_USED_PAYMENT_MODE, PAYTM.tag);
+        String paymentTag = PreferenceManager.getDefaultSharedPreferences(getApplicationContext())
+                .getString(Constants.SP_LAST_USED_PAYMENT_MODE, PAYTM.tag);
         selectedMode = ShopModel.PAYMENT_MODE.getByTag(paymentTag);
 
         setPaymentModeUpdates();
@@ -128,6 +126,9 @@ public class ActiveSessionInvoiceActivity extends AppCompatActivity {
                 setupData(resource.data);
             }
         });
+        boolean isRequestedCheckout = getIntent().getBooleanExtra(KEY_SESSION_REQUESTED_CHECKOUT, false);
+        if (isRequestedCheckout && !mViewModel.isRequestedCheckout())
+            mViewModel.updateRequestCheckout(true);
     }
 
     private void setupData(SessionInvoiceModel data) {
@@ -140,19 +141,8 @@ public class ActiveSessionInvoiceActivity extends AppCompatActivity {
             tipWaiterContainer.setVisibility(View.GONE);
 
         mBillHolder.bind(data.getBill());
-
         edInvoiceTip.setText(data.getBill().formatTip());
-
         tvInvoiceTotal.setText(Utils.formatCurrencyAmount(this, data.getBill().getTotal()));
-
-        boolean isRequestedCheckout = getIntent().getBooleanExtra(KEY_SESSION_REQUESTED_CHECKOUT, false);
-        edInvoiceTip.setEnabled(!isRequestedCheckout);
-
-        if (isRequestedCheckout) {
-            edInvoiceTip.setBackground(getResources().getDrawable(R.drawable.bordered_text_light_grey));
-            edInvoiceTip.setPadding(15, 0, 0, 0);
-            btnRequestCheckout.setText("Requested Checkout");
-        }
     }
 
     private void setupObserver() {
@@ -165,6 +155,7 @@ public class ActiveSessionInvoiceActivity extends AppCompatActivity {
                 if (statusModelResource.data.isCheckout())
                     Utils.navigateBackToHome(getApplicationContext());
                 else {
+                    mViewModel.updateRequestCheckout(true);
                     selectedMode = ShopModel.PAYMENT_MODE.getByTag(statusModelResource.data.getPaymentMode());
                     switch (selectedMode) {
                         case PAYTM:
@@ -178,10 +169,19 @@ public class ActiveSessionInvoiceActivity extends AppCompatActivity {
                     }
                 }
             } else if (statusModelResource.status != Resource.Status.LOADING) {
-                if ("Session already requested to checkout.".equals(statusModelResource.message)) {
-                    alertDialogForOverridingPaymentRequest();
-                } else
-                    Utils.toast(this, statusModelResource.message);
+                Utils.toast(this, statusModelResource.message);
+            }
+        });
+
+        mViewModel.getRequestedCheckout().observe(this, isRequestedCheckout -> {
+            edInvoiceTip.setEnabled(!isRequestedCheckout);
+
+            if (isRequestedCheckout) {
+                edInvoiceTip.setBackground(getResources().getDrawable(R.drawable.bordered_text_light_grey));
+                edInvoiceTip.setPadding(15, 0, 0, 0);
+                btnRequestCheckout.setText("Requested Checkout");
+            } else {
+                btnRequestCheckout.setText("Request Checkout");
             }
         });
 
@@ -214,9 +214,8 @@ public class ActiveSessionInvoiceActivity extends AppCompatActivity {
             if (paytmModelResource == null)
                 return;
             if (paytmModelResource.status == Resource.Status.SUCCESS && paytmModelResource.data != null) {
-                PaytmModel paytmModel = paytmModelResource.data;
-                paytmPayment.initializePayment(paytmModel, this);
-            } else {
+                paytmPayment.initializePayment(paytmModelResource.data, this);
+            } else if (paytmModelResource.status != Resource.Status.LOADING) {
                 Utils.toast(this, paytmModelResource.message);
             }
         });
@@ -238,7 +237,10 @@ public class ActiveSessionInvoiceActivity extends AppCompatActivity {
 
     @OnClick(R.id.btn_invoice_request_checkout)
     public void onClickCheckout() {
-        onRequestCheckout(false);
+        if (mViewModel.isRequestedCheckout())
+            alertDialogForOverridingPaymentRequest();
+        else
+            onRequestCheckout(false);
     }
 
     private void onRequestCheckout(boolean override) {

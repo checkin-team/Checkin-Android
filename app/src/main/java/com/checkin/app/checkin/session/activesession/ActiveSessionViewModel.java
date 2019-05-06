@@ -2,11 +2,11 @@ package com.checkin.app.checkin.session.activesession;
 
 import android.app.Application;
 import android.os.Bundle;
-import android.text.TextUtils;
 
 import androidx.annotation.NonNull;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MediatorLiveData;
+import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.Transformations;
 
 import com.checkin.app.checkin.Data.BaseViewModel;
@@ -40,6 +40,7 @@ public class ActiveSessionViewModel extends BaseViewModel {
     private MediatorLiveData<Resource<List<SessionOrderedItemModel>>> mOrdersData = new MediatorLiveData<>();
     private MediatorLiveData<Resource<CheckoutStatusModel>> mCheckoutData = new MediatorLiveData<>();
     private MediatorLiveData<Resource<PaytmModel>> mPaytmData = new MediatorLiveData<>();
+    private MutableLiveData<Boolean> mIsRequestedCheckout = new MutableLiveData<>(false);
 
     private long mShopPk = -1, mSessionPk = -1;
 
@@ -55,7 +56,11 @@ public class ActiveSessionViewModel extends BaseViewModel {
     }
 
     public void fetchActiveSessionDetail() {
-        mSessionData.addSource(mRepository.getActiveSessionDetail(), mSessionData::setValue);
+        mSessionData.addSource(mRepository.getActiveSessionDetail(), (resource) -> {
+            if (resource != null && resource.data != null)
+                mIsRequestedCheckout.setValue(resource.data.isRequestedCheckout());
+            mSessionData.setValue(resource);
+        });
     }
 
     public LiveData<Resource<ActiveSessionModel>> getSessionData() {
@@ -114,14 +119,13 @@ public class ActiveSessionViewModel extends BaseViewModel {
         if (mPaytmData.getValue() == null || mPaytmData.getValue().data == null)
             return;
         PaytmModel paytmModel = mPaytmData.getValue().data;
-        String txnId = bundle.getString("BANKTXNID");
         ObjectNode data = Converters.objectMapper.createObjectNode()
                 .put("MID", bundle.getString("MID"))
                 .put("ORDERID", bundle.getString("ORDERID"))
                 .put("CUST_ID", paytmModel.getCustomerId())
                 .put("CHECKSUMHASH", paytmModel.getChecksumHash())
                 .put("TXNAMOUNT", bundle.getString("TXNAMOUNT"))
-                .put("TXNID", TextUtils.isEmpty(txnId) ? "123" : txnId)
+                .put("TXNID", bundle.getString("TXNID"))
                 .put("RESPCODE", bundle.getString("RESPCODE"))
                 .put("STATUS", bundle.getString("STATUS"))
                 .put("RESPMSG", bundle.getString("RESPMSG"))
@@ -271,10 +275,16 @@ public class ActiveSessionViewModel extends BaseViewModel {
     }
 
     public boolean isRequestedCheckout() {
-        Resource<ActiveSessionModel> resource = mSessionData.getValue();
-        if (resource == null || resource.data == null)
-            return false;
-        return resource.data.isRequestedCheckout();
+        Boolean result = mIsRequestedCheckout.getValue();
+        return result != null ? result : false;
+    }
+
+    public LiveData<Boolean> getRequestedCheckout() {
+        return mIsRequestedCheckout;
+    }
+
+    public void updateRequestCheckout(boolean isCheckout) {
+        mIsRequestedCheckout.setValue(isCheckout);
     }
 
     public void setRequestedCheckout(boolean isRequestedCheckout) {
@@ -284,6 +294,4 @@ public class ActiveSessionViewModel extends BaseViewModel {
         resource.data.setRequestedCheckout(isRequestedCheckout);
         mSessionData.setValue(Resource.cloneResource(resource, resource.data));
     }
-
-
 }

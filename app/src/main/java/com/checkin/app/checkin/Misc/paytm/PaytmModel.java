@@ -88,7 +88,7 @@ public class PaytmModel {
         paramMap.put("ORDER_ID", getOrderId());
         paramMap.put("CUST_ID", getCustomerId());
         if (!TextUtils.isEmpty(phone)) paramMap.put("MOBILE_NO", getPhone());
-        if (!TextUtils.isEmpty(phone)) paramMap.put("EMAIL", getEmail());
+        if (!TextUtils.isEmpty(email)) paramMap.put("EMAIL", getEmail());
         paramMap.put("CHANNEL_ID", "WAP");
         paramMap.put("TXN_AMOUNT", getAmount());
         paramMap.put("WEBSITE", getWebsite());
@@ -99,4 +99,22 @@ public class PaytmModel {
         Log.e("PayTm", paramMap.toString());
         return new PaytmOrder(paramMap);
     }
+
+    /*
+    public PaytmOrder getPaytmOrder() {
+        HashMap<String, String> paramMap = new HashMap<>();
+        paramMap.put("MID", "mUsdOB28426623954609");
+        paramMap.put("ORDER_ID", "20");
+        paramMap.put("CUST_ID", "1");
+        paramMap.put("CHANNEL_ID", "WAP");
+        paramMap.put("TXN_AMOUNT", "95.00");
+        paramMap.put("WEBSITE", "APPSTAGING");
+        paramMap.put("INDUSTRY_TYPE_ID", "Retail");
+        paramMap.put("CALLBACK_URL", "https://securegw-stage.paytm.in/theia/paytmCallback?ORDER_ID=20");
+        paramMap.put("CHECKSUMHASH", "NaKZ3o9zBu8lk7WnG3TwE67gam29IxC06/Y+PKnm6MVoo6QmPQtTttEv8/CiLMnJgMBqZT1/rSb1oSowv7hdx+YxuNBGl0oxwVXF4v+2HlA=");
+
+        Log.e("PayTm", paramMap.toString());
+        return new PaytmOrder(paramMap);
+    }
+    */
 }
