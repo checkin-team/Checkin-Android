@@ -59,6 +59,7 @@ public class SessionMenuActivity extends BaseActivity implements
 
     public static final String KEY_RESTAURANT_PK = "menu.shop_pk";
     public static final String KEY_SESSION_PK = "menu.session_pk";
+    public static final String KEY_SESSION_TRENDING_ITEM = "menu.session_trending_item_pk";
     public static final String SESSION_ARG = "session_arg";
 
     @BindView(R.id.view_menu_search)
@@ -84,17 +85,19 @@ public class SessionMenuActivity extends BaseActivity implements
     private SESSION_STATUS mSessionStatus;
     private EndDrawerToggle endToggle = null;
 
-    public static void startWithSession(Context context, Long restaurantPk, @Nullable Long sessionPk) {
-        context.startActivity(withSession(context, restaurantPk, sessionPk));
+    public static void startWithSession(Context context, Long restaurantPk, @Nullable Long sessionPk, @Nullable Long itemModel) {
+        context.startActivity(withSession(context, restaurantPk, sessionPk, itemModel));
     }
 
-    public static Intent withSession(Context context, Long restaurantPk, @Nullable Long sessionPk) {
+    public static Intent withSession(Context context, Long restaurantPk, @Nullable Long sessionPk, @Nullable Long itemModel) {
         Intent intent = new Intent(context, SessionMenuActivity.class);
         Bundle args = new Bundle();
         args.putSerializable(KEY_SESSION_STATUS, SESSION_STATUS.ACTIVE);
         args.putLong(KEY_RESTAURANT_PK, restaurantPk);
         if (sessionPk != null)
             args.putLong(KEY_SESSION_PK, sessionPk);
+//        if (itemModel != null)
+//            args.putLong(KEY_SESSION_TRENDING_ITEM, itemModel);
         intent.putExtra(SESSION_ARG, args);
         return intent;
     }
@@ -135,7 +138,21 @@ public class SessionMenuActivity extends BaseActivity implements
 
         if (isSessionActive())
             setupCart();
+
+        /*long itemPk = args.getLong(KEY_SESSION_TRENDING_ITEM, 0L);
+        if (itemPk > 0L){
+            mViewModel.searchMenuItemById(itemPk);
+            mViewModel.getMenuItem().observe(this, itemModel -> {
+                if (itemModel != null)
+                    onMenuItemAdded(itemModel);
+
+            });
+        }*/
+
+
     }
+
+
 
     private void setupFilter() {
         mFilterFragment = MenuFilterFragment.newInstance(this);

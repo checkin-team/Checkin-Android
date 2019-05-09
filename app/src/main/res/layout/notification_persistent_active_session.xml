@@ -75,7 +75,6 @@
                 android:src="@drawable/ic_action_show_menu" />
 
             <TextView
-                android:id="@+id/btn_active_session_menu"
                 style="@style/GreySmallTextStyle"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"

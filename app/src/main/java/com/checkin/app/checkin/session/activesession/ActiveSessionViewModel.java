@@ -6,8 +6,10 @@ import android.os.Bundle;
 import com.checkin.app.checkin.Data.BaseViewModel;
 import com.checkin.app.checkin.Data.Converters;
 import com.checkin.app.checkin.Data.Resource;
+import com.checkin.app.checkin.Inventory.Model.InventoryItemModel;
 import com.checkin.app.checkin.Misc.BriefModel;
 import com.checkin.app.checkin.Misc.GenericDetailModel;
+import com.checkin.app.checkin.session.model.TrendingDishModel;
 import com.checkin.app.checkin.session.paytm.PaytmModel;
 import com.checkin.app.checkin.session.activesession.chat.SessionChatModel;
 import com.checkin.app.checkin.session.model.ActiveSessionModel;
@@ -19,6 +21,7 @@ import com.checkin.app.checkin.Shop.ShopModel;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 import androidx.annotation.NonNull;
@@ -39,6 +42,7 @@ public class ActiveSessionViewModel extends BaseViewModel {
     private MediatorLiveData<Resource<List<SessionOrderedItemModel>>> mOrdersData = new MediatorLiveData<>();
     private MediatorLiveData<Resource<CheckoutStatusModel>> mCheckoutData = new MediatorLiveData<>();
     private MediatorLiveData<Resource<PaytmModel>> mPaytmData = new MediatorLiveData<>();
+    private MediatorLiveData<List<TrendingDishModel>> mTrendingData = new MediatorLiveData<>();
 
     private long mShopPk = -1, mSessionPk = -1;
     private String paytmChecksum, paytmCustId;
@@ -286,5 +290,27 @@ public class ActiveSessionViewModel extends BaseViewModel {
         mSessionData.setValue(Resource.cloneResource(resource, resource.data));
     }
 
+
+    public LiveData<List<TrendingDishModel>> getTrendingItem() {
+
+        List<TrendingDishModel> data = new ArrayList<>();
+        TrendingDishModel itemModel = new TrendingDishModel();
+        itemModel.setPk(3);
+        itemModel.setName("Hot Fudge");
+        itemModel.setTypeNames(Collections.singletonList("L"));
+        itemModel.setTypeCosts(Collections.singletonList(99.00));
+
+        String[] availableMeals = new String[]{"brkfst",
+                "lunch",
+                "dinner"};
+        itemModel.setAvailableMeals(availableMeals);
+        itemModel.setDescription("have a tasty fudge sundae!");
+        itemModel.setVegetarian(true);
+        itemModel.setCustomizations(null);
+
+        data.add(0,itemModel);
+        mTrendingData.postValue(data);
+        return mTrendingData;
+    }
 
 }

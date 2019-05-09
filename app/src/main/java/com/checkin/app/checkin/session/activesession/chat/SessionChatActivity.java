@@ -39,7 +39,7 @@ public class SessionChatActivity extends BaseActivity implements ActiveSessionCh
     private static final String TAG = SessionChatActivity.class.getSimpleName();
     @BindView(R.id.bottom_expand_menu)
     ViewGroup bottomExpandedMenu;
-    @BindView(R.id.container_session_actions)
+    @BindView(R.id.container_session_trending_items_actions)
     ViewGroup containerSessionActions;
     @BindView(R.id.rv_active_session_chat)
     RecyclerView rvSessionChat;

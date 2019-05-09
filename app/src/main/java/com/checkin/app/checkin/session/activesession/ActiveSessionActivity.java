@@ -18,6 +18,9 @@ import com.checkin.app.checkin.Data.Message.MessageModel;
 import com.checkin.app.checkin.Data.Message.MessageModel.MESSAGE_TYPE;
 import com.checkin.app.checkin.Data.Message.MessageObjectModel;
 import com.checkin.app.checkin.Data.Message.MessageUtils;
+import com.checkin.app.checkin.Inventory.Model.InventoryItemModel;
+import com.checkin.app.checkin.Menu.Model.MenuItemModel;
+import com.checkin.app.checkin.Menu.Model.MenuModel;
 import com.checkin.app.checkin.Menu.SessionMenuActivity;
 import com.checkin.app.checkin.Misc.BaseActivity;
 import com.checkin.app.checkin.Misc.BriefModel;
@@ -31,6 +34,11 @@ import com.checkin.app.checkin.session.model.SessionCustomerModel;
 import com.checkin.app.checkin.session.model.SessionOrderedItemModel;
 import com.checkin.app.checkin.Utility.OnBoardingUtils;
 import com.checkin.app.checkin.Utility.Utils;
+import com.checkin.app.checkin.session.model.TrendingDishModel;
+
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
 
 import androidx.annotation.Nullable;
 import androidx.lifecycle.ViewModelProviders;
@@ -41,13 +49,15 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 
 public class ActiveSessionActivity extends BaseActivity implements
-        ActiveSessionMemberAdapter.SessionMemberInteraction {
+        ActiveSessionMemberAdapter.SessionMemberInteraction, ActiveSessionTrendingDishAdapter.SessionTrendingDishInteraction {
     public static final String KEY_SP_INTERACT_WITH_US = "sp.interact.with.us";
     public static final String KEY_INTERACT_WITH_US = "interact.with.us";
     public static final String SP_MENU = "sp.menu";
     private static final int RC_SEARCH_MEMBER = 201;
     @BindView(R.id.rv_session_members)
     RecyclerView rvMembers;
+    @BindView(R.id.rv_as_trending_dishes)
+    RecyclerView rvTrendingDishes;
     @BindView(R.id.tv_active_session_bill)
     TextView tvBill;
     @BindView(R.id.tv_as_waiter_name)
@@ -67,7 +77,7 @@ public class ActiveSessionActivity extends BaseActivity implements
     @BindView(R.id.tv_session_checkout)
     TextView tvSessionCheckout;
     @BindView(R.id.btn_active_session_menu)
-    TextView btnSessionMenu;
+    ImageView btnSessionMenu;
     @BindView(R.id.rl_container_session_orders)
     RelativeLayout rlSessionOrders;
     @BindView(R.id.ll_call_waiter_button)
@@ -128,6 +138,7 @@ public class ActiveSessionActivity extends BaseActivity implements
         }
     };
     private ActiveSessionMemberAdapter mSessionMembersAdapter;
+    private ActiveSessionTrendingDishAdapter mTrendingDishAdapter;
     private ActiveSessionViewOrdersFragment mOrdersFragment;
 
     @Override
@@ -212,6 +223,10 @@ public class ActiveSessionActivity extends BaseActivity implements
                 integer = 0;
             tvCountOrdersDelivered.setText(String.valueOf(integer));
         });
+
+        mViewModel.getTrendingItem().observe(this, inventoryItemModels -> {
+            mTrendingDishAdapter.setData(inventoryItemModels);
+        });
     }
 
     @Override
@@ -224,6 +239,11 @@ public class ActiveSessionActivity extends BaseActivity implements
         rvMembers.setLayoutManager(new LinearLayoutManager(this, RecyclerView.HORIZONTAL, false));
         mSessionMembersAdapter = new ActiveSessionMemberAdapter(null, this);
         rvMembers.setAdapter(mSessionMembersAdapter);
+
+        rvTrendingDishes.setLayoutManager(new LinearLayoutManager(this, RecyclerView.HORIZONTAL, false));
+        mTrendingDishAdapter = new ActiveSessionTrendingDishAdapter(this);
+        rvTrendingDishes.setAdapter(mTrendingDishAdapter);
+
         tvBill.setEnabled(false);
         rlSessionOrders.setEnabled(false);
         containerBottomActions.setOnTouchListener((v, event) -> {
@@ -299,7 +319,7 @@ public class ActiveSessionActivity extends BaseActivity implements
     @OnClick(R.id.btn_active_session_menu)
     public void onListMenu() {
         if (mViewModel.getShopPk() > 0)
-            SessionMenuActivity.startWithSession(this, mViewModel.getShopPk(), null);
+            SessionMenuActivity.startWithSession(this, mViewModel.getShopPk(), null,null);
     }
 
     @OnClick(R.id.rl_container_session_orders)
@@ -401,5 +421,10 @@ public class ActiveSessionActivity extends BaseActivity implements
         llCallWaiter.setEnabled(true);
         llTableCleaning.setEnabled(true);
         llRefillGlass.setEnabled(true);
+    }
+
+    @Override
+    public void onDishClick(TrendingDishModel itemModel) {
+        SessionMenuActivity.startWithSession(this, mViewModel.getShopPk(), null,itemModel.getPk());
     }
 }

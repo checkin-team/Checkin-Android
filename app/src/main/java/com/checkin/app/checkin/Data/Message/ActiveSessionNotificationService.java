@@ -100,7 +100,7 @@ public class ActiveSessionNotificationService extends Service {
     }
 
     private void openMenu() {
-        Intent menuIntent = SessionMenuActivity.withSession(this, mRestaurantPk, mSessionPk);
+        Intent menuIntent = SessionMenuActivity.withSession(this, mRestaurantPk, mSessionPk,null);
         menuIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
         startActivity(menuIntent);
     }

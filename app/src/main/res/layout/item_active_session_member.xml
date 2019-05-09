@@ -4,6 +4,7 @@
     android:layout_width="@dimen/width_card_wide"
     android:layout_height="@dimen/height_card_tall"
     android:layout_marginTop="@dimen/spacing_normal"
+    android:paddingBottom="@dimen/spacing_small"
     android:gravity="center"
     android:orientation="vertical">
 
@@ -11,7 +12,19 @@
         android:id="@+id/im_as_member_user"
         style="@style/LogoImageStyle"
         android:scaleType="centerCrop"
-        tools:src="@drawable/dummy_alex" />
+        tools:src="@drawable/dummy_alex"
+        android:visibility="visible"/>
+
+    <TextView
+        android:id="@+id/tv_as_member_unaccepted"
+        style="@style/LogoImageStyle"
+        android:layout_marginTop="@dimen/spacing_tiny"
+        android:text="@string/accept_request"
+        android:textSize="@dimen/font_extra_small"
+        android:background="@drawable/shape_oval_red"
+        android:textColor="@color/white"
+        android:gravity="center"
+        android:visibility="gone" />
 
     <TextView
         android:id="@+id/tv_as_member_user"
@@ -20,17 +33,9 @@
         android:layout_marginTop="@dimen/spacing_small"
         android:textAlignment="center"
         android:textColor="@color/brownish_grey"
-        android:textSize="@dimen/font_normal"
+        android:textSize="@dimen/font_small"
         tools:text="Laura" />
 
-    <TextView
-        android:id="@+id/tv_as_member_unaccepted"
-        style="@style/RedSmallTextStyle"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/spacing_tiny"
-        android:text="@string/pending_request"
-        android:textSize="@dimen/font_extra_small"
-        android:visibility="invisible" />
+
 
 </LinearLayout>

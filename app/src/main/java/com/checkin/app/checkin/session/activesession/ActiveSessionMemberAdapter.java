@@ -94,7 +94,7 @@ public class ActiveSessionMemberAdapter extends HeaderFooterRecyclerViewAdapter 
             tvUser.setText(customer.getUser().getDisplayName());
             Utils.loadImageOrDefault(imUser, customer.getUser().getDisplayPic(), R.drawable.cover_unknown_male);
             if (!customer.isAccepted()) tvPendingRequest.setVisibility(View.VISIBLE);
-            else tvPendingRequest.setVisibility(View.INVISIBLE);
+            else tvPendingRequest.setVisibility(View.GONE);
         }
     }
 }

@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    xmlns:android="http://schemas.android.com/apk/res/android">
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
 
     <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
         xmlns:app="http://schemas.android.com/apk/res-auto"
@@ -71,119 +72,298 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent">
 
-                    <RelativeLayout
-                        android:id="@+id/container_first"
-                        android:layout_width="match_parent"
-                        android:layout_height="0dp"
-                        app:layout_constraintBottom_toTopOf="@id/container_second"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toTopOf="parent"
-                        app:layout_constraintVertical_weight="0.8">
+                <RelativeLayout
+                    android:id="@+id/container_first"
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
+                    app:layout_constraintBottom_toTopOf="@id/container_second"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintVertical_weight="0.7">
 
-                        <TextView
-                            android:id="@+id/tv_session_live_at"
-                            style="@style/GreySmallTextStyle"
+                    <TextView
+                        android:id="@+id/tv_session_live_at"
+                        style="@style/GreySmallTextStyle"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="@dimen/spacing_normal"
+                        android:layout_marginTop="@dimen/spacing_small"
+                        android:layout_marginBottom="@dimen/spacing_tiny"
+                        android:text="You are live at Roma's Cafe"
+                        tools:text="You are live at Roma's Cafe" />
+
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_above="@id/tv_title_friends_can_join"
+                        android:layout_below="@+id/tv_session_live_at"
+                        android:layout_marginStart="@dimen/spacing_small">
+
+
+                        <LinearLayout
+                            android:id="@+id/ll_container_waiter"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_marginStart="@dimen/spacing_normal"
-                            android:layout_marginTop="@dimen/spacing_small"
-                            android:layout_marginBottom="@dimen/spacing_tiny"
-                            tools:text="You are live at Roma's Cafe" />
+                            android:layout_gravity="center"
+                            android:orientation="vertical"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            app:layout_constraintEnd_toStartOf="@+id/btn_active_session_menu"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toTopOf="parent">
+
+                            <de.hdodenhof.circleimageview.CircleImageView
+                                android:id="@+id/im_as_waiter_pic"
+                                style="@style/LogoImageStyle"
+                                android:layout_gravity="center"
+                                android:padding="@dimen/spacing_tiny"
+                                android:src="@drawable/ic_waiter" />
+
+                            <TextView
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="@dimen/spacing_extra_small"
+                                android:gravity="center"
+                                android:text="@string/waiter"
+                                android:textSize="@dimen/font_extra_small" />
+
+
+                            <TextView
+                                android:id="@+id/tv_as_waiter_name"
+                                style="@style/GreyTextStyle"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:textSize="@dimen/font_small"
+                                tools:text="waiter name" />
+
+                        </LinearLayout>
+
+                        <View
+                            android:layout_width="@dimen/height_horizontal_view"
+                            android:layout_height="@dimen/button_height_tall"
+                            android:layout_gravity="center"
+                            android:layout_marginStart="@dimen/spacing_tiny"
+                            android:layout_marginBottom="@dimen/spacing_small"
+                            android:background="@drawable/ic_line" />
 
                         <androidx.recyclerview.widget.RecyclerView
                             android:id="@+id/rv_session_members"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:layout_above="@id/tv_title_friends_can_join"
-                            android:layout_below="@+id/tv_session_live_at"
-
                             android:layout_marginStart="@dimen/spacing_small" />
 
-                        <TextView
-                            android:id="@+id/tv_title_friends_can_join"
-                            style="@style/PinkishGreySmallTextStyle"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_alignParentBottom="true"
-                            android:layout_centerInParent="true"
-                            android:layout_marginTop="@dimen/spacing_small"
-                            android:layout_marginBottom="@dimen/spacing_small"
-                            android:text="@string/your_friends_can_join_by_scanning_qr_code" />
 
-                    </RelativeLayout>
+                    </LinearLayout>
+
+
+                    <TextView
+                        android:id="@+id/tv_title_friends_can_join"
+                        style="@style/PinkishGreySmallTextStyle"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentBottom="true"
+                        android:layout_centerInParent="true"
+                        android:layout_marginTop="@dimen/spacing_small"
+                        android:layout_marginBottom="@dimen/spacing_small"
+                        android:text="@string/your_friends_can_join_by_scanning_qr_code" />
+
+                </RelativeLayout>
 
                 <androidx.constraintlayout.widget.ConstraintLayout
                     android:id="@+id/container_second"
                     android:layout_width="0dp"
                     android:layout_height="0dp"
-                    app:layout_constraintBottom_toTopOf="@id/container_session_actions"
+                    app:layout_constraintBottom_toTopOf="@id/container_session_trending_items_actions"
                     app:layout_constraintLeft_toLeftOf="parent"
                     app:layout_constraintRight_toRightOf="parent"
                     app:layout_constraintTop_toBottomOf="@id/container_first"
-                    app:layout_constraintVertical_weight="0.5">
+                    app:layout_constraintVertical_weight="0.4">
 
                     <View
+                        android:id="@+id/view_session_member"
                         android:layout_width="match_parent"
                         android:layout_height="@dimen/height_horizontal_view"
                         android:background="@drawable/background_top_inner_shadow"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toTopOf="parent" />
 
+
                     <LinearLayout
-                        android:id="@+id/ll_container_waiter"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:gravity="center"
-                        android:orientation="vertical"
-                        app:layout_constraintBottom_toBottomOf="parent"
-                        app:layout_constraintEnd_toStartOf="@+id/btn_active_session_menu"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toTopOf="parent">
-
-                        <de.hdodenhof.circleimageview.CircleImageView
-                            android:id="@+id/im_as_waiter_pic"
-                            style="@style/LogoImageStyle"
-                            android:src="@drawable/ic_waiter" />
+                        android:id="@+id/container_session_order_actions"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        app:layout_constraintTop_toBottomOf="@+id/view_session_member">
 
                         <TextView
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_marginTop="@dimen/spacing_extra_small"
-                            android:gravity="center"
-                            android:text="@string/waiter"
-                            android:textSize="@dimen/font_extra_small" />
-
-
-                        <TextView
-                            android:id="@+id/tv_as_waiter_name"
+                            android:id="@+id/tv_session_checkout"
                             style="@style/GreyTextStyle"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
+                            android:layout_centerInParent="true"
+                            android:drawableStart="@drawable/ic_hourglass"
+                            android:drawablePadding="@dimen/spacing_small"
+                            android:gravity="center"
+                            android:text="@string/session_requested_checkout"
                             android:textSize="@dimen/font_small"
-                            tools:text="waiter name" />
+                            android:visibility="gone" />
 
+                        <RelativeLayout
+                            android:id="@+id/rl_container_session_orders"
+                            android:layout_width="0dp"
+                            android:layout_height="match_parent"
+                            android:layout_marginStart="@dimen/spacing_small"
+                            android:layout_weight="1"
+                            android:orientation="vertical"
+                            android:visibility="visible">
+
+
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_centerInParent="true"
+                                android:background="@drawable/rounded_rectangle_white"
+
+                                android:weightSum="3">
+
+                                <LinearLayout
+                                    android:id="@+id/container_as_order_new"
+                                    android:layout_width="0dp"
+                                    android:layout_height="wrap_content"
+                                    android:layout_weight="1"
+                                    android:gravity="center|left">
+
+                                    <TextView
+                                        android:id="@+id/tv_as_order_new_count"
+                                        style="@style/GreyTitleStyle"
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:gravity="center"
+                                        tools:text="3" />
+
+                                    <LinearLayout
+                                        android:layout_width="match_parent"
+                                        android:layout_height="wrap_content"
+                                        android:gravity="center"
+                                        android:orientation="vertical">
+
+                                        <ImageView
+                                            style="@style/ButtonNormal"
+                                            android:src="@drawable/ic_order_new_grey" />
+
+                                        <TextView
+                                            style="@style/GreySmallTextStyle"
+                                            android:layout_width="wrap_content"
+                                            android:layout_height="wrap_content"
+                                            android:text="@string/label_new" />
+                                    </LinearLayout>
+
+                                </LinearLayout>
+
+                                <include layout="@layout/incl_vertical_line" />
+
+                                <LinearLayout
+                                    android:id="@+id/container_as_order_progress"
+                                    android:layout_width="0dp"
+                                    android:layout_height="match_parent"
+                                    android:layout_marginStart="@dimen/spacing_extra_small"
+                                    android:layout_weight="1"
+                                    android:gravity="center|left">
+
+                                    <TextView
+                                        android:id="@+id/tv_as_order_progress_count"
+                                        style="@style/GreyTitleStyle"
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:gravity="center"
+
+                                        tools:text="3" />
+
+                                    <LinearLayout
+                                        android:layout_width="match_parent"
+                                        android:layout_height="wrap_content"
+                                        android:gravity="center"
+                                        android:orientation="vertical">
+
+                                        <ImageView
+                                            style="@style/ButtonNormal"
+                                            android:src="@drawable/ic_order_cooking_grey" />
+
+                                        <TextView
+                                            style="@style/GreySmallTextStyle"
+                                            android:layout_width="wrap_content"
+                                            android:layout_height="wrap_content"
+                                            android:text="@string/status_order_in_progress" />
+                                    </LinearLayout>
+
+                                </LinearLayout>
+
+                                <include layout="@layout/incl_vertical_line" />
+
+                                <LinearLayout
+                                    android:id="@+id/container_as_order_done"
+                                    android:layout_width="0dp"
+                                    android:layout_height="match_parent"
+                                    android:layout_marginStart="@dimen/spacing_extra_small"
+                                    android:layout_weight="1"
+                                    android:gravity="center|left">
+
+                                    <TextView
+                                        android:id="@+id/tv_as_order_done_count"
+                                        style="@style/GreyTitleStyle"
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:gravity="center"
+                                        tools:text="3" />
+
+                                    <LinearLayout
+                                        android:layout_width="match_parent"
+                                        android:layout_height="wrap_content"
+                                        android:layout_marginStart="@dimen/spacing_extra_small"
+                                        android:gravity="center"
+                                        android:orientation="vertical">
+
+                                        <ImageView
+                                            style="@style/ButtonNormal"
+                                            android:src="@drawable/ic_order_delivered_grey" />
+
+                                        <TextView
+                                            style="@style/GreySmallTextStyle"
+                                            android:layout_width="wrap_content"
+                                            android:layout_height="wrap_content"
+                                            android:text="@string/status_order_delivered" />
+                                    </LinearLayout>
+
+                                </LinearLayout>
+                            </LinearLayout>
+
+                            <TextView
+                                android:id="@+id/title_orders_label"
+                                style="@style/GreyTextStyle"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_alignParentBottom="true"
+                                android:layout_centerInParent="true"
+                                android:layout_marginBottom="@dimen/spacing_extra_small"
+                                android:gravity="center"
+                                android:text="@string/action_list_orders"
+                                android:textSize="@dimen/font_small" />
+
+                        </RelativeLayout>
+
+                        <ImageView
+                            android:id="@+id/btn_active_session_menu"
+                            android:layout_width="90dp"
+                            android:layout_height="match_parent"
+                            android:clickable="true"
+                            android:focusable="true"
+                            android:src="@drawable/menu"
+                            android:scaleType="fitXY"/>
                     </LinearLayout>
-
-                    <TextView
-                        android:id="@+id/btn_active_session_menu"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="@dimen/spacing_small"
-                        android:layout_marginEnd="80dp"
-                        android:drawableTop="@drawable/ic_action_show_menu"
-                        android:drawablePadding="@dimen/spacing_small"
-                        android:text="@string/action_view_menu"
-                        android:textAlignment="center"
-                        android:textSize="@dimen/font_normal"
-                        app:layout_constraintBottom_toBottomOf="parent"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintTop_toTopOf="parent"
-                        app:layout_constraintVertical_bias="0.38" />
 
                 </androidx.constraintlayout.widget.ConstraintLayout>
 
                 <androidx.constraintlayout.widget.ConstraintLayout
-                    android:id="@+id/container_session_actions"
+                    android:id="@+id/container_session_trending_items_actions"
                     android:layout_width="0dp"
                     android:layout_height="0dp"
                     android:orientation="vertical"
@@ -200,15 +380,12 @@
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toTopOf="parent" />
 
-                    <RelativeLayout
-                        android:id="@+id/container_session_order_actions"
+                    <LinearLayout
+                        android:id="@+id/container_dish"
                         android:layout_width="match_parent"
                         android:layout_height="0dp"
-                        android:layout_gravity="bottom"
-                        android:paddingStart="@dimen/spacing_normal"
-                        android:paddingTop="@dimen/spacing_extra_small"
-                        android:paddingEnd="@dimen/spacing_normal"
-                        android:paddingBottom="@dimen/spacing_extra_small"
+                        android:orientation="vertical"
+                        android:layout_marginStart="@dimen/spacing_small"
                         app:layout_constraintBottom_toTopOf="@id/container_as_actions_bottom"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintLeft_toLeftOf="parent"
@@ -218,153 +395,25 @@
                         app:layout_constraintVertical_weight="0.6">
 
                         <TextView
-                            android:id="@+id/tv_session_checkout"
-                            style="@style/GreyTextStyle"
+                            style="@style/PinkishGreySmallTextStyle"
                             android:layout_width="wrap_content"
-                            android:layout_height="match_parent"
-                            android:drawableStart="@drawable/ic_hourglass"
-                            android:drawablePadding="@dimen/spacing_small"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="@dimen/spacing_tiny"
+                            android:layout_marginBottom="@dimen/spacing_extra_small"
                             android:gravity="center"
-                            android:layout_centerInParent="true"
-                            android:text="@string/session_requested_checkout"
+                            android:text="Trending Dishes"
                             android:textSize="@dimen/font_small" />
 
-                        <RelativeLayout
-                            android:id="@+id/rl_container_session_orders"
+
+                        <androidx.recyclerview.widget.RecyclerView
+                            android:id="@+id/rv_as_trending_dishes"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:visibility="visible">
+                            android:layout_gravity="bottom"
+                             />
 
-                        <TextView
-                            android:id="@+id/title_orders_label"
-                            style="@style/GreyTextStyle"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_alignParentStart="true"
-                            android:text="@string/action_list_orders" />
+                    </LinearLayout>
 
-                        <LinearLayout
-                            android:id="@+id/ll_active_session_orders"
-                            android:layout_width="match_parent"
-                            android:layout_height="match_parent"
-                            android:layout_below="@id/title_orders_label"
-                            android:paddingTop="@dimen/spacing_small"
-                            android:paddingBottom="@dimen/spacing_small"
-                            android:background="@drawable/rounded_rectangle_white"
-                            android:weightSum="3">
-
-                            <LinearLayout
-                                android:id="@+id/container_as_order_new"
-                                android:layout_width="0dp"
-                                android:layout_height="match_parent"
-                                android:layout_weight="1"
-                                android:gravity="center">
-
-                                <TextView
-                                    android:id="@+id/tv_as_order_new_count"
-                                    style="@style/GreyTitleStyle"
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="wrap_content"
-                                    android:gravity="center"
-                                    tools:text="3" />
-
-                                <LinearLayout
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="wrap_content"
-                                    android:layout_marginStart="@dimen/spacing_extra_small"
-                                    android:gravity="center"
-                                    android:orientation="vertical">
-
-                                    <ImageView
-                                        style="@style/ButtonNormal"
-                                        android:src="@drawable/ic_order_new_grey" />
-
-                                    <TextView
-                                        style="@style/GreySmallTextStyle"
-                                        android:layout_width="wrap_content"
-                                        android:layout_height="wrap_content"
-                                        android:text="@string/label_new" />
-                                </LinearLayout>
-
-                            </LinearLayout>
-
-                            <include layout="@layout/incl_vertical_line" />
-
-                            <LinearLayout
-                                android:id="@+id/container_as_order_progress"
-                                android:layout_width="0dp"
-                                android:layout_height="match_parent"
-                                android:layout_weight="1"
-                                android:gravity="center">
-
-                                <TextView
-                                    android:id="@+id/tv_as_order_progress_count"
-                                    style="@style/GreyTitleStyle"
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="wrap_content"
-                                    android:gravity="center"
-                                    tools:text="3" />
-
-                                <LinearLayout
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="wrap_content"
-                                    android:layout_marginStart="@dimen/spacing_extra_small"
-                                    android:gravity="center"
-                                    android:orientation="vertical">
-
-                                    <ImageView
-                                        style="@style/ButtonNormal"
-                                        android:src="@drawable/ic_order_cooking_grey" />
-
-                                    <TextView
-                                        style="@style/GreySmallTextStyle"
-                                        android:layout_width="wrap_content"
-                                        android:layout_height="wrap_content"
-                                        android:text="@string/status_order_in_progress" />
-                                </LinearLayout>
-
-                            </LinearLayout>
-
-                            <include layout="@layout/incl_vertical_line" />
-
-                            <LinearLayout
-                                android:id="@+id/container_as_order_done"
-                                android:layout_width="0dp"
-                                android:layout_height="match_parent"
-                                android:layout_weight="1"
-                                android:gravity="center">
-
-                                <TextView
-                                    android:id="@+id/tv_as_order_done_count"
-                                    style="@style/GreyTitleStyle"
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="wrap_content"
-                                    android:gravity="center"
-                                    tools:text="3" />
-
-                                <LinearLayout
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="wrap_content"
-                                    android:layout_marginStart="@dimen/spacing_extra_small"
-                                    android:gravity="center"
-                                    android:orientation="vertical">
-
-                                    <ImageView
-                                        style="@style/ButtonNormal"
-                                        android:src="@drawable/ic_order_delivered_grey" />
-
-                                    <TextView
-                                        style="@style/GreySmallTextStyle"
-                                        android:layout_width="wrap_content"
-                                        android:layout_height="wrap_content"
-                                        android:text="@string/status_order_delivered" />
-                                </LinearLayout>
-
-                            </LinearLayout>
-                        </LinearLayout>
-
-                        </RelativeLayout>
-                    </RelativeLayout>
 
                     <androidx.constraintlayout.widget.ConstraintLayout
                         android:id="@+id/container_as_actions_bottom"
@@ -375,8 +424,8 @@
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintLeft_toLeftOf="parent"
                         app:layout_constraintRight_toRightOf="parent"
-                        app:layout_constraintTop_toBottomOf="@id/container_session_order_actions"
-                        app:layout_constraintVertical_weight="0.6">
+                        app:layout_constraintTop_toBottomOf="@id/container_dish"
+                        app:layout_constraintVertical_weight="0.5">
 
 
                         <TextView
@@ -403,12 +452,11 @@
                             app:layout_constraintTop_toTopOf="parent" />
 
 
-
                         <LinearLayout
                             android:id="@+id/ll_call_waiter_button"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_marginTop="@dimen/spacing_normal"
+                            android:layout_marginTop="@dimen/spacing_large"
                             android:orientation="vertical"
                             app:layout_constraintBottom_toBottomOf="parent"
                             app:layout_constraintEnd_toStartOf="@id/ll_table_cleaning_button"
@@ -436,7 +484,7 @@
                             android:id="@+id/ll_table_cleaning_button"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_marginTop="@dimen/spacing_normal"
+                            android:layout_marginTop="@dimen/spacing_large"
                             android:orientation="vertical"
                             app:layout_constraintBottom_toBottomOf="parent"
                             app:layout_constraintEnd_toStartOf="@id/ll_refill_glass_button"
@@ -465,7 +513,7 @@
                             android:id="@+id/ll_refill_glass_button"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_marginTop="@dimen/spacing_normal"
+                            android:layout_marginTop="@dimen/spacing_large"
                             android:orientation="vertical"
                             app:layout_constraintBottom_toBottomOf="parent"
                             app:layout_constraintEnd_toEndOf="parent"
@@ -501,6 +549,6 @@
     <FrameLayout
         android:id="@+id/container_as_orders"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"/>
+        android:layout_height="match_parent" />
 
 </RelativeLayout>

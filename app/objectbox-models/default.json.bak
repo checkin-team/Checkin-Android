@@ -162,10 +162,68 @@
         }
       ],
       "relations": []
+    },
+    {
+      "id": "22:3643427195445481719",
+      "lastPropertyId": "5:274458193090023858",
+      "name": "TrendingDishItemCustomizationFieldModel",
+      "properties": [
+        {
+          "id": "1:7480019776840273373",
+          "name": "pk"
+        },
+        {
+          "id": "2:6323637463288499980",
+          "name": "name"
+        },
+        {
+          "id": "3:4773993801147998822",
+          "name": "isVegetarian"
+        },
+        {
+          "id": "4:8896713719871230987",
+          "name": "cost"
+        },
+        {
+          "id": "5:274458193090023858",
+          "indexId": "17:6158104803656108503",
+          "name": "groupId"
+        }
+      ],
+      "relations": []
+    },
+    {
+      "id": "23:5149164517759451944",
+      "lastPropertyId": "5:8850970574772370525",
+      "name": "TrendingDishItemCustomizationGroupModel",
+      "properties": [
+        {
+          "id": "1:1504409382056673480",
+          "name": "pk"
+        },
+        {
+          "id": "2:5619038471180695434",
+          "name": "name"
+        },
+        {
+          "id": "3:5870207110330661312",
+          "name": "minSelection"
+        },
+        {
+          "id": "4:8350737945362140122",
+          "name": "maxSelection"
+        },
+        {
+          "id": "5:8850970574772370525",
+          "indexId": "18:523707218859611128",
+          "name": "menuItemId"
+        }
+      ],
+      "relations": []
     }
   ],
-  "lastEntityId": "21:5535667857483612174",
-  "lastIndexId": "16:3961878181504181650",
+  "lastEntityId": "23:5149164517759451944",
+  "lastIndexId": "18:523707218859611128",
   "lastRelationId": "5:7294562391163822078",
   "lastSequenceId": "0:0",
   "modelVersion": 4,

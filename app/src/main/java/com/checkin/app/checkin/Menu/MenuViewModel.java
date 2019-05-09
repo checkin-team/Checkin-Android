@@ -36,6 +36,7 @@ public class MenuViewModel extends BaseViewModel {
     private Runnable mRunnable;
     private Long mSessionPk;
     private long mShopPk;
+    private Long mTrendingItemPk;
 
     public MenuViewModel(@NonNull Application application) {
         super(application);
@@ -386,5 +387,32 @@ public class MenuViewModel extends BaseViewModel {
 
     public LiveData<String> getFilteredString() {
         return mFilteredString;
+    }
+
+    public void searchMenuItemById(long itemPk){
+        mTrendingItemPk = itemPk;
+    }
+
+    public LiveData<MenuItemModel> getMenuItem() {
+        if(mTrendingItemPk == null )
+            return null;
+        if (mRunnable != null)
+            mHandler.removeCallbacks(mRunnable);
+        mRunnable = () -> {
+            Transformations.map(mMenuData, input -> {
+                if (input == null || input.data == null)
+                    return null;
+                for (MenuGroupModel groupModel : input.data.getGroups()) {
+                    for (MenuItemModel itemModel : groupModel.getItems()) {
+                        if (itemModel.getPk() == mTrendingItemPk) {
+                            return itemModel;
+                        }
+                    }
+                }
+                return null;
+            });
+        };
+        mHandler.postDelayed(mRunnable, 1000);
+        return null;
     }
 }
