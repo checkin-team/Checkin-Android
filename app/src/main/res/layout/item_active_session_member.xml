@@ -1,9 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="@dimen/width_card_wide"
+    android:layout_width="@dimen/button_width_normal"
     android:layout_height="@dimen/height_card_tall"
-    android:layout_marginTop="@dimen/spacing_normal"
+    android:layout_marginEnd="@dimen/spacing_small"
+    android:layout_marginTop="@dimen/spacing_small"
     android:paddingBottom="@dimen/spacing_small"
     android:gravity="center"
     android:orientation="vertical">
@@ -34,7 +35,10 @@
         android:textAlignment="center"
         android:textColor="@color/brownish_grey"
         android:textSize="@dimen/font_small"
-        tools:text="Laura" />
+        android:maxLines="2"
+        android:ellipsize="end"
+        android:gravity="center"
+        tools:text="Laura " />
 
 
 

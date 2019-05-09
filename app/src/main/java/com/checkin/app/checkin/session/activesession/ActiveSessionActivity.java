@@ -18,15 +18,12 @@ import com.checkin.app.checkin.Data.Message.MessageModel;
 import com.checkin.app.checkin.Data.Message.MessageModel.MESSAGE_TYPE;
 import com.checkin.app.checkin.Data.Message.MessageObjectModel;
 import com.checkin.app.checkin.Data.Message.MessageUtils;
-import com.checkin.app.checkin.Inventory.Model.InventoryItemModel;
-import com.checkin.app.checkin.Menu.Model.MenuItemModel;
-import com.checkin.app.checkin.Menu.Model.MenuModel;
 import com.checkin.app.checkin.Menu.SessionMenuActivity;
 import com.checkin.app.checkin.Misc.BaseActivity;
 import com.checkin.app.checkin.Misc.BriefModel;
 import com.checkin.app.checkin.R;
 import com.checkin.app.checkin.Search.SearchActivity;
-import com.checkin.app.checkin.session.activesession.chat.SessionChatActivity;
+import com.checkin.app.checkin.session.activesession.chat.SessionChatFragment;
 import com.checkin.app.checkin.session.activesession.chat.SessionChatDataModel;
 import com.checkin.app.checkin.session.activesession.chat.SessionChatModel;
 import com.checkin.app.checkin.session.model.ActiveSessionModel;
@@ -35,10 +32,6 @@ import com.checkin.app.checkin.session.model.SessionOrderedItemModel;
 import com.checkin.app.checkin.Utility.OnBoardingUtils;
 import com.checkin.app.checkin.Utility.Utils;
 import com.checkin.app.checkin.session.model.TrendingDishModel;
-
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
 
 import androidx.annotation.Nullable;
 import androidx.lifecycle.ViewModelProviders;
@@ -140,6 +133,7 @@ public class ActiveSessionActivity extends BaseActivity implements
     private ActiveSessionMemberAdapter mSessionMembersAdapter;
     private ActiveSessionTrendingDishAdapter mTrendingDishAdapter;
     private ActiveSessionViewOrdersFragment mOrdersFragment;
+    private SessionChatFragment mChatFragment;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -381,11 +375,12 @@ public class ActiveSessionActivity extends BaseActivity implements
     }
 
     public void openChat(SessionChatDataModel.EVENT_REQUEST_SERVICE_TYPE service, View view) {
-        view.setEnabled(false);
-        Intent myIntent = new Intent(ActiveSessionActivity.this, SessionChatActivity.class);
-//        ActivityOptions options = ActivityOptions.makeCustomAnimation(ActiveSessionActivity.this, R.anim.slide_up, R.anim.slide_down);
-        myIntent.putExtra(SessionChatActivity.KEY_SERVICE_TYPE, service.tag);
-        startActivity(myIntent);
+//        view.setEnabled(false);
+        mChatFragment = SessionChatFragment.newInstance(service.tag);
+        getSupportFragmentManager().beginTransaction()
+                .replace(R.id.container_as_orders, mChatFragment)
+                .addToBackStack(null)
+                .commit();
     }
 
     @Override
@@ -406,7 +401,7 @@ public class ActiveSessionActivity extends BaseActivity implements
 
     @Override
     public void onBackPressed() {
-        if (!mOrdersFragment.onBackPressed())
+        if (!mOrdersFragment.onBackPressed() && !mChatFragment.onBackPressed())
             super.onBackPressed();
     }
 

@@ -389,30 +389,26 @@ public class MenuViewModel extends BaseViewModel {
         return mFilteredString;
     }
 
-    public void searchMenuItemById(long itemPk){
+    public void searchMenuItemById(long itemPk) {
         mTrendingItemPk = itemPk;
     }
 
     public LiveData<MenuItemModel> getMenuItem() {
-        if(mTrendingItemPk == null )
+        if(mTrendingItemPk == null)
             return null;
-        if (mRunnable != null)
-            mHandler.removeCallbacks(mRunnable);
-        mRunnable = () -> {
-            Transformations.map(mMenuData, input -> {
-                if (input == null || input.data == null)
-                    return null;
-                for (MenuGroupModel groupModel : input.data.getGroups()) {
-                    for (MenuItemModel itemModel : groupModel.getItems()) {
-                        if (itemModel.getPk() == mTrendingItemPk) {
-                            return itemModel;
+        mMenuData.setValue(Resource.loading(null));
+       return Transformations.map(mMenuData, input -> {
+                    if (input == null || input.data == null)
+                        return null;
+                    for (MenuGroupModel groupModel : input.data.getGroups()) {
+                        for (MenuItemModel itemModel : groupModel.getItems()) {
+                            if (itemModel.getPk() == mTrendingItemPk) {
+                                mTrendingItemPk = 0L;
+                                return itemModel;
+                            }
                         }
                     }
-                }
-                return null;
-            });
-        };
-        mHandler.postDelayed(mRunnable, 1000);
-        return null;
+                    return null;
+                });
     }
 }

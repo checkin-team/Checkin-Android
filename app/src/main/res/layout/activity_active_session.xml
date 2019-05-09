@@ -79,7 +79,7 @@
                     app:layout_constraintBottom_toTopOf="@id/container_second"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent"
-                    app:layout_constraintVertical_weight="0.7">
+                    app:layout_constraintVertical_weight="0.6">
 
                     <TextView
                         android:id="@+id/tv_session_live_at"
@@ -88,7 +88,6 @@
                         android:layout_height="wrap_content"
                         android:layout_marginStart="@dimen/spacing_normal"
                         android:layout_marginTop="@dimen/spacing_small"
-                        android:layout_marginBottom="@dimen/spacing_tiny"
                         android:text="You are live at Roma's Cafe"
                         tools:text="You are live at Roma's Cafe" />
 
@@ -163,7 +162,6 @@
                         android:layout_height="wrap_content"
                         android:layout_alignParentBottom="true"
                         android:layout_centerInParent="true"
-                        android:layout_marginTop="@dimen/spacing_small"
                         android:layout_marginBottom="@dimen/spacing_small"
                         android:text="@string/your_friends_can_join_by_scanning_qr_code" />
 
@@ -254,7 +252,9 @@
                                             style="@style/GreySmallTextStyle"
                                             android:layout_width="wrap_content"
                                             android:layout_height="wrap_content"
-                                            android:text="@string/label_new" />
+                                            android:text="@string/label_new"
+                                            android:layout_marginTop="@dimen/spacing_extra_tiny"
+                                            android:textSize="@dimen/font_extra_small"/>
                                     </LinearLayout>
 
                                 </LinearLayout>
@@ -292,7 +292,9 @@
                                             style="@style/GreySmallTextStyle"
                                             android:layout_width="wrap_content"
                                             android:layout_height="wrap_content"
-                                            android:text="@string/status_order_in_progress" />
+                                            android:text="@string/status_order_in_progress"
+                                            android:layout_marginTop="@dimen/spacing_extra_tiny"
+                                            android:textSize="@dimen/font_extra_small"/>
                                     </LinearLayout>
 
                                 </LinearLayout>
@@ -330,7 +332,9 @@
                                             style="@style/GreySmallTextStyle"
                                             android:layout_width="wrap_content"
                                             android:layout_height="wrap_content"
-                                            android:text="@string/status_order_delivered" />
+                                            android:text="@string/status_order_delivered"
+                                            android:layout_marginTop="@dimen/spacing_extra_tiny"
+                                            android:textSize="@dimen/font_extra_small"/>
                                     </LinearLayout>
 
                                 </LinearLayout>
@@ -338,7 +342,7 @@
 
                             <TextView
                                 android:id="@+id/title_orders_label"
-                                style="@style/GreyTextStyle"
+                                style="@style/PinkishGreySmallTextStyle"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_alignParentBottom="true"
@@ -356,9 +360,16 @@
                             android:layout_height="match_parent"
                             android:clickable="true"
                             android:focusable="true"
-                            android:src="@drawable/menu"
+                            android:src="@drawable/ic_menu"
                             android:scaleType="fitXY"/>
                     </LinearLayout>
+
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/height_horizontal_view"
+                        android:background="@drawable/background_top_inner_shadow"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintBottom_toBottomOf="parent" />
 
                 </androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -373,12 +384,6 @@
                     app:layout_constraintTop_toBottomOf="@id/container_second"
                     app:layout_constraintVertical_weight="1">
 
-                    <View
-                        android:layout_width="match_parent"
-                        android:layout_height="@dimen/height_horizontal_view"
-                        android:background="@drawable/background_top_inner_shadow"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toTopOf="parent" />
 
                     <LinearLayout
                         android:id="@+id/container_dish"
@@ -392,14 +397,14 @@
                         app:layout_constraintRight_toRightOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toTopOf="parent"
-                        app:layout_constraintVertical_weight="0.6">
+                        app:layout_constraintVertical_weight="0.7">
 
                         <TextView
                             style="@style/PinkishGreySmallTextStyle"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginTop="@dimen/spacing_tiny"
-                            android:layout_marginBottom="@dimen/spacing_extra_small"
+                            android:layout_marginBottom="12dp"
                             android:gravity="center"
                             android:text="Trending Dishes"
                             android:textSize="@dimen/font_small" />
@@ -409,8 +414,7 @@
                             android:id="@+id/rv_as_trending_dishes"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:layout_gravity="bottom"
-                             />
+                            android:layout_gravity="center" />
 
                     </LinearLayout>
 

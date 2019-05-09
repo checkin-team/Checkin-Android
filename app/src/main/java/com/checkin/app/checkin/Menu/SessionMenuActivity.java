@@ -4,6 +4,7 @@ import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
 import android.speech.RecognizerIntent;
 import android.text.InputType;
 import android.text.TextUtils;
@@ -96,8 +97,8 @@ public class SessionMenuActivity extends BaseActivity implements
         args.putLong(KEY_RESTAURANT_PK, restaurantPk);
         if (sessionPk != null)
             args.putLong(KEY_SESSION_PK, sessionPk);
-//        if (itemModel != null)
-//            args.putLong(KEY_SESSION_TRENDING_ITEM, itemModel);
+        if (itemModel != null)
+            args.putLong(KEY_SESSION_TRENDING_ITEM, itemModel);
         intent.putExtra(SESSION_ARG, args);
         return intent;
     }
@@ -139,20 +140,16 @@ public class SessionMenuActivity extends BaseActivity implements
         if (isSessionActive())
             setupCart();
 
-        /*long itemPk = args.getLong(KEY_SESSION_TRENDING_ITEM, 0L);
-        if (itemPk > 0L){
+        long itemPk = args.getLong(KEY_SESSION_TRENDING_ITEM, 0L);
+        if (itemPk > 0L) {
             mViewModel.searchMenuItemById(itemPk);
             mViewModel.getMenuItem().observe(this, itemModel -> {
-                if (itemModel != null)
+                if (itemModel != null) {
                     onMenuItemAdded(itemModel);
-
+                }
             });
-        }*/
-
-
+        }
     }
-
-
 
     private void setupFilter() {
         mFilterFragment = MenuFilterFragment.newInstance(this);
