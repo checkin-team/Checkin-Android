@@ -102,6 +102,6 @@ public class UserViewModel extends BaseViewModel {
         if(!phone_token.isEmpty())
             data.put("phone_token", phone_token);
 
-        mData.addSource(mRepository.postUserData(data), mData::setValue);
+        mUserData.addSource(mRepository.postUserData(data), mUserData::setValue);
     }
 }

@@ -110,7 +110,7 @@
                             android:layout_height="wrap_content"
                             android:layout_gravity="center"
                             android:layout_marginTop="@dimen/spacing_extra_small"
-                            android:text="Cash" />
+                            android:text="" />
 
                         <TextView
                             style="@style/GreySmallTextStyle"

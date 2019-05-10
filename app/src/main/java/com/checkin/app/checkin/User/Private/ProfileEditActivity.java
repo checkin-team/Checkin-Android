@@ -8,6 +8,7 @@ import android.text.TextWatcher;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -31,6 +32,7 @@ import butterknife.OnClick;
 public class ProfileEditActivity extends AppCompatActivity implements OtpVerificationDialog.AuthCallback {
 
     private static final String TAG = ProfileEditActivity.class.getSimpleName();
+    public static final String KEY_USER_DATA = "profileEdit.user_data";
     @BindView(R.id.et_edit_profile_name)
     EditText etName;
     @BindView(R.id.et_edit_profile_city)
@@ -45,6 +47,8 @@ public class ProfileEditActivity extends AppCompatActivity implements OtpVerific
     EditText etEmail;
     @BindView(R.id.tv_edit_save_phone)
     TextView tvEditPhone;
+    @BindView(R.id.tv_error_phone_number)
+    TextView tvErrorPhoneNumber;
 
     private UserViewModel mUserViewModel;
     private FirebaseAuth mAuth;
@@ -70,26 +74,22 @@ public class ProfileEditActivity extends AppCompatActivity implements OtpVerific
 
     private void getData(){
         mUserViewModel = ViewModelProviders.of(this).get(UserViewModel.class);
-        mUserViewModel.fetchUserData();
+        setUi((UserModel) getIntent().getSerializableExtra(KEY_USER_DATA));
+
         mUserViewModel.getUserData().observe(this, userModelResource -> {
             if (userModelResource == null)
                 return;
             if (userModelResource.status == Resource.Status.SUCCESS && userModelResource.data != null) {
                 setUi(userModelResource.data);
-            }
-        });
-        mUserViewModel.getObservableData().observe(this, resource -> {
-            if (resource == null)
-                return;
-            if (resource.status == Resource.Status.SUCCESS) {
                 finish();
-            } else {
-                Utils.toast(this, resource.message);
+            }else if(userModelResource.status == Resource.Status.ERROR_INVALID_REQUEST) {
+                tvErrorPhoneNumber.setText(userModelResource.message);
+                tvErrorPhoneNumber.setVisibility(View.VISIBLE);
+                Utils.setKeyboardVisibility(etPhone,false);
+                enablePhoneSaveButton(getResources().getString(R.string.btn_edit));
             }
         });
-
     }
-
 
     private void setUi(UserModel user) {
         etName.setText(user.getFullName());
@@ -101,7 +101,7 @@ public class ProfileEditActivity extends AppCompatActivity implements OtpVerific
 
     @OnClick(R.id.tv_edit_save_phone)
     public void onEditPhone() {
-
+        tvErrorPhoneNumber.setVisibility(View.GONE);
         if (tvEditPhone.getText().toString().equalsIgnoreCase(getResources().getString(R.string.btn_save)) &&
                 etPhone.getText().toString().length() == 13) {
             OtpVerificationDialog dialog = OtpVerificationDialog.Builder.with(this)
@@ -113,7 +113,7 @@ public class ProfileEditActivity extends AppCompatActivity implements OtpVerific
             etPhone.setEnabled(true);
             etPhone.requestFocus();
             setPhoneCode();
-            disablePhoneSaveButton();
+            disablePhoneSaveButton(getResources().getString(R.string.btn_save));
         }
 
         etPhone.addTextChangedListener(new TextWatcher() {
@@ -133,20 +133,24 @@ public class ProfileEditActivity extends AppCompatActivity implements OtpVerific
                     setPhoneCode();
 
                 if (s.length() >= 13) {
-                    tvEditPhone.setEnabled(true);
-                    tvEditPhone.setTextColor(getResources().getColor(R.color.primary_red));
+                    enablePhoneSaveButton(getResources().getString(R.string.btn_save));
                 } else {
-                    disablePhoneSaveButton();
+                    disablePhoneSaveButton(getResources().getString(R.string.btn_save));
                 }
-
             }
         });
     }
 
-    public void disablePhoneSaveButton() {
-        tvEditPhone.setText(getResources().getString(R.string.btn_save));
+    public void disablePhoneSaveButton(String text) {
+        tvEditPhone.setText(text);
         tvEditPhone.setEnabled(false);
         tvEditPhone.setTextColor(getResources().getColor(R.color.pinkish_grey));
+    }
+
+    public void enablePhoneSaveButton(String text) {
+        tvEditPhone.setText(text);
+        tvEditPhone.setEnabled(true);
+        tvEditPhone.setTextColor(getResources().getColor(R.color.primary_red));
     }
 
     public void setPhoneCode() {
@@ -164,22 +168,26 @@ public class ProfileEditActivity extends AppCompatActivity implements OtpVerific
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case R.id.menu_item_done: {
-                String name = etName.getText().toString();
-                String firstName="";
-                String lastName="";
-                if(name.split("\\w+").length>1){
-
-                    lastName = name.substring(name.lastIndexOf(" ")+1);
-                    firstName = name.substring(0, name.lastIndexOf(' '));
-                }
-                else{
-                    firstName = name;
-                }
-                mUserViewModel.postUserData(firstName, lastName, phone_token, etBio.getText().toString());
+                hitApiSaveProfile();
                 return true;
             }
         }
         return super.onOptionsItemSelected(item);
+    }
+
+    private void hitApiSaveProfile(){
+        String name = etName.getText().toString().trim();
+        String firstName="";
+        String lastName="";
+        if(name.split("\\w+").length>1){
+
+            lastName = name.substring(name.lastIndexOf(" ")+1);
+            firstName = name.substring(0, name.lastIndexOf(' '));
+        }
+        else{
+            firstName = name;
+        }
+        mUserViewModel.postUserData(firstName, lastName, phone_token, etBio.getText().toString().trim());
     }
 
     @Override
@@ -195,6 +203,8 @@ public class ProfileEditActivity extends AppCompatActivity implements OtpVerific
             if (task.isSuccessful()) {
                 mAuth.getCurrentUser().getIdToken(false).addOnSuccessListener(result -> {
                     phone_token = result.getToken();
+                    hitApiSaveProfile();
+                    disablePhoneSaveButton("Saved");
                 });
             } else {
                 Log.e(TAG, "Authentication failed", task.getException());
