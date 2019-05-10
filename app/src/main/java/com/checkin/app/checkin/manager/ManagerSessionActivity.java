@@ -1,4 +1,4 @@
-package com.checkin.app.checkin.Manager;
+package com.checkin.app.checkin.manager;
 
 import android.content.BroadcastReceiver;
 import android.content.Context;
@@ -12,9 +12,9 @@ import android.widget.TextView;
 import com.checkin.app.checkin.Data.Message.MessageModel;
 import com.checkin.app.checkin.Data.Message.MessageObjectModel;
 import com.checkin.app.checkin.Data.Message.MessageUtils;
-import com.checkin.app.checkin.Manager.Fragment.ManagerSessionEventFragment;
-import com.checkin.app.checkin.Manager.Fragment.ManagerSessionOrderFragment;
-import com.checkin.app.checkin.Manager.Model.ManagerSessionEventModel;
+import com.checkin.app.checkin.manager.fragment.ManagerSessionEventFragment;
+import com.checkin.app.checkin.manager.fragment.ManagerSessionOrderFragment;
+import com.checkin.app.checkin.manager.model.ManagerSessionEventModel;
 import com.checkin.app.checkin.Misc.BriefModel;
 import com.checkin.app.checkin.R;
 import com.checkin.app.checkin.session.activesession.chat.SessionChatModel;

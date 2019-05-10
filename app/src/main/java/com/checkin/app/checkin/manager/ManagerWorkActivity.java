@@ -1,20 +1,24 @@
-package com.checkin.app.checkin.Manager;
+package com.checkin.app.checkin.manager;
 
+import android.app.AlertDialog;
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.View;
 import android.widget.TextView;
 
 import com.checkin.app.checkin.Account.AccountModel;
 import com.checkin.app.checkin.Account.BaseAccountActivity;
 import com.checkin.app.checkin.Data.Resource;
-import com.checkin.app.checkin.Manager.Fragment.ManagerStatsFragment;
-import com.checkin.app.checkin.Manager.Fragment.ManagerTablesActivateFragment;
-import com.checkin.app.checkin.Manager.Fragment.ManagerTablesFragment;
+import com.checkin.app.checkin.manager.adapter.ManagerInactiveTableAdapter;
+import com.checkin.app.checkin.manager.fragment.ManagerStatsFragment;
+import com.checkin.app.checkin.manager.fragment.ManagerTablesActivateFragment;
+import com.checkin.app.checkin.manager.fragment.ManagerTablesFragment;
 import com.checkin.app.checkin.Misc.BaseFragmentAdapterBottomNav;
 import com.checkin.app.checkin.R;
 import com.checkin.app.checkin.Shop.ShopPreferences;
 import com.checkin.app.checkin.Utility.DynamicSwipableViewPager;
 import com.checkin.app.checkin.Utility.Utils;
+import com.checkin.app.checkin.session.model.RestaurantTableModel;
 import com.google.android.material.tabs.TabLayout;
 
 import androidx.annotation.NonNull;
@@ -27,11 +31,14 @@ import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.lifecycle.ViewModelProviders;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 import androidx.viewpager.widget.ViewPager;
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 
-public class ManagerWorkActivity extends BaseAccountActivity implements ManagerTablesActivateFragment.LiveOrdersInteraction {
+public class ManagerWorkActivity extends BaseAccountActivity implements ManagerTablesActivateFragment.LiveOrdersInteraction, ManagerInactiveTableAdapter.ManagerTableInitiate {
 
     public static final String KEY_RESTAURANT_PK = "manager.restaurant_pk";
     public static final String KEY_SESSION_BUNDLE = "manager.session_bundle";
@@ -48,7 +55,12 @@ public class ManagerWorkActivity extends BaseAccountActivity implements ManagerT
     TextView tvActionBarTitle;
     @BindView(R.id.sw_live_order)
     SwitchCompat swLiveOrdersToggle;
+    @BindView(R.id.ll_manager_tables_container)
+    View managerTablesContainer;
+    @BindView(R.id.rv_mw_table)
+    RecyclerView rvTable;
     ManagerWorkViewModel mViewModel;
+    ManagerInactiveTableAdapter mInactiveAdapter;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -67,6 +79,10 @@ public class ManagerWorkActivity extends BaseAccountActivity implements ManagerT
             drawerLayout.addDrawerListener(startToggle);
             startToggle.syncState();
         }
+
+        rvTable.setLayoutManager(new LinearLayoutManager(this, RecyclerView.VERTICAL, false));
+        mInactiveAdapter = new ManagerInactiveTableAdapter(this);
+        rvTable.setAdapter(mInactiveAdapter);
 
         mViewModel = ViewModelProviders.of(this).get(ManagerWorkViewModel.class);
         initRefreshScreen(R.id.sr_manager_work);
@@ -119,6 +135,17 @@ public class ManagerWorkActivity extends BaseAccountActivity implements ManagerT
                 Utils.toast(this, input.message);
             }
         });
+
+        managerTablesContainer.setOnClickListener(v -> {
+            managerTablesContainer.setVisibility(View.GONE);
+        });
+
+        mViewModel.getInactiveTables().observe(this, listResource -> {
+            if (listResource == null)
+                return;
+            if (listResource.status == Resource.Status.SUCCESS && listResource.data != null)
+                mInactiveAdapter.setData(listResource.data);
+        });
     }
 
     @Override
@@ -159,6 +186,24 @@ public class ManagerWorkActivity extends BaseAccountActivity implements ManagerT
         super.onResume();
 //        MessageUtils.dismissNotification(this, MessageObjectModel.MESSAGE_OBJECT_TYPE.SESSION, mViewModel.getSessionPk());
 
+    }
+
+    @OnClick(R.id.im_manager_initiate_session)
+    public void onClickInitiate() {
+        if (mInactiveAdapter.getItemCount() > 0)
+            managerTablesContainer.setVisibility(View.VISIBLE);
+        else
+            Utils.toast(this, "No tables are Inactive.");
+    }
+
+    @Override
+    public void onClickInactiveTable(RestaurantTableModel tableModel) {
+        managerTablesContainer.setVisibility(View.GONE);
+        AlertDialog.Builder builder = new AlertDialog.Builder(this).setTitle(tableModel.getTable())
+                .setMessage("Do you want to initiate the session?")
+                .setPositiveButton("Done", (dialog, which) -> mViewModel.processQrPk(tableModel.getQrPk()))
+                .setNegativeButton("Cancel", (dialog, which) -> dialog.cancel());
+        builder.show();
     }
 
     static class ManagerFragmentAdapter extends BaseFragmentAdapterBottomNav {
@@ -228,5 +273,13 @@ public class ManagerWorkActivity extends BaseAccountActivity implements ManagerT
             isActivated = isChecked;
             notifyDataSetChanged();
         }
+    }
+
+    @Override
+    public void onBackPressed() {
+        if (managerTablesContainer.getVisibility() == View.VISIBLE)
+            managerTablesContainer.setVisibility(View.GONE);
+        else
+            super.onBackPressed();
     }
 }

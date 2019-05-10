@@ -1,7 +1,7 @@
 package com.checkin.app.checkin.Data;
 
 import com.checkin.app.checkin.Account.AccountModel;
-import com.checkin.app.checkin.Manager.ManagerStatsModel;
+import com.checkin.app.checkin.manager.ManagerStatsModel;
 import com.checkin.app.checkin.ImageGallery.ImageGalleryModel;
 import com.checkin.app.checkin.Menu.Model.MenuModel;
 import com.checkin.app.checkin.Menu.Model.OrderedItemModel;

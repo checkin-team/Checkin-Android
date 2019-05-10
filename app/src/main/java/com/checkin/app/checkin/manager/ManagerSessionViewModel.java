@@ -1,12 +1,12 @@
-package com.checkin.app.checkin.Manager;
+package com.checkin.app.checkin.manager;
 
 import android.app.Application;
 
 import com.checkin.app.checkin.Data.BaseViewModel;
 import com.checkin.app.checkin.Data.Converters;
 import com.checkin.app.checkin.Data.Resource;
-import com.checkin.app.checkin.Manager.Model.ManagerSessionEventModel;
-import com.checkin.app.checkin.Manager.Model.ManagerSessionInvoiceModel;
+import com.checkin.app.checkin.manager.model.ManagerSessionEventModel;
+import com.checkin.app.checkin.manager.model.ManagerSessionInvoiceModel;
 import com.checkin.app.checkin.Misc.GenericDetailModel;
 import com.checkin.app.checkin.session.activesession.chat.SessionChatModel;
 import com.checkin.app.checkin.session.model.CheckoutStatusModel;

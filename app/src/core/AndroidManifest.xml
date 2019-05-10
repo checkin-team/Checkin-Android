@@ -106,13 +106,13 @@
             android:label="@string/action_discount"
             android:theme="@style/AppThemeWhiteActionBar" />
         <activity
-            android:name=".Manager.ManagerSessionActivity"
+            android:name=".manager.ManagerSessionActivity"
             android:windowSoftInputMode="adjustNothing" />
         <activity
-            android:name=".Manager.ManagerWorkActivity"
+            android:name=".manager.ManagerWorkActivity"
             android:label="Manager"
             android:theme="@style/AppTheme" />
-        <activity android:name=".Manager.ManagerSessionInvoiceActivity"
+        <activity android:name=".manager.ManagerSessionInvoiceActivity"
             android:label="Invoice"
             android:theme="@style/AppThemeWhiteActionBar"/>
         <activity android:name=".Shop.Private.ShopPrivateActivity"

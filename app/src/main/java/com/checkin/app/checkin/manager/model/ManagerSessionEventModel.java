@@ -1,4 +1,4 @@
-package com.checkin.app.checkin.Manager.Model;
+package com.checkin.app.checkin.manager.model;
 
 import com.checkin.app.checkin.session.activesession.chat.SessionChatDataModel.EVENT_CONCERN_TYPE;
 import com.checkin.app.checkin.Waiter.Model.WaiterEventModel;
