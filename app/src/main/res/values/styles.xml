@@ -32,6 +32,7 @@
     <style name="AppThemeWhiteActionBar.ActionBar" parent="Widget.AppCompat.ActionBar">
         <item name="background">@color/white</item>
         <item name="titleTextStyle">@style/GreyTextStyle</item>
+        <item name="android:textSize">@dimen/font_large</item>
         <item name="android:homeAsUpIndicator">@drawable/ic_back_grey</item>
         <item name="android:tabWidgetStyle">@style/AppThemeWhiteActionBar.TabLayout</item>
     </style>

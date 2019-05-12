@@ -1,7 +1,9 @@
 package com.checkin.app.checkin.session.activesession;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.text.Editable;
 import android.view.View;
 import android.view.ViewGroup;
@@ -12,6 +14,7 @@ import android.widget.TextView;
 
 import com.checkin.app.checkin.Data.Resource;
 import com.checkin.app.checkin.Misc.BillHolder;
+import com.checkin.app.checkin.Utility.Constants;
 import com.checkin.app.checkin.session.paytm.PaytmModel;
 import com.checkin.app.checkin.session.paytm.PaytmPayment;
 import com.checkin.app.checkin.R;
@@ -54,10 +57,10 @@ public class ActiveSessionInvoiceActivity extends AppCompatActivity {
     TextView tvSavingPercent;
     @BindView(R.id.ed_invoice_tip)
     EditText edInvoiceTip;
+    @BindView(R.id.container_invoice_tip_waiter)
+    ViewGroup tipWaiterContainer;
     @BindView(R.id.btn_invoice_request_checkout)
     Button btnRequestCheckout;
-    @BindView(R.id.btn_select_payment_mode)
-    Button btnSelectPaymentMode;
     @BindView(R.id.payment_mode_change_container)
     ViewGroup paymentModeChangeContainer;
     @BindView(R.id.saving_info_container)
@@ -68,6 +71,7 @@ public class ActiveSessionInvoiceActivity extends AppCompatActivity {
     private SessionBillModel mBillModel;
     private BillHolder mBillHolder;
     private PaytmPayment paytmPayment;
+    private SharedPreferences prefs;
 
     private static final int REQUEST_PAYMENT_MODE = 141;
     ShopModel.PAYMENT_MODE selectedMode;
@@ -93,10 +97,25 @@ public class ActiveSessionInvoiceActivity extends AppCompatActivity {
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         }
 
+        prefs = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
+
+        String paymentTag = prefs.getString(Constants.SP_LAST_USED_PAYMENT_MODE, PAYTM.tag);
+        selectedMode = ShopModel.PAYMENT_MODE.getByTag(paymentTag);
+
+        setPaymentModeUpdates();
         rvOrderedItems.setLayoutManager(new LinearLayoutManager(this, RecyclerView.VERTICAL, false));
         mAdapter = new InvoiceOrdersAdapter(null);
         rvOrderedItems.setAdapter(mAdapter);
         mBillHolder = new BillHolder(findViewById(android.R.id.content));
+    }
+
+    private void setPaymentModeUpdates(){
+        tvPaymentMode.setText(ShopModel.getPaymentMode(selectedMode));
+        tvPaymentMode.setCompoundDrawablesWithIntrinsicBounds(ShopModel.getPaymentModeIcon(selectedMode), 0, 0, 0);
+        if (selectedMode != null && selectedMode.equals(PAYTM))
+            btnRequestCheckout.setText("Pay");
+        else
+            btnRequestCheckout.setText(getResources().getString(R.string.title_request_checkout));
     }
 
     private void getData() {
@@ -106,13 +125,14 @@ public class ActiveSessionInvoiceActivity extends AppCompatActivity {
             if (resource == null)
                 return;
             if (resource.status == Resource.Status.SUCCESS && resource.data != null) {
-//                setupData(resource.data);
                 SessionInvoiceModel data = resource.data;
                 mAdapter.setData(data.getOrderedItems());
                 mBillModel = data.getBill();
 
                 if (data.getHost() != null)
                     Utils.loadImageOrDefault(imWaiterPic, data.getHost().getDisplayPic(), R.drawable.ic_waiter);
+                else
+                    tipWaiterContainer.setVisibility(View.GONE);
 
                 mBillHolder.bind(data.getBill());
 
@@ -165,7 +185,7 @@ public class ActiveSessionInvoiceActivity extends AppCompatActivity {
         });
     }
 
-    private void paytmObserver(){
+    private void paytmObserver() {
         paytmPayment = new PaytmPayment() {
             @Override
             protected void onPaytmTransactionResponse(Bundle inResponse) {
@@ -221,11 +241,6 @@ public class ActiveSessionInvoiceActivity extends AppCompatActivity {
         startActivityForResult(intent, REQUEST_PAYMENT_MODE);
     }
 
-    @OnClick(R.id.btn_select_payment_mode)
-    public void onSelectPaymentMode() {
-        onPaymentModeClick();
-    }
-
     @Override
     public boolean onSupportNavigateUp() {
         finish();
@@ -239,13 +254,16 @@ public class ActiveSessionInvoiceActivity extends AppCompatActivity {
         switch (requestCode) {
             case REQUEST_PAYMENT_MODE:
                 if (resultCode == RESULT_OK && data != null) {
-                    btnSelectPaymentMode.setVisibility(View.GONE);
                     paymentModeChangeContainer.setVisibility(View.VISIBLE);
                     selectedMode = (ShopModel.PAYMENT_MODE) data.getSerializableExtra(KEY_PAYMENT_MODE_RESULT);
-//                        tvPaymentMode.setText(ShopModel.getPaymentMode(selectedMode));
+                    prefs.edit()
+                            .putString(Constants.SP_LAST_USED_PAYMENT_MODE, selectedMode.tag)
+                            .apply();
+
                     if (selectedMode.equals(CASH)) {
-                        tvPaymentMode.setText("via Cash");
+                        setPaymentModeUpdates();
                     } else {
+                        setPaymentModeUpdates();
                         setTotalAmount();
                     }
                     tvPaymentMode.setCompoundDrawablesWithIntrinsicBounds(ShopModel.getPaymentModeIcon(selectedMode), 0, 0, 0);

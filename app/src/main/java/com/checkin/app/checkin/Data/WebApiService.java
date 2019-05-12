@@ -78,7 +78,7 @@ public interface WebApiService {
     // endregion
 
     @PATCH("users/self/")
-    Call<ObjectNode> postUserData(@Body ObjectNode objectNode);
+    Call<UserModel> postUserData(@Body ObjectNode objectNode);
 
     @Multipart
     @POST("users/self/picture/")

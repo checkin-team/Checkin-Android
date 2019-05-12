@@ -20,6 +20,7 @@ public class Constants {
     public static final String SP_SYNC_DEVICE_TOKEN = "device_token";
     public static final String SP_LAST_ACCOUNT_TYPE = "last_account.type";
     public static final String SP_LAST_ACCOUNT_PK = "last_account.pk";
+    public static final String SP_LAST_USED_PAYMENT_MODE = "last_payment_mode";
 
     public static final String SP_MANAGER_LIVE_ORDER_ACTIVE_KEY = "com.checkin.app.checkin.sp.manager.live.order.key";
     public static final String SP_SHOP_PREFERENCES_TABLE = "com.checkin.app.checkin.sp.shop.preferences";

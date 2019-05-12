@@ -2,6 +2,7 @@ package com.checkin.app.checkin.User.Private;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -25,6 +26,7 @@ import butterknife.BindView;
 import butterknife.OnClick;
 
 import static android.app.Activity.RESULT_OK;
+import static com.checkin.app.checkin.User.Private.ProfileEditActivity.KEY_USER_DATA;
 
 public class UserPrivateProfileFragment extends BaseFragment {
     @BindView(R.id.tv_user_private_checkins)
@@ -105,6 +107,7 @@ public class UserPrivateProfileFragment extends BaseFragment {
     }
 
     private void setupData(UserModel data) {
+        Log.e("dataset====", "data_set again======");
         mUserModel = data;
         tvDisplayName.setText(data.getFullName());
         Utils.loadImageOrDefault(imCover, data.getProfilePic(), (data.getGender() == UserModel.GENDER.MALE) ? R.drawable.cover_unknown_male : R.drawable.cover_unknown_female);
@@ -121,8 +124,13 @@ public class UserPrivateProfileFragment extends BaseFragment {
                 startActivityForResult(intent, SelectCropImageActivity.RC_CROP_IMAGE);
                 break;
             case R.id.btn_user_private_edit:
+                if (mUserModel == null) {
+                    mViewModel.fetchUserData();
+                }else {
                     Intent editProfileIntent = new Intent(requireContext(), ProfileEditActivity.class);
-                    startActivity(editProfileIntent);
+                    editProfileIntent.putExtra(KEY_USER_DATA, mUserModel);
+                    startActivityForResult(editProfileIntent, 111);
+                }
                 break;
         }
     }
@@ -135,6 +143,8 @@ public class UserPrivateProfileFragment extends BaseFragment {
                 File image = (File) data.getExtras().get(SelectCropImageActivity.KEY_IMAGE);
                 mViewModel.updateProfilePic(image, requireContext());
             }
+        }else {
+            mViewModel.updateResults();
         }
     }
 }
