@@ -5,6 +5,7 @@ import android.app.AlertDialog;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
+import android.os.Build;
 import android.os.Bundle;
 import android.view.MotionEvent;
 import android.view.View;
@@ -23,7 +24,7 @@ import com.checkin.app.checkin.Misc.BaseActivity;
 import com.checkin.app.checkin.Misc.BriefModel;
 import com.checkin.app.checkin.R;
 import com.checkin.app.checkin.Search.SearchActivity;
-import com.checkin.app.checkin.session.activesession.chat.SessionChatFragment;
+import com.checkin.app.checkin.session.activesession.chat.SessionChatActivity;
 import com.checkin.app.checkin.session.activesession.chat.SessionChatDataModel;
 import com.checkin.app.checkin.session.activesession.chat.SessionChatModel;
 import com.checkin.app.checkin.session.model.ActiveSessionModel;
@@ -34,6 +35,7 @@ import com.checkin.app.checkin.Utility.Utils;
 import com.checkin.app.checkin.session.model.TrendingDishModel;
 
 import androidx.annotation.Nullable;
+import androidx.core.app.ActivityOptionsCompat;
 import androidx.lifecycle.ViewModelProviders;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -133,7 +135,6 @@ public class ActiveSessionActivity extends BaseActivity implements
     private ActiveSessionMemberAdapter mSessionMembersAdapter;
     private ActiveSessionTrendingDishAdapter mTrendingDishAdapter;
     private ActiveSessionViewOrdersFragment mOrdersFragment;
-    private SessionChatFragment mChatFragment;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -313,7 +314,7 @@ public class ActiveSessionActivity extends BaseActivity implements
     @OnClick(R.id.btn_active_session_menu)
     public void onListMenu() {
         if (mViewModel.getShopPk() > 0)
-            SessionMenuActivity.startWithSession(this, mViewModel.getShopPk(), null,null);
+            SessionMenuActivity.startWithSession(this, mViewModel.getShopPk(), null, null);
     }
 
     @OnClick(R.id.rl_container_session_orders)
@@ -375,12 +376,19 @@ public class ActiveSessionActivity extends BaseActivity implements
     }
 
     public void openChat(SessionChatDataModel.EVENT_REQUEST_SERVICE_TYPE service, View view) {
-//        view.setEnabled(false);
-        mChatFragment = SessionChatFragment.newInstance(service.tag);
-        getSupportFragmentManager().beginTransaction()
-                .replace(R.id.container_as_orders, mChatFragment)
-                .addToBackStack(null)
-                .commit();
+        view.setEnabled(false);
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            Intent myIntent = new Intent(ActiveSessionActivity.this, SessionChatActivity.class);
+            ActivityOptionsCompat options = ActivityOptionsCompat.
+                    makeSceneTransitionAnimation(this, (View) containerBottomActions, "chatActions");
+            myIntent.putExtra(SessionChatActivity.KEY_SERVICE_TYPE, service.tag);
+            startActivity(myIntent, options.toBundle());
+        } else {
+            Intent myIntent = new Intent(ActiveSessionActivity.this, SessionChatActivity.class);
+            myIntent.putExtra(SessionChatActivity.KEY_SERVICE_TYPE, service.tag);
+            startActivity(myIntent);
+        }
     }
 
     @Override
@@ -401,7 +409,7 @@ public class ActiveSessionActivity extends BaseActivity implements
 
     @Override
     public void onBackPressed() {
-        if (!mOrdersFragment.onBackPressed() && !mChatFragment.onBackPressed())
+        if (!mOrdersFragment.onBackPressed())
             super.onBackPressed();
     }
 
@@ -420,6 +428,6 @@ public class ActiveSessionActivity extends BaseActivity implements
 
     @Override
     public void onDishClick(TrendingDishModel itemModel) {
-        SessionMenuActivity.startWithSession(this, mViewModel.getShopPk(), null,itemModel.getPk());
+        SessionMenuActivity.startWithSession(this, mViewModel.getShopPk(), null, itemModel.getPk());
     }
 }

@@ -5,9 +5,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
-import android.view.LayoutInflater;
 import android.view.Menu;
-import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
@@ -22,27 +20,26 @@ import com.checkin.app.checkin.Data.Message.MessageModel.MESSAGE_TYPE;
 import com.checkin.app.checkin.Data.Message.MessageObjectModel;
 import com.checkin.app.checkin.Data.Message.MessageUtils;
 import com.checkin.app.checkin.Data.Resource;
-import com.checkin.app.checkin.Misc.BaseFragment;
+import com.checkin.app.checkin.Misc.BaseActivity;
 import com.checkin.app.checkin.R;
 import com.checkin.app.checkin.session.activesession.chat.SessionChatDataModel.EVENT_CONCERN_TYPE;
 import com.checkin.app.checkin.session.activesession.chat.SessionChatDataModel.EVENT_REQUEST_SERVICE_TYPE;
 import com.checkin.app.checkin.Utility.Utils;
 
-import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.ViewModelProviders;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import butterknife.BindView;
+import butterknife.ButterKnife;
 import butterknife.OnClick;
 
-public class SessionChatFragment extends BaseFragment implements ActiveSessionChatAdapter.SessionChatInteraction {
+public class SessionChatActivity extends BaseActivity implements ActiveSessionChatAdapter.SessionChatInteraction {
     public static final String KEY_SERVICE_TYPE = "session_chat.service";
-    private static final String TAG = SessionChatFragment.class.getSimpleName();
+    private static final String TAG = SessionChatActivity.class.getSimpleName();
     @BindView(R.id.bottom_expand_menu)
     ViewGroup bottomExpandedMenu;
-    @BindView(R.id.container_session_trending_items_actions)
+    @BindView(R.id.container_session_actions)
     ViewGroup containerSessionActions;
     @BindView(R.id.rv_active_session_chat)
     RecyclerView rvSessionChat;
@@ -60,17 +57,6 @@ public class SessionChatFragment extends BaseFragment implements ActiveSessionCh
     private ActiveSessionChatAdapter mChatAdapter;
     private ActiveSessionChatViewModel mViewModel;
 
-    public SessionChatFragment() {
-    }
-
-    public static SessionChatFragment newInstance(int tag) {
-        SessionChatFragment fragment = new SessionChatFragment();
-        Bundle bundle = new Bundle();
-        bundle.putInt(SessionChatFragment.KEY_SERVICE_TYPE, tag);
-        fragment.setArguments(bundle);
-        return fragment;
-    }
-
     private final BroadcastReceiver mReceiver = new BroadcastReceiver() {
         @Override
         public void onReceive(Context context, Intent intent) {
@@ -79,28 +65,25 @@ public class SessionChatFragment extends BaseFragment implements ActiveSessionCh
 
             switch (message.getType()) {
                 case USER_SESSION_EVENT_NEW:
-                    SessionChatFragment.this.addEvent(message.getRawData().getSessionEventDetail());
+                    SessionChatActivity.this.addEvent(message.getRawData().getSessionEventDetail());
                     break;
                 case USER_SESSION_EVENT_UPDATE:
-                    SessionChatFragment.this.updateEvent(message.getObject(), message.getRawData().getSessionEventStatus());
+                    SessionChatActivity.this.updateEvent(message.getObject(), message.getRawData().getSessionEventStatus());
                     break;
                 case WAITER_SESSION_UPDATE_ORDER:
-                    SessionChatFragment.this.updateEvent(message.getObject(), message.getRawData().getSessionEventStatus());
+                    SessionChatActivity.this.updateEvent(message.getObject(), message.getRawData().getSessionEventStatus());
                     break;
+
             }
         }
     };
 
     @Override
-    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
-        super.onActivityCreated(savedInstanceState);
-        setHasOptionsMenu(true);
-    }
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_active_session_chat);
+        ButterKnife.bind(this);
 
-    @Override
-    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
-        super.onViewCreated(view, savedInstanceState);
-        view.startAnimation(AnimationUtils.loadAnimation(requireContext(), R.anim.slide_up));
         mViewModel = ViewModelProviders.of(this).get(ActiveSessionChatViewModel.class);
 
         setupUi();
@@ -115,7 +98,7 @@ public class SessionChatFragment extends BaseFragment implements ActiveSessionCh
                 startRefreshing();
             } else {
                 stopRefreshing();
-                Utils.toast(requireContext(), resource.message);
+                Utils.toast(this, resource.message);
             }
         });
 
@@ -130,7 +113,7 @@ public class SessionChatFragment extends BaseFragment implements ActiveSessionCh
                 case LOADING:
                     break;
                 default: {
-                    Utils.toast(requireContext(), resource.message);
+                    Utils.toast(this, resource.message);
                 }
             }
         });
@@ -138,24 +121,19 @@ public class SessionChatFragment extends BaseFragment implements ActiveSessionCh
         mViewModel.fetchSessionChat();
     }
 
-    @Override
-    protected int getRootLayout() {
-        return R.layout.activity_active_session_chat;
-    }
-
     private void setupUi() {
-        /*if (((AppCompatActivity)getActivity()).getSupportActionBar() != null) {
-            ((AppCompatActivity)getActivity()).getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-            ((AppCompatActivity)getActivity()).getSupportActionBar().setHomeAsUpIndicator(R.drawable.ic_back_white);
-        }*/
+        if (getSupportActionBar() != null) {
+            getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+            getSupportActionBar().setHomeAsUpIndicator(R.drawable.ic_back_white);
+        }
 
         initRefreshScreen(R.id.sr_session_chat);
 
-        rvSessionChat.setLayoutManager(new LinearLayoutManager(requireContext(), RecyclerView.VERTICAL, true));
+        rvSessionChat.setLayoutManager(new LinearLayoutManager(this, RecyclerView.VERTICAL, true));
         mChatAdapter = new ActiveSessionChatAdapter(null, this);
         rvSessionChat.setAdapter(mChatAdapter);
 
-        int serviceTag =getArguments().getInt(KEY_SERVICE_TYPE, EVENT_REQUEST_SERVICE_TYPE.SERVICE_NONE.tag);
+        int serviceTag = getIntent().getIntExtra(KEY_SERVICE_TYPE, EVENT_REQUEST_SERVICE_TYPE.SERVICE_NONE.tag);
         if (serviceTag == EVENT_REQUEST_SERVICE_TYPE.SERVICE_CALL_WAITER.tag)
             vCallWaiter.performClick();
         else if (serviceTag == EVENT_REQUEST_SERVICE_TYPE.SERVICE_CLEAN_TABLE.tag)
@@ -163,7 +141,7 @@ public class SessionChatFragment extends BaseFragment implements ActiveSessionCh
         else if (serviceTag == EVENT_REQUEST_SERVICE_TYPE.SERVICE_BRING_COMMODITY.tag)
             vRefillGlass.performClick();
 
-        getActivity().invalidateOptionsMenu();
+        invalidateOptionsMenu();
     }
 
     private void resetMessageState() {
@@ -176,7 +154,7 @@ public class SessionChatFragment extends BaseFragment implements ActiveSessionCh
     public void setMessage(String msg) {
         etMessage.setText(msg);
         etMessage.requestFocus();
-        InputMethodManager imm = (InputMethodManager) requireContext().getSystemService(Context.INPUT_METHOD_SERVICE);
+        InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
         if (imm != null) {
             imm.toggleSoftInput(InputMethodManager.SHOW_FORCED, InputMethodManager.HIDE_IMPLICIT_ONLY);
         }
@@ -202,7 +180,7 @@ public class SessionChatFragment extends BaseFragment implements ActiveSessionCh
 
     @OnClick(R.id.im_expand_bottom_menu)
     public void onExpandMenu() {
-        Animation bottomUp = AnimationUtils.loadAnimation(requireContext(), R.anim.slide_up);
+        Animation bottomUp = AnimationUtils.loadAnimation(this, R.anim.slide_up);
         bottomExpandedMenu.startAnimation(bottomUp);
         bottomExpandedMenu.clearAnimation();
         bottomExpandedMenu.setVisibility(View.VISIBLE);
@@ -210,7 +188,7 @@ public class SessionChatFragment extends BaseFragment implements ActiveSessionCh
 
     @OnClick(R.id.im_collapse_bottom_menu)
     public void onCollapseMenu() {
-        Animation upDown = AnimationUtils.loadAnimation(requireContext(), R.anim.slide_down);
+        Animation upDown = AnimationUtils.loadAnimation(this, R.anim.slide_down);
         bottomExpandedMenu.startAnimation(upDown);
         bottomExpandedMenu.clearAnimation();
         bottomExpandedMenu.setVisibility(View.GONE);
@@ -225,7 +203,7 @@ public class SessionChatFragment extends BaseFragment implements ActiveSessionCh
                 btnSendMsg.setTag(EVENT_REQUEST_SERVICE_TYPE.SERVICE_NONE);
             mViewModel.sendMessage(msg, btnSendMsg.getTag());
         } else {
-            Utils.toast(requireContext(), "Please enter the message.");
+            Utils.toast(this, "Please enter the message.");
             btnSendMsg.setEnabled(true);
         }
     }
@@ -287,36 +265,28 @@ public class SessionChatFragment extends BaseFragment implements ActiveSessionCh
         }
     }
 
-
     @Override
     protected void updateScreen() {
         mViewModel.updateResults();
     }
 
     @Override
-    public void onPrepareOptionsMenu(Menu menu) {
-        super.onPrepareOptionsMenu(menu);
-        mChatAdapter.getSelectedEvent();
+    public boolean onPrepareOptionsMenu(Menu menu) {
+        return mChatAdapter.getSelectedEvent() != null;
     }
 
     @Override
-    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
-        inflater.inflate(R.menu.menu_active_session_chat, menu);
-        super.onCreateOptionsMenu(menu,inflater);
-
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.menu_active_session_chat, menu);
+        return true;
     }
 
     @Override
     public void onSelectionChange(@Nullable SessionChatModel chatModel) {
-        getActivity().invalidateOptionsMenu();
+        invalidateOptionsMenu();
     }
 
-    /*@OnClick(R.id.im_session_chat_back)
-    public void onBack() {
-        onBackPressed();
-    }*/
-
-    /*@Override
+    @Override
     public boolean onSupportNavigateUp() {
         onBackPressed();
         return true;
@@ -328,29 +298,20 @@ public class SessionChatFragment extends BaseFragment implements ActiveSessionCh
             mChatAdapter.resetSelectedEvent();
         } else {
             Utils.setKeyboardVisibility(etMessage, false);
+            supportFinishAfterTransition();
             super.onBackPressed();
         }
-    }*/
-
-    public boolean onBackPressed() {
-        if (getFragmentManager() != null) {
-            if (getView() != null)
-                getView().startAnimation(AnimationUtils.loadAnimation(requireContext(), R.anim.slide_down));
-            getFragmentManager().popBackStack();
-            return true;
-        }
-        return false;
     }
 
     @Override
-    public void onResume() {
+    protected void onResume() {
         super.onResume();
-        MessageUtils.registerLocalReceiver(requireContext(), mReceiver, MESSAGE_TYPE.USER_SESSION_EVENT_NEW, MESSAGE_TYPE.USER_SESSION_EVENT_UPDATE);
+        MessageUtils.registerLocalReceiver(this, mReceiver, MESSAGE_TYPE.USER_SESSION_EVENT_NEW, MESSAGE_TYPE.USER_SESSION_EVENT_UPDATE);
     }
 
     @Override
-    public void onPause() {
+    protected void onPause() {
         super.onPause();
-        MessageUtils.unregisterLocalReceiver(requireContext(), mReceiver);
+        MessageUtils.unregisterLocalReceiver(this, mReceiver);
     }
 }

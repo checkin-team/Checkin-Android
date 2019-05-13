@@ -86,6 +86,7 @@
 
     <dimen name="width_quantity_selection">120dp</dimen>
     <dimen name="height_quantity_selection">60dp</dimen>
+    <dimen name="width_session_menu">90dp</dimen>
 
     <!--Chat dimensions-->
     <dimen name="size_chat_status">10dp</dimen>
