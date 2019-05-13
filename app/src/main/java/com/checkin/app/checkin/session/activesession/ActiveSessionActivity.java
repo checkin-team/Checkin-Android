@@ -73,6 +73,8 @@ public class ActiveSessionActivity extends BaseActivity implements
     TextView tvSessionCheckout;
     @BindView(R.id.btn_active_session_menu)
     ImageView btnSessionMenu;
+    @BindView(R.id.view_proxy_menu)
+    View viewMenuIcon;
     @BindView(R.id.rl_container_session_orders)
     RelativeLayout rlSessionOrders;
     @BindView(R.id.ll_call_waiter_button)
@@ -251,7 +253,7 @@ public class ActiveSessionActivity extends BaseActivity implements
     }
 
     private void explainSession() {
-        OnBoardingUtils.conditionalOnBoarding(this, SP_MENU, true, new OnBoardingUtils.OnBoardingModel("Checkout your menu here!", btnSessionMenu));
+        OnBoardingUtils.conditionalOnBoarding(this, SP_MENU, true, new OnBoardingUtils.OnBoardingModel("Checkout your menu here!", viewMenuIcon));
     }
 
     // region UI-Update
@@ -377,16 +379,14 @@ public class ActiveSessionActivity extends BaseActivity implements
 
     public void openChat(SessionChatDataModel.EVENT_REQUEST_SERVICE_TYPE service, View view) {
         view.setEnabled(false);
+        Intent myIntent = new Intent(ActiveSessionActivity.this, SessionChatActivity.class);
+        myIntent.putExtra(SessionChatActivity.KEY_SERVICE_TYPE, service.tag);
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-            Intent myIntent = new Intent(ActiveSessionActivity.this, SessionChatActivity.class);
             ActivityOptionsCompat options = ActivityOptionsCompat.
                     makeSceneTransitionAnimation(this, (View) containerBottomActions, "chatActions");
-            myIntent.putExtra(SessionChatActivity.KEY_SERVICE_TYPE, service.tag);
             startActivity(myIntent, options.toBundle());
         } else {
-            Intent myIntent = new Intent(ActiveSessionActivity.this, SessionChatActivity.class);
-            myIntent.putExtra(SessionChatActivity.KEY_SERVICE_TYPE, service.tag);
             startActivity(myIntent);
         }
     }
