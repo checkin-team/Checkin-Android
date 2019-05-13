@@ -81,6 +81,13 @@
     @android.arch.lifecycle.OnLifecycleEvent *;
 }
 
+##########
+# Paytm
+##########
+-keepclassmembers class com.paytm.pgsdk.PaytmWebView$PaytmJavaScriptInterface {
+   public *;
+}
+
 ########### General
 -keepattributes SourceFile,LineNumberTable,*Annotation*,EnclosingMethod,Signature,Exceptions,InnerClasses
 -keep class com.checkin.app.checkin.**Model { *; }

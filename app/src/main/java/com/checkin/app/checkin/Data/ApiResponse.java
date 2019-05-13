@@ -2,12 +2,13 @@ package com.checkin.app.checkin.Data;
 
 import android.util.Log;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+
 import com.fasterxml.jackson.databind.JsonNode;
 
 import java.io.IOException;
 
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 import retrofit2.Response;
 
 import static java.net.HttpURLConnection.HTTP_CLIENT_TIMEOUT;
@@ -68,14 +69,14 @@ public class ApiResponse<T> {
         Log.e("APIResponse", "Error data: " + data.toString());
         if (data.isObject()) {
             if (data.has("detail")) {
-                Log.e("APIResponse", "Detail");
+                Log.d("APIResponse", "Detail");
                 return data.get("detail").asText();
             } else if (data.has("errors")) {
-                Log.e("APIResponse", "Errors");
+                Log.d("APIResponse", "Errors");
                 return data.get("errors").get(0).asText();
             }
         } else if (data.isArray()) {
-            Log.e("APIResponse", "Array");
+            Log.d("APIResponse", "Array");
             return data.get(0).asText();
         }
         return errorMessage;
