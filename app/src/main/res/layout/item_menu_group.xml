@@ -11,12 +11,13 @@
     app:cardCornerRadius="@dimen/card_corner_radius"
     app:cardElevation="@dimen/card_elevation">
 
-    <FrameLayout
+    <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_gravity="center">
 
         <LinearLayout
+            android:id="@+id/container_menu_group"
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
 
@@ -37,7 +38,8 @@
                 android:layout_marginStart="@dimen/spacing_small"
                 android:layout_weight="1"
                 android:textAlignment="center"
-                tools:text="GROUP TITLE" />
+                android:gravity="center"
+                tools:text="GROUP TITLE " />
 
             <Switch
                 android:id="@+id/switch_menu_group_availability"
@@ -53,7 +55,7 @@
                 android:switchTextAppearance="@style/SwitchTextAppearance"
                 android:thumb="@drawable/ic_switch_toggle"
                 android:track="@drawable/rectangle_white_three"
-                android:visibility="gone" />
+                android:visibility="visible" />
 
         </LinearLayout>
 
@@ -62,8 +64,9 @@
             android:id="@+id/container_menu_sub_groups"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_marginTop="@dimen/spacing_huge"
+            android:layout_below="@+id/container_menu_group"
             android:orientation="vertical"
+            android:paddingTop="@dimen/spacing_small"
             android:paddingStart="@dimen/spacing_small"
             android:paddingEnd="@dimen/spacing_small"
             android:visibility="gone">
@@ -98,5 +101,5 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content" />
         </LinearLayout>
-    </FrameLayout>
+    </RelativeLayout>
 </androidx.cardview.widget.CardView>
