@@ -20,6 +20,7 @@ import com.checkin.app.checkin.session.model.ActiveSessionModel;
 import com.checkin.app.checkin.session.model.CheckoutStatusModel;
 import com.checkin.app.checkin.session.model.SessionInvoiceModel;
 import com.checkin.app.checkin.session.model.SessionOrderedItemModel;
+import com.checkin.app.checkin.session.model.TrendingDishModel;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 
 import java.util.List;
@@ -336,6 +337,26 @@ public class ActiveSessionRepository extends BaseRepository {
 
             @Override
             protected void saveCallResult(GenericDetailModel data) {
+            }
+        }.getAsLiveData();
+    }
+
+    public LiveData<Resource<List<TrendingDishModel>>> getTrendingDishes(long restaurantId) {
+        return new NetworkBoundResource<List<TrendingDishModel>, List<TrendingDishModel>>() {
+
+            @Override
+            protected void saveCallResult(List<TrendingDishModel> data) {
+            }
+
+            @Override
+            protected boolean shouldUseLocalDb() {
+                return false;
+            }
+
+            @NonNull
+            @Override
+            protected LiveData<ApiResponse<List<TrendingDishModel>>> createCall() {
+                return new RetrofitLiveData<>(mWebService.getRestaurantTrendingItem(restaurantId));
             }
         }.getAsLiveData();
     }

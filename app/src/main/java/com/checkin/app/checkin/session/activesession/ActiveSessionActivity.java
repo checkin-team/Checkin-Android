@@ -19,6 +19,7 @@ import com.checkin.app.checkin.Data.Message.MessageModel;
 import com.checkin.app.checkin.Data.Message.MessageModel.MESSAGE_TYPE;
 import com.checkin.app.checkin.Data.Message.MessageObjectModel;
 import com.checkin.app.checkin.Data.Message.MessageUtils;
+import com.checkin.app.checkin.Data.Resource;
 import com.checkin.app.checkin.Menu.SessionMenuActivity;
 import com.checkin.app.checkin.Misc.BaseActivity;
 import com.checkin.app.checkin.Misc.BriefModel;
@@ -166,6 +167,7 @@ public class ActiveSessionActivity extends BaseActivity implements
                     stopRefreshing();
                     mViewModel.setSessionPk(data.getPk());
                     mViewModel.setShopPk(data.getShopPk());
+                    mViewModel.fetchTrendingItem();
                     setupData(data);
                     break;
                 }
@@ -221,8 +223,14 @@ public class ActiveSessionActivity extends BaseActivity implements
             tvCountOrdersDelivered.setText(String.valueOf(integer));
         });
 
+
         mViewModel.getTrendingItem().observe(this, inventoryItemModels -> {
-            mTrendingDishAdapter.setData(inventoryItemModels);
+
+            if (inventoryItemModels == null)
+                return;
+
+            if (inventoryItemModels.status == Resource.Status.SUCCESS && inventoryItemModels.data != null)
+                mTrendingDishAdapter.setData(inventoryItemModels.data);
         });
     }
 

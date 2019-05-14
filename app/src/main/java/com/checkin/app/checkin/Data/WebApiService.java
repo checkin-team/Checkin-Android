@@ -35,6 +35,7 @@ import com.checkin.app.checkin.session.model.SessionBasicModel;
 import com.checkin.app.checkin.session.model.SessionBriefModel;
 import com.checkin.app.checkin.session.model.SessionInvoiceModel;
 import com.checkin.app.checkin.session.model.SessionOrderedItemModel;
+import com.checkin.app.checkin.session.model.TrendingDishModel;
 import com.fasterxml.jackson.databind.node.ArrayNode;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 
@@ -270,6 +271,9 @@ public interface WebApiService {
 
     @GET("menus/restaurants/{restaurant_id}/manage/available/")
     Call<InventoryModel> getAvailableRestaurantMenu(@Path("restaurant_id") long restaurantId);
+
+    @GET("menus/items/trending/restaurants/{restaurant_id}/")
+    Call<List<TrendingDishModel>> getRestaurantTrendingItem(@Path("restaurant_id") long restaurantId);
 
     @POST("menus/restaurants/{restaurant_id}/manage/items/")
     Call<List<InventoryAvailabilityModel>> postChangeMenuAvailability(@Path("restaurant_id") long restaurantId, @Body List<InventoryAvailabilityModel> msOrderStatus);

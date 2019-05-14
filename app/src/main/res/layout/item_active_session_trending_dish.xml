@@ -6,6 +6,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:orientation="vertical"
     android:gravity="center"
+    android:layout_marginEnd="@dimen/spacing_small"
     android:background="@drawable/background_pinkish_grey_stroke">
 
 

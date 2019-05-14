@@ -51,7 +51,7 @@ public class ActiveSessionViewModel extends BaseViewModel {
     private MediatorLiveData<Resource<CheckoutStatusModel>> mCheckoutData = new MediatorLiveData<>();
     private MediatorLiveData<Resource<PaytmModel>> mPaytmData = new MediatorLiveData<>();
     private MutableLiveData<Boolean> mIsRequestedCheckout = new MutableLiveData<>(false);
-    private MediatorLiveData<List<TrendingDishModel>> mTrendingData = new MediatorLiveData<>();
+    private MediatorLiveData<Resource<List<TrendingDishModel>>> mTrendingData = new MediatorLiveData<>();
 
     private long mShopPk = -1, mSessionPk = -1;
 
@@ -297,26 +297,11 @@ public class ActiveSessionViewModel extends BaseViewModel {
         mSessionData.setValue(Resource.cloneResource(resource, resource.data));
     }
 
+    public void fetchTrendingItem(){
+        mTrendingData.addSource(mRepository.getTrendingDishes(mShopPk), mTrendingData::setValue);
+    }
 
-    public LiveData<List<TrendingDishModel>> getTrendingItem() {
-
-        List<TrendingDishModel> data = new ArrayList<>();
-        TrendingDishModel itemModel = new TrendingDishModel();
-        itemModel.setPk(3);
-        itemModel.setName("Hot Fudge");
-        itemModel.setTypeNames(Collections.singletonList("L"));
-        itemModel.setTypeCosts(Collections.singletonList(99.00));
-
-        String[] availableMeals = new String[]{"brkfst",
-                "lunch",
-                "dinner"};
-        itemModel.setAvailableMeals(availableMeals);
-        itemModel.setDescription("have a tasty fudge sundae!");
-        itemModel.setVegetarian(true);
-        itemModel.setCustomizations(null);
-
-        data.add(0, itemModel);
-        mTrendingData.postValue(data);
+    public LiveData<Resource<List<TrendingDishModel>>> getTrendingItem() {
         return mTrendingData;
     }
 
