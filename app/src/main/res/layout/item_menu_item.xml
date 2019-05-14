@@ -13,7 +13,7 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="@dimen/spacing_small"
         android:layout_marginTop="@dimen/spacing_small"
-        android:layout_marginEnd="@dimen/spacing_small"
+        android:layout_marginEnd="@dimen/spacing_normal"
         android:gravity="start"
         app:layout_constraintEnd_toStartOf="@id/container_menu_quantity_picker"
         app:layout_constraintStart_toStartOf="parent"

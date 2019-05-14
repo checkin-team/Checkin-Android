@@ -107,7 +107,6 @@ public class UserPrivateProfileFragment extends BaseFragment {
     }
 
     private void setupData(UserModel data) {
-        Log.e("dataset====", "data_set again======");
         mUserModel = data;
         tvDisplayName.setText(data.getFullName());
         Utils.loadImageOrDefault(imCover, data.getProfilePic(), (data.getGender() == UserModel.GENDER.MALE) ? R.drawable.cover_unknown_male : R.drawable.cover_unknown_female);

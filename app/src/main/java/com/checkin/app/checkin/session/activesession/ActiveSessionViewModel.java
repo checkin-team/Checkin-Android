@@ -1,7 +1,9 @@
 package com.checkin.app.checkin.session.activesession;
 
 import android.app.Application;
+import android.os.Build;
 import android.os.Bundle;
+import android.util.Log;
 
 import androidx.annotation.NonNull;
 import androidx.lifecycle.LiveData;
@@ -25,9 +27,13 @@ import com.checkin.app.checkin.session.model.SessionOrderedItemModel;
 import com.checkin.app.checkin.session.model.TrendingDishModel;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.Set;
 
 import static com.checkin.app.checkin.session.activesession.chat.SessionChatModel.CHAT_STATUS_TYPE.DONE;
 import static com.checkin.app.checkin.session.activesession.chat.SessionChatModel.CHAT_STATUS_TYPE.IN_PROGRESS;
@@ -119,7 +125,21 @@ public class ActiveSessionViewModel extends BaseViewModel {
     }
 
     public void postPaytmCallback(Bundle bundle) {
-        ObjectNode data = Converters.objectMapper.valueToTree(bundle);
+        JSONObject json = new JSONObject();
+        Set<String> keys = bundle.keySet();
+        for (String key : keys) {
+            try {
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
+                    json.put(key, JSONObject.wrap(bundle.get(key)));
+
+                }
+            } catch(JSONException e) {
+                Log.e("Exception:", e.getMessage());
+            }
+        }
+
+        ObjectNode data = Converters.objectMapper.valueToTree(json);
+
         mData.addSource(mRepository.postPaytmResult(data), mData::setValue);
     }
 
