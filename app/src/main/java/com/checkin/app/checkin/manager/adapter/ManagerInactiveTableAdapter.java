@@ -63,8 +63,8 @@ public class ManagerInactiveTableAdapter extends RecyclerView.Adapter<ManagerIna
         }
 
         public void bindData(RestaurantTableModel data) {
-            mTableModel = data;
-            tvManagerTableNumber.setText(String.valueOf(data.getQrPk()));
+            this.mTableModel = data;
+            tvManagerTableNumber.setText(String.valueOf(data.getTable().split(" ")[1]));
         }
     }
 

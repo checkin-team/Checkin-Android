@@ -25,6 +25,8 @@ import com.checkin.app.checkin.session.model.SessionCustomerModel;
 import com.checkin.app.checkin.session.model.SessionInvoiceModel;
 import com.checkin.app.checkin.session.model.SessionOrderedItemModel;
 import com.checkin.app.checkin.session.model.TrendingDishModel;
+import com.fasterxml.jackson.databind.JsonNode;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 
 import org.json.JSONException;
@@ -125,21 +127,11 @@ public class ActiveSessionViewModel extends BaseViewModel {
     }
 
     public void postPaytmCallback(Bundle bundle) {
-        JSONObject json = new JSONObject();
+        ObjectNode data = Converters.objectMapper.createObjectNode();
         Set<String> keys = bundle.keySet();
         for (String key : keys) {
-            try {
-                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
-                    json.put(key, JSONObject.wrap(bundle.get(key)));
-
-                }
-            } catch(JSONException e) {
-                Log.e("Exception:", e.getMessage());
-            }
+                data.put(key, String.valueOf(bundle.get(key)));
         }
-
-        ObjectNode data = Converters.objectMapper.valueToTree(json);
-
         mData.addSource(mRepository.postPaytmResult(data), mData::setValue);
     }
 
