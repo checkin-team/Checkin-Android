@@ -224,7 +224,7 @@ public class MenuGroupAdapter extends RecyclerView.Adapter<MenuGroupAdapter.Grou
 
         void showMenu(View view) {
             LinearLayout.LayoutParams layoutParams = (LinearLayout.LayoutParams) tvGroupName.getLayoutParams();
-            layoutParams.gravity = Gravity.TOP;
+            layoutParams.gravity = Gravity.CENTER;
             tvGroupName.setLayoutParams(layoutParams);
             Animator sizeChangeAnim = AnimUtils.changeViewSize(view, AnimUtils.NO_CHANGE, (int) view.getResources().getDimension(R.dimen.height_menu_group_expanded));
             Animator hideImageAnim = AnimUtils.hideView(imGroupIcon);
