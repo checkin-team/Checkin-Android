@@ -21,9 +21,6 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.checkin.app.checkin.Data.Resource;
 import com.checkin.app.checkin.Misc.BillHolder;
-import com.checkin.app.checkin.Utility.Constants;
-import com.checkin.app.checkin.session.paytm.PaytmModel;
-import com.checkin.app.checkin.session.paytm.PaytmPayment;
 import com.checkin.app.checkin.Misc.paytm.PaytmPayment;
 import com.checkin.app.checkin.R;
 import com.checkin.app.checkin.Shop.ShopModel;
@@ -98,11 +95,6 @@ public class ActiveSessionInvoiceActivity extends AppCompatActivity {
             getSupportActionBar().setHomeAsUpIndicator(R.drawable.ic_back_grey);
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         }
-        prefs = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
-
-        String paymentTag = prefs.getString(Constants.SP_LAST_USED_PAYMENT_MODE, PAYTM.tag);
-        selectedMode = ShopModel.PAYMENT_MODE.getByTag(paymentTag);
-
         prefs = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
 
         String paymentTag = prefs.getString(Constants.SP_LAST_USED_PAYMENT_MODE, PAYTM.tag);
