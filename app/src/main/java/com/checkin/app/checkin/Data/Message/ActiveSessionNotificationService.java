@@ -77,6 +77,7 @@ public class ActiveSessionNotificationService extends Service {
                 .setContentTitle("Live")
                 .setContentText(restaurant_name)
                 .setStyle(new NotificationCompat.BigTextStyle())
+                .setCustomContentView(bigViews)
                 .setCustomBigContentView(bigViews)
                 .setContentIntent(pendingIntent)
                 .setOngoing(true)
