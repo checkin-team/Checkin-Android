@@ -4,10 +4,10 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:minHeight="@dimen/height_menu_group_collapsed"
     android:layout_marginBottom="@dimen/spacing_small"
     android:clickable="true"
     android:focusable="true"
+    android:minHeight="@dimen/height_menu_group_collapsed"
     app:cardCornerRadius="@dimen/card_corner_radius"
     app:cardElevation="@dimen/card_elevation">
 
@@ -19,32 +19,35 @@
         <LinearLayout
             android:id="@+id/container_menu_group"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true">
 
             <ImageView
                 android:id="@+id/im_menu_group_icon"
                 android:layout_width="@dimen/size_logo"
                 android:layout_height="@dimen/size_logo"
-                android:layout_marginStart="@dimen/spacing_normal"
                 android:layout_gravity="center"
+                android:layout_marginStart="@dimen/spacing_normal"
                 tools:src="@drawable/ic_beer" />
 
             <TextView
                 android:id="@+id/tv_menu_group_name"
                 style="@style/GreyTitleStyle"
-                android:layout_width="wrap_content"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:layout_marginStart="@dimen/spacing_small"
                 android:layout_weight="1"
-                android:textAlignment="center"
                 android:gravity="center"
-                tools:text="GROUP TITLE " />
+                android:layout_centerVertical="true"
+                android:layout_gravity="center"
+                android:layout_toStartOf="@+id/switch_menu_group_availability"
+                tools:text="GROUP" />
 
             <Switch
                 android:id="@+id/switch_menu_group_availability"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_alignParentEnd="true"
+                android:layout_centerVertical="true"
                 android:layout_gravity="center"
                 android:layout_marginStart="@dimen/spacing_tiny"
                 android:layout_marginTop="@dimen/spacing_small"
@@ -55,7 +58,7 @@
                 android:switchTextAppearance="@style/SwitchTextAppearance"
                 android:thumb="@drawable/ic_switch_toggle"
                 android:track="@drawable/rectangle_white_three"
-                android:visibility="visible" />
+                android:visibility="gone" />
 
         </LinearLayout>
 
@@ -66,8 +69,8 @@
             android:layout_height="match_parent"
             android:layout_below="@+id/container_menu_group"
             android:orientation="vertical"
-            android:paddingTop="@dimen/spacing_small"
             android:paddingStart="@dimen/spacing_small"
+            android:paddingTop="@dimen/spacing_small"
             android:paddingEnd="@dimen/spacing_small"
             android:visibility="gone">
 

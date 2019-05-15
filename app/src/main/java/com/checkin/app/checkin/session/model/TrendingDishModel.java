@@ -13,7 +13,7 @@ import java.util.List;
 public class TrendingDishModel {
 
     @JsonProperty("customizations")
-    public List<TrendingDishItemCustomizationGroupModel> customizations;
+    public List<Integer> customizations;
 
     @JsonProperty("pk")
     private long pk;
@@ -132,11 +132,11 @@ public class TrendingDishModel {
         this.image = image;
     }
 
-    public List<TrendingDishItemCustomizationGroupModel> getCustomizations() {
+    public List<Integer> getCustomizations() {
         return customizations;
     }
 
-    public void setCustomizations(List<TrendingDishItemCustomizationGroupModel> customizations) {
+    public void setCustomizations(List<Integer> customizations) {
         this.customizations = customizations;
     }
 

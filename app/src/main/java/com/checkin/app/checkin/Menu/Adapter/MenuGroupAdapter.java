@@ -13,6 +13,7 @@ import android.view.ViewConfiguration;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.checkin.app.checkin.Menu.Fragment.MenuItemsFragment;
@@ -223,9 +224,9 @@ public class MenuGroupAdapter extends RecyclerView.Adapter<MenuGroupAdapter.Grou
         }
 
         void showMenu(View view) {
-            LinearLayout.LayoutParams layoutParams = (LinearLayout.LayoutParams) tvGroupName.getLayoutParams();
-            layoutParams.gravity = Gravity.CENTER;
-            tvGroupName.setLayoutParams(layoutParams);
+//            RelativeLayout.LayoutParams layoutParams = (RelativeLayout.LayoutParams) tvGroupName.getLayoutParams();
+////            layoutParams.gravity = Gravity.CENTER;
+//            tvGroupName.setLayoutParams(layoutParams);
             Animator sizeChangeAnim = AnimUtils.changeViewSize(view, AnimUtils.NO_CHANGE, (int) view.getResources().getDimension(R.dimen.height_menu_group_expanded));
             Animator hideImageAnim = AnimUtils.hideView(imGroupIcon);
             Animator showMenuAnim = AnimUtils.showView(vSubGroupWrapper);
@@ -233,7 +234,7 @@ public class MenuGroupAdapter extends RecyclerView.Adapter<MenuGroupAdapter.Grou
             scrollAnimator.setDuration(AnimUtils.DEFAULT_DURATION).addUpdateListener(animation ->
                     ((LinearLayoutManager) mRecyclerView.getLayoutManager()).scrollToPositionWithOffset(getAdapterPosition(), 0));
             AnimatorSet animatorSet = new AnimatorSet();
-            animatorSet.playTogether(sizeChangeAnim, hideImageAnim, showMenuAnim, scrollAnimator);
+            animatorSet.playTogether(hideImageAnim, sizeChangeAnim, showMenuAnim, scrollAnimator);
             isExpanded = true;
             animatorSet.addListener(new AnimatorListenerAdapter() {
                 @Override
@@ -245,14 +246,15 @@ public class MenuGroupAdapter extends RecyclerView.Adapter<MenuGroupAdapter.Grou
         }
 
         void hideMenu(View view) {
-            LinearLayout.LayoutParams layoutParams = (LinearLayout.LayoutParams) tvGroupName.getLayoutParams();
-            layoutParams.gravity = Gravity.CENTER;
-            tvGroupName.setLayoutParams(layoutParams);
+//            RelativeLayout.LayoutParams layoutParams = (RelativeLayout.LayoutParams) tvGroupName.getLayoutParams();
+////            layoutParams.gravity = Gravity.CENTER;
+//            tvGroupName.setLayoutParams(layoutParams);
             Animator sizeChangeAnim = AnimUtils.changeViewSize(view, AnimUtils.NO_CHANGE, (int) view.getResources().getDimension(R.dimen.height_menu_group_collapsed));
             Animator showImageAnim = AnimUtils.showView(imGroupIcon);
             Animator hideMenuAnim = AnimUtils.hideView(vSubGroupWrapper);
+            Animator showTitleAnim = AnimUtils.animateAlpha(tvGroupName,1.5f, 350L);
             AnimatorSet animatorSet = new AnimatorSet();
-            animatorSet.playTogether(sizeChangeAnim, showImageAnim, hideMenuAnim);
+            animatorSet.playTogether( sizeChangeAnim, hideMenuAnim, showImageAnim, showTitleAnim);
             isExpanded = false;
             animatorSet.addListener(new AnimatorListenerAdapter() {
                 @Override

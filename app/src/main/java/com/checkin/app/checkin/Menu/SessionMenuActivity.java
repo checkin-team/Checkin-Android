@@ -17,12 +17,14 @@ import android.widget.TextView;
 
 import com.checkin.app.checkin.Data.Resource.Status;
 import com.checkin.app.checkin.Menu.Adapter.MenuCartAdapter;
+import com.checkin.app.checkin.Menu.Adapter.MenuItemAdapter;
 import com.checkin.app.checkin.Menu.Fragment.ItemCustomizationFragment;
 import com.checkin.app.checkin.Menu.Fragment.MenuFilterFragment;
 import com.checkin.app.checkin.Menu.Fragment.MenuGroupsFragment;
 import com.checkin.app.checkin.Menu.Fragment.MenuGroupsFragment.SESSION_STATUS;
 import com.checkin.app.checkin.Menu.Fragment.MenuInfoFragment;
 import com.checkin.app.checkin.Menu.Fragment.MenuItemSearchFragment;
+import com.checkin.app.checkin.Menu.Model.ItemCustomizationFieldModel;
 import com.checkin.app.checkin.Menu.Model.MenuItemModel;
 import com.checkin.app.checkin.Menu.Model.OrderedItemModel;
 import com.checkin.app.checkin.Misc.BaseActivity;
@@ -145,7 +147,14 @@ public class SessionMenuActivity extends BaseActivity implements
             mViewModel.searchMenuItemById(itemPk);
             mViewModel.getMenuItem().observe(this, itemModel -> {
                 if (itemModel != null) {
-                    onMenuItemAdded(itemModel);
+                    if(itemModel.isComplexItem()){
+                        mViewModel.newOrderedItem(itemModel);
+                        onItemInteraction(itemModel,1);
+                    }else{
+                        onMenuItemAdded(itemModel);
+                        endToggle.toggle();
+                    }
+
                 }
             });
         }

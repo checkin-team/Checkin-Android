@@ -233,9 +233,9 @@ public class InventoryGroupAdapter extends RecyclerView.Adapter<InventoryGroupAd
         }
 
         void showMenu(View view) {
-            LinearLayout.LayoutParams layoutParams = (LinearLayout.LayoutParams) tvGroupName.getLayoutParams();
-            layoutParams.gravity = Gravity.CENTER;
-            tvGroupName.setLayoutParams(layoutParams);
+//            LinearLayout.LayoutParams layoutParams = (LinearLayout.LayoutParams) tvGroupName.getLayoutParams();
+//            layoutParams.gravity = Gravity.CENTER;
+//            tvGroupName.setLayoutParams(layoutParams);
             Animator sizeChangeAnim = AnimUtils.changeViewSize(view, AnimUtils.NO_CHANGE, (int) view.getResources().getDimension(R.dimen.height_menu_group_expanded));
             Animator hideImageAnim = AnimUtils.hideView(imGroupIcon);
             Animator showMenuAnim = AnimUtils.showView(vSubGroupWrapper);
@@ -255,14 +255,15 @@ public class InventoryGroupAdapter extends RecyclerView.Adapter<InventoryGroupAd
         }
 
         void hideMenu(View view) {
-            LinearLayout.LayoutParams layoutParams = (LinearLayout.LayoutParams) tvGroupName.getLayoutParams();
-            layoutParams.gravity = Gravity.CENTER;
-            tvGroupName.setLayoutParams(layoutParams);
+//            LinearLayout.LayoutParams layoutParams = (LinearLayout.LayoutParams) tvGroupName.getLayoutParams();
+//            layoutParams.gravity = Gravity.CENTER;
+//            tvGroupName.setLayoutParams(layoutParams);
             Animator sizeChangeAnim = AnimUtils.changeViewSize(view, AnimUtils.NO_CHANGE, (int) view.getResources().getDimension(R.dimen.height_menu_group_collapsed));
             Animator showImageAnim = AnimUtils.showView(imGroupIcon);
             Animator hideMenuAnim = AnimUtils.hideView(vSubGroupWrapper);
+            Animator showTitleAnim = AnimUtils.animateAlpha(tvGroupName,1.5f, 350L);
             AnimatorSet animatorSet = new AnimatorSet();
-            animatorSet.playTogether(sizeChangeAnim, showImageAnim, hideMenuAnim);
+            animatorSet.playTogether(sizeChangeAnim, showImageAnim, hideMenuAnim, showTitleAnim);
             isExpanded = false;
             animatorSet.addListener(new AnimatorListenerAdapter() {
                 @Override

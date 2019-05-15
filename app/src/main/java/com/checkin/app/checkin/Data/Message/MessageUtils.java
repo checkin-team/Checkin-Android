@@ -123,7 +123,7 @@ public class MessageUtils {
             createChannelGroups(notificationManager, CHANNEL_GROUP.RESTAURANT_CUSTOMER);
 
             List<NotificationChannel> channels;
-            channels = createChannels(CHANNEL_GROUP.RESTAURANT_CUSTOMER, NotificationManager.IMPORTANCE_DEFAULT, CHANNEL.ACTIVE_SESSION_PERSISTENT);
+            channels = createChannels(CHANNEL_GROUP.RESTAURANT_CUSTOMER, NotificationManager.IMPORTANCE_MAX, CHANNEL.ACTIVE_SESSION_PERSISTENT);
             notificationManager.createNotificationChannels(channels);
 
             channels.get(0).setLockscreenVisibility(Notification.VISIBILITY_PUBLIC);

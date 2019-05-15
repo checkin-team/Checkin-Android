@@ -76,6 +76,7 @@ public class ActiveSessionNotificationService extends Service {
                 .setSmallIcon(R.drawable.ic_logo_notification)
                 .setContentTitle("Live")
                 .setContentText(restaurant_name)
+                .setStyle(new NotificationCompat.BigTextStyle())
                 .setCustomBigContentView(bigViews)
                 .setContentIntent(pendingIntent)
                 .setOngoing(true)
