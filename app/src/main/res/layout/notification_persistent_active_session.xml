@@ -32,7 +32,7 @@
                 android:id="@+id/im_as_noti_restaurant_logo"
                 style="@style/LogoSmallImageStyle"
                 android:layout_gravity="center"
-                android:background="@color/white"
+                android:scaleType="centerCrop"
                 tools:src="@drawable/dummy_alex" />
 
             <TextView
