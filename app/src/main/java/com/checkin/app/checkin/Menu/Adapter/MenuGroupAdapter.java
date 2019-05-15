@@ -224,9 +224,9 @@ public class MenuGroupAdapter extends RecyclerView.Adapter<MenuGroupAdapter.Grou
         }
 
         void showMenu(View view) {
-//            RelativeLayout.LayoutParams layoutParams = (RelativeLayout.LayoutParams) tvGroupName.getLayoutParams();
-////            layoutParams.gravity = Gravity.CENTER;
-//            tvGroupName.setLayoutParams(layoutParams);
+            LinearLayout.LayoutParams layoutParams = (LinearLayout.LayoutParams) tvGroupName.getLayoutParams();
+            layoutParams.gravity = Gravity.CENTER;
+            tvGroupName.setLayoutParams(layoutParams);
             Animator sizeChangeAnim = AnimUtils.changeViewSize(view, AnimUtils.NO_CHANGE, (int) view.getResources().getDimension(R.dimen.height_menu_group_expanded));
             Animator hideImageAnim = AnimUtils.hideView(imGroupIcon);
             Animator showMenuAnim = AnimUtils.showView(vSubGroupWrapper);
@@ -246,9 +246,9 @@ public class MenuGroupAdapter extends RecyclerView.Adapter<MenuGroupAdapter.Grou
         }
 
         void hideMenu(View view) {
-//            RelativeLayout.LayoutParams layoutParams = (RelativeLayout.LayoutParams) tvGroupName.getLayoutParams();
-////            layoutParams.gravity = Gravity.CENTER;
-//            tvGroupName.setLayoutParams(layoutParams);
+            LinearLayout.LayoutParams layoutParams = (LinearLayout.LayoutParams) tvGroupName.getLayoutParams();
+            layoutParams.gravity = Gravity.CENTER;
+            tvGroupName.setLayoutParams(layoutParams);
             Animator sizeChangeAnim = AnimUtils.changeViewSize(view, AnimUtils.NO_CHANGE, (int) view.getResources().getDimension(R.dimen.height_menu_group_collapsed));
             Animator showImageAnim = AnimUtils.showView(imGroupIcon);
             Animator hideMenuAnim = AnimUtils.hideView(vSubGroupWrapper);

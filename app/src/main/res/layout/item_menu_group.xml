@@ -11,10 +11,11 @@
     app:cardCornerRadius="@dimen/card_corner_radius"
     app:cardElevation="@dimen/card_elevation">
 
-    <RelativeLayout
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_gravity="center">
+        android:layout_gravity="center"
+        android:orientation="vertical">
 
         <LinearLayout
             android:id="@+id/container_menu_group"
@@ -104,5 +105,5 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content" />
         </LinearLayout>
-    </RelativeLayout>
+    </LinearLayout>
 </androidx.cardview.widget.CardView>

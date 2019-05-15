@@ -42,6 +42,7 @@ import java.util.Locale;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.widget.Toolbar;
+import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProviders;
@@ -154,9 +155,11 @@ public class SessionMenuActivity extends BaseActivity implements
                         onMenuItemAdded(itemModel);
                         endToggle.toggle();
                     }
-
                 }
             });
+        }else {
+            if(isSessionActive())
+            explainMenu();
         }
     }
 
@@ -208,10 +211,15 @@ public class SessionMenuActivity extends BaseActivity implements
         if (isSessionActive()) {
             DrawerLayout drawerLayout = findViewById(R.id.drawer_menu);
             endToggle = new EndDrawerToggle(
-                    this, drawerLayout, toolbar, R.string.menu_drawer_open, R.string.menu_drawer_close, R.drawable.ic_cart_white);
+                    this, drawerLayout, toolbar, R.string.menu_drawer_open, R.string.menu_drawer_close, R.drawable.ic_cart_white){
+
+                public void onDrawerClosed(View view) {
+                    super.onDrawerClosed(view);
+                    explainMenu();
+                }
+            };
             drawerLayout.addDrawerListener(endToggle);
             endToggle.syncState();
-            explainMenu();
         } else {
             findViewById(R.id.nav_menu_cart).setVisibility(View.GONE);
         }
