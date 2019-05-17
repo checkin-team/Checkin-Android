@@ -5,6 +5,7 @@ import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.text.Editable;
+import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
@@ -15,6 +16,7 @@ import android.widget.TextView;
 import com.checkin.app.checkin.Data.Resource;
 import com.checkin.app.checkin.Misc.BillHolder;
 import com.checkin.app.checkin.Utility.Constants;
+import com.checkin.app.checkin.session.model.SessionPromoModel;
 import com.checkin.app.checkin.session.paytm.PaytmModel;
 import com.checkin.app.checkin.session.paytm.PaytmPayment;
 import com.checkin.app.checkin.R;
@@ -55,6 +57,10 @@ public class ActiveSessionInvoiceActivity extends AppCompatActivity {
     TextView tvSavingInfoLabel;
     @BindView(R.id.tv_saving_percent)
     TextView tvSavingPercent;
+    @BindView(R.id.tv_invoice_promo_code)
+    TextView tvPromoCode;
+    @BindView(R.id.tv_invoice_promo)
+    TextView tvPromoCodeAmount;
     @BindView(R.id.ed_invoice_tip)
     EditText edInvoiceTip;
     @BindView(R.id.container_invoice_tip_waiter)
@@ -65,6 +71,8 @@ public class ActiveSessionInvoiceActivity extends AppCompatActivity {
     ViewGroup paymentModeChangeContainer;
     @BindView(R.id.saving_info_container)
     ViewGroup savingInfoContainer;
+    @BindView(R.id.container_invoice_promo)
+    ViewGroup invoicePromoCodeContainer;
 
     private ActiveSessionViewModel mViewModel;
     private InvoiceOrdersAdapter mAdapter;
@@ -74,6 +82,7 @@ public class ActiveSessionInvoiceActivity extends AppCompatActivity {
     private SharedPreferences prefs;
 
     private static final int REQUEST_PAYMENT_MODE = 141;
+    private static final int REQUEST_PROMO_CODE_APPLY = 142;
     ShopModel.PAYMENT_MODE selectedMode;
 
 
@@ -139,6 +148,9 @@ public class ActiveSessionInvoiceActivity extends AppCompatActivity {
                 edInvoiceTip.setText(data.getBill().formatTip());
 
                 tvInvoiceTotal.setText(Utils.formatCurrencyAmount(this, data.getBill().getTotal()));
+
+                if(data.getBill().getTotalSaving() != null)
+                    setDiscountInfo("You're saving", data.getBill().getTotalSaving());
 
                 boolean isRequestedCheckout = getIntent().getBooleanExtra(KEY_SESSION_REQUESTED_CHECKOUT, false);
                 edInvoiceTip.setEnabled(!isRequestedCheckout);
@@ -241,6 +253,11 @@ public class ActiveSessionInvoiceActivity extends AppCompatActivity {
         startActivityForResult(intent, REQUEST_PAYMENT_MODE);
     }
 
+    @OnClick(R.id.promo_code_apply_container)
+    public void onPromoCodeClick(){
+        startActivity(new Intent(this, ActiveSessionPromoActivity.class));
+    }
+
     @Override
     public boolean onSupportNavigateUp() {
         finish();
@@ -269,6 +286,17 @@ public class ActiveSessionInvoiceActivity extends AppCompatActivity {
                     tvPaymentMode.setCompoundDrawablesWithIntrinsicBounds(ShopModel.getPaymentModeIcon(selectedMode), 0, 0, 0);
                 }
                 break;
+
+            /*case REQUEST_PROMO_CODE_APPLY:
+                if (resultCode == RESULT_OK && data != null) {
+                    invoicePromoCodeContainer.setVisibility(View.VISIBLE);
+                    SessionPromoModel promoModel = (SessionPromoModel) data.getSerializableExtra("session.promo_code");
+                    mViewModel.availPromoCode(promoModel.getCode());
+
+//                tvPromoCode.setText("Promo-("+promoModel.getCode()+")");
+                tvPromoCodeAmount.setText(promoModel);
+                }
+                break;*/
             default:
                 break;
         }
@@ -280,16 +308,15 @@ public class ActiveSessionInvoiceActivity extends AppCompatActivity {
             tvPaymentMode.setText(tvInvoiceTotal.getText().toString());
     }
 
-    /*private void setDiscountInfo(String label, String offPercent) {
-        savingInfoContainer.setVisibility(View.VISIBLE);
-        tvSavingInfoLabel.setText(label);
-        tvSavingPercent.setText(offPercent);
+    @Override
+    protected void onResume() {
+        super.onResume();
+//        mViewModel.fetchSessionInvoice();
     }
 
-    private void alertDialogForOverridingPaymentRequest() {
-        AlertDialog.Builder builder = new AlertDialog.Builder(this).setTitle("Already a payment request is processing! Are you sure you want to initiate a new request?")
-                .setPositiveButton("Yes", (dialog, which) -> onRequestCheckout())
-                .setNegativeButton("No", (dialog, which) -> dialog.cancel());
-        builder.show();
-    }*/
+    private void setDiscountInfo(String label, String offPercent) {
+        savingInfoContainer.setVisibility(View.VISIBLE);
+        tvSavingInfoLabel.setText(label);
+        tvSavingPercent.setText(Utils.formatCurrencyAmount(this, offPercent));
+    }
 }

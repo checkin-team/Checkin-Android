@@ -8,6 +8,7 @@ import com.checkin.app.checkin.Data.Converters;
 import com.checkin.app.checkin.Data.Resource;
 import com.checkin.app.checkin.Misc.BriefModel;
 import com.checkin.app.checkin.Misc.GenericDetailModel;
+import com.checkin.app.checkin.session.model.SessionPromoModel;
 import com.checkin.app.checkin.session.paytm.PaytmModel;
 import com.checkin.app.checkin.session.activesession.chat.SessionChatModel;
 import com.checkin.app.checkin.session.model.ActiveSessionModel;
@@ -39,6 +40,7 @@ public class ActiveSessionViewModel extends BaseViewModel {
     private MediatorLiveData<Resource<List<SessionOrderedItemModel>>> mOrdersData = new MediatorLiveData<>();
     private MediatorLiveData<Resource<CheckoutStatusModel>> mCheckoutData = new MediatorLiveData<>();
     private MediatorLiveData<Resource<PaytmModel>> mPaytmData = new MediatorLiveData<>();
+    private MediatorLiveData<Resource<List<SessionPromoModel>>> mPromoCodes = new MediatorLiveData<>();
 
     private long mShopPk = -1, mSessionPk = -1;
     private String paytmChecksum, paytmCustId;
@@ -284,6 +286,20 @@ public class ActiveSessionViewModel extends BaseViewModel {
             return;
         resource.data.setRequestedCheckout(isRequestedCheckout);
         mSessionData.setValue(Resource.cloneResource(resource, resource.data));
+    }
+
+    public void fetchAvailablePromoCodes() {
+        mPromoCodes.addSource(mRepository.getAvailablePromoCodes(), mPromoCodes::setValue);
+    }
+
+    public LiveData<Resource<List<SessionPromoModel>>> getPromoCodes() {
+        return mPromoCodes;
+    }
+
+    public void availPromoCode(String code) {
+        ObjectNode data = Converters.objectMapper.createObjectNode()
+                .put("code", code);
+        mData.addSource(mRepository.postAvailPromoCode(data), mData::setValue);
     }
 
 

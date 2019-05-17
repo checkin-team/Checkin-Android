@@ -97,6 +97,10 @@
             android:label="Invoice"
             android:theme="@style/AppThemeWhiteActionBar" />
         <activity
+            android:name=".session.activesession.ActiveSessionPromoActivity"
+            android:label="Promo Code"
+            android:theme="@style/AppThemeWhiteActionBar" />
+        <activity
             android:name=".Shop.Private.Invoice.ShopInvoiceListActivity"
             android:label="@string/action_invoice"
             android:theme="@style/AppThemeWhiteActionBar" />

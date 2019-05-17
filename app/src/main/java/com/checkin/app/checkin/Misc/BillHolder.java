@@ -23,6 +23,8 @@ public class BillHolder {
     TextView tvInvoiceTip;
     @BindView(R.id.tv_invoice_promo)
     TextView tvInvoicePromo;
+    @BindView(R.id.tv_invoice_promo_code)
+    TextView tvInvoicePromoCode;
     @BindView(R.id.container_invoice_tax)
     ViewGroup containerInvoiceTax;
     @BindView(R.id.container_invoice_promo)
@@ -47,9 +49,10 @@ public class BillHolder {
         else
             containerInvoiceTax.setVisibility(View.GONE);
         // Promo
-        if (bill.getOffers() != null)
+        if (bill.getOffers() != null) {
+            tvInvoicePromoCode.setText(bill.getPromo());
             tvInvoicePromo.setText(Utils.formatCurrencyAmount(mContext, bill.getOffers()));
-        else
+        }else
             containerInvoicePromo.setVisibility(View.GONE);
         // Discount
         if (bill.getDiscount() != null)

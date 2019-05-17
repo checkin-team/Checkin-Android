@@ -21,6 +21,7 @@ import com.checkin.app.checkin.session.model.SessionBasicModel;
 import com.checkin.app.checkin.session.model.SessionBriefModel;
 import com.checkin.app.checkin.session.model.SessionInvoiceModel;
 import com.checkin.app.checkin.session.model.SessionOrderedItemModel;
+import com.checkin.app.checkin.session.model.SessionPromoModel;
 import com.checkin.app.checkin.session.paytm.PaytmModel;
 import com.checkin.app.checkin.Shop.Private.Finance.FinanceModel;
 import com.checkin.app.checkin.Shop.Private.Invoice.RestaurantSessionModel;
@@ -250,6 +251,9 @@ public interface WebApiService {
     @POST("sessions/manage/new/")
     Call<QRResultModel> postManageInitiateSession(@Body ObjectNode data);
 
+    @POST("sessions/active/promos/avail/")
+    Call<ObjectNode> postAvailPromoCode(@Body ObjectNode data);
+
     // endregion
 
     // region MENU
@@ -297,4 +301,10 @@ public interface WebApiService {
     // region payments
     @POST("payments/callback/paytm/")
     Call<ObjectNode> postPaytmCallback(@Body ObjectNode data);
+
+    // endregion
+
+    // region promos
+    @GET("promos/")
+    Call<List<SessionPromoModel>> getPromoCodes();
 }
