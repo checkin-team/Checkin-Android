@@ -23,7 +23,11 @@ public class SessionBillModel {
     @JsonProperty("total")
     private Double total;
 
+    @JsonProperty("promo")
+    private String promo;
+
     private Double discountPercentage;
+    private Double totalSaving;
 
     public SessionBillModel() {
     }
@@ -82,6 +86,14 @@ public class SessionBillModel {
         return total;
     }
 
+    public String getPromo() {
+        return "Promo - (" + promo + ")";
+    }
+
+    public void setPromo(String promo) {
+        this.promo = promo;
+    }
+
     public void calculateDiscount(Double percent) {
         discountPercentage = percent;
 
@@ -104,6 +116,12 @@ public class SessionBillModel {
     public void giveTip(double tip) {
         this.tip = tip;
         calculateTotal();
+    }
+
+    public String getTotalSaving() {
+        if(discount!=null && offers!=null)
+        totalSaving = discount + offers;
+        return String.valueOf(totalSaving);
     }
 
     private void calculateTotal() {

@@ -79,7 +79,7 @@ public class ActiveSessionActivity extends BaseActivity implements
     @BindView(R.id.rl_container_session_orders)
     RelativeLayout rlSessionOrders;
     @BindView(R.id.ll_call_waiter_button)
-    LinearLayout llCallWaiter;
+    ViewGroup llCallWaiter;
     @BindView(R.id.ll_table_cleaning_button)
     LinearLayout llTableCleaning;
     @BindView(R.id.ll_refill_glass_button)

@@ -74,6 +74,7 @@ public class ActiveSessionInvoiceActivity extends AppCompatActivity {
     private BillHolder mBillHolder;
     private PaytmPayment paytmPayment;
     private SharedPreferences prefs;
+    private ActiveSessionPromoFragment mPromoFragment;
 
     private ShopModel.PAYMENT_MODE selectedMode;
 
@@ -105,6 +106,7 @@ public class ActiveSessionInvoiceActivity extends AppCompatActivity {
         mAdapter = new InvoiceOrdersAdapter(null);
         rvOrderedItems.setAdapter(mAdapter);
         mBillHolder = new BillHolder(findViewById(android.R.id.content));
+        mPromoFragment = new ActiveSessionPromoFragment();
     }
 
     private void setPaymentModeUpdates() {
@@ -143,6 +145,9 @@ public class ActiveSessionInvoiceActivity extends AppCompatActivity {
         mBillHolder.bind(data.getBill());
         edInvoiceTip.setText(data.getBill().formatTip());
         tvInvoiceTotal.setText(Utils.formatCurrencyAmount(this, data.getBill().getTotal()));
+
+        if(data.getBill().getTotalSaving() != null && !data.getBill().getTotalSaving().isEmpty())
+            setDiscountInfo("You're saving", data.getBill().getTotalSaving());
     }
 
     private void setupObserver() {
@@ -247,6 +252,14 @@ public class ActiveSessionInvoiceActivity extends AppCompatActivity {
             onRequestCheckout(false);
     }
 
+    @OnClick(R.id.promo_code_apply_container)
+    public void onPromoCodeClick(){
+        getSupportFragmentManager().beginTransaction()
+                .replace(R.id.container_promo_code, mPromoFragment)
+                .addToBackStack(null)
+                .commit();
+    }
+
     private void onRequestCheckout(boolean override) {
         if (selectedMode != null)
             mViewModel.requestCheckout(mBillModel.getTip(), selectedMode, override);
@@ -303,7 +316,7 @@ public class ActiveSessionInvoiceActivity extends AppCompatActivity {
     private void setDiscountInfo(String label, String offPercent) {
         savingInfoContainer.setVisibility(View.VISIBLE);
         tvSavingInfoLabel.setText(label);
-        tvSavingPercent.setText(offPercent);
+        tvSavingPercent.setText(Utils.formatCurrencyAmount(this, offPercent));
     }
 
     private void alertDialogForOverridingPaymentRequest() {

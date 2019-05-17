@@ -2,7 +2,7 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:card_view="http://schemas.android.com/apk/res-auto"
     android:layout_width="100dp"
-    android:layout_height="@dimen/width_card_wide"
+    android:layout_height="match_parent"
     xmlns:tools="http://schemas.android.com/tools"
     android:orientation="vertical"
     android:gravity="center"
@@ -12,8 +12,9 @@
 
     <ImageView
         android:id="@+id/im_as_trending_dish"
-        style="@style/LogoSmallImageStyle"
+        style="@style/LogoImageStyle"
         android:src="@drawable/ic_plus_red"
+        android:padding="@dimen/spacing_extra_small"
         android:layout_marginTop="@dimen/spacing_small" />
 
 
@@ -22,12 +23,12 @@
         android:layout_width="wrap_content"
         android:layout_height="0dp"
         android:layout_weight="1"
-        android:gravity="center"
+        android:gravity="center|top"
         android:textSize="@dimen/font_small"
         android:ellipsize="end"
         android:maxLines="3"
         android:textColor="@color/brownish_grey"
-        android:layout_marginTop="@dimen/spacing_extra_small"
+        android:layout_marginTop="@dimen/spacing_small"
         android:fontFamily="@font/arial_rounded_mt_bold"
         tools:text="Vanilla Cone"/>
 
@@ -38,7 +39,7 @@
         android:layout_height="wrap_content"
         android:textSize="@dimen/font_normal"
         android:textColor="@color/primary_red"
-        android:paddingBottom="@dimen/spacing_tiny"
+        android:paddingBottom="@dimen/spacing_extra_small"
         android:fontFamily="@font/arial_rounded_mt_bold"
         tools:text="200"/>
 

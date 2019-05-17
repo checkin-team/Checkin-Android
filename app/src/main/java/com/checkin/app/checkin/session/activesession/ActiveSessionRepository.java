@@ -20,6 +20,7 @@ import com.checkin.app.checkin.session.model.ActiveSessionModel;
 import com.checkin.app.checkin.session.model.CheckoutStatusModel;
 import com.checkin.app.checkin.session.model.SessionInvoiceModel;
 import com.checkin.app.checkin.session.model.SessionOrderedItemModel;
+import com.checkin.app.checkin.session.model.SessionPromoModel;
 import com.checkin.app.checkin.session.model.TrendingDishModel;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 
@@ -357,6 +358,46 @@ public class ActiveSessionRepository extends BaseRepository {
             @Override
             protected LiveData<ApiResponse<List<TrendingDishModel>>> createCall() {
                 return new RetrofitLiveData<>(mWebService.getRestaurantTrendingItem(restaurantId));
+            }
+        }.getAsLiveData();
+    }
+
+    public LiveData<Resource<List<SessionPromoModel>>> getAvailablePromoCodes() {
+        return new NetworkBoundResource<List<SessionPromoModel>, List<SessionPromoModel>>() {
+            @Override
+            protected boolean shouldUseLocalDb() {
+                return false;
+            }
+
+            @NonNull
+            @Override
+            protected LiveData<ApiResponse<List<SessionPromoModel>>> createCall() {
+                return new RetrofitLiveData<>(mWebService.getPromoCodes());
+            }
+
+            @Override
+            protected void saveCallResult(List<SessionPromoModel> data) {
+
+            }
+        }.getAsLiveData();
+    }
+
+    public LiveData<Resource<ObjectNode>> postAvailPromoCode(ObjectNode data) {
+        return new NetworkBoundResource<ObjectNode, ObjectNode>() {
+            @Override
+            protected boolean shouldUseLocalDb() {
+                return false;
+            }
+
+            @NonNull
+            @Override
+            protected LiveData<ApiResponse<ObjectNode>> createCall() {
+                return new RetrofitLiveData<>(mWebService.postAvailPromoCode(data));
+            }
+
+            @Override
+            protected void saveCallResult(ObjectNode data) {
+                //saveCallResult code
             }
         }.getAsLiveData();
     }

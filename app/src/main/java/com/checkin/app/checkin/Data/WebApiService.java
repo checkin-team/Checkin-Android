@@ -4,15 +4,25 @@ import com.checkin.app.checkin.Account.AccountModel;
 import com.checkin.app.checkin.Auth.AuthResultModel;
 import com.checkin.app.checkin.Inventory.Model.InventoryAvailabilityModel;
 import com.checkin.app.checkin.Inventory.Model.InventoryModel;
+import com.checkin.app.checkin.Misc.paytm.PaytmModel;
 import com.checkin.app.checkin.manager.model.ManagerSessionEventModel;
 import com.checkin.app.checkin.manager.model.ManagerSessionInvoiceModel;
 import com.checkin.app.checkin.manager.model.ManagerStatsModel;
 import com.checkin.app.checkin.Menu.Model.MenuModel;
 import com.checkin.app.checkin.Menu.Model.OrderedItemModel;
 import com.checkin.app.checkin.Misc.GenericDetailModel;
-import com.checkin.app.checkin.Misc.paytm.PaytmModel;
 import com.checkin.app.checkin.Search.SearchResultPeopleModel;
 import com.checkin.app.checkin.Search.SearchResultShopModel;
+import com.checkin.app.checkin.session.activesession.chat.SessionChatModel;
+import com.checkin.app.checkin.session.model.ActiveSessionModel;
+import com.checkin.app.checkin.session.model.CheckoutStatusModel;
+import com.checkin.app.checkin.session.model.QRResultModel;
+import com.checkin.app.checkin.session.model.RestaurantTableModel;
+import com.checkin.app.checkin.session.model.SessionBasicModel;
+import com.checkin.app.checkin.session.model.SessionBriefModel;
+import com.checkin.app.checkin.session.model.SessionInvoiceModel;
+import com.checkin.app.checkin.session.model.SessionOrderedItemModel;
+import com.checkin.app.checkin.session.model.SessionPromoModel;
 import com.checkin.app.checkin.Shop.Private.Finance.FinanceModel;
 import com.checkin.app.checkin.Shop.Private.Invoice.RestaurantSessionModel;
 import com.checkin.app.checkin.Shop.Private.Invoice.ShopSessionDetailModel;
@@ -251,6 +261,9 @@ public interface WebApiService {
     @POST("sessions/manage/new/")
     Call<QRResultModel> postManageInitiateSession(@Body ObjectNode data);
 
+    @POST("sessions/active/promos/avail/")
+    Call<ObjectNode> postAvailPromoCode(@Body ObjectNode data);
+
     // endregion
 
     // region MENU
@@ -301,4 +314,10 @@ public interface WebApiService {
     // region payments
     @POST("payments/callback/paytm/")
     Call<ObjectNode> postPaytmCallback(@Body ObjectNode data);
+
+    // endregion
+
+    // region promos
+    @GET("promos/")
+    Call<List<SessionPromoModel>> getPromoCodes();
 }

@@ -24,6 +24,7 @@ import com.checkin.app.checkin.session.model.CheckoutStatusModel;
 import com.checkin.app.checkin.session.model.SessionCustomerModel;
 import com.checkin.app.checkin.session.model.SessionInvoiceModel;
 import com.checkin.app.checkin.session.model.SessionOrderedItemModel;
+import com.checkin.app.checkin.session.model.SessionPromoModel;
 import com.checkin.app.checkin.session.model.TrendingDishModel;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -52,6 +53,7 @@ public class ActiveSessionViewModel extends BaseViewModel {
     private MediatorLiveData<Resource<PaytmModel>> mPaytmData = new MediatorLiveData<>();
     private MutableLiveData<Boolean> mIsRequestedCheckout = new MutableLiveData<>(false);
     private MediatorLiveData<Resource<List<TrendingDishModel>>> mTrendingData = new MediatorLiveData<>();
+    private MediatorLiveData<Resource<List<SessionPromoModel>>> mPromoCodes = new MediatorLiveData<>();
 
     private long mShopPk = -1, mSessionPk = -1;
 
@@ -304,5 +306,45 @@ public class ActiveSessionViewModel extends BaseViewModel {
     public LiveData<Resource<List<TrendingDishModel>>> getTrendingItem() {
         return mTrendingData;
     }
+
+    public void fetchAvailablePromoCodes() {
+        mPromoCodes.addSource(mRepository.getAvailablePromoCodes(), mPromoCodes::setValue);
+    }
+
+    public LiveData<Resource<List<SessionPromoModel>>> getPromoCodes() {
+        return mPromoCodes;
+    }
+
+    public void availPromoCode(String code) {
+        ObjectNode data = Converters.objectMapper.createObjectNode()
+                .put("code", code);
+        mData.addSource(mRepository.postAvailPromoCode(data), mData::setValue);
+    }
+
+    public void searchPromoCodes(final String query) {
+        if (query == null || query.isEmpty())
+            return;
+        mPromoCodes.setValue(Resource.loading(null));
+            LiveData<Resource<List<SessionPromoModel>>> resourceLiveData = Transformations.map(mPromoCodes, input -> {
+                if (input == null || input.data == null)
+                    return Resource.loading(null);
+                List<SessionPromoModel> items = new ArrayList<>();
+                List<SessionPromoModel> data = input.data;
+                for (int i =0; i<data.size(); i++) {
+                        if (data.get(i).getCode().equalsIgnoreCase(query))
+                            items.add(data.get(i));
+
+                }
+                if (items.size() == 0)
+                    return Resource.errorNotFound(null);
+                return Resource.cloneResource(input, items);
+            });
+            mPromoCodes.addSource(resourceLiveData, mPromoCodes::setValue);
+    }
+
+    public void resetPromoItems() {
+        mPromoCodes.setValue(Resource.noRequest());
+    }
+
 
 }

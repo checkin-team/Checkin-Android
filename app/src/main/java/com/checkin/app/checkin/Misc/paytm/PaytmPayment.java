@@ -5,14 +5,17 @@ import android.os.Bundle;
 import android.util.Log;
 
 import com.checkin.app.checkin.R;
+import com.checkin.app.checkin.Utility.Constants;
 import com.paytm.pgsdk.PaytmPGService;
 import com.paytm.pgsdk.PaytmPaymentTransactionCallback;
+
+import static com.checkin.app.checkin.Utility.Constants.getPaytmService;
 
 public abstract class PaytmPayment {
     private static final String TAG = PaytmPayment.class.getSimpleName();
 
     public void initializePayment(PaytmModel paytmModel, Context context) {
-        PaytmPGService paytmPGService = PaytmPGService.getStagingService();
+        PaytmPGService paytmPGService = getPaytmService();
         paytmPGService.initialize(paytmModel.getPaytmOrder(), null);
 
         paytmPGService.startPaymentTransaction(context, true, true, new PaytmPaymentTransactionCallback() {

@@ -132,9 +132,9 @@
     <string name="action_tax_discount_description">Apply discount on the bill to retain customers. Discount applies to a subtotal of the bill.</string>
     <string name="description_shop_finance_discount">**This discount percentage is applied to every bill, though you can change the discount amount for the individual bill during checkout.**</string>
     <string name="waiter">Waiter</string>
-    <string name="call_waiter">Call\nWaiter</string>
-    <string name="table_cleaning">Table\nCleaning</string>
-    <string name="refill_glass">Refill\nGlass</string>
+    <string name="call_waiter">Call Waiter</string>
+    <string name="table_cleaning">Table Cleaning</string>
+    <string name="refill_glass">Refill Glass</string>
     <string name="title_how_can_we_assist_you">How can we assist you?</string>
     <string name="chat_with_us">Chat With Us</string>
     <string name="title_your_request">Your Request</string>

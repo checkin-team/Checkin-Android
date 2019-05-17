@@ -111,7 +111,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/thickness_line"
                 android:background="@color/white_three"
-                android:visibility="gone"/>
+                android:visibility="visible"/>
 
             <LinearLayout
                 android:id="@+id/promo_code_apply_container"
@@ -120,7 +120,7 @@
                 android:gravity="center"
                 android:paddingStart="@dimen/spacing_small"
                 android:paddingEnd="@dimen/spacing_small"
-                android:visibility="gone">
+                android:visibility="visible">
 
                 <TextView
                     android:id="@+id/tv_promo_code"
@@ -191,13 +191,13 @@
         <LinearLayout
             android:id="@+id/saving_info_container"
             android:layout_width="wrap_content"
-            android:layout_height="@dimen/button_height_tall"
+            android:layout_height="@dimen/button_height_medium"
             android:layout_gravity="center"
             android:layout_marginBottom="-25dp"
             android:background="@drawable/background_textbox"
             android:orientation="horizontal"
             android:paddingStart="@dimen/spacing_large"
-            android:paddingTop="@dimen/spacing_normal"
+            android:paddingTop="@dimen/spacing_small"
             android:paddingEnd="@dimen/spacing_large"
             android:visibility="gone">
 
@@ -206,7 +206,8 @@
                 style="@style/GreyTextStyle"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="You're saving  " />
+                android:paddingEnd="@dimen/spacing_extra_small"
+                android:text="You're saving" />
 
             <TextView
                 android:id="@+id/tv_saving_percent"
@@ -214,6 +215,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textColor="@color/apple_green"
+
                 tools:text="$ 100.00" />
 
         </LinearLayout>
@@ -302,5 +304,10 @@
         </androidx.constraintlayout.widget.ConstraintLayout>
 
     </LinearLayout>
+
+    <FrameLayout
+        android:id="@+id/container_promo_code"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"/>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

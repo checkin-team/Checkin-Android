@@ -3,13 +3,20 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:orientation="vertical"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="wrap_content"
+    android:paddingBottom="@dimen/spacing_small">
 
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="@dimen/button_height_medium">
 
+        <!--<de.hdodenhof.circleimageview.CircleImageView
+            android:id="@+id/im_as_promo_icon"
+            style="@style/LogoImageStyle"
+            android:layout_marginEnd="@dimen/spacing_small"/>-->
+
         <TextView
+            android:id="@+id/tv_as_promo_code"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             style="@style/RedHeadingStyle"
@@ -21,6 +28,7 @@
             tools:text="CHECKOUT" />
 
         <TextView
+            android:id="@+id/tv_as_promo_apply"
             style="@style/RedSmallTextStyle"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
@@ -32,10 +40,20 @@
     </RelativeLayout>
 
     <TextView
+        android:id="@+id/tv_as_promo_name"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         style="@style/GreyTextStyle"
         android:layout_marginTop="@dimen/spacing_extra_small"
+        tools:text="Get 40% discount upto on your first 3 orders."/>
+
+    <TextView
+        android:id="@+id/tv_as_promo_summary"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        style="@style/PinkishGreySmallTextStyle"
+        android:layout_marginTop="@dimen/spacing_extra_small"
+        android:textSize="@dimen/font_small"
         tools:text="Get 40% discount upto on your first 3 orders."/>
 
 </LinearLayout>

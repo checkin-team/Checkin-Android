@@ -176,6 +176,7 @@
         android:background="@android:color/transparent"
         android:contentDescription="@string/action_filter"
         android:scaleType="fitCenter"
+        app:layout_anchorGravity="center"
         android:src="@drawable/ic_filter_toggle" />
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

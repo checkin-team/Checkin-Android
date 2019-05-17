@@ -37,8 +37,8 @@ import butterknife.OnClick;
 public class SessionChatActivity extends BaseActivity implements ActiveSessionChatAdapter.SessionChatInteraction {
     public static final String KEY_SERVICE_TYPE = "session_chat.service";
     private static final String TAG = SessionChatActivity.class.getSimpleName();
-    @BindView(R.id.bottom_expand_menu)
-    ViewGroup bottomExpandedMenu;
+//    @BindView(R.id.bottom_expand_menu)
+//    ViewGroup bottomExpandedMenu;
     @BindView(R.id.container_session_actions)
     ViewGroup containerSessionActions;
     @BindView(R.id.rv_active_session_chat)
@@ -178,7 +178,7 @@ public class SessionChatActivity extends BaseActivity implements ActiveSessionCh
         btnSendMsg.setTag(EVENT_REQUEST_SERVICE_TYPE.SERVICE_BRING_COMMODITY);
     }
 
-    @OnClick(R.id.im_expand_bottom_menu)
+    /*@OnClick(R.id.im_expand_bottom_menu)
     public void onExpandMenu() {
         Animation bottomUp = AnimationUtils.loadAnimation(this, R.anim.slide_up);
         bottomExpandedMenu.startAnimation(bottomUp);
@@ -192,7 +192,7 @@ public class SessionChatActivity extends BaseActivity implements ActiveSessionCh
         bottomExpandedMenu.startAnimation(upDown);
         bottomExpandedMenu.clearAnimation();
         bottomExpandedMenu.setVisibility(View.GONE);
-    }
+    }*/
 
     @OnClick(R.id.btn_chat_send_msg)
     public void sendMsg() {
@@ -212,28 +212,28 @@ public class SessionChatActivity extends BaseActivity implements ActiveSessionCh
     public void clickNapkin() {
         setMessage("Napkins required");
         btnSendMsg.setTag(EVENT_REQUEST_SERVICE_TYPE.SERVICE_BRING_COMMODITY);
-        onCollapseMenu();
+//        onCollapseMenu();
     }
 
     @OnClick(R.id.ll_extra_plates_container_button)
     public void clickExtraPlates() {
         setMessage("Bring extra plates");
         btnSendMsg.setTag(EVENT_REQUEST_SERVICE_TYPE.SERVICE_BRING_COMMODITY);
-        onCollapseMenu();
+//        onCollapseMenu();
     }
 
     @OnClick(R.id.ll_salt_container_button)
     public void clickSalt() {
         setMessage("Bring salt");
         btnSendMsg.setTag(EVENT_REQUEST_SERVICE_TYPE.SERVICE_BRING_COMMODITY);
-        onCollapseMenu();
+//        onCollapseMenu();
     }
 
     @OnClick(R.id.ll_sauce_container_button)
     public void clickSauce() {
         setMessage("Bring sauce");
         btnSendMsg.setTag(EVENT_REQUEST_SERVICE_TYPE.SERVICE_BRING_COMMODITY);
-        onCollapseMenu();
+//        onCollapseMenu();
     }
 
     private void updateEvent(MessageObjectModel object, SessionChatModel.CHAT_STATUS_TYPE sessionEventStatus) {

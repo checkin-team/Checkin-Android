@@ -1,6 +1,7 @@
 package com.checkin.app.checkin.Utility;
 
 import com.checkin.app.checkin.BuildConfig;
+import com.paytm.pgsdk.PaytmPGService;
 
 import static java.util.concurrent.TimeUnit.MILLISECONDS;
 import static java.util.concurrent.TimeUnit.MINUTES;
@@ -43,5 +44,11 @@ public class Constants {
         if (!BuildConfig.DEBUG && BuildConfig.BUILD_TYPE.equalsIgnoreCase("release"))
             return "api.check-in.in";
         return "dev.api.check-in.in";
+    }
+
+    public static final PaytmPGService getPaytmService() {
+        if (!BuildConfig.DEBUG && BuildConfig.BUILD_TYPE.equalsIgnoreCase("release"))
+            return PaytmPGService.getStagingService();
+        return PaytmPGService.getProductionService();
     }
 }
