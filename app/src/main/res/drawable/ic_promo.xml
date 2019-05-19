@@ -4,15 +4,15 @@
     android:viewportWidth="194"
     android:viewportHeight="59">
     <path
-        android:fillColor="#FFF00"
+        android:fillColor="#00FFFFFF"
         android:fillType="evenOdd"
         android:pathData="M-40,-238h640V842H-40z" />
     <path
-        android:fillColor="#00000"
+        android:fillColor="#00FFFFFF"
         android:fillType="nonZero"
         android:pathData="M8,2L186,2A6,6 0,0 1,192 8L192,51A6,6 0,0 1,186 57L8,57A6,6 0,0 1,2 51L2,8A6,6 0,0 1,8 2z" />
     <path
-        android:fillColor="#FFF00"
+        android:fillColor="#00FFFFFF"
         android:fillType="nonZero"
         android:pathData="M8,2L186,2A6,6 0,0 1,192 8L192,51A6,6 0,0 1,186 57L8,57A6,6 0,0 1,2 51L2,8A6,6 0,0 1,8 2z" />
     <path android:fillColor="#000" android:fillType="nonZero" android:pathData="M33.308,2h15c2.675,0 3.645,0.278 4.623,0.801a5.452,5.452 0,0 1,2.268 2.268c0.523,0.978 0.801,1.948 0.801,4.623v39.616c0,2.675 -0.278,3.645 -0.801,4.623a5.452,5.452 0,0 1,-2.268 2.268c-0.978,0.523 -1.948,0.801 -4.623,0.801L9.692,57c-2.675,0 -3.645,-0.278 -4.623,-0.801A5.452,5.452 0,0 1,2.801 53.93C2.278,52.953 2,51.983 2,49.308L2,9.692c0,-2.675 0.278,-3.645 0.801,-4.623A5.452,5.452 0,0 1,5.07 2.801C6.047,2.278 7.017,2 9.692,2h23.616z"/>
