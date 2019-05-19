@@ -64,6 +64,8 @@ public class ActiveSessionActivity extends BaseActivity implements
     ImageView imWaiterPic;
     @BindView(R.id.container_as_actions_bottom)
     ViewGroup containerBottomActions;
+    @BindView(R.id.container_as_chat_action)
+    ViewGroup containerChatActions;
     @BindView(R.id.tv_as_order_new_count)
     TextView tvCountOrdersNew;
     @BindView(R.id.tv_as_order_progress_count)
@@ -323,8 +325,10 @@ public class ActiveSessionActivity extends BaseActivity implements
 
     @OnClick(R.id.btn_active_session_menu)
     public void onListMenu() {
-        if (mViewModel.getShopPk() > 0)
+        if (mViewModel.getShopPk() > 0){
+            btnSessionMenu.setEnabled(false);
             SessionMenuActivity.startWithSession(this, mViewModel.getShopPk(), null, null);
+        }
     }
 
     @OnClick(R.id.rl_container_session_orders)
@@ -392,7 +396,7 @@ public class ActiveSessionActivity extends BaseActivity implements
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
             ActivityOptionsCompat options = ActivityOptionsCompat.
-                    makeSceneTransitionAnimation(this, (View) containerBottomActions, "chatActions");
+                    makeSceneTransitionAnimation(this, (View) containerChatActions, "chatActions");
             startActivity(myIntent, options.toBundle());
         } else {
             startActivity(myIntent);

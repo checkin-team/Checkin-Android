@@ -21,9 +21,11 @@ import com.checkin.app.checkin.Shop.ShopModel;
 import com.checkin.app.checkin.session.activesession.chat.SessionChatModel;
 import com.checkin.app.checkin.session.model.ActiveSessionModel;
 import com.checkin.app.checkin.session.model.CheckoutStatusModel;
+import com.checkin.app.checkin.session.model.SessionBillModel;
 import com.checkin.app.checkin.session.model.SessionCustomerModel;
 import com.checkin.app.checkin.session.model.SessionInvoiceModel;
 import com.checkin.app.checkin.session.model.SessionOrderedItemModel;
+import com.checkin.app.checkin.session.model.SessionPromoCodeAvailModel;
 import com.checkin.app.checkin.session.model.SessionPromoModel;
 import com.checkin.app.checkin.session.model.TrendingDishModel;
 import com.fasterxml.jackson.databind.JsonNode;
@@ -54,6 +56,7 @@ public class ActiveSessionViewModel extends BaseViewModel {
     private MutableLiveData<Boolean> mIsRequestedCheckout = new MutableLiveData<>(false);
     private MediatorLiveData<Resource<List<TrendingDishModel>>> mTrendingData = new MediatorLiveData<>();
     private MediatorLiveData<Resource<List<SessionPromoModel>>> mPromoCodes = new MediatorLiveData<>();
+    private MediatorLiveData<Resource<SessionPromoCodeAvailModel>> mPromoCodeAvail = new MediatorLiveData<>();
 
     private long mShopPk = -1, mSessionPk = -1;
 
@@ -318,7 +321,25 @@ public class ActiveSessionViewModel extends BaseViewModel {
     public void availPromoCode(String code) {
         ObjectNode data = Converters.objectMapper.createObjectNode()
                 .put("code", code);
-        mData.addSource(mRepository.postAvailPromoCode(data), mData::setValue);
+        mPromoCodeAvail.addSource(mRepository.postAvailPromoCode(data), mPromoCodeAvail::setValue);
+    }
+
+    public void removePromoCode() {
+        mData.addSource(mRepository.postRemovePromoCode(), mData::setValue);
+    }
+
+    public LiveData<Resource<SessionPromoCodeAvailModel>> getPromoCodeAvailed() {
+        return mPromoCodeAvail;
+    }
+
+    public void updateInvoice(String code, Double offerAmount){
+        Resource<SessionInvoiceModel> listResource = mInvoiceData.getValue();
+        if (listResource == null || listResource.data == null)
+            return;
+        SessionBillModel sessionBillModel = listResource.data.getBill();
+        sessionBillModel.setPromo(code);
+        sessionBillModel.setOffers(offerAmount);
+        mInvoiceData.setValue(Resource.cloneResource(listResource, listResource.data));
     }
 
     public void searchPromoCodes(final String query) {

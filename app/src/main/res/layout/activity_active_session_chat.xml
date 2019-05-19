@@ -3,6 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:tools="http://schemas.android.com/tools"
     android:fitsSystemWindows="true">
 
     <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
@@ -49,12 +50,27 @@
                 android:layout_marginEnd="@dimen/spacing_normal"
                 android:orientation="vertical">
 
-                <ImageView
+                <de.hdodenhof.circleimageview.CircleImageView
+                    android:id="@+id/im_as_waiter_pic"
+                    android:layout_width="35dp"
+                    android:layout_height="35dp"
+                    android:layout_gravity="center"
+                    android:background="@drawable/shape_oval_pinkish_grey"
+                    android:src="@drawable/ic_waiter" />
+
+                <TextView
+                    android:id="@+id/tv_as_waiter_name"
+                    style="@style/PinkishGreySmallTextStyle"
                     android:layout_width="wrap_content"
-                    android:layout_height="@dimen/button_height_normal"
-                    android:src="@drawable/ic_action_call_waiter"
-                    android:tint="@color/brownish_grey"
-                    android:layout_gravity="center"/>
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/im_as_waiter_pic"
+                    android:layout_gravity="center"
+                    android:ellipsize="end"
+                    android:maxLength="25"
+                    android:maxLines="1"
+                    android:text="unassigned"
+                    android:textSize="@dimen/font_tiny"
+                    tools:text="waiter name" />
 
                 <TextView
                     style="@style/GreyTextStyle"

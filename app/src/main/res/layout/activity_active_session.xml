@@ -87,11 +87,10 @@
                         android:id="@+id/rv_session_members"
                         android:layout_width="match_parent"
                         android:layout_height="0dp"
-                        android:layout_weight="1"
-                        android:layout_marginStart="@dimen/spacing_small"
                         android:layout_gravity="center"
+                        android:layout_marginStart="@dimen/spacing_small"
                         android:layout_marginTop="@dimen/spacing_normal"
-                         />
+                        android:layout_weight="1" />
 
 
                     <TextView
@@ -390,7 +389,7 @@
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
                             android:layout_gravity="center"
-                            android:paddingBottom="@dimen/spacing_tiny"/>
+                            android:paddingBottom="@dimen/spacing_tiny" />
 
                     </LinearLayout>
 
@@ -400,7 +399,6 @@
                         android:layout_width="match_parent"
                         android:layout_height="0dp"
                         android:background="@drawable/swipe_up_card_combined"
-                        android:transitionName="chatActions"
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintLeft_toLeftOf="parent"
@@ -432,26 +430,36 @@
                             app:layout_constraintEnd_toEndOf="parent"
                             app:layout_constraintTop_toTopOf="parent" />
 
+                        <LinearLayout
+                            android:id="@+id/container_as_chat_action"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toTopOf="parent"
+                            android:transitionName="chatActions"
+                            android:weightSum="3">
+
 
                         <RelativeLayout
                             android:id="@+id/ll_call_waiter_button"
                             android:layout_width="wrap_content"
                             android:layout_height="70dp"
                             android:layout_marginTop="@dimen/spacing_large"
-                            android:orientation="vertical"
+                            android:layout_weight="1"
                             android:gravity="center"
+                            android:orientation="vertical"
                             app:layout_constraintBottom_toBottomOf="parent"
                             app:layout_constraintEnd_toStartOf="@id/ll_table_cleaning_button"
                             app:layout_constraintStart_toStartOf="parent"
                             app:layout_constraintTop_toTopOf="parent">
 
 
-
                             <de.hdodenhof.circleimageview.CircleImageView
                                 android:id="@+id/im_as_waiter_pic"
-                               android:layout_width="35dp"
+                                android:layout_width="35dp"
                                 android:layout_height="35dp"
-                               android:layout_centerHorizontal="true"
+                                android:layout_centerHorizontal="true"
                                 android:background="@drawable/shape_oval_pinkish_grey"
                                 android:src="@drawable/ic_waiter" />
 
@@ -460,22 +468,20 @@
                                 style="@style/PinkishGreySmallTextStyle"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:layout_centerHorizontal="true"
-                                android:maxLines="1"
-                                android:ellipsize="end"
                                 android:layout_below="@+id/im_as_waiter_pic"
-                                android:maxLength="25"
-                                android:textSize="@dimen/font_tiny"
+                                android:layout_centerHorizontal="true"
+                                android:ellipsize="end"
+                                android:maxLines="1"
                                 android:text="unassigned"
+                                android:textSize="@dimen/font_tiny"
                                 tools:text="waiter name" />
 
                             <TextView
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:layout_gravity="center"
-                                android:layout_marginTop="7dp"
-                                android:gravity="center"
                                 android:layout_alignParentBottom="true"
+                                android:layout_marginTop="@dimen/spacing_tiny"
+                                android:layout_centerHorizontal="true"
                                 android:text="@string/call_waiter"
                                 android:textSize="@dimen/font_small" />
 
@@ -487,6 +493,7 @@
                             android:layout_height="wrap_content"
                             android:layout_marginTop="@dimen/spacing_large"
                             android:orientation="vertical"
+                            android:layout_weight="1"
                             app:layout_constraintBottom_toBottomOf="parent"
                             app:layout_constraintEnd_toStartOf="@id/ll_refill_glass_button"
                             app:layout_constraintStart_toEndOf="@id/ll_call_waiter_button"
@@ -495,15 +502,15 @@
                             <ImageView
                                 android:layout_width="match_parent"
                                 android:layout_height="@dimen/button_height_normal"
-                                android:layout_marginBottom="@dimen/spacing_small"
                                 android:layout_gravity="center"
+                                android:layout_marginBottom="@dimen/spacing_small"
                                 android:src="@drawable/ic_action_clean_table" />
 
                             <TextView
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_gravity="center"
-                                android:layout_marginTop="@dimen/spacing_extra_small"
+                                android:layout_marginTop="@dimen/spacing_tiny"
                                 android:gravity="center"
                                 android:text="@string/table_cleaning"
                                 android:textSize="@dimen/font_small" />
@@ -517,6 +524,7 @@
                             android:layout_height="wrap_content"
                             android:layout_marginTop="@dimen/spacing_large"
                             android:orientation="vertical"
+                            android:layout_weight="1"
                             app:layout_constraintBottom_toBottomOf="parent"
                             app:layout_constraintEnd_toEndOf="parent"
                             app:layout_constraintStart_toEndOf="@id/ll_table_cleaning_button"
@@ -532,13 +540,14 @@
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_gravity="center"
+                                android:layout_marginTop="@dimen/spacing_tiny"
                                 android:gravity="center"
-                                android:layout_marginTop="@dimen/spacing_extra_small"
                                 android:text="@string/refill_glass"
                                 android:textSize="@dimen/font_small" />
 
                         </LinearLayout>
 
+                        </LinearLayout>
 
 
                     </androidx.constraintlayout.widget.ConstraintLayout>

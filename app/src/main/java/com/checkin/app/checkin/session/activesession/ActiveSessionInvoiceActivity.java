@@ -5,6 +5,7 @@ import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.text.Editable;
+import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
@@ -59,6 +60,14 @@ public class ActiveSessionInvoiceActivity extends AppCompatActivity {
     TextView tvSavingPercent;
     @BindView(R.id.ed_invoice_tip)
     EditText edInvoiceTip;
+    @BindView(R.id.im_invoice_remove_promo_code)
+    ImageView removePromoCode;
+    @BindView(R.id.tv_as_promo_applied_details)
+    TextView promoAppliedDetails;
+    @BindView(R.id.container_remove_promo_code)
+    ViewGroup removePromoCodeContainer;
+    @BindView(R.id.container_promo_code_apply)
+    ViewGroup applyPromoCodeContainer;
     @BindView(R.id.container_invoice_tip_waiter)
     ViewGroup tipWaiterContainer;
     @BindView(R.id.btn_invoice_request_checkout)
@@ -106,7 +115,6 @@ public class ActiveSessionInvoiceActivity extends AppCompatActivity {
         mAdapter = new InvoiceOrdersAdapter(null);
         rvOrderedItems.setAdapter(mAdapter);
         mBillHolder = new BillHolder(findViewById(android.R.id.content));
-        mPromoFragment = new ActiveSessionPromoFragment();
     }
 
     private void setPaymentModeUpdates() {
@@ -121,6 +129,7 @@ public class ActiveSessionInvoiceActivity extends AppCompatActivity {
     private void getData() {
         mViewModel = ViewModelProviders.of(this).get(ActiveSessionViewModel.class);
         mViewModel.fetchSessionInvoice();
+        mViewModel.fetchAvailablePromoCodes();
         mViewModel.getSessionInvoice().observe(this, resource -> {
             if (resource == null)
                 return;
@@ -131,6 +140,19 @@ public class ActiveSessionInvoiceActivity extends AppCompatActivity {
         boolean isRequestedCheckout = getIntent().getBooleanExtra(KEY_SESSION_REQUESTED_CHECKOUT, false);
         if (isRequestedCheckout && !mViewModel.isRequestedCheckout())
             mViewModel.updateRequestCheckout(true);
+
+        mViewModel.getPromoCodes().observe(this, listResource -> {
+            if (listResource == null)
+                return;
+            if (listResource.status == Resource.Status.SUCCESS && listResource.data != null) {
+                applyPromoCodeContainer.setVisibility(View.VISIBLE);
+                removePromoCodeContainer.setVisibility(View.GONE);
+                setDiscountInfo("Pay online to avail ", listResource.data.get(0).getName(), getResources().getColor(R.color.primary_red));
+                mPromoFragment = ActiveSessionPromoFragment.newInstance(listResource.data);
+            } else {
+                Utils.toast(this, listResource.message);
+            }
+        });
     }
 
     private void setupData(SessionInvoiceModel data) {
@@ -146,8 +168,12 @@ public class ActiveSessionInvoiceActivity extends AppCompatActivity {
         edInvoiceTip.setText(data.getBill().formatTip());
         tvInvoiceTotal.setText(Utils.formatCurrencyAmount(this, data.getBill().getTotal()));
 
-        if(data.getBill().getTotalSaving() != null && !data.getBill().getTotalSaving().isEmpty())
-            setDiscountInfo("You're saving", data.getBill().getTotalSaving());
+        if (data.getBill().getTotalSaving() != null) {
+            removePromoCodeContainer.setVisibility(View.VISIBLE);
+            applyPromoCodeContainer.setVisibility(View.GONE);
+            promoAppliedDetails.setText(data.getBill().setPromoAvailDetails());
+            setDiscountInfo("You're saving", data.getBill().getTotalSaving(), getResources().getColor(R.color.apple_green));
+        }
     }
 
     private void setupObserver() {
@@ -194,8 +220,10 @@ public class ActiveSessionInvoiceActivity extends AppCompatActivity {
             if (resource == null)
                 return;
 
-            if (resource.status == Resource.Status.SUCCESS && resource.data != null)
-                Utils.navigateBackToHome(getApplicationContext());
+            if (resource.status == Resource.Status.SUCCESS && resource.data != null){
+//                Utils.navigateBackToHome(getApplicationContext());
+            }
+
 
             Utils.toast(this, resource.message);
         });
@@ -252,12 +280,17 @@ public class ActiveSessionInvoiceActivity extends AppCompatActivity {
             onRequestCheckout(false);
     }
 
-    @OnClick(R.id.promo_code_apply_container)
-    public void onPromoCodeClick(){
+    @OnClick(R.id.container_promo_code_apply)
+    public void onPromoCodeClick() {
         getSupportFragmentManager().beginTransaction()
                 .replace(R.id.container_promo_code, mPromoFragment)
                 .addToBackStack(null)
                 .commit();
+    }
+
+    @OnClick(R.id.im_invoice_remove_promo_code)
+    public void onRemovePromoCode(){
+        mViewModel.removePromoCode();
     }
 
     private void onRequestCheckout(boolean override) {
@@ -313,10 +346,15 @@ public class ActiveSessionInvoiceActivity extends AppCompatActivity {
             tvPaymentMode.setText(tvInvoiceTotal.getText().toString());
     }
 
-    private void setDiscountInfo(String label, String offPercent) {
+    private void setDiscountInfo(String label, String offPercent, int color) {
         savingInfoContainer.setVisibility(View.VISIBLE);
         tvSavingInfoLabel.setText(label);
-        tvSavingPercent.setText(Utils.formatCurrencyAmount(this, offPercent));
+        tvSavingPercent.setTextColor(color);
+        if (color == getResources().getColor(R.color.apple_green))
+            tvSavingPercent.setText(Utils.formatCurrencyAmount(this, offPercent));
+        else
+            tvSavingPercent.setText(offPercent);
+
     }
 
     private void alertDialogForOverridingPaymentRequest() {
@@ -325,5 +363,14 @@ public class ActiveSessionInvoiceActivity extends AppCompatActivity {
                 .setPositiveButton("Yes", (dialog, which) -> onRequestCheckout(true))
                 .setNegativeButton("No", (dialog, which) -> dialog.cancel());
         builder.show();
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+
+       /*if (selectedMode.equals(CASH) && ) {
+
+        }*/
     }
 }

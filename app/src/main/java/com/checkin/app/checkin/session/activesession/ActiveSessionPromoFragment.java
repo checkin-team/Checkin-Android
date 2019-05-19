@@ -8,8 +8,11 @@ import com.checkin.app.checkin.Misc.BaseActivity;
 import com.checkin.app.checkin.Misc.BaseFragment;
 import com.checkin.app.checkin.R;
 import com.checkin.app.checkin.Utility.Utils;
+import com.checkin.app.checkin.session.model.SessionBillModel;
 import com.checkin.app.checkin.session.model.SessionPromoModel;
 import com.miguelcatalan.materialsearchview.MaterialSearchView;
+
+import java.util.List;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -28,6 +31,17 @@ public class ActiveSessionPromoFragment extends BaseFragment implements ActiveSe
 
     private ActiveSessionViewModel mViewModel;
     private ActiveSessionPromoAdapter mAdapter;
+    private List<SessionPromoModel> promoModelList;
+
+    public ActiveSessionPromoFragment() {
+    }
+
+    public static ActiveSessionPromoFragment newInstance(List<SessionPromoModel> data) {
+        ActiveSessionPromoFragment fragment = new ActiveSessionPromoFragment();
+        fragment.promoModelList = data;
+        return fragment;
+    }
+
 
     @Override
     protected int getRootLayout() {
@@ -36,11 +50,12 @@ public class ActiveSessionPromoFragment extends BaseFragment implements ActiveSe
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
-        mViewModel = ViewModelProviders.of(this).get(ActiveSessionViewModel.class);
+        mViewModel = ViewModelProviders.of(requireActivity()).get(ActiveSessionViewModel.class);
         rvPromos.setLayoutManager(new LinearLayoutManager(requireContext(), RecyclerView.VERTICAL, false));
-        mAdapter = new ActiveSessionPromoAdapter(null, this);
+        if(promoModelList != null)
+        mAdapter = new ActiveSessionPromoAdapter(promoModelList, this);
         rvPromos.setAdapter(mAdapter);
-        mViewModel.fetchAvailablePromoCodes();
+      /*  mViewModel.fetchAvailablePromoCodes();
         mViewModel.getPromoCodes().observe(this,listResource -> {
             if (listResource == null)
                 return;
@@ -49,12 +64,13 @@ public class ActiveSessionPromoFragment extends BaseFragment implements ActiveSe
             } else {
                 Utils.toast(requireContext(), listResource.message);
             }
-        });
+        });*/
 
-        mViewModel.getObservableData().observe(this, objectNodeResource -> {
+        mViewModel.getPromoCodeAvailed().observe(this, objectNodeResource -> {
             if (objectNodeResource == null)
                 return;
             if (objectNodeResource.status == Resource.Status.SUCCESS && objectNodeResource.data != null) {
+                mViewModel.updateInvoice(objectNodeResource.data.getCode(), objectNodeResource.data.getOfferAmount());
                 getFragmentManager().popBackStack();
             } else {
                 Utils.toast(requireContext(), objectNodeResource.message);

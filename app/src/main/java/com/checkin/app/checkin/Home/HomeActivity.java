@@ -193,6 +193,7 @@ public class HomeActivity extends BaseAccountActivity implements NavigationView.
 
     @OnClick(R.id.container_home_session_status)
     public void onSessionStatusClick() {
+        vSessionStatus.setEnabled(false);
         startActivity(new Intent(this, ActiveSessionActivity.class));
     }
 
@@ -244,7 +245,7 @@ public class HomeActivity extends BaseAccountActivity implements NavigationView.
     protected void onResume() {
         super.onResume();
         mViewModel.updateResults();
-
+        vSessionStatus.setEnabled(true);
         MessageModel.MESSAGE_TYPE[] types = new MessageModel.MESSAGE_TYPE[]{
                 MessageModel.MESSAGE_TYPE.USER_SESSION_ADDED_BY_OWNER, MessageModel.MESSAGE_TYPE.SHOP_MEMBER_ADDED
         };

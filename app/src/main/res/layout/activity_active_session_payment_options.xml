@@ -59,10 +59,12 @@
                         android:orientation="vertical">
 
                         <ImageView
-                            android:layout_width="@dimen/payment_card_logo"
+                            android:layout_width="80dp"
                             android:layout_height="@dimen/button_height_normal"
                             android:layout_gravity="center|top"
                             android:layout_marginTop="@dimen/spacing_normal"
+                            android:scaleType="fitXY"
+                            android:padding="@dimen/spacing_tiny"
                             android:src="@drawable/ic_cash_grey" />
 
                         <TextView
@@ -70,7 +72,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_gravity="center"
-                            android:layout_marginTop="@dimen/spacing_extra_small"
+                            android:layout_marginTop="5dp"
                             android:text="Cash" />
 
                         <TextView
@@ -78,7 +80,7 @@
                             android:layout_width="@dimen/size_large_button"
                             android:layout_height="@dimen/size_small_button"
                             android:layout_gravity="bottom|center"
-                            android:layout_marginTop="20dp"
+                            android:layout_marginTop="16dp"
                             android:background="@drawable/rounded_rectangle_light_grey"
                             android:gravity="center"
                             android:text="@string/select" />
@@ -101,7 +103,7 @@
                             android:layout_height="@dimen/button_height_normal"
                             android:layout_gravity="center|top"
                             android:layout_marginTop="@dimen/spacing_normal"
-                            android:padding="@dimen/spacing_tiny"
+                            android:padding="@dimen/spacing_extra_small"
                             android:src="@drawable/ic_paytm_logo" />
 
                         <TextView
@@ -117,7 +119,7 @@
                             android:layout_width="@dimen/size_large_button"
                             android:layout_height="@dimen/size_small_button"
                             android:layout_gravity="bottom|center"
-                            android:layout_marginTop="20dp"
+                            android:layout_marginTop="16dp"
                             android:background="@drawable/rounded_rectangle_light_grey"
                             android:gravity="center"
                             android:text="@string/select" />
@@ -261,11 +263,12 @@
 
     <TextView
         style="@style/GreySmallTextStyle"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_gravity="bottom|center"
         android:layout_marginTop="@dimen/spacing_small"
         android:layout_marginBottom="@dimen/spacing_small"
+        android:gravity="center"
         android:text="** Pro Tip: Promo Codes are applicable on online payment **" />
 
 

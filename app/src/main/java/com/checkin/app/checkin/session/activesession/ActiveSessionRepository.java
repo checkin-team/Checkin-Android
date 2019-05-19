@@ -20,6 +20,7 @@ import com.checkin.app.checkin.session.model.ActiveSessionModel;
 import com.checkin.app.checkin.session.model.CheckoutStatusModel;
 import com.checkin.app.checkin.session.model.SessionInvoiceModel;
 import com.checkin.app.checkin.session.model.SessionOrderedItemModel;
+import com.checkin.app.checkin.session.model.SessionPromoCodeAvailModel;
 import com.checkin.app.checkin.session.model.SessionPromoModel;
 import com.checkin.app.checkin.session.model.TrendingDishModel;
 import com.fasterxml.jackson.databind.node.ObjectNode;
@@ -382,7 +383,27 @@ public class ActiveSessionRepository extends BaseRepository {
         }.getAsLiveData();
     }
 
-    public LiveData<Resource<ObjectNode>> postAvailPromoCode(ObjectNode data) {
+    public LiveData<Resource<SessionPromoCodeAvailModel>> postAvailPromoCode(ObjectNode data) {
+        return new NetworkBoundResource<SessionPromoCodeAvailModel, SessionPromoCodeAvailModel>() {
+            @Override
+            protected boolean shouldUseLocalDb() {
+                return false;
+            }
+
+            @NonNull
+            @Override
+            protected LiveData<ApiResponse<SessionPromoCodeAvailModel>> createCall() {
+                return new RetrofitLiveData<>(mWebService.postAvailPromoCode(data));
+            }
+
+            @Override
+            protected void saveCallResult(SessionPromoCodeAvailModel data) {
+                //saveCallResult code
+            }
+        }.getAsLiveData();
+    }
+
+    public LiveData<Resource<ObjectNode>> postRemovePromoCode() {
         return new NetworkBoundResource<ObjectNode, ObjectNode>() {
             @Override
             protected boolean shouldUseLocalDb() {
@@ -392,7 +413,7 @@ public class ActiveSessionRepository extends BaseRepository {
             @NonNull
             @Override
             protected LiveData<ApiResponse<ObjectNode>> createCall() {
-                return new RetrofitLiveData<>(mWebService.postAvailPromoCode(data));
+                return new RetrofitLiveData<>(mWebService.postRemovePromoCode());
             }
 
             @Override

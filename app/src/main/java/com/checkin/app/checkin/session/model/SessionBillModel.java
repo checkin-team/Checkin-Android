@@ -118,10 +118,16 @@ public class SessionBillModel {
         calculateTotal();
     }
 
+    public String setPromoAvailDetails(){
+        return promo+" - ";
+    }
+
     public String getTotalSaving() {
-        if(discount!=null && offers!=null)
-        totalSaving = discount + offers;
-        return String.valueOf(totalSaving);
+        if(discount!=null && offers!=null) {
+            totalSaving = discount + offers;
+            return String.valueOf(totalSaving);
+        }
+        return null;
     }
 
     private void calculateTotal() {

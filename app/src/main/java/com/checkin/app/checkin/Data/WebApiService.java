@@ -22,6 +22,7 @@ import com.checkin.app.checkin.session.model.SessionBasicModel;
 import com.checkin.app.checkin.session.model.SessionBriefModel;
 import com.checkin.app.checkin.session.model.SessionInvoiceModel;
 import com.checkin.app.checkin.session.model.SessionOrderedItemModel;
+import com.checkin.app.checkin.session.model.SessionPromoCodeAvailModel;
 import com.checkin.app.checkin.session.model.SessionPromoModel;
 import com.checkin.app.checkin.Shop.Private.Finance.FinanceModel;
 import com.checkin.app.checkin.Shop.Private.Invoice.RestaurantSessionModel;
@@ -262,7 +263,10 @@ public interface WebApiService {
     Call<QRResultModel> postManageInitiateSession(@Body ObjectNode data);
 
     @POST("sessions/active/promos/avail/")
-    Call<ObjectNode> postAvailPromoCode(@Body ObjectNode data);
+    Call<SessionPromoCodeAvailModel> postAvailPromoCode(@Body ObjectNode data);
+
+    @DELETE("sessions/active/promos/remove/")
+    Call<ObjectNode> postRemovePromoCode();
 
     // endregion
 

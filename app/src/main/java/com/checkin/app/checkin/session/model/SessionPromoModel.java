@@ -3,10 +3,8 @@ package com.checkin.app.checkin.session.model;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
-import java.io.Serializable;
-
 @JsonIgnoreProperties(ignoreUnknown = true)
-public class SessionPromoModel implements Serializable {
+public class SessionPromoModel {
 
     @JsonProperty("pk")
     private long promoPk;

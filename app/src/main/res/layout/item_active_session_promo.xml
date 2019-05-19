@@ -18,7 +18,7 @@
         <TextView
             android:id="@+id/tv_as_promo_code"
             android:layout_width="wrap_content"
-            android:layout_height="match_parent"
+            android:layout_height="45dp"
             style="@style/RedHeadingStyle"
             android:background="@drawable/ic_promo"
             android:paddingStart="@dimen/spacing_gigantic"
