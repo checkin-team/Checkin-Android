@@ -39,6 +39,9 @@ public class PaytmModel {
     @JsonProperty("checksum_hash")
     String checksumHash;
 
+    @JsonProperty("callback_url")
+    String callbackUrl;
+
     public PaytmModel() {
     }
 
@@ -79,7 +82,7 @@ public class PaytmModel {
     }
 
     public String getCallbackURL() {
-        return PAYTM_CALLBACK_URL + getOrderId();
+        return callbackUrl;
     }
 
     public PaytmOrder getPaytmOrder() {

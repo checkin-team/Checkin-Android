@@ -15,8 +15,7 @@ public abstract class PaytmPayment {
     private static final String TAG = PaytmPayment.class.getSimpleName();
 
     public void initializePayment(PaytmModel paytmModel, Context context) {
-//        PaytmPGService paytmPGService = getPaytmService();
-        PaytmPGService paytmPGService = PaytmPGService.getProductionService();
+        PaytmPGService paytmPGService = getPaytmService();
         paytmPGService.initialize(paytmModel.getPaytmOrder(), null);
 
         paytmPGService.startPaymentTransaction(context, true, true, new PaytmPaymentTransactionCallback() {
