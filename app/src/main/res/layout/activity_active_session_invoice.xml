@@ -4,14 +4,13 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/white">
+    android:background="@color/white_three">
 
     <TextView
         android:id="@+id/title_bill_details"
         style="@style/GreyTextStyle"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@color/white_three"
         android:padding="@dimen/spacing_extra_small"
         android:text="@string/title_bill_details"
         app:layout_constraintBottom_toTopOf="@id/container_session_invoice"
@@ -23,7 +22,7 @@
         android:layout_height="0dp"
         android:fillViewport="true"
         android:scrollbars="none"
-        app:layout_constraintBottom_toTopOf="@id/payment_mode_saving_container"
+        app:layout_constraintBottom_toTopOf="@id/container_as_invoice_payment_info"
         app:layout_constraintTop_toBottomOf="@id/title_bill_details"
         app:layout_constraintVertical_weight="1">
 
@@ -36,20 +35,21 @@
                 android:id="@+id/rv_invoice_ordered_items"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:background="@color/white"
                 android:nestedScrollingEnabled="false"
                 android:paddingStart="@dimen/spacing_normal"
                 android:paddingTop="@dimen/spacing_extra_small"
                 android:paddingEnd="@dimen/spacing_normal"
                 android:paddingBottom="@dimen/spacing_extra_small" />
 
-
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:id="@+id/container_invoice_tip_waiter"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:background="@color/white"
                 android:orientation="horizontal"
                 android:paddingStart="@dimen/spacing_normal"
-                android:paddingEnd="@dimen/spacing_small"
+                android:paddingEnd="@dimen/spacing_normal"
                 android:paddingBottom="@dimen/spacing_small">
 
                 <include layout="@layout/incl_horizontal_line" />
@@ -58,6 +58,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="@dimen/spacing_normal"
+                    android:layout_marginTop="@dimen/spacing_small"
                     android:orientation="vertical"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
@@ -107,37 +108,40 @@
 
             </androidx.constraintlayout.widget.ConstraintLayout>
 
-            <LinearLayout
-                android:id="@+id/container_promo_code_apply"
+            <FrameLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="vertical"
-                android:visibility="gone">
+                android:layout_height="@dimen/button_height_medium"
+                android:layout_marginTop="@dimen/thickness_line"
+                android:background="@color/white"
+                android:paddingStart="@dimen/spacing_small"
+                android:paddingEnd="@dimen/spacing_small">
 
-                <View
-                    android:layout_width="match_parent"
-                    android:layout_height="@dimen/thickness_line"
-                    android:background="@color/white_three"
-                    android:visibility="visible" />
+                <TextView
+                    android:id="@+id/tv_as_promo_invalid_status"
+                    style="@style/RedTextStyle"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical|start"
+                    android:drawablePadding="@dimen/spacing_small"
+                    android:text="@string/active_session_fetching_offers" />
 
                 <LinearLayout
+                    android:id="@+id/container_promo_code_apply"
                     android:layout_width="match_parent"
-                    android:layout_height="@dimen/button_height_medium"
+                    android:layout_height="match_parent"
                     android:gravity="center"
-                    android:paddingStart="@dimen/spacing_small"
-                    android:paddingEnd="@dimen/spacing_small">
+                    android:orientation="horizontal"
+                    android:visibility="gone">
 
                     <TextView
                         android:id="@+id/tv_promo_code"
-                        style="@style/RedTitleStyle"
-                        android:layout_width="wrap_content"
+                        style="@style/RedTextStyle"
+                        android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
-                        android:drawableLeft="@drawable/ic_discount_percent"
+                        android:drawableStart="@drawable/ic_discount_percent"
                         android:drawablePadding="@dimen/spacing_small"
-                        android:gravity="center|left"
-                        android:text="Apply Promo Code"
-                        android:textSize="@dimen/font_normal" />
+                        android:text="@string/session_benefits_apply_promo_code" />
 
                     <ImageView
                         android:layout_width="@dimen/size_extra_small_button"
@@ -147,57 +151,40 @@
 
                 </LinearLayout>
 
-            </LinearLayout>
-
-            <LinearLayout
-                android:id="@+id/container_remove_promo_code"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="vertical"
-                android:visibility="gone">
-
-                <View
-                    android:layout_width="match_parent"
-                    android:layout_height="@dimen/thickness_line"
-                    android:background="@color/white_three"
-                    android:visibility="visible" />
-
                 <LinearLayout
+                    android:id="@+id/container_remove_promo_code"
                     android:layout_width="match_parent"
-                    android:layout_height="60dp"
-                    android:paddingStart="@dimen/spacing_small"
-                    android:paddingEnd="@dimen/spacing_small">
+                    android:layout_height="match_parent"
+                    android:orientation="horizontal"
+                    android:visibility="gone">
 
                     <ImageView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center"
+                        android:layout_marginEnd="@dimen/spacing_small"
                         android:src="@drawable/ic_discount_percent" />
 
                     <LinearLayout
-                        android:layout_width="wrap_content"
+                        android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center"
                         android:layout_weight="1"
-                        android:orientation="vertical"
-                        android:paddingStart="@dimen/spacing_small">
+                        android:orientation="vertical">
 
                         <TextView
                             android:id="@+id/tv_as_promo_applied_details"
-                            style="@style/RedTitleStyle"
+                            style="@style/RedTextStyle"
                             android:layout_width="wrap_content"
                             android:layout_height="match_parent"
                             android:layout_weight="1"
-                            android:gravity="center|left"
-                            android:textSize="@dimen/font_normal"
-                            tools:text="Promo Code Applied" />
+                            tools:text="CODE - Name" />
 
                         <TextView
                             style="@style/PinkishGreySmallTextStyle"
                             android:layout_width="wrap_content"
                             android:layout_height="match_parent"
                             android:layout_weight="1"
-                            android:gravity="center|left"
                             android:text="Promo Applied"
                             android:textSize="@dimen/font_small" />
 
@@ -211,61 +198,58 @@
                         android:padding="@dimen/spacing_tiny"
                         android:src="@drawable/ic_cancel" />
 
-
                 </LinearLayout>
-
-            </LinearLayout>
-
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="@dimen/thickness_line"
-                android:background="@color/white_three"
-                android:visibility="visible" />
-
-
-            <include layout="@layout/incl_session_invoice" />
-
-            <include layout="@layout/incl_horizontal_line" />
-
-            <FrameLayout
-                android:id="@+id/container_invoice_total"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/spacing_extra_small"
-                android:paddingStart="@dimen/spacing_normal"
-                android:paddingEnd="@dimen/spacing_normal">
-
-                <TextView
-                    style="@style/GreyTextStyle"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center_vertical|start"
-                    android:text="Total" />
-
-                <TextView
-                    android:id="@+id/tv_invoice_total"
-                    style="@style/GreyTextStyle"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center_vertical|end"
-                    tools:text="54" />
             </FrameLayout>
 
-        </LinearLayout>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginTop="@dimen/thickness_line"
+                android:background="@color/white"
+                android:orientation="vertical">
 
+                <include layout="@layout/incl_session_invoice" />
+
+                <include layout="@layout/incl_horizontal_line" />
+
+                <FrameLayout
+                    android:id="@+id/container_invoice_total"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:padding="@dimen/spacing_small">
+
+                    <TextView
+                        style="@style/RedHeadingStyle"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_vertical|start"
+                        android:text="Grand Total" />
+
+                    <TextView
+                        android:id="@+id/tv_invoice_total"
+                        style="@style/RedHeadingStyle"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_vertical|end"
+                        tools:text="54" />
+                </FrameLayout>
+            </LinearLayout>
+
+        </LinearLayout>
     </ScrollView>
 
     <LinearLayout
-        android:id="@+id/payment_mode_saving_container"
+        android:id="@+id/container_as_invoice_payment_info"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:background="@color/white"
         android:orientation="vertical"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent">
 
         <LinearLayout
-            android:id="@+id/saving_info_container"
+            android:id="@+id/container_as_session_benefits"
             android:layout_width="wrap_content"
             android:layout_height="@dimen/button_height_medium"
             android:layout_gravity="center"
@@ -278,26 +262,16 @@
             android:visibility="gone">
 
             <TextView
-                android:id="@+id/tv_saving_info_label"
+                android:id="@+id/tv_as_session_benefits"
                 style="@style/GreyTextStyle"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:paddingEnd="@dimen/spacing_extra_small"
-                android:text="You're saving" />
-
-            <TextView
-                android:id="@+id/tv_saving_percent"
-                style="@style/GreyTextStyle"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textColor="@color/apple_green"
-
-                tools:text="$ 100.00" />
+                android:text="You're saving $100" />
 
         </LinearLayout>
 
         <androidx.constraintlayout.widget.ConstraintLayout
-            android:id="@+id/payment_mode_container"
+            android:id="@+id/container_as_payment_mode"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_margin="@dimen/spacing_normal"
@@ -307,48 +281,28 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent">
 
-            <!--<Button
-                android:id="@+id/btn_select_payment_mode"
-                style="@style/RedSmallTextStyle"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Select \n Payment Mode"
-                android:textSize="@dimen/font_small"
-                android:padding="@dimen/spacing_small"
-                android:background="@drawable/background_textbox"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toStartOf="@id/btn_invoice_request_checkout"
-                app:layout_constraintHorizontal_bias="0.25"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />-->
-
-
             <LinearLayout
-                android:id="@+id/payment_mode_change_container"
+                android:id="@+id/container_as_payment_mode_change"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:layout_marginEnd="@dimen/spacing_small"
-                android:layout_weight="0.5"
                 android:orientation="vertical"
-                android:visibility="visible"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toStartOf="@id/btn_invoice_request_checkout"
-                app:layout_constraintHorizontal_bias="0.25"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent">
 
                 <TextView
                     android:id="@+id/tv_as_payment_mode"
+                    style="@style/GreySmallTextStyle"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
                     android:drawableStart="@drawable/ic_cash_grey"
                     android:drawablePadding="@dimen/spacing_normal"
                     android:gravity="center"
-                    android:text="Via Cash"
-                    android:textColor="@color/brownish_grey"
-                    android:textSize="@dimen/font_small" />
+                    android:text="Via Cash" />
 
                 <include
                     layout="@layout/incl_dotted_view"
@@ -382,7 +336,7 @@
     </LinearLayout>
 
     <FrameLayout
-        android:id="@+id/container_promo_code"
+        android:id="@+id/fragment_container_promo"
         android:layout_width="match_parent"
         android:layout_height="match_parent" />
 

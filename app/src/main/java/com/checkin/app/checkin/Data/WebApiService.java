@@ -4,26 +4,12 @@ import com.checkin.app.checkin.Account.AccountModel;
 import com.checkin.app.checkin.Auth.AuthResultModel;
 import com.checkin.app.checkin.Inventory.Model.InventoryAvailabilityModel;
 import com.checkin.app.checkin.Inventory.Model.InventoryModel;
-import com.checkin.app.checkin.Misc.paytm.PaytmModel;
-import com.checkin.app.checkin.manager.model.ManagerSessionEventModel;
-import com.checkin.app.checkin.manager.model.ManagerSessionInvoiceModel;
-import com.checkin.app.checkin.manager.model.ManagerStatsModel;
 import com.checkin.app.checkin.Menu.Model.MenuModel;
 import com.checkin.app.checkin.Menu.Model.OrderedItemModel;
 import com.checkin.app.checkin.Misc.GenericDetailModel;
+import com.checkin.app.checkin.Misc.paytm.PaytmModel;
 import com.checkin.app.checkin.Search.SearchResultPeopleModel;
 import com.checkin.app.checkin.Search.SearchResultShopModel;
-import com.checkin.app.checkin.session.activesession.chat.SessionChatModel;
-import com.checkin.app.checkin.session.model.ActiveSessionModel;
-import com.checkin.app.checkin.session.model.CheckoutStatusModel;
-import com.checkin.app.checkin.session.model.QRResultModel;
-import com.checkin.app.checkin.session.model.RestaurantTableModel;
-import com.checkin.app.checkin.session.model.SessionBasicModel;
-import com.checkin.app.checkin.session.model.SessionBriefModel;
-import com.checkin.app.checkin.session.model.SessionInvoiceModel;
-import com.checkin.app.checkin.session.model.SessionOrderedItemModel;
-import com.checkin.app.checkin.session.model.SessionPromoCodeAvailModel;
-import com.checkin.app.checkin.session.model.SessionPromoModel;
 import com.checkin.app.checkin.Shop.Private.Finance.FinanceModel;
 import com.checkin.app.checkin.Shop.Private.Invoice.RestaurantSessionModel;
 import com.checkin.app.checkin.Shop.Private.Invoice.ShopSessionDetailModel;
@@ -37,15 +23,20 @@ import com.checkin.app.checkin.Waiter.Model.SessionContactModel;
 import com.checkin.app.checkin.Waiter.Model.WaiterEventModel;
 import com.checkin.app.checkin.Waiter.Model.WaiterStatsModel;
 import com.checkin.app.checkin.Waiter.Model.WaiterTableModel;
+import com.checkin.app.checkin.manager.model.ManagerSessionEventModel;
+import com.checkin.app.checkin.manager.model.ManagerSessionInvoiceModel;
+import com.checkin.app.checkin.manager.model.ManagerStatsModel;
 import com.checkin.app.checkin.session.activesession.chat.SessionChatModel;
 import com.checkin.app.checkin.session.model.ActiveSessionModel;
 import com.checkin.app.checkin.session.model.CheckoutStatusModel;
+import com.checkin.app.checkin.session.model.PromoDetailModel;
 import com.checkin.app.checkin.session.model.QRResultModel;
 import com.checkin.app.checkin.session.model.RestaurantTableModel;
 import com.checkin.app.checkin.session.model.SessionBasicModel;
 import com.checkin.app.checkin.session.model.SessionBriefModel;
 import com.checkin.app.checkin.session.model.SessionInvoiceModel;
 import com.checkin.app.checkin.session.model.SessionOrderedItemModel;
+import com.checkin.app.checkin.session.model.SessionPromoModel;
 import com.checkin.app.checkin.session.model.TrendingDishModel;
 import com.fasterxml.jackson.databind.node.ArrayNode;
 import com.fasterxml.jackson.databind.node.ObjectNode;
@@ -262,11 +253,14 @@ public interface WebApiService {
     @POST("sessions/manage/new/")
     Call<QRResultModel> postManageInitiateSession(@Body ObjectNode data);
 
+    @GET("sessions/active/promo/")
+    Call<SessionPromoModel> getSessionAppliedPromo();
+
     @POST("sessions/active/promos/avail/")
-    Call<SessionPromoCodeAvailModel> postAvailPromoCode(@Body ObjectNode data);
+    Call<SessionPromoModel> postAvailPromoCode(@Body ObjectNode data);
 
     @DELETE("sessions/active/promos/remove/")
-    Call<ObjectNode> postRemovePromoCode();
+    Call<ObjectNode> deletePromoCode();
 
     // endregion
 
@@ -323,5 +317,5 @@ public interface WebApiService {
 
     // region promos
     @GET("promos/")
-    Call<List<SessionPromoModel>> getPromoCodes();
+    Call<List<PromoDetailModel>> getPromoCodes();
 }

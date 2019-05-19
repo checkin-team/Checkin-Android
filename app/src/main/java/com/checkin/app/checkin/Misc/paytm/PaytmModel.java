@@ -8,8 +8,6 @@ import com.paytm.pgsdk.PaytmOrder;
 
 import java.util.HashMap;
 
-import static com.checkin.app.checkin.Utility.Constants.PAYTM_CALLBACK_URL;
-
 public class PaytmModel {
 
     @JsonProperty("merchant_id")
@@ -104,6 +102,7 @@ public class PaytmModel {
     }
 
     /*
+    ** For Testing Purposes.
     public PaytmOrder getPaytmOrder() {
         HashMap<String, String> paramMap = new HashMap<>();
         paramMap.put("MID", "mUsdOB28426623954609");

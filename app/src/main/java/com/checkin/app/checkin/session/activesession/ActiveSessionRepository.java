@@ -18,18 +18,14 @@ import com.checkin.app.checkin.Misc.paytm.PaytmModel;
 import com.checkin.app.checkin.session.activesession.chat.SessionChatModel;
 import com.checkin.app.checkin.session.model.ActiveSessionModel;
 import com.checkin.app.checkin.session.model.CheckoutStatusModel;
+import com.checkin.app.checkin.session.model.PromoDetailModel;
 import com.checkin.app.checkin.session.model.SessionInvoiceModel;
 import com.checkin.app.checkin.session.model.SessionOrderedItemModel;
-import com.checkin.app.checkin.session.model.SessionPromoCodeAvailModel;
 import com.checkin.app.checkin.session.model.SessionPromoModel;
 import com.checkin.app.checkin.session.model.TrendingDishModel;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 
 import java.util.List;
-
-/**
- * Created by Bhavik Patel on 04/08/2018.
- */
 
 public class ActiveSessionRepository extends BaseRepository {
 
@@ -363,8 +359,8 @@ public class ActiveSessionRepository extends BaseRepository {
         }.getAsLiveData();
     }
 
-    public LiveData<Resource<List<SessionPromoModel>>> getAvailablePromoCodes() {
-        return new NetworkBoundResource<List<SessionPromoModel>, List<SessionPromoModel>>() {
+    public LiveData<Resource<List<PromoDetailModel>>> getAvailablePromoCodes() {
+        return new NetworkBoundResource<List<PromoDetailModel>, List<PromoDetailModel>>() {
             @Override
             protected boolean shouldUseLocalDb() {
                 return false;
@@ -372,19 +368,19 @@ public class ActiveSessionRepository extends BaseRepository {
 
             @NonNull
             @Override
-            protected LiveData<ApiResponse<List<SessionPromoModel>>> createCall() {
+            protected LiveData<ApiResponse<List<PromoDetailModel>>> createCall() {
                 return new RetrofitLiveData<>(mWebService.getPromoCodes());
             }
 
             @Override
-            protected void saveCallResult(List<SessionPromoModel> data) {
+            protected void saveCallResult(List<PromoDetailModel> data) {
 
             }
         }.getAsLiveData();
     }
 
-    public LiveData<Resource<SessionPromoCodeAvailModel>> postAvailPromoCode(ObjectNode data) {
-        return new NetworkBoundResource<SessionPromoCodeAvailModel, SessionPromoCodeAvailModel>() {
+    public LiveData<Resource<SessionPromoModel>> postAvailPromoCode(ObjectNode data) {
+        return new NetworkBoundResource<SessionPromoModel, SessionPromoModel>() {
             @Override
             protected boolean shouldUseLocalDb() {
                 return false;
@@ -392,18 +388,18 @@ public class ActiveSessionRepository extends BaseRepository {
 
             @NonNull
             @Override
-            protected LiveData<ApiResponse<SessionPromoCodeAvailModel>> createCall() {
+            protected LiveData<ApiResponse<SessionPromoModel>> createCall() {
                 return new RetrofitLiveData<>(mWebService.postAvailPromoCode(data));
             }
 
             @Override
-            protected void saveCallResult(SessionPromoCodeAvailModel data) {
+            protected void saveCallResult(SessionPromoModel data) {
                 //saveCallResult code
             }
         }.getAsLiveData();
     }
 
-    public LiveData<Resource<ObjectNode>> postRemovePromoCode() {
+    public LiveData<Resource<ObjectNode>> removePromoCode() {
         return new NetworkBoundResource<ObjectNode, ObjectNode>() {
             @Override
             protected boolean shouldUseLocalDb() {
@@ -413,12 +409,33 @@ public class ActiveSessionRepository extends BaseRepository {
             @NonNull
             @Override
             protected LiveData<ApiResponse<ObjectNode>> createCall() {
-                return new RetrofitLiveData<>(mWebService.postRemovePromoCode());
+                return new RetrofitLiveData<>(mWebService.deletePromoCode());
             }
 
             @Override
             protected void saveCallResult(ObjectNode data) {
                 //saveCallResult code
+            }
+        }.getAsLiveData();
+    }
+
+    public LiveData<Resource<SessionPromoModel>> getSessionAppliedPromo() {
+        return new NetworkBoundResource<SessionPromoModel, SessionPromoModel>() {
+
+            @Override
+            protected boolean shouldUseLocalDb() {
+                return false;
+            }
+
+            @NonNull
+            @Override
+            protected LiveData<ApiResponse<SessionPromoModel>> createCall() {
+                return new RetrofitLiveData<>(mWebService.getSessionAppliedPromo());
+            }
+
+            @Override
+            protected void saveCallResult(SessionPromoModel data) {
+                // unimplemented
             }
         }.getAsLiveData();
     }

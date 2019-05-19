@@ -82,7 +82,8 @@ public final class OnBoardingUtils {
                 .outerCircleColor(R.color.primary_red)
                 .drawShadow(true)
                 .cancelable(model.isCancelable)
-                .targetRadius(60);
+                .targetRadius(60)
+                .tintTarget(false);
     }
 
     public static class OnBoardingModel {

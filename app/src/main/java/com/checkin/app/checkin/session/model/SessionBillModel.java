@@ -27,7 +27,6 @@ public class SessionBillModel {
     private String promo;
 
     private Double discountPercentage;
-    private Double totalSaving;
 
     public SessionBillModel() {
     }
@@ -102,7 +101,6 @@ public class SessionBillModel {
             discount = (subtotal * percent) / 100;
             total -= (discount - oldDiscount);
         }
-
     }
 
     public Double getDiscountPercentage() {
@@ -118,16 +116,8 @@ public class SessionBillModel {
         calculateTotal();
     }
 
-    public String setPromoAvailDetails(){
-        return promo+" - ";
-    }
-
-    public String getTotalSaving() {
-        if(discount!=null && offers!=null) {
-            totalSaving = discount + offers;
-            return String.valueOf(totalSaving);
-        }
-        return null;
+    public double getTotalSaving() {
+        return discount + offers;
     }
 
     private void calculateTotal() {
@@ -142,5 +132,6 @@ public class SessionBillModel {
             this.total -= this.discount;
         if (this.offers != null)
             this.total -= this.offers;
+        this.total = (double) Math.round(this.total);
     }
 }

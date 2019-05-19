@@ -146,6 +146,7 @@
     <string name="title_bill_details">Bill Details</string>
     <string name="total">Total</string>
     <string name="title_request_checkout">Request Checkout</string>
+    <string name="title_pay_checkout">Pay</string>
     <string name="change">Change</string>
     <string name="title_tip_your_waiter">Tip your waiter</string>
     <string name="msg_call_waiter">Please send the waiter to our table</string>
@@ -200,5 +201,8 @@
     <string name="error_required_agree_eula"><![CDATA[Need to accept Terms & Condition]]></string>
     <string name="no_order">relax!\nwe will\nnotify about</string>
     <string name="activate_fetch_live_order">activate!\nto fetch\n<font color="#af1014">live orders</font></string>
+    <string name="session_benefits_apply_promo_code">Apply Promo Code</string>
+    <string name="active_session_fetching_offers">Fetching Available Offers…</string>
+    <string name="button_apply">Apply</string>
 
 </resources>

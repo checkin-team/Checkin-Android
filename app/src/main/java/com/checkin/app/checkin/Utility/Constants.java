@@ -1,7 +1,6 @@
 package com.checkin.app.checkin.Utility;
 
 import com.checkin.app.checkin.BuildConfig;
-import com.paytm.pgsdk.PaytmPGService;
 
 import static java.util.concurrent.TimeUnit.MILLISECONDS;
 import static java.util.concurrent.TimeUnit.MINUTES;
@@ -10,6 +9,8 @@ public class Constants {
     public static final String API_VERSION = "0.8.6";
     public static final String API_PROTOCOL = "https://";
     public static final String API_HOST = getApiHost();
+
+    public static final boolean IS_RELEASE_BUILD = !BuildConfig.DEBUG && BuildConfig.BUILD_TYPE.equalsIgnoreCase("release");
 
     public static final String ACCOUNT_TYPE = "com.checkin.accounts";
     public static final String ACCOUNT_UID = "account_uid";
@@ -35,21 +36,10 @@ public class Constants {
 
     public final static String EXPAND_TEXT = "....";
 
-//    public static final String PAYTM_CALLBACK_URL = "https://securegw-stage.paytm.in/theia/paytmCallback?ORDER_ID=";
-    public static final String PAYTM_CALLBACK_URL = "https://securegw.paytm.in/theia/paytmCallback?ORDER_ID=";
-
     private Constants() {
     }
 
     private static String getApiHost() {
-        if (!BuildConfig.DEBUG && BuildConfig.BUILD_TYPE.equalsIgnoreCase("release"))
-            return "api.check-in.in";
-        return "dev.api.check-in.in";
-    }
-
-    public static final PaytmPGService getPaytmService() {
-        if (!BuildConfig.DEBUG && BuildConfig.BUILD_TYPE.equalsIgnoreCase("release"))
-            return PaytmPGService.getStagingService();
-        return PaytmPGService.getProductionService();
+        return IS_RELEASE_BUILD ? "api.check-in.in" : "dev.api.check-in.in";
     }
 }

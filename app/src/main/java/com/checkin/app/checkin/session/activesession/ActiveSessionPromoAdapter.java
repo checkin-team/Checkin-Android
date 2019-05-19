@@ -1,38 +1,32 @@
 package com.checkin.app.checkin.session.activesession;
 
-import android.app.Activity;
-import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
 import android.widget.TextView;
-
-import com.checkin.app.checkin.R;
-import com.checkin.app.checkin.Utility.Utils;
-import com.checkin.app.checkin.session.model.SessionPromoModel;
-
-import java.util.List;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
+
+import com.checkin.app.checkin.R;
+import com.checkin.app.checkin.session.model.PromoDetailModel;
+
+import java.util.List;
+
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
-import static android.app.Activity.RESULT_OK;
-
 public class ActiveSessionPromoAdapter extends RecyclerView.Adapter<ActiveSessionPromoAdapter.ItemViewHolder> {
-    private List<SessionPromoModel> mItemsList;
-    private boolean mIsSessionActive;
-    private onPromoCodeItemListener mListener;
-    private Activity mActivity;
+    private List<PromoDetailModel> mItemsList;
 
-    public ActiveSessionPromoAdapter(List<SessionPromoModel> itemsList, onPromoCodeItemListener listener) {
+    private onPromoCodeItemListener mListener;
+
+    public ActiveSessionPromoAdapter(List<PromoDetailModel> itemsList, onPromoCodeItemListener listener) {
         mItemsList = itemsList;
         mListener = listener;
     }
 
-    public void setData(List<SessionPromoModel> menuItems) {
+    public void setData(List<PromoDetailModel> menuItems) {
         this.mItemsList = menuItems;
         notifyDataSetChanged();
     }
@@ -60,7 +54,7 @@ public class ActiveSessionPromoAdapter extends RecyclerView.Adapter<ActiveSessio
     }
 
     public interface onPromoCodeItemListener {
-        void onPromoApply(SessionPromoModel item);
+        void onPromoApply(PromoDetailModel item);
     }
 
     public class ItemViewHolder extends RecyclerView.ViewHolder {
@@ -76,24 +70,22 @@ public class ActiveSessionPromoAdapter extends RecyclerView.Adapter<ActiveSessio
 //        @BindView(R.id.im_as_promo_icon)
 //        ImageView imPromoIcon;
 
-        private SessionPromoModel mItem;
+        private PromoDetailModel mItem;
 
         ItemViewHolder(final View itemView) {
             super(itemView);
             ButterKnife.bind(this, itemView);
 
-            tvPromoApply.setOnClickListener(v -> {mListener.onPromoApply(mItem);
-            });
+            tvPromoApply.setOnClickListener(v -> mListener.onPromoApply(mItem));
         }
 
-        void bindData(SessionPromoModel promoModel) {
+        void bindData(PromoDetailModel promoModel) {
             this.mItem = promoModel;
 
             tvPromoCode.setText(promoModel.getCode());
             tvPromoName.setText(promoModel.getName());
             tvPromoSummary.setText(promoModel.getSummary());
 //            Utils.loadImageOrDefault(imPromoIcon, promoModel.getIcon(), 0);
-
         }
     }
 }

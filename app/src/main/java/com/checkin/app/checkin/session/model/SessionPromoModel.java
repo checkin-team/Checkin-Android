@@ -1,13 +1,11 @@
 package com.checkin.app.checkin.session.model;
 
+import com.checkin.app.checkin.Misc.BriefModel;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class SessionPromoModel {
-
-    @JsonProperty("pk")
-    private long promoPk;
 
     @JsonProperty("code")
     private String code;
@@ -18,67 +16,13 @@ public class SessionPromoModel {
     @JsonProperty("name")
     private String name;
 
-    @JsonProperty("summary")
-    private String summary;
+    @JsonProperty("by_user")
+    private BriefModel byUser;
 
-    @JsonProperty("terms")
-    private String terms;
-
-    @JsonProperty("expires")
-    private String expires;
-
-    @JsonProperty("discount_amount")
-    private Double discount_amount;
+    @JsonProperty("offer_amount")
+    private Double offerAmount;
 
     public SessionPromoModel() {
-    }
-
-    public long getPromoPk() {
-        return promoPk;
-    }
-
-    public void setPromoPk(long promoPk) {
-        this.promoPk = promoPk;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public String getSummary() {
-        return summary;
-    }
-
-    public void setSummary(String summary) {
-        this.summary = summary;
-    }
-
-    public String getIcon() {
-        return icon;
-    }
-
-    public void setIcon(String icon) {
-        this.icon = icon;
-    }
-
-    public String getTerms() {
-        return terms;
-    }
-
-    public void setTerms(String terms) {
-        this.terms = terms;
-    }
-
-    public Double getDiscount_amount() {
-        return discount_amount;
-    }
-
-    public void setDiscount_amount(Double discount_amount) {
-        this.discount_amount = discount_amount;
     }
 
     public String getCode() {
@@ -89,11 +33,39 @@ public class SessionPromoModel {
         this.code = code;
     }
 
-    public String getExpires() {
-        return expires;
+    public String getIcon() {
+        return icon;
     }
 
-    public void setExpires(String expires) {
-        this.expires = expires;
+    public void setIcon(String icon) {
+        this.icon = icon;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public BriefModel getByUser() {
+        return byUser;
+    }
+
+    public void setByUser(BriefModel byUser) {
+        this.byUser = byUser;
+    }
+
+    public Double getOfferAmount() {
+        return offerAmount;
+    }
+
+    public void setOfferAmount(Double offerAmount) {
+        this.offerAmount = offerAmount;
+    }
+
+    public String getDetails() {
+        return String.format("%s - %s", code, name);
     }
 }

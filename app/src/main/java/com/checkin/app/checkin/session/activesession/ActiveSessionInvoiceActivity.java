@@ -5,7 +5,6 @@ import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.text.Editable;
-import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
@@ -29,6 +28,7 @@ import com.checkin.app.checkin.Utility.Constants;
 import com.checkin.app.checkin.Utility.Utils;
 import com.checkin.app.checkin.session.model.SessionBillModel;
 import com.checkin.app.checkin.session.model.SessionInvoiceModel;
+import com.checkin.app.checkin.session.model.SessionPromoModel;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -54,35 +54,33 @@ public class ActiveSessionInvoiceActivity extends AppCompatActivity {
     TextView tvInvoiceTotal;
     @BindView(R.id.tv_as_payment_mode)
     TextView tvPaymentMode;
-    @BindView(R.id.tv_saving_info_label)
-    TextView tvSavingInfoLabel;
-    @BindView(R.id.tv_saving_percent)
-    TextView tvSavingPercent;
     @BindView(R.id.ed_invoice_tip)
     EditText edInvoiceTip;
     @BindView(R.id.im_invoice_remove_promo_code)
     ImageView removePromoCode;
     @BindView(R.id.tv_as_promo_applied_details)
-    TextView promoAppliedDetails;
+    TextView tvAppliedPromoDetails;
+    @BindView(R.id.tv_as_promo_invalid_status)
+    TextView tvPromoInvalidStatus;
     @BindView(R.id.container_remove_promo_code)
-    ViewGroup removePromoCodeContainer;
+    ViewGroup containerRemovePromo;
     @BindView(R.id.container_promo_code_apply)
-    ViewGroup applyPromoCodeContainer;
+    ViewGroup containerApplyPromo;
     @BindView(R.id.container_invoice_tip_waiter)
-    ViewGroup tipWaiterContainer;
+    ViewGroup containerTipWaiter;
     @BindView(R.id.btn_invoice_request_checkout)
     Button btnRequestCheckout;
-    @BindView(R.id.payment_mode_change_container)
-    ViewGroup paymentModeChangeContainer;
-    @BindView(R.id.saving_info_container)
-    ViewGroup savingInfoContainer;
+    @BindView(R.id.container_as_session_benefits)
+    ViewGroup containerSessionBenefits;
+    @BindView(R.id.tv_as_session_benefits)
+    TextView tvSessionBenefits;
 
-    private ActiveSessionViewModel mViewModel;
+    private ActiveSessionInvoiceViewModel mViewModel;
     private InvoiceOrdersAdapter mAdapter;
     private SessionBillModel mBillModel;
     private BillHolder mBillHolder;
-    private PaytmPayment paytmPayment;
-    private SharedPreferences prefs;
+    private SharedPreferences mPrefs;
+    private PaytmPayment mPaymentPayTm;
     private ActiveSessionPromoFragment mPromoFragment;
 
     private ShopModel.PAYMENT_MODE selectedMode;
@@ -93,6 +91,8 @@ public class ActiveSessionInvoiceActivity extends AppCompatActivity {
 
         setContentView(R.layout.activity_active_session_invoice);
         ButterKnife.bind(this);
+
+        mViewModel = ViewModelProviders.of(this).get(ActiveSessionInvoiceViewModel.class);
 
         setupUi();
         getData();
@@ -105,9 +105,9 @@ public class ActiveSessionInvoiceActivity extends AppCompatActivity {
             getSupportActionBar().setHomeAsUpIndicator(R.drawable.ic_back_grey);
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         }
-        prefs = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
+        mPrefs = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
 
-        String paymentTag = prefs.getString(Constants.SP_LAST_USED_PAYMENT_MODE, PAYTM.tag);
+        String paymentTag = mPrefs.getString(Constants.SP_LAST_USED_PAYMENT_MODE, PAYTM.tag);
         selectedMode = ShopModel.PAYMENT_MODE.getByTag(paymentTag);
 
         setPaymentModeUpdates();
@@ -115,44 +115,27 @@ public class ActiveSessionInvoiceActivity extends AppCompatActivity {
         mAdapter = new InvoiceOrdersAdapter(null);
         rvOrderedItems.setAdapter(mAdapter);
         mBillHolder = new BillHolder(findViewById(android.R.id.content));
+
+        mPromoFragment = ActiveSessionPromoFragment.newInstance();
     }
 
     private void setPaymentModeUpdates() {
         tvPaymentMode.setText(ShopModel.getPaymentMode(selectedMode));
         tvPaymentMode.setCompoundDrawablesWithIntrinsicBounds(ShopModel.getPaymentModeIcon(selectedMode), 0, 0, 0);
         if (selectedMode != null && selectedMode.equals(PAYTM))
-            btnRequestCheckout.setText("Pay");
+            btnRequestCheckout.setText(R.string.title_pay_checkout);
         else
-            btnRequestCheckout.setText(getResources().getString(R.string.title_request_checkout));
+            btnRequestCheckout.setText(R.string.title_request_checkout);
     }
 
     private void getData() {
-        mViewModel = ViewModelProviders.of(this).get(ActiveSessionViewModel.class);
         mViewModel.fetchSessionInvoice();
         mViewModel.fetchAvailablePromoCodes();
-        mViewModel.getSessionInvoice().observe(this, resource -> {
-            if (resource == null)
-                return;
-            if (resource.status == Resource.Status.SUCCESS && resource.data != null) {
-                setupData(resource.data);
-            }
-        });
+        mViewModel.fetchSessionAppliedPromo();
+
         boolean isRequestedCheckout = getIntent().getBooleanExtra(KEY_SESSION_REQUESTED_CHECKOUT, false);
         if (isRequestedCheckout && !mViewModel.isRequestedCheckout())
             mViewModel.updateRequestCheckout(true);
-
-        mViewModel.getPromoCodes().observe(this, listResource -> {
-            if (listResource == null)
-                return;
-            if (listResource.status == Resource.Status.SUCCESS && listResource.data != null) {
-                applyPromoCodeContainer.setVisibility(View.VISIBLE);
-                removePromoCodeContainer.setVisibility(View.GONE);
-                setDiscountInfo("Pay online to avail ", listResource.data.get(0).getName(), getResources().getColor(R.color.primary_red));
-                mPromoFragment = ActiveSessionPromoFragment.newInstance(listResource.data);
-            } else {
-                Utils.toast(this, listResource.message);
-            }
-        });
     }
 
     private void setupData(SessionInvoiceModel data) {
@@ -162,21 +145,26 @@ public class ActiveSessionInvoiceActivity extends AppCompatActivity {
         if (data.getHost() != null)
             Utils.loadImageOrDefault(imWaiterPic, data.getHost().getDisplayPic(), R.drawable.ic_waiter);
         else
-            tipWaiterContainer.setVisibility(View.GONE);
+            containerTipWaiter.setVisibility(View.GONE);
 
         mBillHolder.bind(data.getBill());
         edInvoiceTip.setText(data.getBill().formatTip());
         tvInvoiceTotal.setText(Utils.formatCurrencyAmount(this, data.getBill().getTotal()));
-
-        if (data.getBill().getTotalSaving() != null) {
-            removePromoCodeContainer.setVisibility(View.VISIBLE);
-            applyPromoCodeContainer.setVisibility(View.GONE);
-            promoAppliedDetails.setText(data.getBill().setPromoAvailDetails());
-            setDiscountInfo("You're saving", data.getBill().getTotalSaving(), getResources().getColor(R.color.apple_green));
-        }
+//
+//        if (data.getBill().getTotalSaving() > 0) {
+//            setDiscountInfo("You're saving", data.getBill().getTotalSaving(), getResources().getColor(R.color.apple_green));
+//        }
     }
 
     private void setupObserver() {
+        mViewModel.getSessionInvoice().observe(this, resource -> {
+            if (resource == null)
+                return;
+            if (resource.status == Resource.Status.SUCCESS && resource.data != null) {
+                setupData(resource.data);
+            }
+        });
+
         mViewModel.getCheckoutData().observe(this, statusModelResource -> {
             if (statusModelResource == null)
                 return;
@@ -219,18 +207,57 @@ public class ActiveSessionInvoiceActivity extends AppCompatActivity {
         mViewModel.getObservableData().observe(this, resource -> {
             if (resource == null)
                 return;
-
-            if (resource.status == Resource.Status.SUCCESS && resource.data != null){
-//                Utils.navigateBackToHome(getApplicationContext());
-            }
-
-
             Utils.toast(this, resource.message);
+        });
+
+        mViewModel.getSessionAppliedPromo().observe(this, sessionPromoModelResource -> {
+            if (sessionPromoModelResource == null)
+                return;
+            if (sessionPromoModelResource.status == Resource.Status.SUCCESS && sessionPromoModelResource.data != null) {
+                showPromoDetails(sessionPromoModelResource.data);
+            } else if (sessionPromoModelResource.status == Resource.Status.ERROR_NOT_FOUND) {
+                showPromoApply();
+            }
+        });
+
+        mViewModel.getPromoCodes().observe(this, listResource -> {
+            if (listResource == null)
+                return;
+            if (listResource.status == Resource.Status.SUCCESS && listResource.data != null) {
+//                setDiscountInfo("Pay online to avail ", listResource.data.get(0).getName(), getResources().getColor(R.color.primary_red));
+            } else if (listResource.status == Resource.Status.ERROR_INVALID_REQUEST) {
+                showPromoInvalid();
+            } else if (listResource.status != Resource.Status.LOADING) {
+                Utils.toast(this, listResource.message);
+            }
         });
     }
 
+    private void showPromoInvalid() {
+        resetPromoCards();
+        tvAppliedPromoDetails.setVisibility(View.VISIBLE);
+        tvAppliedPromoDetails.setCompoundDrawablesRelativeWithIntrinsicBounds(R.drawable.ic_error_exclamation, 0, 0, 0);
+    }
+
+    private void showPromoApply() {
+        resetPromoCards();
+        containerApplyPromo.setVisibility(View.VISIBLE);
+    }
+
+    private void showPromoDetails(SessionPromoModel data) {
+        resetPromoCards();
+        containerRemovePromo.setVisibility(View.VISIBLE);
+        tvAppliedPromoDetails.setText(data.getDetails());
+    }
+
+    private void resetPromoCards() {
+        containerRemovePromo.setVisibility(View.GONE);
+        containerApplyPromo.setVisibility(View.GONE);
+        tvPromoInvalidStatus.setVisibility(View.GONE);
+    }
+
     private void paytmObserver() {
-        paytmPayment = new PaytmPayment() {
+        mPaymentPayTm = new PaytmPayment() {
             @Override
             protected void onPaytmTransactionResponse(Bundle inResponse) {
                 mViewModel.postPaytmCallback(inResponse);
@@ -251,7 +278,7 @@ public class ActiveSessionInvoiceActivity extends AppCompatActivity {
             if (paytmModelResource == null)
                 return;
             if (paytmModelResource.status == Resource.Status.SUCCESS && paytmModelResource.data != null) {
-                paytmPayment.initializePayment(paytmModelResource.data, this);
+                mPaymentPayTm.initializePayment(paytmModelResource.data, this);
             } else if (paytmModelResource.status != Resource.Status.LOADING) {
                 Utils.toast(this, paytmModelResource.message);
             }
@@ -283,13 +310,13 @@ public class ActiveSessionInvoiceActivity extends AppCompatActivity {
     @OnClick(R.id.container_promo_code_apply)
     public void onPromoCodeClick() {
         getSupportFragmentManager().beginTransaction()
-                .replace(R.id.container_promo_code, mPromoFragment)
+                .replace(R.id.fragment_container_promo, mPromoFragment)
                 .addToBackStack(null)
                 .commit();
     }
 
     @OnClick(R.id.im_invoice_remove_promo_code)
-    public void onRemovePromoCode(){
+    public void onRemovePromoCode() {
         mViewModel.removePromoCode();
     }
 
@@ -300,7 +327,7 @@ public class ActiveSessionInvoiceActivity extends AppCompatActivity {
             Utils.toast(this, "Please select the Payment Mode.");
     }
 
-    @OnClick(R.id.payment_mode_change_container)
+    @OnClick(R.id.container_as_payment_mode_change)
     public void onPaymentModeClick() {
         Intent intent = new Intent(this, ActiveSessionPaymentOptions.class);
         intent.putExtra(KEY_SESSION_AMOUNT, tvInvoiceTotal.getText().toString());
@@ -320,9 +347,8 @@ public class ActiveSessionInvoiceActivity extends AppCompatActivity {
         switch (requestCode) {
             case REQUEST_PAYMENT_MODE:
                 if (resultCode == RESULT_OK && data != null) {
-                    paymentModeChangeContainer.setVisibility(View.VISIBLE);
                     selectedMode = (ShopModel.PAYMENT_MODE) data.getSerializableExtra(KEY_PAYMENT_MODE_RESULT);
-                    prefs.edit()
+                    mPrefs.edit()
                             .putString(Constants.SP_LAST_USED_PAYMENT_MODE, selectedMode.tag)
                             .apply();
 
@@ -346,31 +372,11 @@ public class ActiveSessionInvoiceActivity extends AppCompatActivity {
             tvPaymentMode.setText(tvInvoiceTotal.getText().toString());
     }
 
-    private void setDiscountInfo(String label, String offPercent, int color) {
-        savingInfoContainer.setVisibility(View.VISIBLE);
-        tvSavingInfoLabel.setText(label);
-        tvSavingPercent.setTextColor(color);
-        if (color == getResources().getColor(R.color.apple_green))
-            tvSavingPercent.setText(Utils.formatCurrencyAmount(this, offPercent));
-        else
-            tvSavingPercent.setText(offPercent);
-
-    }
-
     private void alertDialogForOverridingPaymentRequest() {
         AlertDialog.Builder builder = new AlertDialog.Builder(this).setTitle("Override checkout request?")
                 .setMessage("A payment request is in progress. Are you sure you want to cancel that request and initiate a new one?")
                 .setPositiveButton("Yes", (dialog, which) -> onRequestCheckout(true))
                 .setNegativeButton("No", (dialog, which) -> dialog.cancel());
         builder.show();
-    }
-
-    @Override
-    protected void onResume() {
-        super.onResume();
-
-       /*if (selectedMode.equals(CASH) && ) {
-
-        }*/
     }
 }

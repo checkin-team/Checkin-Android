@@ -315,27 +315,15 @@
 
                         </RelativeLayout>
 
-                        <RelativeLayout
+                        <ImageView
+                            android:id="@+id/btn_active_session_menu"
                             android:layout_width="90dp"
-                            android:layout_height="match_parent">
+                            android:layout_height="match_parent"
+                            android:clickable="true"
+                            android:focusable="true"
+                            android:scaleType="fitXY"
+                            android:src="@drawable/ic_menu" />
 
-                            <View
-                                android:id="@+id/view_proxy_menu"
-                                android:layout_width="90dp"
-                                android:layout_height="match_parent"
-                                android:background="@android:color/transparent"
-                                android:visibility="visible" />
-
-                            <ImageView
-                                android:id="@+id/btn_active_session_menu"
-                                android:layout_width="90dp"
-                                android:layout_height="match_parent"
-                                android:clickable="true"
-                                android:focusable="true"
-                                android:scaleType="fitXY"
-                                android:src="@drawable/ic_menu" />
-
-                        </RelativeLayout>
                     </LinearLayout>
 
                     <View
@@ -434,118 +422,118 @@
                             android:id="@+id/container_as_chat_action"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            app:layout_constraintBottom_toBottomOf="parent"
-                            app:layout_constraintStart_toStartOf="parent"
-                            app:layout_constraintTop_toTopOf="parent"
                             android:transitionName="chatActions"
-                            android:weightSum="3">
-
-
-                        <RelativeLayout
-                            android:id="@+id/ll_call_waiter_button"
-                            android:layout_width="wrap_content"
-                            android:layout_height="70dp"
-                            android:layout_marginTop="@dimen/spacing_large"
-                            android:layout_weight="1"
-                            android:gravity="center"
-                            android:orientation="vertical"
+                            android:weightSum="3"
                             app:layout_constraintBottom_toBottomOf="parent"
-                            app:layout_constraintEnd_toStartOf="@id/ll_table_cleaning_button"
                             app:layout_constraintStart_toStartOf="parent"
                             app:layout_constraintTop_toTopOf="parent">
 
 
-                            <de.hdodenhof.circleimageview.CircleImageView
-                                android:id="@+id/im_as_waiter_pic"
-                                android:layout_width="35dp"
-                                android:layout_height="35dp"
-                                android:layout_centerHorizontal="true"
-                                android:background="@drawable/shape_oval_pinkish_grey"
-                                android:src="@drawable/ic_waiter" />
-
-                            <TextView
-                                android:id="@+id/tv_as_waiter_name"
-                                style="@style/PinkishGreySmallTextStyle"
+                            <RelativeLayout
+                                android:id="@+id/ll_call_waiter_button"
                                 android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:layout_below="@+id/im_as_waiter_pic"
-                                android:layout_centerHorizontal="true"
-                                android:ellipsize="end"
-                                android:maxLines="1"
-                                android:text="unassigned"
-                                android:textSize="@dimen/font_tiny"
-                                tools:text="waiter name" />
-
-                            <TextView
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:layout_alignParentBottom="true"
-                                android:layout_marginTop="@dimen/spacing_tiny"
-                                android:layout_centerHorizontal="true"
-                                android:text="@string/call_waiter"
-                                android:textSize="@dimen/font_small" />
-
-                        </RelativeLayout>
-
-                        <LinearLayout
-                            android:id="@+id/ll_table_cleaning_button"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginTop="@dimen/spacing_large"
-                            android:orientation="vertical"
-                            android:layout_weight="1"
-                            app:layout_constraintBottom_toBottomOf="parent"
-                            app:layout_constraintEnd_toStartOf="@id/ll_refill_glass_button"
-                            app:layout_constraintStart_toEndOf="@id/ll_call_waiter_button"
-                            app:layout_constraintTop_toTopOf="parent">
-
-                            <ImageView
-                                android:layout_width="match_parent"
-                                android:layout_height="@dimen/button_height_normal"
-                                android:layout_gravity="center"
-                                android:layout_marginBottom="@dimen/spacing_small"
-                                android:src="@drawable/ic_action_clean_table" />
-
-                            <TextView
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:layout_gravity="center"
-                                android:layout_marginTop="@dimen/spacing_tiny"
+                                android:layout_height="70dp"
+                                android:layout_marginTop="@dimen/spacing_large"
+                                android:layout_weight="1"
                                 android:gravity="center"
-                                android:text="@string/table_cleaning"
-                                android:textSize="@dimen/font_small" />
+                                android:orientation="vertical"
+                                app:layout_constraintBottom_toBottomOf="parent"
+                                app:layout_constraintEnd_toStartOf="@id/ll_table_cleaning_button"
+                                app:layout_constraintStart_toStartOf="parent"
+                                app:layout_constraintTop_toTopOf="parent">
 
-                        </LinearLayout>
 
+                                <de.hdodenhof.circleimageview.CircleImageView
+                                    android:id="@+id/im_as_waiter_pic"
+                                    android:layout_width="35dp"
+                                    android:layout_height="35dp"
+                                    android:layout_centerHorizontal="true"
+                                    android:background="@drawable/shape_oval_pinkish_grey"
+                                    android:src="@drawable/ic_waiter" />
 
-                        <LinearLayout
-                            android:id="@+id/ll_refill_glass_button"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginTop="@dimen/spacing_large"
-                            android:orientation="vertical"
-                            android:layout_weight="1"
-                            app:layout_constraintBottom_toBottomOf="parent"
-                            app:layout_constraintEnd_toEndOf="parent"
-                            app:layout_constraintStart_toEndOf="@id/ll_table_cleaning_button"
-                            app:layout_constraintTop_toTopOf="parent">
+                                <TextView
+                                    android:id="@+id/tv_as_waiter_name"
+                                    style="@style/PinkishGreySmallTextStyle"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_below="@+id/im_as_waiter_pic"
+                                    android:layout_centerHorizontal="true"
+                                    android:ellipsize="end"
+                                    android:maxLines="1"
+                                    android:text="unassigned"
+                                    android:textSize="@dimen/font_tiny"
+                                    tools:text="waiter name" />
 
-                            <ImageView
-                                android:layout_width="match_parent"
-                                android:layout_height="@dimen/button_height_normal"
-                                android:layout_marginBottom="@dimen/spacing_small"
-                                android:src="@drawable/ic_action_refill_water" />
+                                <TextView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_alignParentBottom="true"
+                                    android:layout_centerHorizontal="true"
+                                    android:layout_marginTop="@dimen/spacing_tiny"
+                                    android:text="@string/call_waiter"
+                                    android:textSize="@dimen/font_small" />
 
-                            <TextView
+                            </RelativeLayout>
+
+                            <LinearLayout
+                                android:id="@+id/ll_table_cleaning_button"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:layout_gravity="center"
-                                android:layout_marginTop="@dimen/spacing_tiny"
-                                android:gravity="center"
-                                android:text="@string/refill_glass"
-                                android:textSize="@dimen/font_small" />
+                                android:layout_marginTop="@dimen/spacing_large"
+                                android:layout_weight="1"
+                                android:orientation="vertical"
+                                app:layout_constraintBottom_toBottomOf="parent"
+                                app:layout_constraintEnd_toStartOf="@id/ll_refill_glass_button"
+                                app:layout_constraintStart_toEndOf="@id/ll_call_waiter_button"
+                                app:layout_constraintTop_toTopOf="parent">
 
-                        </LinearLayout>
+                                <ImageView
+                                    android:layout_width="match_parent"
+                                    android:layout_height="@dimen/button_height_normal"
+                                    android:layout_gravity="center"
+                                    android:layout_marginBottom="@dimen/spacing_small"
+                                    android:src="@drawable/ic_action_clean_table" />
+
+                                <TextView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_gravity="center"
+                                    android:layout_marginTop="@dimen/spacing_tiny"
+                                    android:gravity="center"
+                                    android:text="@string/table_cleaning"
+                                    android:textSize="@dimen/font_small" />
+
+                            </LinearLayout>
+
+
+                            <LinearLayout
+                                android:id="@+id/ll_refill_glass_button"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="@dimen/spacing_large"
+                                android:layout_weight="1"
+                                android:orientation="vertical"
+                                app:layout_constraintBottom_toBottomOf="parent"
+                                app:layout_constraintEnd_toEndOf="parent"
+                                app:layout_constraintStart_toEndOf="@id/ll_table_cleaning_button"
+                                app:layout_constraintTop_toTopOf="parent">
+
+                                <ImageView
+                                    android:layout_width="match_parent"
+                                    android:layout_height="@dimen/button_height_normal"
+                                    android:layout_marginBottom="@dimen/spacing_small"
+                                    android:src="@drawable/ic_action_refill_water" />
+
+                                <TextView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_gravity="center"
+                                    android:layout_marginTop="@dimen/spacing_tiny"
+                                    android:gravity="center"
+                                    android:text="@string/refill_glass"
+                                    android:textSize="@dimen/font_small" />
+
+                            </LinearLayout>
 
                         </LinearLayout>
 

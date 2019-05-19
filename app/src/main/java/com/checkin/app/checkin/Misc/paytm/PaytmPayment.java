@@ -9,8 +9,6 @@ import com.checkin.app.checkin.Utility.Constants;
 import com.paytm.pgsdk.PaytmPGService;
 import com.paytm.pgsdk.PaytmPaymentTransactionCallback;
 
-import static com.checkin.app.checkin.Utility.Constants.getPaytmService;
-
 public abstract class PaytmPayment {
     private static final String TAG = PaytmPayment.class.getSimpleName();
 
@@ -56,6 +54,10 @@ public abstract class PaytmPayment {
                 onPaytmTransactionCancel(inResponse, "Transaction cancelled" + inErrorMessage);
             }
         });
+    }
+
+    public static PaytmPGService getPaytmService() {
+        return Constants.IS_RELEASE_BUILD ? PaytmPGService.getProductionService() : PaytmPGService.getStagingService();
     }
 
     protected abstract void onPaytmTransactionResponse(Bundle inResponse);

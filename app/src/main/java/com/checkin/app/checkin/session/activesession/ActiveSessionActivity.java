@@ -15,6 +15,12 @@ import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import androidx.annotation.Nullable;
+import androidx.core.app.ActivityOptionsCompat;
+import androidx.lifecycle.ViewModelProviders;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+
 import com.checkin.app.checkin.Data.Message.MessageModel;
 import com.checkin.app.checkin.Data.Message.MessageModel.MESSAGE_TYPE;
 import com.checkin.app.checkin.Data.Message.MessageObjectModel;
@@ -25,31 +31,28 @@ import com.checkin.app.checkin.Misc.BaseActivity;
 import com.checkin.app.checkin.Misc.BriefModel;
 import com.checkin.app.checkin.R;
 import com.checkin.app.checkin.Search.SearchActivity;
+import com.checkin.app.checkin.Utility.OnBoardingUtils;
+import com.checkin.app.checkin.Utility.Utils;
 import com.checkin.app.checkin.session.activesession.chat.SessionChatActivity;
 import com.checkin.app.checkin.session.activesession.chat.SessionChatDataModel;
 import com.checkin.app.checkin.session.activesession.chat.SessionChatModel;
 import com.checkin.app.checkin.session.model.ActiveSessionModel;
 import com.checkin.app.checkin.session.model.SessionCustomerModel;
 import com.checkin.app.checkin.session.model.SessionOrderedItemModel;
-import com.checkin.app.checkin.Utility.OnBoardingUtils;
-import com.checkin.app.checkin.Utility.Utils;
 import com.checkin.app.checkin.session.model.TrendingDishModel;
 
-import androidx.annotation.Nullable;
-import androidx.core.app.ActivityOptionsCompat;
-import androidx.lifecycle.ViewModelProviders;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 
 public class ActiveSessionActivity extends BaseActivity implements
         ActiveSessionMemberAdapter.SessionMemberInteraction, ActiveSessionTrendingDishAdapter.SessionTrendingDishInteraction {
+
     public static final String KEY_SP_INTERACT_WITH_US = "sp.interact.with.us";
     public static final String KEY_INTERACT_WITH_US = "interact.with.us";
     public static final String SP_MENU = "sp.menu";
     private static final int RC_SEARCH_MEMBER = 201;
+
     @BindView(R.id.rv_session_members)
     RecyclerView rvMembers;
     @BindView(R.id.rv_as_trending_dishes)
@@ -76,8 +79,6 @@ public class ActiveSessionActivity extends BaseActivity implements
     TextView tvSessionCheckout;
     @BindView(R.id.btn_active_session_menu)
     ImageView btnSessionMenu;
-    @BindView(R.id.view_proxy_menu)
-    View viewMenuIcon;
     @BindView(R.id.rl_container_session_orders)
     RelativeLayout rlSessionOrders;
     @BindView(R.id.ll_call_waiter_button)
@@ -88,7 +89,13 @@ public class ActiveSessionActivity extends BaseActivity implements
     LinearLayout llRefillGlass;
     @BindView(R.id.tv_interact_with_us)
     TextView tvInteractWithUs;
+
     private ActiveSessionViewModel mViewModel;
+    private ActiveSessionMemberAdapter mSessionMembersAdapter;
+    private ActiveSessionTrendingDishAdapter mTrendingDishAdapter;
+    private ActiveSessionViewOrdersFragment mOrdersFragment;
+
+
     private final BroadcastReceiver mReceiver = new BroadcastReceiver() {
         @Override
         public void onReceive(Context context, Intent intent) {
@@ -137,9 +144,6 @@ public class ActiveSessionActivity extends BaseActivity implements
             }
         }
     };
-    private ActiveSessionMemberAdapter mSessionMembersAdapter;
-    private ActiveSessionTrendingDishAdapter mTrendingDishAdapter;
-    private ActiveSessionViewOrdersFragment mOrdersFragment;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -226,7 +230,7 @@ public class ActiveSessionActivity extends BaseActivity implements
         });
 
 
-        mViewModel.getTrendingItem().observe(this, inventoryItemModels -> {
+        mViewModel.getMenuTrendingItems().observe(this, inventoryItemModels -> {
 
             if (inventoryItemModels == null)
                 return;
@@ -263,7 +267,7 @@ public class ActiveSessionActivity extends BaseActivity implements
     }
 
     private void explainSession() {
-        OnBoardingUtils.conditionalOnBoarding(this, SP_MENU, true, new OnBoardingUtils.OnBoardingModel("Checkout your menu here!", viewMenuIcon));
+        OnBoardingUtils.conditionalOnBoarding(this, SP_MENU, true, new OnBoardingUtils.OnBoardingModel("Checkout your menu here!", btnSessionMenu));
     }
 
     // region UI-Update
@@ -325,7 +329,7 @@ public class ActiveSessionActivity extends BaseActivity implements
 
     @OnClick(R.id.btn_active_session_menu)
     public void onListMenu() {
-        if (mViewModel.getShopPk() > 0){
+        if (mViewModel.getShopPk() > 0) {
             btnSessionMenu.setEnabled(false);
             SessionMenuActivity.startWithSession(this, mViewModel.getShopPk(), null, null);
         }
