@@ -89,20 +89,21 @@
 
             <TextView
                 android:id="@+id/tv_invoice_session_paid_via"
+                style="@style/GreyTextStyle"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                style="@style/GreyTextStyle"
-                android:text="Paid via"
-                android:gravity="center"
-                android:textSize="@dimen/font_small"
                 android:drawableBottom="@drawable/ic_paytm_logo"
                 android:drawablePadding="@dimen/spacing_tiny"
+                android:gravity="center"
                 android:paddingTop="@dimen/spacing_small"
+                android:text="Paid via"
+                android:textSize="@dimen/font_small"
+                app:layout_constraintBottom_toTopOf="@+id/tv_invoice_session_table"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent"/>
+                app:layout_constraintTop_toTopOf="parent" />
 
-            <TextView
+            <!--<TextView
                 android:id="@+id/tv_invoice_session_member_count"
                 style="@style/GreyHeadingStyle"
                 android:layout_width="wrap_content"
@@ -115,7 +116,7 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintVertical_chainStyle="packed"
                 tools:text="2" /> />
-
+-->
             <TextView
                 android:id="@+id/tv_invoice_session_table"
                 style="@style/GreyTextStyle"
@@ -123,9 +124,10 @@
                 android:layout_height="wrap_content"
                 android:paddingTop="@dimen/spacing_tiny"
                 android:paddingBottom="@dimen/spacing_tiny"
+                app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/tv_invoice_session_member_count"
+                app:layout_constraintTop_toBottomOf="@+id/tv_invoice_session_paid_via"
                 tools:text="TABLE 4" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>

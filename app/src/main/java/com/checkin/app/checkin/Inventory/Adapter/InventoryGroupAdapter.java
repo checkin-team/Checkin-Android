@@ -5,16 +5,22 @@ import android.animation.AnimatorListenerAdapter;
 import android.animation.AnimatorSet;
 import android.animation.ValueAnimator;
 import android.os.Build;
-import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewConfiguration;
 import android.view.ViewGroup;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.Switch;
 import android.widget.TextView;
+
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentStatePagerAdapter;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.checkin.app.checkin.Inventory.Fragment.InventoryItemsFragment;
 import com.checkin.app.checkin.Inventory.Model.InventoryGroupModel;
@@ -29,13 +35,6 @@ import com.google.android.material.tabs.TabLayout;
 import java.util.ArrayList;
 import java.util.List;
 
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentManager;
-import androidx.fragment.app.FragmentStatePagerAdapter;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
@@ -233,17 +232,17 @@ public class InventoryGroupAdapter extends RecyclerView.Adapter<InventoryGroupAd
         }
 
         void showMenu(View view) {
-            LinearLayout.LayoutParams layoutParams = (LinearLayout.LayoutParams) tvGroupName.getLayoutParams();
-            layoutParams.gravity = Gravity.CENTER;
-            tvGroupName.setLayoutParams(layoutParams);
             Animator sizeChangeAnim = AnimUtils.changeViewSize(view, AnimUtils.NO_CHANGE, (int) view.getResources().getDimension(R.dimen.height_menu_group_expanded));
             Animator hideImageAnim = AnimUtils.hideView(imGroupIcon);
+            int newImageSize = ((int) view.getResources().getDimension(R.dimen.button_height_short));
+            Animator sizeDecreaseImageAnim = AnimUtils.changeViewSize(imGroupIcon, newImageSize, newImageSize);
             Animator showMenuAnim = AnimUtils.showView(vSubGroupWrapper);
             ValueAnimator scrollAnimator = ValueAnimator.ofInt(1, 2, 3, 4);
-            scrollAnimator.setDuration(AnimUtils.DEFAULT_DURATION).addUpdateListener(animation ->
-                    ((LinearLayoutManager) mRecyclerView.getLayoutManager()).scrollToPositionWithOffset(getAdapterPosition(), 0));
+            scrollAnimator.setDuration(AnimUtils.DEFAULT_DURATION)
+                    .addUpdateListener(animation ->
+                            ((LinearLayoutManager) mRecyclerView.getLayoutManager()).scrollToPositionWithOffset(getAdapterPosition(), 0));
             AnimatorSet animatorSet = new AnimatorSet();
-            animatorSet.playTogether(sizeChangeAnim, hideImageAnim, showMenuAnim, scrollAnimator);
+            animatorSet.playTogether(hideImageAnim, sizeDecreaseImageAnim, sizeChangeAnim, showMenuAnim, scrollAnimator);
             isExpanded = true;
             animatorSet.addListener(new AnimatorListenerAdapter() {
                 @Override
@@ -255,15 +254,14 @@ public class InventoryGroupAdapter extends RecyclerView.Adapter<InventoryGroupAd
         }
 
         void hideMenu(View view) {
-            LinearLayout.LayoutParams layoutParams = (LinearLayout.LayoutParams) tvGroupName.getLayoutParams();
-            layoutParams.gravity = Gravity.CENTER;
-            tvGroupName.setLayoutParams(layoutParams);
             Animator sizeChangeAnim = AnimUtils.changeViewSize(view, AnimUtils.NO_CHANGE, (int) view.getResources().getDimension(R.dimen.height_menu_group_collapsed));
             Animator showImageAnim = AnimUtils.showView(imGroupIcon);
+            int newImageSize = ((int) view.getResources().getDimension(R.dimen.button_height_medium));
+            Animator sizeIncreaseImageAnim = AnimUtils.changeViewSize(imGroupIcon, newImageSize, newImageSize);
             Animator hideMenuAnim = AnimUtils.hideView(vSubGroupWrapper);
-            Animator showTitleAnim = AnimUtils.animateAlpha(tvGroupName,1.5f, 350L);
+            Animator showTitleAnim = AnimUtils.animateAlpha(tvGroupName, 1.5f, 350L);
             AnimatorSet animatorSet = new AnimatorSet();
-            animatorSet.playTogether(sizeChangeAnim, showImageAnim, hideMenuAnim, showTitleAnim);
+            animatorSet.playTogether(sizeChangeAnim, sizeIncreaseImageAnim, hideMenuAnim, showImageAnim, showTitleAnim);
             isExpanded = false;
             animatorSet.addListener(new AnimatorListenerAdapter() {
                 @Override

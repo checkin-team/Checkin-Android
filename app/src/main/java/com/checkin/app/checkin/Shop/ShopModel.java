@@ -250,8 +250,8 @@ public class ShopModel {
         }
 
         public static PAYMENT_MODE getByTag(String tag) {
-            if(tag == null)
-                return null ;
+            if (tag == null)
+                return null;
             for (PAYMENT_MODE mode : PAYMENT_MODE.values()) {
                 if (mode.tag.contentEquals(tag))
                     return mode;

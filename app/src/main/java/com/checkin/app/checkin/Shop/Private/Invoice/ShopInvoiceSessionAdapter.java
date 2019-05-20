@@ -5,6 +5,9 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import androidx.annotation.NonNull;
+import androidx.recyclerview.widget.RecyclerView;
+
 import com.checkin.app.checkin.Misc.BriefModel;
 import com.checkin.app.checkin.R;
 import com.checkin.app.checkin.Shop.ShopModel;
@@ -13,8 +16,6 @@ import com.checkin.app.checkin.Utility.Utils;
 import java.util.List;
 import java.util.Locale;
 
-import androidx.annotation.NonNull;
-import androidx.recyclerview.widget.RecyclerView;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
@@ -91,8 +92,8 @@ public class ShopInvoiceSessionAdapter extends RecyclerView.Adapter<ShopInvoiceS
             tvMemberCount.setText(String.valueOf(data.getCountCustomers()));
             tvItemCount.setText(String.format(Locale.ENGLISH, " | %d item(s)", data.getCountOrders()));
             tvTable.setText(data.getTable());
-            if(data.getPaymentMode()!=null)
-            tvPaidVia.setCompoundDrawablesWithIntrinsicBounds(0, 0, 0, ShopModel.getPaymentModeIcon(data.getPaymentMode()));
+            if (data.getPaymentMode() != null)
+                tvPaidVia.setCompoundDrawablesWithIntrinsicBounds(0, 0, 0, ShopModel.getPaymentModeIcon(data.getPaymentMode()));
         }
     }
 }

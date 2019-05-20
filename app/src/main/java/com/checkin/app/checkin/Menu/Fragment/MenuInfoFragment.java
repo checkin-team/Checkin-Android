@@ -9,14 +9,14 @@ import android.view.animation.AnimationUtils;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.bumptech.glide.Glide;
-import com.checkin.app.checkin.Inventory.Model.InventoryItemModel;
-import com.checkin.app.checkin.Menu.Model.MenuItemModel;
-import com.checkin.app.checkin.R;
-
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+
+import com.bumptech.glide.Glide;
+import com.checkin.app.checkin.Menu.Model.MenuItemModel;
+import com.checkin.app.checkin.R;
+
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.Unbinder;
@@ -32,8 +32,8 @@ public class MenuInfoFragment extends Fragment {
     @BindView(R.id.im_menu_info_image)
     ImageView imMenuItemInfo;
     private Unbinder unbinder;
+
     private MenuItemModel item;
-    private InventoryItemModel inventoryItem;
 
     public MenuInfoFragment() {
     }
@@ -41,12 +41,6 @@ public class MenuInfoFragment extends Fragment {
     public static MenuInfoFragment newInstance(MenuItemModel item) {
         MenuInfoFragment fragment = new MenuInfoFragment();
         fragment.item = item;
-        return fragment;
-    }
-
-    public static MenuInfoFragment newInstanceInventory(InventoryItemModel item) {
-        MenuInfoFragment fragment = new MenuInfoFragment();
-        fragment.inventoryItem = item;
         return fragment;
     }
 

@@ -6,6 +6,9 @@ import android.view.ViewGroup;
 import android.widget.Switch;
 import android.widget.TextView;
 
+import androidx.annotation.NonNull;
+import androidx.recyclerview.widget.RecyclerView;
+
 import com.checkin.app.checkin.Inventory.Model.InventoryItemModel;
 import com.checkin.app.checkin.R;
 import com.checkin.app.checkin.Utility.Utils;
@@ -13,8 +16,6 @@ import com.checkin.app.checkin.Utility.Utils;
 import java.util.List;
 import java.util.Locale;
 
-import androidx.annotation.NonNull;
-import androidx.recyclerview.widget.RecyclerView;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
@@ -91,7 +92,6 @@ public class InventoryItemAdapter extends RecyclerView.Adapter<InventoryItemAdap
 
         void bindData(InventoryItemModel menuItem) {
             this.mItem = menuItem;
-            this.mItem.setItemHolder(this);
 
             tvItemName.setText(menuItem.getName());
             tvItemPrices.setText(String.format(
