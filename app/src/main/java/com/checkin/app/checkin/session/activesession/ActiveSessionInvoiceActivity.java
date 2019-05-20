@@ -8,7 +8,6 @@ import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.text.Editable;
 import android.text.Html;
-import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
@@ -44,7 +43,6 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 import butterknife.OnTextChanged;
 
-import static com.checkin.app.checkin.Shop.ShopModel.PAYMENT_MODE.CASH;
 import static com.checkin.app.checkin.Shop.ShopModel.PAYMENT_MODE.PAYTM;
 import static com.checkin.app.checkin.session.activesession.ActiveSessionPaymentOptions.KEY_PAYMENT_MODE_RESULT;
 import static com.checkin.app.checkin.session.activesession.ActiveSessionPaymentOptions.KEY_SESSION_AMOUNT;
@@ -195,7 +193,7 @@ public class ActiveSessionInvoiceActivity extends BaseActivity {
                 tryShowTotalSavings();
             }
 
-            if(resource.status != Resource.Status.LOADING )
+            if (resource.status != Resource.Status.LOADING)
                 stopRefreshing();
         });
 
@@ -396,6 +394,12 @@ public class ActiveSessionInvoiceActivity extends BaseActivity {
             mViewModel.requestCheckout(mBillModel.getTip(), selectedMode, override);
         else
             Utils.toast(this, "Please select the Payment Mode.");
+    }
+
+    @OnTextChanged(R.id.tv_invoice_total)
+    public void setTotalAmount() {
+        if (selectedMode != null && selectedMode.equals(PAYTM))
+            tvPaymentMode.setText(tvInvoiceTotal.getText().toString());
     }
 
     @OnClick(R.id.container_as_payment_mode_change)
