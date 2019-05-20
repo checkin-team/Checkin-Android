@@ -1,7 +1,9 @@
 package com.checkin.app.checkin.session.activesession;
 
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.view.View;
+import android.widget.EditText;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -14,16 +16,16 @@ import com.checkin.app.checkin.Misc.BaseFragment;
 import com.checkin.app.checkin.R;
 import com.checkin.app.checkin.Utility.Utils;
 import com.checkin.app.checkin.session.model.PromoDetailModel;
-import com.miguelcatalan.materialsearchview.MaterialSearchView;
 
 import butterknife.BindView;
+import butterknife.OnClick;
 
 public class ActiveSessionPromoFragment extends BaseFragment implements ActiveSessionPromoAdapter.onPromoCodeItemListener {
 
     @BindView(R.id.rv_available_promos)
     RecyclerView rvPromos;
-    @BindView(R.id.as_promo_search_view)
-    MaterialSearchView promoSearch;
+    @BindView(R.id.ed_promo_code)
+    EditText edPromoCode;
 
     private ActiveSessionInvoiceViewModel mViewModel;
     private ActiveSessionPromoAdapter mAdapter;
@@ -75,6 +77,14 @@ public class ActiveSessionPromoFragment extends BaseFragment implements ActiveSe
             }
             Utils.toast(requireContext(), msg);
         });
+    }
+
+    @OnClick(R.id.tv_apply_promo)
+    public void onPromoCodeApplyClick() {
+        String promoCode = edPromoCode.getText().toString();
+        if (!TextUtils.isEmpty(promoCode)) {
+            mViewModel.availPromoCode(promoCode);
+        }
     }
 
     @Override

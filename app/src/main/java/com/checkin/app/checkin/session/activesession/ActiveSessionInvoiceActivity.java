@@ -5,6 +5,7 @@ import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.text.Editable;
+import android.text.Html;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
@@ -26,6 +27,7 @@ import com.checkin.app.checkin.R;
 import com.checkin.app.checkin.Shop.ShopModel;
 import com.checkin.app.checkin.Utility.Constants;
 import com.checkin.app.checkin.Utility.Utils;
+import com.checkin.app.checkin.session.model.PromoDetailModel;
 import com.checkin.app.checkin.session.model.SessionBillModel;
 import com.checkin.app.checkin.session.model.SessionInvoiceModel;
 import com.checkin.app.checkin.session.model.SessionPromoModel;
@@ -150,10 +152,6 @@ public class ActiveSessionInvoiceActivity extends AppCompatActivity {
         mBillHolder.bind(data.getBill());
         edInvoiceTip.setText(data.getBill().formatTip());
         tvInvoiceTotal.setText(Utils.formatCurrencyAmount(this, data.getBill().getTotal()));
-//
-//        if (data.getBill().getTotalSaving() > 0) {
-//            setDiscountInfo("You're saving", data.getBill().getTotalSaving(), getResources().getColor(R.color.apple_green));
-//        }
     }
 
     private void setupObserver() {
@@ -162,6 +160,7 @@ public class ActiveSessionInvoiceActivity extends AppCompatActivity {
                 return;
             if (resource.status == Resource.Status.SUCCESS && resource.data != null) {
                 setupData(resource.data);
+                tryShowTotalSavings();
             }
         });
 
@@ -198,7 +197,7 @@ public class ActiveSessionInvoiceActivity extends AppCompatActivity {
             if (isRequestedCheckout) {
                 edInvoiceTip.setBackground(getResources().getDrawable(R.drawable.bordered_text_light_grey));
                 edInvoiceTip.setPadding(15, 0, 0, 0);
-                btnRequestCheckout.setText("Requested Checkout");
+                btnRequestCheckout.setText(R.string.session_inform_requested_checkout);
             } else {
                 setPaymentModeUpdates();
             }
@@ -207,6 +206,7 @@ public class ActiveSessionInvoiceActivity extends AppCompatActivity {
         mViewModel.getObservableData().observe(this, resource -> {
             if (resource == null)
                 return;
+            tryShowTotalSavings();
             Utils.toast(this, resource.message);
         });
 
@@ -215,6 +215,7 @@ public class ActiveSessionInvoiceActivity extends AppCompatActivity {
                 return;
             if (sessionPromoModelResource.status == Resource.Status.SUCCESS && sessionPromoModelResource.data != null) {
                 showPromoDetails(sessionPromoModelResource.data);
+                tryShowTotalSavings();
             } else if (sessionPromoModelResource.status == Resource.Status.ERROR_NOT_FOUND) {
                 showPromoApply();
             }
@@ -223,9 +224,9 @@ public class ActiveSessionInvoiceActivity extends AppCompatActivity {
         mViewModel.getPromoCodes().observe(this, listResource -> {
             if (listResource == null)
                 return;
-            if (listResource.status == Resource.Status.SUCCESS && listResource.data != null) {
-//                setDiscountInfo("Pay online to avail ", listResource.data.get(0).getName(), getResources().getColor(R.color.primary_red));
-            } else if (listResource.status == Resource.Status.ERROR_INVALID_REQUEST) {
+            if (listResource.status == Resource.Status.SUCCESS && listResource.data != null && listResource.data.size() > 0) {
+                tryShowAvailableOffer(listResource.data.get(0));
+            } else if (listResource.status == Resource.Status.ERROR_FORBIDDEN) {
                 showPromoInvalid();
             } else if (listResource.status != Resource.Status.LOADING) {
                 Utils.toast(this, listResource.message);
@@ -233,10 +234,33 @@ public class ActiveSessionInvoiceActivity extends AppCompatActivity {
         });
     }
 
+    private void tryShowAvailableOffer(PromoDetailModel promoDetailModel) {
+        if (!mViewModel.isSessionBenefitsShown())
+            showSessionBenefit(String.format("Offer available! %s", promoDetailModel.getName()));
+    }
+
+    private void tryShowTotalSavings() {
+        double savings = 0;
+        Resource<SessionInvoiceModel> invoiceModelResource = mViewModel.getSessionInvoice().getValue();
+        if (invoiceModelResource != null && invoiceModelResource.data != null) {
+            savings = invoiceModelResource.data.getBill().getTotalSaving();
+        } else {
+            Resource<SessionPromoModel> promoModelResource = mViewModel.getSessionAppliedPromo().getValue();
+            if (promoModelResource != null && promoModelResource.data != null) {
+                savings = promoModelResource.data.getOfferAmount();
+            }
+        }
+        if (savings > 0)
+            showSessionBenefit(String.format(getString(R.string.format_session_benefits_savings), savings));
+        else
+            hideSessionBenefit();
+    }
+
     private void showPromoInvalid() {
         resetPromoCards();
-        tvAppliedPromoDetails.setVisibility(View.VISIBLE);
-        tvAppliedPromoDetails.setCompoundDrawablesRelativeWithIntrinsicBounds(R.drawable.ic_error_exclamation, 0, 0, 0);
+        tvPromoInvalidStatus.setVisibility(View.VISIBLE);
+        tvPromoInvalidStatus.setText(R.string.label_session_offer_not_allowed);
+        tvPromoInvalidStatus.setCompoundDrawablesRelativeWithIntrinsicBounds(R.drawable.ic_error_exclamation, 0, 0, 0);
     }
 
     private void showPromoApply() {
@@ -248,12 +272,6 @@ public class ActiveSessionInvoiceActivity extends AppCompatActivity {
         resetPromoCards();
         containerRemovePromo.setVisibility(View.VISIBLE);
         tvAppliedPromoDetails.setText(data.getDetails());
-    }
-
-    private void resetPromoCards() {
-        containerRemovePromo.setVisibility(View.GONE);
-        containerApplyPromo.setVisibility(View.GONE);
-        tvPromoInvalidStatus.setVisibility(View.GONE);
     }
 
     private void paytmObserver() {
@@ -364,6 +382,24 @@ public class ActiveSessionInvoiceActivity extends AppCompatActivity {
             default:
                 break;
         }
+    }
+
+    private void showSessionBenefit(String msg) {
+        containerSessionBenefits.setVisibility(View.VISIBLE);
+        tvSessionBenefits.setText(Html.fromHtml(msg));
+        mViewModel.showedSessionBenefits();
+    }
+
+    private void hideSessionBenefit() {
+        containerSessionBenefits.setVisibility(View.GONE);
+    }
+
+    private void resetPromoCards() {
+        containerRemovePromo.setVisibility(View.GONE);
+        containerApplyPromo.setVisibility(View.GONE);
+        tvPromoInvalidStatus.setVisibility(View.GONE);
+        tvPromoInvalidStatus.setText(R.string.active_session_fetching_offers);
+        tvPromoInvalidStatus.setCompoundDrawablesWithIntrinsicBounds(0, 0, 0, 0);
     }
 
     @OnTextChanged(R.id.tv_invoice_total)

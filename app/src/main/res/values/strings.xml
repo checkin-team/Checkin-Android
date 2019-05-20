@@ -119,6 +119,7 @@
 
     <string name="symbol_currency_rupee">&#x20B9;</string>
     <string name="format_currency_rupee">&#x20B9; %s</string>
+    <string name="format_session_benefits_savings">You\'re saving &lt;font color="#7ed321"&gt;&#x20B9; %.2f&lt;/font&gt;</string>
 
     <!-- Active Session -->
     <string name="action_list_orders">View Orders</string>
@@ -157,7 +158,9 @@
     <string name="recommendation_coming_soon">Recommendation of dishes coming soon</string>
     <string name="pending_request">(Pending Request)</string>
     <string name="accept_request">Accept Request</string>
+    <string name="session_inform_requested_checkout">Requested Checkout</string>
     <string name="session_requested_checkout">Your checkout request has been sent.\n Waiter is coming to you soon</string>
+    <string name="session_payment_mode_via_cash">Via Cash</string>
 
     <string name="status_order_open">Not Accepted</string>
     <string name="status_order_cancelled">Order Cancelled</string>
@@ -204,5 +207,6 @@
     <string name="session_benefits_apply_promo_code">Apply Promo Code</string>
     <string name="active_session_fetching_offers">Fetching Available Offers…</string>
     <string name="button_apply">Apply</string>
+    <string name="label_session_offer_not_allowed">Offers not allowed - Register your mobile number first.</string>
 
 </resources>

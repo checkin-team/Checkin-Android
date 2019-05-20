@@ -11,6 +11,7 @@
     <dimen name="font_tiny">8sp</dimen>
 
     <!-- typical spacing between two views -->
+    <dimen name="spacing_incredible">75dp</dimen>
     <dimen name="spacing_gigantic">60dp</dimen>
     <dimen name="spacing_very_huge">50dp</dimen>
     <dimen name="spacing_huge">40dp</dimen>

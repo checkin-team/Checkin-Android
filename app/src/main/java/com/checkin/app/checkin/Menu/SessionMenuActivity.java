@@ -4,7 +4,6 @@ import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
-import android.os.Handler;
 import android.speech.RecognizerIntent;
 import android.text.InputType;
 import android.text.TextUtils;
@@ -15,16 +14,23 @@ import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.TextView;
 
+import androidx.annotation.Nullable;
+import androidx.appcompat.app.AlertDialog;
+import androidx.appcompat.widget.Toolbar;
+import androidx.drawerlayout.widget.DrawerLayout;
+import androidx.fragment.app.Fragment;
+import androidx.lifecycle.ViewModelProviders;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+
 import com.checkin.app.checkin.Data.Resource.Status;
 import com.checkin.app.checkin.Menu.Adapter.MenuCartAdapter;
-import com.checkin.app.checkin.Menu.Adapter.MenuItemAdapter;
 import com.checkin.app.checkin.Menu.Fragment.ItemCustomizationFragment;
 import com.checkin.app.checkin.Menu.Fragment.MenuFilterFragment;
 import com.checkin.app.checkin.Menu.Fragment.MenuGroupsFragment;
 import com.checkin.app.checkin.Menu.Fragment.MenuGroupsFragment.SESSION_STATUS;
 import com.checkin.app.checkin.Menu.Fragment.MenuInfoFragment;
 import com.checkin.app.checkin.Menu.Fragment.MenuItemSearchFragment;
-import com.checkin.app.checkin.Menu.Model.ItemCustomizationFieldModel;
 import com.checkin.app.checkin.Menu.Model.MenuItemModel;
 import com.checkin.app.checkin.Menu.Model.OrderedItemModel;
 import com.checkin.app.checkin.Misc.BaseActivity;
@@ -39,15 +45,6 @@ import com.miguelcatalan.materialsearchview.MaterialSearchView;
 import java.util.ArrayList;
 import java.util.Locale;
 
-import androidx.annotation.Nullable;
-import androidx.appcompat.app.AlertDialog;
-import androidx.appcompat.widget.Toolbar;
-import androidx.core.view.GravityCompat;
-import androidx.drawerlayout.widget.DrawerLayout;
-import androidx.fragment.app.Fragment;
-import androidx.lifecycle.ViewModelProviders;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
@@ -148,18 +145,18 @@ public class SessionMenuActivity extends BaseActivity implements
             mViewModel.searchMenuItemById(itemPk);
             mViewModel.getMenuItem().observe(this, itemModel -> {
                 if (itemModel != null) {
-                    if(itemModel.isComplexItem()){
+                    if (itemModel.isComplexItem()) {
                         mViewModel.newOrderedItem(itemModel);
-                        onItemInteraction(itemModel,1);
-                    }else{
+                        onItemInteraction(itemModel, 1);
+                    } else {
                         onMenuItemAdded(itemModel);
                         endToggle.toggle();
                     }
                 }
             });
-        }else {
-            if(isSessionActive())
-            explainMenu();
+        } else {
+            if (isSessionActive())
+                explainMenu();
         }
     }
 
@@ -211,7 +208,7 @@ public class SessionMenuActivity extends BaseActivity implements
         if (isSessionActive()) {
             DrawerLayout drawerLayout = findViewById(R.id.drawer_menu);
             endToggle = new EndDrawerToggle(
-                    this, drawerLayout, toolbar, R.string.menu_drawer_open, R.string.menu_drawer_close, R.drawable.ic_cart_white){
+                    this, drawerLayout, toolbar, R.string.menu_drawer_open, R.string.menu_drawer_close, R.drawable.ic_cart_white) {
 
                 public void onDrawerClosed(View view) {
                     super.onDrawerClosed(view);

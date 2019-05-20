@@ -34,6 +34,8 @@ public class ActiveSessionInvoiceViewModel extends BaseViewModel {
     private MediatorLiveData<Resource<SessionPromoModel>> mSessionPromo = new MediatorLiveData<>();
     private MutableLiveData<Boolean> mIsRequestedCheckout = new MutableLiveData<>(false);
 
+    private boolean mSessionBenefitsSet = false;
+
     public ActiveSessionInvoiceViewModel(@NonNull Application application) {
         super(application);
         mRepository = ActiveSessionRepository.getInstance(application);
@@ -139,6 +141,14 @@ public class ActiveSessionInvoiceViewModel extends BaseViewModel {
     public boolean isOfferApplied() {
         Resource<SessionPromoModel> resource = mSessionPromo.getValue();
         return resource != null && resource.data != null;
+    }
+
+    public void showedSessionBenefits() {
+        mSessionBenefitsSet = true;
+    }
+
+    public boolean isSessionBenefitsShown() {
+        return mSessionBenefitsSet;
     }
 
     @Override

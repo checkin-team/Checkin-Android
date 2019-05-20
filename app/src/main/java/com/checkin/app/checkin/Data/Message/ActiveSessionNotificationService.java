@@ -7,15 +7,15 @@ import android.content.Intent;
 import android.os.IBinder;
 import android.widget.RemoteViews;
 
+import androidx.annotation.Nullable;
+import androidx.core.app.NotificationCompat;
+
 import com.bumptech.glide.request.target.NotificationTarget;
 import com.checkin.app.checkin.Menu.SessionMenuActivity;
 import com.checkin.app.checkin.Misc.BriefModel;
 import com.checkin.app.checkin.R;
-import com.checkin.app.checkin.session.activesession.ActiveSessionActivity;
 import com.checkin.app.checkin.Utility.GlideApp;
-
-import androidx.annotation.Nullable;
-import androidx.core.app.NotificationCompat;
+import com.checkin.app.checkin.session.activesession.ActiveSessionActivity;
 
 public class ActiveSessionNotificationService extends Service {
     public static final String ACTIVE_RESTAURANT_DETAIL = "active.restaurant.detail";
@@ -35,6 +35,8 @@ public class ActiveSessionNotificationService extends Service {
 
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
+        if (intent == null)
+            return START_STICKY;
         if (Constants.SERVICE_ACTION_FOREGROUND_START.equals(intent.getAction())) {
             if (mNotification == null) showNotification(intent);
         } else if (Constants.SERVICE_ACTION_FOREGROUND_STOP.equals(intent.getAction())) {
@@ -102,7 +104,7 @@ public class ActiveSessionNotificationService extends Service {
     }
 
     private void openMenu() {
-        Intent menuIntent = SessionMenuActivity.withSession(this, mRestaurantPk, mSessionPk,null);
+        Intent menuIntent = SessionMenuActivity.withSession(this, mRestaurantPk, mSessionPk, null);
         menuIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
         startActivity(menuIntent);
     }

@@ -263,7 +263,7 @@ public class ShopModel {
             case CASH:
                 return "via Cash";
             case PAYTM:
-                return "via Paytm";
+                return "";
             default:
                 return "via Cash";
         }

@@ -117,7 +117,12 @@ public class SessionBillModel {
     }
 
     public double getTotalSaving() {
-        return discount + offers;
+        double savings = 0;
+        if (discount != null)
+            savings += discount;
+        if (offers != null)
+            savings += offers;
+        return savings;
     }
 
     private void calculateTotal() {

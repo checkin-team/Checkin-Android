@@ -2,44 +2,34 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:padding="@dimen/spacing_normal"
+    android:background="@color/white"
     android:orientation="vertical"
-    android:background="@color/white">
+    android:padding="@dimen/spacing_normal">
 
-    <FrameLayout
+
+    <LinearLayout
         style="@style/InputTextStyle"
         android:layout_width="match_parent"
-        android:layout_height="?android:attr/actionBarSize">
+        android:orientation="horizontal">
 
-        <LinearLayout
-            android:layout_width="match_parent"
+        <EditText
+            android:id="@+id/ed_promo_code"
+            style="@style/InputTextStyleTransparentBackground"
+            android:layout_width="0dp"
             android:layout_height="match_parent"
-            android:orientation="horizontal">
+            android:layout_weight="1"
+            android:gravity="center_vertical"
+            android:text="Enter promo code"
+            android:textSize="@dimen/font_normal" />
 
-            <TextView
-                android:id="@+id/tv_search"
-                style="@style/PinkishGreySmallTextStyle"
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:layout_weight="1"
-                android:gravity="center_vertical"
-                android:text="Search for promo code"
-                android:textSize="@dimen/font_normal" />
-
-            <TextView
-                style="@style/RedSmallTextStyle"
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:gravity="center_vertical"
-                android:text="Apply"
-                android:textSize="@dimen/font_normal" />
-        </LinearLayout>
-
-        <com.miguelcatalan.materialsearchview.MaterialSearchView
-            android:id="@+id/as_promo_search_view"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent" />
-    </FrameLayout>
+        <TextView
+            android:id="@+id/tv_apply_promo"
+            style="@style/RedTextStyle"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:gravity="center_vertical"
+            android:text="Apply" />
+    </LinearLayout>
 
     <TextView
         style="@style/GreyTextStyle"

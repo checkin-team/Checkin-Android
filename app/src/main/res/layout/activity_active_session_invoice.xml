@@ -302,7 +302,7 @@
                     android:drawableStart="@drawable/ic_cash_grey"
                     android:drawablePadding="@dimen/spacing_normal"
                     android:gravity="center"
-                    android:text="Via Cash" />
+                    android:text="@string/session_payment_mode_via_cash" />
 
                 <include
                     layout="@layout/incl_dotted_view"

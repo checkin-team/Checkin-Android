@@ -6,8 +6,8 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.checkin.app.checkin.R;
-import com.checkin.app.checkin.session.model.SessionBillModel;
 import com.checkin.app.checkin.Utility.Utils;
+import com.checkin.app.checkin.session.model.SessionBillModel;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -37,6 +37,8 @@ public class BillHolder {
     public BillHolder(View itemView) {
         ButterKnife.bind(this, itemView);
         mContext = itemView.getContext();
+        containerInvoicePromo.setVisibility(View.GONE);
+        containerInvoiceDiscount.setVisibility(View.GONE);
     }
 
     public void bind(SessionBillModel bill) {
@@ -52,7 +54,7 @@ public class BillHolder {
         if (bill.getOffers() != null) {
             tvInvoicePromoCode.setText(bill.getPromo());
             tvInvoicePromo.setText(Utils.formatCurrencyAmount(mContext, bill.getOffers()));
-        }else
+        } else
             containerInvoicePromo.setVisibility(View.GONE);
         // Discount
         if (bill.getDiscount() != null)
