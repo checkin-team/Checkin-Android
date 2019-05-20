@@ -32,9 +32,12 @@ public class ActiveSessionInvoiceViewModel extends BaseViewModel {
     private MediatorLiveData<Resource<PaytmModel>> mPaytmData = new MediatorLiveData<>();
     private MediatorLiveData<Resource<List<PromoDetailModel>>> mPromoList = new MediatorLiveData<>();
     private MediatorLiveData<Resource<SessionPromoModel>> mSessionPromo = new MediatorLiveData<>();
+    private MediatorLiveData<Resource<ObjectNode>> mPromoDeletedData = new MediatorLiveData<>();
+    private MediatorLiveData<Resource<ObjectNode>> mPaytmCallbackData = new MediatorLiveData<>();
     private MutableLiveData<Boolean> mIsRequestedCheckout = new MutableLiveData<>(false);
 
     private boolean mSessionBenefitsSet = false;
+    private boolean mSessionPromoInvalid = false;
 
     public ActiveSessionInvoiceViewModel(@NonNull Application application) {
         super(application);
@@ -71,7 +74,11 @@ public class ActiveSessionInvoiceViewModel extends BaseViewModel {
         for (String key : keys) {
             data.put(key, String.valueOf(bundle.get(key)));
         }
-        mData.addSource(mRepository.postPaytmResult(data), mData::setValue);
+        mPaytmCallbackData.addSource(mRepository.postPaytmResult(data), mPaytmCallbackData::setValue);
+    }
+
+    public LiveData<Resource<ObjectNode>> getPaytmCallbackData() {
+        return mPaytmCallbackData;
     }
 
     public LiveData<Resource<CheckoutStatusModel>> getCheckoutData() {
@@ -99,7 +106,16 @@ public class ActiveSessionInvoiceViewModel extends BaseViewModel {
     }
 
     public void removePromoCode() {
-        mData.addSource(mRepository.removePromoCode(), mData::setValue);
+        mPromoDeletedData.addSource(mRepository.removePromoCode(), mPromoDeletedData::setValue);
+    }
+
+    public LiveData<Resource<ObjectNode>> getPromoDeletedData() {
+        return Transformations.map(mPromoDeletedData, input -> {
+            if (input != null && input.status == Resource.Status.SUCCESS) {
+                mSessionPromo.setValue(Resource.errorNotFound("Not Found"));
+            }
+            return input;
+        });
     }
 
     public void fetchSessionAppliedPromo() {
@@ -108,8 +124,12 @@ public class ActiveSessionInvoiceViewModel extends BaseViewModel {
 
     public LiveData<Resource<SessionPromoModel>> getSessionAppliedPromo() {
         return Transformations.map(mSessionPromo, input -> {
-            if (input != null && input.data != null)
+            if (input == null)
+                return null;
+            if (input.status == Resource.Status.SUCCESS && input.data != null)
                 updateOfferInInvoice(input.data.getCode(), input.data.getOfferAmount());
+            else if (input.status == Resource.Status.ERROR_NOT_FOUND)
+                updateOfferInInvoice(null, null);
             return input;
         });
     }
@@ -149,6 +169,14 @@ public class ActiveSessionInvoiceViewModel extends BaseViewModel {
 
     public boolean isSessionBenefitsShown() {
         return mSessionBenefitsSet;
+    }
+
+    public boolean isSessionPromoInvalid() {
+        return mSessionPromoInvalid;
+    }
+
+    public void setSessionPromoInvalid(boolean value) {
+        mSessionPromoInvalid = value;
     }
 
     @Override

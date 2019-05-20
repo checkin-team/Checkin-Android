@@ -2,7 +2,6 @@ package com.checkin.app.checkin.Misc.paytm;
 
 import android.content.Context;
 import android.os.Bundle;
-import android.util.Log;
 
 import com.checkin.app.checkin.R;
 import com.checkin.app.checkin.Utility.Constants;
@@ -19,7 +18,6 @@ public abstract class PaytmPayment {
         paytmPGService.startPaymentTransaction(context, true, true, new PaytmPaymentTransactionCallback() {
             @Override
             public void onTransactionResponse(Bundle inResponse) {
-                Log.e(TAG, "Response: " + inResponse.toString());
                 onPaytmTransactionResponse(inResponse);
             }
 
@@ -50,7 +48,6 @@ public abstract class PaytmPayment {
 
             @Override
             public void onTransactionCancel(String inErrorMessage, Bundle inResponse) {
-                Log.e(TAG, "Cancel: " + inResponse.toString());
                 onPaytmTransactionCancel(inResponse, "Transaction cancelled" + inErrorMessage);
             }
         });

@@ -14,6 +14,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.Nullable;
+import androidx.annotation.StringRes;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.ViewModelProviders;
@@ -198,15 +199,19 @@ public class ActiveSessionInvoiceActivity extends AppCompatActivity {
                 edInvoiceTip.setBackground(getResources().getDrawable(R.drawable.bordered_text_light_grey));
                 edInvoiceTip.setPadding(15, 0, 0, 0);
                 btnRequestCheckout.setText(R.string.session_inform_requested_checkout);
+                showPromoInvalid(R.string.label_session_offer_not_allowed_session_requested_checkout);
             } else {
                 setPaymentModeUpdates();
             }
         });
 
-        mViewModel.getObservableData().observe(this, resource -> {
+        mViewModel.getPromoDeletedData().observe(this, resource -> {
             if (resource == null)
                 return;
-            tryShowTotalSavings();
+            if (resource.status == Resource.Status.SUCCESS) {
+                showPromoApply();
+                tryShowTotalSavings();
+            }
             Utils.toast(this, resource.message);
         });
 
@@ -227,7 +232,7 @@ public class ActiveSessionInvoiceActivity extends AppCompatActivity {
             if (listResource.status == Resource.Status.SUCCESS && listResource.data != null && listResource.data.size() > 0) {
                 tryShowAvailableOffer(listResource.data.get(0));
             } else if (listResource.status == Resource.Status.ERROR_FORBIDDEN) {
-                showPromoInvalid();
+                showPromoInvalid(R.string.label_session_offer_not_allowed_phone_not_registered);
             } else if (listResource.status != Resource.Status.LOADING) {
                 Utils.toast(this, listResource.message);
             }
@@ -256,14 +261,19 @@ public class ActiveSessionInvoiceActivity extends AppCompatActivity {
             hideSessionBenefit();
     }
 
-    private void showPromoInvalid() {
+    private void showPromoInvalid(@StringRes int errorMsg) {
+        if (mViewModel.isOfferApplied())
+            return;
         resetPromoCards();
         tvPromoInvalidStatus.setVisibility(View.VISIBLE);
-        tvPromoInvalidStatus.setText(R.string.label_session_offer_not_allowed);
+        tvPromoInvalidStatus.setText(errorMsg);
         tvPromoInvalidStatus.setCompoundDrawablesRelativeWithIntrinsicBounds(R.drawable.ic_error_exclamation, 0, 0, 0);
+        mViewModel.setSessionPromoInvalid(true);
     }
 
     private void showPromoApply() {
+        if (mViewModel.isSessionPromoInvalid())
+            return;
         resetPromoCards();
         containerApplyPromo.setVisibility(View.VISIBLE);
     }
@@ -300,6 +310,15 @@ public class ActiveSessionInvoiceActivity extends AppCompatActivity {
             } else if (paytmModelResource.status != Resource.Status.LOADING) {
                 Utils.toast(this, paytmModelResource.message);
             }
+        });
+
+        mViewModel.getPaytmCallbackData().observe(this, objectNodeResource -> {
+            if (objectNodeResource == null)
+                return;
+            if (objectNodeResource.status == Resource.Status.SUCCESS) {
+                Utils.navigateBackToHome(this);
+            }
+            Utils.toast(this, objectNodeResource.message);
         });
     }
 
@@ -354,7 +373,7 @@ public class ActiveSessionInvoiceActivity extends AppCompatActivity {
 
     @Override
     public boolean onSupportNavigateUp() {
-        finish();
+        onBackPressed();
         return true;
     }
 

@@ -3,6 +3,8 @@ package com.checkin.app.checkin.session.model;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
+import javax.annotation.Nullable;
+
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class SessionBillModel {
     @JsonProperty("subtotal")
@@ -57,8 +59,8 @@ public class SessionBillModel {
     }
 
     @JsonProperty("offers")
-    public void setOffers(Double offers) {
-        this.offers = (offers > 0) ? offers : null;
+    public void setOffers(@Nullable Double offers) {
+        this.offers = (offers != null && offers > 0) ? offers : null;
     }
 
     public String formatSubTotal() {

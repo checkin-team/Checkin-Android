@@ -54,12 +54,14 @@ public class BillHolder {
         if (bill.getOffers() != null) {
             tvInvoicePromoCode.setText(bill.getPromo());
             tvInvoicePromo.setText(Utils.formatCurrencyAmount(mContext, bill.getOffers()));
+            containerInvoicePromo.setVisibility(View.VISIBLE);
         } else
             containerInvoicePromo.setVisibility(View.GONE);
         // Discount
-        if (bill.getDiscount() != null)
+        if (bill.getDiscount() != null) {
             tvInvoiceDiscount.setText(Utils.formatCurrencyAmount(mContext, bill.getDiscount()));
-        else
+            containerInvoiceDiscount.setVisibility(View.VISIBLE);
+        } else
             containerInvoiceDiscount.setVisibility(View.GONE);
         // Tip
         tvInvoiceTip.setText(Utils.formatCurrencyAmount(mContext, bill.getTip()));

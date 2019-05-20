@@ -68,12 +68,15 @@ public class ActiveSessionPromoFragment extends BaseFragment implements ActiveSe
 
             String msg = objectNodeResource.message;
             if (objectNodeResource.status == Resource.Status.SUCCESS) {
+                mViewModel.resetObservableData();
                 if (getFragmentManager() != null) {
                     getFragmentManager().popBackStack();
                 }
                 if (objectNodeResource.data != null && objectNodeResource.data.has("code")) {
                     msg = "Successfully applied " + objectNodeResource.data.get("code");
                 }
+            } else if (objectNodeResource.status == Resource.Status.ERROR_NOT_FOUND) {
+                msg = "Invalid Promo code.";
             }
             Utils.toast(requireContext(), msg);
         });

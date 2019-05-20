@@ -1,7 +1,6 @@
 package com.checkin.app.checkin.Misc.paytm;
 
 import android.text.TextUtils;
-import android.util.Log;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.paytm.pgsdk.PaytmOrder;
@@ -96,8 +95,6 @@ public class PaytmModel {
         paramMap.put("INDUSTRY_TYPE_ID", getIndustryTypeId());
         paramMap.put("CALLBACK_URL", getCallbackURL());
         paramMap.put("CHECKSUMHASH", getChecksumHash());
-
-        Log.e("PayTm", paramMap.toString());
         return new PaytmOrder(paramMap);
     }
 

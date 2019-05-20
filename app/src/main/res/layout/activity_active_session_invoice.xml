@@ -195,6 +195,8 @@
                         android:layout_width="@dimen/size_small_button"
                         android:layout_height="@dimen/size_small_button"
                         android:layout_gravity="center"
+                        android:clickable="true"
+                        android:focusable="true"
                         android:padding="@dimen/spacing_tiny"
                         android:src="@drawable/ic_cancel" />
 

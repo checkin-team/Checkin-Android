@@ -19,7 +19,7 @@
             android:layout_height="match_parent"
             android:layout_weight="1"
             android:gravity="center_vertical"
-            android:text="Enter promo code"
+            android:hint="Enter promo code"
             android:textSize="@dimen/font_normal" />
 
         <TextView
