@@ -62,8 +62,6 @@ public class ShopInvoiceSessionAdapter extends RecyclerView.Adapter<ShopInvoiceS
         TextView tvBill;
         @BindView(R.id.tv_invoice_session_item_count)
         TextView tvItemCount;
-        @BindView(R.id.tv_invoice_session_member_count)
-        TextView tvMemberCount;
         @BindView(R.id.tv_invoice_session_paid_via)
         TextView tvPaidVia;
         @BindView(R.id.tv_invoice_session_waiter)
@@ -89,7 +87,6 @@ public class ShopInvoiceSessionAdapter extends RecyclerView.Adapter<ShopInvoiceS
             tvSessionId.setText(data.getHashId());
             tvBill.setText(String.format(Locale.ENGLISH, Utils.getCurrencyFormat(itemView.getContext()), data.formatTotal()));
             tvDate.setText(data.getFormattedDate());
-            tvMemberCount.setText(String.valueOf(data.getCountCustomers()));
             tvItemCount.setText(String.format(Locale.ENGLISH, " | %d item(s)", data.getCountOrders()));
             tvTable.setText(data.getTable());
             if (data.getPaymentMode() != null)
