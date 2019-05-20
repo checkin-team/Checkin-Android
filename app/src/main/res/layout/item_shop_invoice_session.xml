@@ -74,7 +74,7 @@
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="0dp"
-            android:layout_height="match_parent"
+            android:layout_height="wrap_content"
             android:layout_weight="0.25"
             android:gravity="center">
 
@@ -88,25 +88,41 @@
                 app:layout_constraintTop_toTopOf="parent" />
 
             <TextView
+                android:id="@+id/tv_invoice_session_paid_via"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                style="@style/GreyTextStyle"
+                android:text="Paid via"
+                android:gravity="center"
+                android:textSize="@dimen/font_small"
+                android:drawableBottom="@drawable/ic_paytm_logo"
+                android:drawablePadding="@dimen/spacing_tiny"
+                android:paddingTop="@dimen/spacing_small"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"/>
+
+            <TextView
                 android:id="@+id/tv_invoice_session_member_count"
                 style="@style/GreyHeadingStyle"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:paddingTop="@dimen/spacing_tiny"
                 android:drawableStart="@drawable/ic_person_outline_grey"
                 android:drawablePadding="@dimen/spacing_tiny"
-                app:layout_constraintBottom_toTopOf="@id/tv_invoice_session_table"
+                app:layout_constraintTop_toBottomOf="@id/tv_invoice_session_paid_via"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintVertical_chainStyle="packed"
-                tools:text="2" />
+                tools:text="2" /> />
 
             <TextView
                 android:id="@+id/tv_invoice_session_table"
                 style="@style/GreyTextStyle"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                app:layout_constraintBottom_toBottomOf="parent"
+                android:paddingTop="@dimen/spacing_tiny"
+                android:paddingBottom="@dimen/spacing_tiny"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/tv_invoice_session_member_count"

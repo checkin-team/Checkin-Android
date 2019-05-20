@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:tools="http://schemas.android.com/tools"
     android:fitsSystemWindows="true">
 
     <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
@@ -23,264 +23,260 @@
             android:layout_height="wrap_content"
             android:orientation="vertical">
 
-        <LinearLayout
-            android:id="@+id/container_session_actions"
-            android:layout_width="match_parent"
-            android:layout_height="80dp"
-            android:background="@color/white_two"
-            android:transitionName="chatActions">
+            <LinearLayout
+                android:id="@+id/container_session_actions"
+                android:layout_width="match_parent"
+                android:layout_height="80dp"
+                android:background="@color/white_two"
+                android:transitionName="chatActions">
 
-            <HorizontalScrollView
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:scrollbars="none">
-
-                <LinearLayout
+                <HorizontalScrollView
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
-                    android:gravity="center">
-
-            <LinearLayout
-                android:id="@+id/ll_call_waiter_button"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:clickable="true"
-                android:focusable="true"
-                android:layout_marginStart="@dimen/spacing_large"
-                android:layout_marginEnd="@dimen/spacing_normal"
-                android:orientation="vertical">
-
-                <de.hdodenhof.circleimageview.CircleImageView
-                    android:id="@+id/im_as_waiter_pic"
-                    android:layout_width="35dp"
-                    android:layout_height="35dp"
-                    android:layout_gravity="center"
-                    android:background="@drawable/shape_oval_pinkish_grey"
-                    android:src="@drawable/ic_waiter" />
-
-                <TextView
-                    android:id="@+id/tv_as_waiter_name"
-                    style="@style/PinkishGreySmallTextStyle"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_below="@+id/im_as_waiter_pic"
-                    android:layout_gravity="center"
-                    android:ellipsize="end"
-                    android:maxLength="25"
-                    android:maxLines="1"
-                    android:text="unassigned"
-                    android:textSize="@dimen/font_tiny"
-                    tools:text="waiter name" />
-
-                <TextView
-                    style="@style/GreyTextStyle"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center"
-                    android:layout_marginTop="@dimen/spacing_extra_tiny"
-                    android:gravity="center"
-                    android:text="@string/call_waiter"
-                    android:textSize="@dimen/font_small" />
-
-            </LinearLayout>
-
-            <LinearLayout
-                android:id="@+id/ll_table_cleaning_button"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:clickable="true"
-                android:focusable="true"
-                android:layout_marginStart="@dimen/spacing_normal"
-                android:layout_marginEnd="@dimen/spacing_small"
-                android:orientation="vertical">
-
-                <ImageView
-                    android:layout_width="wrap_content"
-                    android:layout_height="@dimen/button_height_normal"
-                    android:layout_gravity="center"
-                    android:src="@drawable/ic_action_clean_table" />
-
-                <TextView
-                    style="@style/GreyTextStyle"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center"
-                    android:layout_marginTop="@dimen/spacing_extra_tiny"
-                    android:gravity="center"
-                    android:text="@string/table_cleaning"
-                    android:textSize="@dimen/font_small" />
-            </LinearLayout>
-
-            <LinearLayout
-                android:id="@+id/ll_refill_glass_button"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:clickable="true"
-                android:focusable="true"
-                android:layout_marginStart="@dimen/spacing_small"
-                android:layout_marginEnd="@dimen/spacing_small"
-                android:orientation="vertical">
-
-                <ImageView
-                    android:layout_width="wrap_content"
-                    android:layout_height="@dimen/button_height_normal"
-                    android:layout_gravity="center"
-                    android:src="@drawable/ic_action_refill_water" />
-
-                <TextView
-                    android:id="@+id/text_refill_glass"
-                    style="@style/GreyTextStyle"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center"
-                    android:layout_marginTop="@dimen/spacing_extra_tiny"
-                    android:gravity="center"
-                    android:text="@string/refill_glass"
-                    android:textSize="@dimen/font_small" />
-
-            </LinearLayout>
-
-            <LinearLayout
-                android:id="@+id/ll_napkin_container_button"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:clickable="true"
-                android:focusable="true"
-                android:layout_marginStart="@dimen/spacing_small"
-                android:layout_marginEnd="@dimen/spacing_small"
-                android:orientation="vertical">
-
-                <ImageView
-                    android:layout_width="match_parent"
-                    android:layout_height="@dimen/button_height_normal"
-                    android:layout_gravity="center"
-                    android:padding="@dimen/spacing_tiny"
-                    android:src="@drawable/ic_action_bring_napkins"
-                    android:tint="@color/brownish_grey"/>
-
-                <TextView
-                    style="@style/GreyTextStyle"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center"
-                    android:layout_marginTop="@dimen/spacing_extra_tiny"
-                    android:gravity="center"
-                    android:textSize="@dimen/font_small"
-                    android:text="@string/napkin" />
-
-            </LinearLayout>
+                    android:scrollbars="none">
 
                     <LinearLayout
-                        android:id="@+id/ll_extra_plates_container_button"
                         android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:clickable="true"
-                        android:focusable="true"
-                        android:layout_marginStart="@dimen/spacing_small"
-                        android:layout_marginEnd="@dimen/spacing_small"
-                        android:orientation="vertical">
+                        android:layout_height="match_parent"
+                        android:gravity="center">
 
-                        <ImageView
-                            android:layout_width="match_parent"
-                            android:layout_height="@dimen/button_height_normal"
-                            android:src="@drawable/ic_action_extra_plates"
-                            android:tint="@color/brownish_grey"
-                            android:padding="@dimen/spacing_tiny"/>
-
-                        <TextView
-                            style="@style/GreyTextStyle"
-                            android:layout_width="wrap_content"
+                        <LinearLayout
+                            android:id="@+id/ll_call_waiter_button"
+                            android:layout_width="@dimen/height_card_wide"
                             android:layout_height="wrap_content"
+                            android:layout_marginStart="@dimen/spacing_small"
+                            android:clickable="true"
+                            android:focusable="true"
                             android:layout_gravity="center"
-                            android:layout_marginTop="@dimen/spacing_extra_tiny"
-                            android:gravity="center"
-                            android:textSize="@dimen/font_small"
-                            android:text="Extra Plates" />
+                            android:orientation="vertical">
+
+                            <de.hdodenhof.circleimageview.CircleImageView
+                                android:id="@+id/im_as_waiter_pic"
+                                android:layout_width="30dp"
+                                android:layout_height="30dp"
+                                android:layout_gravity="center"
+                                android:background="@drawable/shape_oval_pinkish_grey"
+                                android:src="@drawable/ic_waiter" />
+
+                            <TextView
+                                android:id="@+id/tv_as_waiter_name"
+                                style="@style/PinkishGreySmallTextStyle"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_below="@+id/im_as_waiter_pic"
+                                android:layout_gravity="center"
+                                android:ellipsize="end"
+                                android:maxLength="25"
+                                android:maxLines="1"
+                                android:text="unassigned"
+                                android:textSize="@dimen/font_tiny"
+                                tools:text="waiter name" />
+
+                            <TextView
+                                style="@style/GreyTextStyle"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_gravity="center"
+                                android:layout_marginTop="@dimen/spacing_tiny"
+                                android:gravity="center"
+                                android:text="@string/call_waiter"
+                                android:textSize="@dimen/font_small" />
+
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:id="@+id/ll_table_cleaning_button"
+                            android:layout_width="@dimen/height_card_wide"
+                            android:layout_height="wrap_content"
+                            android:clickable="true"
+                            android:focusable="true"
+                            android:layout_gravity="center"
+                            android:orientation="vertical">
+
+                            <ImageView
+                                android:layout_width="35dp"
+                                android:layout_height="38dp"
+                                android:layout_gravity="center"
+                                android:scaleType="fitXY"
+                                android:padding="@dimen/spacing_extra_tiny"
+                                android:src="@drawable/ic_action_clean_table" />
+
+                            <TextView
+                                style="@style/GreyTextStyle"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_gravity="center"
+                                android:layout_marginTop="@dimen/spacing_extra_small"
+                                android:gravity="center"
+                                android:text="@string/table_cleaning"
+                                android:textSize="@dimen/font_small" />
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:id="@+id/ll_refill_glass_button"
+                            android:layout_width="@dimen/height_card_wide"
+                            android:layout_height="wrap_content"
+                            android:clickable="true"
+                            android:focusable="true"
+                            android:orientation="vertical">
+
+                            <ImageView
+                                android:layout_width="24dp"
+                                android:layout_height="38dp"
+                                android:layout_gravity="center"
+                                android:scaleType="fitXY"
+                                android:padding="@dimen/spacing_extra_tiny"
+                                android:src="@drawable/ic_action_refill_water" />
+
+                            <TextView
+                                android:id="@+id/text_refill_glass"
+                                style="@style/GreyTextStyle"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_gravity="center"
+                                android:layout_marginTop="@dimen/spacing_extra_small"
+                                android:gravity="center"
+                                android:text="@string/refill_glass"
+                                android:textSize="@dimen/font_small" />
+
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:id="@+id/ll_napkin_container_button"
+                            android:layout_width="@dimen/height_card_wide"
+                            android:layout_height="wrap_content"
+                            android:clickable="true"
+                            android:focusable="true"
+                            android:orientation="vertical">
+
+                            <ImageView
+                                android:layout_width="35dp"
+                                android:layout_height="38dp"
+                                android:layout_gravity="center"
+                                android:scaleType="fitXY"
+                                android:padding="@dimen/spacing_extra_tiny"
+                                android:src="@drawable/ic_action_bring_napkins" />
+
+                            <TextView
+                                style="@style/GreyTextStyle"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_gravity="center"
+                                android:layout_marginTop="@dimen/spacing_extra_small"
+                                android:gravity="center"
+                                android:text="@string/napkin"
+                                android:textSize="@dimen/font_small" />
+
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:id="@+id/ll_extra_plates_container_button"
+                            android:layout_width="@dimen/height_card_wide"
+                            android:layout_height="wrap_content"
+                            android:clickable="true"
+                            android:focusable="true"
+                            android:layout_gravity="center"
+                            android:orientation="vertical">
+
+                            <ImageView
+                                android:layout_width="35dp"
+                                android:layout_height="38dp"
+                                android:layout_gravity="center"
+                                android:scaleType="fitXY"
+                                android:padding="@dimen/spacing_extra_tiny"
+                                android:src="@drawable/ic_action_extra_plates"
+                               />
+
+                            <TextView
+                                style="@style/GreyTextStyle"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_gravity="center"
+                                android:layout_marginTop="@dimen/spacing_extra_small"
+                                android:gravity="center"
+                                android:text="Extra Plates"
+                                android:textSize="@dimen/font_small" />
+
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:id="@+id/ll_sauce_container_button"
+                            android:layout_width="@dimen/height_card_wide"
+                            android:layout_height="wrap_content"
+                            android:clickable="true"
+                            android:focusable="true"
+                            android:layout_gravity="center"
+                            android:orientation="vertical">
+
+                            <ImageView
+                                android:layout_width="35dp"
+                                android:layout_height="38dp"
+                                android:layout_gravity="center"
+                                android:scaleType="fitXY"
+                                android:padding="@dimen/spacing_extra_tiny"
+                                android:src="@drawable/ic_action_bring_sauce" />
+
+                            <TextView
+                                style="@style/GreyTextStyle"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_gravity="center"
+                                android:layout_marginTop="@dimen/spacing_extra_small"
+                                android:gravity="center"
+                                android:text="@string/sauce"
+                                android:textSize="@dimen/font_small" />
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:id="@+id/ll_salt_container_button"
+                            android:layout_width="@dimen/height_card_wide"
+                            android:layout_height="wrap_content"
+                            android:layout_marginEnd="@dimen/spacing_large"
+                            android:clickable="true"
+                            android:focusable="true"
+                            android:orientation="vertical"
+                            android:layout_gravity="center"
+                            android:padding="@dimen/spacing_tiny">
+
+                            <ImageView
+                                android:layout_width="35dp"
+                                android:layout_height="38dp"
+                                android:layout_gravity="center"
+                                android:scaleType="fitXY"
+                                android:padding="@dimen/spacing_extra_tiny"
+                                android:src="@drawable/ic_action_bring_salt" />
+
+                            <TextView
+                                style="@style/GreyTextStyle"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_gravity="center"
+                                android:layout_marginTop="@dimen/spacing_extra_small"
+                                android:gravity="center"
+                                android:text="@string/salt"
+                                android:textSize="@dimen/font_small" />
+
+                        </LinearLayout>
+
 
                     </LinearLayout>
 
-                    <LinearLayout
-                        android:id="@+id/ll_sauce_container_button"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:clickable="true"
-                        android:focusable="true"
-                        android:layout_marginStart="@dimen/spacing_small"
-                        android:layout_marginEnd="@dimen/spacing_small"
-                        android:orientation="vertical">
+                </HorizontalScrollView>
 
-                        <ImageView
-                            android:layout_width="match_parent"
-                            android:layout_height="@dimen/button_height_normal"
-                            android:src="@drawable/ic_action_bring_sauce"
-                            android:tint="@color/brownish_grey"
-                            android:padding="@dimen/spacing_tiny"/>
 
-                        <TextView
-                            style="@style/GreyTextStyle"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_gravity="center"
-                            android:layout_marginTop="@dimen/spacing_extra_tiny"
-                            android:gravity="center"
-                            android:textSize="@dimen/font_small"
-                            android:text="@string/sauce" />
-                    </LinearLayout>
+            </LinearLayout>
 
-            <LinearLayout
-                android:id="@+id/ll_salt_container_button"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:clickable="true"
-                android:focusable="true"
-                android:layout_marginStart="@dimen/spacing_normal"
-                android:layout_marginEnd="@dimen/spacing_large"
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/rv_active_session_chat"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
                 android:orientation="vertical"
-                android:padding="@dimen/spacing_tiny">
+                android:paddingBottom="@dimen/spacing_small"
 
-                <ImageView
-                    android:layout_width="match_parent"
-                    android:layout_height="@dimen/button_height_normal"
-                    android:src="@drawable/ic_action_bring_salt"
-                    android:tint="@color/brownish_grey"/>
-
-                <TextView
-                    style="@style/GreyTextStyle"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center"
-                    android:layout_marginTop="@dimen/spacing_extra_tiny"
-                    android:gravity="center"
-                    android:textSize="@dimen/font_small"
-                    android:text="@string/salt" />
-
-            </LinearLayout>
-
-
-
-
-
-                </LinearLayout>
-
-            </HorizontalScrollView>
-
-
-
-        </LinearLayout>
-
-
-
-
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/rv_active_session_chat"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:orientation="vertical"
-            android:paddingBottom="@dimen/spacing_small"
-
-            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-            app:reverseLayout="true"
-            app:stackFromEnd="true" />
+                app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                app:reverseLayout="true"
+                app:stackFromEnd="true" />
 
         </LinearLayout>
     </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>

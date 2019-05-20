@@ -7,6 +7,7 @@ import android.widget.TextView;
 
 import com.checkin.app.checkin.Misc.BriefModel;
 import com.checkin.app.checkin.R;
+import com.checkin.app.checkin.Shop.ShopModel;
 import com.checkin.app.checkin.Utility.Utils;
 
 import java.util.List;
@@ -62,6 +63,8 @@ public class ShopInvoiceSessionAdapter extends RecyclerView.Adapter<ShopInvoiceS
         TextView tvItemCount;
         @BindView(R.id.tv_invoice_session_member_count)
         TextView tvMemberCount;
+        @BindView(R.id.tv_invoice_session_paid_via)
+        TextView tvPaidVia;
         @BindView(R.id.tv_invoice_session_waiter)
         TextView tvWaiter;
         @BindView(R.id.tv_invoice_session_table)
@@ -88,6 +91,8 @@ public class ShopInvoiceSessionAdapter extends RecyclerView.Adapter<ShopInvoiceS
             tvMemberCount.setText(String.valueOf(data.getCountCustomers()));
             tvItemCount.setText(String.format(Locale.ENGLISH, " | %d item(s)", data.getCountOrders()));
             tvTable.setText(data.getTable());
+            if(data.getPaymentMode()!=null)
+            tvPaidVia.setCompoundDrawablesWithIntrinsicBounds(0, 0, 0, ShopModel.getPaymentModeIcon(data.getPaymentMode()));
         }
     }
 }

@@ -469,7 +469,7 @@
                                     android:layout_height="wrap_content"
                                     android:layout_alignParentBottom="true"
                                     android:layout_centerHorizontal="true"
-                                    android:layout_marginTop="@dimen/spacing_tiny"
+
                                     android:text="@string/call_waiter"
                                     android:textSize="@dimen/font_small" />
 
@@ -488,10 +488,11 @@
                                 app:layout_constraintTop_toTopOf="parent">
 
                                 <ImageView
-                                    android:layout_width="match_parent"
+                                    android:layout_width="35dp"
                                     android:layout_height="@dimen/button_height_normal"
                                     android:layout_gravity="center"
                                     android:layout_marginBottom="@dimen/spacing_small"
+                                    android:scaleType="fitXY"
                                     android:src="@drawable/ic_action_clean_table" />
 
                                 <TextView
@@ -519,9 +520,11 @@
                                 app:layout_constraintTop_toTopOf="parent">
 
                                 <ImageView
-                                    android:layout_width="match_parent"
+                                    android:layout_width="25dp"
                                     android:layout_height="@dimen/button_height_normal"
                                     android:layout_marginBottom="@dimen/spacing_small"
+                                    android:scaleType="fitXY"
+                                    android:layout_gravity="center"
                                     android:src="@drawable/ic_action_refill_water" />
 
                                 <TextView

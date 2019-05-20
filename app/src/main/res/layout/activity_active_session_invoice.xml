@@ -146,6 +146,7 @@
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
+                            android:gravity="center|left"
                             android:drawableStart="@drawable/ic_discount_percent"
                             android:drawablePadding="@dimen/spacing_small"
                             android:text="@string/session_benefits_apply_promo_code" />

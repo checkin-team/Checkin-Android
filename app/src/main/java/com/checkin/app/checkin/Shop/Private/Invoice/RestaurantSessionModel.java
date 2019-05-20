@@ -1,6 +1,7 @@
 package com.checkin.app.checkin.Shop.Private.Invoice;
 
 import com.checkin.app.checkin.Misc.BriefModel;
+import com.checkin.app.checkin.Shop.ShopModel;
 import com.checkin.app.checkin.Utility.Utils;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonInclude;
@@ -38,6 +39,9 @@ public class RestaurantSessionModel implements Serializable {
 
     @JsonProperty("checked_out")
     private Date checkedOut;
+
+    @JsonProperty("payment_mode")
+    private String paymentMode;
 
     public RestaurantSessionModel() {
     }
@@ -84,5 +88,13 @@ public class RestaurantSessionModel implements Serializable {
 
     public String formatTotal() {
         return String.valueOf(total);
+    }
+
+    public ShopModel.PAYMENT_MODE getPaymentMode() {
+        return ShopModel.PAYMENT_MODE.getByTag(paymentMode);
+    }
+
+    public void setPaymentMode(String paymentModes) {
+        this.paymentMode = paymentModes;
     }
 }

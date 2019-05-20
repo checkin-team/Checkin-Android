@@ -5,6 +5,7 @@ import android.widget.TextView;
 
 import com.checkin.app.checkin.Misc.BriefModel;
 import com.checkin.app.checkin.R;
+import com.checkin.app.checkin.Shop.ShopModel;
 import com.google.android.material.appbar.AppBarLayout;
 import com.google.android.material.tabs.TabLayout;
 
@@ -30,6 +31,8 @@ public class ShopInvoiceDetailActivity extends AppCompatActivity {
     TextView tvDate;
     @BindView(R.id.tv_invoice_session_item_count)
     TextView tvItemCount;
+    @BindView(R.id.tv_invoice_session_paid_via)
+    TextView tvPaidVia;
     @BindView(R.id.tv_invoice_session_member_count)
     TextView tvMemberCount;
     @BindView(R.id.tv_invoice_session_waiter)
@@ -74,7 +77,8 @@ public class ShopInvoiceDetailActivity extends AppCompatActivity {
         tvMemberCount.setText(String.valueOf(data.getCountCustomers()));
         tvItemCount.setText(String.format(Locale.ENGLISH, " | %d item(s)", data.getCountOrders()));
         tvTable.setText(data.getTable());
-    }
+        if(data.getPaymentMode()!=null)
+            tvPaidVia.setCompoundDrawablesWithIntrinsicBounds(0, 0, 0, ShopModel.getPaymentModeIcon(data.getPaymentMode()));    }
 
     private void setupViewPager() {
         pagerInvoice.setAdapter(new InvoiceFragmentAdapter(getSupportFragmentManager()));
