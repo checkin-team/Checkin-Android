@@ -8,6 +8,7 @@ import android.widget.TextView;
 
 import com.checkin.app.checkin.Data.Resource;
 import com.checkin.app.checkin.R;
+import com.checkin.app.checkin.Shop.ShopModel;
 import com.checkin.app.checkin.Utility.Utils;
 import com.checkin.app.checkin.Waiter.WaiterTableViewModel;
 
@@ -20,8 +21,12 @@ import butterknife.ButterKnife;
 import butterknife.Unbinder;
 
 public class WaiterTableCollectCashFragment extends Fragment {
+    @BindView(R.id.title_waiter_collect)
+    TextView titleWaiterCollect;
     @BindView(R.id.tv_waiter_table_bill)
     TextView tvWaiterTableBill;
+    @BindView(R.id.tv_waiter_table_payment_mode)
+    TextView tvWaiterTablePaymentMode;
     private Unbinder unbinder;
     private WaiterTableViewModel mViewModel;
 
@@ -50,8 +55,19 @@ public class WaiterTableCollectCashFragment extends Fragment {
         mViewModel.getSessionDetail().observe(this, resource -> {
             if (resource == null)
                 return;
-            if (resource.status == Resource.Status.SUCCESS && resource.data != null)
+            if (resource.status == Resource.Status.SUCCESS && resource.data != null) {
                 tvWaiterTableBill.setText(Utils.formatCurrencyAmount(requireContext(), resource.data.getBill()));
+                tvWaiterTablePaymentMode.setText(ShopModel.getPaymentMode(resource.data.getPaymentModes()));
+                tvWaiterTablePaymentMode.setCompoundDrawablesWithIntrinsicBounds(ShopModel.getPaymentModeIcon(resource.data.getPaymentModes()), 0, 0, 0);
+                if (tvWaiterTablePaymentMode.getText().toString().equalsIgnoreCase("via Cash")){
+                    titleWaiterCollect.setText("Collect");
+                    tvWaiterTablePaymentMode.setCompoundDrawablePadding(10);
+                } else {
+                    titleWaiterCollect.setText("");
+                    tvWaiterTablePaymentMode.setCompoundDrawablePadding(0);
+                }
+
+            }
         });
     }
 

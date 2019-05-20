@@ -72,12 +72,14 @@ public class ActiveSessionTrendingDishAdapter extends RecyclerView.Adapter<Activ
             super(itemView);
             ButterKnife.bind(this, itemView);
 
-            itemView.setOnClickListener(v -> mListener.onDishClick(mItemModel));
+            itemView.setOnClickListener(v -> {
+                itemView.setEnabled(false);
+                mListener.onDishClick(mItemModel);});
         }
 
         void bindData(TrendingDishModel itemModel) {
             this.mItemModel = itemModel;
-
+            itemView.setEnabled(true);
             Utils.loadImageOrDefault(imDish, itemModel.getImage(),0);
             tvName.setText(itemModel.getName());
             tvPrice.setText(String.format(

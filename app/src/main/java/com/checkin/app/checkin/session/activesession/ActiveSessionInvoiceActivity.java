@@ -1,11 +1,14 @@
 package com.checkin.app.checkin.session.activesession;
 
+import android.content.BroadcastReceiver;
+import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.text.Editable;
 import android.text.Html;
+import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
@@ -16,12 +19,15 @@ import android.widget.TextView;
 import androidx.annotation.Nullable;
 import androidx.annotation.StringRes;
 import androidx.appcompat.app.AlertDialog;
-import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.ViewModelProviders;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.checkin.app.checkin.Data.Message.MessageModel;
+import com.checkin.app.checkin.Data.Message.MessageObjectModel;
+import com.checkin.app.checkin.Data.Message.MessageUtils;
 import com.checkin.app.checkin.Data.Resource;
+import com.checkin.app.checkin.Misc.BaseActivity;
 import com.checkin.app.checkin.Misc.BillHolder;
 import com.checkin.app.checkin.Misc.paytm.PaytmPayment;
 import com.checkin.app.checkin.R;
@@ -43,7 +49,7 @@ import static com.checkin.app.checkin.Shop.ShopModel.PAYMENT_MODE.PAYTM;
 import static com.checkin.app.checkin.session.activesession.ActiveSessionPaymentOptions.KEY_PAYMENT_MODE_RESULT;
 import static com.checkin.app.checkin.session.activesession.ActiveSessionPaymentOptions.KEY_SESSION_AMOUNT;
 
-public class ActiveSessionInvoiceActivity extends AppCompatActivity {
+public class ActiveSessionInvoiceActivity extends BaseActivity {
     public static final String KEY_SESSION_REQUESTED_CHECKOUT = "invoice.session.requested_checkout";
     private static final int REQUEST_PAYMENT_MODE = 141;
 
@@ -88,6 +94,27 @@ public class ActiveSessionInvoiceActivity extends AppCompatActivity {
 
     private ShopModel.PAYMENT_MODE selectedMode;
 
+    private final BroadcastReceiver mReceiver = new BroadcastReceiver() {
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            MessageModel message = MessageUtils.parseMessage(intent);
+            if (message == null) return;
+
+            MessageObjectModel model;
+
+            switch (message.getType()) {
+                case USER_SESSION_PROMO_AVAILED:
+                case USER_SESSION_PROMO_REMOVED:
+                    mViewModel.fetchSessionAppliedPromo();
+                    break;
+                case USER_SESSION_BILL_CHANGE:
+                    mViewModel.fetchSessionInvoice();
+                    break;
+            }
+
+        }
+    };
+
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -108,6 +135,8 @@ public class ActiveSessionInvoiceActivity extends AppCompatActivity {
             getSupportActionBar().setHomeAsUpIndicator(R.drawable.ic_back_grey);
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         }
+        initRefreshScreen(R.id.sr_active_session_invoice);
+
         mPrefs = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
 
         String paymentTag = mPrefs.getString(Constants.SP_LAST_USED_PAYMENT_MODE, PAYTM.tag);
@@ -127,8 +156,10 @@ public class ActiveSessionInvoiceActivity extends AppCompatActivity {
         tvPaymentMode.setCompoundDrawablesWithIntrinsicBounds(ShopModel.getPaymentModeIcon(selectedMode), 0, 0, 0);
         if (selectedMode != null && selectedMode.equals(PAYTM))
             btnRequestCheckout.setText(R.string.title_pay_checkout);
-        else
+        else {
+//            showPromoInvalid(R.string.label_session_offer_not_allowed_payment_mode_cash);
             btnRequestCheckout.setText(R.string.title_request_checkout);
+        }
     }
 
     private void getData() {
@@ -163,6 +194,9 @@ public class ActiveSessionInvoiceActivity extends AppCompatActivity {
                 setupData(resource.data);
                 tryShowTotalSavings();
             }
+
+            if(resource.status != Resource.Status.LOADING )
+                stopRefreshing();
         });
 
         mViewModel.getCheckoutData().observe(this, statusModelResource -> {
@@ -389,12 +423,7 @@ public class ActiveSessionInvoiceActivity extends AppCompatActivity {
                             .putString(Constants.SP_LAST_USED_PAYMENT_MODE, selectedMode.tag)
                             .apply();
 
-                    if (selectedMode.equals(CASH)) {
-                        setPaymentModeUpdates();
-                    } else {
-                        setPaymentModeUpdates();
-                        setTotalAmount();
-                    }
+                    setPaymentModeUpdates();
                     tvPaymentMode.setCompoundDrawablesWithIntrinsicBounds(ShopModel.getPaymentModeIcon(selectedMode), 0, 0, 0);
                 }
                 break;
@@ -421,17 +450,31 @@ public class ActiveSessionInvoiceActivity extends AppCompatActivity {
         tvPromoInvalidStatus.setCompoundDrawablesWithIntrinsicBounds(0, 0, 0, 0);
     }
 
-    @OnTextChanged(R.id.tv_invoice_total)
-    public void setTotalAmount() {
-        if (selectedMode != null && selectedMode.equals(PAYTM))
-            tvPaymentMode.setText(tvInvoiceTotal.getText().toString());
-    }
-
     private void alertDialogForOverridingPaymentRequest() {
         AlertDialog.Builder builder = new AlertDialog.Builder(this).setTitle("Override checkout request?")
                 .setMessage("A payment request is in progress. Are you sure you want to cancel that request and initiate a new one?")
                 .setPositiveButton("Yes", (dialog, which) -> onRequestCheckout(true))
                 .setNegativeButton("No", (dialog, which) -> dialog.cancel());
         builder.show();
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        MessageModel.MESSAGE_TYPE[] types = new MessageModel.MESSAGE_TYPE[]{
+                MessageModel.MESSAGE_TYPE.USER_SESSION_PROMO_AVAILED, MessageModel.MESSAGE_TYPE.USER_SESSION_PROMO_REMOVED,
+                MessageModel.MESSAGE_TYPE.USER_SESSION_BILL_CHANGE};
+        MessageUtils.registerLocalReceiver(this, mReceiver, types);
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        MessageUtils.unregisterLocalReceiver(this, mReceiver);
+    }
+
+    @Override
+    protected void updateScreen() {
+        mViewModel.updateResults();
     }
 }

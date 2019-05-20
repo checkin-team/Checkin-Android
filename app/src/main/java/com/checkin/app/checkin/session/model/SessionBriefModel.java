@@ -1,6 +1,7 @@
 package com.checkin.app.checkin.session.model;
 
 import com.checkin.app.checkin.Misc.BriefModel;
+import com.checkin.app.checkin.Shop.ShopModel;
 import com.checkin.app.checkin.Utility.Utils;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
@@ -21,6 +22,9 @@ public class SessionBriefModel {
 
     @JsonProperty("bill")
     private double bill;
+
+    @JsonProperty("payment_mode")
+    private String paymentModes;
 
     @JsonProperty("created")
     private Date created;
@@ -60,6 +64,14 @@ public class SessionBriefModel {
 
     public void setBill(double bill) {
         this.bill = bill;
+    }
+
+    public ShopModel.PAYMENT_MODE getPaymentModes() {
+        return ShopModel.PAYMENT_MODE.getByTag(paymentModes);
+    }
+
+    public void setPaymentModes(String paymentModes) {
+        this.paymentModes = paymentModes;
     }
 
     public String formatBill() {

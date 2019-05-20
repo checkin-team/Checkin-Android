@@ -209,5 +209,6 @@
     <string name="button_apply">Apply</string>
     <string name="label_session_offer_not_allowed_phone_not_registered">Offers not allowed - Register your mobile number first.</string>
     <string name="label_session_offer_not_allowed_session_requested_checkout">Offers not allowed - Session already requested checkout.</string>
+    <string name="label_session_offer_not_allowed_payment_mode_cash">Promo not applicable for cash payment.</string>
 
 </resources>

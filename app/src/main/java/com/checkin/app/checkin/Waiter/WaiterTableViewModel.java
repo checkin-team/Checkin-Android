@@ -6,6 +6,7 @@ import com.checkin.app.checkin.Data.BaseViewModel;
 import com.checkin.app.checkin.Data.Converters;
 import com.checkin.app.checkin.Data.Resource;
 import com.checkin.app.checkin.Misc.GenericDetailModel;
+import com.checkin.app.checkin.Shop.ShopModel;
 import com.checkin.app.checkin.session.activesession.chat.SessionChatModel.CHAT_STATUS_TYPE;
 import com.checkin.app.checkin.session.model.CheckoutStatusModel;
 import com.checkin.app.checkin.session.model.SessionBriefModel;
@@ -251,12 +252,13 @@ public class WaiterTableViewModel extends BaseViewModel {
         mEventData.setValue(Resource.cloneResource(listResource, listResource.data));
     }
 
-    public void initiateCollectCash(double bill) {
+    public void initiateCollectCash(double bill, ShopModel.PAYMENT_MODE sessionBillPaymentMode) {
         Resource<SessionBriefModel> resource = mSessionDetail.getValue();
         if (resource == null || resource.data == null)
             return;
         SessionBriefModel data = resource.data;
         data.setBill(bill);
+        data.setPaymentModes(sessionBillPaymentMode.tag);
         data.setRequestedCheckout(true);
         mSessionDetail.setValue(Resource.cloneResource(resource, data));
     }

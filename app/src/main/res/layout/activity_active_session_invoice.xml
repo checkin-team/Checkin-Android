@@ -1,345 +1,354 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.swiperefreshlayout.widget.SwipeRefreshLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:background="@color/white_three">
+    android:id="@+id/sr_active_session_invoice"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content">
 
-    <TextView
-        android:id="@+id/title_bill_details"
-        style="@style/GreyTextStyle"
+
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:padding="@dimen/spacing_extra_small"
-        android:text="@string/title_bill_details"
-        app:layout_constraintBottom_toTopOf="@id/container_session_invoice"
-        app:layout_constraintTop_toTopOf="parent" />
+        android:layout_height="match_parent"
+        android:background="@color/white_three">
 
-    <ScrollView
-        android:id="@+id/container_session_invoice"
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:fillViewport="true"
-        android:scrollbars="none"
-        app:layout_constraintBottom_toTopOf="@id/container_as_invoice_payment_info"
-        app:layout_constraintTop_toBottomOf="@id/title_bill_details"
-        app:layout_constraintVertical_weight="1">
 
-        <LinearLayout
+        <TextView
+            android:id="@+id/title_bill_details"
+            style="@style/GreyTextStyle"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical">
+            android:padding="@dimen/spacing_extra_small"
+            android:text="@string/title_bill_details"
+            app:layout_constraintBottom_toTopOf="@id/container_session_invoice"
+            app:layout_constraintTop_toTopOf="parent" />
 
-            <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/rv_invoice_ordered_items"
+        <ScrollView
+            android:id="@+id/container_session_invoice"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:fillViewport="true"
+            android:scrollbars="none"
+            app:layout_constraintBottom_toTopOf="@id/container_as_invoice_payment_info"
+            app:layout_constraintTop_toBottomOf="@id/title_bill_details"
+            app:layout_constraintVertical_weight="1">
+
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:background="@color/white"
-                android:nestedScrollingEnabled="false"
-                android:paddingStart="@dimen/spacing_normal"
-                android:paddingTop="@dimen/spacing_extra_small"
-                android:paddingEnd="@dimen/spacing_normal"
-                android:paddingBottom="@dimen/spacing_extra_small" />
+                android:orientation="vertical">
 
-            <androidx.constraintlayout.widget.ConstraintLayout
-                android:id="@+id/container_invoice_tip_waiter"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:background="@color/white"
-                android:orientation="horizontal"
-                android:paddingStart="@dimen/spacing_normal"
-                android:paddingEnd="@dimen/spacing_normal"
-                android:paddingBottom="@dimen/spacing_small">
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/rv_invoice_ordered_items"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@color/white"
+                    android:nestedScrollingEnabled="false"
+                    android:paddingStart="@dimen/spacing_normal"
+                    android:paddingTop="@dimen/spacing_extra_small"
+                    android:paddingEnd="@dimen/spacing_normal"
+                    android:paddingBottom="@dimen/spacing_extra_small" />
 
-                <include layout="@layout/incl_horizontal_line" />
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:id="@+id/container_invoice_tip_waiter"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@color/white"
+                    android:orientation="horizontal"
+                    android:paddingStart="@dimen/spacing_normal"
+                    android:paddingEnd="@dimen/spacing_normal"
+                    android:paddingBottom="@dimen/spacing_small">
+
+                    <include layout="@layout/incl_horizontal_line" />
+
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="@dimen/spacing_normal"
+                        android:layout_marginTop="@dimen/spacing_small"
+                        android:orientation="vertical"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent">
+
+                        <de.hdodenhof.circleimageview.CircleImageView
+                            android:id="@+id/im_invoice_waiter"
+                            style="@style/LogoSmallImageStyle"
+                            android:layout_gravity="center"
+                            android:src="@drawable/ic_waiter" />
+
+                        <TextView
+                            android:id="@+id/tv_invoice_waiter_name"
+                            style="@style/GreyTextStyle"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="@dimen/spacing_tiny"
+                            android:gravity="center"
+                            android:text="@string/title_tip_your_waiter" />
+
+                    </LinearLayout>
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginEnd="@dimen/spacing_small"
+                        android:text="@string/symbol_currency_rupee"
+                        android:textSize="@dimen/font_largest"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toStartOf="@id/ed_invoice_tip"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                    <EditText
+                        android:id="@+id/ed_invoice_tip"
+                        style="@style/GreyTextStyle"
+                        android:layout_width="@dimen/width_input_small"
+                        android:layout_height="@dimen/button_height_short"
+                        android:background="@drawable/background_grey_stroke"
+                        android:gravity="center"
+                        android:inputType="numberDecimal"
+                        android:padding="@dimen/spacing_extra_small"
+                        android:text="0.00"
+                        android:textSize="@dimen/font_heading"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+                <FrameLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/button_height_medium"
+                    android:layout_marginTop="@dimen/thickness_line"
+                    android:background="@color/white"
+                    android:paddingStart="@dimen/spacing_small"
+                    android:paddingEnd="@dimen/spacing_small">
+
+                    <TextView
+                        android:id="@+id/tv_as_promo_invalid_status"
+                        style="@style/RedTextStyle"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_vertical|start"
+                        android:drawablePadding="@dimen/spacing_small"
+                        android:text="@string/active_session_fetching_offers" />
+
+                    <LinearLayout
+                        android:id="@+id/container_promo_code_apply"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:gravity="center"
+                        android:orientation="horizontal"
+                        android:visibility="gone">
+
+                        <TextView
+                            android:id="@+id/tv_promo_code"
+                            style="@style/RedTextStyle"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:drawableStart="@drawable/ic_discount_percent"
+                            android:drawablePadding="@dimen/spacing_small"
+                            android:text="@string/session_benefits_apply_promo_code" />
+
+                        <ImageView
+                            android:layout_width="@dimen/size_extra_small_button"
+                            android:layout_height="@dimen/size_extra_small_button"
+                            android:padding="@dimen/spacing_tiny"
+                            android:src="@drawable/ic_forward_arrow" />
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:id="@+id/container_remove_promo_code"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:orientation="horizontal"
+                        android:visibility="gone">
+
+                        <ImageView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center"
+                            android:layout_marginEnd="@dimen/spacing_small"
+                            android:src="@drawable/ic_discount_percent" />
+
+                        <LinearLayout
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center"
+                            android:layout_weight="1"
+                            android:orientation="vertical">
+
+                            <TextView
+                                android:id="@+id/tv_as_promo_applied_details"
+                                style="@style/RedTextStyle"
+                                android:layout_width="wrap_content"
+                                android:layout_height="match_parent"
+                                android:layout_weight="1"
+                                tools:text="CODE - Name" />
+
+                            <TextView
+                                style="@style/PinkishGreySmallTextStyle"
+                                android:layout_width="wrap_content"
+                                android:layout_height="match_parent"
+                                android:layout_weight="1"
+                                android:text="Promo Applied"
+                                android:textSize="@dimen/font_small" />
+
+                        </LinearLayout>
+
+                        <ImageView
+                            android:id="@+id/im_invoice_remove_promo_code"
+                            android:layout_width="@dimen/size_small_button"
+                            android:layout_height="@dimen/size_small_button"
+                            android:layout_gravity="center"
+                            android:clickable="true"
+                            android:focusable="true"
+                            android:padding="@dimen/spacing_tiny"
+                            android:src="@drawable/ic_cancel" />
+
+                    </LinearLayout>
+                </FrameLayout>
 
                 <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_marginTop="@dimen/thickness_line"
+                    android:background="@color/white"
+                    android:orientation="vertical">
+
+                    <include layout="@layout/incl_session_invoice" />
+
+                    <include layout="@layout/incl_horizontal_line" />
+
+                    <FrameLayout
+                        android:id="@+id/container_invoice_total"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:padding="@dimen/spacing_small">
+
+                        <TextView
+                            style="@style/RedHeadingStyle"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center_vertical|start"
+                            android:text="Grand Total" />
+
+                        <TextView
+                            android:id="@+id/tv_invoice_total"
+                            style="@style/RedHeadingStyle"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center_vertical|end"
+                            tools:text="54" />
+                    </FrameLayout>
+                </LinearLayout>
+
+            </LinearLayout>
+        </ScrollView>
+
+        <LinearLayout
+            android:id="@+id/container_as_invoice_payment_info"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/white"
+            android:orientation="vertical"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent">
+
+            <LinearLayout
+                android:id="@+id/container_as_session_benefits"
+                android:layout_width="wrap_content"
+                android:layout_height="@dimen/button_height_medium"
+                android:layout_gravity="center"
+                android:layout_marginBottom="-25dp"
+                android:background="@drawable/background_textbox"
+                android:orientation="horizontal"
+                android:paddingStart="@dimen/spacing_small"
+                android:paddingTop="@dimen/spacing_small"
+                android:paddingEnd="@dimen/spacing_small"
+                android:visibility="gone">
+
+                <TextView
+                    android:id="@+id/tv_as_session_benefits"
+                    style="@style/GreyTextStyle"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="@dimen/spacing_normal"
-                    android:layout_marginTop="@dimen/spacing_small"
+                    android:text="You're saving $100" />
+
+            </LinearLayout>
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/container_as_payment_mode"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="@dimen/spacing_normal"
+                android:background="@drawable/rounded_rectangle_light_grey"
+                android:padding="@dimen/spacing_small"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent">
+
+                <LinearLayout
+                    android:id="@+id/container_as_payment_mode_change"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_marginEnd="@dimen/spacing_small"
                     android:orientation="vertical"
                     app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toStartOf="@id/btn_invoice_request_checkout"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent">
 
-                    <de.hdodenhof.circleimageview.CircleImageView
-                        android:id="@+id/im_invoice_waiter"
-                        style="@style/LogoSmallImageStyle"
-                        android:layout_gravity="center"
-                        android:src="@drawable/ic_waiter" />
-
                     <TextView
-                        android:id="@+id/tv_invoice_waiter_name"
-                        style="@style/GreyTextStyle"
+                        android:id="@+id/tv_as_payment_mode"
+                        style="@style/GreySmallTextStyle"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="@dimen/spacing_tiny"
+                        android:layout_gravity="center"
+                        android:drawableStart="@drawable/ic_cash_grey"
+                        android:drawablePadding="@dimen/spacing_normal"
                         android:gravity="center"
-                        android:text="@string/title_tip_your_waiter" />
+                        android:text="@string/session_payment_mode_via_cash" />
+
+                    <include
+                        layout="@layout/incl_dotted_view"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:layout_marginTop="@dimen/spacing_extra_tiny" />
+
+                    <TextView
+                        style="@style/RedSmallTextStyle"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:layout_marginTop="@dimen/spacing_extra_tiny"
+                        android:text="@string/change" />
 
                 </LinearLayout>
 
-                <TextView
+                <Button
+                    android:id="@+id/btn_invoice_request_checkout"
+                    style="@style/ButtonRedAlertAction"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginEnd="@dimen/spacing_small"
-                    android:text="@string/symbol_currency_rupee"
-                    android:textSize="@dimen/font_largest"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintEnd_toStartOf="@id/ed_invoice_tip"
-                    app:layout_constraintTop_toTopOf="parent" />
-
-                <EditText
-                    android:id="@+id/ed_invoice_tip"
-                    style="@style/GreyTextStyle"
-                    android:layout_width="@dimen/width_input_small"
-                    android:layout_height="@dimen/button_height_short"
-                    android:background="@drawable/background_grey_stroke"
-                    android:gravity="center"
-                    android:inputType="numberDecimal"
-                    android:padding="@dimen/spacing_extra_small"
-                    android:text="0.00"
-                    android:textSize="@dimen/font_heading"
+                    android:text="@string/title_request_checkout"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />
 
             </androidx.constraintlayout.widget.ConstraintLayout>
 
-            <FrameLayout
-                android:layout_width="match_parent"
-                android:layout_height="@dimen/button_height_medium"
-                android:layout_marginTop="@dimen/thickness_line"
-                android:background="@color/white"
-                android:paddingStart="@dimen/spacing_small"
-                android:paddingEnd="@dimen/spacing_small">
-
-                <TextView
-                    android:id="@+id/tv_as_promo_invalid_status"
-                    style="@style/RedTextStyle"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center_vertical|start"
-                    android:drawablePadding="@dimen/spacing_small"
-                    android:text="@string/active_session_fetching_offers" />
-
-                <LinearLayout
-                    android:id="@+id/container_promo_code_apply"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:gravity="center"
-                    android:orientation="horizontal"
-                    android:visibility="gone">
-
-                    <TextView
-                        android:id="@+id/tv_promo_code"
-                        style="@style/RedTextStyle"
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:drawableStart="@drawable/ic_discount_percent"
-                        android:drawablePadding="@dimen/spacing_small"
-                        android:text="@string/session_benefits_apply_promo_code" />
-
-                    <ImageView
-                        android:layout_width="@dimen/size_extra_small_button"
-                        android:layout_height="@dimen/size_extra_small_button"
-                        android:padding="@dimen/spacing_tiny"
-                        android:src="@drawable/ic_forward_arrow" />
-
-                </LinearLayout>
-
-                <LinearLayout
-                    android:id="@+id/container_remove_promo_code"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:orientation="horizontal"
-                    android:visibility="gone">
-
-                    <ImageView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="center"
-                        android:layout_marginEnd="@dimen/spacing_small"
-                        android:src="@drawable/ic_discount_percent" />
-
-                    <LinearLayout
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="center"
-                        android:layout_weight="1"
-                        android:orientation="vertical">
-
-                        <TextView
-                            android:id="@+id/tv_as_promo_applied_details"
-                            style="@style/RedTextStyle"
-                            android:layout_width="wrap_content"
-                            android:layout_height="match_parent"
-                            android:layout_weight="1"
-                            tools:text="CODE - Name" />
-
-                        <TextView
-                            style="@style/PinkishGreySmallTextStyle"
-                            android:layout_width="wrap_content"
-                            android:layout_height="match_parent"
-                            android:layout_weight="1"
-                            android:text="Promo Applied"
-                            android:textSize="@dimen/font_small" />
-
-                    </LinearLayout>
-
-                    <ImageView
-                        android:id="@+id/im_invoice_remove_promo_code"
-                        android:layout_width="@dimen/size_small_button"
-                        android:layout_height="@dimen/size_small_button"
-                        android:layout_gravity="center"
-                        android:clickable="true"
-                        android:focusable="true"
-                        android:padding="@dimen/spacing_tiny"
-                        android:src="@drawable/ic_cancel" />
-
-                </LinearLayout>
-            </FrameLayout>
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_marginTop="@dimen/thickness_line"
-                android:background="@color/white"
-                android:orientation="vertical">
-
-                <include layout="@layout/incl_session_invoice" />
-
-                <include layout="@layout/incl_horizontal_line" />
-
-                <FrameLayout
-                    android:id="@+id/container_invoice_total"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:padding="@dimen/spacing_small">
-
-                    <TextView
-                        style="@style/RedHeadingStyle"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="center_vertical|start"
-                        android:text="Grand Total" />
-
-                    <TextView
-                        android:id="@+id/tv_invoice_total"
-                        style="@style/RedHeadingStyle"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="center_vertical|end"
-                        tools:text="54" />
-                </FrameLayout>
-            </LinearLayout>
-
-        </LinearLayout>
-    </ScrollView>
-
-    <LinearLayout
-        android:id="@+id/container_as_invoice_payment_info"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="@color/white"
-        android:orientation="vertical"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent">
-
-        <LinearLayout
-            android:id="@+id/container_as_session_benefits"
-            android:layout_width="wrap_content"
-            android:layout_height="@dimen/button_height_medium"
-            android:layout_gravity="center"
-            android:layout_marginBottom="-25dp"
-            android:background="@drawable/background_textbox"
-            android:orientation="horizontal"
-            android:paddingStart="@dimen/spacing_small"
-            android:paddingTop="@dimen/spacing_small"
-            android:paddingEnd="@dimen/spacing_small"
-            android:visibility="gone">
-
-            <TextView
-                android:id="@+id/tv_as_session_benefits"
-                style="@style/GreyTextStyle"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="You're saving $100" />
-
         </LinearLayout>
 
-        <androidx.constraintlayout.widget.ConstraintLayout
-            android:id="@+id/container_as_payment_mode"
+        <FrameLayout
+            android:id="@+id/fragment_container_promo"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_margin="@dimen/spacing_normal"
-            android:background="@drawable/rounded_rectangle_light_grey"
-            android:padding="@dimen/spacing_small"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent">
+            android:layout_height="match_parent" />
 
-            <LinearLayout
-                android:id="@+id/container_as_payment_mode_change"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:layout_marginEnd="@dimen/spacing_small"
-                android:orientation="vertical"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toStartOf="@id/btn_invoice_request_checkout"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent">
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
-                <TextView
-                    android:id="@+id/tv_as_payment_mode"
-                    style="@style/GreySmallTextStyle"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center"
-                    android:drawableStart="@drawable/ic_cash_grey"
-                    android:drawablePadding="@dimen/spacing_normal"
-                    android:gravity="center"
-                    android:text="@string/session_payment_mode_via_cash" />
-
-                <include
-                    layout="@layout/incl_dotted_view"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center"
-                    android:layout_marginTop="@dimen/spacing_extra_tiny" />
-
-                <TextView
-                    style="@style/RedSmallTextStyle"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center"
-                    android:layout_marginTop="@dimen/spacing_extra_tiny"
-                    android:text="@string/change" />
-
-            </LinearLayout>
-
-            <Button
-                android:id="@+id/btn_invoice_request_checkout"
-                style="@style/ButtonRedAlertAction"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/title_request_checkout"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
-
-        </androidx.constraintlayout.widget.ConstraintLayout>
-
-    </LinearLayout>
-
-    <FrameLayout
-        android:id="@+id/fragment_container_promo"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent" />
-
-</androidx.constraintlayout.widget.ConstraintLayout>
+</androidx.swiperefreshlayout.widget.SwipeRefreshLayout>

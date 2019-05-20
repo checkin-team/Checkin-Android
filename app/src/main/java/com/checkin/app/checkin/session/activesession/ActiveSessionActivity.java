@@ -7,6 +7,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
@@ -285,10 +286,12 @@ public class ActiveSessionActivity extends BaseActivity implements
         }
         if (!data.isRequestedCheckout()) {
             btnSessionMenu.setEnabled(true);
+//            mTrendingDishAdapter.isSessionCheckedOut = false;
             rlSessionOrders.setEnabled(true);
             rlSessionOrders.setVisibility(View.VISIBLE);
         } else {
             btnSessionMenu.setEnabled(false);
+//            mTrendingDishAdapter.isSessionCheckedOut = true;
             tvSessionCheckout.setVisibility(View.VISIBLE);
             rlSessionOrders.setVisibility(View.GONE);
         }
@@ -329,9 +332,13 @@ public class ActiveSessionActivity extends BaseActivity implements
 
     @OnClick(R.id.btn_active_session_menu)
     public void onListMenu() {
-        if (mViewModel.getShopPk() > 0) {
+        if (Utils.isNetworkConnected(this)) {
+            if (mViewModel.getShopPk() < 0 )
+                return;
             btnSessionMenu.setEnabled(false);
             SessionMenuActivity.startWithSession(this, mViewModel.getShopPk(), null, null);
+        } else {
+            Utils.toast(this, R.string.error_unavailable_network);
         }
     }
 
@@ -444,6 +451,13 @@ public class ActiveSessionActivity extends BaseActivity implements
 
     @Override
     public void onDishClick(TrendingDishModel itemModel) {
-        SessionMenuActivity.startWithSession(this, mViewModel.getShopPk(), null, itemModel.getPk());
+        if (Utils.isNetworkConnected(this)) {
+            if (mViewModel.getShopPk() < 0 || mViewModel.isRequestedCheckout())
+                return;
+            SessionMenuActivity.startWithSession(this, mViewModel.getShopPk(), null, itemModel.getPk());
+        } else {
+            Utils.toast(this, R.string.error_unavailable_network);
+        }
+
     }
 }

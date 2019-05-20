@@ -3,12 +3,14 @@ package com.checkin.app.checkin.session.activesession;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.checkin.app.checkin.R;
+import com.checkin.app.checkin.Utility.Utils;
 import com.checkin.app.checkin.session.model.PromoDetailModel;
 
 import java.util.List;
@@ -67,8 +69,8 @@ public class ActiveSessionPromoAdapter extends RecyclerView.Adapter<ActiveSessio
         TextView tvPromoApply;
         @BindView(R.id.tv_as_promo_summary)
         TextView tvPromoSummary;
-//        @BindView(R.id.im_as_promo_icon)
-//        ImageView imPromoIcon;
+        @BindView(R.id.im_as_promo_icon)
+        ImageView imPromoIcon;
 
         private PromoDetailModel mItem;
 
@@ -85,7 +87,7 @@ public class ActiveSessionPromoAdapter extends RecyclerView.Adapter<ActiveSessio
             tvPromoCode.setText(promoModel.getCode());
             tvPromoName.setText(promoModel.getName());
             tvPromoSummary.setText(promoModel.getSummary());
-//            Utils.loadImageOrDefault(imPromoIcon, promoModel.getIcon(), 0);
+            Utils.loadImageOrDefault(imPromoIcon, promoModel.getIcon(), 0);
         }
     }
 }

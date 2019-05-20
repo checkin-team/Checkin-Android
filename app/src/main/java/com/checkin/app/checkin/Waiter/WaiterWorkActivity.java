@@ -332,7 +332,7 @@ public class WaiterWorkActivity extends BaseAccountActivity implements
     private void collectCash(long sessionPk, double sessionBillTotal, ShopModel.PAYMENT_MODE sessionBillPaymentMode) {
         WaiterTableViewModel viewModel = mFragmentAdapter.getTableViewModel(sessionPk);
         if (viewModel != null) {
-            viewModel.initiateCollectCash(sessionBillTotal);
+            viewModel.initiateCollectCash(sessionBillTotal, sessionBillPaymentMode);
         }
     }
 
