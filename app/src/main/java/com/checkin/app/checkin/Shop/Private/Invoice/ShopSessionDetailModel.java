@@ -1,6 +1,7 @@
 package com.checkin.app.checkin.Shop.Private.Invoice;
 
 import com.checkin.app.checkin.Misc.BriefModel;
+import com.checkin.app.checkin.Shop.ShopModel;
 import com.checkin.app.checkin.session.model.SessionBillModel;
 import com.checkin.app.checkin.session.model.SessionOrderedItemModel;
 import com.checkin.app.checkin.Utility.Utils;
@@ -30,6 +31,9 @@ public class ShopSessionDetailModel {
 
     @JsonProperty("host")
     private BriefModel host;
+
+    @JsonProperty("payment_mode")
+    private String paymentMode;
 
     public ShopSessionDetailModel() {
     }
@@ -64,5 +68,13 @@ public class ShopSessionDetailModel {
 
     public String formatPreparationTime() {
         return Utils.formatTimeDuration(avgPreparationTime);
+    }
+
+    public ShopModel.PAYMENT_MODE getPaymentMode() {
+        return ShopModel.PAYMENT_MODE.getByTag(paymentMode);
+    }
+
+    public void setPaymentMode(String paymentModes) {
+        this.paymentMode = paymentModes;
     }
 }

@@ -439,4 +439,24 @@ public class ActiveSessionRepository extends BaseRepository {
             }
         }.getAsLiveData();
     }
+
+    public LiveData<Resource<ObjectNode>> removeCanceledCheckout() {
+        return new NetworkBoundResource<ObjectNode, ObjectNode>() {
+            @Override
+            protected boolean shouldUseLocalDb() {
+                return false;
+            }
+
+            @NonNull
+            @Override
+            protected LiveData<ApiResponse<ObjectNode>> createCall() {
+                return new RetrofitLiveData<>(mWebService.deleteCheckout());
+            }
+
+            @Override
+            protected void saveCallResult(ObjectNode data) {
+                //saveCallResult code
+            }
+        }.getAsLiveData();
+    }
 }

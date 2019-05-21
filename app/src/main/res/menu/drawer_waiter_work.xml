@@ -2,7 +2,7 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
     <item
         android:id="@+id/nav_waiter_orders"
-        android:icon="@drawable/ic_orders_taken"
+        android:icon="@drawable/ic_orders_taken_grey"
         android:title="@string/menu_waiter_orders_taken"
         android:enabled="true"/>
 

@@ -325,11 +325,13 @@ public class ActiveSessionInvoiceActivity extends BaseActivity {
 
             @Override
             protected void onPaytmTransactionCancel(Bundle inResponse, String msg) {
+                mViewModel.deleteOnCancelCheckout();
                 Utils.toast(ActiveSessionInvoiceActivity.this, msg);
             }
 
             @Override
             protected void onPaytmError(String inErrorMessage) {
+                mViewModel.deleteOnCancelCheckout();
                 Utils.toast(ActiveSessionInvoiceActivity.this, inErrorMessage);
             }
         };
@@ -351,6 +353,10 @@ public class ActiveSessionInvoiceActivity extends BaseActivity {
                 Utils.navigateBackToHome(this);
             }
             Utils.toast(this, objectNodeResource.message);
+        });
+
+        mViewModel.getObservableData().observe(this,objectNodeResource -> {
+
         });
     }
 
@@ -394,12 +400,6 @@ public class ActiveSessionInvoiceActivity extends BaseActivity {
             mViewModel.requestCheckout(mBillModel.getTip(), selectedMode, override);
         else
             Utils.toast(this, "Please select the Payment Mode.");
-    }
-
-    @OnTextChanged(R.id.tv_invoice_total)
-    public void setTotalAmount() {
-        if (selectedMode != null && selectedMode.equals(PAYTM))
-            tvPaymentMode.setText(tvInvoiceTotal.getText().toString());
     }
 
     @OnClick(R.id.container_as_payment_mode_change)

@@ -186,6 +186,7 @@
     <string name="title_rated">Rated</string>
     <string name="title_follow">Follow</string>
     <string name="title_uploaded_by">Uploaded by</string>
+    <string name="label_paid_via">Paid Via</string>
 
     <!--Review-->
     <string name="label_review_write">Write a review</string>

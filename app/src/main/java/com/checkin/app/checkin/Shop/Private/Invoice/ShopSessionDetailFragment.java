@@ -9,6 +9,7 @@ import android.widget.TextView;
 import com.checkin.app.checkin.Data.Resource;
 import com.checkin.app.checkin.Misc.BillHolder;
 import com.checkin.app.checkin.R;
+import com.checkin.app.checkin.Shop.ShopModel;
 import com.checkin.app.checkin.session.activesession.InvoiceOrdersAdapter;
 import com.checkin.app.checkin.Utility.Utils;
 
@@ -33,6 +34,8 @@ public class ShopSessionDetailFragment extends Fragment {
     TextView tvPreparationTime;
     @BindView(R.id.tv_shop_session_bill_total)
     TextView tvBillTotal;
+    @BindView(R.id.tv_invoice_session_paid_via)
+    TextView tvPaidVia;
     private Unbinder unbinder;
     private BillHolder mBillHolder;
     private InvoiceOrdersAdapter mOrdersAdapter;
@@ -75,6 +78,8 @@ public class ShopSessionDetailFragment extends Fragment {
                 tvPreparationTime.setText(data.formatPreparationTime());
                 mOrdersAdapter.setData(data.getOrderedItems());
                 mBillHolder.bind(data.getBill());
+                if (data.getPaymentMode() != null)
+                    tvPaidVia.setCompoundDrawablesWithIntrinsicBounds(0, 0, ShopModel.getPaymentModeIcon(data.getPaymentMode()), 0);
             }
         });
     }

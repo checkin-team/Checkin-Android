@@ -23,7 +23,7 @@ public class ShopInvoiceSessionAdapter extends RecyclerView.Adapter<ShopInvoiceS
     private List<RestaurantSessionModel> mData;
     private ShopInvoiceInteraction mListener;
 
-    ShopInvoiceSessionAdapter(ShopInvoiceInteraction listener) {
+    public ShopInvoiceSessionAdapter(ShopInvoiceInteraction listener) {
         mListener = listener;
     }
 
@@ -44,7 +44,7 @@ public class ShopInvoiceSessionAdapter extends RecyclerView.Adapter<ShopInvoiceS
         return mData != null ? mData.size() : 0;
     }
 
-    void setSessionData(List<RestaurantSessionModel> data) {
+    public void setSessionData(List<RestaurantSessionModel> data) {
         this.mData = data;
         notifyDataSetChanged();
     }

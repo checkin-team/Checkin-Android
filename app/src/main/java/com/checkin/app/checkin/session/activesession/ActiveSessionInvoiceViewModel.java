@@ -109,6 +109,10 @@ public class ActiveSessionInvoiceViewModel extends BaseViewModel {
         mPromoDeletedData.addSource(mRepository.removePromoCode(), mPromoDeletedData::setValue);
     }
 
+    public void deleteOnCancelCheckout() {
+        mData.addSource(mRepository.removeCanceledCheckout(), mData::setValue);
+    }
+
     public LiveData<Resource<ObjectNode>> getPromoDeletedData() {
         return Transformations.map(mPromoDeletedData, input -> {
             if (input != null && input.status == Resource.Status.SUCCESS) {

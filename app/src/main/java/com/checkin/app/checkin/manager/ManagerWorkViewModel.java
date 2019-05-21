@@ -65,11 +65,11 @@ public class ManagerWorkViewModel extends BaseViewModel {
 
 
             Collections.sort(result, (t1, t2) -> {
-                    if (t2.getTableSession().getEvent() != null && t1.getTableSession().getEvent() !=null) {
-                        return t2.getTableSession().getEvent().getTimestamp().compareTo(t1.getTableSession().getEvent().getTimestamp());
-                    }else {
-                        return t2.getTableSession().getCreated().compareTo(t1.getTableSession().getCreated());
-                    }
+                if (t2.getTableSession().getEvent() != null && t1.getTableSession().getEvent() !=null) {
+                    return t2.getTableSession().getEvent().getTimestamp().compareTo(t1.getTableSession().getEvent().getTimestamp());
+                }else {
+                    return t2.getTableSession().getCreated().compareTo(t1.getTableSession().getCreated());
+                }
             });
             return Resource.cloneResource(input, result);
         });

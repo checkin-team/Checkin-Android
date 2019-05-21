@@ -87,21 +87,6 @@
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />
-                
-                <TextView
-                    android:id="@+id/tv_invoice_session_paid_via"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    style="@style/GreyTextStyle"
-                    android:text="Paid via"
-                    android:gravity="center"
-                    android:textSize="@dimen/font_small"
-                    android:drawableBottom="@drawable/ic_paytm_logo"
-                    android:drawablePadding="@dimen/spacing_tiny"
-                    android:paddingTop="@dimen/spacing_small"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent"/>
 
                 <TextView
                     android:id="@+id/tv_invoice_session_member_count"
