@@ -1,4 +1,4 @@
-package com.checkin.app.checkin.manager.fragment;
+package com.checkin.app.checkin.Manager.Fragment;
 
 import android.annotation.SuppressLint;
 import android.os.Bundle;
@@ -8,8 +8,9 @@ import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
-import com.checkin.app.checkin.manager.adapter.ManagerSessionOrderAdapter;
-import com.checkin.app.checkin.manager.ManagerSessionViewModel;
+import com.checkin.app.checkin.Manager.Adapter.ManagerSessionOrderAdapter;
+import com.checkin.app.checkin.Manager.ManagerSessionViewModel;
+
 import com.checkin.app.checkin.Misc.BaseFragment;
 import com.checkin.app.checkin.R;
 import com.checkin.app.checkin.session.activesession.chat.SessionChatModel;

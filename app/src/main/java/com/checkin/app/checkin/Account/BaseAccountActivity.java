@@ -19,7 +19,8 @@ import com.checkin.app.checkin.Account.AccountModel.ACCOUNT_TYPE;
 import com.checkin.app.checkin.Auth.AuthPreferences;
 import com.checkin.app.checkin.Data.Resource;
 import com.checkin.app.checkin.Home.SplashActivity;
-import com.checkin.app.checkin.manager.ManagerWorkActivity;
+
+import com.checkin.app.checkin.Manager.ManagerWorkActivity;
 import com.checkin.app.checkin.Misc.BaseActivity;
 import com.checkin.app.checkin.R;
 import com.checkin.app.checkin.Shop.Private.ShopPrivateActivity;

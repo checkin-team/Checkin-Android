@@ -1,4 +1,4 @@
-package com.checkin.app.checkin.manager.adapter;
+package com.checkin.app.checkin.Manager.Adapter;
 
 import android.view.LayoutInflater;
 import android.view.View;

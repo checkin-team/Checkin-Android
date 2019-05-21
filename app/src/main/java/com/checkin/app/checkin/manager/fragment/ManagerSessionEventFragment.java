@@ -1,11 +1,11 @@
-package com.checkin.app.checkin.manager.fragment;
+package com.checkin.app.checkin.Manager.Fragment;
 
 import android.os.Bundle;
 import android.view.View;
 import android.widget.TextView;
 
-import com.checkin.app.checkin.manager.adapter.ManagerSessionEventAdapter;
-import com.checkin.app.checkin.manager.ManagerSessionViewModel;
+import com.checkin.app.checkin.Manager.Adapter.ManagerSessionEventAdapter;
+import com.checkin.app.checkin.Manager.ManagerSessionViewModel;
 import com.checkin.app.checkin.manager.model.ManagerSessionEventModel;
 import com.checkin.app.checkin.Menu.SessionMenuActivity;
 import com.checkin.app.checkin.Misc.BaseFragment;

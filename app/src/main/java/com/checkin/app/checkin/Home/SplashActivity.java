@@ -10,7 +10,8 @@ import com.checkin.app.checkin.Account.AccountModel.ACCOUNT_TYPE;
 import com.checkin.app.checkin.Auth.AuthActivity;
 import com.checkin.app.checkin.Auth.AuthPreferences;
 import com.checkin.app.checkin.Auth.DeviceTokenService;
-import com.checkin.app.checkin.manager.ManagerWorkActivity;
+
+import com.checkin.app.checkin.Manager.ManagerWorkActivity;
 import com.checkin.app.checkin.Shop.Private.ShopPrivateActivity;
 import com.checkin.app.checkin.Utility.Constants;
 import com.checkin.app.checkin.Waiter.WaiterWorkActivity;

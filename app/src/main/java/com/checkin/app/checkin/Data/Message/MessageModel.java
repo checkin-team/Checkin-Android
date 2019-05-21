@@ -11,8 +11,8 @@ import android.text.TextUtils;
 
 import com.checkin.app.checkin.Data.Message.Constants.CHANNEL;
 import com.checkin.app.checkin.Data.Message.MessageObjectModel.MESSAGE_OBJECT_TYPE;
-import com.checkin.app.checkin.manager.ManagerSessionActivity;
-import com.checkin.app.checkin.manager.ManagerWorkActivity;
+import com.checkin.app.checkin.Manager.ManagerSessionActivity;
+import com.checkin.app.checkin.Manager.ManagerWorkActivity;
 import com.checkin.app.checkin.R;
 import com.checkin.app.checkin.session.activesession.ActiveSessionActivity;
 import com.checkin.app.checkin.Waiter.WaiterWorkActivity;

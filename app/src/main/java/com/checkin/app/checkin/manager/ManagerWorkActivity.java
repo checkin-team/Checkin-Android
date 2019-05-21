@@ -1,4 +1,4 @@
-package com.checkin.app.checkin.manager;
+package com.checkin.app.checkin.Manager;
 
 import android.app.AlertDialog;
 import android.content.Intent;
@@ -9,12 +9,13 @@ import android.widget.TextView;
 import com.checkin.app.checkin.Account.AccountModel;
 import com.checkin.app.checkin.Account.BaseAccountActivity;
 import com.checkin.app.checkin.Data.Resource;
+import com.checkin.app.checkin.Manager.Adapter.ManagerInactiveTableAdapter;
 import com.checkin.app.checkin.Manager.Fragment.ManagerInvoiceFragment;
+import com.checkin.app.checkin.Manager.Fragment.ManagerStatsFragment;
+import com.checkin.app.checkin.Manager.Fragment.ManagerTablesActivateFragment;
+import com.checkin.app.checkin.Manager.Fragment.ManagerTablesFragment;
 import com.checkin.app.checkin.Shop.Private.Invoice.ShopInvoiceViewModel;
-import com.checkin.app.checkin.manager.adapter.ManagerInactiveTableAdapter;
-import com.checkin.app.checkin.manager.fragment.ManagerStatsFragment;
-import com.checkin.app.checkin.manager.fragment.ManagerTablesActivateFragment;
-import com.checkin.app.checkin.manager.fragment.ManagerTablesFragment;
+
 import com.checkin.app.checkin.Misc.BaseFragmentAdapterBottomNav;
 import com.checkin.app.checkin.R;
 import com.checkin.app.checkin.Shop.ShopPreferences;

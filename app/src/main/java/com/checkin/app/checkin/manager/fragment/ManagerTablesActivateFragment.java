@@ -1,4 +1,4 @@
-package com.checkin.app.checkin.manager.fragment;
+package com.checkin.app.checkin.Manager.Fragment;
 
 import android.content.Context;
 import android.widget.Button;
