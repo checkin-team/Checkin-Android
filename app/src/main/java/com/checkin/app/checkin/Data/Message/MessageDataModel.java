@@ -1,7 +1,7 @@
 package com.checkin.app.checkin.Data.Message;
 
 import com.checkin.app.checkin.Data.Converters;
-import com.checkin.app.checkin.manager.model.ManagerSessionEventModel;
+import com.checkin.app.checkin.Manager.Model.ManagerSessionEventModel;
 import com.checkin.app.checkin.session.activesession.chat.SessionChatModel;
 import com.checkin.app.checkin.session.model.SessionOrderedItemModel;
 import com.checkin.app.checkin.Shop.ShopModel;

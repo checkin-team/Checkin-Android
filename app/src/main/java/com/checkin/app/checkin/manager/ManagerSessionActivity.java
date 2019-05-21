@@ -15,7 +15,7 @@ import com.checkin.app.checkin.Data.Message.MessageUtils;
 
 import com.checkin.app.checkin.Manager.Fragment.ManagerSessionEventFragment;
 import com.checkin.app.checkin.Manager.Fragment.ManagerSessionOrderFragment;
-import com.checkin.app.checkin.manager.model.ManagerSessionEventModel;
+import com.checkin.app.checkin.Manager.Model.ManagerSessionEventModel;
 import com.checkin.app.checkin.Misc.BriefModel;
 import com.checkin.app.checkin.R;
 import com.checkin.app.checkin.session.activesession.chat.SessionChatModel;

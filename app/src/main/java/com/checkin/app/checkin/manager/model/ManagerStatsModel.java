@@ -1,4 +1,4 @@
-package com.checkin.app.checkin.manager.model;
+package com.checkin.app.checkin.Manager.Model;
 
 import com.checkin.app.checkin.Menu.Model.MenuItemBriefModel;
 import com.checkin.app.checkin.Utility.Utils;

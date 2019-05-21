@@ -8,7 +8,8 @@ import com.checkin.app.checkin.Data.Resource;
 import com.checkin.app.checkin.Manager.Adapter.ManagerStatsOrderAdapter;
 import com.checkin.app.checkin.Manager.ManagerWorkViewModel;
 
-import com.checkin.app.checkin.manager.model.ManagerStatsModel;
+
+import com.checkin.app.checkin.Manager.Model.ManagerStatsModel;
 import com.checkin.app.checkin.Misc.BaseFragment;
 import com.checkin.app.checkin.R;
 import com.checkin.app.checkin.Utility.Utils;

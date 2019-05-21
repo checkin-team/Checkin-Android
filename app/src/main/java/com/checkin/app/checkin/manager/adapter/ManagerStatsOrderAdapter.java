@@ -6,7 +6,8 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.checkin.app.checkin.manager.model.ManagerStatsModel;
+
+import com.checkin.app.checkin.Manager.Model.ManagerStatsModel;
 import com.checkin.app.checkin.Menu.Model.MenuItemBriefModel;
 import com.checkin.app.checkin.R;
 
