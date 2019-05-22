@@ -9,7 +9,6 @@
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/rv_shop_invoice_sessions"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_marginTop="@dimen/spacing_small" />
+        android:layout_height="match_parent" />
 
 </LinearLayout>
