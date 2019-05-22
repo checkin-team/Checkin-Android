@@ -222,6 +222,8 @@ public class ActiveSessionActivity extends BaseActivity implements
         mViewModel.getCountProgressOrders().observe(this, integer -> {
             if (integer == null)
                 integer = 0;
+            tvCountOrdersInProgress.setTextColor(
+                    integer > 0 ? getResources().getColor(R.color.primary_red) : getResources().getColor(R.color.brownish_grey));
             tvCountOrdersInProgress.setText(String.valueOf(integer));
         });
         mViewModel.getCountDeliveredOrders().observe(this, integer -> {

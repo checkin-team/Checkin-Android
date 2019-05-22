@@ -1,46 +1,56 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:card_view="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="100dp"
     android:layout_height="match_parent"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:orientation="vertical"
-    android:gravity="center"
+    android:layout_gravity="center"
     android:layout_marginEnd="@dimen/spacing_small"
-    android:background="@drawable/background_pinkish_grey_stroke">
+    android:gravity="center">
 
-
-    <ImageView
-        android:id="@+id/im_as_trending_dish"
-        style="@style/LogoImageStyle"
-        android:src="@drawable/ic_plus_red"
-        android:padding="@dimen/spacing_extra_small"
-        android:layout_marginTop="@dimen/spacing_small" />
-
-
-    <TextView
-        android:id="@+id/tv_as_trending_dish_name"
-        android:layout_width="wrap_content"
-        android:layout_height="0dp"
-        android:layout_weight="1"
-        android:gravity="center|top"
-        android:textSize="@dimen/font_small"
-        android:ellipsize="end"
-        android:maxLines="3"
-        android:textColor="@color/brownish_grey"
-        android:layout_marginTop="@dimen/spacing_small"
-        android:fontFamily="@font/arial_rounded_mt_bold"
-        tools:text="Vanilla Cone"/>
-
-
-    <TextView
-        android:id="@+id/tv_as_trending_dish_price"
-        android:layout_width="wrap_content"
+    <LinearLayout
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:textSize="@dimen/font_normal"
-        android:textColor="@color/primary_red"
-        android:paddingBottom="@dimen/spacing_extra_small"
-        android:fontFamily="@font/arial_rounded_mt_bold"
-        tools:text="200"/>
+        android:minHeight="150dp"
+        android:background="@drawable/background_pinkish_grey_stroke"
+        android:gravity="center"
+        android:orientation="vertical">
+
+
+        <ImageView
+            android:id="@+id/im_as_trending_dish"
+            style="@style/LogoImageStyle"
+            android:layout_marginTop="@dimen/spacing_small"
+            android:padding="@dimen/spacing_extra_small"
+            android:src="@drawable/ic_plus_red" />
+
+
+        <TextView
+            android:id="@+id/tv_as_trending_dish_name"
+            android:layout_width="wrap_content"
+            android:layout_height="0dp"
+            android:layout_marginTop="@dimen/spacing_small"
+            android:layout_weight="1"
+            android:ellipsize="end"
+            android:fontFamily="@font/arial_rounded_mt_bold"
+            android:gravity="center|top"
+            android:maxLines="2"
+            android:textColor="@color/brownish_grey"
+            android:textSize="@dimen/font_small"
+            tools:text="Vanilla Cone" />
+
+
+        <TextView
+            android:id="@+id/tv_as_trending_dish_price"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/arial_rounded_mt_bold"
+            android:paddingBottom="@dimen/spacing_extra_small"
+            android:layout_marginTop="@dimen/spacing_extra_small"
+            android:textColor="@color/primary_red"
+            android:textSize="@dimen/font_normal"
+            tools:text="200" />
+
+    </LinearLayout>
 
 </LinearLayout>

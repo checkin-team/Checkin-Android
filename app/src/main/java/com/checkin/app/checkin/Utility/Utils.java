@@ -241,6 +241,12 @@ public final class Utils {
         return new SimpleDateFormat("HH:mm", Locale.ENGLISH).format(dateTime);
     }
 
+    public static String getCurrentFormattedDateInvoice(){
+        Date date = Calendar.getInstance().getTime();
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault());
+        return simpleDateFormat.format(date);
+    }
+
     public static String getCurrentFormattedDate() {
         Date date = Calendar.getInstance().getTime();
         return getFormattedDate(date);

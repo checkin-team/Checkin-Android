@@ -2,10 +2,9 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="@dimen/button_width_normal"
-    android:layout_height="wrap_content"
+    android:layout_height="match_parent"
     android:layout_marginEnd="@dimen/spacing_small"
-    android:layout_marginTop="@dimen/spacing_tiny"
-    android:layout_marginBottom="@dimen/spacing_extra_small"
+    android:layout_gravity="center"
     android:gravity="center"
     android:orientation="vertical">
 

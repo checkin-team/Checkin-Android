@@ -31,10 +31,6 @@ import butterknife.OnClick;
 
 public class ManagerInvoiceFragment extends BaseFragment implements ShopInvoiceSessionAdapter.ShopInvoiceInteraction  {
 
-    @BindView(R.id.tv_shop_invoice_filter_from)
-    TextView tvFilterFrom;
-    @BindView(R.id.tv_shop_invoice_filter_to)
-    TextView tvFilterTo;
     @BindView(R.id.rv_shop_invoice_sessions)
     RecyclerView rvSessions;
 
@@ -63,49 +59,17 @@ public class ManagerInvoiceFragment extends BaseFragment implements ShopInvoiceS
                 Utils.toast(requireContext(), input.message);
             }
         });
-
     }
 
     private void setupUi() {
         rvSessions.setLayoutManager(new LinearLayoutManager(requireContext(), RecyclerView.VERTICAL, false));
         mAdapter = new ShopInvoiceSessionAdapter(this);
         rvSessions.setAdapter(mAdapter);
-
-        tvFilterFrom.setText(Utils.getCurrentFormattedDate());
-        tvFilterTo.setText(Utils.getCurrentFormattedDate());
     }
 
     @Override
     protected int getRootLayout() {
-        return R.layout.activity_shop_invoice_list;
-    }
-
-    private String updateDate(TextView tvDate, int year, int month, int day) {
-        String initialDate = String.format(Locale.ENGLISH, "%04d-%02d-%02d", year, month, day);
-        try {
-            String result = Utils.formatDate(initialDate, "yyyy-MM-dd", "MMM dd, yyyy");
-            tvDate.setText(result);
-        } catch (ParseException e) {
-            e.printStackTrace();
-        }
-        return initialDate;
-    }
-
-    @OnClick({R.id.tv_shop_invoice_filter_from, R.id.tv_shop_invoice_filter_to})
-    public void onClick(TextView tv) {
-        Calendar cal = Calendar.getInstance();
-        try {
-            Date date = new SimpleDateFormat("MMM dd, yyyy", Locale.ENGLISH).parse(tv.getText().toString());
-            cal.setTime(date);
-        } catch (ParseException e) {
-        }
-        new DatePickerDialog(requireContext(), (view, year, month, dayOfMonth) -> {
-            String resultDate = updateDate(tv, year, month + 1, dayOfMonth);
-            if (tv.getId() == R.id.tv_shop_invoice_filter_from)
-                mViewModel.filterFrom(resultDate);
-            else
-                mViewModel.filterTo(resultDate);
-        }, cal.get(Calendar.YEAR), cal.get(Calendar.MONTH), cal.get(Calendar.DAY_OF_MONTH)).show();
+        return R.layout.fragment_manager_invoice;
     }
 
     @Override

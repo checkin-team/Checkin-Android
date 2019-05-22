@@ -30,6 +30,10 @@ public class ShopInvoiceViewModel extends BaseViewModel {
         mResults.addSource(mPrevResults, mResults::setValue);
     }
 
+    public void setShopPk(long restaurantId){
+        this.mShopPk = restaurantId;
+    }
+
     public void filterRestaurantSessions(String fromDate, String toDate) {
         if (mPrevResults != null)
             mResults.removeSource(mPrevResults);

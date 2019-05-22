@@ -24,6 +24,8 @@ import com.checkin.app.checkin.Utility.Utils;
 import com.checkin.app.checkin.session.model.RestaurantTableModel;
 import com.google.android.material.tabs.TabLayout;
 
+import java.util.Calendar;
+
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.ActionBar;
@@ -96,7 +98,10 @@ public class ManagerWorkActivity extends BaseAccountActivity implements ManagerT
         long shopId = getIntent().getLongExtra(KEY_RESTAURANT_PK, 0L);
 
         mViewModel.fetchActiveTables(shopId);
-        mShopViewModel.fetchShopSessions(shopId);
+
+        mShopViewModel.setShopPk(shopId);
+        mShopViewModel.filterFrom(Utils.getCurrentFormattedDateInvoice());
+        mShopViewModel.filterTo(Utils.getCurrentFormattedDateInvoice());
 
         Bundle sessionBundle = getIntent().getBundleExtra(KEY_SESSION_BUNDLE);
         if (sessionBundle != null) {

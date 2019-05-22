@@ -317,7 +317,7 @@
 
                         <ImageView
                             android:id="@+id/btn_active_session_menu"
-                            android:layout_width="90dp"
+                            android:layout_width="@dimen/width_session_menu"
                             android:layout_height="match_parent"
                             android:clickable="true"
                             android:focusable="true"
@@ -366,7 +366,6 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginTop="@dimen/spacing_extra_small"
-                            android:layout_marginBottom="@dimen/spacing_small"
                             android:gravity="center"
                             android:text="Trending Dishes"
                             android:textSize="@dimen/font_small" />
@@ -376,8 +375,9 @@
                             android:id="@+id/rv_as_trending_dishes"
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
-                            android:layout_gravity="center"
-                            android:paddingBottom="@dimen/spacing_tiny" />
+                            android:layout_centerVertical="true"
+                            android:layout_marginTop="@dimen/spacing_normal"
+                            android:layout_gravity="center" />
 
                     </LinearLayout>
 
@@ -429,10 +429,10 @@
                             app:layout_constraintTop_toTopOf="parent">
 
 
-                            <RelativeLayout
+                            <LinearLayout
                                 android:id="@+id/ll_call_waiter_button"
                                 android:layout_width="wrap_content"
-                                android:layout_height="70dp"
+                                android:layout_height="match_parent"
                                 android:layout_marginTop="@dimen/spacing_large"
                                 android:layout_weight="1"
                                 android:gravity="center"
@@ -445,9 +445,10 @@
 
                                 <de.hdodenhof.circleimageview.CircleImageView
                                     android:id="@+id/im_as_waiter_pic"
-                                    android:layout_width="35dp"
-                                    android:layout_height="35dp"
+                                    android:layout_width="34dp"
+                                    android:layout_height="34dp"
                                     android:layout_centerHorizontal="true"
+                                    android:layout_gravity="center"
                                     android:background="@drawable/shape_oval_pinkish_grey"
                                     android:src="@drawable/ic_waiter" />
 
@@ -456,10 +457,10 @@
                                     style="@style/PinkishGreySmallTextStyle"
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
-                                    android:layout_below="@+id/im_as_waiter_pic"
-                                    android:layout_centerHorizontal="true"
+                                    android:layout_weight="1"
                                     android:ellipsize="end"
                                     android:maxLines="1"
+                                    android:gravity="center|top"
                                     android:text="unassigned"
                                     android:textSize="@dimen/font_tiny"
                                     tools:text="waiter name" />
@@ -469,11 +470,11 @@
                                     android:layout_height="wrap_content"
                                     android:layout_alignParentBottom="true"
                                     android:layout_centerHorizontal="true"
-
+                                    android:layout_gravity="center"
                                     android:text="@string/call_waiter"
                                     android:textSize="@dimen/font_small" />
 
-                            </RelativeLayout>
+                            </LinearLayout>
 
                             <LinearLayout
                                 android:id="@+id/ll_table_cleaning_button"

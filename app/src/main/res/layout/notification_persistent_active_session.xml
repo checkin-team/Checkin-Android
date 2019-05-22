@@ -67,7 +67,7 @@
             android:layout_marginStart="@dimen/spacing_tiny"
             android:orientation="vertical"
             android:paddingEnd="@dimen/spacing_normal"
-            android:paddingBottom="@dimen/spacing_small">
+            android:layout_marginBottom="@dimen/spacing_small">
 
             <ImageView
                 style="@style/ButtonNormal"
