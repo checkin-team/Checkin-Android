@@ -22,7 +22,6 @@ import androidx.lifecycle.ViewModelProviders;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.checkin.app.checkin.Auth.OtpVerificationDialog;
 import com.checkin.app.checkin.Data.Message.MessageModel;
 import com.checkin.app.checkin.Data.Message.MessageObjectModel;
 import com.checkin.app.checkin.Data.Message.MessageUtils;
@@ -38,6 +37,7 @@ import com.checkin.app.checkin.session.model.PromoDetailModel;
 import com.checkin.app.checkin.session.model.SessionBillModel;
 import com.checkin.app.checkin.session.model.SessionInvoiceModel;
 import com.checkin.app.checkin.session.model.SessionPromoModel;
+import com.checkin.app.checkin.session.successfultransaction.SuccessfulTransactionActivity;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -355,7 +355,7 @@ public class ActiveSessionInvoiceActivity extends BaseActivity {
                 return;
             if (objectNodeResource.status == Resource.Status.SUCCESS) {
 //                Utils.navigateBackToHome(this);
-                Intent successIntent = new Intent(this,SuccessfulTransactionActivity.class);
+                Intent successIntent = new Intent(this, SuccessfulTransactionActivity.class);
                 successIntent.putExtra("sessionId", sessionId);
                 startActivity(successIntent);
                 finish();

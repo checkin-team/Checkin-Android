@@ -7,7 +7,7 @@
     android:orientation="vertical">
 
     <com.google.android.material.appbar.AppBarLayout
-        android:id="@+id/appbar_shop_invoice"
+        android:id="@+id/appbar_successful_transaction_details"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@color/white">

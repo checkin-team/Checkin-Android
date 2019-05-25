@@ -1,20 +1,17 @@
-package com.checkin.app.checkin.session.activesession;
+package com.checkin.app.checkin.session.successfultransaction;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.text.Html;
 import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.checkin.app.checkin.Data.Resource;
 import com.checkin.app.checkin.Misc.BaseActivity;
 import com.checkin.app.checkin.R;
-import com.checkin.app.checkin.Shop.ShopModel;
 import com.checkin.app.checkin.Utility.Utils;
 import com.checkin.app.checkin.session.model.SessionSuccessfulTransactionModel;
 
 import androidx.annotation.Nullable;
-import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.ViewModelProviders;
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -34,7 +31,7 @@ public class SuccessfulTransactionActivity extends BaseActivity {
     @BindView(R.id.tv_successful_transaction_restaurant_transaction_date)
     TextView tvTransactionDate;
 
-    private ActiveSessionInvoiceViewModel mViewModel;
+    private SuccessfulTransactionViewModel mViewModel;
     private long sessionId;
 
     @Override
@@ -44,7 +41,7 @@ public class SuccessfulTransactionActivity extends BaseActivity {
         setContentView(R.layout.activity_transaction_successful);
         ButterKnife.bind(this);
 
-        mViewModel = ViewModelProviders.of(this).get(ActiveSessionInvoiceViewModel.class);
+        mViewModel = ViewModelProviders.of(this).get(SuccessfulTransactionViewModel.class);
         sessionId = getIntent().getLongExtra("sessionId", 0);
         mViewModel.fetchSessionSuccessfulTransaction(sessionId);
 

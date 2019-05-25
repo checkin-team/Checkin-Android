@@ -462,45 +462,4 @@ public class ActiveSessionRepository extends BaseRepository {
             }
         }.getAsLiveData();
     }
-
-
-    public LiveData<Resource<ShopSessionDetailModel>> getShopSessionDetail(long sessionId) {
-        return new NetworkBoundResource<ShopSessionDetailModel, ShopSessionDetailModel>() {
-            @Override
-            protected boolean shouldUseLocalDb() {
-                return false;
-            }
-
-            @NonNull
-            @Override
-            protected LiveData<ApiResponse<ShopSessionDetailModel>> createCall() {
-                return new RetrofitLiveData<>(mWebService.getUserSessionDetailById(sessionId));
-            }
-
-            @Override
-            protected void saveCallResult(ShopSessionDetailModel data) {
-
-            }
-        }.getAsLiveData();
-    }
-
-    public LiveData<Resource<SessionSuccessfulTransactionModel>> getSessionBriefDetail(final long sessionPk) {
-        return new NetworkBoundResource<SessionSuccessfulTransactionModel, SessionSuccessfulTransactionModel>() {
-            @Override
-            protected boolean shouldUseLocalDb() {
-                return false;
-            }
-
-            @NonNull
-            @Override
-            protected LiveData<ApiResponse<SessionSuccessfulTransactionModel>> createCall() {
-                return new RetrofitLiveData<>(mWebService.getUserSessionBrief(sessionPk));
-            }
-
-            @Override
-            protected void saveCallResult(SessionSuccessfulTransactionModel data) {
-
-            }
-        }.getAsLiveData();
-    }
 }

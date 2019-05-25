@@ -1,14 +1,17 @@
-package com.checkin.app.checkin.session.activesession;
+package com.checkin.app.checkin.session.successfultransaction;
 
 import android.os.Bundle;
 import android.widget.TextView;
 
+import com.checkin.app.checkin.Data.Resource;
 import com.checkin.app.checkin.Misc.BriefModel;
 import com.checkin.app.checkin.R;
 import com.checkin.app.checkin.Shop.Private.Invoice.RestaurantSessionModel;
 import com.checkin.app.checkin.Shop.Private.Invoice.ShopSessionDetailFragment;
+import com.checkin.app.checkin.Shop.Private.Invoice.ShopSessionDetailModel;
 import com.checkin.app.checkin.Shop.Private.Invoice.ShopSessionFeedbackFragment;
 import com.checkin.app.checkin.Shop.Private.Invoice.ShopSessionViewModel;
+import com.checkin.app.checkin.session.activesession.ActiveSessionInvoiceViewModel;
 import com.google.android.material.appbar.AppBarLayout;
 import com.google.android.material.tabs.TabLayout;
 
@@ -34,20 +37,14 @@ public class SuccessfulTransactionDetailActivity extends AppCompatActivity {
     TextView tvDate;
     @BindView(R.id.tv_invoice_session_item_count)
     TextView tvItemCount;
-    @BindView(R.id.tv_invoice_session_member_count)
-    TextView tvMemberCount;
+    @BindView(R.id.tv_shop_session_total_time)
+    TextView tvTotalTime;
     @BindView(R.id.tv_invoice_session_waiter)
     TextView tvWaiter;
-    @BindView(R.id.tv_invoice_session_table)
-    TextView tvTable;
-    @BindView(R.id.appbar_shop_invoice)
+    @BindView(R.id.appbar_successful_transaction_details)
     AppBarLayout appBarLayout;
-    @BindView(R.id.tabs_shop_invoice)
-    TabLayout tabLayout;
-    @BindView(R.id.pager_shop_invoice)
-    ViewPager pagerInvoice;
 
-    private ActiveSessionInvoiceViewModel mViewModel;
+    private SuccessfulTransactionViewModel mViewModel;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -61,10 +58,14 @@ public class SuccessfulTransactionDetailActivity extends AppCompatActivity {
     }
 
     private void getData() {
-        mViewModel = ViewModelProviders.of(this).get(ActiveSessionInvoiceViewModel.class);
+        mViewModel = ViewModelProviders.of(this).get(SuccessfulTransactionViewModel.class);
         mViewModel.fetchUserSessionDetail( getIntent().getLongExtra("sessionId", 0));
         mViewModel.getUserSessionDetail().observe(this, shopSessionDetailModelResource -> {
-
+            if (shopSessionDetailModelResource == null)
+                return;
+            if (shopSessionDetailModelResource.status == Resource.Status.SUCCESS && shopSessionDetailModelResource.data != null) {
+//                setupAppbarDetails(shopSessionDetailModelResource.data.);
+            }
         });
     }
 
@@ -74,9 +75,8 @@ public class SuccessfulTransactionDetailActivity extends AppCompatActivity {
 
         tvSessionId.setText(data.getHashId());
         tvDate.setText(data.getFormattedDate());
-        tvMemberCount.setText(String.valueOf(data.getCountCustomers()));
         tvItemCount.setText(String.format(Locale.ENGLISH, " | %d item(s)", data.getCountOrders()));
-        tvTable.setText(data.getTable());
+//        tvTotalTime.setText(data.formatTotalTime());
     }
 
 

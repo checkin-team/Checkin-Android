@@ -12,10 +12,12 @@ import com.checkin.app.checkin.Data.RetrofitLiveData;
 import com.checkin.app.checkin.Data.WebApiService;
 
 import com.checkin.app.checkin.Manager.Model.ManagerSessionEventModel;
+import com.checkin.app.checkin.Shop.Private.Invoice.ShopSessionDetailModel;
 import com.checkin.app.checkin.session.model.QRResultModel;
 import com.checkin.app.checkin.session.model.SessionBasicModel;
 import com.checkin.app.checkin.session.model.SessionBriefModel;
 import com.checkin.app.checkin.session.model.SessionOrderedItemModel;
+import com.checkin.app.checkin.session.model.SessionSuccessfulTransactionModel;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 
 import java.util.List;
@@ -138,6 +140,47 @@ public class SessionRepository extends BaseRepository {
 
             @Override
             protected void saveCallResult(List<ManagerSessionEventModel> data) {
+            }
+        }.getAsLiveData();
+    }
+
+
+    public LiveData<Resource<ShopSessionDetailModel>> getUserSessionDetail(long sessionId) {
+        return new NetworkBoundResource<ShopSessionDetailModel, ShopSessionDetailModel>() {
+            @Override
+            protected boolean shouldUseLocalDb() {
+                return false;
+            }
+
+            @NonNull
+            @Override
+            protected LiveData<ApiResponse<ShopSessionDetailModel>> createCall() {
+                return new RetrofitLiveData<>(mWebService.getUserSessionDetailById(sessionId));
+            }
+
+            @Override
+            protected void saveCallResult(ShopSessionDetailModel data) {
+
+            }
+        }.getAsLiveData();
+    }
+
+    public LiveData<Resource<SessionSuccessfulTransactionModel>> getUserSessionBriefDetail(final long sessionPk) {
+        return new NetworkBoundResource<SessionSuccessfulTransactionModel, SessionSuccessfulTransactionModel>() {
+            @Override
+            protected boolean shouldUseLocalDb() {
+                return false;
+            }
+
+            @NonNull
+            @Override
+            protected LiveData<ApiResponse<SessionSuccessfulTransactionModel>> createCall() {
+                return new RetrofitLiveData<>(mWebService.getUserSessionBrief(sessionPk));
+            }
+
+            @Override
+            protected void saveCallResult(SessionSuccessfulTransactionModel data) {
+
             }
         }.getAsLiveData();
     }
