@@ -271,7 +271,7 @@ public class SnapToBlock extends SnapHelper {
         }
 
         /*
-            Calculate the amount of scroll needed to align the target view with the layout edge.
+            Calculate the totalAmount of scroll needed to align the target view with the layout edge.
          */
         int getScrollToAlignView(View targetView) {
             return (mIsRTL)
@@ -317,7 +317,7 @@ public class SnapToBlock extends SnapHelper {
         }
 
         /*
-            Calculate the number of positions to move in the RecyclerView given a scroll amount
+            Calculate the number of positions to move in the RecyclerView given a scroll totalAmount
             and the size of the ic_ordered_items to be scrolled. Return integral multiple of mBlockSize not
             equal to zero.
          */

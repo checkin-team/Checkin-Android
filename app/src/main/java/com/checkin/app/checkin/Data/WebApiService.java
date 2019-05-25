@@ -37,6 +37,7 @@ import com.checkin.app.checkin.session.model.SessionBriefModel;
 import com.checkin.app.checkin.session.model.SessionInvoiceModel;
 import com.checkin.app.checkin.session.model.SessionOrderedItemModel;
 import com.checkin.app.checkin.session.model.SessionPromoModel;
+import com.checkin.app.checkin.session.model.SessionSuccessfulTransactionModel;
 import com.checkin.app.checkin.session.model.TrendingDishModel;
 import com.fasterxml.jackson.databind.node.ArrayNode;
 import com.fasterxml.jackson.databind.node.ObjectNode;
@@ -136,7 +137,7 @@ public interface WebApiService {
     @GET("sessions/restaurants/{restaurant_id}/")
     Call<List<RestaurantSessionModel>> getRestaurantSessionsById(@Path("restaurant_id") long restaurantId, @Query("checked_out_after") String checkedOutAfter, @Query("checked_out_before") String checkedOutBefore);
 
-    @GET("sessions/{session_id}/detail/")
+    @GET("sessions/manage/{session_id}/detail/")
     Call<ShopSessionDetailModel> getShopSessionDetailById(@Path("session_id") long sessionId);
 
     @GET("restaurants/{restaurant_id}/finance/")
@@ -192,7 +193,7 @@ public interface WebApiService {
     @GET("sessions/active/invoice/")
     Call<SessionInvoiceModel> getActiveSessionInvoice();
 
-    @GET("sessions/{session_id}/brief/")
+    @GET("sessions/manage/{session_id}/brief/")
     Call<SessionBriefModel> getSessionBriefDetail(@Path("session_id") long sessionId);
 
     @GET("sessions/{session_id}/orders/")
@@ -200,6 +201,13 @@ public interface WebApiService {
 
     @GET("sessions/recent/users/self/")
     Call<List<ShopCustomerModel>> getUserRecentCheckins();
+
+
+    @GET("sessions/{session_id}/brief/")
+    Call<SessionSuccessfulTransactionModel> getUserSessionBrief(@Path("session_id") long sessionId);
+
+    @GET("sessions/{session_id}/detail/")
+    Call<ShopSessionDetailModel> getUserSessionDetailById(@Path("session_id") long sessionId);
     // endregion
 
     // region WAITER

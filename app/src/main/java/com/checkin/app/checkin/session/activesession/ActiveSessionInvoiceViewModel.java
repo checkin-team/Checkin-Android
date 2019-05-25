@@ -13,12 +13,15 @@ import com.checkin.app.checkin.Data.BaseViewModel;
 import com.checkin.app.checkin.Data.Converters;
 import com.checkin.app.checkin.Data.Resource;
 import com.checkin.app.checkin.Misc.paytm.PaytmModel;
+import com.checkin.app.checkin.Shop.Private.Invoice.ShopSessionDetailModel;
 import com.checkin.app.checkin.Shop.ShopModel;
 import com.checkin.app.checkin.session.model.CheckoutStatusModel;
 import com.checkin.app.checkin.session.model.PromoDetailModel;
 import com.checkin.app.checkin.session.model.SessionBillModel;
+import com.checkin.app.checkin.session.model.SessionBriefModel;
 import com.checkin.app.checkin.session.model.SessionInvoiceModel;
 import com.checkin.app.checkin.session.model.SessionPromoModel;
+import com.checkin.app.checkin.session.model.SessionSuccessfulTransactionModel;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 
 import java.util.List;
@@ -35,6 +38,10 @@ public class ActiveSessionInvoiceViewModel extends BaseViewModel {
     private MediatorLiveData<Resource<ObjectNode>> mPromoDeletedData = new MediatorLiveData<>();
     private MediatorLiveData<Resource<ObjectNode>> mPaytmCallbackData = new MediatorLiveData<>();
     private MutableLiveData<Boolean> mIsRequestedCheckout = new MutableLiveData<>(false);
+//    private SessionSuccessfulTransactionModel successfulTransactionModel = new SessionSuccessfulTransactionModel();
+
+    private MediatorLiveData<Resource<SessionSuccessfulTransactionModel>> mBriefData = new MediatorLiveData<>();
+    private MediatorLiveData<Resource<ShopSessionDetailModel>> mDetailData = new MediatorLiveData<>();
 
     private boolean mSessionBenefitsSet = false;
     private boolean mSessionPromoInvalid = false;
@@ -188,4 +195,22 @@ public class ActiveSessionInvoiceViewModel extends BaseViewModel {
         fetchSessionInvoice();
         fetchSessionAppliedPromo();
     }
+
+
+    public void fetchSessionSuccessfulTransaction(long sessionId) {
+        mBriefData.addSource(mRepository.getSessionBriefDetail(sessionId), mBriefData::setValue);
+    }
+
+    public void fetchUserSessionDetail(long sessionId) {
+        mDetailData.addSource(mRepository.getShopSessionDetail(sessionId), mDetailData::setValue);
+    }
+
+    public LiveData<Resource<SessionSuccessfulTransactionModel>> getUserSessionBriefData() {
+        return mBriefData;
+    }
+
+    public LiveData<Resource<ShopSessionDetailModel>> getUserSessionDetail() {
+        return mDetailData;
+    }
+
 }

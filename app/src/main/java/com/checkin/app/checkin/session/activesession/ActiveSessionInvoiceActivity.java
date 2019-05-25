@@ -22,6 +22,7 @@ import androidx.lifecycle.ViewModelProviders;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.checkin.app.checkin.Auth.OtpVerificationDialog;
 import com.checkin.app.checkin.Data.Message.MessageModel;
 import com.checkin.app.checkin.Data.Message.MessageObjectModel;
 import com.checkin.app.checkin.Data.Message.MessageUtils;
@@ -81,6 +82,8 @@ public class ActiveSessionInvoiceActivity extends BaseActivity {
     ViewGroup containerSessionBenefits;
     @BindView(R.id.tv_as_session_benefits)
     TextView tvSessionBenefits;
+
+    private long sessionId;
 
     private ActiveSessionInvoiceViewModel mViewModel;
     private InvoiceOrdersAdapter mAdapter;
@@ -191,6 +194,7 @@ public class ActiveSessionInvoiceActivity extends BaseActivity {
             if (resource.status == Resource.Status.SUCCESS && resource.data != null) {
                 setupData(resource.data);
                 tryShowTotalSavings();
+                sessionId = resource.data.getPk();
             }
 
             if (resource.status != Resource.Status.LOADING)
@@ -350,12 +354,16 @@ public class ActiveSessionInvoiceActivity extends BaseActivity {
             if (objectNodeResource == null)
                 return;
             if (objectNodeResource.status == Resource.Status.SUCCESS) {
-                Utils.navigateBackToHome(this);
+//                Utils.navigateBackToHome(this);
+                Intent successIntent = new Intent(this,SuccessfulTransactionActivity.class);
+                successIntent.putExtra("sessionId", sessionId);
+                startActivity(successIntent);
+                finish();
             }
             Utils.toast(this, objectNodeResource.message);
         });
 
-        mViewModel.getObservableData().observe(this,objectNodeResource -> {
+        mViewModel.getObservableData().observe(this, objectNodeResource -> {
 
         });
     }

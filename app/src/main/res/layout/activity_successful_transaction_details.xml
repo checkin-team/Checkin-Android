@@ -1,0 +1,186 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <com.google.android.material.appbar.AppBarLayout
+        android:id="@+id/appbar_shop_invoice"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/white">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:orientation="horizontal">
+
+            <ImageView
+                android:id="@+id/im_shop_invoice_appbar_back"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_weight="0.1"
+                android:src="@drawable/ic_back_grey" />
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="0.75"
+                android:padding="@dimen/spacing_small">
+
+                <LinearLayout
+                    android:id="@+id/ll_top_container"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent">
+
+                    <TextView
+                        android:id="@+id/tv_invoice_session_id"
+                        style="@style/GreyTextStyle"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        tools:text="#56743536323" />
+
+
+                    <TextView
+                        android:id="@+id/tv_invoice_session_waiter"
+                        style="@style/GreySmallTextStyle"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginEnd="@dimen/spacing_small"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toEndOf="@id/tv_invoice_session_id"
+                        app:layout_constraintTop_toTopOf="parent"
+                        tools:text="Waiter : NAME" />
+
+                </LinearLayout>
+
+                <TextView
+                    android:id="@+id/tv_invoice_session_date"
+                    style="@style/PinkishGreySmallTextStyle"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/spacing_extra_small"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/ll_top_container"
+                    tools:text="Dec 5, 2108 10:34 AM" />
+
+
+                <TextView
+                    android:id="@+id/title_shop_session_total_time"
+                    style="@style/GreyTextStyle"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/spacing_extra_small"
+                    android:text="Session Time :"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/tv_invoice_session_date" />
+
+                <TextView
+                    android:id="@+id/tv_shop_session_total_time"
+                    style="@style/GreyTextStyle"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/spacing_extra_small"
+                    app:layout_constraintStart_toEndOf="@id/title_shop_session_total_time"
+                    app:layout_constraintTop_toTopOf="@id/title_shop_session_total_time"
+                    tools:text="3 Mins" />
+
+                <TextView
+                    android:id="@+id/tv_invoice_session_item_count"
+                    style="@style/PinkishGreySmallTextStyle"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/spacing_extra_small"
+                    app:layout_constraintStart_toEndOf="@id/tv_invoice_session_date"
+                    app:layout_constraintTop_toBottomOf="@id/ll_top_container"
+                    tools:text=" | 3 items" />
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+        </LinearLayout>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/height_horizontal_line"
+            android:layout_gravity="center_horizontal"
+            android:background="@drawable/ic_line" />
+
+
+    </com.google.android.material.appbar.AppBarLayout>
+
+    <androidx.core.widget.NestedScrollView
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/rv_shop_session_orders"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:nestedScrollingEnabled="false"
+                android:padding="@dimen/spacing_small" />
+
+            <include layout="@layout/incl_horizontal_line" />
+
+            <include layout="@layout/incl_session_invoice" />
+
+        </LinearLayout>
+    </androidx.core.widget.NestedScrollView>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/height_horizontal_line"
+        android:background="@color/pinkish_grey" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/button_height_medium"
+        android:orientation="horizontal"
+        android:paddingStart="@dimen/spacing_small"
+        android:paddingTop="@dimen/spacing_small"
+        android:paddingEnd="@dimen/spacing_small">
+
+        <TextView
+            android:id="@+id/tv_invoice_session_paid_via"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:drawableEnd="@drawable/ic_paytm_logo"
+            android:drawablePadding="@dimen/spacing_small"
+            android:text="@string/label_paid_via" />
+
+
+        <TextView
+            style="@style/RedTextStyle"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="@dimen/spacing_normal"
+            android:layout_weight="1"
+            android:text="Bill Total"
+            android:textAlignment="textEnd"
+            android:textAllCaps="true" />
+
+        <TextView
+            android:id="@+id/tv_shop_session_bill_total"
+            style="@style/RedTextStyle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            tools:text="Rs. 123" />
+
+    </LinearLayout>
+
+
+</LinearLayout>

@@ -22,6 +22,7 @@
     <dimen name="spacing_extra_small">7dp</dimen>
     <dimen name="spacing_tiny">4dp</dimen>
     <dimen name="spacing_extra_tiny">2dp</dimen>
+    <dimen name="spacing_medium">20dp</dimen>
 
     <!-- icon sizes -->
     <dimen name="size_tiny_icon">12dp</dimen>

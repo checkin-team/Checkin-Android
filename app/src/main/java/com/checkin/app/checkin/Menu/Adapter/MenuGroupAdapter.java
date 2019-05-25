@@ -5,6 +5,7 @@ import android.animation.AnimatorListenerAdapter;
 import android.animation.AnimatorSet;
 import android.animation.ValueAnimator;
 import android.os.Build;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
@@ -192,10 +193,7 @@ public class MenuGroupAdapter extends RecyclerView.Adapter<MenuGroupAdapter.Grou
             vPager.setEnabled(false);
 
             itemView.setOnClickListener(view -> {
-                if (!this.isExpanded) {
-                    contractView();
-                    expandView(this);
-                }
+                tvGroupName.performClick();
             });
             tvGroupName.setOnClickListener(v -> {
                 if (this.isExpanded)

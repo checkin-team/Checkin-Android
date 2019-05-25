@@ -1,0 +1,175 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/primary_red"
+    android:orientation="vertical">
+
+    <RelativeLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:paddingEnd="@dimen/spacing_medium">
+
+        <ImageView
+            android:layout_width="90dp"
+            android:layout_height="130dp"
+            android:scaleType="fitXY"
+            android:src="@drawable/ic_holi_payment_success" />
+
+        <ImageView
+            android:id="@+id/im_thank_you"
+            android:layout_width="80dp"
+            android:layout_height="80dp"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="@dimen/spacing_normal"
+            android:src="@drawable/ic_thank_you" />
+
+        <TextView
+            style="@style/WhiteTextStyle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/im_thank_you"
+            android:layout_centerHorizontal="true"
+            android:text="@string/label_for_dining_with_us"
+            android:textSize="@dimen/font_small" />
+
+
+        <ImageView
+            android:id="@+id/im_payment_successful_finish"
+            android:layout_width="@dimen/size_small_button"
+            android:layout_height="@dimen/size_small_button"
+            android:layout_alignParentEnd="true"
+            android:layout_marginTop="@dimen/spacing_normal"
+            android:src="@drawable/ic_cancel"
+            android:tint="@color/white" />
+
+    </RelativeLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/spacing_large"
+        android:orientation="vertical">
+
+        <TextView
+            style="@style/WhiteTextStyle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/label_paid_successfully"
+            android:textSize="@dimen/font_small" />
+
+        <TextView
+            android:id="@+id/tv_successful_transaction_amount"
+            style="@style/WhiteTitleStyle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/spacing_small"
+            android:text="$ 234.00" />
+
+        <TextView
+            android:id="@+id/tv_successful_transaction_restaurant_name"
+            style="@style/WhiteTitleStyle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/spacing_large"
+            android:text="Cheese Doest It"
+            android:textSize="@dimen/font_extra_large" />
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/spacing_small">
+
+            <TextView
+                style="@style/WhiteTextStyle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="@dimen/spacing_small"
+                android:text="Via"
+                android:layout_gravity="center"/>
+
+            <ImageView
+                android:id="@+id/im_successful_transaction_payment_mode"
+                android:layout_width="50dp"
+                android:layout_height="25dp"
+                android:src="@drawable/ic_paytm_logo" />
+
+        </LinearLayout>
+
+        <TextView
+            android:id="@+id/tv_successful_transaction_restaurant_saved_amount"
+            style="@style/WhiteTextStyle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/spacing_large"
+            android:text="You've saved $ 100.00" />
+
+        <TextView
+            android:id="@+id/tv_successful_transaction_restaurant_transaction_id"
+            style="@style/PinkishGreySmallTextStyle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/spacing_large"
+            android:text="Transaction ID: XXXXXXXXXX"
+            android:textSize="@dimen/font_small" />
+
+        <TextView
+            android:id="@+id/tv_successful_transaction_restaurant_transaction_date"
+            style="@style/PinkishGreySmallTextStyle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/spacing_small"
+            android:text="6:27 PM, 21 May 2019"
+            android:textSize="@dimen/font_small" />
+
+        <View
+            android:layout_width="wrap_content"
+            android:layout_height="@dimen/height_horizontal_line"
+            android:layout_marginTop="@dimen/spacing_huge"
+            android:background="@color/white" />
+
+
+        <LinearLayout
+            android:id="@+id/ll_successful_transaction_view_transactions"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingTop="@dimen/spacing_normal"
+            android:paddingBottom="@dimen/spacing_large">
+
+
+            <ImageView
+                android:layout_width="18dp"
+                android:layout_height="25dp"
+                android:scaleType="fitXY"
+                android:src="@drawable/ic_orders_taken_white" />
+
+            <TextView
+                style="@style/WhiteTextStyle"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:gravity="center|left"
+                android:paddingStart="@dimen/spacing_large"
+                android:text="View Details"
+                android:textSize="@dimen/font_large" />
+
+            <ImageView
+                android:layout_width="15dp"
+                android:layout_height="25dp"
+                android:layout_marginEnd="@dimen/spacing_small"
+                android:scaleType="fitXY"
+                android:src="@drawable/ic_forward_arrow"
+                android:tint="@color/white" />
+
+        </LinearLayout>
+
+        <View
+            android:layout_width="wrap_content"
+            android:layout_height="@dimen/height_horizontal_line"
+            android:background="@color/white" />
+
+    </LinearLayout>
+
+
+</LinearLayout>

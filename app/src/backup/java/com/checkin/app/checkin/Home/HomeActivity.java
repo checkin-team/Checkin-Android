@@ -224,8 +224,8 @@ public class HomeActivity extends BaseAccountActivity
 ////             * calculation. In that case, dx and dy will be 0.
 ////             *
 ////             * @param recyclerView The RecyclerView which scrolled.
-////             * @param dx           The amount of horizontal scroll.
-////             * @param dy           The amount of vertical scroll.
+////             * @param dx           The totalAmount of horizontal scroll.
+////             * @param dy           The totalAmount of vertical scroll.
 ////             */
 ////            @Override
 ////            public_selected void onScrolled(RecyclerView recyclerView, int dx, int dy) {

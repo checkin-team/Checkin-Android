@@ -131,7 +131,7 @@
     <string name="action_checkins">Checkins</string>
     <string name="action_discount">Discount</string>
     <string name="action_tax_discount_description">Apply discount on the bill to retain customers. Discount applies to a subtotal of the bill.</string>
-    <string name="description_shop_finance_discount">**This discount percentage is applied to every bill, though you can change the discount amount for the individual bill during checkout.**</string>
+    <string name="description_shop_finance_discount">**This discount percentage is applied to every bill, though you can change the discount totalAmount for the individual bill during checkout.**</string>
     <string name="waiter">Waiter</string>
     <string name="call_waiter">Call Waiter</string>
     <string name="table_cleaning">Table Cleaning</string>
@@ -211,5 +211,7 @@
     <string name="label_session_offer_not_allowed_phone_not_registered">Offers not allowed - Register your mobile number first.</string>
     <string name="label_session_offer_not_allowed_session_requested_checkout">Offers not allowed - Session already requested checkout.</string>
     <string name="label_session_offer_not_allowed_payment_mode_cash">Promo not applicable for cash payment.</string>
+    <string name="label_paid_successfully">Paid Successfully</string>
+    <string name="label_for_dining_with_us">For dining with us!</string>
 
 </resources>
