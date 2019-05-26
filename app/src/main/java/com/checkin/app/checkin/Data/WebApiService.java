@@ -314,7 +314,7 @@ public interface WebApiService {
     Call<List<SearchResultShopModel>> getSearchShopResults(@Query("search") String query, @Query("has_nonveg") Boolean hasNonVeg, @Query("has_alcohol") Boolean hasAlcohol);
     // endregion
 
-    @POST("sessions/{session_id}/contacts/")
+    @POST("sessions/manage/{session_id}/contacts/")
     Call<ObjectNode> postSessionContact(@Path("session_id") long sessionId, @Body SessionContactModel data);
 
     @GET("sessions/manage/{session_id}/contacts/")
