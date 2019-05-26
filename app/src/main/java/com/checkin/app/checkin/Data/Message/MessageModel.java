@@ -9,13 +9,17 @@ import android.os.Bundle;
 import android.text.Html;
 import android.text.TextUtils;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.core.app.NotificationCompat;
+
 import com.checkin.app.checkin.Data.Message.Constants.CHANNEL;
 import com.checkin.app.checkin.Data.Message.MessageObjectModel.MESSAGE_OBJECT_TYPE;
 import com.checkin.app.checkin.Manager.ManagerSessionActivity;
 import com.checkin.app.checkin.Manager.ManagerWorkActivity;
 import com.checkin.app.checkin.R;
-import com.checkin.app.checkin.session.activesession.ActiveSessionActivity;
 import com.checkin.app.checkin.Waiter.WaiterWorkActivity;
+import com.checkin.app.checkin.session.activesession.ActiveSessionActivity;
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
@@ -23,10 +27,6 @@ import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 
 import java.io.Serializable;
 import java.util.Locale;
-
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.core.app.NotificationCompat;
 
 import static com.checkin.app.checkin.Data.Message.MessageModel.MESSAGE_TYPE.MANAGER_SESSION_ORDERS_PUSH;
 import static com.checkin.app.checkin.Data.Message.MessageModel.MESSAGE_TYPE.WAITER_SESSION_NEW;
@@ -285,6 +285,7 @@ public class MessageModel implements Serializable {
             case USER_SESSION_ORDER_ACCEPTED_REJECTED:
             case MANAGER_SESSION_ORDERS_PUSH:
             case WAITER_SESSION_ORDERS_PUSH:
+            case USER_ACTIVITY_REQUEST_REVIEW:
                 return false;
             default:
                 return true;
@@ -327,6 +328,8 @@ public class MessageModel implements Serializable {
         NONE(0),
 
         /* Users */
+        // Activity
+        USER_ACTIVITY_REQUEST_REVIEW(220),
 
         // Active Session
         USER_SESSION_MEMBER_ADD_REQUEST(302), USER_SESSION_ADDED_BY_OWNER(303), USER_SESSION_MEMBER_REMOVED(304),

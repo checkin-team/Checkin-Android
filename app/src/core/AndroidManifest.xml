@@ -97,10 +97,9 @@
             android:label="Invoice"
             android:theme="@style/AppThemeWhiteActionBar" />
         <activity
-            android:name=".session.successfultransaction.SuccessfulTransactionActivity"
+            android:name=".User.bills.SuccessfulTransactionActivity"
             android:theme="@style/Theme.Design.NoActionBar" />
-        <activity
-            android:name=".session.successfultransaction.SuccessfulTransactionDetailActivity" />
+        <activity android:name=".User.bills.TransactionDetailsActivity" />
         <activity
             android:name=".Shop.Private.Invoice.ShopInvoiceListActivity"
             android:label="@string/action_invoice"

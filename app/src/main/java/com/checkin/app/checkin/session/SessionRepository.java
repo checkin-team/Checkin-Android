@@ -3,6 +3,9 @@ package com.checkin.app.checkin.session;
 import android.app.Application;
 import android.content.Context;
 
+import androidx.annotation.NonNull;
+import androidx.lifecycle.LiveData;
+
 import com.checkin.app.checkin.Data.ApiClient;
 import com.checkin.app.checkin.Data.ApiResponse;
 import com.checkin.app.checkin.Data.BaseRepository;
@@ -10,20 +13,16 @@ import com.checkin.app.checkin.Data.NetworkBoundResource;
 import com.checkin.app.checkin.Data.Resource;
 import com.checkin.app.checkin.Data.RetrofitLiveData;
 import com.checkin.app.checkin.Data.WebApiService;
-
 import com.checkin.app.checkin.Manager.Model.ManagerSessionEventModel;
-import com.checkin.app.checkin.Shop.Private.Invoice.ShopSessionDetailModel;
+import com.checkin.app.checkin.User.bills.UserTransactionBriefModel;
+import com.checkin.app.checkin.User.bills.UserTransactionDetailsModel;
 import com.checkin.app.checkin.session.model.QRResultModel;
 import com.checkin.app.checkin.session.model.SessionBasicModel;
 import com.checkin.app.checkin.session.model.SessionBriefModel;
 import com.checkin.app.checkin.session.model.SessionOrderedItemModel;
-import com.checkin.app.checkin.session.model.SessionSuccessfulTransactionModel;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 
 import java.util.List;
-
-import androidx.annotation.NonNull;
-import androidx.lifecycle.LiveData;
 
 public class SessionRepository extends BaseRepository {
     private static SessionRepository INSTANCE;
@@ -145,8 +144,8 @@ public class SessionRepository extends BaseRepository {
     }
 
 
-    public LiveData<Resource<ShopSessionDetailModel>> getUserSessionDetail(long sessionId) {
-        return new NetworkBoundResource<ShopSessionDetailModel, ShopSessionDetailModel>() {
+    public LiveData<Resource<UserTransactionDetailsModel>> getUserSessionDetail(long sessionId) {
+        return new NetworkBoundResource<UserTransactionDetailsModel, UserTransactionDetailsModel>() {
             @Override
             protected boolean shouldUseLocalDb() {
                 return false;
@@ -154,19 +153,19 @@ public class SessionRepository extends BaseRepository {
 
             @NonNull
             @Override
-            protected LiveData<ApiResponse<ShopSessionDetailModel>> createCall() {
+            protected LiveData<ApiResponse<UserTransactionDetailsModel>> createCall() {
                 return new RetrofitLiveData<>(mWebService.getUserSessionDetailById(sessionId));
             }
 
             @Override
-            protected void saveCallResult(ShopSessionDetailModel data) {
+            protected void saveCallResult(UserTransactionDetailsModel data) {
 
             }
         }.getAsLiveData();
     }
 
-    public LiveData<Resource<SessionSuccessfulTransactionModel>> getUserSessionBriefDetail(final long sessionPk) {
-        return new NetworkBoundResource<SessionSuccessfulTransactionModel, SessionSuccessfulTransactionModel>() {
+    public LiveData<Resource<UserTransactionBriefModel>> getUserSessionBriefDetail(final long sessionPk) {
+        return new NetworkBoundResource<UserTransactionBriefModel, UserTransactionBriefModel>() {
             @Override
             protected boolean shouldUseLocalDb() {
                 return false;
@@ -174,12 +173,12 @@ public class SessionRepository extends BaseRepository {
 
             @NonNull
             @Override
-            protected LiveData<ApiResponse<SessionSuccessfulTransactionModel>> createCall() {
+            protected LiveData<ApiResponse<UserTransactionBriefModel>> createCall() {
                 return new RetrofitLiveData<>(mWebService.getUserSessionBrief(sessionPk));
             }
 
             @Override
-            protected void saveCallResult(SessionSuccessfulTransactionModel data) {
+            protected void saveCallResult(UserTransactionBriefModel data) {
 
             }
         }.getAsLiveData();

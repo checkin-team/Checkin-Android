@@ -20,6 +20,8 @@ public class ApiResponse<T> {
     @Nullable
     private final String errorMessage;
     @Nullable
+    private final JsonNode errorData;
+    @Nullable
     private final Throwable errorThrowable;
     private Response<T> mResponse;
 
@@ -29,6 +31,7 @@ public class ApiResponse<T> {
         data = null;
         errorMessage = error.getMessage();
         errorThrowable = error;
+        errorData = null;
     }
 
     public ApiResponse(@NonNull Response<T> response) {
@@ -42,10 +45,17 @@ public class ApiResponse<T> {
             } catch (IOException e) {
                 e.printStackTrace();
             } finally {
-                errorMessage = str;
+                if (str != null) {
+                    errorMessage = str;
+                    errorData = Converters.getJsonNode(errorMessage);
+                } else {
+                    errorData = null;
+                    errorMessage = null;
+                }
             }
         } else {
             errorMessage = null;
+            errorData = null;
         }
         data = response.body();
     }
@@ -61,23 +71,22 @@ public class ApiResponse<T> {
 
     @Nullable
     public String getErrorMessage() {
-        if (errorMessage == null)
-            return null;
-        JsonNode data = Converters.getJsonNode(errorMessage);
-        if (data == null)
+        if (errorData == null)
             return errorMessage;
-        Log.e("APIResponse", "Error data: " + data.toString());
-        if (data.isObject()) {
-            if (data.has("detail")) {
+        Log.e("APIResponse", "Error data: " + errorData.toString());
+        if (errorData.isObject()) {
+            if (errorData.has("detail")) {
                 Log.d("APIResponse", "Detail");
-                return data.get("detail").asText();
-            } else if (data.has("errors")) {
+                return errorData.get("detail").asText();
+            } else if (errorData.has("errors")) {
                 Log.d("APIResponse", "Errors");
-                return data.get("errors").get(0).asText();
+                return errorData.get("errors").get(0).asText();
+            } else if (errorData.has("title")) {
+                return errorData.get("title").asText();
             }
-        } else if (data.isArray()) {
+        } else if (errorData.isArray()) {
             Log.d("APIResponse", "Array");
-            return data.get(0).asText();
+            return errorData.get(0).asText();
         }
         return errorMessage;
     }

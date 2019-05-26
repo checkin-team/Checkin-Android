@@ -21,6 +21,8 @@ import com.checkin.app.checkin.Shop.RestaurantModel;
 import com.checkin.app.checkin.Shop.ShopJoin.ShopJoinModel;
 import com.checkin.app.checkin.User.ShopCustomerModel;
 import com.checkin.app.checkin.User.UserModel;
+import com.checkin.app.checkin.User.bills.UserTransactionBriefModel;
+import com.checkin.app.checkin.User.bills.UserTransactionDetailsModel;
 import com.checkin.app.checkin.Waiter.Model.OrderStatusModel;
 import com.checkin.app.checkin.Waiter.Model.SessionContactModel;
 import com.checkin.app.checkin.Waiter.Model.WaiterEventModel;
@@ -37,7 +39,6 @@ import com.checkin.app.checkin.session.model.SessionBriefModel;
 import com.checkin.app.checkin.session.model.SessionInvoiceModel;
 import com.checkin.app.checkin.session.model.SessionOrderedItemModel;
 import com.checkin.app.checkin.session.model.SessionPromoModel;
-import com.checkin.app.checkin.session.model.SessionSuccessfulTransactionModel;
 import com.checkin.app.checkin.session.model.TrendingDishModel;
 import com.fasterxml.jackson.databind.node.ArrayNode;
 import com.fasterxml.jackson.databind.node.ObjectNode;
@@ -79,6 +80,15 @@ public interface WebApiService {
 
     @GET("users/self/")
     Call<UserModel> getPersonalUser();
+
+    @GET("sessions/recent/users/self/")
+    Call<List<ShopCustomerModel>> getUserRecentCheckins();
+
+    @GET("sessions/{session_id}/brief/")
+    Call<UserTransactionBriefModel> getUserSessionBrief(@Path("session_id") long sessionId);
+
+    @GET("sessions/{session_id}/detail/")
+    Call<UserTransactionDetailsModel> getUserSessionDetailById(@Path("session_id") long sessionId);
     // endregion
 
     @PATCH("users/self/")
@@ -198,16 +208,6 @@ public interface WebApiService {
 
     @GET("sessions/{session_id}/orders/")
     Call<List<SessionOrderedItemModel>> getSessionOrders(@Path("session_id") long sessionId);
-
-    @GET("sessions/recent/users/self/")
-    Call<List<ShopCustomerModel>> getUserRecentCheckins();
-
-
-    @GET("sessions/{session_id}/brief/")
-    Call<SessionSuccessfulTransactionModel> getUserSessionBrief(@Path("session_id") long sessionId);
-
-    @GET("sessions/{session_id}/detail/")
-    Call<ShopSessionDetailModel> getUserSessionDetailById(@Path("session_id") long sessionId);
     // endregion
 
     // region WAITER

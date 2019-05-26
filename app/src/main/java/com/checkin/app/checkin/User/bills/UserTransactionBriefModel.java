@@ -1,4 +1,6 @@
-package com.checkin.app.checkin.session.model;
+package com.checkin.app.checkin.User.bills;
+
+import androidx.annotation.DrawableRes;
 
 import com.checkin.app.checkin.Misc.BriefModel;
 import com.checkin.app.checkin.R;
@@ -7,13 +9,10 @@ import com.checkin.app.checkin.Utility.Utils;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
-import java.io.Serializable;
 import java.util.Date;
 
-import androidx.annotation.DrawableRes;
-
 @JsonIgnoreProperties(ignoreUnknown = true)
-public class SessionSuccessfulTransactionModel {
+public class UserTransactionBriefModel {
 
     @JsonProperty("hash_id")
     private String hashId;
@@ -28,7 +27,7 @@ public class SessionSuccessfulTransactionModel {
     private Double savings;
 
     @JsonProperty("transaction_id")
-    public String transactionId;
+    private String transactionId;
 
     @JsonProperty("table")
     private String table;
@@ -42,7 +41,7 @@ public class SessionSuccessfulTransactionModel {
     @JsonProperty("payment_mode")
     private String paymentMode;
 
-    public SessionSuccessfulTransactionModel() {
+    public UserTransactionBriefModel() {
     }
 
     public String getHashId() {
@@ -100,5 +99,4 @@ public class SessionSuccessfulTransactionModel {
                 return R.drawable.ic_cash_white_red;
         }
     }
-
 }

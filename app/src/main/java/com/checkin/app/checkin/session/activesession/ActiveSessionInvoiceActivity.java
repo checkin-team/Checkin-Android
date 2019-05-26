@@ -31,13 +31,13 @@ import com.checkin.app.checkin.Misc.BillHolder;
 import com.checkin.app.checkin.Misc.paytm.PaytmPayment;
 import com.checkin.app.checkin.R;
 import com.checkin.app.checkin.Shop.ShopModel;
+import com.checkin.app.checkin.User.bills.SuccessfulTransactionActivity;
 import com.checkin.app.checkin.Utility.Constants;
 import com.checkin.app.checkin.Utility.Utils;
 import com.checkin.app.checkin.session.model.PromoDetailModel;
 import com.checkin.app.checkin.session.model.SessionBillModel;
 import com.checkin.app.checkin.session.model.SessionInvoiceModel;
 import com.checkin.app.checkin.session.model.SessionPromoModel;
-import com.checkin.app.checkin.session.successfultransaction.SuccessfulTransactionActivity;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;

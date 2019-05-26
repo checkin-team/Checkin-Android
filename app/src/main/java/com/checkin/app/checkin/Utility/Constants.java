@@ -6,7 +6,7 @@ import static java.util.concurrent.TimeUnit.MILLISECONDS;
 import static java.util.concurrent.TimeUnit.MINUTES;
 
 public class Constants {
-    public static final String API_VERSION = "0.8.6";
+    public static final String API_VERSION = "0.8.9";
     public static final String API_PROTOCOL = "https://";
     public static final String API_HOST = getApiHost();
 

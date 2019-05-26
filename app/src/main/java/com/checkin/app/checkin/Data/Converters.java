@@ -2,6 +2,9 @@ package com.checkin.app.checkin.Data;
 
 import android.util.Log;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+
 import com.checkin.app.checkin.User.UserModel.GENDER;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.core.type.TypeReference;
@@ -12,8 +15,6 @@ import java.io.IOException;
 import java.util.List;
 import java.util.Map;
 
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 import io.objectbox.converter.PropertyConverter;
 
 public class Converters {
