@@ -18,6 +18,7 @@ import com.checkin.app.checkin.Data.Message.MessageObjectModel.MESSAGE_OBJECT_TY
 import com.checkin.app.checkin.Manager.ManagerSessionActivity;
 import com.checkin.app.checkin.Manager.ManagerWorkActivity;
 import com.checkin.app.checkin.R;
+import com.checkin.app.checkin.User.bills.SuccessfulTransactionActivity;
 import com.checkin.app.checkin.Waiter.WaiterWorkActivity;
 import com.checkin.app.checkin.session.activesession.ActiveSessionActivity;
 import com.fasterxml.jackson.annotation.JsonCreator;
@@ -29,6 +30,7 @@ import java.io.Serializable;
 import java.util.Locale;
 
 import static com.checkin.app.checkin.Data.Message.MessageModel.MESSAGE_TYPE.MANAGER_SESSION_ORDERS_PUSH;
+import static com.checkin.app.checkin.Data.Message.MessageModel.MESSAGE_TYPE.USER_ACTIVITY_REQUEST_REVIEW;
 import static com.checkin.app.checkin.Data.Message.MessageModel.MESSAGE_TYPE.WAITER_SESSION_NEW;
 import static com.checkin.app.checkin.Data.Message.MessageModel.MESSAGE_TYPE.WAITER_SESSION_ORDERS_PUSH;
 import static com.checkin.app.checkin.Waiter.WaiterWorkActivity.ACTION_NEW_TABLE;
@@ -136,7 +138,8 @@ public class MessageModel implements Serializable {
         } else if (isShopWaiterNotification()) {
             intent.putExtra(WaiterWorkActivity.KEY_SHOP_PK, shopDetail.getPk())
                     .putExtra(WaiterWorkActivity.KEY_SESSION_PK, sessionDetail != null ? sessionDetail.getPk() : 0L);
-        }
+        } else if (isUserReviewNotification())
+            intent.putExtra(SuccessfulTransactionActivity.KEY_SESSION_ID, sessionDetail != null ? sessionDetail.getPk() : 0L);
     }
 
     @Nullable
@@ -148,6 +151,8 @@ public class MessageModel implements Serializable {
             componentName = new ComponentName(context, WaiterWorkActivity.class);
         else if (isShopManagerNotification())
             componentName = new ComponentName(context, ManagerWorkActivity.class);
+        else if (isUserReviewNotification())
+            componentName = new ComponentName(context, SuccessfulTransactionActivity.class);
         return componentName;
     }
 
@@ -302,6 +307,10 @@ public class MessageModel implements Serializable {
 
     private boolean isShopManagerNotification() {
         return this.type.id > 600 && this.type.id < 700;
+    }
+
+    private boolean isUserReviewNotification() {
+        return this.type == USER_ACTIVITY_REQUEST_REVIEW ;
     }
 
     @Nullable

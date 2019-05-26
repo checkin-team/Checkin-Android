@@ -87,7 +87,7 @@ public class TransactionDetailsActivity extends AppCompatActivity {
         tvWaiter.setText(String.format(Locale.ENGLISH, "Waiter : %s", host != null ? host.getDisplayName() : getResources().getString(R.string.waiter_unassigned)));
 
         tvSessionId.setText(data.getHashId());
-        tvDate.setText(data.formatTotalTime());
+        tvDate.setText(data.getFormattedDate());
         tvItemCount.setText(String.format(Locale.ENGLISH, " | %d item(s)", data.getCountOrders()));
         tvTotalTime.setText(data.formatTotalTime());
         mOrdersAdapter.setData(data.getOrderedItems());
