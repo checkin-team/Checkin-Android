@@ -45,6 +45,7 @@ import butterknife.OnClick;
 import butterknife.OnTextChanged;
 
 import static com.checkin.app.checkin.Shop.ShopModel.PAYMENT_MODE.PAYTM;
+import static com.checkin.app.checkin.User.bills.SuccessfulTransactionActivity.KEY_SESSION_ID;
 import static com.checkin.app.checkin.session.activesession.ActiveSessionPaymentOptions.KEY_PAYMENT_MODE_RESULT;
 import static com.checkin.app.checkin.session.activesession.ActiveSessionPaymentOptions.KEY_SESSION_AMOUNT;
 
@@ -356,7 +357,7 @@ public class ActiveSessionInvoiceActivity extends BaseActivity {
             if (objectNodeResource.status == Resource.Status.SUCCESS) {
 //                Utils.navigateBackToHome(this);
                 Intent successIntent = new Intent(this, SuccessfulTransactionActivity.class);
-                successIntent.putExtra("sessionId", sessionId);
+                successIntent.putExtra(KEY_SESSION_ID, sessionId);
                 startActivity(successIntent);
                 finish();
             }

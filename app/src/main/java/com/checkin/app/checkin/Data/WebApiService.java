@@ -255,7 +255,7 @@ public interface WebApiService {
     @PUT("sessions/{session_id}/manage/bill/")
     Call<GenericDetailModel> putManageSessionBill(@Path("session_id") long sessionId, @Body ObjectNode data);
 
-    @POST("sessions/{session_id}/checkout/")
+    @POST("sessions/manage/{session_id}/checkout/")
     Call<CheckoutStatusModel> putSessionCheckout(@Path("session_id") long sessionId);
 
     @POST("sessions/manage/new/")
@@ -317,7 +317,7 @@ public interface WebApiService {
     @POST("sessions/{session_id}/contacts/")
     Call<ObjectNode> postSessionContact(@Path("session_id") long sessionId, @Body SessionContactModel data);
 
-    @GET("sessions/{session_id}/contacts/")
+    @GET("sessions/manage/{session_id}/contacts/")
     Call<List<SessionContactModel>> getSessionContactList(@Path("session_id") long sessionId);
 
     // region payments

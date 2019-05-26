@@ -71,4 +71,8 @@ public class UserTransactionDetailsModel {
     public String getHashId() {
         return hashId;
     }
+
+    public int getCountOrders() {
+        return orderedItems.size();
+    }
 }

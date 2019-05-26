@@ -7,7 +7,7 @@
     android:orientation="vertical">
 
     <com.google.android.material.appbar.AppBarLayout
-        android:id="@+id/appbar_successful_transaction_details"
+        android:id="@+id/appbar_user_transaction_details"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@color/white">
@@ -19,7 +19,7 @@
             android:orientation="horizontal">
 
             <ImageView
-                android:id="@+id/im_shop_invoice_appbar_back"
+                android:id="@+id/im_user_transaction_appbar_back"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
@@ -41,7 +41,7 @@
                     app:layout_constraintTop_toTopOf="parent">
 
                     <TextView
-                        android:id="@+id/tv_invoice_session_id"
+                        android:id="@+id/tv_user_transaction_session_id"
                         style="@style/GreyTextStyle"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
@@ -50,20 +50,20 @@
 
 
                     <TextView
-                        android:id="@+id/tv_invoice_session_waiter"
+                        android:id="@+id/tv_user_transaction_session_waiter"
                         style="@style/GreySmallTextStyle"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginEnd="@dimen/spacing_small"
                         app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintStart_toEndOf="@id/tv_invoice_session_id"
+                        app:layout_constraintStart_toEndOf="@id/tv_user_transaction_session_id"
                         app:layout_constraintTop_toTopOf="parent"
                         tools:text="Waiter : NAME" />
 
                 </LinearLayout>
 
                 <TextView
-                    android:id="@+id/tv_invoice_session_date"
+                    android:id="@+id/tv_user_transaction_session_date"
                     style="@style/PinkishGreySmallTextStyle"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -74,32 +74,32 @@
 
 
                 <TextView
-                    android:id="@+id/title_shop_session_total_time"
+                    android:id="@+id/title_user_transaction_session_total_time"
                     style="@style/GreyTextStyle"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="@dimen/spacing_extra_small"
                     android:text="Session Time :"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/tv_invoice_session_date" />
+                    app:layout_constraintTop_toBottomOf="@id/tv_user_transaction_session_date" />
 
                 <TextView
-                    android:id="@+id/tv_shop_session_total_time"
+                    android:id="@+id/tv_user_transaction_session_total_time"
                     style="@style/GreyTextStyle"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="@dimen/spacing_extra_small"
-                    app:layout_constraintStart_toEndOf="@id/title_shop_session_total_time"
-                    app:layout_constraintTop_toTopOf="@id/title_shop_session_total_time"
+                    app:layout_constraintStart_toEndOf="@id/title_user_transaction_session_total_time"
+                    app:layout_constraintTop_toTopOf="@id/title_user_transaction_session_total_time"
                     tools:text="3 Mins" />
 
                 <TextView
-                    android:id="@+id/tv_invoice_session_item_count"
+                    android:id="@+id/tv_user_transaction_session_item_count"
                     style="@style/PinkishGreySmallTextStyle"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="@dimen/spacing_extra_small"
-                    app:layout_constraintStart_toEndOf="@id/tv_invoice_session_date"
+                    app:layout_constraintStart_toEndOf="@id/tv_user_transaction_session_date"
                     app:layout_constraintTop_toBottomOf="@id/ll_top_container"
                     tools:text=" | 3 items" />
 
@@ -128,7 +128,7 @@
 
 
             <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/rv_shop_session_orders"
+                android:id="@+id/rv_user_transaction_session_orders"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:nestedScrollingEnabled="false"
@@ -155,7 +155,7 @@
         android:paddingEnd="@dimen/spacing_small">
 
         <TextView
-            android:id="@+id/tv_invoice_session_paid_via"
+            android:id="@+id/tv_user_transaction_session_paid_via"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:drawableEnd="@drawable/ic_paytm_logo"
@@ -174,7 +174,7 @@
             android:textAllCaps="true" />
 
         <TextView
-            android:id="@+id/tv_shop_session_bill_total"
+            android:id="@+id/tv_user_transaction_session_bill_total"
             style="@style/RedTextStyle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"

@@ -24,7 +24,6 @@
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"
         android:layout_marginTop="@dimen/spacing_tiny"
-        android:layout_marginBottom="@dimen/spacing_tiny"
         android:textColor="@drawable/selector_tab_color"
         android:textSize="@dimen/font_small"
         tools:text="Option" />

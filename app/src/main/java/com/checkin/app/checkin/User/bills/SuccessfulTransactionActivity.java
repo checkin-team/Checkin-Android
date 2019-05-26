@@ -18,6 +18,8 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 
 public class SuccessfulTransactionActivity extends BaseActivity {
+    public static final String KEY_SESSION_ID = "user.session_id";
+
     @BindView(R.id.tv_successful_transaction_amount)
     TextView tvAmount;
     @BindView(R.id.tv_successful_transaction_restaurant_name)
@@ -42,7 +44,7 @@ public class SuccessfulTransactionActivity extends BaseActivity {
         ButterKnife.bind(this);
 
         mViewModel = ViewModelProviders.of(this).get(UserTransactionsViewModel.class);
-        sessionId = getIntent().getLongExtra("sessionId", 0);
+        sessionId = getIntent().getLongExtra(KEY_SESSION_ID, 0L);
         mViewModel.fetchSessionSuccessfulTransaction(sessionId);
 
         mViewModel.getUserSessionBriefData().observe(this, sessionBriefModelResource -> {
