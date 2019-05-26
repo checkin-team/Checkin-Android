@@ -26,6 +26,8 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.Unbinder;
 
+import static com.checkin.app.checkin.User.bills.SuccessfulTransactionActivity.KEY_SESSION_ID;
+
 public class TransactionDetailsActivity extends AppCompatActivity {
     public static final String KEY_SESSION_DATA = "shop.invoice_session";
 
@@ -72,7 +74,7 @@ public class TransactionDetailsActivity extends AppCompatActivity {
 
     private void getData() {
         mViewModel = ViewModelProviders.of(this).get(UserTransactionsViewModel.class);
-        mViewModel.fetchUserSessionDetail(getIntent().getLongExtra("sessionId", 0));
+        mViewModel.fetchUserSessionDetail(getIntent().getLongExtra(KEY_SESSION_ID, 0));
         mViewModel.getUserSessionDetail().observe(this, shopSessionDetailModelResource -> {
             if (shopSessionDetailModelResource == null)
                 return;
