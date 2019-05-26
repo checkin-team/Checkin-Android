@@ -356,7 +356,7 @@ public class ActiveSessionInvoiceActivity extends BaseActivity {
             if (objectNodeResource.status == Resource.Status.SUCCESS) {
 //                Utils.navigateBackToHome(this);
                 Intent successIntent = new Intent(this, SuccessfulTransactionActivity.class);
-                successIntent.putExtra("sessionId", sessionId);
+                successIntent.putExtra(SuccessfulTransactionActivity.KEY_SESSION_ID, sessionId);
                 startActivity(successIntent);
                 finish();
             }
