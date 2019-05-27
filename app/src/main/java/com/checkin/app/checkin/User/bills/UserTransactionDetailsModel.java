@@ -8,6 +8,7 @@ import com.checkin.app.checkin.session.model.SessionOrderedItemModel;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
+import java.util.Date;
 import java.util.List;
 
 @JsonIgnoreProperties(ignoreUnknown = true)
@@ -32,6 +33,9 @@ public class UserTransactionDetailsModel {
 
     @JsonProperty("payment_mode")
     private String paymentMode;
+
+    @JsonProperty("checked_out")
+    private Date checkedOut;
 
     public UserTransactionDetailsModel() {
     }
@@ -70,5 +74,13 @@ public class UserTransactionDetailsModel {
 
     public String getHashId() {
         return hashId;
+    }
+
+    public int getCountOrders() {
+        return orderedItems.size();
+    }
+
+    public String getFormattedDate() {
+        return Utils.formatCompleteDate(checkedOut);
     }
 }

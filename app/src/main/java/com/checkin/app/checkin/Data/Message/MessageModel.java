@@ -138,9 +138,8 @@ public class MessageModel implements Serializable {
         } else if (isShopWaiterNotification()) {
             intent.putExtra(WaiterWorkActivity.KEY_SHOP_PK, shopDetail.getPk())
                     .putExtra(WaiterWorkActivity.KEY_SESSION_PK, sessionDetail != null ? sessionDetail.getPk() : 0L);
-        } else if (this.type == USER_ACTIVITY_REQUEST_REVIEW && sessionDetail != null) {
-            intent.putExtra(SuccessfulTransactionActivity.KEY_SESSION_ID, sessionDetail.getPk());
-        }
+        } else if (isUserReviewNotification() && sessionDetail != null)
+            intent.putExtra(SuccessfulTransactionActivity.KEY_SESSION_ID, sessionDetail != null ? sessionDetail.getPk() : 0L);
     }
 
     @Nullable
@@ -152,7 +151,7 @@ public class MessageModel implements Serializable {
             componentName = new ComponentName(context, WaiterWorkActivity.class);
         else if (isShopManagerNotification())
             componentName = new ComponentName(context, ManagerWorkActivity.class);
-        else if (this.type == USER_ACTIVITY_REQUEST_REVIEW)
+        else if (isUserReviewNotification())
             componentName = new ComponentName(context, SuccessfulTransactionActivity.class);
         return componentName;
     }
@@ -308,6 +307,10 @@ public class MessageModel implements Serializable {
 
     private boolean isShopManagerNotification() {
         return this.type.id > 600 && this.type.id < 700;
+    }
+
+    private boolean isUserReviewNotification() {
+        return this.type == USER_ACTIVITY_REQUEST_REVIEW ;
     }
 
     @Nullable
