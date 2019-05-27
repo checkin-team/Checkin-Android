@@ -12,8 +12,6 @@ public class Constants {
     public static final String API_PROTOCOL = "https://";
     public static final String API_HOST = getApiHost();
 
-    public static final boolean IS_RELEASE_BUILD = !BuildConfig.DEBUG && BuildConfig.BUILD_TYPE.equalsIgnoreCase("release");
-
     public static final Uri PLAY_STORE_URI = Uri.parse("https://play.google.com/store/apps/details?id=com.checkin.app.checkin");
 
     public static final String ACCOUNT_TYPE = "com.checkin.accounts";
@@ -43,7 +41,11 @@ public class Constants {
     private Constants() {
     }
 
+    public static boolean IS_RELEASE_BUILD() {
+        return !BuildConfig.DEBUG && BuildConfig.BUILD_TYPE.equalsIgnoreCase("release");
+    }
+
     private static String getApiHost() {
-        return IS_RELEASE_BUILD ? "api.check-in.in" : "dev.api.check-in.in";
+        return IS_RELEASE_BUILD() ? "api.check-in.in" : "dev.api.check-in.in";
     }
 }
