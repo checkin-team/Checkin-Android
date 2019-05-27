@@ -34,6 +34,7 @@ public class ActiveSessionInvoiceViewModel extends BaseViewModel {
     private MediatorLiveData<Resource<SessionPromoModel>> mSessionPromo = new MediatorLiveData<>();
     private MediatorLiveData<Resource<ObjectNode>> mPromoDeletedData = new MediatorLiveData<>();
     private MediatorLiveData<Resource<ObjectNode>> mPaytmCallbackData = new MediatorLiveData<>();
+    private MediatorLiveData<Resource<ObjectNode>> mSessionCancelCheckoutData = new MediatorLiveData<>();
     private MutableLiveData<Boolean> mIsRequestedCheckout = new MutableLiveData<>(false);
 
     private boolean mSessionBenefitsSet = false;
@@ -110,7 +111,11 @@ public class ActiveSessionInvoiceViewModel extends BaseViewModel {
     }
 
     public void cancelCheckoutRequest() {
-        mData.addSource(mRepository.removeCanceledCheckout(), mData::setValue);
+        mSessionCancelCheckoutData.addSource(mRepository.removeCanceledCheckout(), mSessionCancelCheckoutData::setValue);
+    }
+
+    public LiveData<Resource<ObjectNode>> getSessionCancelCheckoutData() {
+        return mSessionCancelCheckoutData;
     }
 
     public LiveData<Resource<ObjectNode>> getPromoDeletedData() {

@@ -362,7 +362,9 @@ public class ActiveSessionInvoiceActivity extends BaseActivity {
             Utils.toast(this, objectNodeResource.message);
         });
 
-        mViewModel.getObservableData().observe(this, objectNodeResource -> {
+        mViewModel.getSessionCancelCheckoutData().observe(this, objectNodeResource -> {
+            if (objectNodeResource == null)
+                return;
             if (objectNodeResource.status == Resource.Status.SUCCESS) {
                 mViewModel.updateRequestCheckout(false);
             }
