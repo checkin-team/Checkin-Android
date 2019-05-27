@@ -6,13 +6,13 @@ import android.widget.TextView;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.ViewModelProviders;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.checkin.app.checkin.Data.Resource;
 import com.checkin.app.checkin.Misc.BillHolder;
 import com.checkin.app.checkin.Misc.BriefModel;
 import com.checkin.app.checkin.R;
-import com.checkin.app.checkin.Shop.Private.Invoice.RestaurantSessionModel;
-import com.checkin.app.checkin.Shop.Private.Invoice.ShopSessionViewModel;
 import com.checkin.app.checkin.Shop.ShopModel;
 import com.checkin.app.checkin.Utility.Utils;
 import com.checkin.app.checkin.session.activesession.InvoiceOrdersAdapter;
@@ -20,16 +20,12 @@ import com.google.android.material.appbar.AppBarLayout;
 
 import java.util.Locale;
 
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.Unbinder;
 
-import static com.checkin.app.checkin.User.bills.SuccessfulTransactionActivity.KEY_SESSION_ID;
-
 public class TransactionDetailsActivity extends AppCompatActivity {
-    public static final String KEY_SESSION_DATA = "shop.invoice_session";
+    public static final String KEY_SESSION_ID = "user.bill.session_id";
 
     @BindView(R.id.tv_user_transaction_session_id)
     TextView tvSessionId;
@@ -65,7 +61,7 @@ public class TransactionDetailsActivity extends AppCompatActivity {
         getData();
     }
 
-    private void setupUI(){
+    private void setupUI() {
         mOrdersAdapter = new InvoiceOrdersAdapter(null);
         rvSessionOrders.setLayoutManager(new LinearLayoutManager(this, RecyclerView.VERTICAL, false));
         rvSessionOrders.setAdapter(mOrdersAdapter);

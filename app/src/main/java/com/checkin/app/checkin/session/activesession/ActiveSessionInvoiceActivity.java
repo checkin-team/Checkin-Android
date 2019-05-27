@@ -112,7 +112,6 @@ public class ActiveSessionInvoiceActivity extends BaseActivity {
                     mViewModel.fetchSessionInvoice();
                     break;
             }
-
         }
     };
 
@@ -329,13 +328,13 @@ public class ActiveSessionInvoiceActivity extends BaseActivity {
 
             @Override
             protected void onPaytmTransactionCancel(Bundle inResponse, String msg) {
-                mViewModel.deleteOnCancelCheckout();
+                mViewModel.cancelCheckoutRequest();
                 Utils.toast(ActiveSessionInvoiceActivity.this, msg);
             }
 
             @Override
             protected void onPaytmError(String inErrorMessage) {
-                mViewModel.deleteOnCancelCheckout();
+                mViewModel.cancelCheckoutRequest();
                 Utils.toast(ActiveSessionInvoiceActivity.this, inErrorMessage);
             }
         };
@@ -364,7 +363,9 @@ public class ActiveSessionInvoiceActivity extends BaseActivity {
         });
 
         mViewModel.getObservableData().observe(this, objectNodeResource -> {
-
+            if (objectNodeResource.status == Resource.Status.SUCCESS) {
+                mViewModel.updateRequestCheckout(false);
+            }
         });
     }
 

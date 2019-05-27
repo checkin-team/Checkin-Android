@@ -5,13 +5,17 @@ import android.content.Intent;
 import android.location.Address;
 import android.os.Bundle;
 import android.text.Editable;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Toast;
+
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.fragment.app.Fragment;
+import androidx.lifecycle.ViewModelProviders;
 
 import com.checkin.app.checkin.Data.Resource;
 import com.checkin.app.checkin.Maps.MapsActivity;
@@ -21,10 +25,6 @@ import com.checkin.app.checkin.Misc.LocationModel;
 import com.checkin.app.checkin.R;
 import com.fasterxml.jackson.databind.JsonNode;
 
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.fragment.app.Fragment;
-import androidx.lifecycle.ViewModelProviders;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnTextChanged;
@@ -33,7 +33,6 @@ import butterknife.Unbinder;
 import static android.app.Activity.RESULT_OK;
 
 public class BasicInfoFragment extends Fragment {
-    private static final String TAG = BasicInfoFragment.class.getSimpleName();
     @BindView(R.id.et_location)
     EditText etLocality;
     @BindView(R.id.et_name)
@@ -88,7 +87,6 @@ public class BasicInfoFragment extends Fragment {
                 } else {
                     Toast.makeText(getContext(), "Error!", Toast.LENGTH_SHORT).show();
                 }
-                Log.e(TAG, "Error: " + resource.message + ", data: " + resource.data);
             }
         });
 

@@ -197,10 +197,7 @@ public class InventoryGroupAdapter extends RecyclerView.Adapter<InventoryGroupAd
 
             switchGroupAvailability.setVisibility(View.VISIBLE);
             itemView.setOnClickListener(view -> {
-                if (!this.isExpanded) {
-                    contractView(mPrevExpandedViewHolder);
-                    expandView(this);
-                }
+                tvGroupName.performClick();
             });
             tvGroupName.setOnClickListener(v -> {
                 if (this.isExpanded)
@@ -247,7 +244,8 @@ public class InventoryGroupAdapter extends RecyclerView.Adapter<InventoryGroupAd
             animatorSet.addListener(new AnimatorListenerAdapter() {
                 @Override
                 public void onAnimationStart(Animator animation) {
-                    vSubGroupWrapper.setVisibility(View.VISIBLE);
+                    if (isExpanded)
+                        vSubGroupWrapper.setVisibility(View.VISIBLE);
                 }
             });
             animatorSet.start();
@@ -266,7 +264,8 @@ public class InventoryGroupAdapter extends RecyclerView.Adapter<InventoryGroupAd
             animatorSet.addListener(new AnimatorListenerAdapter() {
                 @Override
                 public void onAnimationEnd(Animator animation) {
-                    vSubGroupWrapper.setVisibility(View.GONE);
+                    if (!isExpanded)
+                        vSubGroupWrapper.setVisibility(View.GONE);
                 }
             });
             animatorSet.start();

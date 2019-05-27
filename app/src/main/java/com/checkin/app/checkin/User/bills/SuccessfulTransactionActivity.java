@@ -78,6 +78,6 @@ public class SuccessfulTransactionActivity extends BaseActivity {
 
     @OnClick(R.id.ll_successful_transaction_view_transactions)
     public void onViewDetails() {
-        startActivity(new Intent(this, TransactionDetailsActivity.class).putExtra(KEY_SESSION_ID, sessionId));
+        startActivity(new Intent(this, TransactionDetailsActivity.class).putExtra(TransactionDetailsActivity.KEY_SESSION_ID, sessionId));
     }
 }

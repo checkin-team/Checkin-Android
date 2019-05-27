@@ -109,7 +109,7 @@ public class ActiveSessionInvoiceViewModel extends BaseViewModel {
         mPromoDeletedData.addSource(mRepository.removePromoCode(), mPromoDeletedData::setValue);
     }
 
-    public void deleteOnCancelCheckout() {
+    public void cancelCheckoutRequest() {
         mData.addSource(mRepository.removeCanceledCheckout(), mData::setValue);
     }
 

@@ -5,7 +5,6 @@ import android.animation.AnimatorListenerAdapter;
 import android.animation.AnimatorSet;
 import android.animation.ValueAnimator;
 import android.os.Build;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
@@ -236,7 +235,9 @@ public class MenuGroupAdapter extends RecyclerView.Adapter<MenuGroupAdapter.Grou
             animatorSet.addListener(new AnimatorListenerAdapter() {
                 @Override
                 public void onAnimationStart(Animator animation) {
-                    vSubGroupWrapper.setVisibility(View.VISIBLE);
+                    if (isExpanded) {
+                        vSubGroupWrapper.setVisibility(View.VISIBLE);
+                    }
                 }
             });
             animatorSet.start();
@@ -255,7 +256,9 @@ public class MenuGroupAdapter extends RecyclerView.Adapter<MenuGroupAdapter.Grou
             animatorSet.addListener(new AnimatorListenerAdapter() {
                 @Override
                 public void onAnimationEnd(Animator animation) {
-                    vSubGroupWrapper.setVisibility(View.GONE);
+                    if (!isExpanded) {
+                        vSubGroupWrapper.setVisibility(View.GONE);
+                    }
                 }
             });
             animatorSet.start();

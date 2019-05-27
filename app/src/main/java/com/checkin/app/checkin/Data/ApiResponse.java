@@ -91,6 +91,11 @@ public class ApiResponse<T> {
         return errorMessage;
     }
 
+    @Nullable
+    public JsonNode getErrorData() {
+        return errorData;
+    }
+
     public int getStatusCode() {
         return mStatusCode;
     }

@@ -72,15 +72,12 @@
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 
-
         <LinearLayout
             android:id="@+id/container_menu_sub_groups"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:orientation="vertical"
-
             android:paddingTop="@dimen/spacing_small"
-
             android:visibility="gone">
 
             <com.google.android.material.tabs.TabLayout
@@ -88,9 +85,9 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_gravity="top"
-                android:visibility="gone"
                 android:layout_marginStart="@dimen/spacing_small"
                 android:layout_marginEnd="@dimen/spacing_small"
+                android:visibility="gone"
                 app:tabBackground="@drawable/selector_tab_rounded_rouge"
                 app:tabGravity="fill"
                 app:tabIndicator="@null"
@@ -114,7 +111,7 @@
                 android:id="@+id/pager_menu_items"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/spacing_extra_small"/>
+                android:layout_marginTop="@dimen/spacing_extra_small" />
         </LinearLayout>
     </LinearLayout>
 </androidx.cardview.widget.CardView>
