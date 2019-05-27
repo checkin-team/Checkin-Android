@@ -110,6 +110,10 @@ public class Resource<T> {
         return errorBody;
     }
 
+    public boolean hasErrorBody() {
+        return errorBody != null;
+    }
+
     public enum Status {
         NO_REQUEST,
         SUCCESS,

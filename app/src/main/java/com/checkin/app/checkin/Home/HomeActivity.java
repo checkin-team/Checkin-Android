@@ -10,6 +10,16 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.appcompat.app.ActionBarDrawerToggle;
+import androidx.core.view.GravityCompat;
+import androidx.drawerlayout.widget.DrawerLayout;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
+import androidx.lifecycle.ViewModelProviders;
+import androidx.viewpager.widget.ViewPager;
+
 import com.checkin.app.checkin.Account.AccountModel;
 import com.checkin.app.checkin.Account.BaseAccountActivity;
 import com.checkin.app.checkin.Data.Message.ActiveSessionNotificationService;
@@ -21,7 +31,6 @@ import com.checkin.app.checkin.Misc.BaseFragmentAdapterBottomNav;
 import com.checkin.app.checkin.Misc.BlankFragment;
 import com.checkin.app.checkin.Misc.QRScannerActivity;
 import com.checkin.app.checkin.R;
-import com.checkin.app.checkin.session.activesession.ActiveSessionActivity;
 import com.checkin.app.checkin.Shop.ShopJoin.BusinessFeaturesActivity;
 import com.checkin.app.checkin.User.Private.UserPrivateProfileFragment;
 import com.checkin.app.checkin.User.Private.UserViewModel;
@@ -30,19 +39,11 @@ import com.checkin.app.checkin.Utility.DynamicSwipableViewPager;
 import com.checkin.app.checkin.Utility.OnBoardingUtils;
 import com.checkin.app.checkin.Utility.OnBoardingUtils.OnBoardingModel;
 import com.checkin.app.checkin.Utility.Utils;
+import com.checkin.app.checkin.session.activesession.ActiveSessionActivity;
 import com.getkeepsafe.taptargetview.TapTargetSequence;
 import com.google.android.material.navigation.NavigationView;
 import com.google.android.material.tabs.TabLayout;
 
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.appcompat.app.ActionBarDrawerToggle;
-import androidx.core.view.GravityCompat;
-import androidx.drawerlayout.widget.DrawerLayout;
-import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentManager;
-import androidx.lifecycle.ViewModelProviders;
-import androidx.viewpager.widget.ViewPager;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
@@ -53,6 +54,7 @@ import static com.checkin.app.checkin.Data.Message.ActiveSessionNotificationServ
 public class HomeActivity extends BaseAccountActivity implements NavigationView.OnNavigationItemSelectedListener {
     public static final String SP_QR_SCANNER = "qrscanner";
     private static final int REQUEST_QR_SCANNER = 212;
+
     @BindView(R.id.drawer_home)
     DrawerLayout drawerLayout;
     @BindView(R.id.iv_home_navigation)
@@ -66,6 +68,7 @@ public class HomeActivity extends BaseAccountActivity implements NavigationView.
     @BindView(R.id.tv_home_session_active_status)
     TextView tvSessionStatus;
     ImageView imTabUserIcon;
+
     private HomeViewModel mViewModel;
     private UserViewModel mUserViewModel;
     private TapTargetSequence.Listener mListener;
