@@ -192,10 +192,8 @@ public class HomeActivity extends BaseAccountActivity implements NavigationView.
                 serviceIntent.setAction(Constants.SERVICE_ACTION_FOREGROUND_STOP);
                 startService(serviceIntent);
             } else if (resource.getProblem() != null && resource.getProblem().getErrorCode() == ProblemModel.ERROR_CODE.SESSION_USER_PENDING_MEMBER){
-                ProblemModel problemModel = ProblemModel.fromResource(resource);
                 sessionWaitingStatus();
-                tvSessionWaitQRBusy.setText(problemModel.getDetail());
-
+                tvSessionWaitQRBusy.setText(resource.getProblem().getDetail());
             }
         });
 
@@ -206,12 +204,14 @@ public class HomeActivity extends BaseAccountActivity implements NavigationView.
         vSessionStatus.setVisibility(View.VISIBLE);
         vSessionActiveStatus.setVisibility(View.VISIBLE);
         vSessionWaitingStatus.setVisibility(View.GONE);
+        vSessionStatus.setEnabled(true);
     }
 
     private void sessionWaitingStatus(){
         vSessionStatus.setVisibility(View.VISIBLE);
         vSessionActiveStatus.setVisibility(View.GONE);
         vSessionWaitingStatus.setVisibility(View.VISIBLE);
+        vSessionStatus.setEnabled(false);
     }
 
     private void explainQr() {
