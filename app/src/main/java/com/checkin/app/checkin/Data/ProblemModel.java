@@ -89,7 +89,8 @@ public class ProblemModel {
     }
 
     public enum ERROR_CODE {
-        HTTP_ERROR(""), INVALID_VERSION("invalid_version"), DEPRECATED_VERSION("deprecated_version");
+        HTTP_ERROR(""), INVALID_VERSION("invalid_version"), DEPRECATED_VERSION("deprecated_version"),
+        SESSION_USER_PENDING_MEMBER("session__user_pending_member");
 
         String tag;
 

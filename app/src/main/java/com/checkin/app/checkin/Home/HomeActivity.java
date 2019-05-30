@@ -1,9 +1,14 @@
 package com.checkin.app.checkin.Home;
 
+import android.app.AlertDialog;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.Html;
+import android.text.Spannable;
+import android.text.SpannableString;
+import android.text.style.ForegroundColorSpan;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
@@ -26,6 +31,7 @@ import com.checkin.app.checkin.Data.Message.ActiveSessionNotificationService;
 import com.checkin.app.checkin.Data.Message.Constants;
 import com.checkin.app.checkin.Data.Message.MessageModel;
 import com.checkin.app.checkin.Data.Message.MessageUtils;
+import com.checkin.app.checkin.Data.ProblemModel;
 import com.checkin.app.checkin.Data.Resource;
 import com.checkin.app.checkin.Misc.BaseFragmentAdapterBottomNav;
 import com.checkin.app.checkin.Misc.BlankFragment;
@@ -38,6 +44,7 @@ import com.checkin.app.checkin.User.UserModel;
 import com.checkin.app.checkin.Utility.DynamicSwipableViewPager;
 import com.checkin.app.checkin.Utility.OnBoardingUtils;
 import com.checkin.app.checkin.Utility.OnBoardingUtils.OnBoardingModel;
+import com.checkin.app.checkin.Utility.ProblemHandler;
 import com.checkin.app.checkin.Utility.Utils;
 import com.checkin.app.checkin.session.activesession.ActiveSessionActivity;
 import com.getkeepsafe.taptargetview.TapTargetSequence;
@@ -65,8 +72,14 @@ public class HomeActivity extends BaseAccountActivity implements NavigationView.
     DynamicSwipableViewPager vpHome;
     @BindView(R.id.container_home_session_status)
     ViewGroup vSessionStatus;
+    @BindView(R.id.container_home_session_active_status)
+    ViewGroup vSessionActiveStatus;
+    @BindView(R.id.container_home_session_waiting_status)
+    ViewGroup vSessionWaitingStatus;
     @BindView(R.id.tv_home_session_active_status)
     TextView tvSessionStatus;
+    @BindView(R.id.tv_home_session_wait_qr_busy)
+    TextView tvSessionWaitQRBusy;
     ImageView imTabUserIcon;
 
     private HomeViewModel mViewModel;
@@ -161,8 +174,11 @@ public class HomeActivity extends BaseAccountActivity implements NavigationView.
         mViewModel.getSessionStatus().observe(this, resource -> {
             if (resource == null)
                 return;
+            if (ProblemHandler.handleProblems(this, resource))
+                return;
+
             if (resource.status == Resource.Status.SUCCESS && resource.data != null) {
-                vSessionStatus.setVisibility(View.VISIBLE);
+                sessionActiveStatus();
                 tvSessionStatus.setText(resource.data.getLiveStatus());
 
                 Intent serviceIntent = new Intent(this, ActiveSessionNotificationService.class);
@@ -175,10 +191,27 @@ public class HomeActivity extends BaseAccountActivity implements NavigationView.
                 Intent serviceIntent = new Intent(this, ActiveSessionNotificationService.class);
                 serviceIntent.setAction(Constants.SERVICE_ACTION_FOREGROUND_STOP);
                 startService(serviceIntent);
+            } else if (resource.getProblem() != null && resource.getProblem().getErrorCode() == ProblemModel.ERROR_CODE.SESSION_USER_PENDING_MEMBER){
+                ProblemModel problemModel = ProblemModel.fromResource(resource);
+                sessionWaitingStatus();
+                tvSessionWaitQRBusy.setText(problemModel.getDetail());
+
             }
         });
 
         mViewModel.fetchSessionStatus();
+    }
+
+    private void sessionActiveStatus(){
+        vSessionStatus.setVisibility(View.VISIBLE);
+        vSessionActiveStatus.setVisibility(View.VISIBLE);
+        vSessionWaitingStatus.setVisibility(View.GONE);
+    }
+
+    private void sessionWaitingStatus(){
+        vSessionStatus.setVisibility(View.VISIBLE);
+        vSessionActiveStatus.setVisibility(View.GONE);
+        vSessionWaitingStatus.setVisibility(View.VISIBLE);
     }
 
     private void explainQr() {
@@ -199,6 +232,14 @@ public class HomeActivity extends BaseAccountActivity implements NavigationView.
         vSessionStatus.setEnabled(false);
         startActivity(new Intent(this, ActiveSessionActivity.class));
     }
+
+    /*@OnClick(R.id.im_home_session_wait_cancel)
+    public void onCancelClicked() {
+        AlertDialog.Builder builder = new AlertDialog.Builder(this).setTitle("Are you sure you want to cancel the request?")
+                .setPositiveButton("Ok", (dialog, which) -> mViewModel.putSessionCheckout())
+                .setNegativeButton("Cancel", (dialog, which) -> dialog.dismiss());
+        builder.show();
+    }*/
 
     @Override
     protected int getDrawerRootId() {

@@ -17,6 +17,7 @@ import android.widget.TextView;
 
 import com.checkin.app.checkin.Account.AccountModel.ACCOUNT_TYPE;
 import com.checkin.app.checkin.Auth.AuthPreferences;
+import com.checkin.app.checkin.Data.Message.ActiveSessionNotificationService;
 import com.checkin.app.checkin.Data.Resource;
 import com.checkin.app.checkin.Home.SplashActivity;
 
@@ -112,6 +113,10 @@ public abstract class BaseAccountActivity extends BaseActivity {
             PreferenceManager.getDefaultSharedPreferences(this).edit()
                     .clear()
                     .apply();
+            Intent serviceIntent = new Intent(this, ActiveSessionNotificationService.class);
+            serviceIntent.setAction(com.checkin.app.checkin.Data.Message.Constants.SERVICE_ACTION_FOREGROUND_STOP);
+            startService(serviceIntent);
+
             Intent splashIntent = new Intent(this, SplashActivity.class);
             splashIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
             startActivity(splashIntent);

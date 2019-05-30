@@ -6,6 +6,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
 import com.checkin.app.checkin.Utility.NoConnectivityException;
+import com.checkin.app.checkin.session.model.PromoDetailModel;
 import com.fasterxml.jackson.databind.JsonNode;
 
 import static java.net.HttpURLConnection.HTTP_BAD_REQUEST;
@@ -25,6 +26,8 @@ public class Resource<T> {
     private final JsonNode errorBody;
     @Nullable
     public final String message;
+    @Nullable
+    private ProblemModel problemModel;
 
     private Resource(@NonNull Status status, @Nullable T data, @Nullable String message, @Nullable JsonNode errorBody) {
         this.status = status;
@@ -112,6 +115,13 @@ public class Resource<T> {
 
     public boolean hasErrorBody() {
         return errorBody != null;
+    }
+
+    @Nullable
+    public ProblemModel getProblem () {
+        if (problemModel == null)
+            problemModel = ProblemModel.fromResource(this);
+        return problemModel;
     }
 
     public enum Status {
