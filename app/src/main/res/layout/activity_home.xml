@@ -58,7 +58,7 @@
                     android:layout_height="wrap_content"
                     android:background="@color/white_two"
                     android:padding="@dimen/spacing_small"
-                    android:visibility="gone">
+                    android:visibility="visible">
 
                     <TextView
                         android:id="@+id/tv_home_session_wait_qr_busy"
@@ -68,6 +68,7 @@
                         android:layout_weight="1"
                         android:drawableStart="@drawable/ic_dining_qr_busy"
                         android:drawablePadding="@dimen/spacing_extra_small"
+                        android:layout_marginStart="@dimen/spacing_small"
                         tools:text="Kindly Wait. Dine in request sent to Shivansh." />
 
                     <ImageView
