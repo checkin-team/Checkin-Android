@@ -45,6 +45,7 @@
                 android:layout_weight="1"
                 android:gravity="start"
                 android:textSize="@dimen/font_large"
+                android:paddingStart="@dimen/spacing_between_group_icon_name"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="@id/switch_menu_group_availability"
                 app:layout_constraintStart_toStartOf="parent"

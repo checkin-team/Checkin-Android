@@ -26,7 +26,7 @@
             <LinearLayout
                 android:id="@+id/container_session_actions"
                 android:layout_width="match_parent"
-                android:layout_height="80dp"
+                android:layout_height="@dimen/height_card_normal"
                 android:background="@color/white_two"
                 android:transitionName="chatActions">
 
@@ -52,8 +52,8 @@
 
                             <de.hdodenhof.circleimageview.CircleImageView
                                 android:id="@+id/im_as_waiter_pic"
-                                android:layout_width="30dp"
-                                android:layout_height="30dp"
+                                android:layout_width="@dimen/size_medium_icon"
+                                android:layout_height="@dimen/size_medium_icon"
                                 android:layout_gravity="center"
                                 android:background="@drawable/shape_oval_pinkish_grey"
                                 android:src="@drawable/ic_waiter" />
@@ -95,8 +95,8 @@
                             android:orientation="vertical">
 
                             <ImageView
-                                android:layout_width="35dp"
-                                android:layout_height="38dp"
+                                android:layout_width="@dimen/width_chat_actions"
+                                android:layout_height="@dimen/height_chat_actions"
                                 android:layout_gravity="center"
                                 android:scaleType="fitXY"
                                 android:padding="@dimen/spacing_extra_tiny"
@@ -122,8 +122,8 @@
                             android:orientation="vertical">
 
                             <ImageView
-                                android:layout_width="24dp"
-                                android:layout_height="38dp"
+                                android:layout_width="@dimen/width_glass"
+                                android:layout_height="@dimen/height_chat_actions"
                                 android:layout_gravity="center"
                                 android:scaleType="fitXY"
                                 android:padding="@dimen/spacing_extra_tiny"
@@ -151,8 +151,8 @@
                             android:orientation="vertical">
 
                             <ImageView
-                                android:layout_width="35dp"
-                                android:layout_height="38dp"
+                                android:layout_width="@dimen/width_chat_actions"
+                                android:layout_height="@dimen/height_chat_actions"
                                 android:layout_gravity="center"
                                 android:scaleType="fitXY"
                                 android:padding="@dimen/spacing_extra_tiny"
@@ -180,8 +180,8 @@
                             android:orientation="vertical">
 
                             <ImageView
-                                android:layout_width="35dp"
-                                android:layout_height="38dp"
+                                android:layout_width="@dimen/width_chat_actions"
+                                android:layout_height="@dimen/height_chat_actions"
                                 android:layout_gravity="center"
                                 android:scaleType="fitXY"
                                 android:padding="@dimen/spacing_extra_tiny"
@@ -210,8 +210,8 @@
                             android:orientation="vertical">
 
                             <ImageView
-                                android:layout_width="35dp"
-                                android:layout_height="38dp"
+                                android:layout_width="@dimen/width_chat_actions"
+                                android:layout_height="@dimen/height_chat_actions"
                                 android:layout_gravity="center"
                                 android:scaleType="fitXY"
                                 android:padding="@dimen/spacing_extra_tiny"
@@ -240,8 +240,8 @@
                             android:padding="@dimen/spacing_tiny">
 
                             <ImageView
-                                android:layout_width="35dp"
-                                android:layout_height="38dp"
+                                android:layout_width="@dimen/width_chat_actions"
+                                android:layout_height="@dimen/height_chat_actions"
                                 android:layout_gravity="center"
                                 android:scaleType="fitXY"
                                 android:padding="@dimen/spacing_extra_tiny"

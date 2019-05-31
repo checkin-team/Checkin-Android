@@ -44,6 +44,7 @@
 
     <dimen name="size_image_small">40dp</dimen>
     <dimen name="size_image_large">250dp</dimen>
+    <dimen name="width_small_icon">15dp</dimen>
 
     <dimen name="size_fab">60dp</dimen>
 
@@ -73,6 +74,8 @@
 
     <dimen name="height_spinner_item">50dp</dimen>
 
+    <dimen name="height_bottom_tab">47dp</dimen>
+
     <!-- Cover dimensions -->
     <dimen name="height_shadow_top_cover">80dp</dimen>
 
@@ -89,6 +92,9 @@
     <dimen name="width_quantity_selection">120dp</dimen>
     <dimen name="height_quantity_selection">60dp</dimen>
     <dimen name="width_session_menu">90dp</dimen>
+    <dimen name="height_session_trending_dishes">150dp</dimen>
+
+    <dimen name="spacing_between_group_icon_name">60dp</dimen>
 
     <!--Chat dimensions-->
     <dimen name="size_chat_status">10dp</dimen>
@@ -139,4 +145,16 @@
 
     <!--Payment Mode-->
     <dimen name="payment_card_logo">140dp</dimen>
+
+    <!--Chat Actions-->
+    <dimen name="width_glass">25dp</dimen>
+    <dimen name="width_chat_actions">35dp</dimen>
+    <dimen name="height_chat_actions">38dp</dimen>
+    <dimen name="session_waiter_logo">34dp</dimen>
+
+    <!--User Session End -->
+    <dimen name="width_holi_icon">90dp</dimen>
+    <dimen name="height_holi_icon">130dp</dimen>
+
+
 </resources>

@@ -1,0 +1,158 @@
+<resources>
+    <!-- font sizes -->
+    <dimen name="font_largest">28sp</dimen>
+    <dimen name="font_larger">24sp</dimen>
+    <dimen name="font_extra_large">22sp</dimen>
+    <dimen name="font_large">20sp</dimen>
+    <dimen name="font_heading" format="float">18.5sp</dimen>
+    <dimen name="font_normal">17sp</dimen>
+    <dimen name="font_small">14sp</dimen>
+    <dimen name="font_extra_small">12sp</dimen>
+    <dimen name="font_tiny">10sp</dimen>
+
+    <!-- typical spacing between two views -->
+    <dimen name="spacing_incredible">77dp</dimen>
+    <dimen name="spacing_gigantic">62dp</dimen>
+    <dimen name="spacing_very_huge">52dp</dimen>
+    <dimen name="spacing_huge">42dp</dimen>
+    <dimen name="spacing_extra_large">34dp</dimen>
+    <dimen name="spacing_large">26dp</dimen>
+    <dimen name="spacing_normal">16dp</dimen>
+    <dimen name="spacing_small">12dp</dimen>
+    <dimen name="spacing_extra_small">9dp</dimen>
+    <dimen name="spacing_tiny">6dp</dimen>
+    <dimen name="spacing_extra_tiny">4dp</dimen>
+    <dimen name="spacing_medium">22dp</dimen>
+
+    <!-- icon sizes -->
+    <dimen name="size_tiny_icon">14dp</dimen>
+    <dimen name="size_extra_small_icon">20dp</dimen>
+    <dimen name="size_small_icon">26dp</dimen>
+    <dimen name="size_medium_icon">32dp</dimen>
+    <dimen name="size_normal_icon">42dp</dimen>
+
+    <!-- button sizes -->
+    <dimen name="size_large_button">82dp</dimen>
+    <dimen name="size_normal_button">42dp</dimen>
+    <dimen name="size_small_button">32dp</dimen>
+    <dimen name="size_extra_small_button">22dp</dimen>
+    <dimen name="size_tiny_button">12dp</dimen>
+
+    <dimen name="size_logo_small">@dimen/size_image_small</dimen>
+    <dimen name="size_logo">62dp</dimen>
+    <dimen name="size_logo_large">82dp</dimen>
+
+    <dimen name="size_image_small">42dp</dimen>
+    <dimen name="size_image_large">252dp</dimen>
+    <dimen name="width_small_icon">17dp</dimen>
+
+    <dimen name="size_fab">62dp</dimen>
+
+    <dimen name="height_card_normal">84dp</dimen>
+    <dimen name="height_card_tall">124dp</dimen>
+    <dimen name="width_card_tall">79dp</dimen>
+
+    <dimen name="height_card_wide">104dp</dimen>
+    <dimen name="width_card_wide">129dp</dimen>
+
+    <dimen name="thickness_line">3dp</dimen>
+
+    <!-- typical sizes of views -->
+    <dimen name="button_height_tall">66dp</dimen>
+    <dimen name="button_height_medium">56dp</dimen>
+    <dimen name="button_height_normal">46dp</dimen>
+    <dimen name="button_height_short">38dp</dimen>
+
+    <dimen name="button_width_wide">156dp</dimen>
+    <dimen name="button_width_normal">108dp</dimen>
+    <dimen name="button_width_short">76dp</dimen>
+    <dimen name="button_width_tiny">56dp</dimen>
+
+    <dimen name="button_oval_large">126dp</dimen>
+    <dimen name="button_oval_normal">102dp</dimen>
+    <dimen name="width_input_small">66dp</dimen>
+
+    <dimen name="height_spinner_item">56dp</dimen>
+
+    <dimen name="height_bottom_tab">57dp</dimen>
+
+    <!-- Cover dimensions -->
+    <dimen name="height_shadow_top_cover">86dp</dimen>
+
+    <!-- Menu dimensions -->
+    <dimen name="height_menu_filter">402dp</dimen>
+    <dimen name="height_menu_customization">352dp</dimen>
+    <dimen name="height_menu_customization_header">72dp</dimen>
+    <dimen name="height_menu_customization_footer">62dp</dimen>
+    <dimen name="height_menu_group_collapsed">100dp</dimen>
+    <dimen name="height_menu_group_expanded">350dp</dimen>
+    <dimen name="height_menu_item">82dp</dimen>
+    <dimen name="height_menu_cart_item">105dp</dimen>
+
+    <dimen name="width_quantity_selection">122dp</dimen>
+    <dimen name="height_quantity_selection">62dp</dimen>
+    <dimen name="width_session_menu">112dp</dimen>
+    <dimen name="height_session_trending_dishes">182dp</dimen>
+
+    <dimen name="spacing_between_group_icon_name">40dp</dimen>
+
+    <!--Chat dimensions-->
+    <dimen name="size_chat_status">12dp</dimen>
+    <dimen name="width_chat_card">252dp</dimen>
+
+    <!--Order dimensions-->
+    <dimen name="height_card_order_status">52dp</dimen>
+    <dimen name="size_icon_order_status">@dimen/size_medium_icon</dimen>
+
+    <!--Manager dimensions-->
+    <dimen name="height_manager_bottom_actions">142dp</dimen>
+    <dimen name="width_manager_order_item_name">152dp</dimen>
+    <dimen name="width_manager_order_item_status">82dp</dimen>
+    <dimen name="width_manager_table_event_icon">28dp</dimen>
+    <dimen name="height_manager_table_event_icon">20dp</dimen>
+
+    <!-- Card dimensions -->
+    <dimen name="card_elevation">6dp</dimen>
+    <dimen name="card_corner_radius" format="float">12.5dp</dimen>
+    <dimen name="card_corner_radius_large">14dp</dimen>
+
+    <dimen name="size_card_square">102dp</dimen>
+    <dimen name="height_input_normal">42dp</dimen>
+    <dimen name="height_input_small">27dp</dimen>
+
+    <dimen name="height_horizontal_line">1dp</dimen>
+    <dimen name="width_vertical_line">1dp</dimen>
+
+    <!-- Shop dimensions -->
+    <dimen name="width_shop_finance_tax">162dp</dimen>
+    <dimen name="height_rangebar_short">52dp</dimen>
+    <dimen name="padding_rangebar_bottom">17dp</dimen>
+    <dimen name="negative_margin_top">-8dp</dimen>
+
+    <!--Waiter dimensions-->
+    <dimen name="width_waiter_collect_cash">252dp</dimen>
+    <dimen name="height_waiter_collect_cash">202dp</dimen>
+    <dimen name="height_waiter_session_member_details">57dp</dimen>
+
+    <!--Notification-->
+    <dimen name="notif_heading_padding">12dp</dimen>
+    <dimen name="notif_heading_size">20sp</dimen>
+    <dimen name="text_spacing_from_right">20dp</dimen>
+    <dimen name="width_input_large">77dp</dimen>
+    <dimen name="height_input_large">37dp</dimen>
+
+    <dimen name="height_horizontal_view">1.5dp</dimen>
+
+    <!--Payment Mode-->
+    <dimen name="payment_card_logo">145dp</dimen>
+
+    <!--Chat Actions-->
+    <dimen name="width_glass">27dp</dimen>
+    <dimen name="width_chat_actions">37dp</dimen>
+    <dimen name="height_chat_actions">42dp</dimen>
+    <dimen name="session_waiter_logo">36dp</dimen>
+
+    <!--User Session End -->
+    <dimen name="width_holi_icon">92dp</dimen>
+    <dimen name="height_holi_icon">132dp</dimen>
+</resources>

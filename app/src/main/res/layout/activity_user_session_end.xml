@@ -11,15 +11,15 @@
         android:paddingEnd="@dimen/spacing_medium">
 
         <ImageView
-            android:layout_width="90dp"
-            android:layout_height="130dp"
+            android:layout_width="@dimen/width_holi_icon"
+            android:layout_height="@dimen/height_holi_icon"
             android:scaleType="fitXY"
             android:src="@drawable/ic_holi_payment_success" />
 
         <ImageView
             android:id="@+id/im_thank_you"
-            android:layout_width="80dp"
-            android:layout_height="80dp"
+            android:layout_width="@dimen/size_logo_large"
+            android:layout_height="@dimen/size_logo_large"
             android:layout_centerHorizontal="true"
             android:layout_marginTop="@dimen/spacing_normal"
             android:src="@drawable/ic_thank_you" />
@@ -90,8 +90,8 @@
 
             <ImageView
                 android:id="@+id/im_successful_transaction_payment_mode"
-                android:layout_width="50dp"
-                android:layout_height="25dp"
+                android:layout_width="@dimen/button_height_medium"
+                android:layout_height="@dimen/height_input_small"
                 android:src="@drawable/ic_paytm_logo" />
 
         </LinearLayout>
@@ -138,8 +138,8 @@
 
 
             <ImageView
-                android:layout_width="18dp"
-                android:layout_height="25dp"
+                android:layout_width="@dimen/size_extra_small_icon"
+                android:layout_height="@dimen/height_input_small"
                 android:scaleType="fitXY"
                 android:src="@drawable/ic_orders_taken_white" />
 
@@ -154,8 +154,8 @@
                 android:textSize="@dimen/font_large" />
 
             <ImageView
-                android:layout_width="15dp"
-                android:layout_height="25dp"
+                android:layout_width="@dimen/width_small_icon"
+                android:layout_height="@dimen/height_input_small"
                 android:layout_marginEnd="@dimen/spacing_small"
                 android:scaleType="fitXY"
                 android:src="@drawable/ic_forward_arrow"

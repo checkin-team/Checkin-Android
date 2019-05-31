@@ -2,7 +2,7 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:card_view="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="100dp"
+    android:layout_width="@dimen/button_width_normal"
     android:layout_height="match_parent"
     android:layout_gravity="center"
     android:layout_marginEnd="@dimen/spacing_small"
@@ -11,7 +11,7 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:minHeight="150dp"
+        android:minHeight="@dimen/height_session_trending_dishes"
         android:background="@drawable/background_pinkish_grey_stroke"
         android:gravity="center"
         android:orientation="vertical">
