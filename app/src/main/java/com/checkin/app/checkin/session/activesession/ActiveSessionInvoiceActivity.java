@@ -226,12 +226,9 @@ public class ActiveSessionInvoiceActivity extends BaseActivity {
                 }
             } else if (statusModelResource.status != Resource.Status.LOADING) {
                 Utils.toast(ActiveSessionInvoiceActivity.this, statusModelResource.message);
-                if (statusModelResource.getProblem() != null && statusModelResource.getProblem().getErrorCode() == ProblemModel.ERROR_CODE.INVALID_PAYMENT_MODE_PROMO_AVAILED) {
-//                    Utils.toast(ActiveSessionInvoiceActivity.this, String.valueOf(statusModelResource.getProblem().getErrors().get(0)));
-//                    Log.e("msg====", String.valueOf(statusModelResource.getProblem().getErrors().get(0)));
-//                    Utils.toast(this, String.valueOf(statusModelResource.getProblem().getErrors().get(0)));
+                if (statusModelResource.getProblem() != null && statusModelResource.getProblem().getErrorCode() == ProblemModel.ERROR_CODE.INVALID_PAYMENT_MODE_PROMO_AVAILED)
                     onPaymentModeClick();
-                }
+
             }
         });
 

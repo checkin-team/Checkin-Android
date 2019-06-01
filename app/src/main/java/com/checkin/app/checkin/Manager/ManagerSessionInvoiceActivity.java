@@ -1,6 +1,8 @@
 package com.checkin.app.checkin.Manager;
 
 import android.app.AlertDialog;
+import android.content.BroadcastReceiver;
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
@@ -19,6 +21,9 @@ import androidx.lifecycle.ViewModelProviders;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.checkin.app.checkin.Data.Message.MessageModel;
+import com.checkin.app.checkin.Data.Message.MessageObjectModel;
+import com.checkin.app.checkin.Data.Message.MessageUtils;
 import com.checkin.app.checkin.Data.Resource;
 import com.checkin.app.checkin.Manager.Model.ManagerSessionInvoiceModel;
 import com.checkin.app.checkin.Misc.BillHolder;
@@ -66,6 +71,26 @@ public class ManagerSessionInvoiceActivity extends AppCompatActivity {
     private BillHolder mBillHolder;
     private boolean isRequestedCheckout;
 
+    private final BroadcastReceiver mReceiver = new BroadcastReceiver() {
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            MessageModel message = MessageUtils.parseMessage(intent);
+            if (message == null) return;
+
+            MessageObjectModel model;
+
+            switch (message.getType()) {
+                case MANAGER_SESSION_BILL_CHANGE:
+                    mViewModel.fetchManagerInvoice(message.getTarget().getPk());
+                    break;
+                case MANAGER_SESSION_END:
+                    finish();
+                    break;
+
+            }
+        }
+    };
+
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -92,8 +117,9 @@ public class ManagerSessionInvoiceActivity extends AppCompatActivity {
         rvOrderedItems.setLayoutManager(new LinearLayoutManager(this, RecyclerView.VERTICAL, false));
         mAdapter = new InvoiceOrdersAdapter(null);
         rvOrderedItems.setAdapter(mAdapter);
+        mViewModel.fetchManagerInvoice(keySession);
 
-        mViewModel.getSessionInvoice(keySession).observe(this, resource -> {
+        mViewModel.getSessionInvoice().observe(this, resource -> {
             if (resource == null)
                 return;
             if (resource.status == Resource.Status.SUCCESS && resource.data != null) {
@@ -184,6 +210,14 @@ public class ManagerSessionInvoiceActivity extends AppCompatActivity {
                 saveContact();
                 break;
         }
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        MessageModel.MESSAGE_TYPE[] types = new MessageModel.MESSAGE_TYPE[]{
+                MessageModel.MESSAGE_TYPE.MANAGER_SESSION_BILL_CHANGE,MessageModel.MESSAGE_TYPE.MANAGER_SESSION_END };
+        MessageUtils.registerLocalReceiver(this, mReceiver, types);
     }
 
     private void saveContact() {

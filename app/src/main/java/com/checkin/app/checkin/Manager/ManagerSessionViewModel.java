@@ -50,6 +50,7 @@ public class ManagerSessionViewModel extends BaseViewModel {
 
     private MutableLiveData<List<OrderStatusModel>> mNewOrderStatus = new MutableLiveData<>();
     private MediatorLiveData<Resource<List<OrderStatusModel>>> mResultOrderStatus = new MediatorLiveData<>();
+    private MediatorLiveData<Resource<ManagerSessionInvoiceModel>> mInvoiceData = new MediatorLiveData<>();
 
     private long mSessionPk;
     private long mShopPk;
@@ -71,6 +72,7 @@ public class ManagerSessionViewModel extends BaseViewModel {
         mCheckoutData = registerProblemHandler(mCheckoutData);
         mContactListData = registerProblemHandler(mContactListData);
         mResultOrderStatus = registerProblemHandler(mResultOrderStatus);
+        mInvoiceData = registerProblemHandler(mInvoiceData);
     }
 
     public void putSessionCheckout() {
@@ -90,9 +92,13 @@ public class ManagerSessionViewModel extends BaseViewModel {
         fetchSessionBriefData(mSessionPk);
     }
 
-    public LiveData<Resource<ManagerSessionInvoiceModel>> getSessionInvoice(long sessionId) {
+    public void fetchManagerInvoice(long sessionId){
         mSessionPk = sessionId;
-        return mManagerRepository.getManagerSessionInvoice(sessionId);
+        mInvoiceData.addSource(mManagerRepository.getManagerSessionInvoice(sessionId), mInvoiceData::setValue);
+    }
+
+    public LiveData<Resource<ManagerSessionInvoiceModel>> getSessionInvoice() {
+        return mInvoiceData ;
     }
 
     public void updateDiscount(double discountPercent) {

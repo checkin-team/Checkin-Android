@@ -45,6 +45,18 @@ public class ActiveSessionInvoiceViewModel extends BaseViewModel {
         mRepository = ActiveSessionRepository.getInstance(application);
     }
 
+    @Override
+    protected void registerProblemHandlers() {
+        mInvoiceData = registerProblemHandler(mInvoiceData);
+        mCheckoutData = registerProblemHandler(mCheckoutData);
+        mPaytmData = registerProblemHandler(mPaytmData);
+        mPromoList = registerProblemHandler(mPromoList);
+        mSessionPromo = registerProblemHandler(mSessionPromo);
+        mPromoDeletedData = registerProblemHandler(mPromoDeletedData);
+        mPaytmCallbackData = registerProblemHandler(mPaytmCallbackData);
+        mSessionCancelCheckoutData = registerProblemHandler(mSessionCancelCheckoutData);
+    }
+
     public LiveData<Resource<SessionInvoiceModel>> getSessionInvoice() {
         return mInvoiceData;
     }
@@ -193,18 +205,4 @@ public class ActiveSessionInvoiceViewModel extends BaseViewModel {
         fetchSessionInvoice();
         fetchSessionAppliedPromo();
     }
-
-
-    @Override
-    protected void registerProblemHandlers() {
-        mInvoiceData = registerProblemHandler(mInvoiceData);
-        mCheckoutData = registerProblemHandler(mCheckoutData);
-        mPaytmData = registerProblemHandler(mPaytmData);
-        mPromoList = registerProblemHandler(mPromoList);
-        mSessionPromo = registerProblemHandler(mSessionPromo);
-        mPromoDeletedData = registerProblemHandler(mPromoDeletedData);
-        mPaytmCallbackData = registerProblemHandler(mPaytmCallbackData);
-        mSessionCancelCheckoutData = registerProblemHandler(mSessionCancelCheckoutData);
-    }
-
 }
