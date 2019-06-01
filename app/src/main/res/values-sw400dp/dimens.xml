@@ -92,7 +92,8 @@
     <dimen name="width_quantity_selection">122dp</dimen>
     <dimen name="height_quantity_selection">62dp</dimen>
     <dimen name="width_session_menu">112dp</dimen>
-    <dimen name="height_session_trending_dishes">182dp</dimen>
+    <dimen name="height_session_trending_dishes">188dp</dimen>
+    <dimen name="width_session_trending_dishes">122dp</dimen>
 
     <dimen name="spacing_between_group_icon_name">40dp</dimen>
 

@@ -14,9 +14,10 @@
         android:id="@+id/iv_bnav_icon"
         android:layout_width="@dimen/size_extra_small_button"
         android:layout_height="@dimen/size_small_icon"
+        android:minWidth="@dimen/size_small_icon"
+        android:minHeight="@dimen/size_small_icon"
         android:layout_gravity="center_horizontal"
-        android:scaleType="fitXY"
-        tools:src="@drawable/ic_orders_list_toggle" />
+        tools:src="@drawable/ic_qr_code_grey" />
 
     <TextView
         android:id="@+id/tv_bnav_title"

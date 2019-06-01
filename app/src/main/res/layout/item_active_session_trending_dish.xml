@@ -2,7 +2,7 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:card_view="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="@dimen/button_width_normal"
+    android:layout_width="@dimen/width_session_trending_dishes"
     android:layout_height="match_parent"
     android:layout_gravity="center"
     android:layout_marginEnd="@dimen/spacing_small"
@@ -37,6 +37,8 @@
             android:maxLines="2"
             android:textColor="@color/brownish_grey"
             android:textSize="@dimen/font_small"
+            android:paddingStart="@dimen/spacing_extra_tiny"
+            android:paddingEnd="@dimen/spacing_extra_tiny"
             tools:text="Vanilla Cone" />
 
 
