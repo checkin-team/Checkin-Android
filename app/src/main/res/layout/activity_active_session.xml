@@ -404,6 +404,7 @@
                             android:layout_marginTop="@dimen/spacing_normal"
                             android:paddingTop="@dimen/spacing_tiny"
                             android:text="Interact with us"
+                            android:textSize="@dimen/font_small"
                             app:layout_constraintStart_toStartOf="parent"
                             app:layout_constraintTop_toTopOf="parent" />
 
@@ -445,8 +446,8 @@
 
                                 <de.hdodenhof.circleimageview.CircleImageView
                                     android:id="@+id/im_as_waiter_pic"
-                                    android:layout_width="34dp"
-                                    android:layout_height="34dp"
+                                    android:layout_width="@dimen/session_waiter_logo"
+                                    android:layout_height="@dimen/session_waiter_logo"
                                     android:layout_centerHorizontal="true"
                                     android:layout_gravity="center"
                                     android:background="@drawable/shape_oval_pinkish_grey"
@@ -489,7 +490,7 @@
                                 app:layout_constraintTop_toTopOf="parent">
 
                                 <ImageView
-                                    android:layout_width="35dp"
+                                    android:layout_width="@dimen/width_chat_actions"
                                     android:layout_height="@dimen/button_height_normal"
                                     android:layout_gravity="center"
                                     android:layout_marginBottom="@dimen/spacing_small"
@@ -521,7 +522,7 @@
                                 app:layout_constraintTop_toTopOf="parent">
 
                                 <ImageView
-                                    android:layout_width="25dp"
+                                    android:layout_width="@dimen/width_glass"
                                     android:layout_height="@dimen/button_height_normal"
                                     android:layout_marginBottom="@dimen/spacing_small"
                                     android:scaleType="fitXY"

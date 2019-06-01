@@ -61,7 +61,7 @@
             <com.google.android.material.tabs.TabLayout
                 android:id="@+id/tabs_manager_work"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="@dimen/height_bottom_tab"
                 android:layout_alignParentBottom="true"
                 android:background="@drawable/background_tab_bottom_shadowed"
                 app:tabGravity="fill"

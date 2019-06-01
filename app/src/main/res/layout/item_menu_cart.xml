@@ -5,10 +5,11 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/sr_menu_cart_item"
     android:layout_width="match_parent"
-    android:layout_height="@dimen/height_menu_cart_item"
+    android:layout_height="wrap_content"
     android:layout_marginBottom="@dimen/spacing_normal"
     android:layout_marginStart="@dimen/spacing_small"
     android:layout_marginEnd="@dimen/spacing_small"
+    android:minHeight="@dimen/height_menu_cart_item"
     app:dragFromEdge="right">
 
     <androidx.coordinatorlayout.widget.CoordinatorLayout
@@ -38,7 +39,7 @@
     <FrameLayout
         android:id="@+id/container_menu_cart_item"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
         android:clickable="true"
         android:focusable="true">
 
@@ -78,23 +79,25 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     style="@style/WhiteTextStyle"
-                    app:layout_constraintTop_toTopOf="@id/btn_menu_cart_item_edit"
-                    app:layout_constraintBottom_toBottomOf="@id/btn_menu_cart_item_edit"
+                    app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintEnd_toStartOf="@id/btn_menu_cart_item_edit"
+                    app:layout_constraintTop_toBottomOf="@id/tv_menu_cart_item_name"
                     tools:text="9 Type (?isCustomized)" />
 
                 <ImageButton
                     android:id="@+id/btn_menu_cart_item_edit"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginEnd="@dimen/spacing_small"
-                    android:src="@drawable/ic_edit_pencil_white"
+                    android:layout_marginEnd="12dp"
                     android:background="@color/transparent"
-                    android:padding="@dimen/spacing_tiny"
                     android:contentDescription="Edit"
+                    android:padding="@dimen/spacing_tiny"
+                    android:src="@drawable/ic_edit_pencil_white"
+                    app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toStartOf="@id/btn_menu_cart_item_remove"
-                    app:layout_constraintBottom_toBottomOf="parent"/>
+                    app:layout_constraintTop_toBottomOf="@id/tv_menu_cart_item_price"
+                    app:layout_constraintVertical_bias="1.0" />
 
                 <ImageButton
                     android:id="@+id/btn_menu_cart_item_remove"
@@ -105,7 +108,9 @@
                     android:padding="@dimen/spacing_tiny"
                     android:contentDescription="Remove"
                     app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintBottom_toBottomOf="parent"/>
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/tv_menu_cart_item_price"
+                    app:layout_constraintVertical_bias="1.0"/>
 
             </androidx.constraintlayout.widget.ConstraintLayout>
         </androidx.cardview.widget.CardView>
