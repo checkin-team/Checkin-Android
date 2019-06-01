@@ -58,7 +58,7 @@
                     android:layout_height="wrap_content"
                     android:background="@color/white_two"
                     android:padding="@dimen/spacing_small"
-                    android:visibility="visible">
+                    android:visibility="gone">
 
                     <TextView
                         android:id="@+id/tv_home_session_wait_qr_busy"

@@ -13,7 +13,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 
-public class ActiveSessionPaymentOptions extends BaseActivity {
+public class ActiveSessionPaymentOptionsActivity extends BaseActivity {
 
     @BindView(R.id.tv_as_payment_options_amount)
     TextView tvAmount;

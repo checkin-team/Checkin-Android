@@ -21,6 +21,11 @@ public class ShopSessionViewModel extends BaseViewModel {
         mRepository = ShopInvoiceRepository.getInstance(application);
     }
 
+    @Override
+    protected void registerProblemHandlers() {
+        mDetailData = registerProblemHandler(mDetailData);
+    }
+
     public void fetchSessionDetail() {
         mDetailData.addSource(mRepository.getShopSessionDetail(mSessionPk), mDetailData::setValue);
     }

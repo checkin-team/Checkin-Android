@@ -42,6 +42,14 @@ public class ManagerWorkViewModel extends BaseViewModel {
         mWaiterRepository = WaiterRepository.getInstance(application);
     }
 
+    @Override
+    protected void registerProblemHandlers() {
+        mTablesData = registerProblemHandler(mTablesData);
+        mStatsData = registerProblemHandler(mStatsData);
+        mCheckoutData = registerProblemHandler(mCheckoutData);
+        mQrResult = registerProblemHandler(mQrResult);
+    }
+
     public void fetchActiveTables(long restaurantId) {
         mShopPk = restaurantId;
         mTablesData.addSource(mWaiterRepository.getShopTables(restaurantId, false), mTablesData::setValue);

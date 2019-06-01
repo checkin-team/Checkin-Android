@@ -121,7 +121,7 @@
             android:theme="@style/AppThemeWhiteActionBar"/>
         <activity android:name=".Shop.Private.ShopPrivateActivity"
             android:screenOrientation="portrait"/>
-        <activity android:name=".session.activesession.ActiveSessionPaymentOptions"
+        <activity android:name=".session.activesession.ActiveSessionPaymentOptionsActivity"
             android:label="Payment Mode"
             android:theme="@style/AppThemeWhiteActionBar" />
 

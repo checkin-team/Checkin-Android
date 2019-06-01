@@ -8,6 +8,7 @@ import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.text.Editable;
 import android.text.Html;
+import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
@@ -25,6 +26,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.checkin.app.checkin.Data.Message.MessageModel;
 import com.checkin.app.checkin.Data.Message.MessageObjectModel;
 import com.checkin.app.checkin.Data.Message.MessageUtils;
+import com.checkin.app.checkin.Data.ProblemModel;
 import com.checkin.app.checkin.Data.Resource;
 import com.checkin.app.checkin.Misc.BaseActivity;
 import com.checkin.app.checkin.Misc.BillHolder;
@@ -45,8 +47,8 @@ import butterknife.OnClick;
 import butterknife.OnTextChanged;
 
 import static com.checkin.app.checkin.Shop.ShopModel.PAYMENT_MODE.PAYTM;
-import static com.checkin.app.checkin.session.activesession.ActiveSessionPaymentOptions.KEY_PAYMENT_MODE_RESULT;
-import static com.checkin.app.checkin.session.activesession.ActiveSessionPaymentOptions.KEY_SESSION_AMOUNT;
+import static com.checkin.app.checkin.session.activesession.ActiveSessionPaymentOptionsActivity.KEY_PAYMENT_MODE_RESULT;
+import static com.checkin.app.checkin.session.activesession.ActiveSessionPaymentOptionsActivity.KEY_SESSION_AMOUNT;
 
 public class ActiveSessionInvoiceActivity extends BaseActivity {
     public static final String KEY_SESSION_REQUESTED_CHECKOUT = "invoice.session.requested_checkout";
@@ -223,7 +225,13 @@ public class ActiveSessionInvoiceActivity extends BaseActivity {
                     }
                 }
             } else if (statusModelResource.status != Resource.Status.LOADING) {
-                Utils.toast(this, statusModelResource.message);
+                Utils.toast(ActiveSessionInvoiceActivity.this, statusModelResource.message);
+                if (statusModelResource.getProblem() != null && statusModelResource.getProblem().getErrorCode() == ProblemModel.ERROR_CODE.INVALID_PAYMENT_MODE_PROMO_AVAILED) {
+//                    Utils.toast(ActiveSessionInvoiceActivity.this, String.valueOf(statusModelResource.getProblem().getErrors().get(0)));
+//                    Log.e("msg====", String.valueOf(statusModelResource.getProblem().getErrors().get(0)));
+//                    Utils.toast(this, String.valueOf(statusModelResource.getProblem().getErrors().get(0)));
+                    onPaymentModeClick();
+                }
             }
         });
 
@@ -415,7 +423,7 @@ public class ActiveSessionInvoiceActivity extends BaseActivity {
 
     @OnClick(R.id.container_as_payment_mode_change)
     public void onPaymentModeClick() {
-        Intent intent = new Intent(this, ActiveSessionPaymentOptions.class);
+        Intent intent = new Intent(this, ActiveSessionPaymentOptionsActivity.class);
         intent.putExtra(KEY_SESSION_AMOUNT, tvInvoiceTotal.getText().toString());
         startActivityForResult(intent, REQUEST_PAYMENT_MODE);
     }

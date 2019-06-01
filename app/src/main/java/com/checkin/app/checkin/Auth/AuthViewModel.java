@@ -35,7 +35,11 @@ public class AuthViewModel extends BaseViewModel {
 
     @Override
     public void updateResults() {
+    }
 
+    @Override
+    protected void registerProblemHandlers() {
+        mAuthResult = registerProblemHandler(mAuthResult);
     }
 
     public void setFireBaseIdToken(String idToken) {

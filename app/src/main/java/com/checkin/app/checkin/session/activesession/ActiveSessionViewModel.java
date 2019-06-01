@@ -50,6 +50,14 @@ public class ActiveSessionViewModel extends BaseViewModel {
         fetchSessionOrders();
     }
 
+    @Override
+    protected void registerProblemHandlers() {
+        mSessionData = registerProblemHandler(mSessionData);
+        mMemberUpdate = registerProblemHandler(mMemberUpdate);
+        mOrdersData = registerProblemHandler(mOrdersData);
+        mTrendingData = registerProblemHandler(mTrendingData);
+    }
+
     public void fetchActiveSessionDetail() {
         mSessionData.addSource(mRepository.getActiveSessionDetail(), (resource) -> {
             if (resource != null && resource.data != null)

@@ -34,6 +34,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.checkin.app.checkin.Data.Message.ActiveSessionNotificationService;
 import com.checkin.app.checkin.Home.HomeActivity;
 import com.checkin.app.checkin.R;
 import com.golovin.fluentstackbar.FluentSnackbar;
@@ -42,6 +43,7 @@ import com.google.android.material.tabs.TabLayout;
 
 import java.io.IOException;
 import java.lang.reflect.Field;
+import java.text.DecimalFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -234,7 +236,8 @@ public final class Utils {
     }
 
     public static String formatCurrencyAmount(Context context, Double amount) {
-        return formatCurrencyAmount(context, String.valueOf(amount));
+        DecimalFormat format = new DecimalFormat("0.00");
+        return formatCurrencyAmount(context, format.format(amount));
     }
 
     public static String formatDateTo24HoursTime(Date dateTime) {
@@ -605,5 +608,12 @@ public final class Utils {
 
     public interface MatchResultFunction {
         String apply(MatchResult match);
+    }
+
+
+    public static void clearSessionPersistentNotification(Context context){
+        Intent serviceIntent = new Intent(context, ActiveSessionNotificationService.class);
+        serviceIntent.setAction(com.checkin.app.checkin.Data.Message.Constants.SERVICE_ACTION_FOREGROUND_STOP);
+        context.startService(serviceIntent);
     }
 }

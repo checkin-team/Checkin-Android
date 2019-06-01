@@ -47,6 +47,17 @@ public class WaiterTableViewModel extends BaseViewModel {
         mSessionRepository = SessionRepository.getInstance(application);
     }
 
+    @Override
+    protected void registerProblemHandlers() {
+        mSessionDetail = registerProblemHandler(mSessionDetail);
+        mEventData = registerProblemHandler(mEventData);
+        mEventUpdate = registerProblemHandler(mEventUpdate);
+        mOrderStatus = registerProblemHandler(mOrderStatus);
+        mCheckoutData = registerProblemHandler(mCheckoutData);
+        mContactListData = registerProblemHandler(mContactListData);
+        mResultOrderStatus = registerProblemHandler(mResultOrderStatus);
+    }
+
     public void fetchSessionDetail(long sessionId) {
         mSessionPk = sessionId;
         mSessionDetail.addSource(mSessionRepository.getSessionBriefDetail(sessionId), mSessionDetail::setValue);

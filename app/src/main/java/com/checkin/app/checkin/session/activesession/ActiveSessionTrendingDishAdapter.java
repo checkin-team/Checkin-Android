@@ -82,9 +82,7 @@ public class ActiveSessionTrendingDishAdapter extends RecyclerView.Adapter<Activ
             itemView.setEnabled(true);
             Utils.loadImageOrDefault(imDish, itemModel.getImage(),0);
             tvName.setText(itemModel.getName());
-            tvPrice.setText(String.format(
-                    Locale.ENGLISH, Utils.getCurrencyFormat(itemView.getContext()),
-                    Utils.joinCollection(itemModel.getTypeCosts(), " | ")));
+            tvPrice.setText(Utils.formatCurrencyAmount(tvPrice.getContext(), itemModel.getTypeCosts().get(0)));
         }
     }
 }

@@ -43,4 +43,9 @@ public class AccountViewModel extends BaseViewModel {
     public void updateResults() {
         fetchAccounts();
     }
+
+    @Override
+    protected void registerProblemHandlers() {
+        mAccounts = registerProblemHandler(mAccounts);
+    }
 }

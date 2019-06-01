@@ -48,6 +48,15 @@ public class MenuViewModel extends BaseViewModel {
         fetchAvailableMenu(mShopPk);
     }
 
+    @Override
+    protected void registerProblemHandlers() {
+        mMenuData = registerProblemHandler(mMenuData);
+        mOriginalMenuGroups = registerProblemHandler(mOriginalMenuGroups);
+        mMenuGroups = registerProblemHandler(mMenuGroups);
+        mMenuItems = registerProblemHandler(mMenuItems);
+        mResultOrder = registerProblemHandler(mResultOrder);
+    }
+
     public void fetchAvailableMenu(long shopId) {
         mShopPk = shopId;
         mMenuData.addSource(mRepository.getAvailableMenu(shopId), mMenuData::setValue);

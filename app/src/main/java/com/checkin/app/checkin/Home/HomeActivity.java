@@ -174,8 +174,6 @@ public class HomeActivity extends BaseAccountActivity implements NavigationView.
         mViewModel.getSessionStatus().observe(this, resource -> {
             if (resource == null)
                 return;
-            if (ProblemHandler.handleProblems(this, resource))
-                return;
 
             if (resource.status == Resource.Status.SUCCESS && resource.data != null) {
                 sessionActiveStatus();
@@ -187,17 +185,27 @@ public class HomeActivity extends BaseAccountActivity implements NavigationView.
                 serviceIntent.putExtra(ACTIVE_SESSION_PK, resource.data.getPk());
                 startService(serviceIntent);
             } else if (resource.status == Resource.Status.ERROR_NOT_FOUND) {
-                vSessionStatus.setVisibility(View.GONE);
-                Intent serviceIntent = new Intent(this, ActiveSessionNotificationService.class);
-                serviceIntent.setAction(Constants.SERVICE_ACTION_FOREGROUND_STOP);
-                startService(serviceIntent);
+                sessionInactive();
+                Utils.clearSessionPersistentNotification(this);
             } else if (resource.getProblem() != null && resource.getProblem().getErrorCode() == ProblemModel.ERROR_CODE.SESSION_USER_PENDING_MEMBER){
                 sessionWaitingStatus();
                 tvSessionWaitQRBusy.setText(resource.getProblem().getDetail());
             }
         });
 
+        mViewModel.getCancelDineInData().observe(this, objectNodeResource -> {
+            if (objectNodeResource == null)
+                return;
+            if (objectNodeResource.status == Resource.Status.SUCCESS) {
+                sessionInactive();
+            }
+        });
+
         mViewModel.fetchSessionStatus();
+    }
+
+    private void sessionInactive(){
+        vSessionStatus.setVisibility(View.GONE);
     }
 
     private void sessionActiveStatus(){
@@ -233,13 +241,13 @@ public class HomeActivity extends BaseAccountActivity implements NavigationView.
         startActivity(new Intent(this, ActiveSessionActivity.class));
     }
 
-    /*@OnClick(R.id.im_home_session_wait_cancel)
+    @OnClick(R.id.im_home_session_wait_cancel)
     public void onCancelClicked() {
         AlertDialog.Builder builder = new AlertDialog.Builder(this).setTitle("Are you sure you want to cancel the request?")
-                .setPositiveButton("Ok", (dialog, which) -> mViewModel.putSessionCheckout())
+                .setPositiveButton("Ok", (dialog, which) -> mViewModel.cancelUserWaitingDineIn())
                 .setNegativeButton("Cancel", (dialog, which) -> dialog.dismiss());
         builder.show();
-    }*/
+    }
 
     @Override
     protected int getDrawerRootId() {

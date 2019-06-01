@@ -44,6 +44,14 @@ public class WaiterWorkViewModel extends BaseViewModel {
         fetchWaiterServedTables();
     }
 
+    @Override
+    protected void registerProblemHandlers() {
+        mShopTables = registerProblemHandler(mShopTables);
+        mWaiterTables = registerProblemHandler(mWaiterTables);
+        mQrResult = registerProblemHandler(mQrResult);
+        mWaiterStats = registerProblemHandler(mWaiterStats);
+    }
+
     public void fetchWaiterServedTables() {
         mWaiterTables.addSource(mWaiterRepository.getWaiterServedTables(), mWaiterTables::setValue);
     }

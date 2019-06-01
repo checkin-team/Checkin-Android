@@ -33,6 +33,13 @@ public class InventoryViewModel extends BaseViewModel {
     }
 
     @Override
+    protected void registerProblemHandlers() {
+        mMenuData = registerProblemHandler(mMenuData);
+        mOriginalMenuGroups = registerProblemHandler(mOriginalMenuGroups);
+        mResultMenuAvailability = registerProblemHandler(mResultMenuAvailability);
+    }
+
+    @Override
     public void updateResults() {
         fetchAvailableMenuDetail(mRestaurantId);
     }

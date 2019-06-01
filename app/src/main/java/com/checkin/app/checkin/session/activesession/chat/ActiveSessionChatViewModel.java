@@ -85,4 +85,9 @@ public class ActiveSessionChatViewModel extends BaseViewModel {
             mChatData.setValue(Resource.cloneResource(listResource, listResource.data));
         }
     }
+
+    @Override
+    protected void registerProblemHandlers() {
+        mChatData = registerProblemHandler(mChatData);
+    }
 }

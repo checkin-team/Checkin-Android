@@ -44,6 +44,13 @@ public class UserViewModel extends BaseViewModel {
         fetchUserData();
     }
 
+    @Override
+    protected void registerProblemHandlers() {
+        mUserData = registerProblemHandler(mUserData);
+        mUserRecentCheckinsData = registerProblemHandler(mUserRecentCheckinsData);
+        mImageUploadResult = registerProblemHandler(mImageUploadResult);
+    }
+
     public void fetchUserData() {
         mUserData.addSource(mRepository.getUser(0), mUserData::setValue);
     }

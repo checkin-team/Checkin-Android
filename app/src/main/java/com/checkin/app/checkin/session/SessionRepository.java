@@ -183,4 +183,24 @@ public class SessionRepository extends BaseRepository {
             }
         }.getAsLiveData();
     }
+
+    public LiveData<Resource<ObjectNode>> removeUserFromWaiting() {
+        return new NetworkBoundResource<ObjectNode, ObjectNode>() {
+            @Override
+            protected boolean shouldUseLocalDb() {
+                return false;
+            }
+
+            @NonNull
+            @Override
+            protected LiveData<ApiResponse<ObjectNode>> createCall() {
+                return new RetrofitLiveData<>(mWebService.deleteSessionUserWaiting());
+            }
+
+            @Override
+            protected void saveCallResult(ObjectNode data) {
+                //saveCallResult code
+            }
+        }.getAsLiveData();
+    }
 }

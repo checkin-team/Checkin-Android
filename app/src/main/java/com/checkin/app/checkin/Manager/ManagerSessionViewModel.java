@@ -61,6 +61,18 @@ public class ManagerSessionViewModel extends BaseViewModel {
         mWaiterRepository = WaiterRepository.getInstance(application);
     }
 
+    @Override
+    protected void registerProblemHandlers() {
+        mBriefData = registerProblemHandler(mBriefData);
+        mOrdersData = registerProblemHandler(mOrdersData);
+        mEventData = registerProblemHandler(mEventData);
+        mDetailData = registerProblemHandler(mDetailData);
+        mOrderStatusData = registerProblemHandler(mOrderStatusData);
+        mCheckoutData = registerProblemHandler(mCheckoutData);
+        mContactListData = registerProblemHandler(mContactListData);
+        mResultOrderStatus = registerProblemHandler(mResultOrderStatus);
+    }
+
     public void putSessionCheckout() {
         ObjectNode data = Converters.objectMapper.createObjectNode();
         data.put("payment_mode", "csh");

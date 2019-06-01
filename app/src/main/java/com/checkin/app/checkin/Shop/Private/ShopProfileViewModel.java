@@ -43,6 +43,11 @@ public class ShopProfileViewModel extends BaseViewModel {
         mCollectAspectData.setValue(false);
     }
 
+    @Override
+    protected void registerProblemHandlers() {
+        mShopData = registerProblemHandler(mShopData);
+    }
+
     public LiveData<Resource<RestaurantModel>> getShopData() {
         return mShopData;
     }

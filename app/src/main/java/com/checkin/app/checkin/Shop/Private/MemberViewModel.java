@@ -28,6 +28,12 @@ public class MemberViewModel extends BaseViewModel {
         mRepository = ShopRepository.getInstance(application);
     }
 
+    @Override
+    protected void registerProblemHandlers() {
+        mShopMembers = registerProblemHandler(mShopMembers);
+        mRemovedMember = registerProblemHandler(mRemovedMember);
+    }
+
     public void fetchShopMembers(long shopPk) {
         mShopPk = shopPk;
         mShopMembers.addSource(mRepository.getRestaurantMembers(mShopPk), mShopMembers::setValue);

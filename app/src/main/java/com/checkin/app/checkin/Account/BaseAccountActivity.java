@@ -113,9 +113,7 @@ public abstract class BaseAccountActivity extends BaseActivity {
             PreferenceManager.getDefaultSharedPreferences(this).edit()
                     .clear()
                     .apply();
-            Intent serviceIntent = new Intent(this, ActiveSessionNotificationService.class);
-            serviceIntent.setAction(com.checkin.app.checkin.Data.Message.Constants.SERVICE_ACTION_FOREGROUND_STOP);
-            startService(serviceIntent);
+            Utils.clearSessionPersistentNotification(this);
 
             Intent splashIntent = new Intent(this, SplashActivity.class);
             splashIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);

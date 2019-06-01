@@ -22,6 +22,12 @@ public class FinanceViewModel extends BaseViewModel {
         financeRepository = FinanceRepository.getInstance(application);
     }
 
+    @Override
+    protected void registerProblemHandlers() {
+        mGetFinanceMediatorLiveData = registerProblemHandler(mGetFinanceMediatorLiveData);
+        mSetFinanceMediatorLiveData = registerProblemHandler(mSetFinanceMediatorLiveData);
+    }
+
     public void getRestaurantFinanceById(long restaurantId) {
         this.restaurantId = restaurantId;
         LiveData<Resource<FinanceModel>> mLiveData = financeRepository.getRestaurantFinanceById(restaurantId);

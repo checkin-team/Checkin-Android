@@ -21,6 +21,11 @@ public class UserTransactionsViewModel extends BaseViewModel {
         mRepository = SessionRepository.getInstance(application);
     }
 
+    @Override
+    protected void registerProblemHandlers() {
+        mBriefData = registerProblemHandler(mBriefData);
+        mDetailData = registerProblemHandler(mDetailData);
+    }
 
     public void fetchSessionSuccessfulTransaction(long sessionId) {
         mBriefData.addSource(mRepository.getUserSessionBriefDetail(sessionId), mBriefData::setValue);

@@ -24,6 +24,12 @@ public class ShopInvoiceViewModel extends BaseViewModel {
         this.mShopInvoiceRepository = ShopInvoiceRepository.getInstance(application);
     }
 
+    @Override
+    protected void registerProblemHandlers() {
+        mPrevResults = registerProblemHandler(mPrevResults);
+        mResults = registerProblemHandler(mResults);
+    }
+
     public void fetchShopSessions(long restaurantId) {
         this.mShopPk = restaurantId;
         mPrevResults = mShopInvoiceRepository.getRestaurantSessions(restaurantId);

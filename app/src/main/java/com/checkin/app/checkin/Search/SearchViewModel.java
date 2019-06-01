@@ -36,6 +36,11 @@ public class SearchViewModel extends BaseViewModel {
         mRepository = new SearchRepository(application.getApplicationContext());
     }
 
+    @Override
+    protected void registerProblemHandlers() {
+        mResults = registerProblemHandler(mResults);
+    }
+
     private void combineResults() {
         Resource<List<SearchResultPeopleModel>> resourcePeople = null;
         Resource<List<SearchResultShopModel>> resourceShop = null;
