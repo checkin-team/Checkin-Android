@@ -5,10 +5,11 @@ import android.util.Log;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
+import com.checkin.app.checkin.Utility.NoConnectivityException;
+import com.checkin.app.checkin.Utility.RequestCanceledException;
 import com.fasterxml.jackson.databind.JsonNode;
 
 import java.io.IOException;
-import java.net.SocketException;
 
 import retrofit2.Response;
 
@@ -26,15 +27,21 @@ public class ApiResponse<T> {
     private final Throwable errorThrowable;
     private Response<T> mResponse;
 
-    public ApiResponse(Throwable error) {
+    public ApiResponse(@NonNull Throwable error) {
         mResponse = null;
-        if (error instanceof SocketException) {
-
-        }
         mStatusCode = HTTP_CLIENT_TIMEOUT;
+        if (error instanceof NoConnectivityException) {
+            errorThrowable = error;
+        } else if (error instanceof IOException) {
+            if ("Canceled".equals(error.getMessage()))
+                errorThrowable = new RequestCanceledException(error);
+            else
+                errorThrowable = new NoConnectivityException(error);
+        } else {
+            errorThrowable = error;
+        }
         data = null;
         errorMessage = error.getMessage();
-        errorThrowable = error;
         errorData = null;
     }
 

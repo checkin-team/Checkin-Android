@@ -6,6 +6,8 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
 import com.checkin.app.checkin.Utility.NoConnectivityException;
+import com.checkin.app.checkin.Utility.RequestCanceledException;
+import com.crashlytics.android.Crashlytics;
 import com.fasterxml.jackson.databind.JsonNode;
 
 import static java.net.HttpURLConnection.HTTP_BAD_REQUEST;
@@ -80,12 +82,14 @@ public class Resource<T> {
         if (apiResponse.isSuccessful()) {
             resource = success(apiResponse.getData());
         } else if (apiResponse.getErrorThrowable() != null) {
-            Log.e(TAG, apiResponse.getErrorThrowable().getMessage(), apiResponse.getErrorThrowable());
-            if (apiResponse.getErrorThrowable() instanceof NoConnectivityException) {
-                Log.e(TAG, apiResponse.getErrorMessage());
+            if (apiResponse.getErrorThrowable() instanceof RequestCanceledException) {
+                resource = error(Status.ERROR_CANCELLED, null, null, null);
+            } else if (apiResponse.getErrorThrowable() instanceof NoConnectivityException) {
                 resource = error(Status.ERROR_DISCONNECTED, apiResponse.getErrorMessage(), apiResponse.getData(), null);
             } else {
                 resource = error(Status.ERROR_UNKNOWN, apiResponse.getErrorMessage(), apiResponse.getData(), apiResponse.getErrorData());
+                Crashlytics.log(Log.ERROR, TAG, apiResponse.getErrorMessage());
+                Crashlytics.logException(apiResponse.getErrorThrowable());
             }
         } else if (apiResponse.hasStatus(HTTP_NOT_FOUND)) {
             resource = error(Status.ERROR_NOT_FOUND, apiResponse.getErrorMessage(), apiResponse.getData(), apiResponse.getErrorData());

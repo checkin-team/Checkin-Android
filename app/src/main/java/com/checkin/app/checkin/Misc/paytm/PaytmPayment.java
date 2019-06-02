@@ -2,9 +2,11 @@ package com.checkin.app.checkin.Misc.paytm;
 
 import android.content.Context;
 import android.os.Bundle;
+import android.util.Log;
 
 import com.checkin.app.checkin.R;
 import com.checkin.app.checkin.Utility.Constants;
+import com.crashlytics.android.Crashlytics;
 import com.paytm.pgsdk.PaytmPGService;
 import com.paytm.pgsdk.PaytmPaymentTransactionCallback;
 
@@ -28,17 +30,18 @@ public abstract class PaytmPayment {
 
             @Override
             public void clientAuthenticationFailed(String inErrorMessage) {
-                onPaytmError("Authentication failed: Server error " + inErrorMessage);
+                onPaytmError(inErrorMessage);
+                Crashlytics.log(Log.ERROR, TAG, inErrorMessage);
             }
 
             @Override
             public void someUIErrorOccurred(String inErrorMessage) {
-                onPaytmError("UI Error " + inErrorMessage);
+                onPaytmError("UI Error - " + inErrorMessage);
             }
 
             @Override
             public void onErrorLoadingWebPage(int iniErrorCode, String inErrorMessage, String inFailingUrl) {
-                onPaytmError("Unable to load webpage " + inErrorMessage);
+                onPaytmError("Unable to load webpage - " + inErrorMessage);
             }
 
             @Override
