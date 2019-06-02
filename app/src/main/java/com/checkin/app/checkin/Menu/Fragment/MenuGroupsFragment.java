@@ -63,8 +63,8 @@ public class MenuGroupsFragment extends BaseFragment {
                 stopRefreshing();
             } else if (menuGroupResource.status == Resource.Status.LOADING) {
                 startRefreshing();
-//                if (menuGroupResource.data != null)
-//                    mAdapter.setGroupList(menuGroupResource.data);
+                if (menuGroupResource.data != null)
+                    mAdapter.setGroupList(menuGroupResource.data);
             } else {
                 stopRefreshing();
                 Utils.toast(requireContext(), menuGroupResource.message);

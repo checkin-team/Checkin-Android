@@ -52,7 +52,7 @@ public class MenuRepository {
         return new NetworkBoundResource<MenuModel, MenuModel>() {
             @Override
             protected boolean shouldUseLocalDb() {
-                return false;
+                return true;
             }
 
             @Override

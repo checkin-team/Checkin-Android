@@ -5,6 +5,7 @@ import android.util.Log;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
+import com.checkin.app.checkin.Utility.NetworkIssueException;
 import com.checkin.app.checkin.Utility.NoConnectivityException;
 import com.checkin.app.checkin.Utility.RequestCanceledException;
 import com.fasterxml.jackson.databind.JsonNode;
@@ -36,12 +37,12 @@ public class ApiResponse<T> {
             if ("Canceled".equals(error.getMessage()))
                 errorThrowable = new RequestCanceledException(error);
             else
-                errorThrowable = new NoConnectivityException(error);
+                errorThrowable = new NetworkIssueException(error);
         } else {
             errorThrowable = error;
         }
         data = null;
-        errorMessage = error.getMessage();
+        errorMessage = errorThrowable.getMessage();
         errorData = null;
     }
 
