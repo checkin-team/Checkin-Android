@@ -8,7 +8,6 @@ import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.text.Editable;
 import android.text.Html;
-import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
@@ -228,7 +227,6 @@ public class ActiveSessionInvoiceActivity extends BaseActivity {
                 Utils.toast(ActiveSessionInvoiceActivity.this, statusModelResource.message);
                 if (statusModelResource.getProblem() != null && statusModelResource.getProblem().getErrorCode() == ProblemModel.ERROR_CODE.INVALID_PAYMENT_MODE_PROMO_AVAILED)
                     onPaymentModeClick();
-
             }
         });
 

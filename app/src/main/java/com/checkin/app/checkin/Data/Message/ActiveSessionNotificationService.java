@@ -3,6 +3,7 @@ package com.checkin.app.checkin.Data.Message;
 import android.app.Notification;
 import android.app.PendingIntent;
 import android.app.Service;
+import android.content.Context;
 import android.content.Intent;
 import android.os.IBinder;
 import android.widget.RemoteViews;
@@ -107,5 +108,11 @@ public class ActiveSessionNotificationService extends Service {
         Intent menuIntent = SessionMenuActivity.withSession(this, mRestaurantPk, mSessionPk, null);
         menuIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
         startActivity(menuIntent);
+    }
+
+    public static void clearNotification(Context context) {
+        Intent serviceIntent = new Intent(context, ActiveSessionNotificationService.class)
+                .setAction(Constants.SERVICE_ACTION_FOREGROUND_STOP);
+        context.startService(serviceIntent);
     }
 }

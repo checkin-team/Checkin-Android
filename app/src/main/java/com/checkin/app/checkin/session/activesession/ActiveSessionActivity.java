@@ -7,7 +7,6 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
@@ -270,7 +269,7 @@ public class ActiveSessionActivity extends BaseActivity implements
     }
 
     private void explainSession() {
-        OnBoardingUtils.conditionalOnBoarding(this, SP_MENU, true, new OnBoardingUtils.OnBoardingModel("Checkout your menu here!", btnSessionMenu));
+        OnBoardingUtils.conditionalOnBoarding(this, SP_MENU, true, new OnBoardingUtils.OnBoardingModel("Checkout your menu here!", btnSessionMenu, false));
     }
 
     // region UI-Update
@@ -335,7 +334,7 @@ public class ActiveSessionActivity extends BaseActivity implements
     @OnClick(R.id.btn_active_session_menu)
     public void onListMenu() {
         if (Utils.isNetworkConnected(this)) {
-            if (mViewModel.getShopPk() < 0 )
+            if (mViewModel.getShopPk() < 0)
                 return;
             btnSessionMenu.setEnabled(false);
             SessionMenuActivity.startWithSession(this, mViewModel.getShopPk(), null, null);
@@ -428,7 +427,7 @@ public class ActiveSessionActivity extends BaseActivity implements
         updateScreen();
         resetEnableViews();
         if (OnBoardingUtils.isOnBoardingShown(this, KEY_INTERACT_WITH_US))
-            OnBoardingUtils.conditionalOnBoarding(this, KEY_SP_INTERACT_WITH_US, true, new OnBoardingUtils.OnBoardingModel("Interact with waiter here!", tvInteractWithUs));
+            OnBoardingUtils.conditionalOnBoarding(this, KEY_SP_INTERACT_WITH_US, true, new OnBoardingUtils.OnBoardingModel("Interact with waiter here!", tvInteractWithUs, true));
         MessageUtils.dismissNotification(this, MessageObjectModel.MESSAGE_OBJECT_TYPE.SESSION, mViewModel.getSessionPk());
     }
 

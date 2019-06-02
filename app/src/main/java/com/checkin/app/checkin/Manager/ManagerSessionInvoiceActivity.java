@@ -77,16 +77,17 @@ public class ManagerSessionInvoiceActivity extends AppCompatActivity {
             MessageModel message = MessageUtils.parseMessage(intent);
             if (message == null) return;
 
-            MessageObjectModel model;
+            MessageObjectModel session = message.getSessionDetail();
+            if (session == null || session.getPk() != mViewModel.getSessionPk())
+                return;
 
             switch (message.getType()) {
                 case MANAGER_SESSION_BILL_CHANGE:
-                    mViewModel.fetchManagerInvoice(message.getTarget().getPk());
+                    mViewModel.fetchManagerInvoice(session.getPk());
                     break;
                 case MANAGER_SESSION_END:
                     finish();
                     break;
-
             }
         }
     };
@@ -216,7 +217,7 @@ public class ManagerSessionInvoiceActivity extends AppCompatActivity {
     protected void onResume() {
         super.onResume();
         MessageModel.MESSAGE_TYPE[] types = new MessageModel.MESSAGE_TYPE[]{
-                MessageModel.MESSAGE_TYPE.MANAGER_SESSION_BILL_CHANGE,MessageModel.MESSAGE_TYPE.MANAGER_SESSION_END };
+                MessageModel.MESSAGE_TYPE.MANAGER_SESSION_BILL_CHANGE, MessageModel.MESSAGE_TYPE.MANAGER_SESSION_END};
         MessageUtils.registerLocalReceiver(this, mReceiver, types);
     }
 

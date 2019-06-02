@@ -2,33 +2,33 @@ package com.checkin.app.checkin.Waiter;
 
 import android.app.Application;
 
+import androidx.annotation.NonNull;
+import androidx.lifecycle.LiveData;
+import androidx.lifecycle.Transformations;
+
 import com.checkin.app.checkin.Data.BaseViewModel;
 import com.checkin.app.checkin.Data.Converters;
 import com.checkin.app.checkin.Data.Resource;
 import com.checkin.app.checkin.Data.Resource.Status;
 import com.checkin.app.checkin.Misc.BriefModel;
+import com.checkin.app.checkin.Utility.SourceMappedLiveData;
+import com.checkin.app.checkin.Waiter.Model.WaiterStatsModel;
+import com.checkin.app.checkin.Waiter.Model.WaiterTableModel;
 import com.checkin.app.checkin.session.model.QRResultModel;
 import com.checkin.app.checkin.session.model.RestaurantTableModel;
 import com.checkin.app.checkin.session.model.TableSessionModel;
-import com.checkin.app.checkin.Waiter.Model.WaiterStatsModel;
-import com.checkin.app.checkin.Waiter.Model.WaiterTableModel;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import androidx.annotation.NonNull;
-import androidx.lifecycle.LiveData;
-import androidx.lifecycle.MediatorLiveData;
-import androidx.lifecycle.Transformations;
-
 public class WaiterWorkViewModel extends BaseViewModel {
     private WaiterRepository mWaiterRepository;
 
-    private MediatorLiveData<Resource<List<RestaurantTableModel>>> mShopTables = new MediatorLiveData<>();
-    private MediatorLiveData<Resource<List<WaiterTableModel>>> mWaiterTables = new MediatorLiveData<>();
-    private MediatorLiveData<Resource<QRResultModel>> mQrResult = new MediatorLiveData<>();
-    private MediatorLiveData<Resource<WaiterStatsModel>> mWaiterStats = new MediatorLiveData<>();
+    private SourceMappedLiveData<Resource<List<RestaurantTableModel>>> mShopTables = createNetworkLiveData();
+    private SourceMappedLiveData<Resource<List<WaiterTableModel>>> mWaiterTables = createNetworkLiveData();
+    private SourceMappedLiveData<Resource<QRResultModel>> mQrResult = createNetworkLiveData();
+    private SourceMappedLiveData<Resource<WaiterStatsModel>> mWaiterStats = createNetworkLiveData();
 
     private long mShopPk;
 
@@ -44,14 +44,6 @@ public class WaiterWorkViewModel extends BaseViewModel {
         fetchWaiterServedTables();
     }
 
-    @Override
-    protected void registerProblemHandlers() {
-        mShopTables = registerProblemHandler(mShopTables);
-        mWaiterTables = registerProblemHandler(mWaiterTables);
-        mQrResult = registerProblemHandler(mQrResult);
-        mWaiterStats = registerProblemHandler(mWaiterStats);
-    }
-
     public void fetchWaiterServedTables() {
         mWaiterTables.addSource(mWaiterRepository.getWaiterServedTables(), mWaiterTables::setValue);
     }
@@ -62,7 +54,7 @@ public class WaiterWorkViewModel extends BaseViewModel {
 
     public void fetchShopTables(long shopId) {
         mShopPk = shopId;
-        mShopTables.addSource(mWaiterRepository.getShopTables(shopId,false), mShopTables::setValue);
+        mShopTables.addSource(mWaiterRepository.getShopTables(shopId, false), mShopTables::setValue);
     }
 
     public LiveData<Resource<List<RestaurantTableModel>>> getShopAssignedTables() {

@@ -184,7 +184,7 @@ public class SessionRepository extends BaseRepository {
         }.getAsLiveData();
     }
 
-    public LiveData<Resource<ObjectNode>> removeUserFromWaiting() {
+    public LiveData<Resource<ObjectNode>> cancelSessionJoinRequest() {
         return new NetworkBoundResource<ObjectNode, ObjectNode>() {
             @Override
             protected boolean shouldUseLocalDb() {
@@ -194,7 +194,7 @@ public class SessionRepository extends BaseRepository {
             @NonNull
             @Override
             protected LiveData<ApiResponse<ObjectNode>> createCall() {
-                return new RetrofitLiveData<>(mWebService.deleteSessionUserWaiting());
+                return new RetrofitLiveData<>(mWebService.deleteCustomerSessionJoinRequest());
             }
 
             @Override

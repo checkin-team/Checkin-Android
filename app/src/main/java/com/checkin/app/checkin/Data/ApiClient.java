@@ -5,6 +5,8 @@ import android.content.Context;
 import android.os.Build;
 import android.util.Log;
 
+import androidx.annotation.NonNull;
+
 import com.checkin.app.checkin.Auth.AuthPreferences;
 import com.checkin.app.checkin.BuildConfig;
 import com.checkin.app.checkin.Utility.Constants;
@@ -15,7 +17,6 @@ import java.util.concurrent.TimeUnit;
 
 import javax.net.ssl.HttpsURLConnection;
 
-import androidx.annotation.NonNull;
 import dagger.Module;
 import dagger.Provides;
 import okhttp3.Cache;
@@ -73,6 +74,7 @@ public class ApiClient {
                 .connectTimeout(15, TimeUnit.SECONDS)
                 .readTimeout(30, TimeUnit.SECONDS)
                 .writeTimeout(30, TimeUnit.SECONDS)
+                .retryOnConnectionFailure(true)
                 .cache(cache);
         if (BuildConfig.DEBUG) {
             // Logging interceptor

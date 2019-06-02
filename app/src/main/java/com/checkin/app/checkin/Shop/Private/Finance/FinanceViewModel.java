@@ -2,30 +2,24 @@ package com.checkin.app.checkin.Shop.Private.Finance;
 
 import android.app.Application;
 
+import androidx.annotation.NonNull;
+import androidx.lifecycle.LiveData;
+
 import com.checkin.app.checkin.Data.BaseViewModel;
 import com.checkin.app.checkin.Data.Resource;
 import com.checkin.app.checkin.Misc.GenericDetailModel;
-
-import androidx.annotation.NonNull;
-import androidx.lifecycle.LiveData;
-import androidx.lifecycle.MediatorLiveData;
+import com.checkin.app.checkin.Utility.SourceMappedLiveData;
 
 public class FinanceViewModel extends BaseViewModel {
     private FinanceRepository financeRepository;
 
     private long restaurantId;
-    private MediatorLiveData<Resource<FinanceModel>> mGetFinanceMediatorLiveData = new MediatorLiveData<>();
-    private MediatorLiveData<Resource<GenericDetailModel>> mSetFinanceMediatorLiveData = new MediatorLiveData<>();
+    private SourceMappedLiveData<Resource<FinanceModel>> mGetFinanceMediatorLiveData = createNetworkLiveData();
+    private SourceMappedLiveData<Resource<GenericDetailModel>> mSetFinanceMediatorLiveData = createNetworkLiveData();
 
     public FinanceViewModel(@NonNull Application application) {
         super(application);
         financeRepository = FinanceRepository.getInstance(application);
-    }
-
-    @Override
-    protected void registerProblemHandlers() {
-        mGetFinanceMediatorLiveData = registerProblemHandler(mGetFinanceMediatorLiveData);
-        mSetFinanceMediatorLiveData = registerProblemHandler(mSetFinanceMediatorLiveData);
     }
 
     public void getRestaurantFinanceById(long restaurantId) {

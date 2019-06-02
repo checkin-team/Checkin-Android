@@ -4,27 +4,21 @@ import android.app.Application;
 
 import androidx.annotation.NonNull;
 import androidx.lifecycle.LiveData;
-import androidx.lifecycle.MediatorLiveData;
 
 import com.checkin.app.checkin.Data.BaseViewModel;
 import com.checkin.app.checkin.Data.Resource;
+import com.checkin.app.checkin.Utility.SourceMappedLiveData;
 import com.checkin.app.checkin.session.SessionRepository;
 
 public class UserTransactionsViewModel extends BaseViewModel {
     private final SessionRepository mRepository;
 
-    private MediatorLiveData<Resource<UserTransactionBriefModel>> mBriefData = new MediatorLiveData<>();
-    private MediatorLiveData<Resource<UserTransactionDetailsModel>> mDetailData = new MediatorLiveData<>();
+    private SourceMappedLiveData<Resource<UserTransactionBriefModel>> mBriefData = createNetworkLiveData();
+    private SourceMappedLiveData<Resource<UserTransactionDetailsModel>> mDetailData = createNetworkLiveData();
 
     public UserTransactionsViewModel(@NonNull Application application) {
         super(application);
         mRepository = SessionRepository.getInstance(application);
-    }
-
-    @Override
-    protected void registerProblemHandlers() {
-        mBriefData = registerProblemHandler(mBriefData);
-        mDetailData = registerProblemHandler(mDetailData);
     }
 
     public void fetchSessionSuccessfulTransaction(long sessionId) {

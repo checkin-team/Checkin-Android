@@ -223,7 +223,7 @@ public class SessionMenuActivity extends BaseActivity implements
     }
 
     private void explainMenu() {
-        OnBoardingUtils.conditionalOnBoarding(this, SP_MENU_SEARCH, true, new OnBoardingModel("Search for food item here.", btnMenuSearch));
+        OnBoardingUtils.conditionalOnBoarding(this, SP_MENU_SEARCH, true, new OnBoardingModel("Search for food item here.", btnMenuSearch, true));
     }
 
     private void setupCart() {
@@ -266,7 +266,7 @@ public class SessionMenuActivity extends BaseActivity implements
 
     private void explainCartMenu(EndDrawerToggle toggle) {
         View cartButton = toggle.getToggleButton();
-        OnBoardingUtils.conditionalOnBoarding(this, SP_MENU_CART, true, new OnBoardingModel("Checkout your order here.", cartButton));
+        OnBoardingUtils.conditionalOnBoarding(this, SP_MENU_CART, true, new OnBoardingModel("Checkout your order here.", cartButton, true));
     }
 
     private void setupSearch() {

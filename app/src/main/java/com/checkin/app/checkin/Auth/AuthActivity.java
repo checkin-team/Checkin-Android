@@ -12,11 +12,15 @@ import android.os.Handler;
 import android.preference.PreferenceManager;
 import android.util.Log;
 import android.view.View;
-import android.widget.CheckBox;
-import android.widget.CheckedTextView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentTransaction;
+import androidx.lifecycle.ViewModelProviders;
 
 import com.checkin.app.checkin.Home.HomeActivity;
 import com.checkin.app.checkin.Misc.EulaDialog;
@@ -43,11 +47,6 @@ import com.google.firebase.auth.PhoneAuthCredential;
 
 import java.util.Locale;
 
-import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentTransaction;
-import androidx.lifecycle.ViewModelProviders;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
@@ -127,9 +126,7 @@ public class AuthActivity extends AppCompatActivity implements AuthFragmentInter
             }
         });
 
-        mDarkBack.setOnTouchListener((v, event) -> {
-            return true;
-        });
+        mDarkBack.setOnTouchListener((v, event) -> true);
     }
 
     private void showProgress() {

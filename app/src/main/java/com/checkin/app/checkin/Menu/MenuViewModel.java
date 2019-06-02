@@ -3,6 +3,11 @@ package com.checkin.app.checkin.Menu;
 import android.app.Application;
 import android.os.Handler;
 
+import androidx.annotation.NonNull;
+import androidx.lifecycle.LiveData;
+import androidx.lifecycle.MutableLiveData;
+import androidx.lifecycle.Transformations;
+
 import com.checkin.app.checkin.Data.BaseViewModel;
 import com.checkin.app.checkin.Data.Resource;
 import com.checkin.app.checkin.Menu.Model.ItemCustomizationFieldModel;
@@ -10,26 +15,23 @@ import com.checkin.app.checkin.Menu.Model.MenuGroupModel;
 import com.checkin.app.checkin.Menu.Model.MenuItemModel;
 import com.checkin.app.checkin.Menu.Model.MenuModel;
 import com.checkin.app.checkin.Menu.Model.OrderedItemModel;
+import com.checkin.app.checkin.Utility.SourceMappedLiveData;
 import com.fasterxml.jackson.databind.node.ArrayNode;
 
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-import androidx.annotation.NonNull;
-import androidx.lifecycle.LiveData;
-import androidx.lifecycle.MediatorLiveData;
-import androidx.lifecycle.MutableLiveData;
-import androidx.lifecycle.Transformations;
-
 public class MenuViewModel extends BaseViewModel {
     private final Handler mHandler = new Handler();
     private MenuRepository mRepository;
-    private MediatorLiveData<Resource<MenuModel>> mMenuData = new MediatorLiveData<>();
-    private MediatorLiveData<Resource<List<MenuGroupModel>>> mOriginalMenuGroups = new MediatorLiveData<>();
-    private MediatorLiveData<Resource<List<MenuGroupModel>>> mMenuGroups = new MediatorLiveData<>();
-    private MediatorLiveData<Resource<List<MenuItemModel>>> mMenuItems = new MediatorLiveData<>();
-    private MediatorLiveData<Resource<ArrayNode>> mResultOrder = new MediatorLiveData<>();
+
+    private SourceMappedLiveData<Resource<MenuModel>> mMenuData = createNetworkLiveData();
+    private SourceMappedLiveData<Resource<List<MenuGroupModel>>> mOriginalMenuGroups = createNetworkLiveData();
+    private SourceMappedLiveData<Resource<List<MenuGroupModel>>> mMenuGroups = createNetworkLiveData();
+    private SourceMappedLiveData<Resource<List<MenuItemModel>>> mMenuItems = createNetworkLiveData();
+    private SourceMappedLiveData<Resource<ArrayNode>> mResultOrder = createNetworkLiveData();
+
     private MutableLiveData<List<OrderedItemModel>> mOrderedItems = new MutableLiveData<>();
     private MutableLiveData<OrderedItemModel> mCurrentItem = new MutableLiveData<>();
     private MutableLiveData<String> mFilteredString = new MutableLiveData<>();
@@ -45,16 +47,7 @@ public class MenuViewModel extends BaseViewModel {
 
     @Override
     public void updateResults() {
-        fetchAvailableMenu(mShopPk);
-    }
-
-    @Override
-    protected void registerProblemHandlers() {
-        mMenuData = registerProblemHandler(mMenuData);
-        mOriginalMenuGroups = registerProblemHandler(mOriginalMenuGroups);
-        mMenuGroups = registerProblemHandler(mMenuGroups);
-        mMenuItems = registerProblemHandler(mMenuItems);
-        mResultOrder = registerProblemHandler(mResultOrder);
+        mMenuData.addSource(mRepository.getAvailableMenu(mShopPk), mMenuData::setValue);
     }
 
     public void fetchAvailableMenu(long shopId) {
@@ -403,21 +396,21 @@ public class MenuViewModel extends BaseViewModel {
     }
 
     public LiveData<MenuItemModel> getMenuItem() {
-        if(mTrendingItemPk == null)
+        if (mTrendingItemPk == null)
             return null;
         mMenuData.setValue(Resource.loading(null));
-       return Transformations.map(mMenuData, input -> {
-                    if (input == null || input.data == null)
-                        return null;
-                    for (MenuGroupModel groupModel : input.data.getGroups()) {
-                        for (MenuItemModel itemModel : groupModel.getItems()) {
-                            if (itemModel.getPk() == mTrendingItemPk) {
-                                mTrendingItemPk = 0L;
-                                return itemModel;
-                            }
-                        }
+        return Transformations.map(mMenuData, input -> {
+            if (input == null || input.data == null)
+                return null;
+            for (MenuGroupModel groupModel : input.data.getGroups()) {
+                for (MenuItemModel itemModel : groupModel.getItems()) {
+                    if (itemModel.getPk() == mTrendingItemPk) {
+                        mTrendingItemPk = 0L;
+                        return itemModel;
                     }
-                    return null;
-                });
+                }
+            }
+            return null;
+        });
     }
 }

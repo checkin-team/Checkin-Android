@@ -2,41 +2,34 @@ package com.checkin.app.checkin.Inventory;
 
 import android.app.Application;
 
+import androidx.annotation.NonNull;
+import androidx.lifecycle.LiveData;
+import androidx.lifecycle.Transformations;
+
 import com.checkin.app.checkin.Data.BaseViewModel;
 import com.checkin.app.checkin.Data.Resource;
 import com.checkin.app.checkin.Inventory.Model.InventoryAvailabilityModel;
 import com.checkin.app.checkin.Inventory.Model.InventoryGroupModel;
 import com.checkin.app.checkin.Inventory.Model.InventoryItemModel;
 import com.checkin.app.checkin.Inventory.Model.InventoryModel;
+import com.checkin.app.checkin.Utility.SourceMappedLiveData;
 
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-import androidx.annotation.NonNull;
-import androidx.lifecycle.LiveData;
-import androidx.lifecycle.MediatorLiveData;
-import androidx.lifecycle.Transformations;
-
 public class InventoryViewModel extends BaseViewModel {
     private InventoryRepository mRepository;
-    private MediatorLiveData<Resource<InventoryModel>> mMenuData = new MediatorLiveData<>();
-    private MediatorLiveData<Resource<List<InventoryGroupModel>>> mOriginalMenuGroups = new MediatorLiveData<>();
 
-    private MediatorLiveData<Resource<List<InventoryAvailabilityModel>>> mResultMenuAvailability = new MediatorLiveData<>();
+    private SourceMappedLiveData<Resource<InventoryModel>> mMenuData = createNetworkLiveData();
+    private SourceMappedLiveData<Resource<List<InventoryGroupModel>>> mOriginalMenuGroups = createNetworkLiveData();
+    private SourceMappedLiveData<Resource<List<InventoryAvailabilityModel>>> mResultMenuAvailability = createNetworkLiveData();
 
     private long mRestaurantId;
 
     public InventoryViewModel(@NonNull Application application) {
         super(application);
         mRepository = InventoryRepository.getInstance(application);
-    }
-
-    @Override
-    protected void registerProblemHandlers() {
-        mMenuData = registerProblemHandler(mMenuData);
-        mOriginalMenuGroups = registerProblemHandler(mOriginalMenuGroups);
-        mResultMenuAvailability = registerProblemHandler(mResultMenuAvailability);
     }
 
     @Override

@@ -3,6 +3,9 @@ package com.checkin.app.checkin.Menu;
 import android.app.Application;
 import android.content.Context;
 
+import androidx.annotation.NonNull;
+import androidx.lifecycle.LiveData;
+
 import com.checkin.app.checkin.Data.ApiClient;
 import com.checkin.app.checkin.Data.ApiResponse;
 import com.checkin.app.checkin.Data.AppDatabase;
@@ -20,8 +23,6 @@ import java.util.List;
 
 import javax.inject.Singleton;
 
-import androidx.annotation.NonNull;
-import androidx.lifecycle.LiveData;
 import io.objectbox.Box;
 
 @Singleton
@@ -51,7 +52,7 @@ public class MenuRepository {
         return new NetworkBoundResource<MenuModel, MenuModel>() {
             @Override
             protected boolean shouldUseLocalDb() {
-                return true;
+                return false;
             }
 
             @Override

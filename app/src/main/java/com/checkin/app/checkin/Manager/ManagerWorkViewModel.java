@@ -5,13 +5,13 @@ import android.app.Application;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.lifecycle.LiveData;
-import androidx.lifecycle.MediatorLiveData;
 import androidx.lifecycle.Transformations;
 
 import com.checkin.app.checkin.Data.BaseViewModel;
 import com.checkin.app.checkin.Data.Converters;
 import com.checkin.app.checkin.Data.Resource;
 import com.checkin.app.checkin.Manager.Model.ManagerStatsModel;
+import com.checkin.app.checkin.Utility.SourceMappedLiveData;
 import com.checkin.app.checkin.Waiter.WaiterRepository;
 import com.checkin.app.checkin.session.activesession.chat.SessionChatModel;
 import com.checkin.app.checkin.session.model.CheckoutStatusModel;
@@ -29,10 +29,10 @@ public class ManagerWorkViewModel extends BaseViewModel {
     private ManagerRepository mManagerRepository;
     private WaiterRepository mWaiterRepository;
 
-    private MediatorLiveData<Resource<List<RestaurantTableModel>>> mTablesData = new MediatorLiveData<>();
-    private MediatorLiveData<Resource<ManagerStatsModel>> mStatsData = new MediatorLiveData<>();
-    private MediatorLiveData<Resource<CheckoutStatusModel>> mCheckoutData = new MediatorLiveData<>();
-    private MediatorLiveData<Resource<QRResultModel>> mQrResult = new MediatorLiveData<>();
+    private SourceMappedLiveData<Resource<List<RestaurantTableModel>>> mTablesData = createNetworkLiveData();
+    private SourceMappedLiveData<Resource<ManagerStatsModel>> mStatsData = createNetworkLiveData();
+    private SourceMappedLiveData<Resource<CheckoutStatusModel>> mCheckoutData = createNetworkLiveData();
+    private SourceMappedLiveData<Resource<QRResultModel>> mQrResult = createNetworkLiveData();
 
     private long mShopPk;
 
@@ -40,14 +40,6 @@ public class ManagerWorkViewModel extends BaseViewModel {
         super(application);
         mManagerRepository = ManagerRepository.getInstance(application);
         mWaiterRepository = WaiterRepository.getInstance(application);
-    }
-
-    @Override
-    protected void registerProblemHandlers() {
-        mTablesData = registerProblemHandler(mTablesData);
-        mStatsData = registerProblemHandler(mStatsData);
-        mCheckoutData = registerProblemHandler(mCheckoutData);
-        mQrResult = registerProblemHandler(mQrResult);
     }
 
     public void fetchActiveTables(long restaurantId) {

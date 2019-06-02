@@ -5,7 +5,6 @@ import android.app.Application;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.lifecycle.LiveData;
-import androidx.lifecycle.MediatorLiveData;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.Transformations;
 
@@ -15,6 +14,7 @@ import com.checkin.app.checkin.Data.Resource;
 import com.checkin.app.checkin.Manager.Model.ManagerSessionEventModel;
 import com.checkin.app.checkin.Manager.Model.ManagerSessionInvoiceModel;
 import com.checkin.app.checkin.Misc.GenericDetailModel;
+import com.checkin.app.checkin.Utility.SourceMappedLiveData;
 import com.checkin.app.checkin.Waiter.Model.OrderStatusModel;
 import com.checkin.app.checkin.Waiter.Model.SessionContactModel;
 import com.checkin.app.checkin.Waiter.WaiterRepository;
@@ -40,17 +40,17 @@ public class ManagerSessionViewModel extends BaseViewModel {
     private final SessionRepository mSessionRepository;
     private final WaiterRepository mWaiterRepository;
 
-    private MediatorLiveData<Resource<SessionBriefModel>> mBriefData = new MediatorLiveData<>();
-    private MediatorLiveData<Resource<List<SessionOrderedItemModel>>> mOrdersData = new MediatorLiveData<>();
-    private MediatorLiveData<Resource<List<ManagerSessionEventModel>>> mEventData = new MediatorLiveData<>();
-    private MediatorLiveData<Resource<GenericDetailModel>> mDetailData = new MediatorLiveData<>();
-    private MediatorLiveData<Resource<OrderStatusModel>> mOrderStatusData = new MediatorLiveData<>();
-    private MediatorLiveData<Resource<CheckoutStatusModel>> mCheckoutData = new MediatorLiveData<>();
-    private MediatorLiveData<Resource<List<SessionContactModel>>> mContactListData = new MediatorLiveData<>();
+    private SourceMappedLiveData<Resource<SessionBriefModel>> mBriefData = createNetworkLiveData();
+    private SourceMappedLiveData<Resource<List<SessionOrderedItemModel>>> mOrdersData = createNetworkLiveData();
+    private SourceMappedLiveData<Resource<List<ManagerSessionEventModel>>> mEventData = createNetworkLiveData();
+    private SourceMappedLiveData<Resource<GenericDetailModel>> mDetailData = createNetworkLiveData();
+    private SourceMappedLiveData<Resource<OrderStatusModel>> mOrderStatusData = createNetworkLiveData();
+    private SourceMappedLiveData<Resource<CheckoutStatusModel>> mCheckoutData = createNetworkLiveData();
+    private SourceMappedLiveData<Resource<List<SessionContactModel>>> mContactListData = createNetworkLiveData();
+    private SourceMappedLiveData<Resource<List<OrderStatusModel>>> mResultOrderStatus = createNetworkLiveData();
+    private SourceMappedLiveData<Resource<ManagerSessionInvoiceModel>> mInvoiceData = createNetworkLiveData();
 
     private MutableLiveData<List<OrderStatusModel>> mNewOrderStatus = new MutableLiveData<>();
-    private MediatorLiveData<Resource<List<OrderStatusModel>>> mResultOrderStatus = new MediatorLiveData<>();
-    private MediatorLiveData<Resource<ManagerSessionInvoiceModel>> mInvoiceData = new MediatorLiveData<>();
 
     private long mSessionPk;
     private long mShopPk;
@@ -60,19 +60,6 @@ public class ManagerSessionViewModel extends BaseViewModel {
         mManagerRepository = ManagerRepository.getInstance(application);
         mSessionRepository = SessionRepository.getInstance(application);
         mWaiterRepository = WaiterRepository.getInstance(application);
-    }
-
-    @Override
-    protected void registerProblemHandlers() {
-        mBriefData = registerProblemHandler(mBriefData);
-        mOrdersData = registerProblemHandler(mOrdersData);
-        mEventData = registerProblemHandler(mEventData);
-        mDetailData = registerProblemHandler(mDetailData);
-        mOrderStatusData = registerProblemHandler(mOrderStatusData);
-        mCheckoutData = registerProblemHandler(mCheckoutData);
-        mContactListData = registerProblemHandler(mContactListData);
-        mResultOrderStatus = registerProblemHandler(mResultOrderStatus);
-        mInvoiceData = registerProblemHandler(mInvoiceData);
     }
 
     public void putSessionCheckout() {
@@ -92,13 +79,13 @@ public class ManagerSessionViewModel extends BaseViewModel {
         fetchSessionBriefData(mSessionPk);
     }
 
-    public void fetchManagerInvoice(long sessionId){
+    public void fetchManagerInvoice(long sessionId) {
         mSessionPk = sessionId;
         mInvoiceData.addSource(mManagerRepository.getManagerSessionInvoice(sessionId), mInvoiceData::setValue);
     }
 
     public LiveData<Resource<ManagerSessionInvoiceModel>> getSessionInvoice() {
-        return mInvoiceData ;
+        return mInvoiceData;
     }
 
     public void updateDiscount(double discountPercent) {

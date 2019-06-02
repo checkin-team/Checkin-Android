@@ -83,7 +83,7 @@ public final class OnBoardingUtils {
                 .drawShadow(true)
                 .cancelable(model.isCancelable)
                 .targetRadius(60)
-                .tintTarget(false);
+                .tintTarget(model.doTintTarget());
     }
 
     public static class OnBoardingModel {
@@ -91,24 +91,26 @@ public final class OnBoardingUtils {
         String description;
         View view;
         boolean isCancelable;
+        boolean doTintTarget;
 
         public OnBoardingModel(String title, String description, View view) {
-            this(title, description, view, true);
+            this(title, description, view, true, true);
         }
 
-        public OnBoardingModel(String title, View view) {
-            this(title, null, view, true);
+        public OnBoardingModel(String title, View view, boolean doTintTarget) {
+            this(title, view, true, doTintTarget);
         }
 
-        public OnBoardingModel(String title, View view, boolean isCancelable) {
-            this(title, null, view, isCancelable);
+        public OnBoardingModel(String title, View view, boolean isCancelable, boolean doTintTarget) {
+            this(title, null, view, isCancelable, doTintTarget);
         }
 
-        public OnBoardingModel(String title, String description, View view, boolean isCancelable) {
+        public OnBoardingModel(String title, String description, View view, boolean isCancelable, boolean doTintTarget) {
             this.title = title;
             this.description = description;
             this.view = view;
             this.isCancelable = isCancelable;
+            this.doTintTarget = doTintTarget;
         }
 
         public String getTitle() {
@@ -121,6 +123,10 @@ public final class OnBoardingUtils {
 
         public View getView() {
             return view;
+        }
+
+        public boolean doTintTarget() {
+            return doTintTarget;
         }
     }
 }

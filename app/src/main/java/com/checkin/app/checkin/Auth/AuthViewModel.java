@@ -3,18 +3,19 @@ package com.checkin.app.checkin.Auth;
 import android.app.Application;
 import android.util.Log;
 
-import com.checkin.app.checkin.Data.BaseViewModel;
-import com.checkin.app.checkin.Data.Converters;
-import com.checkin.app.checkin.Data.Resource;
-import com.checkin.app.checkin.User.UserModel;
-import com.fasterxml.jackson.databind.JsonNode;
-import com.fasterxml.jackson.databind.node.ObjectNode;
-
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MediatorLiveData;
 import androidx.lifecycle.MutableLiveData;
+
+import com.checkin.app.checkin.Data.BaseViewModel;
+import com.checkin.app.checkin.Data.Converters;
+import com.checkin.app.checkin.Data.Resource;
+import com.checkin.app.checkin.User.UserModel;
+import com.checkin.app.checkin.Utility.SourceMappedLiveData;
+import com.fasterxml.jackson.databind.JsonNode;
+import com.fasterxml.jackson.databind.node.ObjectNode;
 
 public class AuthViewModel extends BaseViewModel {
     private static final String TAG = AuthViewModel.class.getSimpleName();
@@ -22,7 +23,7 @@ public class AuthViewModel extends BaseViewModel {
     private final AuthRepository mRepository;
 
     private MutableLiveData<JsonNode> mErrors = new MutableLiveData<>();
-    private MediatorLiveData<Resource<AuthResultModel>> mAuthResult = new MediatorLiveData<>();
+    private SourceMappedLiveData<Resource<AuthResultModel>> mAuthResult = createNetworkLiveData();
 
     private String firebaseIdToken;
     private String providerIdToken;
@@ -35,11 +36,6 @@ public class AuthViewModel extends BaseViewModel {
 
     @Override
     public void updateResults() {
-    }
-
-    @Override
-    protected void registerProblemHandlers() {
-        mAuthResult = registerProblemHandler(mAuthResult);
     }
 
     public void setFireBaseIdToken(String idToken) {

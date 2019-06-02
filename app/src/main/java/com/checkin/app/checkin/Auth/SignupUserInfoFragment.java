@@ -4,17 +4,21 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.FrameLayout;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.fragment.app.Fragment;
+import androidx.lifecycle.ViewModelProviders;
+
+import com.checkin.app.checkin.Misc.DebouncedOnClickListener;
 import com.checkin.app.checkin.R;
 import com.checkin.app.checkin.User.UserModel.GENDER;
 import com.fasterxml.jackson.databind.JsonNode;
 
-import androidx.annotation.NonNull;
-import androidx.fragment.app.Fragment;
-import androidx.lifecycle.ViewModelProviders;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
@@ -33,6 +37,9 @@ public class SignupUserInfoFragment extends Fragment {
     FrameLayout imFemale;
     @BindView(R.id.ed_Username)
     EditText edUsername;
+    @BindView(R.id.btn_enter)
+    Button btnEnter;
+
     private AuthFragmentInteraction fragmentInteraction;
     private Unbinder unbinder;
     private GENDER genderChosen = null;
@@ -50,6 +57,12 @@ public class SignupUserInfoFragment extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         final View view = inflater.inflate(R.layout.fragment_signup_user_info, container, false);
         unbinder = ButterKnife.bind(this, view);
+
+        return view;
+    }
+
+    @Override
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         if (getArguments() != null) {
             String name = getArguments().getString(KEY_NAME);
             edFirstName.setText(name.substring(0, name.indexOf(" ")));
@@ -67,7 +80,12 @@ public class SignupUserInfoFragment extends Fragment {
             }
         });
 
-        return view;
+        btnEnter.setOnClickListener(new DebouncedOnClickListener(2000) {
+            @Override
+            public void onDebouncedClick(View v) {
+                onProceedClicked(v);
+            }
+        });
     }
 
     @Override
@@ -84,7 +102,6 @@ public class SignupUserInfoFragment extends Fragment {
         else imMale.setSelected(false);
     }
 
-    @OnClick(R.id.btn_enter)
     public void onProceedClicked(View view) {
         String firstname = edFirstName.getText().toString();
         String lastname = edLastName.getText().toString();
@@ -102,6 +119,5 @@ public class SignupUserInfoFragment extends Fragment {
             return;
         }
         fragmentInteraction.onUserInfoProcess(firstname, lastname, username, genderChosen);
-
     }
 }

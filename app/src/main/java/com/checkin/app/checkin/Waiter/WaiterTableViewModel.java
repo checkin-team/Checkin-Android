@@ -2,42 +2,42 @@ package com.checkin.app.checkin.Waiter;
 
 import android.app.Application;
 
+import androidx.annotation.NonNull;
+import androidx.lifecycle.LiveData;
+import androidx.lifecycle.MutableLiveData;
+import androidx.lifecycle.Transformations;
+
 import com.checkin.app.checkin.Data.BaseViewModel;
 import com.checkin.app.checkin.Data.Converters;
 import com.checkin.app.checkin.Data.Resource;
 import com.checkin.app.checkin.Misc.GenericDetailModel;
 import com.checkin.app.checkin.Shop.ShopModel;
-import com.checkin.app.checkin.session.activesession.chat.SessionChatModel.CHAT_STATUS_TYPE;
-import com.checkin.app.checkin.session.model.CheckoutStatusModel;
-import com.checkin.app.checkin.session.model.SessionBriefModel;
-import com.checkin.app.checkin.session.SessionRepository;
+import com.checkin.app.checkin.Utility.SourceMappedLiveData;
 import com.checkin.app.checkin.Waiter.Model.OrderStatusModel;
 import com.checkin.app.checkin.Waiter.Model.SessionContactModel;
 import com.checkin.app.checkin.Waiter.Model.WaiterEventModel;
+import com.checkin.app.checkin.session.SessionRepository;
+import com.checkin.app.checkin.session.activesession.chat.SessionChatModel.CHAT_STATUS_TYPE;
+import com.checkin.app.checkin.session.model.CheckoutStatusModel;
+import com.checkin.app.checkin.session.model.SessionBriefModel;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import androidx.annotation.NonNull;
-import androidx.lifecycle.LiveData;
-import androidx.lifecycle.MediatorLiveData;
-import androidx.lifecycle.MutableLiveData;
-import androidx.lifecycle.Transformations;
-
 public class WaiterTableViewModel extends BaseViewModel {
     private WaiterRepository mWaiterRepository;
     private SessionRepository mSessionRepository;
 
-    private MediatorLiveData<Resource<SessionBriefModel>> mSessionDetail = new MediatorLiveData<>();
-    private MediatorLiveData<Resource<List<WaiterEventModel>>> mEventData = new MediatorLiveData<>();
-    private MediatorLiveData<Resource<GenericDetailModel>> mEventUpdate = new MediatorLiveData<>();
-    private MediatorLiveData<Resource<OrderStatusModel>> mOrderStatus = new MediatorLiveData<>();
-    private MediatorLiveData<Resource<CheckoutStatusModel>> mCheckoutData = new MediatorLiveData<>();
-    private MediatorLiveData<Resource<List<SessionContactModel>>> mContactListData = new MediatorLiveData<>();
+    private SourceMappedLiveData<Resource<SessionBriefModel>> mSessionDetail = createNetworkLiveData();
+    private SourceMappedLiveData<Resource<List<WaiterEventModel>>> mEventData = createNetworkLiveData();
+    private SourceMappedLiveData<Resource<GenericDetailModel>> mEventUpdate = createNetworkLiveData();
+    private SourceMappedLiveData<Resource<OrderStatusModel>> mOrderStatus = createNetworkLiveData();
+    private SourceMappedLiveData<Resource<CheckoutStatusModel>> mCheckoutData = createNetworkLiveData();
+    private SourceMappedLiveData<Resource<List<SessionContactModel>>> mContactListData = createNetworkLiveData();
+    private SourceMappedLiveData<Resource<List<OrderStatusModel>>> mResultOrderStatus = createNetworkLiveData();
 
     private MutableLiveData<List<OrderStatusModel>> mNewOrderStatus = new MutableLiveData<>();
-    private MediatorLiveData<Resource<List<OrderStatusModel>>> mResultOrderStatus = new MediatorLiveData<>();
 
     private long mSessionPk;
 
@@ -45,17 +45,6 @@ public class WaiterTableViewModel extends BaseViewModel {
         super(application);
         mWaiterRepository = WaiterRepository.getInstance(application);
         mSessionRepository = SessionRepository.getInstance(application);
-    }
-
-    @Override
-    protected void registerProblemHandlers() {
-        mSessionDetail = registerProblemHandler(mSessionDetail);
-        mEventData = registerProblemHandler(mEventData);
-        mEventUpdate = registerProblemHandler(mEventUpdate);
-        mOrderStatus = registerProblemHandler(mOrderStatus);
-        mCheckoutData = registerProblemHandler(mCheckoutData);
-        mContactListData = registerProblemHandler(mContactListData);
-        mResultOrderStatus = registerProblemHandler(mResultOrderStatus);
     }
 
     public void fetchSessionDetail(long sessionId) {

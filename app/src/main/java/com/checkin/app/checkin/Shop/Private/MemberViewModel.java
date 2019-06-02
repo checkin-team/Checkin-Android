@@ -2,22 +2,23 @@ package com.checkin.app.checkin.Shop.Private;
 
 import android.app.Application;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.lifecycle.LiveData;
+
 import com.checkin.app.checkin.Data.BaseViewModel;
 import com.checkin.app.checkin.Data.Resource;
 import com.checkin.app.checkin.Shop.ShopRepository;
+import com.checkin.app.checkin.Utility.SourceMappedLiveData;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 
 import java.util.List;
 
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.lifecycle.LiveData;
-import androidx.lifecycle.MediatorLiveData;
-
 public class MemberViewModel extends BaseViewModel {
     private ShopRepository mRepository;
-    private MediatorLiveData<Resource<List<MemberModel>>> mShopMembers = new MediatorLiveData<>();
-    private MediatorLiveData<Resource<ObjectNode>> mRemovedMember = new MediatorLiveData<>();
+
+    private SourceMappedLiveData<Resource<List<MemberModel>>> mShopMembers = createNetworkLiveData();
+    private SourceMappedLiveData<Resource<ObjectNode>> mRemovedMember = createNetworkLiveData();
 
     private long mShopPk;
     @Nullable
@@ -26,12 +27,6 @@ public class MemberViewModel extends BaseViewModel {
     public MemberViewModel(@NonNull Application application) {
         super(application);
         mRepository = ShopRepository.getInstance(application);
-    }
-
-    @Override
-    protected void registerProblemHandlers() {
-        mShopMembers = registerProblemHandler(mShopMembers);
-        mRemovedMember = registerProblemHandler(mRemovedMember);
     }
 
     public void fetchShopMembers(long shopPk) {

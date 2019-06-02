@@ -3,6 +3,12 @@ package com.checkin.app.checkin.Search;
 import android.app.Application;
 import android.os.Handler;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.lifecycle.LiveData;
+import androidx.lifecycle.MediatorLiveData;
+import androidx.lifecycle.Transformations;
+
 import com.checkin.app.checkin.Data.BaseViewModel;
 import com.checkin.app.checkin.Data.Resource;
 import com.checkin.app.checkin.Data.Resource.Status;
@@ -10,12 +16,6 @@ import com.checkin.app.checkin.Data.SingleSourceMediatorLiveData;
 
 import java.util.ArrayList;
 import java.util.List;
-
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.lifecycle.LiveData;
-import androidx.lifecycle.MediatorLiveData;
-import androidx.lifecycle.Transformations;
 
 /**
  * Created by Jogi Miglani on 29-10-2018.
@@ -34,11 +34,6 @@ public class SearchViewModel extends BaseViewModel {
     public SearchViewModel(@NonNull Application application) {
         super(application);
         mRepository = new SearchRepository(application.getApplicationContext());
-    }
-
-    @Override
-    protected void registerProblemHandlers() {
-        mResults = registerProblemHandler(mResults);
     }
 
     private void combineResults() {

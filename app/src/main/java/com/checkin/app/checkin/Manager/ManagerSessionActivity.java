@@ -34,6 +34,7 @@ import butterknife.OnClick;
 
 import static com.checkin.app.checkin.Data.Message.MessageModel.MESSAGE_TYPE.MANAGER_SESSION_BILL_CHANGE;
 import static com.checkin.app.checkin.Data.Message.MessageModel.MESSAGE_TYPE.MANAGER_SESSION_CHECKOUT_REQUEST;
+import static com.checkin.app.checkin.Data.Message.MessageModel.MESSAGE_TYPE.MANAGER_SESSION_END;
 import static com.checkin.app.checkin.Data.Message.MessageModel.MESSAGE_TYPE.MANAGER_SESSION_EVENT_CONCERN;
 import static com.checkin.app.checkin.Data.Message.MessageModel.MESSAGE_TYPE.MANAGER_SESSION_EVENT_SERVICE;
 import static com.checkin.app.checkin.Data.Message.MessageModel.MESSAGE_TYPE.MANAGER_SESSION_EVENT_UPDATE;
@@ -104,13 +105,16 @@ public class ManagerSessionActivity extends AppCompatActivity implements
                 case MANAGER_SESSION_MEMBER_CHANGE:
                     ManagerSessionActivity.this.updateMemberCount(message.getRawData().getSessionCustomerCount());
                     break;
-               /* case MANAGER_SESSION_UPDATE_ORDER:
+                case MANAGER_SESSION_UPDATE_ORDER:
                     long orderPk = message.getRawData().getSessionOrderId();
                     ManagerSessionActivity.this.updateOrderStatus(orderPk, message.getRawData().getSessionEventStatus());
-                    break;*/
+                    break;
                 case MANAGER_SESSION_EVENT_UPDATE:
                     long eventPk = message.getObject().getPk();
                     ManagerSessionActivity.this.updateEventStatus(eventPk, message.getRawData().getSessionEventStatus());
+                    break;
+                case MANAGER_SESSION_END:
+                    finish();
                     break;
             }
         }
@@ -268,7 +272,8 @@ public class ManagerSessionActivity extends AppCompatActivity implements
         MessageModel.MESSAGE_TYPE[] types = new MessageModel.MESSAGE_TYPE[]{
                 MANAGER_SESSION_NEW_ORDER, MANAGER_SESSION_EVENT_SERVICE, MANAGER_SESSION_CHECKOUT_REQUEST,
                 MANAGER_SESSION_EVENT_CONCERN, MANAGER_SESSION_HOST_ASSIGNED, MANAGER_SESSION_BILL_CHANGE,
-                MANAGER_SESSION_MEMBER_CHANGE, MANAGER_SESSION_UPDATE_ORDER, MANAGER_SESSION_EVENT_UPDATE
+                MANAGER_SESSION_MEMBER_CHANGE, MANAGER_SESSION_UPDATE_ORDER, MANAGER_SESSION_EVENT_UPDATE,
+                MANAGER_SESSION_END
         };
         MessageUtils.registerLocalReceiver(this, mReceiver, types);
         mViewModel.fetchSessionBriefData();

@@ -181,8 +181,8 @@ public class HomeActivity extends BaseAccountActivity implements NavigationView.
                 startService(serviceIntent);
             } else if (resource.status == Resource.Status.ERROR_NOT_FOUND) {
                 sessionInactive();
-                Utils.clearSessionPersistentNotification(this);
-            } else if (resource.getProblem() != null && resource.getProblem().getErrorCode() == ProblemModel.ERROR_CODE.SESSION_USER_PENDING_MEMBER){
+                ActiveSessionNotificationService.clearNotification(getApplicationContext());
+            } else if (resource.getProblem() != null && resource.getProblem().getErrorCode() == ProblemModel.ERROR_CODE.SESSION_USER_PENDING_MEMBER) {
                 sessionWaitingStatus();
                 tvSessionWaitQRBusy.setText(resource.getProblem().getDetail());
             }
@@ -199,18 +199,18 @@ public class HomeActivity extends BaseAccountActivity implements NavigationView.
         mViewModel.fetchSessionStatus();
     }
 
-    private void sessionInactive(){
+    private void sessionInactive() {
         vSessionStatus.setVisibility(View.GONE);
     }
 
-    private void sessionActiveStatus(){
+    private void sessionActiveStatus() {
         vSessionStatus.setVisibility(View.VISIBLE);
         vSessionActiveStatus.setVisibility(View.VISIBLE);
         vSessionWaitingStatus.setVisibility(View.GONE);
         vSessionStatus.setEnabled(true);
     }
 
-    private void sessionWaitingStatus(){
+    private void sessionWaitingStatus() {
         vSessionStatus.setVisibility(View.VISIBLE);
         vSessionActiveStatus.setVisibility(View.GONE);
         vSessionWaitingStatus.setVisibility(View.VISIBLE);
@@ -221,7 +221,7 @@ public class HomeActivity extends BaseAccountActivity implements NavigationView.
         TabLayout.Tab tab = tabLayout.getTabAt(1);
         if (tab != null) {
             View qrView = tab.getCustomView();
-            OnBoardingUtils.conditionalOnBoarding(this, SP_QR_SCANNER, true, new OnBoardingModel("Scan Checkin QR!", qrView));
+            OnBoardingUtils.conditionalOnBoarding(this, SP_QR_SCANNER, true, new OnBoardingModel("Scan Checkin QR!", qrView, false));
         }
     }
 

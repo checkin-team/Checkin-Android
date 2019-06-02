@@ -3,8 +3,6 @@ package com.checkin.app.checkin.session.model;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
-import java.text.DecimalFormat;
-
 import javax.annotation.Nullable;
 
 @JsonIgnoreProperties(ignoreUnknown = true)
@@ -142,6 +140,5 @@ public class SessionBillModel {
         if (this.offers != null)
             this.total -= this.offers;
         this.total = (double) Math.round(this.total);
-
     }
 }

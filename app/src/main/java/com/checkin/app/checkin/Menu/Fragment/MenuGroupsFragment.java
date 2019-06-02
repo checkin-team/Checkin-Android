@@ -4,6 +4,12 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.TextView;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.lifecycle.ViewModelProviders;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+
 import com.checkin.app.checkin.Data.Resource;
 import com.checkin.app.checkin.Menu.Adapter.MenuGroupAdapter;
 import com.checkin.app.checkin.Menu.Adapter.MenuItemAdapter;
@@ -13,11 +19,6 @@ import com.checkin.app.checkin.Misc.BaseFragment;
 import com.checkin.app.checkin.R;
 import com.checkin.app.checkin.Utility.Utils;
 
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.lifecycle.ViewModelProviders;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
 import butterknife.BindView;
 
 public class MenuGroupsFragment extends BaseFragment {
@@ -62,8 +63,8 @@ public class MenuGroupsFragment extends BaseFragment {
                 stopRefreshing();
             } else if (menuGroupResource.status == Resource.Status.LOADING) {
                 startRefreshing();
-                if (menuGroupResource.data != null)
-                    mAdapter.setGroupList(menuGroupResource.data);
+//                if (menuGroupResource.data != null)
+//                    mAdapter.setGroupList(menuGroupResource.data);
             } else {
                 stopRefreshing();
                 Utils.toast(requireContext(), menuGroupResource.message);

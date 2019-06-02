@@ -3,6 +3,10 @@ package com.checkin.app.checkin.User.Private;
 import android.app.Application;
 import android.content.Context;
 
+import androidx.annotation.NonNull;
+import androidx.core.app.NotificationCompat;
+import androidx.lifecycle.LiveData;
+
 import com.checkin.app.checkin.Data.BaseViewModel;
 import com.checkin.app.checkin.Data.Converters;
 import com.checkin.app.checkin.Data.Message.MessageUtils;
@@ -13,16 +17,11 @@ import com.checkin.app.checkin.User.ShopCustomerModel;
 import com.checkin.app.checkin.User.UserModel;
 import com.checkin.app.checkin.User.UserRepository;
 import com.checkin.app.checkin.Utility.ProgressRequestBody;
+import com.checkin.app.checkin.Utility.SourceMappedLiveData;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 
 import java.io.File;
 import java.util.List;
-
-import androidx.annotation.NonNull;
-import androidx.core.app.NotificationCompat;
-import androidx.lifecycle.LiveData;
-import androidx.lifecycle.MediatorLiveData;
-import androidx.lifecycle.MutableLiveData;
 
 /**
  * Created by Jogi Miglani on 29-09-2018.
@@ -30,9 +29,10 @@ import androidx.lifecycle.MutableLiveData;
 
 public class UserViewModel extends BaseViewModel {
     private UserRepository mRepository;
-    private MediatorLiveData<Resource<UserModel>> mUserData = new MediatorLiveData<>();
-    private MediatorLiveData<Resource<List<ShopCustomerModel>>> mUserRecentCheckinsData = new MediatorLiveData<>();
-    private MutableLiveData<Resource<Void>> mImageUploadResult = new MutableLiveData<>();
+
+    private SourceMappedLiveData<Resource<UserModel>> mUserData = createNetworkLiveData();
+    private SourceMappedLiveData<Resource<List<ShopCustomerModel>>> mUserRecentCheckinsData = createNetworkLiveData();
+    private SourceMappedLiveData<Resource<Void>> mImageUploadResult = createNetworkLiveData();
 
     public UserViewModel(@NonNull Application application) {
         super(application);
@@ -42,13 +42,6 @@ public class UserViewModel extends BaseViewModel {
     @Override
     public void updateResults() {
         fetchUserData();
-    }
-
-    @Override
-    protected void registerProblemHandlers() {
-        mUserData = registerProblemHandler(mUserData);
-        mUserRecentCheckinsData = registerProblemHandler(mUserRecentCheckinsData);
-        mImageUploadResult = registerProblemHandler(mImageUploadResult);
     }
 
     public void fetchUserData() {
@@ -106,7 +99,7 @@ public class UserViewModel extends BaseViewModel {
         data.put("bio", bio);
         data.put("is_public", true);
 
-        if(!phone_token.isEmpty())
+        if (!phone_token.isEmpty())
             data.put("phone_token", phone_token);
 
         mUserData.addSource(mRepository.postUserData(data), mUserData::setValue);

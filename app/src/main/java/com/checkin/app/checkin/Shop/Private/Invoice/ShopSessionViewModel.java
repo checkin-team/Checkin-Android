@@ -2,28 +2,23 @@ package com.checkin.app.checkin.Shop.Private.Invoice;
 
 import android.app.Application;
 
-import com.checkin.app.checkin.Data.BaseViewModel;
-import com.checkin.app.checkin.Data.Resource;
-
 import androidx.annotation.NonNull;
 import androidx.lifecycle.LiveData;
-import androidx.lifecycle.MediatorLiveData;
+
+import com.checkin.app.checkin.Data.BaseViewModel;
+import com.checkin.app.checkin.Data.Resource;
+import com.checkin.app.checkin.Utility.SourceMappedLiveData;
 
 public class ShopSessionViewModel extends BaseViewModel {
     private ShopInvoiceRepository mRepository;
 
-    private MediatorLiveData<Resource<ShopSessionDetailModel>> mDetailData = new MediatorLiveData<>();
+    private SourceMappedLiveData<Resource<ShopSessionDetailModel>> mDetailData = createNetworkLiveData();
 
     private long mSessionPk;
 
     public ShopSessionViewModel(@NonNull Application application) {
         super(application);
         mRepository = ShopInvoiceRepository.getInstance(application);
-    }
-
-    @Override
-    protected void registerProblemHandlers() {
-        mDetailData = registerProblemHandler(mDetailData);
     }
 
     public void fetchSessionDetail() {

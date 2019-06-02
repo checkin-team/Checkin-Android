@@ -15,12 +15,15 @@ import android.widget.ImageView;
 import android.widget.Spinner;
 import android.widget.TextView;
 
-import com.checkin.app.checkin.Account.AccountModel.ACCOUNT_TYPE;
-import com.checkin.app.checkin.Auth.AuthPreferences;
-import com.checkin.app.checkin.Data.Message.ActiveSessionNotificationService;
-import com.checkin.app.checkin.Data.Resource;
-import com.checkin.app.checkin.Home.SplashActivity;
+import androidx.annotation.IdRes;
+import androidx.annotation.LayoutRes;
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.drawerlayout.widget.DrawerLayout;
+import androidx.lifecycle.ViewModelProviders;
 
+import com.checkin.app.checkin.Account.AccountModel.ACCOUNT_TYPE;
+import com.checkin.app.checkin.Data.Resource;
 import com.checkin.app.checkin.Manager.ManagerWorkActivity;
 import com.checkin.app.checkin.Misc.BaseActivity;
 import com.checkin.app.checkin.R;
@@ -34,12 +37,6 @@ import com.google.android.material.navigation.NavigationView;
 import java.util.ArrayList;
 import java.util.List;
 
-import androidx.annotation.IdRes;
-import androidx.annotation.LayoutRes;
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.drawerlayout.widget.DrawerLayout;
-import androidx.lifecycle.ViewModelProviders;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import de.hdodenhof.circleimageview.CircleImageView;
@@ -109,19 +106,8 @@ public abstract class BaseAccountActivity extends BaseActivity {
     }
 
     protected void onLogoutClick(View v) {
-        if (AuthPreferences.removeCurrentAccount(this)) {
-            PreferenceManager.getDefaultSharedPreferences(this).edit()
-                    .clear()
-                    .apply();
-            Utils.clearSessionPersistentNotification(this);
-
-            Intent splashIntent = new Intent(this, SplashActivity.class);
-            splashIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-            startActivity(splashIntent);
-            finish();
-        } else {
-            Utils.toast(this, "Unable to logout. Manually remove account from settings.");
-        }
+        if (!Utils.logoutFromApp(getApplicationContext()))
+            Utils.toast(getApplicationContext(), "Unable to logout. Manually remove account from settings.");
     }
 
     @IdRes

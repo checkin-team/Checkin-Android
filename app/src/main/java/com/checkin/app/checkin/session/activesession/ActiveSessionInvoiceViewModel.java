@@ -5,7 +5,6 @@ import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.lifecycle.LiveData;
-import androidx.lifecycle.MediatorLiveData;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.Transformations;
 
@@ -14,6 +13,7 @@ import com.checkin.app.checkin.Data.Converters;
 import com.checkin.app.checkin.Data.Resource;
 import com.checkin.app.checkin.Misc.paytm.PaytmModel;
 import com.checkin.app.checkin.Shop.ShopModel;
+import com.checkin.app.checkin.Utility.SourceMappedLiveData;
 import com.checkin.app.checkin.session.model.CheckoutStatusModel;
 import com.checkin.app.checkin.session.model.PromoDetailModel;
 import com.checkin.app.checkin.session.model.SessionBillModel;
@@ -27,14 +27,14 @@ import java.util.Set;
 public class ActiveSessionInvoiceViewModel extends BaseViewModel {
     private final ActiveSessionRepository mRepository;
 
-    private MediatorLiveData<Resource<SessionInvoiceModel>> mInvoiceData = new MediatorLiveData<>();
-    private MediatorLiveData<Resource<CheckoutStatusModel>> mCheckoutData = new MediatorLiveData<>();
-    private MediatorLiveData<Resource<PaytmModel>> mPaytmData = new MediatorLiveData<>();
-    private MediatorLiveData<Resource<List<PromoDetailModel>>> mPromoList = new MediatorLiveData<>();
-    private MediatorLiveData<Resource<SessionPromoModel>> mSessionPromo = new MediatorLiveData<>();
-    private MediatorLiveData<Resource<ObjectNode>> mPromoDeletedData = new MediatorLiveData<>();
-    private MediatorLiveData<Resource<ObjectNode>> mPaytmCallbackData = new MediatorLiveData<>();
-    private MediatorLiveData<Resource<ObjectNode>> mSessionCancelCheckoutData = new MediatorLiveData<>();
+    private SourceMappedLiveData<Resource<SessionInvoiceModel>> mInvoiceData = createNetworkLiveData();
+    private SourceMappedLiveData<Resource<CheckoutStatusModel>> mCheckoutData = createNetworkLiveData();
+    private SourceMappedLiveData<Resource<PaytmModel>> mPaytmData = createNetworkLiveData();
+    private SourceMappedLiveData<Resource<List<PromoDetailModel>>> mPromoList = createNetworkLiveData();
+    private SourceMappedLiveData<Resource<SessionPromoModel>> mSessionPromo = createNetworkLiveData();
+    private SourceMappedLiveData<Resource<ObjectNode>> mPromoDeletedData = createNetworkLiveData();
+    private SourceMappedLiveData<Resource<ObjectNode>> mPaytmCallbackData = createNetworkLiveData();
+    private SourceMappedLiveData<Resource<ObjectNode>> mSessionCancelCheckoutData = createNetworkLiveData();
     private MutableLiveData<Boolean> mIsRequestedCheckout = new MutableLiveData<>(false);
 
     private boolean mSessionBenefitsSet = false;
@@ -43,18 +43,6 @@ public class ActiveSessionInvoiceViewModel extends BaseViewModel {
     public ActiveSessionInvoiceViewModel(@NonNull Application application) {
         super(application);
         mRepository = ActiveSessionRepository.getInstance(application);
-    }
-
-    @Override
-    protected void registerProblemHandlers() {
-        mInvoiceData = registerProblemHandler(mInvoiceData);
-        mCheckoutData = registerProblemHandler(mCheckoutData);
-        mPaytmData = registerProblemHandler(mPaytmData);
-        mPromoList = registerProblemHandler(mPromoList);
-        mSessionPromo = registerProblemHandler(mSessionPromo);
-        mPromoDeletedData = registerProblemHandler(mPromoDeletedData);
-        mPaytmCallbackData = registerProblemHandler(mPaytmCallbackData);
-        mSessionCancelCheckoutData = registerProblemHandler(mSessionCancelCheckoutData);
     }
 
     public LiveData<Resource<SessionInvoiceModel>> getSessionInvoice() {

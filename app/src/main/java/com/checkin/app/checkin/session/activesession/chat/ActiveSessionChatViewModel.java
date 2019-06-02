@@ -2,9 +2,13 @@ package com.checkin.app.checkin.session.activesession.chat;
 
 import android.app.Application;
 
+import androidx.annotation.NonNull;
+import androidx.lifecycle.LiveData;
+
 import com.checkin.app.checkin.Data.BaseViewModel;
 import com.checkin.app.checkin.Data.Converters;
 import com.checkin.app.checkin.Data.Resource;
+import com.checkin.app.checkin.Utility.SourceMappedLiveData;
 import com.checkin.app.checkin.session.activesession.ActiveSessionRepository;
 import com.checkin.app.checkin.session.activesession.chat.SessionChatDataModel.EVENT_REQUEST_SERVICE_TYPE;
 import com.checkin.app.checkin.session.activesession.chat.SessionChatModel.CHAT_STATUS_TYPE;
@@ -12,13 +16,9 @@ import com.fasterxml.jackson.databind.node.ObjectNode;
 
 import java.util.List;
 
-import androidx.annotation.NonNull;
-import androidx.lifecycle.LiveData;
-import androidx.lifecycle.MediatorLiveData;
-
 public class ActiveSessionChatViewModel extends BaseViewModel {
     private final ActiveSessionRepository mRepository;
-    private MediatorLiveData<Resource<List<SessionChatModel>>> mChatData = new MediatorLiveData<>();
+    private SourceMappedLiveData<Resource<List<SessionChatModel>>> mChatData = createNetworkLiveData();
 
     public ActiveSessionChatViewModel(@NonNull Application application) {
         super(application);
@@ -84,10 +84,5 @@ public class ActiveSessionChatViewModel extends BaseViewModel {
             listResource.data.add(0, chatModel);
             mChatData.setValue(Resource.cloneResource(listResource, listResource.data));
         }
-    }
-
-    @Override
-    protected void registerProblemHandlers() {
-        mChatData = registerProblemHandler(mChatData);
     }
 }

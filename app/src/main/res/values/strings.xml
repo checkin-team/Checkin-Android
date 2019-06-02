@@ -216,5 +216,7 @@
     <string name="label_session_offer_not_allowed_payment_mode_cash">Promo not applicable for cash payment.</string>
     <string name="label_paid_successfully">Paid Successfully</string>
     <string name="label_for_dining_with_us">For dining with us!</string>
+    <string name="app_force_logged_out">Sorry, but your session has expired. Login again.</string>
+    <string name="app_not_working_reinstall">App stopped working. Try reinstalling it.</string>
 
 </resources>

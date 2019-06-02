@@ -6,7 +6,6 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
 import com.checkin.app.checkin.Utility.NoConnectivityException;
-import com.checkin.app.checkin.session.model.PromoDetailModel;
 import com.fasterxml.jackson.databind.JsonNode;
 
 import static java.net.HttpURLConnection.HTTP_BAD_REQUEST;
@@ -118,7 +117,7 @@ public class Resource<T> {
     }
 
     @Nullable
-    public ProblemModel getProblem () {
+    public ProblemModel getProblem() {
         if (problemModel == null)
             problemModel = ProblemModel.fromResource(this);
         return problemModel;

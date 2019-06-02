@@ -4,10 +4,10 @@ import android.app.Application;
 
 import androidx.annotation.NonNull;
 import androidx.lifecycle.LiveData;
-import androidx.lifecycle.MediatorLiveData;
 
 import com.checkin.app.checkin.Data.BaseViewModel;
 import com.checkin.app.checkin.Data.Resource;
+import com.checkin.app.checkin.Utility.SourceMappedLiveData;
 
 import java.util.List;
 
@@ -17,17 +17,11 @@ public class ShopInvoiceViewModel extends BaseViewModel {
     private long mShopPk;
     private String fromDate, toDate;
     private LiveData<Resource<List<RestaurantSessionModel>>> mPrevResults;
-    private MediatorLiveData<Resource<List<RestaurantSessionModel>>> mResults = new MediatorLiveData<>();
+    private SourceMappedLiveData<Resource<List<RestaurantSessionModel>>> mResults = createNetworkLiveData();
 
     public ShopInvoiceViewModel(@NonNull Application application) {
         super(application);
         this.mShopInvoiceRepository = ShopInvoiceRepository.getInstance(application);
-    }
-
-    @Override
-    protected void registerProblemHandlers() {
-        mPrevResults = registerProblemHandler(mPrevResults);
-        mResults = registerProblemHandler(mResults);
     }
 
     public void fetchShopSessions(long restaurantId) {
@@ -36,7 +30,7 @@ public class ShopInvoiceViewModel extends BaseViewModel {
         mResults.addSource(mPrevResults, mResults::setValue);
     }
 
-    public void setShopPk(long restaurantId){
+    public void setShopPk(long restaurantId) {
         this.mShopPk = restaurantId;
     }
 

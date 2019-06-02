@@ -23,6 +23,7 @@ import android.os.Build;
 import android.os.Environment;
 import android.os.Handler;
 import android.os.Looper;
+import android.preference.PreferenceManager;
 import android.provider.DocumentsContract;
 import android.provider.MediaStore;
 import android.text.TextUtils;
@@ -34,8 +35,14 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.annotation.DrawableRes;
+import androidx.annotation.NonNull;
+import androidx.annotation.StringRes;
+
+import com.checkin.app.checkin.Auth.AuthPreferences;
 import com.checkin.app.checkin.Data.Message.ActiveSessionNotificationService;
 import com.checkin.app.checkin.Home.HomeActivity;
+import com.checkin.app.checkin.Home.SplashActivity;
 import com.checkin.app.checkin.R;
 import com.golovin.fluentstackbar.FluentSnackbar;
 import com.google.android.material.snackbar.Snackbar;
@@ -55,10 +62,6 @@ import java.util.Locale;
 import java.util.Map;
 import java.util.regex.MatchResult;
 import java.util.regex.Matcher;
-
-import androidx.annotation.DrawableRes;
-import androidx.annotation.NonNull;
-import androidx.annotation.StringRes;
 
 /**
  * Created by shivanshs9 on 12/5/18.
@@ -244,7 +247,7 @@ public final class Utils {
         return new SimpleDateFormat("HH:mm", Locale.ENGLISH).format(dateTime);
     }
 
-    public static String getCurrentFormattedDateInvoice(){
+    public static String getCurrentFormattedDateInvoice() {
         Date date = Calendar.getInstance().getTime();
         SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault());
         return simpleDateFormat.format(date);
@@ -606,14 +609,24 @@ public final class Utils {
         return "com.android.providers.media.documents".equals(uri.getAuthority());
     }
 
-    public interface MatchResultFunction {
-        String apply(MatchResult match);
+    public static void resetStuff(Context context) {
+        PreferenceManager.getDefaultSharedPreferences(context).edit()
+                .clear()
+                .apply();
+        ActiveSessionNotificationService.clearNotification(context);
     }
 
+    public static boolean logoutFromApp(Context context) {
+        if (!AuthPreferences.removeCurrentAccount(context))
+            return false;
+        Utils.resetStuff(context);
 
-    public static void clearSessionPersistentNotification(Context context){
-        Intent serviceIntent = new Intent(context, ActiveSessionNotificationService.class);
-        serviceIntent.setAction(com.checkin.app.checkin.Data.Message.Constants.SERVICE_ACTION_FOREGROUND_STOP);
-        context.startService(serviceIntent);
+        Intent splashIntent = Intent.makeRestartActivityTask(new ComponentName(context, SplashActivity.class));
+        context.startActivity(splashIntent);
+        return true;
+    }
+
+    public interface MatchResultFunction {
+        String apply(MatchResult match);
     }
 }

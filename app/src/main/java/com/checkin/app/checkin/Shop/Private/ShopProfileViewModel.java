@@ -3,6 +3,11 @@ package com.checkin.app.checkin.Shop.Private;
 import android.app.Application;
 import android.content.Context;
 
+import androidx.annotation.NonNull;
+import androidx.core.app.NotificationCompat;
+import androidx.lifecycle.LiveData;
+import androidx.lifecycle.MutableLiveData;
+
 import com.checkin.app.checkin.Data.BaseViewModel;
 import com.checkin.app.checkin.Data.Converters;
 import com.checkin.app.checkin.Data.Message.MessageUtils;
@@ -12,17 +17,12 @@ import com.checkin.app.checkin.Misc.GenericDetailModel;
 import com.checkin.app.checkin.Shop.RestaurantModel;
 import com.checkin.app.checkin.Shop.ShopRepository;
 import com.checkin.app.checkin.Utility.ProgressRequestBody;
+import com.checkin.app.checkin.Utility.SourceMappedLiveData;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 
 import java.io.File;
 import java.util.List;
-
-import androidx.annotation.NonNull;
-import androidx.core.app.NotificationCompat;
-import androidx.lifecycle.LiveData;
-import androidx.lifecycle.MediatorLiveData;
-import androidx.lifecycle.MutableLiveData;
 
 /**
  * Created by Bhavik Patel on 24/08/2018.
@@ -31,7 +31,8 @@ import androidx.lifecycle.MutableLiveData;
 public class ShopProfileViewModel extends BaseViewModel {
     private ShopRepository mRepository;
     private long mShopPk;
-    private MediatorLiveData<Resource<RestaurantModel>> mShopData = new MediatorLiveData<>();
+
+    private SourceMappedLiveData<Resource<RestaurantModel>> mShopData = createNetworkLiveData();
     private MutableLiveData<Boolean> mCollectAspectData = new MutableLiveData<>();
     private MutableLiveData<Boolean> mCollectBasicData = new MutableLiveData<>();
     private MutableLiveData<JsonNode> mErrors = new MutableLiveData<>();
@@ -41,11 +42,6 @@ public class ShopProfileViewModel extends BaseViewModel {
         mRepository = ShopRepository.getInstance(application);
         mCollectBasicData.setValue(false);
         mCollectAspectData.setValue(false);
-    }
-
-    @Override
-    protected void registerProblemHandlers() {
-        mShopData = registerProblemHandler(mShopData);
     }
 
     public LiveData<Resource<RestaurantModel>> getShopData() {

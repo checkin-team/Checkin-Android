@@ -8,6 +8,7 @@ import androidx.annotation.Nullable;
 import com.fasterxml.jackson.databind.JsonNode;
 
 import java.io.IOException;
+import java.net.SocketException;
 
 import retrofit2.Response;
 
@@ -27,6 +28,9 @@ public class ApiResponse<T> {
 
     public ApiResponse(Throwable error) {
         mResponse = null;
+        if (error instanceof SocketException) {
+
+        }
         mStatusCode = HTTP_CLIENT_TIMEOUT;
         data = null;
         errorMessage = error.getMessage();

@@ -4,7 +4,6 @@ import android.app.Application;
 
 import androidx.annotation.NonNull;
 import androidx.lifecycle.LiveData;
-import androidx.lifecycle.MediatorLiveData;
 import androidx.lifecycle.Transformations;
 
 import com.checkin.app.checkin.Data.BaseViewModel;
@@ -12,6 +11,7 @@ import com.checkin.app.checkin.Data.Converters;
 import com.checkin.app.checkin.Data.Resource;
 import com.checkin.app.checkin.Misc.BriefModel;
 import com.checkin.app.checkin.Misc.GenericDetailModel;
+import com.checkin.app.checkin.Utility.SourceMappedLiveData;
 import com.checkin.app.checkin.session.activesession.chat.SessionChatModel;
 import com.checkin.app.checkin.session.model.ActiveSessionModel;
 import com.checkin.app.checkin.session.model.SessionCustomerModel;
@@ -29,11 +29,10 @@ import static com.checkin.app.checkin.session.activesession.chat.SessionChatMode
 public class ActiveSessionViewModel extends BaseViewModel {
     private final ActiveSessionRepository mRepository;
 
-    private MediatorLiveData<Resource<ActiveSessionModel>> mSessionData = new MediatorLiveData<>();
-    private MediatorLiveData<Resource<GenericDetailModel>> mMemberUpdate = new MediatorLiveData<>();
-    private MediatorLiveData<Resource<List<SessionOrderedItemModel>>> mOrdersData = new MediatorLiveData<>();
-
-    private MediatorLiveData<Resource<List<TrendingDishModel>>> mTrendingData = new MediatorLiveData<>();
+    private SourceMappedLiveData<Resource<ActiveSessionModel>> mSessionData = createNetworkLiveData();
+    private SourceMappedLiveData<Resource<GenericDetailModel>> mMemberUpdate = createNetworkLiveData();
+    private SourceMappedLiveData<Resource<List<SessionOrderedItemModel>>> mOrdersData = createNetworkLiveData();
+    private SourceMappedLiveData<Resource<List<TrendingDishModel>>> mTrendingData = createNetworkLiveData();
 
     private boolean mIsRequestedCheckout = false;
 
@@ -48,14 +47,6 @@ public class ActiveSessionViewModel extends BaseViewModel {
     public void updateResults() {
         fetchActiveSessionDetail();
         fetchSessionOrders();
-    }
-
-    @Override
-    protected void registerProblemHandlers() {
-        mSessionData = registerProblemHandler(mSessionData);
-        mMemberUpdate = registerProblemHandler(mMemberUpdate);
-        mOrdersData = registerProblemHandler(mOrdersData);
-        mTrendingData = registerProblemHandler(mTrendingData);
     }
 
     public void fetchActiveSessionDetail() {

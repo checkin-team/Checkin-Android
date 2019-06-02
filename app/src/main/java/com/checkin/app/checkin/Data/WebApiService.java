@@ -274,7 +274,7 @@ public interface WebApiService {
     Call<ObjectNode> deleteCheckout();
 
     @DELETE("sessions/customer/cancel/")
-    Call<ObjectNode> deleteSessionUserWaiting();
+    Call<ObjectNode> deleteCustomerSessionJoinRequest();
 
     // endregion
 
