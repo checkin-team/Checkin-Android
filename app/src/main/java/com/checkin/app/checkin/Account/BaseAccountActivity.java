@@ -66,6 +66,7 @@ public abstract class BaseAccountActivity extends BaseActivity {
         setupHeader();
 
         mNavAccount.inflateMenu(getNavMenu());
+        mNavAccount.setItemIconTintList(null);
     }
 
     private void setupHeader() {
