@@ -62,7 +62,6 @@ public class MenuItemModel implements Serializable {
     @JsonProperty("image")
     private String image;
 
-    @Backlink(to = "menuItem")
     private ToMany<ItemCustomizationGroupModel> customizationGroups;
 
     @JsonIgnore

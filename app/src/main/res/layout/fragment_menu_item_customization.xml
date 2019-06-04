@@ -61,16 +61,16 @@
                 <TextView
                     android:id="@+id/tv_menu_customization_item_name"
                     style="@style/RedTitleStyle"
-                    android:layout_width="0dp"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     tools:text="Pizza" />
 
                 <RadioGroup
                     android:id="@+id/rg_menu_customization_type"
-                    android:layout_width="0dp"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_weight="1"
+                    android:gravity="end"
                     android:orientation="horizontal">
 
                     <androidx.constraintlayout.widget.ConstraintLayout
@@ -92,6 +92,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:button="@drawable/radiobutton_selector"
+
                             app:layout_constraintEnd_toEndOf="@+id/tv_menu_customization_radio_1"
                             app:layout_constraintStart_toStartOf="@+id/tv_menu_customization_radio_1"
                             app:layout_constraintTop_toTopOf="parent" />
@@ -101,6 +102,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:button="@drawable/radiobutton_selector"
+
                             app:layout_constraintEnd_toEndOf="@+id/tv_menu_customization_radio_2"
                             app:layout_constraintStart_toStartOf="@+id/tv_menu_customization_radio_2"
                             app:layout_constraintTop_toTopOf="parent" />
@@ -110,6 +112,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:button="@drawable/radiobutton_selector"
+
                             app:layout_constraintEnd_toEndOf="@+id/tv_menu_customization_radio_3"
                             app:layout_constraintStart_toStartOf="@+id/tv_menu_customization_radio_3"
                             app:layout_constraintTop_toTopOf="parent" />
@@ -119,36 +122,38 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:textAlignment="center"
+                            android:minWidth="@dimen/button_width_tiny"
                             android:textColor="@color/brownish_grey"
                             android:textSize="@dimen/font_small"
-                            android:layout_marginStart="@dimen/spacing_normal"
+                            android:gravity="center"
                             app:layout_constraintStart_toStartOf="parent"
                             app:layout_constraintTop_toBottomOf="@id/rb_menu_customization_type_1"
-                            tools:text="Small" />
+                            tools:text="R" />
 
                         <TextView
                             android:id="@+id/tv_menu_customization_radio_2"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:textAlignment="center"
+                            android:minWidth="@dimen/button_width_tiny"
                             android:textColor="@color/brownish_grey"
                             android:textSize="@dimen/font_small"
                             app:layout_constraintEnd_toStartOf="@id/tv_menu_customization_radio_3"
                             app:layout_constraintStart_toEndOf="@id/tv_menu_customization_radio_1"
                             app:layout_constraintTop_toBottomOf="@id/rb_menu_customization_type_2"
-                            tools:text="Medium" />
+                            tools:text="R" />
 
                         <TextView
                             android:id="@+id/tv_menu_customization_radio_3"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
+                            android:minWidth="@dimen/button_width_tiny"
                             android:textAlignment="center"
                             android:textColor="@color/brownish_grey"
                             android:textSize="@dimen/font_small"
-                            android:layout_marginEnd="@dimen/spacing_normal"
                             app:layout_constraintEnd_toEndOf="parent"
                             app:layout_constraintTop_toBottomOf="@id/rb_menu_customization_type_3"
-                            tools:text="Large" />
+                            tools:text="R" />
 
                     </androidx.constraintlayout.widget.ConstraintLayout>
 

@@ -80,7 +80,7 @@
                 android:src="@drawable/ic_plus_red" />
 
             <LinearLayout
-                android:id="@+id/ll_manager_tables_container"
+                android:id="@+id/container_manager_inactive_tables"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_alignParentBottom="true"
@@ -92,6 +92,7 @@
 
 
                 <LinearLayout
+                    android:id="@+id/ll_manager_inactive_tables"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:background="@color/white"

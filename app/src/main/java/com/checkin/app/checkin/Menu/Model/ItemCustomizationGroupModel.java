@@ -37,7 +37,7 @@ public class ItemCustomizationGroupModel {
     @Backlink(to = "group")
     private ToMany<ItemCustomizationFieldModel> customizationFields;
 
-    private ToOne<MenuItemModel> menuItem;
+    private ToMany<MenuItemModel> menuItem;
 
     public ItemCustomizationGroupModel() {
     }
@@ -101,11 +101,11 @@ public class ItemCustomizationGroupModel {
         this.pk = pk;
     }
 
-    public ToOne<MenuItemModel> getMenuItem() {
+    public ToMany<MenuItemModel> getMenuItem() {
         return menuItem;
     }
 
-    public void setMenuItem(ToOne<MenuItemModel> menuItem) {
+    public void setMenuItem(ToMany<MenuItemModel> menuItem) {
         this.menuItem = menuItem;
     }
 }

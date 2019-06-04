@@ -4,13 +4,18 @@ import android.location.Address;
 
 import com.checkin.app.checkin.Data.Converters;
 import com.fasterxml.jackson.annotation.JsonAutoDetect;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 
 import androidx.annotation.NonNull;
 
+@JsonIgnoreProperties(ignoreUnknown = true)
 @JsonAutoDetect(fieldVisibility = JsonAutoDetect.Visibility.NONE, getterVisibility = JsonAutoDetect.Visibility.NONE, isGetterVisibility = JsonAutoDetect.Visibility.NONE)
 public class LocationModel {
+    @JsonProperty("pk")
+    private long pk;
+
     @JsonProperty("latitude")
     private double latitude;
 
@@ -92,6 +97,10 @@ public class LocationModel {
 
     public void setLocality(String locality) {
         this.locality = locality;
+    }
+
+    public long getPk() {
+        return pk;
     }
 
     @JsonProperty("point")

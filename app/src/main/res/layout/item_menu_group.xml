@@ -47,20 +47,20 @@
                 android:textSize="@dimen/font_large"
                 android:paddingStart="@dimen/spacing_between_group_icon_name"
                 app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="@id/switch_menu_group_availability"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
-                tools:text="GROUP" />
+                app:layout_constraintEnd_toStartOf="@id/switch_menu_group_availability"
+                tools:text="GROUP " />
 
             <Switch
                 android:id="@+id/switch_menu_group_availability"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_height="15dp"
                 android:layout_gravity="center"
-                android:layout_marginStart="@dimen/spacing_tiny"
                 android:layout_marginTop="@dimen/spacing_small"
                 android:layout_marginEnd="@dimen/spacing_small"
                 android:layout_marginBottom="@dimen/spacing_small"
+                android:paddingStart="@dimen/spacing_small"
                 android:clickable="false"
                 android:splitTrack="false"
                 android:switchTextAppearance="@style/SwitchTextAppearance"

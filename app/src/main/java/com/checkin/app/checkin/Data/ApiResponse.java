@@ -5,10 +5,13 @@ import android.util.Log;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
+import com.checkin.app.checkin.Utility.JacksonProcessingException;
 import com.checkin.app.checkin.Utility.NetworkIssueException;
 import com.checkin.app.checkin.Utility.NoConnectivityException;
 import com.checkin.app.checkin.Utility.RequestCanceledException;
+import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonNode;
+import com.fasterxml.jackson.databind.exc.UnrecognizedPropertyException;
 
 import java.io.IOException;
 
@@ -33,6 +36,8 @@ public class ApiResponse<T> {
         mStatusCode = HTTP_CLIENT_TIMEOUT;
         if (error instanceof NoConnectivityException) {
             errorThrowable = error;
+        } else if (error instanceof JsonProcessingException) {
+            errorThrowable = new JacksonProcessingException(error);
         } else if (error instanceof IOException) {
             if ("Canceled".equals(error.getMessage()))
                 errorThrowable = new RequestCanceledException(error);

@@ -1,9 +1,13 @@
 package com.checkin.app.checkin.Manager;
 
 import android.app.AlertDialog;
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.DisplayMetrics;
 import android.view.View;
+import android.view.ViewGroup;
+import android.view.WindowManager;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -58,8 +62,10 @@ public class ManagerWorkActivity extends BaseAccountActivity implements ManagerT
     TextView tvActionBarTitle;
     @BindView(R.id.sw_live_order)
     SwitchCompat swLiveOrdersToggle;
-    @BindView(R.id.ll_manager_tables_container)
-    View managerTablesContainer;
+    @BindView(R.id.container_manager_inactive_tables)
+    ViewGroup managerTablesParentContainer;
+    @BindView(R.id.ll_manager_inactive_tables)
+    ViewGroup managerTablesContainer;
     @BindView(R.id.rv_mw_table)
     RecyclerView rvTable;
     private ManagerWorkViewModel mViewModel;
@@ -150,8 +156,8 @@ public class ManagerWorkActivity extends BaseAccountActivity implements ManagerT
             }
         });
 
-        managerTablesContainer.setOnClickListener(v -> {
-            managerTablesContainer.setVisibility(View.GONE);
+        managerTablesParentContainer.setOnClickListener(v -> {
+            managerTablesParentContainer.setVisibility(View.GONE);
         });
 
         mViewModel.getInactiveTables().observe(this, listResource -> {
@@ -160,6 +166,15 @@ public class ManagerWorkActivity extends BaseAccountActivity implements ManagerT
             if (listResource.status == Resource.Status.SUCCESS && listResource.data != null)
                 mInactiveAdapter.setData(listResource.data);
         });
+
+        DisplayMetrics displayMetrics = new DisplayMetrics();
+        WindowManager windowmanager = (WindowManager) getApplicationContext().getSystemService(Context.WINDOW_SERVICE);
+        windowmanager.getDefaultDisplay().getMetrics(displayMetrics);
+
+        ViewGroup.LayoutParams params = (ViewGroup.LayoutParams) managerTablesContainer.getLayoutParams();
+        params.height = (displayMetrics.heightPixels)/2;
+
+        managerTablesContainer.setLayoutParams(params);
     }
 
     @Override
@@ -205,14 +220,14 @@ public class ManagerWorkActivity extends BaseAccountActivity implements ManagerT
     @OnClick(R.id.im_manager_initiate_session)
     public void onClickInitiate() {
         if (mInactiveAdapter.getItemCount() > 0)
-            managerTablesContainer.setVisibility(View.VISIBLE);
+            managerTablesParentContainer.setVisibility(View.VISIBLE);
         else
             Utils.toast(this, "No tables are Inactive.");
     }
 
     @Override
     public void onClickInactiveTable(RestaurantTableModel tableModel) {
-        managerTablesContainer.setVisibility(View.GONE);
+        managerTablesParentContainer.setVisibility(View.GONE);
         AlertDialog.Builder builder = new AlertDialog.Builder(this).setTitle(tableModel.getTable())
                 .setMessage("Do you want to initiate the session?")
                 .setPositiveButton("Done", (dialog, which) -> mViewModel.processQrPk(tableModel.getQrPk()))
@@ -222,8 +237,8 @@ public class ManagerWorkActivity extends BaseAccountActivity implements ManagerT
 
     @Override
     public void onBackPressed() {
-        if (managerTablesContainer.getVisibility() == View.VISIBLE)
-            managerTablesContainer.setVisibility(View.GONE);
+        if (managerTablesParentContainer.getVisibility() == View.VISIBLE)
+            managerTablesParentContainer.setVisibility(View.GONE);
         else
             super.onBackPressed();
     }

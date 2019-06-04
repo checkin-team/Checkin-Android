@@ -13,7 +13,8 @@
     <FrameLayout
         android:id="@+id/container_filter"
         android:layout_width="match_parent"
-        android:layout_height="@dimen/height_menu_filter"
+        android:layout_height="wrap_content"
+        android:minHeight="@dimen/height_menu_filter"
         android:layout_gravity="bottom|center_horizontal"
         android:layout_marginBottom="@dimen/spacing_extra_small"
         android:layout_marginEnd="@dimen/spacing_normal"

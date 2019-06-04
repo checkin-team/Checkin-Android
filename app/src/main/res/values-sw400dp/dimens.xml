@@ -80,7 +80,7 @@
     <dimen name="height_shadow_top_cover">86dp</dimen>
 
     <!-- Menu dimensions -->
-    <dimen name="height_menu_filter">402dp</dimen>
+    <dimen name="height_menu_filter">420dp</dimen>
     <dimen name="height_menu_customization">352dp</dimen>
     <dimen name="height_menu_customization_header">72dp</dimen>
     <dimen name="height_menu_customization_footer">62dp</dimen>
