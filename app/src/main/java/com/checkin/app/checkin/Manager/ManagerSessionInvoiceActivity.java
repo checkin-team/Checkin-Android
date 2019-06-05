@@ -3,6 +3,7 @@ package com.checkin.app.checkin.Manager;
 import android.app.AlertDialog;
 import android.content.BroadcastReceiver;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
@@ -31,13 +32,15 @@ import com.checkin.app.checkin.R;
 import com.checkin.app.checkin.Utility.Utils;
 import com.checkin.app.checkin.Waiter.Model.SessionContactModel;
 import com.checkin.app.checkin.session.activesession.InvoiceOrdersAdapter;
+import com.checkin.app.checkin.session.activesession.chat.SessionChatModel;
 import com.checkin.app.checkin.session.model.SessionBillModel;
+import com.checkin.app.checkin.session.model.SessionOrderedItemModel;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 
-public class ManagerSessionInvoiceActivity extends AppCompatActivity {
+public class ManagerSessionInvoiceActivity extends AppCompatActivity implements InvoiceOrdersAdapter.OrderedItemClick {
     public static final String KEY_SESSION = "com.checkin.app.checkin.Manager.key.session";
     public static final String TABLE_NAME = "com.checkin.app.checkin.Manager.table.name";
     public static final String IS_REQUESTED_CHECKOUT = "com.checkin.app.checkin.Manager.session.is.requested.checkout";
@@ -116,7 +119,7 @@ public class ManagerSessionInvoiceActivity extends AppCompatActivity {
         }
 
         rvOrderedItems.setLayoutManager(new LinearLayoutManager(this, RecyclerView.VERTICAL, false));
-        mAdapter = new InvoiceOrdersAdapter(null);
+        mAdapter = new InvoiceOrdersAdapter(null, this);
         rvOrderedItems.setAdapter(mAdapter);
         mViewModel.fetchManagerInvoice(keySession);
 
@@ -168,6 +171,22 @@ public class ManagerSessionInvoiceActivity extends AppCompatActivity {
                 Utils.toast(this, "Contact updated successfully.");
             } else if (input.status != Resource.Status.LOADING && input.message != null)
                 Utils.toast(this, input.message);
+        });
+
+        mViewModel.getOrderListStatusData().observe(this, listResource -> {
+            if (listResource == null)
+                return;
+            switch (listResource.status) {
+                case SUCCESS: {
+                    mViewModel.updateUiOrderListStatus(listResource.data);
+                    break;
+                }
+                case LOADING:
+                    break;
+                default: {
+                    Utils.toast(this, listResource.message);
+                }
+            }
         });
 
         mBillHolder = new BillHolder(findViewById(android.R.id.content));
@@ -292,4 +311,18 @@ public class ManagerSessionInvoiceActivity extends AppCompatActivity {
         tvInvoiceChange.setVisibility(visibilityChange);
         btnSaveChange.setVisibility(visibilitySave);
     }
+
+    @Override
+    public void cancelOrderedItem(SessionOrderedItemModel orderedItem) {
+        AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(getApplicationContext());
+        alertDialogBuilder.setMessage("Are you sure want to cancel the ordered item?").setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int which) {
+                mViewModel.updateOrderStatusCancel( orderedItem.getItem().getPk(), SessionChatModel.CHAT_STATUS_TYPE.CANCELLED.tag);
+                mViewModel.confirmCancelOrderManager();
+            }
+        }).setNegativeButton("No", (dialog, which) -> dialog.dismiss()).show();
+
+    }
+
+
 }

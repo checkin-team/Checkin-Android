@@ -141,7 +141,12 @@
           "name": "groupId"
         }
       ],
-      "relations": []
+      "relations": [
+        {
+          "id": "7:5947346323364223045",
+          "name": "customizationGroups"
+        }
+      ]
     },
     {
       "id": "20:2752911192166673003",
@@ -166,7 +171,7 @@
   ],
   "lastEntityId": "23:5149164517759451944",
   "lastIndexId": "18:523707218859611128",
-  "lastRelationId": "6:1379355884974702299",
+  "lastRelationId": "7:5947346323364223045",
   "lastSequenceId": "0:0",
   "modelVersion": 4,
   "modelVersionParserMinimum": 4,

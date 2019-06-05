@@ -377,4 +377,17 @@ public class ManagerSessionViewModel extends BaseViewModel {
     public LiveData<Resource<List<SessionContactModel>>> getSessionContactListData() {
         return mContactListData;
     }
+
+    public void updateOrderStatusCancel(long orderId, int statusType) {
+        List<OrderStatusModel> listNewOrderStatus = new ArrayList<>();
+        OrderStatusModel item = new OrderStatusModel();
+        item.setPk(orderId);
+        item.setStatus(statusType);
+        listNewOrderStatus.add(item);
+        mNewOrderStatus.setValue(listNewOrderStatus);
+    }
+
+    public void confirmCancelOrderManager() {
+        mResultOrderStatus.addSource(mWaiterRepository.postOrderListStatus(mNewOrderStatus.getValue()), mResultOrderStatus::setValue);
+    }
 }

@@ -27,4 +27,11 @@
         android:layout_marginEnd="@dimen/spacing_extra_small"
         tools:text="300.00" />
 
+    <ImageView
+        android:id="@+id/im_ms_ordered_item_cancel"
+        android:layout_width="15dp"
+        android:layout_height="15dp"
+        android:src="@drawable/ic_cancel"
+        android:visibility="gone"/>
+
 </LinearLayout>

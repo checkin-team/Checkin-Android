@@ -89,11 +89,9 @@
                 android:layout_marginStart="@dimen/spacing_small"
                 android:layout_marginEnd="@dimen/spacing_small"
                 android:visibility="gone"
-                app:tabBackground="@drawable/selector_tab_rounded_rouge"
                 app:tabGravity="fill"
-                app:tabIndicator="@null"
+                app:tabIndicatorHeight="2dp"
                 app:tabMode="fixed"
-                app:tabSelectedTextColor="@color/white"
                 app:tabTextColor="@color/brownish_grey">
 
                 <com.google.android.material.tabs.TabItem
