@@ -2,6 +2,7 @@ package com.checkin.app.checkin.Manager.Fragment;
 
 import android.annotation.SuppressLint;
 import android.os.Bundle;
+import android.view.Menu;
 import android.view.View;
 import android.view.animation.AnimationUtils;
 import android.widget.ImageView;
@@ -78,6 +79,7 @@ public class ManagerSessionOrderFragment extends BaseFragment implements Manager
     }
 
     private void setupUi() {
+        setHasOptionsMenu(true);
         rvOrdersNew.setLayoutManager(new LinearLayoutManager(getContext(), RecyclerView.VERTICAL, false));
         mAdapterNew = new ManagerSessionOrderAdapter(this, true);
         rvOrdersNew.setAdapter(mAdapterNew);
@@ -238,6 +240,11 @@ public class ManagerSessionOrderFragment extends BaseFragment implements Manager
 
     public interface ManagerOrdersInteraction {
         void onGenerateBillClick();
+    }
+
+    @Override
+    public void onPrepareOptionsMenu(Menu menu) {
+        menu.clear();
     }
 }
 

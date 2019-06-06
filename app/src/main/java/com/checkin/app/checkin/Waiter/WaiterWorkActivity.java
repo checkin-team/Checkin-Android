@@ -152,6 +152,9 @@ public class WaiterWorkActivity extends BaseAccountActivity implements
                     sessionPk = message.getObject().getPk();
                     WaiterWorkActivity.this.endSession(sessionPk);
                     break;
+                case WAITER_SESSION_SWITCH_TABLE:
+                    mViewModel.fetchWaiterServedTables();
+                    break;
             }
         }
     };
@@ -391,7 +394,8 @@ public class WaiterWorkActivity extends BaseAccountActivity implements
         MESSAGE_TYPE[] types = new MESSAGE_TYPE[]{
                 MESSAGE_TYPE.WAITER_SESSION_NEW, MESSAGE_TYPE.WAITER_SESSION_NEW_ORDER, MESSAGE_TYPE.WAITER_SESSION_COLLECT_CASH,
                 MESSAGE_TYPE.WAITER_SESSION_EVENT_SERVICE, MESSAGE_TYPE.WAITER_SESSION_HOST_ASSIGNED, MESSAGE_TYPE.WAITER_SESSION_MEMBER_CHANGE,
-                MESSAGE_TYPE.WAITER_SESSION_UPDATE_ORDER, MESSAGE_TYPE.WAITER_SESSION_END, MESSAGE_TYPE.WAITER_SESSION_EVENT_UPDATE
+                MESSAGE_TYPE.WAITER_SESSION_UPDATE_ORDER, MESSAGE_TYPE.WAITER_SESSION_END, MESSAGE_TYPE.WAITER_SESSION_EVENT_UPDATE,
+                MESSAGE_TYPE.WAITER_SESSION_SWITCH_TABLE
         };
         MessageUtils.registerLocalReceiver(this, mReceiver, types);
     }

@@ -28,9 +28,11 @@ import android.provider.DocumentsContract;
 import android.provider.MediaStore;
 import android.provider.OpenableColumns;
 import android.text.TextUtils;
+import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.WindowManager;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -782,6 +784,17 @@ public final class Utils {
                 e.printStackTrace();
             }
         }
+    }
+
+    public static void calculateHeightSetHalfView(Context context, View view){
+        DisplayMetrics displayMetrics = new DisplayMetrics();
+        WindowManager windowmanager = (WindowManager) context.getSystemService(Context.WINDOW_SERVICE);
+        windowmanager.getDefaultDisplay().getMetrics(displayMetrics);
+
+        ViewGroup.LayoutParams params = (ViewGroup.LayoutParams) view.getLayoutParams();
+        params.height = (displayMetrics.heightPixels)/2;
+
+        view.setLayoutParams(params);
     }
 
 }

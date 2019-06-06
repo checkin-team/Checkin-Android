@@ -227,8 +227,8 @@ public interface WebApiService {
     @POST("sessions/manage/orders/{order_id}/status/")
     Call<OrderStatusModel> postChangeOrderStatus(@Path("order_id") long orderId, @Body ObjectNode data);
 
-    @POST("sessions/manage/orders/status/")
-    Call<List<OrderStatusModel>> postChangeOrderStatusList(@Body List<OrderStatusModel> msOrderStatus);
+    @POST("sessions/{session_id}/manage/orders/status/")
+    Call<List<OrderStatusModel>> postChangeOrderStatusList(@Path("session_id") long sessionId,@Body List<OrderStatusModel> msOrderStatus);
 
     @PUT("sessions/manage/events/{event_id}/done/")
     Call<GenericDetailModel> putSessionEventDone(@Path("event_id") long eventId);
@@ -266,6 +266,9 @@ public interface WebApiService {
 
     @POST("sessions/active/promos/avail/")
     Call<SessionPromoModel> postAvailPromoCode(@Body ObjectNode data);
+
+    @POST("sessions/manage/{session_id}/table/change/")
+    Call<ObjectNode> postTableSwitch(@Path("session_id") long sessionId, @Body ObjectNode data);
 
     @DELETE("sessions/active/promos/remove/")
     Call<ObjectNode> deletePromoCode();

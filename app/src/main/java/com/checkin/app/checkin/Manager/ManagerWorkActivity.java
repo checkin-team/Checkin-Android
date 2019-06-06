@@ -167,14 +167,7 @@ public class ManagerWorkActivity extends BaseAccountActivity implements ManagerT
                 mInactiveAdapter.setData(listResource.data);
         });
 
-        DisplayMetrics displayMetrics = new DisplayMetrics();
-        WindowManager windowmanager = (WindowManager) getApplicationContext().getSystemService(Context.WINDOW_SERVICE);
-        windowmanager.getDefaultDisplay().getMetrics(displayMetrics);
-
-        ViewGroup.LayoutParams params = (ViewGroup.LayoutParams) managerTablesContainer.getLayoutParams();
-        params.height = (displayMetrics.heightPixels)/2;
-
-        managerTablesContainer.setLayoutParams(params);
+        Utils.calculateHeightSetHalfView(this, managerTablesContainer);
     }
 
     @Override

@@ -144,7 +144,7 @@ public class WaiterTableViewModel extends BaseViewModel {
     }
 
     public void confirmOrderStatusWaiter() {
-        mResultOrderStatus.addSource(mWaiterRepository.postOrderListStatus(mNewOrderStatus.getValue()), mResultOrderStatus::setValue);
+        mResultOrderStatus.addSource(mWaiterRepository.postOrderListStatus(mSessionPk, mNewOrderStatus.getValue()), mResultOrderStatus::setValue);
     }
 
     public LiveData<Resource<List<OrderStatusModel>>> getOrderListStatusData() {

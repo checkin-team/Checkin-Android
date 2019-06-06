@@ -1,20 +1,29 @@
 package com.checkin.app.checkin.Manager;
 
+import android.app.AlertDialog;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.DisplayMetrics;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
+import android.view.ViewGroup;
+import android.view.WindowManager;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 import androidx.lifecycle.ViewModelProviders;
 
 import com.checkin.app.checkin.Data.Message.MessageModel;
 import com.checkin.app.checkin.Data.Message.MessageObjectModel;
 import com.checkin.app.checkin.Data.Message.MessageUtils;
+import com.checkin.app.checkin.Data.Resource;
+import com.checkin.app.checkin.Manager.Adapter.ManagerInactiveTableAdapter;
 import com.checkin.app.checkin.Manager.Fragment.ManagerSessionEventFragment;
 import com.checkin.app.checkin.Manager.Fragment.ManagerSessionOrderFragment;
 import com.checkin.app.checkin.Manager.Model.ManagerSessionEventModel;
@@ -23,11 +32,14 @@ import com.checkin.app.checkin.R;
 import com.checkin.app.checkin.Utility.Utils;
 import com.checkin.app.checkin.Waiter.Model.OrderStatusModel;
 import com.checkin.app.checkin.session.activesession.chat.SessionChatModel;
+import com.checkin.app.checkin.session.model.RestaurantTableModel;
 import com.checkin.app.checkin.session.model.SessionBriefModel;
 import com.checkin.app.checkin.session.model.SessionOrderedItemModel;
 
 import java.util.Locale;
 
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
@@ -41,14 +53,17 @@ import static com.checkin.app.checkin.Data.Message.MessageModel.MESSAGE_TYPE.MAN
 import static com.checkin.app.checkin.Data.Message.MessageModel.MESSAGE_TYPE.MANAGER_SESSION_HOST_ASSIGNED;
 import static com.checkin.app.checkin.Data.Message.MessageModel.MESSAGE_TYPE.MANAGER_SESSION_MEMBER_CHANGE;
 import static com.checkin.app.checkin.Data.Message.MessageModel.MESSAGE_TYPE.MANAGER_SESSION_NEW_ORDER;
+import static com.checkin.app.checkin.Data.Message.MessageModel.MESSAGE_TYPE.MANAGER_SESSION_SWITCH_TABLE;
 import static com.checkin.app.checkin.Data.Message.MessageModel.MESSAGE_TYPE.MANAGER_SESSION_UPDATE_ORDER;
 
 public class ManagerSessionActivity extends AppCompatActivity implements
-        ManagerSessionOrderFragment.ManagerOrdersInteraction {
+        ManagerSessionOrderFragment.ManagerOrdersInteraction, ManagerInactiveTableAdapter.ManagerTableInitiate {
     public static final String KEY_SESSION_PK = "manager.session.session_pk";
     public static final String KEY_SHOP_PK = "manager.session.shop_pk";
     public static final String KEY_OPEN_ORDERS = "manager.session.open_orders";
     private static final String TAG = ManagerSessionActivity.class.getSimpleName();
+    @BindView(R.id.manager_session_toolbar)
+    Toolbar toolbar;
     @BindView(R.id.tv_ms_order_new_count)
     TextView tvCountOrdersNew;
     @BindView(R.id.tv_ms_order_progress_count)
@@ -69,10 +84,18 @@ public class ManagerSessionActivity extends AppCompatActivity implements
     LinearLayout containerMsOrderProgress;
     @BindView(R.id.container_ms_order_done)
     LinearLayout containerMsOrderDone;
+    @BindView(R.id.container_manager_inactive_tables)
+    ViewGroup managerTablesParentContainer;
+    @BindView(R.id.ll_manager_inactive_tables)
+    ViewGroup managerTablesContainer;
+    @BindView(R.id.rv_mw_table)
+    RecyclerView rvTable;
 
     private ManagerSessionOrderFragment mOrderFragment;
     private ManagerSessionEventFragment mEventFragment;
+    private ManagerInactiveTableAdapter mInactiveAdapter;
     private ManagerSessionViewModel mViewModel;
+    private ManagerWorkViewModel mWorkViewModel;
     private final BroadcastReceiver mReceiver = new BroadcastReceiver() {
         @Override
         public void onReceive(Context context, Intent intent) {
@@ -128,18 +151,27 @@ public class ManagerSessionActivity extends AppCompatActivity implements
         ButterKnife.bind(this);
 
         mViewModel = ViewModelProviders.of(this).get(ManagerSessionViewModel.class);
+        mWorkViewModel = ViewModelProviders.of(this).get(ManagerWorkViewModel.class);
         mOrderFragment = ManagerSessionOrderFragment.newInstance(this);
         mEventFragment = ManagerSessionEventFragment.newInstance();
+
         setupUi();
         setupEventListing();
     }
 
     private void setupUi() {
+        setSupportActionBar(toolbar);
         long sessionId = getIntent().getLongExtra(KEY_SESSION_PK, 0L);
         long shopId = getIntent().getLongExtra(KEY_SHOP_PK, 0L);
         mViewModel.fetchSessionBriefData(sessionId);
         mViewModel.setShopPk(shopId);
         mViewModel.fetchSessionOrders();
+        mWorkViewModel.fetchActiveTables(shopId);
+
+        rvTable.setLayoutManager(new LinearLayoutManager(this, RecyclerView.VERTICAL, false));
+        mInactiveAdapter = new ManagerInactiveTableAdapter(this);
+        rvTable.setAdapter(mInactiveAdapter);
+        Utils.calculateHeightSetHalfView(this, managerTablesContainer);
 
         mViewModel.getSessionBriefData().observe(this, resource -> {
             if (resource == null) return;
@@ -182,11 +214,33 @@ public class ManagerSessionActivity extends AppCompatActivity implements
 
         boolean shouldOpenOrders = getIntent().getBooleanExtra(KEY_OPEN_ORDERS, false);
         if (shouldOpenOrders) setupOrdersListing();
+
+        managerTablesParentContainer.setOnClickListener(v -> {
+            managerTablesParentContainer.setVisibility(View.GONE);
+        });
+
+        mWorkViewModel.getInactiveTables().observe(this, listResource -> {
+            if (listResource == null)
+                return;
+            if (listResource.status == Resource.Status.SUCCESS && listResource.data != null)
+                mInactiveAdapter.setData(listResource.data);
+        });
+
+        mViewModel.getSessionSwitchTable().observe(this, qrResultModelResource -> {
+            if (qrResultModelResource == null) return;
+            if (qrResultModelResource.status == Resource.Status.SUCCESS && qrResultModelResource.data != null) {
+                mViewModel.fetchSessionBriefData(sessionId);
+            } else {
+                Utils.toast(this, qrResultModelResource.message);
+
+            }
+        });
+
     }
 
     private void setupData(SessionBriefModel data) {
         mSessionData = data;
-        tvCartItemPrice.setText(String.format(Locale.ENGLISH, Utils.getCurrencyFormat(this), data.formatBill()));
+        tvCartItemPrice.setText("Total:  "+String.format(Locale.ENGLISH, Utils.getCurrencyFormat(this), data.formatBill()));
         if (data.getHost() != null) {
             tvWaiterName.setText(data.getHost().getDisplayName());
             Utils.loadImageOrDefault(imWaiterPic, data.getHost().getDisplayPic(), R.drawable.ic_waiter);
@@ -262,7 +316,9 @@ public class ManagerSessionActivity extends AppCompatActivity implements
 
     @Override
     public void onBackPressed() {
-        if (mOrderFragment != null && !mOrderFragment.onBackPressed())
+        if (managerTablesParentContainer.getVisibility() == View.VISIBLE)
+            managerTablesParentContainer.setVisibility(View.GONE);
+        else
             super.onBackPressed();
     }
 
@@ -278,6 +334,7 @@ public class ManagerSessionActivity extends AppCompatActivity implements
         MessageUtils.registerLocalReceiver(this, mReceiver, types);
         mViewModel.fetchSessionBriefData();
         MessageUtils.dismissNotification(this, MessageObjectModel.MESSAGE_OBJECT_TYPE.SESSION, mViewModel.getSessionPk());
+        mViewModel.fetchSessionOrders();
     }
 
     @Override
@@ -320,5 +377,36 @@ public class ManagerSessionActivity extends AppCompatActivity implements
                 .putExtra(ManagerSessionInvoiceActivity.KEY_SESSION, mViewModel.getSessionPk())
                 .putExtra(ManagerSessionInvoiceActivity.IS_REQUESTED_CHECKOUT, mSessionData.isRequestedCheckout());
         startActivity(intent);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.menu_ms_switch_table:
+                if (mInactiveAdapter.getItemCount() > 0)
+                    managerTablesParentContainer.setVisibility(View.VISIBLE);
+                else
+                    Utils.toast(this, "No tables are free.");
+                return true;
+
+            default:
+                return false;
+        }
+
+    }
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+            getMenuInflater().inflate(R.menu.menu_manager_session, menu);
+            return true;
+    }
+
+    @Override
+    public void onClickInactiveTable(RestaurantTableModel tableModel) {
+        managerTablesParentContainer.setVisibility(View.GONE);
+        AlertDialog.Builder builder = new AlertDialog.Builder(this)
+                .setMessage("Are you sure you want "+ tvTable.getText().toString() + " to be switch to " + tableModel.getTable())
+                .setPositiveButton("Done", (dialog, which) -> mViewModel.switchTable(tableModel.getQrPk()))
+                .setNegativeButton("Cancel", (dialog, which) -> dialog.cancel());
+        builder.show();
     }
 }

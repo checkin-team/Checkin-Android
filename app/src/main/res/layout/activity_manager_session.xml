@@ -13,6 +13,7 @@
         android:fitsSystemWindows="true">
 
         <androidx.appcompat.widget.Toolbar
+            android:id="@+id/manager_session_toolbar"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:background="@color/white">
@@ -32,10 +33,9 @@
                     android:src="@drawable/ic_back_grey" />
 
                 <androidx.constraintlayout.widget.ConstraintLayout
-                    android:layout_width="0dp"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="@dimen/spacing_small"
-                    android:layout_weight="1">
+                    android:layout_marginStart="@dimen/spacing_small">
 
                     <de.hdodenhof.circleimageview.CircleImageView
                         android:id="@+id/im_manager_session_waiter"
@@ -72,20 +72,7 @@
 
                 </androidx.constraintlayout.widget.ConstraintLayout>
 
-                <TextView
-                    android:id="@+id/tv_manager_session_bill"
-                    style="@style/GreyTextStyle"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginEnd="@dimen/spacing_normal"
-                    android:layout_gravity="center"
-                    android:background="@drawable/bordered_rectangle_brownish_grey"
-                    android:drawableEnd="@drawable/ic_cart_grey"
-                    android:drawablePadding="@dimen/spacing_extra_small"
-                    android:gravity="center"
-                    android:padding="@dimen/spacing_extra_small"
-                    android:textSize="@dimen/font_large"
-                    tools:text="$ 420" />
+
 
             </LinearLayout>
         </androidx.appcompat.widget.Toolbar>
@@ -122,16 +109,18 @@
                 android:text="@string/label_orders"
                 android:textSize="@dimen/font_large"/>
 
-            <ImageView
-                android:id="@+id/im_ms_bottom_swipe_up"
-                android:layout_width="@dimen/size_extra_small_button"
-                android:layout_height="0dp"
-                android:layout_alignTop="@id/title_orders_label"
-                android:layout_alignBottom="@+id/title_orders_label"
+
+            <TextView
+                android:id="@+id/tv_manager_session_bill"
+                style="@style/PinkishGreySmallTextStyle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
                 android:layout_alignParentEnd="true"
-                android:clickable="true"
-                android:focusable="true"
-                android:src="@drawable/ic_swipe_up" />
+                android:layout_gravity="center"
+                android:drawablePadding="@dimen/spacing_extra_small"
+                android:gravity="center"
+                android:textSize="@dimen/font_normal"
+                tools:text="$ 420" />
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -251,5 +240,14 @@
                 </LinearLayout>
             </LinearLayout>
         </RelativeLayout>
+
+        <include
+            layout="@layout/incl_manager_inactive_tables"/>
+
+
     </FrameLayout>
+
+
+
+
 </LinearLayout>

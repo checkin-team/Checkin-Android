@@ -7,6 +7,7 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
+import android.util.Log;
 import android.util.Patterns;
 import android.view.View;
 import android.widget.Button;
@@ -176,16 +177,9 @@ public class ManagerSessionInvoiceActivity extends AppCompatActivity implements 
         mViewModel.getOrderListStatusData().observe(this, listResource -> {
             if (listResource == null)
                 return;
-            switch (listResource.status) {
-                case SUCCESS: {
-                    mViewModel.updateUiOrderListStatus(listResource.data);
-                    break;
-                }
-                case LOADING:
-                    break;
-                default: {
-                    Utils.toast(this, listResource.message);
-                }
+
+            if (listResource.status != Resource.Status.LOADING && listResource.data != null) {
+                Utils.toast(this, listResource.message);
             }
         });
 
@@ -314,15 +308,14 @@ public class ManagerSessionInvoiceActivity extends AppCompatActivity implements 
 
     @Override
     public void cancelOrderedItem(SessionOrderedItemModel orderedItem) {
-        AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(getApplicationContext());
+        AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(this);
+        alertDialogBuilder.setTitle(orderedItem.getItem().getName());
         alertDialogBuilder.setMessage("Are you sure want to cancel the ordered item?").setPositiveButton("Yes", new DialogInterface.OnClickListener() {
             public void onClick(DialogInterface dialog, int which) {
-                mViewModel.updateOrderStatusCancel( orderedItem.getItem().getPk(), SessionChatModel.CHAT_STATUS_TYPE.CANCELLED.tag);
+                mViewModel.updateOrderStatusCancel(orderedItem.getPk(), SessionChatModel.CHAT_STATUS_TYPE.CANCELLED.tag);
                 mViewModel.confirmCancelOrderManager();
             }
         }).setNegativeButton("No", (dialog, which) -> dialog.dismiss()).show();
 
     }
-
-
 }

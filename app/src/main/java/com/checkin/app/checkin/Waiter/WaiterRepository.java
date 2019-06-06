@@ -247,7 +247,7 @@ public class WaiterRepository extends BaseRepository {
         }.getAsLiveData();
     }
 
-    public LiveData<Resource<List<OrderStatusModel>>> postOrderListStatus(final List<OrderStatusModel> orders) {
+    public LiveData<Resource<List<OrderStatusModel>>> postOrderListStatus(long sessionId, final List<OrderStatusModel> orders) {
         return new NetworkBoundResource<List<OrderStatusModel>, List<OrderStatusModel>>() {
             @Override
             protected boolean shouldUseLocalDb() {
@@ -257,7 +257,7 @@ public class WaiterRepository extends BaseRepository {
             @NonNull
             @Override
             protected LiveData<ApiResponse<List<OrderStatusModel>>> createCall() {
-                return new RetrofitLiveData<>(mWebService.postChangeOrderStatusList(orders));
+                return new RetrofitLiveData<>(mWebService.postChangeOrderStatusList(sessionId, orders));
             }
 
             @Override

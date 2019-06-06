@@ -138,4 +138,24 @@ public class ManagerRepository extends BaseRepository {
             }
         }.getAsLiveData();
     }
+
+    public LiveData<Resource<ObjectNode>> managerSessionSwitchTable(long sessionId, ObjectNode requestJson) {
+        return new NetworkBoundResource<ObjectNode, ObjectNode>() {
+            @Override
+            protected boolean shouldUseLocalDb() {
+                return false;
+            }
+
+            @NonNull
+            @Override
+            protected LiveData<ApiResponse<ObjectNode>> createCall() {
+                return new RetrofitLiveData<>(mWebService.postTableSwitch(sessionId,requestJson));
+            }
+
+            @Override
+            protected void saveCallResult(ObjectNode data) {
+                //saveCallResult code
+            }
+        }.getAsLiveData();
+    }
 }
