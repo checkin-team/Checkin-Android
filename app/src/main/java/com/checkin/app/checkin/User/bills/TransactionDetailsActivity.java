@@ -62,7 +62,7 @@ public class TransactionDetailsActivity extends AppCompatActivity {
     }
 
     private void setupUI() {
-        mOrdersAdapter = new InvoiceOrdersAdapter(null, null);
+        mOrdersAdapter = new InvoiceOrdersAdapter(null);
         rvSessionOrders.setLayoutManager(new LinearLayoutManager(this, RecyclerView.VERTICAL, false));
         rvSessionOrders.setAdapter(mOrdersAdapter);
         mBillHolder = new BillHolder(findViewById(android.R.id.content));

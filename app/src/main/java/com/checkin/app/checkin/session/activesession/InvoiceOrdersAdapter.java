@@ -3,7 +3,6 @@ package com.checkin.app.checkin.session.activesession;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.checkin.app.checkin.R;
@@ -21,11 +20,9 @@ import butterknife.ButterKnife;
 public class InvoiceOrdersAdapter extends RecyclerView.Adapter<InvoiceOrdersAdapter.ViewHolder> {
 
     private List<SessionOrderedItemModel> mOrderedItems;
-    private OrderedItemClick mClickListener;
 
-    public InvoiceOrdersAdapter(List<SessionOrderedItemModel> orderedItems, OrderedItemClick clickListener) {
+    public InvoiceOrdersAdapter(List<SessionOrderedItemModel> orderedItems) {
         this.mOrderedItems = orderedItems;
-        this.mClickListener = clickListener;
     }
 
     public void setData(List<SessionOrderedItemModel> data) {
@@ -61,32 +58,19 @@ public class InvoiceOrdersAdapter extends RecyclerView.Adapter<InvoiceOrdersAdap
         TextView tvName;
         @BindView(R.id.tv_ordered_item_price)
         TextView tvPrice;
-        @BindView(R.id.im_ms_ordered_item_cancel)
-        ImageView imCancelOrder;
-        private SessionOrderedItemModel morderedItem;
 
         ViewHolder(View view) {
             super(view);
             ButterKnife.bind(this, view);
-            view.setOnClickListener(v -> {
-                mClickListener.cancelOrderedItem(morderedItem);
-            });
         }
 
         void bindData(SessionOrderedItemModel orderedItem) {
-            morderedItem = orderedItem;
-            if(mClickListener!=null)
-                imCancelOrder.setVisibility(View.VISIBLE);
             tvName.setText(orderedItem.formatItemDetail());
             if (!orderedItem.getItem().isVegetarian())
                 tvName.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ic_non_veg, 0, 0, 0);
             tvPrice.setText(String.format(
                     Locale.ENGLISH, Utils.getCurrencyFormat(itemView.getContext()), orderedItem.formatCost()));
         }
-    }
-
-    public interface OrderedItemClick{
-        void cancelOrderedItem(SessionOrderedItemModel orderedItem);
     }
 
 }

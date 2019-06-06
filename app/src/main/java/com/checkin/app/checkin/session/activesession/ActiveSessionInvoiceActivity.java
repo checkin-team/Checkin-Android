@@ -145,7 +145,7 @@ public class ActiveSessionInvoiceActivity extends BaseActivity {
 
         setPaymentModeUpdates();
         rvOrderedItems.setLayoutManager(new LinearLayoutManager(this, RecyclerView.VERTICAL, false));
-        mAdapter = new InvoiceOrdersAdapter(null, null);
+        mAdapter = new InvoiceOrdersAdapter(null);
         rvOrderedItems.setAdapter(mAdapter);
         mBillHolder = new BillHolder(findViewById(android.R.id.content));
 
