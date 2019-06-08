@@ -9,6 +9,7 @@ import com.checkin.app.checkin.Data.NetworkBoundResource;
 import com.checkin.app.checkin.Data.Resource;
 import com.checkin.app.checkin.Data.RetrofitLiveData;
 import com.checkin.app.checkin.Data.WebApiService;
+import com.checkin.app.checkin.User.bills.ShopReviewModel;
 
 import java.util.List;
 
@@ -77,5 +78,25 @@ public class ShopInvoiceRepository {
 
     public LiveData<Resource<List<RestaurantSessionModel>>> getRestaurantSessions(long restaurantId) {
         return getRestaurantSessions(restaurantId, null, null);
+    }
+
+    public LiveData<Resource<List<ShopSessionFeedbackModel>>> getRestaurantSessionReviews(final long sessionId) {
+        return new NetworkBoundResource<List<ShopSessionFeedbackModel>, List<ShopSessionFeedbackModel>>() {
+            @Override
+            protected boolean shouldUseLocalDb() {
+                return false;
+            }
+
+            @NonNull
+            @Override
+            protected LiveData<ApiResponse<List<ShopSessionFeedbackModel>>> createCall() {
+                return new RetrofitLiveData<>(mWebService.getRestaurantSessionReviews(sessionId));
+            }
+
+            @Override
+            protected void saveCallResult(List<ShopSessionFeedbackModel> data) {
+
+            }
+        }.getAsLiveData();
     }
 }

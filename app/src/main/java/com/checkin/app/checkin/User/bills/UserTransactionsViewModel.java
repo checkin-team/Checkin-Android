@@ -7,21 +7,31 @@ import androidx.lifecycle.LiveData;
 
 import com.checkin.app.checkin.Data.BaseViewModel;
 import com.checkin.app.checkin.Data.Resource;
+import com.checkin.app.checkin.User.ReviewRepository;
 import com.checkin.app.checkin.Utility.SourceMappedLiveData;
 import com.checkin.app.checkin.session.SessionRepository;
+import com.fasterxml.jackson.databind.node.ObjectNode;
+
+import java.util.Arrays;
 
 public class UserTransactionsViewModel extends BaseViewModel {
     private final SessionRepository mRepository;
+    private final ReviewRepository mReviewRepository;
 
     private SourceMappedLiveData<Resource<UserTransactionBriefModel>> mBriefData = createNetworkLiveData();
     private SourceMappedLiveData<Resource<UserTransactionDetailsModel>> mDetailData = createNetworkLiveData();
+    private SourceMappedLiveData<Resource<ObjectNode>> mReviewData = createNetworkLiveData();
+    private long mSessionId;
+
 
     public UserTransactionsViewModel(@NonNull Application application) {
         super(application);
         mRepository = SessionRepository.getInstance(application);
+        mReviewRepository = ReviewRepository.getInstance(application);
     }
 
     public void fetchSessionSuccessfulTransaction(long sessionId) {
+        mSessionId = sessionId;
         mBriefData.addSource(mRepository.getUserSessionBriefDetail(sessionId), mBriefData::setValue);
     }
 
@@ -35,6 +45,20 @@ public class UserTransactionsViewModel extends BaseViewModel {
 
     public LiveData<Resource<UserTransactionDetailsModel>> getUserSessionDetail() {
         return mDetailData;
+    }
+
+    public void submitReview(int rating) {
+        NewReviewModel reviewData = new NewReviewModel();
+        reviewData.setBody(String.valueOf(rating));
+        reviewData.setFoodRating(rating);
+        reviewData.setAmbienceRating(rating);
+        reviewData.setHospitalityRating(rating);
+        reviewData.setImagePks(Arrays.asList(new String[]{"0"}));
+        mReviewData.addSource(mReviewRepository.postSessionReview(mSessionId, reviewData), mReviewData::setValue);
+    }
+
+    public LiveData<Resource<ObjectNode>> getUserReviewDetail() {
+        return mReviewData;
     }
 
     @Override

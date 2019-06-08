@@ -16,11 +16,14 @@ import com.checkin.app.checkin.Search.SearchResultShopModel;
 import com.checkin.app.checkin.Shop.Private.Finance.FinanceModel;
 import com.checkin.app.checkin.Shop.Private.Invoice.RestaurantSessionModel;
 import com.checkin.app.checkin.Shop.Private.Invoice.ShopSessionDetailModel;
+import com.checkin.app.checkin.Shop.Private.Invoice.ShopSessionFeedbackModel;
 import com.checkin.app.checkin.Shop.Private.MemberModel;
 import com.checkin.app.checkin.Shop.RestaurantModel;
 import com.checkin.app.checkin.Shop.ShopJoin.ShopJoinModel;
 import com.checkin.app.checkin.User.ShopCustomerModel;
 import com.checkin.app.checkin.User.UserModel;
+import com.checkin.app.checkin.User.bills.NewReviewModel;
+import com.checkin.app.checkin.User.bills.ShopReviewModel;
 import com.checkin.app.checkin.User.bills.UserTransactionBriefModel;
 import com.checkin.app.checkin.User.bills.UserTransactionDetailsModel;
 import com.checkin.app.checkin.Waiter.Model.OrderStatusModel;
@@ -335,4 +338,16 @@ public interface WebApiService {
     // region promos
     @GET("promos/")
     Call<List<PromoDetailModel>> getPromoCodes();
+
+    //endregion
+
+    //region Review
+    @GET("reviews/restaurants/{shop_id}/")
+    Call<List<ShopReviewModel>> getRestaurantReviews(@Path("shop_id") long shopId);
+
+    @GET("reviews/sessions/{session_id}/")
+    Call<List<ShopSessionFeedbackModel>> getRestaurantSessionReviews(@Path("session_id") long sessionId);
+
+    @POST("reviews/sessions/{session_id}/")
+    Call<ObjectNode> postCustomerReview(@Path("session_id") long sessionId, @Body NewReviewModel review);
 }

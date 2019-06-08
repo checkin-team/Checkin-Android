@@ -9,10 +9,14 @@ import com.checkin.app.checkin.Data.BaseViewModel;
 import com.checkin.app.checkin.Data.Resource;
 import com.checkin.app.checkin.Utility.SourceMappedLiveData;
 
+import java.util.List;
+
 public class ShopSessionViewModel extends BaseViewModel {
     private ShopInvoiceRepository mRepository;
 
     private SourceMappedLiveData<Resource<ShopSessionDetailModel>> mDetailData = createNetworkLiveData();
+    private SourceMappedLiveData<Resource<List<ShopSessionFeedbackModel>>> mShopReviewData = createNetworkLiveData();
+
 
     private long mSessionPk;
 
@@ -25,8 +29,16 @@ public class ShopSessionViewModel extends BaseViewModel {
         mDetailData.addSource(mRepository.getShopSessionDetail(mSessionPk), mDetailData::setValue);
     }
 
+    public void fetchRestaurantSessionReviews() {
+        mShopReviewData.addSource(mRepository.getRestaurantSessionReviews(mSessionPk), mShopReviewData::setValue);
+    }
+
     public LiveData<Resource<ShopSessionDetailModel>> getSessionDetail() {
         return mDetailData;
+    }
+
+    public LiveData<Resource<List<ShopSessionFeedbackModel>>> getSessionReviews() {
+        return mShopReviewData;
     }
 
     @Override

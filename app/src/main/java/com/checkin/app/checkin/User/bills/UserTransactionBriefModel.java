@@ -99,4 +99,40 @@ public class UserTransactionBriefModel {
                 return R.drawable.ic_cash_white_red;
         }
     }
+
+    @DrawableRes
+    public static int getFeedbackEmoji(int rate) {
+        switch (rate) {
+            case 1:
+                return R.drawable.ic_emoji_angry_yellow;
+            case 2:
+                return R.drawable.ic_emoji_sad_yellow;
+            case 3:
+                return R.drawable.ic_emoji_confused_yellow;
+            case 4:
+                return R.drawable.ic_emoji_smiling_yellow;
+            case 5:
+                return R.drawable.ic_emoji_in_love_yellow;
+            default:
+                return R.drawable.ic_emoji_in_love_yellow;
+        }
+    }
+
+
+    public static String getFeedbackText(int rate) {
+        switch (rate) {
+            case 1:
+                return "Disappointing!";
+            case 2:
+                return "Unpleasant!";
+            case 3:
+                return "Satisfactory!";
+            case 4:
+                return "Pleasant!";
+            case 5:
+                return "Awesome!";
+            default:
+                return "Awesome!";
+        }
+    }
 }

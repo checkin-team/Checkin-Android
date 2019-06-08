@@ -1,7 +1,14 @@
 package com.checkin.app.checkin.User.bills;
 
+import android.animation.Animator;
+import android.animation.AnimatorListenerAdapter;
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.View;
+import android.view.ViewGroup;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
+import android.view.animation.ScaleAnimation;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -32,6 +39,24 @@ public class SuccessfulTransactionActivity extends BaseActivity {
     TextView tvTransactionId;
     @BindView(R.id.tv_successful_transaction_restaurant_transaction_date)
     TextView tvTransactionDate;
+    @BindView(R.id.container_user_end_feedback_take)
+    ViewGroup containerFeedbackTake;
+    @BindView(R.id.container_user_end_feedback_show)
+    ViewGroup containerFeedbackShow;
+    @BindView(R.id.im_emoji_angry_1)
+    ImageView imAngry;
+    @BindView(R.id.im_emoji_sad_2)
+    ImageView imSad;
+    @BindView(R.id.im_emoji_confused_3)
+    ImageView imConfused;
+    @BindView(R.id.im_emoji_smile_4)
+    ImageView imSmile;
+    @BindView(R.id.im_emoji_love_5)
+    ImageView imLove;
+    @BindView(R.id.im_feedback_show_emoji)
+    ImageView imFeedbackShowEmoji;
+    @BindView(R.id.tv_feedback_text)
+    TextView tvFeedbacktext;
 
     private UserTransactionsViewModel mViewModel;
     private long sessionId;
@@ -42,6 +67,7 @@ public class SuccessfulTransactionActivity extends BaseActivity {
 
         setContentView(R.layout.activity_user_session_end);
         ButterKnife.bind(this);
+        takeFeedback();
 
         mViewModel = ViewModelProviders.of(this).get(UserTransactionsViewModel.class);
         sessionId = getIntent().getLongExtra(KEY_SESSION_ID, 0L);
@@ -52,6 +78,13 @@ public class SuccessfulTransactionActivity extends BaseActivity {
                 return;
             if (sessionBriefModelResource.status == Resource.Status.SUCCESS && sessionBriefModelResource.data != null) {
                 setupData(sessionBriefModelResource.data);
+            }
+        });
+
+        mViewModel.getUserReviewDetail().observe(this, objectNodeResource -> {
+            if (objectNodeResource == null)
+                return;
+            if (objectNodeResource.status == Resource.Status.SUCCESS && objectNodeResource.data != null) {
             }
         });
     }
@@ -79,5 +112,41 @@ public class SuccessfulTransactionActivity extends BaseActivity {
     @OnClick(R.id.ll_successful_transaction_view_transactions)
     public void onViewDetails() {
         startActivity(new Intent(this, TransactionDetailsActivity.class).putExtra(TransactionDetailsActivity.KEY_SESSION_ID, sessionId));
+    }
+
+    @OnClick({R.id.im_emoji_angry_1, R.id.im_emoji_sad_2, R.id.im_emoji_confused_3, R.id.im_emoji_smile_4, R.id.im_emoji_love_5})
+    public void onLove(View v) {
+        switch (v.getId()) {
+            case R.id.im_emoji_angry_1:
+                showFeedback(1);
+                break;
+            case R.id.im_emoji_sad_2:
+                showFeedback(2);
+                break;
+            case R.id.im_emoji_confused_3:
+                showFeedback(3);
+                break;
+            case R.id.im_emoji_smile_4:
+                showFeedback(4);
+                break;
+            case R.id.im_emoji_love_5:
+                showFeedback(5);
+                break;
+        }
+    }
+
+    public void showFeedback(int rate) {
+        containerFeedbackTake.setVisibility(View.GONE);
+        imFeedbackShowEmoji.setImageDrawable(getResources().getDrawable(UserTransactionBriefModel.getFeedbackEmoji(rate)));
+        imFeedbackShowEmoji.startAnimation(AnimationUtils.loadAnimation(this, R.anim.expand_in));
+        tvFeedbacktext.setText(UserTransactionBriefModel.getFeedbackText(rate));
+        tvFeedbacktext.startAnimation(AnimationUtils.loadAnimation(this, R.anim.expand_in));
+        containerFeedbackShow.setVisibility(View.VISIBLE);
+        mViewModel.submitReview(rate);
+    }
+
+    public void takeFeedback() {
+        containerFeedbackShow.setVisibility(View.GONE);
+        containerFeedbackTake.setVisibility(View.VISIBLE);
     }
 }

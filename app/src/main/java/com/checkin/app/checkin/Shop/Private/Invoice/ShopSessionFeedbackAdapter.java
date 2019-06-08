@@ -3,12 +3,14 @@ package com.checkin.app.checkin.Shop.Private.Invoice;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.appyvet.materialrangebar.RangeBar;
 import com.checkin.app.checkin.Misc.ImageThumbnailHolder;
 import com.checkin.app.checkin.Misc.ImageThumbnailHolder.ImageThumbnailInteraction;
 import com.checkin.app.checkin.R;
+import com.checkin.app.checkin.User.bills.UserTransactionBriefModel;
 
 import java.util.List;
 
@@ -18,17 +20,16 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 
 public class ShopSessionFeedbackAdapter extends RecyclerView.Adapter<ShopSessionFeedbackAdapter.ShopInvoiceFeedbackHolder> {
-    public ImageThumbnailInteraction mListener;
     private List<ShopSessionFeedbackModel> mList;
 
-    ShopSessionFeedbackAdapter(ImageThumbnailInteraction listener) {
-        mListener = listener;
+    ShopSessionFeedbackAdapter(List<ShopSessionFeedbackModel> data) {
+        this.mList = data;
     }
 
     @NonNull
     @Override
     public ShopInvoiceFeedbackHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_shop_invoice_session_feedback, parent, false);
+        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_feedback_review, parent, false);
         return new ShopInvoiceFeedbackHolder(view);
     }
 
@@ -49,41 +50,63 @@ public class ShopSessionFeedbackAdapter extends RecyclerView.Adapter<ShopSession
     }
 
     class ShopInvoiceFeedbackHolder extends RecyclerView.ViewHolder {
-        @BindView(R.id.tv_feedback_overall)
-        TextView tvRatingOverall;
-        @BindView(R.id.seekbar_feedback_ambiance)
-        RangeBar seekbarAmbiance;
-        @BindView(R.id.seekbar_feedback_food)
-        RangeBar seekbarFood;
-        @BindView(R.id.seekbar_feedback_hospitality)
-        RangeBar seekbarHospitality;
-        @BindView(R.id.tv_shop_session_review_customer_name)
+        @BindView(R.id.tv_sf_user_name)
         TextView tvCustomerName;
-        @BindView(R.id.tv_shop_session_review_body)
-        TextView tvBody;
-
-        private ImageThumbnailHolder mThumbnailHolder;
+        @BindView(R.id.tv_sf_rating_number)
+        TextView tvRatingNumber;
+        @BindView(R.id.tv_sf_rating_text)
+        TextView tvRatingText;
+        @BindView(R.id.im_sf_emoji_angry_1)
+        ImageView imAngry;
+        @BindView(R.id.im_sf_emoji_sad_2)
+        ImageView imSad;
+        @BindView(R.id.im_sf_emoji_confused_3)
+        ImageView imConfused;
+        @BindView(R.id.im_sf_emoji_smile_4)
+        ImageView imSmile;
+        @BindView(R.id.im_sf_emoji_love_5)
+        ImageView imLove;
 
         ShopInvoiceFeedbackHolder(View itemView) {
             super(itemView);
             ButterKnife.bind(this, itemView);
-
-            seekbarFood.setEnabled(false);
-            seekbarHospitality.setEnabled(false);
-            seekbarAmbiance.setEnabled(false);
-            mThumbnailHolder = new ImageThumbnailHolder(itemView, mListener);
         }
 
         public void bindData(ShopSessionFeedbackModel data) {
-            tvBody.setText(data.getBody());
             tvCustomerName.setText(data.getUser().getDisplayName());
 
-            tvRatingOverall.setText(String.valueOf(data.getOverallRating()));
-            seekbarFood.setSeekPinByIndex(data.getFoodRating());
-            seekbarAmbiance.setSeekPinByIndex(data.getAmbienceRating());
-            seekbarHospitality.setSeekPinByIndex(data.getHospitalityRating());
+            tvRatingNumber.setText(String.valueOf(data.getFoodRating()));
+            tvRatingText.setText(UserTransactionBriefModel.getFeedbackText(data.getFoodRating()));
+            defaultRatingEmoji();
+            switch (data.getFoodRating()) {
+                case 1:
+                    imAngry.setImageDrawable(imAngry.getContext().getResources().getDrawable(R.drawable.ic_emoji_angry_yellow));
+                    break;
+                case 2:
+                    imSad.setImageDrawable(imAngry.getContext().getResources().getDrawable(R.drawable.ic_emoji_sad_yellow));
+                    break;
+                case 3:
+                    imConfused.setImageDrawable(imAngry.getContext().getResources().getDrawable(R.drawable.ic_emoji_confused_yellow));
+                    break;
+                case 4:
+                    imSmile.setImageDrawable(imAngry.getContext().getResources().getDrawable(R.drawable.ic_emoji_smiling_yellow));
+                    break;
+                case 5:
+                    imLove.setImageDrawable(imAngry.getContext().getResources().getDrawable(R.drawable.ic_emoji_in_love_yellow));
+                    break;
+                default:
+                    imLove.setImageDrawable(imAngry.getContext().getResources().getDrawable(R.drawable.ic_emoji_in_love_yellow));
+                    break;
 
-            mThumbnailHolder.bindThumbnails(data.getThumbnails());
+            }
+        }
+
+        public void defaultRatingEmoji() {
+            imAngry.setImageDrawable(imAngry.getContext().getResources().getDrawable(R.drawable.ic_emoji_angry));
+            imSad.setImageDrawable(imAngry.getContext().getResources().getDrawable(R.drawable.ic_emoji_sad));
+            imConfused.setImageDrawable(imAngry.getContext().getResources().getDrawable(R.drawable.ic_emoji_confused));
+            imSmile.setImageDrawable(imAngry.getContext().getResources().getDrawable(R.drawable.ic_emoji_smiling));
+            imLove.setImageDrawable(imAngry.getContext().getResources().getDrawable(R.drawable.ic_emoji_in_love));
         }
     }
 }
