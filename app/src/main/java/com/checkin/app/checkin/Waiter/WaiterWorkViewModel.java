@@ -41,7 +41,6 @@ public class WaiterWorkViewModel extends BaseViewModel {
     public void updateResults() {
         fetchShopTables(mShopPk);
         fetchWaiterStats();
-        fetchWaiterServedTables();
     }
 
     public void fetchWaiterServedTables() {

@@ -3,17 +3,18 @@ package com.checkin.app.checkin.session.activesession;
 import android.os.Bundle;
 import android.view.View;
 
-import com.checkin.app.checkin.Data.Resource;
-import com.checkin.app.checkin.Misc.BaseFragment;
-import com.checkin.app.checkin.R;
-import com.checkin.app.checkin.session.model.SessionOrderedItemModel;
-import com.checkin.app.checkin.Utility.Utils;
-
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.lifecycle.ViewModelProviders;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+
+import com.checkin.app.checkin.Data.Resource;
+import com.checkin.app.checkin.Misc.BaseFragment;
+import com.checkin.app.checkin.R;
+import com.checkin.app.checkin.Utility.Utils;
+import com.checkin.app.checkin.session.model.SessionOrderedItemModel;
+
 import butterknife.BindView;
 import butterknife.OnClick;
 

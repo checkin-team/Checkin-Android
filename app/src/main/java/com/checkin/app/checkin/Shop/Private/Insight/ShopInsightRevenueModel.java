@@ -1,5 +1,7 @@
 package com.checkin.app.checkin.Shop.Private.Insight;
 
+import android.content.Context;
+
 import com.checkin.app.checkin.Manager.Model.ManagerStatsModel;
 import com.checkin.app.checkin.Utility.Utils;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
@@ -17,7 +19,7 @@ public class ShopInsightRevenueModel {
     private RevenueDurationModel countOrders;
 
     @JsonProperty("sales")
-    private String sales;
+    private double sales;
 
     @JsonProperty("avg_session_time")
     private long avgSessionTime;
@@ -45,12 +47,12 @@ public class ShopInsightRevenueModel {
         return countOrders;
     }
 
-    public int formatCount(){
-        return Integer.parseInt(String.valueOf(countOrders));
+    public double getSales() {
+        return sales;
     }
 
-    public String getSales() {
-        return sales;
+    public String formatSales(Context context) {
+        return Utils.formatCurrencyAmount(context, sales);
     }
 
     public long getAvgSessionTime() {
@@ -70,7 +72,7 @@ public class ShopInsightRevenueModel {
     }
 
     public String getCancellationRate() {
-        return String.valueOf(cancellationRate)+"%";
+        return cancellationRate + "%";
     }
 
     public String formatAvgSessionTime() {

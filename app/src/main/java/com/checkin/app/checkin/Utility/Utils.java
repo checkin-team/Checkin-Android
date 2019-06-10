@@ -251,7 +251,7 @@ public final class Utils {
     }
 
     public static String formatCurrencyAmount(Context context, Double amount) {
-        DecimalFormat format = new DecimalFormat("0.00");
+        DecimalFormat format = new DecimalFormat("##,##,##,##0.00");
         return formatCurrencyAmount(context, format.format(amount));
     }
 

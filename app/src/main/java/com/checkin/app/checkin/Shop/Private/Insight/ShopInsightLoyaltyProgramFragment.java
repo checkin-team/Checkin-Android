@@ -4,6 +4,12 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.TextView;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.lifecycle.ViewModelProviders;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+
 import com.checkin.app.checkin.Data.Resource;
 import com.checkin.app.checkin.Misc.BaseFragment;
 import com.checkin.app.checkin.R;
@@ -13,12 +19,6 @@ import com.checkin.app.checkin.session.activesession.ActiveSessionPromoAdapter;
 
 import java.util.Locale;
 
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.fragment.app.Fragment;
-import androidx.lifecycle.ViewModelProviders;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
 import butterknife.BindView;
 
 public class ShopInsightLoyaltyProgramFragment extends BaseFragment {
@@ -26,6 +26,7 @@ public class ShopInsightLoyaltyProgramFragment extends BaseFragment {
     TextView tvDiscount;
     @BindView(R.id.rv_shop_insight_loyalty)
     RecyclerView rvLoyalty;
+
     private ActiveSessionPromoAdapter mAdapter;
     private ShopInsightViewModel mViewModel;
     private ActiveSessionInvoiceViewModel mInvoiceViewModel;
@@ -50,7 +51,7 @@ public class ShopInsightLoyaltyProgramFragment extends BaseFragment {
     }
 
     private void setUpUi() {
-        mAdapter = new ActiveSessionPromoAdapter(null,null);
+        mAdapter = new ActiveSessionPromoAdapter(null, null);
         rvLoyalty.setLayoutManager(new LinearLayoutManager(getContext(), RecyclerView.VERTICAL, false));
         rvLoyalty.setAdapter(mAdapter);
     }

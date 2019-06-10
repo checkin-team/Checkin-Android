@@ -12,36 +12,6 @@ import android.view.Menu;
 import android.view.View;
 import android.widget.TextView;
 
-import com.checkin.app.checkin.Account.AccountModel;
-import com.checkin.app.checkin.Account.BaseAccountActivity;
-import com.checkin.app.checkin.Data.Message.MessageModel;
-import com.checkin.app.checkin.Data.Message.MessageModel.MESSAGE_TYPE;
-import com.checkin.app.checkin.Data.Message.MessageObjectModel;
-import com.checkin.app.checkin.Data.Message.MessageUtils;
-import com.checkin.app.checkin.Data.Resource.Status;
-import com.checkin.app.checkin.Misc.BriefModel;
-import com.checkin.app.checkin.Misc.QRScannerActivity;
-import com.checkin.app.checkin.R;
-import com.checkin.app.checkin.session.activesession.chat.SessionChatModel;
-import com.checkin.app.checkin.session.model.EventBriefModel;
-import com.checkin.app.checkin.session.model.RestaurantTableModel;
-import com.checkin.app.checkin.session.model.SessionOrderedItemModel;
-import com.checkin.app.checkin.session.model.TableSessionModel;
-import com.checkin.app.checkin.Shop.ShopModel;
-import com.checkin.app.checkin.Utility.DynamicSwipableViewPager;
-import com.checkin.app.checkin.Utility.EndDrawerToggle;
-import com.checkin.app.checkin.Utility.Utils;
-import com.checkin.app.checkin.Waiter.Fragment.WaiterTableFragment;
-import com.checkin.app.checkin.Waiter.Model.WaiterEventModel;
-import com.checkin.app.checkin.Waiter.Model.WaiterStatsModel;
-import com.checkin.app.checkin.Waiter.Model.WaiterTableModel;
-import com.google.android.material.navigation.NavigationView;
-import com.google.android.material.tabs.TabLayout;
-
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Locale;
-
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.ActionBarDrawerToggle;
@@ -54,6 +24,37 @@ import androidx.lifecycle.ViewModelProviders;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.viewpager.widget.ViewPager;
+
+import com.checkin.app.checkin.Account.AccountModel;
+import com.checkin.app.checkin.Account.BaseAccountActivity;
+import com.checkin.app.checkin.Data.Message.MessageModel;
+import com.checkin.app.checkin.Data.Message.MessageModel.MESSAGE_TYPE;
+import com.checkin.app.checkin.Data.Message.MessageObjectModel;
+import com.checkin.app.checkin.Data.Message.MessageUtils;
+import com.checkin.app.checkin.Data.Resource.Status;
+import com.checkin.app.checkin.Misc.BriefModel;
+import com.checkin.app.checkin.Misc.QRScannerActivity;
+import com.checkin.app.checkin.R;
+import com.checkin.app.checkin.Shop.ShopModel;
+import com.checkin.app.checkin.Utility.DynamicSwipableViewPager;
+import com.checkin.app.checkin.Utility.EndDrawerToggle;
+import com.checkin.app.checkin.Utility.Utils;
+import com.checkin.app.checkin.Waiter.Fragment.WaiterTableFragment;
+import com.checkin.app.checkin.Waiter.Model.WaiterEventModel;
+import com.checkin.app.checkin.Waiter.Model.WaiterStatsModel;
+import com.checkin.app.checkin.Waiter.Model.WaiterTableModel;
+import com.checkin.app.checkin.session.activesession.chat.SessionChatModel;
+import com.checkin.app.checkin.session.model.EventBriefModel;
+import com.checkin.app.checkin.session.model.RestaurantTableModel;
+import com.checkin.app.checkin.session.model.SessionOrderedItemModel;
+import com.checkin.app.checkin.session.model.TableSessionModel;
+import com.google.android.material.navigation.NavigationView;
+import com.google.android.material.tabs.TabLayout;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Locale;
+
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
@@ -303,6 +304,7 @@ public class WaiterWorkActivity extends BaseAccountActivity implements
     protected void updateScreen() {
         getAccountViewModel().updateResults();
         mViewModel.updateResults();
+        mViewModel.fetchWaiterServedTables();
     }
 
     // region UI-Update
@@ -397,6 +399,8 @@ public class WaiterWorkActivity extends BaseAccountActivity implements
                 MESSAGE_TYPE.WAITER_SESSION_UPDATE_ORDER, MESSAGE_TYPE.WAITER_SESSION_END, MESSAGE_TYPE.WAITER_SESSION_EVENT_UPDATE,
                 MESSAGE_TYPE.WAITER_SESSION_SWITCH_TABLE
         };
+        getAccountViewModel().updateResults();
+        mViewModel.updateResults();
         MessageUtils.registerLocalReceiver(this, mReceiver, types);
     }
 

@@ -22,6 +22,7 @@ import java.util.Locale;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 import butterknife.Unbinder;
 
 public class TransactionDetailsActivity extends AppCompatActivity {
@@ -62,7 +63,7 @@ public class TransactionDetailsActivity extends AppCompatActivity {
     }
 
     private void setupUI() {
-        mOrdersAdapter = new InvoiceOrdersAdapter(null,null);
+        mOrdersAdapter = new InvoiceOrdersAdapter(null, null);
         rvSessionOrders.setLayoutManager(new LinearLayoutManager(this, RecyclerView.VERTICAL, false));
         rvSessionOrders.setAdapter(mOrdersAdapter);
         mBillHolder = new BillHolder(findViewById(android.R.id.content));
@@ -93,6 +94,10 @@ public class TransactionDetailsActivity extends AppCompatActivity {
         tvBillTotal.setText(String.format(Locale.ENGLISH, Utils.getCurrencyFormat(this), data.getBill().getTotal()));
         if (data.getPaymentMode() != null)
             tvPaidVia.setCompoundDrawablesWithIntrinsicBounds(0, 0, ShopModel.getPaymentModeIcon(data.getPaymentMode()), 0);
+    }
 
+    @OnClick(R.id.im_user_transaction_appbar_back)
+    public void onBack() {
+        onBackPressed();
     }
 }

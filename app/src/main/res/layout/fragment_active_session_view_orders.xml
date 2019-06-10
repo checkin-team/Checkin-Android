@@ -56,13 +56,6 @@
                         android:textColor="@color/white"
                         android:textSize="@dimen/font_large" />
 
-                    <ImageView
-                        android:id="@+id/btn_view_orders_help"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginEnd="@dimen/spacing_small"
-                        android:src="@drawable/btn_help" />
-
                 </LinearLayout>
 
             </androidx.appcompat.widget.Toolbar>

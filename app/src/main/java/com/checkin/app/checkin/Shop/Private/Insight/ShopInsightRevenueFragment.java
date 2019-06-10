@@ -6,6 +6,14 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.lifecycle.ViewModelProviders;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+import androidx.viewpager.widget.PagerAdapter;
+import androidx.viewpager.widget.ViewPager;
+
 import com.checkin.app.checkin.Data.Resource;
 import com.checkin.app.checkin.Manager.Adapter.ManagerStatsOrderAdapter;
 import com.checkin.app.checkin.Misc.BaseFragment;
@@ -14,22 +22,10 @@ import com.checkin.app.checkin.Utility.Utils;
 import com.rd.PageIndicatorView;
 import com.rd.animation.type.AnimationType;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
 import java.util.Locale;
 
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.lifecycle.ViewModelProviders;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
-import androidx.viewpager.widget.PagerAdapter;
-import androidx.viewpager.widget.ViewPager;
 import butterknife.BindView;
 import butterknife.ButterKnife;
-
-import static com.checkin.app.checkin.Inventory.InventoryActivity.KEY_INVENTORY_RESTAURANT_PK;
 
 public class ShopInsightRevenueFragment extends BaseFragment {
     @BindView(R.id.vp_shop_insight_revenue)
@@ -42,6 +38,7 @@ public class ShopInsightRevenueFragment extends BaseFragment {
     TextView tvCancellationRate;
     @BindView(R.id.rv_shop_insight_revenue_trending_orders)
     RecyclerView rvTrendingOrders;
+
     private ShopInsightRevenueAdapter mPagerAdapter;
     private ManagerStatsOrderAdapter mAdapter;
     private ShopInsightViewModel mViewModel;
@@ -84,7 +81,7 @@ public class ShopInsightRevenueFragment extends BaseFragment {
             if (shopInsightRevenueModelResource.status == Resource.Status.SUCCESS && shopInsightRevenueModelResource.data != null) {
                 ShopInsightRevenueModel revenueModel = shopInsightRevenueModelResource.data;
                 mPagerAdapter.setData(revenueModel);
-                tvFloatingCash.setText(String.format(Locale.ENGLISH, Utils.getCurrencyFormat(tvFloatingCash.getContext()), revenueModel.getFloatingCash()));
+                tvFloatingCash.setText(Utils.formatCurrencyAmount(requireContext(), revenueModel.getFloatingCash()));
                 tvCancellationRate.setText(revenueModel.getCancellationRate());
                 mAdapter.setData(revenueModel.getTrendingOrders());
             }
@@ -94,7 +91,7 @@ public class ShopInsightRevenueFragment extends BaseFragment {
     public class ShopInsightRevenueAdapter extends PagerAdapter {
         private ShopInsightRevenueModel mData;
 
-        public ShopInsightRevenueAdapter(ShopInsightRevenueModel data){
+        public ShopInsightRevenueAdapter(ShopInsightRevenueModel data) {
             this.mData = data;
         }
 
@@ -103,18 +100,19 @@ public class ShopInsightRevenueFragment extends BaseFragment {
             notifyDataSetChanged();
         }
 
+        @NonNull
         @Override
-        public Object instantiateItem(final ViewGroup container, final int position) {
+        public Object instantiateItem(@NonNull final ViewGroup container, final int position) {
             View view;
             ViewHolder holder;
 
             view = LayoutInflater.from(container.getContext()).inflate(R.layout.item_shop_insight_revenue_amount, null);
             holder = new ViewHolder(view);
 
-            if(mData!=null)
-            holder.bindData(mData, position);
+            if (mData != null)
+                holder.bindData(mData, position);
 
-            ((ViewPager) container).addView(view, 0);
+            container.addView(view, 0);
             return view;
 
         }
@@ -126,14 +124,14 @@ public class ShopInsightRevenueFragment extends BaseFragment {
 
         @Override
         public boolean isViewFromObject(@NonNull View view, @NonNull Object object) {
-            return object==(View)view;
+            return object == view;
         }
 
         class ViewHolder {
             @BindView(R.id.tv_shop_insight_revenue_duration)
             TextView tvDuration;
             @BindView(R.id.tv_shop_insight_revenue_orders_number)
-            TextView tvOrsersNumber;
+            TextView tvOrdersNumber;
             @BindView(R.id.tv_shop_insight_revenue_amount)
             TextView tvAmount;
             ShopInsightRevenueModel mData;
@@ -147,18 +145,18 @@ public class ShopInsightRevenueFragment extends BaseFragment {
                 switch (position) {
                     case 0:
                         tvDuration.setText("Today's Revenue");
-                        tvOrsersNumber.setText(String.format(Locale.ENGLISH, "%s ORDERS", data.getCountOrders().formatDay()));
-                        tvAmount.setText(String.format(Locale.ENGLISH, Utils.getCurrencyFormat(tvAmount.getContext()), data.getRevenue().getDay()));
+                        tvOrdersNumber.setText(String.format(Locale.ENGLISH, "%.0f ORDERS", data.getCountOrders().getDay()));
+                        tvAmount.setText(Utils.formatCurrencyAmount(tvAmount.getContext(), data.getRevenue().getDay()));
                         break;
                     case 1:
                         tvDuration.setText("Week's Revenue");
-                        tvOrsersNumber.setText(String.format(Locale.ENGLISH, "%s ORDERS", data.getCountOrders().formatWeek()));
-                        tvAmount.setText(String.format(Locale.ENGLISH, Utils.getCurrencyFormat(tvAmount.getContext()), data.getRevenue().getWeek()));
+                        tvOrdersNumber.setText(String.format(Locale.ENGLISH, "%.0f ORDERS", data.getCountOrders().getWeek()));
+                        tvAmount.setText(Utils.formatCurrencyAmount(tvAmount.getContext(), data.getRevenue().getWeek()));
                         break;
                     case 2:
                         tvDuration.setText("Month's Revenue");
-                        tvOrsersNumber.setText(String.format(Locale.ENGLISH, "%s ORDERS", data.getCountOrders().formatMonth()));
-                        tvAmount.setText(String.format(Locale.ENGLISH, Utils.getCurrencyFormat(tvAmount.getContext()), data.getRevenue().getMonth()));
+                        tvOrdersNumber.setText(String.format(Locale.ENGLISH, "%.0f ORDERS", data.getCountOrders().getMonth()));
+                        tvAmount.setText(Utils.formatCurrencyAmount(tvAmount.getContext(), data.getRevenue().getMonth()));
                         break;
                 }
             }

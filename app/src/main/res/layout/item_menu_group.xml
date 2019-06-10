@@ -44,12 +44,12 @@
                 android:layout_marginStart="@dimen/spacing_incredible"
                 android:layout_weight="1"
                 android:gravity="start"
-                android:textSize="@dimen/font_large"
                 android:paddingStart="@dimen/spacing_between_group_icon_name"
+                android:textSize="@dimen/font_large"
                 app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toStartOf="@id/switch_menu_group_availability"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintEnd_toStartOf="@id/switch_menu_group_availability"
                 tools:text="GROUP " />
 
             <Switch
@@ -60,8 +60,8 @@
                 android:layout_marginTop="@dimen/spacing_small"
                 android:layout_marginEnd="@dimen/spacing_small"
                 android:layout_marginBottom="@dimen/spacing_small"
-                android:paddingStart="@dimen/spacing_small"
                 android:clickable="false"
+                android:paddingStart="@dimen/spacing_small"
                 android:splitTrack="false"
                 android:switchTextAppearance="@style/SwitchTextAppearance"
                 android:thumb="@drawable/ic_switch_toggle"
@@ -89,11 +89,10 @@
                 android:layout_marginStart="@dimen/spacing_small"
                 android:layout_marginEnd="@dimen/spacing_small"
                 android:visibility="gone"
-                app:tabBackground="@drawable/selector_tab_rounded_rouge"
                 app:tabGravity="fill"
                 app:tabIndicator="@null"
+                app:tabIndicatorHeight="2dp"
                 app:tabMode="fixed"
-                app:tabSelectedTextColor="@color/white"
                 app:tabTextColor="@color/brownish_grey">
 
                 <com.google.android.material.tabs.TabItem

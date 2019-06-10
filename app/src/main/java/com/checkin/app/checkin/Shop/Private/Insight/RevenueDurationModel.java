@@ -41,16 +41,4 @@ public class RevenueDurationModel {
     public void setMonth(double month) {
         this.month = month;
     }
-
-    public int formatDay(){
-        return (int)day;
-    }
-
-    public int formatWeek(){
-        return (int)week;
-    }
-
-    public int formatMonth(){
-        return (int)month;
-    }
 }

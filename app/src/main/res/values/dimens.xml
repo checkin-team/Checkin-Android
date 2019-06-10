@@ -170,7 +170,5 @@
     <dimen name="height_insight_discount_icon">35dp</dimen>
     <dimen name="width_insight_discount_icon">20dp</dimen>
     <dimen name="height_floating_cash_card">120dp</dimen>
-
-
-
+    <dimen name="width_coming_soon_label">65dp</dimen>
 </resources>

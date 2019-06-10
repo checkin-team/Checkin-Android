@@ -5,16 +5,14 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import androidx.annotation.Nullable;
+import androidx.lifecycle.ViewModelProviders;
+
 import com.checkin.app.checkin.Data.Resource;
 import com.checkin.app.checkin.Misc.BaseActivity;
 import com.checkin.app.checkin.R;
 import com.checkin.app.checkin.Utility.Utils;
 
-import java.util.Locale;
-
-import androidx.annotation.Nullable;
-
-import androidx.lifecycle.ViewModelProviders;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
@@ -37,6 +35,7 @@ public class ShopInsightActivity extends BaseActivity {
     ViewGroup cardLoyaltyProgramSelected;
     @BindView(R.id.card_shop_insight_revenue_selected)
     ViewGroup cardRevenueSelected;
+
     private ShopInsightRevenueFragment mRevenueFragment;
     private ShopInsightLoyaltyProgramFragment mLoyaltyProgramFragment;
     private ShopInsightViewModel mViewModel;
@@ -57,7 +56,7 @@ public class ShopInsightActivity extends BaseActivity {
         onRevenueClick();
     }
 
-    private void setData(){
+    private void setData() {
         mViewModel = ViewModelProviders.of(this).get(ShopInsightViewModel.class);
         long restaurantPk = getIntent().getLongExtra(KEY_INVENTORY_RESTAURANT_PK, 0);
         mViewModel.fetchShopInsightRevenueDetail(restaurantPk);
@@ -65,8 +64,8 @@ public class ShopInsightActivity extends BaseActivity {
             if (shopInsightRevenueModelResource == null)
                 return;
             if (shopInsightRevenueModelResource.status == Resource.Status.SUCCESS && shopInsightRevenueModelResource.data != null) {
-                ShopInsightRevenueModel revenueModel =  shopInsightRevenueModelResource.data;
-                tvTotalSale.setText(String.format(Locale.ENGLISH, Utils.getCurrencyFormat(tvTotalSale.getContext()), revenueModel.getSales()));
+                ShopInsightRevenueModel revenueModel = shopInsightRevenueModelResource.data;
+                tvTotalSale.setText(revenueModel.formatSales(this));
                 tvSessionTime.setText(revenueModel.formatAvgSessionTime());
                 tvServingTime.setText(revenueModel.formatAvgServingTime());
             }
@@ -74,28 +73,34 @@ public class ShopInsightActivity extends BaseActivity {
     }
 
     @OnClick(R.id.card_shop_insight_revenue)
-    public void onRevenueClick(){
+    public void onRevenueClick() {
         showRevenueSelected();
         getSupportFragmentManager().beginTransaction()
                 .replace(R.id.container_shop_insight_details, mRevenueFragment)
                 .commit();
     }
+
     @OnClick(R.id.card_shop_insight_loyalty_program)
-    public void onLoyaltyClick(){
+    public void onLoyaltyClick() {
         showLoyaltySelected();
         getSupportFragmentManager().beginTransaction()
                 .replace(R.id.container_shop_insight_details, mLoyaltyProgramFragment)
                 .commit();
     }
 
-    public void showRevenueSelected(){
+    @OnClick(R.id.card_shop_insight_expenditure)
+    public void onExpenditureClick() {
+        Utils.toast(this, "Coming soon!");
+    }
+
+    public void showRevenueSelected() {
         cardRevenue.setVisibility(View.GONE);
         cardRevenueSelected.setVisibility(View.VISIBLE);
         cardLoyaltyProgram.setVisibility(View.VISIBLE);
         cardLoyaltyProgramSelected.setVisibility(View.GONE);
     }
 
-    public void showLoyaltySelected(){
+    public void showLoyaltySelected() {
         cardRevenue.setVisibility(View.VISIBLE);
         cardRevenueSelected.setVisibility(View.GONE);
         cardLoyaltyProgram.setVisibility(View.GONE);

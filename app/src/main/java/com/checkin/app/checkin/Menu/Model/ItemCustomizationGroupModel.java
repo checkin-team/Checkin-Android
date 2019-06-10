@@ -11,7 +11,6 @@ import io.objectbox.annotation.Backlink;
 import io.objectbox.annotation.Entity;
 import io.objectbox.annotation.Id;
 import io.objectbox.relation.ToMany;
-import io.objectbox.relation.ToOne;
 
 /**
  * Created by Bhavik Patel on 11/08/2018.
@@ -83,7 +82,6 @@ public class ItemCustomizationGroupModel {
         AppDatabase.getMenuItemCustomizationFieldModel(null).put(customizationFields);
         AppDatabase.getMenuItemCustomizationGroupModel(null).put(this);
         this.customizationFields.addAll(customizationFields);
-
     }
 
     public void setCustomizationFields(ToMany<ItemCustomizationFieldModel> customizationFields) {

@@ -25,12 +25,12 @@ public class ManagerStatsModel {
     @JsonProperty("trending_orders")
     private List<TrendingOrder> trendingOrders;
 
-    public String getDayRevenue() {
-        return String.valueOf(revenue.day);
+    public double getDayRevenue() {
+        return revenue.day;
     }
 
-    public String getWeekRevenue() {
-        return String.valueOf(revenue.week);
+    public double getWeekRevenue() {
+        return revenue.week;
     }
 
     public String getDayOrdersCount() {

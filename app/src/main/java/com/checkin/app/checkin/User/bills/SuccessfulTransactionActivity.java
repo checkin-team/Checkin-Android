@@ -1,14 +1,10 @@
 package com.checkin.app.checkin.User.bills;
 
-import android.animation.Animator;
-import android.animation.AnimatorListenerAdapter;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
-import android.view.animation.ScaleAnimation;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -18,6 +14,7 @@ import androidx.lifecycle.ViewModelProviders;
 import com.checkin.app.checkin.Data.Resource;
 import com.checkin.app.checkin.Misc.BaseActivity;
 import com.checkin.app.checkin.R;
+import com.checkin.app.checkin.Utility.Constants;
 import com.checkin.app.checkin.Utility.Utils;
 
 import butterknife.BindView;
@@ -102,6 +99,11 @@ public class SuccessfulTransactionActivity extends BaseActivity {
     @OnClick(R.id.im_payment_successful_finish)
     public void onClickDismiss() {
         Utils.navigateBackToHome(this);
+    }
+
+    @OnClick(R.id.tv_se_rate_checkin)
+    public void onClickRateCheckin() {
+        startActivity(new Intent(Intent.ACTION_VIEW, Constants.PLAY_STORE_URI));
     }
 
     @Override
