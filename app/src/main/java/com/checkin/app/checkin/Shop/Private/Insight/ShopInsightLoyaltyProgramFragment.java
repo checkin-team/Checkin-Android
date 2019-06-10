@@ -14,7 +14,6 @@ import com.checkin.app.checkin.Data.Resource;
 import com.checkin.app.checkin.Misc.BaseFragment;
 import com.checkin.app.checkin.R;
 import com.checkin.app.checkin.Utility.Utils;
-import com.checkin.app.checkin.session.activesession.ActiveSessionInvoiceViewModel;
 import com.checkin.app.checkin.session.activesession.ActiveSessionPromoAdapter;
 
 import java.util.Locale;
@@ -29,7 +28,6 @@ public class ShopInsightLoyaltyProgramFragment extends BaseFragment {
 
     private ActiveSessionPromoAdapter mAdapter;
     private ShopInsightViewModel mViewModel;
-    private ActiveSessionInvoiceViewModel mInvoiceViewModel;
 
     public ShopInsightLoyaltyProgramFragment() {
     }
@@ -58,11 +56,8 @@ public class ShopInsightLoyaltyProgramFragment extends BaseFragment {
 
     private void getData() {
         mViewModel = ViewModelProviders.of(requireActivity()).get(ShopInsightViewModel.class);
-        mInvoiceViewModel = ViewModelProviders.of(requireActivity()).get(ActiveSessionInvoiceViewModel.class);
-        mInvoiceViewModel.fetchAvailablePromoCodes();
-        mViewModel.fetchShopInsightLoyaltyDetail();
 
-        mInvoiceViewModel.getPromoCodes().observe(this, listResource -> {
+        mViewModel.getShopActivePromos().observe(this, listResource -> {
             if (listResource == null)
                 return;
             if (listResource.status == Resource.Status.SUCCESS && listResource.data != null)

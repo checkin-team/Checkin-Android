@@ -59,7 +59,11 @@ public class ShopInsightActivity extends BaseActivity {
     private void setData() {
         mViewModel = ViewModelProviders.of(this).get(ShopInsightViewModel.class);
         long restaurantPk = getIntent().getLongExtra(KEY_INVENTORY_RESTAURANT_PK, 0);
+
         mViewModel.fetchShopInsightRevenueDetail(restaurantPk);
+        mViewModel.fetchShopActivePromos();
+        mViewModel.fetchShopInsightLoyaltyDetail();
+
         mViewModel.getInsightRevenueDetail().observe(this, shopInsightRevenueModelResource -> {
             if (shopInsightRevenueModelResource == null)
                 return;

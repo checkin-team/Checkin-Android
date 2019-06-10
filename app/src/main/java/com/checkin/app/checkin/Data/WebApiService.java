@@ -238,7 +238,7 @@ public interface WebApiService {
     Call<OrderStatusModel> postChangeOrderStatus(@Path("order_id") long orderId, @Body ObjectNode data);
 
     @POST("sessions/{session_id}/manage/orders/status/")
-    Call<List<OrderStatusModel>> postChangeOrderStatusList(@Path("session_id") long sessionId,@Body List<OrderStatusModel> msOrderStatus);
+    Call<List<OrderStatusModel>> postChangeOrderStatusList(@Path("session_id") long sessionId, @Body List<OrderStatusModel> msOrderStatus);
 
     @PUT("sessions/manage/events/{event_id}/done/")
     Call<GenericDetailModel> putSessionEventDone(@Path("event_id") long eventId);
@@ -345,6 +345,9 @@ public interface WebApiService {
     // region promos
     @GET("promos/")
     Call<List<PromoDetailModel>> getPromoCodes();
+
+    @GET("promos/active/restaurants/{restaurant_id}/")
+    Call<List<PromoDetailModel>> getRestaurantActivePromos(@Path("restaurant_id") long restaurantId);
 
     //endregion
 
