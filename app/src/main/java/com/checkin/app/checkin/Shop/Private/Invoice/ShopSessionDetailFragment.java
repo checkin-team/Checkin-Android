@@ -61,7 +61,7 @@ public class ShopSessionDetailFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         mBillHolder = new BillHolder(view);
 
-        mOrdersAdapter = new InvoiceOrdersAdapter(null);
+        mOrdersAdapter = new InvoiceOrdersAdapter(null,null);
         rvSessionOrders.setLayoutManager(new LinearLayoutManager(getContext(), RecyclerView.VERTICAL, false));
         rvSessionOrders.setAdapter(mOrdersAdapter);
 
