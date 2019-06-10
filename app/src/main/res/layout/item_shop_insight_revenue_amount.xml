@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <TextView
+        android:id="@+id/tv_shop_insight_revenue_duration"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        style="@style/PinkishGreySmallTextStyle"
+        android:layout_centerHorizontal="true"
+        android:layout_alignParentTop="true"
+        android:layout_marginTop="@dimen/spacing_extra_small"
+        tools:text="Today's Revenue"/>
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/tv_shop_insight_revenue_orders_number"
+            style="@style/RedSmallTextStyle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/josefinsans_regular"
+            android:layout_gravity="end"
+            android:textAllCaps="true"
+            android:textSize="@dimen/font_extra_small"
+            tools:text="55 orders" />
+
+        <TextView
+            android:id="@+id/tv_shop_insight_revenue_amount"
+            style="@style/RedTextStyle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="end"
+            tools:text="$ 10,000" />
+
+    </LinearLayout>
+
+</RelativeLayout>

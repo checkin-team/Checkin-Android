@@ -176,6 +176,10 @@
             android:theme="@style/AppThemeWhiteActionBar"/>
         <activity android:name=".Shop.Private.ShopPrivateActivity"
             android:screenOrientation="portrait"/>
+        <activity
+            android:name=".Shop.Private.Insight.ShopInsightActivity"
+            android:label="Insight"
+            android:theme="@style/AppTheme" />
 
         <service
             android:name=".Auth.AuthenticatorService"

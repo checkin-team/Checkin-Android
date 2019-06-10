@@ -135,4 +135,21 @@ public class UserTransactionBriefModel {
                 return "Awesome!";
         }
     }
+
+    public static String getFeedbackTextWithoutExclamatory(int rate) {
+        switch (rate) {
+            case 1:
+                return "Disappointing";
+            case 2:
+                return "Unpleasant";
+            case 3:
+                return "Satisfactory";
+            case 4:
+                return "Pleasant";
+            case 5:
+                return "Awesome";
+            default:
+                return "Awesome";
+        }
+    }
 }

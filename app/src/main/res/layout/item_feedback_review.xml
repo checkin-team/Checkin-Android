@@ -1,0 +1,123 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginStart="@dimen/spacing_small"
+    android:layout_marginTop="@dimen/spacing_small"
+    android:layout_marginEnd="@dimen/spacing_small"
+    android:clickable="true"
+    android:focusable="true"
+    app:cardCornerRadius="@dimen/card_corner_radius"
+    app:cardElevation="@dimen/card_elevation">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+    <TextView
+        android:id="@+id/tv_sf_user_name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        style="@style/RedTextStyle"
+        android:layout_marginStart="@dimen/spacing_large"
+        android:layout_marginTop="@dimen/spacing_small"
+        tools:text="Divya singh"/>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/button_height_normal"
+        android:layout_marginTop="@dimen/spacing_normal"
+        android:layout_marginStart="@dimen/spacing_large"
+        android:layout_marginEnd="@dimen/spacing_large"
+        android:weightSum="5">
+
+        <ImageView
+            android:id="@+id/im_sf_emoji_angry_1"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:src="@drawable/ic_emoji_angry" />
+        <ImageView
+            android:id="@+id/im_sf_emoji_sad_2"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:src="@drawable/ic_emoji_sad"/>
+        <ImageView
+            android:id="@+id/im_sf_emoji_confused_3"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:src="@drawable/ic_emoji_confused"/>
+        <ImageView
+            android:id="@+id/im_sf_emoji_smile_4"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:src="@drawable/ic_emoji_smiling"/>
+        <ImageView
+            android:id="@+id/im_sf_emoji_love_5"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:src="@drawable/ic_emoji_in_love"/>
+
+    </LinearLayout>
+
+
+
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:layout_marginTop="@dimen/spacing_small"
+        android:clickable="true"
+        android:focusable="true"
+        android:background="@drawable/rectangle_bordered_shadow">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginStart="@dimen/spacing_small"
+            android:layout_marginEnd="@dimen/spacing_small">
+
+        <de.hdodenhof.circleimageview.CircleImageView
+            style="@style/LogoSmallImageStyle"
+            android:src="@drawable/ic_rating_star"
+            android:layout_gravity="center"
+            android:padding="@dimen/spacing_tiny"/>
+
+        <TextView
+            android:id="@+id/tv_sf_rating_number"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            style="@style/RedSmallTextStyle"
+            android:background="@drawable/background_pinkish_grey_stroke"
+            android:paddingStart="@dimen/spacing_extra_small"
+            android:paddingEnd="@dimen/spacing_extra_small"
+            android:paddingTop="@dimen/spacing_tiny"
+            android:paddingBottom="@dimen/spacing_tiny"
+            android:layout_gravity="center"
+            android:gravity="center"
+            android:layout_marginStart="@dimen/spacing_normal"
+            tools:text="4"/>
+
+            <TextView
+                android:id="@+id/tv_sf_rating_text"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                style="@style/GreyTextStyle"
+                android:layout_weight="1"
+                android:gravity="end"
+                android:layout_gravity="center|end"
+                tools:text="Awesome"/>
+
+        </LinearLayout>
+
+    </LinearLayout>
+    </LinearLayout>
+    </androidx.cardview.widget.CardView>

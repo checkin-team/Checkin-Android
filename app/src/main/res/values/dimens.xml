@@ -9,6 +9,7 @@
     <dimen name="font_small">12sp</dimen>
     <dimen name="font_extra_small">10sp</dimen>
     <dimen name="font_tiny">8sp</dimen>
+    <dimen name="font_extra_tiny">6sp</dimen>
 
     <!-- typical spacing between two views -->
     <dimen name="spacing_incredible">75dp</dimen>
@@ -156,6 +157,20 @@
     <!--User Session End -->
     <dimen name="width_holi_icon">90dp</dimen>
     <dimen name="height_holi_icon">130dp</dimen>
+    <dimen name="width_love_us_icon">180dp</dimen>
+    <dimen name="height_love_us_icon">40dp</dimen>
+
+    <!--Shop Insight -->
+    <dimen name="height_shop_insight_card">180dp</dimen>
+    <dimen name="height_shop_insight_tabs">110dp</dimen>
+    <dimen name="height_shop_insight_revenue_tabs">130dp</dimen>
+    <dimen name="width_floating_cash">55dp</dimen>
+    <dimen name="height_floating_cash">45dp</dimen>
+    <dimen name="height_insight_discount">110dp</dimen>
+    <dimen name="height_insight_discount_icon">35dp</dimen>
+    <dimen name="width_insight_discount_icon">20dp</dimen>
+    <dimen name="height_floating_cash_card">120dp</dimen>
+
 
 
 </resources>

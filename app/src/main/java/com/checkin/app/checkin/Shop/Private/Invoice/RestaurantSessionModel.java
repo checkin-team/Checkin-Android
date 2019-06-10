@@ -51,7 +51,7 @@ public class RestaurantSessionModel implements Serializable {
     }
 
     public String getHashId() {
-        return hashId;
+        return "Session Id: #"+hashId;
     }
 
     public int getCountOrders() {

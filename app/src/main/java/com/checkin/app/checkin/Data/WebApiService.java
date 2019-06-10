@@ -14,6 +14,8 @@ import com.checkin.app.checkin.Misc.paytm.PaytmModel;
 import com.checkin.app.checkin.Search.SearchResultPeopleModel;
 import com.checkin.app.checkin.Search.SearchResultShopModel;
 import com.checkin.app.checkin.Shop.Private.Finance.FinanceModel;
+import com.checkin.app.checkin.Shop.Private.Insight.ShopInsightLoyaltyProgramModel;
+import com.checkin.app.checkin.Shop.Private.Insight.ShopInsightRevenueModel;
 import com.checkin.app.checkin.Shop.Private.Invoice.RestaurantSessionModel;
 import com.checkin.app.checkin.Shop.Private.Invoice.ShopSessionDetailModel;
 import com.checkin.app.checkin.Shop.Private.Invoice.ShopSessionFeedbackModel;
@@ -23,7 +25,6 @@ import com.checkin.app.checkin.Shop.ShopJoin.ShopJoinModel;
 import com.checkin.app.checkin.User.ShopCustomerModel;
 import com.checkin.app.checkin.User.UserModel;
 import com.checkin.app.checkin.User.bills.NewReviewModel;
-import com.checkin.app.checkin.User.bills.ShopReviewModel;
 import com.checkin.app.checkin.User.bills.UserTransactionBriefModel;
 import com.checkin.app.checkin.User.bills.UserTransactionDetailsModel;
 import com.checkin.app.checkin.Waiter.Model.OrderStatusModel;
@@ -133,6 +134,12 @@ public interface WebApiService {
 
     @PUT("restaurants/{shop_id}/verify/")
     Call<ObjectNode> putRestaurantContactVerify(@Path("shop_id") long shopId, @Body ObjectNode data);
+
+    @GET("/restaurants/{restaurant_id}/insights/revenue/")
+    Call<ShopInsightRevenueModel> getShopInsightRevenueDetail(@Path("restaurant_id") long shopId);
+
+    @GET("/restaurants/{restaurant_id}/insights/loyalty/")
+    Call<ShopInsightLoyaltyProgramModel> getShopInsightLoyaltyDetail(@Path("restaurant_id") long shopId);
 
     // region SHOP_MEMBERS
     @GET("restaurants/{shop_id}/members/")
@@ -342,8 +349,6 @@ public interface WebApiService {
     //endregion
 
     //region Review
-    @GET("reviews/restaurants/{shop_id}/")
-    Call<List<ShopReviewModel>> getRestaurantReviews(@Path("shop_id") long shopId);
 
     @GET("reviews/sessions/{session_id}/")
     Call<List<ShopSessionFeedbackModel>> getRestaurantSessionReviews(@Path("session_id") long sessionId);

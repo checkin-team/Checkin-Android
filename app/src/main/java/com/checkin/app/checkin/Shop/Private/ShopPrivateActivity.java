@@ -11,6 +11,7 @@ import com.checkin.app.checkin.Inventory.InventoryActivity;
 import com.checkin.app.checkin.Misc.BaseFragmentAdapterBottomNav;
 import com.checkin.app.checkin.Misc.BlankFragment;
 import com.checkin.app.checkin.R;
+import com.checkin.app.checkin.Shop.Private.Insight.ShopInsightActivity;
 import com.checkin.app.checkin.Utility.DynamicSwipableViewPager;
 import com.checkin.app.checkin.Utility.Utils;
 import com.google.android.material.tabs.TabLayout;
@@ -80,10 +81,12 @@ public class ShopPrivateActivity extends BaseAccountActivity {
         vpShopPrivate.addOnPageChangeListener(new ViewPager.SimpleOnPageChangeListener() {
             @Override
             public void onPageSelected(int position) {
-                if (position == 1) {
+                if (position == 1)
+                    launchShopInsight();
+                else if (position == 2)
                     launchMenu();
-                    vpShopPrivate.setCurrentItem(0);
-                }
+                vpShopPrivate.setCurrentItem(0);
+
                 super.onPageSelected(position);
             }
         });
@@ -120,6 +123,12 @@ public class ShopPrivateActivity extends BaseAccountActivity {
         startActivity(intent);
     }
 
+    private void launchShopInsight() {
+        Intent intent = new Intent(this, ShopInsightActivity.class);
+        intent.putExtra(InventoryActivity.KEY_INVENTORY_RESTAURANT_PK, mViewModel.getShopPk());
+        startActivity(intent);
+    }
+
     @Override
     protected void updateScreen() {
         getAccountViewModel().updateResults();
@@ -137,6 +146,8 @@ public class ShopPrivateActivity extends BaseAccountActivity {
                 case 0:
                     return R.drawable.ic_tab_home_toggle;
                 case 1:
+                    return R.drawable.ic_stats_toggle;
+                case 2:
                     return R.drawable.ic_tab_menu_toggle;
                 default:
                     return 0;
@@ -150,19 +161,25 @@ public class ShopPrivateActivity extends BaseAccountActivity {
                     return ShopPrivateProfileFragment.newInstance();
                 case 1:
                     return BlankFragment.newInstance();
+                case 2:
+                    return BlankFragment.newInstance();
             }
             return null;
         }
 
         @Override
         public int getCount() {
-            return 2;
+            return 3;
         }
 
         @Override
         protected void onTabClick(int position) {
-            if (position == 1) launchMenu();
-            else super.onTabClick(position);
+            if (position == 1)
+                launchShopInsight();
+            else if (position == 2)
+                launchMenu();
+            else
+                super.onTabClick(position);
         }
     }
 }

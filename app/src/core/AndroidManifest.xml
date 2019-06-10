@@ -124,6 +124,10 @@
         <activity android:name=".session.activesession.ActiveSessionPaymentOptionsActivity"
             android:label="Payment Mode"
             android:theme="@style/AppThemeWhiteActionBar" />
+        <activity
+            android:name=".Shop.Private.Insight.ShopInsightActivity"
+            android:label="Insight"
+            android:theme="@style/AppTheme" />
 
         <service android:name=".Data.Message.AppMessagingService">
             <intent-filter>

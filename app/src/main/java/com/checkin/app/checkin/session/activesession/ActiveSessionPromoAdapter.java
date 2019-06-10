@@ -84,6 +84,9 @@ public class ActiveSessionPromoAdapter extends RecyclerView.Adapter<ActiveSessio
         void bindData(PromoDetailModel promoModel) {
             this.mItem = promoModel;
 
+            if(mListener == null)
+                tvPromoApply.setVisibility(View.GONE);
+
             tvPromoCode.setText(promoModel.getCode());
             tvPromoName.setText(promoModel.getName());
             tvPromoSummary.setText(promoModel.getSummary());

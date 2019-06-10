@@ -7,12 +7,14 @@ import androidx.lifecycle.LiveData;
 
 import com.checkin.app.checkin.Data.BaseViewModel;
 import com.checkin.app.checkin.Data.Resource;
+import com.checkin.app.checkin.Misc.BriefModel;
 import com.checkin.app.checkin.User.ReviewRepository;
 import com.checkin.app.checkin.Utility.SourceMappedLiveData;
 import com.checkin.app.checkin.session.SessionRepository;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 
 import java.util.Arrays;
+import java.util.List;
 
 public class UserTransactionsViewModel extends BaseViewModel {
     private final SessionRepository mRepository;
@@ -49,11 +51,13 @@ public class UserTransactionsViewModel extends BaseViewModel {
 
     public void submitReview(int rating) {
         NewReviewModel reviewData = new NewReviewModel();
+//        BriefModel userData = new BriefModel();
+//        userData.setPk();
+//        reviewData.setUser(userData);
         reviewData.setBody(String.valueOf(rating));
         reviewData.setFoodRating(rating);
         reviewData.setAmbienceRating(rating);
         reviewData.setHospitalityRating(rating);
-        reviewData.setImagePks(Arrays.asList(new String[]{"0"}));
         mReviewData.addSource(mReviewRepository.postSessionReview(mSessionId, reviewData), mReviewData::setValue);
     }
 

@@ -87,7 +87,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginTop="@dimen/spacing_extra_small"
-                            android:text="$ 234.00" />
+                            tools:text="$ 234.00" />
 
                     </LinearLayout>
 
@@ -101,7 +101,7 @@
                             style="@style/PinkishGreySmallTextStyle"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="Transaction ID: XXXXXXXXXX"
+                            tools:text="Transaction ID: XXXXXXXXXX"
                             android:textSize="@dimen/font_small" />
 
                         <TextView
@@ -109,7 +109,7 @@
                             style="@style/PinkishGreySmallTextStyle"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="6:27 PM, 21 May 2019"
+                            tools:text="6:27 PM, 21 May 2019"
                             android:textSize="@dimen/font_small" />
 
                     </LinearLayout>
@@ -162,7 +162,7 @@
                                 android:id="@+id/im_successful_transaction_payment_mode"
                                 android:layout_width="@dimen/button_height_medium"
                                 android:layout_height="@dimen/height_input_small"
-                                android:src="@drawable/ic_paytm_logo" />
+                                tools:src="@drawable/ic_paytm_logo" />
 
                         </LinearLayout>
 
@@ -216,16 +216,9 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="@dimen/spacing_normal"
-                    android:text="You've saved $ 100.00" />
+                    tools:text="You've saved $ 100.00" />
 
             </LinearLayout>
-
-           <!-- <FrameLayout
-                android:id="@+id/container_feedback"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="@dimen/spacing_large"
-                android:layout_marginEnd="@dimen/spacing_large"/>-->
 
             <LinearLayout
                 android:id="@+id/container_user_end_feedback_take"
@@ -322,8 +315,7 @@
 
                 <ImageView
                     android:id="@+id/im_feedback_show_emoji"
-                    android:layout_width="60dp"
-                    android:layout_height="60dp"
+                    style="@style/LogoImageStyle"
                     android:layout_weight="1"
                     android:layout_gravity="center"
                     android:layout_marginTop="@dimen/spacing_normal"
@@ -350,8 +342,8 @@
 
 
             <ImageView
-                android:layout_width="180dp"
-                android:layout_height="40dp"
+                android:layout_width="@dimen/width_love_us_icon"
+                android:layout_height="@dimen/height_love_us_icon"
                 android:src="@drawable/love_us"
                 android:scaleType="fitXY"
                 android:layout_gravity="center"/>

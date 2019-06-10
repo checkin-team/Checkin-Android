@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:fillViewport="true"
+    android:scrollbars="none">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <TextView
+            style="@style/RedTextStyle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Ongoing Campaign" />
+
+
+        <androidx.cardview.widget.CardView
+            style="@style/WhiteCardStyle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/spacing_small">
+
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/rv_shop_insight_loyalty"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/spacing_small"
+            android:layout_marginEnd="@dimen/spacing_small"
+            android:layout_marginTop="@dimen/spacing_small"/>
+
+        </androidx.cardview.widget.CardView>
+
+
+        <androidx.cardview.widget.CardView
+            style="@style/WhiteCardStyle"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/height_insight_discount"
+            android:layout_marginTop="@dimen/spacing_normal"
+            android:layout_marginBottom="@dimen/spacing_normal">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/spacing_small"
+                android:orientation="vertical">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <ImageView
+                        android:layout_width="@dimen/width_insight_discount_icon"
+                        android:layout_height="@dimen/height_insight_discount_icon"
+                        android:src="@drawable/ic_discount" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        style="@style/RedTextStyle"
+                        android:fontFamily="@font/josefinsans_regular"
+                        android:gravity="bottom"
+                        android:text="Discounts"
+                        android:layout_marginStart="@dimen/spacing_small"
+                        android:layout_marginTop="@dimen/spacing_tiny"
+                        android:textSize="@dimen/font_large" />
+
+                </LinearLayout>
+
+                <TextView
+                    style="@style/GreySmallTextStyle"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/spacing_extra_large"
+                    android:layout_marginTop="@dimen/spacing_small"
+                    android:text="@string/header_shop_discount_total" />
+
+                <TextView
+                    android:id="@+id/tv_shop_insight_loyalty_total_discount"
+                    style="@style/RedTitleStyle"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/spacing_extra_large"
+                    android:layout_marginTop="@dimen/spacing_extra_small"
+                    tools:text="$ 212002" />
+
+            </LinearLayout>
+
+        </androidx.cardview.widget.CardView>
+
+    </LinearLayout>
+
+</ScrollView>

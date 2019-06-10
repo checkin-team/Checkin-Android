@@ -76,26 +76,26 @@ public class ShopSessionFeedbackAdapter extends RecyclerView.Adapter<ShopSession
             tvCustomerName.setText(data.getUser().getDisplayName());
 
             tvRatingNumber.setText(String.valueOf(data.getFoodRating()));
-            tvRatingText.setText(UserTransactionBriefModel.getFeedbackText(data.getFoodRating()));
+            tvRatingText.setText(UserTransactionBriefModel.getFeedbackTextWithoutExclamatory(data.getFoodRating()));
             defaultRatingEmoji();
             switch (data.getFoodRating()) {
                 case 1:
                     imAngry.setImageDrawable(imAngry.getContext().getResources().getDrawable(R.drawable.ic_emoji_angry_yellow));
                     break;
                 case 2:
-                    imSad.setImageDrawable(imAngry.getContext().getResources().getDrawable(R.drawable.ic_emoji_sad_yellow));
+                    imSad.setImageDrawable(imSad.getContext().getResources().getDrawable(R.drawable.ic_emoji_sad_yellow));
                     break;
                 case 3:
-                    imConfused.setImageDrawable(imAngry.getContext().getResources().getDrawable(R.drawable.ic_emoji_confused_yellow));
+                    imConfused.setImageDrawable(imConfused.getContext().getResources().getDrawable(R.drawable.ic_emoji_confused_yellow));
                     break;
                 case 4:
-                    imSmile.setImageDrawable(imAngry.getContext().getResources().getDrawable(R.drawable.ic_emoji_smiling_yellow));
+                    imSmile.setImageDrawable(imSmile.getContext().getResources().getDrawable(R.drawable.ic_emoji_smiling_yellow));
                     break;
                 case 5:
-                    imLove.setImageDrawable(imAngry.getContext().getResources().getDrawable(R.drawable.ic_emoji_in_love_yellow));
+                    imLove.setImageDrawable(imLove.getContext().getResources().getDrawable(R.drawable.ic_emoji_in_love_yellow));
                     break;
                 default:
-                    imLove.setImageDrawable(imAngry.getContext().getResources().getDrawable(R.drawable.ic_emoji_in_love_yellow));
+                    imLove.setImageDrawable(imLove.getContext().getResources().getDrawable(R.drawable.ic_emoji_in_love_yellow));
                     break;
 
             }
