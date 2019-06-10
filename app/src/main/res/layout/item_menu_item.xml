@@ -4,7 +4,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/card_view"
     android:layout_width="match_parent"
-    android:layout_height="@dimen/height_menu_item">
+    android:layout_height="wrap_content"
+    android:minHeight="@dimen/height_menu_item">
 
     <TextView
         android:id="@+id/tv_menu_item_name"
@@ -30,6 +31,7 @@
         android:textSize="@dimen/font_normal"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tv_menu_item_name"
         tools:text="@string/format_currency_rupee" />
 
 

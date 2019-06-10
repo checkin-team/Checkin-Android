@@ -81,8 +81,9 @@ public class ItemCustomizationGroupModel {
         AppDatabase.getMenuItemCustomizationGroupModel(null).attach(this);
         AppDatabase.getMenuItemCustomizationFieldModel(null).remove(this.customizationFields);
         AppDatabase.getMenuItemCustomizationFieldModel(null).put(customizationFields);
-        this.customizationFields.addAll(customizationFields);
         AppDatabase.getMenuItemCustomizationGroupModel(null).put(this);
+        this.customizationFields.addAll(customizationFields);
+
     }
 
     public void setCustomizationFields(ToMany<ItemCustomizationFieldModel> customizationFields) {

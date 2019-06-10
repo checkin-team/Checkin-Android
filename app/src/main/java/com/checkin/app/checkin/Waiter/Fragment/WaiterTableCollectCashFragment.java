@@ -57,9 +57,15 @@ public class WaiterTableCollectCashFragment extends Fragment {
                 return;
             if (resource.status == Resource.Status.SUCCESS && resource.data != null) {
                 tvWaiterTableBill.setText(Utils.formatCurrencyAmount(requireContext(), resource.data.getBill()));
-                tvWaiterTablePaymentMode.setText(ShopModel.getPaymentMode(resource.data.getPaymentModes()));
+                if (resource.data.getPaymentModes() == null) {
+                    if (getFragmentManager() != null) {
+                        getFragmentManager().popBackStack();
+                    }
+                }else {
+                    tvWaiterTablePaymentMode.setText(ShopModel.getPaymentMode(resource.data.getPaymentModes()));
+                }
                 tvWaiterTablePaymentMode.setCompoundDrawablesWithIntrinsicBounds(ShopModel.getPaymentModeIcon(resource.data.getPaymentModes()), 0, 0, 0);
-                if (tvWaiterTablePaymentMode.getText().toString().equalsIgnoreCase("via Cash")){
+                if (tvWaiterTablePaymentMode.getText().toString().equalsIgnoreCase("via Cash")) {
                     titleWaiterCollect.setText("Collect");
                     tvWaiterTablePaymentMode.setCompoundDrawablePadding(10);
                 } else {

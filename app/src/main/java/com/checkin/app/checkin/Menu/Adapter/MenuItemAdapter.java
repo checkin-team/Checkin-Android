@@ -35,6 +35,7 @@ public class MenuItemAdapter extends RecyclerView.Adapter<MenuItemAdapter.ItemVi
         mItemsList = itemsList;
         mListener = listener;
         mIsSessionActive = isSessionActive;
+
     }
 
     public void setMenuItems(List<MenuItemModel> menuItems) {
