@@ -8,7 +8,7 @@ import static java.util.concurrent.TimeUnit.MILLISECONDS;
 import static java.util.concurrent.TimeUnit.MINUTES;
 
 public class Constants {
-    public static final String API_VERSION = "0.9.2";
+    public static final String API_VERSION = "0.9.5";
     public static final String API_PROTOCOL = "https://";
     public static final String API_HOST = getApiHost();
 
