@@ -10,7 +10,9 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical">
+        android:orientation="vertical"
+        android:paddingStart="@dimen/spacing_small"
+        android:paddingEnd="@dimen/spacing_small">
 
         <androidx.cardview.widget.CardView
             android:layout_width="match_parent"
@@ -34,9 +36,9 @@
                 app:piv_animationType="scale"
                 app:piv_dynamicCount="true"
                 app:piv_interactiveAnimation="true"
+                app:piv_radius="@dimen/spacing_tiny"
                 app:piv_selectedColor="@color/brownish_grey"
-                app:piv_unselectedColor="@color/pinkish_grey"
-                app:piv_radius="@dimen/spacing_tiny"/>
+                app:piv_unselectedColor="@color/pinkish_grey" />
 
         </androidx.cardview.widget.CardView>
 
@@ -72,10 +74,10 @@
                         android:layout_height="wrap_content"
                         android:layout_gravity="center"
                         android:background="@color/white_two"
-                        android:paddingTop="@dimen/spacing_extra_tiny"
-                        android:paddingBottom="@dimen/spacing_extra_tiny"
                         android:paddingStart="@dimen/spacing_tiny"
+                        android:paddingTop="@dimen/spacing_extra_tiny"
                         android:paddingEnd="@dimen/spacing_tiny"
+                        android:paddingBottom="@dimen/spacing_extra_tiny"
                         tools:text="$ 245,485457654" />
 
                     <TextView
@@ -93,8 +95,8 @@
                         android:layout_gravity="center"
                         android:layout_marginTop="@dimen/spacing_tiny"
                         android:gravity="center"
-                        android:textSize="@dimen/font_tiny"
-                        android:text="*It will be updated once the cash is settled*" />
+                        android:text="*It will be updated once the cash is settled*"
+                        android:textSize="@dimen/font_tiny" />
 
                 </LinearLayout>
 
@@ -141,8 +143,8 @@
                         android:layout_gravity="center"
                         android:layout_marginTop="@dimen/spacing_tiny"
                         android:maxLines="1"
-                        android:textSize="@dimen/font_tiny"
-                        android:text="*Data of last week*" />
+                        android:text="*Data of last week*"
+                        android:textSize="@dimen/font_tiny" />
 
                 </LinearLayout>
 
@@ -164,7 +166,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/spacing_small"
-            android:nestedScrollingEnabled="false"/>
+            android:nestedScrollingEnabled="false" />
 
     </LinearLayout>
 </androidx.core.widget.NestedScrollView>

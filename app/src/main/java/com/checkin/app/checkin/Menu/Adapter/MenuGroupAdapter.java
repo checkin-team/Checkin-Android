@@ -299,7 +299,6 @@ public class MenuGroupAdapter extends RecyclerView.Adapter<MenuGroupAdapter.Grou
             if (menuGroup.hasSubGroups()) {
                 mListItems.add(menuGroup.getVegItems());
                 mListItems.add(menuGroup.getNonVegItems());
-                notifyDataSetChanged();
             } else {
                 mListItems.add(menuGroup.getItems());
             }

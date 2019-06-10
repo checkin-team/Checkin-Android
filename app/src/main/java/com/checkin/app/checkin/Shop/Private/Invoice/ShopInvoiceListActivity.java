@@ -5,7 +5,14 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.widget.TextView;
 
+import androidx.annotation.Nullable;
+import androidx.appcompat.app.ActionBar;
+import androidx.lifecycle.ViewModelProviders;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+
 import com.checkin.app.checkin.Data.Resource;
+import com.checkin.app.checkin.Misc.BaseActivity;
 import com.checkin.app.checkin.R;
 import com.checkin.app.checkin.Utility.Utils;
 
@@ -15,17 +22,11 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.Locale;
 
-import androidx.annotation.Nullable;
-import androidx.appcompat.app.ActionBar;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.lifecycle.ViewModelProviders;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 
-public class ShopInvoiceListActivity extends AppCompatActivity implements ShopInvoiceSessionAdapter.ShopInvoiceInteraction {
+public class ShopInvoiceListActivity extends BaseActivity implements ShopInvoiceSessionAdapter.ShopInvoiceInteraction {
     public static final String KEY_SHOP_PK = "SHOP_KEY";
 
     @BindView(R.id.tv_shop_invoice_filter_from)
@@ -43,6 +44,8 @@ public class ShopInvoiceListActivity extends AppCompatActivity implements ShopIn
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_shop_invoice_list);
         ButterKnife.bind(this);
+
+        initProgressBar(R.id.pb_shop_invoice);
 
         ActionBar actionBar = getSupportActionBar();
 
@@ -62,9 +65,13 @@ public class ShopInvoiceListActivity extends AppCompatActivity implements ShopIn
                 return;
             if (input.status == Resource.Status.SUCCESS && input.data != null) {
                 mAdapter.setSessionData(input.data);
+                hideProgressBar();
             } else if (input.status != Resource.Status.LOADING) {
                 Utils.toast(this, input.message);
+                hideProgressBar();
             }
+            if (input.status == Resource.Status.LOADING)
+                visibleProgressBar();
         });
         setupUi();
     }

@@ -64,7 +64,6 @@
             android:layout_alignParentBottom="true"
             android:orientation="vertical">
 
-
             <TextView
                 style="@style/PinkishGreySmallTextStyle"
                 android:layout_width="wrap_content"
@@ -81,7 +80,6 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 tools:text="20:40 Min" />
-
 
         </LinearLayout>
 
@@ -115,13 +113,12 @@
 
     </RelativeLayout>
 
-
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="@dimen/height_shop_insight_tabs"
+        android:layout_marginStart="@dimen/spacing_normal"
         android:layout_marginTop="@dimen/spacing_normal"
-        android:paddingStart="@dimen/spacing_normal"
-        android:paddingEnd="@dimen/spacing_normal"
+        android:layout_marginEnd="@dimen/spacing_normal"
         android:weightSum="3">
 
         <androidx.cardview.widget.CardView
@@ -287,7 +284,5 @@
     <FrameLayout
         android:id="@+id/container_shop_insight_details"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:paddingStart="@dimen/spacing_normal"
-        android:paddingEnd="@dimen/spacing_normal" />
+        android:layout_height="wrap_content" />
 </LinearLayout>
