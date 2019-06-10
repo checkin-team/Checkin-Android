@@ -123,6 +123,8 @@ public class ActiveSessionInvoiceActivity extends BaseActivity {
         setContentView(R.layout.activity_active_session_invoice);
         ButterKnife.bind(this);
 
+        initProgressBar(R.id.pb_as_checkout);
+
         mViewModel = ViewModelProviders.of(this).get(ActiveSessionInvoiceViewModel.class);
 
         setupUi();
@@ -225,6 +227,7 @@ public class ActiveSessionInvoiceActivity extends BaseActivity {
                 }
             } else if (statusModelResource.status != Resource.Status.LOADING) {
                 Utils.toast(ActiveSessionInvoiceActivity.this, statusModelResource.message);
+                hideProgressBar();
                 if (statusModelResource.getProblem() != null && statusModelResource.getProblem().getErrorCode() == ProblemModel.ERROR_CODE.INVALID_PAYMENT_MODE_PROMO_AVAILED)
                     onPaymentModeClick();
             }
@@ -362,7 +365,10 @@ public class ActiveSessionInvoiceActivity extends BaseActivity {
                 startActivity(successIntent);
                 finish();
             }
-            Utils.toast(this, objectNodeResource.message);
+            if (objectNodeResource.status != Resource.Status.LOADING) {
+                Utils.toast(this, objectNodeResource.message);
+                hideProgressBar();
+            }
         });
 
         mViewModel.getSessionCancelCheckoutData().observe(this, objectNodeResource -> {
@@ -370,6 +376,9 @@ public class ActiveSessionInvoiceActivity extends BaseActivity {
                 return;
             if (objectNodeResource.status == Resource.Status.SUCCESS) {
                 mViewModel.updateRequestCheckout(false);
+            }
+            if (objectNodeResource.status != Resource.Status.LOADING) {
+                hideProgressBar();
             }
         });
     }
@@ -410,9 +419,10 @@ public class ActiveSessionInvoiceActivity extends BaseActivity {
     }
 
     private void onRequestCheckout(boolean override) {
-        if (selectedMode != null)
+        if (selectedMode != null) {
             mViewModel.requestCheckout(mBillModel.getTip(), selectedMode, override);
-        else
+            visibleProgressBar();
+        } else
             Utils.toast(this, "Please select the Payment Mode.");
     }
 

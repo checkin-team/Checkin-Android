@@ -27,6 +27,8 @@ import com.fasterxml.jackson.databind.node.ObjectNode;
 
 import java.util.List;
 
+import retrofit2.Call;
+
 public class ActiveSessionRepository extends BaseRepository {
 
     private static ActiveSessionRepository INSTANCE;
@@ -299,6 +301,10 @@ public class ActiveSessionRepository extends BaseRepository {
                 //saveCallResult code
             }
         }.getAsLiveData();
+    }
+
+    public Call<ObjectNode> synchPostPaytmCallback(ObjectNode data) {
+        return mWebService.postPaytmCallback(data);
     }
 
     public LiveData<Resource<GenericDetailModel>> acceptSessionMemberRequest(String userId) {

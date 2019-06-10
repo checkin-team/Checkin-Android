@@ -6,12 +6,20 @@
     android:layout_width="wrap_content"
     android:layout_height="wrap_content">
 
-
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:background="@color/white_three">
 
+        <ProgressBar
+            android:id="@+id/pb_as_checkout"
+            style="?android:attr/progressBarStyleHorizontal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:indeterminate="true"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
 
         <TextView
             android:id="@+id/title_bill_details"
@@ -21,7 +29,7 @@
             android:padding="@dimen/spacing_extra_small"
             android:text="@string/title_bill_details"
             app:layout_constraintBottom_toTopOf="@id/container_session_invoice"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toBottomOf="@id/pb_as_checkout" />
 
         <ScrollView
             android:id="@+id/container_session_invoice"
@@ -146,9 +154,9 @@
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
-                            android:gravity="center|left"
                             android:drawableStart="@drawable/ic_discount_percent"
                             android:drawablePadding="@dimen/spacing_small"
+                            android:gravity="center|left"
                             android:text="@string/session_benefits_apply_promo_code" />
 
                         <ImageView

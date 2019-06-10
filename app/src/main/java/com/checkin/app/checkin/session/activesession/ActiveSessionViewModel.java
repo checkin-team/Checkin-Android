@@ -104,7 +104,7 @@ public class ActiveSessionViewModel extends BaseViewModel {
     public void updateBill(double bill) {
         Resource<ActiveSessionModel> resource = mSessionData.getValue();
         if (resource != null && resource.status == Resource.Status.SUCCESS && resource.data != null) {
-            resource.data.setBill(String.valueOf(bill));
+            resource.data.setBill(bill);
         }
         mSessionData.setValue(resource);
     }

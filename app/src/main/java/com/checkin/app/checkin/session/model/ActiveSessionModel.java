@@ -20,7 +20,7 @@ public class ActiveSessionModel {
     private int pk;
 
     @JsonProperty("bill")
-    private String bill;
+    private double bill;
 
     @JsonProperty("customers")
     private List<SessionCustomerModel> customers;
@@ -46,11 +46,11 @@ public class ActiveSessionModel {
     public ActiveSessionModel() {
     }
 
-    public String getBill() {
+    public double getBill() {
         return bill;
     }
 
-    public void setBill(String bill) {
+    public void setBill(double bill) {
         this.bill = bill;
     }
 
