@@ -11,8 +11,10 @@ import androidx.lifecycle.Transformations;
 import com.checkin.app.checkin.Data.BaseViewModel;
 import com.checkin.app.checkin.Data.Converters;
 import com.checkin.app.checkin.Data.Resource;
+import com.checkin.app.checkin.Data.RetrofitCallAsyncTask;
 import com.checkin.app.checkin.Misc.paytm.PaytmModel;
 import com.checkin.app.checkin.Shop.ShopModel;
+import com.checkin.app.checkin.Utility.ProgressRequestBody;
 import com.checkin.app.checkin.Utility.SourceMappedLiveData;
 import com.checkin.app.checkin.session.model.CheckoutStatusModel;
 import com.checkin.app.checkin.session.model.PromoDetailModel;
@@ -75,7 +77,27 @@ public class ActiveSessionInvoiceViewModel extends BaseViewModel {
         for (String key : keys) {
             data.put(key, String.valueOf(bundle.get(key)));
         }
-        mPaytmCallbackData.addSource(mRepository.postPaytmResult(data), mPaytmCallbackData::setValue);
+        ProgressRequestBody.UploadCallbacks listener = new ProgressRequestBody.UploadCallbacks() {
+            @Override
+            public void onProgressUpdate(int percentage) {
+                mPaytmCallbackData.postValue(Resource.loading(null));
+            }
+
+            @Override
+            public void onSuccess() {
+                mPaytmCallbackData.postValue(Resource.success(null));
+            }
+
+            @Override
+            public void onFailure() {
+                mPaytmCallbackData.postValue(Resource.error("Sorry, but PayTM transaction failed", null));
+            }
+        };
+        doPostPaytmCallback(data, listener);
+    }
+
+    private void doPostPaytmCallback(ObjectNode data, ProgressRequestBody.UploadCallbacks listener) {
+        new RetrofitCallAsyncTask<ObjectNode>(listener).execute(mRepository.synchPostPaytmCallback(data));
     }
 
     public LiveData<Resource<ObjectNode>> getPaytmCallbackData() {
