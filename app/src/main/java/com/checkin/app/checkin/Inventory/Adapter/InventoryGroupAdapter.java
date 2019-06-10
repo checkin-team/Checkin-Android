@@ -4,7 +4,12 @@ import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
 import android.animation.AnimatorSet;
 import android.animation.ValueAnimator;
+import android.graphics.drawable.Drawable;
 import android.os.Build;
+import android.text.SpannableStringBuilder;
+import android.text.Spanned;
+import android.text.style.DynamicDrawableSpan;
+import android.text.style.ImageSpan;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
@@ -221,6 +226,24 @@ public class InventoryGroupAdapter extends RecyclerView.Adapter<InventoryGroupAd
             if (menuGroup.hasSubGroups()) {
                 vTabs.setVisibility(View.VISIBLE);
                 vTabs.setupWithViewPager(vPager);
+                vTabs.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
+                    @Override
+                    public void onTabSelected(TabLayout.Tab tab) {
+                        if (tab.getPosition() == 0)
+                            vTabs.setSelectedTabIndicatorColor(vTabs.getContext().getResources().getColor(R.color.apple_green));
+                        else
+                            vTabs.setSelectedTabIndicatorColor(vTabs.getContext().getResources().getColor(R.color.primary_red));
+
+                    }
+
+                    @Override
+                    public void onTabUnselected(TabLayout.Tab tab) {
+                    }
+
+                    @Override
+                    public void onTabReselected(TabLayout.Tab tab) {
+                    }
+                });
             } else {
                 vTabs.setVisibility(View.GONE);
             }
@@ -303,13 +326,27 @@ public class InventoryGroupAdapter extends RecyclerView.Adapter<InventoryGroupAd
         @Nullable
         @Override
         public CharSequence getPageTitle(int position) {
+            String title = null;
+            Drawable drawable = null;
             switch (position) {
                 case 0:
-                    return "Veg";
+                    title = "Veg";
+                    drawable = mRecyclerView.getContext().getResources().getDrawable(R.drawable.ic_veg);
+                    break;
                 case 1:
-                    return "Non-Veg";
+                    title = "Non-Veg";
+                    drawable = mRecyclerView.getContext().getResources().getDrawable(R.drawable.ic_non_veg);
+                    break;
+                default:
+                    break;
             }
-            return "";
+
+            SpannableStringBuilder stringBuilder = new SpannableStringBuilder("    " + title);
+            drawable.setBounds(2, 2, drawable.getIntrinsicWidth(), drawable.getIntrinsicHeight());
+            ImageSpan span = new ImageSpan(drawable, DynamicDrawableSpan.ALIGN_BASELINE);
+            stringBuilder.setSpan(span, 0, 1, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
+
+            return stringBuilder;
         }
     }
 }
