@@ -18,11 +18,14 @@ import com.checkin.app.checkin.Menu.MenuViewModel;
 import com.checkin.app.checkin.Misc.BaseFragment;
 import com.checkin.app.checkin.R;
 import com.checkin.app.checkin.Utility.Utils;
+import com.facebook.shimmer.ShimmerFrameLayout;
 
 import butterknife.BindView;
 
 public class MenuGroupsFragment extends BaseFragment {
     public static final String KEY_SESSION_STATUS = "menu.status";
+    @BindView(R.id.shimmer_menu_group)
+    ShimmerFrameLayout shimmerMenu;
     @BindView(R.id.rv_menu_groups)
     RecyclerView rvGroupsList;
     @BindView(R.id.tv_menu_current_category)
@@ -61,6 +64,8 @@ public class MenuGroupsFragment extends BaseFragment {
             if (menuGroupResource.status == Resource.Status.SUCCESS && !menuGroupResource.isCached()) {
                 mAdapter.setGroupList(menuGroupResource.data);
                 stopRefreshing();
+                shimmerMenu.stopShimmer();
+                shimmerMenu.setVisibility(View.GONE);
             } else if (menuGroupResource.status == Resource.Status.LOADING) {
                 startRefreshing();
                 if (!mAdapter.hasData() && menuGroupResource.data != null)

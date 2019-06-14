@@ -42,6 +42,7 @@ import com.checkin.app.checkin.session.model.ActiveSessionModel;
 import com.checkin.app.checkin.session.model.SessionCustomerModel;
 import com.checkin.app.checkin.session.model.SessionOrderedItemModel;
 import com.checkin.app.checkin.session.model.TrendingDishModel;
+import com.facebook.shimmer.ShimmerFrameLayout;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -55,6 +56,10 @@ public class ActiveSessionActivity extends BaseActivity implements
     public static final String SP_MENU = "sp.menu";
     private static final int RC_SEARCH_MEMBER = 201;
 
+    @BindView(R.id.shimmer_session_members)
+    ShimmerFrameLayout shimmerMembers;
+    @BindView(R.id.shimmer_as_trending_dishes)
+    ShimmerFrameLayout shimmerTrendingDish;
     @BindView(R.id.sr_active_session)
     SwipeRefreshLayout swipeRefreshLayout;
     @BindView(R.id.rv_session_members)
@@ -241,8 +246,11 @@ public class ActiveSessionActivity extends BaseActivity implements
             if (inventoryItemModels == null)
                 return;
 
-            if (inventoryItemModels.status == Resource.Status.SUCCESS && inventoryItemModels.data != null)
+            if (inventoryItemModels.status == Resource.Status.SUCCESS && inventoryItemModels.data != null) {
                 mTrendingDishAdapter.setData(inventoryItemModels.data);
+                shimmerTrendingDish.stopShimmer();
+                shimmerTrendingDish.setVisibility(View.GONE);
+            }
         });
     }
 
@@ -326,7 +334,8 @@ public class ActiveSessionActivity extends BaseActivity implements
             tvSessionCheckout.setVisibility(View.VISIBLE);
             rlSessionOrders.setVisibility(View.GONE);
         }
-
+        shimmerMembers.stopShimmer();
+        shimmerMembers.setVisibility(View.GONE);
     }
 
     private void updateBill(double bill) {
@@ -344,6 +353,7 @@ public class ActiveSessionActivity extends BaseActivity implements
     private void updateCustomer(long customer, boolean isAdded) {
         mViewModel.updateCustomer(customer, isAdded);
     }
+
 
     private void updateOrderStatus(long orderPk, SessionChatModel.CHAT_STATUS_TYPE sessionEventStatus) {
         mViewModel.updateOrderStatus(orderPk, sessionEventStatus);

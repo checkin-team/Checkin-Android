@@ -26,10 +26,40 @@
             android:layout_height="@dimen/height_horizontal_line"
             android:background="@drawable/ic_line" />
 
+        <FrameLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+
+        <com.facebook.shimmer.ShimmerFrameLayout
+            android:id="@+id/shimmer_menu_group"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:visibility="visible">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical">
+                <include
+                    layout="@layout/shimmer_menu_group"/><include
+                    layout="@layout/shimmer_menu_group"/><include
+                    layout="@layout/shimmer_menu_group"/><include
+                    layout="@layout/shimmer_menu_group"/><include
+                    layout="@layout/shimmer_menu_group"/><include
+                    layout="@layout/shimmer_menu_group"/><include
+                    layout="@layout/shimmer_menu_group"/> <include
+                    layout="@layout/shimmer_menu_group"/>
+
+            </LinearLayout>
+
+        </com.facebook.shimmer.ShimmerFrameLayout>
+
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/rv_menu_groups"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             app:layout_behavior="@string/appbar_scrolling_view_behavior" />
+        </FrameLayout>
     </LinearLayout>
 </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>

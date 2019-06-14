@@ -340,6 +340,12 @@
         <item name="android:textColor">@color/brownish_grey</item>
     </style>
 
+    <style name="ShimmerTextViewStyle">
+        <item name="android:layout_width">@dimen/width_text_view</item>
+        <item name="android:layout_height">@dimen/height_text_view</item>
+        <item name="android:background">@color/shimmer_background</item>
+    </style>
+
 
     <style name="AppTheme.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar">
         <item name="android:windowContentOverlay">@null</item>

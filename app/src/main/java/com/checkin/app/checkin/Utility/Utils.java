@@ -48,6 +48,8 @@ import com.checkin.app.checkin.Data.Message.ActiveSessionNotificationService;
 import com.checkin.app.checkin.Home.HomeActivity;
 import com.checkin.app.checkin.Home.SplashActivity;
 import com.checkin.app.checkin.R;
+import com.facebook.shimmer.Shimmer;
+import com.facebook.shimmer.ShimmerDrawable;
 import com.golovin.fluentstackbar.FluentSnackbar;
 import com.google.android.material.snackbar.Snackbar;
 import com.google.android.material.tabs.TabLayout;
@@ -70,6 +72,8 @@ import java.util.Locale;
 import java.util.Map;
 import java.util.regex.MatchResult;
 import java.util.regex.Matcher;
+
+
 
 import static com.checkin.app.checkin.BuildConfig.DEBUG;
 
@@ -386,8 +390,11 @@ public final class Utils {
 
     public static void loadImageOrDefault(ImageView imageView, String url, @DrawableRes int defaultDrawable) {
         if (url != null) {
+//            ShimmerDrawable shimmerDrawable = new ShimmerDrawable();
+//            shimmerDrawable.setShimmer(new Shimmer.AlphaHighlightBuilder().build());
             GlideApp.with(imageView.getContext())
                     .load(url)
+//                    .placeholder(shimmerDrawable)
                     .into(imageView);
         } else if (defaultDrawable != 0) {
             imageView.setImageResource(defaultDrawable);

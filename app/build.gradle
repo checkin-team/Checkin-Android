@@ -176,6 +176,9 @@ dependencies {
     implementation('com.paytm:pgplussdk:1.3.3') {
         transitive = true
     }
+
+    //Shimmering Effects
+    implementation 'com.facebook.shimmer:shimmer:0.4.0'
 }
 
 repositories {

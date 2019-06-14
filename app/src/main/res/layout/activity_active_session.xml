@@ -2,11 +2,11 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    xmlns:tools="http://schemas.android.com/tools">
 
-    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-        xmlns:app="http://schemas.android.com/apk/res-auto"
-        xmlns:tools="http://schemas.android.com/tools"
+
+    <LinearLayout
         android:id="@+id/root_session"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -83,15 +83,42 @@
                     app:layout_constraintVertical_weight="0.45">
 
 
+
+                <FrameLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
+                    android:layout_gravity="center"
+                    android:layout_marginStart="@dimen/spacing_small"
+                    android:layout_marginTop="@dimen/spacing_normal"
+                    android:layout_weight="1">
+
+                    <com.facebook.shimmer.ShimmerFrameLayout
+                        android:id="@+id/shimmer_session_members"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:visibility="visible">
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content">
+                            <include
+                                layout="@layout/shimmer_active_session_member"/> <include
+                            layout="@layout/shimmer_active_session_member"/> <include
+                            layout="@layout/shimmer_active_session_member"/> <include
+                            layout="@layout/shimmer_active_session_member"/> <include
+                            layout="@layout/shimmer_active_session_member"/>
+
+                        </LinearLayout>
+
+                    </com.facebook.shimmer.ShimmerFrameLayout>
+
                     <androidx.recyclerview.widget.RecyclerView
                         android:id="@+id/rv_session_members"
                         android:layout_width="match_parent"
-                        android:layout_height="0dp"
-                        android:layout_gravity="center"
-                        android:layout_marginStart="@dimen/spacing_small"
-                        android:layout_marginTop="@dimen/spacing_normal"
-                        android:layout_weight="1" />
+                        android:layout_height="wrap_content" />
 
+                </FrameLayout>
 
                     <TextView
                         android:id="@+id/tv_title_friends_can_join"
@@ -370,14 +397,39 @@
                             android:text="Trending Dishes"
                             android:textSize="@dimen/font_small" />
 
-
-                        <androidx.recyclerview.widget.RecyclerView
-                            android:id="@+id/rv_as_trending_dishes"
+                        <FrameLayout
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
                             android:layout_centerVertical="true"
                             android:layout_marginTop="@dimen/spacing_normal"
-                            android:layout_gravity="center" />
+                            android:layout_gravity="center" >
+
+                        <com.facebook.shimmer.ShimmerFrameLayout
+                            android:id="@+id/shimmer_as_trending_dishes"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:visibility="visible">
+
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent">
+                                <include
+                                    layout="@layout/shimmer_active_session_trending_dishes"/>  <include
+                                    layout="@layout/shimmer_active_session_trending_dishes"/>  <include
+                                    layout="@layout/shimmer_active_session_trending_dishes"/>  <include
+                                    layout="@layout/shimmer_active_session_trending_dishes"/>
+
+                            </LinearLayout>
+
+                        </com.facebook.shimmer.ShimmerFrameLayout>
+
+
+                        <androidx.recyclerview.widget.RecyclerView
+                            android:id="@+id/rv_as_trending_dishes"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent" />
+
+                        </FrameLayout>
 
                     </LinearLayout>
 
@@ -551,7 +603,11 @@
 
         </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
 
+
+
     </LinearLayout>
+
+
 
     <FrameLayout
         android:id="@+id/container_as_orders"
