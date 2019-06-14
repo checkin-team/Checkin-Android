@@ -19,6 +19,7 @@ import com.checkin.app.checkin.Data.Message.MessageUtils;
 import com.checkin.app.checkin.Data.Resource;
 import com.checkin.app.checkin.Manager.Adapter.ManagerWorkTableAdapter;
 import com.checkin.app.checkin.Manager.ManagerSessionActivity;
+import com.checkin.app.checkin.Manager.ManagerSessionInvoiceActivity;
 import com.checkin.app.checkin.Manager.ManagerWorkViewModel;
 import com.checkin.app.checkin.Misc.BaseFragment;
 import com.checkin.app.checkin.Misc.BriefModel;
@@ -222,6 +223,15 @@ public class ManagerTablesFragment extends BaseFragment implements ManagerWorkTa
             tableModel.setEventCount(0);
             mAdapter.updateSession(pos);
         }
+    }
+
+    @Override
+    public void onClickBill(RestaurantTableModel tableModel) {
+        Intent intent = new Intent(getContext(), ManagerSessionInvoiceActivity.class);
+        intent.putExtra(ManagerSessionInvoiceActivity.TABLE_NAME, tableModel.getTable())
+                .putExtra(ManagerSessionInvoiceActivity.KEY_SESSION, tableModel.getTableSession().getPk())
+                .putExtra(ManagerSessionInvoiceActivity.IS_REQUESTED_CHECKOUT, tableModel.getTableSession().isRequestedCheckout());
+        startActivity(intent);
     }
 
     @Override

@@ -157,13 +157,17 @@
     <!--User Session End -->
     <dimen name="width_holi_icon">92dp</dimen>
     <dimen name="height_holi_icon">132dp</dimen>
-    <dimen name="width_love_us_icon">190dp</dimen>
-    <dimen name="height_love_us_icon">55dp</dimen>
+    <dimen name="width_love_us_icon">220dp</dimen>
+    <dimen name="height_love_us_icon">50dp</dimen>
+    <dimen name="spacing_feedback_take_view">40dp</dimen>
+    <dimen name="spacing_love_us_view">30dp</dimen>
+    <dimen name="spacing_feedback_detail_top_view">30dp</dimen>
+    <dimen name="spacing_small_rating_rest_text">10dp</dimen>
+    <dimen name="spacing_normal_emoji">18dp</dimen>
 
     <!--Shop Insight -->
     <dimen name="height_shop_insight_card">200dp</dimen>
     <dimen name="height_shop_insight_tabs">120dp</dimen>
-    <dimen name="height_shop_insight_revenue_tabs">130dp</dimen>
     <dimen name="width_floating_cash">60dp</dimen>
     <dimen name="height_floating_cash">50dp</dimen>
     <dimen name="height_insight_discount">130dp</dimen>

@@ -159,11 +159,15 @@
     <dimen name="height_holi_icon">130dp</dimen>
     <dimen name="width_love_us_icon">180dp</dimen>
     <dimen name="height_love_us_icon">40dp</dimen>
+    <dimen name="spacing_feedback_take_view">0dp</dimen>
+    <dimen name="spacing_love_us_view">14dp</dimen>
+    <dimen name="spacing_feedback_detail_top_view">24dp</dimen>
+    <dimen name="spacing_small_rating_rest_text">4dp</dimen>
+    <dimen name="spacing_normal_emoji">14dp</dimen>
 
     <!--Shop Insight -->
     <dimen name="height_shop_insight_card">180dp</dimen>
     <dimen name="height_shop_insight_tabs">110dp</dimen>
-    <dimen name="height_shop_insight_revenue_tabs">130dp</dimen>
     <dimen name="width_floating_cash">55dp</dimen>
     <dimen name="height_floating_cash">45dp</dimen>
     <dimen name="height_insight_discount">110dp</dimen>

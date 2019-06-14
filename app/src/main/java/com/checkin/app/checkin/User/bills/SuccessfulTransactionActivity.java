@@ -88,8 +88,9 @@ public class SuccessfulTransactionActivity extends BaseActivity {
 
     private void setupData(UserTransactionBriefModel data) {
         tvAmount.setText(Utils.formatCurrencyAmount(this, data.getTotal()));
-        tvRestaurantName.setText(Utils.formatCurrencyAmount(this, data.getRestaurant().getDisplayName()));
+        tvRestaurantName.setText(data.getRestaurant().getDisplayName());
         imPaymentMode.setImageDrawable(getResources().getDrawable(UserTransactionBriefModel.getPaymentModeIcon(data.getPaymentMode())));
+        if(data.getSavings() > 0)
         tvSavings.setText(String.format("You've saved %s!", Utils.formatCurrencyAmount(this, data.getSavings())));
         tvTransactionId.setText(data.getTransactionId());
         tvTransactionDate.setText(data.getFormattedDate());

@@ -15,6 +15,7 @@ import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.core.app.ActivityOptionsCompat;
 import androidx.lifecycle.ViewModelProviders;
@@ -41,6 +42,7 @@ import com.checkin.app.checkin.session.model.SessionCustomerModel;
 import com.checkin.app.checkin.session.model.SessionOrderedItemModel;
 import com.checkin.app.checkin.session.model.TrendingDishModel;
 
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
@@ -53,6 +55,8 @@ public class ActiveSessionActivity extends BaseActivity implements
     public static final String SP_MENU = "sp.menu";
     private static final int RC_SEARCH_MEMBER = 201;
 
+    @BindView(R.id.sr_active_session)
+    SwipeRefreshLayout swipeRefreshLayout;
     @BindView(R.id.rv_session_members)
     RecyclerView rvMembers;
     @BindView(R.id.rv_as_trending_dishes)
@@ -242,6 +246,12 @@ public class ActiveSessionActivity extends BaseActivity implements
         });
     }
 
+    public void enableDisableSwipeRefresh(boolean enable) {
+        if (swipeRefreshLayout != null) {
+            swipeRefreshLayout.setEnabled(enable);
+        }
+    }
+
     @Override
     protected void updateScreen() {
         mViewModel.updateResults();
@@ -252,10 +262,30 @@ public class ActiveSessionActivity extends BaseActivity implements
         rvMembers.setLayoutManager(new LinearLayoutManager(this, RecyclerView.HORIZONTAL, false));
         mSessionMembersAdapter = new ActiveSessionMemberAdapter(null, this);
         rvMembers.setAdapter(mSessionMembersAdapter);
+        rvMembers.addOnScrollListener(new RecyclerView.OnScrollListener() {
+            @Override
+            public void onScrollStateChanged(@NonNull RecyclerView recyclerView, int newState) {
+                super.onScrollStateChanged(recyclerView, newState);
+                if (newState != RecyclerView.SCROLL_STATE_IDLE)
+                    enableDisableSwipeRefresh(false);
+                else
+                    enableDisableSwipeRefresh(true);
+            }
+        });
 
         rvTrendingDishes.setLayoutManager(new LinearLayoutManager(this, RecyclerView.HORIZONTAL, false));
         mTrendingDishAdapter = new ActiveSessionTrendingDishAdapter(this);
         rvTrendingDishes.setAdapter(mTrendingDishAdapter);
+        rvTrendingDishes.addOnScrollListener(new RecyclerView.OnScrollListener() {
+            @Override
+            public void onScrollStateChanged(@NonNull RecyclerView recyclerView, int newState) {
+                super.onScrollStateChanged(recyclerView, newState);
+                if (newState != RecyclerView.SCROLL_STATE_IDLE)
+                    enableDisableSwipeRefresh(false);
+                else
+                    enableDisableSwipeRefresh(true);
+            }
+        });
 
         tvBill.setEnabled(false);
         rlSessionOrders.setEnabled(false);

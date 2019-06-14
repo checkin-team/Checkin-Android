@@ -27,6 +27,7 @@ import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProviders;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+import androidx.viewpager.widget.ViewPager;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
@@ -84,6 +85,23 @@ public class ShopPrivateProfileFragment extends Fragment {
         indicatorTopCover.setAnimationType(AnimationType.FILL);
         indicatorTopCover.setClickListener(position -> vpImage.setCurrentItem(position));
 
+        vpImage.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
+            @Override
+            public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
+
+            }
+
+            @Override
+            public void onPageSelected(int position) {
+
+            }
+
+            @Override
+            public void onPageScrollStateChanged(int state) {
+                ((ShopPrivateActivity)getActivity()).enableDisableSwipeRefresh( state == ViewPager.SCROLL_STATE_IDLE );
+            }
+        });
+
         mExtraDataAdapter = new StatusTextAdapter(R.drawable.ic_oval_red_white_tick);
         rvAdditionalData.setAdapter(mExtraDataAdapter);
         rvAdditionalData.setLayoutManager(new GridLayoutManager(requireContext(), 2, RecyclerView.VERTICAL, false));
@@ -106,6 +124,8 @@ public class ShopPrivateProfileFragment extends Fragment {
         super.onDestroyView();
         unbinder.unbind();
     }
+
+
 
     private void setupData(RestaurantModel shop) {
         tvShopName.setText(shop.getName());

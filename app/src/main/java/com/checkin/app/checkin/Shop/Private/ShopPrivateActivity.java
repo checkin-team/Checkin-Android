@@ -23,6 +23,7 @@ import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.lifecycle.ViewModelProviders;
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 import androidx.viewpager.widget.ViewPager;
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -31,6 +32,8 @@ import butterknife.OnClick;
 public class ShopPrivateActivity extends BaseAccountActivity {
 
     public static final String KEY_SHOP_PK = "shop_private.pk";
+    @BindView(R.id.sr_shop_private)
+    SwipeRefreshLayout swipeRefreshLayout;
     @BindView(R.id.vp_shop_private)
     DynamicSwipableViewPager vpShopPrivate;
     @BindView(R.id.drawer_shop_private)
@@ -90,6 +93,12 @@ public class ShopPrivateActivity extends BaseAccountActivity {
                 super.onPageSelected(position);
             }
         });
+    }
+
+    public void enableDisableSwipeRefresh(boolean enable) {
+        if (swipeRefreshLayout != null) {
+            swipeRefreshLayout.setEnabled(enable);
+        }
     }
 
     @Override

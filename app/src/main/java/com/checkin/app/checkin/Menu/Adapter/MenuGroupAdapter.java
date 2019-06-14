@@ -10,6 +10,7 @@ import android.text.SpannableStringBuilder;
 import android.text.Spanned;
 import android.text.style.DynamicDrawableSpan;
 import android.text.style.ImageSpan;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
@@ -193,6 +194,7 @@ public class MenuGroupAdapter extends RecyclerView.Adapter<MenuGroupAdapter.Grou
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
                 Utils.setTabsFont(vTabs, itemView.getResources().getFont(R.font.arial_rounded_mt_bold));
             }
+
             vPager.setEnabled(false);
 
             itemView.setOnClickListener(view -> {
@@ -220,10 +222,11 @@ public class MenuGroupAdapter extends RecyclerView.Adapter<MenuGroupAdapter.Grou
                 vTabs.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
                     @Override
                     public void onTabSelected(TabLayout.Tab tab) {
-                        if (tab.getPosition() == 0)
+                        if (tab.getPosition() == 0) {
                             vTabs.setSelectedTabIndicatorColor(vTabs.getContext().getResources().getColor(R.color.apple_green));
-                        else
+                        } else {
                             vTabs.setSelectedTabIndicatorColor(vTabs.getContext().getResources().getColor(R.color.primary_red));
+                        }
                     }
 
                     @Override
@@ -238,6 +241,9 @@ public class MenuGroupAdapter extends RecyclerView.Adapter<MenuGroupAdapter.Grou
                 vTabs.setVisibility(View.GONE);
             }
             vPager.setAdapter(pagerAdapter);
+            if (Build.VERSION.SDK_INT <= Build.VERSION_CODES.M) {
+                setupTabIcons();
+            }
         }
 
         void showMenu(View view) {
@@ -288,6 +294,22 @@ public class MenuGroupAdapter extends RecyclerView.Adapter<MenuGroupAdapter.Grou
         public boolean isScrollableList() {
             return mMenuGroup.getItems().size() >= 4;
         }
+
+        private void setupTabIcons() {
+            View tabOne = (View) LayoutInflater.from(vTabs.getContext()).inflate(R.layout.custom_tab_menu_subgroup, null);
+            TextView tv = tabOne.findViewById(R.id.tv_tab);
+            ImageView im = tabOne.findViewById(R.id.im_tab);
+            tv.setText("  Veg");
+            im.setImageDrawable(mRecyclerView.getContext().getResources().getDrawable(R.drawable.ic_veg));
+            vTabs.getTabAt(0).setCustomView(tabOne);
+
+            View tabTwo = (View) LayoutInflater.from(vTabs.getContext()).inflate(R.layout.custom_tab_menu_subgroup, null);
+            TextView tvTwo = tabTwo.findViewById(R.id.tv_tab);
+            ImageView imTwo = tabTwo.findViewById(R.id.im_tab);
+            tvTwo.setText("  Non-Veg");
+            imTwo.setImageDrawable(mRecyclerView.getContext().getResources().getDrawable(R.drawable.ic_non_veg));
+            vTabs.getTabAt(1).setCustomView(tabTwo);
+        }
     }
 
     public class SubGroupPagerAdapter extends FragmentStatePagerAdapter {
@@ -332,12 +354,16 @@ public class MenuGroupAdapter extends RecyclerView.Adapter<MenuGroupAdapter.Grou
                     break;
             }
 
-            SpannableStringBuilder stringBuilder = new SpannableStringBuilder("    " + title);
-            drawable.setBounds(2, 2, drawable.getIntrinsicWidth(), drawable.getIntrinsicHeight());
-            ImageSpan span = new ImageSpan(drawable, DynamicDrawableSpan.ALIGN_BASELINE);
-            stringBuilder.setSpan(span, 0, 1, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+                SpannableStringBuilder stringBuilder = new SpannableStringBuilder("    " + title);
+                drawable.setBounds(2, 2, drawable.getIntrinsicWidth(), drawable.getIntrinsicHeight());
+                ImageSpan span = new ImageSpan(drawable, DynamicDrawableSpan.ALIGN_BASELINE);
+                stringBuilder.setSpan(span, 0, 1, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
 
-            return stringBuilder;
+                return stringBuilder;
+            } else
+                return null;
+
         }
 
 

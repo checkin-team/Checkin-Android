@@ -1,5 +1,6 @@
 package com.checkin.app.checkin.Manager.Adapter;
 
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -9,6 +10,7 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.checkin.app.checkin.Manager.ManagerSessionInvoiceActivity;
 import com.checkin.app.checkin.Misc.BriefModel;
 import com.checkin.app.checkin.R;
 import com.checkin.app.checkin.Utility.Utils;
@@ -65,7 +67,7 @@ public class ManagerWorkTableAdapter extends RecyclerView.Adapter<ManagerWorkTab
 
     public interface ManagerTableInteraction {
         void onClickTable(RestaurantTableModel tableModel);
-
+        void onClickBill(RestaurantTableModel tableModel);
         void onMarkSessionDone(RestaurantTableModel tableModel);
     }
 
@@ -101,6 +103,10 @@ public class ManagerWorkTableAdapter extends RecyclerView.Adapter<ManagerWorkTab
             ButterKnife.bind(this, itemView);
 
             itemView.setOnClickListener(v -> mListener.onClickTable(mTableModel));
+
+            tvShopManagerTableBill.setOnClickListener(v -> { mListener.onClickBill(mTableModel);});
+
+
         }
 
         public void bindData(RestaurantTableModel data) {

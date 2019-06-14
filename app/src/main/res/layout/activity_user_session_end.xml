@@ -61,7 +61,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/top_container"
-                android:layout_margin="@dimen/spacing_large"
+                android:layout_margin="@dimen/spacing_feedback_detail_top_view"
                 android:orientation="vertical">
 
                 <LinearLayout
@@ -142,7 +142,7 @@
                             android:layout_height="wrap_content"
                             android:autoSizeTextType="uniform"
                             android:maxLines="1"
-                            android:text="Cheese Doest It Now"
+                            tools:text="Cheese Doest It Now"
                             android:textSize="@dimen/font_extra_large" />
 
                         <LinearLayout
@@ -221,16 +221,24 @@
             </LinearLayout>
 
             <LinearLayout
-                android:id="@+id/container_user_end_feedback_take"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
+                android:orientation="vertical"
                 android:layout_below="@+id/container_user_end_transaction_details"
+                android:layout_alignParentBottom="true">
+
+            <LinearLayout
+                android:id="@+id/container_user_end_feedback_take"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="1"
                 android:layout_marginStart="@dimen/spacing_large"
                 android:layout_marginEnd="@dimen/spacing_large"
                 android:background="@color/primary_red"
                 android:orientation="vertical"
                 android:paddingStart="@dimen/spacing_small"
                 android:paddingEnd="@dimen/spacing_small"
+                android:gravity="center"
                 android:visibility="visible">
 
                 <TextView
@@ -341,7 +349,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_alignParentBottom="true"
-                android:layout_marginBottom="@dimen/spacing_normal"
+                android:layout_marginBottom="@dimen/spacing_love_us_view"
                 android:orientation="vertical">
 
 
@@ -371,6 +379,8 @@
                     android:padding="@dimen/spacing_small"
                     android:text="Rate Checkin"
                     android:textSize="@dimen/font_normal" />
+
+            </LinearLayout>
 
             </LinearLayout>
 

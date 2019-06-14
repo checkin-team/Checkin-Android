@@ -10,13 +10,13 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical"
-        android:paddingStart="@dimen/spacing_small"
-        android:paddingEnd="@dimen/spacing_small">
+        android:orientation="vertical">
 
         <androidx.cardview.widget.CardView
             android:layout_width="match_parent"
             android:layout_height="@dimen/height_card_wide"
+            android:layout_marginTop="@dimen/spacing_extra_small"
+            android:layout_marginBottom="@dimen/spacing_tiny"
             android:layout_marginStart="@dimen/spacing_very_huge"
             android:layout_marginEnd="@dimen/spacing_very_huge"
             android:elevation="@dimen/card_elevation"
@@ -44,13 +44,13 @@
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="@dimen/height_shop_insight_revenue_tabs"
-            android:layout_marginTop="@dimen/spacing_small">
+            android:layout_height="wrap_content"
+            android:gravity="center">
 
             <androidx.cardview.widget.CardView
                 android:layout_width="0dp"
-                android:layout_height="@dimen/height_floating_cash_card"
-                android:layout_marginEnd="@dimen/spacing_extra_small"
+                android:layout_height="wrap_content"
+                android:layout_margin="@dimen/spacing_small"
                 android:layout_weight="1"
                 android:elevation="@dimen/card_elevation"
                 app:cardCornerRadius="@dimen/card_corner_radius">
@@ -96,7 +96,8 @@
                         android:layout_marginTop="@dimen/spacing_tiny"
                         android:gravity="center"
                         android:text="*It will be updated once the cash is settled*"
-                        android:textSize="@dimen/font_tiny" />
+                        android:textSize="@dimen/font_tiny"
+                        android:paddingBottom="@dimen/spacing_extra_tiny"/>
 
                 </LinearLayout>
 
@@ -104,9 +105,12 @@
 
             <androidx.cardview.widget.CardView
                 android:layout_width="0dp"
-                android:layout_height="@dimen/height_floating_cash_card"
+                android:layout_height="match_parent"
                 android:layout_marginStart="@dimen/spacing_extra_small"
                 android:layout_weight="1"
+                android:layout_marginTop="@dimen/spacing_small"
+                android:layout_marginBottom="@dimen/spacing_small"
+                android:layout_marginEnd="@dimen/spacing_small"
                 android:elevation="@dimen/card_elevation"
                 app:cardCornerRadius="@dimen/card_corner_radius">
 
@@ -157,7 +161,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_below="@id/cv_shop_manager_table_statics"
-            android:layout_marginTop="@dimen/spacing_extra_small"
+            android:layout_marginStart="@dimen/spacing_small"
+            android:layout_marginTop="@dimen/spacing_small"
             android:layout_marginEnd="@dimen/spacing_small"
             android:text="TRENDING ITEMS IN LAST 30  DAYS" />
 
@@ -165,7 +170,9 @@
             android:id="@+id/rv_shop_insight_revenue_trending_orders"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/spacing_small"
+            android:layout_marginStart="@dimen/spacing_small"
+            android:layout_marginEnd="@dimen/spacing_small"
+            android:layout_marginTop="@dimen/spacing_tiny"
             android:nestedScrollingEnabled="false" />
 
     </LinearLayout>

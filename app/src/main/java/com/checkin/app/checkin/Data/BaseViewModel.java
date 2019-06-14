@@ -13,6 +13,7 @@ import com.fasterxml.jackson.databind.node.ObjectNode;
 public abstract class BaseViewModel extends AndroidViewModel {
     private Application mApplication;
     protected SourceMappedLiveData<Resource<ObjectNode>> mData = createNetworkLiveData();
+    ProblemHandler problemHandler;
 
     public BaseViewModel(@NonNull Application application) {
         super(application);
@@ -25,6 +26,7 @@ public abstract class BaseViewModel extends AndroidViewModel {
 
     protected <T> SourceMappedLiveData<Resource<T>> createNetworkLiveData() {
         return new SourceMappedLiveData<>(resource -> {
+            problemHandler = new ProblemHandler(mApplication);
             if (ProblemHandler.handleProblems(mApplication, resource))
                 return null;
             return resource;
