@@ -241,9 +241,7 @@ public class MenuGroupAdapter extends RecyclerView.Adapter<MenuGroupAdapter.Grou
                 vTabs.setVisibility(View.GONE);
             }
             vPager.setAdapter(pagerAdapter);
-            if (Build.VERSION.SDK_INT <= Build.VERSION_CODES.M) {
-                setupTabIcons();
-            }
+            setupTabIcons();
         }
 
         void showMenu(View view) {
@@ -340,32 +338,18 @@ public class MenuGroupAdapter extends RecyclerView.Adapter<MenuGroupAdapter.Grou
         @Override
         public CharSequence getPageTitle(int position) {
             String title = null;
-            Drawable drawable = null;
             switch (position) {
                 case 0:
                     title = "Veg";
-                    drawable = mRecyclerView.getContext().getResources().getDrawable(R.drawable.ic_veg);
                     break;
                 case 1:
                     title = "Non-Veg";
-                    drawable = mRecyclerView.getContext().getResources().getDrawable(R.drawable.ic_non_veg);
                     break;
                 default:
                     break;
             }
-
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-                SpannableStringBuilder stringBuilder = new SpannableStringBuilder("    " + title);
-                drawable.setBounds(2, 2, drawable.getIntrinsicWidth(), drawable.getIntrinsicHeight());
-                ImageSpan span = new ImageSpan(drawable, DynamicDrawableSpan.ALIGN_BASELINE);
-                stringBuilder.setSpan(span, 0, 1, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
-
-                return stringBuilder;
-            } else
-                return null;
+            return title;
 
         }
-
-
     }
 }
