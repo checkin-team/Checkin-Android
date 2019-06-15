@@ -17,6 +17,10 @@
             android:layout_weight="0.55"
             android:orientation="vertical">
 
+            <include
+                android:id="@+id/shimmer_user_private_cover"
+                layout="@layout/shimmer_cover_image"/>
+
             <ImageView
                 android:id="@+id/im_user_private_cover"
                 android:layout_width="match_parent"

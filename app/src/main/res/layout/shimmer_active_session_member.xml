@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="wrap_content"
+    android:layout_height="match_parent"
+    android:layout_marginEnd="@dimen/spacing_small">
+
+    <de.hdodenhof.circleimageview.CircleImageView
+        android:id="@+id/im_as_member_user"
+        style="@style/LogoImageStyle"
+        android:scaleType="centerCrop"
+        android:src="@color/shimmer_background"
+        android:layout_gravity="center"
+        android:visibility="visible"/>
+
+    <TextView
+       style="@style/ShimmerTextViewStyle"
+        android:layout_marginTop="@dimen/spacing_small"/>
+
+</LinearLayout>

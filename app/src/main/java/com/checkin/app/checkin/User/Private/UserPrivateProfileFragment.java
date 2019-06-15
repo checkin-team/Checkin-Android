@@ -19,6 +19,7 @@ import com.checkin.app.checkin.Misc.SelectCropImageActivity;
 import com.checkin.app.checkin.R;
 import com.checkin.app.checkin.User.UserModel;
 import com.checkin.app.checkin.Utility.Utils;
+import com.facebook.shimmer.ShimmerFrameLayout;
 
 import java.io.File;
 
@@ -29,6 +30,8 @@ import static android.app.Activity.RESULT_OK;
 import static com.checkin.app.checkin.User.Private.ProfileEditActivity.KEY_USER_DATA;
 
 public class UserPrivateProfileFragment extends BaseFragment {
+    @BindView(R.id.shimmer_user_private_cover)
+    ShimmerFrameLayout shimmerLayout;
     @BindView(R.id.tv_user_private_checkins)
     TextView tvCheckins;
     @BindView(R.id.tv_user_private_display_name)
@@ -112,6 +115,9 @@ public class UserPrivateProfileFragment extends BaseFragment {
         Utils.loadImageOrDefault(imCover, data.getProfilePic(), (data.getGender() == UserModel.GENDER.MALE) ? R.drawable.cover_unknown_male : R.drawable.cover_unknown_female);
         tvCheckins.setText(data.formatCheckins());
         tvLocality.setText(data.getAddress());
+
+        shimmerLayout.stopShimmer();
+        shimmerLayout.setVisibility(View.GONE);
     }
 
     @OnClick({R.id.btn_user_private_add_logo, R.id.btn_user_private_edit})
