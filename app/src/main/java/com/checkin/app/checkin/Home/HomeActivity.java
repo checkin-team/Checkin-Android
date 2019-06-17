@@ -4,10 +4,7 @@ import android.app.AlertDialog;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
-import android.net.Uri;
-import android.os.Build;
 import android.os.Bundle;
-import android.provider.Settings;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
@@ -79,7 +76,7 @@ public class HomeActivity extends BaseAccountActivity implements NavigationView.
     @BindView(R.id.tv_home_session_wait_qr_busy)
     TextView tvSessionWaitQRBusy;
     ImageView imTabUserIcon;
-    public final static int REQUEST_CODE_OVERLAY = 1009;
+
     private HomeViewModel mViewModel;
     private UserViewModel mUserViewModel;
     private TapTargetSequence.Listener mListener;
@@ -131,15 +128,6 @@ public class HomeActivity extends BaseAccountActivity implements NavigationView.
         getNavAccount().setNavigationItemSelectedListener(this);
         setup();
         explainQr();
-
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-            if (!Settings.canDrawOverlays(this)) {
-                // if not construct intent to request permission
-                Intent intent = new Intent(Settings.ACTION_MANAGE_OVERLAY_PERMISSION,
-                        Uri.parse("package:" + getApplicationContext().getPackageName()));
-                startActivityForResult(intent, REQUEST_CODE_OVERLAY);
-            }
-        }
     }
 
     @Override
@@ -282,8 +270,6 @@ public class HomeActivity extends BaseAccountActivity implements NavigationView.
         if (requestCode == REQUEST_QR_SCANNER && resultCode == RESULT_OK) {
             String qrData = data.getStringExtra(QRScannerActivity.KEY_QR_RESULT);
             mViewModel.processQr(qrData);
-        }else if(requestCode == REQUEST_CODE_OVERLAY && resultCode == RESULT_OK){
-
         }
     }
 

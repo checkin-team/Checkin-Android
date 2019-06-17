@@ -21,7 +21,6 @@
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
     <uses-permission android:name="android.permission.FOREGROUND_SERVICE" />
     <uses-permission android:name="android.permission.ACCESS_DOWNLOAD_MANAGER" />
-    <uses-permission android:name="android.permission.SYSTEM_ALERT_WINDOW"/>
 
 
     <uses-feature android:name="android.hardware.camera" />
@@ -80,6 +79,8 @@
             </intent-filter>
         </activity>
 
+        <activity android:name=".Misc.UpdateAppActivity"/>
+
         <service
             android:name=".Auth.AuthenticatorService"
             android:enabled="true"
@@ -96,11 +97,6 @@
         <service android:name=".Maps.FetchAddressIntentService" />
         <service android:name=".Auth.DeviceTokenService" />
         <service android:name=".Data.Message.ActiveSessionNotificationService" />
-        <service android:name=".Utility.ProblemHandler$ShowDialogUpdateApp">
-            <intent-filter>
-                <action android:name="my.service.intent"/>
-            </intent-filter>
-        </service>
 
         <meta-data
             android:name="com.facebook.sdk.ApplicationId"
