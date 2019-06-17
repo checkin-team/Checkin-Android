@@ -80,7 +80,7 @@ public class ShopInvoiceListActivity extends BaseActivity implements ShopInvoice
         rvSessions.setLayoutManager(new LinearLayoutManager(this, RecyclerView.VERTICAL, false));
         rvSessions.setAdapter(mAdapter);
 
-        tvFilterFrom.setText(Utils.getCurrentFormattedDate());
+        tvFilterFrom.setText("------------");
         tvFilterTo.setText(Utils.getCurrentFormattedDate());
     }
 

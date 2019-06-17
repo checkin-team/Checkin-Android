@@ -4,11 +4,11 @@ import android.app.AlertDialog;
 import android.content.Intent;
 import android.os.Bundle;
 
-import com.checkin.app.checkin.R;
-import com.checkin.app.checkin.Utility.Constants;
-
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+
+import com.checkin.app.checkin.R;
+import com.checkin.app.checkin.Utility.Constants;
 
 public class UpdateAppActivity extends AppCompatActivity {
 
@@ -22,8 +22,12 @@ public class UpdateAppActivity extends AppCompatActivity {
                 .setPositiveButton("Ok", (dialogInterface, i) -> {
                     dialogInterface.dismiss();
                     startActivity(new Intent(Intent.ACTION_VIEW, Constants.PLAY_STORE_URI));
+                    finish();
                 })
-                .setNegativeButton("Cancel", ((dialogInterface, i) -> dialogInterface.dismiss()))
+                .setNegativeButton("Cancel", ((dialogInterface, i) -> {
+                    dialogInterface.dismiss();
+                    finish();
+                }))
                 .show();
     }
 }

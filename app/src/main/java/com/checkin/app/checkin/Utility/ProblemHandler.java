@@ -12,6 +12,7 @@ import com.checkin.app.checkin.Data.ProblemModel.ERROR_CODE;
 import com.checkin.app.checkin.Data.Resource;
 import com.checkin.app.checkin.Misc.UpdateAppActivity;
 import com.checkin.app.checkin.R;
+import com.crashlytics.android.Crashlytics;
 
 /**
  * Created by shivanshs9 on 27/5/19.
@@ -20,12 +21,11 @@ import com.checkin.app.checkin.R;
 public final class ProblemHandler {
     private static final String TAG = ProblemHandler.class.getSimpleName();
 
-
     public static boolean handleDeprecatedAPIUse(Context context, Resource<?> resource) {
         ProblemModel problemModel = resource.getProblem();
         if (problemModel != null) {
             if (problemModel.getErrorCode() == ERROR_CODE.DEPRECATED_VERSION || problemModel.getErrorCode() == ERROR_CODE.INVALID_VERSION) {
-                Log.e(TAG, "Error Code: " + problemModel.getErrorCode());
+                Crashlytics.log(Log.ERROR, TAG, "Error Code: " + problemModel.getErrorCode());
                 context.startActivity(Intent.makeRestartActivityTask(new ComponentName(context, UpdateAppActivity.class)));
                 return true;
             }
