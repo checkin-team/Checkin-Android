@@ -22,13 +22,12 @@ public abstract class NetworkBoundResource<ResultType, RequestType> {
         if (shouldUseLocalDb()) {
             final LiveData<ResultType> dbSource = loadFromDb();
             mResult.addSource(dbSource, data -> {
-
                 mResult.removeSource(dbSource);
                 if (shouldFetch(data)) {
                     fetchFromNetwork(dbSource);
                 } else {
                     mResult.addSource(dbSource,
-                            (ResultType newData) -> mResult.setValue(Resource.success(newData)));
+                            (ResultType newData) -> mResult.setValue(Resource.successCached(newData)));
                 }
             });
         } else {
@@ -81,7 +80,7 @@ public abstract class NetworkBoundResource<ResultType, RequestType> {
                 // otherwise we will get immediately last cached value,
                 // which may not be updated with latest results received from network.
                 mResult.addSource(loadFromDb(),
-                        newData -> mResult.setValue(Resource.success(newData)));
+                        newData -> mResult.setValue(Resource.successCached(newData)));
             }
         }.execute();
     }

@@ -58,12 +58,12 @@ public class MenuGroupsFragment extends BaseFragment {
         mViewModel.getMenuGroups().observe(this, menuGroupResource -> {
             if (menuGroupResource == null)
                 return;
-            if (menuGroupResource.status == Resource.Status.SUCCESS) {
+            if (menuGroupResource.status == Resource.Status.SUCCESS && !menuGroupResource.isCached()) {
                 mAdapter.setGroupList(menuGroupResource.data);
                 stopRefreshing();
             } else if (menuGroupResource.status == Resource.Status.LOADING) {
                 startRefreshing();
-                if (menuGroupResource.data != null)
+                if (!mAdapter.hasData() && menuGroupResource.data != null)
                     mAdapter.setGroupList(menuGroupResource.data);
             } else {
                 stopRefreshing();
@@ -90,7 +90,7 @@ public class MenuGroupsFragment extends BaseFragment {
 
         rvGroupsList.addOnScrollListener(new RecyclerView.OnScrollListener() {
             @Override
-            public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
+            public void onScrolled(@NonNull RecyclerView recyclerView, int dx, int dy) {
                 super.onScrolled(recyclerView, dx, dy);
                 tvCurrentCategory.setText(mAdapter.getCurrentCategory());
             }

@@ -6,6 +6,10 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.recyclerview.widget.RecyclerView;
+
 import com.checkin.app.checkin.Menu.Model.MenuItemModel;
 import com.checkin.app.checkin.Misc.TextBaseAdapter;
 import com.checkin.app.checkin.R;
@@ -18,9 +22,6 @@ import com.yarolegovich.discretescrollview.DiscreteScrollView;
 import java.util.List;
 import java.util.Locale;
 
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.recyclerview.widget.RecyclerView;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
@@ -35,7 +36,6 @@ public class MenuItemAdapter extends RecyclerView.Adapter<MenuItemAdapter.ItemVi
         mItemsList = itemsList;
         mListener = listener;
         mIsSessionActive = isSessionActive;
-
     }
 
     public void setMenuItems(List<MenuItemModel> menuItems) {

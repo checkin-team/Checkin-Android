@@ -433,7 +433,7 @@ public class WaiterWorkActivity extends BaseAccountActivity implements
     @SuppressLint("WrongConstant")
     @Override
     public void onTableClick(RestaurantTableModel restaurantTableModel) {
-        drawerLayout.closeDrawer(Gravity.END,false);
+        drawerLayout.closeDrawer(Gravity.END, false);
         newWaiterSessionDialog(restaurantTableModel.getQrPk(), restaurantTableModel.getTable());
     }
 

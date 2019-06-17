@@ -59,6 +59,8 @@ public class MenuGroupModel {
 
     @JsonProperty("items")
     public void setItems(List<MenuItemModel> items) {
+        vegItems = null;
+        nonVegItems = null;
         AppDatabase.getMenuGroupModel(null).attach(this);
         AppDatabase.getMenuItemModel(null).remove(this.items);
         AppDatabase.getMenuItemModel(null).put(items);
@@ -83,29 +85,29 @@ public class MenuGroupModel {
     }
 
     public List<MenuItemModel> getNonVegItems() {
-        if (nonVegItems != null)
-            return nonVegItems;
-        nonVegItems = new ArrayList<>();
-        for (MenuItemModel item : items) {
-            if (!item.isVegetarian())
-                nonVegItems.add(item);
+        if (nonVegItems == null) {
+            nonVegItems = new ArrayList<>();
+            for (MenuItemModel item : items) {
+                if (!item.isVegetarian())
+                    nonVegItems.add(item);
+            }
         }
         return nonVegItems;
     }
 
     public List<MenuItemModel> getVegItems() {
-        if (vegItems != null)
-            return vegItems;
-        vegItems = new ArrayList<>();
-        for (MenuItemModel item : items) {
-            if (item.isVegetarian())
-                vegItems.add(item);
+        if (vegItems == null) {
+            vegItems = new ArrayList<>();
+            for (MenuItemModel item : items) {
+                if (item.isVegetarian())
+                    vegItems.add(item);
+            }
         }
         return vegItems;
     }
 
     public boolean hasSubGroups() {
-        return getVegItems().size() > 0 && getNonVegItems().size() > 0;
+        return !getVegItems().isEmpty() && !getNonVegItems().isEmpty();
     }
 
     public long getPk() {

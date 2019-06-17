@@ -4,13 +4,7 @@ import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
 import android.animation.AnimatorSet;
 import android.animation.ValueAnimator;
-import android.graphics.drawable.Drawable;
 import android.os.Build;
-import android.text.SpannableStringBuilder;
-import android.text.Spanned;
-import android.text.style.DynamicDrawableSpan;
-import android.text.style.ImageSpan;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
@@ -29,7 +23,6 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.checkin.app.checkin.Menu.Fragment.MenuItemsFragment;
 import com.checkin.app.checkin.Menu.MenuItemInteraction;
 import com.checkin.app.checkin.Menu.Model.MenuGroupModel;
-import com.checkin.app.checkin.Menu.Model.MenuItemModel;
 import com.checkin.app.checkin.R;
 import com.checkin.app.checkin.Utility.AnimUtils;
 import com.checkin.app.checkin.Utility.DynamicSwipableViewPager;
@@ -39,6 +32,7 @@ import com.google.android.material.tabs.TabLayout;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -72,6 +66,10 @@ public class MenuGroupAdapter extends RecyclerView.Adapter<MenuGroupAdapter.Grou
     public void setGroupList(List<MenuGroupModel> mGroupList) {
         this.mGroupList = mGroupList;
         notifyDataSetChanged();
+    }
+
+    public boolean hasData() {
+        return mGroupList != null && !mGroupList.isEmpty();
     }
 
     public boolean isGroupExpanded() {
@@ -211,11 +209,13 @@ public class MenuGroupAdapter extends RecyclerView.Adapter<MenuGroupAdapter.Grou
         }
 
         void bindData(final MenuGroupModel menuGroup) {
+            vSubGroupWrapper.setVisibility(View.GONE);
             mMenuGroup = menuGroup;
 
             tvGroupName.setText(menuGroup.getName());
             GlideApp.with(itemView).load(menuGroup.getIcon()).into(imGroupIcon);
             SubGroupPagerAdapter pagerAdapter = new SubGroupPagerAdapter(menuGroup);
+            vPager.setAdapter(pagerAdapter);
             if (menuGroup.hasSubGroups()) {
                 vTabs.setVisibility(View.VISIBLE);
                 vTabs.setupWithViewPager(vPager);
@@ -240,7 +240,6 @@ public class MenuGroupAdapter extends RecyclerView.Adapter<MenuGroupAdapter.Grou
             } else {
                 vTabs.setVisibility(View.GONE);
             }
-            vPager.setAdapter(pagerAdapter);
             setupTabIcons();
         }
 
@@ -294,44 +293,44 @@ public class MenuGroupAdapter extends RecyclerView.Adapter<MenuGroupAdapter.Grou
         }
 
         private void setupTabIcons() {
-            View tabOne = (View) LayoutInflater.from(vTabs.getContext()).inflate(R.layout.custom_tab_menu_subgroup, null);
+            View tabOne = LayoutInflater.from(vTabs.getContext()).inflate(R.layout.custom_tab_menu_subgroup, null);
             TextView tv = tabOne.findViewById(R.id.tv_tab);
             ImageView im = tabOne.findViewById(R.id.im_tab);
             tv.setText("  Veg");
             im.setImageDrawable(mRecyclerView.getContext().getResources().getDrawable(R.drawable.ic_veg));
-            vTabs.getTabAt(0).setCustomView(tabOne);
+            Objects.requireNonNull(vTabs.getTabAt(0)).setCustomView(tabOne);
 
-            View tabTwo = (View) LayoutInflater.from(vTabs.getContext()).inflate(R.layout.custom_tab_menu_subgroup, null);
+            View tabTwo = LayoutInflater.from(vTabs.getContext()).inflate(R.layout.custom_tab_menu_subgroup, null);
             TextView tvTwo = tabTwo.findViewById(R.id.tv_tab);
             ImageView imTwo = tabTwo.findViewById(R.id.im_tab);
             tvTwo.setText("  Non-Veg");
             imTwo.setImageDrawable(mRecyclerView.getContext().getResources().getDrawable(R.drawable.ic_non_veg));
-            vTabs.getTabAt(1).setCustomView(tabTwo);
+            Objects.requireNonNull(vTabs.getTabAt(1)).setCustomView(tabTwo);
         }
     }
 
     public class SubGroupPagerAdapter extends FragmentStatePagerAdapter {
-        private List<List<MenuItemModel>> mListItems;
+        private List<MenuItemsFragment> mListFragment;
 
         SubGroupPagerAdapter(MenuGroupModel menuGroup) {
             super(mFragmentManager);
-            mListItems = new ArrayList<>();
+            mListFragment = new ArrayList<>();
             if (menuGroup.hasSubGroups()) {
-                mListItems.add(menuGroup.getVegItems());
-                mListItems.add(menuGroup.getNonVegItems());
+                mListFragment.add(MenuItemsFragment.newInstance(menuGroup.getVegItems(), mListener, mIsSessionActive));
+                mListFragment.add(MenuItemsFragment.newInstance(menuGroup.getNonVegItems(), mListener, mIsSessionActive));
             } else {
-                mListItems.add(menuGroup.getItems());
+                mListFragment.add(MenuItemsFragment.newInstance(menuGroup.getItems(), mListener, mIsSessionActive));
             }
         }
 
         @Override
         public Fragment getItem(int position) {
-            return MenuItemsFragment.newInstance(mListItems.get(position), mListener, mIsSessionActive);
+            return mListFragment.get(position);
         }
 
         @Override
         public int getCount() {
-            return mListItems.size();
+            return mListFragment.size();
         }
 
         @Nullable
@@ -349,7 +348,6 @@ public class MenuGroupAdapter extends RecyclerView.Adapter<MenuGroupAdapter.Grou
                     break;
             }
             return title;
-
         }
     }
 }

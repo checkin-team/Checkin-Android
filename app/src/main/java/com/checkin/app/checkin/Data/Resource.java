@@ -30,6 +30,8 @@ public class Resource<T> {
     @Nullable
     private ProblemModel problemModel;
 
+    private boolean isCached = false;
+
     private Resource(@NonNull Status status, @Nullable T data, @Nullable String message, @Nullable JsonNode errorBody) {
         this.status = status;
         this.data = data;
@@ -40,6 +42,12 @@ public class Resource<T> {
     @NonNull
     public static <T> Resource<T> success(@Nullable T data) {
         return new Resource<>(Status.SUCCESS, data, null, null);
+    }
+
+    public static <T> Resource<T> successCached(@Nullable T data) {
+        Resource<T> resource = new Resource<>(Status.SUCCESS, data, null, null);
+        resource.isCached = true;
+        return resource;
     }
 
     @NonNull
@@ -125,6 +133,10 @@ public class Resource<T> {
         if (problemModel == null)
             problemModel = ProblemModel.fromResource(this);
         return problemModel;
+    }
+
+    public boolean isCached() {
+        return isCached;
     }
 
     public enum Status {

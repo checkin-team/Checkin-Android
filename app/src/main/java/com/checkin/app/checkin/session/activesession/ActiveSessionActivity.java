@@ -21,6 +21,7 @@ import androidx.core.app.ActivityOptionsCompat;
 import androidx.lifecycle.ViewModelProviders;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import com.checkin.app.checkin.Data.Message.MessageModel;
 import com.checkin.app.checkin.Data.Message.MessageModel.MESSAGE_TYPE;
@@ -42,7 +43,6 @@ import com.checkin.app.checkin.session.model.SessionCustomerModel;
 import com.checkin.app.checkin.session.model.SessionOrderedItemModel;
 import com.checkin.app.checkin.session.model.TrendingDishModel;
 
-import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
