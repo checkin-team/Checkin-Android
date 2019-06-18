@@ -32,7 +32,6 @@ import com.google.android.material.tabs.TabLayout;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Objects;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -293,19 +292,25 @@ public class MenuGroupAdapter extends RecyclerView.Adapter<MenuGroupAdapter.Grou
         }
 
         private void setupTabIcons() {
-            View tabOne = LayoutInflater.from(vTabs.getContext()).inflate(R.layout.custom_tab_menu_subgroup, null);
-            TextView tv = tabOne.findViewById(R.id.tv_tab);
-            ImageView im = tabOne.findViewById(R.id.im_tab);
-            tv.setText("  Veg");
-            im.setImageDrawable(mRecyclerView.getContext().getResources().getDrawable(R.drawable.ic_veg));
-            Objects.requireNonNull(vTabs.getTabAt(0)).setCustomView(tabOne);
+            TabLayout.Tab tab = vTabs.getTabAt(0);
+            if (tab != null) {
+                View tabOne = LayoutInflater.from(vTabs.getContext()).inflate(R.layout.custom_tab_menu_subgroup, null);
+                TextView tv = tabOne.findViewById(R.id.tv_tab);
+                ImageView im = tabOne.findViewById(R.id.im_tab);
+                tv.setText("  Veg");
+                im.setImageDrawable(mRecyclerView.getContext().getResources().getDrawable(R.drawable.ic_veg));
+                tab.setCustomView(tabOne);
+            }
 
-            View tabTwo = LayoutInflater.from(vTabs.getContext()).inflate(R.layout.custom_tab_menu_subgroup, null);
-            TextView tvTwo = tabTwo.findViewById(R.id.tv_tab);
-            ImageView imTwo = tabTwo.findViewById(R.id.im_tab);
-            tvTwo.setText("  Non-Veg");
-            imTwo.setImageDrawable(mRecyclerView.getContext().getResources().getDrawable(R.drawable.ic_non_veg));
-            Objects.requireNonNull(vTabs.getTabAt(1)).setCustomView(tabTwo);
+            tab = vTabs.getTabAt(1);
+            if (tab != null) {
+                View tabTwo = LayoutInflater.from(vTabs.getContext()).inflate(R.layout.custom_tab_menu_subgroup, null);
+                TextView tvTwo = tabTwo.findViewById(R.id.tv_tab);
+                ImageView imTwo = tabTwo.findViewById(R.id.im_tab);
+                tvTwo.setText("  Non-Veg");
+                imTwo.setImageDrawable(mRecyclerView.getContext().getResources().getDrawable(R.drawable.ic_non_veg));
+                tab.setCustomView(tabTwo);
+            }
         }
     }
 
