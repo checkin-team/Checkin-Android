@@ -16,6 +16,8 @@ import com.checkin.app.checkin.Menu.Model.MenuItemModel;
 import com.checkin.app.checkin.Menu.Model.MenuModel;
 import com.checkin.app.checkin.Menu.Model.OrderedItemModel;
 import com.checkin.app.checkin.Utility.SourceMappedLiveData;
+import com.checkin.app.checkin.session.activesession.ActiveSessionRepository;
+import com.checkin.app.checkin.session.model.TrendingDishModel;
 import com.fasterxml.jackson.databind.node.ArrayNode;
 
 import java.util.ArrayList;
@@ -25,12 +27,15 @@ import java.util.List;
 public class MenuViewModel extends BaseViewModel {
     private final Handler mHandler = new Handler();
     private MenuRepository mRepository;
+    private ActiveSessionRepository mActiveSessionRepository;
 
     private SourceMappedLiveData<Resource<MenuModel>> mMenuData = createNetworkLiveData();
     private SourceMappedLiveData<Resource<List<MenuGroupModel>>> mOriginalMenuGroups = createNetworkLiveData();
     private SourceMappedLiveData<Resource<List<MenuGroupModel>>> mMenuGroups = createNetworkLiveData();
     private SourceMappedLiveData<Resource<List<MenuItemModel>>> mMenuItems = createNetworkLiveData();
     private SourceMappedLiveData<Resource<ArrayNode>> mResultOrder = createNetworkLiveData();
+    private SourceMappedLiveData<Resource<List<TrendingDishModel>>> mTrendingData = createNetworkLiveData();
+    private SourceMappedLiveData<Resource<List<OrderedItemModel>>> mTreatYourselfData = createNetworkLiveData();
 
     private MutableLiveData<List<OrderedItemModel>> mOrderedItems = new MutableLiveData<>();
     private MutableLiveData<OrderedItemModel> mCurrentItem = new MutableLiveData<>();
@@ -43,6 +48,7 @@ public class MenuViewModel extends BaseViewModel {
     public MenuViewModel(@NonNull Application application) {
         super(application);
         mRepository = MenuRepository.getInstance(application);
+        mActiveSessionRepository = ActiveSessionRepository.getInstance(application);
     }
 
     @Override
@@ -412,5 +418,32 @@ public class MenuViewModel extends BaseViewModel {
             }
             return null;
         });
+    }
+
+    public LiveData<MenuItemModel> getTreatMenuItem() {
+        if (mTrendingItemPk == null)
+            return null;
+        return Transformations.map(mMenuData, input -> {
+            if (input == null || input.data == null)
+                return null;
+            for (MenuGroupModel groupModel : input.data.getGroups()) {
+                for (MenuItemModel itemModel : groupModel.getItems()) {
+                    if (itemModel.getPk() == mTrendingItemPk) {
+                        mTrendingItemPk = 0L;
+                        return itemModel;
+                    }
+                }
+            }
+            return null;
+        });
+    }
+
+
+    public void fetchTrendingItem() {
+        mTrendingData.addSource(mActiveSessionRepository.getTrendingDishes(mShopPk), mTrendingData::setValue);
+    }
+
+    public LiveData<Resource<List<TrendingDishModel>>> getMenuTrendingItems() {
+        return mTrendingData;
     }
 }

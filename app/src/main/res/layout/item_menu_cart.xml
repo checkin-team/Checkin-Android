@@ -1,120 +1,146 @@
 <?xml version="1.0" encoding="utf-8"?>
-<com.checkin.app.checkin.Utility.SwipeRevealLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/sr_menu_cart_item"
+    android:id="@+id/card_view"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_marginBottom="@dimen/spacing_normal"
-    android:layout_marginStart="@dimen/spacing_small"
-    android:layout_marginEnd="@dimen/spacing_small"
-    android:minHeight="@dimen/height_menu_cart_item"
-    app:dragFromEdge="right">
+    android:background="@color/white_two"
+    android:layout_marginBottom="@dimen/spacing_small"
+    android:minHeight="@dimen/height_menu_item">
 
-    <androidx.coordinatorlayout.widget.CoordinatorLayout
-        android:layout_width="wrap_content"
-        android:layout_height="match_parent"
-        android:layout_gravity="center_vertical|end"
-        android:orientation="horizontal">
 
-        <FrameLayout
-            android:layout_width="@dimen/width_quantity_selection"
-            android:layout_height="@dimen/height_quantity_selection"
-            android:layout_marginEnd="@dimen/spacing_small"
-            android:background="@drawable/background_menu_quantity_selection"
-            android:layout_gravity="center">
-            <com.checkin.app.checkin.Utility.QuantityPickerView
-                android:id="@+id/qp_menu_cart_item_quantity"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_gravity="center"
-                android:layout_marginEnd="@dimen/spacing_tiny"
-                android:layout_marginStart="@dimen/spacing_tiny"
-                app:dsv_orientation="horizontal" />
-        </FrameLayout>
+    <ImageView
+        android:id="@+id/im_menu_cart_item_type"
+        android:layout_width="@dimen/size_extra_small_icon"
+        android:layout_height="@dimen/size_extra_small_icon"
+        android:layout_margin="@dimen/spacing_small"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:src="@drawable/ic_veg" />
 
-    </androidx.coordinatorlayout.widget.CoordinatorLayout>
-
-    <FrameLayout
-        android:id="@+id/container_menu_cart_item"
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:clickable="true"
-        android:focusable="true">
+        android:layout_marginEnd="@dimen/spacing_small"
+        android:orientation="vertical">
 
-        <androidx.cardview.widget.CardView
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            app:cardCornerRadius="@dimen/card_corner_radius">
+            android:layout_height="wrap_content">
 
-            <androidx.constraintlayout.widget.ConstraintLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:background="@drawable/bordered_card_rouge"
-                android:padding="@dimen/spacing_small">
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:orientation="vertical">
+
                 <TextView
                     android:id="@+id/tv_menu_cart_item_name"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    style="@style/WhiteTextStyle"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent"
-                    app:layout_constraintEnd_toStartOf="@id/tv_menu_cart_item_price"
-                    tools:text="Ordered Item name" />
-
-                <TextView
-                    android:id="@+id/tv_menu_cart_item_price"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    style="@style/WhiteTextStyle"
-                    android:textAlignment="textEnd"
-                    app:layout_constraintEnd_toEndOf="@id/btn_menu_cart_item_remove"
-                    app:layout_constraintTop_toTopOf="parent"
-                    app:layout_constraintStart_toStartOf="@id/btn_menu_cart_item_edit"
-                    tools:text="&#x20B9; 999" />
-
-                <TextView
-                    android:id="@+id/tv_menu_cart_item_extra"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    style="@style/WhiteTextStyle"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintEnd_toStartOf="@id/btn_menu_cart_item_edit"
-                    app:layout_constraintTop_toBottomOf="@id/tv_menu_cart_item_name"
-                    tools:text="9 Type (?isCustomized)" />
-
-                <ImageButton
-                    android:id="@+id/btn_menu_cart_item_edit"
+                    style="@style/GreyTextStyle"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginEnd="12dp"
-                    android:background="@color/transparent"
-                    android:contentDescription="Edit"
-                    android:padding="@dimen/spacing_tiny"
-                    android:src="@drawable/ic_edit_pencil_white"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintEnd_toStartOf="@id/btn_menu_cart_item_remove"
-                    app:layout_constraintTop_toBottomOf="@id/tv_menu_cart_item_price"
-                    app:layout_constraintVertical_bias="1.0" />
+                    android:layout_marginTop="@dimen/spacing_small"
+                    android:layout_marginEnd="@dimen/spacing_normal"
+                    android:gravity="start"
+                    tools:text="ITEM TITLE " />
 
-                <ImageButton
-                    android:id="@+id/btn_menu_cart_item_remove"
+                <LinearLayout
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:src="@drawable/ic_cross_white"
-                    android:background="@color/transparent"
-                    android:padding="@dimen/spacing_tiny"
-                    android:contentDescription="Remove"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/tv_menu_cart_item_price"
-                    app:layout_constraintVertical_bias="1.0"/>
+                    android:layout_marginTop="@dimen/spacing_tiny">
 
-            </androidx.constraintlayout.widget.ConstraintLayout>
-        </androidx.cardview.widget.CardView>
+                    <TextView
+                        android:id="@+id/tv_menu_cart_item_customized"
+                        style="@style/RedSmallTextStyle"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginEnd="@dimen/spacing_small"
+                        android:drawableEnd="@drawable/ic_setting"
+                        android:drawablePadding="@dimen/spacing_tiny"
+                        android:fontFamily="@font/josefinsans_regular"
+                        android:gravity="start"
+                        android:visibility="gone"
+                        android:text="Customized" />
 
-    </FrameLayout>
+                    <TextView
+                        android:id="@+id/tv_menu_cart_item_price"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:gravity="start"
+                        android:textColor="@color/pinkish_grey"
+                        android:textSize="@dimen/font_normal"
+                        tools:text="$ 7666473" />
 
-</com.checkin.app.checkin.Utility.SwipeRevealLayout>
+                </LinearLayout>
+
+
+            </LinearLayout>
+
+            <FrameLayout
+                android:layout_width="@dimen/width_quantity_selection"
+                android:layout_height="@dimen/height_quantity_selection"
+                android:layout_marginEnd="@dimen/spacing_small"
+                android:background="@drawable/background_menu_quantity_selection"
+                android:layout_gravity="center">
+                <com.checkin.app.checkin.Utility.QuantityPickerView
+                    android:id="@+id/qp_menu_cart_item_quantity"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_gravity="center"
+                    android:layout_marginEnd="@dimen/spacing_tiny"
+                    android:layout_marginStart="@dimen/spacing_tiny"
+                    app:dsv_orientation="horizontal" />
+            </FrameLayout>
+
+            <FrameLayout
+                android:id="@+id/container_menu_quantity_picker"
+                android:layout_width="110dp"
+                android:layout_height="50dp"
+                android:layout_marginTop="@dimen/spacing_small"
+                android:background="@drawable/background_menu_quantity_selection"
+                android:clickable="true"
+                android:focusable="true"
+                android:visibility="gone"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent">
+
+                <Button
+                    android:id="@+id/btn_menu_item_add"
+                    style="@style/WhiteTextStyle"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:background="@drawable/btn_menu_item_add"
+                    android:text="Add"
+                    android:textAllCaps="false"
+                    android:visibility="gone" />
+
+                <com.checkin.app.checkin.Utility.QuantityPickerView
+                    android:id="@+id/qp_menu_item_quantity"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_gravity="center"
+                    android:layout_marginStart="@dimen/spacing_tiny"
+                    android:layout_marginEnd="@dimen/spacing_tiny"
+                    android:clickable="false"
+                    android:focusable="false"
+                    app:dsv_orientation="horizontal" />
+            </FrameLayout>
+
+        </LinearLayout>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/spacing_extra_small"
+            android:layout_marginBottom="@dimen/spacing_small"
+            android:background="@drawable/rounded_rectangle_white"
+            android:textColorHint="@color/pinkish_grey"
+            android:hint="Write Special Instructions"
+            android:padding="@dimen/spacing_tiny" />
+
+    </LinearLayout>
+
+
+</LinearLayout>

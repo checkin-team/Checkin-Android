@@ -4,6 +4,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.checkin.app.checkin.Menu.Model.OrderedItemModel;
@@ -11,6 +12,7 @@ import com.checkin.app.checkin.R;
 import com.checkin.app.checkin.Utility.ItemClickSupport;
 import com.checkin.app.checkin.Utility.QuantityPickerView;
 import com.checkin.app.checkin.Utility.SwipeRevealLayout;
+import com.checkin.app.checkin.Utility.Utils;
 import com.yarolegovich.discretescrollview.DiscreteScrollView;
 
 import java.util.ArrayList;
@@ -62,28 +64,20 @@ public class MenuCartAdapter extends RecyclerView.Adapter<MenuCartAdapter.ViewHo
     public interface MenuCartInteraction {
         void onOrderedItemRemark(OrderedItemModel item);
 
-        void onOrderedItemRemoved(OrderedItemModel item);
-
         void onOrderedItemChanged(OrderedItemModel item, int count);
     }
 
     class ViewHolder extends RecyclerView.ViewHolder implements DiscreteScrollView.ScrollStateChangeListener {
-        @BindView(R.id.btn_menu_cart_item_edit)
-        ImageButton btnItemEdit;
-        @BindView(R.id.btn_menu_cart_item_remove)
-        ImageButton btnItemRemove;
         @BindView(R.id.tv_menu_cart_item_name)
         TextView tvItemName;
         @BindView(R.id.tv_menu_cart_item_price)
         TextView tvItemPrice;
-        @BindView(R.id.tv_menu_cart_item_extra)
-        TextView tvItemExtra;
+        @BindView(R.id.tv_menu_cart_item_customized)
+        TextView tvItemCustomized;
+        @BindView(R.id.im_menu_cart_item_type)
+        ImageView imType;
         @BindView(R.id.qp_menu_cart_item_quantity)
         QuantityPickerView qpItemQuantity;
-        @BindView(R.id.sr_menu_cart_item)
-        SwipeRevealLayout srCartItem;
-        @BindView(R.id.container_menu_cart_item)
-        ViewGroup containerMenuCartItem;
 
         private OrderedItemModel mItem;
         private int scrollPos;
@@ -92,15 +86,7 @@ public class MenuCartAdapter extends RecyclerView.Adapter<MenuCartAdapter.ViewHo
             super(itemView);
             ButterKnife.bind(this, itemView);
 
-            containerMenuCartItem.setOnClickListener(v -> {
-                if (srCartItem.isOpened())
-                    srCartItem.close(true);
-                else
-                    srCartItem.open(true);
-            });
-
-            btnItemRemove.setOnClickListener(v -> mListener.onOrderedItemRemoved(mItem));
-            btnItemEdit.setOnClickListener(v -> mListener.onOrderedItemRemark(mItem));
+//            btnItemEdit.setOnClickListener(v -> mListener.onOrderedItemRemark(mItem));
             qpItemQuantity.setSlideOnFling(true);
             qpItemQuantity.addScrollStateChangeListener(this);
 
@@ -114,12 +100,25 @@ public class MenuCartAdapter extends RecyclerView.Adapter<MenuCartAdapter.ViewHo
                 e.printStackTrace();
             }
 
-            tvItemName.setText(String.format(Locale.ENGLISH, "%s", item.getItemModel().getName()));
-            tvItemPrice.setText(String.format(Locale.ENGLISH, "\u20B9 %.2f", item.getCost()));
-            tvItemExtra.setText(String.format(
-                    Locale.ENGLISH, "%d %s %s", item.getQuantity(), (item.getTypeName() != null ? item.getTypeName() : ""), (item.isCustomized() ? "(Customized)" : "")));
+            tvItemName.setText(item.getItemModel().getName());
+            tvItemPrice.setText(Utils.formatCurrencyAmount(tvItemPrice.getContext(), item.getCost()));
+            if(item.isCustomized())
+                tvItemCustomized.setVisibility(View.VISIBLE);
+            else
+                tvItemCustomized.setVisibility(View.GONE);
+
+
+            if(item.getItemModel().isVegetarian())
+                imType.setImageDrawable(imType.getContext().getResources().getDrawable(R.drawable.ic_veg));
+            else
+                imType.setImageDrawable(imType.getContext().getResources().getDrawable(R.drawable.ic_non_veg));
+
             qpItemQuantity.scrollToPosition(item.getQuantity());
             scrollPos = item.getQuantity();
+        }
+
+        public void setItemType(boolean isVegetarian){
+
         }
 
         @Override
