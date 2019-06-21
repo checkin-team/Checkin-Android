@@ -218,6 +218,7 @@ public class MenuGroupAdapter extends RecyclerView.Adapter<MenuGroupAdapter.Grou
             if (menuGroup.hasSubGroups()) {
                 vTabs.setVisibility(View.VISIBLE);
                 vTabs.setupWithViewPager(vPager);
+                setupTabIcons();
                 vTabs.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
                     @Override
                     public void onTabSelected(TabLayout.Tab tab) {
@@ -239,7 +240,6 @@ public class MenuGroupAdapter extends RecyclerView.Adapter<MenuGroupAdapter.Grou
             } else {
                 vTabs.setVisibility(View.GONE);
             }
-            setupTabIcons();
         }
 
         void showMenu(View view) {
