@@ -1,4 +1,6 @@
 apply plugin: 'com.android.application'
+apply plugin: 'kotlin-android-extensions'
+apply plugin: 'kotlin-android'
 apply plugin: 'io.objectbox'
 apply plugin: 'com.google.gms.google-services'
 apply plugin: 'io.fabric'
@@ -87,23 +89,31 @@ android {
 dependencies {
     implementation fileTree(include: ['*.jar'], dir: 'libs')
 
+    // Kotlin libraries
+    implementation "androidx.core:core-ktx:1.0.2"
+    implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$versions.kotlin"
+    implementation "androidx.fragment:fragment-ktx:1.0.0"
+    implementation "androidx.lifecycle:lifecycle-viewmodel-ktx:$versions.lifecycle"
+
+    // AndroidX libraries
     implementation 'androidx.legacy:legacy-support-v4:1.0.0'
-    implementation 'androidx.core:core:1.0.1'
+    implementation 'androidx.core:core:1.0.2'
     implementation 'androidx.constraintlayout:constraintlayout:1.1.3'
     implementation 'androidx.cardview:cardview:1.0.0'
     implementation 'androidx.recyclerview:recyclerview:1.0.0'
     implementation 'androidx.exifinterface:exifinterface:1.0.0'
 
     testImplementation 'junit:junit:4.12'
-    androidTestImplementation 'androidx.test:runner:1.2.0-alpha03'
+    androidTestImplementation 'androidx.test:runner:1.3.0-alpha01'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.2.0-alpha03'
-    implementation 'com.google.android.gms:play-services-auth:16.0.1'
+
+    implementation 'com.google.android.gms:play-services-auth:17.0.0'
     // FireBase libraries
-    implementation 'com.google.firebase:firebase-core:16.0.8'
-    implementation 'com.google.firebase:firebase-auth:16.2.0'
-    implementation 'com.google.firebase:firebase-messaging:17.5.0'
+    implementation 'com.google.firebase:firebase-core:17.0.0'
+    implementation 'com.google.firebase:firebase-auth:18.0.0'
+    implementation 'com.google.firebase:firebase-messaging:19.0.1'
     // Fabric Crashlytics
-    implementation 'com.crashlytics.sdk.android:crashlytics:2.9.9'
+    implementation 'com.crashlytics.sdk.android:crashlytics:2.10.1'
     // Facebook SDK
     implementation 'com.facebook.android:facebook-android-sdk:4.37.0'
     implementation 'com.facebook.android:facebook-login:4.37.0'
@@ -143,8 +153,8 @@ dependencies {
     implementation 'io.objectbox:objectbox-android:' + versions.objectBox
     annotationProcessor 'io.objectbox:objectbox-processor:' + versions.objectBox
     // Lifecycle components
-    implementation 'androidx.lifecycle:lifecycle-extensions:2.1.0-alpha04'
-    annotationProcessor 'androidx.lifecycle:lifecycle-compiler:2.1.0-alpha04'
+    implementation "androidx.lifecycle:lifecycle-extensions:$versions.lifecycle"
+    annotationProcessor "androidx.lifecycle:lifecycle-compiler:$versions.lifecycle"
     // Dagger components
     implementation 'com.google.dagger:dagger:' + versions.dagger
     annotationProcessor 'com.google.dagger:dagger-compiler:' + versions.dagger
@@ -152,9 +162,9 @@ dependencies {
     implementation project(':library:MaterialSearchView')
 
     // Google Maps
-    implementation 'com.google.android.gms:play-services-maps:16.1.0'
-    implementation 'com.google.android.libraries.places:places:1.0.0'
-    implementation 'com.google.android.gms:play-services-location:16.0.0'
+    implementation 'com.google.android.gms:play-services-maps:17.0.0'
+    implementation 'com.google.android.libraries.places:places:1.1.0'
+    implementation 'com.google.android.gms:play-services-location:17.0.0'
 
     // Onboarding Screens
     implementation 'com.getkeepsafe.taptargetview:taptargetview:1.12.0'
@@ -162,11 +172,14 @@ dependencies {
     // Multidex
     implementation 'com.android.support:multidex:1.0.3'
 
-
     //Paytm sdk
     implementation('com.paytm:pgplussdk:1.3.3') {
-        transitive = true;
+        transitive = true
     }
+}
+
+repositories {
+    mavenCentral()
 }
 
 static def buildTime() {
