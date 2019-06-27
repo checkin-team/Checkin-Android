@@ -377,7 +377,7 @@ public class MaterialSearchView extends FrameLayout implements Filter.FilterList
 
     public void setBackIconGone() {
         mBackBtn.setVisibility(GONE);
-        mSearchSrcTextView.setPadding(0,0,0,0);
+        mSearchSrcTextView.setPadding(20,0,0,0);
     }
 
     public void setSuggestionIcon(Drawable drawable) {

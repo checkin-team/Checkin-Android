@@ -73,16 +73,7 @@
             android:id="@+id/container_menu"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_marginTop="?android:attr/actionBarSize">
-
-            <Button
-                android:id="@+id/show_cart"
-                android:layout_width="wrap_content"
-                android:layout_height="60dp"
-                android:text="cart"
-                android:layout_gravity="bottom"/>
-
-        </FrameLayout>
+            android:layout_marginTop="?android:attr/actionBarSize" />
 
         <FrameLayout
             android:id="@+id/container_menu_fragment"
@@ -90,4 +81,63 @@
             android:layout_height="match_parent" />
     </FrameLayout>
 
+    <com.google.android.material.navigation.NavigationView
+        android:id="@+id/nav_menu_cart"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:layout_gravity="end"
+        android:fitsSystemWindows="false">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/rv_menu_cart"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:paddingTop="@dimen/spacing_small"
+                app:layout_constraintBottom_toTopOf="@id/container_menu_cart_detail"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <LinearLayout
+                android:id="@+id/container_menu_cart_detail"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="parent">
+
+                <include layout="@layout/incl_horizontal_line" />
+
+                <TextView
+                    android:id="@+id/tv_menu_subtotal"
+                    style="@style/RedTitleStyle"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/spacing_extra_small"
+                    android:layout_marginBottom="@dimen/spacing_extra_small"
+                    android:textAlignment="center"
+                    tools:text="Subtotal: 213 *" />
+
+                <TextView
+                    style="@style/GreyTextStyle"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="@dimen/spacing_extra_small"
+                    android:text="* Does not include extra charges or discounts."
+                    android:textAlignment="center"
+                    android:textSize="@dimen/font_small" />
+
+                <Button
+                    android:id="@+id/btn_menu_cart_proceed"
+                    style="@style/WhiteTitleStyle"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@color/primary_red"
+                    android:text="Proceed" />
+            </LinearLayout>
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </com.google.android.material.navigation.NavigationView>
 </androidx.drawerlayout.widget.DrawerLayout>

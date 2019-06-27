@@ -100,6 +100,10 @@
 
     <dimen name="height_as_menu_group_collapsed">60dp</dimen>
     <dimen name="height_as_menu_group_expanded">350dp</dimen>
+    <dimen name="width_as_menu_cart_total">110dp</dimen>
+    <dimen name="width_as_menu_cart">60dp</dimen>
+    <dimen name="width_treat_yourself">150dp</dimen>
+    <dimen name="height_treat_yourself">140dp</dimen>
 
     <!--Chat dimensions-->
     <dimen name="size_chat_status">10dp</dimen>

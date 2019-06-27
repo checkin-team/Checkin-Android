@@ -4,7 +4,7 @@ import com.checkin.app.checkin.Data.AppDatabase;
 import com.checkin.app.checkin.Data.Converters;
 import com.checkin.app.checkin.Inventory.Adapter.InventoryItemAdapter;
 import com.checkin.app.checkin.Menu.Adapter.MenuItemAdapter;
-import com.checkin.app.checkin.Menu.New.Adapter.ActiveSessionMenuItemAdapter;
+import com.checkin.app.checkin.Menu.ActiveSessionMenu.Adapter.ActiveSessionMenuItemAdapter;
 import com.fasterxml.jackson.annotation.JsonAutoDetect;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
@@ -15,7 +15,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import androidx.annotation.NonNull;
-import io.objectbox.annotation.Backlink;
 import io.objectbox.annotation.Convert;
 import io.objectbox.annotation.Entity;
 import io.objectbox.annotation.Id;

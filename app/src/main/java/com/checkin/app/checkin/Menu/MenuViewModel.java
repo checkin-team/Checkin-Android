@@ -122,63 +122,16 @@ public class MenuViewModel extends BaseViewModel {
         mHandler.postDelayed(mRunnable, 500);
     }
 
-
-//    public void sortMenuItems(boolean low2high) {
-//        mFilteredString.setValue("Sorted: " + (low2high ? "Low-High" : "High-Low"));
-//        LiveData<Resource<List<MenuItemModel>>> resourceLiveData = Transformations.map(mMenuData, input -> {
-//            if (input == null || input.data == null)
-//                return Resource.loading(null);
-//            List<MenuItemModel> items = new ArrayList<>();
-//            for (MenuGroupModel groupModel : input.data.getGroups()) {
-//                items.addAll(groupModel.getItems());
-//            }
-//            if (items.size() == 0)
-//                return Resource.errorNotFound(null);
-//            Collections.sort(items, (o1, o2) -> {
-//                int diff = (int) (o1.getTypeCosts().get(0) - o2.getTypeCosts().get(0));
-//                return low2high ? diff : -diff;
-//            });
-//            return Resource.cloneResource(input, items);
-//        });
-//        mMenuItems.addSource(resourceLiveData, mMenuItems::setValue);
-//    }
-
     public void filterMenuGroups(final MenuItemModel.AVAILABLE_MEAL availableMeal) {
         mFilteredString.setValue(availableMeal.name());
-        /*LiveData<Resource<List<MenuGroupModel>>> resourceLiveData = Transformations.map(mMenuData, listResource -> {
-            if (listResource == null || listResource.data == null)
-                return null;
-            List<MenuGroupModel> result = new ArrayList<>();
-            for (MenuGroupModel menuGroupModel : listResource.data.getGroups()) {
-                List<MenuItemModel> items = new ArrayList<>();
-                for (MenuItemModel menuItemModel : menuGroupModel.getItems()) {
-                    if (menuItemModel.getAvailableMeals().contains(availableMeal)) {
-                        items.add(menuItemModel);
-                    }
-                }
-                if (items.size() > 0) {
-                    menuGroupModel.setItems(items);
-                    result.add(menuGroupModel);
-                }
-            }
-            return Resource.cloneResource(listResource, result);
-        });
-        mMenuGroups.addSource(resourceLiveData, mMenuGroups::setValue);*/
-
-
-
         LiveData<Resource<List<MenuItemModel>>> resourceLiveData = Transformations.map(mMenuData, input -> {
             if (input == null || input.data == null)
                 return Resource.loading(null);
             List<MenuItemModel> items = new ArrayList<>();
             for (MenuGroupModel groupModel : input.data.getGroups()) {
                 for (MenuItemModel menuItemModel : groupModel.getItems()) {
-//                    Log.e("itemss===", menuItemModel.getAvailableMeals()+ " === " +availableMeal);
-                    for(int i =0; menuItemModel.getAvailableMeals().size()>i; i++){
-//                        Log.e("itemss===", menuItemModel.getAvailableMeals().get(i).tag+ " === " +availableMeal.tag);
-                        if(menuItemModel.getAvailableMeals().get(i).name().equalsIgnoreCase(availableMeal.name())){
-                            items.add(menuItemModel);
-                        }
+                    if(menuItemModel.getAvailableMeals().contains(availableMeal.name())){
+                        items.add(menuItemModel);
                     }
                 }
             }
