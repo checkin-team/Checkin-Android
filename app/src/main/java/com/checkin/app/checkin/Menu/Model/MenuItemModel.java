@@ -4,6 +4,7 @@ import com.checkin.app.checkin.Data.AppDatabase;
 import com.checkin.app.checkin.Data.Converters;
 import com.checkin.app.checkin.Inventory.Adapter.InventoryItemAdapter;
 import com.checkin.app.checkin.Menu.Adapter.MenuItemAdapter;
+import com.checkin.app.checkin.Menu.New.Adapter.ActiveSessionMenuItemAdapter;
 import com.fasterxml.jackson.annotation.JsonAutoDetect;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
@@ -70,6 +71,10 @@ public class MenuItemModel implements Serializable {
     @JsonIgnore
     @Transient
     private MenuItemAdapter.ItemViewHolder holder;
+
+    @JsonIgnore
+    @Transient
+    private ActiveSessionMenuItemAdapter.ItemViewHolder asItemholder;
 
     @JsonIgnore
     @Transient
@@ -216,9 +221,18 @@ public class MenuItemModel implements Serializable {
         return holder;
     }
 
+    public ActiveSessionMenuItemAdapter.ItemViewHolder getASItemHolder() {
+        return asItemholder;
+    }
+
     @JsonIgnore
     public void setItemHolder(MenuItemAdapter.ItemViewHolder holder) {
         this.holder = holder;
+    }
+
+    @JsonIgnore
+    public void setActiveSessionItemHolder(ActiveSessionMenuItemAdapter.ItemViewHolder holder) {
+        this.asItemholder = holder;
     }
 
     @Override

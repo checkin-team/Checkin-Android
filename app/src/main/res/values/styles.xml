@@ -390,6 +390,37 @@
         <item name="android:hint">@string/search_hint</item>
     </style>
 
+
+    <style name="MaterialSearchViewStyleNew">
+        <!-- Background for the search bar-->
+        <item name="searchBackground">@color/white</item>
+
+        <!-- Change voice icon-->
+        <item name="searchVoiceIcon">@drawable/ic_action_voice_search_inverted</item>
+
+        <!-- Change clear text icon-->
+        <item name="searchCloseIcon">@drawable/ic_cancel</item>
+
+        <!-- Change up icon-->
+        <item name="searchBackIcon">@null</item>
+
+        <!-- Change icon for the suggestions-->
+        <item name="searchSuggestionIcon">@drawable/ic_suggestion</item>
+
+        <!-- Change background for the suggestions shopReviews view-->
+        <item name="searchSuggestionBackground">@android:color/white</item>
+
+        <!-- Change text color for edit text. This will also be the color of the cursor-->
+        <item name="android:textColor">@color/brownish_grey</item>
+
+        <!-- Change hint text color for edit text-->
+        <item name="android:textColorHint">@color/pinkish_grey</item>
+
+        <!-- Hint for edit text-->
+        <item name="android:hint">@string/search_hint</item>
+    </style>
+
+
     <style name="ActionTextView">
         <item name="android:layout_width">@dimen/size_card_square</item>
         <item name="android:layout_height">@dimen/size_card_square</item>

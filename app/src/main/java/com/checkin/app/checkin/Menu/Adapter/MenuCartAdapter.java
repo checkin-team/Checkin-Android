@@ -1,23 +1,21 @@
 package com.checkin.app.checkin.Menu.Adapter;
 
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.checkin.app.checkin.Menu.Model.OrderedItemModel;
 import com.checkin.app.checkin.R;
 import com.checkin.app.checkin.Utility.ItemClickSupport;
-import com.checkin.app.checkin.Utility.QuantityPickerView;
-import com.checkin.app.checkin.Utility.SwipeRevealLayout;
 import com.checkin.app.checkin.Utility.Utils;
 import com.yarolegovich.discretescrollview.DiscreteScrollView;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Locale;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -67,7 +65,7 @@ public class MenuCartAdapter extends RecyclerView.Adapter<MenuCartAdapter.ViewHo
         void onOrderedItemChanged(OrderedItemModel item, int count);
     }
 
-    class ViewHolder extends RecyclerView.ViewHolder implements DiscreteScrollView.ScrollStateChangeListener {
+    class ViewHolder extends RecyclerView.ViewHolder {
         @BindView(R.id.tv_menu_cart_item_name)
         TextView tvItemName;
         @BindView(R.id.tv_menu_cart_item_price)
@@ -76,21 +74,31 @@ public class MenuCartAdapter extends RecyclerView.Adapter<MenuCartAdapter.ViewHo
         TextView tvItemCustomized;
         @BindView(R.id.im_menu_cart_item_type)
         ImageView imType;
-        @BindView(R.id.qp_menu_cart_item_quantity)
-        QuantityPickerView qpItemQuantity;
+        @BindView(R.id.tv_menu_item_quantity_decrement)
+        TextView tvQuantityDecrement;
+        @BindView(R.id.tv_menu_item_quantity_number)
+        TextView tvQuantityNumber;
+        @BindView(R.id.tv_menu_item_quantity_increment)
+        TextView tvQuantityIncrement;
 
         private OrderedItemModel mItem;
-        private int scrollPos;
+        private int mCount;
 
         ViewHolder(View itemView) {
             super(itemView);
             ButterKnife.bind(this, itemView);
 
-//            btnItemEdit.setOnClickListener(v -> mListener.onOrderedItemRemark(mItem));
-            qpItemQuantity.setSlideOnFling(true);
-            qpItemQuantity.addScrollStateChangeListener(this);
 
-            ItemClickSupport.addTo(qpItemQuantity).setOnItemClickListener((rv, position, v) -> qpItemQuantity.smoothScrollToPosition(position));
+
+            tvQuantityDecrement.setOnClickListener(v -> {
+                decreaseQuantity();
+                setQuantityChangeListener();
+            });
+
+            tvQuantityIncrement.setOnClickListener(v -> {
+                increaseQuantity();
+                setQuantityChangeListener();
+            });
         }
 
         void bindData(final OrderedItemModel item) {
@@ -113,29 +121,49 @@ public class MenuCartAdapter extends RecyclerView.Adapter<MenuCartAdapter.ViewHo
             else
                 imType.setImageDrawable(imType.getContext().getResources().getDrawable(R.drawable.ic_non_veg));
 
-            qpItemQuantity.scrollToPosition(item.getQuantity());
-            scrollPos = item.getQuantity();
+            displayQuantity(item.getQuantity());
+            mCount = item.getQuantity();
         }
 
         public void setItemType(boolean isVegetarian){
 
         }
 
-        @Override
-        public void onScrollStart(@NonNull RecyclerView.ViewHolder currentItemHolder, int adapterPosition) {
+        private void setQuantityChangeListener(){
+            tvQuantityNumber.addTextChangedListener(new TextWatcher() {
+                @Override
+                public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+                }
+
+                @Override
+                public void onTextChanged(CharSequence s, int start, int before, int count) {
+                }
+
+                @Override
+                public void afterTextChanged(Editable s) {
+                    if (mCount != Integer.parseInt(s.toString())) {
+                        mCount = Integer.parseInt(s.toString());
+                        mListener.onOrderedItemChanged(mItem, mCount);
+                    }
+                }
+            });
+        }
+
+        public void increaseQuantity() {
+            mCount ++;
+            displayQuantity(mCount);
+
+        }
+        public void decreaseQuantity() {
+            if(mCount<=0)
+                return;
+            mCount --;
+            displayQuantity(mCount);
 
         }
 
-        @Override
-        public void onScrollEnd(@NonNull RecyclerView.ViewHolder currentItemHolder, int adapterPosition) {
-            if (scrollPos != adapterPosition) {
-                scrollPos = adapterPosition;
-                mListener.onOrderedItemChanged(mItem, scrollPos);
-            }
-        }
-
-        @Override
-        public void onScroll(float scrollPosition, int currentPosition, int newPosition, @Nullable RecyclerView.ViewHolder currentHolder, @Nullable RecyclerView.ViewHolder newCurrent) {
+        private void displayQuantity(int number) {
+            tvQuantityNumber.setText("" + number);
         }
     }
 }

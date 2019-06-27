@@ -22,6 +22,7 @@ import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.ViewGroup;
 import android.view.inputmethod.EditorInfo;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.AdapterView;
@@ -372,6 +373,11 @@ public class MaterialSearchView extends FrameLayout implements Filter.FilterList
 
     public void setBackIcon(Drawable drawable) {
         mBackBtn.setImageDrawable(drawable);
+    }
+
+    public void setBackIconGone() {
+        mBackBtn.setVisibility(GONE);
+        mSearchSrcTextView.setPadding(0,0,0,0);
     }
 
     public void setSuggestionIcon(Drawable drawable) {

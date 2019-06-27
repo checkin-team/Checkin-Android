@@ -80,6 +80,7 @@
         </activity>
 
         <activity android:name=".Misc.UpdateAppActivity" />
+        <activity android:name=".Menu.New.NewMenuActivity" />
 
         <service
             android:name=".Auth.AuthenticatorService"

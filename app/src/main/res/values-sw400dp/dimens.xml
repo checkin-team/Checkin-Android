@@ -95,8 +95,6 @@
     <dimen name="width_session_menu">112dp</dimen>
     <dimen name="height_session_trending_dishes">188dp</dimen>
     <dimen name="width_session_trending_dishes">122dp</dimen>
-    <dimen name="width_treat_yourself_card">145dp</dimen>
-    <dimen name="height_treat_yourself_card">135dp</dimen>
 
     <dimen name="spacing_between_group_icon_name">40dp</dimen>
 

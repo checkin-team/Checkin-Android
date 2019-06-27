@@ -28,6 +28,7 @@ import com.checkin.app.checkin.Data.Message.MessageModel.MESSAGE_TYPE;
 import com.checkin.app.checkin.Data.Message.MessageObjectModel;
 import com.checkin.app.checkin.Data.Message.MessageUtils;
 import com.checkin.app.checkin.Data.Resource;
+import com.checkin.app.checkin.Menu.New.NewMenuActivity;
 import com.checkin.app.checkin.Menu.SessionMenuActivity;
 import com.checkin.app.checkin.Misc.BaseActivity;
 import com.checkin.app.checkin.Misc.BriefModel;
@@ -377,7 +378,7 @@ public class ActiveSessionActivity extends BaseActivity implements
             if (mViewModel.getShopPk() < 0)
                 return;
             btnSessionMenu.setEnabled(false);
-            SessionMenuActivity.startWithSession(this, mViewModel.getShopPk(), null, null);
+            NewMenuActivity.startWithSession(this, mViewModel.getShopPk(), null, null);
         } else {
             Utils.toast(this, R.string.error_unavailable_network);
         }
@@ -495,7 +496,7 @@ public class ActiveSessionActivity extends BaseActivity implements
         if (Utils.isNetworkConnected(this)) {
             if (mViewModel.getShopPk() < 0 || mViewModel.isRequestedCheckout())
                 return;
-            SessionMenuActivity.startWithSession(this, mViewModel.getShopPk(), null, itemModel.getPk());
+            NewMenuActivity.startWithSession(this, mViewModel.getShopPk(), null, itemModel.getPk());
         } else {
             Utils.toast(this, R.string.error_unavailable_network);
         }

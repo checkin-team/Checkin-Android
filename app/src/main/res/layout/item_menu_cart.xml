@@ -12,8 +12,8 @@
 
     <ImageView
         android:id="@+id/im_menu_cart_item_type"
-        android:layout_width="@dimen/size_extra_small_icon"
-        android:layout_height="@dimen/size_extra_small_icon"
+        android:layout_width="20dp"
+        android:layout_height="20dp"
         android:layout_margin="@dimen/spacing_small"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
@@ -77,56 +77,45 @@
 
             </LinearLayout>
 
-            <FrameLayout
-                android:layout_width="@dimen/width_quantity_selection"
-                android:layout_height="@dimen/height_quantity_selection"
-                android:layout_marginEnd="@dimen/spacing_small"
-                android:background="@drawable/background_menu_quantity_selection"
-                android:layout_gravity="center">
-                <com.checkin.app.checkin.Utility.QuantityPickerView
-                    android:id="@+id/qp_menu_cart_item_quantity"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:layout_gravity="center"
-                    android:layout_marginEnd="@dimen/spacing_tiny"
-                    android:layout_marginStart="@dimen/spacing_tiny"
-                    app:dsv_orientation="horizontal" />
-            </FrameLayout>
-
-            <FrameLayout
-                android:id="@+id/container_menu_quantity_picker"
-                android:layout_width="110dp"
-                android:layout_height="50dp"
+            <LinearLayout
+                android:id="@+id/container_cart_item_quantity"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/spacing_small"
-                android:background="@drawable/background_menu_quantity_selection"
-                android:clickable="true"
-                android:focusable="true"
-                android:visibility="gone"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toTopOf="parent">
+                android:visibility="visible">
 
-                <Button
-                    android:id="@+id/btn_menu_item_add"
-                    style="@style/WhiteTextStyle"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:background="@drawable/btn_menu_item_add"
-                    android:text="Add"
-                    android:textAllCaps="false"
-                    android:visibility="gone" />
-
-                <com.checkin.app.checkin.Utility.QuantityPickerView
-                    android:id="@+id/qp_menu_item_quantity"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
+                <TextView
+                    android:id="@+id/tv_menu_item_quantity_decrement"
+                    style="@style/RedTextStyle"
+                    android:layout_width="@dimen/size_small_icon"
+                    android:layout_height="@dimen/size_small_icon"
+                    android:background="@drawable/shape_oval_red_stroke"
+                    android:gravity="center"
+                    android:layout_marginEnd="@dimen/spacing_small"
+                    android:text="-"
+                    android:visibility="visible" />
+                <TextView
+                    android:id="@+id/tv_menu_item_quantity_number"
+                    style="@style/RedTextStyle"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
                     android:layout_gravity="center"
-                    android:layout_marginStart="@dimen/spacing_tiny"
-                    android:layout_marginEnd="@dimen/spacing_tiny"
-                    android:clickable="false"
-                    android:focusable="false"
-                    app:dsv_orientation="horizontal" />
-            </FrameLayout>
+                    android:layout_marginEnd="@dimen/spacing_small"
+                    android:text="12"
+                    android:visibility="visible" />
+                <TextView
+                    android:id="@+id/tv_menu_item_quantity_increment"
+                    style="@style/RedTextStyle"
+                    android:layout_width="@dimen/size_small_icon"
+                    android:layout_height="@dimen/size_small_icon"
+                    android:background="@drawable/shape_oval_red_stroke"
+                    android:gravity="center"
+                    android:layout_gravity="end"
+                    android:text="+"
+                    android:visibility="visible" />
+
+            </LinearLayout>
+
 
         </LinearLayout>
 
