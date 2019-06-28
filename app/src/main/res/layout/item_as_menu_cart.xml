@@ -1,0 +1,138 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/card_view"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@color/white_two"
+    android:layout_marginBottom="@dimen/spacing_small"
+    android:minHeight="@dimen/height_menu_item">
+
+
+    <ImageView
+        android:id="@+id/im_menu_cart_item_type"
+        android:layout_width="@dimen/size_extra_small_button"
+        android:layout_height="@dimen/size_extra_small_button"
+        android:layout_margin="@dimen/spacing_small"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:src="@drawable/ic_veg" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="@dimen/spacing_small"
+        android:orientation="vertical">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:orientation="vertical">
+
+                <TextView
+                    android:id="@+id/tv_menu_cart_item_name"
+                    style="@style/GreyTextStyle"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/spacing_small"
+                    android:layout_marginEnd="@dimen/spacing_normal"
+                    android:gravity="start"
+                    tools:text="ITEM TITLE " />
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/spacing_tiny">
+
+                    <TextView
+                        android:id="@+id/tv_menu_cart_item_customized"
+                        style="@style/RedSmallTextStyle"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginEnd="@dimen/spacing_small"
+                        android:drawableEnd="@drawable/ic_setting"
+                        android:drawablePadding="@dimen/spacing_tiny"
+                        android:fontFamily="@font/josefinsans_regular"
+                        android:gravity="start"
+                        android:visibility="gone"
+                        android:text="Customized" />
+
+                    <TextView
+                        android:id="@+id/tv_menu_cart_item_price"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:gravity="start"
+                        android:textColor="@color/pinkish_grey"
+                        android:textSize="@dimen/font_normal"
+                        tools:text="$ 7666473" />
+
+                </LinearLayout>
+
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/container_cart_item_quantity"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/spacing_small"
+                android:visibility="visible">
+
+                <TextView
+                    android:id="@+id/tv_menu_item_quantity_decrement"
+                    style="@style/RedTextStyle"
+                    android:layout_width="@dimen/size_small_icon"
+                    android:layout_height="@dimen/size_small_icon"
+                    android:background="@drawable/shape_oval_red_stroke"
+                    android:gravity="center"
+                    android:layout_marginEnd="@dimen/spacing_small"
+                    android:text="-"
+                    android:visibility="visible" />
+                <TextView
+                    android:id="@+id/tv_menu_item_quantity_number"
+                    style="@style/RedTextStyle"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_marginEnd="@dimen/spacing_small"
+                    android:text="12"
+                    android:visibility="visible" />
+                <TextView
+                    android:id="@+id/tv_menu_item_quantity_increment"
+                    style="@style/RedTextStyle"
+                    android:layout_width="@dimen/size_small_icon"
+                    android:layout_height="@dimen/size_small_icon"
+                    android:background="@drawable/shape_oval_red_stroke"
+                    android:gravity="center"
+                    android:layout_gravity="end"
+                    android:text="+"
+                    android:visibility="visible" />
+
+            </LinearLayout>
+
+
+        </LinearLayout>
+
+        <EditText
+            android:id="@+id/et_as_menu_cart_special_instruction"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            style="@style/GreySmallTextStyle"
+            android:layout_marginTop="@dimen/spacing_extra_small"
+            android:layout_marginBottom="@dimen/spacing_small"
+            android:background="@drawable/rounded_rectangle_white"
+            android:textColorHint="@color/pinkish_grey"
+            android:hint="Write Special Instructions"
+            android:inputType="textCapSentences"
+            android:padding="@dimen/spacing_tiny" />
+
+    </LinearLayout>
+
+
+</LinearLayout>

@@ -1,0 +1,151 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white"
+    android:orientation="vertical">
+
+    <com.google.android.material.appbar.AppBarLayout
+        android:id="@+id/appbar_cart"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:elevation="@dimen/card_elevation"
+        android:fitsSystemWindows="true"
+        android:theme="@style/appbar_main">
+
+        <androidx.appcompat.widget.Toolbar
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="top"
+            android:background="@color/white"
+            app:popupTheme="@style/PopupOverlay">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+                <ImageView
+                    android:id="@+id/im_menu_cart_back"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:src="@drawable/ic_back_white"
+                    android:tint="@color/primary_red" />
+
+                <TextView
+                    style="@style/RedTitleStyle"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/josefinsans_regular"
+                    android:gravity="center"
+                    android:paddingStart="@dimen/spacing_small"
+                    android:text="Cart" />
+
+            </LinearLayout>
+        </androidx.appcompat.widget.Toolbar>
+    </com.google.android.material.appbar.AppBarLayout>
+
+    <androidx.core.widget.NestedScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_above="@id/bottom_container"
+        android:layout_below="@+id/appbar_cart">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/rv_menu_cart"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/white_two"
+                android:orientation="vertical"
+                android:padding="@dimen/spacing_small">
+
+                <TextView
+                    style="@style/GreyTextStyle"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="@dimen/spacing_small"
+                    android:text="Treat yourself" />
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/rv_menu_treat_yourself"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="@dimen/spacing_small"/>
+
+            </LinearLayout>
+        </LinearLayout>
+    </androidx.core.widget.NestedScrollView>
+
+    <LinearLayout
+        android:id="@+id/bottom_container"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:orientation="vertical">
+
+        <TextView
+            style="@style/GreySmallTextStyle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/josefinsans_regular"
+            android:gravity="center"
+            android:paddingTop="@dimen/spacing_extra_tiny"
+            android:paddingBottom="@dimen/spacing_extra_small"
+            android:text="*Does not include extra charges or discounts*" />
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/primary_red">
+
+            <TextView
+                android:id="@+id/tv_menu_count_ordered_items"
+                style="@style/WhiteSmallTextStyle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:paddingStart="@dimen/spacing_small"
+                android:paddingTop="@dimen/spacing_extra_small"
+                tools:text="344 items" />
+
+            <TextView
+                android:id="@+id/tv_menu_subtotal"
+                style="@style/WhiteTextStyle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/tv_menu_count_ordered_items"
+                android:layout_alignParentStart="true"
+                android:layout_toStartOf="@+id/btn_menu_cart_proceed"
+                android:paddingStart="@dimen/spacing_small"
+                android:paddingTop="@dimen/spacing_extra_tiny"
+                android:paddingBottom="@dimen/spacing_tiny"
+                tools:text="$ 122342" />
+
+            <Button
+                android:id="@+id/btn_menu_cart_proceed"
+                style="@style/WhiteTitleStyle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentEnd="true"
+                android:layout_centerInParent="true"
+                android:background="@null"
+                android:fontFamily="@font/josefinsans_regular"
+                android:paddingEnd="@dimen/spacing_normal"
+                android:text="Proceed" />
+
+
+        </RelativeLayout>
+
+    </LinearLayout>
+
+</RelativeLayout>

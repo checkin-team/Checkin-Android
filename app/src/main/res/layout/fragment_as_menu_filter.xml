@@ -1,0 +1,219 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <FrameLayout
+        android:id="@+id/dark_back_as_menu_filter"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/translucent_black" />
+
+
+    <FrameLayout
+        android:id="@+id/container_as_menu_filter"
+        android:layout_width="510dp"
+        android:layout_height="510dp"
+        android:layout_gravity="bottom|end"
+        android:layout_marginStart="@dimen/spacing_huge"
+        android:layout_marginEnd="-200dp"
+        android:layout_marginBottom="-200dp"
+        android:background="@drawable/ellipse_large"
+        android:visibility="visible">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/spacing_extra_small"
+            android:layout_marginTop="@dimen/spacing_extra_small">
+
+            <LinearLayout
+                android:id="@+id/container_as_menu_filter_clear"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_marginTop="@dimen/spacing_extra_small"
+                android:orientation="vertical"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    style="@style/GreySmallTextStyle"
+                    android:text="Clear all" />
+
+                <View
+                    android:layout_width="@dimen/size_normal_icon"
+                    android:layout_height="2dp"
+                    android:layout_gravity="end"
+                    android:layout_marginTop="@dimen/spacing_extra_tiny"
+                    android:background="@color/brownish_grey" />
+
+                <View
+                    android:layout_width="@dimen/size_medium_icon"
+                    android:layout_height="2dp"
+                    android:layout_gravity="end"
+                    android:layout_marginTop="@dimen/spacing_extra_tiny"
+                    android:background="@color/brownish_grey" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/container_as_menu_filter_breakfast"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/spacing_normal"
+                android:orientation="vertical"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintEnd_toStartOf="@id/container_as_menu_filter_clear"
+                app:layout_constraintTop_toTopOf="parent">
+
+                <ImageView
+                    android:id="@+id/im_as_menu_filter_breakfast"
+                    style="@style/LogoImageStyle"
+                    android:src="@drawable/ic_menu_filter_breakfast" />
+
+                <TextView
+                    android:id="@+id/tv_as_menu_filter_breakfast"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Breakfast"
+                    android:textAlignment="center"
+                    android:textSize="@dimen/font_small" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/container_as_menu_filter_lunch"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="64dp"
+                android:layout_marginEnd="12dp"
+                android:orientation="vertical"
+                app:layout_constraintEnd_toStartOf="@id/container_as_menu_filter_breakfast"
+                app:layout_constraintTop_toTopOf="parent">
+
+                <ImageView
+                    android:id="@+id/im_as_menu_filter_lunch"
+                    style="@style/LogoImageStyle"
+                    android:src="@drawable/ic_menu_filter_lunch" />
+
+                <TextView
+                    android:id="@+id/tv_as_menu_filter_lunch"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:text="Lunch"
+                    android:textSize="@dimen/font_small" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/container_as_menu_filter_dinner"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/spacing_normal"
+                android:orientation="vertical"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/container_as_menu_filter_lunch">
+
+                <ImageView
+                    android:id="@+id/im_as_menu_filter_dinner"
+                    style="@style/LogoImageStyle"
+                    android:src="@drawable/ic_menu_filter_dinner" />
+
+                <TextView
+                    android:id="@+id/tv_as_menu_filter_dinner"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:gravity="center"
+                    android:text="Dinner"
+                    android:textSize="@dimen/font_small" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/spacing_normal"
+                android:orientation="vertical"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/container_as_menu_filter_dinner"
+                app:layout_constraintVertical_bias="0.0"
+                tools:layout_editor_absoluteX="6dp">
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content">
+
+
+                    <TextView
+                        android:id="@+id/tv_as_menu_low"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Low" />
+
+                    <ImageView
+
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="@dimen/spacing_extra_small"
+                        android:layout_marginEnd="@dimen/spacing_extra_small"
+                        android:src="@drawable/ic_bidirection_arrow" />
+
+                    <TextView
+                        android:id="@+id/tv_as_menu_high"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="High" />
+
+                </LinearLayout>
+
+                <ImageView
+                    android:layout_width="@dimen/size_small_icon"
+                    android:layout_height="@dimen/size_small_icon"
+                    android:layout_gravity="center"
+                    android:layout_marginBottom="@dimen/spacing_small"
+                    android:src="@drawable/ic_filter_circle" />
+
+            </LinearLayout>
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <FrameLayout
+            android:id="@+id/inner_container"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="120dp"
+            android:layout_marginTop="100dp"
+            android:background="@drawable/ellipse_small">
+
+            <androidx.core.widget.NestedScrollView
+                android:layout_width="match_parent"
+                android:layout_height="150dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                android:layout_gravity="top|center"
+                android:fillViewport="true"
+                android:layout_marginTop="@dimen/spacing_very_huge"
+                android:layout_marginEnd="@dimen/spacing_gigantic"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent">
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/rv_as_menu_groups"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:nestedScrollingEnabled="false" />
+
+            </androidx.core.widget.NestedScrollView>
+
+
+        </FrameLayout>
+
+
+    </FrameLayout>
+
+
+</FrameLayout>

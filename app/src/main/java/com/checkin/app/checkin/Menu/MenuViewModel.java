@@ -342,7 +342,7 @@ public class MenuViewModel extends BaseViewModel {
         });
     }
 
-    public LiveData<Double> getASOrderedSubTotal() {
+    /*public LiveData<Double> getASOrderedSubTotal() {
         if(mOrderedItems == null)
             return null;
 
@@ -353,7 +353,7 @@ public class MenuViewModel extends BaseViewModel {
                 return res;
             });
 
-    }
+    }*/
 
     public LiveData<List<String>> getCategories() {
         return Transformations.map(mOriginalMenuGroups, input -> {

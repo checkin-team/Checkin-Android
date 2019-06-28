@@ -1,0 +1,109 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginStart="@dimen/spacing_extra_small"
+    android:layout_marginTop="@dimen/spacing_extra_small"
+    android:layout_marginEnd="@dimen/spacing_extra_small"
+    android:clickable="true"
+    android:focusable="true"
+    android:minHeight="@dimen/height_as_menu_group_collapsed"
+    app:cardCornerRadius="@dimen/card_corner_radius_small"
+    app:cardElevation="@dimen/card_elevation">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:orientation="vertical">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/container_menu_group"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <ImageView
+                android:id="@+id/im_as_menu_group_icon"
+                android:layout_width="@dimen/button_height_normal"
+                android:layout_height="@dimen/button_height_normal"
+                android:layout_gravity="center"
+                android:layout_marginStart="@dimen/spacing_normal"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                tools:src="@drawable/ic_beer" />
+
+            <TextView
+                android:id="@+id/tv_as_menu_group_name"
+                style="@style/GreyTextStyle"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginStart="@dimen/spacing_incredible"
+                android:layout_weight="1"
+                android:gravity="start"
+                android:textSize="@dimen/font_large"
+                android:paddingEnd="@dimen/spacing_tiny"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toStartOf="@id/switch_menu_group_availability"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                tools:text="GROUP" />
+
+            <ImageView
+                android:id="@+id/switch_menu_group_availability"
+                android:layout_width="@dimen/width_small_icon"
+                android:layout_height="@dimen/width_small_icon"
+                android:layout_gravity="center"
+                android:layout_marginEnd="@dimen/spacing_small"
+                android:src="@drawable/ic_drop_down_arrow"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <LinearLayout
+            android:id="@+id/container_as_menu_sub_groups"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:paddingTop="@dimen/spacing_small"
+            android:visibility="gone">
+
+            <com.google.android.material.tabs.TabLayout
+                android:id="@+id/tabs_as_menu_sub_groups"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="top"
+                android:layout_marginStart="@dimen/spacing_small"
+                android:layout_marginEnd="@dimen/spacing_small"
+                android:visibility="gone"
+                app:tabGravity="fill"
+                app:tabIndicator="@null"
+                app:tabIndicatorHeight="2dp"
+                app:tabMode="fixed"
+                app:tabTextColor="@color/brownish_grey">
+
+                <com.google.android.material.tabs.TabItem
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Veg" />
+
+                <com.google.android.material.tabs.TabItem
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Non-Veg" />
+
+            </com.google.android.material.tabs.TabLayout>
+
+            <com.checkin.app.checkin.Utility.DynamicSwipableViewPager
+                android:id="@+id/pager_as_menu_items"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/spacing_extra_small" />
+        </LinearLayout>
+    </LinearLayout>
+</androidx.cardview.widget.CardView>

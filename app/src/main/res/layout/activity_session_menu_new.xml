@@ -1,0 +1,254 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="@color/white_one">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <ImageView
+            android:layout_width="@dimen/width_small_icon"
+            android:layout_height="@dimen/size_extra_small_button"
+            android:layout_marginStart="@dimen/spacing_extra_small"
+            android:layout_gravity="center|start"
+            android:layout_marginTop="@dimen/spacing_tiny"
+            android:src="@drawable/ic_back_grey" />
+
+        <FrameLayout
+            android:id="@+id/container_as_menu_serach"
+            android:layout_width="match_parent"
+            android:layout_height="?android:attr/actionBarSize"
+            android:layout_marginStart="@dimen/spacing_small"
+            android:layout_marginTop="@dimen/spacing_medium"
+
+            android:layout_marginEnd="@dimen/spacing_extra_large"
+
+            android:background="@color/white">
+
+            <TextView
+                android:id="@+id/tv_as_menu_title"
+                style="@style/RedHeadingStyle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center|start"
+                android:layout_weight="1"
+                android:paddingStart="@dimen/spacing_small"
+                android:text="Menu" />
+
+
+            <ImageView
+                android:id="@+id/btn_as_menu_search"
+                android:layout_width="@dimen/size_small_button"
+                android:layout_height="@dimen/size_small_button"
+                android:layout_gravity="end|center_vertical"
+                android:background="@drawable/ic_search_grey"
+                android:layout_marginEnd="@dimen/spacing_small"
+                android:foregroundTint="@color/brownish_grey" />
+
+            <com.miguelcatalan.materialsearchview.MaterialSearchView
+                android:id="@+id/view_as_menu_search"
+                style="@style/MaterialSearchViewStyle"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent" />
+
+        </FrameLayout>
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/spacing_extra_small"
+        android:layout_marginEnd="@dimen/spacing_extra_small"
+        android:layout_marginBottom="@dimen/spacing_small"
+        android:layout_marginTop="@dimen/spacing_extra_small"
+        android:weightSum="4">
+
+        <TextView
+            android:id="@+id/tv_as_menu_drinks"
+            style="@style/GreySmallTextStyle"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:drawableTop="@drawable/ic_drink"
+            android:fontFamily="@font/opensans_regular"
+            android:gravity="center"
+            android:padding="@dimen/spacing_extra_small"
+            android:text="Drinks" />
+
+        <TextView
+            android:id="@+id/tv_as_menu_food"
+            style="@style/GreySmallTextStyle"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:drawableTop="@drawable/ic_burger"
+            android:fontFamily="@font/opensans_regular"
+            android:gravity="center"
+            android:padding="@dimen/spacing_extra_small"
+            android:text="Food" />
+
+        <TextView
+            android:id="@+id/tv_as_menu_dessert"
+            style="@style/GreySmallTextStyle"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:drawableTop="@drawable/ic_dessert"
+            android:fontFamily="@font/opensans_regular"
+            android:gravity="center"
+            android:padding="@dimen/spacing_extra_small"
+            android:text="Dessert" />
+
+        <TextView
+            android:id="@+id/tv_as_menu_specials"
+            style="@style/GreySmallTextStyle"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:drawableTop="@drawable/ic_special_star"
+            android:fontFamily="@font/opensans_regular"
+            android:gravity="center"
+            android:padding="@dimen/spacing_extra_small"
+            android:text="Specials" />
+
+    </LinearLayout>
+
+    <!--<View
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/height_horizontal_view"
+        android:layout_marginStart="@dimen/spacing_tiny"
+        android:layout_marginEnd="@dimen/spacing_tiny"
+        android:background="@color/pinkish_grey" />-->
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/rv_menu"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:visibility="gone" />
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <FrameLayout
+            android:id="@+id/container_as_menu"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"/>
+
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/container_as_menu_cart"
+            android:layout_width="wrap_content"
+            android:layout_height="@dimen/button_height_medium"
+            android:layout_gravity="bottom|center"
+            android:layout_marginBottom="@dimen/spacing_medium">
+
+
+            <TextView
+                android:id="@+id/tv_as_menu_cart_item_price"
+                style="@style/WhiteTextStyle"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_marginTop="@dimen/spacing_tiny"
+                android:layout_marginBottom="@dimen/spacing_tiny"
+                android:layout_toEndOf="@id/cart"
+                android:background="@drawable/rectangle_blue"
+                android:gravity="center"
+                android:maxLines="1"
+                android:minWidth="@dimen/width_as_menu_cart_total"
+                android:paddingStart="@dimen/button_height_normal"
+                android:paddingEnd="@dimen/spacing_normal"
+                android:scaleType="fitXY"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="@id/guideline_two"
+                app:layout_constraintTop_toTopOf="parent"
+                tools:text="$ 14.78" />
+
+            <androidx.constraintlayout.widget.Guideline
+                android:id="@+id/guideline"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:orientation="vertical"
+                app:layout_constraintGuide_percent="0.45" />
+
+            <ImageView
+                android:id="@+id/cart"
+                android:layout_width="@dimen/width_as_menu_cart"
+                android:layout_height="match_parent"
+                android:layout_gravity="start"
+                android:scaleType="fitXY"
+                android:src="@drawable/ic_cart"
+                android:layout_marginStart="@dimen/spacing_small"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="@id/guideline"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <androidx.constraintlayout.widget.Guideline
+                android:id="@+id/guideline_two"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:orientation="vertical"
+                app:layout_constraintGuide_percent="0.2" />
+
+            <TextView
+                android:id="@+id/tv_menu_count_ordered_items"
+                style="@style/WhiteSmallTextStyle"
+                android:layout_width="@dimen/size_extra_small_icon"
+                android:layout_height="@dimen/size_extra_small_icon"
+                android:layout_marginTop="@dimen/spacing_extra_small"
+                android:layout_marginEnd="@dimen/spacing_extra_small"
+                android:background="@drawable/shape_oval_blue"
+                android:gravity="center"
+                android:visibility="gone"
+                app:layout_constraintEnd_toEndOf="@id/cart"
+                app:layout_constraintTop_toTopOf="parent"
+                tools:text="13" />
+
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <ImageView
+            android:id="@+id/btn_as_menu_filter"
+            style="@style/LogoImageStyle"
+            android:layout_gravity="end|bottom"
+            android:layout_marginEnd="@dimen/spacing_small"
+            android:layout_marginBottom="@dimen/spacing_normal"
+            android:padding="@dimen/spacing_extra_tiny"
+            android:src="@drawable/ic_menu_as_filter" />
+
+    </FrameLayout>
+
+    </LinearLayout>
+
+    </LinearLayout>
+    <FrameLayout
+        android:id="@+id/container_as_menu_fragment"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:visibility="visible">
+
+    </FrameLayout>
+
+
+</FrameLayout>

@@ -39,6 +39,9 @@
 -dontwarn javax.annotation.Nullable
 -dontwarn javax.annotation.ParametersAreNonnullByDefault
 
+-keep public class com.google.j2objc.** { public *; }
+-dontwarn com.google.j2objc.**
+
 ########### Jackson
 -keep @com.fasterxml.jackson.annotation.JsonIgnoreProperties class * { *; }
 -keep class com.fasterxml.** { *; }
