@@ -13,9 +13,10 @@
         style="@style/GreyTextStyle"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginStart="@dimen/spacing_small"
-        android:layout_marginEnd="@dimen/spacing_small"
+        android:layout_marginStart="@dimen/spacing_extra_small"
+        android:layout_marginEnd="@dimen/spacing_extra_small"
         android:gravity="start"
+        app:layout_constraintHorizontal_weight="0.6"
         app:layout_constraintEnd_toStartOf="@id/im_as_menu_item"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
@@ -26,27 +27,31 @@
         style="@style/PinkishGreySmallTextStyle"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginStart="@dimen/spacing_small"
-        android:layout_marginTop="@dimen/spacing_extra_small"
-        android:layout_marginEnd="@dimen/spacing_small"
+        android:layout_marginStart="@dimen/spacing_extra_small"
+        android:layout_marginTop="@dimen/spacing_tiny"
+        android:layout_marginEnd="@dimen/spacing_extra_tiny"
+        android:fontFamily="@font/opensans_regular"
         android:gravity="start"
         app:colorClickableText="@color/primary_red"
         app:trimCollapsedText=" ...read more"
         app:trimExpandedText="  read less"
         app:trimLines="2"
         app:trimMode="trimModeLine"
+        app:layout_constraintHorizontal_weight="0.6"
         app:layout_constraintEnd_toStartOf="@id/im_as_menu_item"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/tv_as_menu_item_name"
-        tools:text="desc fdfbdbd" />
+        tools:text="desc " />
 
 
-    <ImageView
+    <com.checkin.app.checkin.Utility.FadingImageView
         android:id="@+id/im_as_menu_item"
         android:layout_width="0dp"
-        android:layout_height="0dp"
+        android:layout_height="60dp"
         android:layout_marginBottom="@dimen/spacing_small"
-        tools:src="@drawable/ic_burger"
+        tools:src="@drawable/cover_unknown_male"
+        android:scaleType="centerCrop"
+        app:layout_constraintHorizontal_weight="0.8"
         app:layout_constraintStart_toEndOf="@id/tv_as_menu_item_name"
         app:layout_constraintEnd_toStartOf="@id/container_as_menu_quantity_picker"
         app:layout_constraintTop_toTopOf="parent"
@@ -57,7 +62,7 @@
         android:id="@+id/tv_as_menu_item_price"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginEnd="@dimen/spacing_normal"
+        android:layout_marginEnd="@dimen/spacing_extra_small"
         android:layout_marginBottom="@dimen/spacing_small"
         android:textColor="@color/brownish_grey"
         android:textSize="@dimen/font_normal"
@@ -73,11 +78,12 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/spacing_tiny"
-        android:layout_marginEnd="@dimen/spacing_small"
+        android:layout_marginEnd="@dimen/spacing_extra_small"
         android:layout_marginStart="@dimen/spacing_small"
         android:layout_marginBottom="@dimen/spacing_small"
         android:clickable="true"
         android:focusable="true"
+        app:layout_constraintHorizontal_weight="1"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@id/im_as_menu_item"
@@ -87,7 +93,7 @@
         <TextView
             android:id="@+id/btn_as_menu_item_add"
             style="@style/RedSmallTextStyle"
-            android:layout_width="@dimen/size_large_button"
+            android:layout_width="@dimen/width_menu_add_quantity"
             android:layout_height="@dimen/size_small_button"
             android:layout_gravity="center|end"
             android:background="@drawable/rounded_rectangle_red_stroke"
@@ -103,7 +109,9 @@
         <LinearLayout
             android:id="@+id/container_menu_item_quantity"
             android:layout_width="wrap_content"
+            android:minWidth="@dimen/width_menu_add_quantity"
             android:layout_height="wrap_content"
+            android:gravity="end"
             android:visibility="visible">
 
         <TextView
@@ -113,7 +121,6 @@
             android:layout_height="@dimen/size_small_icon"
             android:background="@drawable/shape_oval_red_stroke"
             android:gravity="center"
-            android:layout_marginEnd="@dimen/spacing_small"
             android:text="-"
             android:visibility="visible" />
         <TextView
@@ -122,7 +129,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:layout_marginEnd="@dimen/spacing_small"
+            android:minWidth="@dimen/size_medium_icon"
+            android:gravity="center"
             android:text="12"
             android:visibility="visible" />
         <TextView

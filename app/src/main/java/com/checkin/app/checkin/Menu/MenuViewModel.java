@@ -335,6 +335,9 @@ public class MenuViewModel extends BaseViewModel {
 
     public LiveData<Double> getOrderedSubTotal() {
         return Transformations.map(mOrderedItems, input -> {
+            if(input.size()<=0)
+                return null;
+
             double res = 0.0;
             for (OrderedItemModel item : input)
                 res += item.getCost();

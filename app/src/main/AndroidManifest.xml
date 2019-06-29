@@ -80,7 +80,8 @@
         </activity>
 
         <activity android:name=".Misc.UpdateAppActivity" />
-        <activity android:name=".Menu.ActiveSessionMenu.ActiveSessionMenuActivity" />
+        <activity android:name=".Menu.ActiveSessionMenu.ActiveSessionMenuActivity"
+            android:windowSoftInputMode="adjustPan"/>
 
         <service
             android:name=".Auth.AuthenticatorService"

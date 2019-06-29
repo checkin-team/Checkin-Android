@@ -84,7 +84,7 @@
     <dimen name="height_menu_filter">400dp</dimen>
     <dimen name="height_menu_customization">350dp</dimen>
     <dimen name="height_menu_customization_header">70dp</dimen>
-    <dimen name="height_menu_customization_footer">60dp</dimen>
+    <dimen name="height_menu_customization_footer">50dp</dimen>
     <dimen name="height_menu_group_collapsed">95dp</dimen>
     <dimen name="height_menu_group_expanded">350dp</dimen>
     <dimen name="height_menu_item">70dp</dimen>
@@ -96,7 +96,7 @@
     <dimen name="height_session_trending_dishes">150dp</dimen>
     <dimen name="width_session_trending_dishes">100dp</dimen>
 
-    <dimen name="spacing_between_group_icon_name">20dp</dimen>
+    <dimen name="spacing_between_group_icon_name">15dp</dimen>
 
     <dimen name="height_as_menu_group_collapsed">60dp</dimen>
     <dimen name="height_as_menu_group_expanded">350dp</dimen>
@@ -104,6 +104,8 @@
     <dimen name="width_as_menu_cart">60dp</dimen>
     <dimen name="width_treat_yourself">150dp</dimen>
     <dimen name="height_treat_yourself">140dp</dimen>
+    <dimen name="width_menu_add_quantity">78dp</dimen>
+    <dimen name="drop_down_arrow_icon">14dp</dimen>
 
     <!--Chat dimensions-->
     <dimen name="size_chat_status">10dp</dimen>

@@ -1,5 +1,10 @@
 package com.checkin.app.checkin.Menu.ActiveSessionMenu.Adapter;
 
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.graphics.BlurMaskFilter;
+import android.graphics.drawable.BitmapDrawable;
+import android.net.Uri;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.LayoutInflater;
@@ -11,9 +16,11 @@ import android.widget.TextView;
 import com.checkin.app.checkin.Menu.Model.MenuItemModel;
 import com.checkin.app.checkin.Misc.TextBaseAdapter;
 import com.checkin.app.checkin.R;
+import com.checkin.app.checkin.Utility.GlideApp;
 import com.checkin.app.checkin.Utility.Utils;
 import com.yarolegovich.discretescrollview.DiscreteScrollView;
 
+import java.io.FileNotFoundException;
 import java.util.List;
 import java.util.Locale;
 
@@ -22,6 +29,8 @@ import androidx.annotation.Nullable;
 import androidx.recyclerview.widget.RecyclerView;
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import jp.wasabeef.glide.transformations.BlurTransformation;
+import jp.wasabeef.glide.transformations.MaskTransformation;
 
 public class ActiveSessionMenuItemAdapter extends RecyclerView.Adapter<ActiveSessionMenuItemAdapter.ItemViewHolder> {
     private static final String TAG = ActiveSessionMenuItemAdapter.class.getSimpleName();
@@ -156,10 +165,12 @@ public class ActiveSessionMenuItemAdapter extends RecyclerView.Adapter<ActiveSes
 
             tvItemName.setText(menuItem.getName());
             tvDesc.setText(menuItem.getDescription());
-            Utils.loadImageOrDefault(imItem, menuItem.getImage(), R.drawable.ic_burger);
-            tvItemPrices.setText(String.format(
-                    Locale.ENGLISH, Utils.getCurrencyFormat(itemView.getContext()),
-                    Utils.joinCollection(menuItem.getTypeCosts(), " | ")));
+            Utils.loadImageOrDefault(imItem, menuItem.getImage(), R.drawable.shahi_paneer);
+//            imItem.setLayerType(View.LAYER_TYPE_SOFTWARE,null);
+//            Bitmap icon = BitmapFactory.decodeResource(imItem.getResources(), R.drawable.shahi_paneer);
+//            Utils.blurImage(imItem ,icon);
+
+            tvItemPrices.setText(Utils.formatCurrencyAmount(tvItemPrices.getContext(),menuItem.getTypeCosts().get(0)));
 
             int count = mListener.orderedItemCount(menuItem);
             if (count > 0)

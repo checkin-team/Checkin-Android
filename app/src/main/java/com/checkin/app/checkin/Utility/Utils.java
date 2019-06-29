@@ -9,8 +9,12 @@ import android.content.Intent;
 import android.content.res.Resources;
 import android.database.Cursor;
 import android.graphics.Bitmap;
+import android.graphics.BlurMaskFilter;
 import android.graphics.Canvas;
 import android.graphics.Matrix;
+import android.graphics.Paint;
+import android.graphics.PorterDuff;
+import android.graphics.PorterDuffXfermode;
 import android.graphics.Typeface;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
@@ -48,8 +52,6 @@ import com.checkin.app.checkin.Data.Message.ActiveSessionNotificationService;
 import com.checkin.app.checkin.Home.HomeActivity;
 import com.checkin.app.checkin.Home.SplashActivity;
 import com.checkin.app.checkin.R;
-import com.facebook.shimmer.Shimmer;
-import com.facebook.shimmer.ShimmerDrawable;
 import com.golovin.fluentstackbar.FluentSnackbar;
 import com.google.android.material.snackbar.Snackbar;
 import com.google.android.material.tabs.TabLayout;
@@ -72,8 +74,6 @@ import java.util.Locale;
 import java.util.Map;
 import java.util.regex.MatchResult;
 import java.util.regex.Matcher;
-
-
 
 import static com.checkin.app.checkin.BuildConfig.DEBUG;
 
@@ -806,4 +806,38 @@ public final class Utils {
 
         view.setLayoutParams(params);
     }
+
+    @SuppressLint("ResourceAsColor")
+    public static Bitmap blurImage(ImageView imageView, Bitmap src) {
+        // create new bitmap, which will be painted and becomes result image
+        Bitmap bmOut = Bitmap.createBitmap(src.getWidth(), src.getHeight(), Bitmap.Config.ARGB_8888);
+        Log.e("width===", src.getWidth() + "    " + src.getHeight() + "===");
+        // setup canvas for painting
+        Canvas canvas = new Canvas(bmOut);
+        // setup default color
+//        canvas.drawColor(0, PorterDuff.Mode.CLEAR);
+        // create a blur paint for capturing alpha
+        Paint ptBlur = new Paint();
+        ptBlur.setXfermode(new PorterDuffXfermode(PorterDuff.Mode.DST_OVER));
+        ptBlur.setMaskFilter(new BlurMaskFilter(80, BlurMaskFilter.Blur.OUTER));
+        int[] offsetXY = new int[2];
+        // capture alpha into a bitmap
+//        Bitmap bmAlpha = src.extractAlpha(ptBlur, offsetXY);
+        // create a color paint
+        Paint ptAlphaColor = new Paint();
+        ptAlphaColor.setColor(R.color.apple_green);
+        canvas.drawBitmap(src, 100, 50, ptBlur);
+        // paint color for captured alpha region (bitmap)
+//        canvas.drawBitmap(bmAlpha, offsetXY[0], offsetXY[1], ptAlphaColor);
+        // free memory
+//        bmAlpha.recycle();
+
+        // paint the image source
+//        canvas.drawBitmap(src, 40, 10, ptAlphaColor);
+        imageView.draw(canvas);
+        imageView.setImageBitmap(bmOut);
+        // return out final image
+        return bmOut;
+    }
+
 }

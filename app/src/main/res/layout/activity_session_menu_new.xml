@@ -28,12 +28,10 @@
         <FrameLayout
             android:id="@+id/container_as_menu_serach"
             android:layout_width="match_parent"
-            android:layout_height="?android:attr/actionBarSize"
+            android:layout_height="@dimen/button_height_normal"
             android:layout_marginStart="@dimen/spacing_small"
             android:layout_marginTop="@dimen/spacing_medium"
-
             android:layout_marginEnd="@dimen/spacing_extra_large"
-
             android:background="@color/white">
 
             <TextView
@@ -49,8 +47,8 @@
 
             <ImageView
                 android:id="@+id/btn_as_menu_search"
-                android:layout_width="@dimen/size_small_button"
-                android:layout_height="@dimen/size_small_button"
+                android:layout_width="@dimen/size_extra_small_button"
+                android:layout_height="@dimen/size_extra_small_button"
                 android:layout_gravity="end|center_vertical"
                 android:background="@drawable/ic_search_grey"
                 android:layout_marginEnd="@dimen/spacing_small"
@@ -234,7 +232,6 @@
             android:layout_gravity="end|bottom"
             android:layout_marginEnd="@dimen/spacing_small"
             android:layout_marginBottom="@dimen/spacing_normal"
-            android:padding="@dimen/spacing_extra_tiny"
             android:src="@drawable/ic_menu_as_filter" />
 
     </FrameLayout>

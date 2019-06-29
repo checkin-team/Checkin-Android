@@ -157,14 +157,16 @@ public class ActiveSessionMenuGroupAdapter extends RecyclerView.Adapter<ActiveSe
 
     private void contractView(GroupViewHolder groupViewHolder) {
         if (groupViewHolder != null) {
-            groupViewHolder.hideMenu(groupViewHolder.itemView);
+//            groupViewHolder.hideMenu(groupViewHolder.itemView);
+            groupViewHolder.hideMenu();
             mPrevExpandedViewHolder = null;
         }
     }
 
     private void expandView(GroupViewHolder groupViewHolder) {
         if (groupViewHolder != null) {
-            groupViewHolder.showMenu(groupViewHolder.itemView);
+//            groupViewHolder.showMenu(groupViewHolder.itemView);
+            groupViewHolder.showMenu();
             ((LinearLayoutManager) mRecyclerView.getLayoutManager()).scrollToPositionWithOffset(groupViewHolder.getAdapterPosition(), 0);
             mPrevExpandedViewHolder = groupViewHolder;
         }
@@ -249,6 +251,21 @@ public class ActiveSessionMenuGroupAdapter extends RecyclerView.Adapter<ActiveSe
                 vTabs.setVisibility(View.GONE);
             }
         }
+
+        void showMenu(){
+            isExpanded = true;
+            if (isExpanded) {
+                vSubGroupWrapper.setVisibility(View.VISIBLE);
+            }
+        }
+
+        void hideMenu(){
+            isExpanded = false;
+            if (!isExpanded) {
+                vSubGroupWrapper.setVisibility(View.GONE);
+            }
+        }
+
 
         void showMenu(View view) {
             Animator sizeChangeAnim = AnimUtils.changeViewSize(view, AnimUtils.NO_CHANGE, (int) view.getResources().getDimension(R.dimen.height_as_menu_group_expanded));

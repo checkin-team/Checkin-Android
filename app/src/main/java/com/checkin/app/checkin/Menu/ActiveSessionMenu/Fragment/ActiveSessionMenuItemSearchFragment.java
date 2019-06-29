@@ -7,6 +7,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.checkin.app.checkin.Data.Resource.Status;
+import com.checkin.app.checkin.Menu.ActiveSessionMenu.ActiveSessionMenuActivity;
 import com.checkin.app.checkin.Menu.MenuItemInteraction;
 import com.checkin.app.checkin.Menu.MenuViewModel;
 import com.checkin.app.checkin.Menu.Model.MenuItemModel;
@@ -59,7 +60,7 @@ public class ActiveSessionMenuItemSearchFragment extends BaseSearchFragment impl
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         view.setOnTouchListener((v, event) -> {
-            ((SessionMenuActivity) requireActivity()).closeSearch();
+            ((ActiveSessionMenuActivity) requireActivity()).closeSearch();
             return true;
         });
 

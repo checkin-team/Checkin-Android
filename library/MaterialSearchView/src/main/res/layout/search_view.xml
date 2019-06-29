@@ -15,7 +15,7 @@
         <RelativeLayout
             android:id="@+id/search_top_bar"
             android:layout_width="match_parent"
-            android:layout_height="?android:attr/actionBarSize"
+            android:layout_height="@dimen/button_height_normal"
             android:background="@android:color/white">
 
             <EditText
@@ -31,7 +31,7 @@
                 android:singleLine="true"
                 android:textColor="#212121"
                 android:textColorHint="#727272"
-                android:textSize="16sp"/>
+                android:textSize="15sp"/>
 
             <ImageButton
                 android:id="@+id/action_up_btn"

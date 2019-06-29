@@ -14,6 +14,7 @@ import android.view.animation.AnimationUtils;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.checkin.app.checkin.Menu.ActiveSessionMenu.Fragment.ActiveSessionItemCustomizationFragment;
 import com.checkin.app.checkin.Menu.Fragment.ItemCustomizationFragment;
 import com.checkin.app.checkin.Menu.ActiveSessionMenu.Fragment.MenuCartFragment;
 import com.checkin.app.checkin.Menu.Fragment.MenuInfoFragment;
@@ -46,7 +47,7 @@ import static com.checkin.app.checkin.Menu.SessionMenuActivity.KEY_SESSION_TREND
 import static com.checkin.app.checkin.Menu.SessionMenuActivity.SESSION_ARG;
 
 public class ActiveSessionMenuActivity extends BaseActivity implements
-        MenuItemInteraction, ItemCustomizationFragment.ItemCustomizationInteraction, ActiveSessionMenuFilterFragment.MenuFilterInteraction {
+        MenuItemInteraction, ActiveSessionItemCustomizationFragment.ItemCustomizationInteraction, ActiveSessionMenuFilterFragment.MenuFilterInteraction {
     public static final String SP_MENU_SEARCH = "sp.menu.search";
     public static final String SP_MENU_CART = "sp.menu.cart";
     @BindView(R.id.rv_menu)
@@ -174,17 +175,21 @@ public class ActiveSessionMenuActivity extends BaseActivity implements
                 tvCountOrderedItems.setVisibility(View.VISIBLE);
                 explainCartMenu();
             } else {
+                menuCart.setVisibility(View.GONE);
                 tvCountOrderedItems.setVisibility(View.GONE);
             }
         });
 
-        mViewModel.getOrderedItems().observe(this, orderedItemModels -> {});
-
         mViewModel.getOrderedSubTotal().observe(this, subtotal -> {
             if (subtotal == null)
                 return;
+            if(subtotal < 0.0){
+                menuCart.setVisibility(View.GONE);
+            }else {
+                menuCart.setVisibility(View.VISIBLE);
+                tvCartSubtotal.setText(Utils.formatCurrencyAmount(this, subtotal));
+            }
 
-            tvCartSubtotal.setText(Utils.formatCurrencyAmount(this, subtotal));
         });
 
         mViewModel.mOriginalMenuGroups.observe(this, listResource -> {});
@@ -235,6 +240,7 @@ public class ActiveSessionMenuActivity extends BaseActivity implements
             getSupportActionBar().setElevation(0);
         }
         mCartFragment = MenuCartFragment.newInstance(this);
+        menuCart.setVisibility(View.GONE);
     }
 
     private void explainMenu() {
@@ -357,7 +363,7 @@ public class ActiveSessionMenuActivity extends BaseActivity implements
     private void onItemInteraction(MenuItemModel item, int count) {
         if (item.isComplexItem()) {
             getSupportFragmentManager().beginTransaction()
-                    .add(R.id.container_as_menu_fragment, ItemCustomizationFragment.newInstance(item, this), "item_customization")
+                    .add(R.id.container_as_menu_fragment, ActiveSessionItemCustomizationFragment.newInstance(item, this), "item_customization")
                     .commit();
         } else {
             mViewModel.orderItem();
