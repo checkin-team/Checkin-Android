@@ -43,6 +43,7 @@ public class ActiveSessionMenuItemAdapter extends RecyclerView.Adapter<ActiveSes
         mItemsList = itemsList;
         mListener = listener;
         mIsSessionActive = isSessionActive;
+        notifyDataSetChanged();
     }
 
     public void setMenuItems(List<MenuItemModel> menuItems) {

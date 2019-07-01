@@ -42,7 +42,7 @@ public class ActiveSessionMenuItemsFragment extends Fragment implements ActiveSe
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        final View view = inflater.inflate(R.layout.fragment_menu_items, container, false);
+        final View view = inflater.inflate(R.layout.fragment_as_menu_items, container, false);
         unbinder = ButterKnife.bind(this, view);
         return view;
     }
@@ -51,6 +51,7 @@ public class ActiveSessionMenuItemsFragment extends Fragment implements ActiveSe
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         rvMenuItems.setAdapter(mAdapter);
         rvMenuItems.setLayoutManager(new LinearLayoutManager(getContext(), RecyclerView.VERTICAL, false));
+       mAdapter.notifyDataSetChanged();
     }
 
     @Override

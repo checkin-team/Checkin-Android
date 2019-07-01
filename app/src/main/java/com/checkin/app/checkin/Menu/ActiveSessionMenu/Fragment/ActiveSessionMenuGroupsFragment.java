@@ -60,12 +60,16 @@ public class ActiveSessionMenuGroupsFragment extends BaseFragment {
             if (menuGroupResource.status == Resource.Status.SUCCESS && !menuGroupResource.isCached()) {
                 mAdapter.setGroupList(menuGroupResource.data);
                 stopRefreshing();
-                shimmerMenu.stopShimmer();
-                shimmerMenu.setVisibility(View.GONE);
+                if(shimmerMenu.getVisibility()==View.VISIBLE){
+                    shimmerMenu.stopShimmer();
+                    shimmerMenu.setVisibility(View.GONE);
+                }
             } else if (menuGroupResource.status == Resource.Status.LOADING) {
                 startRefreshing();
                 if (!mAdapter.hasData() && menuGroupResource.data != null)
                     mAdapter.setGroupList(menuGroupResource.data);
+                shimmerMenu.stopShimmer();
+                shimmerMenu.setVisibility(View.GONE);
             } else {
                 stopRefreshing();
                 Utils.toast(requireContext(), menuGroupResource.message);
@@ -102,7 +106,7 @@ public class ActiveSessionMenuGroupsFragment extends BaseFragment {
 
     public boolean onBackPressed() {
         if (isGroupExpanded()) {
-            mAdapter.contractView();
+//            mAdapter.contractView();
             return true;
         }
         return false;

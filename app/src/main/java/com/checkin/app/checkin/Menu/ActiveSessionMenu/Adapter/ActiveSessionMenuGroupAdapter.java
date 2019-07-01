@@ -83,7 +83,7 @@ public class ActiveSessionMenuGroupAdapter extends RecyclerView.Adapter<ActiveSe
                     contractView(mPrevExpandedViewHolder);
             }
         });*/
-        mRecyclerView.addOnItemTouchListener(new RecyclerView.SimpleOnItemTouchListener() {
+       /* mRecyclerView.addOnItemTouchListener(new RecyclerView.SimpleOnItemTouchListener() {
             @Override
             public boolean onInterceptTouchEvent(RecyclerView rv, MotionEvent e) {
                 View v = rv.findChildViewUnder(e.getX(), e.getY());
@@ -94,7 +94,7 @@ public class ActiveSessionMenuGroupAdapter extends RecyclerView.Adapter<ActiveSe
                     rv.requestDisallowInterceptTouchEvent(true);
                 return false;
             }
-        });
+        });*/
     }
 
     @Override
@@ -166,7 +166,7 @@ public class ActiveSessionMenuGroupAdapter extends RecyclerView.Adapter<ActiveSe
     private void expandView(GroupViewHolder groupViewHolder) {
         if (groupViewHolder != null) {
 //            groupViewHolder.showMenu(groupViewHolder.itemView);
-            groupViewHolder.showMenu();
+//            groupViewHolder.showMenu();
             ((LinearLayoutManager) mRecyclerView.getLayoutManager()).scrollToPositionWithOffset(groupViewHolder.getAdapterPosition(), 0);
             mPrevExpandedViewHolder = groupViewHolder;
         }
@@ -175,9 +175,9 @@ public class ActiveSessionMenuGroupAdapter extends RecyclerView.Adapter<ActiveSe
     @Override
     public void onBindViewHolder(@NonNull final GroupViewHolder groupViewHolder, final int position) {
         groupViewHolder.bindData(mGroupList.get(position));
-        if (groupViewHolder.isExpanded) {
-            contractView(groupViewHolder);
-        }
+//        if (groupViewHolder.isExpanded) {
+//            contractView(groupViewHolder);
+//        }
     }
 
     public class GroupViewHolder extends RecyclerView.ViewHolder {
@@ -208,23 +208,25 @@ public class ActiveSessionMenuGroupAdapter extends RecyclerView.Adapter<ActiveSe
                 tvGroupName.performClick();
             });
             tvGroupName.setOnClickListener(v -> {
-                if (this.isExpanded)
-                    contractView(this);
-                else {
-                    contractView();
-                    expandView(this);
-                }
+//                if (this.isExpanded)
+//                    contractView(this);
+//                else {
+//                    contractView();
+//                    expandView(this);
+//                }
             });
         }
 
         void bindData(final MenuGroupModel menuGroup) {
-            vSubGroupWrapper.setVisibility(View.GONE);
+            vSubGroupWrapper.setVisibility(View.VISIBLE);
             mMenuGroup = menuGroup;
 
             tvGroupName.setText(menuGroup.getName());
             GlideApp.with(itemView).load(menuGroup.getIcon()).into(imGroupIcon);
             SubGroupPagerAdapter pagerAdapter = new SubGroupPagerAdapter(menuGroup);
             vPager.setAdapter(pagerAdapter);
+
+//            vSubGroupWrapper.setVisibility(View.VISIBLE);
             if (menuGroup.hasSubGroups()) {
                 vTabs.setVisibility(View.VISIBLE);
                 vTabs.setupWithViewPager(vPager);
@@ -250,6 +252,7 @@ public class ActiveSessionMenuGroupAdapter extends RecyclerView.Adapter<ActiveSe
             } else {
                 vTabs.setVisibility(View.GONE);
             }
+            pagerAdapter.notifyDataSetChanged();
         }
 
         void showMenu(){

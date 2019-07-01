@@ -17,6 +17,7 @@ import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.TextView;
 
+import com.checkin.app.checkin.Menu.ActiveSessionMenu.Model.ActiveSessionItemCustomizationGroupHolder;
 import com.checkin.app.checkin.Menu.ItemCustomizationGroupHolder;
 import com.checkin.app.checkin.Menu.MenuViewModel;
 import com.checkin.app.checkin.Menu.Model.ItemCustomizationFieldModel;
@@ -41,7 +42,7 @@ import okhttp3.internal.Util;
  * Created by Bhavik Patel on 12/08/2018.
  */
 
-public class ActiveSessionItemCustomizationFragment extends Fragment implements ItemCustomizationGroupHolder.CustomizationGroupInteraction {
+public class ActiveSessionItemCustomizationFragment extends Fragment implements ActiveSessionItemCustomizationGroupHolder.CustomizationGroupInteraction {
     private static final String TAG = ActiveSessionItemCustomizationFragment.class.getSimpleName();
     @BindView(R.id.container_menu_customization)
     ConstraintLayout vMenuCustomizations;
@@ -119,8 +120,9 @@ public class ActiveSessionItemCustomizationFragment extends Fragment implements 
         });
 
         tvItemName.setText(mItem.getName());
-        mViewModel.getItemCost().observe(this, value -> tvBill.setText("Item Total  " + Utils.formatCurrencyAmount(requireContext(), value)));
+        mViewModel.getItemCost().observe(this, value -> tvBill.setText("Item Total   " + Utils.formatCurrencyAmount(requireContext(), value)));
         tvRadioLabel1.setText(mItem.getTypeNames().get(0));
+        groupRadio.setVisibility(View.VISIBLE);
         switch (mItem.getTypeNames().size()) {
             case 3:
                 tvRadioLabel2.setText(mItem.getTypeNames().get(1));
@@ -128,18 +130,18 @@ public class ActiveSessionItemCustomizationFragment extends Fragment implements 
                 btnRadio1.performClick();
                 break;
             case 2:
-                goneViews(btnRadio3, tvRadioLabel3, vLineHorizontalTwo);
+                hideViews(btnRadio3, tvRadioLabel3, vLineHorizontalTwo);
                 setViewInCenter();
                 tvRadioLabel2.setText(mItem.getTypeNames().get(1));
                 btnRadio1.performClick();
                 break;
             default:
-                hideViews(btnRadio1, btnRadio2, btnRadio3, tvRadioLabel1, tvRadioLabel2, tvRadioLabel3, vLineHorizontal, vLineHorizontalTwo);
+                groupRadio.setVisibility(View.GONE);
                 break;
         }
         if (mItem.hasCustomizations()) {
             for (ItemCustomizationGroupModel group : mItem.getCustomizations()) {
-                listCustomizations.addView(new ItemCustomizationGroupHolder(group, getContext(), this).getView());
+                listCustomizations.addView(new ActiveSessionItemCustomizationGroupHolder(group, getContext(), this).getView());
             }
         } else {
             svContainerCustomization.setVisibility(View.GONE);
@@ -204,12 +206,6 @@ public class ActiveSessionItemCustomizationFragment extends Fragment implements 
     }
 
     private void hideViews(View... views) {
-        for (View v : views) {
-            v.setVisibility(View.INVISIBLE);
-        }
-    }
-
-    private void goneViews(View... views) {
         for (View v : views) {
             v.setVisibility(View.GONE);
         }

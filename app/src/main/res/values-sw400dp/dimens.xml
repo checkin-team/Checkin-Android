@@ -97,10 +97,11 @@
     <dimen name="width_session_trending_dishes">122dp</dimen>
 
     <dimen name="spacing_between_group_icon_name">40dp</dimen>
-
     <dimen name="height_as_menu_group_collapsed">60dp</dimen>
-    <dimen name="drop_down_arrow_icon">16dp</dimen>
     <dimen name="width_menu_add_quantity">84dp</dimen>
+
+    <dimen name="width_filter_group_name">80dp</dimen>
+    <dimen name="container_filter">310dp</dimen>
 
     <!--Chat dimensions-->
     <dimen name="size_chat_status">12dp</dimen>

@@ -388,7 +388,7 @@ public class MenuViewModel extends BaseViewModel {
     }
 
     public void sortMenuItems(boolean low2high) {
-        mFilteredString.setValue("Sorted: " + (low2high ? "Low-High" : "High-Low"));
+        mFilteredString.setValue(low2high ? "Low-High" : "High-Low");
         LiveData<Resource<List<MenuItemModel>>> resourceLiveData = Transformations.map(mMenuData, input -> {
             if (input == null || input.data == null)
                 return Resource.loading(null);

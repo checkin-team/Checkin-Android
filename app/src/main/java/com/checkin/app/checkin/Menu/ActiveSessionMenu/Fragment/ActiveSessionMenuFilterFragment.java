@@ -5,8 +5,10 @@ import android.animation.AnimatorListenerAdapter;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewAnimationUtils;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.RadioButton;
 import android.widget.TextView;
 
 import com.checkin.app.checkin.Menu.MenuViewModel;
@@ -28,6 +30,8 @@ import butterknife.Unbinder;
 
 public class ActiveSessionMenuFilterFragment extends Fragment {
     private static final String TAG = ActiveSessionMenuFilterFragment.class.getSimpleName();
+    @BindView(R.id.container_as_menu_parent_filter)
+    ViewGroup parentContainer;
     @BindView(R.id.dark_back_as_menu_filter)
     ViewGroup vDarkBack;
     @BindView(R.id.container_as_menu_filter)
@@ -48,10 +52,10 @@ public class ActiveSessionMenuFilterFragment extends Fragment {
     TextView tvLunch;
     @BindView(R.id.tv_as_menu_filter_dinner)
     TextView tvDinner;
-    @BindView(R.id.tv_as_menu_low)
-    TextView tvLow;
-    @BindView(R.id.tv_as_menu_high)
-    TextView tvHigh;
+    @BindView(R.id.rb_as_menu_filter_low_high)
+    RadioButton rbLowHigh;
+    @BindView(R.id.rb_as_menu_filter_high_low)
+    RadioButton rbHighLow;
     private Unbinder unbinder;
     private MenuViewModel mViewModel;
     private FilterGroupAdapter mAdapter;
@@ -87,8 +91,6 @@ public class ActiveSessionMenuFilterFragment extends Fragment {
         rvFilterCategories.setLayoutManager(new LinearLayoutManager(requireContext(), RecyclerView.VERTICAL, false));
         rvFilterCategories.setAdapter(mAdapter);
 
-
-
         mViewModel = ViewModelProviders.of(requireActivity()).get(MenuViewModel.class);
         mViewModel.getGroupName().observe(this, listResource -> {
             mAdapter.setCategories(listResource);
@@ -105,17 +107,16 @@ public class ActiveSessionMenuFilterFragment extends Fragment {
                     tvDinner.setTextColor(getResources().getColor(R.color.primary_red));
                     imDinner.setImageDrawable(getResources().getDrawable(R.drawable.ic_menu_filter_dinner_rouge));
                 }else if(value.equalsIgnoreCase("Low-High")){
-                    tvLow.setTextColor(getResources().getColor(R.color.brownish_grey));
-                    tvHigh.setTextColor(getResources().getColor(R.color.primary_red));
+                    rbLowHigh.setChecked(true);
+                    rbHighLow.setChecked(false);
                 }else if(value.equalsIgnoreCase("High-Low")){
-                    tvHigh.setTextColor(getResources().getColor(R.color.brownish_grey));
-                    tvLow.setTextColor(getResources().getColor(R.color.primary_red));
+                    rbLowHigh.setChecked(false);
+                    rbHighLow.setChecked(true);
                 }
-
             }
         });
 
-        resetFilterContainer();
+//        resetFilterContainer();
         showFilter();
     }
 
@@ -149,16 +150,17 @@ public class ActiveSessionMenuFilterFragment extends Fragment {
     public void resetFilter() {
         mViewModel.clearFilters();
         mListener.resetFilters();
+        hideFilter();
     }
 
-    @OnClick({R.id.tv_as_menu_high, R.id.tv_as_menu_low})
+    @OnClick({R.id.rb_as_menu_filter_high_low, R.id.rb_as_menu_filter_low_high})
     public void sortMenuItems(View v) {
         switch (v.getId()) {
-            case R.id.tv_as_menu_high:
+            case R.id.rb_as_menu_filter_high_low:
                 mListener.sortItems();
                 mViewModel.sortMenuItems(false);
                 break;
-            case R.id.tv_as_menu_low:
+            case R.id.rb_as_menu_filter_low_high:
                 mListener.sortItems();
                 mViewModel.sortMenuItems(true);
                 break;
@@ -179,20 +181,43 @@ public class ActiveSessionMenuFilterFragment extends Fragment {
         mListener.onShowFilter();
 
         showDarkBack();
-        containerFilter.animate()
-                .rotationBy(-180)
-                .alpha(1.0f)
-                .setListener(new AnimatorListenerAdapter() {
-                    @Override
-                    public void onAnimationStart(Animator animation) {
-                        containerFilter.setVisibility(View.VISIBLE);
-                    }
 
-                    @Override
-                    public void onAnimationEnd(Animator animation) {
-                        containerFilter.setRotation(0);
-                    }
-                });
+        int x = containerFilter.getRight();
+        int y = containerFilter.getBottom();
+
+        int startRadius = 0;
+        int endRadius = (int) Math.hypot(parentContainer.getWidth(), parentContainer.getHeight());
+
+        Animator anim = null;
+        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.LOLLIPOP) {
+            anim = ViewAnimationUtils.createCircularReveal(containerFilter, x, y, startRadius, endRadius);
+            anim.addListener(new Animator.AnimatorListener() {
+                @Override
+                public void onAnimationStart(Animator animation) {
+
+                }
+
+                @Override
+                public void onAnimationEnd(Animator animation) {
+                    tvFilterClear.setVisibility(View.VISIBLE);
+                }
+
+                @Override
+                public void onAnimationCancel(Animator animation) {
+
+                }
+
+                @Override
+                public void onAnimationRepeat(Animator animation) {
+
+                }
+            });
+            anim.start();
+        }else {
+            tvFilterClear.setVisibility(View.VISIBLE);
+        }
+
+        containerFilter.setVisibility(View.VISIBLE);
     }
 
     private void hideFilter() {
@@ -200,17 +225,42 @@ public class ActiveSessionMenuFilterFragment extends Fragment {
         mListener.onHideFilter();
 
         hideDarkBack();
-        containerFilter.animate()
-                .rotationBy(-180)
-                .alpha(0.0f)
-                .setListener(new AnimatorListenerAdapter() {
-                    @Override
-                    public void onAnimationEnd(Animator animation) {
-                        containerFilter.setVisibility(View.GONE);
-                        containerFilter.setRotation(180);
-                    }
-                });
 
+        int x = containerFilter.getRight();
+        int y = containerFilter.getBottom();
+
+        int startRadius = Math.max(vDarkBack.getWidth(), vDarkBack.getHeight());
+        int endRadius = 0;
+
+        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.LOLLIPOP) {
+            Animator anim = ViewAnimationUtils.createCircularReveal(containerFilter, x, y, startRadius, endRadius);
+            anim.addListener(new Animator.AnimatorListener() {
+                @Override
+                public void onAnimationStart(Animator animator) {
+
+                }
+
+                @Override
+                public void onAnimationEnd(Animator animator) {
+                    containerFilter.setVisibility(View.GONE);
+                    tvFilterClear.setVisibility(View.GONE);
+                }
+
+                @Override
+                public void onAnimationCancel(Animator animator) {
+
+                }
+
+                @Override
+                public void onAnimationRepeat(Animator animator) {
+
+                }
+            });
+            anim.start();
+        }else {
+            containerFilter.setVisibility(View.GONE);
+            tvFilterClear.setVisibility(View.GONE);
+        }
         if (getFragmentManager() != null) {
             getFragmentManager().popBackStack();
         }
