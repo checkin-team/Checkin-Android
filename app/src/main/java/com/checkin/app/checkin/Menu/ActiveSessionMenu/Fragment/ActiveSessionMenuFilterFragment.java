@@ -36,7 +36,7 @@ public class ActiveSessionMenuFilterFragment extends Fragment {
     @BindView(R.id.container_as_menu_parent_filter)
     ViewGroup parentContainer;
     @BindView(R.id.dark_back_as_menu_filter)
-    ViewGroup vDarkBack;
+    ImageView vDarkBack;
     @BindView(R.id.container_as_menu_filter)
     ViewGroup containerFilter;
     @BindView(R.id.rv_as_menu_groups)
@@ -77,6 +77,9 @@ public class ActiveSessionMenuFilterFragment extends Fragment {
         final View view = inflater.inflate(R.layout.fragment_as_menu_filter, container, false);
         unbinder = ButterKnife.bind(this, view);
 
+        View bgView = getActivity().findViewById(R.id.container_as_menu_parent);
+        RenderScript renderScript = RenderScript.create(requireContext());
+        vDarkBack.setImageBitmap(new RSBlurProcessor(renderScript).blur(Utils.getBitmapFromView(bgView), 25, 1));
 
         return view;
     }
@@ -85,7 +88,6 @@ public class ActiveSessionMenuFilterFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         vDarkBack.setOnClickListener(v -> {
             hideFilter();
-
         });
 
         mAdapter = new FilterGroupAdapter(null, category -> {
@@ -134,7 +136,6 @@ public class ActiveSessionMenuFilterFragment extends Fragment {
 
     @OnClick({R.id.container_as_menu_filter_breakfast, R.id.container_as_menu_filter_lunch, R.id.container_as_menu_filter_dinner})
     public void filterByAvailableMeal(View v) {
-        mListener.sortItems();
         switch (v.getId()) {
             case R.id.container_as_menu_filter_breakfast:
                 mViewModel.filterMenuGroups(AVAILABLE_MEAL.BREAKFAST);
@@ -146,7 +147,6 @@ public class ActiveSessionMenuFilterFragment extends Fragment {
                 mViewModel.filterMenuGroups(AVAILABLE_MEAL.DINNER);
                 break;
         }
-
         hideFilter();
     }
 

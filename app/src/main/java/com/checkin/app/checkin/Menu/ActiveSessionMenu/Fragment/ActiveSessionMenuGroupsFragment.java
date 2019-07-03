@@ -2,6 +2,7 @@ package com.checkin.app.checkin.Menu.ActiveSessionMenu.Fragment;
 
 import android.os.Bundle;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -23,6 +24,7 @@ import com.facebook.shimmer.ShimmerFrameLayout;
 
 import java.util.List;
 
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 import butterknife.BindView;
 
 public class ActiveSessionMenuGroupsFragment extends BaseFragment {
@@ -33,6 +35,8 @@ public class ActiveSessionMenuGroupsFragment extends BaseFragment {
     TextView tvCurrentCategory;
     @BindView(R.id.shimmer_as_menu_group)
     ShimmerFrameLayout shimmerMenu;
+    @BindView(R.id.sr_session_menu)
+    SwipeRefreshLayout swipeRefreshLayout;
     private MenuViewModel mViewModel;
     private ActiveSessionMenuGroupAdapter mAdapter;
     @Nullable
@@ -106,13 +110,27 @@ public class ActiveSessionMenuGroupsFragment extends BaseFragment {
             @Override
             public void onScrolled(@NonNull RecyclerView recyclerView, int dx, int dy) {
                 super.onScrolled(recyclerView, dx, dy);
-                if (tvCurrentCategory.getVisibility() == View.GONE)
-                    tvCurrentCategory.setVisibility(View.GONE);
-                tvCurrentCategory.setText(mAdapter.getCurrentCategory());
-
-
+//                if (tvCurrentCategory.getVisibility() == View.GONE)
+//                    tvCurrentCategory.setVisibility(View.VISIBLE);
+//                tvCurrentCategory.setText(mAdapter.getCurrentCategory());
             }
+
+           /* @Override
+            public void onScrollStateChanged(@NonNull RecyclerView recyclerView, int newState) {
+                super.onScrollStateChanged(recyclerView, newState);
+                if (newState != RecyclerView.SCROLL_STATE_IDLE)
+                    enableDisableSwipeRefresh(false);
+                else
+                    enableDisableSwipeRefresh(true);
+            }*/
         });
+
+    }
+
+    private void enableDisableSwipeRefresh(boolean enable) {
+        if (swipeRefreshLayout != null) {
+            swipeRefreshLayout.setEnabled(enable);
+        }
     }
 
     public boolean onBackPressed() {

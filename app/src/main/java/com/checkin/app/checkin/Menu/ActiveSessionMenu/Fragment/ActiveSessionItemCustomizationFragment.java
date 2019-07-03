@@ -5,6 +5,7 @@ import android.animation.AnimatorListenerAdapter;
 import android.annotation.SuppressLint;
 import android.opengl.Visibility;
 import android.os.Bundle;
+import android.renderscript.RenderScript;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
@@ -12,6 +13,7 @@ import android.view.ViewGroup;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
@@ -24,6 +26,7 @@ import com.checkin.app.checkin.Menu.Model.ItemCustomizationFieldModel;
 import com.checkin.app.checkin.Menu.Model.ItemCustomizationGroupModel;
 import com.checkin.app.checkin.Menu.Model.MenuItemModel;
 import com.checkin.app.checkin.R;
+import com.checkin.app.checkin.Utility.RSBlurProcessor;
 import com.checkin.app.checkin.Utility.Utils;
 
 import androidx.annotation.NonNull;
@@ -47,7 +50,7 @@ public class ActiveSessionItemCustomizationFragment extends Fragment implements 
     @BindView(R.id.container_menu_customization)
     ConstraintLayout vMenuCustomizations;
     @BindView(R.id.dark_back_menu_customization)
-    ViewGroup vDarkBack;
+    ImageView vDarkBack;
     @BindView(R.id.btn_menu_customization_done)
     Button btnDone;
     @BindView(R.id.tv_menu_customization_bill)
@@ -98,6 +101,11 @@ public class ActiveSessionItemCustomizationFragment extends Fragment implements 
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         final View rootView = inflater.inflate(R.layout.fragment_as_menu_item_customization, container, false);
         unbinder = ButterKnife.bind(this, rootView);
+
+        View bgView = getActivity().findViewById(R.id.container_as_menu_parent);
+        RenderScript renderScript = RenderScript.create(requireContext());
+        vDarkBack.setImageBitmap(new RSBlurProcessor(renderScript).blur(Utils.getBitmapFromView(bgView), 25, 1));
+
 
         return rootView;
     }
@@ -169,12 +177,12 @@ public class ActiveSessionItemCustomizationFragment extends Fragment implements 
 
         constraintSet.connect(R.id.tv_menu_customization_radio_1, ConstraintSet.START, ConstraintSet.PARENT_ID, ConstraintSet.START);
         constraintSet.connect(R.id.tv_menu_customization_radio_1, ConstraintSet.TOP, R.id.rb_menu_customization_type_1, ConstraintSet.BOTTOM);
-        constraintSet.connect(R.id.tv_menu_customization_radio_1, ConstraintSet.END ,R.id.line_horizontal, ConstraintSet.START);
+//        constraintSet.connect(R.id.tv_menu_customization_radio_1, ConstraintSet.END ,R.id.line_horizontal, ConstraintSet.START);
         constraintSet.setHorizontalChainStyle(R.id.tv_menu_customization_radio_1, ConstraintSet.HORIZONTAL_GUIDELINE);
 
         constraintSet.connect(R.id.tv_menu_customization_radio_2, ConstraintSet.END, ConstraintSet.PARENT_ID, ConstraintSet.END);
         constraintSet.connect(R.id.tv_menu_customization_radio_2, ConstraintSet.TOP, R.id.rb_menu_customization_type_2, ConstraintSet.BOTTOM);
-        constraintSet.connect(R.id.tv_menu_customization_radio_2, ConstraintSet.START,R.id.line_horizontal, ConstraintSet.END);
+        constraintSet.connect(R.id.tv_menu_customization_radio_2, ConstraintSet.START,R.id.line_horizontal, ConstraintSet.END, 30);
 
         constraintSet.applyTo(containerRadioButtons);
     }
@@ -278,7 +286,7 @@ public class ActiveSessionItemCustomizationFragment extends Fragment implements 
                         vDarkBack.setVisibility(View.VISIBLE);
                     }
                 })
-                .setDuration(600L)
+                .setDuration(100L)
                 .start();
     }
 

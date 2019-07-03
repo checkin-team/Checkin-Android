@@ -11,6 +11,8 @@ import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.BlurMaskFilter;
 import android.graphics.Canvas;
+import android.graphics.ColorFilter;
+import android.graphics.LightingColorFilter;
 import android.graphics.Matrix;
 import android.graphics.Paint;
 import android.graphics.PorterDuff;
@@ -841,11 +843,35 @@ public final class Utils {
     }
 
     public static Bitmap getBitmapFromView(View view) {
-        Bitmap mBitmap = Bitmap.createBitmap(view.getWidth(), view.getHeight(), Bitmap.Config.ARGB_8888);
-        Canvas c = new Canvas(mBitmap);
-        view.layout(view.getLeft(), view.getTop(), view.getRight(), view.getBottom());
-        view.draw(c);
-        return mBitmap;
+        //Create a Bitmap with the same dimensions as the View
+        Bitmap image = Bitmap.createBitmap(view.getMeasuredWidth(),
+                view.getMeasuredHeight(),
+                Bitmap.Config.ARGB_4444); //reduce quality
+        //Draw the view inside the Bitmap
+        Canvas canvas = new Canvas(image);
+        view.draw(canvas);
+
+        //Make it frosty
+        Paint paint = new Paint();
+        paint.setXfermode(
+                new PorterDuffXfermode(PorterDuff.Mode.SRC_IN));
+        ColorFilter filter =
+           new LightingColorFilter(0xFF7F7F7F, 0x00000000); // darken
+        paint.setColorFilter(filter);
+        canvas.drawBitmap(image, 0, 0, paint);
+        return image;
+
+
+
+
+
+
+
+
+
+
+
+
     }
 
 }

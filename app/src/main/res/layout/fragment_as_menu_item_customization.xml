@@ -6,11 +6,10 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <FrameLayout
+    <ImageView
         android:id="@+id/dark_back_menu_customization"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:background="@color/translucent_black" />
+        android:layout_height="match_parent" />
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/container_menu_customization"

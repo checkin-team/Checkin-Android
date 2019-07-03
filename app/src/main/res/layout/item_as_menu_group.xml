@@ -18,6 +18,48 @@
         android:layout_gravity="center"
         android:orientation="vertical">
 
+        <LinearLayout
+            android:id="@+id/container_as_menu_sub_groups"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:paddingTop="@dimen/spacing_small"
+            android:visibility="gone">
+
+            <com.google.android.material.tabs.TabLayout
+                android:id="@+id/tabs_as_menu_sub_groups"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="top"
+                android:layout_marginStart="@dimen/spacing_small"
+                android:layout_marginEnd="@dimen/spacing_small"
+                android:layout_marginBottom="@dimen/spacing_extra_small"
+                android:visibility="visible"
+                app:tabGravity="fill"
+                app:tabIndicator="@null"
+                app:tabIndicatorColor="@color/apple_green"
+                app:tabIndicatorHeight="2dp"
+                app:tabMode="fixed"
+                app:tabTextColor="@color/brownish_grey">
+
+                <com.google.android.material.tabs.TabItem
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Veg" />
+
+                <com.google.android.material.tabs.TabItem
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Non-Veg" />
+
+            </com.google.android.material.tabs.TabLayout>
+
+            <com.checkin.app.checkin.Utility.CustomViewPager
+                android:id="@+id/pager_as_menu_items"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+        </LinearLayout>
+
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/container_menu_group"
             android:layout_width="match_parent"
@@ -67,46 +109,5 @@
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 
-        <LinearLayout
-            android:id="@+id/container_as_menu_sub_groups"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:orientation="vertical"
-            android:paddingTop="@dimen/spacing_small"
-            android:visibility="visible">
-
-            <com.google.android.material.tabs.TabLayout
-                android:id="@+id/tabs_as_menu_sub_groups"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_gravity="top"
-                android:layout_marginStart="@dimen/spacing_small"
-                android:layout_marginEnd="@dimen/spacing_small"
-                android:layout_marginBottom="@dimen/spacing_extra_small"
-                android:visibility="visible"
-                app:tabGravity="fill"
-                app:tabIndicator="@null"
-                app:tabIndicatorColor="@color/apple_green"
-                app:tabIndicatorHeight="2dp"
-                app:tabMode="fixed"
-                app:tabTextColor="@color/brownish_grey">
-
-                <com.google.android.material.tabs.TabItem
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Veg" />
-
-                <com.google.android.material.tabs.TabItem
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Non-Veg" />
-
-            </com.google.android.material.tabs.TabLayout>
-
-            <com.checkin.app.checkin.Utility.CustomViewPager
-                android:id="@+id/pager_as_menu_items"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content" />
-        </LinearLayout>
     </LinearLayout>
 </androidx.cardview.widget.CardView>

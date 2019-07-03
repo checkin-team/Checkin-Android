@@ -327,9 +327,12 @@ public class ActiveSessionMenuActivity extends BaseActivity implements
                     .commit();
         }else if(!mMenuFragment.onBackPressed()){
             super.onBackPressed();
-        }else {
-            super.onBackPressed();
         }
+    }
+
+    @OnClick(R.id.im_as_menu_back)
+    public void onBackClick(){
+        onBackPressed();
     }
 
     public void closeSearch() {

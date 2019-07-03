@@ -208,7 +208,7 @@ public class ActiveSessionMenuGroupAdapter extends RecyclerView.Adapter<ActiveSe
                 Utils.setTabsFont(vTabs, itemView.getResources().getFont(R.font.arial_rounded_mt_bold));
             }
 
-            vPager.setEnabled(false);
+//            vPager.setEnabled(false);
 
             itemView.setOnClickListener(view -> tvGroupName.performClick());
             tvGroupName.setOnClickListener(v -> {
@@ -222,7 +222,6 @@ public class ActiveSessionMenuGroupAdapter extends RecyclerView.Adapter<ActiveSe
         }
 
         void bindData(final MenuGroupModel menuGroup) {
-            vSubGroupWrapper.setVisibility(View.GONE);
             mMenuGroup = menuGroup;
 
             tvGroupName.setText(menuGroup.getName());

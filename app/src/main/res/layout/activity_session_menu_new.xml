@@ -2,226 +2,219 @@
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/container_as_menu_parent"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
-    android:id="@+id/container_as_menu_parent"
-    android:background="@color/white_one">
+    android:background="@color/white_one"
+    android:orientation="vertical">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical">
 
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal">
-
-        <ImageView
-            android:layout_width="@dimen/width_small_icon"
-            android:layout_height="@dimen/size_extra_small_button"
-            android:layout_marginStart="@dimen/spacing_extra_small"
-            android:layout_gravity="center|start"
-            android:layout_marginTop="@dimen/spacing_tiny"
-            android:src="@drawable/ic_back_grey" />
-
-        <FrameLayout
-            android:id="@+id/container_as_menu_serach"
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="@dimen/button_height_normal"
-            android:layout_marginStart="@dimen/spacing_small"
-            android:layout_marginTop="@dimen/spacing_medium"
-            android:layout_marginEnd="@dimen/spacing_extra_large"
-            android:background="@color/white">
-
-            <TextView
-                android:id="@+id/tv_as_menu_title"
-                style="@style/RedHeadingStyle"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center|start"
-                android:layout_weight="1"
-                android:paddingStart="@dimen/spacing_small"
-                android:text="Menu" />
-
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/spacing_normal"
+            android:orientation="horizontal">
 
             <ImageView
-                android:id="@+id/btn_as_menu_search"
-                android:layout_width="@dimen/size_extra_small_button"
+                android:id="@+id/im_as_menu_back"
+                android:layout_width="@dimen/width_small_icon"
                 android:layout_height="@dimen/size_extra_small_button"
-                android:layout_gravity="end|center_vertical"
-                android:background="@drawable/ic_search_grey"
-                android:layout_marginEnd="@dimen/spacing_small"
-                android:foregroundTint="@color/brownish_grey" />
-
-            <com.miguelcatalan.materialsearchview.MaterialSearchView
-                android:id="@+id/view_as_menu_search"
-                style="@style/MaterialSearchViewStyle"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent" />
-
-        </FrameLayout>
-
-    </LinearLayout>
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="vertical">
-
-
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="@dimen/spacing_extra_small"
-        android:layout_marginEnd="@dimen/spacing_extra_small"
-        android:layout_marginBottom="@dimen/spacing_small"
-        android:layout_marginTop="@dimen/spacing_extra_small"
-        android:weightSum="4">
-
-        <TextView
-            android:id="@+id/tv_as_menu_drinks"
-            style="@style/GreySmallTextStyle"
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:drawableTop="@drawable/ic_drink"
-            android:fontFamily="@font/opensans_regular"
-            android:gravity="center"
-            android:padding="@dimen/spacing_extra_small"
-            android:text="Drinks" />
-
-        <TextView
-            android:id="@+id/tv_as_menu_food"
-            style="@style/GreySmallTextStyle"
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:drawableTop="@drawable/ic_burger"
-            android:fontFamily="@font/opensans_regular"
-            android:gravity="center"
-            android:padding="@dimen/spacing_extra_small"
-            android:text="Food" />
-
-        <TextView
-            android:id="@+id/tv_as_menu_dessert"
-            style="@style/GreySmallTextStyle"
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:drawableTop="@drawable/ic_dessert"
-            android:fontFamily="@font/opensans_regular"
-            android:gravity="center"
-            android:padding="@dimen/spacing_extra_small"
-            android:text="Dessert" />
-
-        <TextView
-            android:id="@+id/tv_as_menu_specials"
-            style="@style/GreySmallTextStyle"
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:drawableTop="@drawable/ic_special_star"
-            android:fontFamily="@font/opensans_regular"
-            android:gravity="center"
-            android:padding="@dimen/spacing_extra_small"
-            android:text="Specials" />
-
-    </LinearLayout>
-
-    <!--<View
-        android:layout_width="match_parent"
-        android:layout_height="@dimen/height_horizontal_view"
-        android:layout_marginStart="@dimen/spacing_tiny"
-        android:layout_marginEnd="@dimen/spacing_tiny"
-        android:background="@color/pinkish_grey" />-->
-
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/rv_menu"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:visibility="gone" />
-
-    <FrameLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent">
-
-        <FrameLayout
-            android:id="@+id/container_as_menu"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"/>
-
-        <FrameLayout
-            android:id="@+id/container_as_menu_cart"
-            android:layout_width="wrap_content"
-            android:layout_height="@dimen/button_height_normal"
-            android:layout_gravity="bottom|center"
-            android:layout_marginBottom="@dimen/spacing_medium"
-            android:minWidth="@dimen/width_as_menu_cart_total"
-            android:background="@drawable/rectangle_blue"
-            android:elevation="@dimen/spacing_tiny">
+                android:layout_gravity="start|center"
+                android:layout_marginStart="@dimen/spacing_extra_small"
+                android:src="@drawable/ic_back_grey" />
 
             <FrameLayout
-                android:layout_width="@dimen/width_as_menu_cart"
-                android:layout_height="match_parent"
-                android:layout_gravity="start">
-
-            <ImageView
-                android:id="@+id/cart"
+                android:id="@+id/container_as_menu_serach"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:background="@drawable/ic_cart" />
+                android:layout_height="@dimen/button_height_normal"
+                android:layout_marginStart="@dimen/spacing_small"
+                android:layout_marginEnd="@dimen/spacing_extra_large"
+                android:background="@color/white">
 
-            <TextView
-                android:id="@+id/tv_menu_count_ordered_items"
-                style="@style/WhiteSmallTextStyle"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:minWidth="@dimen/size_extra_small_icon"
-                android:minHeight="@dimen/size_extra_small_icon"
-                android:layout_gravity="end|top"
-                android:layout_marginTop="@dimen/spacing_tiny"
-                android:layout_marginEnd="@dimen/spacing_tiny"
-                android:background="@drawable/shape_oval_blue"
-                android:gravity="center"
-                android:visibility="visible"
-                android:padding="1dp"
-                tools:text="10" />
+                <TextView
+                    android:id="@+id/tv_as_menu_title"
+                    style="@style/RedHeadingStyle"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center|start"
+                    android:layout_weight="1"
+                    android:paddingStart="@dimen/spacing_small"
+                    android:text="Menu" />
+
+
+                <ImageView
+                    android:id="@+id/btn_as_menu_search"
+                    android:layout_width="@dimen/size_extra_small_button"
+                    android:layout_height="@dimen/size_extra_small_button"
+                    android:layout_gravity="end|center_vertical"
+                    android:layout_marginEnd="@dimen/spacing_small"
+                    android:background="@drawable/ic_search_grey"
+                    android:foregroundTint="@color/brownish_grey" />
+
+                <com.miguelcatalan.materialsearchview.MaterialSearchView
+                    android:id="@+id/view_as_menu_search"
+                    style="@style/MaterialSearchViewStyle"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent" />
+
             </FrameLayout>
 
-            <TextView
-                android:id="@+id/tv_as_menu_cart_item_price"
-                style="@style/WhiteTextStyle"
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:layout_marginStart="@dimen/width_as_menu_cart"
-                android:layout_gravity="end"
-                android:gravity="center"
-                android:paddingStart="@dimen/spacing_tiny"
-                android:paddingEnd="@dimen/spacing_small"
-                android:maxLines="1"
-                tools:text="$ 14.784" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
 
 
-        </FrameLayout>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/spacing_extra_small"
+                android:layout_marginTop="@dimen/spacing_extra_small"
+                android:layout_marginEnd="@dimen/spacing_extra_small"
+                android:layout_marginBottom="@dimen/spacing_small"
+                android:weightSum="4">
 
-        <ImageView
-            android:id="@+id/btn_as_menu_filter"
-            android:layout_width="@dimen/button_height_medium"
-            android:layout_height="@dimen/button_height_medium"
-            android:layout_gravity="end|bottom"
-            android:layout_marginEnd="@dimen/spacing_small"
-            android:layout_marginBottom="@dimen/spacing_normal"
-            android:src="@drawable/ic_menu_as_filter"
-            android:elevation="@dimen/spacing_tiny"/>
+                <TextView
+                    android:id="@+id/tv_as_menu_drinks"
+                    style="@style/GreySmallTextStyle"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:drawableTop="@drawable/ic_drink"
+                    android:fontFamily="@font/opensans_regular"
+                    android:gravity="center"
+                    android:padding="@dimen/spacing_extra_small"
+                    android:text="Drinks" />
 
-    </FrameLayout>
+                <TextView
+                    android:id="@+id/tv_as_menu_food"
+                    style="@style/GreySmallTextStyle"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:drawableTop="@drawable/ic_burger"
+                    android:fontFamily="@font/opensans_regular"
+                    android:gravity="center"
+                    android:padding="@dimen/spacing_extra_small"
+                    android:text="Food" />
+
+                <TextView
+                    android:id="@+id/tv_as_menu_dessert"
+                    style="@style/GreySmallTextStyle"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:drawableTop="@drawable/ic_dessert"
+                    android:fontFamily="@font/opensans_regular"
+                    android:gravity="center"
+                    android:padding="@dimen/spacing_extra_small"
+                    android:text="Dessert" />
+
+                <TextView
+                    android:id="@+id/tv_as_menu_specials"
+                    style="@style/GreySmallTextStyle"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:drawableTop="@drawable/ic_special_star"
+                    android:fontFamily="@font/opensans_regular"
+                    android:gravity="center"
+                    android:padding="@dimen/spacing_extra_small"
+                    android:text="Specials" />
+
+            </LinearLayout>
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/rv_menu"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:visibility="gone" />
+
+            <FrameLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+                <FrameLayout
+                    android:id="@+id/container_as_menu"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent" />
+
+                <FrameLayout
+                    android:id="@+id/container_as_menu_cart"
+                    android:layout_width="wrap_content"
+                    android:layout_height="@dimen/button_height_normal"
+                    android:layout_gravity="bottom|center"
+                    android:layout_marginBottom="@dimen/spacing_medium"
+                    android:background="@drawable/rectangle_blue"
+                    android:elevation="@dimen/spacing_tiny"
+                    android:minWidth="@dimen/width_as_menu_cart_total">
+
+                    <FrameLayout
+                        android:layout_width="@dimen/width_as_menu_cart"
+                        android:layout_height="match_parent"
+                        android:layout_gravity="start">
+
+                        <ImageView
+                            android:id="@+id/cart"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:background="@drawable/ic_cart" />
+
+                        <TextView
+                            android:id="@+id/tv_menu_count_ordered_items"
+                            style="@style/WhiteSmallTextStyle"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="end|top"
+                            android:layout_marginTop="@dimen/spacing_tiny"
+                            android:layout_marginEnd="@dimen/spacing_tiny"
+                            android:background="@drawable/shape_oval_blue"
+                            android:gravity="center"
+                            android:minWidth="@dimen/size_extra_small_icon"
+                            android:minHeight="@dimen/size_extra_small_icon"
+                            android:padding="1dp"
+                            android:visibility="visible"
+                            tools:text="10" />
+                    </FrameLayout>
+
+                    <TextView
+                        android:id="@+id/tv_as_menu_cart_item_price"
+                        style="@style/WhiteTextStyle"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:layout_gravity="end"
+                        android:layout_marginStart="@dimen/width_as_menu_cart"
+                        android:gravity="center"
+                        android:maxLines="1"
+                        android:paddingStart="@dimen/spacing_tiny"
+                        android:paddingEnd="@dimen/spacing_small"
+                        tools:text="$ 14.784" />
+
+
+                </FrameLayout>
+
+                <ImageView
+                    android:id="@+id/btn_as_menu_filter"
+                    android:layout_width="@dimen/button_height_medium"
+                    android:layout_height="@dimen/button_height_medium"
+                    android:layout_gravity="end|bottom"
+                    android:layout_marginEnd="@dimen/spacing_small"
+                    android:layout_marginBottom="@dimen/spacing_normal"
+                    android:elevation="@dimen/spacing_tiny"
+                    android:src="@drawable/ic_menu_as_filter" />
+
+            </FrameLayout>
+
+        </LinearLayout>
 
     </LinearLayout>
 
-    </LinearLayout>
     <FrameLayout
         android:id="@+id/container_as_menu_fragment"
         android:layout_width="match_parent"

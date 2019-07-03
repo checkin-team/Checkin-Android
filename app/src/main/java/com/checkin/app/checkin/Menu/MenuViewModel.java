@@ -124,22 +124,27 @@ public class MenuViewModel extends BaseViewModel {
 
     public void filterMenuGroups(final MenuItemModel.AVAILABLE_MEAL availableMeal) {
         mFilteredString.setValue(availableMeal.name());
-        LiveData<Resource<List<MenuItemModel>>> resourceLiveData = Transformations.map(mMenuData, input -> {
-            if (input == null || input.data == null)
-                return Resource.loading(null);
-            List<MenuItemModel> items = new ArrayList<>();
-            for (MenuGroupModel groupModel : input.data.getGroups()) {
-                for (MenuItemModel menuItemModel : groupModel.getItems()) {
+        LiveData<Resource<List<MenuGroupModel>>> resourceLiveData = Transformations.map(mOriginalMenuGroups, listResource -> {
+            if (listResource == null || listResource.data == null)
+                return null;
+            List<MenuGroupModel> result = new ArrayList<>();
+
+            for (MenuGroupModel menuGroupModel : listResource.data) {
+                List<MenuItemModel> items = new ArrayList<>();
+                for (MenuItemModel menuItemModel : menuGroupModel.getItems()) {
                     if(menuItemModel.getAvailableMeals().contains(availableMeal.name())){
                         items.add(menuItemModel);
                     }
                 }
+                if (items.size() > 0) {
+                    menuGroupModel.getItems().clear();
+                    menuGroupModel.setItems(items);
+                    result.add(menuGroupModel);
+                }
             }
-            if (items.size() == 0)
-                return Resource.errorNotFound(null);
-            return Resource.cloneResource(input, items);
+            return Resource.cloneResource(listResource, result);
         });
-        mMenuItems.addSource(resourceLiveData, mMenuItems::setValue);
+        mMenuGroups.addSource(resourceLiveData, mMenuGroups::setValue);
     }
 
     public LiveData<Resource<List<MenuItemModel>>> getFilteredMenuItems() {
