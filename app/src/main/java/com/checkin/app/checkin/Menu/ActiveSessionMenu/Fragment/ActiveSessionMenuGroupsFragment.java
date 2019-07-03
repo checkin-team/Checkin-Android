@@ -2,28 +2,35 @@ package com.checkin.app.checkin.Menu.ActiveSessionMenu.Fragment;
 
 import android.os.Bundle;
 import android.view.View;
-
-import com.checkin.app.checkin.Data.Resource;
-import com.checkin.app.checkin.Menu.MenuItemInteraction;
-import com.checkin.app.checkin.Menu.MenuViewModel;
-import com.checkin.app.checkin.Menu.ActiveSessionMenu.Adapter.ActiveSessionMenuGroupAdapter;
-import com.checkin.app.checkin.Menu.ActiveSessionMenu.Adapter.ActiveSessionMenuItemAdapter;
-import com.checkin.app.checkin.Misc.BaseFragment;
-import com.checkin.app.checkin.R;
-import com.checkin.app.checkin.Utility.Utils;
-import com.facebook.shimmer.ShimmerFrameLayout;
+import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.lifecycle.ViewModelProviders;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+
+import com.checkin.app.checkin.Data.Resource;
+import com.checkin.app.checkin.Menu.ActiveSessionMenu.Adapter.ActiveSessionMenuGroupAdapter;
+import com.checkin.app.checkin.Menu.ActiveSessionMenu.Adapter.ActiveSessionMenuItemAdapter;
+import com.checkin.app.checkin.Menu.MenuItemInteraction;
+import com.checkin.app.checkin.Menu.MenuViewModel;
+import com.checkin.app.checkin.Menu.Model.MenuGroupModel;
+import com.checkin.app.checkin.Misc.BaseFragment;
+import com.checkin.app.checkin.R;
+import com.checkin.app.checkin.Utility.Utils;
+import com.facebook.shimmer.ShimmerFrameLayout;
+
+import java.util.List;
+
 import butterknife.BindView;
 
 public class ActiveSessionMenuGroupsFragment extends BaseFragment {
     public static final String KEY_SESSION_STATUS = "menu.status";
     @BindView(R.id.rv_menu_groups)
     RecyclerView rvGroupsList;
+    @BindView(R.id.tv_as_menu_current_category)
+    TextView tvCurrentCategory;
     @BindView(R.id.shimmer_as_menu_group)
     ShimmerFrameLayout shimmerMenu;
     private MenuViewModel mViewModel;
@@ -58,18 +65,12 @@ public class ActiveSessionMenuGroupsFragment extends BaseFragment {
             if (menuGroupResource == null)
                 return;
             if (menuGroupResource.status == Resource.Status.SUCCESS && !menuGroupResource.isCached()) {
-                mAdapter.setGroupList(menuGroupResource.data);
                 stopRefreshing();
-                if(shimmerMenu.getVisibility()==View.VISIBLE){
-                    shimmerMenu.stopShimmer();
-                    shimmerMenu.setVisibility(View.GONE);
-                }
+                setupData(menuGroupResource.data);
             } else if (menuGroupResource.status == Resource.Status.LOADING) {
                 startRefreshing();
                 if (!mAdapter.hasData() && menuGroupResource.data != null)
-                    mAdapter.setGroupList(menuGroupResource.data);
-                shimmerMenu.stopShimmer();
-                shimmerMenu.setVisibility(View.GONE);
+                    setupData(menuGroupResource.data);
             } else {
                 stopRefreshing();
                 Utils.toast(requireContext(), menuGroupResource.message);
@@ -84,8 +85,14 @@ public class ActiveSessionMenuGroupsFragment extends BaseFragment {
                 holder.changeQuantity(mViewModel.getOrderedCount(orderedItem.getItemModel()) + orderedItem.getChangeCount());
             }
         });
+    }
 
-
+    private void setupData(List<MenuGroupModel> data) {
+        mAdapter.setGroupList(data);
+        if (shimmerMenu.getVisibility() == View.VISIBLE) {
+            shimmerMenu.stopShimmer();
+            shimmerMenu.setVisibility(View.GONE);
+        }
     }
 
     private void setupGroupRecycler() {
@@ -99,14 +106,18 @@ public class ActiveSessionMenuGroupsFragment extends BaseFragment {
             @Override
             public void onScrolled(@NonNull RecyclerView recyclerView, int dx, int dy) {
                 super.onScrolled(recyclerView, dx, dy);
-//                tvCurrentCategory.setText(mAdapter.getCurrentCategory());
+                if (tvCurrentCategory.getVisibility() == View.GONE)
+                    tvCurrentCategory.setVisibility(View.GONE);
+                tvCurrentCategory.setText(mAdapter.getCurrentCategory());
+
+
             }
         });
     }
 
     public boolean onBackPressed() {
         if (isGroupExpanded()) {
-//            mAdapter.contractView();
+            mAdapter.contractView();
             return true;
         }
         return false;

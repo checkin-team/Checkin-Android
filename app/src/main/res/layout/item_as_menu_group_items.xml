@@ -5,8 +5,8 @@
     android:id="@+id/card_view"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:minHeight="@dimen/height_menu_item"
-    android:layout_marginBottom="@dimen/spacing_small">
+    android:paddingBottom="@dimen/spacing_normal"
+    android:minHeight="@dimen/height_menu_item">
 
     <TextView
         android:id="@+id/tv_as_menu_item_name"
@@ -16,8 +16,8 @@
         android:layout_marginStart="@dimen/spacing_extra_small"
         android:layout_marginEnd="@dimen/spacing_extra_tiny"
         android:gravity="start"
-        app:layout_constraintHorizontal_weight="0.7"
         app:layout_constraintEnd_toStartOf="@id/im_as_menu_item"
+        app:layout_constraintHorizontal_weight="0.7"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         tools:text="ITEM TITLE" />
@@ -33,29 +33,29 @@
         android:fontFamily="@font/opensans_regular"
         android:gravity="start"
         app:colorClickableText="@color/primary_red"
-        app:trimCollapsedText=" ...read more"
-        app:trimExpandedText="  read less"
-        app:trimLines="1"
-        app:trimMode="trimModeLine"
-        app:layout_constraintHorizontal_weight="0.7"
         app:layout_constraintEnd_toStartOf="@id/im_as_menu_item"
+        app:layout_constraintHorizontal_weight="0.7"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/tv_as_menu_item_name"
-        tools:text="desc " />
+        app:trimCollapsedText=" ...read more"
+        app:trimExpandedText="  read less"
+        app:trimLines="2"
+        app:trimMode="trimModeLine"
+        tools:text="description ... " />
 
 
     <com.checkin.app.checkin.Utility.FadingImageView
         android:id="@+id/im_as_menu_item"
         android:layout_width="0dp"
-        android:layout_height="60dp"
+        android:layout_height="0dp"
         android:layout_marginBottom="@dimen/spacing_small"
-        tools:src="@drawable/cover_unknown_male"
         android:scaleType="centerCrop"
+        app:layout_constraintEnd_toStartOf="@id/container_as_menu_quantity_picker"
         app:layout_constraintHorizontal_weight="0.8"
         app:layout_constraintStart_toEndOf="@id/tv_as_menu_item_name"
-        app:layout_constraintEnd_toStartOf="@id/container_as_menu_quantity_picker"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintBottom_toBottomOf="parent"/>
+        app:layout_constraintBottom_toBottomOf="parent"
+        tools:src="@drawable/cover_unknown_male" />
 
 
     <TextView
@@ -64,29 +64,28 @@
         android:layout_height="wrap_content"
         android:layout_marginEnd="@dimen/spacing_extra_small"
         android:layout_marginBottom="@dimen/spacing_small"
+        android:gravity="end"
         android:paddingTop="@dimen/spacing_tiny"
         android:textColor="@color/brownish_grey"
         android:textSize="@dimen/font_normal"
-        android:gravity="end"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintStart_toEndOf="@id/im_as_menu_item"
-        tools:text="@string/format_currency_rupee" />
+        app:layout_constraintTop_toTopOf="@+id/im_as_menu_item"
+        tools:text="$ 636" />
 
 
     <FrameLayout
         android:id="@+id/container_as_menu_quantity_picker"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/spacing_small"
         android:layout_marginTop="@dimen/spacing_tiny"
         android:layout_marginEnd="@dimen/spacing_extra_small"
-        android:layout_marginStart="@dimen/spacing_small"
         android:layout_marginBottom="@dimen/spacing_small"
         android:clickable="true"
         android:focusable="true"
-        app:layout_constraintHorizontal_weight="1"
-        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_weight="1"
         app:layout_constraintStart_toEndOf="@id/im_as_menu_item"
         app:layout_constraintTop_toBottomOf="@+id/tv_as_menu_item_price">
 
@@ -98,52 +97,54 @@
             android:layout_height="@dimen/size_small_button"
             android:layout_gravity="center|end"
             android:background="@drawable/rounded_rectangle_red_stroke"
+            android:drawableEnd="@drawable/ic_setting"
             android:gravity="center"
             android:paddingStart="@dimen/spacing_small"
             android:paddingTop="@dimen/spacing_extra_tiny"
             android:paddingEnd="@dimen/spacing_small"
             android:paddingBottom="@dimen/spacing_extra_tiny"
             android:text="Add "
-            android:drawableEnd="@drawable/ic_setting"
             android:visibility="gone" />
 
         <LinearLayout
             android:id="@+id/container_menu_item_quantity"
             android:layout_width="wrap_content"
-            android:minWidth="@dimen/width_menu_add_quantity"
             android:layout_height="wrap_content"
             android:gravity="end"
+            android:minWidth="@dimen/width_menu_add_quantity"
             android:visibility="visible">
 
-        <TextView
-            android:id="@+id/tv_menu_item_quantity_decrement"
-            style="@style/RedTextStyle"
-            android:layout_width="@dimen/size_small_icon"
-            android:layout_height="@dimen/size_small_icon"
-            android:background="@drawable/shape_oval_red_stroke"
-            android:gravity="center"
-            android:text="-"
-            android:visibility="visible" />
-        <TextView
-            android:id="@+id/tv_menu_item_quantity_number"
-            style="@style/RedTextStyle"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:minWidth="@dimen/size_medium_icon"
-            android:gravity="center"
-            android:text="12"
-            android:visibility="visible" />
-        <TextView
-            android:id="@+id/tv_menu_item_quantity_increment"
-            style="@style/RedTextStyle"
-            android:layout_width="@dimen/size_small_icon"
-            android:layout_height="@dimen/size_small_icon"
-            android:background="@drawable/shape_oval_red_stroke"
-            android:gravity="center"
-            android:layout_gravity="end"
-            android:text="+"
-            android:visibility="visible" />
+            <TextView
+                android:id="@+id/tv_menu_item_quantity_decrement"
+                style="@style/RedTextStyle"
+                android:layout_width="@dimen/size_small_icon"
+                android:layout_height="@dimen/size_small_icon"
+                android:background="@drawable/shape_oval_red_stroke"
+                android:gravity="center"
+                android:text="-"
+                android:visibility="visible" />
+
+            <TextView
+                android:id="@+id/tv_menu_item_quantity_number"
+                style="@style/RedTextStyle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:gravity="center"
+                android:minWidth="@dimen/size_medium_icon"
+                android:text="12"
+                android:visibility="visible" />
+
+            <TextView
+                android:id="@+id/tv_menu_item_quantity_increment"
+                style="@style/RedTextStyle"
+                android:layout_width="@dimen/size_small_icon"
+                android:layout_height="@dimen/size_small_icon"
+                android:layout_gravity="end"
+                android:background="@drawable/shape_oval_red_stroke"
+                android:gravity="center"
+                android:text="+"
+                android:visibility="visible" />
 
         </LinearLayout>
     </FrameLayout>

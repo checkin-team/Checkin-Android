@@ -5,8 +5,8 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_marginStart="@dimen/spacing_extra_small"
-    android:layout_marginBottom="@dimen/spacing_extra_small"
     android:layout_marginEnd="@dimen/spacing_extra_small"
+    android:layout_marginBottom="@dimen/spacing_extra_small"
     android:clickable="true"
     android:focusable="true"
     app:cardCornerRadius="@dimen/card_corner_radius_small"
@@ -14,14 +14,16 @@
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="match_parent"
         android:layout_gravity="center"
         android:orientation="vertical">
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/container_menu_group"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            android:padding="@dimen/spacing_tiny"
+            android:minHeight="@dimen/height_as_menu_group_collapsed">
 
             <ImageView
                 android:id="@+id/im_as_menu_group_icon"
@@ -43,9 +45,9 @@
                 android:layout_marginStart="@dimen/spacing_incredible"
                 android:layout_weight="1"
                 android:gravity="start"
-                android:textSize="@dimen/font_large"
-                android:paddingEnd="@dimen/spacing_tiny"
                 android:paddingStart="@dimen/spacing_between_group_icon_name"
+                android:paddingEnd="@dimen/spacing_tiny"
+                android:textSize="@dimen/font_large"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toStartOf="@id/switch_menu_group_availability"
                 app:layout_constraintStart_toStartOf="parent"
@@ -53,7 +55,7 @@
                 tools:text="GROUP" />
 
             <ImageView
-                android:id="@+id/switch_menu_group_availability"
+                android:id="@+id/im_as_menu_drop_down"
                 android:layout_width="@dimen/width_small_icon"
                 android:layout_height="@dimen/width_small_icon"
                 android:layout_gravity="center"
@@ -68,7 +70,7 @@
         <LinearLayout
             android:id="@+id/container_as_menu_sub_groups"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
             android:orientation="vertical"
             android:paddingTop="@dimen/spacing_small"
             android:visibility="visible">
@@ -80,9 +82,11 @@
                 android:layout_gravity="top"
                 android:layout_marginStart="@dimen/spacing_small"
                 android:layout_marginEnd="@dimen/spacing_small"
+                android:layout_marginBottom="@dimen/spacing_extra_small"
                 android:visibility="visible"
                 app:tabGravity="fill"
                 app:tabIndicator="@null"
+                app:tabIndicatorColor="@color/apple_green"
                 app:tabIndicatorHeight="2dp"
                 app:tabMode="fixed"
                 app:tabTextColor="@color/brownish_grey">
@@ -99,11 +103,10 @@
 
             </com.google.android.material.tabs.TabLayout>
 
-            <com.checkin.app.checkin.Utility.DynamicSwipableViewPager
+            <com.checkin.app.checkin.Utility.CustomViewPager
                 android:id="@+id/pager_as_menu_items"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_marginTop="@dimen/spacing_extra_small" />
+                android:layout_height="wrap_content" />
         </LinearLayout>
     </LinearLayout>
 </androidx.cardview.widget.CardView>

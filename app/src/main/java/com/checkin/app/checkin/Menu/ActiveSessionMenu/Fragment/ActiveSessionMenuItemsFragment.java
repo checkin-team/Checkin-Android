@@ -28,13 +28,14 @@ public class ActiveSessionMenuItemsFragment extends Fragment implements ActiveSe
     private ActiveSessionMenuItemAdapter mAdapter;
     @Nullable
     private MenuItemInteraction mListener;
+    private List<MenuItemModel> menuItems;
 
     public ActiveSessionMenuItemsFragment() {
     }
 
     public static ActiveSessionMenuItemsFragment newInstance(List<MenuItemModel> menuItems, MenuItemInteraction listener, boolean isSessionActive) {
         ActiveSessionMenuItemsFragment fragment = new ActiveSessionMenuItemsFragment();
-        fragment.mAdapter = new ActiveSessionMenuItemAdapter(menuItems, fragment, isSessionActive);
+        fragment.menuItems = menuItems;
         fragment.mListener = listener;
         return fragment;
     }
@@ -44,6 +45,8 @@ public class ActiveSessionMenuItemsFragment extends Fragment implements ActiveSe
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         final View view = inflater.inflate(R.layout.fragment_as_menu_items, container, false);
         unbinder = ButterKnife.bind(this, view);
+
+        mAdapter = new ActiveSessionMenuItemAdapter(null, this, true);
         return view;
     }
 
@@ -51,7 +54,7 @@ public class ActiveSessionMenuItemsFragment extends Fragment implements ActiveSe
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         rvMenuItems.setAdapter(mAdapter);
         rvMenuItems.setLayoutManager(new LinearLayoutManager(getContext(), RecyclerView.VERTICAL, false));
-       mAdapter.notifyDataSetChanged();
+        mAdapter.setMenuItems(menuItems);
     }
 
     @Override

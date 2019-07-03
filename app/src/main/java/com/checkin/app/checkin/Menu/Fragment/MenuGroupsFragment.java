@@ -15,10 +15,13 @@ import com.checkin.app.checkin.Menu.Adapter.MenuGroupAdapter;
 import com.checkin.app.checkin.Menu.Adapter.MenuItemAdapter;
 import com.checkin.app.checkin.Menu.MenuItemInteraction;
 import com.checkin.app.checkin.Menu.MenuViewModel;
+import com.checkin.app.checkin.Menu.Model.MenuGroupModel;
 import com.checkin.app.checkin.Misc.BaseFragment;
 import com.checkin.app.checkin.R;
 import com.checkin.app.checkin.Utility.Utils;
 import com.facebook.shimmer.ShimmerFrameLayout;
+
+import java.util.List;
 
 import butterknife.BindView;
 
@@ -64,12 +67,11 @@ public class MenuGroupsFragment extends BaseFragment {
             if (menuGroupResource.status == Resource.Status.SUCCESS && !menuGroupResource.isCached()) {
                 mAdapter.setGroupList(menuGroupResource.data);
                 stopRefreshing();
-                shimmerMenu.stopShimmer();
-                shimmerMenu.setVisibility(View.GONE);
+                setupData(menuGroupResource.data);
             } else if (menuGroupResource.status == Resource.Status.LOADING) {
                 startRefreshing();
                 if (!mAdapter.hasData() && menuGroupResource.data != null)
-                    mAdapter.setGroupList(menuGroupResource.data);
+                    setupData(menuGroupResource.data);
             } else {
                 stopRefreshing();
                 Utils.toast(requireContext(), menuGroupResource.message);
@@ -84,6 +86,14 @@ public class MenuGroupsFragment extends BaseFragment {
                 holder.changeQuantity(mViewModel.getOrderedCount(orderedItem.getItemModel()) + orderedItem.getChangeCount());
             }
         });
+    }
+
+    private void setupData(List<MenuGroupModel> data) {
+        mAdapter.setGroupList(data);
+        if (shimmerMenu.getVisibility() == View.VISIBLE) {
+            shimmerMenu.stopShimmer();
+            shimmerMenu.setVisibility(View.GONE);
+        }
     }
 
     private void setupGroupRecycler() {

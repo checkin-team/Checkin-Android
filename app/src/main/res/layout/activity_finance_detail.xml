@@ -86,7 +86,6 @@
                         android:layout_width="@dimen/width_input_small"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center"
-                        android:cursorVisible="false"
                         android:gravity="center"
                         android:imeOptions="actionDone"
                         android:inputType="numberDecimal"

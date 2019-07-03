@@ -3,6 +3,7 @@ package com.checkin.app.checkin.Menu.ActiveSessionMenu.Fragment;
 import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
 import android.os.Bundle;
+import android.renderscript.RenderScript;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewAnimationUtils;
@@ -15,6 +16,7 @@ import com.checkin.app.checkin.Menu.MenuViewModel;
 import com.checkin.app.checkin.Menu.Model.MenuItemModel.AVAILABLE_MEAL;
 import com.checkin.app.checkin.Menu.ActiveSessionMenu.Adapter.FilterGroupAdapter;
 import com.checkin.app.checkin.R;
+import com.checkin.app.checkin.Utility.RSBlurProcessor;
 import com.checkin.app.checkin.Utility.Utils;
 
 import androidx.annotation.NonNull;
@@ -27,6 +29,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import butterknife.Unbinder;
+import okhttp3.internal.Util;
 
 public class ActiveSessionMenuFilterFragment extends Fragment {
     private static final String TAG = ActiveSessionMenuFilterFragment.class.getSimpleName();
@@ -182,8 +185,8 @@ public class ActiveSessionMenuFilterFragment extends Fragment {
 
         showDarkBack();
 
-        int x = containerFilter.getRight();
-        int y = containerFilter.getBottom();
+        int x = vDarkBack.getRight();
+        int y = vDarkBack.getBottom();
 
         int startRadius = 0;
         int endRadius = (int) Math.hypot(parentContainer.getWidth(), parentContainer.getHeight());

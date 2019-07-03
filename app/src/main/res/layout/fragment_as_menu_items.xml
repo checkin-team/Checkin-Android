@@ -2,7 +2,7 @@
 <androidx.cardview.widget.CardView
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
+    android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     app:cardCornerRadius="@dimen/card_corner_radius_small"
     android:padding="@dimen/spacing_normal"
@@ -12,6 +12,6 @@
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/rv_menu_items"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
+        android:layout_height="match_parent" />
 
 </androidx.cardview.widget.CardView>

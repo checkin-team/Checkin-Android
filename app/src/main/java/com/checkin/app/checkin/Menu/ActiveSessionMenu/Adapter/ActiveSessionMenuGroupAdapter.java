@@ -6,17 +6,27 @@ import android.animation.AnimatorSet;
 import android.animation.ValueAnimator;
 import android.os.Build;
 import android.view.LayoutInflater;
-import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentPagerAdapter;
+import androidx.fragment.app.FragmentStatePagerAdapter;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+
+import com.checkin.app.checkin.Menu.ActiveSessionMenu.Fragment.ActiveSessionMenuItemsFragment;
 import com.checkin.app.checkin.Menu.MenuItemInteraction;
 import com.checkin.app.checkin.Menu.Model.MenuGroupModel;
-import com.checkin.app.checkin.Menu.ActiveSessionMenu.Fragment.ActiveSessionMenuItemsFragment;
 import com.checkin.app.checkin.R;
 import com.checkin.app.checkin.Utility.AnimUtils;
+import com.checkin.app.checkin.Utility.CustomViewPager;
 import com.checkin.app.checkin.Utility.DynamicSwipableViewPager;
 import com.checkin.app.checkin.Utility.GlideApp;
 import com.checkin.app.checkin.Utility.Utils;
@@ -24,15 +34,9 @@ import com.google.android.material.tabs.TabLayout;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Objects;
 
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentManager;
-import androidx.fragment.app.FragmentStatePagerAdapter;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
+import androidx.transition.TransitionManager;
+import androidx.viewpager.widget.ViewPager;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
@@ -117,7 +121,7 @@ public class ActiveSessionMenuGroupAdapter extends RecyclerView.Adapter<ActiveSe
     public String getCurrentCategory() {
         int position = ((LinearLayoutManager) mRecyclerView.getLayoutManager()).findFirstVisibleItemPosition();
         try {
-            return mGroupList.get(position).getCategory();
+            return mGroupList.get(position).getName();
         } catch (ArrayIndexOutOfBoundsException ignored) {
             return "";
         }
@@ -157,7 +161,7 @@ public class ActiveSessionMenuGroupAdapter extends RecyclerView.Adapter<ActiveSe
 
     private void contractView(GroupViewHolder groupViewHolder) {
         if (groupViewHolder != null) {
-//            groupViewHolder.hideMenu(groupViewHolder.itemView);
+//            groupViewHolder.hideMenu(groupViewHolder.vSubGroupWrapper);
             groupViewHolder.hideMenu();
             mPrevExpandedViewHolder = null;
         }
@@ -165,8 +169,8 @@ public class ActiveSessionMenuGroupAdapter extends RecyclerView.Adapter<ActiveSe
 
     private void expandView(GroupViewHolder groupViewHolder) {
         if (groupViewHolder != null) {
-//            groupViewHolder.showMenu(groupViewHolder.itemView);
-//            groupViewHolder.showMenu();
+//            groupViewHolder.showMenu(groupViewHolder.vSubGroupWrapper);
+            groupViewHolder.showMenu();
             ((LinearLayoutManager) mRecyclerView.getLayoutManager()).scrollToPositionWithOffset(groupViewHolder.getAdapterPosition(), 0);
             mPrevExpandedViewHolder = groupViewHolder;
         }
@@ -190,9 +194,11 @@ public class ActiveSessionMenuGroupAdapter extends RecyclerView.Adapter<ActiveSe
         @BindView(R.id.tabs_as_menu_sub_groups)
         TabLayout vTabs;
         @BindView(R.id.pager_as_menu_items)
-        DynamicSwipableViewPager vPager;
+        CustomViewPager vPager;
         @BindView(R.id.container_as_menu_sub_groups)
         ViewGroup vSubGroupWrapper;
+        @BindView(R.id.im_as_menu_drop_down)
+        ImageView imDropDown;
         private MenuGroupModel mMenuGroup;
 
         GroupViewHolder(View itemView) {
@@ -204,29 +210,25 @@ public class ActiveSessionMenuGroupAdapter extends RecyclerView.Adapter<ActiveSe
 
             vPager.setEnabled(false);
 
-            itemView.setOnClickListener(view -> {
-                tvGroupName.performClick();
-            });
+            itemView.setOnClickListener(view -> tvGroupName.performClick());
             tvGroupName.setOnClickListener(v -> {
-//                if (this.isExpanded)
-//                    contractView(this);
-//                else {
-//                    contractView();
-//                    expandView(this);
-//                }
+                if (this.isExpanded)
+                    contractView(this);
+                else {
+                    contractView();
+                    expandView(this);
+                }
             });
         }
 
         void bindData(final MenuGroupModel menuGroup) {
-            vSubGroupWrapper.setVisibility(View.VISIBLE);
+            vSubGroupWrapper.setVisibility(View.GONE);
             mMenuGroup = menuGroup;
 
             tvGroupName.setText(menuGroup.getName());
             GlideApp.with(itemView).load(menuGroup.getIcon()).into(imGroupIcon);
             SubGroupPagerAdapter pagerAdapter = new SubGroupPagerAdapter(menuGroup);
             vPager.setAdapter(pagerAdapter);
-
-//            vSubGroupWrapper.setVisibility(View.VISIBLE);
             if (menuGroup.hasSubGroups()) {
                 vTabs.setVisibility(View.VISIBLE);
                 vTabs.setupWithViewPager(vPager);
@@ -252,7 +254,6 @@ public class ActiveSessionMenuGroupAdapter extends RecyclerView.Adapter<ActiveSe
             } else {
                 vTabs.setVisibility(View.GONE);
             }
-            pagerAdapter.notifyDataSetChanged();
         }
 
         void showMenu(){
@@ -271,7 +272,9 @@ public class ActiveSessionMenuGroupAdapter extends RecyclerView.Adapter<ActiveSe
 
 
         void showMenu(View view) {
-            Animator sizeChangeAnim = AnimUtils.changeViewSize(view, AnimUtils.NO_CHANGE, (int) view.getResources().getDimension(R.dimen.height_as_menu_group_expanded));
+            int menuItemHeight = (int) view.getResources().getDimension(R.dimen.height_menu_item);
+            int maxLength = Math.max(mMenuGroup.getVegItems().size(), mMenuGroup.getNonVegItems().size());
+            Animator sizeChangeAnim = AnimUtils.changeViewSize(view, AnimUtils.NO_CHANGE, (maxLength * menuItemHeight));
             Animator hideImageAnim = AnimUtils.hideView(imGroupIcon);
             int newImageSize = ((int) view.getResources().getDimension(R.dimen.button_height_short));
             Animator sizeDecreaseImageAnim = AnimUtils.changeViewSize(imGroupIcon, newImageSize, newImageSize);
@@ -281,7 +284,7 @@ public class ActiveSessionMenuGroupAdapter extends RecyclerView.Adapter<ActiveSe
                     .addUpdateListener(animation ->
                             ((LinearLayoutManager) mRecyclerView.getLayoutManager()).scrollToPositionWithOffset(getAdapterPosition(), 0));
             AnimatorSet animatorSet = new AnimatorSet();
-            animatorSet.playTogether(hideImageAnim, sizeDecreaseImageAnim, sizeChangeAnim, showMenuAnim, scrollAnimator);
+            animatorSet.playTogether(sizeChangeAnim, hideImageAnim, sizeDecreaseImageAnim, showMenuAnim, scrollAnimator);
             isExpanded = true;
             animatorSet.addListener(new AnimatorListenerAdapter() {
                 @Override
@@ -320,24 +323,31 @@ public class ActiveSessionMenuGroupAdapter extends RecyclerView.Adapter<ActiveSe
         }
 
         private void setupTabIcons() {
-            View tabOne = LayoutInflater.from(vTabs.getContext()).inflate(R.layout.custom_tab_menu_subgroup, null);
-            TextView tv = tabOne.findViewById(R.id.tv_tab);
-            ImageView im = tabOne.findViewById(R.id.im_tab);
-            tv.setText("  Veg");
-            im.setImageDrawable(mRecyclerView.getContext().getResources().getDrawable(R.drawable.ic_veg));
-            Objects.requireNonNull(vTabs.getTabAt(0)).setCustomView(tabOne);
+            TabLayout.Tab tab = vTabs.getTabAt(0);
+            if (tab != null) {
+                View tabOne = LayoutInflater.from(vTabs.getContext()).inflate(R.layout.custom_tab_menu_subgroup, null);
+                TextView tv = tabOne.findViewById(R.id.tv_tab);
+                ImageView im = tabOne.findViewById(R.id.im_tab);
+                tv.setText("  Veg");
+                im.setImageDrawable(mRecyclerView.getContext().getResources().getDrawable(R.drawable.ic_veg));
+                tab.setCustomView(tabOne);
+            }
 
-            View tabTwo = LayoutInflater.from(vTabs.getContext()).inflate(R.layout.custom_tab_menu_subgroup, null);
-            TextView tvTwo = tabTwo.findViewById(R.id.tv_tab);
-            ImageView imTwo = tabTwo.findViewById(R.id.im_tab);
-            tvTwo.setText("  Non-Veg");
-            imTwo.setImageDrawable(mRecyclerView.getContext().getResources().getDrawable(R.drawable.ic_non_veg));
-            Objects.requireNonNull(vTabs.getTabAt(1)).setCustomView(tabTwo);
+            tab = vTabs.getTabAt(1);
+            if (tab != null) {
+                View tabTwo = LayoutInflater.from(vTabs.getContext()).inflate(R.layout.custom_tab_menu_subgroup, null);
+                TextView tvTwo = tabTwo.findViewById(R.id.tv_tab);
+                ImageView imTwo = tabTwo.findViewById(R.id.im_tab);
+                tvTwo.setText("  Non-Veg");
+                imTwo.setImageDrawable(mRecyclerView.getContext().getResources().getDrawable(R.drawable.ic_non_veg));
+                tab.setCustomView(tabTwo);
+            }
         }
     }
 
     public class SubGroupPagerAdapter extends FragmentStatePagerAdapter {
         private List<ActiveSessionMenuItemsFragment> mListFragment;
+        private int mCurrentPosition = 0;
 
         SubGroupPagerAdapter(MenuGroupModel menuGroup) {
             super(mFragmentManager);

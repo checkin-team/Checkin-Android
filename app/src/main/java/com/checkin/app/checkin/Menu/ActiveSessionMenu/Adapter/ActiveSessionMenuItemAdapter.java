@@ -1,10 +1,5 @@
 package com.checkin.app.checkin.Menu.ActiveSessionMenu.Adapter;
 
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
-import android.graphics.BlurMaskFilter;
-import android.graphics.drawable.BitmapDrawable;
-import android.net.Uri;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.LayoutInflater;
@@ -13,24 +8,20 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.checkin.app.checkin.Menu.Model.MenuItemModel;
-import com.checkin.app.checkin.Misc.TextBaseAdapter;
-import com.checkin.app.checkin.R;
-import com.checkin.app.checkin.Utility.GlideApp;
-import com.checkin.app.checkin.Utility.Utils;
-import com.yarolegovich.discretescrollview.DiscreteScrollView;
-
-import java.io.FileNotFoundException;
-import java.util.List;
-import java.util.Locale;
-
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.recyclerview.widget.RecyclerView;
+
+import com.checkin.app.checkin.Menu.Model.MenuItemModel;
+import com.checkin.app.checkin.Misc.TextBaseAdapter;
+import com.checkin.app.checkin.R;
+import com.checkin.app.checkin.Utility.Utils;
+import com.yarolegovich.discretescrollview.DiscreteScrollView;
+
+import java.util.List;
+
 import butterknife.BindView;
 import butterknife.ButterKnife;
-import jp.wasabeef.glide.transformations.BlurTransformation;
-import jp.wasabeef.glide.transformations.MaskTransformation;
 
 public class ActiveSessionMenuItemAdapter extends RecyclerView.Adapter<ActiveSessionMenuItemAdapter.ItemViewHolder> {
     private static final String TAG = ActiveSessionMenuItemAdapter.class.getSimpleName();
@@ -43,7 +34,6 @@ public class ActiveSessionMenuItemAdapter extends RecyclerView.Adapter<ActiveSes
         mItemsList = itemsList;
         mListener = listener;
         mIsSessionActive = isSessionActive;
-        notifyDataSetChanged();
     }
 
     public void setMenuItems(List<MenuItemModel> menuItems) {
@@ -166,12 +156,15 @@ public class ActiveSessionMenuItemAdapter extends RecyclerView.Adapter<ActiveSes
 
             tvItemName.setText(menuItem.getName());
             tvDesc.setText(menuItem.getDescription());
-            Utils.loadImageOrDefault(imItem, menuItem.getImage(), R.drawable.shahi_paneer);
+//            if (menuItem.getImage() != null)
+                Utils.loadImageOrDefault(imItem, menuItem.getImage(), R.drawable.shahi_paneer);
+//            else
+//                imItem.setVisibility(View.GONE);
 //            imItem.setLayerType(View.LAYER_TYPE_SOFTWARE,null);
 //            Bitmap icon = BitmapFactory.decodeResource(imItem.getResources(), R.drawable.shahi_paneer);
 //            Utils.blurImage(imItem ,icon);
 
-            tvItemPrices.setText(Utils.formatCurrencyAmount(tvItemPrices.getContext(),menuItem.getTypeCosts().get(0)));
+            tvItemPrices.setText(Utils.formatCurrencyAmount(tvItemPrices.getContext(), menuItem.getTypeCosts().get(0)));
 
             int count = mListener.orderedItemCount(menuItem);
             if (count > 0)
@@ -180,15 +173,15 @@ public class ActiveSessionMenuItemAdapter extends RecyclerView.Adapter<ActiveSes
                 hideQuantitySelection();
 
             if (menuItem.isComplexItem()) {
-                btnItemAdd.setCompoundDrawablesWithIntrinsicBounds(null,null, btnItemAdd.getContext().getResources().getDrawable(R.drawable.ic_setting),null);
+                btnItemAdd.setCompoundDrawablesWithIntrinsicBounds(null, null, btnItemAdd.getContext().getResources().getDrawable(R.drawable.ic_setting), null);
 
                 containerItemQuantity.setEnabled(false);
                 containerItemQuantity.setOnClickListener(v -> {
                     disallowDecreaseCount();
-                    return ;
+                    return;
                 });
-            }else{
-                btnItemAdd.setCompoundDrawablesWithIntrinsicBounds(null,null,null,null);
+            } else {
+                btnItemAdd.setCompoundDrawablesWithIntrinsicBounds(null, null, null, null);
                 containerItemQuantity.setEnabled(true);
             }
         }
@@ -246,13 +239,15 @@ public class ActiveSessionMenuItemAdapter extends RecyclerView.Adapter<ActiveSes
         }
 
         public void increaseQuantity() {
-            mCount ++;
+            mCount++;
             displayQuantity(mCount);
 
-        }public void decreaseQuantity() {
-            if(mCount<=0)
+        }
+
+        public void decreaseQuantity() {
+            if (mCount <= 0)
                 return;
-            mCount --;
+            mCount--;
             displayQuantity(mCount);
 
         }

@@ -8,6 +8,14 @@
 
     <FrameLayout
         android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+    <androidx.core.widget.NestedScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+    <FrameLayout
+        android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical">
 
@@ -39,12 +47,28 @@
 
         </com.facebook.shimmer.ShimmerFrameLayout>
 
-
-
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/rv_menu_groups"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
+            android:nestedScrollingEnabled="false"
             app:layout_behavior="@string/appbar_scrolling_view_behavior" />
+
     </FrameLayout>
+
+    </androidx.core.widget.NestedScrollView>
+
+    <TextView
+        android:id="@+id/tv_as_menu_current_category"
+        style="@style/GreySmallTextStyle"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        tools:text="Sub category"
+        android:background="@color/white_alpha"
+        android:fontFamily="@font/opensans_regular"
+        android:padding="@dimen/spacing_small"
+        android:layout_gravity="top"
+        android:visibility="gone"/>
+    </FrameLayout>
+
 </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>

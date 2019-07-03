@@ -100,16 +100,13 @@ public class FinanceDetailActivity extends AppCompatActivity {
     @OnClick({R.id.et_finance_discount, R.id.btn_finance_save})
     public void onViewClicked(View view) {
         switch (view.getId()) {
-            case R.id.et_finance_discount:
-                if (!etTaxDiscount.isCursorVisible()) {
-                    etTaxDiscount.setCursorVisible(true);
-                }
-                break;
             case R.id.btn_finance_save:
                 String discountPercent = etTaxDiscount.getText().toString();
                 try {
                     double discount = Double.valueOf(discountPercent);
                     mViewModel.updateDiscountPercent(discount);
+                    Utils.setKeyboardVisibility(etTaxDiscount,false);
+                    etTaxDiscount.setCursorVisible(false);
                 } catch (NumberFormatException ex) {
                     Utils.toast(this, "Input valid percentage for discount!");
                 }

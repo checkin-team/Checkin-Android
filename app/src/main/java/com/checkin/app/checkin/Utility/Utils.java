@@ -840,4 +840,12 @@ public final class Utils {
         return bmOut;
     }
 
+    public static Bitmap getBitmapFromView(View view) {
+        Bitmap mBitmap = Bitmap.createBitmap(view.getWidth(), view.getHeight(), Bitmap.Config.ARGB_8888);
+        Canvas c = new Canvas(mBitmap);
+        view.layout(view.getLeft(), view.getTop(), view.getRight(), view.getBottom());
+        view.draw(c);
+        return mBitmap;
+    }
+
 }

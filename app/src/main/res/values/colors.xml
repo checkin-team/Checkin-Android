@@ -32,4 +32,5 @@
     <color name="translucent_brownish_grey">#806d6d6d</color>
 
     <color name="shimmer_background">#dddddd</color>
+    <color name="white_alpha">#B3ffffff</color>
 </resources>
