@@ -77,6 +77,7 @@ public class ActiveSessionMenuFilterFragment extends Fragment {
         final View view = inflater.inflate(R.layout.fragment_as_menu_filter, container, false);
         unbinder = ButterKnife.bind(this, view);
 
+
         return view;
     }
 
