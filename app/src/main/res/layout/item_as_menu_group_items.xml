@@ -16,11 +16,13 @@
         android:layout_marginStart="@dimen/spacing_extra_small"
         android:layout_marginEnd="@dimen/spacing_extra_tiny"
         android:gravity="start"
+        android:autoSizeTextType="uniform"
+        android:maxLines="2"
         app:layout_constraintEnd_toStartOf="@id/im_as_menu_item"
         app:layout_constraintHorizontal_weight="0.7"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        tools:text="ITEM TITLE" />
+        tools:text="ITEM TITLE " />
 
     <com.borjabravo.readmoretextview.ReadMoreTextView
         android:id="@+id/tv_as_menu_item_desc"
@@ -47,14 +49,13 @@
     <com.checkin.app.checkin.Utility.FadingImageView
         android:id="@+id/im_as_menu_item"
         android:layout_width="0dp"
-        android:layout_height="0dp"
+        android:layout_height="60dp"
         android:layout_marginBottom="@dimen/spacing_small"
         android:scaleType="centerCrop"
         app:layout_constraintEnd_toStartOf="@id/container_as_menu_quantity_picker"
         app:layout_constraintHorizontal_weight="0.8"
         app:layout_constraintStart_toEndOf="@id/tv_as_menu_item_name"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintBottom_toBottomOf="parent"
         tools:src="@drawable/cover_unknown_male" />
 
 
