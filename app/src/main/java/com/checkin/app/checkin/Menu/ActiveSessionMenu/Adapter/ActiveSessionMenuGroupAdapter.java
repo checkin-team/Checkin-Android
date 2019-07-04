@@ -6,6 +6,7 @@ import android.animation.AnimatorSet;
 import android.animation.TimeInterpolator;
 import android.animation.ValueAnimator;
 import android.os.Build;
+import android.os.Handler;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -266,31 +267,45 @@ public class ActiveSessionMenuGroupAdapter extends RecyclerView.Adapter<ActiveSe
         }
 
         void showMenu(){
-            AnimUtils.expand(vPager, vPager.getContext());
-            Animator showMenuAnim = AnimUtils.showView(vSubGroupWrapper);
-            ValueAnimator scrollAnimator = ValueAnimator.ofInt(1, 2, 3, 4);
-            scrollAnimator.setDuration(AnimUtils.DEFAULT_DURATION)
-                    .addUpdateListener(animation ->
-                            ((LinearLayoutManager) mRecyclerView.getLayoutManager()).scrollToPositionWithOffset(getAdapterPosition(), 0));
-            AnimatorSet animatorSet = new AnimatorSet();
-            animatorSet.playTogether(showMenuAnim, scrollAnimator);
             isExpanded = true;
-            animatorSet.addListener(new AnimatorListenerAdapter() {
-                @Override
-                public void onAnimationStart(Animator animation) {
-                    if (isExpanded) {
-                        vSubGroupWrapper.setVisibility(View.VISIBLE);
-                    }
-                }
-            });
-            animatorSet.start();
+            CustomViewPager customViewPager = new CustomViewPager(vPager.getContext(),vPager);
+            customViewPager.expand(vSubGroupWrapper);
+
+//            new Handler().postDelayed(new Runnable() {
+//                @Override
+//                public void run() {
+//                    customViewPager.expand();
+//                }
+//            }, 500);
+
+
+//            AnimUtils.expand(vPager, vPager.getContext());
+//            Animator showMenuAnim = AnimUtils.showView(vSubGroupWrapper);
+//            ValueAnimator scrollAnimator = ValueAnimator.ofInt(1, 2, 3, 4);
+//            scrollAnimator.setDuration(AnimUtils.DEFAULT_DURATION)
+//                    .addUpdateListener(animation ->
+//                            ((LinearLayoutManager) mRecyclerView.getLayoutManager()).scrollToPositionWithOffset(getAdapterPosition(), 0));
+//            AnimatorSet animatorSet = new AnimatorSet();
+//            animatorSet.playTogether(showMenuAnim, scrollAnimator);
+//            isExpanded = true;
+//            animatorSet.addListener(new AnimatorListenerAdapter() {
+//                @Override
+//                public void onAnimationStart(Animator animation) {
+//                    if (isExpanded) {
+//                        vSubGroupWrapper.setVisibility(View.VISIBLE);
+//                    }
+//                }
+//            });
+//            animatorSet.start();
             mGroupInteractionListener.onGroupExpandCollapse(isExpanded, mMenuGroup.getName());
 
         }
 
         void hideMenu(){
             isExpanded = false;
-            AnimUtils.collapse(vSubGroupWrapper, vPager);
+            CustomViewPager customViewPager = new CustomViewPager(vPager.getContext(),vPager);
+            customViewPager.collapse(vSubGroupWrapper);
+//            AnimUtils.collapse(vSubGroupWrapper, vPager);
             mGroupInteractionListener.onGroupExpandCollapse(isExpanded, "");
 //            Utils.collapse(vSubGroupWrapper);
 //            if (!isExpanded) {

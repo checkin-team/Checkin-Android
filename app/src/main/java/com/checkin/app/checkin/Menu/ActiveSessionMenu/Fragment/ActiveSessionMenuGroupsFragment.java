@@ -100,6 +100,10 @@ public class ActiveSessionMenuGroupsFragment extends BaseFragment implements Act
             shimmerMenu.stopShimmer();
             shimmerMenu.setVisibility(View.GONE);
         }
+
+        if(tvCurrentCategory.getVisibility() == View.VISIBLE){
+            AnimationUtil.fadeOutView(tvCurrentCategory);
+        }
     }
 
     private void setupGroupRecycler() {
