@@ -2,8 +2,10 @@ package com.checkin.app.checkin.Menu.ActiveSessionMenu.Fragment;
 
 import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
+import android.animation.AnimatorSet;
 import android.os.Bundle;
 import android.renderscript.RenderScript;
+import android.util.DisplayMetrics;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewAnimationUtils;
@@ -16,8 +18,11 @@ import com.checkin.app.checkin.Menu.MenuViewModel;
 import com.checkin.app.checkin.Menu.Model.MenuItemModel.AVAILABLE_MEAL;
 import com.checkin.app.checkin.Menu.ActiveSessionMenu.Adapter.FilterGroupAdapter;
 import com.checkin.app.checkin.R;
+import com.checkin.app.checkin.Utility.AnimUtils;
+import com.checkin.app.checkin.Utility.ClipRevealFrame;
 import com.checkin.app.checkin.Utility.RSBlurProcessor;
 import com.checkin.app.checkin.Utility.Utils;
+import com.miguelcatalan.materialsearchview.utils.AnimationUtil;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -59,6 +64,7 @@ public class ActiveSessionMenuFilterFragment extends Fragment {
     RadioButton rbLowHigh;
     @BindView(R.id.rb_as_menu_filter_high_low)
     RadioButton rbHighLow;
+    View bgView;
     private Unbinder unbinder;
     private MenuViewModel mViewModel;
     private FilterGroupAdapter mAdapter;
@@ -77,9 +83,10 @@ public class ActiveSessionMenuFilterFragment extends Fragment {
         final View view = inflater.inflate(R.layout.fragment_as_menu_filter, container, false);
         unbinder = ButterKnife.bind(this, view);
 
-        View bgView = getActivity().findViewById(R.id.container_as_menu_parent);
+        bgView = getActivity().findViewById(R.id.container_as_menu_parent);
         RenderScript renderScript = RenderScript.create(requireContext());
         vDarkBack.setImageBitmap(new RSBlurProcessor(renderScript).blur(Utils.getBitmapFromView(bgView), 25, 1));
+
 
         return view;
     }
@@ -184,44 +191,66 @@ public class ActiveSessionMenuFilterFragment extends Fragment {
         isFilterShown = true;
         mListener.onShowFilter();
 
-        showDarkBack();
-
-        int x = vDarkBack.getRight();
-        int y = vDarkBack.getBottom();
-
-        int startRadius = 0;
-        int endRadius = (int) Math.hypot(parentContainer.getWidth(), parentContainer.getHeight());
-
-        Animator anim = null;
         if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.LOLLIPOP) {
-            anim = ViewAnimationUtils.createCircularReveal(containerFilter, x, y, startRadius, endRadius);
-            anim.addListener(new Animator.AnimatorListener() {
-                @Override
-                public void onAnimationStart(Animator animation) {
+            DisplayMetrics displayMetrics = new DisplayMetrics();
+            requireActivity().getWindowManager().getDefaultDisplay().getMetrics(displayMetrics);
+            int heightPixels = displayMetrics.heightPixels;
+            int widthPixels = displayMetrics.widthPixels;
 
+            int x = bgView.getRight();
+            int y = bgView.getBottom();
+            int cx = widthPixels / 2;
+            int cy = heightPixels / 2;
+
+            float finalRadius = (float) Math.hypot(cx, cy);
+            AnimationUtil.AnimationListener animationListener = new AnimationUtil.AnimationListener() {
+                @Override
+                public boolean onAnimationStart(View view) {
+                    return false;
                 }
 
                 @Override
-                public void onAnimationEnd(Animator animation) {
-                    tvFilterClear.setVisibility(View.VISIBLE);
+                public boolean onAnimationEnd(View view) {
+                    return false;
                 }
 
                 @Override
-                public void onAnimationCancel(Animator animation) {
-
+                public boolean onAnimationCancel(View view) {
+                    return false;
                 }
+            };
+            AnimationUtil.reveal(containerFilter,animationListener,true);
 
-                @Override
-                public void onAnimationRepeat(Animator animation) {
+//            Animator anim = ViewAnimationUtils.createCircularReveal(containerFilter, x-200, y-200,0f, finalRadius);
+//            containerFilter.setVisibility(View.VISIBLE);
+//            anim.addListener(new Animator.AnimatorListener() {
+//                @Override
+//                public void onAnimationStart(Animator animator) {
+//                }
+//
+//                @Override
+//                public void onAnimationEnd(Animator animator) {
+//                    tvFilterClear.setVisibility(View.VISIBLE);
+//                }
+//
+//                @Override
+//                public void onAnimationCancel(Animator animator) {
+//                }
+//
+//                @Override
+//                public void onAnimationRepeat(Animator animator) {
+//                }
+//            });
+//            anim.setDuration(300);
+//            anim.start();
 
-                }
-            });
-            anim.start();
         }else {
+            containerFilter.setVisibility(View.VISIBLE);
             tvFilterClear.setVisibility(View.VISIBLE);
         }
+        showDarkBack();
 
-        containerFilter.setVisibility(View.VISIBLE);
+
     }
 
     private void hideFilter() {
@@ -232,7 +261,6 @@ public class ActiveSessionMenuFilterFragment extends Fragment {
 
         int x = containerFilter.getRight();
         int y = containerFilter.getBottom();
-
         int startRadius = Math.max(vDarkBack.getWidth(), vDarkBack.getHeight());
         int endRadius = 0;
 
@@ -241,7 +269,6 @@ public class ActiveSessionMenuFilterFragment extends Fragment {
             anim.addListener(new Animator.AnimatorListener() {
                 @Override
                 public void onAnimationStart(Animator animator) {
-
                 }
 
                 @Override
@@ -252,12 +279,10 @@ public class ActiveSessionMenuFilterFragment extends Fragment {
 
                 @Override
                 public void onAnimationCancel(Animator animator) {
-
                 }
 
                 @Override
                 public void onAnimationRepeat(Animator animator) {
-
                 }
             });
             anim.start();

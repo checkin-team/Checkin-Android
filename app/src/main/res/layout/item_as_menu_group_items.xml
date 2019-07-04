@@ -49,7 +49,7 @@
     <com.checkin.app.checkin.Utility.FadingImageView
         android:id="@+id/im_as_menu_item"
         android:layout_width="0dp"
-        android:layout_height="60dp"
+        android:layout_height="@dimen/height_as_menu_thumbnail"
         android:layout_marginBottom="@dimen/spacing_small"
         android:scaleType="centerCrop"
         app:layout_constraintEnd_toStartOf="@id/container_as_menu_quantity_picker"

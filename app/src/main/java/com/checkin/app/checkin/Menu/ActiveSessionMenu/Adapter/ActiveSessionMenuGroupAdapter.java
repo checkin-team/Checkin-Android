@@ -3,11 +3,13 @@ package com.checkin.app.checkin.Menu.ActiveSessionMenu.Adapter;
 import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
 import android.animation.AnimatorSet;
+import android.animation.TimeInterpolator;
 import android.animation.ValueAnimator;
 import android.os.Build;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.Animation;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -47,15 +49,17 @@ public class ActiveSessionMenuGroupAdapter extends RecyclerView.Adapter<ActiveSe
     private GroupViewHolder mPrevExpandedViewHolder;
     private RecyclerView mRecyclerView;
     private FragmentManager mFragmentManager;
+    private OnGroupInteractionInterface mGroupInteractionListener;
 
     @Nullable
     private MenuItemInteraction mListener;
     private boolean mIsSessionActive = true;
 
-    public ActiveSessionMenuGroupAdapter(List<MenuGroupModel> groupsList, FragmentManager fragmentManager, @Nullable MenuItemInteraction listener) {
+    public ActiveSessionMenuGroupAdapter(List<MenuGroupModel> groupsList, FragmentManager fragmentManager, @Nullable MenuItemInteraction listener, OnGroupInteractionInterface groupInteractionListener ) {
         this.mGroupList = groupsList;
         this.mFragmentManager = fragmentManager;
         this.mListener = listener;
+        this.mGroupInteractionListener = groupInteractionListener;
     }
 
     public void setSessionActive(boolean value) {
@@ -148,7 +152,7 @@ public class ActiveSessionMenuGroupAdapter extends RecyclerView.Adapter<ActiveSe
                 i++;
             }
         }
-        return i;
+        return 0;
     }
 
     public void contractView() {
@@ -184,6 +188,10 @@ public class ActiveSessionMenuGroupAdapter extends RecyclerView.Adapter<ActiveSe
 //        }
     }
 
+    public interface OnGroupInteractionInterface {
+        void onGroupExpandCollapse(boolean isExpanded, String groupName);
+    }
+
     public class GroupViewHolder extends RecyclerView.ViewHolder {
         protected boolean isExpanded = false;
 
@@ -200,10 +208,12 @@ public class ActiveSessionMenuGroupAdapter extends RecyclerView.Adapter<ActiveSe
         @BindView(R.id.im_as_menu_drop_down)
         ImageView imDropDown;
         private MenuGroupModel mMenuGroup;
+        CustomViewPager customViewPager;
 
         GroupViewHolder(View itemView) {
             super(itemView);
             ButterKnife.bind(this, itemView);
+//            customViewPager = new CustomViewPager(itemView.getContext(),vPager);
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
                 Utils.setTabsFont(vTabs, itemView.getResources().getFont(R.font.arial_rounded_mt_bold));
             }
@@ -256,17 +266,36 @@ public class ActiveSessionMenuGroupAdapter extends RecyclerView.Adapter<ActiveSe
         }
 
         void showMenu(){
+            AnimUtils.expand(vPager, vPager.getContext());
+            Animator showMenuAnim = AnimUtils.showView(vSubGroupWrapper);
+            ValueAnimator scrollAnimator = ValueAnimator.ofInt(1, 2, 3, 4);
+            scrollAnimator.setDuration(AnimUtils.DEFAULT_DURATION)
+                    .addUpdateListener(animation ->
+                            ((LinearLayoutManager) mRecyclerView.getLayoutManager()).scrollToPositionWithOffset(getAdapterPosition(), 0));
+            AnimatorSet animatorSet = new AnimatorSet();
+            animatorSet.playTogether(showMenuAnim, scrollAnimator);
             isExpanded = true;
-            if (isExpanded) {
-                vSubGroupWrapper.setVisibility(View.VISIBLE);
-            }
+            animatorSet.addListener(new AnimatorListenerAdapter() {
+                @Override
+                public void onAnimationStart(Animator animation) {
+                    if (isExpanded) {
+                        vSubGroupWrapper.setVisibility(View.VISIBLE);
+                    }
+                }
+            });
+            animatorSet.start();
+            mGroupInteractionListener.onGroupExpandCollapse(isExpanded, mMenuGroup.getName());
+
         }
 
         void hideMenu(){
             isExpanded = false;
-            if (!isExpanded) {
-                vSubGroupWrapper.setVisibility(View.GONE);
-            }
+            AnimUtils.collapse(vSubGroupWrapper, vPager);
+            mGroupInteractionListener.onGroupExpandCollapse(isExpanded, "");
+//            Utils.collapse(vSubGroupWrapper);
+//            if (!isExpanded) {
+//                vSubGroupWrapper.setVisibility(View.GONE);
+//            }
         }
 
 

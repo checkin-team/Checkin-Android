@@ -39,6 +39,8 @@ import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.WindowManager;
+import android.view.animation.Animation;
+import android.view.animation.Transformation;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -860,18 +862,5 @@ public final class Utils {
         paint.setColorFilter(filter);
         canvas.drawBitmap(image, 0, 0, paint);
         return image;
-
-
-
-
-
-
-
-
-
-
-
-
     }
-
 }

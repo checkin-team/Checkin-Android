@@ -102,6 +102,7 @@
 
     <dimen name="width_filter_group_name">80dp</dimen>
     <dimen name="container_filter">310dp</dimen>
+    <dimen name="height_as_menu_thumbnail">60dp</dimen>
 
     <!--Chat dimensions-->
     <dimen name="size_chat_status">12dp</dimen>

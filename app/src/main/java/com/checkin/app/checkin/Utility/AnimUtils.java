@@ -5,15 +5,23 @@ import android.animation.AnimatorSet;
 import android.animation.ArgbEvaluator;
 import android.animation.ObjectAnimator;
 import android.animation.ValueAnimator;
+import android.content.Context;
 import android.content.res.ColorStateList;
 import android.graphics.drawable.ColorDrawable;
 import android.graphics.drawable.Drawable;
 import android.os.Build;
 import android.view.View;
 import android.view.ViewAnimationUtils;
+import android.view.ViewGroup;
 import android.view.animation.AccelerateDecelerateInterpolator;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
+import android.view.animation.Transformation;
 import android.widget.ImageView;
 import android.widget.TextView;
+
+import com.checkin.app.checkin.R;
+import com.miguelcatalan.materialsearchview.utils.AnimationUtil;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.RequiresApi;
@@ -161,4 +169,56 @@ public final class AnimUtils {
         reveal.setInterpolator(new AccelerateDecelerateInterpolator());
         return reveal;
     }
+
+    public static void expand(CustomViewPager viewPager, Context context) {
+        final int targetHeight = viewPager.getMeasuredHeight();
+
+        viewPager.getLayoutParams().height = 1;
+        Animation a = new Animation()
+        {
+            @Override
+            protected void applyTransformation(float interpolatedTime, Transformation t) {
+                viewPager.getLayoutParams().height = interpolatedTime == 1 ? CustomViewPager.LayoutParams.WRAP_CONTENT
+                        : (int)(targetHeight * interpolatedTime);
+                viewPager.requestLayout();
+
+            }
+
+            @Override
+            public boolean willChangeBounds() {
+                return true;
+            }
+        };
+        a.setDuration((int)(targetHeight / viewPager.getContext().getResources().getDisplayMetrics().density));
+        viewPager.setVisibility(View.VISIBLE);
+        viewPager.startAnimation(a);
+    }
+
+    public static void collapse(ViewGroup vSubGroupWrapper, CustomViewPager viewPager) {
+        final int initialHeight = viewPager.getMeasuredHeight();
+
+        Animation a = new Animation()
+        {
+            @Override
+            protected void applyTransformation(float interpolatedTime, Transformation t) {
+                if(interpolatedTime == 1){
+                    viewPager.setVisibility(View.GONE);
+                    vSubGroupWrapper.setVisibility(View.GONE);
+                }else{
+                    viewPager.getLayoutParams().height = initialHeight - (int)(initialHeight * interpolatedTime);
+                    viewPager.requestLayout();
+                }
+            }
+
+            @Override
+            public boolean willChangeBounds() {
+                return true;
+            }
+        };
+
+        a.setDuration((int)(initialHeight / viewPager.getContext().getResources().getDisplayMetrics().density));
+        viewPager.startAnimation(a);
+    }
+
+
 }

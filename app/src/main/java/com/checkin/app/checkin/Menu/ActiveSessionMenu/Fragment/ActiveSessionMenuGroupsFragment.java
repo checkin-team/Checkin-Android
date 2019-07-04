@@ -2,6 +2,7 @@ package com.checkin.app.checkin.Menu.ActiveSessionMenu.Fragment;
 
 import android.os.Bundle;
 import android.view.View;
+import android.view.animation.Animation;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -21,13 +22,15 @@ import com.checkin.app.checkin.Misc.BaseFragment;
 import com.checkin.app.checkin.R;
 import com.checkin.app.checkin.Utility.Utils;
 import com.facebook.shimmer.ShimmerFrameLayout;
+import com.miguelcatalan.materialsearchview.utils.AnimationUtil;
 
 import java.util.List;
 
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 import butterknife.BindView;
+import butterknife.OnClick;
 
-public class ActiveSessionMenuGroupsFragment extends BaseFragment {
+public class ActiveSessionMenuGroupsFragment extends BaseFragment implements ActiveSessionMenuGroupAdapter.OnGroupInteractionInterface {
     public static final String KEY_SESSION_STATUS = "menu.status";
     @BindView(R.id.rv_menu_groups)
     RecyclerView rvGroupsList;
@@ -102,35 +105,9 @@ public class ActiveSessionMenuGroupsFragment extends BaseFragment {
     private void setupGroupRecycler() {
         rvGroupsList.setLayoutManager(new LinearLayoutManager(getContext(), RecyclerView.VERTICAL, false));
 
-        mAdapter = new ActiveSessionMenuGroupAdapter(null, requireFragmentManager(), mListener);
+        mAdapter = new ActiveSessionMenuGroupAdapter(null, requireFragmentManager(), mListener, this);
         mAdapter.setSessionActive(mIsSessionActive);
         rvGroupsList.setAdapter(mAdapter);
-
-        rvGroupsList.addOnScrollListener(new RecyclerView.OnScrollListener() {
-            @Override
-            public void onScrolled(@NonNull RecyclerView recyclerView, int dx, int dy) {
-                super.onScrolled(recyclerView, dx, dy);
-//                if (tvCurrentCategory.getVisibility() == View.GONE)
-//                    tvCurrentCategory.setVisibility(View.VISIBLE);
-//                tvCurrentCategory.setText(mAdapter.getCurrentCategory());
-            }
-
-           /* @Override
-            public void onScrollStateChanged(@NonNull RecyclerView recyclerView, int newState) {
-                super.onScrollStateChanged(recyclerView, newState);
-                if (newState != RecyclerView.SCROLL_STATE_IDLE)
-                    enableDisableSwipeRefresh(false);
-                else
-                    enableDisableSwipeRefresh(true);
-            }*/
-        });
-
-    }
-
-    private void enableDisableSwipeRefresh(boolean enable) {
-        if (swipeRefreshLayout != null) {
-            swipeRefreshLayout.setEnabled(enable);
-        }
     }
 
     public boolean onBackPressed() {
@@ -147,11 +124,27 @@ public class ActiveSessionMenuGroupsFragment extends BaseFragment {
 
     public void scrollToCategory(String title) {
         rvGroupsList.smoothScrollToPosition(mAdapter.getGroupPosition(title));
+//        mAdapter.expandView();
     }
 
     @Override
     protected void updateScreen() {
         mViewModel.updateResults();
+    }
+
+    @Override
+    public void onGroupExpandCollapse(boolean isExpanded, String groupName) {
+        if(isExpanded){
+            AnimationUtil.fadeInView(tvCurrentCategory);
+            tvCurrentCategory.setText(groupName);
+        }else {
+            AnimationUtil.fadeOutView(tvCurrentCategory);
+        }
+    }
+
+    @OnClick(R.id.tv_as_menu_current_category)
+    public void onStickyGroup(){
+        mAdapter.contractView();
     }
 
     public enum SESSION_STATUS {

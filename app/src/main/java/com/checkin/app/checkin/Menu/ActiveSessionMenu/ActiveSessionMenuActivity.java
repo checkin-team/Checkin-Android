@@ -435,6 +435,7 @@ public class ActiveSessionMenuActivity extends BaseActivity implements
     @Override
     public void sortItems() {
         vMenuSearch.showSearch(true);
+        Utils.setKeyboardVisibility(vMenuSearch, false);
     }
 
     @Override

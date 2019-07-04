@@ -3,10 +3,14 @@ package com.checkin.app.checkin.Utility;
 import android.content.Context;
 import android.util.AttributeSet;
 import android.view.View;
+import android.view.ViewGroup;
+import android.view.animation.Animation;
+import android.view.animation.Transformation;
 
 import androidx.viewpager.widget.ViewPager;
 
 public class CustomViewPager extends ViewPager {
+
     public CustomViewPager(Context context) {
         super(context);
     }
