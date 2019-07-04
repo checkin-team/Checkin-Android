@@ -192,17 +192,17 @@ public class ActiveSessionMenuFilterFragment extends Fragment {
         mListener.onShowFilter();
 
         if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.LOLLIPOP) {
-            DisplayMetrics displayMetrics = new DisplayMetrics();
-            requireActivity().getWindowManager().getDefaultDisplay().getMetrics(displayMetrics);
-            int heightPixels = displayMetrics.heightPixels;
-            int widthPixels = displayMetrics.widthPixels;
-
-            int x = bgView.getRight();
-            int y = bgView.getBottom();
-            int cx = widthPixels / 2;
-            int cy = heightPixels / 2;
-
-            float finalRadius = (float) Math.hypot(cx, cy);
+//            DisplayMetrics displayMetrics = new DisplayMetrics();
+//            requireActivity().getWindowManager().getDefaultDisplay().getMetrics(displayMetrics);
+//            int heightPixels = displayMetrics.heightPixels;
+//            int widthPixels = displayMetrics.widthPixels;
+//
+//            int x = bgView.getRight();
+//            int y = bgView.getBottom();
+//            int cx = widthPixels / 2;
+//            int cy = heightPixels / 2;
+//
+//            float finalRadius = (float) Math.hypot(cx, cy);
             AnimationUtil.AnimationListener animationListener = new AnimationUtil.AnimationListener() {
                 @Override
                 public boolean onAnimationStart(View view) {
@@ -211,7 +211,8 @@ public class ActiveSessionMenuFilterFragment extends Fragment {
 
                 @Override
                 public boolean onAnimationEnd(View view) {
-                    return false;
+                    tvFilterClear.setVisibility(View.VISIBLE);
+                    return true;
                 }
 
                 @Override
@@ -220,6 +221,7 @@ public class ActiveSessionMenuFilterFragment extends Fragment {
                 }
             };
             AnimationUtil.reveal(containerFilter,animationListener,true);
+
 
 //            Animator anim = ViewAnimationUtils.createCircularReveal(containerFilter, x-200, y-200,0f, finalRadius);
 //            containerFilter.setVisibility(View.VISIBLE);
