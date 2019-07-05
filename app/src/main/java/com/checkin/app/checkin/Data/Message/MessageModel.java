@@ -29,6 +29,7 @@ import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import java.io.Serializable;
 import java.util.Locale;
 
+import static com.checkin.app.checkin.Data.Message.MessageModel.MESSAGE_TYPE.MANAGER_SESSION_END;
 import static com.checkin.app.checkin.Data.Message.MessageModel.MESSAGE_TYPE.MANAGER_SESSION_ORDERS_PUSH;
 import static com.checkin.app.checkin.Data.Message.MessageModel.MESSAGE_TYPE.USER_ACTIVITY_REQUEST_REVIEW;
 import static com.checkin.app.checkin.Data.Message.MessageModel.MESSAGE_TYPE.WAITER_SESSION_NEW;
@@ -130,6 +131,8 @@ public class MessageModel implements Serializable {
         MessageObjectModel sessionDetail = getSessionDetail();
         if (shopDetail == null) return;
         if (isShopManagerNotification()) {
+            if (type == MANAGER_SESSION_END)
+                intent.putExtra(ManagerWorkActivity.KEY_OPEN_LAST_TABLES, true);
             Bundle bundle = new Bundle();
             bundle.putLong(ManagerSessionActivity.KEY_SESSION_PK, sessionDetail != null ? sessionDetail.getPk() : 0L);
             bundle.putBoolean(ManagerSessionActivity.KEY_OPEN_ORDERS, this.type == MANAGER_SESSION_ORDERS_PUSH);
@@ -194,7 +197,7 @@ public class MessageModel implements Serializable {
     }
 
     protected boolean shouldShowNotification() {
-        return !TextUtils.isEmpty(description) && !isOnlyUiUpdate();
+        return !TextUtils.isEmpty(description);
     }
 
     private void tryGroupNotification(NotificationCompat.Builder builder) {

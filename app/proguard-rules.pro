@@ -82,13 +82,20 @@
 }
 
 ##########
+# Google Libraries
+##########
+-dontwarn com.google.android.libraries.places.**
+
+##########
 # Paytm
 ##########
 -keepclassmembers class com.paytm.pgsdk.PaytmWebView$PaytmJavaScriptInterface {
    public *;
 }
 
-########### General
+##########
+# General
+##########
 -keepattributes SourceFile,LineNumberTable,*Annotation*,EnclosingMethod,Signature,Exceptions,InnerClasses
 -keep class com.checkin.app.checkin.**Model { *; }
 

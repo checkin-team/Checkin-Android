@@ -537,7 +537,8 @@ public final class Utils {
                             if (path != null) {
                                 return path;
                             }
-                        } catch (Exception e) {}
+                        } catch (Exception e) {
+                        }
                     }
 
                     // path could not be retrieved using ContentResolver, therefore copy file to accessible cache using streams
@@ -715,7 +716,7 @@ public final class Utils {
     }
 
     private static void logDir(File dir) {
-        if(!DEBUG) return;
+        if (!DEBUG) return;
         Log.d(TAG, "Dir=" + dir);
         File[] files = dir.listFiles();
         for (File file : files) {
@@ -786,15 +787,16 @@ public final class Utils {
         }
     }
 
-    public static void calculateHeightSetHalfView(Context context, View view){
+    public static void calculateHeightSetHalfView(Context context, View view) {
         DisplayMetrics displayMetrics = new DisplayMetrics();
         WindowManager windowmanager = (WindowManager) context.getSystemService(Context.WINDOW_SERVICE);
-        windowmanager.getDefaultDisplay().getMetrics(displayMetrics);
+        if (windowmanager != null) {
+            windowmanager.getDefaultDisplay().getMetrics(displayMetrics);
+        }
 
-        ViewGroup.LayoutParams params = (ViewGroup.LayoutParams) view.getLayoutParams();
-        params.height = (displayMetrics.heightPixels)/2;
+        ViewGroup.LayoutParams params = view.getLayoutParams();
+        params.height = (displayMetrics.heightPixels) / 2;
 
         view.setLayoutParams(params);
     }
-
 }

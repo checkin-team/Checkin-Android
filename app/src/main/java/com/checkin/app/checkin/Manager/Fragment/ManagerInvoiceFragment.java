@@ -38,7 +38,6 @@ public class ManagerInvoiceFragment extends BaseFragment implements ShopInvoiceS
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
-
         setupUi();
         mViewModel = ViewModelProviders.of(requireActivity()).get(ShopInvoiceViewModel.class);
 

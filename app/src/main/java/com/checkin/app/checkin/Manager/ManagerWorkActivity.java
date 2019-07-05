@@ -1,13 +1,10 @@
 package com.checkin.app.checkin.Manager;
 
 import android.app.AlertDialog;
-import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.DisplayMetrics;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.WindowManager;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -46,7 +43,7 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 
 public class ManagerWorkActivity extends BaseAccountActivity implements ManagerTablesActivateFragment.LiveOrdersInteraction, ManagerInactiveTableAdapter.ManagerTableInitiate {
-
+    public static final String KEY_OPEN_LAST_TABLES = "manager.show_last_tables";
     public static final String KEY_RESTAURANT_PK = "manager.restaurant_pk";
     public static final String KEY_SESSION_BUNDLE = "manager.session_bundle";
 
@@ -99,22 +96,7 @@ public class ManagerWorkActivity extends BaseAccountActivity implements ManagerT
 
         initRefreshScreen(R.id.sr_manager_work);
 
-        long shopId = getIntent().getLongExtra(KEY_RESTAURANT_PK, 0L);
-
-        mViewModel.fetchActiveTables(shopId);
-
-        mShopViewModel.setShopPk(shopId);
-        mShopViewModel.filterFrom(Utils.getCurrentFormattedDateInvoice());
-        mShopViewModel.filterTo(Utils.getCurrentFormattedDateInvoice());
-
-        Bundle sessionBundle = getIntent().getBundleExtra(KEY_SESSION_BUNDLE);
-        if (sessionBundle != null) {
-            Intent intent = new Intent(this, ManagerSessionActivity.class);
-            intent.putExtra(ManagerSessionActivity.KEY_SESSION_PK, sessionBundle.getLong(ManagerSessionActivity.KEY_SESSION_PK))
-                    .putExtra(ManagerSessionActivity.KEY_SHOP_PK, mViewModel.getShopPk())
-                    .putExtra(ManagerSessionActivity.KEY_OPEN_ORDERS, sessionBundle.getBoolean(ManagerSessionActivity.KEY_OPEN_ORDERS));
-            startActivity(intent);
-        }
+        setupObservers(getIntent().getLongExtra(KEY_RESTAURANT_PK, 0L));
 
         pagerManager.setEnabled(false);
         ManagerFragmentAdapter pagerAdapter = new ManagerFragmentAdapter(getSupportFragmentManager());
@@ -144,6 +126,35 @@ public class ManagerWorkActivity extends BaseAccountActivity implements ManagerT
 
         setLiveOrdersActivation(ShopPreferences.isManagerLiveOrdersActivated(this));
 
+
+        managerTablesParentContainer.setOnClickListener(v -> {
+            managerTablesParentContainer.setVisibility(View.GONE);
+        });
+
+        Utils.calculateHeightSetHalfView(this, managerTablesContainer);
+
+        boolean shouldOpenInvoice = getIntent().getBooleanExtra(KEY_OPEN_LAST_TABLES, false);
+        if (shouldOpenInvoice) {
+            pagerManager.setCurrentItem(2, true);
+        } else {
+            Bundle sessionBundle = getIntent().getBundleExtra(KEY_SESSION_BUNDLE);
+            if (sessionBundle != null) {
+                Intent intent = new Intent(this, ManagerSessionActivity.class);
+                intent.putExtra(ManagerSessionActivity.KEY_SESSION_PK, sessionBundle.getLong(ManagerSessionActivity.KEY_SESSION_PK))
+                        .putExtra(ManagerSessionActivity.KEY_SHOP_PK, mViewModel.getShopPk())
+                        .putExtra(ManagerSessionActivity.KEY_OPEN_ORDERS, sessionBundle.getBoolean(ManagerSessionActivity.KEY_OPEN_ORDERS));
+                startActivity(intent);
+            }
+        }
+    }
+
+    private void setupObservers(long shopId) {
+        mViewModel.fetchActiveTables(shopId);
+
+        mShopViewModel.fetchShopSessions(shopId);
+        mShopViewModel.filterFrom(Utils.getCurrentFormattedDateInvoice());
+        mShopViewModel.filterTo(Utils.getCurrentFormattedDateInvoice());
+
         mViewModel.getActiveTables().observe(this, input -> {
             if (input == null) return;
             if (input.status == Resource.Status.SUCCESS && input.data != null) {
@@ -156,18 +167,12 @@ public class ManagerWorkActivity extends BaseAccountActivity implements ManagerT
             }
         });
 
-        managerTablesParentContainer.setOnClickListener(v -> {
-            managerTablesParentContainer.setVisibility(View.GONE);
-        });
-
         mViewModel.getInactiveTables().observe(this, listResource -> {
             if (listResource == null)
                 return;
             if (listResource.status == Resource.Status.SUCCESS && listResource.data != null)
                 mInactiveAdapter.setData(listResource.data);
         });
-
-        Utils.calculateHeightSetHalfView(this, managerTablesContainer);
     }
 
     @Override

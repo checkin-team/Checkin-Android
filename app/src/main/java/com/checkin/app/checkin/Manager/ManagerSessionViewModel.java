@@ -98,12 +98,12 @@ public class ManagerSessionViewModel extends BaseViewModel {
         discountInINR = isINR;
     }
 
-    public void updateDiscount(double discountPercent) {
+    public void updateDiscount(double value) {
         ObjectNode data = Converters.objectMapper.createObjectNode();
         if (discountInINR)
-            data.put("discount_amount", discountPercent);
+            data.put("discount_amount", value);
         else
-            data.put("discount_percent", discountPercent);
+            data.put("discount_percent", value);
 
         mDetailData.addSource(mManagerRepository.putManageSessionBill(mSessionPk, data), mDetailData::setValue);
     }
