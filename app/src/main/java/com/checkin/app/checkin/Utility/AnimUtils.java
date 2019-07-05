@@ -13,6 +13,7 @@ import android.os.Build;
 import android.view.View;
 import android.view.ViewAnimationUtils;
 import android.view.ViewGroup;
+import android.view.ViewTreeObserver;
 import android.view.animation.AccelerateDecelerateInterpolator;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
@@ -170,16 +171,92 @@ public final class AnimUtils {
         return reveal;
     }
 
-    public static void expand(CustomViewPager viewPager, Context context) {
+    public static void expand(ViewGroup viewPager, Context context) {
+//        int matchParentMeasureSpec = View.MeasureSpec.makeMeasureSpec(viewPager.getWidth(), View.MeasureSpec.EXACTLY);
+//        int wrapContentMeasureSpec = View.MeasureSpec.makeMeasureSpec(viewPager.getHeight(), View.MeasureSpec.AT_MOST);
+//
+//        viewPager.measure(matchParentMeasureSpec, wrapContentMeasureSpec);
+
+//        viewPager.measure(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+//        int height = viewPager.getMeasuredHeight();
+
+       /* ViewTreeObserver vto = viewPager.getViewTreeObserver();
+        vto.addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
+            @Override
+            public void onGlobalLayout() {
+
+                if(viewPager.getMeasuredHeight()> 0){
+
+
+                    int width  = viewPager.getMeasuredWidth();
+                    int height = viewPager.getMeasuredHeight();
+
+                    final int targetHeight = height;
+
+//                    viewPager.getLayoutParams().height = 1;
+                    Animation a = new Animation() {
+                        @Override
+                        protected void applyTransformation(float interpolatedTime, Transformation t) {
+                            viewPager.getLayoutParams().height = interpolatedTime == 1 ? ViewGroup.LayoutParams.WRAP_CONTENT
+                                    : (int) (targetHeight * interpolatedTime);
+                            viewPager.requestLayout();
+
+                        }
+
+                        @Override
+                        public boolean willChangeBounds() {
+                            return true;
+                        }
+                    };
+                    a.setDuration((int) (targetHeight / viewPager.getContext().getResources().getDisplayMetrics().density));
+                    viewPager.setVisibility(View.VISIBLE);
+                    viewPager.startAnimation(a);
+                }
+            }
+        });*/
+
+        viewPager.post(new Runnable() {
+
+            @Override
+            public void run() {
+                int width = viewPager.getWidth();
+                int height = viewPager.getMeasuredHeight();
+
+                final int targetHeight = height;
+
+                viewPager.getLayoutParams().height = 1;
+                Animation a = new Animation() {
+                    @Override
+                    protected void applyTransformation(float interpolatedTime, Transformation t) {
+                        viewPager.getLayoutParams().height = interpolatedTime == 1 ? ViewGroup.LayoutParams.WRAP_CONTENT
+                                : (int) (targetHeight * interpolatedTime);
+                        viewPager.requestLayout();
+
+                    }
+
+                    @Override
+                    public boolean willChangeBounds() {
+                        return true;
+                    }
+                };
+                a.setDuration((int) (targetHeight / viewPager.getContext().getResources().getDisplayMetrics().density));
+                viewPager.setVisibility(View.VISIBLE);
+                viewPager.startAnimation(a);
+            }
+
+        });
+
+       /* int widthSpec = View.MeasureSpec.makeMeasureSpec(viewPager.getWidth(), View.MeasureSpec.EXACTLY);
+        int heightSpec = View.MeasureSpec.makeMeasureSpec(0, View.MeasureSpec.UNSPECIFIED);
+        viewPager.measure(widthSpec, heightSpec);
         final int targetHeight = viewPager.getMeasuredHeight();
 
         viewPager.getLayoutParams().height = 1;
-        Animation a = new Animation()
-        {
+        Animation a = new Animation() {
             @Override
             protected void applyTransformation(float interpolatedTime, Transformation t) {
-                viewPager.getLayoutParams().height = interpolatedTime == 1 ? CustomViewPager.LayoutParams.WRAP_CONTENT
-                        : (int)(targetHeight * interpolatedTime);
+                viewPager.getLayoutParams().height = interpolatedTime == 1 ? ViewGroup.LayoutParams.WRAP_CONTENT
+                        : (int) (targetHeight * interpolatedTime);
                 viewPager.requestLayout();
 
             }
@@ -189,24 +266,26 @@ public final class AnimUtils {
                 return true;
             }
         };
-        a.setDuration((int)(targetHeight / viewPager.getContext().getResources().getDisplayMetrics().density));
+        a.setDuration((int) (targetHeight / viewPager.getContext().getResources().getDisplayMetrics().density));
         viewPager.setVisibility(View.VISIBLE);
-        viewPager.startAnimation(a);
+        viewPager.startAnimation(a);*/
+
+
+
     }
 
     public static void collapse(ViewGroup vSubGroupWrapper, CustomViewPager viewPager) {
-        final int initialHeight = viewPager.getMeasuredHeight();
+        final int initialHeight = vSubGroupWrapper.getMeasuredHeight();
 
-        Animation a = new Animation()
-        {
+        Animation a = new Animation() {
             @Override
             protected void applyTransformation(float interpolatedTime, Transformation t) {
-                if(interpolatedTime == 1){
-                    viewPager.setVisibility(View.GONE);
+                if (interpolatedTime == 1) {
                     vSubGroupWrapper.setVisibility(View.GONE);
-                }else{
-                    viewPager.getLayoutParams().height = initialHeight - (int)(initialHeight * interpolatedTime);
-                    viewPager.requestLayout();
+                    viewPager.setVisibility(View.GONE);
+                } else {
+                    vSubGroupWrapper.getLayoutParams().height = initialHeight - (int) (initialHeight * interpolatedTime);
+                    vSubGroupWrapper.requestLayout();
                 }
             }
 
@@ -216,8 +295,8 @@ public final class AnimUtils {
             }
         };
 
-        a.setDuration((int)(initialHeight / viewPager.getContext().getResources().getDisplayMetrics().density));
-        viewPager.startAnimation(a);
+        a.setDuration((int) (initialHeight / vSubGroupWrapper.getContext().getResources().getDisplayMetrics().density));
+        vSubGroupWrapper.startAnimation(a);
     }
 
 

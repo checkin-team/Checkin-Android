@@ -11,10 +11,12 @@ import androidx.viewpager.widget.ViewPager;
 
 public class CustomViewPager extends ViewPager {
     CustomViewPager viewPager;
-    int viewpagerHeight;
+    public int viewpagerHeight;
+    Context context;
 
     public CustomViewPager(Context context, CustomViewPager viewPager) {
         super(context);
+        this.context = context;
         this.viewPager = viewPager;
     }
 
@@ -38,20 +40,22 @@ public class CustomViewPager extends ViewPager {
             }
             heightMeasureSpec = MeasureSpec.makeMeasureSpec(height, MeasureSpec.EXACTLY);
         }
-        viewpagerHeight = heightMeasureSpec;
         super.onMeasure(widthMeasureSpec, heightMeasureSpec);
     }
 
-    public void expand(ViewGroup vSubGroupWrapper) {
+    public int viewPagerMescHeight(){
+        return viewPager.getMeasuredHeight();
+    }
+
+
+    public void expand(ViewGroup vSubGroupWrapper, int height) {
 //        int matchParentMeasureSpec = View.MeasureSpec.makeMeasureSpec(viewPager.getWidth(), View.MeasureSpec.EXACTLY);
 //        int wrapContentMeasureSpec = View.MeasureSpec.makeMeasureSpec(0, View.MeasureSpec.UNSPECIFIED);
 
 //        viewPager.measure(ViewGroup.LayoutParams.MATCH_PARENT, wrapContentMeasureSpec);
 //        viewPager.measure(matchParentMeasureSpec, viewPager.getHeight());
 
-
-//        viewPager.measure(matchParentMeasureSpec, viewpagerHeight);
-        final int targetHeight = viewPager.getMeasuredHeight();
+        int targetHeight = viewPager.getMeasuredHeight();
 //
         viewPager.getLayoutParams().height = 1;
         Animation a = new Animation()
@@ -75,6 +79,41 @@ public class CustomViewPager extends ViewPager {
         viewPager.setVisibility(View.VISIBLE);
         vSubGroupWrapper.setVisibility(View.VISIBLE);
         viewPager.startAnimation(a);
+
+
+
+
+
+//        viewPager.measure(CustomViewPager.LayoutParams.MATCH_PARENT, CustomViewPager.LayoutParams.WRAP_CONTENT);
+//        final int targetHeight = viewpagerHeight;
+//
+//        viewPager.getLayoutParams().height = 0;
+//        viewPager.setVisibility(View.VISIBLE);
+//        vSubGroupWrapper.setVisibility(View.VISIBLE);
+//
+//        ValueAnimator anim = ValueAnimator.ofInt(viewPager.getMeasuredHeight(), targetHeight);
+//        anim.setInterpolator(new AccelerateInterpolator());
+//        anim.setDuration(1000);
+//        anim.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
+//            @Override
+//            public void onAnimationUpdate(ValueAnimator animation) {
+//                ViewGroup.LayoutParams layoutParams = viewPager.getLayoutParams();
+//                layoutParams.height = (int) (targetHeight * animation.getAnimatedFraction());
+//                viewPager.setLayoutParams(layoutParams);
+//            }
+//        });
+//        anim.addListener(new AnimatorListenerAdapter() {
+//            @Override
+//            public void onAnimationEnd(Animator animation) {
+//                // At the end of animation, set the height to wrap content
+//                // This fix is for long views that are not shown on screen
+//                ViewGroup.LayoutParams layoutParams = viewPager.getLayoutParams();
+//                layoutParams.height = ViewGroup.LayoutParams.WRAP_CONTENT;
+//            }
+//        });
+//        anim.start();
+
+
     }
 
     public void collapse(ViewGroup vSubGroupWrapper) {

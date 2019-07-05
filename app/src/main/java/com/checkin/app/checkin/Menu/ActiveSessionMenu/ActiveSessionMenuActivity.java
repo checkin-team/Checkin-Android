@@ -129,6 +129,25 @@ public class ActiveSessionMenuActivity extends BaseActivity implements
         setupMenuFragment();
         setupSearch();
 
+        long itemPk = args.getLong(KEY_SESSION_TRENDING_ITEM, 0L);
+        if (itemPk > 0L) {
+            mViewModel.searchMenuItemById(itemPk);
+            mViewModel.getMenuItem().observe(this, itemModel -> {
+                if (itemModel != null) {
+                    if (itemModel.isComplexItem()) {
+                        mViewModel.newOrderedItem(itemModel);
+                        onItemInteraction(itemModel, 1);
+                    } else {
+                        onMenuItemAdded(itemModel);
+                        onCartClick();
+                    }
+                }
+            });
+        } else {
+            if (isSessionActive())
+                explainMenu();
+        }
+
 
 
 //        rvMenu.setLayoutManager(new GridLayoutManager(this,2));

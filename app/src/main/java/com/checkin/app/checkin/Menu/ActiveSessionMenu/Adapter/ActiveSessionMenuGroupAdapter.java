@@ -11,6 +11,9 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
+import android.view.animation.LayoutAnimationController;
+import android.view.animation.TranslateAnimation;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -235,6 +238,7 @@ public class ActiveSessionMenuGroupAdapter extends RecyclerView.Adapter<ActiveSe
         void bindData(final MenuGroupModel menuGroup) {
             mMenuGroup = menuGroup;
 
+//            customViewPager = new CustomViewPager(vPager.getContext(),vPager);
             tvGroupName.setText(menuGroup.getName());
             GlideApp.with(itemView).load(menuGroup.getIcon()).into(imGroupIcon);
             SubGroupPagerAdapter pagerAdapter = new SubGroupPagerAdapter(menuGroup);
@@ -268,8 +272,20 @@ public class ActiveSessionMenuGroupAdapter extends RecyclerView.Adapter<ActiveSe
 
         void showMenu(){
             isExpanded = true;
-            CustomViewPager customViewPager = new CustomViewPager(vPager.getContext(),vPager);
-            customViewPager.expand(vSubGroupWrapper);
+//            vPager.setVisibility(View.VISIBLE);
+
+//            TranslateAnimation anim = new TranslateAnimation(Animation.RELATIVE_TO_SELF, -1.0f, Animation.RELATIVE_TO_SELF, 0.0f, Animation.RELATIVE_TO_SELF, 0.0f, Animation.RELATIVE_TO_SELF, 0.0f);
+//            anim.setDuration(500);
+//            vSubGroupWrapper.startAnimation(anim);
+//            vSubGroupWrapper.setVisibility(View.VISIBLE);
+
+
+//            CustomViewPager customViewPager = new CustomViewPager(vPager.getContext(),vPager);
+//            int height = customViewPager.viewPagerMescHeight(vPager);
+//            customViewPager.expand(vSubGroupWrapper, 0);
+
+//            CustomViewPager customViewPager = new CustomViewPager(vPager.getContext(),vPager);
+//            customViewPager.expand(vSubGroupWrapper);
 
 //            new Handler().postDelayed(new Runnable() {
 //                @Override
@@ -279,7 +295,8 @@ public class ActiveSessionMenuGroupAdapter extends RecyclerView.Adapter<ActiveSe
 //            }, 500);
 
 
-//            AnimUtils.expand(vPager, vPager.getContext());
+//            AnimUtils.expand(vSubGroupWrapper, vPager.getContext());
+//            showMenu(vSubGroupWrapper);
 //            Animator showMenuAnim = AnimUtils.showView(vSubGroupWrapper);
 //            ValueAnimator scrollAnimator = ValueAnimator.ofInt(1, 2, 3, 4);
 //            scrollAnimator.setDuration(AnimUtils.DEFAULT_DURATION)
@@ -297,15 +314,46 @@ public class ActiveSessionMenuGroupAdapter extends RecyclerView.Adapter<ActiveSe
 //                }
 //            });
 //            animatorSet.start();
+
+            int resId = R.anim.layout_animation_fall_down;
+            LayoutAnimationController animation = AnimationUtils.loadLayoutAnimation(vSubGroupWrapper.getContext(), resId);
+            vSubGroupWrapper.clearAnimation();
+            vSubGroupWrapper.setLayoutAnimation(animation);
+            vSubGroupWrapper.setVisibility(View.VISIBLE);
+
             mGroupInteractionListener.onGroupExpandCollapse(isExpanded, mMenuGroup.getName());
 
         }
 
         void hideMenu(){
             isExpanded = false;
-            CustomViewPager customViewPager = new CustomViewPager(vPager.getContext(),vPager);
-            customViewPager.collapse(vSubGroupWrapper);
-//            AnimUtils.collapse(vSubGroupWrapper, vPager);
+//            runLayoutAnimation();
+//            CustomViewPager customViewPager = new CustomViewPager(vPager.getContext(),vPager);
+//            customViewPager.collapse(vSubGroupWrapper);
+            AnimUtils.collapse(vSubGroupWrapper, vPager);
+//            int resId = R.anim.layout_animation_from_bottom;
+//            LayoutAnimationController animation = AnimationUtils.loadLayoutAnimation(vSubGroupWrapper.getContext(), resId);
+//            vSubGroupWrapper.setLayoutAnimation(animation);
+
+
+//            vSubGroupWrapper.setLayoutAnimationListener(new Animation.AnimationListener() {
+//                @Override
+//                public void onAnimationStart(Animation animation) {
+//
+//                }
+//
+//                @Override
+//                public void onAnimationEnd(Animation animation) {
+//            vSubGroupWrapper.setVisibility(View.GONE);
+//                }
+//
+//                @Override
+//                public void onAnimationRepeat(Animation animation) {
+//
+//                }
+//            });
+//            animation.start();
+
             mGroupInteractionListener.onGroupExpandCollapse(isExpanded, "");
 //            Utils.collapse(vSubGroupWrapper);
 //            if (!isExpanded) {
@@ -313,11 +361,36 @@ public class ActiveSessionMenuGroupAdapter extends RecyclerView.Adapter<ActiveSe
 //            }
         }
 
+        private void runLayoutAnimation() {
+            final LayoutAnimationController controller =
+                    AnimationUtils.loadLayoutAnimation(vSubGroupWrapper.getContext(), R.anim.layout_animation_from_bottom);
+
+            vSubGroupWrapper.setLayoutAnimation(controller);
+//            notifyDataSetChanged();
+            vSubGroupWrapper.scheduleLayoutAnimation();
+            vSubGroupWrapper.setLayoutAnimationListener(new Animation.AnimationListener() {
+                @Override
+                public void onAnimationStart(Animation animation) {
+
+                }
+
+                @Override
+                public void onAnimationEnd(Animation animation) {
+                    vSubGroupWrapper.setVisibility(View.GONE);
+                }
+
+                @Override
+                public void onAnimationRepeat(Animation animation) {
+
+                }
+            });
+        }
+
 
         void showMenu(View view) {
             int menuItemHeight = (int) view.getResources().getDimension(R.dimen.height_menu_item);
             int maxLength = Math.max(mMenuGroup.getVegItems().size(), mMenuGroup.getNonVegItems().size());
-            Animator sizeChangeAnim = AnimUtils.changeViewSize(view, AnimUtils.NO_CHANGE, (maxLength * menuItemHeight));
+            Animator sizeChangeAnim = AnimUtils.changeViewSize(view, AnimUtils.NO_CHANGE, view.getHeight() );
             Animator hideImageAnim = AnimUtils.hideView(imGroupIcon);
             int newImageSize = ((int) view.getResources().getDimension(R.dimen.button_height_short));
             Animator sizeDecreaseImageAnim = AnimUtils.changeViewSize(imGroupIcon, newImageSize, newImageSize);
