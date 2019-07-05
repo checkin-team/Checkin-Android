@@ -73,72 +73,35 @@
                     android:textSize="@dimen/font_large" />
 
                 <LinearLayout
-                    android:layout_width="match_parent"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
                     android:layout_marginTop="@dimen/spacing_small"
                     android:gravity="center"
                     android:orientation="horizontal">
 
-                    <LinearLayout
-                        android:layout_width="0dp"
+                    <EditText
+                        android:id="@+id/et_finance_discount"
+                        style="@style/TextBorderedGrey"
+                        android:layout_width="@dimen/width_input_small"
                         android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:gravity="center">
+                        android:layout_gravity="center"
+                        android:cursorVisible="false"
+                        android:gravity="center"
+                        android:imeOptions="actionDone"
+                        android:inputType="numberDecimal"
+                        android:padding="@dimen/spacing_extra_tiny"
+                        android:textColor="@color/primary_red"
+                        tools:text="20" />
 
-                        <TextView
-                            android:id="@+id/tv_discount_rs"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            style="@style/GreyTextStyle"
-                            android:layout_marginEnd="@dimen/spacing_extra_small"
-                            android:text="@string/symbol_currency_rupee"
-                            android:textSize="@dimen/font_large"
-                            android:visibility="gone"/>
-
-                        <EditText
-                            android:id="@+id/et_finance_discount"
-                            style="@style/TextBorderedGrey"
-                            android:layout_width="@dimen/width_input_small"
-                            android:layout_height="wrap_content"
-                            android:layout_gravity="center"
-                            android:gravity="center"
-                            android:imeOptions="actionDone"
-                            android:inputType="numberDecimal"
-                            android:padding="@dimen/spacing_extra_tiny"
-                            android:textColor="@color/primary_red"
-                            tools:text="20" />
-
-                        <TextView
-                            android:id="@+id/tv_discount_percent"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_gravity="center"
-                            android:layout_marginStart="@dimen/spacing_tiny"
-                            android:layout_marginEnd="@dimen/spacing_extra_small"
-                            android:gravity="center"
-                            android:text="%"
-                            android:textSize="@dimen/font_large" />
-                    </LinearLayout>
-
-                    <Switch
-                        android:id="@+id/switch_discount_percent_rs"
+                    <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:clickable="true"
-                        android:focusable="true"
-                        android:gravity="end|center"
-                        android:splitTrack="false"
-                        android:showText="true"
-                        android:textOff="Percent"
-                        android:textOn="Amount"
-                        android:switchPadding="@dimen/spacing_extra_small"
-                        android:thumbTextPadding="@dimen/spacing_extra_small"
-                        android:switchTextAppearance="@style/SwitchTextAppearance"
-                        android:thumb="@drawable/ic_switch_toggle"
-                        android:track="@drawable/rectangle_white_three" />
-
-
+                        android:layout_gravity="center"
+                        android:layout_marginStart="@dimen/spacing_tiny"
+                        android:gravity="center"
+                        android:text="%"
+                        android:textSize="@dimen/font_large" />
                 </LinearLayout>
 
                 <TextView

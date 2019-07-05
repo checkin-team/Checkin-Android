@@ -95,13 +95,19 @@ public class SessionBillModel {
         this.promo = promo;
     }
 
-    public void calculateDiscount(Double percent) {
+    public void calculateDiscount(Double percent, boolean isINR) {
         discountPercentage = percent;
-
-        if (discount != null) {
-            double oldDiscount = discount;
-            discount = (subtotal * percent) / 100;
-            total -= (discount - oldDiscount);
+        if(!isINR) {
+            if (discount != null) {
+                double oldDiscount = discount;
+                discount = (subtotal * percent) / 100;
+                total -= (discount - oldDiscount);
+            }
+        }else{
+            if (discount != null) {
+                discount = percent;
+                total = subtotal - percent;
+            }
         }
     }
 

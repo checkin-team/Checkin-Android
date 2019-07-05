@@ -65,7 +65,7 @@
                     style="@style/GreyTextStyle"
                     android:layout_width="@dimen/width_input_large"
                     android:layout_height="@dimen/height_input_large"
-                    android:layout_marginEnd="@dimen/spacing_large"
+                    android:layout_marginEnd="@dimen/spacing_huge"
                     android:background="@drawable/bordered_text_light_grey"
                     android:enabled="false"
                     android:gravity="center"
@@ -82,12 +82,13 @@
 
                 <TextView
                     android:id="@+id/tv_invoice_percent"
-                    style="@style/GreyHeadingStyle"
+                    style="@style/WhiteTextStyle"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="@dimen/spacing_extra_small"
                     android:text="%"
-                    android:textStyle="bold"
+                    android:padding="@dimen/spacing_tiny"
+                    android:background="@color/primary_red"
                     app:layout_constraintBottom_toBottomOf="@id/ed_ms_invoice_discount"
                     app:layout_constraintStart_toEndOf="@id/ed_ms_invoice_discount"
                     app:layout_constraintTop_toTopOf="@id/ed_ms_invoice_discount" />

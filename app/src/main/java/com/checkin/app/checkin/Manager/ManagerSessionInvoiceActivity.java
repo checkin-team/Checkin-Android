@@ -6,6 +6,7 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.InputType;
 import android.text.TextUtils;
 import android.util.Log;
 import android.util.Patterns;
@@ -54,6 +55,8 @@ public class ManagerSessionInvoiceActivity extends AppCompatActivity implements 
     EditText edInvoiceDiscount;
     @BindView(R.id.tv_ms_invoice_change)
     TextView tvInvoiceChange;
+    @BindView(R.id.tv_invoice_percent)
+    TextView tvInvoicePercent;
     @BindView(R.id.btn_ms_invoice_save_change)
     Button btnSaveChange;
     @BindView(R.id.tv_ms_invoice_total)
@@ -226,6 +229,22 @@ public class ManagerSessionInvoiceActivity extends AppCompatActivity implements 
         }
     }
 
+    @OnClick(R.id.tv_invoice_percent)
+    public void onDiscountChangeClick(){
+        setUpUi("Update Discount", true, R.drawable.bordered_card_white, View.GONE, View.VISIBLE);
+        if(!mViewModel.getDiscountFormat()){
+            mViewModel.updateDiscountFormat(true);
+            tvInvoicePercent.setText("INR");
+            edInvoiceDiscount.setInputType(InputType.TYPE_CLASS_NUMBER);
+        }else {
+            mViewModel.updateDiscountFormat(false);
+            tvInvoicePercent.setText("%");
+            edInvoiceDiscount.setInputType(InputType.TYPE_NUMBER_FLAG_DECIMAL);
+
+        }
+
+    }
+
     @Override
     protected void onResume() {
         super.onResume();
@@ -280,7 +299,7 @@ public class ManagerSessionInvoiceActivity extends AppCompatActivity implements 
             percent = Double.parseDouble(edInvoiceDiscount.getText().toString());
         } catch (NumberFormatException ignored) {
         }
-        mBillModel.calculateDiscount(percent);
+        mBillModel.calculateDiscount(percent, mViewModel.getDiscountFormat());
         mViewModel.updateDiscount(percent);
         tvInvoiceDiscount.setText(Utils.formatCurrencyAmount(this, mBillModel.getDiscount()));
         tvInvoiceTotal.setText(Utils.formatCurrencyAmount(this, mBillModel.getTotal()));

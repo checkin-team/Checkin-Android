@@ -53,6 +53,7 @@ public class ManagerSessionViewModel extends BaseViewModel {
     private SourceMappedLiveData<Resource<ObjectNode>> mSwitchTableData = createNetworkLiveData();
 
     private MutableLiveData<List<OrderStatusModel>> mNewOrderStatus = new MutableLiveData<>();
+    public boolean discountInPercent;
 
     private long mSessionPk;
     private long mShopPk;
@@ -90,9 +91,21 @@ public class ManagerSessionViewModel extends BaseViewModel {
         return mInvoiceData;
     }
 
+    public Boolean getDiscountFormat() {
+        return discountInPercent;
+    }
+
+    public void updateDiscountFormat(boolean isINR) {
+        discountInPercent = isINR;
+    }
+
     public void updateDiscount(double discountPercent) {
         ObjectNode data = Converters.objectMapper.createObjectNode();
-        data.put("discount_percent", discountPercent);
+        if (discountInPercent)
+            data.put("discount_amount", discountPercent);
+        else
+            data.put("discount_percent", discountPercent);
+
         mDetailData.addSource(mManagerRepository.putManageSessionBill(mSessionPk, data), mDetailData::setValue);
     }
 
@@ -396,7 +409,7 @@ public class ManagerSessionViewModel extends BaseViewModel {
     public void switchTable(long qrPk) {
         ObjectNode requestJson = Converters.objectMapper.createObjectNode();
         requestJson.put("qr", qrPk);
-        mSwitchTableData.addSource(mManagerRepository.managerSessionSwitchTable(mSessionPk,requestJson), mSwitchTableData::setValue);
+        mSwitchTableData.addSource(mManagerRepository.managerSessionSwitchTable(mSessionPk, requestJson), mSwitchTableData::setValue);
     }
 
     public LiveData<Resource<ObjectNode>> getSessionSwitchTable() {
