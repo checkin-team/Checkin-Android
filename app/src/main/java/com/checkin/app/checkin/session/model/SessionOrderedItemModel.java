@@ -62,7 +62,7 @@ public class SessionOrderedItemModel implements Serializable {
             return item;
         else{
             MenuItemModel menuItemModel = new MenuItemModel();
-            menuItemModel.setName("Item doesn't exist");
+            menuItemModel.setName("ITEM DELETED");
             menuItemModel.setVegetarian(true);
             return menuItemModel;
         }
