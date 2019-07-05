@@ -276,6 +276,7 @@ public class MessageModel implements Serializable {
             case MANAGER_SESSION_NEW:
             case MANAGER_SESSION_EVENT_CONCERN:
             case MANAGER_SESSION_CHECKOUT_REQUEST:
+            case MANAGER_SESSION_END:
             case WAITER_SESSION_NEW:
             case WAITER_SESSION_EVENT_SERVICE:
             case WAITER_SESSION_COLLECT_CASH:

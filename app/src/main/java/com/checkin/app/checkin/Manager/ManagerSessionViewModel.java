@@ -21,7 +21,6 @@ import com.checkin.app.checkin.Waiter.WaiterRepository;
 import com.checkin.app.checkin.session.SessionRepository;
 import com.checkin.app.checkin.session.activesession.chat.SessionChatModel;
 import com.checkin.app.checkin.session.model.CheckoutStatusModel;
-import com.checkin.app.checkin.session.model.QRResultModel;
 import com.checkin.app.checkin.session.model.SessionBriefModel;
 import com.checkin.app.checkin.session.model.SessionOrderedItemModel;
 import com.fasterxml.jackson.databind.node.ObjectNode;
@@ -53,8 +52,8 @@ public class ManagerSessionViewModel extends BaseViewModel {
     private SourceMappedLiveData<Resource<ObjectNode>> mSwitchTableData = createNetworkLiveData();
 
     private MutableLiveData<List<OrderStatusModel>> mNewOrderStatus = new MutableLiveData<>();
-    public boolean discountInPercent;
 
+    private boolean discountInINR;
     private long mSessionPk;
     private long mShopPk;
 
@@ -91,17 +90,17 @@ public class ManagerSessionViewModel extends BaseViewModel {
         return mInvoiceData;
     }
 
-    public Boolean getDiscountFormat() {
-        return discountInPercent;
+    public boolean isDiscountInINR() {
+        return discountInINR;
     }
 
-    public void updateDiscountFormat(boolean isINR) {
-        discountInPercent = isINR;
+    public void setDiscountInINR(boolean isINR) {
+        discountInINR = isINR;
     }
 
     public void updateDiscount(double discountPercent) {
         ObjectNode data = Converters.objectMapper.createObjectNode();
-        if (discountInPercent)
+        if (discountInINR)
             data.put("discount_amount", discountPercent);
         else
             data.put("discount_percent", discountPercent);

@@ -81,14 +81,12 @@
                     tools:ignore="LabelFor,UnusedAttribute" />
 
                 <TextView
-                    android:id="@+id/tv_invoice_percent"
-                    style="@style/WhiteTextStyle"
+                    android:id="@+id/tv_current_discount_type"
+                    style="@style/RedHeadingStyle"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="@dimen/spacing_extra_small"
                     android:text="%"
-                    android:padding="@dimen/spacing_tiny"
-                    android:background="@color/primary_red"
                     app:layout_constraintBottom_toBottomOf="@id/ed_ms_invoice_discount"
                     app:layout_constraintStart_toEndOf="@id/ed_ms_invoice_discount"
                     app:layout_constraintTop_toTopOf="@id/ed_ms_invoice_discount" />
@@ -149,24 +147,24 @@
                     app:layout_constraintStart_toStartOf="parent" />
 
                 <EditText
-                    android:layout_marginTop="@dimen/spacing_small"
                     android:id="@+id/ed_ms_invoice_contact"
                     style="@style/GreyTextStyle"
                     android:layout_width="@dimen/button_width_wide"
                     android:layout_height="@dimen/height_input_large"
+                    android:layout_marginTop="@dimen/spacing_small"
                     android:layout_marginEnd="@dimen/spacing_large"
                     android:background="@drawable/bordered_text_light_grey"
                     android:enabled="false"
-                    android:visibility="visible"
+                    android:gravity="center"
+                    android:hint="Phone/Email"
                     android:importantForAutofill="no"
                     android:inputType="text"
-                    android:gravity="center"
                     android:paddingStart="@dimen/spacing_normal"
                     android:paddingTop="@dimen/spacing_extra_small"
                     android:paddingEnd="@dimen/spacing_normal"
-                    android:hint="Phone/Email"
                     android:paddingBottom="@dimen/spacing_extra_small"
                     android:textSize="@dimen/font_heading"
+                    android:visibility="visible"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/btn_ms_invoice_save_change"
                     tools:ignore="LabelFor,UnusedAttribute" />
@@ -256,8 +254,8 @@
         android:layout_height="wrap_content"
         android:layout_above="@id/payment_mode_container"
         android:layout_marginStart="@dimen/spacing_huge"
-        android:layout_marginEnd="@dimen/spacing_huge"
         android:layout_marginTop="@dimen/spacing_small"
+        android:layout_marginEnd="@dimen/spacing_huge"
         android:background="@drawable/rounded_rectangle_two_side_grey"
         android:gravity="center"
         android:orientation="vertical"
@@ -303,7 +301,7 @@
             android:drawableStart="@drawable/ic_cash_grey"
             android:drawablePadding="@dimen/spacing_small"
             android:text="Via Cash"
-            android:visibility="gone"/>
+            android:visibility="gone" />
 
         <Space
             android:layout_width="0dp"
