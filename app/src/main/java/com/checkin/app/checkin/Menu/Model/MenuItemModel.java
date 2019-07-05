@@ -137,6 +137,10 @@ public class MenuItemModel implements Serializable {
         return isVegetarian;
     }
 
+    public void setVegetarian(boolean vegetarian) {
+        isVegetarian = vegetarian;
+    }
+
     public List<String> getTypeNames() {
         return typeNames;
     }

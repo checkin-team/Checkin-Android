@@ -1,10 +1,12 @@
 package com.checkin.app.checkin.Shop.Private.Finance;
 
 import android.os.Bundle;
+import android.text.InputType;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Switch;
 import android.widget.TextView;
 
 import com.checkin.app.checkin.Data.Resource;
@@ -38,6 +40,12 @@ public class FinanceDetailActivity extends AppCompatActivity {
     TextView tvUserTaxDiscountIgst;
     @BindView(R.id.tv_finance_tax_gst)
     TextView tvUserTaxDiscountGst;
+    @BindView(R.id.tv_discount_rs)
+    TextView tvRsSign;
+    @BindView(R.id.tv_discount_percent)
+    TextView tvPercentSign;
+    @BindView(R.id.switch_discount_percent_rs)
+    Switch switchPercent;
 
     private FinanceViewModel mViewModel;
     private String gstin;
@@ -95,21 +103,34 @@ public class FinanceDetailActivity extends AppCompatActivity {
                 }
             }
         });
+
+        switchPercent.setOnCheckedChangeListener((buttonView, isChecked) -> {
+            if(isChecked){
+                etTaxDiscount.setInputType(InputType.TYPE_CLASS_NUMBER);
+                tvPercentSign.setVisibility(View.GONE);
+                tvRsSign.setVisibility(View.VISIBLE);
+            }else{
+                etTaxDiscount.setInputType(InputType.TYPE_NUMBER_FLAG_DECIMAL);
+                tvPercentSign.setVisibility(View.VISIBLE);
+                tvRsSign.setVisibility(View.GONE);
+            }
+        });
     }
 
     @OnClick({R.id.et_finance_discount, R.id.btn_finance_save})
     public void onViewClicked(View view) {
         switch (view.getId()) {
-            case R.id.et_finance_discount:
-                if (!etTaxDiscount.isCursorVisible()) {
-                    etTaxDiscount.setCursorVisible(true);
-                }
-                break;
+//            case R.id.et_finance_discount:
+//                if (!etTaxDiscount.isCursorVisible()) {
+//                    etTaxDiscount.setCursorVisible(true);
+//                }
+//                break;
             case R.id.btn_finance_save:
                 String discountPercent = etTaxDiscount.getText().toString();
                 try {
                     double discount = Double.valueOf(discountPercent);
                     mViewModel.updateDiscountPercent(discount);
+                    Utils.setKeyboardVisibility(etTaxDiscount,false);
                 } catch (NumberFormatException ex) {
                     Utils.toast(this, "Input valid percentage for discount!");
                 }

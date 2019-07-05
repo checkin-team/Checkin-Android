@@ -58,11 +58,22 @@ public class SessionOrderedItemModel implements Serializable {
     }
 
     public MenuItemModel getItem() {
-        return item;
+        if(item !=null)
+            return item;
+        else{
+            MenuItemModel menuItemModel = new MenuItemModel();
+            menuItemModel.setName("Item doesn't exist");
+            menuItemModel.setVegetarian(true);
+            return menuItemModel;
+        }
+
     }
 
     public String formatItemDetail() {
-        return String.format(Locale.ENGLISH, "%s x %d", item.getName(), quantity);
+        if (item != null)
+            return String.format(Locale.ENGLISH, "%s x %d", item.getName(), quantity);
+        else
+            return "Item doesn't exist";
     }
 
     public double getCost() {
