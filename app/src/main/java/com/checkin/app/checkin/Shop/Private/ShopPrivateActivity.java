@@ -3,6 +3,7 @@ package com.checkin.app.checkin.Shop.Private;
 import android.content.Intent;
 import android.os.Bundle;
 import android.widget.ImageView;
+import android.widget.TextView;
 
 import com.checkin.app.checkin.Account.AccountModel;
 import com.checkin.app.checkin.Account.BaseAccountActivity;
@@ -101,6 +102,11 @@ public class ShopPrivateActivity extends BaseAccountActivity {
         }
     }
 
+    @OnClick(R.id.btn_shop_private_insight)
+    public void onInsight() {
+        launchShopInsight();
+    }
+
     @Override
     protected int getDrawerRootId() {
         return R.id.drawer_shop_private;
@@ -155,8 +161,6 @@ public class ShopPrivateActivity extends BaseAccountActivity {
                 case 0:
                     return R.drawable.ic_tab_home_toggle;
                 case 1:
-                    return R.drawable.ic_stats_toggle;
-                case 2:
                     return R.drawable.ic_tab_menu_toggle;
                 default:
                     return 0;
@@ -170,22 +174,30 @@ public class ShopPrivateActivity extends BaseAccountActivity {
                     return ShopPrivateProfileFragment.newInstance();
                 case 1:
                     return BlankFragment.newInstance();
-                case 2:
-                    return BlankFragment.newInstance();
+            }
+            return null;
+        }
+
+        @Nullable
+        @Override
+        public CharSequence getPageTitle(int position) {
+            switch (position) {
+                case 0:
+                    return "Shop";
+                case 1:
+                    return "Inventory";
             }
             return null;
         }
 
         @Override
         public int getCount() {
-            return 3;
+            return 2;
         }
 
         @Override
         protected void onTabClick(int position) {
             if (position == 1)
-                launchShopInsight();
-            else if (position == 2)
                 launchMenu();
             else
                 super.onTabClick(position);

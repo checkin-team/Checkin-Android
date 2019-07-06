@@ -134,10 +134,10 @@ public class ActiveSessionInvoiceActivity extends BaseActivity {
     }
 
     private void setupUi() {
-        if (getSupportActionBar() != null) {
+        /*if (getSupportActionBar() != null) {
             getSupportActionBar().setHomeAsUpIndicator(R.drawable.ic_back_grey);
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        }
+        }*/
         initRefreshScreen(R.id.sr_active_session_invoice);
 
         mPrefs = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
@@ -433,10 +433,9 @@ public class ActiveSessionInvoiceActivity extends BaseActivity {
         startActivityForResult(intent, REQUEST_PAYMENT_MODE);
     }
 
-    @Override
-    public boolean onSupportNavigateUp() {
+    @OnClick(R.id.im_session_view_invoice_back)
+    public void onBackClick() {
         onBackPressed();
-        return true;
     }
 
     @Override

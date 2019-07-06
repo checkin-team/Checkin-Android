@@ -24,6 +24,7 @@
     <dimen name="spacing_tiny">4dp</dimen>
     <dimen name="spacing_extra_tiny">2dp</dimen>
     <dimen name="spacing_medium">20dp</dimen>
+    <dimen name="spacing_elevation_fix_extreme_tiny">2dp</dimen>
 
     <!-- icon sizes -->
     <dimen name="size_tiny_icon">12dp</dimen>
@@ -86,8 +87,8 @@
     <dimen name="height_menu_customization_header">70dp</dimen>
     <dimen name="height_menu_customization_footer">50dp</dimen>
     <dimen name="height_menu_group_collapsed">95dp</dimen>
-    <dimen name="height_menu_group_expanded">350dp</dimen>
-    <dimen name="height_menu_item">70dp</dimen>
+    <dimen name="height_menu_group_expanded">370dp</dimen>
+    <dimen name="height_menu_item">80dp</dimen>
     <dimen name="height_menu_cart_item">100dp</dimen>
 
     <dimen name="width_quantity_selection">120dp</dimen>
@@ -144,6 +145,8 @@
     <dimen name="height_rangebar_short">50dp</dimen>
     <dimen name="padding_rangebar_bottom">15dp</dimen>
     <dimen name="negative_margin_top">-6dp</dimen>
+    <dimen name="business_icon">58dp</dimen>
+    <dimen name="business_font_small">7dp</dimen>
 
     <!--Waiter dimensions-->
     <dimen name="width_waiter_collect_cash">250dp</dimen>

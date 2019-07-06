@@ -1,5 +1,12 @@
 package com.checkin.app.checkin.Misc;
 
+import android.annotation.SuppressLint;
+import android.graphics.Color;
+import android.text.Spannable;
+import android.text.SpannableString;
+import android.text.style.ForegroundColorSpan;
+
+import com.checkin.app.checkin.R;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 import java.io.Serializable;
@@ -46,7 +53,7 @@ public class BriefModel implements Serializable {
     }
 
     public String formatRestaurantName() {
-        return "You are live at " + displayName;
+        return "Live at " + "<font color=#0295aa>" + displayName + "</font>";
     }
 
     public String getDisplayPic() {

@@ -3,11 +3,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_gravity="center"
     android:clickable="true"
     android:focusable="true"
-    android:gravity="center"
-    android:layout_marginTop="@dimen/spacing_tiny"
     android:orientation="vertical">
 
     <ImageView
@@ -24,8 +21,9 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"
-        android:layout_marginTop="@dimen/spacing_tiny"
+        android:layout_marginTop="2dp"
         android:textColor="@drawable/selector_tab_color"
         android:textSize="@dimen/font_small"
+        android:fontFamily="@font/josefinsans_regular"
         tools:text="Option" />
 </LinearLayout>

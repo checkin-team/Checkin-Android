@@ -6,13 +6,14 @@
     android:layout_height="match_parent"
     android:layout_gravity="center"
     android:layout_marginEnd="@dimen/spacing_small"
+    android:elevation="@dimen/spacing_extra_tiny"
     android:gravity="center">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:minHeight="@dimen/height_session_trending_dishes"
-        android:background="@drawable/background_pinkish_grey_stroke"
+        android:background="@drawable/background_lightest_grey_stroke"
         android:gravity="center"
         android:orientation="vertical">
 

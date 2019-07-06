@@ -123,3 +123,9 @@
 -keepclasseswithmembers class * {
     public <init>();
 }
+
+-keep class .R
+
+-keepclasseswithmembers class **.R$* {
+    public static final int define_*;
+}

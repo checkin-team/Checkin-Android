@@ -85,6 +85,9 @@ android {
         abortOnError false
         disable 'MissingTranslation', 'ExtraTranslation'
     }
+    packagingOptions {
+        pickFirst  'META-INF/*'
+    }
 }
 
 dependencies {

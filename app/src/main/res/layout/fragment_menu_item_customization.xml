@@ -61,7 +61,7 @@
 
                 <TextView
                     android:id="@+id/tv_menu_customization_item_name"
-                    style="@style/RedTitleStyle"
+                    style="@style/RedHeadingStyle"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
