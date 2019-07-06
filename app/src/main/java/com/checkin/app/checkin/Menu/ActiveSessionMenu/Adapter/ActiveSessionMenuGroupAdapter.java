@@ -315,10 +315,10 @@ public class ActiveSessionMenuGroupAdapter extends RecyclerView.Adapter<ActiveSe
 //            });
 //            animatorSet.start();
 
-            int resId = R.anim.layout_animation_fall_down;
-            LayoutAnimationController animation = AnimationUtils.loadLayoutAnimation(vSubGroupWrapper.getContext(), resId);
-            vSubGroupWrapper.clearAnimation();
-            vSubGroupWrapper.setLayoutAnimation(animation);
+//            int resId = R.anim.layout_animation_fall_down;
+//            LayoutAnimationController animation = AnimationUtils.loadLayoutAnimation(vSubGroupWrapper.getContext(), resId);
+//            vSubGroupWrapper.clearAnimation();
+//            vSubGroupWrapper.setLayoutAnimation(animation);
             vSubGroupWrapper.setVisibility(View.VISIBLE);
 
             mGroupInteractionListener.onGroupExpandCollapse(isExpanded, mMenuGroup.getName());
@@ -330,7 +330,7 @@ public class ActiveSessionMenuGroupAdapter extends RecyclerView.Adapter<ActiveSe
 //            runLayoutAnimation();
 //            CustomViewPager customViewPager = new CustomViewPager(vPager.getContext(),vPager);
 //            customViewPager.collapse(vSubGroupWrapper);
-            AnimUtils.collapse(vSubGroupWrapper, vPager);
+//            AnimUtils.collapse(vSubGroupWrapper, vPager);
 //            int resId = R.anim.layout_animation_from_bottom;
 //            LayoutAnimationController animation = AnimationUtils.loadLayoutAnimation(vSubGroupWrapper.getContext(), resId);
 //            vSubGroupWrapper.setLayoutAnimation(animation);
@@ -357,7 +357,7 @@ public class ActiveSessionMenuGroupAdapter extends RecyclerView.Adapter<ActiveSe
             mGroupInteractionListener.onGroupExpandCollapse(isExpanded, "");
 //            Utils.collapse(vSubGroupWrapper);
 //            if (!isExpanded) {
-//                vSubGroupWrapper.setVisibility(View.GONE);
+                vSubGroupWrapper.setVisibility(View.GONE);
 //            }
         }
 

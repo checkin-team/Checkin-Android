@@ -501,6 +501,7 @@ public class MenuViewModel extends BaseViewModel {
                 }
 
                 if (items.size() > 0) {
+                    menuGroupModel.getItems().clear();
                     menuGroupModel.setItems(items);
                     result.add(menuGroupModel);
                 }

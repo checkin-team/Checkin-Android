@@ -4,6 +4,8 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.AnimationUtils;
+import android.view.animation.LayoutAnimationController;
 
 import com.checkin.app.checkin.Menu.MenuItemInteraction;
 import com.checkin.app.checkin.Menu.Model.MenuItemModel;
@@ -55,6 +57,10 @@ public class ActiveSessionMenuItemsFragment extends Fragment implements ActiveSe
         rvMenuItems.setAdapter(mAdapter);
         rvMenuItems.setLayoutManager(new LinearLayoutManager(getContext(), RecyclerView.VERTICAL, false));
         mAdapter.setMenuItems(menuItems);
+//                    int resId = R.anim.layout_animation_fall_down;
+//            LayoutAnimationController animation = AnimationUtils.loadLayoutAnimation(rvMenuItems.getContext(), resId);
+//        rvMenuItems.clearAnimation();
+//        rvMenuItems.setLayoutAnimation(animation);
     }
 
     @Override

@@ -43,10 +43,37 @@ public class CustomViewPager extends ViewPager {
         super.onMeasure(widthMeasureSpec, heightMeasureSpec);
     }
 
-    public int viewPagerMescHeight(){
-        return viewPager.getMeasuredHeight();
-    }
+    /*@Override
+    protected void attachLayoutAnimationParameters(View child, ViewGroup.LayoutParams params, int index, int count) {
+        super.attachLayoutAnimationParameters(child, params, index, count);
 
+        int targetHeight = child.getMeasuredHeight();
+//
+        child.getLayoutParams().height = 1;
+        Animation a = new Animation()
+        {
+            @Override
+            protected void applyTransformation(float interpolatedTime, Transformation t) {
+                viewPager.getLayoutParams().height = interpolatedTime == 1 ? params.WRAP_CONTENT
+                        : (int)(targetHeight * interpolatedTime);
+                child.requestLayout();
+            }
+
+            @Override
+            public boolean willChangeBounds() {
+                return true;
+            }
+        };
+
+        // Expansion speed of 1dp/ms
+        a.setDuration((int)(targetHeight / child.getContext().getResources().getDisplayMetrics().density));
+
+        child.setVisibility(View.VISIBLE);
+//        child.setVisibility(View.VISIBLE);
+        child.startAnimation(a);
+
+
+    }*/
 
     public void expand(ViewGroup vSubGroupWrapper, int height) {
 //        int matchParentMeasureSpec = View.MeasureSpec.makeMeasureSpec(viewPager.getWidth(), View.MeasureSpec.EXACTLY);

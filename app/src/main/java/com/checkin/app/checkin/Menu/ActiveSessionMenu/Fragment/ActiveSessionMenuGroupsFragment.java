@@ -104,6 +104,9 @@ public class ActiveSessionMenuGroupsFragment extends BaseFragment implements Act
         if(tvCurrentCategory.getVisibility() == View.VISIBLE){
             AnimationUtil.fadeOutView(tvCurrentCategory);
         }
+        if (isGroupExpanded()) {
+            mAdapter.contractView();
+        }
     }
 
     private void setupGroupRecycler() {
