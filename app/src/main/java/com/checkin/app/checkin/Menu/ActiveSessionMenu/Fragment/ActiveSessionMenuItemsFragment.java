@@ -57,10 +57,6 @@ public class ActiveSessionMenuItemsFragment extends Fragment implements ActiveSe
         rvMenuItems.setAdapter(mAdapter);
         rvMenuItems.setLayoutManager(new LinearLayoutManager(getContext(), RecyclerView.VERTICAL, false));
         mAdapter.setMenuItems(menuItems);
-//                    int resId = R.anim.layout_animation_fall_down;
-//            LayoutAnimationController animation = AnimationUtils.loadLayoutAnimation(rvMenuItems.getContext(), resId);
-//        rvMenuItems.clearAnimation();
-//        rvMenuItems.setLayoutAnimation(animation);
     }
 
     @Override

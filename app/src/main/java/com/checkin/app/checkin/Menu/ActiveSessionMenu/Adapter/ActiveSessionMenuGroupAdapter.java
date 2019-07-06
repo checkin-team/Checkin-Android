@@ -55,6 +55,7 @@ public class ActiveSessionMenuGroupAdapter extends RecyclerView.Adapter<ActiveSe
     private FragmentManager mFragmentManager;
     private OnGroupInteractionInterface mGroupInteractionListener;
 
+
     @Nullable
     private MenuItemInteraction mListener;
     private boolean mIsSessionActive = true;
@@ -170,7 +171,7 @@ public class ActiveSessionMenuGroupAdapter extends RecyclerView.Adapter<ActiveSe
     private void contractView(GroupViewHolder groupViewHolder) {
         if (groupViewHolder != null) {
 //            groupViewHolder.hideMenu(groupViewHolder.vSubGroupWrapper);
-            groupViewHolder.hideMenu();
+            groupViewHolder.hide(groupViewHolder.vSubGroupWrapper);
             mPrevExpandedViewHolder = null;
         }
     }
@@ -178,7 +179,7 @@ public class ActiveSessionMenuGroupAdapter extends RecyclerView.Adapter<ActiveSe
     private void expandView(GroupViewHolder groupViewHolder) {
         if (groupViewHolder != null) {
 //            groupViewHolder.showMenu(groupViewHolder.vSubGroupWrapper);
-            groupViewHolder.showMenu();
+            groupViewHolder.show(groupViewHolder.vSubGroupWrapper);
             ((LinearLayoutManager) mRecyclerView.getLayoutManager()).scrollToPositionWithOffset(groupViewHolder.getAdapterPosition(), 0);
             mPrevExpandedViewHolder = groupViewHolder;
         }
@@ -187,9 +188,9 @@ public class ActiveSessionMenuGroupAdapter extends RecyclerView.Adapter<ActiveSe
     @Override
     public void onBindViewHolder(@NonNull final GroupViewHolder groupViewHolder, final int position) {
         groupViewHolder.bindData(mGroupList.get(position));
-//        if (groupViewHolder.isExpanded) {
-//            contractView(groupViewHolder);
-//        }
+        if (groupViewHolder.isExpanded) {
+            contractView(groupViewHolder);
+        }
     }
 
     public interface OnGroupInteractionInterface {
@@ -217,7 +218,7 @@ public class ActiveSessionMenuGroupAdapter extends RecyclerView.Adapter<ActiveSe
         GroupViewHolder(View itemView) {
             super(itemView);
             ButterKnife.bind(this, itemView);
-//            customViewPager = new CustomViewPager(itemView.getContext(),vPager);
+
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
                 Utils.setTabsFont(vTabs, itemView.getResources().getFont(R.font.arial_rounded_mt_bold));
             }
@@ -238,7 +239,6 @@ public class ActiveSessionMenuGroupAdapter extends RecyclerView.Adapter<ActiveSe
         void bindData(final MenuGroupModel menuGroup) {
             mMenuGroup = menuGroup;
 
-//            customViewPager = new CustomViewPager(vPager.getContext(),vPager);
             tvGroupName.setText(menuGroup.getName());
             GlideApp.with(itemView).load(menuGroup.getIcon()).into(imGroupIcon);
             SubGroupPagerAdapter pagerAdapter = new SubGroupPagerAdapter(menuGroup);
@@ -270,7 +270,7 @@ public class ActiveSessionMenuGroupAdapter extends RecyclerView.Adapter<ActiveSe
             }
         }
 
-        void showMenu(){
+        void show(ViewGroup vSubGroupWrapper){
             isExpanded = true;
 //            vPager.setVisibility(View.VISIBLE);
 
@@ -315,22 +315,23 @@ public class ActiveSessionMenuGroupAdapter extends RecyclerView.Adapter<ActiveSe
 //            });
 //            animatorSet.start();
 
-//            int resId = R.anim.layout_animation_fall_down;
-//            LayoutAnimationController animation = AnimationUtils.loadLayoutAnimation(vSubGroupWrapper.getContext(), resId);
-//            vSubGroupWrapper.clearAnimation();
-//            vSubGroupWrapper.setLayoutAnimation(animation);
+            vSubGroupWrapper.clearAnimation();
+
+            int resId = R.anim.layout_animation_fall_down;
+            LayoutAnimationController animation = AnimationUtils.loadLayoutAnimation(vSubGroupWrapper.getContext(), resId);
+            vSubGroupWrapper.setLayoutAnimation(animation);
             vSubGroupWrapper.setVisibility(View.VISIBLE);
 
             mGroupInteractionListener.onGroupExpandCollapse(isExpanded, mMenuGroup.getName());
 
         }
 
-        void hideMenu(){
+        void hide(ViewGroup vSubGroupWrapper){
             isExpanded = false;
 //            runLayoutAnimation();
 //            CustomViewPager customViewPager = new CustomViewPager(vPager.getContext(),vPager);
 //            customViewPager.collapse(vSubGroupWrapper);
-//            AnimUtils.collapse(vSubGroupWrapper, vPager);
+            AnimUtils.collapse(vSubGroupWrapper, vPager);
 //            int resId = R.anim.layout_animation_from_bottom;
 //            LayoutAnimationController animation = AnimationUtils.loadLayoutAnimation(vSubGroupWrapper.getContext(), resId);
 //            vSubGroupWrapper.setLayoutAnimation(animation);
@@ -357,7 +358,7 @@ public class ActiveSessionMenuGroupAdapter extends RecyclerView.Adapter<ActiveSe
             mGroupInteractionListener.onGroupExpandCollapse(isExpanded, "");
 //            Utils.collapse(vSubGroupWrapper);
 //            if (!isExpanded) {
-                vSubGroupWrapper.setVisibility(View.GONE);
+//                vSubGroupWrapper.setVisibility(View.GONE);
 //            }
         }
 
