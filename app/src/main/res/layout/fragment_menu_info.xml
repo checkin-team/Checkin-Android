@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".Menu.Fragment.MenuInfoFragment">
+    tools:context=".Menu.ShopMenu.Fragment.MenuInfoFragment">
 
     <FrameLayout
         android:id="@+id/dark_back_menu_info"

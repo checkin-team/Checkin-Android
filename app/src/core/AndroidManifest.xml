@@ -34,7 +34,7 @@
             android:label="Edit Profile"
             android:theme="@style/AppThemeWhiteActionBar" />
         <activity
-            android:name=".Menu.SessionMenuActivity"
+            android:name=".Menu.ShopMenu.SessionMenuActivity"
             android:screenOrientation="portrait"
             android:theme="@style/SessionTheme"
             android:windowSoftInputMode="adjustPan" />

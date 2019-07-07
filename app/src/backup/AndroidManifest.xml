@@ -61,7 +61,7 @@
             android:theme="@style/AppThemeWhiteActionBar"
             android:label="Write a Review"/>
         <activity
-            android:name=".Menu.SessionMenuActivity"
+            android:name=".Menu.ShopMenu.SessionMenuActivity"
             android:screenOrientation="portrait"
             android:theme="@style/SessionTheme"
             android:windowSoftInputMode="adjustPan" />

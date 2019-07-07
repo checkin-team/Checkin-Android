@@ -11,6 +11,7 @@ import com.checkin.app.checkin.Data.RetrofitLiveData;
 import com.checkin.app.checkin.Data.WebApiService;
 import com.checkin.app.checkin.Inventory.Model.InventoryAvailabilityModel;
 import com.checkin.app.checkin.Inventory.Model.InventoryModel;
+import com.checkin.app.checkin.Menu.MenuRepository;
 
 import java.util.List;
 
@@ -30,7 +31,7 @@ public class InventoryRepository {
 
     public static InventoryRepository getInstance(Application application) {
         if (INSTANCE == null) {
-            synchronized (com.checkin.app.checkin.Menu.MenuRepository.class) {
+            synchronized (MenuRepository.class) {
                 if (INSTANCE == null) {
                     Context context = application.getApplicationContext();
                     INSTANCE = new InventoryRepository(context);

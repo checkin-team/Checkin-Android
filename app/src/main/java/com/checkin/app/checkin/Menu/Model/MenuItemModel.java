@@ -3,8 +3,7 @@ package com.checkin.app.checkin.Menu.Model;
 import com.checkin.app.checkin.Data.AppDatabase;
 import com.checkin.app.checkin.Data.Converters;
 import com.checkin.app.checkin.Inventory.Adapter.InventoryItemAdapter;
-import com.checkin.app.checkin.Menu.Adapter.MenuItemAdapter;
-import com.checkin.app.checkin.Menu.ActiveSessionMenu.Adapter.ActiveSessionMenuItemAdapter;
+import com.checkin.app.checkin.Menu.UserMenu.Adapter.MenuItemAdapter;
 import com.fasterxml.jackson.annotation.JsonAutoDetect;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
@@ -69,11 +68,11 @@ public class MenuItemModel implements Serializable {
 
     @JsonIgnore
     @Transient
-    private MenuItemAdapter.ItemViewHolder holder;
+    private com.checkin.app.checkin.Menu.ShopMenu.Adapter.MenuItemAdapter.ItemViewHolder holder;
 
     @JsonIgnore
     @Transient
-    private ActiveSessionMenuItemAdapter.ItemViewHolder asItemholder;
+    private MenuItemAdapter.ItemViewHolder asItemholder;
 
     @JsonIgnore
     @Transient
@@ -216,21 +215,21 @@ public class MenuItemModel implements Serializable {
         return new OrderedItemModel(this, quantity, type);
     }
 
-    public MenuItemAdapter.ItemViewHolder getItemHolder() {
+    public com.checkin.app.checkin.Menu.ShopMenu.Adapter.MenuItemAdapter.ItemViewHolder getItemHolder() {
         return holder;
     }
 
-    public ActiveSessionMenuItemAdapter.ItemViewHolder getASItemHolder() {
+    public MenuItemAdapter.ItemViewHolder getASItemHolder() {
         return asItemholder;
     }
 
     @JsonIgnore
-    public void setItemHolder(MenuItemAdapter.ItemViewHolder holder) {
+    public void setItemHolder(com.checkin.app.checkin.Menu.ShopMenu.Adapter.MenuItemAdapter.ItemViewHolder holder) {
         this.holder = holder;
     }
 
     @JsonIgnore
-    public void setActiveSessionItemHolder(ActiveSessionMenuItemAdapter.ItemViewHolder holder) {
+    public void setActiveSessionItemHolder(MenuItemAdapter.ItemViewHolder holder) {
         this.asItemholder = holder;
     }
 

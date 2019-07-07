@@ -18,7 +18,7 @@ import android.widget.TextView;
 import com.checkin.app.checkin.Data.Message.MessageObjectModel;
 import com.checkin.app.checkin.Data.Message.MessageUtils;
 import com.checkin.app.checkin.Data.Resource.Status;
-import com.checkin.app.checkin.Menu.SessionMenuActivity;
+import com.checkin.app.checkin.Menu.ShopMenu.SessionMenuActivity;
 import com.checkin.app.checkin.Misc.BaseFragment;
 import com.checkin.app.checkin.R;
 import com.checkin.app.checkin.session.model.SessionBriefModel;

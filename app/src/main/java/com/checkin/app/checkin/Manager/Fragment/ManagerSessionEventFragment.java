@@ -14,7 +14,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.checkin.app.checkin.Manager.Adapter.ManagerSessionEventAdapter;
 import com.checkin.app.checkin.Manager.ManagerSessionViewModel;
 import com.checkin.app.checkin.Manager.Model.ManagerSessionEventModel;
-import com.checkin.app.checkin.Menu.SessionMenuActivity;
+import com.checkin.app.checkin.Menu.ShopMenu.SessionMenuActivity;
 import com.checkin.app.checkin.Misc.BaseFragment;
 import com.checkin.app.checkin.R;
 import com.checkin.app.checkin.Utility.Utils;
