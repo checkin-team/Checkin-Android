@@ -1,11 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layer-list
-    xmlns:android="http://schemas.android.com/apk/res/android" >
-    <item android:drawable="@drawable/rounded_rectangle_white_large"
-        android:height="@dimen/button_height_normal"
-        android:width="@dimen/width_as_menu_cart"/>
-    <item android:drawable="@drawable/ic_cart_bag" android:width="30dp"
-        android:height="28dp"
-        android:gravity="center"/>
-
+<layer-list xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+        android:top="3dp"
+        android:bottom="3dp"
+        android:drawable="@drawable/rounded_rectangle_white_large" />
+    <item
+        android:left="10dp"
+        android:top="10dp"
+        android:bottom="10dp"
+        android:right="10dp"
+        android:drawable="@drawable/ic_cart_bag"
+        android:gravity="center" />
 </layer-list>

@@ -22,13 +22,15 @@ import butterknife.ButterKnife;
 import butterknife.Unbinder;
 
 public class MenuItemsFragment extends Fragment implements MenuItemAdapter.OnItemInteractionListener {
+    private Unbinder unbinder;
+
     @BindView(R.id.rv_menu_items)
     RecyclerView rvMenuItems;
-    private Unbinder unbinder;
+
     private MenuItemAdapter mAdapter;
+    private List<MenuItemModel> menuItems;
     @Nullable
     private MenuItemInteraction mListener;
-    private List<MenuItemModel> menuItems;
 
     public MenuItemsFragment() {
     }
@@ -52,6 +54,7 @@ public class MenuItemsFragment extends Fragment implements MenuItemAdapter.OnIte
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        rvMenuItems.setNestedScrollingEnabled(false);
         rvMenuItems.setAdapter(mAdapter);
         rvMenuItems.setLayoutManager(new LinearLayoutManager(getContext(), RecyclerView.VERTICAL, false));
         mAdapter.setMenuItems(menuItems);

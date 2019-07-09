@@ -5,6 +5,7 @@ import android.animation.AnimatorSet;
 import android.animation.ArgbEvaluator;
 import android.animation.ObjectAnimator;
 import android.animation.ValueAnimator;
+import android.annotation.TargetApi;
 import android.content.Context;
 import android.content.res.ColorStateList;
 import android.graphics.drawable.ColorDrawable;
@@ -13,16 +14,11 @@ import android.os.Build;
 import android.view.View;
 import android.view.ViewAnimationUtils;
 import android.view.ViewGroup;
-import android.view.ViewTreeObserver;
 import android.view.animation.AccelerateDecelerateInterpolator;
 import android.view.animation.Animation;
-import android.view.animation.AnimationUtils;
 import android.view.animation.Transformation;
 import android.widget.ImageView;
 import android.widget.TextView;
-
-import com.checkin.app.checkin.R;
-import com.miguelcatalan.materialsearchview.utils.AnimationUtil;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.RequiresApi;
@@ -136,7 +132,6 @@ public final class AnimUtils {
     }
 
     public static Animator createCircularRevealAnimator(final ClipRevealFrame view, int x, int y, float startRadius, float endRadius) {
-
         final Animator reveal;
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
             reveal = ViewAnimationUtils.createCircularReveal(view, x, y, startRadius, endRadius);
@@ -169,6 +164,13 @@ public final class AnimUtils {
         reveal.setDuration(DEFAULT_DURATION);
         reveal.setInterpolator(new AccelerateDecelerateInterpolator());
         return reveal;
+    }
+
+    @TargetApi(Build.VERSION_CODES.LOLLIPOP)
+    public static Animator createCircularRevealAnimator(final View view, int x, int y, float startRadius, float endRadius) {
+        if (view instanceof ClipRevealFrame)
+            return createCircularRevealAnimator((ClipRevealFrame) view, x, y, startRadius, endRadius);
+        return ViewAnimationUtils.createCircularReveal(view, x, y, startRadius, endRadius);
     }
 
     public static void expand(ViewGroup viewPager, Context context) {
@@ -274,7 +276,7 @@ public final class AnimUtils {
 
     }
 
-    public static void collapse(ViewGroup vSubGroupWrapper, CustomViewPager viewPager) {
+    public static void collapse(ViewGroup vSubGroupWrapper, ChildSizeMeasureViewPager viewPager) {
         final int initialHeight = vSubGroupWrapper.getMeasuredHeight();
 
         Animation a = new Animation() {

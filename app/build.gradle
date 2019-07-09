@@ -1,6 +1,7 @@
 apply plugin: 'com.android.application'
 apply plugin: 'kotlin-android-extensions'
 apply plugin: 'kotlin-android'
+apply plugin: 'kotlin-kapt'
 apply plugin: 'io.objectbox'
 apply plugin: 'com.google.gms.google-services'
 apply plugin: 'io.fabric'
@@ -122,10 +123,10 @@ dependencies {
     // Design Libraries
     implementation 'de.hdodenhof:circleimageview:2.2.0'
     implementation 'com.github.bumptech.glide:glide:' + versions.glide
-    annotationProcessor 'com.github.bumptech.glide:compiler:' + versions.glide
+    kapt 'com.github.bumptech.glide:compiler:' + versions.glide
     implementation 'jp.wasabeef:glide-transformations:3.3.0'
     implementation 'com.jakewharton:butterknife:' + versions.butterknife
-    annotationProcessor 'com.jakewharton:butterknife-compiler:' + versions.butterknife
+    kapt 'com.jakewharton:butterknife-compiler:' + versions.butterknife
     implementation 'com.yarolegovich:discrete-scrollview:1.4.9'
     implementation 'com.appyvet:materialrangebar:1.4.4'
     implementation 'com.github.antonygolovin:fluentsnackbar:1.0.0'
@@ -151,13 +152,13 @@ dependencies {
 
     // ObjectBox components
     implementation 'io.objectbox:objectbox-android:' + versions.objectBox
-    annotationProcessor 'io.objectbox:objectbox-processor:' + versions.objectBox
+    kapt 'io.objectbox:objectbox-processor:' + versions.objectBox
     // Lifecycle components
     implementation "androidx.lifecycle:lifecycle-extensions:$versions.lifecycle"
-    annotationProcessor "androidx.lifecycle:lifecycle-compiler:$versions.lifecycle"
+    kapt "androidx.lifecycle:lifecycle-compiler:$versions.lifecycle"
     // Dagger components
     implementation 'com.google.dagger:dagger:' + versions.dagger
-    annotationProcessor 'com.google.dagger:dagger-compiler:' + versions.dagger
+    kapt 'com.google.dagger:dagger-compiler:' + versions.dagger
     // Modified libraries
     implementation project(':library:MaterialSearchView')
 

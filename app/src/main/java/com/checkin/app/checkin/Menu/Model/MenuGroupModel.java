@@ -23,7 +23,7 @@ import io.objectbox.relation.ToOne;
 @JsonIgnoreProperties(ignoreUnknown = true)
 @JsonAutoDetect(fieldVisibility = JsonAutoDetect.Visibility.NONE)
 @Entity
-public class MenuGroupModel {
+public class MenuGroupModel implements Cloneable {
     @Id(assignable = true)
     private long pk;
 
@@ -66,6 +66,12 @@ public class MenuGroupModel {
         AppDatabase.getMenuItemModel(null).put(items);
         this.items.addAll(items);
         AppDatabase.getMenuGroupModel(null).put(this);
+    }
+
+    public void setCacheItems(List<MenuItemModel> items) {
+        vegItems = null;
+        nonVegItems = null;
+        this.items.addAll(items);
     }
 
     public String getName() {
@@ -124,5 +130,10 @@ public class MenuGroupModel {
 
     public void setMenu(ToOne<MenuModel> menu) {
         this.menu = menu;
+    }
+
+    @Override
+    public Object clone() throws CloneNotSupportedException {
+        return super.clone();
     }
 }

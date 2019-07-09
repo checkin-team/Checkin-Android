@@ -3,7 +3,6 @@ package com.checkin.app.checkin.Utility;
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.res.Resources;
-import android.graphics.BlurMaskFilter;
 import android.util.AttributeSet;
 import android.util.TypedValue;
 import android.widget.ImageView;
@@ -15,10 +14,6 @@ public class FadingImageView extends ImageView {
     private FadeSide nextFadeSide;
 
     private Context c;
-
-    public enum FadeSide {
-        RIGHT_SIDE, LEFT_SIDE
-    }
 
     public FadingImageView(Context c, AttributeSet attrs, int defStyle) {
         super(c, attrs, defStyle);
@@ -87,5 +82,9 @@ public class FadingImageView extends ImageView {
 
         return (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP,
                 dipValue, r.getDisplayMetrics());
+    }
+
+    public enum FadeSide {
+        RIGHT_SIDE, LEFT_SIDE
     }
 }

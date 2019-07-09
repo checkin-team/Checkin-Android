@@ -1,5 +1,7 @@
 package com.checkin.app.checkin.Menu.Model;
 
+import androidx.annotation.NonNull;
+
 import com.checkin.app.checkin.Data.AppDatabase;
 import com.checkin.app.checkin.Data.Converters;
 import com.checkin.app.checkin.Inventory.Adapter.InventoryItemAdapter;
@@ -11,9 +13,9 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.EnumSet;
 import java.util.List;
 
-import androidx.annotation.NonNull;
 import io.objectbox.annotation.Convert;
 import io.objectbox.annotation.Entity;
 import io.objectbox.annotation.Id;
@@ -77,6 +79,10 @@ public class MenuItemModel implements Serializable {
     @JsonIgnore
     @Transient
     private InventoryItemAdapter.ItemViewHolder inventoryHolder;
+
+    @JsonIgnore
+    @Transient
+    private EnumSet<AVAILABLE_MEAL> availableMealEnumSet = EnumSet.noneOf(AVAILABLE_MEAL.class);
 
     public MenuItemModel() {
     }
@@ -189,6 +195,17 @@ public class MenuItemModel implements Serializable {
         return availableMeals;
     }
 
+    public EnumSet<AVAILABLE_MEAL> getAvailableMealsEnum() {
+        availableMealEnumSet.clear();
+        for (Object availableMeal : availableMeals) {
+            if (availableMeal instanceof AVAILABLE_MEAL)
+                availableMealEnumSet.add(((AVAILABLE_MEAL) availableMeal));
+            else if (availableMeal instanceof String)
+                availableMealEnumSet.add(AVAILABLE_MEAL.getByTag(((String) availableMeal)));
+        }
+        return availableMealEnumSet;
+    }
+
     public void setAvailableMeals(List<AVAILABLE_MEAL> availableMeals) {
         this.availableMeals = availableMeals;
     }
@@ -197,7 +214,8 @@ public class MenuItemModel implements Serializable {
     public void setAvailableMeals(String[] availableMeals) {
         List<AVAILABLE_MEAL> result = new ArrayList<>();
         for (String meal : availableMeals) {
-            result.add(AVAILABLE_MEAL.getByTag(meal));
+            AVAILABLE_MEAL availableMeal = AVAILABLE_MEAL.getByTag(meal);
+            result.add(availableMeal);
         }
         this.availableMeals = result;
     }

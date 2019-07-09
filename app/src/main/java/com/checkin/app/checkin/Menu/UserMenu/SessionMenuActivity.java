@@ -12,12 +12,17 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import androidx.annotation.Nullable;
+import androidx.appcompat.widget.Toolbar;
+import androidx.lifecycle.ViewModelProviders;
+import androidx.recyclerview.widget.GridLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+
+import com.checkin.app.checkin.Menu.MenuItemInteraction;
+import com.checkin.app.checkin.Menu.Model.MenuItemModel;
+import com.checkin.app.checkin.Menu.ShopMenu.Fragment.MenuInfoFragment;
 import com.checkin.app.checkin.Menu.UserMenu.Fragment.ItemCustomizationFragment;
 import com.checkin.app.checkin.Menu.UserMenu.Fragment.MenuCartFragment;
-import com.checkin.app.checkin.Menu.ShopMenu.Fragment.MenuInfoFragment;
-import com.checkin.app.checkin.Menu.MenuItemInteraction;
-import com.checkin.app.checkin.Menu.UserMenu.MenuViewModel;
-import com.checkin.app.checkin.Menu.Model.MenuItemModel;
 import com.checkin.app.checkin.Menu.UserMenu.Fragment.MenuFilterFragment;
 import com.checkin.app.checkin.Menu.UserMenu.Fragment.MenuGroupsFragment;
 import com.checkin.app.checkin.Menu.UserMenu.Fragment.MenuItemSearchFragment;
@@ -27,12 +32,9 @@ import com.checkin.app.checkin.Utility.OnBoardingUtils;
 import com.checkin.app.checkin.Utility.Utils;
 import com.miguelcatalan.materialsearchview.MaterialSearchView;
 
-import java.util.ArrayList;
+import org.jetbrains.annotations.NotNull;
 
-import androidx.annotation.Nullable;
-import androidx.appcompat.widget.Toolbar;
-import androidx.lifecycle.ViewModelProviders;
-import androidx.recyclerview.widget.RecyclerView;
+import java.util.ArrayList;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -107,17 +109,12 @@ public class SessionMenuActivity extends BaseActivity implements
         setContentView(R.layout.activity_user_session_menu);
         ButterKnife.bind(this);
 
-//        vpCategories.setAdapter(new MenuCategoriesFragmentAdapter(getSupportFragmentManager()));
-//        tabLayout.setupWithViewPager(vpCategories);
-//        setupTabIcons();
-
         Bundle args = getIntent().getBundleExtra(SESSION_ARG);
         mSessionStatus = (MenuGroupsFragment.SESSION_STATUS) args.getSerializable(KEY_SESSION_STATUS);
         mViewModel = ViewModelProviders.of(this).get(MenuViewModel.class);
         mViewModel.fetchAvailableMenu(args.getLong(KEY_RESTAURANT_PK));
         long sessionPk = args.getLong(KEY_SESSION_PK, 0L);
-        if (sessionPk > 0L)
-            mViewModel.manageSession(sessionPk);
+        if (sessionPk > 0L) mViewModel.manageSession(sessionPk);
 
         mSearchFragment = MenuItemSearchFragment.newInstance(SessionMenuActivity.this, true);
 
@@ -142,17 +139,12 @@ public class SessionMenuActivity extends BaseActivity implements
                 }
             });
         } else {
-            if (isSessionActive())
-                explainMenu();
+            if (isSessionActive()) explainMenu();
         }
 
-
-//        rvMenu.setLayoutManager(new GridLayoutManager(this,2));
-//        mBestSellerAdapter = new MenuBestSellerAdapter();
-//        rvMenu.setAdapter(mBestSellerAdapter);
-//
-//        List<MenuBestSellerModel> data = new ArrayList<>();
-//        mBestSellerAdapter.setData(data);
+        rvMenu.setLayoutManager(new GridLayoutManager(this, 2));
+        mBestSellerAdapter = new MenuBestSellerAdapter();
+        rvMenu.setAdapter(mBestSellerAdapter);
     }
 
     @OnClick({R.id.tv_as_menu_drinks, R.id.tv_as_menu_food, R.id.tv_as_menu_dessert, R.id.tv_as_menu_specials})
@@ -199,7 +191,7 @@ public class SessionMenuActivity extends BaseActivity implements
         mViewModel.getOrderedSubTotal().observe(this, subtotal -> {
             if (subtotal == null)
                 return;
-            if (subtotal < 0.0) {
+            if (subtotal <= 0.0) {
                 menuCart.setVisibility(View.GONE);
             } else {
                 menuCart.setVisibility(View.VISIBLE);
@@ -236,7 +228,7 @@ public class SessionMenuActivity extends BaseActivity implements
     }
 
     private void setupFilter() {
-        mFilterFragment = MenuFilterFragment.newInstance(this);
+        mFilterFragment = MenuFilterFragment.Companion.newInstance(this, btnMenuFilter);
         getSupportFragmentManager().beginTransaction()
                 .replace(R.id.container_as_menu_fragment, mFilterFragment)
                 .commit();
@@ -246,7 +238,6 @@ public class SessionMenuActivity extends BaseActivity implements
     public void showFilter() {
         setupFilter();
     }
-
 
     @SuppressLint("ClickableViewAccessibility")
     private void setupUiStuff() {
@@ -309,9 +300,7 @@ public class SessionMenuActivity extends BaseActivity implements
             @Override
             public void onSearchViewShown() {
                 mViewModel.resetMenuItems();
-                getSupportFragmentManager().beginTransaction()
-                        .add(R.id.container_as_menu_fragment, mSearchFragment, "search")
-                        .commit();
+                openSearchItems();
             }
 
             @Override
@@ -323,7 +312,13 @@ public class SessionMenuActivity extends BaseActivity implements
         });
     }
 
-    @OnClick({R.id.btn_as_menu_search, R.id.container_as_menu_serach})
+    private void openSearchItems() {
+        getSupportFragmentManager().beginTransaction()
+                .add(R.id.container_as_menu_fragment, mSearchFragment, "search")
+                .commit();
+    }
+
+    @OnClick({R.id.btn_as_menu_search, R.id.container_as_menu_search})
     public void onSearchClicked(View view) {
         vMenuSearch.showSearch();
     }
@@ -337,11 +332,7 @@ public class SessionMenuActivity extends BaseActivity implements
             closeSearch();
         } else if (mCartFragment.isVisible()) {
             mCartFragment.onBackPressed();
-            return;
         } else if (mFilterFragment != null && mFilterFragment.onBackPressed()) {
-            getSupportFragmentManager().beginTransaction()
-                    .remove(mFilterFragment)
-                    .commit();
         } else if (!mMenuFragment.onBackPressed()) {
             super.onBackPressed();
         }
@@ -445,14 +436,14 @@ public class SessionMenuActivity extends BaseActivity implements
     }
 
     @Override
-    public void filterByCategory(String category) {
+    public void filterByCategory(@NotNull String category) {
         mMenuFragment.scrollToCategory(category);
     }
 
     @Override
     public void sortItems() {
-        vMenuSearch.showSearch(true);
-        Utils.setKeyboardVisibility(vMenuSearch, false);
+        mViewModel.searchMenuItems("");
+        openSearchItems();
     }
 
     @Override
@@ -462,7 +453,5 @@ public class SessionMenuActivity extends BaseActivity implements
 
     @Override
     public void filterByAvailableMeals() {
-        setupMenuFragment();
     }
-
 }

@@ -2,6 +2,7 @@ package com.checkin.app.checkin.Menu.UserMenu.Fragment;
 
 import android.os.Bundle;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -25,19 +26,24 @@ import com.miguelcatalan.materialsearchview.utils.AnimationUtil;
 import java.util.List;
 
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
+
 import butterknife.BindView;
 import butterknife.OnClick;
 
 public class MenuGroupsFragment extends BaseFragment implements MenuGroupAdapter.OnGroupInteractionInterface {
     public static final String KEY_SESSION_STATUS = "menu.status";
+
     @BindView(R.id.rv_menu_groups)
     RecyclerView rvGroupsList;
+    @BindView(R.id.container_as_menu_current_category)
+    ViewGroup containerCurrentCategory;
     @BindView(R.id.tv_as_menu_current_category)
     TextView tvCurrentCategory;
     @BindView(R.id.shimmer_as_menu_group)
     ShimmerFrameLayout shimmerMenu;
     @BindView(R.id.sr_session_menu)
     SwipeRefreshLayout swipeRefreshLayout;
+
     private MenuViewModel mViewModel;
     private MenuGroupAdapter mAdapter;
     @Nullable
@@ -98,10 +104,7 @@ public class MenuGroupsFragment extends BaseFragment implements MenuGroupAdapter
             shimmerMenu.stopShimmer();
             shimmerMenu.setVisibility(View.GONE);
         }
-
-        if(tvCurrentCategory.getVisibility() == View.VISIBLE){
-            AnimationUtil.fadeOutView(tvCurrentCategory);
-        }
+        containerCurrentCategory.setVisibility(View.GONE);
     }
 
     private void setupGroupRecycler() {
@@ -135,17 +138,17 @@ public class MenuGroupsFragment extends BaseFragment implements MenuGroupAdapter
     }
 
     @Override
-    public void onGroupExpandCollapse(boolean isExpanded, String groupName) {
-        if(isExpanded){
-            AnimationUtil.fadeInView(tvCurrentCategory);
-            tvCurrentCategory.setText(groupName);
-        }else {
-            AnimationUtil.fadeOutView(tvCurrentCategory);
+    public void onGroupExpandCollapse(boolean isExpanded, MenuGroupModel groupModel) {
+        if (isExpanded) {
+            AnimationUtil.fadeInView(containerCurrentCategory);
+            tvCurrentCategory.setText(groupModel.getName());
+        } else {
+            AnimationUtil.fadeOutView(containerCurrentCategory);
         }
     }
 
     @OnClick(R.id.tv_as_menu_current_category)
-    public void onStickyGroup(){
+    public void onStickyGroup() {
         mAdapter.contractView();
     }
 

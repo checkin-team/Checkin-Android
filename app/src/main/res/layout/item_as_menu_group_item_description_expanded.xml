@@ -1,0 +1,139 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginBottom="@dimen/spacing_small"
+    android:minHeight="@dimen/height_menu_item">
+
+    <TextView
+        android:id="@+id/tv_as_menu_item_name"
+        style="@style/GreyTextStyle"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/spacing_extra_small"
+        android:layout_marginEnd="@dimen/spacing_extra_small"
+        android:autoSizeTextType="uniform"
+        android:gravity="start"
+        android:maxLines="2"
+        app:layout_constraintEnd_toStartOf="@id/tv_as_menu_item_price"
+        app:layout_constraintHorizontal_weight="0.8"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:text="ITEM TITLE " />
+
+    <com.checkin.app.checkin.Utility.ExpandableTextView
+        android:id="@+id/tv_as_menu_item_desc"
+        style="@style/PinkishGreySmallTextStyle"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/spacing_extra_tiny"
+        android:layout_marginEnd="@dimen/spacing_tiny"
+        android:fontFamily="@font/opensans_regular"
+        android:gravity="start"
+        android:text=""
+        app:layout_constraintEnd_toStartOf="@id/container_as_menu_quantity_picker"
+        app:layout_constraintHorizontal_weight="0.8"
+        app:layout_constraintStart_toStartOf="@id/tv_as_menu_item_name"
+        app:layout_constraintTop_toBottomOf="@id/tv_as_menu_item_name"
+        app:trimLines="1"
+        app:selectedMode="line"
+        tools:text="description ... " />
+
+    <com.checkin.app.checkin.Utility.FadingImageView
+        android:id="@+id/im_as_menu_item"
+        android:layout_width="0dp"
+        android:layout_height="@dimen/height_menu_item_thumbnail_small"
+        android:scaleType="centerCrop"
+        android:visibility="gone"
+        android:src="@drawable/cover_unknown_male"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@id/container_as_menu_quantity_picker"
+        app:layout_constraintHorizontal_weight="0.8"
+        app:layout_constraintStart_toEndOf="@id/tv_as_menu_item_name"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/tv_as_menu_item_price"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="@dimen/spacing_extra_small"
+        android:layout_marginBottom="@dimen/spacing_small"
+        android:gravity="end"
+        android:paddingTop="@dimen/spacing_tiny"
+        android:textColor="@color/brownish_grey"
+        android:textSize="@dimen/font_normal"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:text="$ 636" />
+
+    <FrameLayout
+        android:id="@+id/container_as_menu_quantity_picker"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/spacing_small"
+        android:layout_marginTop="@dimen/spacing_tiny"
+        android:layout_marginEnd="@dimen/spacing_extra_small"
+        android:layout_marginBottom="@dimen/spacing_small"
+        android:clickable="true"
+        android:focusable="true"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tv_as_menu_item_price">
+
+        <LinearLayout
+            android:id="@+id/container_menu_item_quantity"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="end"
+            android:minWidth="@dimen/width_menu_add_quantity">
+
+            <TextView
+                android:id="@+id/tv_menu_item_quantity_decrement"
+                style="@style/RedTextStyle"
+                android:layout_width="@dimen/size_small_icon"
+                android:layout_height="@dimen/size_small_icon"
+                android:background="@drawable/shape_oval_red_stroke"
+                android:gravity="center"
+                android:text="-" />
+
+            <TextView
+                android:id="@+id/tv_menu_item_quantity_number"
+                style="@style/RedTextStyle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:gravity="center"
+                android:minWidth="@dimen/size_medium_icon"
+                android:text="12" />
+
+            <TextView
+                android:id="@+id/tv_menu_item_quantity_increment"
+                style="@style/RedTextStyle"
+                android:layout_width="@dimen/size_small_icon"
+                android:layout_height="@dimen/size_small_icon"
+                android:layout_gravity="end"
+                android:background="@drawable/shape_oval_red_stroke"
+                android:gravity="center"
+                android:text="+" />
+
+        </LinearLayout>
+
+        <TextView
+            android:id="@+id/btn_as_menu_item_add"
+            style="@style/RedSmallTextStyle"
+            android:layout_width="@dimen/width_menu_add_quantity"
+            android:layout_height="@dimen/size_small_button"
+            android:layout_gravity="center|end"
+            android:background="@drawable/rounded_rectangle_red_stroke"
+            android:drawableEnd="@drawable/ic_setting"
+            android:gravity="center"
+            android:paddingStart="@dimen/spacing_small"
+            android:paddingTop="@dimen/spacing_extra_tiny"
+            android:paddingEnd="@dimen/spacing_small"
+            android:paddingBottom="@dimen/spacing_extra_tiny"
+            android:text="Add "
+            android:visibility="gone" />
+    </FrameLayout>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

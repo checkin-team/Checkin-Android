@@ -132,14 +132,21 @@ public class MenuViewModel extends BaseViewModel {
             for (MenuGroupModel menuGroupModel : listResource.data) {
                 List<MenuItemModel> items = new ArrayList<>();
                 for (MenuItemModel menuItemModel : menuGroupModel.getItems()) {
-                    if (menuItemModel.getAvailableMeals().contains(availableMeal.name())) {
+                    if (menuItemModel.getAvailableMealsEnum().contains(availableMeal)) {
                         items.add(menuItemModel);
                     }
                 }
+                MenuGroupModel groupModel;
+                try {
+                    groupModel = ((MenuGroupModel) menuGroupModel.clone());
+                } catch (CloneNotSupportedException e) {
+                    e.printStackTrace();
+                    groupModel = menuGroupModel;
+                }
                 if (items.size() > 0) {
-                    menuGroupModel.getItems().clear();
-                    menuGroupModel.setItems(items);
-                    result.add(menuGroupModel);
+                    groupModel.getItems().clear();
+                    groupModel.setCacheItems(items);
+                    result.add(groupModel);
                 }
             }
             return Resource.cloneResource(listResource, result);
@@ -340,28 +347,12 @@ public class MenuViewModel extends BaseViewModel {
 
     public LiveData<Double> getOrderedSubTotal() {
         return Transformations.map(mOrderedItems, input -> {
-            if (input.size() <= 0)
-                return null;
-
             double res = 0.0;
             for (OrderedItemModel item : input)
                 res += item.getCost();
             return res;
         });
     }
-
-    /*public LiveData<Double> getASOrderedSubTotal() {
-        if(mOrderedItems == null)
-            return null;
-
-            return Transformations.map(mOrderedItems, input -> {
-                double res = 0.0;
-                for (OrderedItemModel item : input)
-                    res += item.getCost();
-                return res;
-            });
-
-    }*/
 
     public LiveData<List<String>> getCategories() {
         return Transformations.map(mOriginalMenuGroups, input -> {

@@ -132,7 +132,7 @@ public class MenuViewModel extends BaseViewModel {
             for (MenuGroupModel menuGroupModel : listResource.data) {
                 List<MenuItemModel> items = new ArrayList<>();
                 for (MenuItemModel menuItemModel : menuGroupModel.getItems()) {
-                    if(menuItemModel.getAvailableMeals().contains(availableMeal.name())){
+                    if (menuItemModel.getAvailableMealsEnum().contains(availableMeal)) {
                         items.add(menuItemModel);
                     }
                 }
