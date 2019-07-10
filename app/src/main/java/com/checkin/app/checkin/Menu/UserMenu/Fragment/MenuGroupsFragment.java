@@ -152,8 +152,10 @@ public class MenuGroupsFragment extends BaseFragment implements MenuGroupAdapter
         if (rvGroupsList.getLayoutManager() != null) {
             View v = rvGroupsList.getLayoutManager().findViewByPosition(pos);
             if (v == null) rvGroupsList.smoothScrollToPosition(pos);
-            else
+            else {
+                mAdapter.contractView();
                 mAdapter.expandView(((MenuGroupAdapter.GroupViewHolder) rvGroupsList.getChildViewHolder(v)));
+            }
         }
     }
 

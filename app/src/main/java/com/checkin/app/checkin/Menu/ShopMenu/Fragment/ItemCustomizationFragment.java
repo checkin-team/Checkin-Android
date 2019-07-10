@@ -39,6 +39,7 @@ import butterknife.Unbinder;
 
 public class ItemCustomizationFragment extends Fragment implements ItemCustomizationGroupHolder.CustomizationGroupInteraction {
     private static final String TAG = ItemCustomizationFragment.class.getSimpleName();
+
     @BindView(R.id.container_menu_customization)
     ViewGroup vMenuCustomizations;
     @BindView(R.id.dark_back_menu_customization)
@@ -129,6 +130,7 @@ public class ItemCustomizationFragment extends Fragment implements ItemCustomiza
                 break;
         }
         if (mItem.hasCustomizations()) {
+            svContainerCustomization.setVisibility(View.VISIBLE);
             for (ItemCustomizationGroupModel group : mItem.getCustomizations()) {
                 listCustomizations.addView(new ItemCustomizationGroupHolder(group, getContext(), this).getView());
             }

@@ -141,7 +141,7 @@
     <dimen name="padding_rangebar_bottom">17dp</dimen>
     <dimen name="negative_margin_top">-8dp</dimen>
     <dimen name="business_icon">62dp</dimen>
-    <dimen name="business_font_small">8dp</dimen>
+    <dimen name="business_font_small">8sp</dimen>
 
     <!--Waiter dimensions-->
     <dimen name="width_waiter_collect_cash">252dp</dimen>

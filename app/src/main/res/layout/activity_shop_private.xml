@@ -31,9 +31,9 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_gravity="bottom"
-                    android:paddingBottom="@dimen/spacing_elevation_fix_extreme_tiny"
-                    android:paddingTop="@dimen/spacing_elevation_fix_extreme_tiny"
                     android:background="@drawable/background_tab_bottom_shadowed"
+                    android:paddingTop="@dimen/spacing_elevation_fix_extreme_tiny"
+                    android:paddingBottom="@dimen/spacing_elevation_fix_extreme_tiny"
                     app:tabGravity="fill"
                     app:tabIndicatorColor="@android:color/transparent"
                     app:tabIndicatorHeight="0dp"
@@ -44,31 +44,31 @@
                     android:layout_width="@dimen/business_icon"
                     android:layout_height="@dimen/business_icon"
                     android:layout_gravity="center"
-                    android:gravity="center"
-                    android:elevation="@dimen/spacing_elevation_fix_extreme_tiny"
                     android:layout_marginTop="@dimen/spacing_tiny"
                     android:layout_marginBottom="@dimen/spacing_small"
                     android:background="@drawable/shape_oval_pinkish_grey_filled"
+                    android:elevation="@dimen/spacing_elevation_fix_extreme_tiny"
+                    android:gravity="center"
                     android:orientation="vertical">
 
-                    <de.hdodenhof.circleimageview.CircleImageView
+                    <ImageView
                         android:layout_width="@dimen/button_height_short"
                         android:layout_height="@dimen/button_height_short"
                         android:layout_gravity="center"
+                        android:layout_marginStart="@dimen/spacing_extra_tiny"
+                        android:layout_marginEnd="@dimen/spacing_extra_tiny"
                         android:src="@drawable/ic_money_bag" />
 
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Business"
-                        android:gravity="center"
                         android:layout_gravity="center"
+                        android:gravity="center"
+                        android:text="Business"
                         android:textColor="@color/aqua_blue"
                         android:textSize="@dimen/business_font_small" />
 
                 </LinearLayout>
-
-
             </FrameLayout>
 
             <ImageView
@@ -84,6 +84,4 @@
     </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
 
     <include layout="@layout/incl_account_base" />
-
-
 </androidx.drawerlayout.widget.DrawerLayout>

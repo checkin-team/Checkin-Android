@@ -346,13 +346,13 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent">
 
-                <LinearLayout
+                <androidx.constraintlayout.widget.ConstraintLayout
                     android:id="@+id/container_as_payment_mode_change"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
                     android:layout_marginEnd="@dimen/spacing_small"
-                    android:orientation="vertical"
+                    android:layout_marginStart="@dimen/spacing_small"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toStartOf="@id/btn_invoice_request_checkout"
                     app:layout_constraintStart_toStartOf="parent"
@@ -367,14 +367,19 @@
                         android:drawableStart="@drawable/ic_cash_grey"
                         android:drawablePadding="@dimen/spacing_normal"
                         android:gravity="center"
-                        android:text="@string/session_payment_mode_via_cash" />
+                        android:text="@string/session_payment_mode_via_cash"
+                        app:layout_constraintStart_toStartOf="@id/incl_as_invoice_line"
+                        app:layout_constraintTop_toTopOf="parent" />
 
-                    <include
-                        layout="@layout/incl_dotted_view"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="center"
-                        android:layout_marginTop="@dimen/spacing_extra_tiny" />
+                    <View
+                        android:id="@+id/incl_as_invoice_line"
+                        android:layout_width="120dp"
+                        android:layout_height="@dimen/height_horizontal_line"
+                        android:layout_gravity="center_horizontal"
+                        android:background="@drawable/ic_line_dash_white"
+                        android:layout_marginTop="@dimen/spacing_extra_tiny"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@id/tv_as_payment_mode" />
 
                     <TextView
                         style="@style/RedSmallTextStyle"
@@ -382,9 +387,12 @@
                         android:layout_height="wrap_content"
                         android:layout_gravity="center"
                         android:layout_marginTop="@dimen/spacing_extra_tiny"
-                        android:text="@string/change" />
+                        android:text="@string/change"
+                        app:layout_constraintEnd_toEndOf="@id/tv_as_payment_mode"
+                        app:layout_constraintStart_toStartOf="@id/incl_as_invoice_line"
+                        app:layout_constraintTop_toBottomOf="@id/incl_as_invoice_line" />
 
-                </LinearLayout>
+                </androidx.constraintlayout.widget.ConstraintLayout>
 
                 <Button
                     android:id="@+id/btn_invoice_request_checkout"

@@ -80,7 +80,7 @@
         android:padding="@dimen/spacing_normal"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toStartOf="@id/im_as_menu_drop_down"
-        app:layout_constraintStart_toEndOf="@id/im_as_menu_group_icon"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/container_as_menu_sub_groups"
         tools:text="GROUP" />
 

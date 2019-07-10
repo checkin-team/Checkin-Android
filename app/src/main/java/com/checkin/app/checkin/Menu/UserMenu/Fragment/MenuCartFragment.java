@@ -126,8 +126,8 @@ public class MenuCartFragment extends BaseFragment implements MenuCartAdapter.Me
     public void onOrderedItemRemark(@NotNull OrderedItemModel item, @NotNull String s) {
         if (s.length() > 0) {
             item.setRemarks(s);
-            mViewModel.setCurrentItem(item);
-            mViewModel.orderItem();
+//            mViewModel.setCurrentItem(item);
+//            mViewModel.orderItem();
         }
     }
 
