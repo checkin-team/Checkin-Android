@@ -23,6 +23,7 @@ import androidx.viewpager.widget.ViewPager;
 
 import com.checkin.app.checkin.Account.AccountModel;
 import com.checkin.app.checkin.Account.BaseAccountActivity;
+import com.checkin.app.checkin.AppDetails.AboutLicenseFragmentActivity;
 import com.checkin.app.checkin.Data.Message.ActiveSessionNotificationService;
 import com.checkin.app.checkin.Data.Message.Constants;
 import com.checkin.app.checkin.Data.Message.MessageModel;
@@ -278,6 +279,9 @@ public class HomeActivity extends BaseAccountActivity implements NavigationView.
         switch (item.getItemId()) {
             case R.id.nav_new_shop:
                 startActivity(new Intent(this, BusinessFeaturesActivity.class));
+                return true;
+            case R.id.nav_about_us:
+                startActivity(new Intent(this, AboutLicenseFragmentActivity.class));
                 return true;
         }
         return false;

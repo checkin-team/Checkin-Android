@@ -485,4 +485,14 @@
         <item name="android:colorForeground">@color/pinkish_grey</item>
     </style>
 
+    <style name="MaterialTheme" parent="Theme.MaterialComponents.Light.NoActionBar">
+        <item name="colorPrimary">@color/primary_red</item>
+        <item name="colorAccent">@color/colorAccent</item>
+        <item name="actionBarStyle">@style/AppTheme.AppBarOverlay</item>
+        <item name="android:fontFamily">@font/arial_rounded_mt_bold</item>
+        <item name="fontFamily">@font/arial_rounded_mt_bold</item>
+    </style>
+
+
+
 </resources>

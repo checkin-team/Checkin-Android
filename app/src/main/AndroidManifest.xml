@@ -83,6 +83,8 @@
         <activity
             android:name=".Menu.UserMenu.SessionMenuActivity"
             android:windowSoftInputMode="adjustPan"/>
+        <activity android:name=".AppDetails.AboutLicenseFragmentActivity"
+            android:theme="@style/MaterialTheme"/>
 
         <service
             android:name=".Auth.AuthenticatorService"

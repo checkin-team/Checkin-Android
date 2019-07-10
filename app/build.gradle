@@ -180,6 +180,11 @@ dependencies {
 
     //Shimmering Effects
     implementation 'com.facebook.shimmer:shimmer:0.4.0'
+
+    //Show License details
+    implementation "com.mikepenz:aboutlibraries:7.0.1"
+
+    implementation "com.google.android.material:material:1.0.0"
 }
 
 repositories {

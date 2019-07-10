@@ -220,4 +220,11 @@
     <string name="app_force_logged_out">Sorry, but your session has expired. Login again.</string>
     <string name="app_not_working_reinstall">App stopped working. Try reinstalling it.</string>
 
+    <string name="about_us">Checkin presents all the services of a restaurant at your fingerprints. All the in-house services of a restaurant are just one scan away.\n Copyright &#169; 2019 Reservefree Private Limited</string>
+
+    <string name="app_website_link"><![CDATA[<a href=\"https://check-in.in\">Checkin</a>]]></string>
+    <string name="app_terms_and_condition_link"><![CDATA[<a href="https://check-in.in/terms">Terms & Conditions</a>]]></string>
+    <string name="app_privacy_policy_link"><![CDATA[<a href="https://check-in.in/privacy">Privacy Policy</a>]]></string>
+    <string name="app_refund_policy_link"><![CDATA[<a href="https://check-in.in/refund">Refund Policy</a>]]></string>
+
 </resources>
