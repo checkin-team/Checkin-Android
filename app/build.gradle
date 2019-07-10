@@ -180,10 +180,15 @@ dependencies {
 
     //Shimmering Effects
     implementation 'com.facebook.shimmer:shimmer:0.4.0'
+
+    implementation 'com.instamojo:android-sdk:3.2.0'
 }
 
 repositories {
     mavenCentral()
+    maven {
+        url "https://s3-ap-southeast-1.amazonaws.com/godel-release/godel/"
+    }
 }
 
 static def buildTime() {

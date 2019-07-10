@@ -8,6 +8,7 @@ import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.text.Editable;
 import android.text.Html;
+import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
@@ -39,17 +40,20 @@ import com.checkin.app.checkin.session.model.PromoDetailModel;
 import com.checkin.app.checkin.session.model.SessionBillModel;
 import com.checkin.app.checkin.session.model.SessionInvoiceModel;
 import com.checkin.app.checkin.session.model.SessionPromoModel;
+import com.instamojo.android.Instamojo;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import butterknife.OnTextChanged;
 
+import static com.checkin.app.checkin.Shop.ShopModel.PAYMENT_MODE.INSTAMOJO;
 import static com.checkin.app.checkin.Shop.ShopModel.PAYMENT_MODE.PAYTM;
 import static com.checkin.app.checkin.session.activesession.ActiveSessionPaymentOptionsActivity.KEY_PAYMENT_MODE_RESULT;
 import static com.checkin.app.checkin.session.activesession.ActiveSessionPaymentOptionsActivity.KEY_SESSION_AMOUNT;
 
-public class ActiveSessionInvoiceActivity extends BaseActivity {
+public class ActiveSessionInvoiceActivity extends BaseActivity implements Instamojo.InstamojoPaymentCallback {
+    private static final String TAG = ActiveSessionInvoiceActivity.class.getSimpleName();
     public static final String KEY_SESSION_REQUESTED_CHECKOUT = "invoice.session.requested_checkout";
     private static final int REQUEST_PAYMENT_MODE = 141;
 
@@ -220,6 +224,9 @@ public class ActiveSessionInvoiceActivity extends BaseActivity {
                             break;
                         case CASH:
                             finish();
+                            break;
+                        case INSTAMOJO:
+//                            Instamojo.getInstance().initiatePayment(this, orderID, this);
                             break;
                         default:
                             break;
@@ -450,6 +457,10 @@ public class ActiveSessionInvoiceActivity extends BaseActivity {
                     mPrefs.edit()
                             .putString(Constants.SP_LAST_USED_PAYMENT_MODE, selectedMode.tag)
                             .apply();
+                    if (selectedMode == INSTAMOJO) {
+                        Instamojo.getInstance().initialize(this, Instamojo.Environment.TEST);
+                    }
+
 
                     setPaymentModeUpdates();
                     tvPaymentMode.setCompoundDrawablesWithIntrinsicBounds(ShopModel.getPaymentModeIcon(selectedMode), 0, 0, 0);
@@ -504,5 +515,22 @@ public class ActiveSessionInvoiceActivity extends BaseActivity {
     @Override
     protected void updateScreen() {
         mViewModel.updateResults();
+    }
+
+    @Override
+    public void onInstamojoPaymentComplete(String orderID, String transactionID, String paymentID, String paymentStatus) {
+        Log.e(TAG, "Payment complete. Order ID: " + orderID + ", Transaction ID: " + transactionID
+                + ", Payment ID:" + paymentID + ", Status: " + paymentStatus);
+    }
+
+    @Override
+    public void onPaymentCancelled() {
+        Log.d(TAG, "Payment cancelled");
+    }
+
+    @Override
+    public void onInitiatePaymentFailure(String s) {
+        Log.d(TAG, "Initiate payment failed");
+        Utils.toast(this, "Initiating payment failed. Error: " + s);
     }
 }

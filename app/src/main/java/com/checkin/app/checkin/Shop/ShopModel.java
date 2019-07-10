@@ -241,7 +241,7 @@ public class ShopModel {
     }
 
     public enum PAYMENT_MODE {
-        CASH("csh"), PAYTM("ptm"), CARD("crd");
+        CASH("csh"), PAYTM("ptm"), CARD("crd"), INSTAMOJO("instamojo");
 
         public String tag;
 
@@ -266,6 +266,8 @@ public class ShopModel {
                 return "via Cash";
             case PAYTM:
                 return "";
+            case INSTAMOJO:
+                return "via Instamojo";
             default:
                 return "via Cash";
         }
@@ -278,6 +280,8 @@ public class ShopModel {
                 return R.drawable.ic_cash_grey;
             case PAYTM:
                 return R.drawable.ic_paytm_logo;
+            case INSTAMOJO:
+                return R.drawable.ic_credit_debit_card;
             default:
                 return R.drawable.ic_cash_grey;
         }

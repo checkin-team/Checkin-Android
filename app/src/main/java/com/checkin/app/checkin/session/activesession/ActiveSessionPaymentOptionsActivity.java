@@ -7,6 +7,7 @@ import android.widget.TextView;
 import com.checkin.app.checkin.Misc.BaseActivity;
 import com.checkin.app.checkin.R;
 import com.checkin.app.checkin.Shop.ShopModel;
+import com.instamojo.android.Instamojo;
 
 import androidx.annotation.Nullable;
 import butterknife.BindView;
@@ -51,12 +52,12 @@ public class ActiveSessionPaymentOptionsActivity extends BaseActivity {
         finish();
     }
 
-    @OnClick(R.id.gpay_container)
-    public void onGPayClick(){
-//        Intent data = new Intent();
-//        data.putExtra(KEY_PAYMENT_MODE_RESULT, SessionBillModel.PAYMENT_MODES.GOOGLE_PAY);
-//        setResult(RESULT_OK, data);
-//        finish();
+    @OnClick(R.id.instamojo_container)
+    public void onInstamojoClick(){
+        Intent data = new Intent();
+        data.putExtra(KEY_PAYMENT_MODE_RESULT, ShopModel.PAYMENT_MODE.INSTAMOJO);
+        setResult(RESULT_OK, data);
+        finish();
     }
 
 

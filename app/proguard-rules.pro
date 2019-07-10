@@ -123,3 +123,6 @@
 -keepclasseswithmembers class * {
     public <init>();
 }
+
+# Rules for Instamojo SDK
+-keep class com.instamojo.android.**{*;}
