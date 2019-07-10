@@ -80,10 +80,6 @@ public class MenuItemModel implements Serializable {
     @Transient
     private InventoryItemAdapter.ItemViewHolder inventoryHolder;
 
-    @JsonIgnore
-    @Transient
-    private EnumSet<AVAILABLE_MEAL> availableMealEnumSet = EnumSet.noneOf(AVAILABLE_MEAL.class);
-
     public MenuItemModel() {
     }
 
@@ -193,17 +189,6 @@ public class MenuItemModel implements Serializable {
 
     public List<AVAILABLE_MEAL> getAvailableMeals() {
         return availableMeals;
-    }
-
-    public EnumSet<AVAILABLE_MEAL> getAvailableMealsEnum() {
-        availableMealEnumSet.clear();
-        for (Object availableMeal : availableMeals) {
-            if (availableMeal instanceof AVAILABLE_MEAL)
-                availableMealEnumSet.add(((AVAILABLE_MEAL) availableMeal));
-            else if (availableMeal instanceof String)
-                availableMealEnumSet.add(AVAILABLE_MEAL.getByTag(((String) availableMeal)));
-        }
-        return availableMealEnumSet;
     }
 
     public void setAvailableMeals(List<AVAILABLE_MEAL> availableMeals) {

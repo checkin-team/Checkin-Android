@@ -7,64 +7,58 @@
 
     <FrameLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="match_parent">
 
-        <androidx.core.widget.NestedScrollView
+        <FrameLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_height="match_parent"
+            android:orientation="vertical">
 
-            <FrameLayout
+            <com.facebook.shimmer.ShimmerFrameLayout
+                android:id="@+id/shimmer_as_menu_group"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:orientation="vertical">
+                android:visibility="visible">
 
-                <com.facebook.shimmer.ShimmerFrameLayout
-                    android:id="@+id/shimmer_as_menu_group"
+                <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:visibility="visible">
+                    android:orientation="vertical">
 
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:orientation="vertical">
+                    <include layout="@layout/shimmer_as_menu_group" />
 
-                        <include layout="@layout/shimmer_as_menu_group" />
+                    <include layout="@layout/shimmer_as_menu_group" />
 
-                        <include layout="@layout/shimmer_as_menu_group" />
+                    <include layout="@layout/shimmer_as_menu_group" />
 
-                        <include layout="@layout/shimmer_as_menu_group" />
+                    <include layout="@layout/shimmer_as_menu_group" />
 
-                        <include layout="@layout/shimmer_as_menu_group" />
+                    <include layout="@layout/shimmer_as_menu_group" />
 
-                        <include layout="@layout/shimmer_as_menu_group" />
+                    <include layout="@layout/shimmer_as_menu_group" />
 
-                        <include layout="@layout/shimmer_as_menu_group" />
+                    <include layout="@layout/shimmer_as_menu_group" />
 
-                        <include layout="@layout/shimmer_as_menu_group" />
+                    <include layout="@layout/shimmer_as_menu_group" />
 
-                        <include layout="@layout/shimmer_as_menu_group" />
+                    <include layout="@layout/shimmer_as_menu_group" />
 
-                        <include layout="@layout/shimmer_as_menu_group" />
+                    <include layout="@layout/shimmer_as_menu_group" />
 
-                        <include layout="@layout/shimmer_as_menu_group" />
+                    <include layout="@layout/shimmer_as_menu_group" />
 
-                        <include layout="@layout/shimmer_as_menu_group" />
+                    <include layout="@layout/shimmer_as_menu_group" />
 
-                        <include layout="@layout/shimmer_as_menu_group" />
+                </LinearLayout>
 
-                    </LinearLayout>
+            </com.facebook.shimmer.ShimmerFrameLayout>
 
-                </com.facebook.shimmer.ShimmerFrameLayout>
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/rv_menu_groups"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent" />
 
-                <androidx.recyclerview.widget.RecyclerView
-                    android:id="@+id/rv_menu_groups"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent" />
-
-            </FrameLayout>
-
-        </androidx.core.widget.NestedScrollView>
+        </FrameLayout>
 
         <FrameLayout
             android:id="@+id/container_as_menu_current_category"
@@ -72,7 +66,8 @@
             android:layout_height="wrap_content"
             android:layout_gravity="top"
             android:background="@color/white_alpha"
-            android:padding="@dimen/spacing_extra_small">
+            android:padding="@dimen/spacing_extra_small"
+            android:visibility="gone">
 
             <TextView
                 android:id="@+id/tv_as_menu_current_category"
@@ -86,7 +81,7 @@
 
             <ImageView
                 android:layout_width="40dp"
-                android:layout_height="7dp"
+                android:layout_height="5dp"
                 android:layout_gravity="center_vertical|end"
                 android:layout_marginEnd="@dimen/spacing_extra_small"
                 android:src="@drawable/rounded_rectangle_white"

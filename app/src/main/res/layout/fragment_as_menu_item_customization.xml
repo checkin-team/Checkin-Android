@@ -20,7 +20,6 @@
         android:focusable="true"
         android:minHeight="120dp">
 
-
         <ScrollView
             android:id="@+id/sv_menu_customization"
             android:layout_width="match_parent"
@@ -35,13 +34,12 @@
                 android:id="@+id/list_menu_customizations"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="vertical"
                 android:layout_marginTop="@dimen/spacing_small"
+                android:layout_marginBottom="@dimen/button_height_tall"
+                android:orientation="vertical"
                 android:paddingTop="@dimen/spacing_large"
                 android:paddingBottom="@dimen/spacing_small"
-                android:layout_marginBottom="@dimen/button_height_tall"
                 android:showDividers="middle" />
-
         </ScrollView>
 
         <androidx.cardview.widget.CardView
@@ -69,11 +67,11 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:ellipsize="end"
-                    android:paddingTop="@dimen/spacing_small"
-                    android:paddingBottom="@dimen/spacing_small"
+                    android:fontFamily="@font/opensans_bold"
                     android:gravity="center"
                     android:maxLines="2"
-                    android:fontFamily="@font/opensans_bold"
+                    android:paddingTop="@dimen/spacing_small"
+                    android:paddingBottom="@dimen/spacing_small"
                     tools:text="Pizza" />
 
                 <RadioGroup
@@ -83,8 +81,8 @@
                     android:layout_gravity="center"
                     android:layout_marginBottom="@dimen/spacing_extra_small"
                     android:gravity="center"
-                    android:visibility="visible"
-                    android:orientation="horizontal">
+                    android:orientation="horizontal"
+                    android:visibility="visible">
 
                     <androidx.constraintlayout.widget.ConstraintLayout
                         android:id="@+id/container_as_radio_buttons"

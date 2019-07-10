@@ -242,7 +242,6 @@ public class ActiveSessionActivity extends BaseActivity implements
 
 
         mViewModel.getMenuTrendingItems().observe(this, inventoryItemModels -> {
-
             if (inventoryItemModels == null)
                 return;
 
@@ -499,6 +498,5 @@ public class ActiveSessionActivity extends BaseActivity implements
         } else {
             Utils.toast(this, R.string.error_unavailable_network);
         }
-
     }
 }

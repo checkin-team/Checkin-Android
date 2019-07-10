@@ -6,20 +6,23 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.checkin.app.checkin.Data.Resource.Status;
-import com.checkin.app.checkin.Menu.UserMenu.SessionMenuActivity;
-import com.checkin.app.checkin.Menu.MenuItemInteraction;
-import com.checkin.app.checkin.Menu.UserMenu.MenuViewModel;
-import com.checkin.app.checkin.Menu.Model.MenuItemModel;
-import com.checkin.app.checkin.Menu.UserMenu.Adapter.MenuItemAdapter;
-import com.checkin.app.checkin.Misc.BaseSearchFragment;
-import com.checkin.app.checkin.R;
-
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.lifecycle.ViewModelProviders;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+
+import com.checkin.app.checkin.Data.Resource.Status;
+import com.checkin.app.checkin.Menu.MenuItemInteraction;
+import com.checkin.app.checkin.Menu.Model.MenuItemModel;
+import com.checkin.app.checkin.Menu.UserMenu.Adapter.MenuItemAdapter;
+import com.checkin.app.checkin.Menu.UserMenu.MenuViewModel;
+import com.checkin.app.checkin.Menu.UserMenu.SessionMenuActivity;
+import com.checkin.app.checkin.Misc.BaseSearchFragment;
+import com.checkin.app.checkin.R;
+
+import org.jetbrains.annotations.NotNull;
+
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.Unbinder;
@@ -96,7 +99,7 @@ public class MenuItemSearchFragment extends BaseSearchFragment implements MenuIt
     }
 
     @Override
-    public boolean onItemLongPress(MenuItemModel item) {
+    public boolean onItemLongPress(@NotNull MenuItemModel item) {
         mListener.onMenuItemShowInfo(item);
         return true;
     }
@@ -107,7 +110,17 @@ public class MenuItemSearchFragment extends BaseSearchFragment implements MenuIt
     }
 
     @Override
-    public int orderedItemCount(MenuItemModel item) {
+    public int orderedItemCount(@NotNull MenuItemModel item) {
         return mListener.getItemOrderedCount(item);
+    }
+
+    public boolean onBackPressed() {
+        if (getFragmentManager() != null) {
+            getFragmentManager().beginTransaction()
+                    .remove(this)
+                    .commit();
+            return true;
+        }
+        return false;
     }
 }

@@ -1,7 +1,5 @@
 package com.checkin.app.checkin.Menu.UserMenu.Fragment
 
-import android.animation.Animator
-import android.animation.AnimatorListenerAdapter
 import android.annotation.SuppressLint
 import android.os.Bundle
 import android.renderscript.RenderScript
@@ -92,10 +90,12 @@ class MenuFilterFragment : Fragment() {
             } else false
         }
 
-        mAdapter = FilterGroupAdapter(null) { category ->
-            mListener?.filterByCategory(category)
-            hideFilter()
-        }
+        mAdapter = FilterGroupAdapter(null, object : FilterGroupAdapter.CategoryInteraction {
+            override fun onClick(category: String?) = category?.let {
+                mListener?.filterByCategory(it)
+                hideFilter()
+            } ?: Unit
+        })
         rvFilterCategories.layoutManager = LinearLayoutManager(requireContext(), RecyclerView.VERTICAL, false)
         rvFilterCategories.adapter = mAdapter
 

@@ -45,6 +45,7 @@ import static com.checkin.app.checkin.Menu.ShopMenu.SessionMenuActivity.KEY_REST
 import static com.checkin.app.checkin.Menu.ShopMenu.SessionMenuActivity.KEY_SESSION_PK;
 import static com.checkin.app.checkin.Menu.ShopMenu.SessionMenuActivity.KEY_SESSION_TRENDING_ITEM;
 import static com.checkin.app.checkin.Menu.ShopMenu.SessionMenuActivity.SESSION_ARG;
+import static com.checkin.app.checkin.session.activesession.ActiveSessionActivity.KEY_INTERACT_WITH_US;
 
 public class SessionMenuActivity extends BaseActivity implements
         MenuItemInteraction, ItemCustomizationFragment.ItemCustomizationInteraction, MenuFilterFragment.MenuFilterInteraction {
@@ -68,7 +69,6 @@ public class SessionMenuActivity extends BaseActivity implements
     TextView tvCartSubtotal;
     @BindView(R.id.container_as_menu_cart)
     ViewGroup menuCart;
-
     @BindView(R.id.btn_as_menu_search)
     ImageView btnMenuSearch;
     @BindView(R.id.btn_as_menu_filter)
@@ -115,6 +115,8 @@ public class SessionMenuActivity extends BaseActivity implements
         mViewModel.fetchAvailableMenu(args.getLong(KEY_RESTAURANT_PK));
         long sessionPk = args.getLong(KEY_SESSION_PK, 0L);
         if (sessionPk > 0L) mViewModel.manageSession(sessionPk);
+
+        OnBoardingUtils.setOnBoardingIsShown(this, KEY_INTERACT_WITH_US, true);
 
         mSearchFragment = MenuItemSearchFragment.newInstance(SessionMenuActivity.this, true);
 
@@ -230,7 +232,7 @@ public class SessionMenuActivity extends BaseActivity implements
     private void setupFilter() {
         mFilterFragment = MenuFilterFragment.Companion.newInstance(this, btnMenuFilter);
         getSupportFragmentManager().beginTransaction()
-                .replace(R.id.container_as_menu_fragment, mFilterFragment)
+                .add(R.id.container_as_menu_fragment, mFilterFragment, "filter")
                 .commit();
     }
 
@@ -305,17 +307,16 @@ public class SessionMenuActivity extends BaseActivity implements
 
             @Override
             public void onSearchViewClosed() {
-                getSupportFragmentManager().beginTransaction()
-                        .remove(mSearchFragment)
-                        .commit();
+                mSearchFragment.onBackPressed();
             }
         });
     }
 
     private void openSearchItems() {
-        getSupportFragmentManager().beginTransaction()
-                .add(R.id.container_as_menu_fragment, mSearchFragment, "search")
-                .commit();
+        if (!mSearchFragment.isVisible())
+            getSupportFragmentManager().beginTransaction()
+                    .add(R.id.container_as_menu_fragment, mSearchFragment, "search")
+                    .commit();
     }
 
     @OnClick({R.id.btn_as_menu_search, R.id.container_as_menu_search})
@@ -330,6 +331,9 @@ public class SessionMenuActivity extends BaseActivity implements
             showAllCategories();
         } else if (vMenuSearch.isSearchOpen()) {
             closeSearch();
+        } else if (mSearchFragment.isVisible()) {
+            mSearchFragment.onBackPressed();
+            mViewModel.clearFilters();
         } else if (mCartFragment.isVisible()) {
             mCartFragment.onBackPressed();
         } else if (mFilterFragment != null && mFilterFragment.onBackPressed()) {
@@ -437,7 +441,7 @@ public class SessionMenuActivity extends BaseActivity implements
 
     @Override
     public void filterByCategory(@NotNull String category) {
-        mMenuFragment.scrollToCategory(category);
+        mMenuFragment.scrollToGroup(category);
     }
 
     @Override

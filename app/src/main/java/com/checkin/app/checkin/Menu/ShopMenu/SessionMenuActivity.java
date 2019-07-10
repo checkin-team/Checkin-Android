@@ -25,6 +25,8 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.checkin.app.checkin.Data.Resource.Status;
 import com.checkin.app.checkin.Menu.MenuItemInteraction;
+import com.checkin.app.checkin.Menu.Model.MenuItemModel;
+import com.checkin.app.checkin.Menu.Model.OrderedItemModel;
 import com.checkin.app.checkin.Menu.ShopMenu.Adapter.MenuCartAdapter;
 import com.checkin.app.checkin.Menu.ShopMenu.Fragment.ItemCustomizationFragment;
 import com.checkin.app.checkin.Menu.ShopMenu.Fragment.MenuFilterFragment;
@@ -32,8 +34,6 @@ import com.checkin.app.checkin.Menu.ShopMenu.Fragment.MenuGroupsFragment;
 import com.checkin.app.checkin.Menu.ShopMenu.Fragment.MenuGroupsFragment.SESSION_STATUS;
 import com.checkin.app.checkin.Menu.ShopMenu.Fragment.MenuInfoFragment;
 import com.checkin.app.checkin.Menu.ShopMenu.Fragment.MenuItemSearchFragment;
-import com.checkin.app.checkin.Menu.Model.MenuItemModel;
-import com.checkin.app.checkin.Menu.Model.OrderedItemModel;
 import com.checkin.app.checkin.Misc.BaseActivity;
 import com.checkin.app.checkin.R;
 import com.checkin.app.checkin.Utility.EndDrawerToggle;
@@ -51,7 +51,6 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 
 import static com.checkin.app.checkin.Menu.ShopMenu.Fragment.MenuGroupsFragment.KEY_SESSION_STATUS;
-import static com.checkin.app.checkin.session.activesession.ActiveSessionActivity.KEY_INTERACT_WITH_US;
 
 public class SessionMenuActivity extends BaseActivity implements
         MenuItemInteraction, ItemCustomizationFragment.ItemCustomizationInteraction,
@@ -119,8 +118,6 @@ public class SessionMenuActivity extends BaseActivity implements
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_shop_session_menu);
         ButterKnife.bind(this);
-
-        OnBoardingUtils.setOnBoardingIsShown(this, KEY_INTERACT_WITH_US, true);
 
         Bundle args = getIntent().getBundleExtra(SESSION_ARG);
         mSessionStatus = (SESSION_STATUS) args.getSerializable(KEY_SESSION_STATUS);

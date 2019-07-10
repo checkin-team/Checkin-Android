@@ -6,6 +6,7 @@ import android.util.AttributeSet;
 import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.ViewTreeObserver;
 import android.view.animation.Animation;
 import android.view.animation.Transformation;
 
@@ -41,6 +42,16 @@ public class ChildSizeMeasureViewPager extends ViewPager {
     int getChildHeight(int pos, int widthMeasureSpec) {
         View child = getChildAt(pos);
         if (child != null) {
+            child.getViewTreeObserver().addOnPreDrawListener(new ViewTreeObserver.OnPreDrawListener() {
+                @Override
+                public boolean onPreDraw() {
+                    child.getViewTreeObserver().removeOnPreDrawListener(this);
+                    Log.e("PreDraw", "Width: " + child.getWidth());
+                    Log.e("PreDraw", "Height: " + child.getHeight());
+                    return true;
+                }
+            });
+
             child.measure(widthMeasureSpec, MeasureSpec.makeMeasureSpec(0, MeasureSpec.UNSPECIFIED));
             return child.getMeasuredHeight();
         }

@@ -2,7 +2,6 @@ package com.checkin.app.checkin.Menu.UserMenu.Adapter
 
 import android.animation.ValueAnimator
 import android.os.Build
-import android.os.Handler
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -16,7 +15,6 @@ import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.FragmentStatePagerAdapter
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import androidx.recyclerview.widget.SimpleItemAnimator
 import androidx.transition.ChangeBounds
 import androidx.transition.TransitionManager
 import androidx.viewpager.widget.ViewPager
@@ -38,6 +36,10 @@ class MenuGroupAdapter(private var mGroupList: List<MenuGroupModel>?, private va
 
     val isGroupExpanded: Boolean
         get() = mPrevExpandedViewHolder?.isExpanded ?: false
+
+    init {
+        this.setHasStableIds(true)
+    }
 
     fun setSessionActive(value: Boolean) {
         mIsSessionActive = value
@@ -63,29 +65,9 @@ class MenuGroupAdapter(private var mGroupList: List<MenuGroupModel>?, private va
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): GroupViewHolder = LayoutInflater.from(parent.context).inflate(viewType, parent, false).run { GroupViewHolder(this) }
 
-    fun getCategoryPosition(category: String): Int {
-        var i = 0
-        if (mGroupList != null) {
-            for (groupModel in mGroupList!!) {
-                if (category.contentEquals(groupModel.category))
-                    break
-                i++
-            }
-        }
-        return i
-    }
-
-    fun getGroupPosition(category: String): Int {
-        var i = 0
-        if (mGroupList != null) {
-            for (groupModel in mGroupList!!) {
-                if (category.contentEquals(groupModel.name))
-                    break
-                i++
-            }
-        }
-        return 0
-    }
+    fun getGroupPosition(groupName: String): Int = mGroupList?.run {
+        indexOfFirst { groupName.contentEquals(it.name) }
+    } ?: 0
 
     fun contractView() {
         contractView(mPrevExpandedViewHolder)
@@ -209,16 +191,15 @@ class MenuGroupAdapter(private var mGroupList: List<MenuGroupModel>?, private va
             val scrollAnim = ValueAnimator.ofInt(1, 2, 3, 4)
             scrollAnim.duration = GROUP_ANIMATION_DURATION
             scrollAnim.addUpdateListener {
-                (mRecyclerView.layoutManager as LinearLayoutManager).scrollToPositionWithOffset(adapterPosition, 0)
+                (mRecyclerView.layoutManager as LinearLayoutManager).scrollToPositionWithOffset(adapterPosition, 20)
             }
-//            scrollAnim.start()
+            scrollAnim.start()
         }
 
         internal fun hide() {
             isExpanded = false
             collapsedCs.applyTo(containerMenuGroup)
             TransitionManager.beginDelayedTransition(containerMenuGroup)
-//            Handler().post { notifyItemChanged(adapterPosition) }
             mGroupInteractionListener.onGroupExpandCollapse(isExpanded, mMenuGroup)
         }
 

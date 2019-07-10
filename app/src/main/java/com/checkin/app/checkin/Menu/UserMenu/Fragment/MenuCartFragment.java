@@ -7,25 +7,24 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.appcompat.app.AlertDialog;
+import androidx.lifecycle.ViewModelProviders;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+
 import com.checkin.app.checkin.Data.Resource;
-import com.checkin.app.checkin.Menu.UserMenu.MenuViewModel;
-import com.checkin.app.checkin.Menu.UserMenu.SessionMenuActivity;
-import com.checkin.app.checkin.Menu.UserMenu.Adapter.MenuCartAdapter;
-import com.checkin.app.checkin.Menu.ShopMenu.Adapter.MenuTreatYourselfAdapter;
 import com.checkin.app.checkin.Menu.MenuItemInteraction;
 import com.checkin.app.checkin.Menu.Model.OrderedItemModel;
+import com.checkin.app.checkin.Menu.UserMenu.Adapter.MenuTreatYourselfAdapter;
+import com.checkin.app.checkin.Menu.UserMenu.Adapter.MenuCartAdapter;
+import com.checkin.app.checkin.Menu.UserMenu.MenuViewModel;
 import com.checkin.app.checkin.Misc.BaseFragment;
 import com.checkin.app.checkin.R;
 import com.checkin.app.checkin.Utility.Utils;
 import com.checkin.app.checkin.session.model.TrendingDishModel;
 
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-
-import androidx.appcompat.app.AlertDialog;
-import androidx.lifecycle.ViewModelProviders;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
 import butterknife.BindView;
 import butterknife.OnClick;
 
@@ -57,7 +56,6 @@ public class MenuCartFragment extends BaseFragment implements MenuCartAdapter.Me
         return fragment;
     }
 
-
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         mViewModel = ViewModelProviders.of(requireActivity()).get(MenuViewModel.class);
@@ -75,7 +73,7 @@ public class MenuCartFragment extends BaseFragment implements MenuCartAdapter.Me
         mViewModel.getTotalOrderedCount().observe(this, count -> {
             if (count == null)
                 return;
-            tvCountItems.setText(Utils.formatCount(count) + " Items");
+            tvCountItems.setText(String.format("%s Items", Utils.formatCount(count)));
         });
         mViewModel.getOrderedSubTotal().observe(this, subtotal -> {
             if (subtotal == null)
@@ -88,7 +86,7 @@ public class MenuCartFragment extends BaseFragment implements MenuCartAdapter.Me
                 return;
             if (resource.status == Resource.Status.SUCCESS) {
                 Utils.toast(requireContext(), "Confirmed orders!");
-                ((SessionMenuActivity) getActivity()).finish();
+                requireActivity().finish();
             } else if (resource.status == Resource.Status.LOADING) {
             } else {
                 Utils.toast(requireContext(), resource.message);
@@ -96,17 +94,13 @@ public class MenuCartFragment extends BaseFragment implements MenuCartAdapter.Me
             }
         });
 
-
         mViewModel.getMenuTrendingItems().observe(this, inventoryItemModels -> {
-
             if (inventoryItemModels == null)
                 return;
 
             if (inventoryItemModels.status == Resource.Status.SUCCESS && inventoryItemModels.data != null)
                 mTreatYourselfAdapter.setData(inventoryItemModels.data);
         });
-
-
     }
 
     @Override
@@ -134,7 +128,7 @@ public class MenuCartFragment extends BaseFragment implements MenuCartAdapter.Me
 
     @Override
     public void onOrderedItemRemark(OrderedItemModel item, String s) {
-        if(s.length()>0)
+        if (s.length() > 0)
             item.setRemarks(s);
         mViewModel.setCurrentItem(item);
         mViewModel.orderItem();
@@ -179,10 +173,8 @@ public class MenuCartFragment extends BaseFragment implements MenuCartAdapter.Me
     public void onTreatYourselfItemClick(TrendingDishModel data) {
         mViewModel.searchMenuItemById(data.getPk());
         mViewModel.getTreatMenuItem().observe(this, itemModel -> {
-            if (itemModel != null) {
-                if (mListener != null) {
-                    mListener.onMenuItemAdded(itemModel);
-                }
+            if (itemModel != null && mListener != null) {
+                mListener.onMenuItemAdded(itemModel);
             }
         });
     }

@@ -2,7 +2,6 @@ package com.checkin.app.checkin.User.Private;
 
 import android.content.DialogInterface;
 import android.os.Bundle;
-import android.os.Handler;
 import android.text.Editable;
 import android.text.Selection;
 import android.text.TextWatcher;
@@ -14,19 +13,19 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.appcompat.app.ActionBar;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.lifecycle.ViewModelProviders;
+
 import com.checkin.app.checkin.Auth.OtpVerificationDialog;
 import com.checkin.app.checkin.Data.Resource;
 import com.checkin.app.checkin.R;
 import com.checkin.app.checkin.User.UserModel;
 import com.checkin.app.checkin.Utility.Utils;
-import com.fasterxml.jackson.databind.JsonNode;
 import com.google.firebase.FirebaseException;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.PhoneAuthCredential;
 
-import androidx.appcompat.app.ActionBar;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.lifecycle.ViewModelProviders;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
@@ -74,7 +73,7 @@ public class ProfileEditActivity extends AppCompatActivity implements OtpVerific
         mAuth = FirebaseAuth.getInstance();
     }
 
-    private void getData(){
+    private void getData() {
         mUserViewModel = ViewModelProviders.of(this).get(UserViewModel.class);
         setUi((UserModel) getIntent().getSerializableExtra(KEY_USER_DATA));
 
@@ -84,11 +83,14 @@ public class ProfileEditActivity extends AppCompatActivity implements OtpVerific
             if (userModelResource.status == Resource.Status.SUCCESS && userModelResource.data != null) {
                 setUi(userModelResource.data);
                 finish();
-            }else if(userModelResource.status == Resource.Status.ERROR_INVALID_REQUEST) {
+            } else if (userModelResource.status == Resource.Status.ERROR_INVALID_REQUEST) {
                 tvErrorPhoneNumber.setText(userModelResource.message);
                 tvErrorPhoneNumber.setVisibility(View.VISIBLE);
-                Utils.setKeyboardVisibility(etPhone,false);
+                Utils.setKeyboardVisibility(etPhone, false);
                 enablePhoneSaveButton(getResources().getString(R.string.btn_edit));
+            }
+            if (userModelResource.status != Resource.Status.LOADING) {
+                Utils.toast(this, userModelResource.message);
             }
         });
     }
@@ -177,16 +179,15 @@ public class ProfileEditActivity extends AppCompatActivity implements OtpVerific
         return super.onOptionsItemSelected(item);
     }
 
-    private void hitApiSaveProfile(){
+    private void hitApiSaveProfile() {
         String name = etName.getText().toString().trim();
-        String firstName="";
-        String lastName="";
-        if(name.split("\\w+").length>1){
+        String firstName = "";
+        String lastName = "";
+        if (name.split("\\w+").length > 1) {
 
-            lastName = name.substring(name.lastIndexOf(" ")+1);
+            lastName = name.substring(name.lastIndexOf(" ") + 1);
             firstName = name.substring(0, name.lastIndexOf(' '));
-        }
-        else{
+        } else {
             firstName = name;
         }
         mUserViewModel.postUserData(firstName, lastName, phone_token, etBio.getText().toString().trim());
@@ -202,7 +203,7 @@ public class ProfileEditActivity extends AppCompatActivity implements OtpVerific
     public void onSuccessVerification(DialogInterface dialog, PhoneAuthCredential credential) {
 
         mAuth.signInWithCredential(credential).addOnCompleteListener(task -> {
-            if (task.isSuccessful()) {
+            if (task.isSuccessful() && mAuth.getCurrentUser() != null) {
                 mAuth.getCurrentUser().getIdToken(false).addOnSuccessListener(result -> {
                     phone_token = result.getToken();
                     hitApiSaveProfile();
