@@ -427,7 +427,6 @@
                         app:layout_constraintTop_toBottomOf="@id/container_dish"
                         app:layout_constraintVertical_weight="0.45">
 
-
                         <TextView
                             android:id="@+id/tv_interact_with_us"
                             style="@style/PinkishGreySmallTextStyle"
@@ -458,6 +457,7 @@
                             android:layout_height="wrap_content"
                             android:transitionName="chatActions"
                             android:weightSum="3"
+                            app:layout_constraintVertical_bias="0.4"
                             app:layout_constraintBottom_toBottomOf="parent"
                             app:layout_constraintStart_toStartOf="parent"
                             app:layout_constraintTop_toBottomOf="@id/tv_interact_with_us">
@@ -474,12 +474,10 @@
                                 app:layout_constraintStart_toStartOf="parent"
                                 app:layout_constraintTop_toTopOf="parent">
 
-
                                 <de.hdodenhof.circleimageview.CircleImageView
                                     android:id="@+id/im_as_waiter_pic"
                                     android:layout_width="@dimen/session_waiter_logo"
                                     android:layout_height="@dimen/session_waiter_logo"
-                                    android:layout_centerHorizontal="true"
                                     android:layout_gravity="center"
                                     android:background="@drawable/shape_oval_pinkish_grey"
                                     android:src="@drawable/ic_waiter" />
@@ -489,7 +487,7 @@
                                     style="@style/PinkishGreySmallTextStyle"
                                     android:layout_width="wrap_content"
                                     android:layout_height="0dp"
-                                    android:layout_weight="1"
+                                    android:layout_weight="0.8"
                                     android:ellipsize="end"
                                     android:gravity="center|top"
                                     android:maxLines="1"
@@ -529,7 +527,6 @@
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
                                     android:layout_gravity="center"
-                                    android:layout_marginTop="@dimen/spacing_tiny"
                                     android:gravity="center"
                                     android:text="@string/table_cleaning"
                                     android:textSize="@dimen/font_small" />
@@ -559,7 +556,6 @@
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
                                     android:layout_gravity="center"
-                                    android:layout_marginTop="@dimen/spacing_tiny"
                                     android:gravity="center"
                                     android:text="@string/refill_glass"
                                     android:textSize="@dimen/font_small" />

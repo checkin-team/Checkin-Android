@@ -7,7 +7,6 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.EditText
-import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import butterknife.BindView
@@ -45,8 +44,6 @@ class MenuCartAdapter(private val mListener: MenuCartInteraction) : RecyclerView
         internal lateinit var tvItemPrice: TextView
         @BindView(R.id.tv_menu_cart_item_customized)
         internal lateinit var tvItemCustomized: TextView
-        @BindView(R.id.im_menu_cart_item_type)
-        internal lateinit var imType: ImageView
         @BindView(R.id.tv_menu_item_quantity_decrement)
         internal lateinit var tvQuantityDecrement: TextView
         @BindView(R.id.tv_menu_item_quantity_number)
@@ -57,25 +54,13 @@ class MenuCartAdapter(private val mListener: MenuCartInteraction) : RecyclerView
         internal lateinit var etSpecialInstructions: EditText
 
         private var mItem: OrderedItemModel? = null
-        private var mCount: Int = 0
 
         init {
             ButterKnife.bind(this, itemView)
 
-            tvQuantityDecrement.setOnClickListener { decreaseQuantity() }
+            tvQuantityDecrement.setOnClickListener { mItem?.let { mListener.onOrderedItemChanged(it, it.quantity - 1) } }
 
-            tvQuantityIncrement.setOnClickListener { increaseQuantity() }
-
-            tvQuantityNumber.addTextChangedListener(object : TextWatcher {
-                override fun beforeTextChanged(s: CharSequence, start: Int, count: Int, after: Int) {}
-
-                override fun onTextChanged(s: CharSequence, start: Int, before: Int, count: Int) {}
-
-                override fun afterTextChanged(s: Editable) {
-                    mCount = Integer.parseInt(s.toString())
-                    mListener.onOrderedItemChanged(mItem, Integer.parseInt(s.toString()))
-                }
-            })
+            tvQuantityIncrement.setOnClickListener { mItem?.let { mListener.onOrderedItemChanged(it, it.quantity + 1) } }
 
             etSpecialInstructions.addTextChangedListener(object : TextWatcher {
                 override fun beforeTextChanged(s: CharSequence, start: Int, count: Int, after: Int) {}
@@ -89,40 +74,17 @@ class MenuCartAdapter(private val mListener: MenuCartInteraction) : RecyclerView
         }
 
         fun bindData(item: OrderedItemModel) {
-            mItem = item;
-//            try {
-//                mItem = item.clone()
-//            } catch (e: CloneNotSupportedException) {
-//                e.printStackTrace()
-//            }
+            mItem = item
 
             tvItemName.text = item.itemModel.name
-            tvItemPrice.text = Utils.formatCurrencyAmount(tvItemPrice.context, item.cost)
+            tvItemPrice.text = Utils.formatIntegralCurrencyAmount(tvItemPrice.context, item.cost)
             if (item.isCustomized) tvItemCustomized.visibility = View.VISIBLE
             else tvItemCustomized.visibility = View.GONE
 
-            if (item.itemModel.isVegetarian) imType.setImageDrawable(imType.context.resources.getDrawable(R.drawable.ic_veg))
-            else imType.setImageDrawable(imType.context.resources.getDrawable(R.drawable.ic_non_veg))
+            if (item.itemModel.isVegetarian) tvItemName.setCompoundDrawablesRelativeWithIntrinsicBounds(R.drawable.ic_veg, 0, 0, 0)
+            else tvItemName.setCompoundDrawablesRelativeWithIntrinsicBounds(R.drawable.ic_non_veg, 0, 0, 0)
 
-            displayQuantity(item.quantity)
-            mCount = item.quantity
-        }
-
-        fun increaseQuantity() {
-            mCount++
-            displayQuantity(mCount)
-
-        }
-
-        fun decreaseQuantity() {
-            if (mCount <= 0)
-                return
-            mCount--
-            displayQuantity(mCount)
-        }
-
-        private fun displayQuantity(number: Int) {
-            tvQuantityNumber.text = number.toString()
+            tvQuantityNumber.text = item.quantity.toString()
         }
     }
 }

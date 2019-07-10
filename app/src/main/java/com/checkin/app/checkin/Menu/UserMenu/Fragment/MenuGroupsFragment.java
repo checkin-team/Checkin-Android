@@ -1,7 +1,6 @@
 package com.checkin.app.checkin.Menu.UserMenu.Fragment;
 
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
@@ -150,7 +149,12 @@ public class MenuGroupsFragment extends BaseFragment implements MenuGroupAdapter
 
     public void scrollToGroup(String title) {
         int pos = mAdapter.getGroupPosition(title);
-        mAdapter.expandView(((MenuGroupAdapter.GroupViewHolder) rvGroupsList.getChildViewHolder(rvGroupsList.getChildAt(pos))));
+        if (rvGroupsList.getLayoutManager() != null) {
+            View v = rvGroupsList.getLayoutManager().findViewByPosition(pos);
+            if (v == null) rvGroupsList.smoothScrollToPosition(pos);
+            else
+                mAdapter.expandView(((MenuGroupAdapter.GroupViewHolder) rvGroupsList.getChildViewHolder(v)));
+        }
     }
 
     @Override
