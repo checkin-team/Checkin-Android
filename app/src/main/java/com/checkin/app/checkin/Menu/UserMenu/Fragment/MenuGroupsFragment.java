@@ -109,9 +109,31 @@ public class MenuGroupsFragment extends BaseFragment implements MenuGroupAdapter
     private void setupGroupRecycler() {
         rvGroupsList.setLayoutManager(new LinearLayoutManager(getContext(), RecyclerView.VERTICAL, false));
 
-        mAdapter = new MenuGroupAdapter(null, getChildFragmentManager(), mListener, this);
+        mAdapter = new MenuGroupAdapter(null, mListener, this);
         mAdapter.setSessionActive(mIsSessionActive);
         rvGroupsList.setAdapter(mAdapter);
+
+        rvGroupsList.addOnScrollListener(new RecyclerView.OnScrollListener() {
+            @Override
+            public void onScrolled(@NonNull RecyclerView recyclerView, int dx, int dy) {
+                super.onScrolled(recyclerView, dx, dy);
+                if (getView() != null) {
+                    Integer topIndex = mAdapter.getTopExpandedGroupPosition();
+                    if (topIndex != null) {
+                        int fullHeight = getView().getHeight();
+                        View view = rvGroupsList.getLayoutManager().findViewByPosition(topIndex);
+                        int groupHeight = view != null ? view.getHeight() : 0;
+                        if (groupHeight < fullHeight)
+                            containerCurrentCategory.setVisibility(View.GONE);
+                        else {
+                            containerCurrentCategory.setVisibility(View.VISIBLE);
+                            if (topIndex != tvCurrentCategory.getId())
+                                tvCurrentCategory.setText(mAdapter.getGroupName(topIndex));
+                        }
+                    } else containerCurrentCategory.setVisibility(View.GONE);
+                }
+            }
+        });
     }
 
     public boolean onBackPressed() {
@@ -128,7 +150,7 @@ public class MenuGroupsFragment extends BaseFragment implements MenuGroupAdapter
 
     public void scrollToGroup(String title) {
         int pos = mAdapter.getGroupPosition(title);
-        rvGroupsList.smoothScrollToPosition(pos);
+        mAdapter.expandView(((MenuGroupAdapter.GroupViewHolder) rvGroupsList.getChildViewHolder(rvGroupsList.getChildAt(pos))));
     }
 
     @Override
@@ -146,7 +168,7 @@ public class MenuGroupsFragment extends BaseFragment implements MenuGroupAdapter
         }
     }
 
-    @OnClick(R.id.tv_as_menu_current_category)
+    @OnClick(R.id.container_as_menu_current_category)
     public void onStickyGroup() {
         mAdapter.contractView();
     }

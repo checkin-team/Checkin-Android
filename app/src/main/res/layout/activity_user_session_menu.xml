@@ -191,8 +191,6 @@
                         android:paddingStart="@dimen/spacing_tiny"
                         android:paddingEnd="@dimen/spacing_small"
                         tools:text="$ 14.784" />
-
-
                 </FrameLayout>
 
                 <ImageView

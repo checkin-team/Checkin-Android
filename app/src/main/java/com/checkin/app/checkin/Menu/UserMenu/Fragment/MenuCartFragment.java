@@ -1,15 +1,12 @@
 package com.checkin.app.checkin.Menu.UserMenu.Fragment;
 
 import android.os.Bundle;
-import android.text.InputType;
 import android.view.View;
 import android.widget.Button;
-import android.widget.EditText;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.appcompat.app.AlertDialog;
 import androidx.lifecycle.ViewModelProviders;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -17,13 +14,15 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.checkin.app.checkin.Data.Resource;
 import com.checkin.app.checkin.Menu.MenuItemInteraction;
 import com.checkin.app.checkin.Menu.Model.OrderedItemModel;
-import com.checkin.app.checkin.Menu.UserMenu.Adapter.MenuTreatYourselfAdapter;
 import com.checkin.app.checkin.Menu.UserMenu.Adapter.MenuCartAdapter;
+import com.checkin.app.checkin.Menu.UserMenu.Adapter.MenuTreatYourselfAdapter;
 import com.checkin.app.checkin.Menu.UserMenu.MenuViewModel;
 import com.checkin.app.checkin.Misc.BaseFragment;
 import com.checkin.app.checkin.R;
 import com.checkin.app.checkin.Utility.Utils;
 import com.checkin.app.checkin.session.model.TrendingDishModel;
+
+import org.jetbrains.annotations.NotNull;
 
 import butterknife.BindView;
 import butterknife.OnClick;
@@ -41,7 +40,6 @@ public class MenuCartFragment extends BaseFragment implements MenuCartAdapter.Me
     Button btnCartProceed;
     @Nullable
     private MenuItemInteraction mListener;
-
 
     private MenuViewModel mViewModel;
     private MenuCartAdapter mCartAdapter;
@@ -69,7 +67,6 @@ public class MenuCartFragment extends BaseFragment implements MenuCartAdapter.Me
         rvTreatYourself.setAdapter(mTreatYourselfAdapter);
 
         mViewModel.getOrderedItems().observe(this, mCartAdapter::setOrderedItems);
-
         mViewModel.getTotalOrderedCount().observe(this, count -> {
             if (count == null)
                 return;
@@ -80,7 +77,6 @@ public class MenuCartFragment extends BaseFragment implements MenuCartAdapter.Me
                 return;
             tvCartSubtotal.setText(Utils.formatCurrencyAmount(requireContext(), subtotal));
         });
-
         mViewModel.getServerOrderedItems().observe(this, resource -> {
             if (resource == null)
                 return;
@@ -127,33 +123,12 @@ public class MenuCartFragment extends BaseFragment implements MenuCartAdapter.Me
     }
 
     @Override
-    public void onOrderedItemRemark(OrderedItemModel item, String s) {
-        if (s.length() > 0)
+    public void onOrderedItemRemark(@NotNull OrderedItemModel item, @NotNull String s) {
+        if (s.length() > 0) {
             item.setRemarks(s);
-        mViewModel.setCurrentItem(item);
-        mViewModel.orderItem();
-    }
-
-    private AlertDialog setupRemarksDialog(OrderedItemModel item) {
-        EditText input = new EditText(requireContext());
-        input.setInputType(InputType.TYPE_CLASS_TEXT);
-        input.setText(item.getRemarks());
-
-        return new AlertDialog.Builder(requireContext())
-                .setTitle("Enter Remarks")
-                .setView(input)
-                .setPositiveButton("OK", (dialog, which) -> {
-                    item.setRemarks(input.getText().toString());
-                    item.setChangeCount(0);
-                    mViewModel.setCurrentItem(item);
-                    mViewModel.orderItem();
-                    input.setText("");
-                })
-                .setNegativeButton("Cancel", (dialog, which) -> {
-                    dialog.cancel();
-                    input.setText("");
-                })
-                .create();
+            mViewModel.setCurrentItem(item);
+            mViewModel.orderItem();
+        }
     }
 
     @OnClick(R.id.im_menu_cart_back)
@@ -163,7 +138,9 @@ public class MenuCartFragment extends BaseFragment implements MenuCartAdapter.Me
 
     public boolean onBackPressed() {
         if (getFragmentManager() != null) {
-            getFragmentManager().popBackStack();
+            getFragmentManager().beginTransaction()
+                    .remove(this)
+                    .commit();
             return true;
         }
         return false;

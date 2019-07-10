@@ -4,8 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_marginBottom="@dimen/spacing_small"
-    android:minHeight="@dimen/height_menu_item">
+    android:layout_marginBottom="@dimen/spacing_menu_item">
 
     <TextView
         android:id="@+id/tv_as_menu_item_name"
@@ -38,8 +37,8 @@
         app:layout_constraintHorizontal_weight="0.8"
         app:layout_constraintStart_toStartOf="@id/tv_as_menu_item_name"
         app:layout_constraintTop_toBottomOf="@id/tv_as_menu_item_name"
-        app:trimLines="1"
         app:selectedMode="line"
+        app:trimLines="1"
         tools:text="description ... " />
 
     <com.checkin.app.checkin.Utility.FadingImageView
@@ -58,10 +57,9 @@
         android:id="@+id/tv_as_menu_item_price"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginEnd="@dimen/spacing_extra_small"
+        android:layout_marginEnd="@dimen/spacing_small"
         android:layout_marginBottom="@dimen/spacing_small"
         android:gravity="end"
-        android:paddingTop="@dimen/spacing_tiny"
         android:textColor="@color/brownish_grey"
         android:textSize="@dimen/font_normal"
         app:layout_constraintEnd_toEndOf="parent"

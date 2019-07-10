@@ -56,7 +56,9 @@
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/rv_menu_groups"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent" />
+                android:layout_height="match_parent"
+                android:clipToPadding="false"
+                android:paddingBottom="@dimen/spacing_incredible" />
 
         </FrameLayout>
 
@@ -65,7 +67,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_gravity="top"
-            android:background="@color/white_alpha"
+            android:background="@color/translucent_pinkish_grey"
             android:padding="@dimen/spacing_extra_small"
             android:visibility="gone">
 
@@ -80,7 +82,7 @@
                 tools:text="Sub category" />
 
             <ImageView
-                android:layout_width="40dp"
+                android:layout_width="15dp"
                 android:layout_height="5dp"
                 android:layout_gravity="center_vertical|end"
                 android:layout_marginEnd="@dimen/spacing_extra_small"

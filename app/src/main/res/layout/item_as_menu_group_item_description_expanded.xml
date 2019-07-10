@@ -4,8 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_marginBottom="@dimen/spacing_small"
-    android:minHeight="@dimen/height_menu_item">
+    android:layout_marginBottom="@dimen/spacing_menu_item">
 
     <TextView
         android:id="@+id/tv_as_menu_item_name"
@@ -58,10 +57,9 @@
         android:id="@+id/tv_as_menu_item_price"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginEnd="@dimen/spacing_extra_small"
+        android:layout_marginEnd="@dimen/spacing_small"
         android:layout_marginBottom="@dimen/spacing_small"
         android:gravity="end"
-        android:paddingTop="@dimen/spacing_tiny"
         android:textColor="@color/brownish_grey"
         android:textSize="@dimen/font_normal"
         app:layout_constraintEnd_toEndOf="parent"
@@ -116,7 +114,6 @@
                 android:background="@drawable/shape_oval_red_stroke"
                 android:gravity="center"
                 android:text="+" />
-
         </LinearLayout>
 
         <TextView

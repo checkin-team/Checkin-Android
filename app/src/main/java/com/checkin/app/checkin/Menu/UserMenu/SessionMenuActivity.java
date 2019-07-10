@@ -16,7 +16,6 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.widget.Toolbar;
 import androidx.lifecycle.ViewModelProviders;
 
-import com.checkin.app.checkin.Data.Resource.Status;
 import com.checkin.app.checkin.Menu.MenuItemInteraction;
 import com.checkin.app.checkin.Menu.Model.MenuItemModel;
 import com.checkin.app.checkin.Menu.ShopMenu.Fragment.MenuInfoFragment;
@@ -70,6 +69,8 @@ public class SessionMenuActivity extends BaseActivity implements MenuItemInterac
     ImageView btnMenuSearch;
     @BindView(R.id.btn_as_menu_filter)
     ImageView btnMenuFilter;
+    @BindView(R.id.tv_as_menu_title)
+    TextView tvMenuTitle;
 
     private MenuGroupsFragment.SESSION_STATUS mSessionStatus;
 
@@ -192,6 +193,8 @@ public class SessionMenuActivity extends BaseActivity implements MenuItemInterac
 
         mViewModel.mOriginalMenuGroups.observe(this, listResource -> {
         });
+
+        mViewModel.getFilteredString().observe(this, it -> tvMenuTitle.setText(it != null ? it : "Menu"));
     }
 
     private void setupMenuFragment() {
@@ -247,7 +250,7 @@ public class SessionMenuActivity extends BaseActivity implements MenuItemInterac
 
     private void setupCart() {
         getSupportFragmentManager().beginTransaction()
-                .replace(R.id.container_as_menu_fragment, mCartFragment)
+                .add(R.id.container_as_menu_fragment, mCartFragment, "cart")
                 .addToBackStack(null)
                 .commit();
     }
@@ -433,7 +436,7 @@ public class SessionMenuActivity extends BaseActivity implements MenuItemInterac
     }
 
     @Override
-    public void sortItems() {
+    public void sortItems(boolean low2high) {
         mViewModel.searchMenuItems("");
         openSearchItems();
     }

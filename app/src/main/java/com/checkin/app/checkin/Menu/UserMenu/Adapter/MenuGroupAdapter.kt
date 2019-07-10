@@ -1,7 +1,7 @@
 package com.checkin.app.checkin.Menu.UserMenu.Adapter
 
 import android.animation.ValueAnimator
-import android.content.Context
+import android.content.res.ColorStateList
 import android.os.Build
 import android.view.LayoutInflater
 import android.view.View
@@ -11,10 +11,9 @@ import android.widget.TextView
 import androidx.annotation.ColorRes
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.constraintlayout.widget.ConstraintSet
-import androidx.fragment.app.FragmentManager
+import androidx.core.widget.ImageViewCompat
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import androidx.transition.ChangeBounds
 import androidx.transition.TransitionManager
 import androidx.viewpager.widget.PagerAdapter
 import androidx.viewpager.widget.ViewPager
@@ -29,7 +28,7 @@ import com.checkin.app.checkin.Utility.GlideApp
 import com.checkin.app.checkin.Utility.Utils
 import com.google.android.material.tabs.TabLayout
 
-class MenuGroupAdapter(private var mGroupList: List<MenuGroupModel>?, private val mFragmentManager: FragmentManager, private val mListener: MenuItemInteraction?, private val mGroupInteractionListener: OnGroupInteractionInterface) : RecyclerView.Adapter<MenuGroupAdapter.GroupViewHolder>() {
+class MenuGroupAdapter(private var mGroupList: List<MenuGroupModel>?, private val mListener: MenuItemInteraction?, private val mGroupInteractionListener: OnGroupInteractionInterface) : RecyclerView.Adapter<MenuGroupAdapter.GroupViewHolder>() {
     private var mPrevExpandedViewHolder: GroupViewHolder? = null
     private lateinit var mRecyclerView: RecyclerView
     private var mIsSessionActive = true
@@ -59,6 +58,8 @@ class MenuGroupAdapter(private var mGroupList: List<MenuGroupModel>?, private va
         mRecyclerView = recyclerView
     }
 
+    override fun getItemId(position: Int): Long = position.toLong()
+
     override fun getItemCount() = mGroupList?.size ?: 0
 
     override fun getItemViewType(position: Int) = R.layout.item_as_menu_group_collapsed
@@ -69,6 +70,12 @@ class MenuGroupAdapter(private var mGroupList: List<MenuGroupModel>?, private va
         indexOfFirst { groupName.contentEquals(it.name) }
     } ?: 0
 
+    fun getTopExpandedGroupPosition(): Int? = (mRecyclerView.layoutManager as LinearLayoutManager).findFirstVisibleItemPosition().let {
+        if (mPrevExpandedViewHolder?.adapterPosition == it) it else null
+    }
+
+    fun getGroupName(idx: Int) = mGroupList?.getOrNull(idx)?.name ?: ""
+
     fun contractView() {
         contractView(mPrevExpandedViewHolder)
     }
@@ -77,14 +84,14 @@ class MenuGroupAdapter(private var mGroupList: List<MenuGroupModel>?, private va
         expandView(mPrevExpandedViewHolder)
     }
 
-    private fun contractView(groupViewHolder: GroupViewHolder?) {
+    fun contractView(groupViewHolder: GroupViewHolder?) {
         if (groupViewHolder != null) {
             groupViewHolder.hide()
             mPrevExpandedViewHolder = null
         }
     }
 
-    private fun expandView(groupViewHolder: GroupViewHolder?) {
+    fun expandView(groupViewHolder: GroupViewHolder?) {
         if (groupViewHolder != null) {
             groupViewHolder.show()
             mPrevExpandedViewHolder = groupViewHolder
@@ -133,8 +140,8 @@ class MenuGroupAdapter(private var mGroupList: List<MenuGroupModel>?, private va
                 Utils.setTabsFont(vTabs, itemView.resources.getFont(R.font.arial_rounded_mt_bold))
             }
 
-            itemView.setOnClickListener { view -> tvGroupName.performClick() }
-            tvGroupName.setOnClickListener { v ->
+            itemView.setOnClickListener { tvGroupName.performClick() }
+            tvGroupName.setOnClickListener {
                 if (this.isExpanded) contractView(this)
                 else {
                     contractView()
@@ -144,12 +151,29 @@ class MenuGroupAdapter(private var mGroupList: List<MenuGroupModel>?, private va
 
             collapsedCs = ConstraintSet().apply { clone(containerMenuGroup) }
             expandedCs = ConstraintSet().apply { clone(itemView.context, R.layout.item_as_menu_group_expanded) }
+
+        }
+
+        internal fun applyState(state: Int, animate: Boolean = true) {
+            when (state) {
+                STATE_EXPANDED -> {
+                    expandedCs.applyTo(containerMenuGroup)
+                    val color = itemView.resources.getColor(R.color.primary_red)
+                    tvGroupName.setTextColor(color)
+                    ImageViewCompat.setImageTintList(imDropDown, ColorStateList.valueOf(color))
+                }
+                STATE_COLLAPSED -> {
+                    collapsedCs.applyTo(containerMenuGroup)
+                    val color = itemView.resources.getColor(R.color.brownish_grey)
+                    tvGroupName.setTextColor(color)
+                    ImageViewCompat.setImageTintList(imDropDown, ColorStateList.valueOf(color))
+                }
+            }
+            if (animate) TransitionManager.beginDelayedTransition(containerMenuGroup)
         }
 
         internal fun bindData(menuGroup: MenuGroupModel) {
             mMenuGroup = menuGroup
-
-//            println(mFragmentManager.fragments)
 
             tvGroupName.text = menuGroup.name
             GlideApp.with(itemView).load(menuGroup.icon).into(imGroupIcon)
@@ -180,22 +204,19 @@ class MenuGroupAdapter(private var mGroupList: List<MenuGroupModel>?, private va
 
         internal fun show() {
             isExpanded = true
-            expandedCs.applyTo(containerMenuGroup)
-            val transition = ChangeBounds()
-            TransitionManager.beginDelayedTransition(containerMenuGroup, transition)
+            applyState(STATE_EXPANDED)
             mGroupInteractionListener.onGroupExpandCollapse(isExpanded, mMenuGroup)
             val scrollAnim = ValueAnimator.ofInt(1, 2, 3, 4)
             scrollAnim.duration = GROUP_ANIMATION_DURATION
             scrollAnim.addUpdateListener {
-                (mRecyclerView.layoutManager as LinearLayoutManager).scrollToPositionWithOffset(adapterPosition, 20)
+                (mRecyclerView.layoutManager as LinearLayoutManager).scrollToPositionWithOffset(adapterPosition, 0)
             }
             scrollAnim.start()
         }
 
         internal fun hide() {
             isExpanded = false
-            collapsedCs.applyTo(containerMenuGroup)
-            TransitionManager.beginDelayedTransition(containerMenuGroup)
+            applyState(STATE_COLLAPSED)
             mGroupInteractionListener.onGroupExpandCollapse(isExpanded, mMenuGroup)
         }
 
@@ -259,5 +280,8 @@ class MenuGroupAdapter(private var mGroupList: List<MenuGroupModel>?, private va
     companion object {
         private val TAG = MenuGroupAdapter::class.java.simpleName
         private val GROUP_ANIMATION_DURATION = 300L
+
+        private val STATE_COLLAPSED = 0
+        private val STATE_EXPANDED = 1
     }
 }

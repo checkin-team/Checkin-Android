@@ -132,7 +132,7 @@ public class ItemCustomizationFragment extends Fragment implements ItemCustomiza
         });
 
         tvItemName.setText(mItem.getName());
-        mViewModel.getItemCost().observe(this, value -> tvBill.setText("Item Total   " + Utils.formatCurrencyAmount(requireContext(), value)));
+        mViewModel.getItemCost().observe(this, value -> tvBill.setText(String.format("Item Total   %s", Utils.formatIntegralCurrencyAmount(requireContext(), value))));
         tvRadioLabel1.setText(mItem.getTypeNames().get(0));
         groupRadio.setVisibility(View.VISIBLE);
         switch (mItem.getTypeNames().size()) {

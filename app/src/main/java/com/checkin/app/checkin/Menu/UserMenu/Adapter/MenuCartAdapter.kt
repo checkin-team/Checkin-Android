@@ -89,11 +89,12 @@ class MenuCartAdapter(private val mListener: MenuCartInteraction) : RecyclerView
         }
 
         fun bindData(item: OrderedItemModel) {
-            try {
-                mItem = item.clone()
-            } catch (e: CloneNotSupportedException) {
-                e.printStackTrace()
-            }
+            mItem = item;
+//            try {
+//                mItem = item.clone()
+//            } catch (e: CloneNotSupportedException) {
+//                e.printStackTrace()
+//            }
 
             tvItemName.text = item.itemModel.name
             tvItemPrice.text = Utils.formatCurrencyAmount(tvItemPrice.context, item.cost)

@@ -125,7 +125,17 @@ public class MenuViewModel extends BaseViewModel {
     }
 
     public void filterMenuGroups(final MenuItemModel.AVAILABLE_MEAL availableMeal) {
-        mFilteredString.setValue(availableMeal.name());
+        switch (availableMeal) {
+            case BREAKFAST:
+                mFilteredString.setValue("Breakfast");
+                break;
+            case LUNCH:
+                mFilteredString.setValue("Lunch");
+                break;
+            case DINNER:
+                mFilteredString.setValue("Dinner");
+                break;
+        }
         LiveData<Resource<List<MenuGroupModel>>> resourceLiveData = Transformations.map(mOriginalMenuGroups, listResource -> {
             if (listResource == null || listResource.getData() == null)
                 return null;
@@ -386,7 +396,7 @@ public class MenuViewModel extends BaseViewModel {
     }
 
     public void sortMenuItems(boolean low2high) {
-        mFilteredString.setValue(low2high ? "Low-High" : "High-Low");
+        mFilteredString.setValue(low2high ? "Low - High" : "High - Low");
         LiveData<Resource<List<MenuItemModel>>> resourceLiveData = Transformations.map(mMenuData, input -> {
             if (input == null || input.getData() == null)
                 return Resource.Companion.loading(null);

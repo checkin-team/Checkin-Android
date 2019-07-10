@@ -93,6 +93,7 @@
         android:layout_marginBottom="@dimen/spacing_extra_small"
         android:rotation="180"
         android:src="@drawable/ic_drop_down_arrow"
+        android:tint="@color/primary_red"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@id/container_as_menu_sub_groups" />

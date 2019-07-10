@@ -5,8 +5,7 @@
     android:id="@+id/card_view"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_marginTop="@dimen/spacing_small"
-    android:minHeight="@dimen/height_menu_item">
+    android:layout_marginBottom="@dimen/spacing_menu_item">
 
     <TextView
         android:id="@+id/tv_as_menu_item_name"
@@ -17,26 +16,27 @@
         android:gravity="start"
         android:maxLines="2"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toStartOf="@id/tv_as_menu_item_price"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/im_as_menu_item"
         tools:text="ITEM TITLE VERY VERY " />
 
     <com.checkin.app.checkin.Utility.ExpandableTextView
         android:id="@+id/tv_as_menu_item_desc"
         style="@style/PinkishGreySmallTextStyle"
-        android:layout_width="wrap_content"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/spacing_tiny"
         android:layout_marginEnd="@dimen/spacing_extra_tiny"
         android:fontFamily="@font/opensans_regular"
         android:gravity="start"
         android:text=""
         app:layout_constraintStart_toStartOf="@id/tv_as_menu_item_name"
         app:layout_constraintTop_toBottomOf="@id/tv_as_menu_item_name"
-        app:trimLines="1"
+        app:layout_constraintEnd_toStartOf="@id/container_as_menu_quantity_picker"
+        app:layout_constraintHorizontal_bias="0"
         app:selectedMode="line"
-        tools:text="description ... " />
+        app:trimLines="1"
+        tools:text="description fshfierhfierh iuewhriewh hweirewirheworihfe whfeihfiehfi ... " />
 
     <com.checkin.app.checkin.Utility.FadingImageView
         android:id="@+id/im_as_menu_item"
@@ -55,13 +55,11 @@
         android:layout_marginEnd="@dimen/spacing_extra_small"
         android:layout_marginBottom="@dimen/spacing_small"
         android:gravity="end"
-        android:paddingTop="@dimen/spacing_tiny"
         android:textColor="@color/brownish_grey"
         android:textSize="@dimen/font_normal"
-        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toStartOf="@id/container_as_menu_quantity_picker"
         app:layout_constraintStart_toEndOf="@id/tv_as_menu_item_name"
-        app:layout_constraintTop_toBottomOf="@id/im_as_menu_item"
+        app:layout_constraintTop_toTopOf="@id/tv_as_menu_item_name"
         tools:text="$ 636" />
 
     <FrameLayout
@@ -69,15 +67,13 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="@dimen/spacing_small"
-        android:layout_marginTop="@dimen/spacing_tiny"
         android:layout_marginEnd="@dimen/spacing_extra_small"
         android:layout_marginBottom="@dimen/spacing_small"
         android:clickable="true"
         android:focusable="true"
-        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@id/tv_as_menu_item_price"
-        app:layout_constraintTop_toBottomOf="@id/im_as_menu_item">
+        app:layout_constraintTop_toTopOf="@id/tv_as_menu_item_price">
 
         <LinearLayout
             android:id="@+id/container_menu_item_quantity"
