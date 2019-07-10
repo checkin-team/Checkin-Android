@@ -76,7 +76,7 @@ class MenuFilterFragment : Fragment() {
                 .create(this, container)
                 .start(view)
 
-//        vDarkBack.post(blurBackRunnable)
+        vDarkBack.post(blurBackRunnable)
 
         return view
     }
@@ -100,7 +100,14 @@ class MenuFilterFragment : Fragment() {
         rvFilterCategories.adapter = mAdapter
 
         mViewModel = ViewModelProviders.of(requireActivity()).get(MenuViewModel::class.java)
-        mViewModel.groupName.observe(this, Observer(mAdapter::setCategories))
+        setupObservers()
+        showFilter()
+    }
+
+    private fun setupObservers() {
+        mViewModel.groupName.observe(this, Observer {
+            if (it != null) mAdapter.setCategories(it)
+        })
         mViewModel.filteredString.observe(this, Observer {
             if (it != null) {
                 containerFilterClear.visibility = View.VISIBLE
@@ -130,7 +137,6 @@ class MenuFilterFragment : Fragment() {
                 containerFilterClear.visibility = View.GONE
             }
         })
-        showFilter()
     }
 
     @OnClick(R.id.container_as_menu_filter_breakfast, R.id.container_as_menu_filter_lunch, R.id.container_as_menu_filter_dinner)

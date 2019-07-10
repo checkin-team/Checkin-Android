@@ -62,13 +62,13 @@ public class WaiterTableViewModel extends BaseViewModel {
 
     public LiveData<Resource<List<WaiterEventModel>>> getActiveTableEvents() {
         return Transformations.map(mEventData, input -> {
-            if (input == null || input.data == null)
+            if (input == null || input.getData() == null)
                 return input;
             List<WaiterEventModel> result = new ArrayList<>();
             List<OrderStatusModel> listNewOrderStatus = new ArrayList<>();
 
-            if (input.status == Resource.Status.SUCCESS) {
-                for (WaiterEventModel eventModel : input.data) {
+            if (input.getStatus() == Resource.Status.SUCCESS) {
+                for (WaiterEventModel eventModel : input.getData()) {
                     if (eventModel.getStatus() == CHAT_STATUS_TYPE.OPEN || eventModel.getStatus() == CHAT_STATUS_TYPE.IN_PROGRESS)
                         result.add(eventModel);
 
@@ -76,7 +76,7 @@ public class WaiterTableViewModel extends BaseViewModel {
 //                        listNewOrderStatus.add(new OrderStatusModel(eventModel.getPk(), IN_PROGRESS));
                 }
 //                mNewOrderStatus.setValue(listNewOrderStatus);
-                return Resource.cloneResource(input, result);
+                return Resource.Companion.cloneResource(input, result);
             }
             return input;
         });
@@ -96,15 +96,15 @@ public class WaiterTableViewModel extends BaseViewModel {
 
     public LiveData<Resource<List<WaiterEventModel>>> getDeliveredTableEvents() {
         return Transformations.map(mEventData, input -> {
-            if (input == null || input.data == null)
+            if (input == null || input.getData() == null)
                 return input;
             List<WaiterEventModel> result = new ArrayList<>();
-            if (input.status == Resource.Status.SUCCESS) {
-                for (WaiterEventModel eventModel : input.data) {
+            if (input.getStatus() == Resource.Status.SUCCESS) {
+                for (WaiterEventModel eventModel : input.getData()) {
                     if (eventModel.getStatus() == CHAT_STATUS_TYPE.DONE)
                         result.add(eventModel);
                 }
-                return Resource.cloneResource(input, result);
+                return Resource.Companion.cloneResource(input, result);
             }
             return input;
         });
@@ -167,119 +167,119 @@ public class WaiterTableViewModel extends BaseViewModel {
 
     public void updateUiMarkEventDone(long eventId) {
         Resource<List<WaiterEventModel>> listResource = mEventData.getValue();
-        if (listResource == null || listResource.data == null)
+        if (listResource == null || listResource.getData() == null)
             return;
         int pos = -1;
-        for (int i = 0, count = listResource.data.size(); i < count; i++) {
-            if (listResource.data.get(i).getPk() == eventId) {
+        for (int i = 0, count = listResource.getData().size(); i < count; i++) {
+            if (listResource.getData().get(i).getPk() == eventId) {
                 pos = i;
                 break;
             }
         }
         if (pos > -1) {
-            WaiterEventModel eventModel = listResource.data.get(pos);
-            listResource.data.remove(pos);
+            WaiterEventModel eventModel = listResource.getData().get(pos);
+            listResource.getData().remove(pos);
             eventModel.setStatus(CHAT_STATUS_TYPE.DONE);
-            listResource.data.add(0, eventModel);
+            listResource.getData().add(0, eventModel);
         }
-        mEventData.setValue(Resource.cloneResource(listResource, listResource.data));
+        mEventData.setValue(Resource.Companion.cloneResource(listResource, listResource.getData()));
     }
 
     public void updateOrderItemStatus(long eventId, CHAT_STATUS_TYPE status) {
         Resource<List<WaiterEventModel>> listResource = mEventData.getValue();
-        if (listResource == null || listResource.data == null)
+        if (listResource == null || listResource.getData() == null)
             return;
         int pos = -1;
-        for (int i = 0, count = listResource.data.size(); i < count; i++) {
-            if (listResource.data.get(i).getPk() == eventId) {
+        for (int i = 0, count = listResource.getData().size(); i < count; i++) {
+            if (listResource.getData().get(i).getPk() == eventId) {
                 pos = i;
                 break;
             }
         }
         if (pos > -1) {
-            WaiterEventModel event = listResource.data.get(pos);
-            listResource.data.remove(pos);
+            WaiterEventModel event = listResource.getData().get(pos);
+            listResource.getData().remove(pos);
             event.setStatus(status);
             if (event.getOrderedItem() != null)
                 event.getOrderedItem().setStatus(status.tag);
-            listResource.data.add(0, event);
+            listResource.getData().add(0, event);
         }
-        mEventData.setValue(Resource.cloneResource(listResource, listResource.data));
+        mEventData.setValue(Resource.Companion.cloneResource(listResource, listResource.getData()));
     }
 
     public void updateUiMarkOrderStatus(OrderStatusModel data) {
         Resource<List<WaiterEventModel>> listResource = mEventData.getValue();
-        if (listResource == null || listResource.data == null)
+        if (listResource == null || listResource.getData() == null)
             return;
         int pos = -1;
-        for (int i = 0, count = listResource.data.size(); i < count; i++) {
-            WaiterEventModel eventModel = listResource.data.get(i);
+        for (int i = 0, count = listResource.getData().size(); i < count; i++) {
+            WaiterEventModel eventModel = listResource.getData().get(i);
             if (eventModel.getOrderedItem() != null && eventModel.getOrderedItem().getPk() == data.getPk()) {
                 pos = i;
                 break;
             }
         }
         if (pos > -1) {
-            WaiterEventModel event = listResource.data.get(pos);
-            listResource.data.remove(pos);
+            WaiterEventModel event = listResource.getData().get(pos);
+            listResource.getData().remove(pos);
             event.setStatus(data.getStatus());
             event.getOrderedItem().setStatus(data.getStatus());
-            listResource.data.add(0, event);
+            listResource.getData().add(0, event);
         }
-        mEventData.setValue(Resource.cloneResource(listResource, listResource.data));
+        mEventData.setValue(Resource.Companion.cloneResource(listResource, listResource.getData()));
     }
 
     public void updateUiOrderListStatus(List<OrderStatusModel> data) {
         Resource<List<WaiterEventModel>> listResource = mEventData.getValue();
-        if (listResource == null || listResource.data == null)
+        if (listResource == null || listResource.getData() == null)
             return;
 
         int pos = -1;
-        for (int i = 0, count = listResource.data.size(); i < count; i++) {
-            WaiterEventModel eventModel = listResource.data.get(i);
+        for (int i = 0, count = listResource.getData().size(); i < count; i++) {
+            WaiterEventModel eventModel = listResource.getData().get(i);
             if (eventModel.getOrderedItem() != null && eventModel.getOrderedItem().getPk() == data.get(0).getPk()) {
                 pos = i;
                 break;
             }
         }
         if (pos > -1) {
-            WaiterEventModel event = listResource.data.get(pos);
-            listResource.data.remove(pos);
+            WaiterEventModel event = listResource.getData().get(pos);
+            listResource.getData().remove(pos);
             event.setStatus(data.get(0).getStatus());
             event.getOrderedItem().setStatus(data.get(0).getStatus());
-            listResource.data.add(0, event);
+            listResource.getData().add(0, event);
         }
-        mEventData.setValue(Resource.cloneResource(listResource, listResource.data));
+        mEventData.setValue(Resource.Companion.cloneResource(listResource, listResource.getData()));
     }
 
     public void initiateCollectCash(double bill, ShopModel.PAYMENT_MODE sessionBillPaymentMode) {
         Resource<SessionBriefModel> resource = mSessionDetail.getValue();
-        if (resource == null || resource.data == null)
+        if (resource == null || resource.getData() == null)
             return;
-        SessionBriefModel data = resource.data;
+        SessionBriefModel data = resource.getData();
         data.setBill(bill);
         data.setPaymentModes(sessionBillPaymentMode.tag);
         data.setRequestedCheckout(true);
-        mSessionDetail.setValue(Resource.cloneResource(resource, data));
+        mSessionDetail.setValue(Resource.Companion.cloneResource(resource, data));
     }
 
     public void addNewEvent(WaiterEventModel waiterEventModel) {
         Resource<List<WaiterEventModel>> listResource = mEventData.getValue();
-        if (listResource == null || listResource.data == null)
+        if (listResource == null || listResource.getData() == null)
             return;
-        for (WaiterEventModel event : listResource.data) {
+        for (WaiterEventModel event : listResource.getData()) {
             if (event.getPk() == waiterEventModel.getPk())
                 return;
         }
-        listResource.data.add(0, waiterEventModel);
-        mEventData.setValue(Resource.cloneResource(listResource, listResource.data));
+        listResource.getData().add(0, waiterEventModel);
+        mEventData.setValue(Resource.Companion.cloneResource(listResource, listResource.getData()));
     }
 
     public void updateMemberCount(int customerCount) {
         Resource<SessionBriefModel> resource = mSessionDetail.getValue();
-        if (resource == null || resource.data == null)
+        if (resource == null || resource.getData() == null)
             return;
-        resource.data.setCustomerCount(customerCount);
-        mSessionDetail.setValue(Resource.cloneResource(resource, resource.data));
+        resource.getData().setCustomerCount(customerCount);
+        mSessionDetail.setValue(Resource.Companion.cloneResource(resource, resource.getData()));
     }
 }

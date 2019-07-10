@@ -67,8 +67,8 @@ public class ShopInsightActivity extends BaseActivity {
         mViewModel.getInsightRevenueDetail().observe(this, shopInsightRevenueModelResource -> {
             if (shopInsightRevenueModelResource == null)
                 return;
-            if (shopInsightRevenueModelResource.status == Resource.Status.SUCCESS && shopInsightRevenueModelResource.data != null) {
-                ShopInsightRevenueModel revenueModel = shopInsightRevenueModelResource.data;
+            if (shopInsightRevenueModelResource.getStatus() == Resource.Status.SUCCESS && shopInsightRevenueModelResource.getData() != null) {
+                ShopInsightRevenueModel revenueModel = shopInsightRevenueModelResource.getData();
                 tvTotalSale.setText(revenueModel.formatSales(this));
                 tvSessionTime.setText(revenueModel.formatAvgSessionTime());
                 tvServingTime.setText(revenueModel.formatAvgServingTime());

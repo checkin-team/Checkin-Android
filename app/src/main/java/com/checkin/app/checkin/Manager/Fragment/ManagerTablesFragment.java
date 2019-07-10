@@ -133,33 +133,33 @@ public class ManagerTablesFragment extends BaseFragment implements ManagerWorkTa
         mViewModel = ViewModelProviders.of(requireActivity()).get(ManagerWorkViewModel.class);
         mViewModel.getActiveTables().observe(this, input -> {
             if (input == null) return;
-            if (input.status == Resource.Status.SUCCESS && input.data != null) {
-                mListData = input.data;
+            if (input.getStatus() == Resource.Status.SUCCESS && input.getData() != null) {
+                mListData = input.getData();
                 updateUi(mListData);
-            } else if (input.status != Resource.Status.LOADING) {
-                Utils.toast(requireContext(), input.message);
+            } else if (input.getStatus() != Resource.Status.LOADING) {
+                Utils.toast(requireContext(), input.getMessage());
 
             }
         });
         mViewModel.getCheckoutData().observe(this, resource -> {
             if (resource == null)
                 return;
-            if (resource.status == Resource.Status.SUCCESS && resource.data != null) {
-                Utils.toast(requireContext(), resource.data.getMessage());
-                if (resource.data.isCheckout())
-                    mViewModel.updateRemoveTable(resource.data.getSessionPk());
+            if (resource.getStatus() == Resource.Status.SUCCESS && resource.getData() != null) {
+                Utils.toast(requireContext(), resource.getData().getMessage());
+                if (resource.getData().isCheckout())
+                    mViewModel.updateRemoveTable(resource.getData().getSessionPk());
                 else
                     mViewModel.updateResults();
-            } else if (resource.status != Resource.Status.LOADING) {
-                Utils.toast(requireContext(), resource.message);
+            } else if (resource.getStatus() != Resource.Status.LOADING) {
+                Utils.toast(requireContext(), resource.getMessage());
             }
         });
         mViewModel.getSessionInitiated().observe(this, qrResultModelResource -> {
             if (qrResultModelResource == null) return;
-            if (qrResultModelResource.status == Resource.Status.SUCCESS && qrResultModelResource.data != null) {
+            if (qrResultModelResource.getStatus() == Resource.Status.SUCCESS && qrResultModelResource.getData() != null) {
                 mViewModel.fetchActiveTables(mViewModel.getShopPk());
             } else {
-                Utils.toast(requireContext(), qrResultModelResource.message);
+                Utils.toast(requireContext(), qrResultModelResource.getMessage());
 
             }
         });

@@ -183,8 +183,8 @@ public class WaiterWorkActivity extends BaseAccountActivity implements
         mViewModel.getWaiterStats().observe(this, resource -> {
             if (resource == null)
                 return;
-            if (resource.status == Status.SUCCESS && resource.data != null) {
-                WaiterStatsModel data = resource.data;
+            if (resource.getStatus() == Status.SUCCESS && resource.getData() != null) {
+                WaiterStatsModel data = resource.getData();
                 Menu menu = getNavAccount().getMenu();
                 try {
                     menu.getItem(0).setTitle(String.format(
@@ -213,12 +213,12 @@ public class WaiterWorkActivity extends BaseAccountActivity implements
         mViewModel.getWaiterTables().observe(this, listResource -> {
             if (listResource == null)
                 return;
-            if (listResource.status == Status.SUCCESS && listResource.data != null) {
+            if (listResource.getStatus() == Status.SUCCESS && listResource.getData() != null) {
                 stopRefreshing();
-                mFragmentAdapter.setTables(tabLayout, listResource.data, this);
+                mFragmentAdapter.setTables(tabLayout, listResource.getData(), this);
                 int index = mFragmentAdapter.getTableIndex(sessionPk);
                 if (index > 0) pagerTables.setCurrentItem(index, true);
-            } else if (listResource.status == Status.LOADING) {
+            } else if (listResource.getStatus() == Status.LOADING) {
                 startRefreshing();
             } else {
                 stopRefreshing();
@@ -228,11 +228,11 @@ public class WaiterWorkActivity extends BaseAccountActivity implements
         mViewModel.getQrResult().observe(this, qrResource -> {
             if (qrResource == null)
                 return;
-            if (qrResource.status == Status.SUCCESS && qrResource.data != null) {
-                addWaiterTable(qrResource.data.getSessionPk(), qrResource.data.getTable());
+            if (qrResource.getStatus() == Status.SUCCESS && qrResource.getData() != null) {
+                addWaiterTable(qrResource.getData().getSessionPk(), qrResource.getData().getTable());
                 mViewModel.fetchShopTables(mViewModel.getShopPk());
-            } else if (qrResource.status != Status.LOADING) {
-                Utils.toast(this, qrResource.message);
+            } else if (qrResource.getStatus() != Status.LOADING) {
+                Utils.toast(this, qrResource.getMessage());
             }
         });
 
@@ -269,21 +269,21 @@ public class WaiterWorkActivity extends BaseAccountActivity implements
         mViewModel.getShopAssignedTables().observe(this, listResource -> {
             if (listResource == null)
                 return;
-            if (listResource.status == Status.SUCCESS && listResource.data != null) {
-                assignedTableAdapter.setData(listResource.data);
+            if (listResource.getStatus() == Status.SUCCESS && listResource.getData() != null) {
+                assignedTableAdapter.setData(listResource.getData());
             }
         });
         mViewModel.getShopUnassignedTables().observe(this, listResource -> {
             if (listResource == null)
                 return;
-            if (listResource.status == Status.SUCCESS && listResource.data != null)
-                unassignedTableAdapter.setData(listResource.data);
+            if (listResource.getStatus() == Status.SUCCESS && listResource.getData() != null)
+                unassignedTableAdapter.setData(listResource.getData());
         });
         mViewModel.getShopInactiveTables().observe(this, listResource -> {
             if (listResource == null)
                 return;
-            if (listResource.status == Status.SUCCESS && listResource.data != null)
-                inactiveTableAdapter.setData(listResource.data);
+            if (listResource.getStatus() == Status.SUCCESS && listResource.getData() != null)
+                inactiveTableAdapter.setData(listResource.getData());
         });
     }
 

@@ -128,28 +128,28 @@ public class ManagerSessionInvoiceActivity extends AppCompatActivity implements 
         mViewModel.getSessionInvoice().observe(this, resource -> {
             if (resource == null)
                 return;
-            if (resource.status == Resource.Status.SUCCESS && resource.data != null) {
-                setupData(resource.data);
+            if (resource.getStatus() == Resource.Status.SUCCESS && resource.getData() != null) {
+                setupData(resource.getData());
             }
         });
         mViewModel.getDetailData().observe(this, resource -> {
             if (resource == null)
                 return;
-            if (resource.status == Resource.Status.SUCCESS && resource.data != null) {
-                Utils.toast(this, resource.data.getDetail());
-            } else if (resource.status != Resource.Status.LOADING) {
-                Utils.toast(this, resource.message);
+            if (resource.getStatus() == Resource.Status.SUCCESS && resource.getData() != null) {
+                Utils.toast(this, resource.getData().getDetail());
+            } else if (resource.getStatus() != Resource.Status.LOADING) {
+                Utils.toast(this, resource.getMessage());
             }
         });
         mViewModel.getCheckoutData().observe(ManagerSessionInvoiceActivity.this, input -> {
             if (input == null)
                 return;
-            if (input.status == Resource.Status.SUCCESS && input.data != null) {
-                Utils.toast(ManagerSessionInvoiceActivity.this, input.data.getMessage());
-                if (input.data.isCheckout()) finish();
+            if (input.getStatus() == Resource.Status.SUCCESS && input.getData() != null) {
+                Utils.toast(ManagerSessionInvoiceActivity.this, input.getData().getMessage());
+                if (input.getData().isCheckout()) finish();
                 else updateRequestCheckoutStatus(true);
-            } else if (input.status != Resource.Status.LOADING) {
-                Utils.toast(this, input.message);
+            } else if (input.getStatus() != Resource.Status.LOADING) {
+                Utils.toast(this, input.getMessage());
             }
         });
 
@@ -158,29 +158,29 @@ public class ManagerSessionInvoiceActivity extends AppCompatActivity implements 
         mViewModel.getSessionContactListData().observe(this, input -> {
             if (input == null)
                 return;
-            if (input.status == Resource.Status.SUCCESS && input.data != null) {
-                if (input.data.size() > 0) {
-                    setupContactData(input.data.get(input.data.size() - 1));
+            if (input.getStatus() == Resource.Status.SUCCESS && input.getData() != null) {
+                if (input.getData().size() > 0) {
+                    setupContactData(input.getData().get(input.getData().size() - 1));
                 }
-            } else if (input.status != Resource.Status.LOADING && input.message != null)
-                Utils.toast(this, input.message);
+            } else if (input.getStatus() != Resource.Status.LOADING && input.getMessage() != null)
+                Utils.toast(this, input.getMessage());
         });
 
         mViewModel.getObservableData().observe(this, input -> {
             if (input == null)
                 return;
-            if (input.status == Resource.Status.SUCCESS && input.data != null) {
+            if (input.getStatus() == Resource.Status.SUCCESS && input.getData() != null) {
                 Utils.toast(this, "Contact updated successfully.");
-            } else if (input.status != Resource.Status.LOADING && input.message != null)
-                Utils.toast(this, input.message);
+            } else if (input.getStatus() != Resource.Status.LOADING && input.getMessage() != null)
+                Utils.toast(this, input.getMessage());
         });
 
         mViewModel.getOrderListStatusData().observe(this, listResource -> {
             if (listResource == null)
                 return;
 
-            if (listResource.status != Resource.Status.LOADING && listResource.data != null) {
-                Utils.toast(this, listResource.message);
+            if (listResource.getStatus() != Resource.Status.LOADING && listResource.getData() != null) {
+                Utils.toast(this, listResource.getMessage());
             }
         });
 

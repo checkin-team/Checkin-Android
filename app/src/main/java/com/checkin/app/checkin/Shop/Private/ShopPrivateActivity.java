@@ -59,13 +59,13 @@ public class ShopPrivateActivity extends BaseAccountActivity {
         mViewModel.getShopData().observe(this, restaurantModelResource -> {
             if (restaurantModelResource == null)
                 return;
-            if (restaurantModelResource.status == Resource.Status.SUCCESS && restaurantModelResource.data != null) {
+            if (restaurantModelResource.getStatus() == Resource.Status.SUCCESS && restaurantModelResource.getData() != null) {
                 stopRefreshing();
-            } else if (restaurantModelResource.status == Resource.Status.LOADING) {
+            } else if (restaurantModelResource.getStatus() == Resource.Status.LOADING) {
                 startRefreshing();
             } else {
                 stopRefreshing();
-                Utils.toast(this, restaurantModelResource.message);
+                Utils.toast(this, restaurantModelResource.getMessage());
             }
         });
 

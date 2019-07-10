@@ -60,17 +60,17 @@ public class ShopInsightLoyaltyProgramFragment extends BaseFragment {
         mViewModel.getShopActivePromos().observe(this, listResource -> {
             if (listResource == null)
                 return;
-            if (listResource.status == Resource.Status.SUCCESS && listResource.data != null)
-                mAdapter.setData(listResource.data);
-            else if (listResource.status != Resource.Status.LOADING)
-                Utils.toast(requireContext(), listResource.message);
+            if (listResource.getStatus() == Resource.Status.SUCCESS && listResource.getData() != null)
+                mAdapter.setData(listResource.getData());
+            else if (listResource.getStatus() != Resource.Status.LOADING)
+                Utils.toast(requireContext(), listResource.getMessage());
         });
 
         mViewModel.getInsightLoyaltyDetail().observe(this, shopInsightLoyaltyProgramModelResource -> {
             if (shopInsightLoyaltyProgramModelResource == null)
                 return;
-            if (shopInsightLoyaltyProgramModelResource.status == Resource.Status.SUCCESS && shopInsightLoyaltyProgramModelResource.data != null)
-                tvDiscount.setText(String.format(Locale.ENGLISH, Utils.getCurrencyFormat(tvDiscount.getContext()), shopInsightLoyaltyProgramModelResource.data.getDiscounts()));
+            if (shopInsightLoyaltyProgramModelResource.getStatus() == Resource.Status.SUCCESS && shopInsightLoyaltyProgramModelResource.getData() != null)
+                tvDiscount.setText(String.format(Locale.ENGLISH, Utils.getCurrencyFormat(tvDiscount.getContext()), shopInsightLoyaltyProgramModelResource.getData().getDiscounts()));
         });
     }
 }

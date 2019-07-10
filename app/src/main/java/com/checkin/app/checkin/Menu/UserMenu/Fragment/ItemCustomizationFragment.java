@@ -18,21 +18,21 @@ import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.TextView;
 
-import com.checkin.app.checkin.Menu.Model.MenuItemModel;
-import com.checkin.app.checkin.Menu.UserMenu.ItemCustomizationGroupHolder;
-import com.checkin.app.checkin.Menu.Model.ItemCustomizationFieldModel;
-import com.checkin.app.checkin.Menu.Model.ItemCustomizationGroupModel;
-import com.checkin.app.checkin.Menu.UserMenu.MenuViewModel;
-import com.checkin.app.checkin.R;
-import com.checkin.app.checkin.Utility.RSBlurProcessor;
-import com.checkin.app.checkin.Utility.Utils;
-
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.constraintlayout.widget.ConstraintSet;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProviders;
+
+import com.checkin.app.checkin.Menu.Model.ItemCustomizationFieldModel;
+import com.checkin.app.checkin.Menu.Model.ItemCustomizationGroupModel;
+import com.checkin.app.checkin.Menu.Model.MenuItemModel;
+import com.checkin.app.checkin.Menu.UserMenu.ItemCustomizationGroupHolder;
+import com.checkin.app.checkin.Menu.UserMenu.MenuViewModel;
+import com.checkin.app.checkin.R;
+import com.checkin.app.checkin.Utility.RSBlurProcessor;
+import com.checkin.app.checkin.Utility.Utils;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -87,6 +87,12 @@ public class ItemCustomizationFragment extends Fragment implements ItemCustomiza
     private MenuItemModel mItem;
     private ItemCustomizationInteraction mInteractionListener;
 
+    private Runnable blurBackRunnable = () -> {
+        View bgView = requireActivity().findViewById(android.R.id.content);
+        RenderScript renderScript = RenderScript.create(requireContext());
+        vDarkBack.setImageBitmap(new RSBlurProcessor(renderScript).blur(Utils.getBitmapFromView(bgView), 25f, 1));
+    };
+
     public ItemCustomizationFragment() {
         // Required empty public constructor
     }
@@ -103,10 +109,7 @@ public class ItemCustomizationFragment extends Fragment implements ItemCustomiza
         final View rootView = inflater.inflate(R.layout.fragment_as_menu_item_customization, container, false);
         unbinder = ButterKnife.bind(this, rootView);
 
-        View bgView = getActivity().findViewById(R.id.container_as_menu_parent);
-        RenderScript renderScript = RenderScript.create(requireContext());
-        vDarkBack.setImageBitmap(new RSBlurProcessor(renderScript).blur(Utils.getBitmapFromView(bgView), 25, 1));
-
+        rootView.post(blurBackRunnable);
 
         return rootView;
     }
@@ -193,7 +196,6 @@ public class ItemCustomizationFragment extends Fragment implements ItemCustomiza
         anim.setAnimationListener(new Animation.AnimationListener() {
             @Override
             public void onAnimationStart(Animation animation) {
-
             }
 
             @Override
@@ -207,7 +209,6 @@ public class ItemCustomizationFragment extends Fragment implements ItemCustomiza
 
             @Override
             public void onAnimationRepeat(Animation animation) {
-
             }
         });
         vMenuCustomizations.startAnimation(anim);
@@ -215,14 +216,13 @@ public class ItemCustomizationFragment extends Fragment implements ItemCustomiza
     }
 
     private void hideViews(View... views) {
-        for (View v : views) {
-            v.setVisibility(View.GONE);
-        }
+        for (View v : views) v.setVisibility(View.GONE);
     }
 
     @Override
     public void onDestroy() {
         super.onDestroy();
+        if (getView() != null) getView().removeCallbacks(blurBackRunnable);
         unbinder.unbind();
     }
 

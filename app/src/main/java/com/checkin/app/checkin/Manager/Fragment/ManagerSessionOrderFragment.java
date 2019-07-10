@@ -99,12 +99,12 @@ public class ManagerSessionOrderFragment extends BaseFragment implements Manager
         mViewModel = ViewModelProviders.of(requireActivity()).get(ManagerSessionViewModel.class);
 
         mViewModel.getOpenOrders().observe(this, listResource -> {
-            if (listResource == null || listResource.data == null)
+            if (listResource == null || listResource.getData() == null)
                 return;
-            switch (listResource.status) {
+            switch (listResource.getStatus()) {
                 case SUCCESS:
-                    if (listResource.data.size() > 0) {
-                        mAdapterNew.setData(listResource.data);
+                    if (listResource.getData().size() > 0) {
+                        mAdapterNew.setData(listResource.getData());
                         titleNewHeader.setVisibility(View.VISIBLE);
                         rvOrdersNew.setVisibility(View.VISIBLE);
                         nestedSVOrder.scrollTo(0, 0);
@@ -119,17 +119,17 @@ public class ManagerSessionOrderFragment extends BaseFragment implements Manager
                     break;
                 default:
                     stopRefreshing();
-                    Utils.toast(requireContext(), listResource.message);
+                    Utils.toast(requireContext(), listResource.getMessage());
             }
         });
 
         mViewModel.getAcceptedOrders().observe(this, listResource -> {
-            if (listResource == null || listResource.data == null)
+            if (listResource == null || listResource.getData() == null)
                 return;
-            switch (listResource.status) {
+            switch (listResource.getStatus()) {
                 case SUCCESS:
-                    if (listResource.data.size() > 0) {
-                        mAdapterAccepted.setData(listResource.data);
+                    if (listResource.getData().size() > 0) {
+                        mAdapterAccepted.setData(listResource.getData());
                         titleInProgressHeader.setVisibility(View.VISIBLE);
                         rvOrdersAccepted.setVisibility(View.VISIBLE);
                     } else {
@@ -142,14 +142,14 @@ public class ManagerSessionOrderFragment extends BaseFragment implements Manager
         });
 
         mViewModel.getDeliveredRejectedOrders().observe(this, listResource -> {
-            if (listResource == null || listResource.data == null)
+            if (listResource == null || listResource.getData() == null)
                 return;
-            switch (listResource.status) {
+            switch (listResource.getStatus()) {
                 case SUCCESS:
-                    if (listResource.data.size() > 0) {
+                    if (listResource.getData().size() > 0) {
                         titleDeliveredHeader.setVisibility(View.VISIBLE);
                         rvOrdersDelivered.setVisibility(View.VISIBLE);
-                        mAdapterDeliveredRejected.setData(listResource.data);
+                        mAdapterDeliveredRejected.setData(listResource.getData());
                     } else {
                         titleDeliveredHeader.setVisibility(View.GONE);
                         rvOrdersDelivered.setVisibility(View.GONE);
@@ -163,16 +163,16 @@ public class ManagerSessionOrderFragment extends BaseFragment implements Manager
         mViewModel.getOrderStatusData().observe(this, resource -> {
             if (resource == null)
                 return;
-            switch (resource.status) {
+            switch (resource.getStatus()) {
                 case SUCCESS: {
-                    mViewModel.updateUiOrderStatus(resource.data);
+                    mViewModel.updateUiOrderStatus(resource.getData());
                     nestedSVOrder.scrollTo(0, 0);
                     break;
                 }
                 case LOADING:
                     break;
                 default: {
-                    Utils.toast(requireContext(), resource.message);
+                    Utils.toast(requireContext(), resource.getMessage());
                 }
             }
         });
@@ -180,16 +180,16 @@ public class ManagerSessionOrderFragment extends BaseFragment implements Manager
         mViewModel.getOrderListStatusData().observe(this, listResource -> {
             if (listResource == null)
                 return;
-            switch (listResource.status) {
+            switch (listResource.getStatus()) {
                 case SUCCESS: {
-                    mViewModel.updateUiOrderListStatus(listResource.data);
+                    mViewModel.updateUiOrderListStatus(listResource.getData());
                     nestedSVOrder.scrollTo(0, 0);
                     break;
                 }
                 case LOADING:
                     break;
                 default: {
-                    Utils.toast(requireContext(), listResource.message);
+                    Utils.toast(requireContext(), listResource.getMessage());
                 }
             }
         });

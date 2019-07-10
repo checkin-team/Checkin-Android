@@ -75,21 +75,21 @@ public class UserPrivateProfileFragment extends BaseFragment {
         mViewModel.getUserData().observe(this, resource -> {
             if (resource == null)
                 return;
-            if (resource.status == Status.SUCCESS && resource.data != null) {
-                setupData(resource.data);
-            } else if (resource.status == Status.LOADING) {
+            if (resource.getStatus() == Status.SUCCESS && resource.getData() != null) {
+                setupData(resource.getData());
+            } else if (resource.getStatus() == Status.LOADING) {
 
             } else {
-                Utils.toast(requireContext(), "Error: " + resource.message);
+                Utils.toast(requireContext(), "Error: " + resource.getMessage());
             }
         });
 
         mViewModel.getUserRecentCheckinsData().observe(this, input -> {
             if (input == null)
                 return;
-            if (input.status == Status.SUCCESS && input.data != null) {
-                if (input.data.size() > 0) {
-                    mUserCheckinAdapter.setUserCheckinsData(input.data);
+            if (input.getStatus() == Status.SUCCESS && input.getData() != null) {
+                if (input.getData().size() > 0) {
+                    mUserCheckinAdapter.setUserCheckinsData(input.getData());
                 }
             }
         });
@@ -97,12 +97,12 @@ public class UserPrivateProfileFragment extends BaseFragment {
         mViewModel.getImageUploadResult().observe(this, voidResource -> {
             if (voidResource == null)
                 return;
-            switch (voidResource.status) {
+            switch (voidResource.getStatus()) {
                 case SUCCESS:
                     mViewModel.updateResults();
                     break;
                 case ERROR_UNKNOWN:
-                    Utils.toast(requireContext(), voidResource.message);
+                    Utils.toast(requireContext(), voidResource.getMessage());
                     break;
             }
         });

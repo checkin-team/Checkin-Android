@@ -83,31 +83,31 @@ public class WaiterTableFragment extends BaseFragment {
         mViewModel.getSessionDetail().observe(this, resource -> {
             if (resource == null)
                 return;
-            if (resource.status == Status.SUCCESS && resource.data != null) {
-                setupTableData(resource.data);
-            } else if (resource.status == Status.ERROR_NOT_FOUND) {
+            if (resource.getStatus() == Status.SUCCESS && resource.getData() != null) {
+                setupTableData(resource.getData());
+            } else if (resource.getStatus() == Status.ERROR_NOT_FOUND) {
                 mListener.endSession(mViewModel.getSessionPk());
             }
         });
         mViewModel.getCheckoutData().observe(this, resource -> {
             if (resource == null)
                 return;
-            if (resource.status == Status.SUCCESS && resource.data != null) {
-                Utils.toast(requireContext(), resource.data.getMessage());
-                if (resource.data.isCheckout()) {
+            if (resource.getStatus() == Status.SUCCESS && resource.getData() != null) {
+                Utils.toast(requireContext(), resource.getData().getMessage());
+                if (resource.getData().isCheckout()) {
                     mListener.endSession(mViewModel.getSessionPk());
                 }
-            } else if (resource.status != Status.LOADING && resource.message != null) {
-                Utils.toast(requireContext(), resource.message);
+            } else if (resource.getStatus() != Status.LOADING && resource.getMessage() != null) {
+                Utils.toast(requireContext(), resource.getMessage());
             }
         });
         mViewModel.getObservableData().observe(this, input -> {
             if (input == null)
                 return;
-            if (input.status == Status.SUCCESS && input.data != null)
+            if (input.getStatus() == Status.SUCCESS && input.getData() != null)
                 Utils.toast(requireContext(), "User contact details added successfully.");
-            else if (input.status != Status.LOADING && input.message != null)
-                Utils.toast(requireContext(), input.message);
+            else if (input.getStatus() != Status.LOADING && input.getMessage() != null)
+                Utils.toast(requireContext(), input.getMessage());
         });
 
         mViewModel.fetchSessionContacts();
@@ -115,12 +115,12 @@ public class WaiterTableFragment extends BaseFragment {
         mViewModel.getSessionContactListData().observe(this, input -> {
             if (input == null)
                 return;
-            if (input.status == Status.SUCCESS && input.data != null) {
-                if (input.data.size() > 0) {
-                    setupContactData(input.data.get(input.data.size() - 1));
+            if (input.getStatus() == Status.SUCCESS && input.getData() != null) {
+                if (input.getData().size() > 0) {
+                    setupContactData(input.getData().get(input.getData().size() - 1));
                 }
-            } else if (input.status != Status.LOADING && input.message != null)
-                Utils.toast(requireContext(), input.message);
+            } else if (input.getStatus() != Status.LOADING && input.getMessage() != null)
+                Utils.toast(requireContext(), input.getMessage());
         });
     }
 

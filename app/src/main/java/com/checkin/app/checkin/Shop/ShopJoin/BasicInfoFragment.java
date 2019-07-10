@@ -74,9 +74,9 @@ public class BasicInfoFragment extends Fragment {
         mViewModel.getJoinResults().observe(this, resource -> {
             if (resource == null)
                 return;
-            if (resource.status == Resource.Status.SUCCESS && resource.data != null) {
-                mInteractionListener.onShopRegistered(resource.data);
-            } else if (resource.status == Resource.Status.ERROR_INVALID_REQUEST) {
+            if (resource.getStatus() == Resource.Status.SUCCESS && resource.getData() != null) {
+                mInteractionListener.onShopRegistered(resource.getData());
+            } else if (resource.getStatus() == Resource.Status.ERROR_INVALID_REQUEST) {
                 JsonNode error = resource.getErrorBody();
                 if (error != null && error.has("gstin")) {
                     JsonNode gstinNode = error.get("gstin");

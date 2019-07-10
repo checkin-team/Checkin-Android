@@ -1,11 +1,8 @@
 package com.checkin.app.checkin.session.model;
 
-import com.checkin.app.checkin.session.activesession.ActiveSessionTrendingDishAdapter;
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
-import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -44,9 +41,6 @@ public class TrendingDishModel {
 
     @JsonProperty("image")
     private String image;
-
-    @JsonIgnore
-    private ActiveSessionTrendingDishAdapter.ViewHolder holder;
 
     public TrendingDishModel() {
     }
@@ -146,11 +140,6 @@ public class TrendingDishModel {
 
     public void setAvailable(boolean available) {
         isAvailable = available;
-    }
-
-    @JsonIgnore
-    public void setItemHolder(ActiveSessionTrendingDishAdapter.ViewHolder holder) {
-        this.holder = holder;
     }
 
     public boolean hasCustomizations() {

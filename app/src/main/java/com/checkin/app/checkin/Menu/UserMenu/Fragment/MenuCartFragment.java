@@ -84,12 +84,12 @@ public class MenuCartFragment extends BaseFragment implements MenuCartAdapter.Me
         mViewModel.getServerOrderedItems().observe(this, resource -> {
             if (resource == null)
                 return;
-            if (resource.status == Resource.Status.SUCCESS) {
+            if (resource.getStatus() == Resource.Status.SUCCESS) {
                 Utils.toast(requireContext(), "Confirmed orders!");
                 requireActivity().finish();
-            } else if (resource.status == Resource.Status.LOADING) {
+            } else if (resource.getStatus() == Resource.Status.LOADING) {
             } else {
-                Utils.toast(requireContext(), resource.message);
+                Utils.toast(requireContext(), resource.getMessage());
                 btnCartProceed.setEnabled(true);
             }
         });
@@ -98,8 +98,8 @@ public class MenuCartFragment extends BaseFragment implements MenuCartAdapter.Me
             if (inventoryItemModels == null)
                 return;
 
-            if (inventoryItemModels.status == Resource.Status.SUCCESS && inventoryItemModels.data != null)
-                mTreatYourselfAdapter.setData(inventoryItemModels.data);
+            if (inventoryItemModels.getStatus() == Resource.Status.SUCCESS && inventoryItemModels.getData() != null)
+                mTreatYourselfAdapter.setData(inventoryItemModels.getData());
         });
     }
 

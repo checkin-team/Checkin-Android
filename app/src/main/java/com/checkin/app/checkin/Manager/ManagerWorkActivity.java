@@ -157,21 +157,21 @@ public class ManagerWorkActivity extends BaseAccountActivity implements ManagerT
 
         mViewModel.getActiveTables().observe(this, input -> {
             if (input == null) return;
-            if (input.status == Resource.Status.SUCCESS && input.data != null) {
+            if (input.getStatus() == Resource.Status.SUCCESS && input.getData() != null) {
                 stopRefreshing();
-            } else if (input.status == Resource.Status.LOADING)
+            } else if (input.getStatus() == Resource.Status.LOADING)
                 startRefreshing();
             else {
                 stopRefreshing();
-                Utils.toast(this, input.message);
+                Utils.toast(this, input.getMessage());
             }
         });
 
         mViewModel.getInactiveTables().observe(this, listResource -> {
             if (listResource == null)
                 return;
-            if (listResource.status == Resource.Status.SUCCESS && listResource.data != null)
-                mInactiveAdapter.setData(listResource.data);
+            if (listResource.getStatus() == Resource.Status.SUCCESS && listResource.getData() != null)
+                mInactiveAdapter.setData(listResource.getData());
         });
     }
 

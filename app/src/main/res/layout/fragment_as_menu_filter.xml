@@ -66,10 +66,7 @@
                     android:id="@+id/container_as_filter_sort"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_centerInParent="true"
-                    android:layout_gravity="center"
-                    android:layout_marginEnd="@dimen/spacing_small"
-                    android:layout_marginBottom="@dimen/spacing_small">
+                    android:layout_centerInParent="true">
 
                     <LinearLayout
                         android:layout_width="wrap_content"
@@ -89,7 +86,7 @@
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:button="@null"
-                                android:drawableRight="@drawable/radiobutton_selector"
+                                android:drawableEnd="@drawable/radiobutton_small_selector"
                                 android:drawablePadding="@dimen/spacing_extra_small"
                                 android:fontFamily="@font/opensans_semibold"
                                 android:gravity="center"
@@ -103,14 +100,12 @@
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:button="@null"
-                                android:drawableRight="@drawable/radiobutton_selector"
+                                android:drawableEnd="@drawable/radiobutton_small_selector"
                                 android:drawablePadding="@dimen/spacing_extra_small"
                                 android:fontFamily="@font/opensans_semibold"
                                 android:paddingTop="@dimen/spacing_extra_small"
                                 android:text="High to Low"
                                 android:textSize="@dimen/font_extra_small" />
-
-
                         </RadioGroup>
 
                     </LinearLayout>
@@ -140,22 +135,14 @@
                     android:layout_marginTop="@dimen/spacing_normal"
                     android:orientation="vertical">
 
-                    <androidx.core.widget.NestedScrollView
-                        android:layout_width="wrap_content"
+                    <androidx.recyclerview.widget.RecyclerView
+                        android:id="@+id/rv_as_menu_groups"
+                        android:layout_width="match_parent"
                         android:layout_height="0dp"
-                        android:layout_marginEnd="@dimen/spacing_extra_tiny"
+                        android:layout_marginEnd="@dimen/spacing_small"
                         android:layout_weight="1"
-                        android:fillViewport="true"
-                        android:scrollbars="vertical">
-
-                        <androidx.recyclerview.widget.RecyclerView
-                            android:id="@+id/rv_as_menu_groups"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginEnd="@dimen/spacing_normal"
-                            android:nestedScrollingEnabled="false" />
-
-                    </androidx.core.widget.NestedScrollView>
+                        android:overScrollMode="never"
+                        android:scrollbars="vertical" />
 
                     <ImageView
                         android:layout_width="@dimen/size_extra_small_button"

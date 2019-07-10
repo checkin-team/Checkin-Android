@@ -56,10 +56,10 @@ public class LogoCoverActivity extends AppCompatActivity implements ShopCoverAda
         mViewModel.getObservableData().observe(this, resource -> {
             if (resource == null)
                 return;
-            if (resource.status == Resource.Status.SUCCESS && resource.data != null) {
-                Utils.toast(this, resource.data.get("detail").asText());
-            } else if (resource.status != Resource.Status.LOADING) {
-                Utils.toast(this, resource.message);
+            if (resource.getStatus() == Resource.Status.SUCCESS && resource.getData() != null) {
+                Utils.toast(this, resource.getData().get("detail").asText());
+            } else if (resource.getStatus() != Resource.Status.LOADING) {
+                Utils.toast(this, resource.getMessage());
             }
         });
     }

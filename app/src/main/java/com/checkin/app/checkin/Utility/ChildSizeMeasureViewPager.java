@@ -42,7 +42,7 @@ public class ChildSizeMeasureViewPager extends ViewPager {
     int getChildHeight(int pos, int widthMeasureSpec) {
         View child = getChildAt(pos);
         if (child != null) {
-            child.getViewTreeObserver().addOnPreDrawListener(new ViewTreeObserver.OnPreDrawListener() {
+            /*child.getViewTreeObserver().addOnPreDrawListener(new ViewTreeObserver.OnPreDrawListener() {
                 @Override
                 public boolean onPreDraw() {
                     child.getViewTreeObserver().removeOnPreDrawListener(this);
@@ -50,7 +50,7 @@ public class ChildSizeMeasureViewPager extends ViewPager {
                     Log.e("PreDraw", "Height: " + child.getHeight());
                     return true;
                 }
-            });
+            });*/
 
             child.measure(widthMeasureSpec, MeasureSpec.makeMeasureSpec(0, MeasureSpec.UNSPECIFIED));
             return child.getMeasuredHeight();

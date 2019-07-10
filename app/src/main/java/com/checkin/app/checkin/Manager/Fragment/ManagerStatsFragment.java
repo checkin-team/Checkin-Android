@@ -66,10 +66,10 @@ public class ManagerStatsFragment extends BaseFragment {
         mViewModel.getRestaurantStatistics().observe(this, input -> {
             if (input == null)
                 return;
-            if (input.status == Resource.Status.SUCCESS && input.data != null) {
-                setupData(input.data);
-            } else if (input.status != Resource.Status.LOADING) {
-                Utils.toast(requireContext(), input.message);
+            if (input.getStatus() == Resource.Status.SUCCESS && input.getData() != null) {
+                setupData(input.getData());
+            } else if (input.getStatus() != Resource.Status.LOADING) {
+                Utils.toast(requireContext(), input.getMessage());
             }
         });
     }

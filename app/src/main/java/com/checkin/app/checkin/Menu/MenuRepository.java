@@ -17,6 +17,7 @@ import com.checkin.app.checkin.Data.WebApiService;
 import com.checkin.app.checkin.Menu.Model.MenuModel;
 import com.checkin.app.checkin.Menu.Model.MenuModel_;
 import com.checkin.app.checkin.Menu.Model.OrderedItemModel;
+import com.checkin.app.checkin.session.model.TrendingDishModel;
 import com.fasterxml.jackson.databind.node.ArrayNode;
 
 import java.util.List;
@@ -119,6 +120,26 @@ public class MenuRepository {
             @Override
             protected void saveCallResult(ArrayNode data) {
 
+            }
+        }.getAsLiveData();
+    }
+
+    public LiveData<Resource<List<TrendingDishModel>>> getRecommendedDishes(long restaurantId) {
+        return new NetworkBoundResource<List<TrendingDishModel>, List<TrendingDishModel>>() {
+
+            @Override
+            protected void saveCallResult(List<TrendingDishModel> data) {
+            }
+
+            @Override
+            protected boolean shouldUseLocalDb() {
+                return false;
+            }
+
+            @NonNull
+            @Override
+            protected LiveData<ApiResponse<List<TrendingDishModel>>> createCall() {
+                return new RetrofitLiveData<>(mWebService.getRestaurantRecommendedItems(restaurantId));
             }
         }.getAsLiveData();
     }

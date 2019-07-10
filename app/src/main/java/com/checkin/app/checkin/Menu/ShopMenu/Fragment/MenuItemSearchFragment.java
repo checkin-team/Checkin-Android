@@ -70,15 +70,15 @@ public class MenuItemSearchFragment extends BaseSearchFragment implements MenuIt
         mViewModel.getFilteredMenuItems().observe(this, listResource -> {
             if (listResource == null)
                 return;
-            if (listResource.status == Status.SUCCESS && listResource.data != null) {
-                mAdapter.setMenuItems(listResource.data);
+            if (listResource.getStatus() == Status.SUCCESS && listResource.getData() != null) {
+                mAdapter.setMenuItems(listResource.getData());
                 this.hideLoadProgress();
-            } else if (listResource.status == Status.LOADING) {
+            } else if (listResource.getStatus() == Status.LOADING) {
                 this.showLoadProgress();
                 this.resetResults();
-            } else if (listResource.status == Status.ERROR_NOT_FOUND) {
+            } else if (listResource.getStatus() == Status.ERROR_NOT_FOUND) {
                 this.noResultFound();
-            } else if (listResource.status == Status.NO_REQUEST) {
+            } else if (listResource.getStatus() == Status.NO_REQUEST) {
                 this.resetResults();
             }
         });

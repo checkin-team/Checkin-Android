@@ -64,17 +64,17 @@ public class MenuGroupsFragment extends BaseFragment {
         mViewModel.getMenuGroups().observe(this, menuGroupResource -> {
             if (menuGroupResource == null)
                 return;
-            if (menuGroupResource.status == Resource.Status.SUCCESS && !menuGroupResource.isCached()) {
-                mAdapter.setGroupList(menuGroupResource.data);
+            if (menuGroupResource.getStatus() == Resource.Status.SUCCESS && !menuGroupResource.isCached()) {
+                mAdapter.setGroupList(menuGroupResource.getData());
                 stopRefreshing();
-                setupData(menuGroupResource.data);
-            } else if (menuGroupResource.status == Resource.Status.LOADING) {
+                setupData(menuGroupResource.getData());
+            } else if (menuGroupResource.getStatus() == Resource.Status.LOADING) {
                 startRefreshing();
-                if (!mAdapter.hasData() && menuGroupResource.data != null)
-                    setupData(menuGroupResource.data);
+                if (!mAdapter.hasData() && menuGroupResource.getData() != null)
+                    setupData(menuGroupResource.getData());
             } else {
                 stopRefreshing();
-                Utils.toast(requireContext(), menuGroupResource.message);
+                Utils.toast(requireContext(), menuGroupResource.getMessage());
             }
         });
 

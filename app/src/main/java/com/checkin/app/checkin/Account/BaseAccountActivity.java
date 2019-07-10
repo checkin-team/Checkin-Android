@@ -78,8 +78,8 @@ public abstract class BaseAccountActivity extends BaseActivity {
         mViewModel.getAccounts().observe(this, listResource -> {
             if (listResource == null)
                 return;
-            if (listResource.status == Resource.Status.SUCCESS && listResource.data != null) {
-                List<AccountModel> accounts = listResource.data;
+            if (listResource.getStatus() == Resource.Status.SUCCESS && listResource.getData() != null) {
+                List<AccountModel> accounts = listResource.getData();
                 mAccountAdapter.setData(accounts);
 
                 for (ACCOUNT_TYPE accountType : accountTypes) {

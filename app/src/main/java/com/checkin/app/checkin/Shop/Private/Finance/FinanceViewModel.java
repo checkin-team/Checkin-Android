@@ -34,8 +34,8 @@ public class FinanceViewModel extends BaseViewModel {
 
     public void updateDiscountPercent(double discount) {
         Resource<FinanceModel> resource = mGetFinanceMediatorLiveData.getValue();
-        if (resource != null && resource.status == Resource.Status.SUCCESS && resource.data != null) {
-            FinanceModel data = resource.data;
+        if (resource != null && resource.getStatus() == Resource.Status.SUCCESS && resource.getData() != null) {
+            FinanceModel data = resource.getData();
             data.setDiscountPercent(discount);
             setRestaurantFinanceById(data, restaurantId);
         }

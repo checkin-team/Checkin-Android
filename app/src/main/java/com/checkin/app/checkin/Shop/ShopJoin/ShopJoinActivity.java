@@ -59,8 +59,8 @@ public class ShopJoinActivity extends BaseActivity implements
         mShopViewModel.getObservableData().observe(this, resource -> {
             if (resource == null)
                 return;
-            if (resource.status == Resource.Status.SUCCESS && resource.data != null) {
-                long pk = resource.data.get("pk").longValue();
+            if (resource.getStatus() == Resource.Status.SUCCESS && resource.getData() != null) {
+                long pk = resource.getData().get("pk").longValue();
                 finishSignup(pk);
             } else {
                 mShopViewModel.showError(resource.getErrorBody());
@@ -70,10 +70,10 @@ public class ShopJoinActivity extends BaseActivity implements
         mJoinViewModel.getJoinResults().observe(this, genericDetailModelResource -> {
             if (genericDetailModelResource == null)
                 return;
-            if (genericDetailModelResource.status == Resource.Status.SUCCESS && genericDetailModelResource.data != null) {
+            if (genericDetailModelResource.getStatus() == Resource.Status.SUCCESS && genericDetailModelResource.getData() != null) {
                 hideProgressBar();
                 btnNext.setActivated(true);
-            } else if (genericDetailModelResource.status == Resource.Status.LOADING) {
+            } else if (genericDetailModelResource.getStatus() == Resource.Status.LOADING) {
                 visibleProgressBar();
             } else {
                 hideProgressBar();

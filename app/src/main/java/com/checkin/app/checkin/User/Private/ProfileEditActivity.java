@@ -80,17 +80,17 @@ public class ProfileEditActivity extends AppCompatActivity implements OtpVerific
         mUserViewModel.getUserData().observe(this, userModelResource -> {
             if (userModelResource == null)
                 return;
-            if (userModelResource.status == Resource.Status.SUCCESS && userModelResource.data != null) {
-                setUi(userModelResource.data);
+            if (userModelResource.getStatus() == Resource.Status.SUCCESS && userModelResource.getData() != null) {
+                setUi(userModelResource.getData());
                 finish();
-            } else if (userModelResource.status == Resource.Status.ERROR_INVALID_REQUEST) {
-                tvErrorPhoneNumber.setText(userModelResource.message);
+            } else if (userModelResource.getStatus() == Resource.Status.ERROR_INVALID_REQUEST) {
+                tvErrorPhoneNumber.setText(userModelResource.getMessage());
                 tvErrorPhoneNumber.setVisibility(View.VISIBLE);
                 Utils.setKeyboardVisibility(etPhone, false);
                 enablePhoneSaveButton(getResources().getString(R.string.btn_edit));
             }
-            if (userModelResource.status != Resource.Status.LOADING) {
-                Utils.toast(this, userModelResource.message);
+            if (userModelResource.getStatus() != Resource.Status.LOADING) {
+                Utils.toast(this, userModelResource.getMessage());
             }
         });
     }

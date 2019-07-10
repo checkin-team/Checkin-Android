@@ -80,17 +80,17 @@ public class ActiveSessionInvoiceViewModel extends BaseViewModel {
         ProgressRequestBody.UploadCallbacks listener = new ProgressRequestBody.UploadCallbacks() {
             @Override
             public void onProgressUpdate(int percentage) {
-                mPaytmCallbackData.postValue(Resource.loading(null));
+                mPaytmCallbackData.postValue(Resource.Companion.loading(null));
             }
 
             @Override
             public void onSuccess() {
-                mPaytmCallbackData.postValue(Resource.success(null));
+                mPaytmCallbackData.postValue(Resource.Companion.success(null));
             }
 
             @Override
             public void onFailure() {
-                mPaytmCallbackData.postValue(Resource.error("Sorry, but PayTM transaction failed", null));
+                mPaytmCallbackData.postValue(Resource.Companion.error("Sorry, but PayTM transaction failed", null));
             }
         };
         doPostPaytmCallback(data, listener);
@@ -122,8 +122,8 @@ public class ActiveSessionInvoiceViewModel extends BaseViewModel {
         mSessionPromo.addSource(mRepository.postAvailPromoCode(data), sessionPromoModelResource -> {
             if (sessionPromoModelResource == null)
                 return;
-            mData.setValue(Resource.cloneResource(sessionPromoModelResource, data));
-            if (sessionPromoModelResource.status == Resource.Status.SUCCESS && sessionPromoModelResource.data != null)
+            mData.setValue(Resource.Companion.cloneResource(sessionPromoModelResource, data));
+            if (sessionPromoModelResource.getStatus() == Resource.Status.SUCCESS && sessionPromoModelResource.getData() != null)
                 mSessionPromo.setValue(sessionPromoModelResource);
         });
     }
@@ -142,8 +142,8 @@ public class ActiveSessionInvoiceViewModel extends BaseViewModel {
 
     public LiveData<Resource<ObjectNode>> getPromoDeletedData() {
         return Transformations.map(mPromoDeletedData, input -> {
-            if (input != null && input.status == Resource.Status.SUCCESS) {
-                mSessionPromo.setValue(Resource.errorNotFound("Not Found"));
+            if (input != null && input.getStatus() == Resource.Status.SUCCESS) {
+                mSessionPromo.setValue(Resource.Companion.errorNotFound("Not Found"));
             }
             return input;
         });
@@ -157,9 +157,9 @@ public class ActiveSessionInvoiceViewModel extends BaseViewModel {
         return Transformations.map(mSessionPromo, input -> {
             if (input == null)
                 return null;
-            if (input.status == Resource.Status.SUCCESS && input.data != null)
-                updateOfferInInvoice(input.data.getCode(), input.data.getOfferAmount());
-            else if (input.status == Resource.Status.ERROR_NOT_FOUND)
+            if (input.getStatus() == Resource.Status.SUCCESS && input.getData() != null)
+                updateOfferInInvoice(input.getData().getCode(), input.getData().getOfferAmount());
+            else if (input.getStatus() == Resource.Status.ERROR_NOT_FOUND)
                 updateOfferInInvoice(null, null);
             return input;
         });
@@ -167,12 +167,12 @@ public class ActiveSessionInvoiceViewModel extends BaseViewModel {
 
     private void updateOfferInInvoice(String code, Double offerAmount) {
         Resource<SessionInvoiceModel> listResource = mInvoiceData.getValue();
-        if (listResource == null || listResource.data == null)
+        if (listResource == null || listResource.getData() == null)
             return;
-        SessionBillModel sessionBillModel = listResource.data.getBill();
+        SessionBillModel sessionBillModel = listResource.getData().getBill();
         sessionBillModel.setPromo(code);
         sessionBillModel.setOffers(offerAmount);
-        mInvoiceData.setValue(Resource.cloneResource(listResource, listResource.data));
+        mInvoiceData.setValue(Resource.Companion.cloneResource(listResource, listResource.getData()));
     }
 
     public LiveData<Boolean> getRequestedCheckout() {
@@ -191,7 +191,7 @@ public class ActiveSessionInvoiceViewModel extends BaseViewModel {
 
     public boolean isOfferApplied() {
         Resource<SessionPromoModel> resource = mSessionPromo.getValue();
-        return resource != null && resource.data != null;
+        return resource != null && resource.getData() != null;
     }
 
     public void showedSessionBenefits() {

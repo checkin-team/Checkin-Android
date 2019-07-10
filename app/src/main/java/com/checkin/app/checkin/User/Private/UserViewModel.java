@@ -70,19 +70,19 @@ public class UserViewModel extends BaseViewModel {
             @Override
             public void onProgressUpdate(int percentage) {
                 super.onProgressUpdate(percentage);
-                mImageUploadResult.postValue(Resource.loading(null));
+                mImageUploadResult.postValue(Resource.Companion.loading(null));
             }
 
             @Override
             public void onSuccess() {
                 super.onSuccess();
-                mImageUploadResult.postValue(Resource.success(null));
+                mImageUploadResult.postValue(Resource.Companion.success(null));
             }
 
             @Override
             public void onFailure() {
                 super.onFailure();
-                mImageUploadResult.postValue(Resource.error("Unable to upload image", null));
+                mImageUploadResult.postValue(Resource.Companion.error("Unable to upload image", null));
             }
         };
         doUploadImage(pictureFile, notificationUpdate);

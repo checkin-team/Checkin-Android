@@ -146,40 +146,40 @@ public class HomeActivity extends BaseAccountActivity implements NavigationView.
         userViewModel.getUserData().observe(this, resource -> {
             if (resource == null)
                 return;
-            if (resource.status == Resource.Status.SUCCESS && resource.data != null) {
-                UserModel data = resource.data;
+            if (resource.getStatus() == Resource.Status.SUCCESS && resource.getData() != null) {
+                UserModel data = resource.getData();
                 if (imTabUserIcon != null) {
                     Utils.loadImageOrDefault(imTabUserIcon, data.getProfilePic(), (data.getGender() == UserModel.GENDER.MALE) ? R.drawable.cover_unknown_male : R.drawable.cover_unknown_female);
                 }
                 stopRefreshing();
-            } else if (resource.status == Resource.Status.LOADING) startRefreshing();
+            } else if (resource.getStatus() == Resource.Status.LOADING) startRefreshing();
             else stopRefreshing();
         });
 
         mViewModel.getQrResult().observe(this, resource -> {
             if (resource == null) return;
-            if (resource.status == Resource.Status.SUCCESS && resource.data != null) {
+            if (resource.getStatus() == Resource.Status.SUCCESS && resource.getData() != null) {
                 mViewModel.updateResults();
                 onSessionStatusClick();
-                Utils.toast(this, resource.data.getDetail());
-            } else if (resource.status != Resource.Status.LOADING) {
-                Utils.toast(this, resource.message);
+                Utils.toast(this, resource.getData().getDetail());
+            } else if (resource.getStatus() != Resource.Status.LOADING) {
+                Utils.toast(this, resource.getMessage());
             }
         });
         mViewModel.getSessionStatus().observe(this, resource -> {
             if (resource == null)
                 return;
 
-            if (resource.status == Resource.Status.SUCCESS && resource.data != null) {
+            if (resource.getStatus() == Resource.Status.SUCCESS && resource.getData() != null) {
                 sessionActiveStatus();
-                tvSessionStatus.setText(resource.data.getLiveStatus());
+                tvSessionStatus.setText(resource.getData().getLiveStatus());
 
                 Intent serviceIntent = new Intent(this, ActiveSessionNotificationService.class);
                 serviceIntent.setAction(Constants.SERVICE_ACTION_FOREGROUND_START);
-                serviceIntent.putExtra(ACTIVE_RESTAURANT_DETAIL, resource.data.getRestaurant());
-                serviceIntent.putExtra(ACTIVE_SESSION_PK, resource.data.getPk());
+                serviceIntent.putExtra(ACTIVE_RESTAURANT_DETAIL, resource.getData().getRestaurant());
+                serviceIntent.putExtra(ACTIVE_SESSION_PK, resource.getData().getPk());
                 startService(serviceIntent);
-            } else if (resource.status == Resource.Status.ERROR_NOT_FOUND) {
+            } else if (resource.getStatus() == Resource.Status.ERROR_NOT_FOUND) {
                 sessionInactive();
                 ActiveSessionNotificationService.clearNotification(getApplicationContext());
             } else if (resource.getProblem() != null && resource.getProblem().getErrorCode() == ProblemModel.ERROR_CODE.SESSION_USER_PENDING_MEMBER) {
@@ -191,7 +191,7 @@ public class HomeActivity extends BaseAccountActivity implements NavigationView.
         mViewModel.getCancelDineInData().observe(this, objectNodeResource -> {
             if (objectNodeResource == null)
                 return;
-            if (objectNodeResource.status == Resource.Status.SUCCESS) {
+            if (objectNodeResource.getStatus() == Resource.Status.SUCCESS) {
                 sessionInactive();
             }
         });

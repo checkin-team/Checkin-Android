@@ -175,8 +175,8 @@ public class ActiveSessionActivity extends BaseActivity implements
     private void setupObservers() {
         mViewModel.getSessionData().observe(this, resource -> {
             if (resource == null) return;
-            ActiveSessionModel data = resource.data;
-            switch (resource.status) {
+            ActiveSessionModel data = resource.getData();
+            switch (resource.getStatus()) {
                 case SUCCESS: {
                     if (data == null)
                         return;
@@ -196,7 +196,7 @@ public class ActiveSessionActivity extends BaseActivity implements
                     break;
                 default: {
                     stopRefreshing();
-                    Utils.toast(this, resource.message);
+                    Utils.toast(this, resource.getMessage());
                     break;
                 }
             }
@@ -205,7 +205,7 @@ public class ActiveSessionActivity extends BaseActivity implements
         mViewModel.getSessionMemberUpdate().observe(this, resource -> {
             if (resource == null)
                 return;
-            switch (resource.status) {
+            switch (resource.getStatus()) {
                 case SUCCESS: {
                     Utils.toast(this, "Done!");
                     mViewModel.fetchActiveSessionDetail();
@@ -216,7 +216,7 @@ public class ActiveSessionActivity extends BaseActivity implements
                 case ERROR_NOT_FOUND:
                     mViewModel.fetchActiveSessionDetail();
                 default: {
-                    Utils.toast(this, resource.message);
+                    Utils.toast(this, resource.getMessage());
                 }
             }
         });
@@ -246,8 +246,8 @@ public class ActiveSessionActivity extends BaseActivity implements
             if (inventoryItemModels == null)
                 return;
 
-            if (inventoryItemModels.status == Resource.Status.SUCCESS && inventoryItemModels.data != null) {
-                mTrendingDishAdapter.setData(inventoryItemModels.data);
+            if (inventoryItemModels.getStatus() == Resource.Status.SUCCESS && inventoryItemModels.getData() != null) {
+                mTrendingDishAdapter.setData(inventoryItemModels.getData());
                 shimmerTrendingDish.stopShimmer();
                 shimmerTrendingDish.setVisibility(View.GONE);
             }

@@ -51,8 +51,8 @@ public class ActiveSessionViewModel extends BaseViewModel {
 
     public void fetchActiveSessionDetail() {
         mSessionData.addSource(mRepository.getActiveSessionDetail(), (resource) -> {
-            if (resource != null && resource.data != null)
-                mIsRequestedCheckout = resource.data.isRequestedCheckout();
+            if (resource != null && resource.getData() != null)
+                mIsRequestedCheckout = resource.getData().isRequestedCheckout();
             mSessionData.setValue(resource);
         });
     }
@@ -103,8 +103,8 @@ public class ActiveSessionViewModel extends BaseViewModel {
 
     public void updateBill(double bill) {
         Resource<ActiveSessionModel> resource = mSessionData.getValue();
-        if (resource != null && resource.status == Resource.Status.SUCCESS && resource.data != null) {
-            resource.data.setBill(bill);
+        if (resource != null && resource.getStatus() == Resource.Status.SUCCESS && resource.getData() != null) {
+            resource.getData().setBill(bill);
         }
         mSessionData.setValue(resource);
     }
@@ -123,27 +123,27 @@ public class ActiveSessionViewModel extends BaseViewModel {
 
     public void updateHost(BriefModel user) {
         Resource<ActiveSessionModel> resource = mSessionData.getValue();
-        if (resource == null || resource.data == null)
+        if (resource == null || resource.getData() == null)
             return;
-        resource.data.setHost(user);
-        mSessionData.setValue(Resource.cloneResource(resource, resource.data));
+        resource.getData().setHost(user);
+        mSessionData.setValue(Resource.Companion.cloneResource(resource, resource.getData()));
     }
 
     public void addCustomer(SessionCustomerModel customer) {
         Resource<ActiveSessionModel> resource = mSessionData.getValue();
-        if (resource == null || resource.data == null)
+        if (resource == null || resource.getData() == null)
             return;
-        resource.data.addCustomer(customer);
-        mSessionData.setValue(Resource.cloneResource(resource, resource.data));
+        resource.getData().addCustomer(customer);
+        mSessionData.setValue(Resource.Companion.cloneResource(resource, resource.getData()));
     }
 
     public void updateCustomer(long pk, boolean isAdded) {
         Resource<ActiveSessionModel> resource = mSessionData.getValue();
-        if (resource == null || resource.data == null)
+        if (resource == null || resource.getData() == null)
             return;
         int pos = -1;
-        for (int i = 0, count = resource.data.getCustomers().size(); i < count; i++) {
-            if (Long.valueOf(resource.data.getCustomers().get(i).getUser().getPk()) == pk) {
+        for (int i = 0, count = resource.getData().getCustomers().size(); i < count; i++) {
+            if (Long.valueOf(resource.getData().getCustomers().get(i).getUser().getPk()) == pk) {
                 pos = i;
                 break;
             }
@@ -151,20 +151,20 @@ public class ActiveSessionViewModel extends BaseViewModel {
 
         if (pos > -1) {
             if (isAdded) {
-                resource.data.getCustomers().get(pos).setAccepted(true);
+                resource.getData().getCustomers().get(pos).setAccepted(true);
             } else {
-                resource.data.getCustomers().remove(pos);
+                resource.getData().getCustomers().remove(pos);
             }
 
         }
-        mSessionData.setValue(Resource.cloneResource(resource, resource.data));
+        mSessionData.setValue(Resource.Companion.cloneResource(resource, resource.getData()));
     }
 
     public LiveData<Integer> getCountNewOrders() {
         return Transformations.map(mOrdersData, input -> {
             List<SessionOrderedItemModel> list = new ArrayList<>();
-            if (input.data != null) {
-                for (SessionOrderedItemModel item : input.data)
+            if (input.getData() != null) {
+                for (SessionOrderedItemModel item : input.getData())
                     if (item.getStatus() == OPEN)
                         list.add(item);
             }
@@ -175,8 +175,8 @@ public class ActiveSessionViewModel extends BaseViewModel {
     public LiveData<Integer> getCountProgressOrders() {
         return Transformations.map(mOrdersData, input -> {
             List<SessionOrderedItemModel> list = new ArrayList<>();
-            if (input.data != null) {
-                for (SessionOrderedItemModel item : input.data)
+            if (input.getData() != null) {
+                for (SessionOrderedItemModel item : input.getData())
                     if (item.getStatus() == IN_PROGRESS)
                         list.add(item);
             }
@@ -187,8 +187,8 @@ public class ActiveSessionViewModel extends BaseViewModel {
     public LiveData<Integer> getCountDeliveredOrders() {
         return Transformations.map(mOrdersData, input -> {
             List<SessionOrderedItemModel> list = new ArrayList<>();
-            if (input.data != null) {
-                for (SessionOrderedItemModel item : input.data)
+            if (input.getData() != null) {
+                for (SessionOrderedItemModel item : input.getData())
                     if (item.getStatus() == DONE)
                         list.add(item);
             }
@@ -198,27 +198,27 @@ public class ActiveSessionViewModel extends BaseViewModel {
 
     public void addNewOrder(SessionOrderedItemModel sessionOrderedItem) {
         Resource<List<SessionOrderedItemModel>> listResource = mOrdersData.getValue();
-        if (listResource == null || listResource.data == null)
+        if (listResource == null || listResource.getData() == null)
             return;
-        for (SessionOrderedItemModel orderedItemModel : listResource.data) {
+        for (SessionOrderedItemModel orderedItemModel : listResource.getData()) {
             if (orderedItemModel.getPk() == sessionOrderedItem.getPk())
                 return;
         }
-        listResource.data.add(0, sessionOrderedItem);
-        mOrdersData.setValue(Resource.cloneResource(listResource, listResource.data));
+        listResource.getData().add(0, sessionOrderedItem);
+        mOrdersData.setValue(Resource.Companion.cloneResource(listResource, listResource.getData()));
     }
 
     public void updateOrderStatus(long orderPk, SessionChatModel.CHAT_STATUS_TYPE sessionEventStatus) {
         Resource<List<SessionOrderedItemModel>> listResource = mOrdersData.getValue();
-        if (listResource == null || listResource.data == null)
+        if (listResource == null || listResource.getData() == null)
             return;
-        for (SessionOrderedItemModel orderedItemModel : listResource.data) {
+        for (SessionOrderedItemModel orderedItemModel : listResource.getData()) {
             if (orderedItemModel.getPk() == orderPk) {
                 orderedItemModel.setStatus(sessionEventStatus.tag);
                 break;
             }
         }
-        mOrdersData.setValue(Resource.cloneResource(listResource, listResource.data));
+        mOrdersData.setValue(Resource.Companion.cloneResource(listResource, listResource.getData()));
     }
 
     public boolean isRequestedCheckout() {
@@ -227,10 +227,10 @@ public class ActiveSessionViewModel extends BaseViewModel {
 
     public void setRequestedCheckout(boolean isRequestedCheckout) {
         Resource<ActiveSessionModel> resource = mSessionData.getValue();
-        if (resource == null || resource.data == null)
+        if (resource == null || resource.getData() == null)
             return;
-        resource.data.setRequestedCheckout(isRequestedCheckout);
-        mSessionData.setValue(Resource.cloneResource(resource, resource.data));
+        resource.getData().setRequestedCheckout(isRequestedCheckout);
+        mSessionData.setValue(Resource.Companion.cloneResource(resource, resource.getData()));
     }
 
     public void fetchTrendingItem() {

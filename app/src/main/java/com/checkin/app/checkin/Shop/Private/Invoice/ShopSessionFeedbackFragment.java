@@ -60,8 +60,8 @@ public class ShopSessionFeedbackFragment extends Fragment {
         mViewModel.getSessionReviews().observe(this, input -> {
             if (input == null)
                 return;
-            if (input.status == Resource.Status.SUCCESS && input.data != null) {
-                mAdapter.setData(input.data);
+            if (input.getStatus() == Resource.Status.SUCCESS && input.getData() != null) {
+                mAdapter.setData(input.getData());
             }
         });
     }

@@ -50,8 +50,8 @@ public class ShopMembersListFragment extends Fragment implements MemberAdapter.O
         mViewModel.getShopMembers().observe(this, listResource -> {
             if (listResource == null)
                 return;
-            if (listResource.status == Status.SUCCESS && listResource.data != null) {
-                mAdapter.setMembers(listResource.data);
+            if (listResource.getStatus() == Status.SUCCESS && listResource.getData() != null) {
+                mAdapter.setMembers(listResource.getData());
             }
         });
     }

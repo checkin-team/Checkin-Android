@@ -17,7 +17,6 @@ import com.checkin.app.checkin.Menu.MenuItemInteraction;
 import com.checkin.app.checkin.Menu.Model.MenuItemModel;
 import com.checkin.app.checkin.Menu.UserMenu.Adapter.MenuItemAdapter;
 import com.checkin.app.checkin.Menu.UserMenu.MenuViewModel;
-import com.checkin.app.checkin.Menu.UserMenu.SessionMenuActivity;
 import com.checkin.app.checkin.Misc.BaseSearchFragment;
 import com.checkin.app.checkin.R;
 
@@ -29,9 +28,11 @@ import butterknife.Unbinder;
 
 public class MenuItemSearchFragment extends BaseSearchFragment implements MenuItemAdapter.OnItemInteractionListener {
     private static final String TAG = MenuItemSearchFragment.class.getSimpleName();
+    private Unbinder unbinder;
+
     @BindView(R.id.rv_menu_items)
     RecyclerView rvMenuItems;
-    private Unbinder unbinder;
+
     private MenuViewModel mViewModel;
     private MenuItemAdapter mAdapter;
     private MenuItemInteraction mListener;
@@ -62,7 +63,7 @@ public class MenuItemSearchFragment extends BaseSearchFragment implements MenuIt
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         view.setOnTouchListener((v, event) -> {
-            ((SessionMenuActivity) requireActivity()).closeSearch();
+            requireActivity().onBackPressed();
             return true;
         });
 
@@ -73,15 +74,15 @@ public class MenuItemSearchFragment extends BaseSearchFragment implements MenuIt
         mViewModel.getFilteredMenuItems().observe(this, listResource -> {
             if (listResource == null)
                 return;
-            if (listResource.status == Status.SUCCESS && listResource.data != null) {
-                mAdapter.setMenuItems(listResource.data);
+            if (listResource.getStatus() == Status.SUCCESS && listResource.getData() != null) {
+                mAdapter.setMenuItems(listResource.getData());
                 this.hideLoadProgress();
-            } else if (listResource.status == Status.LOADING) {
+            } else if (listResource.getStatus() == Status.LOADING) {
                 this.showLoadProgress();
                 this.resetResults();
-            } else if (listResource.status == Status.ERROR_NOT_FOUND) {
+            } else if (listResource.getStatus() == Status.ERROR_NOT_FOUND) {
                 this.noResultFound();
-            } else if (listResource.status == Status.NO_REQUEST) {
+            } else if (listResource.getStatus() == Status.NO_REQUEST) {
                 this.resetResults();
             }
         });

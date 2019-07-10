@@ -51,13 +51,13 @@ public class MembersActivity extends BaseActivity implements ShopMembersListFrag
         mViewModel.getShopMembers().observe(this, listResource -> {
             if (listResource == null)
                 return;
-            if (listResource.status == Resource.Status.SUCCESS && listResource.data != null) {
+            if (listResource.getStatus() == Resource.Status.SUCCESS && listResource.getData() != null) {
                 stopRefreshing();
-            } else if (listResource.status == Resource.Status.LOADING) {
+            } else if (listResource.getStatus() == Resource.Status.LOADING) {
                 startRefreshing();
             } else {
                 stopRefreshing();
-                Utils.toast(this, listResource.message);
+                Utils.toast(this, listResource.getMessage());
             }
         });
         getSupportFragmentManager().beginTransaction()

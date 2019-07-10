@@ -13,7 +13,7 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="@dimen/spacing_extra_small"
-        android:layout_marginEnd="@dimen/spacing_extra_small"
+        android:layout_marginEnd="@dimen/spacing_small"
         android:autoSizeTextType="uniform"
         android:gravity="start"
         android:maxLines="2"
@@ -37,8 +37,8 @@
         app:layout_constraintHorizontal_weight="0.8"
         app:layout_constraintStart_toStartOf="@id/tv_as_menu_item_name"
         app:layout_constraintTop_toBottomOf="@id/tv_as_menu_item_name"
-        app:trimLines="1"
         app:selectedMode="line"
+        app:trimLines="1"
         tools:text="description ... " />
 
     <com.checkin.app.checkin.Utility.FadingImageView
@@ -46,8 +46,8 @@
         android:layout_width="0dp"
         android:layout_height="@dimen/height_menu_item_thumbnail_small"
         android:scaleType="centerCrop"
-        android:visibility="gone"
         android:src="@drawable/cover_unknown_male"
+        android:visibility="gone"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toStartOf="@id/container_as_menu_quantity_picker"
         app:layout_constraintHorizontal_weight="0.8"

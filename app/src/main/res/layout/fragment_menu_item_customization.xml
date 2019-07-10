@@ -92,7 +92,7 @@
                             android:id="@+id/rb_menu_customization_type_1"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:button="@drawable/radiobutton_selector"
+                            android:button="@drawable/radiobutton_large_selector"
 
                             app:layout_constraintEnd_toEndOf="@+id/tv_menu_customization_radio_1"
                             app:layout_constraintStart_toStartOf="@+id/tv_menu_customization_radio_1"
@@ -102,7 +102,7 @@
                             android:id="@+id/rb_menu_customization_type_2"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:button="@drawable/radiobutton_selector"
+                            android:button="@drawable/radiobutton_large_selector"
 
                             app:layout_constraintEnd_toEndOf="@+id/tv_menu_customization_radio_2"
                             app:layout_constraintStart_toStartOf="@+id/tv_menu_customization_radio_2"
@@ -112,7 +112,7 @@
                             android:id="@+id/rb_menu_customization_type_3"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:button="@drawable/radiobutton_selector"
+                            android:button="@drawable/radiobutton_large_selector"
 
                             app:layout_constraintEnd_toEndOf="@+id/tv_menu_customization_radio_3"
                             app:layout_constraintStart_toStartOf="@+id/tv_menu_customization_radio_3"

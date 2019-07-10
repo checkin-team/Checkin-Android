@@ -75,8 +75,8 @@ public class TransactionDetailsActivity extends AppCompatActivity {
         mViewModel.getUserSessionDetail().observe(this, shopSessionDetailModelResource -> {
             if (shopSessionDetailModelResource == null)
                 return;
-            if (shopSessionDetailModelResource.status == Resource.Status.SUCCESS && shopSessionDetailModelResource.data != null) {
-                setupDetails(shopSessionDetailModelResource.data);
+            if (shopSessionDetailModelResource.getStatus() == Resource.Status.SUCCESS && shopSessionDetailModelResource.getData() != null) {
+                setupDetails(shopSessionDetailModelResource.getData());
             }
         });
     }

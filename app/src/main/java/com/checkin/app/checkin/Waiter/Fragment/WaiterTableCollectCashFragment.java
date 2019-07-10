@@ -55,16 +55,16 @@ public class WaiterTableCollectCashFragment extends Fragment {
         mViewModel.getSessionDetail().observe(this, resource -> {
             if (resource == null)
                 return;
-            if (resource.status == Resource.Status.SUCCESS && resource.data != null) {
-                tvWaiterTableBill.setText(Utils.formatCurrencyAmount(requireContext(), resource.data.getBill()));
-                if (resource.data.getPaymentModes() == null) {
+            if (resource.getStatus() == Resource.Status.SUCCESS && resource.getData() != null) {
+                tvWaiterTableBill.setText(Utils.formatCurrencyAmount(requireContext(), resource.getData().getBill()));
+                if (resource.getData().getPaymentModes() == null) {
                     if (getFragmentManager() != null) {
                         getFragmentManager().popBackStack();
                     }
                 }else {
-                    tvWaiterTablePaymentMode.setText(ShopModel.getPaymentMode(resource.data.getPaymentModes()));
+                    tvWaiterTablePaymentMode.setText(ShopModel.getPaymentMode(resource.getData().getPaymentModes()));
                 }
-                tvWaiterTablePaymentMode.setCompoundDrawablesWithIntrinsicBounds(ShopModel.getPaymentModeIcon(resource.data.getPaymentModes()), 0, 0, 0);
+                tvWaiterTablePaymentMode.setCompoundDrawablesWithIntrinsicBounds(ShopModel.getPaymentModeIcon(resource.getData().getPaymentModes()), 0, 0, 0);
                 if (tvWaiterTablePaymentMode.getText().toString().equalsIgnoreCase("via Cash")) {
                     titleWaiterCollect.setText("Collect");
                     tvWaiterTablePaymentMode.setCompoundDrawablePadding(10);

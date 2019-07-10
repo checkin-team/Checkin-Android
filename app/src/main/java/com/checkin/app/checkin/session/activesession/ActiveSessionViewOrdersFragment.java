@@ -52,10 +52,10 @@ public class ActiveSessionViewOrdersFragment extends BaseFragment implements Act
         mViewModel.getSessionOrdersData().observe(this, listResource -> {
             if (listResource == null)
                 return;
-            if (listResource.status == Resource.Status.SUCCESS && listResource.data != null) {
-                mOrdersAdapter.setData(listResource.data);
+            if (listResource.getStatus() == Resource.Status.SUCCESS && listResource.getData() != null) {
+                mOrdersAdapter.setData(listResource.getData());
                 stopRefreshing();
-            } else if (listResource.status == Resource.Status.LOADING) {
+            } else if (listResource.getStatus() == Resource.Status.LOADING) {
                 startRefreshing();
             }
         });
@@ -63,7 +63,7 @@ public class ActiveSessionViewOrdersFragment extends BaseFragment implements Act
         mViewModel.getObservableData().observe(this, resource -> {
             if (resource == null)
                 return;
-            switch (resource.status) {
+            switch (resource.getStatus()) {
                 case SUCCESS: {
                     mViewModel.fetchSessionOrders();
                     break;
@@ -71,7 +71,7 @@ public class ActiveSessionViewOrdersFragment extends BaseFragment implements Act
                 case LOADING:
                     break;
                 default: {
-                    Utils.toast(requireContext(), resource.message);
+                    Utils.toast(requireContext(), resource.getMessage());
                 }
             }
         });
