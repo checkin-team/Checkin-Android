@@ -9,41 +9,41 @@
     <LinearLayout
         android:layout_width="@dimen/width_treat_yourself"
         android:layout_height="@dimen/height_treat_yourself"
-        android:orientation="vertical"
-        android:background="@drawable/rectangle_pinkish_grey_stroke">
+        android:background="@drawable/background_lightest_grey_stroke"
+        android:orientation="vertical">
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
 
-        <ImageView
-            android:id="@+id/im_menu_cart_treat_item_type"
-            android:layout_width="@dimen/width_small_icon"
-            android:layout_height="@dimen/width_small_icon"
-            android:layout_margin="@dimen/spacing_extra_small"
-            tools:src="@drawable/ic_veg" />
+            <ImageView
+                android:id="@+id/im_menu_cart_treat_item_type"
+                android:layout_width="@dimen/width_small_icon"
+                android:layout_height="@dimen/width_small_icon"
+                android:layout_margin="@dimen/spacing_extra_small"
+                tools:src="@drawable/ic_veg" />
 
-        <ImageView
-            android:id="@+id/im_menu_cart_treat_item_image"
-            style="@style/LogoImageStyle"
-            android:layout_centerHorizontal="true"
-            android:layout_marginTop="@dimen/spacing_medium"
-            android:layout_marginEnd="@dimen/spacing_extra_tiny"
-            android:layout_weight="1"
-            tools:src="@drawable/ic_beer" />
+            <ImageView
+                android:id="@+id/im_menu_cart_treat_item_image"
+                style="@style/LogoImageStyle"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="@dimen/spacing_medium"
+                android:layout_marginEnd="@dimen/spacing_extra_tiny"
+                android:layout_weight="1"
+                tools:src="@drawable/ic_beer" />
 
-        <TextView
-            style="@style/RedSmallTextStyle"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginEnd="@dimen/spacing_extra_small"
-            android:layout_marginTop="@dimen/spacing_extra_small"
-            android:layout_alignParentEnd="true"
-            android:background="@drawable/ic_extra_small_rouge_stroke"
-            android:gravity="center"
-            android:text="ADD"
-            android:padding="1dp"
-            android:textSize="@dimen/font_tiny" />
+            <TextView
+                style="@style/RedSmallTextStyle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentEnd="true"
+                android:layout_marginTop="@dimen/spacing_extra_small"
+                android:layout_marginEnd="@dimen/spacing_extra_small"
+                android:background="@drawable/ic_extra_small_rouge_stroke"
+                android:gravity="center"
+                android:padding="1dp"
+                android:text="ADD"
+                android:textSize="@dimen/font_tiny" />
 
         </LinearLayout>
 
@@ -55,10 +55,10 @@
             android:layout_marginStart="@dimen/spacing_normal"
             android:layout_marginTop="@dimen/spacing_small"
             android:layout_marginEnd="@dimen/spacing_normal"
+            android:ellipsize="end"
             android:gravity="center"
-            tools:text="Strawberry"
             android:maxLines="2"
-            android:ellipsize="end"/>
+            tools:text="Strawberry" />
 
     </LinearLayout>
 

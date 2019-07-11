@@ -73,15 +73,15 @@ public class SuccessfulTransactionActivity extends BaseActivity {
         mViewModel.getUserSessionBriefData().observe(this, sessionBriefModelResource -> {
             if (sessionBriefModelResource == null)
                 return;
-            if (sessionBriefModelResource.status == Resource.Status.SUCCESS && sessionBriefModelResource.data != null) {
-                setupData(sessionBriefModelResource.data);
+            if (sessionBriefModelResource.getStatus() == Resource.Status.SUCCESS && sessionBriefModelResource.getData() != null) {
+                setupData(sessionBriefModelResource.getData());
             }
         });
 
         mViewModel.getUserReviewDetail().observe(this, objectNodeResource -> {
             if (objectNodeResource == null)
                 return;
-            if (objectNodeResource.status == Resource.Status.SUCCESS && objectNodeResource.data != null) {
+            if (objectNodeResource.getStatus() == Resource.Status.SUCCESS && objectNodeResource.getData() != null) {
             }
         });
     }

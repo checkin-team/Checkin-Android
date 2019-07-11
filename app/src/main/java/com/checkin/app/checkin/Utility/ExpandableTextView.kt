@@ -10,10 +10,12 @@ import android.view.ViewTreeObserver
 import android.widget.TextView
 import androidx.core.content.ContextCompat
 import com.checkin.app.checkin.R
+import java.lang.StringBuilder
 
 class ExpandableTextView @JvmOverloads constructor(context: Context, attrs: AttributeSet? = null) : TextView(context, attrs) {
     var originalText: CharSequence? = null
         private set
+    private var fullText: CharSequence? = null
     private var trimmedText: CharSequence? = null
 
     private var colorClickableText: Int = 0
@@ -27,7 +29,7 @@ class ExpandableTextView @JvmOverloads constructor(context: Context, attrs: Attr
     private var lineEndIndex: Int = INVALID_END_INDEX
 
     private val displayableText: CharSequence?
-        get() = if (trimmed) trimmedText else originalText
+        get() = if (trimmed) trimmedText else fullText
 
     val isExpanded: Boolean
         get() = !trimmed
@@ -65,6 +67,7 @@ class ExpandableTextView @JvmOverloads constructor(context: Context, attrs: Attr
     override fun setText(text: CharSequence, type: BufferType) {
         originalText = text
         trimmedText = getTrimmedText(text)
+        fullText = StringBuilder(text).append(SHORTEN_SUFFIX).toString()
         bufferType = type
         setText()
     }
@@ -141,7 +144,8 @@ class ExpandableTextView @JvmOverloads constructor(context: Context, attrs: Attr
 
     companion object {
         private val DEFAULT_TRIM_LENGTH = 50
-        private val ELLIPSIS = " ..."
+        private val ELLIPSIS = " ...read more"
+        private val SHORTEN_SUFFIX = " ...read less"
 
         private val DEFAULT_TRIM_LINES = 2
         private val TRIM_MODE_LINES = 0

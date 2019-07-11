@@ -45,20 +45,20 @@ public class SearchViewModel extends BaseViewModel {
         if (mShopResults != null)
             resourceShop = mShopResults.getValue();
         if (resourcePeople != null && resourceShop != null) {
-            if (resourcePeople.status == Status.LOADING || resourceShop.status == Status.LOADING)
-                result = Resource.loading(null);
-            else if (resourcePeople.data != null && resourceShop.data != null) {
+            if (resourcePeople.getStatus() == Status.LOADING || resourceShop.getStatus() == Status.LOADING)
+                result = Resource.Companion.loading(null);
+            else if (resourcePeople.getData() != null && resourceShop.getData() != null) {
                 List<SearchResultModel> data = new ArrayList<>();
-                data.addAll(resourcePeople.data);
-                data.addAll(resourceShop.data);
-                result = Resource.success(data);
+                data.addAll(resourcePeople.getData());
+                data.addAll(resourceShop.getData());
+                result = Resource.Companion.success(data);
             }
-        } else if (resourcePeople != null && resourcePeople.data != null) {
-            List<SearchResultModel> data = new ArrayList<>(resourcePeople.data);
-            result = Resource.success(data);
-        } else if (resourceShop != null && resourceShop.data != null) {
-            List<SearchResultModel> data = new ArrayList<>(resourceShop.data);
-            result = Resource.success(data);
+        } else if (resourcePeople != null && resourcePeople.getData() != null) {
+            List<SearchResultModel> data = new ArrayList<>(resourcePeople.getData());
+            result = Resource.Companion.success(data);
+        } else if (resourceShop != null && resourceShop.getData() != null) {
+            List<SearchResultModel> data = new ArrayList<>(resourceShop.getData());
+            result = Resource.Companion.success(data);
         }
         mResults.setValue(result);
     }
@@ -99,8 +99,8 @@ public class SearchViewModel extends BaseViewModel {
     public LiveData<Resource<List<SearchResultPeopleModel>>> getPeopleResults() {
         if (mPeopleResults != null) {
             return Transformations.map(mPeopleResults, input -> {
-                if (input != null && input.data != null && input.data.size() == 0)
-                    return Resource.errorNotFound("Not found");
+                if (input != null && input.getData() != null && input.getData().size() == 0)
+                    return Resource.Companion.errorNotFound("Not found");
                 return input;
             });
         }
@@ -110,8 +110,8 @@ public class SearchViewModel extends BaseViewModel {
     public LiveData<Resource<List<SearchResultShopModel>>> getRestaurantResults() {
         if (mShopResults != null) {
             return Transformations.map(mShopResults, input -> {
-                if (input != null && input.data != null && input.data.size() == 0)
-                    return Resource.errorNotFound("Not found");
+                if (input != null && input.getData() != null && input.getData().size() == 0)
+                    return Resource.Companion.errorNotFound("Not found");
                 return input;
             });
         }
@@ -120,8 +120,8 @@ public class SearchViewModel extends BaseViewModel {
 
     public LiveData<Resource<List<SearchResultModel>>> getAllResults() {
         return Transformations.map(mResults, input -> {
-            if (input != null && input.data != null && input.data.size() == 0)
-                return Resource.errorNotFound("Not found");
+            if (input != null && input.getData() != null && input.getData().size() == 0)
+                return Resource.Companion.errorNotFound("Not found");
             return input;
         });
     }

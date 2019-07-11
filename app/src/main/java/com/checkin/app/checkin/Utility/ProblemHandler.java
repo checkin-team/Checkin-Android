@@ -34,7 +34,7 @@ public final class ProblemHandler {
     }
 
     public static boolean handleUnauthenticatedAPIUse(Context context, Resource<?> resource) {
-        if (resource.status == Resource.Status.ERROR_UNAUTHORIZED) {
+        if (resource.getStatus() == Resource.Status.ERROR_UNAUTHORIZED) {
             Utils.logoutFromApp(context);
             Utils.toast(context, R.string.app_force_logged_out);
             return true;

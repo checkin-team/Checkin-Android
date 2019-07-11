@@ -95,12 +95,12 @@ public class AuthActivity extends AppCompatActivity implements AuthFragmentInter
         mAuthViewModel.getAuthResult().observe(this, resource -> {
             if (resource == null)
                 return;
-            switch (resource.status) {
+            switch (resource.getStatus()) {
                 case SUCCESS:
-                    assert resource.data != null;
+                    assert resource.getData() != null;
                     hideProgress();
                     Utils.toast(this, "Welcome!");
-                    successAuth(resource.data);
+                    successAuth(resource.getData());
                     break;
                 case LOADING:
                     showProgress();
@@ -117,12 +117,12 @@ public class AuthActivity extends AppCompatActivity implements AuthFragmentInter
                             Utils.toast(this, String.format(Locale.ENGLISH, "%s\nTry again.", msg));
                         } else if (error.has("username")) {
                             mAuthViewModel.showError(error);
-                        } else Utils.toast(this, resource.message);
+                        } else Utils.toast(this, resource.getMessage());
                     }
                     break;
                 default:
                     hideProgress();
-                    Utils.toast(this, resource.message);
+                    Utils.toast(this, resource.getMessage());
             }
         });
 

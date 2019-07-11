@@ -1,6 +1,7 @@
 package com.checkin.app.checkin.Menu.UserMenu.Adapter
 
 import android.animation.ValueAnimator
+import android.content.res.ColorStateList
 import android.os.Build
 import android.view.LayoutInflater
 import android.view.View
@@ -10,26 +11,24 @@ import android.widget.TextView
 import androidx.annotation.ColorRes
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.constraintlayout.widget.ConstraintSet
-import androidx.fragment.app.Fragment
-import androidx.fragment.app.FragmentManager
-import androidx.fragment.app.FragmentStatePagerAdapter
+import androidx.core.widget.ImageViewCompat
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import androidx.transition.ChangeBounds
 import androidx.transition.TransitionManager
+import androidx.viewpager.widget.PagerAdapter
 import androidx.viewpager.widget.ViewPager
 import butterknife.BindView
 import butterknife.ButterKnife
 import com.checkin.app.checkin.Menu.MenuItemInteraction
 import com.checkin.app.checkin.Menu.Model.MenuGroupModel
-import com.checkin.app.checkin.Menu.UserMenu.Fragment.MenuItemsFragment
+import com.checkin.app.checkin.Menu.Model.MenuItemModel
+import com.checkin.app.checkin.Menu.UserMenu.Fragment.MenuItemsHolder
 import com.checkin.app.checkin.R
 import com.checkin.app.checkin.Utility.GlideApp
 import com.checkin.app.checkin.Utility.Utils
 import com.google.android.material.tabs.TabLayout
-import java.util.*
 
-class MenuGroupAdapter(private var mGroupList: List<MenuGroupModel>?, private val mFragmentManager: FragmentManager, private val mListener: MenuItemInteraction?, private val mGroupInteractionListener: OnGroupInteractionInterface) : RecyclerView.Adapter<MenuGroupAdapter.GroupViewHolder>() {
+class MenuGroupAdapter(private var mGroupList: List<MenuGroupModel>?, private val mListener: MenuItemInteraction?, private val mGroupInteractionListener: OnGroupInteractionInterface) : RecyclerView.Adapter<MenuGroupAdapter.GroupViewHolder>() {
     private var mPrevExpandedViewHolder: GroupViewHolder? = null
     private lateinit var mRecyclerView: RecyclerView
     private var mIsSessionActive = true
@@ -59,6 +58,8 @@ class MenuGroupAdapter(private var mGroupList: List<MenuGroupModel>?, private va
         mRecyclerView = recyclerView
     }
 
+    override fun getItemId(position: Int): Long = position.toLong()
+
     override fun getItemCount() = mGroupList?.size ?: 0
 
     override fun getItemViewType(position: Int) = R.layout.item_as_menu_group_collapsed
@@ -69,6 +70,12 @@ class MenuGroupAdapter(private var mGroupList: List<MenuGroupModel>?, private va
         indexOfFirst { groupName.contentEquals(it.name) }
     } ?: 0
 
+    fun getTopExpandedGroupPosition(): Int? = (mRecyclerView.layoutManager as LinearLayoutManager).findFirstVisibleItemPosition().let {
+        if (mPrevExpandedViewHolder?.adapterPosition == it) it else null
+    }
+
+    fun getGroupName(idx: Int) = mGroupList?.getOrNull(idx)?.name ?: ""
+
     fun contractView() {
         contractView(mPrevExpandedViewHolder)
     }
@@ -77,14 +84,14 @@ class MenuGroupAdapter(private var mGroupList: List<MenuGroupModel>?, private va
         expandView(mPrevExpandedViewHolder)
     }
 
-    private fun contractView(groupViewHolder: GroupViewHolder?) {
+    fun contractView(groupViewHolder: GroupViewHolder?) {
         if (groupViewHolder != null) {
             groupViewHolder.hide()
             mPrevExpandedViewHolder = null
         }
     }
 
-    private fun expandView(groupViewHolder: GroupViewHolder?) {
+    fun expandView(groupViewHolder: GroupViewHolder?) {
         if (groupViewHolder != null) {
             groupViewHolder.show()
             mPrevExpandedViewHolder = groupViewHolder
@@ -123,8 +130,8 @@ class MenuGroupAdapter(private var mGroupList: List<MenuGroupModel>?, private va
         private var mMenuGroup: MenuGroupModel? = null
         private var mAdapter: SubGroupPagerAdapter? = null
 
-        private lateinit var collapsedCs: ConstraintSet
-        private lateinit var expandedCs: ConstraintSet
+        private var collapsedCs: ConstraintSet
+        private var expandedCs: ConstraintSet
 
         init {
             ButterKnife.bind(this, itemView)
@@ -133,10 +140,9 @@ class MenuGroupAdapter(private var mGroupList: List<MenuGroupModel>?, private va
                 Utils.setTabsFont(vTabs, itemView.resources.getFont(R.font.arial_rounded_mt_bold))
             }
 
-            itemView.setOnClickListener { view -> tvGroupName.performClick() }
-            tvGroupName.setOnClickListener { v ->
-                if (this.isExpanded)
-                    contractView(this)
+            itemView.setOnClickListener { tvGroupName.performClick() }
+            tvGroupName.setOnClickListener {
+                if (this.isExpanded) contractView(this)
                 else {
                     contractView()
                     expandView(this)
@@ -146,9 +152,24 @@ class MenuGroupAdapter(private var mGroupList: List<MenuGroupModel>?, private va
             collapsedCs = ConstraintSet().apply { clone(containerMenuGroup) }
             expandedCs = ConstraintSet().apply { clone(itemView.context, R.layout.item_as_menu_group_expanded) }
 
-//            val lt = (itemView as ViewGroup).layoutTransition
-//            lt.enableTransitionType(LayoutTransition.CHANGING)
-//            lt.setDuration(GROUP_ANIMATION_DURATION)
+        }
+
+        internal fun applyState(state: Int, animate: Boolean = true) {
+            when (state) {
+                STATE_EXPANDED -> {
+                    expandedCs.applyTo(containerMenuGroup)
+                    val color = itemView.resources.getColor(R.color.primary_red)
+                    tvGroupName.setTextColor(color)
+                    ImageViewCompat.setImageTintList(imDropDown, ColorStateList.valueOf(color))
+                }
+                STATE_COLLAPSED -> {
+                    collapsedCs.applyTo(containerMenuGroup)
+                    val color = itemView.resources.getColor(R.color.brownish_grey)
+                    tvGroupName.setTextColor(color)
+                    ImageViewCompat.setImageTintList(imDropDown, ColorStateList.valueOf(color))
+                }
+            }
+            if (animate) TransitionManager.beginDelayedTransition(containerMenuGroup)
         }
 
         internal fun bindData(menuGroup: MenuGroupModel) {
@@ -179,27 +200,23 @@ class MenuGroupAdapter(private var mGroupList: List<MenuGroupModel>?, private va
             } else {
                 vTabs.visibility = View.GONE
             }
-            vPager.id = adapterPosition + 1
         }
 
         internal fun show() {
             isExpanded = true
-            expandedCs.applyTo(containerMenuGroup)
-            val transition = ChangeBounds()
-            TransitionManager.beginDelayedTransition(containerMenuGroup, transition)
+            applyState(STATE_EXPANDED)
             mGroupInteractionListener.onGroupExpandCollapse(isExpanded, mMenuGroup)
             val scrollAnim = ValueAnimator.ofInt(1, 2, 3, 4)
             scrollAnim.duration = GROUP_ANIMATION_DURATION
             scrollAnim.addUpdateListener {
-                (mRecyclerView.layoutManager as LinearLayoutManager).scrollToPositionWithOffset(adapterPosition, 20)
+                (mRecyclerView.layoutManager as LinearLayoutManager).scrollToPositionWithOffset(adapterPosition, 0)
             }
             scrollAnim.start()
         }
 
         internal fun hide() {
             isExpanded = false
-            collapsedCs.applyTo(containerMenuGroup)
-            TransitionManager.beginDelayedTransition(containerMenuGroup)
+            applyState(STATE_COLLAPSED)
             mGroupInteractionListener.onGroupExpandCollapse(isExpanded, mMenuGroup)
         }
 
@@ -210,7 +227,7 @@ class MenuGroupAdapter(private var mGroupList: List<MenuGroupModel>?, private va
                 val tv = tabOne.findViewById<TextView>(R.id.tv_tab)
                 val im = tabOne.findViewById<ImageView>(R.id.im_tab)
                 tv.text = "  Veg"
-                im.setImageDrawable(mRecyclerView!!.context.resources.getDrawable(R.drawable.ic_veg))
+                im.setImageDrawable(mRecyclerView.context.resources.getDrawable(R.drawable.ic_veg))
                 tab.customView = tabOne
             }
 
@@ -220,31 +237,32 @@ class MenuGroupAdapter(private var mGroupList: List<MenuGroupModel>?, private va
                 val tvTwo = tabTwo.findViewById<TextView>(R.id.tv_tab)
                 val imTwo = tabTwo.findViewById<ImageView>(R.id.im_tab)
                 tvTwo.text = "  Non-Veg"
-                imTwo.setImageDrawable(mRecyclerView!!.context.resources.getDrawable(R.drawable.ic_non_veg))
+                imTwo.setImageDrawable(mRecyclerView.context.resources.getDrawable(R.drawable.ic_non_veg))
                 tab.customView = tabTwo
             }
         }
     }
 
-    inner class SubGroupPagerAdapter internal constructor(menuGroup: MenuGroupModel) : FragmentStatePagerAdapter(mFragmentManager) {
-        private val mListFragment: MutableList<MenuItemsFragment>
+    inner class SubGroupPagerAdapter internal constructor(menuGroup: MenuGroupModel) : PagerAdapter() {
+        private val mListItems: MutableList<List<MenuItemModel>> = ArrayList()
+
+        override fun isViewFromObject(view: View, obj: Any): Boolean = view == obj
 
         init {
-            mListFragment = ArrayList()
             if (menuGroup.hasSubGroups()) {
-                mListFragment.add(MenuItemsFragment.newInstance(menuGroup.vegItems, mListener, mIsSessionActive))
-                mListFragment.add(MenuItemsFragment.newInstance(menuGroup.nonVegItems, mListener, mIsSessionActive))
+                mListItems.add(menuGroup.vegItems)
+                mListItems.add(menuGroup.nonVegItems)
             } else {
-                mListFragment.add(MenuItemsFragment.newInstance(menuGroup.items, mListener, mIsSessionActive))
+                mListItems.add(menuGroup.items)
             }
         }
 
-        override fun getItem(position: Int): Fragment {
-            return mListFragment[position]
-        }
+        override fun getCount(): Int = mListItems.size
 
-        override fun getCount(): Int {
-            return mListFragment.size
+        override fun instantiateItem(container: ViewGroup, position: Int): Any = MenuItemsHolder(mListItems[position], mListener, container).getView().apply { container.addView(this) }
+
+        override fun destroyItem(container: ViewGroup, position: Int, obj: Any) {
+            container.removeView(obj as View)
         }
 
         override fun getPageTitle(position: Int): CharSequence? {
@@ -262,5 +280,8 @@ class MenuGroupAdapter(private var mGroupList: List<MenuGroupModel>?, private va
     companion object {
         private val TAG = MenuGroupAdapter::class.java.simpleName
         private val GROUP_ANIMATION_DURATION = 300L
+
+        private val STATE_COLLAPSED = 0
+        private val STATE_EXPANDED = 1
     }
 }

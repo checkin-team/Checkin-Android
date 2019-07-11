@@ -18,7 +18,7 @@ public abstract class NetworkBoundResource<ResultType, RequestType> {
 
     @MainThread
     public NetworkBoundResource() {
-        mResult.setValue(Resource.loading(null));
+        mResult.setValue(Resource.Companion.loading(null));
         if (shouldUseLocalDb()) {
             final LiveData<ResultType> dbSource = loadFromDb();
             mResult.addSource(dbSource, data -> {
@@ -27,7 +27,7 @@ public abstract class NetworkBoundResource<ResultType, RequestType> {
                     fetchFromNetwork(dbSource);
                 } else {
                     mResult.addSource(dbSource,
-                            (ResultType newData) -> mResult.setValue(Resource.successCached(newData)));
+                            (ResultType newData) -> mResult.setValue(Resource.Companion.successCached(newData)));
                 }
             });
         } else {
@@ -41,7 +41,7 @@ public abstract class NetworkBoundResource<ResultType, RequestType> {
         if (useDb) {
             // we re-attach dbSource as a new source,
             // it will dispatch its latest value quickly
-            mResult.addSource(dbSource, newData -> mResult.setValue(Resource.loading(newData)));
+            mResult.addSource(dbSource, newData -> mResult.setValue(Resource.Companion.loading(newData)));
         }
         mResult.addSource(apiResponse, response -> {
             mResult.removeSource(apiResponse);
@@ -49,7 +49,7 @@ public abstract class NetworkBoundResource<ResultType, RequestType> {
                 mResult.removeSource(dbSource);
             }
             if (response != null) {
-                Resource<RequestType> resource = Resource.createResource(response);
+                Resource<RequestType> resource = Resource.Companion.createResource(response);
                 if (useDb)
                     saveResultAndReInit(resource);
                 else
@@ -57,7 +57,7 @@ public abstract class NetworkBoundResource<ResultType, RequestType> {
                 if (!response.isSuccessful()) {
                     onFetchFailed(response);
                     if (useDb) {
-                        mResult.addSource(dbSource, newData -> mResult.setValue(Resource.error(resource.message, newData)));
+                        mResult.addSource(dbSource, newData -> mResult.setValue(Resource.Companion.error(resource.getMessage(), newData)));
                     }
                 }
             }
@@ -70,7 +70,7 @@ public abstract class NetworkBoundResource<ResultType, RequestType> {
 
             @Override
             protected Void doInBackground(Void... params) {
-                saveCallResult(resource.data);
+                saveCallResult(resource.getData());
                 return null;
             }
 
@@ -80,7 +80,7 @@ public abstract class NetworkBoundResource<ResultType, RequestType> {
                 // otherwise we will get immediately last cached value,
                 // which may not be updated with latest results received from network.
                 mResult.addSource(loadFromDb(),
-                        newData -> mResult.setValue(Resource.successCached(newData)));
+                        newData -> mResult.setValue(Resource.Companion.success(newData)));
             }
         }.execute();
     }
@@ -88,10 +88,10 @@ public abstract class NetworkBoundResource<ResultType, RequestType> {
     // Called in case no Database interaction needed.
     @MainThread
     protected void postResultDirectly(Resource<RequestType> resource) {
-        RequestType data = resource.data;
-        Log.e(TAG, resource.status.name());
+        RequestType data = resource.getData();
+        Log.e(TAG, resource.getStatus().name());
         try {
-            mResult.setValue(Resource.cloneResource(resource, (ResultType) data));
+            mResult.setValue(Resource.Companion.cloneResource(resource, (ResultType) data));
         } catch (ClassCastException e) {
             Log.e(TAG, "Invalid Resource Data type.");
         }

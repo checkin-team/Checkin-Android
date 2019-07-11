@@ -251,12 +251,12 @@ public class SessionMenuActivity extends BaseActivity implements
         mViewModel.getServerOrderedItems().observe(this, resource -> {
             if (resource == null)
                 return;
-            if (resource.status == Status.SUCCESS) {
+            if (resource.getStatus() == Status.SUCCESS) {
                 Utils.toast(this, "Confirmed orders!");
                 finish();
-            } else if (resource.status == Status.LOADING) {
+            } else if (resource.getStatus() == Status.LOADING) {
             } else {
-                Utils.toast(this, resource.message);
+                Utils.toast(this, resource.getMessage());
                 btnCartProceed.setEnabled(true);
             }
         });

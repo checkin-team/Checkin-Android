@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:orientation="vertical">
+
+
+    <TextView
+        android:id="@+id/tv_about_us"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="@dimen/spacing_small" />
+
+    <TextView
+        android:id="@+id/tv_checkin_link"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="@dimen/spacing_small"
+        android:clickable="true"
+        android:focusable="true" />
+
+    <TextView
+        android:id="@+id/tv_tc_link"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="@dimen/spacing_small"
+        android:clickable="true"
+        android:focusable="true" />
+
+    <TextView
+        android:id="@+id/tv_pp_link"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="@dimen/spacing_small"
+        android:clickable="true"
+        android:focusable="true" />
+
+    <TextView
+        android:id="@+id/tv_refund_policy_link"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="@dimen/spacing_small"
+        android:clickable="true"
+        android:focusable="true" />
+
+    <TextView
+        android:id="@+id/tv_app_version"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        style="@style/GreyTextStyle"
+        android:layout_marginTop="@dimen/spacing_huge"
+        android:clickable="true"
+        android:focusable="true"
+        android:gravity="center"
+        tools:text="v345678" />
+
+</LinearLayout>
+

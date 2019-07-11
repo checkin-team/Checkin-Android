@@ -175,8 +175,8 @@ public class ManagerSessionActivity extends AppCompatActivity implements
 
         mViewModel.getSessionBriefData().observe(this, resource -> {
             if (resource == null) return;
-            SessionBriefModel data = resource.data;
-            switch (resource.status) {
+            SessionBriefModel data = resource.getData();
+            switch (resource.getStatus()) {
                 case SUCCESS:
                     if (data == null)
                         return;
@@ -188,7 +188,7 @@ public class ManagerSessionActivity extends AppCompatActivity implements
                 case LOADING:
                     break;
                 default:
-                    Utils.toast(this, resource.message);
+                    Utils.toast(this, resource.getMessage());
             }
         });
 
@@ -222,16 +222,16 @@ public class ManagerSessionActivity extends AppCompatActivity implements
         mWorkViewModel.getInactiveTables().observe(this, listResource -> {
             if (listResource == null)
                 return;
-            if (listResource.status == Resource.Status.SUCCESS && listResource.data != null)
-                mInactiveAdapter.setData(listResource.data);
+            if (listResource.getStatus() == Resource.Status.SUCCESS && listResource.getData() != null)
+                mInactiveAdapter.setData(listResource.getData());
         });
 
         mViewModel.getSessionSwitchTable().observe(this, qrResultModelResource -> {
             if (qrResultModelResource == null) return;
-            if (qrResultModelResource.status == Resource.Status.SUCCESS && qrResultModelResource.data != null) {
+            if (qrResultModelResource.getStatus() == Resource.Status.SUCCESS && qrResultModelResource.getData() != null) {
                 mViewModel.fetchSessionBriefData(sessionId);
             } else {
-                Utils.toast(this, qrResultModelResource.message);
+                Utils.toast(this, qrResultModelResource.getMessage());
 
             }
         });

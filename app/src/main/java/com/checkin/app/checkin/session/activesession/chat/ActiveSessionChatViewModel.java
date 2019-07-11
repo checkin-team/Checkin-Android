@@ -60,29 +60,29 @@ public class ActiveSessionChatViewModel extends BaseViewModel {
 
     public void addNewEvent(SessionChatModel chatModel) {
         Resource<List<SessionChatModel>> listResource = mChatData.getValue();
-        if (listResource == null || listResource.data == null)
+        if (listResource == null || listResource.getData() == null)
             return;
-        listResource.data.add(0, chatModel);
-        mChatData.setValue(Resource.cloneResource(listResource, listResource.data));
+        listResource.getData().add(0, chatModel);
+        mChatData.setValue(Resource.Companion.cloneResource(listResource, listResource.getData()));
     }
 
     public void updateEventStatus(long eventPk, CHAT_STATUS_TYPE status) {
         Resource<List<SessionChatModel>> listResource = mChatData.getValue();
-        if (listResource == null || listResource.data == null)
+        if (listResource == null || listResource.getData() == null)
             return;
         int pos = -1;
-        for (int i = 0, count = listResource.data.size(); i < count; i++) {
-            if (listResource.data.get(i).getPk() == eventPk) {
+        for (int i = 0, count = listResource.getData().size(); i < count; i++) {
+            if (listResource.getData().get(i).getPk() == eventPk) {
                 pos = i;
                 break;
             }
         }
         if (pos > -1) {
-            SessionChatModel chatModel = listResource.data.get(pos);
+            SessionChatModel chatModel = listResource.getData().get(pos);
             chatModel.setStatus(status.tag);
-            listResource.data.remove(pos);
-            listResource.data.add(0, chatModel);
-            mChatData.setValue(Resource.cloneResource(listResource, listResource.data));
+            listResource.getData().remove(pos);
+            listResource.getData().add(0, chatModel);
+            mChatData.setValue(Resource.Companion.cloneResource(listResource, listResource.getData()));
         }
     }
 }

@@ -91,21 +91,21 @@ public class SessionChatActivity extends BaseActivity implements ActiveSessionCh
         mViewModel.getSessionChat().observe(this, resource -> {
             if (resource == null)
                 return;
-            if (resource.status == Resource.Status.SUCCESS && resource.data != null) {
-                mChatAdapter.setData(resource.data);
+            if (resource.getStatus() == Resource.Status.SUCCESS && resource.getData() != null) {
+                mChatAdapter.setData(resource.getData());
                 stopRefreshing();
-            } else if (resource.status == Resource.Status.LOADING) {
+            } else if (resource.getStatus() == Resource.Status.LOADING) {
                 startRefreshing();
             } else {
                 stopRefreshing();
-                Utils.toast(this, resource.message);
+                Utils.toast(this, resource.getMessage());
             }
         });
 
         mViewModel.getObservableData().observe(this, resource -> {
             if (resource == null)
                 return;
-            switch (resource.status) {
+            switch (resource.getStatus()) {
                 case SUCCESS: {
                     resetMessageState();
                     break;
@@ -113,7 +113,7 @@ public class SessionChatActivity extends BaseActivity implements ActiveSessionCh
                 case LOADING:
                     break;
                 default: {
-                    Utils.toast(this, resource.message);
+                    Utils.toast(this, resource.getMessage());
                 }
             }
         });

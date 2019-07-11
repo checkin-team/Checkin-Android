@@ -63,14 +63,14 @@ public class ShopInvoiceListActivity extends BaseActivity implements ShopInvoice
         mViewModel.getRestaurantSessions().observe(this, input -> {
             if (input == null)
                 return;
-            if (input.status == Resource.Status.SUCCESS && input.data != null) {
-                mAdapter.setSessionData(input.data);
+            if (input.getStatus() == Resource.Status.SUCCESS && input.getData() != null) {
+                mAdapter.setSessionData(input.getData());
                 hideProgressBar();
-            } else if (input.status != Resource.Status.LOADING) {
-                Utils.toast(this, input.message);
+            } else if (input.getStatus() != Resource.Status.LOADING) {
+                Utils.toast(this, input.getMessage());
                 hideProgressBar();
             }
-            if (input.status == Resource.Status.LOADING)
+            if (input.getStatus() == Resource.Status.LOADING)
                 visibleProgressBar();
         });
         setupUi();

@@ -15,8 +15,6 @@ import android.widget.TextView;
 import androidx.annotation.Nullable;
 import androidx.appcompat.widget.Toolbar;
 import androidx.lifecycle.ViewModelProviders;
-import androidx.recyclerview.widget.GridLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
 
 import com.checkin.app.checkin.Menu.MenuItemInteraction;
 import com.checkin.app.checkin.Menu.Model.MenuItemModel;
@@ -47,12 +45,10 @@ import static com.checkin.app.checkin.Menu.ShopMenu.SessionMenuActivity.KEY_SESS
 import static com.checkin.app.checkin.Menu.ShopMenu.SessionMenuActivity.SESSION_ARG;
 import static com.checkin.app.checkin.session.activesession.ActiveSessionActivity.KEY_INTERACT_WITH_US;
 
-public class SessionMenuActivity extends BaseActivity implements
-        MenuItemInteraction, ItemCustomizationFragment.ItemCustomizationInteraction, MenuFilterFragment.MenuFilterInteraction {
+public class SessionMenuActivity extends BaseActivity implements MenuItemInteraction, ItemCustomizationFragment.ItemCustomizationInteraction, MenuFilterFragment.MenuFilterInteraction {
     public static final String SP_MENU_SEARCH = "sp.menu.search";
     public static final String SP_MENU_CART = "sp.menu.cart";
-    @BindView(R.id.rv_menu)
-    RecyclerView rvMenu;
+
     @BindView(R.id.view_as_menu_search)
     MaterialSearchView vMenuSearch;
     @BindView(R.id.tv_as_menu_drinks)
@@ -73,6 +69,8 @@ public class SessionMenuActivity extends BaseActivity implements
     ImageView btnMenuSearch;
     @BindView(R.id.btn_as_menu_filter)
     ImageView btnMenuFilter;
+    @BindView(R.id.tv_as_menu_title)
+    TextView tvMenuTitle;
 
     private MenuGroupsFragment.SESSION_STATUS mSessionStatus;
 
@@ -81,9 +79,6 @@ public class SessionMenuActivity extends BaseActivity implements
     private MenuItemSearchFragment mSearchFragment;
     private MenuFilterFragment mFilterFragment;
     private MenuViewModel mViewModel;
-
-    private MenuBestSellerAdapter mBestSellerAdapter;
-
 
     public static void startWithSession(Context context, Long restaurantPk, @Nullable Long sessionPk, @Nullable Long itemModel) {
         context.startActivity(withSession(context, restaurantPk, sessionPk, itemModel));
@@ -101,7 +96,6 @@ public class SessionMenuActivity extends BaseActivity implements
         intent.putExtra(SESSION_ARG, args);
         return intent;
     }
-
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -143,10 +137,6 @@ public class SessionMenuActivity extends BaseActivity implements
         } else {
             if (isSessionActive()) explainMenu();
         }
-
-        rvMenu.setLayoutManager(new GridLayoutManager(this, 2));
-        mBestSellerAdapter = new MenuBestSellerAdapter();
-        rvMenu.setAdapter(mBestSellerAdapter);
     }
 
     @OnClick({R.id.tv_as_menu_drinks, R.id.tv_as_menu_food, R.id.tv_as_menu_dessert, R.id.tv_as_menu_specials})
@@ -199,11 +189,12 @@ public class SessionMenuActivity extends BaseActivity implements
                 menuCart.setVisibility(View.VISIBLE);
                 tvCartSubtotal.setText(Utils.formatCurrencyAmount(this, subtotal));
             }
-
         });
 
         mViewModel.mOriginalMenuGroups.observe(this, listResource -> {
         });
+
+        mViewModel.getFilteredString().observe(this, it -> tvMenuTitle.setText(it != null ? it : "Menu"));
     }
 
     private void setupMenuFragment() {
@@ -259,7 +250,7 @@ public class SessionMenuActivity extends BaseActivity implements
 
     private void setupCart() {
         getSupportFragmentManager().beginTransaction()
-                .replace(R.id.container_as_menu_fragment, mCartFragment)
+                .add(R.id.container_as_menu_fragment, mCartFragment, "cart")
                 .addToBackStack(null)
                 .commit();
     }
@@ -445,7 +436,7 @@ public class SessionMenuActivity extends BaseActivity implements
     }
 
     @Override
-    public void sortItems() {
+    public void sortItems(boolean low2high) {
         mViewModel.searchMenuItems("");
         openSearchItems();
     }

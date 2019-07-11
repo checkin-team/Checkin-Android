@@ -1,7 +1,6 @@
 package com.checkin.app.checkin.Menu.UserMenu.Fragment;
 
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
@@ -11,13 +10,14 @@ import androidx.annotation.Nullable;
 import androidx.lifecycle.ViewModelProviders;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import com.checkin.app.checkin.Data.Resource;
+import com.checkin.app.checkin.Menu.MenuItemInteraction;
+import com.checkin.app.checkin.Menu.Model.MenuGroupModel;
 import com.checkin.app.checkin.Menu.UserMenu.Adapter.MenuGroupAdapter;
 import com.checkin.app.checkin.Menu.UserMenu.Adapter.MenuItemAdapter;
-import com.checkin.app.checkin.Menu.MenuItemInteraction;
 import com.checkin.app.checkin.Menu.UserMenu.MenuViewModel;
-import com.checkin.app.checkin.Menu.Model.MenuGroupModel;
 import com.checkin.app.checkin.Misc.BaseFragment;
 import com.checkin.app.checkin.R;
 import com.checkin.app.checkin.Utility.Utils;
@@ -25,8 +25,6 @@ import com.facebook.shimmer.ShimmerFrameLayout;
 import com.miguelcatalan.materialsearchview.utils.AnimationUtil;
 
 import java.util.List;
-
-import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import butterknife.BindView;
 import butterknife.OnClick;
@@ -74,18 +72,17 @@ public class MenuGroupsFragment extends BaseFragment implements MenuGroupAdapter
         mViewModel = ViewModelProviders.of(requireActivity()).get(MenuViewModel.class);
 
         mViewModel.getMenuGroups().observe(this, menuGroupResource -> {
-            if (menuGroupResource == null)
-                return;
-            if (menuGroupResource.status == Resource.Status.SUCCESS && !menuGroupResource.isCached()) {
+            if (menuGroupResource == null) return;
+            if (menuGroupResource.getStatus() == Resource.Status.SUCCESS && !menuGroupResource.isCached()) {
                 stopRefreshing();
-                setupData(menuGroupResource.data);
-            } else if (menuGroupResource.status == Resource.Status.LOADING) {
+                setupData(menuGroupResource.getData());
+            } else if (menuGroupResource.getStatus() == Resource.Status.LOADING) {
                 startRefreshing();
-                if (!mAdapter.hasData() && menuGroupResource.data != null)
-                    setupData(menuGroupResource.data);
+                if (!mAdapter.hasData() && menuGroupResource.getData() != null)
+                    setupData(menuGroupResource.getData());
             } else {
                 stopRefreshing();
-                Utils.toast(requireContext(), menuGroupResource.message);
+                Utils.toast(requireContext(), menuGroupResource.getMessage());
             }
         });
 
@@ -111,9 +108,31 @@ public class MenuGroupsFragment extends BaseFragment implements MenuGroupAdapter
     private void setupGroupRecycler() {
         rvGroupsList.setLayoutManager(new LinearLayoutManager(getContext(), RecyclerView.VERTICAL, false));
 
-        mAdapter = new MenuGroupAdapter(null, requireFragmentManager(), mListener, this);
+        mAdapter = new MenuGroupAdapter(null, mListener, this);
         mAdapter.setSessionActive(mIsSessionActive);
         rvGroupsList.setAdapter(mAdapter);
+
+        rvGroupsList.addOnScrollListener(new RecyclerView.OnScrollListener() {
+            @Override
+            public void onScrolled(@NonNull RecyclerView recyclerView, int dx, int dy) {
+                super.onScrolled(recyclerView, dx, dy);
+                if (getView() != null) {
+                    Integer topIndex = mAdapter.getTopExpandedGroupPosition();
+                    if (topIndex != null) {
+                        int fullHeight = getView().getHeight();
+                        View view = rvGroupsList.getLayoutManager().findViewByPosition(topIndex);
+                        int groupHeight = view != null ? view.getHeight() : 0;
+                        if (groupHeight < fullHeight)
+                            containerCurrentCategory.setVisibility(View.GONE);
+                        else {
+                            containerCurrentCategory.setVisibility(View.VISIBLE);
+                            if (topIndex != tvCurrentCategory.getId())
+                                tvCurrentCategory.setText(mAdapter.getGroupName(topIndex));
+                        }
+                    } else containerCurrentCategory.setVisibility(View.GONE);
+                }
+            }
+        });
     }
 
     public boolean onBackPressed() {
@@ -130,8 +149,14 @@ public class MenuGroupsFragment extends BaseFragment implements MenuGroupAdapter
 
     public void scrollToGroup(String title) {
         int pos = mAdapter.getGroupPosition(title);
-        Log.e("scrollToGroup", "pos-" + pos);
-        rvGroupsList.smoothScrollToPosition(pos);
+        if (rvGroupsList.getLayoutManager() != null) {
+            View v = rvGroupsList.getLayoutManager().findViewByPosition(pos);
+            if (v == null) rvGroupsList.smoothScrollToPosition(pos);
+            else {
+                mAdapter.contractView();
+                mAdapter.expandView(((MenuGroupAdapter.GroupViewHolder) rvGroupsList.getChildViewHolder(v)));
+            }
+        }
     }
 
     @Override
@@ -149,7 +174,7 @@ public class MenuGroupsFragment extends BaseFragment implements MenuGroupAdapter
         }
     }
 
-    @OnClick(R.id.tv_as_menu_current_category)
+    @OnClick(R.id.container_as_menu_current_category)
     public void onStickyGroup() {
         mAdapter.contractView();
     }

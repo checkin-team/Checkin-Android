@@ -42,12 +42,12 @@ public class InventoryViewModel extends BaseViewModel {
         mMenuData.addSource(mRepository.getAvailableRestaurantMenu(restaurantId), mMenuData::setValue);
 
         LiveData<Resource<List<InventoryGroupModel>>> resourceLiveData = Transformations.map(mMenuData, menuModelResource -> {
-            mOriginalMenuGroups.setValue(Resource.loading(null));
-            if (menuModelResource == null || menuModelResource.data == null)
-                return Resource.loading(null);
-            List<InventoryGroupModel> groups = menuModelResource.data.getGroups();
+            mOriginalMenuGroups.setValue(Resource.Companion.loading(null));
+            if (menuModelResource == null || menuModelResource.getData() == null)
+                return Resource.Companion.loading(null);
+            List<InventoryGroupModel> groups = menuModelResource.getData().getGroups();
             Collections.sort(groups, (o1, o2) -> o1.getCategory().compareTo(o2.getCategory()));
-            return Resource.cloneResource(menuModelResource, groups);
+            return Resource.Companion.cloneResource(menuModelResource, groups);
         });
 
         mOriginalMenuGroups.addSource(resourceLiveData, mOriginalMenuGroups::setValue);
@@ -55,20 +55,20 @@ public class InventoryViewModel extends BaseViewModel {
 
     public LiveData<Resource<List<InventoryGroupModel>>> getMenuGroups() {
         return Transformations.map(mOriginalMenuGroups, input -> {
-            if (input == null || input.data == null)
+            if (input == null || input.getData() == null)
                 return null;
             List<InventoryItemModel> unavailableItems = new ArrayList<>();
-            for (InventoryGroupModel groupModel : input.data) {
+            for (InventoryGroupModel groupModel : input.getData()) {
                 for (InventoryItemModel itemModel : groupModel.getItems()) {
                     if (!itemModel.isAvailable())
                         unavailableItems.add(itemModel);
                 }
             }
-            List<InventoryGroupModel> groupModels = new ArrayList<>(input.data);
+            List<InventoryGroupModel> groupModels = new ArrayList<>(input.getData());
             if (unavailableItems.size() > 0) {
                 groupModels.add(0, new InventoryGroupModel("Unavailable Items", "Default", unavailableItems));
             }
-            return Resource.cloneResource(input, groupModels);
+            return Resource.Companion.cloneResource(input, groupModels);
         });
     }
 
@@ -86,11 +86,11 @@ public class InventoryViewModel extends BaseViewModel {
 
     public void updateUiItemListAvailability(List<InventoryAvailabilityModel> data) {
         Resource<List<InventoryGroupModel>> resource = mOriginalMenuGroups.getValue();
-        if (resource == null || resource.data == null)
+        if (resource == null || resource.getData() == null)
             return;
         for (InventoryAvailabilityModel availabilityModel : data) {
-            for (int i = 0, groupLength = resource.data.size(); i < groupLength; i++) {
-                List<InventoryItemModel> items = resource.data.get(i).getItems();
+            for (int i = 0, groupLength = resource.getData().size(); i < groupLength; i++) {
+                List<InventoryItemModel> items = resource.getData().get(i).getItems();
                 for (int j = 0, itemsLength = items.size(); j < itemsLength; j++) {
                     if (items.get(j).getPk() == availabilityModel.getPk()) {
                         items.get(j).setAvailable(availabilityModel.isAvailable());
@@ -100,6 +100,6 @@ public class InventoryViewModel extends BaseViewModel {
                 }
             }
         }
-        mOriginalMenuGroups.setValue(Resource.cloneResource(resource, resource.data));
+        mOriginalMenuGroups.setValue(Resource.Companion.cloneResource(resource, resource.getData()));
     }
 }

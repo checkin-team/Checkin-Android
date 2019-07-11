@@ -78,8 +78,8 @@ public class ShopInsightRevenueFragment extends BaseFragment {
         mViewModel.getInsightRevenueDetail().observe(this, shopInsightRevenueModelResource -> {
             if (shopInsightRevenueModelResource == null)
                 return;
-            if (shopInsightRevenueModelResource.status == Resource.Status.SUCCESS && shopInsightRevenueModelResource.data != null) {
-                ShopInsightRevenueModel revenueModel = shopInsightRevenueModelResource.data;
+            if (shopInsightRevenueModelResource.getStatus() == Resource.Status.SUCCESS && shopInsightRevenueModelResource.getData() != null) {
+                ShopInsightRevenueModel revenueModel = shopInsightRevenueModelResource.getData();
                 mPagerAdapter.setData(revenueModel);
                 tvFloatingCash.setText(Utils.formatCurrencyAmount(requireContext(), revenueModel.getFloatingCash()));
                 tvCancellationRate.setText(revenueModel.getCancellationRate());

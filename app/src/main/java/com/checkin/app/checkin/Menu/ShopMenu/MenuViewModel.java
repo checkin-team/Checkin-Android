@@ -64,12 +64,12 @@ public class MenuViewModel extends BaseViewModel {
         resetMenuGroups();
 
         LiveData<Resource<List<MenuGroupModel>>> resourceLiveData = Transformations.map(mMenuData, menuModelResource -> {
-            mOriginalMenuGroups.setValue(Resource.loading(null));
-            if (menuModelResource == null || menuModelResource.data == null)
-                return Resource.loading(null);
-            List<MenuGroupModel> groups = menuModelResource.data.getGroups();
+            mOriginalMenuGroups.setValue(Resource.Companion.loading(null));
+            if (menuModelResource == null || menuModelResource.getData() == null)
+                return Resource.Companion.loading(null);
+            List<MenuGroupModel> groups = menuModelResource.getData().getGroups();
             Collections.sort(groups, (o1, o2) -> o1.getCategory().compareTo(o2.getCategory()));
-            return Resource.cloneResource(menuModelResource, groups);
+            return Resource.Companion.cloneResource(menuModelResource, groups);
         });
         mOriginalMenuGroups.addSource(resourceLiveData, listResource -> {
             mOriginalMenuGroups.setValue(listResource);
@@ -93,29 +93,29 @@ public class MenuViewModel extends BaseViewModel {
     }
 
     public void resetMenuItems() {
-        mMenuItems.setValue(Resource.noRequest());
+        mMenuItems.setValue(Resource.Companion.noRequest());
     }
 
     public void searchMenuItems(final String query) {
         if (query == null || query.isEmpty())
             return;
-        mMenuItems.setValue(Resource.loading(null));
+        mMenuItems.setValue(Resource.Companion.loading(null));
         if (mRunnable != null)
             mHandler.removeCallbacks(mRunnable);
         mRunnable = () -> {
             LiveData<Resource<List<MenuItemModel>>> resourceLiveData = Transformations.map(mMenuData, input -> {
-                if (input == null || input.data == null)
-                    return Resource.loading(null);
+                if (input == null || input.getData() == null)
+                    return Resource.Companion.loading(null);
                 List<MenuItemModel> items = new ArrayList<>();
-                for (MenuGroupModel groupModel : input.data.getGroups()) {
+                for (MenuGroupModel groupModel : input.getData().getGroups()) {
                     for (MenuItemModel itemModel : groupModel.getItems()) {
                         if (itemModel.getName().toLowerCase().contains(query.toLowerCase()))
                             items.add(itemModel);
                     }
                 }
                 if (items.size() == 0)
-                    return Resource.errorNotFound(null);
-                return Resource.cloneResource(input, items);
+                    return Resource.Companion.errorNotFound("Dish not found.");
+                return Resource.Companion.cloneResource(input, items);
             });
             mMenuItems.addSource(resourceLiveData, mMenuItems::setValue);
         };
@@ -125,11 +125,11 @@ public class MenuViewModel extends BaseViewModel {
     public void filterMenuGroups(final MenuItemModel.AVAILABLE_MEAL availableMeal) {
         mFilteredString.setValue(availableMeal.name());
         LiveData<Resource<List<MenuGroupModel>>> resourceLiveData = Transformations.map(mOriginalMenuGroups, listResource -> {
-            if (listResource == null || listResource.data == null)
+            if (listResource == null || listResource.getData() == null)
                 return null;
             List<MenuGroupModel> result = new ArrayList<>();
 
-            for (MenuGroupModel menuGroupModel : listResource.data) {
+            for (MenuGroupModel menuGroupModel : listResource.getData()) {
                 List<MenuItemModel> items = new ArrayList<>();
                 for (MenuItemModel menuItemModel : menuGroupModel.getItems()) {
                     if (menuItemModel.getAvailableMeals().contains(availableMeal.name())) {
@@ -142,7 +142,7 @@ public class MenuViewModel extends BaseViewModel {
                     result.add(menuGroupModel);
                 }
             }
-            return Resource.cloneResource(listResource, result);
+            return Resource.Companion.cloneResource(listResource, result);
         });
         mMenuGroups.addSource(resourceLiveData, mMenuGroups::setValue);
     }
@@ -365,11 +365,11 @@ public class MenuViewModel extends BaseViewModel {
 
     public LiveData<List<String>> getCategories() {
         return Transformations.map(mOriginalMenuGroups, input -> {
-            if (input == null || input.data == null)
+            if (input == null || input.getData() == null)
                 return null;
             List<String> categories = new ArrayList<>();
             String category = "";
-            for (MenuGroupModel menuGroupModel : input.data) {
+            for (MenuGroupModel menuGroupModel : input.getData()) {
                 if (!category.contentEquals(menuGroupModel.getCategory())) {
                     category = menuGroupModel.getCategory();
                     categories.add(category);
@@ -381,11 +381,11 @@ public class MenuViewModel extends BaseViewModel {
 
     public LiveData<List<String>> getGroupName() {
         return Transformations.map(mMenuGroups, input -> {
-            if (input == null || input.data == null)
+            if (input == null || input.getData() == null)
                 return null;
             List<String> categories = new ArrayList<>();
             String category = "";
-            for (MenuGroupModel menuGroupModel : input.data) {
+            for (MenuGroupModel menuGroupModel : input.getData()) {
                 categories.add(menuGroupModel.getName());
             }
             return categories;
@@ -395,19 +395,19 @@ public class MenuViewModel extends BaseViewModel {
     public void sortMenuItems(boolean low2high) {
         mFilteredString.setValue(low2high ? "Low-High" : "High-Low");
         LiveData<Resource<List<MenuItemModel>>> resourceLiveData = Transformations.map(mMenuData, input -> {
-            if (input == null || input.data == null)
-                return Resource.loading(null);
+            if (input == null || input.getData() == null)
+                return Resource.Companion.loading(null);
             List<MenuItemModel> items = new ArrayList<>();
-            for (MenuGroupModel groupModel : input.data.getGroups()) {
+            for (MenuGroupModel groupModel : input.getData().getGroups()) {
                 items.addAll(groupModel.getItems());
             }
             if (items.size() == 0)
-                return Resource.errorNotFound(null);
+                return Resource.Companion.errorNotFound(null);
             Collections.sort(items, (o1, o2) -> {
                 int diff = (int) (o1.getTypeCosts().get(0) - o2.getTypeCosts().get(0));
                 return low2high ? diff : -diff;
             });
-            return Resource.cloneResource(input, items);
+            return Resource.Companion.cloneResource(input, items);
         });
         mMenuItems.addSource(resourceLiveData, mMenuItems::setValue);
     }
@@ -438,11 +438,11 @@ public class MenuViewModel extends BaseViewModel {
     public LiveData<MenuItemModel> getMenuItem() {
         if (mTrendingItemPk == null)
             return null;
-        mMenuData.setValue(Resource.loading(null));
+        mMenuData.setValue(Resource.Companion.loading(null));
         return Transformations.map(mMenuData, input -> {
-            if (input == null || input.data == null)
+            if (input == null || input.getData() == null)
                 return null;
-            for (MenuGroupModel groupModel : input.data.getGroups()) {
+            for (MenuGroupModel groupModel : input.getData().getGroups()) {
                 for (MenuItemModel itemModel : groupModel.getItems()) {
                     if (itemModel.getPk() == mTrendingItemPk) {
                         mTrendingItemPk = 0L;
@@ -458,9 +458,9 @@ public class MenuViewModel extends BaseViewModel {
         if (mTrendingItemPk == null)
             return null;
         return Transformations.map(mMenuData, input -> {
-            if (input == null || input.data == null)
+            if (input == null || input.getData() == null)
                 return null;
-            for (MenuGroupModel groupModel : input.data.getGroups()) {
+            for (MenuGroupModel groupModel : input.getData().getGroups()) {
                 for (MenuItemModel itemModel : groupModel.getItems()) {
                     if (itemModel.getPk() == mTrendingItemPk) {
                         mTrendingItemPk = 0L;
@@ -491,10 +491,10 @@ public class MenuViewModel extends BaseViewModel {
             mSelectedCategory.setValue(category);
 
         LiveData<Resource<List<MenuGroupModel>>> resourceLiveData = Transformations.map(mOriginalMenuGroups, listResource -> {
-            if (listResource == null || listResource.data == null)
+            if (listResource == null || listResource.getData() == null)
                 return null;
             List<MenuGroupModel> result = new ArrayList<>();
-            for (MenuGroupModel menuGroupModel : listResource.data) {
+            for (MenuGroupModel menuGroupModel : listResource.getData()) {
                 List<MenuItemModel> items = new ArrayList<>();
                 if (menuGroupModel.getCategory().equalsIgnoreCase(category)){
                     items.addAll(menuGroupModel.getItems());
@@ -506,7 +506,7 @@ public class MenuViewModel extends BaseViewModel {
                     result.add(menuGroupModel);
                 }
             }
-            return Resource.cloneResource(listResource, result);
+            return Resource.Companion.cloneResource(listResource, result);
         });
         mMenuGroups.addSource(resourceLiveData, mMenuGroups::setValue);
     }

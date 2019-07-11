@@ -95,7 +95,7 @@ public class ActiveSessionModel {
     }
 
     public String formatBill(Context context) {
-        return Utils.formatCurrencyAmount(context, bill);
+        return "Total: " + Utils.formatCurrencyAmount(context, bill);
     }
 
     public boolean isRequestedCheckout() {

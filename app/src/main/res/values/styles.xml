@@ -17,6 +17,7 @@
 
     <style name="appbar_main" parent="AppTheme.AppBarOverlay">
         <item name="android:homeAsUpIndicator">@drawable/ic_back_grey</item>
+        <item name="elevation">@dimen/spacing_elevation_fix_extreme_tiny</item>
     </style>
 
     <style name="SessionTheme" parent="Theme.AppCompat.Light.NoActionBar">

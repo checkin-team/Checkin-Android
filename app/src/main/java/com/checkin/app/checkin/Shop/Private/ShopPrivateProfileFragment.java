@@ -109,12 +109,12 @@ public class ShopPrivateProfileFragment extends Fragment {
         mViewModel.getShopData().observe(this, shopResource -> {
             if (shopResource == null) return;
 
-            if (shopResource.status == Resource.Status.SUCCESS && shopResource.data != null) {
-                this.setupData(shopResource.data);
-            } else if (shopResource.status == Resource.Status.LOADING) {
+            if (shopResource.getStatus() == Resource.Status.SUCCESS && shopResource.getData() != null) {
+                this.setupData(shopResource.getData());
+            } else if (shopResource.getStatus() == Resource.Status.LOADING) {
                 // LOADING
             } else {
-                Utils.toast(requireContext(), "Error!\n" + shopResource.message);
+                Utils.toast(requireContext(), "Error!\n" + shopResource.getMessage());
             }
         });
     }

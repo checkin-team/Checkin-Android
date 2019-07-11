@@ -70,8 +70,8 @@ public class ShopSessionDetailFragment extends Fragment {
         mViewModel.getSessionDetail().observe(this, input -> {
             if (input == null)
                 return;
-            if (input.status == Resource.Status.SUCCESS && input.data != null) {
-                ShopSessionDetailModel data = input.data;
+            if (input.getStatus() == Resource.Status.SUCCESS && input.getData() != null) {
+                ShopSessionDetailModel data = input.getData();
 
                 tvBillTotal.setText(String.format(Locale.ENGLISH, Utils.getCurrencyFormat(requireContext()), data.getBill().getTotal()));
                 tvTotalTime.setText(data.formatTotalTime());

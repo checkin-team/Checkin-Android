@@ -141,23 +141,23 @@ public class ManagerSessionViewModel extends BaseViewModel {
 
     public LiveData<Resource<List<ManagerSessionEventModel>>> getSessionEventData() {
         return Transformations.map(mEventData, input -> {
-            if (input == null || input.data == null)
+            if (input == null || input.getData() == null)
                 return input;
             List<ManagerSessionEventModel> list = new ArrayList<>();
-            if (input.status == Resource.Status.SUCCESS)
-                for (ManagerSessionEventModel data : input.data) {
+            if (input.getStatus() == Resource.Status.SUCCESS)
+                for (ManagerSessionEventModel data : input.getData()) {
                     if (data.getType() != EVENT_MENU_ORDER_ITEM)
                         list.add(data);
                 }
-            return Resource.cloneResource(input, list);
+            return Resource.Companion.cloneResource(input, list);
         });
     }
 
     public LiveData<Integer> getCountNewOrders() {
         return Transformations.map(mOrdersData, input -> {
             List<SessionOrderedItemModel> list = new ArrayList<>();
-            if (input.data != null) {
-                for (SessionOrderedItemModel item : input.data)
+            if (input.getData() != null) {
+                for (SessionOrderedItemModel item : input.getData())
                     if (item.getStatus() == OPEN)
                         list.add(item);
             }
@@ -168,8 +168,8 @@ public class ManagerSessionViewModel extends BaseViewModel {
     public LiveData<Integer> getCountProgressOrders() {
         return Transformations.map(mOrdersData, input -> {
             List<SessionOrderedItemModel> list = new ArrayList<>();
-            if (input.data != null) {
-                for (SessionOrderedItemModel item : input.data)
+            if (input.getData() != null) {
+                for (SessionOrderedItemModel item : input.getData())
                     if (item.getStatus() == IN_PROGRESS)
                         list.add(item);
             }
@@ -180,8 +180,8 @@ public class ManagerSessionViewModel extends BaseViewModel {
     public LiveData<Integer> getCountDeliveredOrders() {
         return Transformations.map(mOrdersData, input -> {
             List<SessionOrderedItemModel> list = new ArrayList<>();
-            if (input.data != null) {
-                for (SessionOrderedItemModel item : input.data)
+            if (input.getData() != null) {
+                for (SessionOrderedItemModel item : input.getData())
                     if (item.getStatus() == DONE)
                         list.add(item);
             }
@@ -191,48 +191,48 @@ public class ManagerSessionViewModel extends BaseViewModel {
 
     public LiveData<Resource<List<SessionOrderedItemModel>>> getOpenOrders() {
         return Transformations.map(mOrdersData, input -> {
-            if (input == null || input.data == null)
+            if (input == null || input.getData() == null)
                 return input;
             List<SessionOrderedItemModel> list = new ArrayList<>();
             List<OrderStatusModel> listNewOrderStatus = new ArrayList<>();
 
-            if (input.status == Resource.Status.SUCCESS)
-                for (SessionOrderedItemModel data : input.data) {
+            if (input.getStatus() == Resource.Status.SUCCESS)
+                for (SessionOrderedItemModel data : input.getData()) {
                     if (data.getStatus() == OPEN) {
                         list.add(data);
                         listNewOrderStatus.add(new OrderStatusModel(data.getPk(), IN_PROGRESS));
                     }
                 }
             mNewOrderStatus.setValue(listNewOrderStatus);
-            return Resource.cloneResource(input, list);
+            return Resource.Companion.cloneResource(input, list);
         });
     }
 
     public LiveData<Resource<List<SessionOrderedItemModel>>> getAcceptedOrders() {
         return Transformations.map(mOrdersData, input -> {
-            if (input == null || input.data == null)
+            if (input == null || input.getData() == null)
                 return input;
             List<SessionOrderedItemModel> list = new ArrayList<>();
-            if (input.status == Resource.Status.SUCCESS)
-                for (SessionOrderedItemModel data : input.data) {
+            if (input.getStatus() == Resource.Status.SUCCESS)
+                for (SessionOrderedItemModel data : input.getData()) {
                     if (data.getStatus() == IN_PROGRESS)
                         list.add(data);
                 }
-            return Resource.cloneResource(input, list);
+            return Resource.Companion.cloneResource(input, list);
         });
     }
 
     public LiveData<Resource<List<SessionOrderedItemModel>>> getDeliveredRejectedOrders() {
         return Transformations.map(mOrdersData, input -> {
-            if (input == null || input.data == null)
+            if (input == null || input.getData() == null)
                 return input;
             List<SessionOrderedItemModel> list = new ArrayList<>();
-            if (input.status == Resource.Status.SUCCESS)
-                for (SessionOrderedItemModel data : input.data) {
+            if (input.getStatus() == Resource.Status.SUCCESS)
+                for (SessionOrderedItemModel data : input.getData()) {
                     if (data.getStatus() == DONE || data.getStatus() == CANCELLED)
                         list.add(data);
                 }
-            return Resource.cloneResource(input, list);
+            return Resource.Companion.cloneResource(input, list);
         });
     }
 
@@ -269,60 +269,60 @@ public class ManagerSessionViewModel extends BaseViewModel {
 
     public void updateUiOrderStatus(OrderStatusModel data) {
         Resource<List<SessionOrderedItemModel>> listResource = mOrdersData.getValue();
-        if (listResource == null || listResource.data == null)
+        if (listResource == null || listResource.getData() == null)
             return;
         int pos = -1;
-        for (int i = 0, count = listResource.data.size(); i < count; i++) {
-            if (listResource.data.get(i).getPk() == data.getPk()) {
+        for (int i = 0, count = listResource.getData().size(); i < count; i++) {
+            if (listResource.getData().get(i).getPk() == data.getPk()) {
                 pos = i;
                 break;
             }
         }
         if (pos > -1) {
-            SessionOrderedItemModel eventModel = listResource.data.get(pos);
+            SessionOrderedItemModel eventModel = listResource.getData().get(pos);
             eventModel.setStatus(data.getStatus());
-            listResource.data.remove(pos);
-            listResource.data.add(0, eventModel);
+            listResource.getData().remove(pos);
+            listResource.getData().add(0, eventModel);
         }
-        mOrdersData.setValue(Resource.cloneResource(listResource, listResource.data));
+        mOrdersData.setValue(Resource.Companion.cloneResource(listResource, listResource.getData()));
     }
 
     public void updateUiOrderListStatus(List<OrderStatusModel> data) {
         Resource<List<SessionOrderedItemModel>> listResource = mOrdersData.getValue();
-        if (listResource == null || listResource.data == null)
+        if (listResource == null || listResource.getData() == null)
             return;
 
-        for (int i = 0, count = listResource.data.size(); i < count; i++) {
+        for (int i = 0, count = listResource.getData().size(); i < count; i++) {
             for (int j = 0, size = data.size(); j < size; j++) {
-                if (listResource.data.get(i).getPk() == data.get(j).getPk()) {
-                    SessionOrderedItemModel eventModel = listResource.data.get(i);
+                if (listResource.getData().get(i).getPk() == data.get(j).getPk()) {
+                    SessionOrderedItemModel eventModel = listResource.getData().get(i);
                     eventModel.setStatus(data.get(j).getStatus());
-                    listResource.data.remove(i);
-                    listResource.data.add(j, eventModel);
+                    listResource.getData().remove(i);
+                    listResource.getData().add(j, eventModel);
                 }
             }
         }
-        mOrdersData.setValue(Resource.cloneResource(listResource, listResource.data));
+        mOrdersData.setValue(Resource.Companion.cloneResource(listResource, listResource.getData()));
     }
 
     public void updateUiEventStatus(long eventId, SessionChatModel.CHAT_STATUS_TYPE status) {
         Resource<List<ManagerSessionEventModel>> listResource = mEventData.getValue();
-        if (listResource == null || listResource.data == null)
+        if (listResource == null || listResource.getData() == null)
             return;
         int pos = -1;
-        for (int i = 0, count = listResource.data.size(); i < count; i++) {
-            if (listResource.data.get(i).getPk() == eventId) {
+        for (int i = 0, count = listResource.getData().size(); i < count; i++) {
+            if (listResource.getData().get(i).getPk() == eventId) {
                 pos = i;
                 break;
             }
         }
         if (pos > -1) {
-            ManagerSessionEventModel eventModel = listResource.data.get(pos);
+            ManagerSessionEventModel eventModel = listResource.getData().get(pos);
             eventModel.setStatus(status);
-            listResource.data.remove(pos);
-            listResource.data.add(0, eventModel);
+            listResource.getData().remove(pos);
+            listResource.getData().add(0, eventModel);
         }
-        mEventData.setValue(Resource.cloneResource(listResource, listResource.data));
+        mEventData.setValue(Resource.Companion.cloneResource(listResource, listResource.getData()));
     }
 
     public long getSessionPk() {
@@ -343,36 +343,36 @@ public class ManagerSessionViewModel extends BaseViewModel {
 
     public void addOrderData(SessionOrderedItemModel orderedItemModel) {
         Resource<List<SessionOrderedItemModel>> resource = mOrdersData.getValue();
-        if (resource == null || resource.data == null)
+        if (resource == null || resource.getData() == null)
             return;
-        for (SessionOrderedItemModel iterOrder : resource.data) {
+        for (SessionOrderedItemModel iterOrder : resource.getData()) {
             if (iterOrder.getPk() == orderedItemModel.getPk()) return;
         }
-        resource.data.add(0, orderedItemModel);
-        mOrdersData.setValue(Resource.cloneResource(resource, resource.data));
+        resource.getData().add(0, orderedItemModel);
+        mOrdersData.setValue(Resource.Companion.cloneResource(resource, resource.getData()));
     }
 
     public void addEventData(ManagerSessionEventModel eventModel) {
         Resource<List<ManagerSessionEventModel>> resource = mEventData.getValue();
-        if (resource == null || resource.data == null)
+        if (resource == null || resource.getData() == null)
             return;
-        for (ManagerSessionEventModel iterEvent : resource.data) {
+        for (ManagerSessionEventModel iterEvent : resource.getData()) {
             if (iterEvent.getPk() == eventModel.getPk()) return;
         }
-        resource.data.add(0, eventModel);
-        mEventData.setValue(Resource.cloneResource(resource, resource.data));
+        resource.getData().add(0, eventModel);
+        mEventData.setValue(Resource.Companion.cloneResource(resource, resource.getData()));
     }
 
     @Nullable
     public SessionBriefModel getSessionData() {
         Resource<SessionBriefModel> resource = mBriefData.getValue();
-        if (resource == null || resource.data == null)
+        if (resource == null || resource.getData() == null)
             return null;
-        return resource.data;
+        return resource.getData();
     }
 
     public void updateSessionData(SessionBriefModel data) {
-        mBriefData.setValue(Resource.success(data));
+        mBriefData.setValue(Resource.Companion.success(data));
     }
 
     public void postSessionContact(String email, String phone) {

@@ -5,6 +5,8 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/white"
+    android:clickable="true"
+    android:focusable="true"
     android:orientation="vertical">
 
     <com.google.android.material.appbar.AppBarLayout
@@ -81,7 +83,7 @@
                     android:id="@+id/rv_menu_treat_yourself"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginBottom="@dimen/spacing_small"/>
+                    android:layout_marginBottom="@dimen/spacing_small" />
 
             </LinearLayout>
         </LinearLayout>

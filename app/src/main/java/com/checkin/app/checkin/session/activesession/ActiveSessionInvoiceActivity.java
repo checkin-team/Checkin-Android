@@ -134,10 +134,10 @@ public class ActiveSessionInvoiceActivity extends BaseActivity {
     }
 
     private void setupUi() {
-        if (getSupportActionBar() != null) {
+        /*if (getSupportActionBar() != null) {
             getSupportActionBar().setHomeAsUpIndicator(R.drawable.ic_back_grey);
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        }
+        }*/
         initRefreshScreen(R.id.sr_active_session_invoice);
 
         mPrefs = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
@@ -193,13 +193,13 @@ public class ActiveSessionInvoiceActivity extends BaseActivity {
         mViewModel.getSessionInvoice().observe(this, resource -> {
             if (resource == null)
                 return;
-            if (resource.status == Resource.Status.SUCCESS && resource.data != null) {
-                setupData(resource.data);
+            if (resource.getStatus() == Resource.Status.SUCCESS && resource.getData() != null) {
+                setupData(resource.getData());
                 tryShowTotalSavings();
-                sessionId = resource.data.getPk();
+                sessionId = resource.getData().getPk();
             }
 
-            if (resource.status != Resource.Status.LOADING)
+            if (resource.getStatus() != Resource.Status.LOADING)
                 stopRefreshing();
         });
 
@@ -207,13 +207,13 @@ public class ActiveSessionInvoiceActivity extends BaseActivity {
             if (statusModelResource == null)
                 return;
 
-            if (statusModelResource.status == Resource.Status.SUCCESS && statusModelResource.data != null) {
-                Utils.toast(this, statusModelResource.data.getMessage());
-                if (statusModelResource.data.isCheckout())
+            if (statusModelResource.getStatus() == Resource.Status.SUCCESS && statusModelResource.getData() != null) {
+                Utils.toast(this, statusModelResource.getData().getMessage());
+                if (statusModelResource.getData().isCheckout())
                     Utils.navigateBackToHome(getApplicationContext());
                 else {
                     mViewModel.updateRequestCheckout(true);
-                    selectedMode = ShopModel.PAYMENT_MODE.getByTag(statusModelResource.data.getPaymentMode());
+                    selectedMode = ShopModel.PAYMENT_MODE.getByTag(statusModelResource.getData().getPaymentMode());
                     switch (selectedMode) {
                         case PAYTM:
                             mViewModel.requestPaytmDetails();
@@ -225,8 +225,8 @@ public class ActiveSessionInvoiceActivity extends BaseActivity {
                             break;
                     }
                 }
-            } else if (statusModelResource.status != Resource.Status.LOADING) {
-                Utils.toast(ActiveSessionInvoiceActivity.this, statusModelResource.message);
+            } else if (statusModelResource.getStatus() != Resource.Status.LOADING) {
+                Utils.toast(ActiveSessionInvoiceActivity.this, statusModelResource.getMessage());
                 hideProgressBar();
                 if (statusModelResource.getProblem() != null && statusModelResource.getProblem().getErrorCode() == ProblemModel.ERROR_CODE.INVALID_PAYMENT_MODE_PROMO_AVAILED)
                     onPaymentModeClick();
@@ -249,20 +249,20 @@ public class ActiveSessionInvoiceActivity extends BaseActivity {
         mViewModel.getPromoDeletedData().observe(this, resource -> {
             if (resource == null)
                 return;
-            if (resource.status == Resource.Status.SUCCESS) {
+            if (resource.getStatus() == Resource.Status.SUCCESS) {
                 showPromoApply();
                 tryShowTotalSavings();
             }
-            Utils.toast(this, resource.message);
+            Utils.toast(this, resource.getMessage());
         });
 
         mViewModel.getSessionAppliedPromo().observe(this, sessionPromoModelResource -> {
             if (sessionPromoModelResource == null)
                 return;
-            if (sessionPromoModelResource.status == Resource.Status.SUCCESS && sessionPromoModelResource.data != null) {
-                showPromoDetails(sessionPromoModelResource.data);
+            if (sessionPromoModelResource.getStatus() == Resource.Status.SUCCESS && sessionPromoModelResource.getData() != null) {
+                showPromoDetails(sessionPromoModelResource.getData());
                 tryShowTotalSavings();
-            } else if (sessionPromoModelResource.status == Resource.Status.ERROR_NOT_FOUND) {
+            } else if (sessionPromoModelResource.getStatus() == Resource.Status.ERROR_NOT_FOUND) {
                 showPromoApply();
             }
         });
@@ -270,12 +270,12 @@ public class ActiveSessionInvoiceActivity extends BaseActivity {
         mViewModel.getPromoCodes().observe(this, listResource -> {
             if (listResource == null)
                 return;
-            if (listResource.status == Resource.Status.SUCCESS && listResource.data != null && listResource.data.size() > 0) {
-                tryShowAvailableOffer(listResource.data.get(0));
-            } else if (listResource.status == Resource.Status.ERROR_FORBIDDEN) {
+            if (listResource.getStatus() == Resource.Status.SUCCESS && listResource.getData() != null && listResource.getData().size() > 0) {
+                tryShowAvailableOffer(listResource.getData().get(0));
+            } else if (listResource.getStatus() == Resource.Status.ERROR_FORBIDDEN) {
                 showPromoInvalid(R.string.label_session_offer_not_allowed_phone_not_registered);
-            } else if (listResource.status != Resource.Status.LOADING) {
-                Utils.toast(this, listResource.message);
+            } else if (listResource.getStatus() != Resource.Status.LOADING) {
+                Utils.toast(this, listResource.getMessage());
             }
         });
     }
@@ -288,12 +288,12 @@ public class ActiveSessionInvoiceActivity extends BaseActivity {
     private void tryShowTotalSavings() {
         double savings = 0;
         Resource<SessionInvoiceModel> invoiceModelResource = mViewModel.getSessionInvoice().getValue();
-        if (invoiceModelResource != null && invoiceModelResource.data != null) {
-            savings = invoiceModelResource.data.getBill().getTotalSaving();
+        if (invoiceModelResource != null && invoiceModelResource.getData() != null) {
+            savings = invoiceModelResource.getData().getBill().getTotalSaving();
         } else {
             Resource<SessionPromoModel> promoModelResource = mViewModel.getSessionAppliedPromo().getValue();
-            if (promoModelResource != null && promoModelResource.data != null) {
-                savings = promoModelResource.data.getOfferAmount();
+            if (promoModelResource != null && promoModelResource.getData() != null) {
+                savings = promoModelResource.getData().getOfferAmount();
             }
         }
         if (savings > 0)
@@ -348,25 +348,25 @@ public class ActiveSessionInvoiceActivity extends BaseActivity {
         mViewModel.getPaytmDetails().observe(this, paytmModelResource -> {
             if (paytmModelResource == null)
                 return;
-            if (paytmModelResource.status == Resource.Status.SUCCESS && paytmModelResource.data != null) {
-                mPaymentPayTm.initializePayment(paytmModelResource.data, this);
-            } else if (paytmModelResource.status != Resource.Status.LOADING) {
-                Utils.toast(this, paytmModelResource.message);
+            if (paytmModelResource.getStatus() == Resource.Status.SUCCESS && paytmModelResource.getData() != null) {
+                mPaymentPayTm.initializePayment(paytmModelResource.getData(), this);
+            } else if (paytmModelResource.getStatus() != Resource.Status.LOADING) {
+                Utils.toast(this, paytmModelResource.getMessage());
             }
         });
 
         mViewModel.getPaytmCallbackData().observe(this, objectNodeResource -> {
             if (objectNodeResource == null)
                 return;
-            if (objectNodeResource.status == Resource.Status.SUCCESS) {
+            if (objectNodeResource.getStatus() == Resource.Status.SUCCESS) {
 //                Utils.navigateBackToHome(this);
                 Intent successIntent = new Intent(this, SuccessfulTransactionActivity.class);
                 successIntent.putExtra(SuccessfulTransactionActivity.KEY_SESSION_ID, sessionId);
                 startActivity(successIntent);
                 finish();
             }
-            if (objectNodeResource.status != Resource.Status.LOADING) {
-                Utils.toast(this, objectNodeResource.message);
+            if (objectNodeResource.getStatus() != Resource.Status.LOADING) {
+                Utils.toast(this, objectNodeResource.getMessage());
                 hideProgressBar();
             }
         });
@@ -374,10 +374,10 @@ public class ActiveSessionInvoiceActivity extends BaseActivity {
         mViewModel.getSessionCancelCheckoutData().observe(this, objectNodeResource -> {
             if (objectNodeResource == null)
                 return;
-            if (objectNodeResource.status == Resource.Status.SUCCESS) {
+            if (objectNodeResource.getStatus() == Resource.Status.SUCCESS) {
                 mViewModel.updateRequestCheckout(false);
             }
-            if (objectNodeResource.status != Resource.Status.LOADING) {
+            if (objectNodeResource.getStatus() != Resource.Status.LOADING) {
                 hideProgressBar();
             }
         });
@@ -433,10 +433,9 @@ public class ActiveSessionInvoiceActivity extends BaseActivity {
         startActivityForResult(intent, REQUEST_PAYMENT_MODE);
     }
 
-    @Override
-    public boolean onSupportNavigateUp() {
+    @OnClick(R.id.im_session_view_invoice_back)
+    public void onBackClick() {
         onBackPressed();
-        return true;
     }
 
     @Override

@@ -58,48 +58,48 @@ public class WaiterWorkViewModel extends BaseViewModel {
 
     public LiveData<Resource<List<RestaurantTableModel>>> getShopAssignedTables() {
         return Transformations.map(mShopTables, input -> {
-            if (input == null || input.data == null || input.status != Status.SUCCESS)
+            if (input == null || input.getData() == null || input.getStatus() != Status.SUCCESS)
                 return input;
 
             List<RestaurantTableModel> result = new ArrayList<>();
-            for (int i = 0, length = input.data.size(); i < length; i++) {
-                RestaurantTableModel tableModel = input.data.get(i);
+            for (int i = 0, length = input.getData().size(); i < length; i++) {
+                RestaurantTableModel tableModel = input.getData().get(i);
                 if (tableModel.isSessionActive() && tableModel.getTableSession().hasHost())
                     result.add(tableModel);
             }
-            return Resource.cloneResource(input, result);
+            return Resource.Companion.cloneResource(input, result);
         });
     }
 
     public LiveData<Resource<List<RestaurantTableModel>>> getShopUnassignedTables() {
         return Transformations.map(mShopTables, input -> {
-            if (input == null || input.data == null || input.status != Status.SUCCESS)
+            if (input == null || input.getData() == null || input.getStatus() != Status.SUCCESS)
                 return input;
 
 
             List<RestaurantTableModel> result = new ArrayList<>();
-            for (int i = 0, length = input.data.size(); i < length; i++) {
-                RestaurantTableModel tableModel = input.data.get(i);
+            for (int i = 0, length = input.getData().size(); i < length; i++) {
+                RestaurantTableModel tableModel = input.getData().get(i);
                 if (tableModel.isSessionActive() && !tableModel.getTableSession().hasHost())
                     result.add(tableModel);
             }
-            return Resource.cloneResource(input, result);
+            return Resource.Companion.cloneResource(input, result);
         });
     }
 
     public LiveData<Resource<List<RestaurantTableModel>>> getShopInactiveTables() {
         return Transformations.map(mShopTables, input -> {
-            if (input == null || input.data == null || input.status != Status.SUCCESS)
+            if (input == null || input.getData() == null || input.getStatus() != Status.SUCCESS)
                 return input;
 
 
             List<RestaurantTableModel> result = new ArrayList<>();
-            for (int i = 0, length = input.data.size(); i < length; i++) {
-                RestaurantTableModel tableModel = input.data.get(i);
+            for (int i = 0, length = input.getData().size(); i < length; i++) {
+                RestaurantTableModel tableModel = input.getData().get(i);
                 if (!tableModel.isSessionActive())
                     result.add(tableModel);
             }
-            return Resource.cloneResource(input, result);
+            return Resource.Companion.cloneResource(input, result);
         });
     }
 
@@ -133,52 +133,52 @@ public class WaiterWorkViewModel extends BaseViewModel {
 
     public void addRestaurantTable(RestaurantTableModel tableModel) {
         Resource<List<RestaurantTableModel>> resource = mShopTables.getValue();
-        if (resource == null || resource.data == null)
+        if (resource == null || resource.getData() == null)
             return;
 
-        if (resource.data.contains(tableModel))
+        if (resource.getData().contains(tableModel))
             return;
-        for (RestaurantTableModel table : resource.data) {
+        for (RestaurantTableModel table : resource.getData()) {
             if (tableModel.getQrPk() == RestaurantTableModel.NO_QR_ID ? tableModel.getTable().equals(table.getTable()) : table.getQrPk() == tableModel.getQrPk()) {
                 table.setTableSession(tableModel.getTableSession());
                 break;
             }
         }
-        mShopTables.setValue(Resource.cloneResource(resource, resource.data));
+        mShopTables.setValue(Resource.Companion.cloneResource(resource, resource.getData()));
     }
 
     public void updateShopTable(long sessionPk, BriefModel host) {
         Resource<List<RestaurantTableModel>> resource = mShopTables.getValue();
-        if (resource == null || resource.data == null)
+        if (resource == null || resource.getData() == null)
             return;
-        for (RestaurantTableModel table : resource.data) {
+        for (RestaurantTableModel table : resource.getData()) {
             if (table.isSessionActive() && table.getTableSession().getPk() == sessionPk) {
                 table.getTableSession().setHost(host);
                 break;
             }
         }
-        mShopTables.setValue(Resource.cloneResource(resource, resource.data));
+        mShopTables.setValue(Resource.Companion.cloneResource(resource, resource.getData()));
     }
 
     public void markSessionEnd(long sessionPk) {
         Resource<List<RestaurantTableModel>> shopTableResource = mShopTables.getValue();
-        if (shopTableResource != null && shopTableResource.data != null) {
-            for (int i = 0, length = shopTableResource.data.size(); i < length; i++) {
-                TableSessionModel sessionModel = shopTableResource.data.get(i).getTableSession();
+        if (shopTableResource != null && shopTableResource.getData() != null) {
+            for (int i = 0, length = shopTableResource.getData().size(); i < length; i++) {
+                TableSessionModel sessionModel = shopTableResource.getData().get(i).getTableSession();
                 if (sessionModel != null && sessionModel.getPk() == sessionPk) {
-                    shopTableResource.data.get(i).setTableSession(null);
-                    mShopTables.setValue(Resource.cloneResource(shopTableResource, shopTableResource.data));
+                    shopTableResource.getData().get(i).setTableSession(null);
+                    mShopTables.setValue(Resource.Companion.cloneResource(shopTableResource, shopTableResource.getData()));
                     break;
                 }
             }
         }
 
         Resource<List<WaiterTableModel>> waiterTableResource = mWaiterTables.getValue();
-        if (waiterTableResource != null && waiterTableResource.data != null) {
-            for (int i = 0, length = waiterTableResource.data.size(); i < length; i++) {
-                if (waiterTableResource.data.get(i).getPk() == sessionPk) {
-                    waiterTableResource.data.remove(i);
-                    mWaiterTables.setValue(Resource.cloneResource(waiterTableResource, waiterTableResource.data));
+        if (waiterTableResource != null && waiterTableResource.getData() != null) {
+            for (int i = 0, length = waiterTableResource.getData().size(); i < length; i++) {
+                if (waiterTableResource.getData().get(i).getPk() == sessionPk) {
+                    waiterTableResource.getData().remove(i);
+                    mWaiterTables.setValue(Resource.Companion.cloneResource(waiterTableResource, waiterTableResource.getData()));
                     break;
                 }
             }
@@ -187,13 +187,13 @@ public class WaiterWorkViewModel extends BaseViewModel {
 
     public void addWaiterTable(WaiterTableModel tableModel) {
         Resource<List<WaiterTableModel>> waiterTableResource = mWaiterTables.getValue();
-        if (waiterTableResource == null || waiterTableResource.data == null)
+        if (waiterTableResource == null || waiterTableResource.getData() == null)
             return;
 
-        if (waiterTableResource.data.contains(tableModel))
+        if (waiterTableResource.getData().contains(tableModel))
             return;
 
-        waiterTableResource.data.add(tableModel);
-        mWaiterTables.setValue(Resource.cloneResource(waiterTableResource, waiterTableResource.data));
+        waiterTableResource.getData().add(tableModel);
+        mWaiterTables.setValue(Resource.Companion.cloneResource(waiterTableResource, waiterTableResource.getData()));
     }
 }

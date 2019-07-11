@@ -70,13 +70,13 @@ public abstract class BaseResultFragment<S extends SearchResultModel> extends Ba
     protected void onResultChanged(Resource<List<S>> listResource) {
         if (listResource == null)
             return;
-        if (listResource.status == Resource.Status.SUCCESS && listResource.data != null) {
-            this.updateResults(listResource.data);
+        if (listResource.getStatus() == Resource.Status.SUCCESS && listResource.getData() != null) {
+            this.updateResults(listResource.getData());
             this.hideLoadProgress();
-        } else if (listResource.status == Resource.Status.LOADING) {
+        } else if (listResource.getStatus() == Resource.Status.LOADING) {
             this.showLoadProgress();
             this.resetResults();
-        } else if (listResource.status == Resource.Status.ERROR_NOT_FOUND) {
+        } else if (listResource.getStatus() == Resource.Status.ERROR_NOT_FOUND) {
             this.noResultFound();
         }
     }

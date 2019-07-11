@@ -72,8 +72,8 @@ public class ManagerSessionEventFragment extends BaseFragment implements Manager
         mViewModel.fetchSessionEvents();
         mViewModel.getSessionBriefData().observe(this, resource -> {
             if (resource == null) return;
-            SessionBriefModel data = resource.data;
-            switch (resource.status) {
+            SessionBriefModel data = resource.getData();
+            switch (resource.getStatus()) {
                 case SUCCESS: {
                     if (data == null)
                         return;
@@ -83,11 +83,11 @@ public class ManagerSessionEventFragment extends BaseFragment implements Manager
         });
 
         mViewModel.getSessionEventData().observe(this, listResource -> {
-            if (listResource == null || listResource.data == null)
+            if (listResource == null || listResource.getData() == null)
                 return;
-            switch (listResource.status) {
+            switch (listResource.getStatus()) {
                 case SUCCESS:
-                    mAdapter.setData(listResource.data);
+                    mAdapter.setData(listResource.getData());
                     stopRefreshing();
                     nestedSVEvent.scrollTo(0, 0);
                     break;
@@ -95,21 +95,21 @@ public class ManagerSessionEventFragment extends BaseFragment implements Manager
                     startRefreshing();
                     break;
                 default: {
-                    Utils.toast(requireContext(), listResource.message);
+                    Utils.toast(requireContext(), listResource.getMessage());
                     stopRefreshing();
                 }
             }
         });
 
         mViewModel.getDetailData().observe(this, resource -> {
-            if (resource == null || resource.data == null)
+            if (resource == null || resource.getData() == null)
                 return;
-            switch (resource.status) {
+            switch (resource.getStatus()) {
                 case SUCCESS:
-                    mViewModel.updateUiEventStatus(Long.valueOf(resource.data.getPk()), SessionChatModel.CHAT_STATUS_TYPE.DONE);
+                    mViewModel.updateUiEventStatus(Long.valueOf(resource.getData().getPk()), SessionChatModel.CHAT_STATUS_TYPE.DONE);
                     break;
                 default: {
-                    Utils.toast(requireContext(), resource.message);
+                    Utils.toast(requireContext(), resource.getMessage());
                 }
             }
         });

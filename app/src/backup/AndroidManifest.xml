@@ -151,10 +151,7 @@
         <activity android:name=".Review.NewReview.NewReviewActivity"
             android:theme="@style/AppThemeWhiteActionBar"
             android:label="Write a Review"/>
-        <activity
-            android:name=".session.activesession.ActiveSessionInvoiceActivity"
-            android:label="Invoice"
-            android:theme="@style/AppThemeWhiteActionBar" />
+        <activity android:name=".session.activesession.ActiveSessionInvoiceActivity" />
         <activity
             android:name=".Shop.Private.Invoice.ShopInvoiceListActivity"
             android:label="@string/action_invoice"

@@ -58,10 +58,10 @@ public class EditProfileActivity extends AppCompatActivity implements EditAspect
         mViewModel.getObservableData().observe(this, resource -> {
             if (resource == null)
                 return;
-            if (resource.status == Resource.Status.SUCCESS && resource.data != null) {
-                String msg = resource.data.get("detail").asText("Success!");
+            if (resource.getStatus() == Resource.Status.SUCCESS && resource.getData() != null) {
+                String msg = resource.getData().get("detail").asText("Success!");
                 Utils.toast(this, msg);
-            } else if (resource.status == Resource.Status.ERROR_INVALID_REQUEST) {
+            } else if (resource.getStatus() == Resource.Status.ERROR_INVALID_REQUEST) {
                 mViewModel.showError(resource.getErrorBody());
                 Utils.toast(this, "Error in updating data.");
             }

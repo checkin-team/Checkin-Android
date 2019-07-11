@@ -3,6 +3,7 @@ package com.checkin.app.checkin.Shop.Private;
 import android.content.Intent;
 import android.os.Bundle;
 import android.widget.ImageView;
+import android.widget.TextView;
 
 import com.checkin.app.checkin.Account.AccountModel;
 import com.checkin.app.checkin.Account.BaseAccountActivity;
@@ -58,13 +59,13 @@ public class ShopPrivateActivity extends BaseAccountActivity {
         mViewModel.getShopData().observe(this, restaurantModelResource -> {
             if (restaurantModelResource == null)
                 return;
-            if (restaurantModelResource.status == Resource.Status.SUCCESS && restaurantModelResource.data != null) {
+            if (restaurantModelResource.getStatus() == Resource.Status.SUCCESS && restaurantModelResource.getData() != null) {
                 stopRefreshing();
-            } else if (restaurantModelResource.status == Resource.Status.LOADING) {
+            } else if (restaurantModelResource.getStatus() == Resource.Status.LOADING) {
                 startRefreshing();
             } else {
                 stopRefreshing();
-                Utils.toast(this, restaurantModelResource.message);
+                Utils.toast(this, restaurantModelResource.getMessage());
             }
         });
 
@@ -99,6 +100,11 @@ public class ShopPrivateActivity extends BaseAccountActivity {
         if (swipeRefreshLayout != null) {
             swipeRefreshLayout.setEnabled(enable);
         }
+    }
+
+    @OnClick(R.id.btn_shop_private_insight)
+    public void onInsight() {
+        launchShopInsight();
     }
 
     @Override
@@ -155,8 +161,6 @@ public class ShopPrivateActivity extends BaseAccountActivity {
                 case 0:
                     return R.drawable.ic_tab_home_toggle;
                 case 1:
-                    return R.drawable.ic_stats_toggle;
-                case 2:
                     return R.drawable.ic_tab_menu_toggle;
                 default:
                     return 0;
@@ -170,22 +174,30 @@ public class ShopPrivateActivity extends BaseAccountActivity {
                     return ShopPrivateProfileFragment.newInstance();
                 case 1:
                     return BlankFragment.newInstance();
-                case 2:
-                    return BlankFragment.newInstance();
+            }
+            return null;
+        }
+
+        @Nullable
+        @Override
+        public CharSequence getPageTitle(int position) {
+            switch (position) {
+                case 0:
+                    return "Shop";
+                case 1:
+                    return "Inventory";
             }
             return null;
         }
 
         @Override
         public int getCount() {
-            return 3;
+            return 2;
         }
 
         @Override
         protected void onTabClick(int position) {
             if (position == 1)
-                launchShopInsight();
-            else if (position == 2)
                 launchMenu();
             else
                 super.onTabClick(position);

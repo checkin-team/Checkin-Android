@@ -53,8 +53,8 @@ public class ShopProfileViewModel extends BaseViewModel {
             boolean hasNonVeg, boolean hasAlcohol, boolean hasHomeDelivery, List<String> extraData) {
         Resource<RestaurantModel> resource = mShopData.getValue();
         RestaurantModel shop;
-        if (resource != null && resource.status == Resource.Status.SUCCESS && resource.data != null)
-            shop = resource.data;
+        if (resource != null && resource.getStatus() == Resource.Status.SUCCESS && resource.getData() != null)
+            shop = resource.getData();
         else
             shop = new RestaurantModel(mShopPk);
         shop.setCuisines(cuisines);
@@ -65,7 +65,7 @@ public class ShopProfileViewModel extends BaseViewModel {
         shop.setHasNonveg(hasNonVeg);
         shop.setExtraData(extraData.toArray(new String[]{}));
 
-        mShopData.setValue(Resource.success(shop));
+        mShopData.setValue(Resource.Companion.success(shop));
         return shop;
     }
 
@@ -74,8 +74,8 @@ public class ShopProfileViewModel extends BaseViewModel {
             CharSequence[] nonWorkingDays, long openingTime, long closingTime) {
         Resource<RestaurantModel> resource = mShopData.getValue();
         RestaurantModel shop;
-        if (resource != null && resource.status == Resource.Status.SUCCESS && resource.data != null)
-            shop = resource.data;
+        if (resource != null && resource.getStatus() == Resource.Status.SUCCESS && resource.getData() != null)
+            shop = resource.getData();
         else
             shop = new RestaurantModel(mShopPk);
         shop.setName(name);
@@ -85,7 +85,7 @@ public class ShopProfileViewModel extends BaseViewModel {
         shop.setOpeningHour(openingTime);
         shop.setClosingHour(closingTime);
 
-        mShopData.setValue(Resource.success(shop));
+        mShopData.setValue(Resource.Companion.success(shop));
         return shop;
     }
 
@@ -150,7 +150,7 @@ public class ShopProfileViewModel extends BaseViewModel {
     }
 
     public void useShop(RestaurantModel restaurantModel) {
-        mShopData.setValue(Resource.success(restaurantModel));
+        mShopData.setValue(Resource.Companion.success(restaurantModel));
     }
 
     public void removeCoverImage(int index) {

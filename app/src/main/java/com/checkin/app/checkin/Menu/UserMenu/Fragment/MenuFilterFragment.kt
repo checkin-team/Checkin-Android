@@ -76,7 +76,7 @@ class MenuFilterFragment : Fragment() {
                 .create(this, container)
                 .start(view)
 
-//        vDarkBack.post(blurBackRunnable)
+        vDarkBack.post(blurBackRunnable)
 
         return view
     }
@@ -100,7 +100,14 @@ class MenuFilterFragment : Fragment() {
         rvFilterCategories.adapter = mAdapter
 
         mViewModel = ViewModelProviders.of(requireActivity()).get(MenuViewModel::class.java)
-        mViewModel.groupName.observe(this, Observer(mAdapter::setCategories))
+        setupObservers()
+        showFilter()
+    }
+
+    private fun setupObservers() {
+        mViewModel.groupName.observe(this, Observer {
+            if (it != null) mAdapter.setCategories(it)
+        })
         mViewModel.filteredString.observe(this, Observer {
             if (it != null) {
                 containerFilterClear.visibility = View.VISIBLE
@@ -117,11 +124,11 @@ class MenuFilterFragment : Fragment() {
                         tvDinner.setTextColor(resources.getColor(R.color.primary_red))
                         imDinner.setImageDrawable(resources.getDrawable(R.drawable.ic_menu_filter_dinner_rouge))
                     }
-                    it.equals("Low-High", ignoreCase = true) -> {
+                    it.equals("Low - High", ignoreCase = true) -> {
                         rbLowHigh.isChecked = true
                         rbHighLow.isChecked = false
                     }
-                    it.equals("High-Low", ignoreCase = true) -> {
+                    it.equals("High - Low", ignoreCase = true) -> {
                         rbLowHigh.isChecked = false
                         rbHighLow.isChecked = true
                     }
@@ -130,7 +137,6 @@ class MenuFilterFragment : Fragment() {
                 containerFilterClear.visibility = View.GONE
             }
         })
-        showFilter()
     }
 
     @OnClick(R.id.container_as_menu_filter_breakfast, R.id.container_as_menu_filter_lunch, R.id.container_as_menu_filter_dinner)
@@ -140,24 +146,26 @@ class MenuFilterFragment : Fragment() {
             R.id.container_as_menu_filter_lunch -> mViewModel.filterMenuGroups(AVAILABLE_MEAL.LUNCH)
             R.id.container_as_menu_filter_dinner -> mViewModel.filterMenuGroups(AVAILABLE_MEAL.DINNER)
         }
-        mListener!!.filterByAvailableMeals()
+        mListener?.filterByAvailableMeals()
         hideFilter()
     }
 
     @OnClick(R.id.container_as_menu_filter_clear)
     fun resetFilter() {
         mViewModel.clearFilters()
-        mListener!!.resetFilters()
+        mListener?.resetFilters()
         hideFilter()
     }
 
     @OnClick(R.id.rb_as_menu_filter_high_low, R.id.rb_as_menu_filter_low_high)
     fun sortMenuItems(v: View) {
-        when (v.id) {
-            R.id.rb_as_menu_filter_high_low -> mViewModel.sortMenuItems(false)
-            R.id.rb_as_menu_filter_low_high -> mViewModel.sortMenuItems(true)
+        val sortWay = when (v.id) {
+            R.id.rb_as_menu_filter_high_low -> false
+            R.id.rb_as_menu_filter_low_high -> true
+            else -> true
         }
-        mListener?.sortItems()
+        mViewModel.sortMenuItems(sortWay)
+        mListener?.sortItems(sortWay)
         hideFilter()
     }
 
@@ -209,7 +217,7 @@ class MenuFilterFragment : Fragment() {
 
         fun filterByCategory(category: String)
 
-        fun sortItems()
+        fun sortItems(low2high: Boolean)
 
         fun resetFilters()
 

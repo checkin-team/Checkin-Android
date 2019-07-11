@@ -25,6 +25,7 @@
     <dimen name="spacing_extra_tiny">4dp</dimen>
     <dimen name="spacing_medium">22dp</dimen>
 
+
     <!-- icon sizes -->
     <dimen name="size_tiny_icon">14dp</dimen>
     <dimen name="size_extra_small_icon">20dp</dimen>
@@ -75,19 +76,19 @@
 
     <dimen name="height_spinner_item">56dp</dimen>
 
-    <dimen name="height_bottom_tab">57dp</dimen>
+    <dimen name="height_bottom_tab">60dp</dimen>
 
     <!-- Cover dimensions -->
     <dimen name="height_shadow_top_cover">86dp</dimen>
 
     <!-- Menu dimensions -->
     <dimen name="height_menu_filter">420dp</dimen>
-    <dimen name="height_menu_customization">352dp</dimen>
+    <dimen name="height_menu_customization">320dp</dimen>
     <dimen name="height_menu_customization_header">72dp</dimen>
     <dimen name="height_menu_customization_footer">52dp</dimen>
     <dimen name="height_menu_group_collapsed">100dp</dimen>
-    <dimen name="height_menu_group_expanded">350dp</dimen>
-    <dimen name="height_menu_item">82dp</dimen>
+    <dimen name="height_menu_group_expanded">400dp</dimen>
+    <dimen name="height_menu_item">75dp</dimen>
     <dimen name="height_menu_cart_item">105dp</dimen>
 
     <dimen name="width_quantity_selection">122dp</dimen>
@@ -100,9 +101,12 @@
     <dimen name="height_as_menu_group_collapsed">60dp</dimen>
     <dimen name="width_menu_add_quantity">84dp</dimen>
 
-    <dimen name="width_filter_group_name">80dp</dimen>
+    <dimen name="width_filter_group_name">100dp</dimen>
     <dimen name="container_filter">310dp</dimen>
-    <dimen name="height_menu_item_thumbnail_small">60dp</dimen>
+    <dimen name="height_menu_item_thumbnail_small">65dp</dimen>
+    <dimen name="height_menu_item_thumbnail_large">150dp</dimen>
+
+    <dimen name="spacing_menu_item">20dp</dimen>
 
     <!--Chat dimensions-->
     <dimen name="size_chat_status">12dp</dimen>
@@ -136,6 +140,8 @@
     <dimen name="height_rangebar_short">52dp</dimen>
     <dimen name="padding_rangebar_bottom">17dp</dimen>
     <dimen name="negative_margin_top">-8dp</dimen>
+    <dimen name="business_icon">62dp</dimen>
+    <dimen name="business_font_small">8sp</dimen>
 
     <!--Waiter dimensions-->
     <dimen name="width_waiter_collect_cash">252dp</dimen>

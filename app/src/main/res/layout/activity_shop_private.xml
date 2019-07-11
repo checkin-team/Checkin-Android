@@ -11,40 +11,77 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content">
 
-    <RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:fitsSystemWindows="true">
-
-        <com.checkin.app.checkin.Utility.DynamicSwipableViewPager
-            android:id="@+id/vp_shop_private"
+        <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent" />
+            android:layout_height="match_parent"
+            android:fitsSystemWindows="true">
 
-        <com.google.android.material.tabs.TabLayout
-            android:id="@+id/tabs_shop_private"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_alignParentBottom="true"
-            android:background="@drawable/background_tab_bottom_shadowed"
-            app:tabGravity="fill"
-            app:tabIndicatorColor="@android:color/transparent"
-            app:tabIndicatorHeight="0dp"
-            app:tabMode="fixed" />
+            <com.checkin.app.checkin.Utility.DynamicSwipableViewPager
+                android:id="@+id/vp_shop_private"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent" />
 
-        <ImageView
-            android:id="@+id/iv_shop_profile_navigation"
-            android:layout_width="@dimen/size_small_icon"
-            android:layout_height="@dimen/size_small_icon"
-            android:layout_marginStart="@dimen/spacing_small"
-            android:layout_marginTop="@dimen/spacing_small"
-            android:contentDescription="@null"
-            android:src="@drawable/ic_navigation_white" />
+            <FrameLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_alignParentBottom="true">
 
-    </RelativeLayout>
+                <com.google.android.material.tabs.TabLayout
+                    android:id="@+id/tabs_shop_private"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="bottom"
+                    android:background="@drawable/background_tab_bottom_shadowed"
+                    android:paddingTop="@dimen/spacing_elevation_fix_extreme_tiny"
+                    android:paddingBottom="@dimen/spacing_elevation_fix_extreme_tiny"
+                    app:tabGravity="fill"
+                    app:tabIndicatorColor="@android:color/transparent"
+                    app:tabIndicatorHeight="0dp"
+                    app:tabMode="fixed" />
+
+                <LinearLayout
+                    android:id="@+id/btn_shop_private_insight"
+                    android:layout_width="@dimen/business_icon"
+                    android:layout_height="@dimen/business_icon"
+                    android:layout_gravity="center"
+                    android:layout_marginTop="@dimen/spacing_tiny"
+                    android:layout_marginBottom="@dimen/spacing_small"
+                    android:background="@drawable/shape_oval_pinkish_grey_filled"
+                    android:elevation="@dimen/spacing_elevation_fix_extreme_tiny"
+                    android:gravity="center"
+                    android:orientation="vertical">
+
+                    <ImageView
+                        android:layout_width="@dimen/button_height_short"
+                        android:layout_height="@dimen/button_height_short"
+                        android:layout_gravity="center"
+                        android:layout_marginStart="@dimen/spacing_extra_tiny"
+                        android:layout_marginEnd="@dimen/spacing_extra_tiny"
+                        android:src="@drawable/ic_money_bag" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:gravity="center"
+                        android:text="Business"
+                        android:textColor="@color/aqua_blue"
+                        android:textSize="@dimen/business_font_small" />
+
+                </LinearLayout>
+            </FrameLayout>
+
+            <ImageView
+                android:id="@+id/iv_shop_profile_navigation"
+                android:layout_width="@dimen/size_small_icon"
+                android:layout_height="@dimen/size_small_icon"
+                android:layout_marginStart="@dimen/spacing_small"
+                android:layout_marginTop="@dimen/spacing_small"
+                android:contentDescription="@null"
+                android:src="@drawable/ic_navigation_white" />
+
+        </RelativeLayout>
     </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
 
     <include layout="@layout/incl_account_base" />
-
-
 </androidx.drawerlayout.widget.DrawerLayout>

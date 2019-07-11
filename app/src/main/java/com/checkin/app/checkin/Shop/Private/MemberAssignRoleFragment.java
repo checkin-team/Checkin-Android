@@ -110,15 +110,15 @@ public class MemberAssignRoleFragment extends DialogFragment {
         mViewModel.getObservableData().observe(this, resource -> {
             if (resource == null)
                 return;
-            if (resource.status == Status.SUCCESS) {
+            if (resource.getStatus() == Status.SUCCESS) {
                 if (isNewMember()) {
                     mListener.onNewMember(mViewModel.getCurrentMember());
                 } else {
                     mListener.onUpdateMember(mViewModel.getCurrentMember(), mPosition);
                 }
                 this.finishDialog();
-            } else if (resource.message != null) {
-                Utils.toast(requireContext(), resource.message);
+            } else if (resource.getMessage() != null) {
+                Utils.toast(requireContext(), resource.getMessage());
             }
             mViewModel.resetObservableData();
         });
@@ -126,11 +126,11 @@ public class MemberAssignRoleFragment extends DialogFragment {
         mViewModel.getRemovedMemberData().observe(this, resource -> {
             if (resource == null)
                 return;
-            if (resource.status == Status.SUCCESS) {
+            if (resource.getStatus() == Status.SUCCESS) {
                 mListener.onRemoveMember(mViewModel.getCurrentMember(), mPosition);
                 this.finishDialog();
-            } else if (resource.message != null) {
-                Utils.toast(requireContext(), resource.message);
+            } else if (resource.getMessage() != null) {
+                Utils.toast(requireContext(), resource.getMessage());
             }
             mViewModel.resetRemovedMemberData();
         });

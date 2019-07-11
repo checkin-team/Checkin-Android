@@ -271,6 +271,11 @@ public final class Utils {
         return formatCurrencyAmount(context, format.format(amount));
     }
 
+    public static String formatIntegralCurrencyAmount(Context context, Double amount) {
+        DecimalFormat format = new DecimalFormat("##,##,##,##0");
+        return formatCurrencyAmount(context, format.format(amount));
+    }
+
     public static String formatDateTo24HoursTime(Date dateTime) {
         return new SimpleDateFormat("HH:mm", Locale.ENGLISH).format(dateTime);
     }

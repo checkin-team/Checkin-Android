@@ -102,8 +102,8 @@ public class EditAspectFragment extends Fragment implements MultiSpinner.MultiSp
             if (resource == null)
                 return;
 
-            if (resource.status == Resource.Status.SUCCESS && resource.data != null) {
-                this.setupValues(resource.data);
+            if (resource.getStatus() == Resource.Status.SUCCESS && resource.getData() != null) {
+                this.setupValues(resource.getData());
             }
         });
 

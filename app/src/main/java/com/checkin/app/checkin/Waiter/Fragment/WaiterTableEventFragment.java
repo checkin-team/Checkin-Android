@@ -75,19 +75,19 @@ public class WaiterTableEventFragment extends BaseFragment implements WaiterEven
         mViewModel.getActiveTableEvents().observe(this, listResource -> {
             if (listResource == null)
                 return;
-            if (listResource.status == Resource.Status.SUCCESS && listResource.data != null) {
-                mActiveAdapter.setData(listResource.data);
+            if (listResource.getStatus() == Resource.Status.SUCCESS && listResource.getData() != null) {
+                mActiveAdapter.setData(listResource.getData());
                 nestedSVEvent.scrollTo(0, 0);
             }
         });
         mViewModel.getDeliveredTableEvents().observe(this, listResource -> {
             if (listResource == null)
                 return;
-            if (listResource.status == Resource.Status.SUCCESS && listResource.data != null) {
-                if (listResource.data.size() > 0) {
+            if (listResource.getStatus() == Resource.Status.SUCCESS && listResource.getData() != null) {
+                if (listResource.getData().size() > 0) {
                     tvDelivered.setVisibility(View.VISIBLE);
                     rvEventsDone.setVisibility(View.VISIBLE);
-                    mDoneAdapter.setData(listResource.data);
+                    mDoneAdapter.setData(listResource.getData());
                     nestedSVEvent.scrollTo(0, 0);
                 }
             }
@@ -95,32 +95,32 @@ public class WaiterTableEventFragment extends BaseFragment implements WaiterEven
         mViewModel.getOrderStatus().observe(this, resource -> {
             if (resource == null)
                 return;
-            if (resource.status == Resource.Status.SUCCESS && resource.data != null)
-                mViewModel.updateUiMarkOrderStatus(resource.data);
-            else if (resource.status != Resource.Status.LOADING)
-                Utils.toast(requireContext(), resource.message);
+            if (resource.getStatus() == Resource.Status.SUCCESS && resource.getData() != null)
+                mViewModel.updateUiMarkOrderStatus(resource.getData());
+            else if (resource.getStatus() != Resource.Status.LOADING)
+                Utils.toast(requireContext(), resource.getMessage());
         });
         mViewModel.getEventUpdate().observe(this, resource -> {
             if (resource == null)
                 return;
-            if (resource.status == Resource.Status.SUCCESS && resource.data != null) {
-                mViewModel.updateUiMarkEventDone(Long.valueOf(resource.data.getPk()));
-            } else if (resource.status != Resource.Status.LOADING)
-                Utils.toast(requireContext(), resource.message);
+            if (resource.getStatus() == Resource.Status.SUCCESS && resource.getData() != null) {
+                mViewModel.updateUiMarkEventDone(Long.valueOf(resource.getData().getPk()));
+            } else if (resource.getStatus() != Resource.Status.LOADING)
+                Utils.toast(requireContext(), resource.getMessage());
         });
 
         mViewModel.getOrderListStatusData().observe(this, listResource -> {
             if (listResource == null)
                 return;
-            switch (listResource.status) {
+            switch (listResource.getStatus()) {
                 case SUCCESS: {
-                    mViewModel.updateUiOrderListStatus(listResource.data);
+                    mViewModel.updateUiOrderListStatus(listResource.getData());
                     break;
                 }
                 case LOADING:
                     break;
                 default: {
-                    Utils.toast(requireContext(), listResource.message);
+                    Utils.toast(requireContext(), listResource.getMessage());
                 }
             }
         });

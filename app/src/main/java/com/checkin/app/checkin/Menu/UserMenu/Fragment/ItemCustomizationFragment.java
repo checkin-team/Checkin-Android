@@ -18,15 +18,6 @@ import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.TextView;
 
-import com.checkin.app.checkin.Menu.Model.MenuItemModel;
-import com.checkin.app.checkin.Menu.UserMenu.ItemCustomizationGroupHolder;
-import com.checkin.app.checkin.Menu.Model.ItemCustomizationFieldModel;
-import com.checkin.app.checkin.Menu.Model.ItemCustomizationGroupModel;
-import com.checkin.app.checkin.Menu.UserMenu.MenuViewModel;
-import com.checkin.app.checkin.R;
-import com.checkin.app.checkin.Utility.RSBlurProcessor;
-import com.checkin.app.checkin.Utility.Utils;
-
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.constraintlayout.widget.ConstraintLayout;
@@ -34,17 +25,24 @@ import androidx.constraintlayout.widget.ConstraintSet;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProviders;
 
+import com.checkin.app.checkin.Menu.Model.ItemCustomizationFieldModel;
+import com.checkin.app.checkin.Menu.Model.ItemCustomizationGroupModel;
+import com.checkin.app.checkin.Menu.Model.MenuItemModel;
+import com.checkin.app.checkin.Menu.UserMenu.ItemCustomizationGroupHolder;
+import com.checkin.app.checkin.Menu.UserMenu.MenuViewModel;
+import com.checkin.app.checkin.R;
+import com.checkin.app.checkin.Utility.RSBlurProcessor;
+import com.checkin.app.checkin.Utility.Utils;
+
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import butterknife.Unbinder;
 
-/**
- * Created by Bhavik Patel on 12/08/2018.
- */
 
 public class ItemCustomizationFragment extends Fragment implements ItemCustomizationGroupHolder.CustomizationGroupInteraction {
     private static final String TAG = ItemCustomizationFragment.class.getSimpleName();
+    private Unbinder unbinder;
 
     @BindView(R.id.container_menu_customization)
     ConstraintLayout vMenuCustomizations;
@@ -81,11 +79,15 @@ public class ItemCustomizationFragment extends Fragment implements ItemCustomiza
     @BindView(R.id.container_as_radio_buttons)
     ConstraintLayout containerRadioButtons;
 
-    private Unbinder unbinder;
-
     private MenuViewModel mViewModel;
     private MenuItemModel mItem;
     private ItemCustomizationInteraction mInteractionListener;
+
+    private Runnable blurBackRunnable = () -> {
+        View bgView = requireActivity().findViewById(android.R.id.content);
+        RenderScript renderScript = RenderScript.create(requireContext());
+        vDarkBack.setImageBitmap(new RSBlurProcessor(renderScript).blur(Utils.getBitmapFromView(bgView), 25f, 1));
+    };
 
     public ItemCustomizationFragment() {
         // Required empty public constructor
@@ -103,10 +105,7 @@ public class ItemCustomizationFragment extends Fragment implements ItemCustomiza
         final View rootView = inflater.inflate(R.layout.fragment_as_menu_item_customization, container, false);
         unbinder = ButterKnife.bind(this, rootView);
 
-        View bgView = getActivity().findViewById(R.id.container_as_menu_parent);
-        RenderScript renderScript = RenderScript.create(requireContext());
-        vDarkBack.setImageBitmap(new RSBlurProcessor(renderScript).blur(Utils.getBitmapFromView(bgView), 25, 1));
-
+        rootView.post(blurBackRunnable);
 
         return rootView;
     }
@@ -129,7 +128,7 @@ public class ItemCustomizationFragment extends Fragment implements ItemCustomiza
         });
 
         tvItemName.setText(mItem.getName());
-        mViewModel.getItemCost().observe(this, value -> tvBill.setText("Item Total   " + Utils.formatCurrencyAmount(requireContext(), value)));
+        mViewModel.getItemCost().observe(this, value -> tvBill.setText(String.format("Item Total   %s", Utils.formatIntegralCurrencyAmount(requireContext(), value))));
         tvRadioLabel1.setText(mItem.getTypeNames().get(0));
         groupRadio.setVisibility(View.VISIBLE);
         switch (mItem.getTypeNames().size()) {
@@ -149,17 +148,12 @@ public class ItemCustomizationFragment extends Fragment implements ItemCustomiza
                 break;
         }
         if (mItem.hasCustomizations()) {
+            svContainerCustomization.setVisibility(View.VISIBLE);
             for (ItemCustomizationGroupModel group : mItem.getCustomizations()) {
                 listCustomizations.addView(new ItemCustomizationGroupHolder(group, getContext(), this).getView());
             }
         } else {
             svContainerCustomization.setVisibility(View.GONE);
-            ConstraintSet constraintSet = new ConstraintSet();
-            constraintSet.clone(vMenuCustomizations);
-            constraintSet.connect(R.id.container_as_menu_customization_header, ConstraintSet.START, ConstraintSet.PARENT_ID, ConstraintSet.START);
-            constraintSet.connect(R.id.container_as_menu_customization_header, ConstraintSet.END, ConstraintSet.PARENT_ID, ConstraintSet.END);
-            constraintSet.connect(R.id.container_as_menu_customization_header, ConstraintSet.BOTTOM, R.id.footer_menu_customization, ConstraintSet.TOP);
-            constraintSet.applyTo(vMenuCustomizations);
         }
 
         vMenuCustomizations.startAnimation(AnimationUtils.loadAnimation(requireContext(), R.anim.slide_up));
@@ -193,7 +187,6 @@ public class ItemCustomizationFragment extends Fragment implements ItemCustomiza
         anim.setAnimationListener(new Animation.AnimationListener() {
             @Override
             public void onAnimationStart(Animation animation) {
-
             }
 
             @Override
@@ -207,7 +200,6 @@ public class ItemCustomizationFragment extends Fragment implements ItemCustomiza
 
             @Override
             public void onAnimationRepeat(Animation animation) {
-
             }
         });
         vMenuCustomizations.startAnimation(anim);
@@ -215,14 +207,13 @@ public class ItemCustomizationFragment extends Fragment implements ItemCustomiza
     }
 
     private void hideViews(View... views) {
-        for (View v : views) {
-            v.setVisibility(View.GONE);
-        }
+        for (View v : views) v.setVisibility(View.GONE);
     }
 
     @Override
     public void onDestroy() {
         super.onDestroy();
+        if (getView() != null) getView().removeCallbacks(blurBackRunnable);
         unbinder.unbind();
     }
 

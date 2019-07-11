@@ -100,8 +100,7 @@ class MenuItemAdapter(private var mItemsList: List<MenuItemModel>?, private val 
                         hideQuantitySelection()
                         return
                     }
-                    if (count == 0)
-                        hideQuantitySelection()
+                    if (count == 0) hideQuantitySelection()
                     mCount = count
                 }
             })
@@ -163,7 +162,7 @@ class MenuItemAdapter(private var mItemsList: List<MenuItemModel>?, private val 
                 applyState(DESCRIPTION_STATE)
             }
 
-            tvItemPrices.text = Utils.formatCurrencyAmount(tvItemPrices.context, menuItem.typeCosts[0])
+            tvItemPrices.text = Utils.formatIntegralCurrencyAmount(tvItemPrices.context, menuItem.typeCosts[0])
 
             val count = mListener.orderedItemCount(menuItem)
             if (count > 0)

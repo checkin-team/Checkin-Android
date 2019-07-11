@@ -58,26 +58,26 @@ public class InventoryGroupsFragment extends BaseFragment implements InventoryGr
         mViewModel.getMenuGroups().observe(this, menuGroupResource -> {
             if (menuGroupResource == null)
                 return;
-            if (menuGroupResource.status == Resource.Status.SUCCESS) {
-                mAdapter.setGroupList(menuGroupResource.data);
+            if (menuGroupResource.getStatus() == Resource.Status.SUCCESS) {
+                mAdapter.setGroupList(menuGroupResource.getData());
                 stopRefreshing();
-            } else if (menuGroupResource.status == Resource.Status.LOADING) {
+            } else if (menuGroupResource.getStatus() == Resource.Status.LOADING) {
                 startRefreshing();
-                if (menuGroupResource.data != null)
-                    mAdapter.setGroupList(menuGroupResource.data);
+                if (menuGroupResource.getData() != null)
+                    mAdapter.setGroupList(menuGroupResource.getData());
             } else {
                 stopRefreshing();
-                Utils.toast(requireContext(), menuGroupResource.message);
+                Utils.toast(requireContext(), menuGroupResource.getMessage());
             }
         });
 
         mViewModel.getMenuItemAvailabilityData().observe(this, listResource -> {
             if (listResource == null)
                 return;
-            if (listResource.status == Resource.Status.SUCCESS) {
-                mViewModel.updateUiItemListAvailability(listResource.data);
-            } else if (listResource.status != Resource.Status.LOADING) {
-                Utils.toast(requireContext(), listResource.message);
+            if (listResource.getStatus() == Resource.Status.SUCCESS) {
+                mViewModel.updateUiItemListAvailability(listResource.getData());
+            } else if (listResource.getStatus() != Resource.Status.LOADING) {
+                Utils.toast(requireContext(), listResource.getMessage());
             }
         });
     }

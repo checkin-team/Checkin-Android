@@ -1,19 +1,19 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:orientation="vertical"
     android:layout_marginStart="@dimen/spacing_normal"
+    android:orientation="vertical"
     tools:background="@color/white">
 
     <TextView
         android:id="@+id/tv_menu_customization_group_name"
+        style="@style/GreyHeadingStyle"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:padding="@dimen/spacing_extra_small"
-        tools:text="Group Name"
-        style="@style/GreyTitleStyle" />
+        tools:text="Group Name" />
 
     <LinearLayout
         android:id="@+id/list_menu_customization_fields"

@@ -11,6 +11,53 @@
         android:layout_height="match_parent"
         android:background="@color/white_three">
 
+        <com.google.android.material.appbar.AppBarLayout
+            android:id="@+id/appbar_active_session_invoice"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:fitsSystemWindows="true"
+            android:theme="@style/appbar_main"
+            app:layout_constraintBottom_toTopOf="@id/pb_as_checkout"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <androidx.appcompat.widget.Toolbar
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="top"
+                android:background="@color/white"
+                app:popupTheme="@style/PopupOverlay">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
+
+                    <ImageView
+                        android:id="@+id/im_session_view_invoice_back"
+                        android:layout_width="@dimen/size_normal_icon"
+                        android:layout_height="@dimen/size_normal_icon"
+                        android:layout_gravity="center_vertical"
+                        android:contentDescription="@null"
+                        android:padding="@dimen/spacing_extra_small"
+                        android:src="@drawable/ic_back_grey" />
+
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center|start"
+                        android:layout_marginStart="@dimen/spacing_small"
+                        android:layout_weight="1"
+                        android:fontFamily="@font/arial_rounded_mt_bold"
+                        android:text="@string/action_invoice"
+                        android:textColor="@color/brownish_grey"
+                        android:textSize="@dimen/font_large" />
+
+                </LinearLayout>
+
+            </androidx.appcompat.widget.Toolbar>
+        </com.google.android.material.appbar.AppBarLayout>
+
+
         <ProgressBar
             android:id="@+id/pb_as_checkout"
             style="@style/RougeProgressBar"
@@ -19,7 +66,7 @@
             android:indeterminate="true"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toBottomOf="@+id/appbar_active_session_invoice" />
 
         <TextView
             android:id="@+id/title_bill_details"
@@ -299,13 +346,13 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent">
 
-                <LinearLayout
+                <androidx.constraintlayout.widget.ConstraintLayout
                     android:id="@+id/container_as_payment_mode_change"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
                     android:layout_marginEnd="@dimen/spacing_small"
-                    android:orientation="vertical"
+                    android:layout_marginStart="@dimen/spacing_small"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toStartOf="@id/btn_invoice_request_checkout"
                     app:layout_constraintStart_toStartOf="parent"
@@ -320,14 +367,19 @@
                         android:drawableStart="@drawable/ic_cash_grey"
                         android:drawablePadding="@dimen/spacing_normal"
                         android:gravity="center"
-                        android:text="@string/session_payment_mode_via_cash" />
+                        android:text="@string/session_payment_mode_via_cash"
+                        app:layout_constraintStart_toStartOf="@id/incl_as_invoice_line"
+                        app:layout_constraintTop_toTopOf="parent" />
 
-                    <include
-                        layout="@layout/incl_dotted_view"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="center"
-                        android:layout_marginTop="@dimen/spacing_extra_tiny" />
+                    <View
+                        android:id="@+id/incl_as_invoice_line"
+                        android:layout_width="120dp"
+                        android:layout_height="@dimen/height_horizontal_line"
+                        android:layout_gravity="center_horizontal"
+                        android:background="@drawable/ic_line_dash_white"
+                        android:layout_marginTop="@dimen/spacing_tiny"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@id/tv_as_payment_mode" />
 
                     <TextView
                         style="@style/RedSmallTextStyle"
@@ -335,9 +387,12 @@
                         android:layout_height="wrap_content"
                         android:layout_gravity="center"
                         android:layout_marginTop="@dimen/spacing_extra_tiny"
-                        android:text="@string/change" />
+                        android:text="@string/change"
+                        app:layout_constraintEnd_toEndOf="@id/tv_as_payment_mode"
+                        app:layout_constraintStart_toStartOf="@id/incl_as_invoice_line"
+                        app:layout_constraintTop_toBottomOf="@id/incl_as_invoice_line" />
 
-                </LinearLayout>
+                </androidx.constraintlayout.widget.ConstraintLayout>
 
                 <Button
                     android:id="@+id/btn_invoice_request_checkout"

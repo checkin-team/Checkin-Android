@@ -44,10 +44,10 @@ public class ManagerInvoiceFragment extends BaseFragment implements ShopInvoiceS
         mViewModel.getRestaurantSessions().observe(this, input -> {
             if (input == null)
                 return;
-            if (input.status == Resource.Status.SUCCESS && input.data != null) {
-                mAdapter.setSessionData(input.data);
-            } else if (input.status != Resource.Status.LOADING) {
-                Utils.toast(requireContext(), input.message);
+            if (input.getStatus() == Resource.Status.SUCCESS && input.getData() != null) {
+                mAdapter.setSessionData(input.getData());
+            } else if (input.getStatus() != Resource.Status.LOADING) {
+                Utils.toast(requireContext(), input.getMessage());
             }
         });
     }

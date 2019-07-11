@@ -62,16 +62,16 @@ public class FinanceDetailActivity extends AppCompatActivity {
         mViewModel = ViewModelProviders.of(this).get(FinanceViewModel.class);
         mViewModel.getRestaurantFinanceById(restaurantId);
         mViewModel.getRestaurantFinanceModel().observe(this, input -> {
-            if (input != null && input.data == null) return;
-            if (input != null && input.status == Resource.Status.SUCCESS) {
+            if (input != null && input.getData() == null) return;
+            if (input != null && input.getStatus() == Resource.Status.SUCCESS) {
 
-                double cgstPercent = input.data.getCgstPercent();
-                double discountPercent = input.data.getDiscountPercent();
-                gstin = input.data.getGstin();
-                double gstPercent = input.data.getGstPercent();
-                double igstPercent = input.data.getIgstPercent();
-                double sgstPercent = input.data.getSgstPercent();
-                double totalDiscount = input.data.getTotalDiscount();
+                double cgstPercent = input.getData().getCgstPercent();
+                double discountPercent = input.getData().getDiscountPercent();
+                gstin = input.getData().getGstin();
+                double gstPercent = input.getData().getGstPercent();
+                double igstPercent = input.getData().getIgstPercent();
+                double sgstPercent = input.getData().getSgstPercent();
+                double totalDiscount = input.getData().getTotalDiscount();
 
                 tvTaxDiscountOneMonth.setText(String.valueOf(totalDiscount));
                 etTaxDiscount.setText(String.valueOf(discountPercent));
@@ -84,9 +84,9 @@ public class FinanceDetailActivity extends AppCompatActivity {
 
         mViewModel.getUpdateFinanceData().observe(this, input -> {
             if (input == null) return;
-            if (input.status == Resource.Status.SUCCESS && input.data != null) {
-                Utils.toast(this, input.data.getDetail());
-            } else if (input.status == Resource.Status.ERROR_INVALID_REQUEST) {
+            if (input.getStatus() == Resource.Status.SUCCESS && input.getData() != null) {
+                Utils.toast(this, input.getData().getDetail());
+            } else if (input.getStatus() == Resource.Status.ERROR_INVALID_REQUEST) {
                 JsonNode error = input.getErrorBody();
                 if (error != null && error.has("discount_percent")) {
                     JsonNode discountPercent = error.get("discount_percent");

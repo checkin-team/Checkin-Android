@@ -1,19 +1,19 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:card_view="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="@dimen/width_session_trending_dishes"
     android:layout_height="match_parent"
     android:layout_gravity="center"
     android:layout_marginEnd="@dimen/spacing_small"
+    android:elevation="@dimen/spacing_extra_tiny"
     android:gravity="center">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:minHeight="@dimen/height_session_trending_dishes"
-        android:background="@drawable/background_pinkish_grey_stroke"
+        android:background="@drawable/background_lightest_grey_stroke"
         android:gravity="center"
+        android:minHeight="@dimen/height_session_trending_dishes"
         android:orientation="vertical">
 
 
@@ -35,10 +35,10 @@
             android:fontFamily="@font/arial_rounded_mt_bold"
             android:gravity="center|top"
             android:maxLines="2"
-            android:textColor="@color/brownish_grey"
-            android:textSize="@dimen/font_small"
             android:paddingStart="@dimen/spacing_extra_tiny"
             android:paddingEnd="@dimen/spacing_extra_tiny"
+            android:textColor="@color/brownish_grey"
+            android:textSize="@dimen/font_small"
             tools:text="Vanilla Cone" />
 
 
@@ -46,9 +46,9 @@
             android:id="@+id/tv_as_trending_dish_price"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/spacing_extra_small"
             android:fontFamily="@font/arial_rounded_mt_bold"
             android:paddingBottom="@dimen/spacing_extra_small"
-            android:layout_marginTop="@dimen/spacing_extra_small"
             android:textColor="@color/primary_red"
             android:textSize="@dimen/font_normal"
             tools:text="200" />
