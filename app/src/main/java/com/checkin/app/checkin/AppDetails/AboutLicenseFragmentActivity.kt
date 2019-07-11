@@ -6,9 +6,11 @@ import android.os.Bundle
 import android.text.Html
 import android.util.Log
 import android.view.View
+import android.widget.Switch
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
+import androidx.browser.customtabs.CustomTabsIntent
 import com.checkin.app.checkin.R
 import com.mikepenz.aboutlibraries.LibTaskCallback
 import com.mikepenz.aboutlibraries.Libs
@@ -57,7 +59,14 @@ class AboutLicenseFragmentActivity : AppCompatActivity() {
         }
 
         override fun onExtraClicked(v: View, specialButton: Libs.SpecialButton): Boolean {
-            return false
+           /* if(specialButton == Libs.SpecialButton.SPECIAL1){
+                onSpecialButtonClick("https://check-in.in/terms")
+            }else if(specialButton == Libs.SpecialButton.SPECIAL2){
+                onSpecialButtonClick("https://check-in.in/privacy")
+            }else if(specialButton == Libs.SpecialButton.SPECIAL3){
+                onSpecialButtonClick("https://check-in.in/refund")
+            }*/
+            return true
         }
 
         override fun onIconLongClicked(v: View): Boolean {
@@ -76,6 +85,13 @@ class AboutLicenseFragmentActivity : AppCompatActivity() {
             return false
         }
     }
+
+    /*private fun onSpecialButtonClick(url: String){
+        val builder = CustomTabsIntent.Builder()
+        val customTabsIntent = builder.build()
+        builder.setToolbarColor(resources.getColor(R.color.primary_red))
+        customTabsIntent.launchUrl(this@AboutLicenseFragmentActivity, Uri.parse(url))
+    }*/
 
     public override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
