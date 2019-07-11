@@ -16,6 +16,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_gravity="bottom"
+        android:background="@color/white"
         android:clickable="true"
         android:focusable="true"
         android:minHeight="120dp">
@@ -27,7 +28,7 @@
             android:background="@color/white"
             android:clipToPadding="false"
             android:fillViewport="true"
-            android:visibility="visible"
+            app:layout_constraintBottom_toTopOf="@id/footer_menu_customization"
             app:layout_constraintTop_toBottomOf="@id/guideline_menu_customization_above">
 
             <LinearLayout
@@ -35,7 +36,6 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/spacing_small"
-                android:layout_marginBottom="@dimen/button_height_tall"
                 android:orientation="vertical"
                 android:paddingTop="@dimen/spacing_large"
                 android:paddingBottom="@dimen/spacing_small"
@@ -48,9 +48,12 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             app:cardElevation="@dimen/card_elevation"
+            android:layout_marginBottom="@dimen/spacing_small"
+            app:layout_constraintBottom_toTopOf="@id/footer_menu_customization"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent">
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0">
 
             <LinearLayout
                 android:id="@+id/header_menu_customization"
@@ -64,7 +67,6 @@
                 <TextView
                     android:id="@+id/tv_menu_customization_item_name"
                     style="@style/RedTitleStyle"
-                    android:textSize="@dimen/font_extra_large"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:ellipsize="end"
@@ -73,6 +75,7 @@
                     android:maxLines="2"
                     android:paddingTop="@dimen/spacing_small"
                     android:paddingBottom="@dimen/spacing_small"
+                    android:textSize="@dimen/font_extra_large"
                     tools:text="Pizza" />
 
                 <RadioGroup
@@ -203,7 +206,6 @@
             android:gravity="center_vertical"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent">
-
 
             <TextView
                 android:id="@+id/tv_menu_customization_bill"

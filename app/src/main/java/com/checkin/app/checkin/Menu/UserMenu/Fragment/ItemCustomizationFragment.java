@@ -39,12 +39,10 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 import butterknife.Unbinder;
 
-/**
- * Created by Bhavik Patel on 12/08/2018.
- */
 
 public class ItemCustomizationFragment extends Fragment implements ItemCustomizationGroupHolder.CustomizationGroupInteraction {
     private static final String TAG = ItemCustomizationFragment.class.getSimpleName();
+    private Unbinder unbinder;
 
     @BindView(R.id.container_menu_customization)
     ConstraintLayout vMenuCustomizations;
@@ -80,8 +78,6 @@ public class ItemCustomizationFragment extends Fragment implements ItemCustomiza
     ViewGroup svContainerCustomization;
     @BindView(R.id.container_as_radio_buttons)
     ConstraintLayout containerRadioButtons;
-
-    private Unbinder unbinder;
 
     private MenuViewModel mViewModel;
     private MenuItemModel mItem;
@@ -152,17 +148,12 @@ public class ItemCustomizationFragment extends Fragment implements ItemCustomiza
                 break;
         }
         if (mItem.hasCustomizations()) {
+            svContainerCustomization.setVisibility(View.VISIBLE);
             for (ItemCustomizationGroupModel group : mItem.getCustomizations()) {
                 listCustomizations.addView(new ItemCustomizationGroupHolder(group, getContext(), this).getView());
             }
         } else {
             svContainerCustomization.setVisibility(View.GONE);
-            ConstraintSet constraintSet = new ConstraintSet();
-            constraintSet.clone(vMenuCustomizations);
-            constraintSet.connect(R.id.container_as_menu_customization_header, ConstraintSet.START, ConstraintSet.PARENT_ID, ConstraintSet.START);
-            constraintSet.connect(R.id.container_as_menu_customization_header, ConstraintSet.END, ConstraintSet.PARENT_ID, ConstraintSet.END);
-            constraintSet.connect(R.id.container_as_menu_customization_header, ConstraintSet.BOTTOM, R.id.footer_menu_customization, ConstraintSet.TOP);
-            constraintSet.applyTo(vMenuCustomizations);
         }
 
         vMenuCustomizations.startAnimation(AnimationUtils.loadAnimation(requireContext(), R.anim.slide_up));

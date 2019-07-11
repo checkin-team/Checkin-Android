@@ -377,7 +377,7 @@
                         android:layout_height="@dimen/height_horizontal_line"
                         android:layout_gravity="center_horizontal"
                         android:background="@drawable/ic_line_dash_white"
-                        android:layout_marginTop="@dimen/spacing_extra_tiny"
+                        android:layout_marginTop="@dimen/spacing_tiny"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toBottomOf="@id/tv_as_payment_mode" />
 

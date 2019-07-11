@@ -83,7 +83,7 @@
 
     <!-- Menu dimensions -->
     <dimen name="height_menu_filter">400dp</dimen>
-    <dimen name="height_menu_customization">350dp</dimen>
+    <dimen name="height_menu_customization">310dp</dimen>
     <dimen name="height_menu_customization_header">70dp</dimen>
     <dimen name="height_menu_customization_footer">50dp</dimen>
     <dimen name="height_menu_group_collapsed">95dp</dimen>

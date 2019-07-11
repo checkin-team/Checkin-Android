@@ -114,7 +114,7 @@ public class MenuViewModel extends BaseViewModel {
                     }
                 }
                 if (items.size() == 0)
-                    return Resource.Companion.errorNotFound(null);
+                    return Resource.Companion.errorNotFound("Dish not found.");
                 return Resource.Companion.cloneResource(input, items);
             });
             mMenuItems.addSource(resourceLiveData, mMenuItems::setValue);
