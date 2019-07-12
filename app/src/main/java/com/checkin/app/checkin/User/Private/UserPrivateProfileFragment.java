@@ -13,6 +13,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.checkin.app.checkin.Data.Resource.Status;
+import com.checkin.app.checkin.Home.CurrentLocationActivity;
 import com.checkin.app.checkin.Misc.BaseFragment;
 import com.checkin.app.checkin.Misc.SelectCropImageActivity;
 import com.checkin.app.checkin.R;
@@ -150,5 +151,10 @@ public class UserPrivateProfileFragment extends BaseFragment {
         }else {
             mViewModel.updateResults();
         }
+    }
+
+    @OnClick(R.id.test)
+    public void testClick(){
+        startActivity(new Intent(requireContext(), CurrentLocationActivity.class));
     }
 }

@@ -200,4 +200,8 @@
     <dimen name="width_text_view">80dp</dimen>
     <dimen name="height_text_view">15dp</dimen>
 
+    <!--Location-->
+    <dimen name="width_current_location">150dp</dimen>
+    <dimen name="height_current_location">140dp</dimen>
+
 </resources>

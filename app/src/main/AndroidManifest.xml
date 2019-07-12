@@ -84,6 +84,8 @@
             android:name=".Menu.UserMenu.SessionMenuActivity"
             android:windowSoftInputMode="adjustPan"/>
 
+        <activity android:name=".Home.CurrentLocationActivity"/>
+
         <service
             android:name=".Auth.AuthenticatorService"
             android:enabled="true"

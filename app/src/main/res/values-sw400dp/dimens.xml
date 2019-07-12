@@ -187,4 +187,8 @@
     <dimen name="width_insight_discount_icon">23dp</dimen>
     <dimen name="height_floating_cash_card">140dp</dimen>
 
+    <!--Location-->
+    <dimen name="width_current_location">160dp</dimen>
+    <dimen name="height_current_location">150dp</dimen>
+
 </resources>

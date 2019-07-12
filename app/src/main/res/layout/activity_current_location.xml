@@ -1,0 +1,189 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white">
+
+    <com.google.android.material.appbar.AppBarLayout
+        android:id="@+id/appbar_active_session_invoice"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:fitsSystemWindows="true"
+        android:theme="@style/appbar_main">
+
+        <androidx.appcompat.widget.Toolbar
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="top"
+            android:background="@color/white"
+            app:popupTheme="@style/PopupOverlay">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+                <ImageView
+                    android:id="@+id/im_session_view_invoice_back"
+                    android:layout_width="@dimen/width_small_icon"
+                    android:layout_height="@dimen/size_extra_small_button"
+                    android:layout_gravity="center_vertical"
+                    android:src="@drawable/ic_back_grey" />
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center|start"
+                    android:layout_marginStart="@dimen/spacing_small"
+                    android:layout_weight="1"
+                    android:fontFamily="@font/arial_rounded_mt_bold"
+                    android:text="Location"
+                    android:textColor="@color/brownish_grey"
+                    android:textSize="@dimen/font_large" />
+
+            </LinearLayout>
+
+        </androidx.appcompat.widget.Toolbar>
+    </com.google.android.material.appbar.AppBarLayout>
+
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        style="@style/GreyHeadingStyle"
+        android:layout_marginTop="@dimen/spacing_medium"
+        android:layout_marginStart="@dimen/spacing_normal"
+        android:drawableStart="@drawable/ic_gps_fixed_indicator"
+        android:drawablePadding="@dimen/spacing_medium"
+        android:textSize="@dimen/font_large"
+        android:text="Current Location"/>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/height_horizontal_line"
+        android:layout_marginTop="@dimen/spacing_tiny"
+        android:background="@color/pinkish_grey"/>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/spacing_small"
+            android:layout_marginEnd="@dimen/spacing_small"
+            android:layout_marginBottom="@dimen/spacing_small"
+            android:layout_marginTop="@dimen/spacing_extra_large"
+            android:gravity="center"
+            android:weightSum="2">
+
+            <LinearLayout
+                android:id="@+id/cash_container"
+                android:layout_width="@dimen/width_current_location"
+                android:layout_height="@dimen/height_current_location"
+                android:layout_marginStart="@dimen/spacing_small"
+                android:layout_marginEnd="@dimen/spacing_normal"
+                android:background="@drawable/background_lightest_grey_stroke"
+                android:orientation="vertical">
+
+                <ImageView
+                    android:layout_width="@dimen/size_logo"
+                    android:layout_height="@dimen/size_logo"
+                    android:layout_gravity="center"
+                    android:layout_weight="1"
+                    android:layout_marginTop="@dimen/spacing_normal"
+                    android:src="@drawable/ic_enterprise_bengaluru" />
+
+
+                <TextView
+                    style="@style/GreyTextStyle"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="bottom|center"
+                    android:layout_marginBottom="@dimen/spacing_small"
+                    android:gravity="center"
+                    android:text="Bengaluru" />
+
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/paytm_container"
+                android:layout_width="@dimen/width_current_location"
+                android:layout_height="@dimen/height_current_location"
+                android:layout_marginStart="@dimen/spacing_normal"
+                android:layout_marginEnd="@dimen/spacing_small"
+                android:background="@drawable/background_lightest_grey_stroke"
+                android:orientation="vertical">
+
+                <ImageView
+                    android:layout_width="@dimen/size_logo"
+                    android:layout_height="@dimen/size_logo"
+                    android:layout_gravity="center"
+                    android:layout_weight="1"
+                    android:layout_marginTop="@dimen/spacing_normal"
+                    android:src="@drawable/ic_temple_varanasi" />
+
+
+                <TextView
+                    style="@style/GreyTextStyle"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="bottom|center"
+                    android:layout_marginBottom="@dimen/spacing_small"
+                    android:gravity="center"
+                    android:text="Varanasi" />
+
+
+            </LinearLayout>
+
+
+        </LinearLayout>
+
+       <!-- <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/spacing_small"
+            android:gravity="center">-->
+
+        <LinearLayout
+            android:id="@+id/hyderabad_container"
+            android:layout_width="@dimen/width_current_location"
+            android:layout_height="@dimen/height_current_location"
+            android:background="@drawable/background_lightest_grey_stroke"
+            android:layout_marginTop="@dimen/spacing_large"
+            android:layout_gravity="center"
+            android:orientation="vertical">
+
+            <ImageView
+                android:layout_width="@dimen/size_logo"
+                android:layout_height="@dimen/size_logo"
+                android:layout_gravity="center"
+                android:layout_weight="1"
+                android:layout_marginTop="@dimen/spacing_normal"
+                android:src="@drawable/ic_red_fort_hybd" />
+
+
+            <TextView
+                style="@style/GreyTextStyle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="bottom|center"
+                android:layout_marginBottom="@dimen/spacing_small"
+                android:gravity="center"
+                android:text="Hyderabad" />
+        </LinearLayout>
+
+        <!--</LinearLayout>-->
+
+
+
+    </LinearLayout>
+
+
+
+</LinearLayout>

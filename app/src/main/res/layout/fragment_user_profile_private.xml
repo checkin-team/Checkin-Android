@@ -94,6 +94,7 @@
             <include layout="@layout/incl_horizontal_line" />
 
             <TextView
+                android:id="@+id/test"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_horizontal"
