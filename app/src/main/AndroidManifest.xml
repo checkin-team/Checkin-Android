@@ -89,6 +89,8 @@
         <activity android:name=".Cook.CookSessionActivity" />
         <activity android:name=".Cook.CookWorkActivity" />
 
+        <activity android:name=".Home.CurrentLocationActivity"/>
+
         <service
             android:name=".Auth.AuthenticatorService"
             android:enabled="true"

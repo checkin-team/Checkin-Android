@@ -222,4 +222,8 @@
 
     <dimen name="new_bottom_user_height">800dp</dimen>
 
+    <!--Location-->
+    <dimen name="width_current_location">150dp</dimen>
+    <dimen name="height_current_location">140dp</dimen>
+
 </resources>
