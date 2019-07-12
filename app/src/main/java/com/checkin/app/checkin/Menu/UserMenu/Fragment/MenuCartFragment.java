@@ -149,7 +149,7 @@ public class MenuCartFragment extends BaseFragment implements MenuCartAdapter.Me
     @Override
     public void onTreatYourselfItemClick(TrendingDishModel data) {
         mViewModel.searchMenuItemById(data.getPk());
-        mViewModel.getTreatMenuItem().observe(this, itemModel -> {
+        mViewModel.getSelectedMenuItemDetails().observe(this, itemModel -> {
             if (itemModel != null && mListener != null) {
                 mListener.onMenuItemAdded(itemModel);
             }

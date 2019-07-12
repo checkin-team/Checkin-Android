@@ -16,9 +16,11 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.widget.Toolbar;
 import androidx.lifecycle.ViewModelProviders;
 
+import com.checkin.app.checkin.Data.Resource;
 import com.checkin.app.checkin.Menu.MenuItemInteraction;
 import com.checkin.app.checkin.Menu.Model.MenuItemModel;
 import com.checkin.app.checkin.Menu.ShopMenu.Fragment.MenuInfoFragment;
+import com.checkin.app.checkin.Menu.UserMenu.Adapter.MenuBestSellerAdapter;
 import com.checkin.app.checkin.Menu.UserMenu.Fragment.ItemCustomizationFragment;
 import com.checkin.app.checkin.Menu.UserMenu.Fragment.MenuCartFragment;
 import com.checkin.app.checkin.Menu.UserMenu.Fragment.MenuFilterFragment;
@@ -28,12 +30,16 @@ import com.checkin.app.checkin.Misc.BaseActivity;
 import com.checkin.app.checkin.R;
 import com.checkin.app.checkin.Utility.OnBoardingUtils;
 import com.checkin.app.checkin.Utility.Utils;
+import com.checkin.app.checkin.session.model.TrendingDishModel;
+import com.facebook.shimmer.ShimmerFrameLayout;
 import com.miguelcatalan.materialsearchview.MaterialSearchView;
 
 import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
 
+import androidx.recyclerview.widget.GridLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
@@ -45,7 +51,7 @@ import static com.checkin.app.checkin.Menu.ShopMenu.SessionMenuActivity.KEY_SESS
 import static com.checkin.app.checkin.Menu.ShopMenu.SessionMenuActivity.SESSION_ARG;
 import static com.checkin.app.checkin.session.activesession.ActiveSessionActivity.KEY_INTERACT_WITH_US;
 
-public class SessionMenuActivity extends BaseActivity implements MenuItemInteraction, ItemCustomizationFragment.ItemCustomizationInteraction, MenuFilterFragment.MenuFilterInteraction {
+public class SessionMenuActivity extends BaseActivity implements MenuItemInteraction, ItemCustomizationFragment.ItemCustomizationInteraction, MenuFilterFragment.MenuFilterInteraction, MenuBestSellerAdapter.SessionTrendingDishInteraction {
     public static final String SP_MENU_SEARCH = "sp.menu.search";
     public static final String SP_MENU_CART = "sp.menu.cart";
 
@@ -71,6 +77,10 @@ public class SessionMenuActivity extends BaseActivity implements MenuItemInterac
     ImageView btnMenuFilter;
     @BindView(R.id.tv_as_menu_title)
     TextView tvMenuTitle;
+    @BindView(R.id.rv_menu_bestseller)
+    RecyclerView rvBestseller;
+    @BindView(R.id.shimmer_as_menu_bestseller)
+    ShimmerFrameLayout shimmerBestSeller;
 
     private MenuGroupsFragment.SESSION_STATUS mSessionStatus;
 
@@ -79,6 +89,7 @@ public class SessionMenuActivity extends BaseActivity implements MenuItemInterac
     private MenuItemSearchFragment mSearchFragment;
     private MenuFilterFragment mFilterFragment;
     private MenuViewModel mViewModel;
+    private MenuBestSellerAdapter mBestsellerAdapter;
 
     public static void startWithSession(Context context, Long restaurantPk, @Nullable Long sessionPk, @Nullable Long itemModel) {
         context.startActivity(withSession(context, restaurantPk, sessionPk, itemModel));
@@ -106,6 +117,7 @@ public class SessionMenuActivity extends BaseActivity implements MenuItemInterac
         Bundle args = getIntent().getBundleExtra(SESSION_ARG);
         mSessionStatus = (MenuGroupsFragment.SESSION_STATUS) args.getSerializable(KEY_SESSION_STATUS);
         mViewModel = ViewModelProviders.of(this).get(MenuViewModel.class);
+        mViewModel.fetchRecommendedItems(args.getLong(KEY_RESTAURANT_PK));
         mViewModel.fetchAvailableMenu(args.getLong(KEY_RESTAURANT_PK));
         long sessionPk = args.getLong(KEY_SESSION_PK, 0L);
         if (sessionPk > 0L) mViewModel.manageSession(sessionPk);
@@ -116,6 +128,7 @@ public class SessionMenuActivity extends BaseActivity implements MenuItemInterac
 
         init(R.id.container_as_menu_fragment, true);
         setupUiStuff();
+        setUpBestsellerFragment();
         setUpObserver();
         setupMenuFragment();
         setupSearch();
@@ -167,6 +180,19 @@ public class SessionMenuActivity extends BaseActivity implements MenuItemInterac
 
     private void setUpObserver() {
         mViewModel.fetchTrendingItem();
+
+        mViewModel.getRecommendedItems().observe(this, listResource -> {
+            if (listResource == null)
+                return;
+
+            if (listResource.getStatus() == Resource.Status.SUCCESS && listResource.getData() != null) {
+                mBestsellerAdapter.setData(listResource.getData());
+                shimmerBestSeller.stopShimmer();
+                shimmerBestSeller.setVisibility(View.GONE);
+            }
+        });
+
+
         mViewModel.getTotalOrderedCount().observe(this, count -> {
             if (count == null)
                 return;
@@ -195,6 +221,14 @@ public class SessionMenuActivity extends BaseActivity implements MenuItemInterac
         });
 
         mViewModel.getFilteredString().observe(this, it -> tvMenuTitle.setText(it != null ? it : "Menu"));
+
+    }
+
+    private void setUpBestsellerFragment() {
+        GridLayoutManager gridLayoutManager = new GridLayoutManager(getApplicationContext(),2);
+        rvBestseller.setLayoutManager(gridLayoutManager);
+        mBestsellerAdapter = new MenuBestSellerAdapter(this);
+        rvBestseller.setAdapter(mBestsellerAdapter);
     }
 
     private void setupMenuFragment() {
@@ -448,5 +482,15 @@ public class SessionMenuActivity extends BaseActivity implements MenuItemInterac
 
     @Override
     public void filterByAvailableMeals() {
+    }
+
+    @Override
+    public void onDishClick(@NotNull TrendingDishModel item) {
+        mViewModel.searchMenuItemById(item.getPk());
+        mViewModel.getSelectedMenuItemDetails().observe(this, itemModel -> {
+            if (itemModel != null ) {
+                onMenuItemAdded(itemModel);
+            }
+        });
     }
 }

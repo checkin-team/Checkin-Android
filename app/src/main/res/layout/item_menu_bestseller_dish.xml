@@ -1,49 +1,77 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    android:layout_marginEnd="@dimen/spacing_small"
+    android:layout_marginBottom="@dimen/spacing_small"
     android:background="@drawable/rounded_rectangle_white"
+    android:orientation="vertical"
     android:padding="@dimen/spacing_extra_small">
 
-    <ImageView
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <ImageView
+            android:id="@+id/im_menu_dish"
+            style="@style/LogoImageStyle"
+            android:layout_gravity="center"
+            android:src="@drawable/ic_action_clean_table" />
+
+        <TextView
+            style="@style/WhiteSmallTextStyle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@color/primary_red"
+            android:paddingTop="@dimen/spacing_elevation_fix_extreme_tiny"
+            android:paddingBottom="@dimen/spacing_elevation_fix_extreme_tiny"
+            android:paddingStart="@dimen/spacing_tiny"
+            android:paddingEnd="@dimen/spacing_tiny"
+            android:text="BESTSELLER"
+            android:layout_gravity="top"
+            android:textSize="@dimen/font_tiny" />
+
+    </FrameLayout>
+
+    <!--<ImageView
         android:id="@+id/im_menu_dish"
         android:layout_width="match_parent"
         android:layout_height="@dimen/height_card_tall"
-        android:src="@drawable/ic_action_clean_table"/>
+        android:src="@drawable/ic_action_clean_table"/>-->
 
     <TextView
         android:id="@+id/im_menu_dish_name"
+        style="@style/GreySmallTextStyle"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        style="@style/GreySmallTextStyle"
-        android:maxLines="2"
-        android:ellipsize="end"
         android:layout_marginTop="@dimen/spacing_extra_small"
-        tools:text="Paneer Butter Masala"/>
+        android:ellipsize="end"
+        android:maxLines="2"
+        tools:text="Paneer Butter Masala" />
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/spacing_tiny">
 
         <TextView
             android:id="@+id/tv_menu_dish_price"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            tools:text="$ 234"/>
+            tools:text="$ 234" />
 
         <TextView
+            style="@style/RedSmallTextStyle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            style="@style/RedSmallTextStyle"
-            android:text="Add"
+            android:background="@drawable/ic_extra_small_rouge_stroke"
             android:paddingStart="@dimen/spacing_extra_small"
-            android:paddingEnd="@dimen/spacing_extra_small"
             android:paddingTop="@dimen/spacing_extra_tiny"
+            android:paddingEnd="@dimen/spacing_extra_small"
             android:paddingBottom="@dimen/spacing_extra_tiny"
-            android:background="@drawable/ic_extra_small_rouge_stroke"/>
+            android:text="Add" />
 
     </LinearLayout>
 

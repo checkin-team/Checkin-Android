@@ -37,7 +37,7 @@ public class MenuViewModel extends BaseViewModel {
     private SourceMappedLiveData<Resource<List<MenuItemModel>>> mMenuItems = createNetworkLiveData();
     private SourceMappedLiveData<Resource<ArrayNode>> mResultOrder = createNetworkLiveData();
     private SourceMappedLiveData<Resource<List<TrendingDishModel>>> mTrendingData = createNetworkLiveData();
-//    private SourceMappedLiveData<Resource<List<TrendingDishModel>>> mRecommendedData = createNetworkLiveData();
+    private SourceMappedLiveData<Resource<List<TrendingDishModel>>> mRecommendedData = createNetworkLiveData();
 
     private MutableLiveData<List<OrderedItemModel>> mOrderedItems = new MutableLiveData<>();
     private MutableLiveData<OrderedItemModel> mCurrentItem = new MutableLiveData<>();
@@ -457,7 +457,7 @@ public class MenuViewModel extends BaseViewModel {
         });
     }
 
-    public LiveData<MenuItemModel> getTreatMenuItem() {
+    public LiveData<MenuItemModel> getSelectedMenuItemDetails() {
         if (mTrendingItemPk == null)
             return null;
         return Transformations.map(mMenuData, input -> {
@@ -475,13 +475,13 @@ public class MenuViewModel extends BaseViewModel {
         });
     }
 
-    /*public void fetchRecommendedItems() {
-        mRecommendedData.addSource(mRepository.getRecommendedDishes(mShopPk), mRecommendedData::setValue);
+    public void fetchRecommendedItems(long shopId) {
+        mRecommendedData.addSource(mRepository.getRecommendedDishes(shopId), mRecommendedData::setValue);
     }
 
     public LiveData<Resource<List<TrendingDishModel>>> getRecommendedItems() {
         return mRecommendedData;
-    }*/
+    }
 
     public void fetchTrendingItem() {
         mTrendingData.addSource(mActiveSessionRepository.getTrendingDishes(mShopPk), mTrendingData::setValue);

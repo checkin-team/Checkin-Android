@@ -6,6 +6,7 @@ import com.checkin.app.checkin.Data.AppDatabase;
 import com.checkin.app.checkin.Data.Converters;
 import com.checkin.app.checkin.Inventory.Adapter.InventoryItemAdapter;
 import com.checkin.app.checkin.Menu.UserMenu.Adapter.MenuItemAdapter;
+import com.checkin.app.checkin.session.model.TrendingDishModel;
 import com.fasterxml.jackson.annotation.JsonAutoDetect;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;

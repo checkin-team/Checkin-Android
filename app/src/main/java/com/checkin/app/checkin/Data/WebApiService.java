@@ -313,7 +313,7 @@ public interface WebApiService {
     @GET("menus/items/trending/restaurants/{restaurant_id}/")
     Call<List<TrendingDishModel>> getRestaurantTrendingItem(@Path("restaurant_id") long restaurantId);
 
-    @GET("menus/items/recommended/restaurants/{restaurant_id}/")
+    @GET("menus/items/trending/restaurants/{restaurant_id}/")
     Call<List<TrendingDishModel>> getRestaurantRecommendedItems(@Path("restaurant_id") long restaurantId);
 
     @POST("menus/restaurants/{restaurant_id}/manage/items/")

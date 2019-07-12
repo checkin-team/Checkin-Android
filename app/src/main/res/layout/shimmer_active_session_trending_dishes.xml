@@ -25,8 +25,7 @@
 
         <TextView
            style="@style/ShimmerTextViewStyle"
-            android:layout_marginTop="@dimen/spacing_small"
-           />
+            android:layout_marginTop="@dimen/spacing_small" />
 
 
         <TextView
