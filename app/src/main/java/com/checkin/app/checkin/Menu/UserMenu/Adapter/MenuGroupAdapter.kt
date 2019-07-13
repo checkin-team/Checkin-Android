@@ -12,6 +12,7 @@ import androidx.annotation.ColorRes
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.constraintlayout.widget.ConstraintSet
 import androidx.core.widget.ImageViewCompat
+import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import androidx.transition.TransitionManager
@@ -25,13 +26,18 @@ import com.checkin.app.checkin.Menu.Model.MenuItemModel
 import com.checkin.app.checkin.Menu.UserMenu.Fragment.MenuItemsHolder
 import com.checkin.app.checkin.R
 import com.checkin.app.checkin.Utility.GlideApp
+import com.checkin.app.checkin.Utility.HeaderFooterRecyclerViewAdapter
 import com.checkin.app.checkin.Utility.Utils
+import com.checkin.app.checkin.session.model.TrendingDishModel
+import com.facebook.shimmer.ShimmerFrameLayout
 import com.google.android.material.tabs.TabLayout
 
-class MenuGroupAdapter(private var mGroupList: List<MenuGroupModel>?, private val mListener: MenuItemInteraction?, private val mGroupInteractionListener: OnGroupInteractionInterface) : RecyclerView.Adapter<MenuGroupAdapter.GroupViewHolder>() {
+class MenuGroupAdapter(private var mGroupList: List<MenuGroupModel>?, private val mListener: MenuItemInteraction?, private val mGroupInteractionListener: OnGroupInteractionInterface, private val mBestSellerListener: MenuBestSellerAdapter.SessionTrendingDishInteraction) : HeaderFooterRecyclerViewAdapter() {
+    private var mBestsellerItems: List<TrendingDishModel>? = null
     private var mPrevExpandedViewHolder: GroupViewHolder? = null
     private lateinit var mRecyclerView: RecyclerView
     private var mIsSessionActive = true
+    private var mBestsellerAdapter: MenuBestSellerAdapter? = null
 
     val isGroupExpanded: Boolean
         get() = mPrevExpandedViewHolder?.isExpanded ?: false
@@ -58,13 +64,67 @@ class MenuGroupAdapter(private var mGroupList: List<MenuGroupModel>?, private va
         mRecyclerView = recyclerView
     }
 
+    fun setData(data: List<TrendingDishModel>) {
+        this.mBestsellerItems = data
+        notifyDataSetChanged()
+    }
+
+
+    override fun useHeader(): Boolean {
+        return true
+    }
+
+    override fun useFooter(): Boolean {
+        return false
+    }
+
+    override fun onCreateHeaderViewHolder(parent: ViewGroup?, viewType: Int): RecyclerView.ViewHolder {
+        val view = LayoutInflater.from(parent?.context).inflate(R.layout.fragment_as_menu_header_bestseller, parent, false)
+        return HeaderViewHolder(view)
+    }
+
+    override fun onBindHeaderView(holder: RecyclerView.ViewHolder?, position: Int) {
+        super.onBindHeaderView(holder, position)
+        mBestsellerItems?.let { mBestsellerAdapter!!.setData(it) }
+    }
+
+    override fun onCreateBasicItemViewHolder(parent: ViewGroup?, viewType: Int): RecyclerView.ViewHolder {
+        val view = LayoutInflater.from(parent?.context).inflate(viewType, parent, false)
+        return GroupViewHolder(view)
+    }
+
+    override fun onBindBasicItemView(holder: RecyclerView.ViewHolder?, position: Int) {
+        (holder as GroupViewHolder).bindData(mGroupList!![position])
+        if (holder.isExpanded) {
+            contractView(holder)
+        }
+    }
+
+    override fun getBasicItemCount() = mGroupList?.size ?: 0
+
+    override fun getBasicItemType(position: Int) = R.layout.item_as_menu_group_collapsed
+
+    internal inner class HeaderViewHolder(view: View) : RecyclerView.ViewHolder(view) {
+        init {
+            mBestsellerAdapter = MenuBestSellerAdapter(mBestSellerListener)
+            val gridLayoutManager = GridLayoutManager(view.context, 2)
+            val recyclerView = view.findViewById<RecyclerView>(R.id.rv_menu_bestseller)
+            recyclerView.layoutManager = gridLayoutManager
+            recyclerView.adapter = mBestsellerAdapter
+//            val shimmerFrameLayout = view.findViewById<ShimmerFrameLayout>(R.id.shimmer_as_menu_bestseller)
+//            shimmerFrameLayout.stopShimmer();
+//            shimmerFrameLayout.setVisibility(View.GONE);
+        }
+    }
+
+
     override fun getItemId(position: Int): Long = position.toLong()
 
-    override fun getItemCount() = mGroupList?.size ?: 0
+//    override fun getItemCount() = mGroupList?.size ?: 0
 
-    override fun getItemViewType(position: Int) = R.layout.item_as_menu_group_collapsed
+//    override fun getItemViewType(position: Int) = R.layout.item_as_menu_group_collapsed
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): GroupViewHolder = LayoutInflater.from(parent.context).inflate(viewType, parent, false).run { GroupViewHolder(this) }
+//    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): GroupViewHolder = LayoutInflater.from(parent.context).inflate(viewType, parent, false).run { GroupViewHolder(this) }
 
     fun getGroupPosition(groupName: String): Int = mGroupList?.run {
         indexOfFirst { groupName.contentEquals(it.name) }
@@ -95,13 +155,6 @@ class MenuGroupAdapter(private var mGroupList: List<MenuGroupModel>?, private va
         if (groupViewHolder != null) {
             groupViewHolder.show()
             mPrevExpandedViewHolder = groupViewHolder
-        }
-    }
-
-    override fun onBindViewHolder(groupViewHolder: GroupViewHolder, position: Int) {
-        groupViewHolder.bindData(mGroupList!![position])
-        if (groupViewHolder.isExpanded) {
-            contractView(groupViewHolder)
         }
     }
 

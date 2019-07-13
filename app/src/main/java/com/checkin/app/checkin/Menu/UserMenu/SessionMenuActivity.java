@@ -14,6 +14,7 @@ import android.widget.TextView;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.widget.Toolbar;
+import androidx.core.view.ViewCompat;
 import androidx.lifecycle.ViewModelProviders;
 
 import com.checkin.app.checkin.Data.Resource;
@@ -21,6 +22,7 @@ import com.checkin.app.checkin.Menu.MenuItemInteraction;
 import com.checkin.app.checkin.Menu.Model.MenuItemModel;
 import com.checkin.app.checkin.Menu.ShopMenu.Fragment.MenuInfoFragment;
 import com.checkin.app.checkin.Menu.UserMenu.Adapter.MenuBestSellerAdapter;
+import com.checkin.app.checkin.Menu.UserMenu.Adapter.MenuGroupAdapter;
 import com.checkin.app.checkin.Menu.UserMenu.Fragment.ItemCustomizationFragment;
 import com.checkin.app.checkin.Menu.UserMenu.Fragment.MenuCartFragment;
 import com.checkin.app.checkin.Menu.UserMenu.Fragment.MenuFilterFragment;
@@ -77,10 +79,10 @@ public class SessionMenuActivity extends BaseActivity implements MenuItemInterac
     ImageView btnMenuFilter;
     @BindView(R.id.tv_as_menu_title)
     TextView tvMenuTitle;
-    @BindView(R.id.rv_menu_bestseller)
-    RecyclerView rvBestseller;
-    @BindView(R.id.shimmer_as_menu_bestseller)
-    ShimmerFrameLayout shimmerBestSeller;
+//    @BindView(R.id.rv_menu_bestseller)
+//    RecyclerView rvBestseller;
+//    @BindView(R.id.shimmer_as_menu_bestseller)
+//    ShimmerFrameLayout shimmerBestSeller;
 
     private MenuGroupsFragment.SESSION_STATUS mSessionStatus;
 
@@ -89,7 +91,6 @@ public class SessionMenuActivity extends BaseActivity implements MenuItemInterac
     private MenuItemSearchFragment mSearchFragment;
     private MenuFilterFragment mFilterFragment;
     private MenuViewModel mViewModel;
-    private MenuBestSellerAdapter mBestsellerAdapter;
 
     public static void startWithSession(Context context, Long restaurantPk, @Nullable Long sessionPk, @Nullable Long itemModel) {
         context.startActivity(withSession(context, restaurantPk, sessionPk, itemModel));
@@ -128,7 +129,6 @@ public class SessionMenuActivity extends BaseActivity implements MenuItemInterac
 
         init(R.id.container_as_menu_fragment, true);
         setupUiStuff();
-        setUpBestsellerFragment();
         setUpObserver();
         setupMenuFragment();
         setupSearch();
@@ -181,18 +181,6 @@ public class SessionMenuActivity extends BaseActivity implements MenuItemInterac
     private void setUpObserver() {
         mViewModel.fetchTrendingItem();
 
-        mViewModel.getRecommendedItems().observe(this, listResource -> {
-            if (listResource == null)
-                return;
-
-            if (listResource.getStatus() == Resource.Status.SUCCESS && listResource.getData() != null) {
-                mBestsellerAdapter.setData(listResource.getData());
-                shimmerBestSeller.stopShimmer();
-                shimmerBestSeller.setVisibility(View.GONE);
-            }
-        });
-
-
         mViewModel.getTotalOrderedCount().observe(this, count -> {
             if (count == null)
                 return;
@@ -224,15 +212,8 @@ public class SessionMenuActivity extends BaseActivity implements MenuItemInterac
 
     }
 
-    private void setUpBestsellerFragment() {
-        GridLayoutManager gridLayoutManager = new GridLayoutManager(getApplicationContext(),2);
-        rvBestseller.setLayoutManager(gridLayoutManager);
-        mBestsellerAdapter = new MenuBestSellerAdapter(this);
-        rvBestseller.setAdapter(mBestsellerAdapter);
-    }
-
     private void setupMenuFragment() {
-        mMenuFragment = MenuGroupsFragment.newInstance(mSessionStatus, this);
+        mMenuFragment = MenuGroupsFragment.newInstance(mSessionStatus, this, this);
         getSupportFragmentManager().beginTransaction()
                 .replace(R.id.container_as_menu, mMenuFragment)
                 .commit();

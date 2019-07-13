@@ -1,5 +1,6 @@
 package com.checkin.app.checkin.Utility
 
+import android.annotation.SuppressLint
 import android.content.Context
 import android.text.SpannableStringBuilder
 import android.text.TextPaint
@@ -11,6 +12,13 @@ import android.widget.TextView
 import androidx.core.content.ContextCompat
 import com.checkin.app.checkin.R
 import java.lang.StringBuilder
+import java.lang.Compiler.command
+import android.text.style.ForegroundColorSpan
+import android.text.Spannable
+import android.graphics.Color
+import android.text.SpannableString
+import androidx.core.graphics.toColorInt
+
 
 class ExpandableTextView @JvmOverloads constructor(context: Context, attrs: AttributeSet? = null) : TextView(context, attrs) {
     var originalText: CharSequence? = null
@@ -18,7 +26,7 @@ class ExpandableTextView @JvmOverloads constructor(context: Context, attrs: Attr
     private var fullText: CharSequence? = null
     private var trimmedText: CharSequence? = null
 
-    private var colorClickableText: Int = 0
+    public var colorClickableText: Int = 0
     private var bufferType: BufferType? = null
     private var trimmed = true
 
@@ -40,10 +48,12 @@ class ExpandableTextView @JvmOverloads constructor(context: Context, attrs: Attr
     init {
         val typedArray = context.obtainStyledAttributes(attrs, R.styleable.ExpandableTextView)
         this.trimLength = typedArray.getInt(R.styleable.ExpandableTextView_trimLength, DEFAULT_TRIM_LENGTH)
-        this.colorClickableText = typedArray.getColor(R.styleable.ExpandableTextView_colorClickableText, ContextCompat.getColor(context, R.color.accent))
+        this.colorClickableText = typedArray.getColor(R.styleable.ExpandableTextView_colorClickableText, ContextCompat.getColor(context, R.color.aqua_blue))
         this.trimMode = typedArray.getInt(R.styleable.ExpandableTextView_selectedMode, TRIM_MODE_LENGTH)
         this.trimLines = typedArray.getInt(R.styleable.ExpandableTextView_trimLines, DEFAULT_TRIM_LINES)
         typedArray.recycle()
+
+//        spannableFactory = Spannable.Factory.getInstance();
 
         setOnClickListener {
             if (mCondition()) {
@@ -64,12 +74,23 @@ class ExpandableTextView @JvmOverloads constructor(context: Context, attrs: Attr
         super.setText(displayableText, bufferType)
     }
 
+    @SuppressLint("ResourceAsColor")
     override fun setText(text: CharSequence, type: BufferType) {
         originalText = text
         trimmedText = getTrimmedText(text)
-        fullText = StringBuilder(text).append(SHORTEN_SUFFIX).toString()
+
+        colorClickableText = R.color.aqua_blue;
+        val shortenSuffix = SpannableString(SHORTEN_SUFFIX)
+        shortenSuffix.setSpan(colorClickableText, 0, SHORTEN_SUFFIX.length, 0)
+
+        fullText = StringBuilder(text).append(shortenSuffix).toString()
+
+
         bufferType = type
+
         setText()
+
+
     }
 
     private fun getTrimmedText(text: CharSequence?): CharSequence? {
@@ -79,7 +100,12 @@ class ExpandableTextView @JvmOverloads constructor(context: Context, attrs: Attr
             TRIM_MODE_LINES -> if (lineEndIndex > ELLIPSIS.length) lineEndIndex - (ELLIPSIS.length + 1) else trimLength + 1
             else -> text.length
         }
-        return if (trimEndIndex < text.length) SpannableStringBuilder(text, 0, trimEndIndex).append(ELLIPSIS) else text
+
+        colorClickableText = R.color.aqua_blue;
+        val shortenSuffix = SpannableString(ELLIPSIS)
+        shortenSuffix.setSpan(colorClickableText, 0, ELLIPSIS.length, 0)
+
+        return if (trimEndIndex < text.length) SpannableStringBuilder(text, 0, trimEndIndex).append(shortenSuffix) else text
     }
 
     fun setTrimLength(trimLength: Int) {
@@ -135,6 +161,8 @@ class ExpandableTextView @JvmOverloads constructor(context: Context, attrs: Attr
 
         override fun updateDrawState(ds: TextPaint) {
             ds.color = colorClickableText
+//            ds.color = Color.parseColor("#343434");
+
         }
     }
 
@@ -154,3 +182,4 @@ class ExpandableTextView @JvmOverloads constructor(context: Context, attrs: Attr
         private val INVALID_END_INDEX = -1
     }
 }
+

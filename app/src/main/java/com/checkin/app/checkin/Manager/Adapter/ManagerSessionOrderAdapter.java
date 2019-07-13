@@ -92,6 +92,8 @@ public class ManagerSessionOrderAdapter extends HeaderFooterRecyclerViewAdapter 
         FooterViewHolder(View view) {
             super(view);
             view.findViewById(R.id.btn_ms_order_confirm).setOnClickListener((v) -> mListener.confirmNewOrders());
+
+
         }
     }
 

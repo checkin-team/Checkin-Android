@@ -1,6 +1,7 @@
 package com.checkin.app.checkin.Menu.UserMenu.Adapter
 
 import android.text.Editable
+import android.text.TextPaint
 import android.text.TextWatcher
 import android.view.LayoutInflater
 import android.view.View
@@ -72,7 +73,6 @@ class MenuItemAdapter(private var mItemsList: List<MenuItemModel>?, private val 
         private var defaultCs: ConstraintSet
         private var imageCs: ConstraintSet
         private var descriptionCs: ConstraintSet
-
         private var mState = DEFAULT_STATE
 
         init {

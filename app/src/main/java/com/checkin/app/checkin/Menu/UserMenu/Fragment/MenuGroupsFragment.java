@@ -7,6 +7,7 @@ import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.core.view.ViewCompat;
 import androidx.lifecycle.ViewModelProviders;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -15,6 +16,7 @@ import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 import com.checkin.app.checkin.Data.Resource;
 import com.checkin.app.checkin.Menu.MenuItemInteraction;
 import com.checkin.app.checkin.Menu.Model.MenuGroupModel;
+import com.checkin.app.checkin.Menu.UserMenu.Adapter.MenuBestSellerAdapter;
 import com.checkin.app.checkin.Menu.UserMenu.Adapter.MenuGroupAdapter;
 import com.checkin.app.checkin.Menu.UserMenu.Adapter.MenuItemAdapter;
 import com.checkin.app.checkin.Menu.UserMenu.MenuViewModel;
@@ -47,15 +49,17 @@ public class MenuGroupsFragment extends BaseFragment implements MenuGroupAdapter
     private MenuGroupAdapter mAdapter;
     @Nullable
     private MenuItemInteraction mListener;
+    private MenuBestSellerAdapter.SessionTrendingDishInteraction mBestsellerListener;
     private boolean mIsSessionActive = true;
 
     public MenuGroupsFragment() {
     }
 
-    public static MenuGroupsFragment newInstance(SESSION_STATUS sessionStatus, MenuItemInteraction listener) {
+    public static MenuGroupsFragment newInstance(SESSION_STATUS sessionStatus, MenuItemInteraction listener, MenuBestSellerAdapter.SessionTrendingDishInteraction bestsellerListener ) {
         MenuGroupsFragment fragment = new MenuGroupsFragment();
         fragment.mIsSessionActive = (sessionStatus == SESSION_STATUS.ACTIVE);
         fragment.mListener = listener;
+        fragment.mBestsellerListener = bestsellerListener;
         return fragment;
     }
 
@@ -70,6 +74,17 @@ public class MenuGroupsFragment extends BaseFragment implements MenuGroupAdapter
         initRefreshScreen(R.id.sr_session_menu);
 
         mViewModel = ViewModelProviders.of(requireActivity()).get(MenuViewModel.class);
+
+        mViewModel.getRecommendedItems().observe(this, listResource -> {
+            if (listResource == null)
+                return;
+
+            if (listResource.getStatus() == Resource.Status.SUCCESS && listResource.getData() != null) {
+                mAdapter.setData(listResource.getData());
+//                shimmerBestSeller.stopShimmer();
+//                shimmerBestSeller.setVisibility(View.GONE);
+            }
+        });
 
         mViewModel.getMenuGroups().observe(this, menuGroupResource -> {
             if (menuGroupResource == null) return;
@@ -108,7 +123,7 @@ public class MenuGroupsFragment extends BaseFragment implements MenuGroupAdapter
     private void setupGroupRecycler() {
         rvGroupsList.setLayoutManager(new LinearLayoutManager(getContext(), RecyclerView.VERTICAL, false));
 
-        mAdapter = new MenuGroupAdapter(null, mListener, this);
+        mAdapter = new MenuGroupAdapter(null, mListener, this, mBestsellerListener);
         mAdapter.setSessionActive(mIsSessionActive);
         rvGroupsList.setAdapter(mAdapter);
 
