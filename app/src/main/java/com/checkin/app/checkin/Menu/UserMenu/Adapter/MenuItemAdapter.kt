@@ -1,6 +1,7 @@
 package com.checkin.app.checkin.Menu.UserMenu.Adapter
 
 import android.text.Editable
+import android.text.Spannable
 import android.text.TextWatcher
 import android.view.LayoutInflater
 import android.view.View
@@ -13,6 +14,7 @@ import androidx.recyclerview.widget.RecyclerView
 import androidx.transition.TransitionManager
 import butterknife.BindView
 import butterknife.ButterKnife
+import com.borjabravo.readmoretextview.ReadMoreTextView
 import com.checkin.app.checkin.Menu.Model.MenuItemModel
 import com.checkin.app.checkin.R
 import com.checkin.app.checkin.Utility.ExpandableTextView

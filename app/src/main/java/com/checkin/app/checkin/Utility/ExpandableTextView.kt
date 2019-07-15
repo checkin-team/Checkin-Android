@@ -2,8 +2,8 @@ package com.checkin.app.checkin.Utility
 
 import android.annotation.SuppressLint
 import android.content.Context
-import android.text.SpannableStringBuilder
-import android.text.TextPaint
+import android.graphics.Color
+import android.text.*
 import android.text.style.ClickableSpan
 import android.util.AttributeSet
 import android.view.View
@@ -12,12 +12,9 @@ import android.widget.TextView
 import androidx.core.content.ContextCompat
 import com.checkin.app.checkin.R
 import java.lang.StringBuilder
-import java.lang.Compiler.command
+import com.checkin.app.checkin.Utility.TextLineWrapper.makeTextViewResizable
+import com.checkin.app.checkin.Utility.TextLineWrapper.MySpannable
 import android.text.style.ForegroundColorSpan
-import android.text.Spannable
-import android.graphics.Color
-import android.text.SpannableString
-import androidx.core.graphics.toColorInt
 
 
 class ExpandableTextView @JvmOverloads constructor(context: Context, attrs: AttributeSet? = null) : TextView(context, attrs) {
@@ -26,7 +23,7 @@ class ExpandableTextView @JvmOverloads constructor(context: Context, attrs: Attr
     private var fullText: CharSequence? = null
     private var trimmedText: CharSequence? = null
 
-    public var colorClickableText: Int = 0
+    private var colorClickableText: Int = 0
     private var bufferType: BufferType? = null
     private var trimmed = true
 
@@ -48,12 +45,9 @@ class ExpandableTextView @JvmOverloads constructor(context: Context, attrs: Attr
     init {
         val typedArray = context.obtainStyledAttributes(attrs, R.styleable.ExpandableTextView)
         this.trimLength = typedArray.getInt(R.styleable.ExpandableTextView_trimLength, DEFAULT_TRIM_LENGTH)
-        this.colorClickableText = typedArray.getColor(R.styleable.ExpandableTextView_colorClickableText, ContextCompat.getColor(context, R.color.aqua_blue))
         this.trimMode = typedArray.getInt(R.styleable.ExpandableTextView_selectedMode, TRIM_MODE_LENGTH)
         this.trimLines = typedArray.getInt(R.styleable.ExpandableTextView_trimLines, DEFAULT_TRIM_LINES)
         typedArray.recycle()
-
-//        spannableFactory = Spannable.Factory.getInstance();
 
         setOnClickListener {
             if (mCondition()) {
@@ -79,20 +73,15 @@ class ExpandableTextView @JvmOverloads constructor(context: Context, attrs: Attr
         originalText = text
         trimmedText = getTrimmedText(text)
 
-        colorClickableText = R.color.aqua_blue;
         val shortenSuffix = SpannableString(SHORTEN_SUFFIX)
-        shortenSuffix.setSpan(colorClickableText, 0, SHORTEN_SUFFIX.length, 0)
+        shortenSuffix.setSpan(ForegroundColorSpan(Color.GREEN), 0, SHORTEN_SUFFIX.length, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE)
 
-        fullText = StringBuilder(text).append(shortenSuffix).toString()
-
-
+        fullText = SpannableStringBuilder(text).append(shortenSuffix).toString()
         bufferType = type
-
         setText()
-
-
     }
 
+    @SuppressLint("ResourceAsColor")
     private fun getTrimmedText(text: CharSequence?): CharSequence? {
         if (text == null) return text
         val trimEndIndex = when (trimMode) {
@@ -101,9 +90,9 @@ class ExpandableTextView @JvmOverloads constructor(context: Context, attrs: Attr
             else -> text.length
         }
 
-        colorClickableText = R.color.aqua_blue;
         val shortenSuffix = SpannableString(ELLIPSIS)
-        shortenSuffix.setSpan(colorClickableText, 0, ELLIPSIS.length, 0)
+        shortenSuffix.setSpan(ForegroundColorSpan(Color.GREEN), 0, ELLIPSIS.length, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE)
+
 
         return if (trimEndIndex < text.length) SpannableStringBuilder(text, 0, trimEndIndex).append(shortenSuffix) else text
     }
@@ -159,10 +148,9 @@ class ExpandableTextView @JvmOverloads constructor(context: Context, attrs: Attr
             mListener?.onToggle(trimmed)
         }
 
+        @SuppressLint("ResourceAsColor")
         override fun updateDrawState(ds: TextPaint) {
             ds.color = colorClickableText
-//            ds.color = Color.parseColor("#343434");
-
         }
     }
 
@@ -182,4 +170,3 @@ class ExpandableTextView @JvmOverloads constructor(context: Context, attrs: Attr
         private val INVALID_END_INDEX = -1
     }
 }
-

@@ -16,7 +16,6 @@
 
     <declare-styleable name="ExpandableTextView">
         <attr name="trimLength" format="integer" />
-        <attr name="colorClickableText" format="color" />
         <attr name="selectedMode">
             <enum name="line" value="0" />
             <enum name="length" value="1" />
