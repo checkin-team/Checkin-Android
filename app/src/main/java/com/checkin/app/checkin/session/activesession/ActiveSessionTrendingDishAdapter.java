@@ -59,8 +59,10 @@ public class ActiveSessionTrendingDishAdapter extends RecyclerView.Adapter<Activ
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {
-        @BindView(R.id.im_as_trending_dish)
-        ImageView imDish;
+        @BindView(R.id.im_as_trending_dish_group_icon)
+        ImageView imDishGroupIcon;
+        @BindView(R.id.im_as_trending_dish_image)
+        ImageView imDishImage;
         @BindView(R.id.tv_as_trending_dish_name)
         TextView tvName;
         @BindView(R.id.tv_as_trending_dish_price)
@@ -78,7 +80,17 @@ public class ActiveSessionTrendingDishAdapter extends RecyclerView.Adapter<Activ
 
         void bindData(TrendingDishModel itemModel) {
             this.mItemModel = itemModel;
-            Utils.loadImageOrDefault(imDish, itemModel.getImage(),0);
+
+            if(itemModel.getImage().contains("static/menu/icons")){
+                Utils.loadImageOrDefault(imDishGroupIcon, itemModel.getImage(),0);
+                imDishGroupIcon.setVisibility(View.VISIBLE);
+                imDishImage.setVisibility(View.GONE);
+            }else {
+                Utils.loadImageOrDefault(imDishImage, itemModel.getImage(),0);
+                imDishGroupIcon.setVisibility(View.GONE);
+                imDishImage.setVisibility(View.VISIBLE);
+            }
+
             tvName.setText(itemModel.getName());
             tvPrice.setText(Utils.formatIntegralCurrencyAmount(tvPrice.getContext(), itemModel.getTypeCosts().get(0)));
         }

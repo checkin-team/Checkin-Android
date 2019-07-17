@@ -18,18 +18,26 @@
 
 
         <ImageView
-            android:id="@+id/im_as_trending_dish"
+            android:id="@+id/im_as_trending_dish_group_icon"
             style="@style/LogoImageStyle"
             android:layout_marginTop="@dimen/spacing_small"
+            android:layout_marginBottom="@dimen/spacing_small"
             android:padding="@dimen/spacing_extra_small"
-            tools:src="@drawable/ic_plus_red" />
+            tools:src="@drawable/ic_plus_red"
+            android:visibility="gone"/>
 
+        <ImageView
+            android:id="@+id/im_as_trending_dish_image"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/size_logo"
+            android:layout_margin="@dimen/spacing_small"
+            android:scaleType="fitXY"
+            tools:src="@drawable/ic_plus_red" />
 
         <TextView
             android:id="@+id/tv_as_trending_dish_name"
             android:layout_width="wrap_content"
             android:layout_height="0dp"
-            android:layout_marginTop="@dimen/spacing_small"
             android:layout_weight="1"
             android:ellipsize="end"
             android:fontFamily="@font/arial_rounded_mt_bold"
