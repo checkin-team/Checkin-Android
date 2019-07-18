@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="150dp"
+    android:layout_height="wrap_content"
+    android:layout_marginEnd="@dimen/spacing_small"
+    android:orientation="vertical">
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="150dp">
+
+        <ImageView
+            android:id="@+id/im_home_trending_rest"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:scaleType="centerCrop"
+            tools:src="@drawable/shahi_paneer" />
+
+        <TextView
+            style="@style/WhiteSmallTextStyle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/spacing_small"
+            android:background="@drawable/ic_flag_gradient"
+            android:paddingStart="@dimen/spacing_extra_small"
+            android:paddingTop="@dimen/spacing_extra_tiny"
+            android:paddingEnd="@dimen/spacing_extra_small"
+            android:paddingBottom="@dimen/spacing_extra_tiny"
+            android:textAllCaps="true"
+            android:textSize="@dimen/font_extra_small"
+            tools:text="20% off" />
+
+        <TextView
+            style="@style/WhiteSmallTextStyle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="bottom|center"
+            android:autoSizeTextType="uniform"
+            android:gravity="center"
+            android:maxLines="1"
+            android:paddingBottom="@dimen/spacing_extra_tiny"
+            tools:text="The Black Rabbit" />
+
+    </FrameLayout>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/spacing_tiny">
+
+        <TextView
+            style="@style/GreySmallTextStyle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:autoSizeTextType="uniform"
+            android:drawableStart="@drawable/ic_location_marker_red"
+            android:drawablePadding="@dimen/spacing_tiny"
+            android:layout_centerInParent="true"
+            android:layout_toStartOf="@id/tv_home_trending_rest_rating"
+            android:paddingEnd="1dp"
+            android:gravity="center"
+            android:maxLines="1"
+            tools:text="Sarjapur " />
+
+        <TextView
+            android:id="@+id/tv_home_trending_rest_rating"
+            style="@style/WhiteSmallTextStyle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:paddingStart="@dimen/spacing_tiny"
+            android:paddingEnd="@dimen/spacing_tiny"
+            android:background="@drawable/background_rectangle_green_radient"
+            tools:text="4.4" />
+
+    </RelativeLayout>
+
+    <TextView
+        style="@style/GreySmallTextStyle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_marginTop="@dimen/spacing_extra_small"
+        android:autoSizeTextType="uniform"
+        android:maxLines="1"
+        android:textColor="@color/aqua_blue"
+        tools:text="5 SEATS AVAILABLE" />
+
+</LinearLayout>

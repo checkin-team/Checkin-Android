@@ -114,7 +114,7 @@ public class HomeActivity extends BaseAccountActivity implements NavigationView.
         vpHome.setEnabled(false);
         adapter.setupWithTab(tabLayout, vpHome);
 
-        vpHome.addOnPageChangeListener(new ViewPager.SimpleOnPageChangeListener() {
+        /*vpHome.addOnPageChangeListener(new ViewPager.SimpleOnPageChangeListener() {
             @Override
             public void onPageSelected(int position) {
                 if (position == 1) {
@@ -122,7 +122,7 @@ public class HomeActivity extends BaseAccountActivity implements NavigationView.
                     vpHome.setCurrentItem(0);
                 }
             }
-        });
+        });*/
 
         initRefreshScreen(R.id.sr_home);
         getNavAccount().setNavigationItemSelectedListener(this);
@@ -306,6 +306,11 @@ public class HomeActivity extends BaseAccountActivity implements NavigationView.
         MessageUtils.unregisterLocalReceiver(this, mReceiver);
     }
 
+    @OnClick(R.id.btn_home_scanner)
+    public void onInsight() {
+        launchScanner();
+    }
+
     private class HomeFragmentAdapter extends BaseFragmentAdapterBottomNav {
 
         public HomeFragmentAdapter(FragmentManager fm) {
@@ -314,26 +319,29 @@ public class HomeActivity extends BaseAccountActivity implements NavigationView.
 
         @Override
         public int getTabDrawable(int position) {
-            if (position == 1)
-                return R.drawable.ic_qr_code_grey;
+            if (position == 0)
+                return R.drawable.ic_tab_home_grey;
             return 0;
         }
 
         @Override
         public int getCustomView(int position) {
-            if (position == 0)
+            if (position == 1)
                 return R.layout.view_tab_bottom_nav_circle;
             return super.getCustomView(position);
         }
 
-        @Override
+        /*@Override
         protected void bindTabText(TextView tvTitle, int position) {
-            tvTitle.setVisibility(View.GONE);
-        }
+            if (position == 1)
+                tvTitle.setVisibility(View.GONE);
+            else
+                tvTitle.setVisibility(View.VISIBLE);
+        }*/
 
         @Override
         protected void bindTabIcon(ImageView imIcon, int position) {
-            if (position == 0) {
+            if (position == 1) {
                 imTabUserIcon = imIcon;
                 imIcon.setImageResource(R.drawable.cover_unknown_male);
             } else super.bindTabIcon(imIcon, position);
@@ -343,9 +351,9 @@ public class HomeActivity extends BaseAccountActivity implements NavigationView.
         public Fragment getItem(int position) {
             switch (position) {
                 case 0:
-                    return UserPrivateProfileFragment.newInstance();
+                    return UserHomeFragment.newInstance();
                 case 1:
-                    return BlankFragment.newInstance();
+                    return UserPrivateProfileFragment.newInstance();
             }
             return null;
         }
@@ -355,21 +363,17 @@ public class HomeActivity extends BaseAccountActivity implements NavigationView.
             return 2;
         }
 
-        @Override
+        /*@Override
         protected void onTabClick(int position) {
             if (position == 1) launchScanner();
             else super.onTabClick(position);
-        }
+        }*/
 
         @Nullable
         @Override
         public CharSequence getPageTitle(int position) {
-            switch (position) {
-                case 0:
-                    return "User";
-                case 1:
-                    return "QR Scanner";
-            }
+            if(position == 0)
+                return "Home";
             return null;
         }
     }
