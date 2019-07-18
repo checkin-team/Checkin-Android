@@ -1,7 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical" android:layout_width="match_parent"
-    android:layout_height="wrap_content">
+    android:layout_width="match_parent"
+    android:layout_height="@dimen/height_menu_group_bestseller"
+    android:layout_marginTop="@dimen/spacing_tiny"
+    android:layout_marginBottom="@dimen/spacing_tiny"
+    android:orientation="vertical">
 
     <FrameLayout
         android:layout_width="match_parent"
@@ -40,8 +43,8 @@
             android:id="@+id/rv_menu_bestseller"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:nestedScrollingEnabled="false"
-            android:layout_marginStart="@dimen/spacing_small" />
+            android:layout_marginStart="@dimen/spacing_small"
+            android:nestedScrollingEnabled="true" />
 
     </FrameLayout>
 

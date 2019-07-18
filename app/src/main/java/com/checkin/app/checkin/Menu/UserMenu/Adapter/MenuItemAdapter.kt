@@ -1,7 +1,6 @@
 package com.checkin.app.checkin.Menu.UserMenu.Adapter
 
 import android.text.Editable
-import android.text.TextPaint
 import android.text.TextWatcher
 import android.view.LayoutInflater
 import android.view.View
@@ -18,6 +17,7 @@ import com.checkin.app.checkin.Menu.Model.MenuItemModel
 import com.checkin.app.checkin.R
 import com.checkin.app.checkin.Utility.ExpandableTextView
 import com.checkin.app.checkin.Utility.Utils
+import com.checkin.app.checkin.Utility.DebouncedOnClickListener
 
 class MenuItemAdapter(private var mItemsList: List<MenuItemModel>?, private val mListener: OnItemInteractionListener, private val mIsSessionActive: Boolean) : RecyclerView.Adapter<MenuItemAdapter.ItemViewHolder>() {
 
@@ -104,13 +104,13 @@ class MenuItemAdapter(private var mItemsList: List<MenuItemModel>?, private val 
                     mCount = count
                 }
             })
-            btnItemAdd.setOnClickListener {
+            btnItemAdd.setOnClickListener(DebouncedOnClickListener {
                 if (!mListener.onItemAdded(menuItem)) {
                     Utils.toast(itemView.context, "Not allowed!")
-                    return@setOnClickListener
+                    return@DebouncedOnClickListener
                 }
                 showQuantitySelection(1)
-            }
+            })
 
             imItem.setOnClickListener {
                 if (mState != DESCRIPTION_STATE) {
@@ -121,7 +121,7 @@ class MenuItemAdapter(private var mItemsList: List<MenuItemModel>?, private val 
             }
 
             tvQuantityDecrement.setOnClickListener { decreaseQuantity() }
-            tvQuantityIncrement.setOnClickListener { increaseQuantity() }
+            tvQuantityIncrement.setOnClickListener(DebouncedOnClickListener { increaseQuantity() })
 
             defaultCs = ConstraintSet().apply { clone(itemView as ConstraintLayout) }
             imageCs = ConstraintSet().apply { clone(itemView.context, R.layout.item_as_menu_group_item_image_expanded) }

@@ -14,15 +14,16 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProviders;
 
-import com.checkin.app.checkin.Misc.DebouncedOnClickListener;
 import com.checkin.app.checkin.R;
 import com.checkin.app.checkin.User.UserModel.GENDER;
 import com.fasterxml.jackson.databind.JsonNode;
+import com.checkin.app.checkin.Utility.DebouncedOnClickListener;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import butterknife.Unbinder;
+import kotlin.Unit;
 
 
 public class SignupUserInfoFragment extends Fragment {
@@ -80,12 +81,10 @@ public class SignupUserInfoFragment extends Fragment {
             }
         });
 
-        btnEnter.setOnClickListener(new DebouncedOnClickListener(2000) {
-            @Override
-            public void onDebouncedClick(View v) {
-                onProceedClicked(v);
-            }
-        });
+        btnEnter.setOnClickListener(new DebouncedOnClickListener(v -> {
+            onProceedClicked(v);
+            return Unit.INSTANCE;
+        }));
     }
 
     @Override

@@ -4,6 +4,7 @@ import android.animation.ValueAnimator
 import android.content.res.ColorStateList
 import android.os.Build
 import android.view.LayoutInflater
+import android.view.MotionEvent
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
@@ -32,12 +33,13 @@ import com.checkin.app.checkin.session.model.TrendingDishModel
 import com.facebook.shimmer.ShimmerFrameLayout
 import com.google.android.material.tabs.TabLayout
 
-class MenuGroupAdapter(private var mGroupList: List<MenuGroupModel>?, private val mListener: MenuItemInteraction?, private val mGroupInteractionListener: OnGroupInteractionInterface, private val mBestSellerListener: MenuBestSellerAdapter.SessionTrendingDishInteraction) : HeaderFooterRecyclerViewAdapter() {
+class MenuGroupAdapter(private var mGroupList: List<MenuGroupModel>?, private val mListener: MenuItemInteraction?, private val mGroupInteractionListener: OnGroupInteractionInterface?, private val mBestSellerListener: MenuBestSellerAdapter.SessionTrendingDishInteraction?) : HeaderFooterRecyclerViewAdapter() {
     private var mBestsellerItems: List<TrendingDishModel>? = null
     private var mPrevExpandedViewHolder: GroupViewHolder? = null
     private lateinit var mRecyclerView: RecyclerView
     private var mIsSessionActive = true
-    private var mBestsellerAdapter: MenuBestSellerAdapter? = null
+
+    private var shouldShowHeader = true
 
     val isGroupExpanded: Boolean
         get() = mPrevExpandedViewHolder?.isExpanded ?: false
@@ -50,48 +52,50 @@ class MenuGroupAdapter(private var mGroupList: List<MenuGroupModel>?, private va
         mIsSessionActive = value
     }
 
+    fun shouldShowBestSeller(shouldShowBestSeller: Boolean) {
+        shouldShowHeader = shouldShowBestSeller
+        notifyItemChanged(0)
+    }
+
     fun setGroupList(mGroupList: List<MenuGroupModel>) {
         this.mGroupList = mGroupList
         notifyDataSetChanged()
     }
 
-    fun hasData(): Boolean {
-        return mGroupList?.isEmpty() ?: false
-    }
+    fun hasData(): Boolean = mGroupList?.isEmpty() ?: false
 
     override fun onAttachedToRecyclerView(recyclerView: RecyclerView) {
         super.onAttachedToRecyclerView(recyclerView)
         mRecyclerView = recyclerView
+
+        mRecyclerView.addOnItemTouchListener(object : RecyclerView.SimpleOnItemTouchListener() {
+            override fun onInterceptTouchEvent(rv: RecyclerView, e: MotionEvent): Boolean {
+                val v = rv.findChildViewUnder(e.x, e.y) ?: return false
+                val holder = rv.findContainingViewHolder(v)
+                if (holder != null && holder is HeaderViewHolder) {
+                    rv.requestDisallowInterceptTouchEvent(true)
+                }
+                return false
+            }
+        })
     }
 
-    fun setData(data: List<TrendingDishModel>) {
+    fun setBestSellerData(data: List<TrendingDishModel>) {
         this.mBestsellerItems = data
-        notifyDataSetChanged()
+        notifyItemChanged(0)
     }
 
+    override fun useHeader(): Boolean = shouldShowHeader
 
-    override fun useHeader(): Boolean {
-        return true
-    }
+    override fun useFooter(): Boolean = false
 
-    override fun useFooter(): Boolean {
-        return false
-    }
-
-    override fun onCreateHeaderViewHolder(parent: ViewGroup?, viewType: Int): RecyclerView.ViewHolder {
-        val view = LayoutInflater.from(parent?.context).inflate(R.layout.fragment_as_menu_header_bestseller, parent, false)
-        return HeaderViewHolder(view)
-    }
+    override fun onCreateHeaderViewHolder(parent: ViewGroup?, viewType: Int): RecyclerView.ViewHolder = LayoutInflater.from(parent!!.context).inflate(R.layout.fragment_as_menu_header_bestseller, parent, false).run { HeaderViewHolder(this) }
 
     override fun onBindHeaderView(holder: RecyclerView.ViewHolder?, position: Int) {
-        super.onBindHeaderView(holder, position)
-        mBestsellerItems?.let { mBestsellerAdapter!!.setData(it) }
+        (holder as? HeaderViewHolder)?.bindData(mBestsellerItems ?: emptyList())
     }
 
-    override fun onCreateBasicItemViewHolder(parent: ViewGroup?, viewType: Int): RecyclerView.ViewHolder {
-        val view = LayoutInflater.from(parent?.context).inflate(viewType, parent, false)
-        return GroupViewHolder(view)
-    }
+    override fun onCreateBasicItemViewHolder(parent: ViewGroup?, viewType: Int): RecyclerView.ViewHolder = LayoutInflater.from(parent!!.context).inflate(viewType, parent, false).run { GroupViewHolder(this) }
 
     override fun onBindBasicItemView(holder: RecyclerView.ViewHolder?, position: Int) {
         (holder as GroupViewHolder).bindData(mGroupList!![position])
@@ -105,33 +109,39 @@ class MenuGroupAdapter(private var mGroupList: List<MenuGroupModel>?, private va
     override fun getBasicItemType(position: Int) = R.layout.item_as_menu_group_collapsed
 
     internal inner class HeaderViewHolder(view: View) : RecyclerView.ViewHolder(view) {
+        @BindView(R.id.shimmer_as_menu_bestseller)
+        internal lateinit var shimmerLayout: ShimmerFrameLayout
+        @BindView(R.id.rv_menu_bestseller)
+        internal lateinit var rvBestSeller: RecyclerView
+
+        private val mAdapter: MenuBestSellerAdapter = MenuBestSellerAdapter(mBestSellerListener)
+
         init {
-            mBestsellerAdapter = MenuBestSellerAdapter(mBestSellerListener)
-            val gridLayoutManager = GridLayoutManager(view.context, 2)
-            val recyclerView = view.findViewById<RecyclerView>(R.id.rv_menu_bestseller)
-            recyclerView.layoutManager = gridLayoutManager
-            recyclerView.adapter = mBestsellerAdapter
-//            val shimmerFrameLayout = view.findViewById<ShimmerFrameLayout>(R.id.shimmer_as_menu_bestseller)
-//            shimmerFrameLayout.stopShimmer();
-//            shimmerFrameLayout.setVisibility(View.GONE);
+            ButterKnife.bind(this, itemView)
+
+            val gridLayoutManager = GridLayoutManager(view.context, 2, RecyclerView.VERTICAL, false)
+            rvBestSeller.layoutManager = gridLayoutManager
+            rvBestSeller.adapter = mAdapter
+
+            shimmerLayout.visibility = View.VISIBLE
+            shimmerLayout.startShimmer()
+        }
+
+        fun bindData(data: List<TrendingDishModel>) {
+            mAdapter.setData(data)
+            shimmerLayout.stopShimmer()
+            shimmerLayout.visibility = View.GONE
         }
     }
 
-
     override fun getItemId(position: Int): Long = position.toLong()
-
-//    override fun getItemCount() = mGroupList?.size ?: 0
-
-//    override fun getItemViewType(position: Int) = R.layout.item_as_menu_group_collapsed
-
-//    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): GroupViewHolder = LayoutInflater.from(parent.context).inflate(viewType, parent, false).run { GroupViewHolder(this) }
 
     fun getGroupPosition(groupName: String): Int = mGroupList?.run {
         indexOfFirst { groupName.contentEquals(it.name) }
     } ?: 0
 
     fun getTopExpandedGroupPosition(): Int? = (mRecyclerView.layoutManager as LinearLayoutManager).findFirstVisibleItemPosition().let {
-        if (mPrevExpandedViewHolder?.adapterPosition == it) it else null
+        if (mPrevExpandedViewHolder?.adapterPosition == it) it + 1 else null
     }
 
     fun getGroupName(idx: Int) = mGroupList?.getOrNull(idx)?.name ?: ""
@@ -258,7 +268,7 @@ class MenuGroupAdapter(private var mGroupList: List<MenuGroupModel>?, private va
         internal fun show() {
             isExpanded = true
             applyState(STATE_EXPANDED)
-            mGroupInteractionListener.onGroupExpandCollapse(isExpanded, mMenuGroup)
+            mGroupInteractionListener?.onGroupExpandCollapse(isExpanded, mMenuGroup)
             val scrollAnim = ValueAnimator.ofInt(1, 2, 3, 4)
             scrollAnim.duration = GROUP_ANIMATION_DURATION
             scrollAnim.addUpdateListener {
@@ -270,7 +280,7 @@ class MenuGroupAdapter(private var mGroupList: List<MenuGroupModel>?, private va
         internal fun hide() {
             isExpanded = false
             applyState(STATE_COLLAPSED)
-            mGroupInteractionListener.onGroupExpandCollapse(isExpanded, mMenuGroup)
+            mGroupInteractionListener?.onGroupExpandCollapse(isExpanded, mMenuGroup)
         }
 
         private fun setupTabIcons() {

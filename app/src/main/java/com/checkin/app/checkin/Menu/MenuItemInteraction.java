@@ -1,13 +1,15 @@
 package com.checkin.app.checkin.Menu;
 
+import androidx.annotation.NonNull;
+
 import com.checkin.app.checkin.Menu.Model.MenuItemModel;
 
 public interface MenuItemInteraction {
-    boolean onMenuItemAdded(MenuItemModel item);
+    boolean onMenuItemAdded(@NonNull MenuItemModel item);
 
-    boolean onMenuItemChanged(MenuItemModel item, int count);
+    boolean onMenuItemChanged(@NonNull MenuItemModel item, int count);
 
-    void onMenuItemShowInfo(MenuItemModel item);
+    void onMenuItemShowInfo(@NonNull MenuItemModel item);
 
-    int getItemOrderedCount(MenuItemModel item);
+    int getItemOrderedCount(@NonNull MenuItemModel item);
 }

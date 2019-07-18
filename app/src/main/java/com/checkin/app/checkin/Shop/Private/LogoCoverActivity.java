@@ -2,8 +2,13 @@ package com.checkin.app.checkin.Shop.Private;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.widget.ImageView;
+
+import androidx.annotation.Nullable;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.lifecycle.ViewModelProviders;
+import androidx.recyclerview.widget.GridLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.checkin.app.checkin.Data.Resource;
 import com.checkin.app.checkin.Misc.SelectCropImageActivity;
@@ -11,13 +16,7 @@ import com.checkin.app.checkin.R;
 import com.checkin.app.checkin.Utility.Utils;
 
 import java.io.File;
-import java.util.Arrays;
 
-import androidx.annotation.Nullable;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.lifecycle.ViewModelProviders;
-import androidx.recyclerview.widget.GridLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
@@ -68,8 +67,6 @@ public class LogoCoverActivity extends AppCompatActivity implements ShopCoverAda
         String[] coverUrls = getIntent().getStringArrayExtra(KEY_SHOP_COVERS);
         String logoUrl = getIntent().getStringExtra(KEY_SHOP_LOGO);
         long shopPk = getIntent().getLongExtra(KEY_SHOP_PK, 0);
-
-        Log.e(TAG, "SHOP: " + shopPk + logoUrl + Arrays.toString(coverUrls));
 
         mViewModel.setShopPk(shopPk);
         ShopCoverAdapter adapter = new ShopCoverAdapter(coverUrls, this);

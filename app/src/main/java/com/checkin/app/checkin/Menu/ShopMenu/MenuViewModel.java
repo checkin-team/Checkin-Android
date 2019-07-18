@@ -454,33 +454,6 @@ public class MenuViewModel extends BaseViewModel {
         });
     }
 
-    public LiveData<MenuItemModel> getTreatMenuItem() {
-        if (mTrendingItemPk == null)
-            return null;
-        return Transformations.map(mMenuData, input -> {
-            if (input == null || input.getData() == null)
-                return null;
-            for (MenuGroupModel groupModel : input.getData().getGroups()) {
-                for (MenuItemModel itemModel : groupModel.getItems()) {
-                    if (itemModel.getPk() == mTrendingItemPk) {
-                        mTrendingItemPk = 0L;
-                        return itemModel;
-                    }
-                }
-            }
-            return null;
-        });
-    }
-
-
-    public void fetchTrendingItem() {
-        mTrendingData.addSource(mActiveSessionRepository.getTrendingDishes(mShopPk), mTrendingData::setValue);
-    }
-
-    public LiveData<Resource<List<TrendingDishModel>>> getMenuTrendingItems() {
-        return mTrendingData;
-    }
-
     public void filterMenuCategories(String category) {
         if(mSelectedCategory.getValue() != null && mSelectedCategory.getValue().equalsIgnoreCase(category)){
             mSelectedCategory.setValue("default");

@@ -11,8 +11,9 @@ import butterknife.ButterKnife
 import com.checkin.app.checkin.R
 import com.checkin.app.checkin.Utility.Utils
 import com.checkin.app.checkin.session.model.TrendingDishModel
+import com.checkin.app.checkin.Utility.DebouncedOnClickListener
 
-class MenuBestSellerAdapter(private val mListener: SessionTrendingDishInteraction) : RecyclerView.Adapter<MenuBestSellerAdapter.ViewHolder>() {
+class MenuBestSellerAdapter(private val mListener: SessionTrendingDishInteraction?) : RecyclerView.Adapter<MenuBestSellerAdapter.ViewHolder>() {
     private var mItems: List<TrendingDishModel>? = null
 
     fun setData(data: List<TrendingDishModel>) {
@@ -20,10 +21,7 @@ class MenuBestSellerAdapter(private val mListener: SessionTrendingDishInteractio
         notifyDataSetChanged()
     }
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
-        val view = LayoutInflater.from(parent.context).inflate(viewType, parent, false)
-        return ViewHolder(view)
-    }
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder = LayoutInflater.from(parent.context).inflate(viewType, parent, false).run { ViewHolder(this) }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) = holder.bindData(mItems!![position])
 
@@ -48,7 +46,9 @@ class MenuBestSellerAdapter(private val mListener: SessionTrendingDishInteractio
         init {
             ButterKnife.bind(this, itemView)
 
-            itemView.setOnClickListener { mListener.onDishClick(mItemModel) }
+            itemView.setOnClickListener(DebouncedOnClickListener {
+                mListener?.onDishClick(mItemModel)
+            })
         }
 
         internal fun bindData(itemModel: TrendingDishModel) {

@@ -111,6 +111,10 @@
     <dimen name="container_filter">310dp</dimen>
     <dimen name="height_menu_item_thumbnail_small">55dp</dimen>
     <dimen name="height_menu_item_thumbnail_large">130dp</dimen>
+    <dimen name="height_menu_group_bestseller">180dp</dimen>
+    <dimen name="height_menu_bestseller_item">180dp</dimen>
+    <dimen name="width_menu_bestseller_item">190dp</dimen>
+    <dimen name="height_menu_bestseller_item_thumbnail">90dp</dimen>
 
     <dimen name="spacing_menu_item">18dp</dimen>
 

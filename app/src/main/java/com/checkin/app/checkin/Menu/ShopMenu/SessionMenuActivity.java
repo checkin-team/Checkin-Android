@@ -43,6 +43,8 @@ import com.checkin.app.checkin.Utility.Utils;
 import com.google.android.material.navigation.NavigationView;
 import com.miguelcatalan.materialsearchview.MaterialSearchView;
 
+import org.jetbrains.annotations.NotNull;
+
 import java.util.ArrayList;
 import java.util.Locale;
 
@@ -397,7 +399,7 @@ public class SessionMenuActivity extends BaseActivity implements
     }
 
     @Override
-    public boolean onMenuItemAdded(MenuItemModel item) {
+    public boolean onMenuItemAdded(@NotNull MenuItemModel item) {
         if (isSessionActive()) {
             mViewModel.newOrderedItem(item);
             this.onItemInteraction(item, 1);
@@ -407,7 +409,7 @@ public class SessionMenuActivity extends BaseActivity implements
     }
 
     @Override
-    public boolean onMenuItemChanged(MenuItemModel item, int count) {
+    public boolean onMenuItemChanged(@NotNull MenuItemModel item, int count) {
         if (isSessionActive()) {
             if (mViewModel.updateOrderedItem(item, count)) {
                 this.onItemInteraction(item, count);
@@ -418,14 +420,14 @@ public class SessionMenuActivity extends BaseActivity implements
     }
 
     @Override
-    public void onMenuItemShowInfo(MenuItemModel item) {
+    public void onMenuItemShowInfo(@NotNull MenuItemModel item) {
         getSupportFragmentManager().beginTransaction()
                 .add(R.id.container_menu_fragment, MenuInfoFragment.newInstance(item), "item_info")
                 .commit();
     }
 
     @Override
-    public int getItemOrderedCount(MenuItemModel item) {
+    public int getItemOrderedCount(@NotNull MenuItemModel item) {
         return mViewModel.getOrderedCount(item);
     }
 

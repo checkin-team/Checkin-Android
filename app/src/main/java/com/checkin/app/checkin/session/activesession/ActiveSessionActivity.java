@@ -383,7 +383,7 @@ public class ActiveSessionActivity extends BaseActivity implements
             if (mViewModel.getShopPk() < 0)
                 return;
             btnSessionMenu.setEnabled(false);
-            SessionMenuActivity.startWithSession(this, mViewModel.getShopPk(), null, null);
+            SessionMenuActivity.Companion.startWithSession(this, mViewModel.getShopPk(), null, null);
         } else {
             Utils.toast(this, R.string.error_unavailable_network);
         }
@@ -501,7 +501,7 @@ public class ActiveSessionActivity extends BaseActivity implements
         if (Utils.isNetworkConnected(this)) {
             if (mViewModel.getShopPk() < 0 || mViewModel.isRequestedCheckout())
                 return;
-            SessionMenuActivity.startWithSession(this, mViewModel.getShopPk(), null, itemModel.getPk());
+            SessionMenuActivity.Companion.startWithSession(this, mViewModel.getShopPk(), null, itemModel.getPk());
         } else {
             Utils.toast(this, R.string.error_unavailable_network);
         }

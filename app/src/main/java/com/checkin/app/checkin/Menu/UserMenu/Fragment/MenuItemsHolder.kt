@@ -29,16 +29,18 @@ class MenuItemsHolder(menuItems: List<MenuItemModel>, private var mListener: Men
 
     fun getView() = mView
 
-    override fun onItemAdded(item: MenuItemModel?): Boolean = mListener?.onMenuItemAdded(item)
-            ?: false
+    override fun onItemAdded(item: MenuItemModel?): Boolean = item?.let {
+        mListener?.onMenuItemAdded(it)
+    } ?: false
 
     override fun onItemLongPress(item: MenuItemModel): Boolean = mListener?.run {
         onMenuItemShowInfo(item)
         true
     } ?: false
 
-    override fun onItemChanged(item: MenuItemModel?, count: Int): Boolean = mListener?.onMenuItemChanged(item, count)
-            ?: false
+    override fun onItemChanged(item: MenuItemModel?, count: Int): Boolean = item?.let {
+        mListener?.onMenuItemChanged(it, count)
+    } ?: false
 
     override fun orderedItemCount(item: MenuItemModel): Int = mListener?.getItemOrderedCount(item)
             ?: 0

@@ -9,7 +9,7 @@
 
     <TextView
         android:id="@+id/tv_as_menu_item_name"
-        style="@style/GreyTextStyle"
+        style="@style/GreySmallTextStyle"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="@dimen/spacing_extra_small"
@@ -55,8 +55,7 @@
         android:layout_marginEnd="@dimen/spacing_extra_small"
         android:layout_marginBottom="@dimen/spacing_small"
         android:gravity="end"
-        android:textColor="@color/brownish_grey"
-        android:textSize="@dimen/font_normal"
+        style="@style/GreySmallTextStyle"
         app:layout_constraintEnd_toStartOf="@id/container_as_menu_quantity_picker"
         app:layout_constraintStart_toEndOf="@id/tv_as_menu_item_name"
         app:layout_constraintTop_toTopOf="@id/tv_as_menu_item_name"

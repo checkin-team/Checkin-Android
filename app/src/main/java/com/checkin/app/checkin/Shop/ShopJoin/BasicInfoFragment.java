@@ -19,16 +19,17 @@ import androidx.lifecycle.ViewModelProviders;
 
 import com.checkin.app.checkin.Data.Resource;
 import com.checkin.app.checkin.Maps.MapsActivity;
-import com.checkin.app.checkin.Misc.DebouncedOnClickListener;
 import com.checkin.app.checkin.Misc.GenericDetailModel;
 import com.checkin.app.checkin.Misc.LocationModel;
 import com.checkin.app.checkin.R;
 import com.fasterxml.jackson.databind.JsonNode;
+import com.checkin.app.checkin.Utility.DebouncedOnClickListener;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnTextChanged;
 import butterknife.Unbinder;
+import kotlin.Unit;
 
 import static android.app.Activity.RESULT_OK;
 
@@ -92,13 +93,11 @@ public class BasicInfoFragment extends Fragment {
 
         ImageView imMaps = view.findViewById(R.id.im_maps);
 
-        imMaps.setOnClickListener(new DebouncedOnClickListener(2500) {
-            @Override
-            public void onDebouncedClick(View v) {
-                Intent intent = new Intent(getContext(), MapsActivity.class);
-                startActivityForResult(intent, MapsActivity.REQUEST_MAP_CODE);
-            }
-        });
+        imMaps.setOnClickListener(new DebouncedOnClickListener(v -> {
+            Intent intent = new Intent(getContext(), MapsActivity.class);
+            startActivityForResult(intent, MapsActivity.REQUEST_MAP_CODE);
+            return Unit.INSTANCE;
+        }));
     }
 
     @OnTextChanged(value = {R.id.et_name, R.id.et_gstin, R.id.et_location}, callback = OnTextChanged.Callback.AFTER_TEXT_CHANGED)

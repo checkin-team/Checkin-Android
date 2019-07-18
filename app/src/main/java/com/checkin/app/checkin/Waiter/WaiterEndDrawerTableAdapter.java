@@ -5,19 +5,21 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
-import com.checkin.app.checkin.Misc.DebouncedOnClickListener;
-import com.checkin.app.checkin.R;
-import com.checkin.app.checkin.session.model.RestaurantTableModel;
-import com.checkin.app.checkin.session.model.TableSessionModel;
-
-import java.util.List;
-
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.RecyclerView;
+
+import com.checkin.app.checkin.R;
+import com.checkin.app.checkin.session.model.RestaurantTableModel;
+import com.checkin.app.checkin.session.model.TableSessionModel;
+import com.checkin.app.checkin.Utility.DebouncedOnClickListener;
+
+import java.util.List;
+
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import kotlin.Unit;
 
 public class WaiterEndDrawerTableAdapter extends RecyclerView.Adapter<WaiterEndDrawerTableAdapter.ViewHolder> {
     private List<RestaurantTableModel> mData;
@@ -78,13 +80,11 @@ public class WaiterEndDrawerTableAdapter extends RecyclerView.Adapter<WaiterEndD
             super(v);
             ButterKnife.bind(this, v);
 
-            cvWaiterTable.setOnClickListener(new DebouncedOnClickListener(2000) {
-                @Override
-                public void onDebouncedClick(View v) {
-                    if (mListener != null && mRestaurantTable != null)
-                        mListener.onTableClick(mRestaurantTable);
-                }
-            });
+            cvWaiterTable.setOnClickListener(new DebouncedOnClickListener(it -> {
+                if (mListener != null && mRestaurantTable != null)
+                    mListener.onTableClick(mRestaurantTable);
+                return Unit.INSTANCE;
+            }));
         }
 
         public void bindData(RestaurantTableModel tableModel) {

@@ -11,7 +11,7 @@ ext.versions = [
         kotlin            : '1.3.40',
         supportLib        : '28.0.0',
 
-        lifecycle         : '2.2.0-alpha01',
+        lifecycle         : '2.2.0-alpha02',
         objectBox         : '2.3.3',
         jackson           : '2.9.8',
         dagger            : '2.15',
