@@ -133,8 +133,9 @@ class MenuCartFragment : BaseFragment(), MenuCartAdapter.MenuCartInteraction, Me
     override fun onTreatYourselfItemClick(itemModel: TrendingDishModel?) {
         itemModel?.let {
             lifecycleScope.launch {
-                val item = mViewModel.getMenuItemById(itemModel.pk)
-                mListener?.onMenuItemAdded(item)
+                mViewModel.getMenuItemById(itemModel.pk)?.let {
+                    mListener?.onMenuItemAdded(it)
+                }
             }
         }
     }

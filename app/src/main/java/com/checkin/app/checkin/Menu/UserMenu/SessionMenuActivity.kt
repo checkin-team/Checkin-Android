@@ -94,7 +94,10 @@ class SessionMenuActivity : BaseActivity(), MenuItemInteraction, ItemCustomizati
 
         val itemPk = args.getLong(KEY_SESSION_TRENDING_ITEM, 0L)
         if (itemPk > 0L) {
-            lifecycleScope.launch {
+            lifecycleScope.launchWhenStarted {
+                // Busy waiting for data to come.. Since it's on another thread no issues.
+                while (mViewModel.getOriginalMenuGroups().value?.data?.isEmpty() != false) {
+                }
                 mViewModel.getMenuItemById(itemPk)?.let {
                     onMenuItemAdded(it)
                     if (!it.isComplexItem)
