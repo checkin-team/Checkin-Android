@@ -17,6 +17,7 @@
     <color name="apple_green">#7ed321</color>
     <color name="aqua_blue">#0295aa</color>
     <color name="blue">#6485CC</color>
+    <color name="light_pink">#ff9abd</color>
 
     <!--Grey variants-->
     <color name="brownish_grey">#6d6d6d</color>
@@ -24,6 +25,7 @@
     <color name="lightest_grey">#e7e7e7</color>
     <color name="white_three">#d8d8d8</color>
     <color name="greyish_brown">#4a4a4a</color>
+    <color name="extra_light_grey">#cdcccc</color>
 
     <!--Transparency variants-->
     <color name="translucent_pinkish_grey">#5ebebebe</color>
