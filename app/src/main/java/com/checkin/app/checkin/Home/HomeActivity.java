@@ -1,5 +1,6 @@
 package com.checkin.app.checkin.Home;
 
+import android.annotation.SuppressLint;
 import android.app.AlertDialog;
 import android.content.BroadcastReceiver;
 import android.content.Context;
@@ -320,7 +321,7 @@ public class HomeActivity extends BaseAccountActivity implements NavigationView.
         @Override
         public int getTabDrawable(int position) {
             if (position == 0)
-                return R.drawable.ic_tab_home_grey;
+                return R.drawable.ic_home_orange;
             return 0;
         }
 
@@ -331,13 +332,15 @@ public class HomeActivity extends BaseAccountActivity implements NavigationView.
             return super.getCustomView(position);
         }
 
-        /*@Override
+        @Override
         protected void bindTabText(TextView tvTitle, int position) {
-            if (position == 1)
-                tvTitle.setVisibility(View.GONE);
-            else
+            if (position == 0) {
                 tvTitle.setVisibility(View.VISIBLE);
-        }*/
+                tvTitle.setText("Home");
+                tvTitle.setTextColor(getResources().getColor(R.color.orange));
+            }else
+                tvTitle.setVisibility(View.GONE);
+        }
 
         @Override
         protected void bindTabIcon(ImageView imIcon, int position) {
@@ -363,16 +366,10 @@ public class HomeActivity extends BaseAccountActivity implements NavigationView.
             return 2;
         }
 
-        /*@Override
-        protected void onTabClick(int position) {
-            if (position == 1) launchScanner();
-            else super.onTabClick(position);
-        }*/
-
         @Nullable
         @Override
         public CharSequence getPageTitle(int position) {
-            if(position == 0)
+            if (position == 0)
                 return "Home";
             return null;
         }

@@ -71,7 +71,7 @@
             android:layout_alignParentEnd="true"
             android:paddingStart="@dimen/spacing_tiny"
             android:paddingEnd="@dimen/spacing_tiny"
-            android:background="@drawable/background_rectangle_green_radient"
+            android:background="@drawable/background_rectangle_green_gradient"
             tools:text="4.4" />
 
     </RelativeLayout>

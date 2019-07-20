@@ -24,6 +24,6 @@
         android:layout_marginTop="2dp"
         android:textColor="@drawable/selector_tab_color"
         android:textSize="@dimen/font_small"
-        android:fontFamily="@font/josefinsans_regular"
+        android:fontFamily="@font/arial_rounded_mt_bold"
         tools:text="Option" />
 </LinearLayout>

@@ -4,18 +4,18 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/white"
     android:paddingStart="@dimen/spacing_small"
     android:paddingEnd="@dimen/spacing_small"
-    android:background="@color/white"
+    app:layout_constraintBottom_toBottomOf="parent"
     app:layout_constraintEnd_toEndOf="parent"
     app:layout_constraintStart_toStartOf="parent"
-    app:layout_constraintTop_toTopOf="parent"
-    app:layout_constraintBottom_toBottomOf="parent">
+    app:layout_constraintTop_toTopOf="parent">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/container_first_home"
         android:layout_width="0dp"
-        android:layout_height="0dp"
+        android:layout_height="wrap_content"
         app:layout_constraintBottom_toTopOf="@id/container_second_home"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -24,57 +24,67 @@
 
         <TextView
             android:id="@+id/tv_home_trending_title"
-            style="@style/GreySmallTextStyle"
+            style="@style/PinkishGreySmallTextStyle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Trending Now"
-            android:textColor="@color/greyish_brown"
+            android:paddingBottom="@dimen/spacing_tiny"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
 
         <LinearLayout
-            android:layout_width="150dp"
+            android:layout_width="@dimen/width_trending_rest"
             android:layout_height="wrap_content"
             android:layout_marginEnd="@dimen/spacing_small"
             android:orientation="vertical"
-            android:layout_marginTop="@dimen/spacing_tiny"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/tv_home_trending_title">
 
-            <FrameLayout
+            <androidx.cardview.widget.CardView
                 android:layout_width="match_parent"
-                android:layout_height="140dp">
+                android:layout_height="@dimen/height_trending_rest"
+                app:cardCornerRadius="@dimen/card_corner_radius"
+                app:cardElevation="0dp">
+
 
                 <ImageView
                     android:id="@+id/im_home_trending_rest"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
+                    android:padding="1dp"
                     android:scaleType="centerCrop"
-                    android:src="@drawable/shahi_paneer"
-                    android:background="@drawable/rounded_rectangle_blackish"/>
+                    android:src="@drawable/shahi_paneer" />
+
 
                 <TextView
                     style="@style/WhiteSmallTextStyle"
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                    android:layout_height="@dimen/size_extra_small_icon"
                     android:layout_marginTop="@dimen/spacing_small"
                     android:background="@drawable/ic_flag_gradient"
-                    android:paddingStart="@dimen/spacing_extra_small"
-                    android:paddingTop="@dimen/spacing_extra_tiny"
-                    android:paddingEnd="@dimen/spacing_extra_small"
-                    android:paddingBottom="@dimen/spacing_extra_tiny"
-                    android:textAllCaps="true"
-                    android:textSize="@dimen/font_extra_small"
                     android:fontFamily="@font/josefinsans_regular"
-                    android:text="20% off" />
+                    android:gravity="center"
+                    android:paddingStart="@dimen/spacing_extra_small"
+                    android:paddingEnd="@dimen/spacing_extra_small"
+                    android:text="20% off"
+                    android:textAllCaps="true"
+                    android:textSize="@dimen/font_extra_small" />
+
+                <ImageView
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/size_tiny_button"
+                    android:layout_gravity="bottom|center"
+                    android:scaleType="fitXY"
+                    android:src="@drawable/bottom_inner_shadow_gradient" />
 
                 <TextView
-                    style="@style/WhiteJosefinSansRegularSmallText"
+                    style="@style/WhiteSmallTextStyle"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_gravity="bottom|center"
                     android:autoSizeTextType="uniform"
+                    android:fontFamily="@font/josefinsans_regular"
                     android:gravity="center"
                     android:maxLines="1"
                     android:paddingBottom="@dimen/spacing_extra_tiny"
@@ -84,26 +94,38 @@
                     android:shadowRadius="5"
                     android:text="The Black Rabbit" />
 
-            </FrameLayout>
+
+            </androidx.cardview.widget.CardView>
 
             <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/spacing_tiny">
 
-                <TextView
-                    style="@style/GreySmallTextStyle"
+                <LinearLayout
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:autoSizeTextType="uniform"
-                    android:drawableStart="@drawable/ic_location_marker_red"
-                    android:drawablePadding="@dimen/spacing_tiny"
-                    android:layout_centerInParent="true"
-                    android:layout_toStartOf="@id/tv_home_trending_rest_rating"
-                    android:paddingEnd="1dp"
-                    android:gravity="center"
-                    android:maxLines="1"
-                    android:text="Sarjapur " />
+                    android:layout_centerInParent="true">
+
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="@dimen/size_tiny_icon"
+                        android:layout_gravity="center"
+                        android:src="@drawable/ic_location_marker_red" />
+
+                    <TextView
+                        style="@style/GreySmallTextStyle"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_toStartOf="@id/tv_home_trending_rest_rating"
+                        android:autoSizeTextType="uniform"
+                        android:gravity="center"
+                        android:maxLines="1"
+                        android:paddingStart="1dp"
+                        android:paddingEnd="1dp"
+                        android:text="Sarjapur " />
+
+                </LinearLayout>
 
                 <TextView
                     android:id="@+id/tv_home_trending_rest_rating"
@@ -111,23 +133,26 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_alignParentEnd="true"
+                    android:background="@drawable/background_rectangle_green_gradient"
                     android:paddingStart="@dimen/spacing_tiny"
                     android:paddingEnd="@dimen/spacing_tiny"
-                    android:background="@drawable/background_rectangle_green_radient"
                     android:text="4.4" />
 
             </RelativeLayout>
 
             <TextView
-                style="@style/GreySmallTextStyle"
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:layout_marginTop="@dimen/spacing_tiny"
                 android:autoSizeTextType="uniform"
+                android:fontFamily="@font/arial_rounded_mt_bold"
+                android:gravity="center"
                 android:maxLines="1"
+                android:text="5 SEATS AVAILABLE"
+                android:textAllCaps="true"
                 android:textColor="@color/aqua_blue"
-                android:text="5 SEATS AVAILABLE" />
+                android:textSize="@dimen/font_small" />
 
         </LinearLayout>
 
@@ -135,8 +160,8 @@
             android:id="@+id/rv_user_private_recent_shops"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:visibility="gone"
             android:layout_marginTop="@dimen/spacing_tiny"
+            android:visibility="gone"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/tv_home_trending_title" />
@@ -147,17 +172,18 @@
         android:id="@+id/container_second_home"
         android:layout_width="0dp"
         android:layout_height="0dp"
+        android:layout_marginTop="@dimen/spacing_small"
+        android:layout_marginBottom="@dimen/spacing_small"
+        android:background="@drawable/background_lightest_grey_stroke"
         app:layout_constraintBottom_toTopOf="@id/container_third_home"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/container_first_home"
-        app:layout_constraintVertical_weight="0.6">
+        app:layout_constraintVertical_weight="0.4">
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:background="@drawable/background_lightest_grey_stroke"
-            android:layout_marginBottom="@dimen/spacing_tiny"
             android:elevation="@dimen/spacing_elevation_fix_extreme_tiny"
             android:weightSum="3"
             app:layout_constraintBottom_toBottomOf="parent"
@@ -174,22 +200,22 @@
 
                 <LinearLayout
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content">
+                    android:layout_height="@dimen/button_height_medium">
 
                     <ImageView
                         android:layout_width="@dimen/button_height_normal"
-                        android:layout_height="@dimen/button_height_medium"
+                        android:layout_height="match_parent"
                         android:src="@drawable/ic_saved_hand" />
 
                     <TextView
                         style="@style/GreyHeadingStyle"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:textColor="@color/aqua_blue"
+                        android:layout_gravity="center"
                         android:autoSizeTextType="uniform"
                         android:maxLines="1"
-                        android:layout_gravity="center"
-                        android:text="4,000" />
+                        android:text="4,000"
+                        android:textColor="@color/aqua_blue" />
 
                 </LinearLayout>
 
@@ -220,27 +246,27 @@
 
                 <LinearLayout
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:gravity="center">
+                    android:layout_height="@dimen/button_height_medium">
 
                     <ImageView
                         android:layout_width="@dimen/button_height_medium"
                         android:layout_height="@dimen/button_height_normal"
-
+                        android:layout_gravity="center"
                         android:src="@drawable/ic_brownie_cash" />
 
                     <TextView
                         style="@style/GreyHeadingStyle"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
+                        android:layout_gravity="center"
                         android:layout_weight="1"
-                        android:textColor="@color/aqua_blue"
+                        android:autoSizeTextType="uniform"
+                        android:gravity="center"
+                        android:maxLines="1"
                         android:paddingStart="@dimen/spacing_tiny"
                         android:paddingEnd="@dimen/spacing_tiny"
-                        android:autoSizeTextType="uniform"
-                        android:maxLines="1"
-                        android:layout_gravity="center"
-                        android:text="$ 400" />
+                        android:text="$ 400"
+                        android:textColor="@color/aqua_blue" />
 
                 </LinearLayout>
 
@@ -249,7 +275,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
-                    android:layout_marginTop="@dimen/spacing_medium"
+                    android:layout_marginTop="@dimen/spacing_small"
                     android:text="Brownie Cash" />
 
 
@@ -271,7 +297,7 @@
 
                 <LinearLayout
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content">
+                    android:layout_height="@dimen/button_height_medium">
 
                     <ImageView
                         android:layout_width="@dimen/button_height_medium"
@@ -282,11 +308,11 @@
                         style="@style/GreyHeadingStyle"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:textColor="@color/aqua_blue"
+                        android:layout_gravity="center"
                         android:autoSizeTextType="uniform"
                         android:maxLines="1"
-                        android:layout_gravity="center"
-                        android:text="40" />
+                        android:text="40"
+                        android:textColor="@color/aqua_blue" />
 
                 </LinearLayout>
 
@@ -308,15 +334,17 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/container_third_home"
         android:layout_width="0dp"
-        android:layout_height="150dp"
+        android:layout_height="0dp"
         app:layout_constraintBottom_toTopOf="@id/container_fourth_home"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/container_second_home">
+        app:layout_constraintTop_toBottomOf="@+id/container_second_home"
+        app:layout_constraintVertical_weight="0.4">
 
         <ImageView
             android:layout_width="match_parent"
             android:layout_height="match_parent"
+            android:scaleType="fitXY"
             android:src="@drawable/settle_payment_banner"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
@@ -328,16 +356,17 @@
         android:id="@+id/container_fourth_home"
         android:layout_width="0dp"
         android:layout_height="0dp"
+        android:layout_marginTop="@dimen/spacing_tiny"
+        android:layout_marginBottom="@dimen/spacing_extra_tiny"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/container_third_home"
-        app:layout_constraintVertical_weight="0.5">
+        app:layout_constraintVertical_weight="0.4">
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_marginTop="@dimen/spacing_tiny"
+            android:layout_height="wrap_content"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -351,6 +380,7 @@
                 <ImageView
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
+                    android:layout_gravity="top"
                     android:src="@drawable/ic_friends" />
 
             </LinearLayout>
@@ -364,17 +394,17 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:fontFamily="@font/josefinsans_bold"
                     android:text="Building a\nCommunity"
                     android:textColor="@color/light_pink"
-                    android:fontFamily="@font/josefinsans_bold"
-                    android:textSize="@dimen/font_extra_large" />
+                    android:textSize="@dimen/font_large" />
 
                 <TextView
                     style="@style/GreySmallTextStyle"
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
-                    android:layout_marginTop="@dimen/spacing_extra_small"
                     android:layout_marginStart="@dimen/spacing_small"
+                    android:layout_marginTop="@dimen/spacing_extra_small"
                     android:drawableEnd="@drawable/ic_join_community"
                     android:text="Join us!\nSet up\nyour profile" />
 

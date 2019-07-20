@@ -7,7 +7,6 @@
         <item name="colorAccent">@color/colorAccent</item>
         <item name="actionBarStyle">@style/AppTheme.AppBarOverlay</item>
         <item name="android:fontFamily">@font/arial_rounded_mt_bold</item>
-        <item name="fontFamily">@font/arial_rounded_mt_bold</item>
     </style>
 
     <style name="MyCheckBox" parent="Theme.AppCompat.Light">

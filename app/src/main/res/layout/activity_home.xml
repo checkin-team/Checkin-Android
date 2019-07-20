@@ -78,6 +78,7 @@
                             android:layout_height="wrap_content"
                             android:layout_gravity="center_vertical"
                             android:textColor="@color/aqua_blue"
+                            android:fontFamily="@font/josefinsans_regular"
                             android:text="Bengaluru" />
 
                     </LinearLayout>
@@ -200,20 +201,19 @@
                     android:orientation="vertical">
 
                     <ImageView
-                        android:layout_width="@dimen/size_small_button"
-                        android:layout_height="@dimen/size_small_button"
-                        android:layout_gravity="center"
-                        android:layout_marginStart="@dimen/spacing_extra_tiny"
-                        android:layout_marginEnd="@dimen/spacing_extra_tiny"
+                        android:layout_width="@dimen/size_qr_scanner"
+                        android:layout_height="@dimen/size_qr_scanner"
+                        android:layout_marginBottom="@dimen/spacing_elevation_fix_extreme_tiny"
                         android:src="@drawable/ic_qr_code_scanner_white" />
 
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_gravity="center"
                         android:gravity="center"
+                        android:layout_gravity="center"
                         android:text="CHECKIN"
                         android:textColor="@color/white"
+                        android:fontFamily="@font/josefinsans_semibold"
                         android:textSize="@dimen/font_extra_tiny" />
 
                 </LinearLayout>
