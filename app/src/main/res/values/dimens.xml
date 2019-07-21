@@ -204,5 +204,7 @@
     <dimen name="width_trending_rest">120dp</dimen>
     <dimen name="height_trending_rest">110dp</dimen>
     <dimen name="size_qr_scanner">20dp</dimen>
+    <dimen name="height_home_bottom_tab">47dp</dimen>
+    <dimen name="spacing_home_bottom">62dp</dimen>
 
 </resources>

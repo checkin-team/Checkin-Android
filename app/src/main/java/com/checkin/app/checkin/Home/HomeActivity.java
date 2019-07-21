@@ -205,14 +205,14 @@ public class HomeActivity extends BaseAccountActivity implements NavigationView.
     }
 
     private void sessionActiveStatus() {
-        vSessionStatus.setVisibility(View.VISIBLE);
+        vSessionStatus.setVisibility(View.GONE);
         vSessionActiveStatus.setVisibility(View.VISIBLE);
         vSessionWaitingStatus.setVisibility(View.GONE);
         vSessionStatus.setEnabled(true);
     }
 
     private void sessionWaitingStatus() {
-        vSessionStatus.setVisibility(View.VISIBLE);
+        vSessionStatus.setVisibility(View.GONE);
         vSessionActiveStatus.setVisibility(View.GONE);
         vSessionWaitingStatus.setVisibility(View.VISIBLE);
         vSessionStatus.setEnabled(false);
@@ -335,7 +335,7 @@ public class HomeActivity extends BaseAccountActivity implements NavigationView.
         @Override
         protected void bindTabText(TextView tvTitle, int position) {
             if (position == 0) {
-                tvTitle.setVisibility(View.VISIBLE);
+                tvTitle.setVisibility(View.GONE);
                 tvTitle.setText("Home");
                 tvTitle.setTextColor(getResources().getColor(R.color.orange));
             }else

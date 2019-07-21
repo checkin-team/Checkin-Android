@@ -27,8 +27,8 @@
             style="@style/PinkishGreySmallTextStyle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Trending Now"
             android:paddingBottom="@dimen/spacing_tiny"
+            android:text="Trending Now"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
@@ -73,7 +73,7 @@
 
                 <ImageView
                     android:layout_width="match_parent"
-                    android:layout_height="@dimen/size_tiny_button"
+                    android:layout_height="wrap_content"
                     android:layout_gravity="bottom|center"
                     android:scaleType="fitXY"
                     android:src="@drawable/bottom_inner_shadow_gradient" />
@@ -123,7 +123,7 @@
                         android:maxLines="1"
                         android:paddingStart="1dp"
                         android:paddingEnd="1dp"
-                        android:text="Sarjapur " />
+                        android:text="Sarjapur" />
 
                 </LinearLayout>
 
@@ -141,18 +141,18 @@
             </RelativeLayout>
 
             <TextView
-                android:layout_width="match_parent"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:layout_marginTop="@dimen/spacing_tiny"
                 android:autoSizeTextType="uniform"
+                android:maxLines="1"
                 android:fontFamily="@font/arial_rounded_mt_bold"
                 android:gravity="center"
-                android:maxLines="1"
                 android:text="5 SEATS AVAILABLE"
                 android:textAllCaps="true"
                 android:textColor="@color/aqua_blue"
-                android:textSize="@dimen/font_small" />
+                android:textSize="@dimen/font_extra_small" />
 
         </LinearLayout>
 
@@ -251,7 +251,8 @@
                     <ImageView
                         android:layout_width="@dimen/button_height_medium"
                         android:layout_height="@dimen/button_height_normal"
-                        android:layout_gravity="center"
+                        android:layout_gravity="center|bottom"
+                        android:scaleType="fitXY"
                         android:src="@drawable/ic_brownie_cash" />
 
                     <TextView
@@ -331,43 +332,62 @@
         </LinearLayout>
     </androidx.constraintlayout.widget.ConstraintLayout>
 
-    <androidx.constraintlayout.widget.ConstraintLayout
+    <androidx.cardview.widget.CardView
         android:id="@+id/container_third_home"
         android:layout_width="0dp"
         android:layout_height="0dp"
+        app:cardCornerRadius="@dimen/card_corner_radius_small"
+        app:cardElevation="@dimen/spacing_elevation_fix_extreme_tiny"
         app:layout_constraintBottom_toTopOf="@id/container_fourth_home"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/container_second_home"
         app:layout_constraintVertical_weight="0.4">
 
-        <ImageView
+
+        <androidx.viewpager.widget.ViewPager
+            android:id="@+id/vp_shop_insight_revenue"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:scaleType="fitXY"
-            android:src="@drawable/settle_payment_banner"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
-    </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <com.rd.PageIndicatorView
+            android:id="@+id/indicator_shop_insight_revenue"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="bottom|center"
+            android:layout_marginBottom="@dimen/spacing_small"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:piv_animationType="scale"
+            app:piv_dynamicCount="true"
+            app:piv_interactiveAnimation="true"
+            app:piv_radius="@dimen/spacing_extra_tiny"
+            app:piv_selectedColor="@color/brownish_grey"
+            app:piv_unselectedColor="@color/white" />
+
+    </androidx.cardview.widget.CardView>
+
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/container_fourth_home"
         android:layout_width="0dp"
         android:layout_height="0dp"
-        android:layout_marginTop="@dimen/spacing_tiny"
+        android:layout_marginTop="@dimen/spacing_extra_small"
         android:layout_marginBottom="@dimen/spacing_extra_tiny"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/container_third_home"
-        app:layout_constraintVertical_weight="0.4">
+        app:layout_constraintVertical_weight="0.38">
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            app:layout_constraintBottom_toBottomOf="parent"
+            android:layout_height="match_parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent">
@@ -385,30 +405,41 @@
 
             </LinearLayout>
 
-            <LinearLayout
+            <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="0dp"
-                android:layout_height="wrap_content"
+                android:layout_height="match_parent"
                 android:layout_weight="0.5"
                 android:orientation="vertical">
 
                 <TextView
-                    android:layout_width="wrap_content"
+                    android:id="@+id/tv_home_community"
+                    android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:fontFamily="@font/josefinsans_bold"
-                    android:text="Building a\nCommunity"
+                    android:text="Building a \nCommunity"
+                    android:autoSizeTextType="uniform"
                     android:textColor="@color/light_pink"
-                    android:textSize="@dimen/font_large" />
+                    android:textSize="@dimen/font_extra_large"
+                    app:layout_constraintBottom_toTopOf="@+id/tv_home_join_us"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
 
                 <TextView
+                    android:id="@+id/tv_home_join_us"
                     style="@style/GreySmallTextStyle"
                     android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
-                    android:layout_marginStart="@dimen/spacing_small"
-                    android:layout_marginTop="@dimen/spacing_extra_small"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/spacing_tiny"
+                    android:layout_marginTop="@dimen/spacing_tiny"
                     android:drawableEnd="@drawable/ic_join_community"
-                    android:text="Join us!\nSet up\nyour profile" />
+                    android:autoSizeTextType="uniform"
+                    android:text="Join us!\nSet up\nyour profile"
+                    app:layout_constraintEnd_toEndOf="@id/tv_home_community"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/tv_home_community" />
 
-            </LinearLayout>
+            </androidx.constraintlayout.widget.ConstraintLayout>
 
 
         </LinearLayout>

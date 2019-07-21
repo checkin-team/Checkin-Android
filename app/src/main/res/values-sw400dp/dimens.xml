@@ -191,5 +191,6 @@
     <dimen name="width_trending_rest">150dp</dimen>
     <dimen name="height_trending_rest">140dp</dimen>
     <dimen name="size_qr_scanner">20dp</dimen>
+    <dimen name="height_home_bottom_tab">55dp</dimen>
 
 </resources>
