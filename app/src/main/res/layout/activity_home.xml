@@ -13,7 +13,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content">
 
-        <FrameLayout
+        <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:fitsSystemWindows="true">
@@ -33,66 +33,63 @@
                     android:paddingStart="@dimen/spacing_extra_small"
                     android:paddingEnd="@dimen/spacing_extra_small">
 
-                    <ImageView
-                        android:id="@+id/iv_home_navigation"
-                        android:layout_width="@dimen/size_small_icon"
-                        android:layout_height="@dimen/size_small_icon"
-                        android:layout_gravity="center|start"
-                        android:src="@drawable/ic_navigation_white"
-                        android:tint="@color/brownish_grey" />
-
-                    <LinearLayout
+                    <androidx.constraintlayout.widget.ConstraintLayout
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center|start"
                         android:layout_marginStart="@dimen/spacing_huge"
                         android:orientation="vertical">
 
-                        <LinearLayout
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content">
 
                             <ImageView
-                                android:layout_width="@dimen/size_medium_icon"
-                                android:layout_height="38dp"
+                                android:id="@+id/im_checkin_logo"
+                                android:layout_width="@dimen/width_checkin_logo_icon"
+                                android:layout_height="@dimen/height_checkin_logo_icon"
                                 android:layout_gravity="center"
                                 android:scaleType="fitXY"
-                                android:src="@drawable/check_in_logo_no_background" />
-
-                            <LinearLayout
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:layout_marginStart="@dimen/spacing_extra_small"
-                                android:orientation="vertical">
+                                android:src="@drawable/check_in_logo_no_background"
+                                app:layout_constraintStart_toStartOf="parent"
+                                app:layout_constraintTop_toTopOf="parent"
+                                app:layout_constraintBottom_toBottomOf="parent"/>
 
                                 <TextView
+                                    android:id="@+id/tv_home_location_title"
                                     style="@style/GreySmallTextStyle"
                                     android:layout_width="wrap_content"
-                                    android:layout_height="wrap_content"
-                                    android:layout_gravity="center_vertical"
-                                    android:text="Location" />
+                                    android:layout_height="0dp"
+                                    android:text="Location"
+                                    android:autoSizeTextType="uniform"
+                                    android:layout_marginStart="@dimen/spacing_extra_small"
+                                    app:layout_constraintStart_toEndOf="@id/im_checkin_logo"
+                                    app:layout_constraintBottom_toTopOf="@+id/tv_action_bar_home_location"
+                                    app:layout_constraintTop_toTopOf="@+id/im_checkin_logo"/>
 
                                 <TextView
                                     android:id="@+id/tv_action_bar_home_location"
-                                    style="@style/GreyHeadingStyle"
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
-                                    android:layout_gravity="center_vertical"
                                     android:fontFamily="@font/josefinsans_regular"
                                     android:text="Bengaluru"
-                                    android:textColor="@color/aqua_blue" />
-
-                            </LinearLayout>
-
-                        </LinearLayout>
+                                    android:gravity="top"
+                                    android:layout_marginStart="@dimen/spacing_extra_small"
+                                    android:textColor="@color/aqua_blue"
+                                    android:textSize="@dimen/font_normal"
+                                    app:layout_constraintStart_toEndOf="@id/im_checkin_logo"
+                                    app:layout_constraintTop_toBottomOf="@+id/tv_home_location_title"
+                                    app:layout_constraintBottom_toBottomOf="@+id/im_checkin_logo" />
 
                         <View
-                            android:layout_width="match_parent"
+                            android:layout_width="0dp"
                             android:layout_height="0.5dp"
                             android:layout_marginStart="@dimen/spacing_extra_tiny"
-                            android:background="@color/lightest_grey" />
+                            android:layout_marginTop="@dimen/spacing_tiny"
+                            android:background="@color/lightest_grey"
+                            app:layout_constraintTop_toBottomOf="@+id/im_checkin_logo"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            app:layout_constraintEnd_toEndOf="@id/tv_action_bar_home_location"/>
 
-                    </LinearLayout>
+                    </androidx.constraintlayout.widget.ConstraintLayout>
 
                     <ImageView
                         android:id="@+id/im_search_home"
@@ -109,10 +106,10 @@
                 android:id="@+id/vp_home"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:layout_marginTop="?attr/actionBarSize"
-                android:layout_marginBottom="@dimen/spacing_home_bottom" />
+                android:layout_below="@+id/toolbar_home"
+                android:layout_above="@+id/container_bottom_bar" />
 
-            <FrameLayout
+            <!--<FrameLayout
                 android:id="@+id/container_home_session_status"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -168,27 +165,54 @@
 
                 </LinearLayout>
 
-            </FrameLayout>
+            </FrameLayout>-->
+
+            <ImageView
+                android:id="@+id/container_home_session_active_status"
+                style="@style/LogoImageStyle"
+                android:layout_gravity="bottom|end"
+                android:layout_marginEnd="@dimen/spacing_tiny"
+                android:background="@drawable/ic_floating_oval"
+                android:padding="16dp"
+                android:src="@drawable/ic_location_marker_red"
+                android:visibility="gone"
+                android:layout_above="@+id/container_bottom_bar"
+                android:layout_alignParentEnd="true"/>
+
+            <ImageView
+                android:id="@+id/container_home_session_waiting_status"
+                style="@style/LogoImageStyle"
+                android:layout_gravity="bottom|end"
+                android:layout_marginEnd="@dimen/spacing_tiny"
+                android:background="@drawable/ic_floating_oval"
+                android:padding="16dp"
+                android:src="@drawable/ic_dining_qr_busy"
+                android:layout_above="@+id/container_bottom_bar"
+                android:layout_alignParentEnd="true" />
+
+            <FrameLayout
+                android:id="@+id/container_bottom_bar"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_alignParentBottom="true">
 
             <com.google.android.material.tabs.TabLayout
                 android:id="@+id/tabs_home"
                 android:layout_width="match_parent"
-                android:layout_height="@dimen/height_home_bottom_tab"
+                android:layout_height="@dimen/height_bottom_tab"
                 android:layout_gravity="bottom"
                 android:background="@drawable/background_tab_bottom_shadowed"
-                android:paddingTop="@dimen/spacing_elevation_fix_extreme_tiny"
-                android:paddingBottom="@dimen/spacing_elevation_fix_extreme_tiny"
                 app:tabGravity="fill"
                 app:tabIndicatorColor="@android:color/transparent"
                 app:tabIndicatorHeight="0dp"
                 app:tabMode="fixed" />
 
+
             <LinearLayout
                 android:id="@+id/btn_home_scanner"
                 android:layout_width="@dimen/business_icon"
                 android:layout_height="@dimen/business_icon"
-                android:layout_gravity="bottom|center"
-                android:layout_marginTop="@dimen/spacing_extra_tiny"
+                android:layout_gravity="center|bottom"
                 android:layout_marginBottom="@dimen/spacing_extra_small"
                 android:background="@drawable/shape_oval_aqua_blue_gradient"
                 android:elevation="@dimen/spacing_elevation_fix_extreme_tiny"
@@ -213,7 +237,21 @@
 
             </LinearLayout>
 
-        </FrameLayout>
+            </FrameLayout>
+
+            <ImageView
+                android:id="@+id/iv_home_navigation"
+                android:layout_width="@dimen/size_small_icon"
+                android:layout_height="@dimen/size_small_icon"
+                android:layout_marginStart="@dimen/spacing_small"
+                android:layout_marginTop="@dimen/spacing_small"
+                android:contentDescription="@null"
+                android:src="@drawable/ic_navigation_white"
+                android:elevation="@dimen/spacing_elevation_fix_extreme_tiny"
+                android:tint="@color/brownish_grey"/>
+
+
+        </RelativeLayout>
 
     </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
 

@@ -2,8 +2,10 @@ package com.checkin.app.checkin.User.Private;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.Gravity;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -17,6 +19,7 @@ import com.checkin.app.checkin.Misc.BaseFragment;
 import com.checkin.app.checkin.Misc.SelectCropImageActivity;
 import com.checkin.app.checkin.R;
 import com.checkin.app.checkin.User.UserModel;
+import com.checkin.app.checkin.Utility.BackgroundShadow;
 import com.checkin.app.checkin.Utility.Utils;
 import com.facebook.shimmer.ShimmerFrameLayout;
 
@@ -41,6 +44,8 @@ public class UserPrivateProfileFragment extends BaseFragment {
     ImageView imCover;
     @BindView(R.id.rv_user_private_recent_shops)
     RecyclerView rvRecentShops;
+    @BindView(R.id.container_checkedin_count)
+    LinearLayout containerCheckedinCount;
 
     private UserViewModel mViewModel;
     @Nullable
@@ -61,6 +66,8 @@ public class UserPrivateProfileFragment extends BaseFragment {
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        containerCheckedinCount.setBackground(BackgroundShadow.generateViewShadow(containerCheckedinCount, R.color.white,
+                R.dimen.card_corner_radius, R.color.translucent_aqua_blue, R.dimen.spacing_elevation_fix_extreme_tiny, Gravity.BOTTOM));
         mViewModel = ViewModelProviders.of(requireActivity()).get(UserViewModel.class);
         setupObservers();
         rvRecentShops.setLayoutManager(new LinearLayoutManager(getActivity(), LinearLayoutManager.HORIZONTAL, false));

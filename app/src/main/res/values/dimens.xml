@@ -76,7 +76,7 @@
 
     <dimen name="height_spinner_item">50dp</dimen>
 
-    <dimen name="height_bottom_tab">47dp</dimen>
+    <dimen name="height_bottom_tab">50dp</dimen>
 
     <!-- Cover dimensions -->
     <dimen name="height_shadow_top_cover">80dp</dimen>
@@ -138,6 +138,7 @@
     <dimen name="card_corner_radius_small">5dp</dimen>
     <dimen name="card_corner_radius" format="float">10.5dp</dimen>
     <dimen name="card_corner_radius_large">12dp</dimen>
+    <dimen name="spacing_zero">0dp</dimen>
 
     <dimen name="size_card_square">100dp</dimen>
     <dimen name="height_input_normal">40dp</dimen>
@@ -205,10 +206,16 @@
     <dimen name="height_text_view">15dp</dimen>
 
     <!--Home -->
+    <dimen name="width_checkin_logo_icon">26dp</dimen>
+    <dimen name="height_checkin_logo_icon">34dp</dimen>
     <dimen name="width_trending_rest">120dp</dimen>
     <dimen name="height_trending_rest">110dp</dimen>
     <dimen name="size_qr_scanner">20dp</dimen>
-    <dimen name="height_home_bottom_tab">47dp</dimen>
-    <dimen name="spacing_home_bottom">62dp</dimen>
+    <dimen name="height_home_bottom_tab">45dp</dimen>
+    <dimen name="spacing_home_bottom">66dp</dimen>
+
+    <!--Bottom Bar -->
+    <dimen name="buttom_bar_small_width">22dp</dimen>
+    <dimen name="buttom_bar_small_icon">26dp</dimen>
 
 </resources>

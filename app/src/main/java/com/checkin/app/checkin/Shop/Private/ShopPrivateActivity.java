@@ -160,7 +160,7 @@ public class ShopPrivateActivity extends BaseAccountActivity {
             switch (position) {
                 case 0:
                     return R.drawable.ic_tab_home_toggle;
-                case 1:
+                case 2:
                     return R.drawable.ic_tab_menu_toggle;
                 default:
                     return 0;
@@ -174,6 +174,8 @@ public class ShopPrivateActivity extends BaseAccountActivity {
                     return ShopPrivateProfileFragment.newInstance();
                 case 1:
                     return BlankFragment.newInstance();
+                case 2:
+                    return BlankFragment.newInstance();
             }
             return null;
         }
@@ -184,7 +186,7 @@ public class ShopPrivateActivity extends BaseAccountActivity {
             switch (position) {
                 case 0:
                     return "Shop";
-                case 1:
+                case 2:
                     return "Inventory";
             }
             return null;
@@ -192,12 +194,12 @@ public class ShopPrivateActivity extends BaseAccountActivity {
 
         @Override
         public int getCount() {
-            return 2;
+            return 3;
         }
 
         @Override
         protected void onTabClick(int position) {
-            if (position == 1)
+            if (position == 2)
                 launchMenu();
             else
                 super.onTabClick(position);

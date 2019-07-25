@@ -10,6 +10,7 @@
         style="@style/LogoImageStyle"
         android:layout_gravity="center"
         android:layout_margin="@dimen/spacing_small"
+        android:elevation="@dimen/spacing_elevation_fix_extreme_tiny"
         tools:src="@drawable/dummy_alex" />
 
     <TextView

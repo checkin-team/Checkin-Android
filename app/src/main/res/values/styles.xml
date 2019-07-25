@@ -241,6 +241,16 @@
         <item name="android:height">10dp</item>
     </style>
 
+    <style name="AquaBlueTextStyle" parent="TextAppearance.AppCompat">
+        <item name="android:textColor">@color/aqua_blue</item>
+        <item name="android:fontFamily">@font/arial_rounded_mt_bold</item>
+        <item name="android:textSize">@dimen/font_normal</item>
+    </style>
+
+    <style name="AquaBlueSmallTextStyle" parent="AquaBlueTextStyle">
+        <item name="android:textSize">@dimen/font_small</item>
+    </style>
+
     <!--<style name="WhiteCardStyle" parent="CardView">
         <item name="android:background">@drawable/background_white_rounded_card_shadow</item>
         <item name="android:padding">@dimen/spacing_normal</item>

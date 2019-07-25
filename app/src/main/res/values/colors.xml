@@ -34,6 +34,7 @@
     <color name="translucent_black">#aa000000</color>
     <color name="translucent_half_black">#80000000</color>
     <color name="translucent_brownish_grey">#806d6d6d</color>
+    <color name="translucent_aqua_blue">#800295aa</color>
 
     <color name="shimmer_background">#dddddd</color>
     <color name="white_alpha">#CCFFFFFF</color>

@@ -83,6 +83,8 @@
         <activity
             android:name=".Menu.UserMenu.SessionMenuActivity"
             android:windowSoftInputMode="adjustPan"/>
+        <activity android:name=".Home.UserBrownieCashActivity"/>
+
         <activity android:name=".Cook.CookSessionActivity" />
         <activity android:name=".Cook.CookWorkActivity" />
 
