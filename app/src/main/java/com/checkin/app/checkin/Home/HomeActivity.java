@@ -6,6 +6,7 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.Gravity;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
@@ -15,6 +16,7 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.ActionBarDrawerToggle;
+import androidx.appcompat.widget.Toolbar;
 import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.fragment.app.Fragment;
@@ -38,6 +40,7 @@ import com.checkin.app.checkin.Shop.ShopJoin.BusinessFeaturesActivity;
 import com.checkin.app.checkin.User.Private.UserPrivateProfileFragment;
 import com.checkin.app.checkin.User.Private.UserViewModel;
 import com.checkin.app.checkin.User.UserModel;
+import com.checkin.app.checkin.Utility.BackgroundShadow;
 import com.checkin.app.checkin.Utility.DynamicSwipableViewPager;
 import com.checkin.app.checkin.Utility.OnBoardingUtils;
 import com.checkin.app.checkin.Utility.OnBoardingUtils.OnBoardingModel;
@@ -58,6 +61,8 @@ public class HomeActivity extends BaseAccountActivity implements NavigationView.
     public static final String SP_QR_SCANNER = "qrscanner";
     private static final int REQUEST_QR_SCANNER = 212;
 
+    @BindView(R.id.toolbar_home)
+    Toolbar toolbarHome;
     @BindView(R.id.drawer_home)
     DrawerLayout drawerLayout;
     @BindView(R.id.iv_home_navigation)
@@ -66,16 +71,16 @@ public class HomeActivity extends BaseAccountActivity implements NavigationView.
     TabLayout tabLayout;
     @BindView(R.id.vp_home)
     DynamicSwipableViewPager vpHome;
-    @BindView(R.id.container_home_session_status)
-    ViewGroup vSessionStatus;
+//    @BindView(R.id.container_home_session_status)
+//    ViewGroup vSessionStatus;
     @BindView(R.id.container_home_session_active_status)
-    ViewGroup vSessionActiveStatus;
+    ImageView vSessionActiveStatus;
     @BindView(R.id.container_home_session_waiting_status)
-    ViewGroup vSessionWaitingStatus;
-    @BindView(R.id.tv_home_session_active_status)
-    TextView tvSessionStatus;
-    @BindView(R.id.tv_home_session_wait_qr_busy)
-    TextView tvSessionWaitQRBusy;
+    ImageView vSessionWaitingStatus;
+//    @BindView(R.id.tv_home_session_active_status)
+//    TextView tvSessionStatus;
+//    @BindView(R.id.tv_home_session_wait_qr_busy)
+//    TextView tvSessionWaitQRBusy;
     ImageView imTabUserIcon;
 
     private HomeViewModel mViewModel;
@@ -115,15 +120,18 @@ public class HomeActivity extends BaseAccountActivity implements NavigationView.
         vpHome.setEnabled(false);
         adapter.setupWithTab(tabLayout, vpHome);
 
-        /*vpHome.addOnPageChangeListener(new ViewPager.SimpleOnPageChangeListener() {
+        vpHome.addOnPageChangeListener(new ViewPager.SimpleOnPageChangeListener() {
             @Override
             public void onPageSelected(int position) {
-                if (position == 1) {
-                    launchScanner();
-                    vpHome.setCurrentItem(0);
+                if (position == 2) {
+                    toolbarHome.setVisibility(View.GONE);
+                    imNavigation.setColorFilter(0);
+                }else{
+                    toolbarHome.setVisibility(View.VISIBLE);
+                    imNavigation.setColorFilter(R.color.brownish_grey);
                 }
             }
-        });*/
+        });
 
         initRefreshScreen(R.id.sr_home);
         getNavAccount().setNavigationItemSelectedListener(this);
@@ -173,7 +181,7 @@ public class HomeActivity extends BaseAccountActivity implements NavigationView.
 
             if (resource.getStatus() == Resource.Status.SUCCESS && resource.getData() != null) {
                 sessionActiveStatus();
-                tvSessionStatus.setText(resource.getData().getLiveStatus());
+//                tvSessionStatus.setText(resource.getData().getLiveStatus());
 
                 Intent serviceIntent = new Intent(this, ActiveSessionNotificationService.class);
                 serviceIntent.setAction(Constants.SERVICE_ACTION_FOREGROUND_START);
@@ -185,7 +193,7 @@ public class HomeActivity extends BaseAccountActivity implements NavigationView.
                 ActiveSessionNotificationService.clearNotification(getApplicationContext());
             } else if (resource.getProblem() != null && resource.getProblem().getErrorCode() == ProblemModel.ERROR_CODE.SESSION_USER_PENDING_MEMBER) {
                 sessionWaitingStatus();
-                tvSessionWaitQRBusy.setText(resource.getProblem().getDetail());
+//                tvSessionWaitQRBusy.setText(resource.getProblem().getDetail());
             }
         });
 
@@ -201,21 +209,23 @@ public class HomeActivity extends BaseAccountActivity implements NavigationView.
     }
 
     private void sessionInactive() {
-        vSessionStatus.setVisibility(View.GONE);
+//        vSessionStatus.setVisibility(View.GONE);
+        vSessionActiveStatus.setVisibility(View.GONE);
+        vSessionWaitingStatus.setVisibility(View.GONE);
     }
 
     private void sessionActiveStatus() {
-        vSessionStatus.setVisibility(View.GONE);
+//        vSessionStatus.setVisibility(View.GONE);
         vSessionActiveStatus.setVisibility(View.VISIBLE);
         vSessionWaitingStatus.setVisibility(View.GONE);
-        vSessionStatus.setEnabled(true);
+//        vSessionStatus.setEnabled(true);
     }
 
     private void sessionWaitingStatus() {
-        vSessionStatus.setVisibility(View.GONE);
+//        vSessionStatus.setVisibility(View.GONE);
         vSessionActiveStatus.setVisibility(View.GONE);
         vSessionWaitingStatus.setVisibility(View.VISIBLE);
-        vSessionStatus.setEnabled(false);
+//        vSessionStatus.setEnabled(false);
     }
 
     private void explainQr() {
@@ -231,19 +241,19 @@ public class HomeActivity extends BaseAccountActivity implements NavigationView.
         drawerLayout.openDrawer(GravityCompat.START);
     }
 
-    @OnClick(R.id.container_home_session_status)
+    @OnClick(R.id.container_home_session_active_status)
     public void onSessionStatusClick() {
-        vSessionStatus.setEnabled(false);
+//        vSessionStatus.setEnabled(false);
         startActivity(new Intent(this, ActiveSessionActivity.class));
     }
 
-    @OnClick(R.id.im_home_session_wait_cancel)
+    /*@OnClick(R.id.im_home_session_wait_cancel)
     public void onCancelClicked() {
         AlertDialog.Builder builder = new AlertDialog.Builder(this).setTitle("Are you sure you want to cancel the request?")
                 .setPositiveButton("Ok", (dialog, which) -> mViewModel.cancelUserWaitingDineIn())
                 .setNegativeButton("Cancel", (dialog, which) -> dialog.dismiss());
         builder.show();
-    }
+    }*/
 
     @Override
     protected int getDrawerRootId() {
@@ -293,7 +303,7 @@ public class HomeActivity extends BaseAccountActivity implements NavigationView.
     protected void onResume() {
         super.onResume();
         mViewModel.updateResults();
-        vSessionStatus.setEnabled(true);
+//        vSessionStatus.setEnabled(true);
         MessageModel.MESSAGE_TYPE[] types = new MessageModel.MESSAGE_TYPE[]{
                 MessageModel.MESSAGE_TYPE.USER_SESSION_ADDED_BY_OWNER, MessageModel.MESSAGE_TYPE.SHOP_MEMBER_ADDED
         };
@@ -322,29 +332,21 @@ public class HomeActivity extends BaseAccountActivity implements NavigationView.
         public int getTabDrawable(int position) {
             if (position == 0)
                 return R.drawable.ic_home_orange;
+            if (position == 1)
+                return 0;
             return 0;
         }
 
         @Override
         public int getCustomView(int position) {
-            if (position == 1)
+            if (position == 2)
                 return R.layout.view_tab_bottom_nav_circle;
             return super.getCustomView(position);
         }
 
         @Override
-        protected void bindTabText(TextView tvTitle, int position) {
-            if (position == 0) {
-                tvTitle.setVisibility(View.GONE);
-                tvTitle.setText("Home");
-                tvTitle.setTextColor(getResources().getColor(R.color.orange));
-            }else
-                tvTitle.setVisibility(View.GONE);
-        }
-
-        @Override
         protected void bindTabIcon(ImageView imIcon, int position) {
-            if (position == 1) {
+            if (position == 2) {
                 imTabUserIcon = imIcon;
                 imIcon.setImageResource(R.drawable.cover_unknown_male);
             } else super.bindTabIcon(imIcon, position);
@@ -356,6 +358,8 @@ public class HomeActivity extends BaseAccountActivity implements NavigationView.
                 case 0:
                     return UserHomeFragment.newInstance();
                 case 1:
+                    return BlankFragment.newInstance();
+                case 2:
                     return UserPrivateProfileFragment.newInstance();
             }
             return null;
@@ -363,14 +367,12 @@ public class HomeActivity extends BaseAccountActivity implements NavigationView.
 
         @Override
         public int getCount() {
-            return 2;
+            return 3;
         }
 
         @Nullable
         @Override
         public CharSequence getPageTitle(int position) {
-            if (position == 0)
-                return "Home";
             return null;
         }
     }

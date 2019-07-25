@@ -3,5 +3,5 @@
     <gradient android:startColor="@color/translucent_black"
         android:centerColor="@color/translucent_half_black"
         android:angle="90" />
-    <size android:height="@dimen/width_small_icon" />
+    <size android:height="@dimen/size_extra_small_icon" />
 </shape>

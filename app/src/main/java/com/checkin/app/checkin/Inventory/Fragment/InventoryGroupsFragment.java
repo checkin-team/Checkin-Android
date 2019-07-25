@@ -8,10 +8,13 @@ import com.checkin.app.checkin.Data.Resource;
 import com.checkin.app.checkin.Inventory.Adapter.InventoryGroupAdapter;
 import com.checkin.app.checkin.Inventory.Adapter.InventoryItemAdapter;
 import com.checkin.app.checkin.Inventory.InventoryViewModel;
+import com.checkin.app.checkin.Inventory.Model.InventoryGroupModel;
 import com.checkin.app.checkin.Inventory.Model.InventoryItemModel;
+import com.checkin.app.checkin.Menu.Model.MenuGroupModel;
 import com.checkin.app.checkin.Misc.BaseFragment;
 import com.checkin.app.checkin.R;
 import com.checkin.app.checkin.Utility.Utils;
+import com.facebook.shimmer.ShimmerFrameLayout;
 
 import java.util.List;
 
@@ -27,6 +30,8 @@ public class InventoryGroupsFragment extends BaseFragment implements InventoryGr
     RecyclerView rvGroupsList;
     @BindView(R.id.tv_menu_current_category)
     TextView tvCurrentCategory;
+    @BindView(R.id.shimmer_menu_group)
+    ShimmerFrameLayout shimmerMenu;
 
     private InventoryViewModel mViewModel;
     private InventoryGroupAdapter mAdapter;
@@ -59,12 +64,12 @@ public class InventoryGroupsFragment extends BaseFragment implements InventoryGr
             if (menuGroupResource == null)
                 return;
             if (menuGroupResource.getStatus() == Resource.Status.SUCCESS) {
-                mAdapter.setGroupList(menuGroupResource.getData());
+                setupData(menuGroupResource.getData());
                 stopRefreshing();
             } else if (menuGroupResource.getStatus() == Resource.Status.LOADING) {
                 startRefreshing();
                 if (menuGroupResource.getData() != null)
-                    mAdapter.setGroupList(menuGroupResource.getData());
+                    setupData(menuGroupResource.getData());
             } else {
                 stopRefreshing();
                 Utils.toast(requireContext(), menuGroupResource.getMessage());
@@ -81,6 +86,15 @@ public class InventoryGroupsFragment extends BaseFragment implements InventoryGr
             }
         });
     }
+
+    private void setupData(List<InventoryGroupModel> data) {
+        mAdapter.setGroupList(data);
+        if (shimmerMenu.getVisibility() == View.VISIBLE) {
+            shimmerMenu.stopShimmer();
+            shimmerMenu.setVisibility(View.GONE);
+        }
+    }
+
 
     private void setupGroupRecycler() {
         rvGroupsList.setLayoutManager(new LinearLayoutManager(getContext(), RecyclerView.VERTICAL, false));
