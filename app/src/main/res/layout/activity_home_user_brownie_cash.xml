@@ -11,6 +11,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:fitsSystemWindows="true"
+        android:elevation="@dimen/spacing_elevation_fix_extreme_tiny"
         android:theme="@style/appbar_main">
 
         <androidx.appcompat.widget.Toolbar
@@ -57,7 +58,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/spacing_normal"
-        android:layout_marginBottom="@dimen/spacing_small">
+        android:layout_marginBottom="@dimen/spacing_normal">
 
         <TextView
             android:layout_width="wrap_content"
@@ -75,7 +76,7 @@
             android:textSize="@dimen/font_large"
             android:gravity="center"
             android:layout_marginEnd="@dimen/spacing_extra_small"
-            tools:text="234"/>
+            android:text="234"/>
 
         <View
             android:layout_width="@dimen/height_horizontal_line"
@@ -95,7 +96,7 @@
                 android:layout_height="wrap_content"
                 style="@style/GreyTextStyle"
                 android:fontFamily="@font/josefinsans_regular"
-                tools:text="Big Brewsky, Kormangla"/>
+                android:text="Big Brewsky, Kormangla"/>
 
             <LinearLayout
                 android:layout_width="wrap_content"
@@ -107,7 +108,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     style="@style/RedHeadingStyle"
-                    tools:text="5"/>
+                    android:text="5"/>
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -115,7 +116,7 @@
                     style="@style/GreySmallTextStyle"
                     android:fontFamily="@font/josefinsans_regular"
                     android:paddingStart="@dimen/spacing_tiny"
-                    tools:text="Days Remaining"/>
+                    android:text="Days Remaining"/>
 
             </LinearLayout>
 
@@ -146,7 +147,7 @@
             android:textSize="@dimen/font_large"
             android:gravity="center"
             android:layout_marginEnd="@dimen/spacing_extra_small"
-            tools:text="234"/>
+            android:text="234"/>
 
         <View
             android:layout_width="@dimen/height_horizontal_line"
@@ -166,7 +167,7 @@
                 android:layout_height="wrap_content"
                 style="@style/GreyTextStyle"
                 android:fontFamily="@font/josefinsans_regular"
-                tools:text="Big Brewsky, Kormangla"/>
+                android:text="Big Brewsky, Kormangla"/>
 
             <LinearLayout
                 android:layout_width="wrap_content"
@@ -178,7 +179,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     style="@style/RedHeadingStyle"
-                    tools:text="5"/>
+                    android:text="5"/>
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -186,7 +187,7 @@
                     style="@style/GreySmallTextStyle"
                     android:fontFamily="@font/josefinsans_regular"
                     android:paddingStart="@dimen/spacing_tiny"
-                    tools:text="Days Remaining"/>
+                    android:text="Days Remaining"/>
 
             </LinearLayout>
 

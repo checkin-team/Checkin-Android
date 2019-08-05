@@ -6,11 +6,11 @@ import android.animation.ValueAnimator;
 import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
-import android.view.GestureDetector;
 import android.view.Gravity;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.AnimationUtils;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -28,10 +28,12 @@ import com.checkin.app.checkin.Misc.BaseFragment;
 import com.checkin.app.checkin.Misc.SelectCropImageActivity;
 import com.checkin.app.checkin.R;
 import com.checkin.app.checkin.User.UserModel;
+import com.checkin.app.checkin.Utility.AnimUtils;
 import com.checkin.app.checkin.Utility.BackgroundShadow;
 import com.checkin.app.checkin.Utility.SwipeTouchListener;
 import com.checkin.app.checkin.Utility.Utils;
 import com.facebook.shimmer.ShimmerFrameLayout;
+import com.miguelcatalan.materialsearchview.utils.AnimationUtil;
 
 import java.io.File;
 import java.util.Objects;
@@ -59,8 +61,6 @@ public class UserPrivateProfileFragment extends BaseFragment {
     LinearLayout containerCheckedinCount;
     @BindView(R.id.container_user_info)
     FrameLayout containerUserDetails;
-    @BindView(R.id.container_user_info_extended)
-    ViewGroup container_user_info_extended;
     @BindView(R.id.container_user_private_top)
     FrameLayout containerUserPrivateTop;
 
@@ -71,7 +71,6 @@ public class UserPrivateProfileFragment extends BaseFragment {
     private int oldHeight;
     private int newHeight = 0;
     protected boolean isExpanded = false;
-    private GestureDetector mDetector;
 
     public UserPrivateProfileFragment() {
     }
@@ -99,31 +98,13 @@ public class UserPrivateProfileFragment extends BaseFragment {
         mViewModel.fetchUserData();
         mViewModel.fetchUserRecentCheckinsData();
 
-        /*containerUserDetails.setOnTouchListener(new View.OnTouchListener() {
+        containerUserPrivateTop.setOnTouchListener(new View.OnTouchListener() {
             @Override
             public boolean onTouch(View v, MotionEvent event) {
-                if (event.getAction() == MotionEvent.ACTION_DOWN) {
-                    ((HomeActivity) Objects.requireNonNull(getActivity())).enableDisableSwipeRefresh(false);
-//                    toggleView();
-                    return true;
-                } else
-                    return false;
+                ((HomeActivity) Objects.requireNonNull(getActivity())).enableDisableSwipeRefresh(true);
+                return true;
             }
-        });*/
-        /*containerUserDetails.addOnLayoutChangeListener(new View.OnLayoutChangeListener() {
-            @Override
-            public void onLayoutChange(View v, int left, int top, int right, int bottom, int oldLeft, int oldTop, int oldRight, int oldBottom) {
-                ((HomeActivity) Objects.requireNonNull(getActivity())).enableDisableSwipeRefresh(false);
-                if (containerUserDetails.isMoving()) {
-                    v.setTop(v.getHeight()+800);
-                    v.setBottom(oldBottom);
-                    v.setLeft(oldLeft);
-                    v.setRight(oldRight);
-                }else {
-
-                }
-            }
-        });*/
+        });
 
 
 
@@ -132,20 +113,15 @@ public class UserPrivateProfileFragment extends BaseFragment {
             public void onSwipeTop() {
                 super.onSwipeTop();
                 ((HomeActivity) Objects.requireNonNull(getActivity())).enableDisableSwipeRefresh(false);
-                toggleView(false);
+                toggleView();
             }
 
             @Override
             public void onSwipeBottom() {
                 super.onSwipeBottom();
-                toggleView(true);
+                toggleView();
             }
 
-            /*@Override
-            public void onActionDown() {
-                super.onActionDown();
-                toggleView(false);
-            }*/
         });
 
         containerUserPrivateTop.setOnTouchListener(new View.OnTouchListener() {
@@ -251,12 +227,12 @@ public class UserPrivateProfileFragment extends BaseFragment {
                 view.setLayoutParams(params);
             }
         });
-        animator.setDuration(300);
+        animator.setDuration(200);
         return animator;
     }
 
-    private void toggleView(boolean isExpanded) {
-        if (isExpanded) {
+    private void toggleView() {
+        if (containerUserDetails.getHeight() == newHeight) {
             Animator toggleAnimation = getToggleAnimation(containerUserDetails, containerUserDetails.getHeight(), oldHeight);
 //            Animator showView = AnimUtils.showView(containerCheckedinCount);
             AnimatorSet animatorSet = new AnimatorSet();

@@ -554,6 +554,7 @@
                 android:background="@color/extra_light_grey" />
 
             <LinearLayout
+                android:id="@+id/container_home_claim_rewards"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="0.9"
