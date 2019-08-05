@@ -611,7 +611,7 @@
 
 
         <androidx.viewpager.widget.ViewPager
-            android:id="@+id/vp_shop_insight_revenue"
+            android:id="@+id/vp_home_banner"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             app:layout_constraintBottom_toBottomOf="parent"
@@ -620,7 +620,7 @@
             app:layout_constraintTop_toTopOf="parent" />
 
         <com.rd.PageIndicatorView
-            android:id="@+id/indicator_shop_insight_revenue"
+            android:id="@+id/indicator_home_banner"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="bottom|center"
