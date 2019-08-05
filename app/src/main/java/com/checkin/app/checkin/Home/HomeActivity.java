@@ -1,18 +1,12 @@
 package com.checkin.app.checkin.Home;
 
-import android.annotation.SuppressLint;
-import android.app.AlertDialog;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
-import android.view.Gravity;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.ImageView;
-import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -42,7 +36,6 @@ import com.checkin.app.checkin.Shop.ShopJoin.BusinessFeaturesActivity;
 import com.checkin.app.checkin.User.Private.UserPrivateProfileFragment;
 import com.checkin.app.checkin.User.Private.UserViewModel;
 import com.checkin.app.checkin.User.UserModel;
-import com.checkin.app.checkin.Utility.BackgroundShadow;
 import com.checkin.app.checkin.Utility.DynamicSwipableViewPager;
 import com.checkin.app.checkin.Utility.OnBoardingUtils;
 import com.checkin.app.checkin.Utility.OnBoardingUtils.OnBoardingModel;
@@ -225,12 +218,17 @@ public class HomeActivity extends BaseAccountActivity implements NavigationView.
 //        vSessionStatus.setVisibility(View.GONE);
         vSessionActiveStatus.setVisibility(View.GONE);
         vSessionWaitingStatus.setVisibility(View.GONE);
+        imTabUserIcon.setBackground(null);
+        imTabUserIcon.setPadding(0,0,0,0);
+
     }
 
     private void sessionActiveStatus() {
 //        vSessionStatus.setVisibility(View.GONE);
         vSessionActiveStatus.setVisibility(View.VISIBLE);
         vSessionWaitingStatus.setVisibility(View.GONE);
+        imTabUserIcon.setBackground(getResources().getDrawable(R.drawable.shape_oval_orange_gradient));
+        imTabUserIcon.setPadding(6,6,6,6);
 //        vSessionStatus.setEnabled(true);
     }
 
@@ -247,6 +245,11 @@ public class HomeActivity extends BaseAccountActivity implements NavigationView.
             View qrView = tab.getCustomView();
             OnBoardingUtils.conditionalOnBoarding(this, SP_QR_SCANNER, true, new OnBoardingModel("Scan Checkin QR!", qrView, false));
         }
+    }
+
+    @OnClick(R.id.container_home_user_location)
+    public void onLocationClick(){
+        startActivity(new Intent(this, CurrentLocationActivity.class ));
     }
 
     @OnClick(R.id.iv_home_navigation)

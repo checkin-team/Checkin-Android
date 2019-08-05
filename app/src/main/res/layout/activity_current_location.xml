@@ -18,6 +18,7 @@
             android:layout_height="wrap_content"
             android:layout_gravity="top"
             android:background="@color/white"
+            app:contentInsetStart="0dp"
             app:popupTheme="@style/PopupOverlay">
 
             <LinearLayout
@@ -26,9 +27,10 @@
 
                 <ImageView
                     android:id="@+id/im_session_view_invoice_back"
-                    android:layout_width="@dimen/width_small_icon"
-                    android:layout_height="@dimen/size_extra_small_button"
+                    android:layout_width="@dimen/size_normal_icon"
+                    android:layout_height="@dimen/size_normal_icon"
                     android:layout_gravity="center_vertical"
+                    android:padding="@dimen/spacing_extra_small"
                     android:src="@drawable/ic_back_grey" />
 
                 <TextView

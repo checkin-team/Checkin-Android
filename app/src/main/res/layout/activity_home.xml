@@ -34,6 +34,7 @@
                     android:paddingEnd="@dimen/spacing_extra_small">
 
                     <androidx.constraintlayout.widget.ConstraintLayout
+                        android:id="@+id/container_home_user_location"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center|start"
