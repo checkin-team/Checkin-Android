@@ -200,4 +200,8 @@
     <dimen name="buttom_bar_small_width">26dp</dimen>
     <dimen name="buttom_bar_small_icon">30dp</dimen>
 
+    <!--Location-->
+    <dimen name="width_current_location">160dp</dimen>
+    <dimen name="height_current_location">150dp</dimen>
+
 </resources>

@@ -87,6 +87,8 @@
         <activity android:name=".Home.UserClaimRewardsActivity" />
 
 
+        <activity android:name=".Home.CurrentLocationActivity"/>
+
         <service
             android:name=".Auth.AuthenticatorService"
             android:enabled="true"
