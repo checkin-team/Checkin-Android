@@ -214,8 +214,12 @@
     <dimen name="height_home_bottom_tab">45dp</dimen>
     <dimen name="spacing_home_bottom">66dp</dimen>
 
+    <dimen name="height_brownie_top_card">150dp</dimen>
+
     <!--Bottom Bar -->
     <dimen name="buttom_bar_small_width">22dp</dimen>
     <dimen name="buttom_bar_small_icon">26dp</dimen>
+
+    <dimen name="new_bottom_user_height">800dp</dimen>
 
 </resources>

@@ -1,6 +1,7 @@
 package com.checkin.app.checkin.Utility;
 
 import android.content.Context;
+import android.view.GestureDetector;
 import android.view.GestureDetector.SimpleOnGestureListener;
 import android.view.MotionEvent;
 import android.view.View;
@@ -8,74 +9,71 @@ import android.view.View;
 import androidx.core.view.GestureDetectorCompat;
 
 public class SwipeTouchListener implements View.OnTouchListener {
-    private final Context mContext;
-    private final GestureDetectorCompat mGestureDetector;
+    private final GestureDetector gestureDetector;
 
-    public SwipeTouchListener(Context context) {
-        mContext = context;
-        mGestureDetector = new GestureDetectorCompat(mContext, new GestureListener());
+    public SwipeTouchListener (Context ctx){
+        gestureDetector = new GestureDetector(ctx, new GestureListener());
     }
 
     @Override
     public boolean onTouch(View v, MotionEvent event) {
-        return mGestureDetector.onTouchEvent(event);
+        return gestureDetector.onTouchEvent(event);
     }
 
-    public boolean onSwipeRight() {
-        return false;
-    }
+    private final class GestureListener extends SimpleOnGestureListener {
 
-    public boolean onSwipeLeft() {
-        return false;
-    }
-
-    public boolean onSwipeTop() {
-        return false;
-    }
-
-    public boolean onSwipeBottom() {
-        return false;
-    }
-
-    private class GestureListener extends SimpleOnGestureListener {
         private static final int SWIPE_THRESHOLD = 100;
         private static final int SWIPE_VELOCITY_THRESHOLD = 100;
 
         @Override
         public boolean onDown(MotionEvent e) {
-            return super.onDown(e);
+            onActionDown();
+            return true;
         }
 
         @Override
-        public boolean onFling(MotionEvent e1, MotionEvent e2, float velocityX,
-                               float velocityY) {
+        public boolean onFling(MotionEvent e1, MotionEvent e2, float velocityX, float velocityY) {
             boolean result = false;
             try {
                 float diffY = e2.getY() - e1.getY();
                 float diffX = e2.getX() - e1.getX();
                 if (Math.abs(diffX) > Math.abs(diffY)) {
-                    if (Math.abs(diffX) > SWIPE_THRESHOLD
-                            && Math.abs(velocityX) > SWIPE_VELOCITY_THRESHOLD) {
+                    if (Math.abs(diffX) > SWIPE_THRESHOLD && Math.abs(velocityX) > SWIPE_VELOCITY_THRESHOLD) {
                         if (diffX > 0) {
-                            result = onSwipeRight();
+                            onSwipeRight();
                         } else {
-                            result = onSwipeLeft();
+                            onSwipeLeft();
                         }
+                        result = true;
                     }
-                } else {
-                    if (Math.abs(diffY) > SWIPE_THRESHOLD
-                            && Math.abs(velocityY) > SWIPE_VELOCITY_THRESHOLD) {
-                        if (diffY > 0) {
-                            result = onSwipeBottom();
-                        } else {
-                            result = onSwipeTop();
-                        }
+                }
+                else if (Math.abs(diffY) > SWIPE_THRESHOLD && Math.abs(velocityY) > SWIPE_VELOCITY_THRESHOLD) {
+                    if (diffY > 0) {
+                        onSwipeBottom();
+                    } else {
+                        onSwipeTop();
                     }
+                    result = true;
                 }
             } catch (Exception exception) {
                 exception.printStackTrace();
             }
             return result;
         }
+    }
+
+    public void onSwipeRight() {
+    }
+
+    public void onSwipeLeft() {
+    }
+
+    public void onSwipeTop() {
+    }
+
+    public void onSwipeBottom() {
+    }
+
+    public void onActionDown() {
     }
 }

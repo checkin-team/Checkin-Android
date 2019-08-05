@@ -131,7 +131,6 @@
         android:id="@+id/container_invoice_tip"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="@dimen/spacing_normal"
         android:paddingStart="@dimen/spacing_normal"
         android:paddingTop="@dimen/spacing_extra_small"
         android:paddingEnd="@dimen/spacing_normal">
@@ -145,6 +144,31 @@
 
         <TextView
             android:id="@+id/tv_invoice_tip"
+            style="@style/GreySmallTextStyle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical|end"
+            tools:text="54" />
+    </FrameLayout>
+
+    <FrameLayout
+        android:id="@+id/container_invoice_brownie_cash"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="@dimen/spacing_normal"
+        android:paddingStart="@dimen/spacing_normal"
+        android:paddingTop="@dimen/spacing_extra_small"
+        android:paddingEnd="@dimen/spacing_normal">
+
+        <TextView
+            style="@style/GreySmallTextStyle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical|start"
+            android:text="Brownie Cash" />
+
+        <TextView
+            android:id="@+id/tv_brownie_cash"
             style="@style/GreySmallTextStyle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"

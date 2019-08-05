@@ -6,6 +6,7 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.MenuItem;
 import android.view.View;
@@ -22,6 +23,7 @@ import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.lifecycle.ViewModelProviders;
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 import androidx.viewpager.widget.ViewPager;
 
 import com.checkin.app.checkin.Account.AccountModel;
@@ -77,6 +79,8 @@ public class HomeActivity extends BaseAccountActivity implements NavigationView.
     ImageView vSessionActiveStatus;
     @BindView(R.id.container_home_session_waiting_status)
     ImageView vSessionWaitingStatus;
+    @BindView(R.id.sr_home)
+    SwipeRefreshLayout swipeRefreshLayout;
 //    @BindView(R.id.tv_home_session_active_status)
 //    TextView tvSessionStatus;
 //    @BindView(R.id.tv_home_session_wait_qr_busy)
@@ -126,6 +130,9 @@ public class HomeActivity extends BaseAccountActivity implements NavigationView.
                 if (position == 2) {
                     toolbarHome.setVisibility(View.GONE);
                     imNavigation.setColorFilter(0);
+                }else if (position == 1){
+                    launchScanner();
+                    vpHome.setCurrentItem(0);
                 }else{
                     toolbarHome.setVisibility(View.VISIBLE);
                     imNavigation.setColorFilter(R.color.brownish_grey);
@@ -144,6 +151,12 @@ public class HomeActivity extends BaseAccountActivity implements NavigationView.
         mViewModel.updateResults();
         mUserViewModel.updateResults();
         getAccountViewModel().updateResults();
+    }
+
+    public void enableDisableSwipeRefresh(boolean enable) {
+        if (swipeRefreshLayout != null) {
+            swipeRefreshLayout.setEnabled(enable);
+        }
     }
 
     private void setup() {
@@ -304,6 +317,8 @@ public class HomeActivity extends BaseAccountActivity implements NavigationView.
         super.onResume();
         mViewModel.updateResults();
 //        vSessionStatus.setEnabled(true);
+        Log.e("onResume===", "onResume=========");
+        enableDisableSwipeRefresh(true);
         MessageModel.MESSAGE_TYPE[] types = new MessageModel.MESSAGE_TYPE[]{
                 MessageModel.MESSAGE_TYPE.USER_SESSION_ADDED_BY_OWNER, MessageModel.MESSAGE_TYPE.SHOP_MEMBER_ADDED
         };

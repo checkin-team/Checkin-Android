@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="@dimen/width_session_trending_dishes"
-    android:layout_height="match_parent"
+    android:layout_height="wrap_content"
     android:layout_gravity="center"
     android:layout_marginEnd="@dimen/spacing_small"
     android:elevation="@dimen/spacing_extra_tiny"
@@ -61,6 +61,23 @@
             android:textSize="@dimen/font_normal"
             tools:text="200" />
 
+        <TextView
+            android:id="@+id/tv_as_brownie_cash_avail_label"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            style="@style/AquaBlueSmallTextStyle"
+            android:paddingBottom="@dimen/spacing_extra_small"
+            android:textSize="@dimen/font_extra_small"
+            android:text="Avail Free"
+            android:visibility="gone"/>
+
     </LinearLayout>
 
-</LinearLayout>
+    <ImageView
+        android:id="@+id/im_as_brownie_cash_disable_layer"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/translucent_white"
+        android:visibility="gone"/>
+
+</FrameLayout>
