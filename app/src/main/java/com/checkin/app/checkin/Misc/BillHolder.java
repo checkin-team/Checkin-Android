@@ -23,6 +23,8 @@ public class BillHolder {
     TextView tvInvoiceTip;
     @BindView(R.id.tv_invoice_promo)
     TextView tvInvoicePromo;
+    @BindView(R.id.tv_brownie_cash)
+    TextView tvBrownieCash;
     @BindView(R.id.tv_invoice_promo_code)
     TextView tvInvoicePromoCode;
     @BindView(R.id.container_invoice_tax)
@@ -31,6 +33,8 @@ public class BillHolder {
     ViewGroup containerInvoicePromo;
     @BindView(R.id.container_invoice_discount)
     ViewGroup containerInvoiceDiscount;
+    @BindView(R.id.container_invoice_brownie_cash)
+    ViewGroup containerBrownieCash;
 
     private Context mContext;
 
@@ -65,5 +69,12 @@ public class BillHolder {
             containerInvoiceDiscount.setVisibility(View.GONE);
         // Tip
         tvInvoiceTip.setText(Utils.formatCurrencyAmount(mContext, bill.getTip()));
+
+        // Brownie Cash
+       /* if (bill.getBrownie() != null) {
+            tvBrownieCash.setText("- "+Utils.formatCurrencyAmount(mContext, bill.getBrownie()));
+            containerBrownieCash.setVisibility(View.VISIBLE);
+        } else
+            containerBrownieCash.setVisibility(View.GONE);*/
     }
 }

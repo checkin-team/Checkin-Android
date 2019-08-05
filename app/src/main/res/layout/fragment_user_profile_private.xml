@@ -74,13 +74,16 @@
         android:background="@drawable/curved_white_shape"
         android:orientation="vertical"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/guideline_above">
+        app:layout_constraintTop_toBottomOf="@id/guideline_above"
+        android:visibility="visible">
 
-        <androidx.constraintlayout.widget.ConstraintLayout
+        <LinearLayout
+            android:id="@+id/container_user_info_extended"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_marginStart="@dimen/spacing_small"
-            android:layout_marginEnd="@dimen/spacing_small">
+            android:layout_marginEnd="@dimen/spacing_small"
+            android:orientation="vertical">
 
             <RelativeLayout
                 android:id="@+id/container_header"
@@ -140,10 +143,9 @@
             <LinearLayout
                 android:id="@+id/container_description"
                 android:layout_width="match_parent"
-                android:layout_height="0dp"
+                android:layout_height="wrap_content"
                 android:orientation="vertical"
                 android:layout_marginTop="@dimen/spacing_small"
-                android:layout_marginBottom="@dimen/spacing_small"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
@@ -176,12 +178,11 @@
                     android:id="@+id/rv_user_private_recent_shops"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="@dimen/spacing_normal"
-                    android:layout_marginTop="@dimen/spacing_small"
-                    android:layout_marginEnd="@dimen/spacing_normal" />
+                    android:paddingStart="@dimen/spacing_normal"
+                    android:paddingEnd="@dimen/spacing_normal" />
 
             </LinearLayout>
-        </androidx.constraintlayout.widget.ConstraintLayout>
+        </LinearLayout>
 
     </FrameLayout>
 
