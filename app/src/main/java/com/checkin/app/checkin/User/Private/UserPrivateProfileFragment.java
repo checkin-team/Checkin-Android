@@ -70,7 +70,7 @@ public class UserPrivateProfileFragment extends BaseFragment {
     private UserCheckinAdapter mUserCheckinAdapter;
     private int oldHeight;
     private int newHeight = 0;
-    protected boolean isExpanded = false;
+//    protected boolean isExpanded = false;
 
     public UserPrivateProfileFragment() {
     }
@@ -107,21 +107,29 @@ public class UserPrivateProfileFragment extends BaseFragment {
         });
 
 
-
         containerUserDetails.setOnTouchListener(new SwipeTouchListener(getContext()){
             @Override
             public void onSwipeTop() {
                 super.onSwipeTop();
                 ((HomeActivity) Objects.requireNonNull(getActivity())).enableDisableSwipeRefresh(false);
-                toggleView();
+                toggleView(false);
             }
 
             @Override
             public void onSwipeBottom() {
                 super.onSwipeBottom();
-                toggleView();
+                toggleView(true);
             }
 
+        });
+
+        rvRecentShops.addOnItemTouchListener(new RecyclerView.SimpleOnItemTouchListener() {
+            @Override
+            public boolean onInterceptTouchEvent(RecyclerView rv, MotionEvent e) {
+                ((HomeActivity) Objects.requireNonNull(getActivity())).enableDisableSwipeRefresh(false);
+                toggleView(true);
+                return false;
+            }
         });
 
         containerUserPrivateTop.setOnTouchListener(new View.OnTouchListener() {
@@ -227,12 +235,13 @@ public class UserPrivateProfileFragment extends BaseFragment {
                 view.setLayoutParams(params);
             }
         });
-        animator.setDuration(200);
+        animator.setDuration(100);
         return animator;
     }
 
-    private void toggleView() {
-        if (containerUserDetails.getHeight() == newHeight) {
+    private void toggleView(boolean isExpanded) {
+//        if (containerUserDetails.getHeight() == newHeight) {
+        if (isExpanded) {
             Animator toggleAnimation = getToggleAnimation(containerUserDetails, containerUserDetails.getHeight(), oldHeight);
 //            Animator showView = AnimUtils.showView(containerCheckedinCount);
             AnimatorSet animatorSet = new AnimatorSet();

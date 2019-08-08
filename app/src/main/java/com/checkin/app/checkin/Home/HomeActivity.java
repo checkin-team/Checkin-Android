@@ -123,12 +123,16 @@ public class HomeActivity extends BaseAccountActivity implements NavigationView.
                 if (position == 2) {
                     toolbarHome.setVisibility(View.GONE);
                     imNavigation.setColorFilter(0);
+                    imTabUserIcon.setBackground(getResources().getDrawable(R.drawable.shape_oval_orange_gradient));
+                    imTabUserIcon.setPadding(6,6,6,6);
                 }else if (position == 1){
                     launchScanner();
                     vpHome.setCurrentItem(0);
+                    resetUserIcon();
                 }else{
                     toolbarHome.setVisibility(View.VISIBLE);
                     imNavigation.setColorFilter(R.color.brownish_grey);
+                    resetUserIcon();
                 }
             }
         });
@@ -218,17 +222,12 @@ public class HomeActivity extends BaseAccountActivity implements NavigationView.
 //        vSessionStatus.setVisibility(View.GONE);
         vSessionActiveStatus.setVisibility(View.GONE);
         vSessionWaitingStatus.setVisibility(View.GONE);
-        imTabUserIcon.setBackground(null);
-        imTabUserIcon.setPadding(0,0,0,0);
-
     }
 
     private void sessionActiveStatus() {
 //        vSessionStatus.setVisibility(View.GONE);
         vSessionActiveStatus.setVisibility(View.VISIBLE);
         vSessionWaitingStatus.setVisibility(View.GONE);
-        imTabUserIcon.setBackground(getResources().getDrawable(R.drawable.shape_oval_orange_gradient));
-        imTabUserIcon.setPadding(6,6,6,6);
 //        vSessionStatus.setEnabled(true);
     }
 
@@ -237,6 +236,11 @@ public class HomeActivity extends BaseAccountActivity implements NavigationView.
         vSessionActiveStatus.setVisibility(View.GONE);
         vSessionWaitingStatus.setVisibility(View.VISIBLE);
 //        vSessionStatus.setEnabled(false);
+    }
+
+    private void resetUserIcon(){
+        imTabUserIcon.setBackground(null);
+        imTabUserIcon.setPadding(0,0,0,0);
     }
 
     private void explainQr() {
@@ -348,7 +352,7 @@ public class HomeActivity extends BaseAccountActivity implements NavigationView.
         @Override
         public int getTabDrawable(int position) {
             if (position == 0)
-                return R.drawable.ic_home_orange;
+                return R.drawable.ic_home_toggle;
             if (position == 1)
                 return 0;
             return 0;
