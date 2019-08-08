@@ -57,8 +57,7 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/spacing_normal"
-        android:layout_marginBottom="@dimen/spacing_normal">
+        android:layout_margin="@dimen/spacing_medium">
 
         <TextView
             android:layout_width="wrap_content"
@@ -75,21 +74,20 @@
             style="@style/AquaBlueTextStyle"
             android:textSize="@dimen/font_large"
             android:gravity="center"
-            android:layout_marginEnd="@dimen/spacing_extra_small"
+            android:layout_marginEnd="@dimen/spacing_small"
             android:text="234"/>
 
         <View
             android:layout_width="@dimen/height_horizontal_line"
             android:layout_height="match_parent"
-            android:background="@color/pinkish_grey"/>
+            android:background="@color/pinkish_grey"
+            android:layout_marginTop="2dp" />
 
         <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:orientation="vertical"
-            android:layout_marginStart="@dimen/spacing_extra_small"
-            android:paddingTop="@dimen/spacing_tiny"
-            android:paddingBottom="@dimen/spacing_tiny">
+            android:layout_marginStart="@dimen/spacing_small">
 
             <TextView
                 android:layout_width="wrap_content"
@@ -124,12 +122,12 @@
 
     </LinearLayout>
 
-
-
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="@dimen/spacing_small">
+        android:layout_marginStart="@dimen/spacing_medium"
+        android:layout_marginEnd="@dimen/spacing_medium"
+        android:layout_marginBottom="@dimen/spacing_normal">
 
         <TextView
             android:layout_width="wrap_content"
@@ -146,21 +144,20 @@
             style="@style/AquaBlueTextStyle"
             android:textSize="@dimen/font_large"
             android:gravity="center"
-            android:layout_marginEnd="@dimen/spacing_extra_small"
+            android:layout_marginEnd="@dimen/spacing_small"
             android:text="234"/>
 
         <View
             android:layout_width="@dimen/height_horizontal_line"
             android:layout_height="match_parent"
-            android:background="@color/pinkish_grey"/>
+            android:background="@color/pinkish_grey"
+            android:layout_marginTop="2dp" />
 
         <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:orientation="vertical"
-            android:layout_marginStart="@dimen/spacing_extra_small"
-            android:paddingTop="@dimen/spacing_tiny"
-            android:paddingBottom="@dimen/spacing_tiny">
+            android:layout_marginStart="@dimen/spacing_small">
 
             <TextView
                 android:layout_width="wrap_content"
