@@ -1,13 +1,13 @@
 package com.checkin.app.checkin.session.activesession.chat;
 
+import androidx.annotation.Nullable;
+
 import com.checkin.app.checkin.Misc.BriefModel;
 import com.checkin.app.checkin.Utility.Utils;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 import java.io.Serializable;
 import java.util.Date;
-
-import androidx.annotation.Nullable;
 
 /**
  * Created by ACER on 1/2/2019.
@@ -180,7 +180,7 @@ public class SessionChatModel implements Serializable {
     }
 
     public enum CHAT_STATUS_TYPE {
-        NONE(0), OPEN(1), IN_PROGRESS(5), CANCELLED(9), DONE(10);
+        NONE(0), OPEN(1), IN_PROGRESS(5), COOKED(6), CANCELLED(9), DONE(10);
 
         public final int tag;
 

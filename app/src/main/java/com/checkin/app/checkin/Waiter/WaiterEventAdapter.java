@@ -11,19 +11,20 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import androidx.annotation.NonNull;
+import androidx.recyclerview.widget.RecyclerView;
+
 import com.checkin.app.checkin.Menu.Model.ItemCustomizationGroupModel;
 import com.checkin.app.checkin.R;
+import com.checkin.app.checkin.Utility.Utils;
+import com.checkin.app.checkin.Waiter.Model.WaiterEventModel;
 import com.checkin.app.checkin.session.activesession.chat.SessionChatModel;
 import com.checkin.app.checkin.session.activesession.chat.SessionChatModel.CHAT_EVENT_TYPE;
 import com.checkin.app.checkin.session.activesession.chat.SessionEventBasicModel;
 import com.checkin.app.checkin.session.model.SessionOrderedItemModel;
-import com.checkin.app.checkin.Utility.Utils;
-import com.checkin.app.checkin.Waiter.Model.WaiterEventModel;
 
 import java.util.List;
 
-import androidx.annotation.NonNull;
-import androidx.recyclerview.widget.RecyclerView;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
@@ -115,6 +116,10 @@ public class WaiterEventAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
         TextView tvOrderCancel;
         @BindView(R.id.tv_waiter_order_accept)
         TextView tvOrderAccept;
+        @BindView(R.id.im_waiter_order_status)
+        ImageView imOrderStatus;
+        @BindView(R.id.tv_waiter_order_status)
+        TextView tvOrderStatus;
 
         private SessionOrderedItemModel mOrderedItem;
 
@@ -158,12 +163,20 @@ public class WaiterEventAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
                 containerCustomizations.setVisibility(View.GONE);
             }
 
+            imOrderStatus.setVisibility(View.GONE);
+            tvOrderStatus.setVisibility(View.GONE);
             switch (order.getStatus()) {
                 case OPEN:
                     containerStatusOpen.setVisibility(View.VISIBLE);
                     containerStatusProgress.setVisibility(View.GONE);
                     break;
+                case COOKED:
+                    containerStatusOpen.setVisibility(View.GONE);
+                    containerStatusProgress.setVisibility(View.VISIBLE);
+                    tvOrderStatus.setVisibility(View.VISIBLE);
+                    break;
                 case IN_PROGRESS:
+                    imOrderStatus.setVisibility(View.VISIBLE);
                     containerStatusProgress.setVisibility(View.VISIBLE);
                     containerStatusOpen.setVisibility(View.GONE);
                     break;

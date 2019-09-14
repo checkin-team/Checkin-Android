@@ -160,7 +160,6 @@ public class ManagerTablesFragment extends BaseFragment implements ManagerWorkTa
                 mViewModel.fetchActiveTables(mViewModel.getShopPk());
             } else {
                 Utils.toast(requireContext(), qrResultModelResource.getMessage());
-
             }
         });
     }
@@ -241,6 +240,4 @@ public class ManagerTablesFragment extends BaseFragment implements ManagerWorkTa
             mViewModel.updateResults();
         }
     }
-
-
 }

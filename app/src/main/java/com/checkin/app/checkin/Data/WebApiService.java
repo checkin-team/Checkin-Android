@@ -2,6 +2,7 @@ package com.checkin.app.checkin.Data;
 
 import com.checkin.app.checkin.Account.AccountModel;
 import com.checkin.app.checkin.Auth.AuthResultModel;
+import com.checkin.app.checkin.Cook.Model.CookTableModel;
 import com.checkin.app.checkin.Inventory.Model.InventoryAvailabilityModel;
 import com.checkin.app.checkin.Inventory.Model.InventoryModel;
 import com.checkin.app.checkin.Manager.Model.ManagerSessionEventModel;
@@ -218,6 +219,13 @@ public interface WebApiService {
 
     @GET("sessions/{session_id}/orders/")
     Call<List<SessionOrderedItemModel>> getSessionOrders(@Path("session_id") long sessionId);
+    // endregion
+
+    // region COOK
+
+    @GET("sessions/restaurants/{restaurant_id}/active/")
+    Call<List<CookTableModel>> getCookActiveTables(@Path("restaurant_id") long restaurantId);
+
     // endregion
 
     // region WAITER

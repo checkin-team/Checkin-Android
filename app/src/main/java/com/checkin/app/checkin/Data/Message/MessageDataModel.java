@@ -2,10 +2,10 @@ package com.checkin.app.checkin.Data.Message;
 
 import com.checkin.app.checkin.Data.Converters;
 import com.checkin.app.checkin.Manager.Model.ManagerSessionEventModel;
-import com.checkin.app.checkin.session.activesession.chat.SessionChatModel;
-import com.checkin.app.checkin.session.model.SessionOrderedItemModel;
 import com.checkin.app.checkin.Shop.ShopModel;
 import com.checkin.app.checkin.User.UserModel;
+import com.checkin.app.checkin.session.activesession.chat.SessionChatModel;
+import com.checkin.app.checkin.session.model.SessionOrderedItemModel;
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
@@ -50,6 +50,12 @@ public class MessageDataModel implements Serializable {
 
     @JsonProperty("session__qr_id")
     private long sessionQRId;
+
+    @JsonProperty("session__new_qr_table")
+    private String sessionNewTable;
+
+    @JsonProperty("session__new_qr_id")
+    private long sessionNewQrId;
 
     @JsonCreator
     public MessageDataModel() {
@@ -97,6 +103,14 @@ public class MessageDataModel implements Serializable {
 
     public long getSessionQRId() {
         return sessionQRId;
+    }
+
+    public String getSessionNewTable() {
+        return sessionNewTable;
+    }
+
+    public long getSessionNewQrId() {
+        return sessionNewQrId;
     }
 
     public static class MessageDataDeserializer extends JsonDeserializer<MessageDataModel> {

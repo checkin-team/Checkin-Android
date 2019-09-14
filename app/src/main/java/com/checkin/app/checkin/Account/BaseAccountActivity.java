@@ -23,6 +23,7 @@ import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.lifecycle.ViewModelProviders;
 
 import com.checkin.app.checkin.Account.AccountModel.ACCOUNT_TYPE;
+import com.checkin.app.checkin.Cook.CookWorkActivity;
 import com.checkin.app.checkin.Data.Resource;
 import com.checkin.app.checkin.Manager.ManagerWorkActivity;
 import com.checkin.app.checkin.Misc.BaseActivity;
@@ -220,14 +221,17 @@ public abstract class BaseAccountActivity extends BaseActivity {
                     intent = Intent.makeRestartActivityTask(new ComponentName(context, WaiterWorkActivity.class));
                     intent.putExtra(WaiterWorkActivity.KEY_SHOP_PK, Long.valueOf(account.getTargetPk()));
                     context.startActivity(intent);
+                    break;
                 case RESTAURANT_COOK:
+                    intent = Intent.makeRestartActivityTask(new ComponentName(context, CookWorkActivity.class));
+                    intent.putExtra(CookWorkActivity.KEY_RESTAURANT_PK, Long.valueOf(account.getTargetPk()));
+                    context.startActivity(intent);
                     break;
             }
         }
 
         @Override
         public void onNothingSelected(AdapterView<?> parent) {
-
         }
 
         void setCurrentAccount(AccountModel account) {

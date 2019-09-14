@@ -1,9 +1,9 @@
 package com.checkin.app.checkin.session.model;
 
+import androidx.annotation.Nullable;
+
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
-
-import androidx.annotation.Nullable;
 
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class RestaurantTableModel {
@@ -75,7 +75,10 @@ public class RestaurantTableModel {
     public boolean equals(@Nullable Object obj) {
         try {
             RestaurantTableModel table = ((RestaurantTableModel) obj);
-            return table != null && table.getQrPk() == this.getQrPk();
+            if (table == null) return false;
+            if (table.getTableSession() != null && getTableSession() != null)
+                return table.getTableSession().getPk() == getTableSession().getPk();
+            return table.getQrPk() == this.getQrPk();
         } catch (ClassCastException ignored) {
             return false;
         }

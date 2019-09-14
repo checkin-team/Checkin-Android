@@ -1,4 +1,4 @@
-package com.checkin.app.checkin.session.model;
+package com.checkin.app.checkin.Cook.Model;
 
 import androidx.annotation.Nullable;
 
@@ -9,18 +9,22 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 
 import java.util.Calendar;
 import java.util.Date;
+import java.util.Locale;
 
 @JsonIgnoreProperties(ignoreUnknown = true)
-public class TableSessionModel {
+public class CookTableModel {
     @JsonProperty("pk")
     private long pk;
+
+    @JsonProperty("table")
+    private String table;
 
     @Nullable
     @JsonProperty("host")
     private BriefModel host;
 
-    @JsonProperty("event")
-    private EventBriefModel event;
+    @JsonProperty("pending_orders")
+    private int pendingOrders;
 
     @JsonProperty("created")
     private Date created;
@@ -31,13 +35,15 @@ public class TableSessionModel {
     @JsonProperty("bill")
     private double bill;
 
-    public TableSessionModel() {
+    private int eventCount = 0;
+
+    public CookTableModel() {
     }
 
-    public TableSessionModel(long pk, @Nullable BriefModel host, EventBriefModel event) {
+    public CookTableModel(long pk, @Nullable BriefModel host) {
         this.pk = pk;
         this.host = host;
-        this.event = event;
+        this.pendingOrders = 0;
     }
 
     public long getPk() {
@@ -55,14 +61,6 @@ public class TableSessionModel {
 
     public boolean hasHost() {
         return host != null;
-    }
-
-    public EventBriefModel getEvent() {
-        return event;
-    }
-
-    public void setEvent(EventBriefModel event) {
-        this.event = event;
     }
 
     public boolean isRequestedCheckout() {
@@ -89,13 +87,55 @@ public class TableSessionModel {
         this.bill = bill;
     }
 
+    public Integer getPendingOrders() {
+        return pendingOrders;
+    }
+
+    public void setPendingOrders(int pendingOrders) {
+        this.pendingOrders = pendingOrders;
+    }
+
     @Override
     public boolean equals(@Nullable Object obj) {
         try {
-            TableSessionModel table = ((TableSessionModel) obj);
+            CookTableModel table = ((CookTableModel) obj);
             return table != null && table.getPk() == this.getPk();
         } catch (ClassCastException ignored) {
             return false;
+        }
+    }
+
+    public String getTable() {
+        return table;
+    }
+
+    public void setTable(String table) {
+        this.table = table;
+    }
+
+    public Integer getEventCount() {
+        return eventCount;
+    }
+
+    public void resetEventCount() {
+        this.eventCount = 0;
+    }
+
+    public void increaseEventCount() {
+        this.eventCount++;
+    }
+
+    public String formatEventCount() {
+        return String.valueOf(eventCount);
+    }
+
+    public String formatOrderStatus() {
+        if (eventCount > 0) {
+            return "New Order!";
+        } else if (pendingOrders > 0) {
+            return String.format(Locale.getDefault(), "%d orders in line. Mark ready after preparation.", pendingOrders);
+        } else {
+            return "No active orders.";
         }
     }
 

@@ -136,6 +136,7 @@ public class ManagerWorkViewModel extends BaseViewModel {
         if (resource == null || resource.getData() == null)
             return;
 
+        if (resource.getData().contains(tableModel)) return;
         resource.getData().add(0, tableModel);
         mTablesData.setValue(Resource.Companion.cloneResource(resource, resource.getData()));
     }

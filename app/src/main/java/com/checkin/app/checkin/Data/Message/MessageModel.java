@@ -283,6 +283,8 @@ public class MessageModel implements Serializable {
             case WAITER_SESSION_NEW:
             case WAITER_SESSION_EVENT_SERVICE:
             case WAITER_SESSION_COLLECT_CASH:
+            case WAITER_SESSION_END:
+            case COOK_SESSION_END:
                 return false;
             default:
                 return true;
@@ -294,7 +296,9 @@ public class MessageModel implements Serializable {
             case USER_SESSION_ORDER_ACCEPTED_REJECTED:
             case MANAGER_SESSION_ORDERS_PUSH:
             case WAITER_SESSION_ORDERS_PUSH:
+            case COOK_SESSION_ORDERS_PUSH:
             case USER_ACTIVITY_REQUEST_REVIEW:
+            case WAITER_ORDER_COOKED_NOTIFY_HOST:
                 return false;
             default:
                 return true;
@@ -314,7 +318,7 @@ public class MessageModel implements Serializable {
     }
 
     private boolean isUserReviewNotification() {
-        return this.type == USER_ACTIVITY_REQUEST_REVIEW ;
+        return this.type == USER_ACTIVITY_REQUEST_REVIEW;
     }
 
     @Nullable
@@ -366,8 +370,13 @@ public class MessageModel implements Serializable {
         // Waiter
         WAITER_SESSION_NEW(711), WAITER_SESSION_MEMBER_CHANGE(712), WAITER_SESSION_HOST_ASSIGNED(713),
         WAITER_SESSION_NEW_ORDER(715), WAITER_SESSION_UPDATE_ORDER(716), WAITER_SESSION_EVENT_SERVICE(717),
-        WAITER_SESSION_EVENT_UPDATE(719), WAITER_SESSION_ORDERS_PUSH(720), WAITER_SESSION_COLLECT_CASH(725),
-        WAITER_SESSION_END(726), WAITER_SESSION_SWITCH_TABLE(721);
+        WAITER_ORDER_COOKED_NOTIFY_HOST(718), WAITER_SESSION_EVENT_UPDATE(719), WAITER_SESSION_ORDERS_PUSH(720),
+        WAITER_SESSION_COLLECT_CASH(725), WAITER_SESSION_END(726), WAITER_SESSION_SWITCH_TABLE(721),
+
+        // Cook
+        COOK_SESSION_NEW(811), COOK_SESSION_HOST_ASSIGNED(813), COOK_SESSION_NEW_ORDER(815),
+        COOK_SESSION_UPDATE_ORDER(816), COOK_SESSION_ORDERS_PUSH(820), COOK_SESSION_SWITCH_TABLE(821),
+        COOK_SESSION_END(826);
 
         public int id;
 

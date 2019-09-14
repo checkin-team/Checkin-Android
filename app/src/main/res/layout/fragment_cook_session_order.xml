@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white"
+    android:orientation="vertical">
+
+    <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+        android:id="@+id/sr_cook_session_orders"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <androidx.core.widget.NestedScrollView
+                android:id="@+id/nested_sv_cs_order"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:fillViewport="true"
+                android:scrollbars="none">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:id="@+id/title_cs_new"
+                        style="@style/RedSmallTextStyle"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:background="@color/pinkish_grey"
+                        android:gravity="center"
+                        android:padding="@dimen/spacing_small"
+                        android:text="@string/label_new"
+                        android:textAllCaps="true"
+                        android:visibility="gone" />
+
+                    <androidx.recyclerview.widget.RecyclerView
+                        android:id="@+id/rv_cs_orders_new"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="@dimen/spacing_small"
+                        android:background="@color/lightest_grey"
+                        android:nestedScrollingEnabled="false"
+                        android:paddingBottom="@dimen/spacing_small"
+                        android:visibility="gone" />
+
+                    <TextView
+                        android:id="@+id/title_cs_in_progress"
+                        style="@style/RedSmallTextStyle"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:background="@color/pinkish_grey"
+                        android:gravity="center"
+                        android:padding="@dimen/spacing_small"
+                        android:text="@string/status_order_in_progress"
+                        android:textAllCaps="true"
+                        android:visibility="gone" />
+
+                    <androidx.recyclerview.widget.RecyclerView
+                        android:id="@+id/rv_cs_orders_accepted"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="@dimen/spacing_small"
+                        android:nestedScrollingEnabled="false"
+                        android:paddingBottom="@dimen/spacing_normal"
+                        android:visibility="gone" />
+
+                    <TextView
+                        android:id="@+id/title_cs_delivered"
+                        style="@style/RedSmallTextStyle"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:background="@color/pinkish_grey"
+                        android:gravity="center"
+                        android:padding="@dimen/spacing_small"
+                        android:text="Delivered / Rejected"
+                        android:textAllCaps="true"
+                        android:visibility="gone" />
+
+                    <androidx.recyclerview.widget.RecyclerView
+                        android:id="@+id/rv_cs_orders_delivered"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="@dimen/spacing_small"
+                        android:nestedScrollingEnabled="false"
+                        android:paddingBottom="@dimen/spacing_small"
+                        android:visibility="gone" />
+
+                </LinearLayout>
+
+            </androidx.core.widget.NestedScrollView>
+
+        </RelativeLayout>
+
+    </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
+
+</RelativeLayout>

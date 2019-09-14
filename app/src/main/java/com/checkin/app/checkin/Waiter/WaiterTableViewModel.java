@@ -65,17 +65,12 @@ public class WaiterTableViewModel extends BaseViewModel {
             if (input == null || input.getData() == null)
                 return input;
             List<WaiterEventModel> result = new ArrayList<>();
-            List<OrderStatusModel> listNewOrderStatus = new ArrayList<>();
 
             if (input.getStatus() == Resource.Status.SUCCESS) {
                 for (WaiterEventModel eventModel : input.getData()) {
-                    if (eventModel.getStatus() == CHAT_STATUS_TYPE.OPEN || eventModel.getStatus() == CHAT_STATUS_TYPE.IN_PROGRESS)
+                    if (eventModel.getStatus() == CHAT_STATUS_TYPE.OPEN || eventModel.getStatus() == CHAT_STATUS_TYPE.IN_PROGRESS || eventModel.getStatus() == CHAT_STATUS_TYPE.COOKED)
                         result.add(eventModel);
-
-//                    if (eventModel.getStatus() == CHAT_STATUS_TYPE.OPEN)
-//                        listNewOrderStatus.add(new OrderStatusModel(eventModel.getPk(), IN_PROGRESS));
                 }
-//                mNewOrderStatus.setValue(listNewOrderStatus);
                 return Resource.Companion.cloneResource(input, result);
             }
             return input;

@@ -73,7 +73,7 @@
                 android:layout_height="@dimen/size_small_button"
                 android:layout_marginStart="@dimen/spacing_tiny"
                 android:gravity="center"
-                android:text="@string/label_done"
+                android:text="@string/label_cooked"
                 android:textSize="@dimen/font_extra_small"
                 android:visibility="gone" />
 
@@ -85,12 +85,6 @@
             android:layout_height="@dimen/size_small_button"
             android:orientation="horizontal"
             android:visibility="gone">
-
-            <TextView
-                android:id="@+id/tv_ms_price"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                tools:text="$ 130.00" />
 
             <CheckBox
                 android:id="@+id/cb_ms_order_accept"

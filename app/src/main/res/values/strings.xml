@@ -228,5 +228,7 @@
     <string name="app_terms_and_condition_link"><![CDATA[<a href="https://check-in.in/terms">Terms & Conditions</a>]]></string>
     <string name="app_privacy_policy_link"><![CDATA[<a href="https://check-in.in/privacy">Privacy Policy</a>]]></string>
     <string name="app_refund_policy_link"><![CDATA[<a href="https://check-in.in/refund">Refund Policy</a>]]></string>
+    <string name="label_cooked">Cooked</string>
+    <string name="status_order_cooked">Cooked</string>
 
 </resources>

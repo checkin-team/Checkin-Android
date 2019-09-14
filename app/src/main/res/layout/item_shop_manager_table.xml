@@ -87,20 +87,20 @@
                             style="@style/GreySmallTextStyle"
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
+                            android:layout_gravity="center"
                             android:layout_marginStart="@dimen/spacing_tiny"
                             android:layout_marginEnd="@dimen/spacing_tiny"
                             android:layout_weight="1"
-                            android:layout_gravity="center"
                             tools:text="Join the table @4.30 pm." />
 
                         <TextView
                             android:id="@+id/tv_shop_manager_table_event_badge"
                             android:layout_width="@dimen/size_extra_small_icon"
                             android:layout_height="@dimen/size_extra_small_icon"
+                            android:layout_marginBottom="@dimen/spacing_tiny"
                             android:background="@drawable/shape_oval_red"
                             android:gravity="center"
                             android:textColor="@color/white"
-                            android:layout_marginBottom="@dimen/spacing_tiny"
                             android:textSize="@dimen/font_extra_small"
                             android:visibility="visible"
                             tools:text="62" />
@@ -117,8 +117,8 @@
                             android:gravity="center"
                             android:padding="@dimen/spacing_extra_small"
                             android:textSize="@dimen/font_large"
-                            tools:text="$ 4206.00"
-                            android:visibility="gone"/>
+                            android:visibility="gone"
+                            tools:text="$ 4206.00" />
 
                     </LinearLayout>
 
@@ -136,12 +136,12 @@
                             style="@style/GreyTextStyle"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
+                            android:layout_alignParentStart="true"
                             android:layout_gravity="center"
                             android:layout_marginEnd="@dimen/spacing_extra_small"
                             android:background="@drawable/bordered_rectangle_brownish_grey"
                             android:drawablePadding="@dimen/spacing_extra_small"
                             android:gravity="center"
-                            android:layout_alignParentStart="true"
                             android:padding="@dimen/spacing_extra_small"
                             android:textSize="@dimen/font_large"
                             tools:text="$ 4206.00" />
@@ -151,8 +151,8 @@
                             style="@style/ButtonRedAlertAction"
                             android:layout_width="wrap_content"
                             android:layout_height="@dimen/button_height_normal"
+                            android:layout_alignParentEnd="true"
                             android:text="End\nSession"
-                           android:layout_alignParentEnd="true"
                             android:textAllCaps="false" />
                     </RelativeLayout>
 
