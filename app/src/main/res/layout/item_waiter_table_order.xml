@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content">
@@ -137,7 +138,7 @@
                     android:background="@drawable/background_bottom_inner_shadow" />
             </LinearLayout>
 
-            <RelativeLayout
+            <androidx.constraintlayout.widget.ConstraintLayout
                 android:id="@+id/container_waiter_order_status_progress"
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/height_card_order_status"
@@ -147,44 +148,52 @@
                     android:id="@+id/im_waiter_order_mark_cancel"
                     android:layout_width="@dimen/size_normal_button"
                     android:layout_height="@dimen/size_normal_button"
-                    android:layout_alignParentStart="true"
-                    android:layout_centerInParent="true"
                     android:clickable="true"
                     android:focusable="true"
                     android:padding="@dimen/spacing_extra_small"
-                    android:src="@drawable/ic_cancel" />
+                    android:src="@drawable/ic_cancel"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
 
                 <ImageView
                     android:id="@+id/im_waiter_order_status"
-                    android:layout_width="@dimen/size_normal_button"
-                    android:layout_height="@dimen/size_normal_button"
-                    android:layout_centerInParent="true"
+                    android:layout_width="@dimen/size_small_button"
+                    android:layout_height="@dimen/size_small_button"
                     android:background="@color/transparent"
                     android:clickable="true"
                     android:focusable="true"
-                    android:padding="@dimen/spacing_extra_small"
-                    android:src="@drawable/ic_order_cooking_grey" />
+                    android:padding="@dimen/spacing_extra_tiny"
+                    android:src="@drawable/ic_order_cooking_grey"
+                    app:layout_constraintEnd_toEndOf="@id/tv_waiter_order_status"
+                    app:layout_constraintStart_toStartOf="@id/tv_waiter_order_status"
+                    app:layout_constraintTop_toTopOf="parent" />
 
                 <TextView
                     android:id="@+id/tv_waiter_order_status"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_marginBottom="@dimen/spacing_tiny"
                     android:text="@string/status_order_cooked"
-                    android:layout_centerInParent="true"
-                    style="@style/GreyHeadingStyle"
-                    android:visibility="gone" />
+                    android:visibility="visible"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/im_waiter_order_status"
+                    app:layout_constraintVertical_chainStyle="packed" />
 
                 <ImageView
                     android:id="@+id/im_waiter_order_mark_done"
                     android:layout_width="@dimen/size_normal_button"
                     android:layout_height="@dimen/size_normal_button"
-                    android:layout_alignParentEnd="true"
-                    android:layout_centerInParent="true"
                     android:clickable="true"
                     android:focusable="true"
                     android:padding="@dimen/spacing_extra_small"
-                    android:src="@drawable/ic_accept_green_white" />
-            </RelativeLayout>
+                    android:src="@drawable/ic_accept_green_white"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+            </androidx.constraintlayout.widget.ConstraintLayout>
 
             <LinearLayout
                 android:id="@+id/container_waiter_order_status_open"

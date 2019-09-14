@@ -66,15 +66,15 @@
                 android:visibility="gone"
                 tools:text="In Progress" />
 
-            <Button
-                android:id="@+id/btn_ms_order_done"
-                style="@style/ButtonPositiveAction"
-                android:layout_width="@dimen/button_width_short"
-                android:layout_height="@dimen/size_small_button"
-                android:layout_marginStart="@dimen/spacing_tiny"
-                android:gravity="center"
-                android:text="@string/label_cooked"
-                android:textSize="@dimen/font_extra_small"
+            <ImageView
+                android:id="@+id/im_cs_order_done"
+                android:layout_width="@dimen/size_normal_button"
+                android:layout_height="@dimen/size_normal_button"
+                android:clickable="true"
+                android:contentDescription="@string/status_order_cooked"
+                android:focusable="true"
+                android:padding="@dimen/spacing_extra_small"
+                android:src="@drawable/ic_accept_green_white"
                 android:visibility="gone" />
 
         </LinearLayout>

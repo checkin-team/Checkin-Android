@@ -86,7 +86,8 @@ android {
         disable 'MissingTranslation', 'ExtraTranslation'
     }
     packagingOptions {
-        pickFirst  'META-INF/*'
+        pickFirst 'META-INF/*'
+//        pickFirst 'META-INF/proguard/coroutines.pro'
     }
 }
 
@@ -95,8 +96,11 @@ dependencies {
 
     // Kotlin libraries
     implementation "androidx.core:core-ktx:1.1.0"
-    implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$versions.kotlin"
+    implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk8:$versions.kotlin"
+
+    //noinspection GradleDependency
     implementation "androidx.fragment:fragment-ktx:1.0.0"
+
     implementation "androidx.lifecycle:lifecycle-viewmodel-ktx:$versions.lifecycle"
     implementation "androidx.lifecycle:lifecycle-runtime-ktx:$versions.lifecycle"
 
@@ -109,8 +113,8 @@ dependencies {
     implementation 'androidx.exifinterface:exifinterface:1.0.0'
 
     testImplementation 'junit:junit:4.12'
-    androidTestImplementation 'androidx.test:runner:1.3.0-alpha01'
-    androidTestImplementation 'androidx.test.espresso:espresso-core:3.2.0-alpha03'
+    androidTestImplementation 'androidx.test:runner:1.3.0-alpha02'
+    androidTestImplementation 'androidx.test.espresso:espresso-core:3.3.0-alpha02'
 
     implementation 'com.google.android.gms:play-services-auth:17.0.0'
     // FireBase libraries
@@ -158,17 +162,16 @@ dependencies {
     implementation 'io.objectbox:objectbox-android:' + versions.objectBox
     kapt 'io.objectbox:objectbox-processor:' + versions.objectBox
     // Lifecycle components
+    implementation "androidx.lifecycle:lifecycle-common-java8:$versions.lifecycle"
     implementation "androidx.lifecycle:lifecycle-extensions:$versions.lifecycle"
-    kapt "androidx.lifecycle:lifecycle-compiler:$versions.lifecycle"
+
     // Dagger components
     implementation 'com.google.dagger:dagger:' + versions.dagger
     kapt 'com.google.dagger:dagger-compiler:' + versions.dagger
-    // Modified libraries
-    implementation project(':library:MaterialSearchView')
 
     // Google Maps
     implementation 'com.google.android.gms:play-services-maps:17.0.0'
-    implementation 'com.google.android.libraries.places:places:1.1.0'
+    implementation 'com.google.android.libraries.places:places:2.0.0'
     implementation 'com.google.android.gms:play-services-location:17.0.0'
 
     // Onboarding Screens
@@ -177,13 +180,16 @@ dependencies {
     // Multidex
     implementation 'com.android.support:multidex:1.0.3'
 
-    //Paytm sdk
+    // PayTM sdk
     implementation('com.paytm:pgplussdk:1.3.3') {
         transitive = true
     }
 
-    //Shimmering Effects
+    // Shimmering Effects
     implementation 'com.facebook.shimmer:shimmer:0.4.0'
+
+    // Modified libraries
+    implementation project(':library:MaterialSearchView')
 }
 
 repositories {
@@ -196,8 +202,6 @@ static def buildTime() {
 
 static def hostName() {
     return "${System.getProperty("user.name")}@${InetAddress.localHost.hostName}"
-
-
 }
 
 def revision() {

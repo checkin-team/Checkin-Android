@@ -163,8 +163,6 @@ public class WaiterEventAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
                 containerCustomizations.setVisibility(View.GONE);
             }
 
-            imOrderStatus.setVisibility(View.GONE);
-            tvOrderStatus.setVisibility(View.GONE);
             switch (order.getStatus()) {
                 case OPEN:
                     containerStatusOpen.setVisibility(View.VISIBLE);
@@ -173,12 +171,14 @@ public class WaiterEventAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
                 case COOKED:
                     containerStatusOpen.setVisibility(View.GONE);
                     containerStatusProgress.setVisibility(View.VISIBLE);
-                    tvOrderStatus.setVisibility(View.VISIBLE);
+                    tvOrderStatus.setText(R.string.status_order_cooked);
+                    imOrderStatus.setImageResource(R.drawable.ic_order_cooked_grey);
                     break;
                 case IN_PROGRESS:
-                    imOrderStatus.setVisibility(View.VISIBLE);
                     containerStatusProgress.setVisibility(View.VISIBLE);
                     containerStatusOpen.setVisibility(View.GONE);
+                    tvOrderStatus.setText(R.string.status_order_in_progress);
+                    imOrderStatus.setImageResource(R.drawable.ic_order_cooking_grey);
                     break;
                 case DONE:
                     containerStatusProgress.setVisibility(View.GONE);

@@ -4,8 +4,8 @@ import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.CheckBox;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
@@ -101,8 +101,8 @@ public class CookSessionOrderAdapter extends HeaderFooterRecyclerViewAdapter {
         TextView tvQuantity;
         @BindView(R.id.cb_ms_order_accept)
         CheckBox cbOrderAccept;
-        @BindView(R.id.btn_ms_order_done)
-        Button btnOrderDone;
+        @BindView(R.id.im_cs_order_done)
+        ImageView btnOrderDone;
         @BindView(R.id.tv_ms_order_remarks)
         TextView tvRemarks;
         @BindView(R.id.container_ms_order_customizations)

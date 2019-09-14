@@ -32,6 +32,7 @@ import java.util.Locale;
 import static com.checkin.app.checkin.Data.Message.MessageModel.MESSAGE_TYPE.MANAGER_SESSION_END;
 import static com.checkin.app.checkin.Data.Message.MessageModel.MESSAGE_TYPE.MANAGER_SESSION_ORDERS_PUSH;
 import static com.checkin.app.checkin.Data.Message.MessageModel.MESSAGE_TYPE.USER_ACTIVITY_REQUEST_REVIEW;
+import static com.checkin.app.checkin.Data.Message.MessageModel.MESSAGE_TYPE.WAITER_ORDER_COOKED_NOTIFY_HOST;
 import static com.checkin.app.checkin.Data.Message.MessageModel.MESSAGE_TYPE.WAITER_SESSION_NEW;
 import static com.checkin.app.checkin.Data.Message.MessageModel.MESSAGE_TYPE.WAITER_SESSION_ORDERS_PUSH;
 import static com.checkin.app.checkin.Waiter.WaiterWorkActivity.ACTION_NEW_TABLE;
@@ -104,7 +105,7 @@ public class MessageModel implements Serializable {
     }
 
     protected CHANNEL getChannel() {
-        if (this.type == MANAGER_SESSION_ORDERS_PUSH || this.type == WAITER_SESSION_ORDERS_PUSH)
+        if (this.type == MANAGER_SESSION_ORDERS_PUSH || this.type == WAITER_SESSION_ORDERS_PUSH || this.type == WAITER_ORDER_COOKED_NOTIFY_HOST)
             return CHANNEL.ORDERS;
         if (isUserActiveSessionNotification())
             return CHANNEL.ACTIVE_SESSION;
