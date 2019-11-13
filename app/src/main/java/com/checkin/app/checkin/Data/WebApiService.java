@@ -17,6 +17,7 @@ import com.checkin.app.checkin.Search.SearchResultShopModel;
 import com.checkin.app.checkin.Shop.Private.Finance.FinanceModel;
 import com.checkin.app.checkin.Shop.Private.Insight.ShopInsightLoyaltyProgramModel;
 import com.checkin.app.checkin.Shop.Private.Insight.ShopInsightRevenueModel;
+import com.checkin.app.checkin.Shop.Private.Invoice.RestaurantAdminStatsModel;
 import com.checkin.app.checkin.Shop.Private.Invoice.RestaurantSessionModel;
 import com.checkin.app.checkin.Shop.Private.Invoice.ShopSessionDetailModel;
 import com.checkin.app.checkin.Shop.Private.Invoice.ShopSessionFeedbackModel;
@@ -156,7 +157,10 @@ public interface WebApiService {
     Call<ObjectNode> deleteRestaurantMember(@Path("shop_id") long shopId, @Path("user_id") long userId);
 
     @GET("sessions/restaurants/{restaurant_id}/")
-    Call<List<RestaurantSessionModel>> getRestaurantSessionsById(@Path("restaurant_id") long restaurantId, @Query("checked_out_after") String checkedOutAfter, @Query("checked_out_before") String checkedOutBefore);
+    Call<List<RestaurantSessionModel>> getRestaurantSessionsById(@Path("restaurant_id") long restaurantId, @Query("checked_in_after") String checkedOutAfter, @Query("checked_in_before") String checkedOutBefore);
+
+    @GET("restaurants/{restaurant_id}/stats/admin")
+    Call<RestaurantAdminStatsModel> getRestaurantAdminStats(@Path("restaurant_id") long restaurantId, @Query("checked_in_after") String checkedOutAfter, @Query("checked_in_before") String checkedOutBefore);
 
     @GET("sessions/manage/{session_id}/detail/")
     Call<ShopSessionDetailModel> getShopSessionDetailById(@Path("session_id") long sessionId);

@@ -35,6 +35,14 @@ public class ShopInvoiceListActivity extends BaseActivity implements ShopInvoice
     TextView tvFilterTo;
     @BindView(R.id.rv_shop_invoice_sessions)
     RecyclerView rvSessions;
+    @BindView(R.id.tv_invoice_total_sales)
+    TextView tvTotalSales;
+    @BindView(R.id.tv_invoice_total_discount)
+    TextView tvTotalDiscounts;
+    @BindView(R.id.tv_invoice_total_orders)
+    TextView tvTotalOrders;
+    @BindView(R.id.tv_invoice_total_tax)
+    TextView tvTotalTaxes;
 
     private ShopInvoiceSessionAdapter mAdapter;
     private ShopInvoiceViewModel mViewModel;
@@ -56,9 +64,11 @@ public class ShopInvoiceListActivity extends BaseActivity implements ShopInvoice
 
         mAdapter = new ShopInvoiceSessionAdapter(this);
         mViewModel = ViewModelProviders.of(this).get(ShopInvoiceViewModel.class);
+        mViewModel.setDoFetchStats(true);
 
         long shopPk = getIntent().getLongExtra(KEY_SHOP_PK, 0);
         mViewModel.fetchShopSessions(shopPk);
+        mViewModel.fetchShopStats(shopPk);
 
         mViewModel.getRestaurantSessions().observe(this, input -> {
             if (input == null)
@@ -73,7 +83,21 @@ public class ShopInvoiceListActivity extends BaseActivity implements ShopInvoice
             if (input.getStatus() == Resource.Status.LOADING)
                 visibleProgressBar();
         });
+        mViewModel.getRestaurantStats().observe(this, input -> {
+            if (input == null) return;
+            if (input.getStatus() == Resource.Status.SUCCESS && input.getData() != null)
+                updateStatsUi(input.getData());
+            else if (input.getStatus() != Resource.Status.LOADING)
+                Utils.toast(this, input.getMessage());
+        });
         setupUi();
+    }
+
+    private void updateStatsUi(RestaurantAdminStatsModel data) {
+        tvTotalSales.setText(Utils.formatIntegralCurrencyAmount(this, data.getTotalSales()));
+        tvTotalDiscounts.setText(Utils.formatIntegralCurrencyAmount(this, data.getTotalDiscounts()));
+        tvTotalOrders.setText(data.formatTotalOrders());
+        tvTotalTaxes.setText(Utils.formatIntegralCurrencyAmount(this, data.getTotalTaxes()));
     }
 
     private void setupUi() {
@@ -81,7 +105,9 @@ public class ShopInvoiceListActivity extends BaseActivity implements ShopInvoice
         rvSessions.setAdapter(mAdapter);
 
         tvFilterFrom.setText("------------");
-        tvFilterTo.setText(Utils.getCurrentFormattedDate());
+        String toDate = Utils.getCurrentFormattedDate();
+        tvFilterTo.setText(toDate);
+//        mViewModel.filterTo(toDate);
     }
 
     private String updateDate(TextView tvDate, int year, int month, int day) {

@@ -22,7 +22,7 @@ public class ShopSessionViewModel extends BaseViewModel {
 
     public ShopSessionViewModel(@NonNull Application application) {
         super(application);
-        mRepository = ShopInvoiceRepository.getInstance(application);
+        mRepository = ShopInvoiceRepository.Companion.getInstance(application);
     }
 
     public void fetchSessionDetail() {

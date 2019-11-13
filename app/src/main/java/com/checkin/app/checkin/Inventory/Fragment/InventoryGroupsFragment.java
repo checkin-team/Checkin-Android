@@ -4,6 +4,12 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.TextView;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.lifecycle.ViewModelProviders;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+
 import com.checkin.app.checkin.Data.Resource;
 import com.checkin.app.checkin.Inventory.Adapter.InventoryGroupAdapter;
 import com.checkin.app.checkin.Inventory.Adapter.InventoryItemAdapter;
@@ -12,14 +18,10 @@ import com.checkin.app.checkin.Inventory.Model.InventoryItemModel;
 import com.checkin.app.checkin.Misc.BaseFragment;
 import com.checkin.app.checkin.R;
 import com.checkin.app.checkin.Utility.Utils;
+import com.facebook.shimmer.ShimmerFrameLayout;
 
 import java.util.List;
 
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.lifecycle.ViewModelProviders;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
 import butterknife.BindView;
 
 public class InventoryGroupsFragment extends BaseFragment implements InventoryGroupAdapter.GroupInteraction {
@@ -27,6 +29,8 @@ public class InventoryGroupsFragment extends BaseFragment implements InventoryGr
     RecyclerView rvGroupsList;
     @BindView(R.id.tv_menu_current_category)
     TextView tvCurrentCategory;
+    @BindView(R.id.shimmer_menu_group)
+    ShimmerFrameLayout shimmerFrameLayout;
 
     private InventoryViewModel mViewModel;
     private InventoryGroupAdapter mAdapter;
@@ -61,6 +65,10 @@ public class InventoryGroupsFragment extends BaseFragment implements InventoryGr
             if (menuGroupResource.getStatus() == Resource.Status.SUCCESS) {
                 mAdapter.setGroupList(menuGroupResource.getData());
                 stopRefreshing();
+                if (shimmerFrameLayout.getVisibility() == View.VISIBLE) {
+                    shimmerFrameLayout.stopShimmer();
+                    shimmerFrameLayout.setVisibility(View.GONE);
+                }
             } else if (menuGroupResource.getStatus() == Resource.Status.LOADING) {
                 startRefreshing();
                 if (menuGroupResource.getData() != null)
@@ -107,10 +115,6 @@ public class InventoryGroupsFragment extends BaseFragment implements InventoryGr
 
     private boolean isGroupExpanded() {
         return mAdapter.isGroupExpanded();
-    }
-
-    public void scrollToCategory(String title) {
-        rvGroupsList.smoothScrollToPosition(mAdapter.getCategoryPosition(title));
     }
 
     @Override
