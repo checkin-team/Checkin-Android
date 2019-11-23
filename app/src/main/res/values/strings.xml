@@ -216,6 +216,8 @@
     <string name="label_session_offer_not_allowed_phone_not_registered">Offers not allowed - Register your mobile number first.</string>
     <string name="label_session_offer_not_allowed_session_requested_checkout">Offers not allowed - Session already requested checkout.</string>
     <string name="label_session_offer_not_allowed_payment_mode_cash">Promo not applicable for cash payment.</string>
+    <string name="label_session_transaction_inprogress">A payment request is in progress. Are you sure you want to cancel that request and initiate a new one?</string>
+    <string name="label_session_promo_cannot_be_applied">Promo code cannot be applied. Are you sure you want to checkout without offer?</string>
     <string name="label_paid_successfully">Paid Successfully</string>
     <string name="label_for_dining_with_us">For dining with us!</string>
     <string name="app_force_logged_out">Sorry, but your session has expired. Login again.</string>

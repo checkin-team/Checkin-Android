@@ -460,7 +460,7 @@ class ActiveSessionInvoiceActivity : BaseActivity() {
 
     private fun alertDialogForOverridingPaymentRequest() {
         val builder = AlertDialog.Builder(this).setTitle("Override checkout request?")
-                .setMessage("A payment request is in progress. Are you sure you want to cancel that request and initiate a new one?")
+                .setMessage(R.string.label_session_transaction_inprogress)
                 .setPositiveButton("Yes") { dialog, which -> onRequestCheckout(true) }
                 .setNegativeButton("No") { dialog, which -> dialog.cancel() }
         builder.show()
@@ -468,7 +468,7 @@ class ActiveSessionInvoiceActivity : BaseActivity() {
 
     private fun alertDialogForRejectedPromo() {
         val builder = AlertDialog.Builder(this).setTitle("Continue without Offer?")
-                .setMessage("Offer cannot be applied, and needs to be removed before settling the bill. Are you sure you want to checkout without any offer?")
+                .setMessage(R.string.label_session_promo_cannot_be_applied)
                 .setPositiveButton("Yes") { dialog, which ->
                     // Remove the promo and once done, request checkout again
                     onRemovePromoCode()
