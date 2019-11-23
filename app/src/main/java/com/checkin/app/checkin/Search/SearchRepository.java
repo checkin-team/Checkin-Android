@@ -2,6 +2,9 @@ package com.checkin.app.checkin.Search;
 
 import android.content.Context;
 
+import androidx.annotation.NonNull;
+import androidx.lifecycle.LiveData;
+
 import com.checkin.app.checkin.Data.ApiClient;
 import com.checkin.app.checkin.Data.ApiResponse;
 import com.checkin.app.checkin.Data.BaseRepository;
@@ -12,9 +15,6 @@ import com.checkin.app.checkin.Data.WebApiService;
 
 import java.util.List;
 
-import androidx.annotation.NonNull;
-import androidx.lifecycle.LiveData;
-
 /**
  * Created by Jogi Miglani on 29-10-2018.
  */
@@ -23,7 +23,7 @@ public class SearchRepository extends BaseRepository {
     private final WebApiService mWebService;
 
     public SearchRepository(Context context) {
-        mWebService = ApiClient.getApiService(context);
+        mWebService = ApiClient.Companion.getApiService(context);
     }
 
     public LiveData<Resource<List<SearchResultPeopleModel>>> getSearchPeopleResults(String query, String friendshipStatus) {

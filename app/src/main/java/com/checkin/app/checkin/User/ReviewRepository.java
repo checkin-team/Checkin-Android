@@ -1,9 +1,10 @@
 package com.checkin.app.checkin.User;
 
 import android.app.Application;
-import androidx.lifecycle.LiveData;
 import android.content.Context;
+
 import androidx.annotation.NonNull;
+import androidx.lifecycle.LiveData;
 
 import com.checkin.app.checkin.Data.ApiClient;
 import com.checkin.app.checkin.Data.ApiResponse;
@@ -20,7 +21,7 @@ public class ReviewRepository {
     private static ReviewRepository INSTANCE = null;
 
     private ReviewRepository(Context context) {
-        mWebService = ApiClient.getApiService(context);
+        mWebService = ApiClient.Companion.getApiService(context);
     }
 
     public static ReviewRepository getInstance(Application application) {

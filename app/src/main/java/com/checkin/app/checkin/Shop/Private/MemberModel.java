@@ -1,11 +1,13 @@
 package com.checkin.app.checkin.Shop.Private;
 
 import com.checkin.app.checkin.Misc.BriefModel;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 import java.util.ArrayList;
 import java.util.List;
 
+@JsonIgnoreProperties(ignoreUnknown = true)
 public class MemberModel {
     public static final char ROLE_OWNER = 'o';
     public static final char ROLE_ADMIN = 'a';

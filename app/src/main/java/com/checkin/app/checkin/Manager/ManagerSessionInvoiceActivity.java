@@ -74,7 +74,9 @@ public class ManagerSessionInvoiceActivity extends AppCompatActivity implements 
     private InvoiceOrdersAdapter mAdapter;
     private SessionBillModel mBillModel;
     private BillHolder mBillHolder;
+
     private boolean isRequestedCheckout;
+    private boolean isPromoApplied;
 
     private final BroadcastReceiver mReceiver = new BroadcastReceiver() {
         @Override
@@ -195,7 +197,6 @@ public class ManagerSessionInvoiceActivity extends AppCompatActivity implements 
             edMsInvoiceContact.setText(phone);
         else if (email != null)
             edMsInvoiceContact.setText(email);
-
     }
 
     @Override
@@ -280,11 +281,13 @@ public class ManagerSessionInvoiceActivity extends AppCompatActivity implements 
 
     private void alertDialogForCloseSession() {
         AlertDialog.Builder builder = new AlertDialog.Builder(this).setTitle("Are you sure you want to close session?")
-                .setPositiveButton("Close session", (dialog, which) -> mViewModel.putSessionCheckout())
                 .setNegativeButton("No", (dialog, which) -> dialog.cancel());
-        if (!isRequestedCheckout) {
+        if (!isPromoApplied || isRequestedCheckout)
+            builder.setPositiveButton("Close session", (dialog, which) -> mViewModel.putSessionCheckout());
+        else
+            builder.setPositiveButton("Notify waiter", ((dialogInterface, i) -> mViewModel.requestSessionCheckout()));
+        if (!isPromoApplied && !isRequestedCheckout)
             builder.setNeutralButton("Notify waiter", ((dialogInterface, i) -> mViewModel.requestSessionCheckout()));
-        }
         builder.show();
     }
 
@@ -308,6 +311,8 @@ public class ManagerSessionInvoiceActivity extends AppCompatActivity implements 
         edInvoiceDiscount.setText(data.formatDiscountPercent());
         mBillHolder.bind(data.getBill());
         tvInvoiceTotal.setText(Utils.formatCurrencyAmount(this, data.getBill().getTotal()));
+
+        isPromoApplied = data.getBill().getPromo() != null;
 
         setUpUi("Discount", false, R.drawable.bordered_text_light_grey, View.VISIBLE, View.GONE);
     }

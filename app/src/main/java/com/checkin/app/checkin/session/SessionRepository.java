@@ -29,7 +29,7 @@ public class SessionRepository extends BaseRepository {
     private final WebApiService mWebService;
 
     private SessionRepository(Context context) {
-        mWebService = ApiClient.getApiService(context);
+        mWebService = ApiClient.Companion.getApiService(context);
     }
 
     public static SessionRepository getInstance(Application application) {

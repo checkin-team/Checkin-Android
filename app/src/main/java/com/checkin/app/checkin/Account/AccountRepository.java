@@ -3,6 +3,9 @@ package com.checkin.app.checkin.Account;
 import android.app.Application;
 import android.content.Context;
 
+import androidx.annotation.NonNull;
+import androidx.lifecycle.LiveData;
+
 import com.checkin.app.checkin.Data.ApiClient;
 import com.checkin.app.checkin.Data.ApiResponse;
 import com.checkin.app.checkin.Data.BaseRepository;
@@ -13,15 +16,12 @@ import com.checkin.app.checkin.Data.WebApiService;
 
 import java.util.List;
 
-import androidx.annotation.NonNull;
-import androidx.lifecycle.LiveData;
-
 public class AccountRepository extends BaseRepository {
     private static AccountRepository INSTANCE;
     private WebApiService mWebService;
 
     private AccountRepository(Context context) {
-        mWebService = ApiClient.getApiService(context);
+        mWebService = ApiClient.Companion.getApiService(context);
     }
 
     public static AccountRepository getInstance(Application application) {

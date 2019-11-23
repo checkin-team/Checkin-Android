@@ -21,7 +21,7 @@ public abstract class PhoneAuth extends PhoneAuthProvider.OnVerificationStateCha
     public void verifyPhoneNo(String phoneNo, Activity activity) {
         mPhoneAuthProvider.verifyPhoneNumber(
                 phoneNo,
-                Constants.DEFAULT_OTP_AUTO_RETRIEVAL_TIMEOUT,
+                Constants.INSTANCE.getDEFAULT_OTP_AUTO_RETRIEVAL_TIMEOUT(),
                 TimeUnit.MILLISECONDS,
                 activity,
                 this);

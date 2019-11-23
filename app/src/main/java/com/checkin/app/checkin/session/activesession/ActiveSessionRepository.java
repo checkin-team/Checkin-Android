@@ -35,7 +35,7 @@ public class ActiveSessionRepository extends BaseRepository {
     private final WebApiService mWebService;
 
     private ActiveSessionRepository(Context context) {
-        mWebService = ApiClient.getApiService(context);
+        mWebService = ApiClient.Companion.getApiService(context);
     }
 
     public static ActiveSessionRepository getInstance(Application application) {

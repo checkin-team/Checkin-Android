@@ -2,11 +2,13 @@ package com.checkin.app.checkin.Misc.paytm;
 
 import android.text.TextUtils;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.paytm.pgsdk.PaytmOrder;
 
 import java.util.HashMap;
 
+@JsonIgnoreProperties(ignoreUnknown = true)
 public class PaytmModel {
 
     @JsonProperty("merchant_id")

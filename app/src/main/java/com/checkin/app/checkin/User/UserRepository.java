@@ -3,6 +3,9 @@ package com.checkin.app.checkin.User;
 import android.app.Application;
 import android.content.Context;
 
+import androidx.annotation.NonNull;
+import androidx.lifecycle.LiveData;
+
 import com.checkin.app.checkin.Data.ApiClient;
 import com.checkin.app.checkin.Data.ApiResponse;
 import com.checkin.app.checkin.Data.BaseRepository;
@@ -17,8 +20,6 @@ import com.fasterxml.jackson.databind.node.ObjectNode;
 import java.io.File;
 import java.util.List;
 
-import androidx.annotation.NonNull;
-import androidx.lifecycle.LiveData;
 import okhttp3.MediaType;
 import okhttp3.MultipartBody;
 import okhttp3.RequestBody;
@@ -29,7 +30,7 @@ public class UserRepository extends BaseRepository {
     private final WebApiService mWebService;
 
     private UserRepository(Context context) {
-        mWebService = ApiClient.getApiService(context);
+        mWebService = ApiClient.Companion.getApiService(context);
     }
 
     public static UserRepository getInstance(Application application) {

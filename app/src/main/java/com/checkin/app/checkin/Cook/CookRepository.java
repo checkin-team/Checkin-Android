@@ -26,7 +26,7 @@ public class CookRepository extends BaseRepository {
     private final WebApiService mWebService;
 
     private CookRepository(Context context) {
-        mWebService = ApiClient.getApiService(context);
+        mWebService = ApiClient.Companion.getApiService(context);
     }
 
     public static CookRepository getInstance(Application application) {

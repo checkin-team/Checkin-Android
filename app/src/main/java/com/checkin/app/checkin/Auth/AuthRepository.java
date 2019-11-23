@@ -3,6 +3,9 @@ package com.checkin.app.checkin.Auth;
 import android.app.Application;
 import android.content.Context;
 
+import androidx.annotation.NonNull;
+import androidx.lifecycle.LiveData;
+
 import com.checkin.app.checkin.Data.ApiClient;
 import com.checkin.app.checkin.Data.ApiResponse;
 import com.checkin.app.checkin.Data.BaseRepository;
@@ -15,8 +18,6 @@ import com.fasterxml.jackson.databind.node.ObjectNode;
 
 import javax.inject.Singleton;
 
-import androidx.annotation.NonNull;
-import androidx.lifecycle.LiveData;
 import retrofit2.Call;
 
 @Singleton
@@ -25,7 +26,7 @@ public class AuthRepository extends BaseRepository {
     private final WebApiService mWebService;
 
     private AuthRepository(Context context) {
-        mWebService = ApiClient.getApiService(context);
+        mWebService = ApiClient.Companion.getApiService(context);
     }
 
     public static AuthRepository getInstance(Application application) {

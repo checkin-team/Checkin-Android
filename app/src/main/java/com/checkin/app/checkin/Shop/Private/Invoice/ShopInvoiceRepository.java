@@ -20,7 +20,7 @@ public class ShopInvoiceRepository {
     private final WebApiService mWebService;
 
     public ShopInvoiceRepository(Context context) {
-        mWebService = ApiClient.getApiService(context);
+        mWebService = ApiClient.Companion.getApiService(context);
     }
 
     public static ShopInvoiceRepository getInstance(Application application) {

@@ -33,7 +33,7 @@ public class MenuRepository {
     private WebApiService mWebService;
 
     private MenuRepository(Context context) {
-        mWebService = ApiClient.getApiService(context);
+        mWebService = ApiClient.Companion.getApiService(context);
         mMenuBox = AppDatabase.getMenuModel(context);
     }
 

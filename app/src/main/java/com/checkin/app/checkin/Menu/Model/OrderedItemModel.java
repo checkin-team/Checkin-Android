@@ -143,7 +143,7 @@ public class OrderedItemModel implements Cloneable {
     }
 
     public long getRemainingCancelTime() {
-        return Constants.DEFAULT_ORDER_CANCEL_DURATION - ((new Date()).getTime() - ordered.getTime());
+        return Constants.INSTANCE.getDEFAULT_ORDER_CANCEL_DURATION() - ((new Date()).getTime() - ordered.getTime());
     }
 
     public long getPk() {

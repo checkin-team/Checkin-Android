@@ -454,7 +454,7 @@ public class ActiveSessionActivity extends BaseActivity implements
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
             ActivityOptionsCompat options = ActivityOptionsCompat.
-                    makeSceneTransitionAnimation(this, (View) containerChatActions, "chatActions");
+                    makeSceneTransitionAnimation(this, containerChatActions, "chatActions");
             startActivity(myIntent, options.toBundle());
         } else {
             startActivity(myIntent);

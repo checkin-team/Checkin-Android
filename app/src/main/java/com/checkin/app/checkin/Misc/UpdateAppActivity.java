@@ -21,7 +21,7 @@ public class UpdateAppActivity extends AppCompatActivity {
                 .setMessage(R.string.app_old_version_dialog_message)
                 .setPositiveButton("Ok", (dialogInterface, i) -> {
                     dialogInterface.dismiss();
-                    startActivity(new Intent(Intent.ACTION_VIEW, Constants.PLAY_STORE_URI));
+                    startActivity(new Intent(Intent.ACTION_VIEW, Constants.INSTANCE.getPLAY_STORE_URI()));
                     finish();
                 })
                 .setNegativeButton("Cancel", ((dialogInterface, i) -> {

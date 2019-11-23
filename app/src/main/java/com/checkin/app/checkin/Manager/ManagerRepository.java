@@ -25,7 +25,7 @@ public class ManagerRepository extends BaseRepository {
     private final WebApiService mWebService;
 
     private ManagerRepository(Context context) {
-        mWebService = ApiClient.getApiService(context);
+        mWebService = ApiClient.Companion.getApiService(context);
     }
 
     public static ManagerRepository getInstance(Application application) {

@@ -104,7 +104,7 @@ public class SuccessfulTransactionActivity extends BaseActivity {
 
     @OnClick(R.id.tv_se_rate_checkin)
     public void onClickRateCheckin() {
-        startActivity(new Intent(Intent.ACTION_VIEW, Constants.PLAY_STORE_URI));
+        startActivity(new Intent(Intent.ACTION_VIEW, Constants.INSTANCE.getPLAY_STORE_URI()));
     }
 
     @Override

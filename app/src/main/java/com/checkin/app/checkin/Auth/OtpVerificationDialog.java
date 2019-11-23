@@ -11,6 +11,9 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AlertDialog;
+
 import com.checkin.app.checkin.R;
 import com.checkin.app.checkin.Utility.Constants;
 import com.checkin.app.checkin.Utility.Utils;
@@ -19,8 +22,6 @@ import com.google.firebase.FirebaseNetworkException;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.PhoneAuthCredential;
 
-import androidx.annotation.NonNull;
-import androidx.appcompat.app.AlertDialog;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
@@ -136,7 +137,7 @@ public class OtpVerificationDialog extends AlertDialog {
 
     public void verifyPhoneNumber(String phone) {
         mPhoneNo = phone;
-        setOtpTimeout(Constants.DEFAULT_OTP_AUTO_RETRIEVAL_TIMEOUT);
+        setOtpTimeout(Constants.INSTANCE.getDEFAULT_OTP_AUTO_RETRIEVAL_TIMEOUT());
         mPhoneAuth.verifyPhoneNo(phone, mActivity);
     }
 

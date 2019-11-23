@@ -1,12 +1,14 @@
 package com.checkin.app.checkin.Misc;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 
 import java.io.File;
 import java.util.Locale;
 
+@JsonIgnoreProperties(ignoreUnknown = true)
 public class GenericDetailModel {
     @JsonProperty("pk")
     private String pk;

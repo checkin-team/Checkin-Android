@@ -3,6 +3,9 @@ package com.checkin.app.checkin.Waiter;
 import android.app.Application;
 import android.content.Context;
 
+import androidx.annotation.NonNull;
+import androidx.lifecycle.LiveData;
+
 import com.checkin.app.checkin.Data.ApiClient;
 import com.checkin.app.checkin.Data.ApiResponse;
 import com.checkin.app.checkin.Data.BaseRepository;
@@ -11,20 +14,17 @@ import com.checkin.app.checkin.Data.Resource;
 import com.checkin.app.checkin.Data.RetrofitLiveData;
 import com.checkin.app.checkin.Data.WebApiService;
 import com.checkin.app.checkin.Misc.GenericDetailModel;
-import com.checkin.app.checkin.session.model.CheckoutStatusModel;
-import com.checkin.app.checkin.session.model.QRResultModel;
-import com.checkin.app.checkin.session.model.RestaurantTableModel;
 import com.checkin.app.checkin.Waiter.Model.OrderStatusModel;
 import com.checkin.app.checkin.Waiter.Model.SessionContactModel;
 import com.checkin.app.checkin.Waiter.Model.WaiterEventModel;
 import com.checkin.app.checkin.Waiter.Model.WaiterStatsModel;
 import com.checkin.app.checkin.Waiter.Model.WaiterTableModel;
+import com.checkin.app.checkin.session.model.CheckoutStatusModel;
+import com.checkin.app.checkin.session.model.QRResultModel;
+import com.checkin.app.checkin.session.model.RestaurantTableModel;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 
 import java.util.List;
-
-import androidx.annotation.NonNull;
-import androidx.lifecycle.LiveData;
 
 /**
  * Created by Shivansh Saini on 24/01/2019.
@@ -35,7 +35,7 @@ public class WaiterRepository extends BaseRepository {
     private final WebApiService mWebService;
 
     private WaiterRepository(Context context) {
-        mWebService = ApiClient.getApiService(context);
+        mWebService = ApiClient.Companion.getApiService(context);
     }
 
     public static WaiterRepository getInstance(Application application) {

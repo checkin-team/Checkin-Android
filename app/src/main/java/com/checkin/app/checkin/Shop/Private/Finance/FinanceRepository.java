@@ -3,6 +3,9 @@ package com.checkin.app.checkin.Shop.Private.Finance;
 import android.app.Application;
 import android.content.Context;
 
+import androidx.annotation.NonNull;
+import androidx.lifecycle.LiveData;
+
 import com.checkin.app.checkin.Data.ApiClient;
 import com.checkin.app.checkin.Data.ApiResponse;
 import com.checkin.app.checkin.Data.NetworkBoundResource;
@@ -11,16 +14,13 @@ import com.checkin.app.checkin.Data.RetrofitLiveData;
 import com.checkin.app.checkin.Data.WebApiService;
 import com.checkin.app.checkin.Misc.GenericDetailModel;
 
-import androidx.annotation.NonNull;
-import androidx.lifecycle.LiveData;
-
 public class FinanceRepository {
 
     private static FinanceRepository INSTANCE;
     private final WebApiService mWebService;
 
     public FinanceRepository(Context context) {
-        mWebService = ApiClient.getApiService(context);
+        mWebService = ApiClient.Companion.getApiService(context);
     }
 
     public static FinanceRepository getInstance(Application application) {

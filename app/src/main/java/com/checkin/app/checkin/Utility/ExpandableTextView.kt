@@ -3,18 +3,17 @@ package com.checkin.app.checkin.Utility
 import android.annotation.SuppressLint
 import android.content.Context
 import android.graphics.Color
-import android.text.*
+import android.text.Spannable
+import android.text.SpannableString
+import android.text.SpannableStringBuilder
+import android.text.TextPaint
 import android.text.style.ClickableSpan
+import android.text.style.ForegroundColorSpan
 import android.util.AttributeSet
 import android.view.View
 import android.view.ViewTreeObserver
 import android.widget.TextView
-import androidx.core.content.ContextCompat
 import com.checkin.app.checkin.R
-import java.lang.StringBuilder
-import com.checkin.app.checkin.Utility.TextLineWrapper.makeTextViewResizable
-import com.checkin.app.checkin.Utility.TextLineWrapper.MySpannable
-import android.text.style.ForegroundColorSpan
 
 
 class ExpandableTextView @JvmOverloads constructor(context: Context, attrs: AttributeSet? = null) : TextView(context, attrs) {

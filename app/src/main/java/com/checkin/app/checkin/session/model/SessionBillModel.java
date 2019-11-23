@@ -87,8 +87,12 @@ public class SessionBillModel {
         return total;
     }
 
-    public String getPromo() {
+    public String formatPromo() {
         return "Promo - (" + promo + ")";
+    }
+
+    public String getPromo() {
+        return promo;
     }
 
     public void setPromo(String promo) {
@@ -140,6 +144,6 @@ public class SessionBillModel {
             this.total -= this.discount;
         if (this.offers != null)
             this.total -= this.offers;
-        this.total = (double) Math.round(this.total);
+        this.total = Math.max(0d, (double) Math.round(this.total));
     }
 }

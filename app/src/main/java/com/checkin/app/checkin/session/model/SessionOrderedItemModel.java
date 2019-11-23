@@ -2,9 +2,9 @@ package com.checkin.app.checkin.session.model;
 
 import com.checkin.app.checkin.Menu.Model.ItemCustomizationGroupModel;
 import com.checkin.app.checkin.Menu.Model.MenuItemModel;
-import com.checkin.app.checkin.session.activesession.chat.SessionChatModel.CHAT_STATUS_TYPE;
 import com.checkin.app.checkin.Utility.Constants;
 import com.checkin.app.checkin.Utility.Utils;
+import com.checkin.app.checkin.session.activesession.chat.SessionChatModel.CHAT_STATUS_TYPE;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
@@ -131,7 +131,7 @@ public class SessionOrderedItemModel implements Serializable {
     }
 
     public long getRemainingCancelTime() {
-        return Constants.DEFAULT_ORDER_CANCEL_DURATION - ((new Date()).getTime() - ordered.getTime());
+        return Constants.INSTANCE.getDEFAULT_ORDER_CANCEL_DURATION() - ((new Date()).getTime() - ordered.getTime());
     }
 
     public boolean canCancel() {

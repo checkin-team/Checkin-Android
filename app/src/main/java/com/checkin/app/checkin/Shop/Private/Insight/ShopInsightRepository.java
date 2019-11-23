@@ -23,7 +23,7 @@ public class ShopInsightRepository extends BaseRepository {
     private final WebApiService mWebService;
 
     private ShopInsightRepository(Context context) {
-        mWebService = ApiClient.getApiService(context);
+        mWebService = ApiClient.Companion.getApiService(context);
     }
 
     public static ShopInsightRepository getInstance(Application application) {

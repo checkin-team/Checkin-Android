@@ -52,7 +52,7 @@ public class BillHolder {
             containerInvoiceTax.setVisibility(View.GONE);
         // Promo
         if (bill.getOffers() != null) {
-            tvInvoicePromoCode.setText(bill.getPromo());
+            tvInvoicePromoCode.setText(bill.formatPromo());
             tvInvoicePromo.setText("- "+Utils.formatCurrencyAmount(mContext, bill.getOffers()));
             containerInvoicePromo.setVisibility(View.VISIBLE);
         } else

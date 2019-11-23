@@ -1,14 +1,16 @@
 package com.checkin.app.checkin.session.activesession.chat;
 
+import androidx.annotation.DrawableRes;
+import androidx.annotation.Nullable;
+
 import com.checkin.app.checkin.R;
 import com.checkin.app.checkin.session.activesession.chat.SessionChatDataModel.EVENT_CONCERN_TYPE;
 import com.checkin.app.checkin.session.activesession.chat.SessionChatDataModel.EVENT_REQUEST_SERVICE_TYPE;
 import com.checkin.app.checkin.session.activesession.chat.SessionChatModel.CHAT_EVENT_TYPE;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
-import androidx.annotation.DrawableRes;
-import androidx.annotation.Nullable;
-
+@JsonIgnoreProperties(ignoreUnknown = true)
 public class SessionEventBasicModel {
     @JsonProperty("pk")
     private int pk;
