@@ -1,4 +1,4 @@
-# Check-Out! [![Build Status](https://travis-ci.com/checkin-team/Checkin-Android.svg?branch=master)](https://travis-ci.com/checkin-team/Checkin-Android) [![Codacy Badge](https://api.codacy.com/project/badge/Grade/dc1f262bc68c4573b3cc0accc971a55f)](https://app.codacy.com/app/checkin-team/Checkin-Android?utm_source=github.com&utm_medium=referral&utm_content=checkin-team/Checkin-Android&utm_campaign=Badge_Grade_Dashboard)
+# Check-Out! [![Build Status](https://travis-ci.com/checkin-team/Checkin-Android.svg?branch=master)](https://travis-ci.com/checkin-team/Checkin-Android) [![Codacy Badge](https://api.codacy.com/project/badge/Grade/46257519d67a479fb4d8d9b8fdba7f2a)](https://www.codacy.com/gh/checkin-team/Checkin-Android?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=checkin-team/Checkin-Android&amp;utm_campaign=Badge_Grade)
 A budding startup project, named **Check-Out**! This repository contains the android project.
 
 ## Things to do before starting:
