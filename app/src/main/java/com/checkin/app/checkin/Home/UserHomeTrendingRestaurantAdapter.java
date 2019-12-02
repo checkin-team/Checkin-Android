@@ -8,7 +8,7 @@ import android.widget.ImageView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.checkin.app.checkin.Home.Model.TrendingRestaurantsModel;
+import com.checkin.app.checkin.Home.model.TrendingRestaurantsModel;
 import com.checkin.app.checkin.R;
 
 import java.util.List;
@@ -20,7 +20,6 @@ public class UserHomeTrendingRestaurantAdapter extends RecyclerView.Adapter<User
     private List<TrendingRestaurantsModel> mTrendingRest;
 
     public UserHomeTrendingRestaurantAdapter() {
-
     }
 
     public void setData(List<TrendingRestaurantsModel> data) {
@@ -52,14 +51,13 @@ public class UserHomeTrendingRestaurantAdapter extends RecyclerView.Adapter<User
 
 
     public class ViewHolder extends RecyclerView.ViewHolder {
-        @BindView(R.id.im_as_trending_dish)
+        @BindView(R.id.im_home_trending_rest)
         ImageView imDish;
         private TrendingRestaurantsModel mItemModel;
 
         ViewHolder(View itemView) {
             super(itemView);
             ButterKnife.bind(this, itemView);
-
         }
 
         void bindData(TrendingRestaurantsModel itemModel) {

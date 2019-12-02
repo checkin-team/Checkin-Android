@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <androidx.viewpager.widget.ViewPager
+        android:id="@+id/vp_home_banner"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <com.rd.PageIndicatorView
+        android:id="@+id/indicator_home_banner"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom|center"
+        android:layout_marginBottom="@dimen/spacing_small"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:piv_animationType="scale"
+        app:piv_dynamicCount="true"
+        app:piv_interactiveAnimation="true"
+        app:piv_radius="@dimen/spacing_extra_tiny"
+        app:piv_selectedColor="@color/brownish_grey"
+        app:piv_unselectedColor="@color/white" />
+
+</LinearLayout>

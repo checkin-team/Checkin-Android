@@ -12,7 +12,6 @@
         app:cardCornerRadius="@dimen/card_corner_radius"
         app:cardElevation="0dp">
 
-
         <ImageView
             android:id="@+id/im_home_trending_rest"
             android:layout_width="match_parent"
@@ -20,7 +19,6 @@
             android:padding="1dp"
             android:scaleType="centerCrop"
             android:src="@drawable/shahi_paneer" />
-
 
         <TextView
             style="@style/WhiteSmallTextStyle"

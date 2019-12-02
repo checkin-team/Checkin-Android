@@ -432,6 +432,7 @@
         android:layout_height="0dp"
         android:layout_marginTop="@dimen/spacing_small"
         android:layout_marginBottom="@dimen/spacing_small"
+        android:visibility="gone"
         android:background="@drawable/background_lightest_grey_stroke"
         android:elevation="@dimen/spacing_elevation_fix_extreme_tiny"
         app:layout_constraintBottom_toTopOf="@id/container_third_home"
@@ -599,111 +600,15 @@
         android:layout_height="0dp"
         app:cardCornerRadius="@dimen/card_corner_radius_small"
         app:cardElevation="@dimen/spacing_elevation_fix_extreme_tiny"
-        app:layout_constraintBottom_toTopOf="@id/container_fourth_home"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/container_second_home"
         app:layout_constraintVertical_weight="0.35">
 
-
-        <androidx.viewpager.widget.ViewPager
-            android:id="@+id/vp_home_banner"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
-
-        <com.rd.PageIndicatorView
-            android:id="@+id/indicator_home_banner"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="bottom|center"
-            android:layout_marginBottom="@dimen/spacing_small"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:piv_animationType="scale"
-            app:piv_dynamicCount="true"
-            app:piv_interactiveAnimation="true"
-            app:piv_radius="@dimen/spacing_extra_tiny"
-            app:piv_selectedColor="@color/brownish_grey"
-            app:piv_unselectedColor="@color/white" />
+        <!--        RecyclerView HERE-->
 
     </androidx.cardview.widget.CardView>
-
-
-    <androidx.constraintlayout.widget.ConstraintLayout
-        android:id="@+id/container_fourth_home"
-        android:layout_width="0dp"
-        android:layout_height="0dp"
-        android:layout_marginTop="@dimen/spacing_extra_small"
-        android:layout_marginBottom="@dimen/spacing_extra_tiny"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/container_third_home"
-        app:layout_constraintVertical_weight="0.38">
-
-        <ImageView
-            android:id="@+id/im_community_friends"
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_gravity="top"
-            android:src="@drawable/ic_friends"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toStartOf="@id/tv_home_community"
-            app:layout_constraintHorizontal_bias="0.5"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
-
-        <TextView
-            android:id="@+id/tv_home_community"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:fontFamily="@font/josefinsans_bold"
-            android:text="Building a\nCommunity"
-            android:textColor="@color/light_pink"
-            android:textSize="@dimen/font_larger"
-            android:layout_marginStart="@dimen/spacing_extra_small"
-            app:layout_constraintBottom_toTopOf="@+id/tv_home_join_us"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.5"
-            app:layout_constraintStart_toEndOf="@id/im_community_friends"
-            app:layout_constraintTop_toTopOf="parent" />
-
-        <LinearLayout
-            android:id="@+id/tv_home_join_us"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="@dimen/spacing_extra_small"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintHorizontal_bias="0.5"
-            app:layout_constraintStart_toEndOf="@id/im_community_friends"
-            app:layout_constraintTop_toBottomOf="@+id/tv_home_community">
-
-
-            <TextView
-                style="@style/GreySmallTextStyle"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="Join us!\nSet up\nyour profile"
-                android:layout_marginEnd="@dimen/spacing_tiny" />
-
-            <ImageView
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:layout_gravity="end"
-                android:src="@drawable/ic_join_community" />
-
-
-        </LinearLayout>
-
-
-    </androidx.constraintlayout.widget.ConstraintLayout>
-
 
 </androidx.constraintlayout.widget.ConstraintLayout>
 

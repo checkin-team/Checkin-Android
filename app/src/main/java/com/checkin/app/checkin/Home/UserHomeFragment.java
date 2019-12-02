@@ -10,6 +10,7 @@ import android.widget.ImageView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.lifecycle.ViewModelProviders;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.viewpager.widget.PagerAdapter;
@@ -36,6 +37,10 @@ public class UserHomeFragment extends BaseFragment {
     private UserHomeTrendingRestaurantAdapter mTrendingRestAdapter;
     private BannerPagerAdapter mPagerAdapter;
 
+    private NearbyRestaurantAdapter mRestAdapter;
+
+    private HomeViewModel mViewModel;
+
     public UserHomeFragment() {
     }
 
@@ -60,8 +65,11 @@ public class UserHomeFragment extends BaseFragment {
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
-        super.onViewCreated(view, savedInstanceState);
+        mViewModel = ViewModelProviders.of(requireActivity()).get(HomeViewModel.class);
+
         ((HomeActivity) Objects.requireNonNull(getActivity())).enableDisableSwipeRefresh(true);
+
+        mRestAdapter = new NearbyRestaurantAdapter();
 
         mPagerAdapter = new BannerPagerAdapter(requireActivity());
         vpBanner.setAdapter(mPagerAdapter);
@@ -98,6 +106,10 @@ public class UserHomeFragment extends BaseFragment {
             }
         });
 
+        mViewModel.getNearbyRestaurantData().observe(this, listResource -> {
+            if (listResource == null) return;
+        });
+
     }
 
     public void enableDisableSwipeRefresh(boolean enable) {
@@ -105,7 +117,6 @@ public class UserHomeFragment extends BaseFragment {
     }
 
     class BannerPagerAdapter extends PagerAdapter {
-
         int[] mResources = {R.drawable.first_banner, R.drawable.second_banner, R.drawable.third_banner};
 
         Context mContext;
@@ -134,7 +145,6 @@ public class UserHomeFragment extends BaseFragment {
             container.addView(itemView);
 
             return itemView;
-
         }
 
         @Override
