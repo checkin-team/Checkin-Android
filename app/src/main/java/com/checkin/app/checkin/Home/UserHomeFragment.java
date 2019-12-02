@@ -7,24 +7,22 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
-
-import com.checkin.app.checkin.Misc.BaseFragment;
-import com.checkin.app.checkin.R;
-import com.checkin.app.checkin.session.activesession.ActiveSessionMemberAdapter;
-import com.rd.PageIndicatorView;
-import com.rd.animation.type.AnimationType;
-
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Objects;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.lifecycle.ViewModelProviders;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.viewpager.widget.PagerAdapter;
 import androidx.viewpager.widget.ViewPager;
+
+import com.checkin.app.checkin.Misc.BaseFragment;
+import com.checkin.app.checkin.R;
+import com.rd.PageIndicatorView;
+import com.rd.animation.type.AnimationType;
+
+import java.util.Objects;
+
 import butterknife.BindView;
 import butterknife.OnClick;
 
@@ -39,6 +37,10 @@ public class UserHomeFragment extends BaseFragment {
     private UserHomeTrendingRestaurantAdapter mTrendingRestAdapter;
     private BannerPagerAdapter mPagerAdapter;
 
+    private NearbyRestaurantAdapter mRestAdapter;
+
+    private HomeViewModel mViewModel;
+
     public UserHomeFragment() {
     }
 
@@ -52,19 +54,22 @@ public class UserHomeFragment extends BaseFragment {
     }
 
     @OnClick(R.id.container_home_brownie_cash)
-    public void brownieClick(){
-        startActivity(new Intent(requireActivity(),UserBrownieCashActivity.class));
+    public void brownieClick() {
+        startActivity(new Intent(requireActivity(), UserBrownieCashActivity.class));
     }
 
     @OnClick(R.id.container_home_claim_rewards)
-    public void claimRewardsClick(){
-        startActivity(new Intent(requireActivity(),UserClaimRewardsActivity.class));
+    public void claimRewardsClick() {
+        startActivity(new Intent(requireActivity(), UserClaimRewardsActivity.class));
     }
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
-        super.onViewCreated(view, savedInstanceState);
+        mViewModel = ViewModelProviders.of(requireActivity()).get(HomeViewModel.class);
+
         ((HomeActivity) Objects.requireNonNull(getActivity())).enableDisableSwipeRefresh(true);
+
+        mRestAdapter = new NearbyRestaurantAdapter();
 
         mPagerAdapter = new BannerPagerAdapter(requireActivity());
         vpBanner.setAdapter(mPagerAdapter);
@@ -101,14 +106,17 @@ public class UserHomeFragment extends BaseFragment {
             }
         });
 
+        mViewModel.getNearbyRestaurantData().observe(this, listResource -> {
+            if (listResource == null) return;
+        });
+
     }
 
     public void enableDisableSwipeRefresh(boolean enable) {
-            ((HomeActivity) Objects.requireNonNull(getActivity())).enableDisableSwipeRefresh(enable);
+        ((HomeActivity) Objects.requireNonNull(getActivity())).enableDisableSwipeRefresh(enable);
     }
 
     class BannerPagerAdapter extends PagerAdapter {
-
         int[] mResources = {R.drawable.first_banner, R.drawable.second_banner, R.drawable.third_banner};
 
         Context mContext;
@@ -137,7 +145,6 @@ public class UserHomeFragment extends BaseFragment {
             container.addView(itemView);
 
             return itemView;
-
         }
 
         @Override
