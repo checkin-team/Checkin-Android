@@ -7,7 +7,6 @@
         <item name="colorAccent">@color/colorAccent</item>
         <item name="actionBarStyle">@style/AppTheme.AppBarOverlay</item>
         <item name="android:fontFamily">@font/arial_rounded_mt_bold</item>
-        <item name="fontFamily">@font/arial_rounded_mt_bold</item>
     </style>
 
     <style name="MyCheckBox" parent="Theme.AppCompat.Light">
@@ -206,6 +205,16 @@
         <item name="android:textSize">@dimen/font_small</item>
     </style>
 
+    <style name="WhiteJosefinSansRegularText" parent="TextAppearance.AppCompat">
+        <item name="android:textColor">@color/white</item>
+        <item name="android:fontFamily">@font/josefinsans_regular</item>
+        <item name="android:textSize">@dimen/font_normal</item>
+    </style>
+
+    <style name="WhiteJosefinSansRegularSmallText" parent="WhiteJosefinSansRegularText">
+        <item name="android:textSize">@dimen/font_small</item>
+    </style>
+
     <style name="GreyTextStyle" parent="TextAppearance.AppCompat">
         <item name="android:textColor">@color/brownish_grey</item>
         <item name="android:fontFamily">@font/arial_rounded_mt_bold</item>
@@ -230,6 +239,16 @@
 
     <style name="RougeProgressBar" parent="Widget.AppCompat.ProgressBar.Horizontal">
         <item name="android:height">10dp</item>
+    </style>
+
+    <style name="AquaBlueTextStyle" parent="TextAppearance.AppCompat">
+        <item name="android:textColor">@color/aqua_blue</item>
+        <item name="android:fontFamily">@font/arial_rounded_mt_bold</item>
+        <item name="android:textSize">@dimen/font_normal</item>
+    </style>
+
+    <style name="AquaBlueSmallTextStyle" parent="AquaBlueTextStyle">
+        <item name="android:textSize">@dimen/font_small</item>
     </style>
 
     <!--<style name="WhiteCardStyle" parent="CardView">

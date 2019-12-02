@@ -28,6 +28,9 @@ public class SessionBillModel {
     @JsonProperty("promo")
     private String promo;
 
+    @JsonProperty("brownie_cash")
+    private Double brownie;
+
     private Double discountPercentage;
 
     public SessionBillModel() {
@@ -97,6 +100,14 @@ public class SessionBillModel {
 
     public void setPromo(String promo) {
         this.promo = promo;
+    }
+
+    public Double getBrownie() {
+        return brownie;
+    }
+
+    public void setBrownie(Double brownie) {
+        this.brownie = brownie;
     }
 
     public void calculateDiscount(Double value, boolean isINR) {

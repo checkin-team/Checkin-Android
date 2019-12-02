@@ -3,18 +3,17 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_gravity="center"
     android:clickable="true"
     android:focusable="true"
-    android:layout_marginTop="@dimen/spacing_tiny"
     android:orientation="vertical">
 
     <de.hdodenhof.circleimageview.CircleImageView
         android:id="@+id/iv_bnav_icon"
-        android:layout_width="@dimen/size_small_icon"
-        android:layout_height="@dimen/size_small_icon"
+        android:layout_width="@dimen/buttom_bar_small_icon"
+        android:layout_height="@dimen/buttom_bar_small_icon"
         android:layout_gravity="center"
         android:scaleType="centerCrop"
+        android:layout_marginTop="@dimen/spacing_tiny"
         tools:src="@drawable/cover_unknown_male" />
 
     <TextView
@@ -23,7 +22,7 @@
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"
         android:layout_marginTop="@dimen/spacing_tiny"
-        android:layout_marginBottom="@dimen/spacing_tiny"
+        android:layout_marginBottom="@dimen/spacing_extra_tiny"
         android:textColor="@drawable/selector_tab_color"
         android:textSize="@dimen/font_small"
         tools:text="Option" />

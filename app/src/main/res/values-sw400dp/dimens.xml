@@ -187,4 +187,21 @@
     <dimen name="width_insight_discount_icon">23dp</dimen>
     <dimen name="height_floating_cash_card">140dp</dimen>
 
+    <!--Home -->
+    <dimen name="width_checkin_logo_icon">28dp</dimen>
+    <dimen name="height_checkin_logo_icon">36dp</dimen>
+    <dimen name="width_trending_rest">150dp</dimen>
+    <dimen name="height_trending_rest">140dp</dimen>
+    <dimen name="size_qr_scanner">20dp</dimen>
+    <dimen name="height_home_bottom_tab">52dp</dimen>
+    <dimen name="spacing_home_bottom">68dp</dimen>
+
+    <!--Bottom Bar -->
+    <dimen name="buttom_bar_small_width">26dp</dimen>
+    <dimen name="buttom_bar_small_icon">30dp</dimen>
+
+    <!--Location-->
+    <dimen name="width_current_location">160dp</dimen>
+    <dimen name="height_current_location">150dp</dimen>
+
 </resources>

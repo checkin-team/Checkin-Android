@@ -1,137 +1,211 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <LinearLayout
+    <FrameLayout
+        android:id="@+id/container_user_private_top"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="vertical">
+        android:layout_height="0dp"
+        android:orientation="vertical"
+        app:layout_constraintBottom_toTopOf="@id/guideline_below"
+        app:layout_constraintTop_toTopOf="parent">
 
-        <FrameLayout
-            android:id="@+id/container_user_private_top"
+        <include
+            android:id="@+id/shimmer_user_private_cover"
+            layout="@layout/shimmer_cover_image" />
+
+        <ImageView
+            android:id="@+id/im_user_private_cover"
             android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_weight="0.55"
-            android:orientation="vertical">
+            android:layout_height="match_parent"
+            android:scaleType="centerCrop"
+            tools:src="@drawable/cover_unknown_male" />
 
-            <include
-                android:id="@+id/shimmer_user_private_cover"
-                layout="@layout/shimmer_cover_image"/>
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/height_shadow_top_cover"
+            android:scaleType="fitXY"
+            android:src="@drawable/shadow_top"
+            app:layout_constraintTop_toTopOf="parent" />
 
-            <ImageView
-                android:id="@+id/im_user_private_cover"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:scaleType="centerCrop"
-                tools:src="@drawable/cover_unknown_male" />
+        <ImageView
+            android:id="@+id/btn_user_private_add_logo"
+            android:layout_width="@dimen/size_small_button"
+            android:layout_height="@dimen/size_small_button"
+            android:layout_gravity="end|top"
+            android:layout_marginTop="@dimen/spacing_normal"
+            android:layout_marginEnd="@dimen/spacing_small"
+            android:contentDescription="@null"
+            android:src="@drawable/ic_add_picture" />
 
-            <ImageView
-                android:layout_width="match_parent"
-                android:layout_height="@dimen/height_shadow_top_cover"
-                android:scaleType="fitXY"
-                android:src="@drawable/shadow_top"
-                app:layout_constraintTop_toTopOf="parent" />
+    </FrameLayout>
 
-            <ImageView
-                android:id="@+id/btn_user_private_add_logo"
-                android:layout_width="@dimen/size_small_button"
-                android:layout_height="@dimen/size_small_button"
-                android:layout_gravity="end|top"
-                android:layout_marginTop="@dimen/spacing_normal"
-                android:layout_marginEnd="@dimen/spacing_small"
-                android:contentDescription="@null"
-                android:src="@drawable/ic_add_picture" />
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guideline_above1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_percent="0.66"
+        app:layout_constraintTop_toTopOf="parent" />
 
-        </FrameLayout>
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guideline_above"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_percent="0.70"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guideline_below"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_percent="0.73"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <FrameLayout
+        android:id="@+id/container_user_info"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:background="@drawable/curved_white_shape"
+        android:orientation="vertical"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/guideline_above"
+        android:visibility="visible">
 
         <LinearLayout
+            android:id="@+id/container_user_info_extended"
             android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_weight="0.45"
+            android:layout_height="match_parent"
+            android:layout_marginStart="@dimen/spacing_small"
+            android:layout_marginEnd="@dimen/spacing_small"
             android:orientation="vertical">
 
             <RelativeLayout
+                android:id="@+id/container_header"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="@dimen/spacing_large"
-                android:layout_marginTop="@dimen/spacing_extra_large"
-                android:layout_marginEnd="@dimen/spacing_large"
-                android:layout_marginBottom="@dimen/spacing_normal">
+                android:layout_marginTop="@dimen/spacing_large"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent">
 
                 <TextView
                     android:id="@+id/tv_user_private_display_name"
-                    style="@style/GreyHeadingStyle"
+                    style="@style/GreyTitleStyle"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_alignParentStart="true"
-                    android:layout_centerVertical="true"
-                    tools:text="@tools:sample/full_names" />
+                    android:textColor="@color/brownish_grey"
+                    tools:text="Alex Norris"
+                    android:textSize="@dimen/font_heading" />
 
                 <TextView
                     android:id="@+id/tv_user_private_locality"
-                    style="@style/PinkishGreySmallTextStyle"
-                    android:layout_width="0dp"
+                    style="@style/AquaBlueSmallTextStyle"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_below="@id/tv_user_private_display_name"
                     android:layout_alignStart="@id/tv_user_private_display_name"
                     android:layout_alignEnd="@id/tv_user_private_display_name"
-                    android:textAlignment="center"
-                    android:visibility="gone"
-                    tools:text="@tools:sample/cities" />
+                    tools:text="Lyon,France" />
 
-                <Button
+                <LinearLayout
                     android:id="@+id/btn_user_private_edit"
-                    style="@style/ButtonPositiveAction"
                     android:layout_width="wrap_content"
-                    android:layout_height="@dimen/button_height_short"
+                    android:layout_height="wrap_content"
                     android:layout_alignParentEnd="true"
-                    android:text="@string/action_profile_edit" />
+                    android:layout_marginEnd="@dimen/spacing_small"
+                    android:gravity="center"
+                    android:orientation="vertical">
+
+                    <ImageView
+                        android:layout_width="@dimen/size_small_icon"
+                        android:layout_height="@dimen/size_small_icon"
+                        android:src="@drawable/ic_edit" />
+
+                    <TextView
+                        style="@style/GreySmallTextStyle"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:paddingTop="@dimen/spacing_extra_tiny"
+                        android:text="@string/action_profile_edit"
+                        android:textSize="@dimen/font_extra_small" />
+
+                </LinearLayout>
+
+
             </RelativeLayout>
 
-            <include layout="@layout/incl_horizontal_line" />
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center_horizontal"
-                android:layout_marginTop="@dimen/spacing_extra_small"
-                android:text="Previously Visited"
-                android:textColor="@color/pinkish_grey"
-                android:textSize="@dimen/font_heading" />
-
-            <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/rv_user_private_recent_shops"
+            <LinearLayout
+                android:id="@+id/container_description"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="@dimen/spacing_normal"
+                android:orientation="vertical"
                 android:layout_marginTop="@dimen/spacing_small"
-                android:layout_marginEnd="@dimen/spacing_normal" />
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/container_header">
 
+                <TextView
+                    android:id="@+id/tv_bio"
+                    style="@style/GreyTextStyle"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/brownish_grey"
+                    android:layout_marginBottom="@dimen/spacing_small"
+                    android:fontFamily="@font/josefinsans_regular"
+                    android:text="Follow our Food and Travel Journey 🍔🍕✈⛵\n🎥: Content Creators\n📍: MIA / NYC / LA 🌎" />
+
+                <!-- <View
+                     android:layout_width="@dimen/button_width_wide"
+                     android:layout_height="@dimen/height_horizontal_line"
+                     android:background="@drawable/ic_line" />-->
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    style="@style/PinkishGreySmallTextStyle"
+                    android:layout_marginTop="@dimen/spacing_extra_small"
+                    android:text="Previously Visited"
+                    android:textSize="@dimen/font_normal" />
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/rv_user_private_recent_shops"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/spacing_small"
+                    android:layout_marginStart="@dimen/spacing_normal"
+                    android:layout_marginEnd="@dimen/spacing_normal"
+                    android:visibility="gone" />
+
+            </LinearLayout>
         </LinearLayout>
 
-    </LinearLayout>
+    </FrameLayout>
 
     <LinearLayout
+        android:id="@+id/container_checkedin_count"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:background="@drawable/background_transparent_rounded_stroke_grey"
         android:gravity="center"
         android:orientation="vertical"
         android:paddingStart="@dimen/spacing_extra_large"
-        android:paddingTop="@dimen/spacing_extra_small"
         android:paddingEnd="@dimen/spacing_extra_large"
-        android:paddingBottom="@dimen/spacing_extra_small"
-        app:layout_anchor="@id/container_user_private_top"
-        app:layout_anchorGravity="center|bottom">
+        app:layout_constraintTop_toTopOf="@+id/guideline_above1"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent">
 
         <TextView
             android:id="@+id/tv_user_private_checkins"
             style="@style/GreySmallTextStyle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:paddingTop="@dimen/spacing_tiny"
             tools:text="1.3k" />
 
         <TextView
@@ -139,8 +213,9 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="2dp"
+            android:paddingBottom="@dimen/spacing_tiny"
             android:text="Checkins" />
 
     </LinearLayout>
 
-</androidx.coordinatorlayout.widget.CoordinatorLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>

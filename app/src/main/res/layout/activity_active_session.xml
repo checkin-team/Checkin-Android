@@ -367,6 +367,7 @@
                         app:layout_constraintVertical_weight="0.7">
 
                         <TextView
+                            android:id="@+id/tv_as_trending_dish_label"
                             style="@style/PinkishGreySmallTextStyle"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
@@ -374,6 +375,41 @@
                             android:gravity="center"
                             android:text="Trending Dishes"
                             android:textSize="@dimen/font_small" />
+
+                        <LinearLayout
+                            android:id="@+id/container_as_brownie_cash"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:visibility="gone"
+                            android:layout_marginTop="@dimen/spacing_extra_small">
+
+                            <TextView
+                                android:id="@+id/tv_as_brownie_cash_label"
+                                style="@style/PinkishGreySmallTextStyle"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:gravity="center|bottom"
+                                android:text="Brownie Cash: "
+                                android:textSize="@dimen/font_small" />
+
+                            <TextView
+                                style="@style/AquaBlueSmallTextStyle"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:gravity="center|bottom"
+                                android:text="@string/symbol_currency_rupee" />
+
+                            <TextView
+                                android:id="@+id/tv_as_brownie_cash_amount"
+                                style="@style/AquaBlueTextStyle"
+                                android:layout_width="wrap_content"
+                                android:layout_height="match_parent"
+                                android:gravity="center"
+                                android:paddingStart="@dimen/spacing_tiny"
+                                android:text="400" />
+
+                        </LinearLayout>
+
 
                         <FrameLayout
                             android:layout_width="match_parent"

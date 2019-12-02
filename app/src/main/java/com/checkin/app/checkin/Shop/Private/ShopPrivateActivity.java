@@ -3,7 +3,16 @@ package com.checkin.app.checkin.Shop.Private;
 import android.content.Intent;
 import android.os.Bundle;
 import android.widget.ImageView;
-import android.widget.TextView;
+
+import androidx.annotation.Nullable;
+import androidx.appcompat.app.ActionBarDrawerToggle;
+import androidx.core.view.GravityCompat;
+import androidx.drawerlayout.widget.DrawerLayout;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
+import androidx.lifecycle.ViewModelProviders;
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
+import androidx.viewpager.widget.ViewPager;
 
 import com.checkin.app.checkin.Account.AccountModel;
 import com.checkin.app.checkin.Account.BaseAccountActivity;
@@ -17,15 +26,6 @@ import com.checkin.app.checkin.Utility.DynamicSwipableViewPager;
 import com.checkin.app.checkin.Utility.Utils;
 import com.google.android.material.tabs.TabLayout;
 
-import androidx.annotation.Nullable;
-import androidx.appcompat.app.ActionBarDrawerToggle;
-import androidx.core.view.GravityCompat;
-import androidx.drawerlayout.widget.DrawerLayout;
-import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentManager;
-import androidx.lifecycle.ViewModelProviders;
-import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
-import androidx.viewpager.widget.ViewPager;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
@@ -160,7 +160,7 @@ public class ShopPrivateActivity extends BaseAccountActivity {
             switch (position) {
                 case 0:
                     return R.drawable.ic_tab_home_toggle;
-                case 1:
+                case 2:
                     return R.drawable.ic_tab_menu_toggle;
                 default:
                     return 0;
@@ -174,6 +174,8 @@ public class ShopPrivateActivity extends BaseAccountActivity {
                     return ShopPrivateProfileFragment.newInstance();
                 case 1:
                     return BlankFragment.newInstance();
+                case 2:
+                    return BlankFragment.newInstance();
             }
             return null;
         }
@@ -184,7 +186,7 @@ public class ShopPrivateActivity extends BaseAccountActivity {
             switch (position) {
                 case 0:
                     return "Shop";
-                case 1:
+                case 2:
                     return "Inventory";
             }
             return null;
@@ -192,12 +194,12 @@ public class ShopPrivateActivity extends BaseAccountActivity {
 
         @Override
         public int getCount() {
-            return 2;
+            return 3;
         }
 
         @Override
         protected void onTabClick(int position) {
-            if (position == 1)
+            if (position == 2)
                 launchMenu();
             else
                 super.onTabClick(position);

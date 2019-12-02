@@ -1,0 +1,709 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white"
+    android:paddingStart="@dimen/spacing_small"
+    android:paddingEnd="@dimen/spacing_small"
+    app:layout_constraintBottom_toBottomOf="parent"
+    app:layout_constraintEnd_toEndOf="parent"
+    app:layout_constraintStart_toStartOf="parent"
+    app:layout_constraintTop_toTopOf="parent">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/container_first_home"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        app:layout_constraintBottom_toTopOf="@id/container_second_home"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_weight="0.9">
+
+        <TextView
+            android:id="@+id/tv_home_trending_title"
+            style="@style/PinkishGreySmallTextStyle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:paddingTop="@dimen/spacing_small"
+            android:paddingBottom="@dimen/spacing_tiny"
+            android:text="Trending Now"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <androidx.core.widget.NestedScrollView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tv_home_trending_title">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <LinearLayout
+                    android:layout_width="@dimen/width_trending_rest"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="@dimen/spacing_extra_small"
+                    android:orientation="vertical">
+
+                    <androidx.cardview.widget.CardView
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/height_trending_rest"
+                        app:cardCornerRadius="@dimen/card_corner_radius"
+                        app:cardElevation="0dp">
+
+
+                        <ImageView
+                            android:id="@+id/im_home_trending_rest"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:padding="1dp"
+                            android:scaleType="centerCrop"
+                            android:src="@drawable/shahi_paneer" />
+
+
+                        <TextView
+                            style="@style/WhiteSmallTextStyle"
+                            android:layout_width="wrap_content"
+                            android:layout_height="@dimen/size_extra_small_icon"
+                            android:layout_marginTop="@dimen/spacing_small"
+                            android:background="@drawable/ic_flag_gradient"
+                            android:fontFamily="@font/josefinsans_regular"
+                            android:gravity="center"
+                            android:paddingStart="@dimen/spacing_extra_small"
+                            android:paddingEnd="@dimen/spacing_extra_small"
+                            android:text="20% off"
+                            android:textAllCaps="true"
+                            android:textSize="@dimen/font_extra_small" />
+
+                        <ImageView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="bottom|center"
+                            android:scaleType="fitXY"
+                            android:src="@drawable/bottom_inner_shadow_gradient" />
+
+                        <TextView
+                            style="@style/WhiteSmallTextStyle"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="bottom|center"
+                            android:autoSizeTextType="uniform"
+                            android:fontFamily="@font/josefinsans_regular"
+                            android:gravity="center"
+                            android:maxLines="1"
+                            android:paddingBottom="@dimen/spacing_extra_tiny"
+                            android:shadowColor="@android:color/white"
+                            android:shadowDx="5"
+                            android:shadowDy="5"
+                            android:shadowRadius="5"
+                            android:text="The Black Rabbit" />
+
+
+                    </androidx.cardview.widget.CardView>
+
+                    <RelativeLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/spacing_tiny">
+
+                        <LinearLayout
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_centerInParent="true">
+
+                            <ImageView
+                                android:layout_width="wrap_content"
+                                android:layout_height="@dimen/size_tiny_icon"
+                                android:layout_gravity="center"
+                                android:paddingTop="@dimen/spacing_elevation_fix_extreme_tiny"
+                                android:src="@drawable/ic_location_marker_red" />
+
+                            <TextView
+                                style="@style/GreySmallTextStyle"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_toStartOf="@id/tv_home_trending_rest_rating"
+                                android:autoSizeTextType="uniform"
+                                android:gravity="center"
+                                android:maxLines="1"
+                                android:paddingStart="1dp"
+                                android:paddingEnd="1dp"
+                                android:text="Sarjapur" />
+
+                        </LinearLayout>
+
+                        <TextView
+                            android:id="@+id/tv_home_trending_rest_rating"
+                            style="@style/WhiteSmallTextStyle"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_alignParentEnd="true"
+                            android:background="@drawable/background_rectangle_green_gradient"
+                            android:paddingStart="@dimen/spacing_tiny"
+                            android:paddingEnd="@dimen/spacing_tiny"
+                            android:text="4.4" />
+
+                    </RelativeLayout>
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:layout_marginTop="@dimen/spacing_tiny"
+                        android:autoSizeTextType="uniform"
+                        android:fontFamily="@font/arial_rounded_mt_bold"
+                        android:gravity="center"
+                        android:maxLines="1"
+                        android:text="5 SEATS AVAILABLE"
+                        android:textAllCaps="true"
+                        android:textColor="@color/aqua_blue"
+                        android:textSize="@dimen/font_extra_small" />
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="@dimen/width_trending_rest"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="@dimen/spacing_extra_small"
+                    android:layout_marginStart="@dimen/spacing_extra_small"
+                    android:orientation="vertical">
+
+                    <androidx.cardview.widget.CardView
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/height_trending_rest"
+                        app:cardCornerRadius="@dimen/card_corner_radius"
+                        app:cardElevation="0dp">
+
+
+                        <ImageView
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:padding="1dp"
+                            android:scaleType="centerCrop"
+                            android:src="@drawable/shahi_paneer" />
+
+
+                        <TextView
+                            style="@style/WhiteSmallTextStyle"
+                            android:layout_width="wrap_content"
+                            android:layout_height="@dimen/size_extra_small_icon"
+                            android:layout_marginTop="@dimen/spacing_small"
+                            android:background="@drawable/ic_flag_gradient"
+                            android:fontFamily="@font/josefinsans_regular"
+                            android:gravity="center"
+                            android:paddingStart="@dimen/spacing_extra_small"
+                            android:paddingEnd="@dimen/spacing_extra_small"
+                            android:text="20% off"
+                            android:textAllCaps="true"
+                            android:textSize="@dimen/font_extra_small" />
+
+                        <ImageView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="bottom|center"
+                            android:scaleType="fitXY"
+                            android:src="@drawable/bottom_inner_shadow_gradient" />
+
+                        <TextView
+                            style="@style/WhiteSmallTextStyle"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="bottom|center"
+                            android:autoSizeTextType="uniform"
+                            android:fontFamily="@font/josefinsans_regular"
+                            android:gravity="center"
+                            android:maxLines="1"
+                            android:paddingBottom="@dimen/spacing_extra_tiny"
+                            android:shadowColor="@android:color/white"
+                            android:shadowDx="5"
+                            android:shadowDy="5"
+                            android:shadowRadius="5"
+                            android:text="The Black Rabbit" />
+
+
+                    </androidx.cardview.widget.CardView>
+
+                    <RelativeLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/spacing_tiny">
+
+                        <LinearLayout
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_centerInParent="true">
+
+                            <ImageView
+                                android:layout_width="wrap_content"
+                                android:layout_height="@dimen/size_tiny_icon"
+                                android:layout_gravity="center"
+                                android:paddingTop="@dimen/spacing_elevation_fix_extreme_tiny"
+                                android:src="@drawable/ic_location_marker_red" />
+
+                            <TextView
+                                style="@style/GreySmallTextStyle"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_toStartOf="@id/tv_home_trending_rest_rating2"
+                                android:autoSizeTextType="uniform"
+                                android:gravity="center"
+                                android:maxLines="1"
+                                android:paddingStart="1dp"
+                                android:paddingEnd="1dp"
+                                android:text="Sarjapur" />
+
+                        </LinearLayout>
+
+                        <TextView
+                            android:id="@+id/tv_home_trending_rest_rating2"
+                            style="@style/WhiteSmallTextStyle"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_alignParentEnd="true"
+                            android:background="@drawable/background_rectangle_green_gradient"
+                            android:paddingStart="@dimen/spacing_tiny"
+                            android:paddingEnd="@dimen/spacing_tiny"
+                            android:text="4.4" />
+
+                    </RelativeLayout>
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:layout_marginTop="@dimen/spacing_tiny"
+                        android:autoSizeTextType="uniform"
+                        android:fontFamily="@font/arial_rounded_mt_bold"
+                        android:gravity="center"
+                        android:maxLines="1"
+                        android:text="5 SEATS AVAILABLE"
+                        android:textAllCaps="true"
+                        android:textColor="@color/aqua_blue"
+                        android:textSize="@dimen/font_extra_small" />
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="@dimen/width_trending_rest"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="@dimen/spacing_extra_small"
+                    android:layout_marginStart="@dimen/spacing_extra_small"
+                    android:orientation="vertical">
+
+                    <androidx.cardview.widget.CardView
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/height_trending_rest"
+                        app:cardCornerRadius="@dimen/card_corner_radius"
+                        app:cardElevation="0dp">
+
+
+                        <ImageView
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:padding="1dp"
+                            android:scaleType="centerCrop"
+                            android:src="@drawable/shahi_paneer" />
+
+
+                        <TextView
+                            style="@style/WhiteSmallTextStyle"
+                            android:layout_width="wrap_content"
+                            android:layout_height="@dimen/size_extra_small_icon"
+                            android:layout_marginTop="@dimen/spacing_small"
+                            android:background="@drawable/ic_flag_gradient"
+                            android:fontFamily="@font/josefinsans_regular"
+                            android:gravity="center"
+                            android:paddingStart="@dimen/spacing_extra_small"
+                            android:paddingEnd="@dimen/spacing_extra_small"
+                            android:text="20% off"
+                            android:textAllCaps="true"
+                            android:textSize="@dimen/font_extra_small" />
+
+                        <ImageView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="bottom|center"
+                            android:scaleType="fitXY"
+                            android:src="@drawable/bottom_inner_shadow_gradient" />
+
+                        <TextView
+                            style="@style/WhiteSmallTextStyle"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="bottom|center"
+                            android:autoSizeTextType="uniform"
+                            android:fontFamily="@font/josefinsans_regular"
+                            android:gravity="center"
+                            android:maxLines="1"
+                            android:paddingBottom="@dimen/spacing_extra_tiny"
+                            android:shadowColor="@android:color/white"
+                            android:shadowDx="5"
+                            android:shadowDy="5"
+                            android:shadowRadius="5"
+                            android:text="The Black Rabbit" />
+
+
+                    </androidx.cardview.widget.CardView>
+
+                    <RelativeLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/spacing_tiny">
+
+                        <LinearLayout
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_centerInParent="true">
+
+                            <ImageView
+                                android:layout_width="wrap_content"
+                                android:layout_height="@dimen/size_tiny_icon"
+                                android:layout_gravity="center"
+                                android:paddingTop="@dimen/spacing_elevation_fix_extreme_tiny"
+                                android:src="@drawable/ic_location_marker_red" />
+
+                            <TextView
+                                style="@style/GreySmallTextStyle"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_toStartOf="@id/tv_home_trending_rest_rating3"
+                                android:autoSizeTextType="uniform"
+                                android:gravity="center"
+                                android:maxLines="1"
+                                android:paddingStart="1dp"
+                                android:paddingEnd="1dp"
+                                android:text="Sarjapur" />
+
+                        </LinearLayout>
+
+                        <TextView
+                            android:id="@+id/tv_home_trending_rest_rating3"
+                            style="@style/WhiteSmallTextStyle"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_alignParentEnd="true"
+                            android:background="@drawable/background_rectangle_green_gradient"
+                            android:paddingStart="@dimen/spacing_tiny"
+                            android:paddingEnd="@dimen/spacing_tiny"
+                            android:text="4.4" />
+
+                    </RelativeLayout>
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:layout_marginTop="@dimen/spacing_tiny"
+                        android:autoSizeTextType="uniform"
+                        android:fontFamily="@font/arial_rounded_mt_bold"
+                        android:gravity="center"
+                        android:maxLines="1"
+                        android:text="5 SEATS AVAILABLE"
+                        android:textAllCaps="true"
+                        android:textColor="@color/aqua_blue"
+                        android:textSize="@dimen/font_extra_small" />
+
+                </LinearLayout>
+
+            </LinearLayout>
+
+
+        </androidx.core.widget.NestedScrollView>
+
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/rv_user_private_recent_shops"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/spacing_tiny"
+            android:visibility="gone"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tv_home_trending_title" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/container_second_home"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginTop="@dimen/spacing_small"
+        android:layout_marginBottom="@dimen/spacing_small"
+        android:background="@drawable/background_lightest_grey_stroke"
+        android:elevation="@dimen/spacing_elevation_fix_extreme_tiny"
+        app:layout_constraintBottom_toTopOf="@id/container_third_home"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/container_first_home"
+        app:layout_constraintVertical_weight="0.35">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:elevation="@dimen/spacing_elevation_fix_extreme_tiny"
+            android:weightSum="3"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="0.9"
+                android:gravity="center"
+                android:orientation="vertical">
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="@dimen/button_height_medium">
+
+                    <ImageView
+                        android:layout_width="@dimen/button_height_normal"
+                        android:layout_height="match_parent"
+                        android:src="@drawable/ic_saved_hand" />
+
+                    <TextView
+                        style="@style/GreyHeadingStyle"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:autoSizeTextType="uniform"
+                        android:maxLines="1"
+                        android:text="4,000"
+                        android:textColor="@color/aqua_blue" />
+
+                </LinearLayout>
+
+                <TextView
+                    style="@style/GreySmallTextStyle"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_marginTop="@dimen/spacing_small"
+                    android:text="You Saved" />
+
+
+            </LinearLayout>
+
+            <View
+                android:layout_width="1dp"
+                android:layout_height="@dimen/button_height_medium"
+                android:layout_gravity="center"
+                android:layout_marginBottom="@dimen/spacing_small"
+                android:background="@color/extra_light_grey" />
+
+            <LinearLayout
+                android:id="@+id/container_home_brownie_cash"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1.2"
+                android:gravity="center"
+                android:orientation="vertical">
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="@dimen/button_height_medium">
+
+                    <ImageView
+                        android:layout_width="@dimen/button_height_medium"
+                        android:layout_height="@dimen/button_height_normal"
+                        android:layout_gravity="center|bottom"
+                        android:scaleType="fitXY"
+                        android:src="@drawable/ic_brownie_cash" />
+
+                    <TextView
+                        style="@style/GreyHeadingStyle"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:layout_weight="1"
+                        android:autoSizeTextType="uniform"
+                        android:gravity="center"
+                        android:maxLines="1"
+                        android:paddingStart="@dimen/spacing_tiny"
+                        android:paddingEnd="@dimen/spacing_tiny"
+                        android:text="$ 400"
+                        android:textColor="@color/aqua_blue" />
+
+                </LinearLayout>
+
+                <TextView
+                    style="@style/GreySmallTextStyle"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_marginTop="@dimen/spacing_small"
+                    android:text="Brownie Cash" />
+
+
+            </LinearLayout>
+
+            <View
+                android:layout_width="1dp"
+                android:layout_height="@dimen/button_height_medium"
+                android:layout_gravity="center"
+                android:layout_marginBottom="@dimen/spacing_small"
+                android:background="@color/extra_light_grey" />
+
+            <LinearLayout
+                android:id="@+id/container_home_claim_rewards"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="0.9"
+                android:gravity="center"
+                android:orientation="vertical">
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="@dimen/button_height_medium">
+
+                    <ImageView
+                        android:layout_width="@dimen/button_height_medium"
+                        android:layout_height="@dimen/button_height_medium"
+                        android:src="@drawable/ic_bonus" />
+
+                    <TextView
+                        style="@style/GreyHeadingStyle"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:autoSizeTextType="uniform"
+                        android:maxLines="1"
+                        android:text="40"
+                        android:textColor="@color/aqua_blue" />
+
+                </LinearLayout>
+
+                <TextView
+                    style="@style/GreySmallTextStyle"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_marginTop="@dimen/spacing_small"
+                    android:text="Claim Rewards" />
+
+
+            </LinearLayout>
+
+
+        </LinearLayout>
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <androidx.cardview.widget.CardView
+        android:id="@+id/container_third_home"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        app:cardCornerRadius="@dimen/card_corner_radius_small"
+        app:cardElevation="@dimen/spacing_elevation_fix_extreme_tiny"
+        app:layout_constraintBottom_toTopOf="@id/container_fourth_home"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/container_second_home"
+        app:layout_constraintVertical_weight="0.35">
+
+
+        <androidx.viewpager.widget.ViewPager
+            android:id="@+id/vp_home_banner"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <com.rd.PageIndicatorView
+            android:id="@+id/indicator_home_banner"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="bottom|center"
+            android:layout_marginBottom="@dimen/spacing_small"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:piv_animationType="scale"
+            app:piv_dynamicCount="true"
+            app:piv_interactiveAnimation="true"
+            app:piv_radius="@dimen/spacing_extra_tiny"
+            app:piv_selectedColor="@color/brownish_grey"
+            app:piv_unselectedColor="@color/white" />
+
+    </androidx.cardview.widget.CardView>
+
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/container_fourth_home"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginTop="@dimen/spacing_extra_small"
+        android:layout_marginBottom="@dimen/spacing_extra_tiny"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/container_third_home"
+        app:layout_constraintVertical_weight="0.38">
+
+        <ImageView
+            android:id="@+id/im_community_friends"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_gravity="top"
+            android:src="@drawable/ic_friends"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@id/tv_home_community"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/tv_home_community"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/josefinsans_bold"
+            android:text="Building a\nCommunity"
+            android:textColor="@color/light_pink"
+            android:textSize="@dimen/font_larger"
+            android:layout_marginStart="@dimen/spacing_extra_small"
+            app:layout_constraintBottom_toTopOf="@+id/tv_home_join_us"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toEndOf="@id/im_community_friends"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <LinearLayout
+            android:id="@+id/tv_home_join_us"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/spacing_extra_small"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toEndOf="@id/im_community_friends"
+            app:layout_constraintTop_toBottomOf="@+id/tv_home_community">
+
+
+            <TextView
+                style="@style/GreySmallTextStyle"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="Join us!\nSet up\nyour profile"
+                android:layout_marginEnd="@dimen/spacing_tiny" />
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_gravity="end"
+                android:src="@drawable/ic_join_community" />
+
+
+        </LinearLayout>
+
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>
+

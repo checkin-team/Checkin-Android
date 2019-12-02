@@ -14,6 +14,7 @@ import com.checkin.app.checkin.Data.Resource;
 import com.checkin.app.checkin.Inventory.Adapter.InventoryGroupAdapter;
 import com.checkin.app.checkin.Inventory.Adapter.InventoryItemAdapter;
 import com.checkin.app.checkin.Inventory.InventoryViewModel;
+import com.checkin.app.checkin.Inventory.Model.InventoryGroupModel;
 import com.checkin.app.checkin.Inventory.Model.InventoryItemModel;
 import com.checkin.app.checkin.Misc.BaseFragment;
 import com.checkin.app.checkin.R;
@@ -63,16 +64,12 @@ public class InventoryGroupsFragment extends BaseFragment implements InventoryGr
             if (menuGroupResource == null)
                 return;
             if (menuGroupResource.getStatus() == Resource.Status.SUCCESS) {
-                mAdapter.setGroupList(menuGroupResource.getData());
+                setupData(menuGroupResource.getData());
                 stopRefreshing();
-                if (shimmerFrameLayout.getVisibility() == View.VISIBLE) {
-                    shimmerFrameLayout.stopShimmer();
-                    shimmerFrameLayout.setVisibility(View.GONE);
-                }
             } else if (menuGroupResource.getStatus() == Resource.Status.LOADING) {
                 startRefreshing();
                 if (menuGroupResource.getData() != null)
-                    mAdapter.setGroupList(menuGroupResource.getData());
+                    setupData(menuGroupResource.getData());
             } else {
                 stopRefreshing();
                 Utils.toast(requireContext(), menuGroupResource.getMessage());
@@ -88,6 +85,14 @@ public class InventoryGroupsFragment extends BaseFragment implements InventoryGr
                 Utils.toast(requireContext(), listResource.getMessage());
             }
         });
+    }
+
+    private void setupData(List<InventoryGroupModel> data) {
+        mAdapter.setGroupList(data);
+        if (shimmerFrameLayout.getVisibility() == View.VISIBLE) {
+            shimmerFrameLayout.stopShimmer();
+            shimmerFrameLayout.setVisibility(View.GONE);
+        }
     }
 
     private void setupGroupRecycler() {

@@ -29,11 +29,9 @@
                 <com.google.android.material.tabs.TabLayout
                     android:id="@+id/tabs_shop_private"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
+                    android:layout_height="@dimen/height_bottom_tab"
                     android:layout_gravity="bottom"
                     android:background="@drawable/background_tab_bottom_shadowed"
-                    android:paddingTop="@dimen/spacing_elevation_fix_extreme_tiny"
-                    android:paddingBottom="@dimen/spacing_elevation_fix_extreme_tiny"
                     app:tabGravity="fill"
                     app:tabIndicatorColor="@android:color/transparent"
                     app:tabIndicatorHeight="0dp"
