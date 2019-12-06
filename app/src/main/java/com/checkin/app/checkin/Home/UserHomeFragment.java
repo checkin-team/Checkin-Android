@@ -2,6 +2,8 @@ package com.checkin.app.checkin.Home;
 
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -21,7 +23,14 @@ import com.checkin.app.checkin.R;
 import com.rd.PageIndicatorView;
 import com.rd.animation.type.AnimationType;
 
+import org.xml.sax.InputSource;
+import org.xml.sax.XMLReader;
+
+import java.net.URL;
 import java.util.Objects;
+
+import javax.xml.parsers.SAXParser;
+import javax.xml.parsers.SAXParserFactory;
 
 import butterknife.BindView;
 import butterknife.OnClick;
@@ -30,14 +39,15 @@ public class UserHomeFragment extends BaseFragment {
 
     @BindView(R.id.rv_user_private_recent_shops)
     RecyclerView rvTrendingRestaurants;
-    @BindView(R.id.indicator_home_banner)
-    PageIndicatorView indicatorView;
-    @BindView(R.id.vp_home_banner)
-    ViewPager vpBanner;
+//    @BindView(R.id.indicator_home_banner)
+//    PageIndicatorView indicatorView;
+//    @BindView(R.id.vp_home_banner)
+//    ViewPager vpBanner;
     private UserHomeTrendingRestaurantAdapter mTrendingRestAdapter;
-    private BannerPagerAdapter mPagerAdapter;
 
     private NearbyRestaurantAdapter mRestAdapter;
+    @BindView(R.id.container_advertisement_nearbyResturant)
+     RecyclerView recyclerView;
 
     private HomeViewModel mViewModel;
 
@@ -69,13 +79,14 @@ public class UserHomeFragment extends BaseFragment {
 
         ((HomeActivity) Objects.requireNonNull(getActivity())).enableDisableSwipeRefresh(true);
 
-        mRestAdapter = new NearbyRestaurantAdapter();
+        mRestAdapter = new NearbyRestaurantAdapter(getContext());
 
-        mPagerAdapter = new BannerPagerAdapter(requireActivity());
-        vpBanner.setAdapter(mPagerAdapter);
-        indicatorView.setViewPager(vpBanner);
-        indicatorView.setAnimationType(AnimationType.FILL);
-        indicatorView.setClickListener(position -> vpBanner.setCurrentItem(position));
+        recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
+        recyclerView.setAdapter(mRestAdapter);
+//        vpBanner.setAdapter(mPagerAdapter);
+//        indicatorView.setViewPager(vpBanner);
+//        indicatorView.setAnimationType(AnimationType.FILL);
+//        indicatorView.setClickListener(position -> vpBanner.setCurrentItem(position));
 
         rvTrendingRestaurants.setLayoutManager(new LinearLayoutManager(requireActivity(), RecyclerView.HORIZONTAL, false));
         mTrendingRestAdapter = new UserHomeTrendingRestaurantAdapter();
@@ -91,23 +102,26 @@ public class UserHomeFragment extends BaseFragment {
             }
         });
 
-        vpBanner.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
-            @Override
-            public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
-            }
-
-            @Override
-            public void onPageSelected(int position) {
-            }
-
-            @Override
-            public void onPageScrollStateChanged(int state) {
-                enableDisableSwipeRefresh(state == ViewPager.SCROLL_STATE_IDLE);
-            }
-        });
+//        vpBanner.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
+//            @Override
+//            public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
+//            }
+//
+//            @Override
+//            public void onPageSelected(int position) {
+//            }
+//
+//            @Override
+//            public void onPageScrollStateChanged(int state) {
+//                enableDisableSwipeRefresh(state == ViewPager.SCROLL_STATE_IDLE);
+//            }
+//        });
 
         mViewModel.getNearbyRestaurantData().observe(this, listResource -> {
             if (listResource == null) return;
+            else{
+                mRestAdapter.updateData(listResource.getData());
+            }
         });
 
     }
@@ -115,44 +129,5 @@ public class UserHomeFragment extends BaseFragment {
     public void enableDisableSwipeRefresh(boolean enable) {
         ((HomeActivity) Objects.requireNonNull(getActivity())).enableDisableSwipeRefresh(enable);
     }
-
-    class BannerPagerAdapter extends PagerAdapter {
-        int[] mResources = {R.drawable.first_banner, R.drawable.second_banner, R.drawable.third_banner};
-
-        Context mContext;
-        LayoutInflater mLayoutInflater;
-
-        public BannerPagerAdapter(Context context) {
-            mContext = context;
-            mLayoutInflater = (LayoutInflater) mContext.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-        }
-
-        @Override
-        public int getCount() {
-            return mResources.length;
-        }
-
-        @Override
-        public boolean isViewFromObject(@NonNull View view, @NonNull Object object) {
-            return object == view;
-        }
-
-        @Override
-        public Object instantiateItem(ViewGroup container, int position) {
-            View itemView = mLayoutInflater.inflate(R.layout.item_home_banner, container, false);
-            ImageView imageView = (ImageView) itemView.findViewById(R.id.im_home_banner);
-            imageView.setImageResource(mResources[position]);
-            container.addView(itemView);
-
-            return itemView;
-        }
-
-        @Override
-        public void destroyItem(@NonNull ViewGroup container, int position, @NonNull Object object) {
-            container.removeView(((View) object));
-        }
-
-    }
-
 
 }
