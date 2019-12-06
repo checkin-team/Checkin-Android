@@ -10,6 +10,7 @@ import com.checkin.app.checkin.Data.BaseViewModel;
 import com.checkin.app.checkin.Data.Converters;
 import com.checkin.app.checkin.Data.Resource;
 import com.checkin.app.checkin.Home.model.NearbyRestaurantModel;
+import com.checkin.app.checkin.R;
 import com.checkin.app.checkin.Utility.SourceMappedLiveData;
 import com.checkin.app.checkin.session.SessionRepository;
 import com.checkin.app.checkin.session.model.QRResultModel;
@@ -64,7 +65,14 @@ public class HomeViewModel extends BaseViewModel {
 
     public LiveData<Resource<List<NearbyRestaurantModel>>> getNearbyRestaurantData() {
         List<NearbyRestaurantModel> data = new ArrayList<>();
-        data.add(new NearbyRestaurantModel("THC", ""));
+        data.add(new NearbyRestaurantModel("THC", R.drawable.first_banner));
+        data.add(new NearbyRestaurantModel("THC", R.drawable.second_banner));
+        data.add(new NearbyRestaurantModel("THC", R.drawable.third_banner));
+        data.add(new NearbyRestaurantModel("THC", R.drawable.second_banner));
+        data.add(new NearbyRestaurantModel("THC", R.drawable.third_banner));
+
+        data.add(new NearbyRestaurantModel("THC", R.drawable.first_banner));
+
         return new MutableLiveData<>(Resource.Companion.success(data));
     }
 }
