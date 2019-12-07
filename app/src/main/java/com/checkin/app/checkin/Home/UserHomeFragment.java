@@ -99,6 +99,8 @@ public class UserHomeFragment extends BaseFragment {
                     enableDisableSwipeRefresh(false);
                 else
                     enableDisableSwipeRefresh(true);
+
+
             }
         });
 

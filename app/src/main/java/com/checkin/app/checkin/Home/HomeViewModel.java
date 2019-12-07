@@ -65,13 +65,15 @@ public class HomeViewModel extends BaseViewModel {
 
     public LiveData<Resource<List<NearbyRestaurantModel>>> getNearbyRestaurantData() {
         List<NearbyRestaurantModel> data = new ArrayList<>();
-        data.add(new NearbyRestaurantModel("THC", R.drawable.first_banner));
-        data.add(new NearbyRestaurantModel("THC", R.drawable.second_banner));
-        data.add(new NearbyRestaurantModel("THC", R.drawable.third_banner));
-        data.add(new NearbyRestaurantModel("THC", R.drawable.second_banner));
-        data.add(new NearbyRestaurantModel("THC", R.drawable.third_banner));
+        data.add(new NearbyRestaurantModel("THC", "https://www.washingtonpost.com/resizer/Kv8laiHtDM2ZOMNV4eP3lUTN8HA=/767x0/smart/arc-anglerfish-washpost-prod-washpost.s3.amazonaws.com/public/2KL6JYQYH4I6REYMIWBYVUGXPI.jpg"));
+        data.add(new NearbyRestaurantModel("THC", "https://www.washingtonpost.com/resizer/Kv8laiHtDM2ZOMNV4eP3lUTN8HA=/767x0/smart/arc-anglerfish-washpost-prod-washpost.s3.amazonaws.com/public/2KL6JYQYH4I6REYMIWBYVUGXPI.jpg"));
+        data.add(new NearbyRestaurantModel("THC", "https://www.washingtonpost.com/resizer/Kv8laiHtDM2ZOMNV4eP3lUTN8HA=/767x0/smart/arc-anglerfish-washpost-prod-washpost.s3.amazonaws.com/public/2KL6JYQYH4I6REYMIWBYVUGXPI.jpg"));
+        data.add(new NearbyRestaurantModel("THC", "https://www.washingtonpost.com/resizer/Kv8laiHtDM2ZOMNV4eP3lUTN8HA=/767x0/smart/arc-anglerfish-washpost-prod-washpost.s3.amazonaws.com/public/2KL6JYQYH4I6REYMIWBYVUGXPI.jpg"));
+        data.add(new NearbyRestaurantModel("THC", "https://www.washingtonpost.com/resizer/Kv8laiHtDM2ZOMNV4eP3lUTN8HA=/767x0/smart/arc-anglerfish-washpost-prod-washpost.s3.amazonaws.com/public/2KL6JYQYH4I6REYMIWBYVUGXPI.jpg"));
 
-        data.add(new NearbyRestaurantModel("THC", R.drawable.first_banner));
+        data.add(new NearbyRestaurantModel("THC", "https://www.washingtonpost.com/resizer/Kv8laiHtDM2ZOMNV4eP3lUTN8HA=/767x0/smart/arc-anglerfish-washpost-prod-washpost.s3.amazonaws.com/public/2KL6JYQYH4I6REYMIWBYVUGXPI.jpg"));
+        data.add(new NearbyRestaurantModel("THC", "https://www.washingtonpost.com/resizer/Kv8laiHtDM2ZOMNV4eP3lUTN8HA=/767x0/smart/arc-anglerfish-washpost-prod-washpost.s3.amazonaws.com/public/2KL6JYQYH4I6REYMIWBYVUGXPI.jpg"));
+        data.add(new NearbyRestaurantModel("THC", "https://www.washingtonpost.com/resizer/Kv8laiHtDM2ZOMNV4eP3lUTN8HA=/767x0/smart/arc-anglerfish-washpost-prod-washpost.s3.amazonaws.com/public/2KL6JYQYH4I6REYMIWBYVUGXPI.jpg"));
 
         return new MutableLiveData<>(Resource.Companion.success(data));
     }
