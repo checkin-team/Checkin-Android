@@ -2,7 +2,7 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:layout_height="@dimen/size_image_large">
+    android:layout_height="200dp">
 
     <androidx.viewpager.widget.ViewPager
         android:id="@+id/vp_home_banner"
@@ -16,7 +16,7 @@
 
     <com.rd.PageIndicatorView
         android:layout_alignParentBottom="true"
-        android:layout_marginTop="@dimen/spacing_extra_small"
+        android:translationY="-10dp"
         android:layout_centerHorizontal="true"
         android:id="@+id/indicator_home_banner"
         android:layout_width="wrap_content"

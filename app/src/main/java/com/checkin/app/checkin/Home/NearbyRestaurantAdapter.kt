@@ -21,6 +21,7 @@ import java.util.*
 import android.graphics.BitmapFactory
 import android.graphics.Bitmap
 import android.nfc.Tag
+import com.bumptech.glide.Glide
 
 
 class NearbyRestaurantAdapter(var context: Context) : RecyclerView.Adapter<BaseViewHolder<Any>>() {
@@ -51,30 +52,40 @@ class NearbyRestaurantAdapter(var context: Context) : RecyclerView.Adapter<BaseV
     }
 
     inner class NearbyRestaurantViewHolder(itemView: View) : BaseViewHolder<NearbyRestaurantModel>(itemView) {
+        var imageView:ImageView=itemView.findViewById(R.id.home_image)
+        init {
+
+
+            imageView.scaleType = ImageView.ScaleType.FIT_XY
+        }
+
         override fun bindData(data: NearbyRestaurantModel) {
-            var imageView:ImageView=itemView.findViewById(R.id.home_image)
-            imageView.setImageResource(data.url)
+
+
+            Glide.with(context).asBitmap()
+                    .load(
+                    data.url).into(imageView)
+
+
         }
     }
 
     inner class AdvertisementViewHolder(itemView: View) : BaseViewHolder<Any>(itemView) {
+        var vpBanner: ViewPager=itemView.findViewById(R.id.vp_home_banner)
+       internal val mPagerAdapter: BannerPagerAdapter=BannerPagerAdapter(context);
+        val indicatorView: PageIndicatorView? = itemView.findViewById(R.id.indicator_home_banner)
+        init {
 
-        override fun bindData(data: Any) {
-             var vpBanner: ViewPager=itemView.findViewById(R.id.vp_home_banner)
-             var mPagerAdapter: BannerPagerAdapter=BannerPagerAdapter(context);
-            var indicatorView: PageIndicatorView? = itemView.findViewById(R.id.indicator_home_banner)
 
             vpBanner.adapter = mPagerAdapter
-            if(indicatorView!=null) {
+            if (indicatorView != null) {
                 indicatorView.setViewPager(vpBanner)
 
                 indicatorView.setAnimationType(AnimationType.FILL)
                 indicatorView.setClickListener { position -> vpBanner.currentItem = position }
-            }
-            else{
+            } else {
 
             }
-
             vpBanner.addOnPageChangeListener(object : ViewPager.OnPageChangeListener {
                 override fun onPageScrolled(position: Int, positionOffset: Float, positionOffsetPixels: Int) {}
 
@@ -84,10 +95,16 @@ class NearbyRestaurantAdapter(var context: Context) : RecyclerView.Adapter<BaseV
                     enableDisableSwipeRefresh(state == ViewPager.SCROLL_STATE_IDLE)
                 }
             })
+        }
+
+        override fun bindData(data: Any) {
+
+
+
 
 
         }
-        fun enableDisableSwipeRefresh(enable: Boolean) {
+        fun enableDisableSwipeRefresh(enable: Boolean) {  
         }
 
     }

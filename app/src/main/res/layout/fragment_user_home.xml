@@ -5,8 +5,7 @@
     android:layout_height="match_parent"
     xmlns:tools="http://schemas.android.com/tools"
     android:background="@color/white"
-    android:paddingStart="@dimen/spacing_small"
-    android:paddingEnd="@dimen/spacing_small"
+
     app:layout_constraintBottom_toBottomOf="parent"
     app:layout_constraintEnd_toEndOf="parent"
     app:layout_constraintStart_toStartOf="parent"
@@ -14,6 +13,8 @@
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/container_first_home"
+        android:layout_marginLeft="@dimen/spacing_small"
+        android:layout_marginRight="@dimen/spacing_small"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         app:layout_constraintBottom_toTopOf="@id/container_second_home"
@@ -599,10 +600,10 @@
         android:id="@+id/container_third_home"
         android:layout_width="0dp"
         android:layout_height="0dp"
+        app:cardBackgroundColor="@color/browser_actions_bg_grey"
         app:cardCornerRadius="@dimen/card_corner_radius_small"
         app:cardElevation="@dimen/spacing_elevation_fix_extreme_tiny"
         android:layout_marginTop="@dimen/spacing_extra_small"
-        android:layout_marginBottom="@dimen/spacing_extra_small"
 
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"

@@ -1,3 +1,3 @@
 package com.checkin.app.checkin.Home.model
 
-data class NearbyRestaurantModel(val name: String, val url: Int)
+data class NearbyRestaurantModel(val name: String, val url: String)
