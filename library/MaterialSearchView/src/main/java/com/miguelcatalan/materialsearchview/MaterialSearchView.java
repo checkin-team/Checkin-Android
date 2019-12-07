@@ -22,7 +22,6 @@ import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.ViewGroup;
 import android.view.inputmethod.EditorInfo;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.AdapterView;
@@ -152,13 +151,13 @@ public class MaterialSearchView extends FrameLayout implements Filter.FilterList
         LayoutInflater.from(mContext).inflate(R.layout.search_view, this, true);
         mSearchLayout = findViewById(R.id.search_layout);
 
-        mSearchTopBar = (RelativeLayout) mSearchLayout.findViewById(R.id.search_top_bar);
-        mSuggestionsListView = (ListView) mSearchLayout.findViewById(R.id.suggestion_list);
-        mSearchSrcTextView = (EditText) mSearchLayout.findViewById(R.id.searchTextView);
+        mSearchTopBar = mSearchLayout.findViewById(R.id.search_top_bar);
+        mSuggestionsListView = mSearchLayout.findViewById(R.id.suggestion_list);
+        mSearchSrcTextView = mSearchLayout.findViewById(R.id.searchTextView);
 
-        mBackBtn = (ImageButton) mSearchLayout.findViewById(R.id.action_up_btn);
-        mVoiceBtn = (ImageButton) mSearchLayout.findViewById(R.id.action_voice_btn);
-        mEmptyBtn = (ImageButton) mSearchLayout.findViewById(R.id.action_empty_btn);
+        mBackBtn = mSearchLayout.findViewById(R.id.action_up_btn);
+        mVoiceBtn = mSearchLayout.findViewById(R.id.action_voice_btn);
+        mEmptyBtn = mSearchLayout.findViewById(R.id.action_empty_btn);
 
         mSearchSrcTextView.setOnClickListener(mOnClickListener);
         mBackBtn.setOnClickListener(mOnClickListener);

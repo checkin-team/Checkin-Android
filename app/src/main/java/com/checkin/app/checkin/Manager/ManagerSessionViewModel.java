@@ -66,7 +66,7 @@ public class ManagerSessionViewModel extends BaseViewModel {
     }
 
     public void putSessionCheckout() {
-        ObjectNode data = Converters.objectMapper.createObjectNode();
+        ObjectNode data = Converters.INSTANCE.getObjectMapper().createObjectNode();
         data.put("payment_mode", "csh");
         mCheckoutData.addSource(mManagerRepository.manageSessionCheckout(mSessionPk), mCheckoutData::setValue);
     }
@@ -100,7 +100,7 @@ public class ManagerSessionViewModel extends BaseViewModel {
     }
 
     public void updateDiscount(double value) {
-        ObjectNode data = Converters.objectMapper.createObjectNode();
+        ObjectNode data = Converters.INSTANCE.getObjectMapper().createObjectNode();
         if (discountInINR)
             data.put("discount_amount", value);
         else
@@ -110,7 +110,7 @@ public class ManagerSessionViewModel extends BaseViewModel {
     }
 
     public void requestSessionCheckout() {
-        ObjectNode data = Converters.objectMapper.createObjectNode();
+        ObjectNode data = Converters.INSTANCE.getObjectMapper().createObjectNode();
         data.put("payment_mode", "csh");
         mCheckoutData.addSource(mWaiterRepository.postSessionRequestCheckout(mSessionPk, data), mCheckoutData::setValue);
     }
@@ -238,7 +238,7 @@ public class ManagerSessionViewModel extends BaseViewModel {
     }
 
     public void updateOrderStatus(int orderId, int statusType) {
-        ObjectNode data = Converters.objectMapper.createObjectNode();
+        ObjectNode data = Converters.INSTANCE.getObjectMapper().createObjectNode();
         data.put("status", statusType);
         mOrderStatusData.addSource(mWaiterRepository.changeOrderStatus(orderId, data), mOrderStatusData::setValue);
     }
@@ -407,7 +407,7 @@ public class ManagerSessionViewModel extends BaseViewModel {
     }
 
     public void switchTable(long qrPk) {
-        ObjectNode requestJson = Converters.objectMapper.createObjectNode();
+        ObjectNode requestJson = Converters.INSTANCE.getObjectMapper().createObjectNode();
         requestJson.put("qr", qrPk);
         mSwitchTableData.addSource(mManagerRepository.managerSessionSwitchTable(mSessionPk, requestJson), mSwitchTableData::setValue);
     }

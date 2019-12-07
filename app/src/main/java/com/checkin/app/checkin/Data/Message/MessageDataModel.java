@@ -116,7 +116,7 @@ public class MessageDataModel implements Serializable {
     public static class MessageDataDeserializer extends JsonDeserializer<MessageDataModel> {
         @Override
         public MessageDataModel deserialize(JsonParser jsonParser, DeserializationContext deserializationContext) throws IOException {
-            return Converters.objectMapper.readValue(jsonParser.getText(), MessageDataModel.class);
+            return Converters.INSTANCE.getObjectMapper().readValue(jsonParser.getText(), MessageDataModel.class);
         }
     }
 }

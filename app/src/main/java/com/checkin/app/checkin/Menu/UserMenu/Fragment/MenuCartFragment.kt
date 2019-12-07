@@ -82,8 +82,8 @@ class MenuCartFragment : BaseFragment(), MenuCartAdapter.MenuCartInteraction, Me
 
         mViewModel.menuTrendingItems.observe(this, Observer {
             it?.let { inventoryItemModels ->
-                if (inventoryItemModels.status === Resource.Status.SUCCESS && inventoryItemModels!!.data != null)
-                    mTreatYourselfAdapter!!.setData(inventoryItemModels!!.data!!)
+                if (inventoryItemModels.status === Resource.Status.SUCCESS && inventoryItemModels.data != null)
+                    mTreatYourselfAdapter!!.setData(inventoryItemModels.data!!)
             }
         })
     }

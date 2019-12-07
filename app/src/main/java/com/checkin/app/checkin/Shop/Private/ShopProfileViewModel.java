@@ -98,7 +98,7 @@ public class ShopProfileViewModel extends BaseViewModel {
     }
 
     public void updateShopContact(String phoneToken, String email) {
-        ObjectNode data = Converters.objectMapper.createObjectNode();
+        ObjectNode data = Converters.INSTANCE.getObjectMapper().createObjectNode();
         if (phoneToken != null)
             data.put("phone_token", phoneToken);
         if (email != null)

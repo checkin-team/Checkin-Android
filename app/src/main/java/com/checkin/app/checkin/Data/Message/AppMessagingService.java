@@ -10,6 +10,9 @@ import android.os.Build;
 import android.service.notification.StatusBarNotification;
 import android.util.Log;
 
+import androidx.annotation.RequiresApi;
+import androidx.core.app.NotificationCompat;
+
 import com.checkin.app.checkin.Auth.DeviceTokenService;
 import com.checkin.app.checkin.Data.Converters;
 import com.checkin.app.checkin.R;
@@ -20,9 +23,6 @@ import com.google.firebase.messaging.RemoteMessage;
 import java.io.IOException;
 import java.util.Locale;
 import java.util.Map;
-
-import androidx.annotation.RequiresApi;
-import androidx.core.app.NotificationCompat;
 
 import static com.checkin.app.checkin.Data.Message.MessageUtils.isNotificationEnabled;
 
@@ -46,8 +46,8 @@ public class AppMessagingService extends FirebaseMessagingService {
             return;
         MessageModel data;
         try {
-            String json = Converters.objectMapper.writeValueAsString(params);
-            data = Converters.objectMapper.readValue(json, MessageModel.class);
+            String json = Converters.INSTANCE.getObjectMapper().writeValueAsString(params);
+            data = Converters.INSTANCE.getObjectMapper().readValue(json, MessageModel.class);
             Log.e(TAG, data.toString());
         } catch (IOException e) {
             Log.e(TAG, "Couldn't parse FCM remote data.", e);

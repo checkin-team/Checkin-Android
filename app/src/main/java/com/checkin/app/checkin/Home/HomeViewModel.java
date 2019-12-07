@@ -32,7 +32,7 @@ public class HomeViewModel extends BaseViewModel {
     }
 
     public void processQr(String data) {
-        ObjectNode requestJson = Converters.objectMapper.createObjectNode();
+        ObjectNode requestJson = Converters.INSTANCE.getObjectMapper().createObjectNode();
         requestJson.put("data", data);
         mQrResult.addSource(mSessionRepository.newCustomerSession(requestJson), mQrResult::setValue);
     }

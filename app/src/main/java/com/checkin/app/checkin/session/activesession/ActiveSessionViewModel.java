@@ -62,13 +62,13 @@ public class ActiveSessionViewModel extends BaseViewModel {
     }
 
     public void addMembers(long id) {
-        ObjectNode data = Converters.objectMapper.createObjectNode();
+        ObjectNode data = Converters.INSTANCE.getObjectMapper().createObjectNode();
         data.put("user_id", id);
         mData.addSource(mRepository.postAddMembers(data), mData::setValue);
     }
 
     public void sendSelfPresence(boolean isPublic) {
-        ObjectNode data = Converters.objectMapper.createObjectNode();
+        ObjectNode data = Converters.INSTANCE.getObjectMapper().createObjectNode();
         data.put("is_public", isPublic);
         mData.addSource(mRepository.putSelfPresence(data), mData::setValue);
     }

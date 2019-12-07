@@ -91,7 +91,7 @@ public class ManagerWorkViewModel extends BaseViewModel {
     }
 
     public void markSessionDone(long sessionId) {
-        ObjectNode data = Converters.objectMapper.createObjectNode();
+        ObjectNode data = Converters.INSTANCE.getObjectMapper().createObjectNode();
         data.put("payment_mode", "csh");
         mCheckoutData.addSource(mManagerRepository.manageSessionCheckout(sessionId), mCheckoutData::setValue);
     }
@@ -188,7 +188,7 @@ public class ManagerWorkViewModel extends BaseViewModel {
     }
 
     public void processQrPk(long qrPk) {
-        ObjectNode requestJson = Converters.objectMapper.createObjectNode();
+        ObjectNode requestJson = Converters.INSTANCE.getObjectMapper().createObjectNode();
         requestJson.put("qr", qrPk);
         mQrResult.addSource(mManagerRepository.managerInitiateSession(requestJson), mQrResult::setValue);
     }

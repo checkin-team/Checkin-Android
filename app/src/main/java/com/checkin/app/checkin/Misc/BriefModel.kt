@@ -18,13 +18,13 @@ open class BriefModel : Serializable {
 
     constructor()
 
-    constructor(pk: String, displayName: String, displayPic: String) {
+    constructor(pk: String, displayName: String?, displayPic: String?) {
         this.pk = pk
         this.displayName = displayName
         this.displayPic = displayPic
     }
 
-    constructor(pk: Long, displayName: String, displayPic: String) {
+    constructor(pk: Long, displayName: String?, displayPic: String?) {
         this.pk = pk.toString()
         this.displayName = displayName
         this.displayPic = displayPic

@@ -116,13 +116,13 @@ public class WaiterWorkViewModel extends BaseViewModel {
     }
 
     public void processQrPk(long qrPk) {
-        ObjectNode requestJson = Converters.objectMapper.createObjectNode();
+        ObjectNode requestJson = Converters.INSTANCE.getObjectMapper().createObjectNode();
         requestJson.put("qr", qrPk);
         mQrResult.addSource(mWaiterRepository.newWaiterSession(requestJson), mQrResult::setValue);
     }
 
     public void processQr(String data) {
-        ObjectNode requestJson = Converters.objectMapper.createObjectNode();
+        ObjectNode requestJson = Converters.INSTANCE.getObjectMapper().createObjectNode();
         requestJson.put("data", data);
         mQrResult.addSource(mWaiterRepository.newWaiterSession(requestJson), mQrResult::setValue);
     }

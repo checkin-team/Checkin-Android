@@ -79,7 +79,7 @@ public class AuthActivity extends AppCompatActivity implements AuthFragmentInter
         if (savedInstanceState == null) {
             mFacebookCallbackManager = CallbackManager.Factory.create();
             FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
-            transaction.add(R.id.fragment_container, AuthOptionsFragment.newInstance(this, mFacebookCallbackManager));
+            transaction.add(R.id.fragment_container, AuthOptionsFragment.Companion.newInstance(mFacebookCallbackManager));
             transaction.commit();
         }
 
@@ -156,7 +156,7 @@ public class AuthActivity extends AppCompatActivity implements AuthFragmentInter
 
     private void askUserDetails() {
         FirebaseUser user = mAuth.getCurrentUser();
-        Fragment fragment = SignupUserInfoFragment.newInstance(AuthActivity.this);
+        Fragment fragment = SignupUserInfoFragment.Companion.newInstance();
         if (user == null) {
             Log.e(TAG, "Logged-in user is NULL");
             return;
@@ -164,7 +164,7 @@ public class AuthActivity extends AppCompatActivity implements AuthFragmentInter
         String name = user.getDisplayName();
         if (name != null) {
             Bundle bundle = new Bundle();
-            bundle.putString(SignupUserInfoFragment.KEY_NAME, name);
+            bundle.putString(SignupUserInfoFragment.Companion.getKEY_NAME(), name);
             fragment.setArguments(bundle);
         }
         goBack = false;

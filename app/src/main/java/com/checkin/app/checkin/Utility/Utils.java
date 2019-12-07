@@ -39,8 +39,6 @@ import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.WindowManager;
-import android.view.animation.Animation;
-import android.view.animation.Transformation;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -228,7 +226,7 @@ public final class Utils {
     public static String formatCount(long count) {
         String res;
         if (count > 1000)
-            res = String.valueOf(count / 1000) + "k";
+            res = count / 1000 + "k";
         else
             res = String.valueOf(count);
         return res;

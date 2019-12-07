@@ -106,7 +106,7 @@ public class WaiterTableViewModel extends BaseViewModel {
     }
 
     public void requestSessionCheckout() {
-        ObjectNode data = Converters.objectMapper.createObjectNode();
+        ObjectNode data = Converters.INSTANCE.getObjectMapper().createObjectNode();
         data.put("payment_mode", "csh");
         mCheckoutData.addSource(mWaiterRepository.postSessionRequestCheckout(mSessionPk, data), mCheckoutData::setValue);
     }
@@ -120,7 +120,7 @@ public class WaiterTableViewModel extends BaseViewModel {
     }
 
     public void updateOrderStatus(long orderId, CHAT_STATUS_TYPE statusType) {
-        ObjectNode data = Converters.objectMapper.createObjectNode();
+        ObjectNode data = Converters.INSTANCE.getObjectMapper().createObjectNode();
         data.put("status", statusType.tag);
         mOrderStatus.addSource(mWaiterRepository.changeOrderStatus(orderId, data), mOrderStatus::setValue);
     }

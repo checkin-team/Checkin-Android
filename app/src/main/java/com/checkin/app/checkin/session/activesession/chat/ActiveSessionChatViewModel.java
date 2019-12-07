@@ -39,7 +39,7 @@ public class ActiveSessionChatViewModel extends BaseViewModel {
     }
 
     public void sendMessage(String msg, Object service) {
-        ObjectNode data = Converters.objectMapper.createObjectNode();
+        ObjectNode data = Converters.INSTANCE.getObjectMapper().createObjectNode();
         EVENT_REQUEST_SERVICE_TYPE type = (EVENT_REQUEST_SERVICE_TYPE) service;
         if (type == EVENT_REQUEST_SERVICE_TYPE.SERVICE_NONE) {
             data.put("message", msg);
@@ -52,7 +52,7 @@ public class ActiveSessionChatViewModel extends BaseViewModel {
     }
 
     public void raiseConcern(SessionChatDataModel.EVENT_CONCERN_TYPE concern, int eventId) {
-        ObjectNode data = Converters.objectMapper.createObjectNode();
+        ObjectNode data = Converters.INSTANCE.getObjectMapper().createObjectNode();
         data.put("concern", concern.tag);
         data.put("event_id", eventId);
         mData.addSource(mRepository.postConcern(data), mData::setValue);

@@ -77,7 +77,7 @@ public class MessageObjectModel implements Serializable {
     public static class MessageObjectDeserializer extends JsonDeserializer<MessageObjectModel> {
         @Override
         public MessageObjectModel deserialize(JsonParser jsonParser, DeserializationContext deserializationContext) throws IOException {
-            return Converters.objectMapper.readValue(jsonParser.getText(), MessageObjectModel.class);
+            return Converters.INSTANCE.getObjectMapper().readValue(jsonParser.getText(), MessageObjectModel.class);
         }
     }
 }

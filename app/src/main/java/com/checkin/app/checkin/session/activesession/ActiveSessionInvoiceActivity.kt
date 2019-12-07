@@ -403,11 +403,10 @@ class ActiveSessionInvoiceActivity : BaseActivity() {
     }
 
     private fun onRequestCheckout(override: Boolean) {
-        if (selectedMode != null) {
-            mViewModel.requestCheckout(mBillModel!!.tip!!, selectedMode!!, override)
+        selectedMode?.let {
+            mViewModel.requestCheckout(mBillModel?.tip ?: 0.0, it, override)
             visibleProgressBar()
-        } else
-            Utils.toast(this, "Please select the Payment Mode.")
+        } ?: Utils.toast(this, "Please select the Payment Mode.")
     }
 
     @OnClick(R.id.container_as_payment_mode_change)
