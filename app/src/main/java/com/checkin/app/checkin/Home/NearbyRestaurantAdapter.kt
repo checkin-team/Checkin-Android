@@ -21,6 +21,8 @@ import java.util.*
 import android.graphics.BitmapFactory
 import android.graphics.Bitmap
 import android.nfc.Tag
+import android.widget.TextView
+import butterknife.BindView
 import com.bumptech.glide.Glide
 
 
@@ -52,7 +54,15 @@ class NearbyRestaurantAdapter(var context: Context) : RecyclerView.Adapter<BaseV
     }
 
     inner class NearbyRestaurantViewHolder(itemView: View) : BaseViewHolder<NearbyRestaurantModel>(itemView) {
-        var imageView:ImageView=itemView.findViewById(R.id.home_image)
+
+
+        var imageView:ImageView=itemView.findViewById(R.id.iv_home_restaurant_banner_main)
+
+        var image_title:TextView=itemView.findViewById(R.id.tv_home_restaurant_banner_image_title)
+
+        var ratings:TextView=itemView.findViewById(R.id.tv_home_restaurant_banner_ratings)
+        var resturantName:TextView=itemView.findViewById(R.id.tv_home_restaurant_banner_restaurant_name)
+
         init {
 
 
@@ -61,7 +71,9 @@ class NearbyRestaurantAdapter(var context: Context) : RecyclerView.Adapter<BaseV
 
         override fun bindData(data: NearbyRestaurantModel) {
 
-
+            image_title.setText(data.imageTitle)
+            ratings.setText(data.ratings)
+            resturantName.setText(data.restaurantName)
             Glide.with(context).asBitmap()
                     .load(
                     data.url).into(imageView)
