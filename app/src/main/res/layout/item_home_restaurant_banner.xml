@@ -8,8 +8,9 @@
 
     <androidx.cardview.widget.CardView
         android:layout_width="match_parent"
-        android:layout_height="@dimen/size_image_large"
+        android:layout_height="234dp"
         android:layout_centerVertical="true"
+        app:cardCornerRadius="@dimen/card_corner_radius_small"
         android:layout_marginLeft="@dimen/spacing_small"
         android:layout_marginTop="@dimen/spacing_huge"
         android:layout_marginRight="@dimen/spacing_small"
@@ -23,18 +24,19 @@
             android:layout_height="match_parent">
 
             <ImageView
-                android:layout_width="12dp"
-                android:layout_height="20dp"
-                android:layout_below="@+id/nearbyRestaurant_food_name"
+                android:layout_width="@dimen/search_icon_padding"
+                android:layout_height="@dimen/spacing_medium"
+                android:layout_below="@+id/tv_home_restaurant_banner_restaurant_name"
 
-                android:layout_marginLeft="@dimen/text_spacing_from_right"
-                android:layout_marginTop="@dimen/search_icon_padding"
+                android:layout_marginLeft="@dimen/places_autocomplete_search_input_padding"
+                android:layout_marginTop="15dp"
                 android:background="@drawable/pedestrian_man"></ImageView>
 
              <TextView
+                 android:id="@+id/button_home_resturant_banner_checkin"
                     android:layout_width="75dp"
                  android:layout_height="@dimen/spacing_feedback_detail_top_view"                 android:layout_alignParentEnd="true"
-                 android:layout_marginTop="180dp"
+                 android:layout_marginTop="155dp"
                  android:layout_marginLeft="@dimen/spacing_love_us_view"
                  android:textAlignment="center"
 
@@ -53,11 +55,12 @@
                     />
 
             <ImageView
+                android:id="@+id/button_home_resturant_banner_navigate"
                 android:layout_marginLeft="@dimen/spacing_love_us_view"
                 android:layout_alignParentEnd="true"
                 android:layout_marginRight="@dimen/search_icon_padding"
-                android:layout_below="@+id/nearbyRestaurant_food_name"
-                android:layout_marginTop="@dimen/search_icon_padding"
+                android:layout_below="@+id/tv_home_restaurant_banner_restaurant_name"
+                android:layout_marginTop="@dimen/places_autocomplete_search_input_padding"
 
                 android:background="@drawable/navigate"
                 android:layout_width="@dimen/spacing_incredible"
@@ -65,40 +68,52 @@
 
 
             <TextView
-                android:id="@+id/nearbyRestaurant_food_name"
+
+                android:id="@+id/tv_home_restaurant_banner_restaurant_name"
 
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:fontFamily="@font/josefinsans_regular"
                 android:layout_marginLeft="36dp"
 
-                android:layout_marginTop="180dp"
+                android:layout_marginTop="155dp"
 
                 android:gravity="center_horizontal"
 
                 android:textColor="@color/brownish_grey"
 
-                android:textSize="@dimen/places_autocomplete_prediction_secondary_text"
+                android:textSize="13dp"
 
                 android:text="Pure Veg  American  Burgers"
 
                 />
+            <ImageView
+                android:layout_width="@dimen/places_autocomplete_search_input_padding"
+                android:layout_marginTop="155dp"
+
+                android:layout_height="@dimen/spacing_medium"
+
+                android:layout_marginLeft="@dimen/places_autocomplete_search_input_padding"
+                android:background="@drawable/ic_grade_black_24dp"></ImageView>
+
 
             <TextView
-                android:id="@+id/distance"
+                android:id="@+id/tv_home_restaurant_banner_distance"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
 
-                android:layout_below="@+id/nearbyRestaurant_food_name"
+                android:layout_below="@+id/tv_home_restaurant_banner_restaurant_name"
+                android:fontFamily="@font/josefinsans_regular"
                 android:layout_marginLeft="35dp"
 
-                android:layout_marginTop="@dimen/search_icon_padding"
+                android:layout_marginTop="14dp"
                 android:gravity="center_horizontal"
 
                 android:text="3 min away"
 
                 android:textColor="@color/brownish_grey"
 
-                android:textSize="14sp"></TextView>
+                android:textSize="13dp"></TextView>
 
         </RelativeLayout>
     </androidx.cardview.widget.CardView>
@@ -106,33 +121,70 @@
     <androidx.cardview.widget.CardView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="@dimen/spacing_feedback_detail_top_view"
+        app:cardCornerRadius="@dimen/card_corner_radius_small"
+        android:layout_marginLeft="@dimen/spacing_medium"
         android:layout_marginTop="@dimen/search_icon_padding"
 
 
-        android:layout_marginRight="@dimen/spacing_extra_large"
+        android:layout_marginRight="@dimen/spacing_medium"
         app:cardElevation="@dimen/card_elevation"
         android:elevation="@dimen/card_elevation">
 
         <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="170dp">
 
             <ImageView
-                android:id="@+id/home_image"
+                android:id="@+id/iv_home_restaurant_banner_main"
                 android:layout_width="match_parent"
 
 
-                android:layout_height="200dp"
+                android:layout_height="170dp"
                 android:layout_centerVertical="true">
             </ImageView>
+
+            <ImageView
+                android:layout_width="match_parent"
+                android:layout_height="24dp"
+                android:layout_alignParentBottom="true"
+
+
+                android:layout_gravity="bottom|center"
+                android:scaleType="fitXY"
+                android:src="@drawable/bottom_inner_shadow_gradient" />
             <TextView
-                android:id="@+id/tv_home_trending_rest_rating"
+                android:id="@+id/tv_home_restaurant_banner_image_title"
+                android:layout_width="wrap_content"
+
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/josefinsans_semibold"
+                android:layout_alignParentBottom="true"
+                android:layout_centerHorizontal="true"
+                android:layout_marginBottom="@dimen/spacing_elevation_fix_extreme_tiny"
+
+                android:shadowColor="#80ffffff"
+
+                android:shadowRadius="3"
+
+                android:textSize="14dp"
+
+                android:textColor="@color/white"
+
+                android:gravity="center_horizontal"
+
+                android:text="Grey Orange - Lavel Road "
+
+                />
+
+
+            <TextView
+
+                android:id="@+id/tv_home_restaurant_banner_ratings"
                 style="@style/WhiteSmallTextStyle"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignParentEnd="true"
-                android:layout_margin="7dp"
+                android:layout_margin="@dimen/spacing_extra_small"
                 android:background="@drawable/background_rectangle_green_gradient"
                 android:paddingStart="@dimen/spacing_tiny"
                 android:paddingEnd="@dimen/spacing_tiny"

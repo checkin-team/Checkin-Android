@@ -65,15 +65,23 @@ public class HomeViewModel extends BaseViewModel {
 
     public LiveData<Resource<List<NearbyRestaurantModel>>> getNearbyRestaurantData() {
         List<NearbyRestaurantModel> data = new ArrayList<>();
-        data.add(new NearbyRestaurantModel("THC", "https://www.washingtonpost.com/resizer/Kv8laiHtDM2ZOMNV4eP3lUTN8HA=/767x0/smart/arc-anglerfish-washpost-prod-washpost.s3.amazonaws.com/public/2KL6JYQYH4I6REYMIWBYVUGXPI.jpg"));
-        data.add(new NearbyRestaurantModel("THC", "https://www.washingtonpost.com/resizer/Kv8laiHtDM2ZOMNV4eP3lUTN8HA=/767x0/smart/arc-anglerfish-washpost-prod-washpost.s3.amazonaws.com/public/2KL6JYQYH4I6REYMIWBYVUGXPI.jpg"));
-        data.add(new NearbyRestaurantModel("THC", "https://www.washingtonpost.com/resizer/Kv8laiHtDM2ZOMNV4eP3lUTN8HA=/767x0/smart/arc-anglerfish-washpost-prod-washpost.s3.amazonaws.com/public/2KL6JYQYH4I6REYMIWBYVUGXPI.jpg"));
-        data.add(new NearbyRestaurantModel("THC", "https://www.washingtonpost.com/resizer/Kv8laiHtDM2ZOMNV4eP3lUTN8HA=/767x0/smart/arc-anglerfish-washpost-prod-washpost.s3.amazonaws.com/public/2KL6JYQYH4I6REYMIWBYVUGXPI.jpg"));
-        data.add(new NearbyRestaurantModel("THC", "https://www.washingtonpost.com/resizer/Kv8laiHtDM2ZOMNV4eP3lUTN8HA=/767x0/smart/arc-anglerfish-washpost-prod-washpost.s3.amazonaws.com/public/2KL6JYQYH4I6REYMIWBYVUGXPI.jpg"));
+        data.add(new NearbyRestaurantModel("THC", "https://www.washingtonpost.com/resizer/Kv8laiHtDM2ZOMNV4eP3lUTN8HA=/767x0/smart/arc-anglerfish-washpost-prod-washpost.s3.amazonaws.com/public/2KL6JYQYH4I6REYMIWBYVUGXPI.jpg"
+                ,"Pure Veg American Burgers","4.4","Lorem ipsum","3 min away"));
+        data.add(new NearbyRestaurantModel("THC", "https://www.washingtonpost.com/resizer/Kv8laiHtDM2ZOMNV4eP3lUTN8HA=/767x0/smart/arc-anglerfish-washpost-prod-washpost.s3.amazonaws.com/public/2KL6JYQYH4I6REYMIWBYVUGXPI.jpg"
+                ,"Pure Veg American Burgers","4.9","Lorem ipsum","5 min away"));
+        data.add(new NearbyRestaurantModel("THC", "https://www.washingtonpost.com/resizer/Kv8laiHtDM2ZOMNV4eP3lUTN8HA=/767x0/smart/arc-anglerfish-washpost-prod-washpost.s3.amazonaws.com/public/2KL6JYQYH4I6REYMIWBYVUGXPI.jpg"
+                ,"Pure Veg American Burgers","3","Lorem ipsum","30 min away"));
+        data.add(new NearbyRestaurantModel("THC", "https://www.washingtonpost.com/resizer/Kv8laiHtDM2ZOMNV4eP3lUTN8HA=/767x0/smart/arc-anglerfish-washpost-prod-washpost.s3.amazonaws.com/public/2KL6JYQYH4I6REYMIWBYVUGXPI.jpg"
+                ,"Pure Veg American Burgers","4.4","Lorem ipsum","3.3 min away"));
+        data.add(new NearbyRestaurantModel("THC", "https://www.washingtonpost.com/resizer/Kv8laiHtDM2ZOMNV4eP3lUTN8HA=/767x0/smart/arc-anglerfish-washpost-prod-washpost.s3.amazonaws.com/public/2KL6JYQYH4I6REYMIWBYVUGXPI.jpg"
+                ,"Pure Veg American Burgers","2","Lorem ipsum","6 min away"));
 
-        data.add(new NearbyRestaurantModel("THC", "https://www.washingtonpost.com/resizer/Kv8laiHtDM2ZOMNV4eP3lUTN8HA=/767x0/smart/arc-anglerfish-washpost-prod-washpost.s3.amazonaws.com/public/2KL6JYQYH4I6REYMIWBYVUGXPI.jpg"));
-        data.add(new NearbyRestaurantModel("THC", "https://www.washingtonpost.com/resizer/Kv8laiHtDM2ZOMNV4eP3lUTN8HA=/767x0/smart/arc-anglerfish-washpost-prod-washpost.s3.amazonaws.com/public/2KL6JYQYH4I6REYMIWBYVUGXPI.jpg"));
-        data.add(new NearbyRestaurantModel("THC", "https://www.washingtonpost.com/resizer/Kv8laiHtDM2ZOMNV4eP3lUTN8HA=/767x0/smart/arc-anglerfish-washpost-prod-washpost.s3.amazonaws.com/public/2KL6JYQYH4I6REYMIWBYVUGXPI.jpg"));
+        data.add(new NearbyRestaurantModel("THC", "https://www.washingtonpost.com/resizer/Kv8laiHtDM2ZOMNV4eP3lUTN8HA=/767x0/smart/arc-anglerfish-washpost-prod-washpost.s3.amazonaws.com/public/2KL6JYQYH4I6REYMIWBYVUGXPI.jpg"
+                ,"Pure Veg American Burgers","5.0","Lorem ipsum","45 min away"));
+        data.add(new NearbyRestaurantModel("THC", "https://www.washingtonpost.com/resizer/Kv8laiHtDM2ZOMNV4eP3lUTN8HA=/767x0/smart/arc-anglerfish-washpost-prod-washpost.s3.amazonaws.com/public/2KL6JYQYH4I6REYMIWBYVUGXPI.jpg"
+                ,"Pure Veg American Burgers","2.2","Lorem ipsum","2 min away"));
+        data.add(new NearbyRestaurantModel("THC", "https://www.washingtonpost.com/resizer/Kv8laiHtDM2ZOMNV4eP3lUTN8HA=/767x0/smart/arc-anglerfish-washpost-prod-washpost.s3.amazonaws.com/public/2KL6JYQYH4I6REYMIWBYVUGXPI.jpg"
+                ,"Pure Veg American Burgers","2.3","Lorem ipsum","1 min away"));
 
         return new MutableLiveData<>(Resource.Companion.success(data));
     }
