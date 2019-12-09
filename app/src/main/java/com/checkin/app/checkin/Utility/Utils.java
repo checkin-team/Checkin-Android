@@ -39,8 +39,6 @@ import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.WindowManager;
-import android.view.animation.Animation;
-import android.view.animation.Transformation;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -407,11 +405,8 @@ public final class Utils {
 
     public static void loadImageOrDefault(ImageView imageView, String url, @DrawableRes int defaultDrawable) {
         if (url != null) {
-//            ShimmerDrawable shimmerDrawable = new ShimmerDrawable();
-//            shimmerDrawable.setShimmer(new Shimmer.AlphaHighlightBuilder().build());
             GlideApp.with(imageView.getContext())
                     .load(url)
-//                    .placeholder(shimmerDrawable)
                     .into(imageView);
         } else if (defaultDrawable != 0) {
             imageView.setImageResource(defaultDrawable);

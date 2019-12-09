@@ -78,6 +78,7 @@ public class HomeActivity extends BaseAccountActivity implements NavigationView.
 //    TextView tvSessionStatus;
 //    @BindView(R.id.tv_home_session_wait_qr_busy)
 //    TextView tvSessionWaitQRBusy;
+    @Nullable
     ImageView imTabUserIcon;
 
     private HomeViewModel mViewModel;
@@ -377,7 +378,7 @@ public class HomeActivity extends BaseAccountActivity implements NavigationView.
         public Fragment getItem(int position) {
             switch (position) {
                 case 0:
-                    return UserHomeFragment.newInstance();
+                    return UserHomeFragment.Companion.newInstance();
                 case 1:
                     return BlankFragment.newInstance();
                 case 2:
