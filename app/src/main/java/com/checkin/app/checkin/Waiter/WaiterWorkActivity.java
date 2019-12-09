@@ -490,7 +490,7 @@ public class WaiterWorkActivity extends BaseAccountActivity implements
             resetTables();
             for (WaiterTableModel tableModel : tableModels) {
                 mTableList.add(tableModel);
-                mFragmentList.add(WaiterTableFragment.Companion.newInstance(tableModel.getPk(), listener));
+                mFragmentList.add(WaiterTableFragment.Companion.newInstance(tableModel.getPk()));
             }
             updateTabUi(tabLayout);
         }
@@ -503,7 +503,7 @@ public class WaiterWorkActivity extends BaseAccountActivity implements
 
         void addTable(TabLayout tabLayout, WaiterTableModel tableModel, WaiterTableFragment.WaiterTableInteraction listener) {
             mTableList.add(tableModel);
-            mFragmentList.add(WaiterTableFragment.Companion.newInstance(tableModel.getPk(), listener));
+            mFragmentList.add(WaiterTableFragment.Companion.newInstance(tableModel.getPk()));
             updateTabUi(tabLayout);
         }
 
