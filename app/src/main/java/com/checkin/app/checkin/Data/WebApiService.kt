@@ -38,9 +38,8 @@ import okhttp3.MultipartBody
 import retrofit2.Call
 import retrofit2.http.*
 
+@JvmSuppressWildcards
 interface WebApiService {
-    // endregion
-
     // region USER
     // region GET
     @get:GET("users/")
@@ -49,16 +48,45 @@ interface WebApiService {
     @get:GET("users/self/")
     val personalUser: Call<UserModel>
 
-    @get:GET("sessions/recent/users/self/")
-    val userRecentCheckins: Call<List<ShopCustomerModel>>
-
-    @get:GET("restaurants/")
-    val restaurants: Call<List<RestaurantModel>>
+    @GET("users/{user_pk}/")
+    fun getNonPersonalUser(@Path("user_pk") userPk: Long): Call<UserModel>
     // endregion
 
+    @PATCH("users/self/")
+    fun postUserData(@Body objectNode: ObjectNode): Call<UserModel>
+
+    @Multipart
+    @POST("users/self/picture/")
+    fun postUserProfilePic(@Part pic: MultipartBody.Part): Call<GenericDetailModel>
     // endregion
 
     // region SESSION
+    @POST("sessions/customer/new/")
+    fun postNewCustomerSession(@Body data: ObjectNode): Call<QRResultModel>
+
+    @POST("/sessions/active/concern/")
+    fun postOrderConcern(@Body data: ObjectNode): Call<ObjectNode>
+
+    @POST("sessions/active/customers/")
+    fun postActiveSessionCustomers(@Body data: ObjectNode): Call<ObjectNode>
+
+    @PUT("sessions/active/customers/self/")
+    fun putActiveSessionSelfCustomer(@Body data: ObjectNode): Call<ObjectNode>
+
+    @POST("sessions/active/customers/{user_id}/")
+    fun postActiveSessionCustomerRequest(@Path("user_id") userId: String): Call<GenericDetailModel>
+
+    @DELETE("sessions/active/customers/{user_id}/")
+    fun deleteActiveSessionCustomer(@Path("user_id") userId: String): Call<GenericDetailModel>
+
+    @POST("sessions/active/message/")
+    fun postCustomerMessage(@Body data: ObjectNode): Call<ObjectNode>
+
+    @POST("sessions/active/request/service/")
+    fun postCustomerRequestService(@Body data: ObjectNode): Call<ObjectNode>
+
+    @POST("sessions/active/request/checkout/")
+    fun postCustomerRequestCheckout(@Body data: ObjectNode): Call<CheckoutStatusModel>
 
     @get:GET("sessions/active/check/")
     val activeSessionCheck: Call<SessionBasicModel>
@@ -81,17 +109,39 @@ interface WebApiService {
     @get:GET("sessions/active/orders/")
     val activeSessionOrders: Call<List<SessionOrderedItemModel>>
 
+    @GET("sessions/{session_id}/brief/")
+    fun getUserSessionBrief(@Path("session_id") sessionId: Long): Call<UserTransactionBriefModel>
+
+    @GET("sessions/{session_id}/detail/")
+    fun getUserSessionDetailById(@Path("session_id") sessionId: Long): Call<UserTransactionDetailsModel>
+
+    @get:GET("sessions/recent/users/self/")
+    val userRecentCheckins: Call<List<ShopCustomerModel>>
+
+    @POST("sessions/active/pay/paytm/")
+    fun postPaytmRequest(): Call<PaytmModel>
+
     // endregion
 
     // region MISC
     @get:GET("accounts/self/")
     val selfAccounts: Call<List<AccountModel>>
 
+    @GET("search/people/")
+    fun getSearchPeopleResults(
+            @Query("search") query: String?, @Query("friendship_status") friendshipStatus: String?): Call<List<SearchResultPeopleModel>>
+
+    @GET("search/restaurant/")
+    fun getSearchShopResults(@Query("search") query: String?, @Query("has_nonveg") hasNonVeg: Boolean?, @Query("has_alcohol") hasAlcohol: Boolean?): Call<List<SearchResultShopModel>>
     // endregion
 
     // region promos
     @get:GET("promos/")
     val promoCodes: Call<List<PromoDetailModel>>
+
+    @GET("promos/active/restaurants/{restaurant_id}/")
+    fun getRestaurantActivePromos(@Path("restaurant_id") restaurantId: Long): Call<List<PromoDetailModel>>
+    // endregion
 
     // region AUTH
     @POST("auth/login/")
@@ -102,26 +152,12 @@ interface WebApiService {
 
     @PUT("auth/devices/self/update/")
     fun postFCMToken(@Body tokenData: ObjectNode): Call<ObjectNode>
-
-    @GET("users/{user_pk}/")
-    fun getNonPersonalUser(@Path("user_pk") userPk: Long): Call<UserModel>
-
-    @GET("sessions/{session_id}/brief/")
-    fun getUserSessionBrief(@Path("session_id") sessionId: Long): Call<UserTransactionBriefModel>
-
-    @GET("sessions/{session_id}/detail/")
-    fun getUserSessionDetailById(@Path("session_id") sessionId: Long): Call<UserTransactionDetailsModel>
-    // endregion
-
-    @PATCH("users/self/")
-    fun postUserData(@Body objectNode: ObjectNode): Call<UserModel>
-
-    @Multipart
-    @POST("users/self/picture/")
-    fun postUserProfilePic(@Part pic: MultipartBody.Part): Call<GenericDetailModel>
     // endregion
 
     // region SHOP
+    @get:GET("restaurants/")
+    val restaurants: Call<List<RestaurantModel>>
+
     @POST("restaurants/create/")
     fun postRegisterShop(@Body model: ShopJoinModel): Call<GenericDetailModel>
 
@@ -156,6 +192,8 @@ interface WebApiService {
     @GET("/restaurants/{restaurant_id}/insights/loyalty/")
     fun getShopInsightLoyaltyDetail(@Path("restaurant_id") shopId: Long): Call<ShopInsightLoyaltyProgramModel>
 
+    // endregion
+
     // region SHOP_MEMBERS
     @GET("restaurants/{shop_id}/members/")
     fun getRestaurantMembers(@Path("shop_id") shopId: Long): Call<List<MemberModel>>
@@ -181,38 +219,14 @@ interface WebApiService {
     @GET("restaurants/{restaurant_id}/finance/")
     fun getRestaurantFinanceById(@Path("restaurant_id") restaurantId: Long): Call<FinanceModel>
 
+    @POST("sessions/manage/{session_id}/contacts/")
+    fun postSessionContact(@Path("session_id") sessionId: Long, @Body data: SessionContactModel): Call<ObjectNode>
+
+    @GET("sessions/manage/{session_id}/contacts/")
+    fun getSessionContactList(@Path("session_id") sessionId: Long): Call<List<SessionContactModel>>
+
     @PUT("restaurants/{restaurant_id}/finance/")
     fun setRestaurantFinanceById(@Body financeModel: FinanceModel, @Path("restaurant_id") restaurantId: Long): Call<GenericDetailModel>
-
-    @POST("sessions/customer/new/")
-    fun postNewCustomerSession(@Body data: ObjectNode): Call<QRResultModel>
-
-    @POST("/sessions/active/concern/")
-    fun postOrderConcern(@Body data: ObjectNode): Call<ObjectNode>
-
-    @POST("sessions/active/customers/")
-    fun postActiveSessionCustomers(@Body data: ObjectNode): Call<ObjectNode>
-
-    @PUT("sessions/active/customers/self/")
-    fun putActiveSessionSelfCustomer(@Body data: ObjectNode): Call<ObjectNode>
-
-    @POST("sessions/active/customers/{user_id}/")
-    fun postActiveSessionCustomerRequest(@Path("user_id") userId: String): Call<GenericDetailModel>
-
-    @DELETE("sessions/active/customers/{user_id}/")
-    fun deleteActiveSessionCustomer(@Path("user_id") userId: String): Call<GenericDetailModel>
-
-    @POST("sessions/active/message/")
-    fun postCustomerMessage(@Body data: ObjectNode): Call<ObjectNode>
-
-    @POST("sessions/active/request/service/")
-    fun postCustomerRequestService(@Body data: ObjectNode): Call<ObjectNode>
-
-    @POST("sessions/active/request/checkout/")
-    fun postCustomerRequestCheckout(@Body data: ObjectNode): Call<CheckoutStatusModel>
-
-    @POST("sessions/active/pay/paytm/")
-    fun postPaytmRequest(): Call<PaytmModel>
 
     @GET("sessions/manage/{session_id}/brief/")
     fun getSessionBriefDetail(@Path("session_id") sessionId: Long): Call<SessionBriefModel>
@@ -318,27 +332,11 @@ interface WebApiService {
     @POST("menus/restaurants/{restaurant_id}/manage/items/")
     fun postChangeMenuAvailability(@Path("restaurant_id") restaurantId: Long, @Body msOrderStatus: List<InventoryAvailabilityModel>): Call<List<InventoryAvailabilityModel>>
 
-    @GET("search/people/")
-    fun getSearchPeopleResults(
-            @Query("search") query: String?, @Query("friendship_status") friendshipStatus: String?): Call<List<SearchResultPeopleModel>>
-
-    @GET("search/restaurant/")
-    fun getSearchShopResults(@Query("search") query: String?, @Query("has_nonveg") hasNonVeg: Boolean?, @Query("has_alcohol") hasAlcohol: Boolean?): Call<List<SearchResultShopModel>>
     // endregion
-
-    @POST("sessions/manage/{session_id}/contacts/")
-    fun postSessionContact(@Path("session_id") sessionId: Long, @Body data: SessionContactModel): Call<ObjectNode>
-
-    @GET("sessions/manage/{session_id}/contacts/")
-    fun getSessionContactList(@Path("session_id") sessionId: Long): Call<List<SessionContactModel>>
 
     // region payments
     @POST("payments/callback/paytm/")
     fun postPaytmCallback(@Body data: ObjectNode): Call<ObjectNode>
-
-    @GET("promos/active/restaurants/{restaurant_id}/")
-    fun getRestaurantActivePromos(@Path("restaurant_id") restaurantId: Long): Call<List<PromoDetailModel>>
-
     //endregion
 
     //region Review
@@ -348,4 +346,6 @@ interface WebApiService {
 
     @POST("reviews/sessions/{session_id}/")
     fun postCustomerReview(@Path("session_id") sessionId: Long, @Body review: NewReviewModel): Call<ObjectNode>
+
+    // endregion
 }
