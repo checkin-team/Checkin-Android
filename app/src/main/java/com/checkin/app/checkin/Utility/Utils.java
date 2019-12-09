@@ -405,11 +405,8 @@ public final class Utils {
 
     public static void loadImageOrDefault(ImageView imageView, String url, @DrawableRes int defaultDrawable) {
         if (url != null) {
-//            ShimmerDrawable shimmerDrawable = new ShimmerDrawable();
-//            shimmerDrawable.setShimmer(new Shimmer.AlphaHighlightBuilder().build());
             GlideApp.with(imageView.getContext())
                     .load(url)
-//                    .placeholder(shimmerDrawable)
                     .into(imageView);
         } else if (defaultDrawable != 0) {
             imageView.setImageResource(defaultDrawable);

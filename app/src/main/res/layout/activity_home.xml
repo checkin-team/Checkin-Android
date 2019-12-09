@@ -107,8 +107,8 @@
                 android:id="@+id/vp_home"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:layout_below="@+id/toolbar_home"
-                android:layout_above="@+id/container_bottom_bar" />
+                android:layout_below="@id/toolbar_home"
+                android:layout_above="@id/container_bottom_bar" />
 
             <!--<FrameLayout
                 android:id="@+id/container_home_session_status"

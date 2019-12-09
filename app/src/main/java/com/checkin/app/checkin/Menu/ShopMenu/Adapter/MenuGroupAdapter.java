@@ -20,9 +20,9 @@ import androidx.fragment.app.FragmentStatePagerAdapter;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.checkin.app.checkin.Menu.ShopMenu.Fragment.MenuItemsFragment;
 import com.checkin.app.checkin.Menu.MenuItemInteraction;
 import com.checkin.app.checkin.Menu.Model.MenuGroupModel;
+import com.checkin.app.checkin.Menu.ShopMenu.Fragment.MenuItemsFragment;
 import com.checkin.app.checkin.R;
 import com.checkin.app.checkin.Utility.AnimUtils;
 import com.checkin.app.checkin.Utility.DynamicSwipableViewPager;
@@ -81,9 +81,9 @@ public class MenuGroupAdapter extends RecyclerView.Adapter<MenuGroupAdapter.Grou
         mRecyclerView = recyclerView;
         /*mRecyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
             @Override
-            public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
-                super.onScrolled(recyclerView, dx, dy);
-                if (Math.abs(dy) > ViewConfiguration.get(recyclerView.getContext()).getScaledTouchSlop())
+            public void onScrolled(RecyclerView rvNearbyRestaurants, int dx, int dy) {
+                super.onScrolled(rvNearbyRestaurants, dx, dy);
+                if (Math.abs(dy) > ViewConfiguration.get(rvNearbyRestaurants.getContext()).getScaledTouchSlop())
                     contractView(mPrevExpandedViewHolder);
             }
         });*/

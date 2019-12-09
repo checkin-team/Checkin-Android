@@ -2,7 +2,7 @@ package com.checkin.app.checkin.Home.model;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 
-public class TrendingRestaurantsModel {
+public class SuggestedDishModel {
 
     @JsonProperty("pk")
     private long pk;
@@ -22,7 +22,7 @@ public class TrendingRestaurantsModel {
     @JsonProperty("off")
     private int off;
 
-    public TrendingRestaurantsModel() {
+    public SuggestedDishModel() {
     }
 
     public long getPk() {

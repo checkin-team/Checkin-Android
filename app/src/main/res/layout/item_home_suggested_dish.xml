@@ -91,31 +91,6 @@
 
         </LinearLayout>
 
-        <TextView
-            android:id="@+id/tv_home_trending_rest_rating"
-            style="@style/WhiteSmallTextStyle"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentEnd="true"
-            android:background="@drawable/background_rectangle_green_gradient"
-            android:paddingStart="@dimen/spacing_tiny"
-            android:paddingEnd="@dimen/spacing_tiny"
-            android:text="4.4" />
-
     </RelativeLayout>
-
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:layout_marginTop="@dimen/spacing_tiny"
-        android:autoSizeTextType="uniform"
-        android:fontFamily="@font/arial_rounded_mt_bold"
-        android:gravity="center"
-        android:maxLines="1"
-        android:text="5 SEATS AVAILABLE"
-        android:textAllCaps="true"
-        android:textColor="@color/aqua_blue"
-        android:textSize="@dimen/font_extra_small" />
 
 </LinearLayout>

@@ -417,7 +417,7 @@
 
 
         <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/rv_user_private_recent_shops"
+            android:id="@+id/rv_home_suggested_dishes"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/spacing_tiny"
@@ -442,158 +442,6 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/container_first_home"
         app:layout_constraintVertical_weight="0.35">
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:elevation="@dimen/spacing_elevation_fix_extreme_tiny"
-            android:weightSum="3"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent">
-
-            <LinearLayout
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:layout_weight="0.9"
-                android:gravity="center"
-                android:orientation="vertical">
-
-                <LinearLayout
-                    android:layout_width="wrap_content"
-                    android:layout_height="@dimen/button_height_medium">
-
-                    <ImageView
-                        android:layout_width="@dimen/button_height_normal"
-                        android:layout_height="match_parent"
-                        android:src="@drawable/ic_saved_hand" />
-
-                    <TextView
-                        style="@style/GreyHeadingStyle"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="center"
-                        android:autoSizeTextType="uniform"
-                        android:maxLines="1"
-                        android:text="4,000"
-                        android:textColor="@color/aqua_blue" />
-
-                </LinearLayout>
-
-                <TextView
-                    style="@style/GreySmallTextStyle"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center"
-                    android:layout_marginTop="@dimen/spacing_small"
-                    android:text="You Saved" />
-
-
-            </LinearLayout>
-
-            <View
-                android:layout_width="1dp"
-                android:layout_height="@dimen/button_height_medium"
-                android:layout_gravity="center"
-                android:layout_marginBottom="@dimen/spacing_small"
-                android:background="@color/extra_light_grey" />
-
-            <LinearLayout
-                android:id="@+id/container_home_brownie_cash"
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:layout_weight="1.2"
-                android:gravity="center"
-                android:orientation="vertical">
-
-                <LinearLayout
-                    android:layout_width="wrap_content"
-                    android:layout_height="@dimen/button_height_medium">
-
-                    <ImageView
-                        android:layout_width="@dimen/button_height_medium"
-                        android:layout_height="@dimen/button_height_normal"
-                        android:layout_gravity="center|bottom"
-                        android:scaleType="fitXY"
-                        android:src="@drawable/ic_brownie_cash" />
-
-                    <TextView
-                        style="@style/GreyHeadingStyle"
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="center"
-                        android:layout_weight="1"
-                        android:autoSizeTextType="uniform"
-                        android:gravity="center"
-                        android:maxLines="1"
-                        android:paddingStart="@dimen/spacing_tiny"
-                        android:paddingEnd="@dimen/spacing_tiny"
-                        android:text="$ 400"
-                        android:textColor="@color/aqua_blue" />
-
-                </LinearLayout>
-
-                <TextView
-                    style="@style/GreySmallTextStyle"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center"
-                    android:layout_marginTop="@dimen/spacing_small"
-                    android:text="Brownie Cash" />
-
-
-            </LinearLayout>
-
-            <View
-                android:layout_width="1dp"
-                android:layout_height="@dimen/button_height_medium"
-                android:layout_gravity="center"
-                android:layout_marginBottom="@dimen/spacing_small"
-                android:background="@color/extra_light_grey" />
-
-            <LinearLayout
-                android:id="@+id/container_home_claim_rewards"
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:layout_weight="0.9"
-                android:gravity="center"
-                android:orientation="vertical">
-
-                <LinearLayout
-                    android:layout_width="wrap_content"
-                    android:layout_height="@dimen/button_height_medium">
-
-                    <ImageView
-                        android:layout_width="@dimen/button_height_medium"
-                        android:layout_height="@dimen/button_height_medium"
-                        android:src="@drawable/ic_bonus" />
-
-                    <TextView
-                        style="@style/GreyHeadingStyle"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="center"
-                        android:autoSizeTextType="uniform"
-                        android:maxLines="1"
-                        android:text="40"
-                        android:textColor="@color/aqua_blue" />
-
-                </LinearLayout>
-
-                <TextView
-                    style="@style/GreySmallTextStyle"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center"
-                    android:layout_marginTop="@dimen/spacing_small"
-                    android:text="Claim Rewards" />
-
-
-            </LinearLayout>
-
-
-        </LinearLayout>
     </androidx.constraintlayout.widget.ConstraintLayout>
 
     <androidx.cardview.widget.CardView
@@ -608,12 +456,11 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/container_second_home"
+        app:layout_constraintTop_toBottomOf="@id/container_second_home"
         app:layout_constraintVertical_weight="0.35">
 
-        <!--        RecyclerView HERE-->
         <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/container_advertisement_nearbyResturant"
+            android:id="@+id/rv_home_nearby_restaurants"
             android:layout_width="match_parent"
             tools:listitem="@layout/item_home_restaurant_banner"
             android:layout_height="match_parent">

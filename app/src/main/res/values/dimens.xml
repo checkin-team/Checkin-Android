@@ -226,4 +226,8 @@
     <dimen name="width_current_location">150dp</dimen>
     <dimen name="height_current_location">140dp</dimen>
 
+    <dimen name="height_restaurant_banner">240dp</dimen>
+    <dimen name="height_restaurant_image_banner">165dp</dimen>
+    <dimen name="height_advertisement_banner">150dp</dimen>
+
 </resources>

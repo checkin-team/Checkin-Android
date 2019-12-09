@@ -223,15 +223,15 @@ public class HomeActivity extends BaseAccountActivity
 ////             * This callback will also be called if visible item range changes after a layout
 ////             * calculation. In that case, dx and dy will be 0.
 ////             *
-////             * @param recyclerView The RecyclerView which scrolled.
+////             * @param rvNearbyRestaurants The RecyclerView which scrolled.
 ////             * @param dx           The totalAmount of horizontal scroll.
 ////             * @param dy           The totalAmount of vertical scroll.
 ////             */
 ////            @Override
-////            public_selected void onScrolled(RecyclerView recyclerView, int dx, int dy) {
+////            public_selected void onScrolled(RecyclerView rvNearbyRestaurants, int dx, int dy) {
 ////                if(false)
 ////                {
-////                    super.onScrolled(recyclerView,dx,dy);
+////                    super.onScrolled(rvNearbyRestaurants,dx,dy);
 ////                    return;
 ////                }
 ////                Log.e(TAG, "onScrolled: CODE"+dx );
@@ -253,7 +253,7 @@ public class HomeActivity extends BaseAccountActivity
 ////                    rvTrendingShops.scrollToPosition(0);
 ////                }
 ////                else
-////                    super.onScrolled(recyclerView, dx, dy);
+////                    super.onScrolled(rvNearbyRestaurants, dx, dy);
 ////            }
 ////            boolean hasMinTranslation() {
 ////                return rvTrendingShops.getTranslationX() <= 0f;
