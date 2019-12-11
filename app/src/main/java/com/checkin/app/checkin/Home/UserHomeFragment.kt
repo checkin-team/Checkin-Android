@@ -7,8 +7,10 @@ import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import butterknife.BindView
+import com.checkin.app.checkin.Data.Resource
 import com.checkin.app.checkin.Misc.BaseFragment
 import com.checkin.app.checkin.R
+import com.checkin.app.checkin.Utility.pass
 
 class UserHomeFragment : BaseFragment() {
     @BindView(R.id.rv_home_suggested_dishes)
@@ -41,9 +43,12 @@ class UserHomeFragment : BaseFragment() {
             }
         })
 
-        mViewModel.nearbyRestaurantData.observe(this, Observer {
+        mViewModel.nearbyRestaurants.observe(this, Observer {
             it?.let { listResource ->
-                mRestAdapter.updateData(listResource.data!!)
+                when (listResource.status) {
+                    Resource.Status.SUCCESS -> listResource.data?.let(mRestAdapter::updateData)
+                    else -> pass
+                }
             }
         })
     }

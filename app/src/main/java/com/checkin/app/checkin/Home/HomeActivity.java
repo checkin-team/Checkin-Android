@@ -217,6 +217,7 @@ public class HomeActivity extends BaseAccountActivity implements NavigationView.
         });
 
         mViewModel.fetchSessionStatus();
+        mViewModel.fetchNearbyRestaurants();
     }
 
     private void sessionInactive() {

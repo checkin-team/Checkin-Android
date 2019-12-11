@@ -382,7 +382,7 @@ public class ManagerSessionViewModel extends BaseViewModel {
             sessionContactModel.setEmail(email);
         if (phone != null)
             sessionContactModel.setPhone(phone);
-        mData.addSource(mWaiterRepository.postSessionContact(mSessionPk, sessionContactModel), mData::setValue);
+        getMData().addSource(mWaiterRepository.postSessionContact(mSessionPk, sessionContactModel), getMData()::setValue);
     }
 
     public void fetchSessionContacts() {

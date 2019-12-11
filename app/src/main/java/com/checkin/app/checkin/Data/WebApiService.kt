@@ -3,6 +3,7 @@ package com.checkin.app.checkin.Data
 import com.checkin.app.checkin.Account.AccountModel
 import com.checkin.app.checkin.Auth.AuthResultModel
 import com.checkin.app.checkin.Cook.Model.CookTableModel
+import com.checkin.app.checkin.Home.model.NearbyRestaurantModel
 import com.checkin.app.checkin.Inventory.Model.InventoryAvailabilityModel
 import com.checkin.app.checkin.Inventory.Model.InventoryModel
 import com.checkin.app.checkin.Manager.Model.ManagerSessionEventModel
@@ -157,6 +158,9 @@ interface WebApiService {
     // region SHOP
     @get:GET("restaurants/")
     val restaurants: Call<List<RestaurantModel>>
+
+    @get:GET("restaurants/nearby/")
+    val nearbyRestaurants: Call<List<NearbyRestaurantModel>>
 
     @POST("restaurants/create/")
     fun postRegisterShop(@Body model: ShopJoinModel): Call<GenericDetailModel>

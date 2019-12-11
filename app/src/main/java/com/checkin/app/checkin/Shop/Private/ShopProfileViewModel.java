@@ -39,7 +39,7 @@ public class ShopProfileViewModel extends BaseViewModel {
 
     public ShopProfileViewModel(@NonNull Application application) {
         super(application);
-        mRepository = ShopRepository.getInstance(application);
+        mRepository = ShopRepository.Companion.getInstance(application);
         mCollectBasicData.setValue(false);
         mCollectAspectData.setValue(false);
     }
@@ -103,11 +103,11 @@ public class ShopProfileViewModel extends BaseViewModel {
             data.put("phone_token", phoneToken);
         if (email != null)
             data.put("email", email);
-        mData.addSource(mRepository.updateShopContact(mShopPk, data), mData::setValue);
+        getMData().addSource(mRepository.updateShopContact(mShopPk, data), getMData()::setValue);
     }
 
     public void updateShop(RestaurantModel shop) {
-        mData.addSource(mRepository.updateShopDetails(shop), mData::setValue);
+        getMData().addSource(mRepository.updateShopDetails(shop), getMData()::setValue);
     }
 
     public void collectData() {
@@ -154,7 +154,7 @@ public class ShopProfileViewModel extends BaseViewModel {
     }
 
     public void removeCoverImage(int index) {
-        mData.addSource(mRepository.deleteRestaurantCover(mShopPk, index), mData::setValue);
+        getMData().addSource(mRepository.deleteRestaurantCover(mShopPk, index), getMData()::setValue);
     }
 
     @Override

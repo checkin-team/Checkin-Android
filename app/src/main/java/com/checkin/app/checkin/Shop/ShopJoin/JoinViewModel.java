@@ -2,17 +2,17 @@ package com.checkin.app.checkin.Shop.ShopJoin;
 
 import android.app.Application;
 
-import com.checkin.app.checkin.Data.Resource;
-import com.checkin.app.checkin.Misc.GenericDetailModel;
-import com.checkin.app.checkin.Misc.LocationModel;
-import com.checkin.app.checkin.Shop.RestaurantModel;
-import com.checkin.app.checkin.Shop.ShopRepository;
-
 import androidx.annotation.NonNull;
 import androidx.lifecycle.AndroidViewModel;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MediatorLiveData;
 import androidx.lifecycle.MutableLiveData;
+
+import com.checkin.app.checkin.Data.Resource;
+import com.checkin.app.checkin.Misc.GenericDetailModel;
+import com.checkin.app.checkin.Misc.LocationModel;
+import com.checkin.app.checkin.Shop.RestaurantModel;
+import com.checkin.app.checkin.Shop.ShopRepository;
 
 public class JoinViewModel extends AndroidViewModel {
     private MutableLiveData<ShopJoinModel> mShopJoinData = new MutableLiveData<>();
@@ -23,7 +23,7 @@ public class JoinViewModel extends AndroidViewModel {
 
     public JoinViewModel(@NonNull Application application) {
         super(application);
-        mRepository = ShopRepository.getInstance(application);
+        mRepository = ShopRepository.Companion.getInstance(application);
     }
 
     public void registerNewBusiness() {

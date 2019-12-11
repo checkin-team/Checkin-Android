@@ -43,11 +43,11 @@ public class ActiveSessionChatViewModel extends BaseViewModel {
         EVENT_REQUEST_SERVICE_TYPE type = (EVENT_REQUEST_SERVICE_TYPE) service;
         if (type == EVENT_REQUEST_SERVICE_TYPE.SERVICE_NONE) {
             data.put("message", msg);
-            mData.addSource(mRepository.postMessage(data), mData::setValue);
+            getMData().addSource(mRepository.postMessage(data), getMData()::setValue);
         } else {
             data.put("message", msg);
             data.put("service", type.tag);
-            mData.addSource(mRepository.postServiceMessage(data), mData::setValue);
+            getMData().addSource(mRepository.postServiceMessage(data), getMData()::setValue);
         }
     }
 
@@ -55,7 +55,7 @@ public class ActiveSessionChatViewModel extends BaseViewModel {
         ObjectNode data = Converters.INSTANCE.getObjectMapper().createObjectNode();
         data.put("concern", concern.tag);
         data.put("event_id", eventId);
-        mData.addSource(mRepository.postConcern(data), mData::setValue);
+        getMData().addSource(mRepository.postConcern(data), getMData()::setValue);
     }
 
     public void addNewEvent(SessionChatModel chatModel) {

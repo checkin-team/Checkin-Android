@@ -78,7 +78,7 @@ public class WaiterTableViewModel extends BaseViewModel {
     }
 
     public void postSessionContact(String email, String phone) {
-        mData.addSource(mWaiterRepository.postSessionContact(mSessionPk, new SessionContactModel(phone, email)), mData::setValue);
+        getMData().addSource(mWaiterRepository.postSessionContact(mSessionPk, new SessionContactModel(phone, email)), getMData()::setValue);
     }
 
     public void fetchSessionContacts() {

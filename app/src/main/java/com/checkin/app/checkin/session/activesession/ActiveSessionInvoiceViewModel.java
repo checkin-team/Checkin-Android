@@ -122,7 +122,7 @@ public class ActiveSessionInvoiceViewModel extends BaseViewModel {
         mSessionPromo.addSource(mRepository.postAvailPromoCode(data), sessionPromoModelResource -> {
             if (sessionPromoModelResource == null)
                 return;
-            mData.setValue(Resource.Companion.cloneResource(sessionPromoModelResource, data));
+            getMData().setValue(Resource.Companion.cloneResource(sessionPromoModelResource, data));
             if (sessionPromoModelResource.getStatus() == Resource.Status.SUCCESS && sessionPromoModelResource.getData() != null)
                 mSessionPromo.setValue(sessionPromoModelResource);
         });

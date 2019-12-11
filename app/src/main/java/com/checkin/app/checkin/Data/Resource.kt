@@ -68,6 +68,7 @@ class Resource<T> private constructor(val status: Status, val data: T?, val mess
                     apiResponse.errorThrowable is RequestCanceledException -> error<T>(Status.ERROR_CANCELLED, null, null, null)
                     apiResponse.errorThrowable is NoConnectivityException -> error(Status.ERROR_DISCONNECTED, apiResponse.errorMessage, apiResponse.data, null)
                     else -> {
+                        Log.e(TAG, apiResponse.errorMessage, apiResponse.errorThrowable)
                         Crashlytics.log(Log.ERROR, TAG, apiResponse.errorMessage)
                         Crashlytics.logException(apiResponse.errorThrowable)
                         error(Status.ERROR_UNKNOWN, apiResponse.errorMessage, apiResponse.data, apiResponse.errorData)

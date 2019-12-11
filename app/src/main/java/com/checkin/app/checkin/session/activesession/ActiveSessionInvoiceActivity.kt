@@ -272,7 +272,7 @@ class ActiveSessionInvoiceActivity : BaseActivity() {
 
     private fun tryShowAvailableOffer(promoDetailModel: PromoDetailModel) {
         if (!mViewModel.isSessionBenefitsShown)
-            showSessionBenefit(String.format("OfferClass available! %s", promoDetailModel.name))
+            showSessionBenefit(String.format("RestaurantListingOfferModel available! %s", promoDetailModel.name))
     }
 
     private fun tryShowTotalSavings() {
@@ -466,7 +466,7 @@ class ActiveSessionInvoiceActivity : BaseActivity() {
     }
 
     private fun alertDialogForRejectedPromo() {
-        val builder = AlertDialog.Builder(this).setTitle("Continue without OfferClass?")
+        val builder = AlertDialog.Builder(this).setTitle("Continue without RestaurantListingOfferModel?")
                 .setMessage(R.string.label_session_promo_cannot_be_applied)
                 .setPositiveButton("Yes") { dialog, which ->
                     // Remove the promo and once done, request checkout again

@@ -64,13 +64,13 @@ public class ActiveSessionViewModel extends BaseViewModel {
     public void addMembers(long id) {
         ObjectNode data = Converters.INSTANCE.getObjectMapper().createObjectNode();
         data.put("user_id", id);
-        mData.addSource(mRepository.postAddMembers(data), mData::setValue);
+        getMData().addSource(mRepository.postAddMembers(data), getMData()::setValue);
     }
 
     public void sendSelfPresence(boolean isPublic) {
         ObjectNode data = Converters.INSTANCE.getObjectMapper().createObjectNode();
         data.put("is_public", isPublic);
-        mData.addSource(mRepository.putSelfPresence(data), mData::setValue);
+        getMData().addSource(mRepository.putSelfPresence(data), getMData()::setValue);
     }
 
     public LiveData<Resource<List<SessionOrderedItemModel>>> getSessionOrdersData() {
@@ -82,7 +82,7 @@ public class ActiveSessionViewModel extends BaseViewModel {
     }
 
     public void deleteSessionOrder(long orderId) {
-        mData.addSource(mRepository.removeSessionOrder(orderId), mData::setValue);
+        getMData().addSource(mRepository.removeSessionOrder(orderId), getMData()::setValue);
     }
 
     public long getShopPk() {
