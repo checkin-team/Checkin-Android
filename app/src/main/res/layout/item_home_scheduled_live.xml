@@ -1,0 +1,216 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="215dp"
+    android:layout_margin="4dp"
+    android:orientation="vertical">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        tools:layout_editor_absoluteX="-12dp"
+        tools:layout_editor_absoluteY="-63dp">
+
+        <ImageView
+            android:id="@+id/im_home_scheduled_live_share"
+            android:layout_width="20dp"
+            android:layout_height="20dp"
+            android:layout_marginEnd="16dp"
+            app:layout_constraintBottom_toBottomOf="@+id/tv_home_scheduled_live_order_status"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/tv_home_scheduled_live_order_status"
+            app:srcCompat="@android:drawable/ic_menu_share" />
+
+        <TextView
+            android:id="@+id/tv_home_scheduled_live_order_status"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:fontFamily="@font/josefinsans_regular"
+            android:text="Hii Roshan, you have dine-in scheduled"
+            android:textColor="#ff4f19"
+            app:layout_constraintEnd_toStartOf="@+id/im_home_scheduled_live_share"
+            app:layout_constraintHorizontal_bias="0.128"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <androidx.cardview.widget.CardView
+            android:id="@+id/item_home_scheduled_live_image_card"
+            android:layout_width="95dp"
+            android:layout_height="95dp"
+            android:layout_marginTop="16dp"
+
+            app:cardCornerRadius="@dimen/card_corner_radius"
+            app:layout_constraintStart_toStartOf="@+id/tv_home_scheduled_live_order_status"
+            app:layout_constraintTop_toBottomOf="@+id/tv_home_scheduled_live_order_status">
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+                <ImageView
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:src="@color/design_default_color_primary"></ImageView>
+
+                <ImageView
+                    android:layout_width="match_parent"
+                    android:layout_height="20dp"
+                    android:layout_alignParentBottom="true"
+                    android:src="#ff4f19"></ImageView>
+
+            </RelativeLayout>
+        </androidx.cardview.widget.CardView>
+
+        <TextView
+            android:id="@+id/tv_home_schedule_live_restuarant_locality"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:fontFamily="@font/josefinsans_semibold"
+            android:text="Grey Orange-Level Road"
+            android:textColor="#6d6d6d"
+            app:layout_constraintStart_toEndOf="@+id/item_home_scheduled_live_image_card"
+            app:layout_constraintTop_toTopOf="@+id/item_home_scheduled_live_image_card" />
+
+        <TextView
+            android:id="@+id/tv_home_schedule_live_time"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:fontFamily="@font/josefinsans_regular"
+            android:text="4:30 PM"
+            android:textColor="#0295aa"
+            android:textSize="12sp"
+            app:layout_constraintStart_toStartOf="@+id/tv_home_schedule_live_restuarant_locality"
+            app:layout_constraintTop_toBottomOf="@+id/tv_home_schedule_live_restuarant_locality" />
+
+        <TextView
+            android:id="@+id/tv_home_schedule_live_date"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:fontFamily="@font/josefinsans_regular"
+            android:text="21st October 2019"
+            android:textColor="#0295aa"
+            android:textSize="12sp"
+            app:layout_constraintBottom_toBottomOf="@+id/tv_home_schedule_live_time"
+            app:layout_constraintStart_toEndOf="@+id/zero_width_button"
+            app:layout_constraintTop_toTopOf="@+id/tv_home_schedule_live_time"
+            app:layout_constraintVertical_bias="0.0" />
+
+        <Button
+            android:id="@+id/zero_width_button"
+            style="?android:attr/borderlessButtonStyle"
+            android:layout_width="1dp"
+
+            android:layout_height="11dp"
+            android:layout_marginStart="8dp"
+            android:background="#979797"
+            app:layout_constraintBottom_toBottomOf="@+id/tv_home_schedule_live_time"
+            app:layout_constraintStart_toEndOf="@+id/tv_home_schedule_live_time"
+            app:layout_constraintTop_toTopOf="@+id/tv_home_schedule_live_time" />
+
+        <TextView
+            android:id="@+id/tv_home_schedule_live_dinerCount"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="3"
+            app:layout_constraintBottom_toBottomOf="@+id/item_home_scheduled_live_image_card"
+            app:layout_constraintEnd_toEndOf="@+id/textView7"
+            app:layout_constraintStart_toStartOf="@+id/textView7" />
+
+        <TextView
+            android:id="@+id/tv_home_schedule_live_dish_count"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="4"
+            app:layout_constraintBottom_toBottomOf="@+id/item_home_scheduled_live_image_card"
+            app:layout_constraintEnd_toEndOf="@+id/textView8"
+            app:layout_constraintStart_toStartOf="@+id/textView8" />
+
+        <TextView
+            android:id="@+id/textView7"
+            android:layout_width="37dp"
+            android:layout_height="14dp"
+            android:layout_marginBottom="8dp"
+
+            android:fontFamily="@font/josefinsans_regular"
+            android:text="Diner"
+            android:textColor="#bebebe"
+
+            android:textSize="12sp"
+            app:layout_constraintBottom_toTopOf="@+id/tv_home_schedule_live_dinerCount"
+            app:layout_constraintStart_toStartOf="@+id/tv_home_schedule_live_restuarant_locality" />
+
+        <TextView
+            android:id="@+id/textView8"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="28dp"
+            android:fontFamily="@font/josefinsans_regular"
+
+            android:text="Ordered Dish"
+            android:textColor="#bebebe"
+            android:textSize="12sp"
+            app:layout_constraintStart_toEndOf="@+id/textView7"
+            app:layout_constraintTop_toTopOf="@+id/textView7" />
+
+        <TextView
+            android:id="@+id/tv_home_schedule_live_order_id"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="16dp"
+            android:text="Order Id : 12344"
+            android:textColor="#bebebe"
+            android:textSize="12sp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="@+id/item_home_scheduled_live_image_card" />
+
+        <TextView
+            android:id="@+id/tv_restaurant_banner_navigate"
+            style="@style/GreyJosefinsExtraSmallTextStyle"
+            android:layout_width="@dimen/button_width_short"
+            android:layout_height="@dimen/button_height_short"
+            android:layout_marginEnd="@dimen/spacing_medium"
+            android:layout_marginBottom="@dimen/spacing_small"
+            android:background="@drawable/btn_small_bordered_grey"
+            android:clickable="true"
+            android:drawableStart="@drawable/ic_navigate_arrow"
+            android:drawablePadding="@dimen/spacing_tiny"
+            android:focusable="true"
+            android:gravity="center_vertical"
+            android:paddingStart="@dimen/spacing_tiny"
+            android:text="Navigate"
+            android:textSize="@dimen/font_tiny"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            tools:ignore="RtlSymmetry" />
+
+
+        <TextView
+            android:layout_width="@dimen/button_width_short"
+            android:layout_height="@dimen/button_height_short"
+            android:layout_marginEnd="20dp"
+            android:background="@drawable/btn_small_bordered_grey"
+
+            android:clickable="true"
+
+            android:drawableStart="@drawable/ic_telephone_auricular_with_cable"
+            android:drawablePadding="@dimen/spacing_small"
+            android:focusable="true"
+            android:gravity="center_vertical"
+            android:padding="@dimen/spacing_tiny"
+            android:paddingStart="@dimen/spacing_tiny"
+            android:text="Call"
+            android:textSize="@dimen/font_tiny"
+
+            app:layout_constraintBottom_toBottomOf="@+id/tv_restaurant_banner_navigate"
+            app:layout_constraintEnd_toStartOf="@+id/tv_restaurant_banner_navigate"
+            tools:ignore="RtlSymmetry"></TextView>
+
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</androidx.cardview.widget.CardView>
