@@ -10,7 +10,7 @@
         android:layout_height="wrap_content"
         style="@style/AquaBlueSmallTextStyle"
         android:paddingEnd="@dimen/spacing_tiny"
-        android:text="@string/symbol_currency_rupee" />
+        android:text="@string/symbol_currency_rupee"/>
 
     <TextView
         android:layout_width="wrap_content"
@@ -18,12 +18,12 @@
         style="@style/AquaBlueTextStyle"
         android:textSize="@dimen/font_large"
         android:layout_marginEnd="@dimen/spacing_extra_small"
-        tools:text="234" />
+        tools:text="234"/>
 
     <View
         android:layout_width="@dimen/height_horizontal_line"
         android:layout_height="wrap_content"
-        android:background="@color/pinkish_grey" />
+        android:background="@color/pinkish_grey"/>
 
     <LinearLayout
         android:layout_width="wrap_content"
@@ -38,7 +38,7 @@
             android:layout_height="wrap_content"
             style="@style/GreyTextStyle"
             android:fontFamily="@font/josefinsans_regular"
-            tools:text="Big Brewsky, Kormangla" />
+            tools:text="Big Brewsky, Kormangla"/>
 
         <LinearLayout
             android:layout_width="wrap_content"
@@ -50,7 +50,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 style="@style/RedHeadingStyle"
-                tools:text="5" />
+                tools:text="5"/>
 
             <TextView
                 android:layout_width="wrap_content"
@@ -58,7 +58,7 @@
                 style="@style/GreySmallTextStyle"
                 android:fontFamily="@font/josefinsans_regular"
                 android:paddingStart="@dimen/spacing_tiny"
-                tools:text="Days Remaining" />
+                tools:text="Days Remaining"/>
 
         </LinearLayout>
 

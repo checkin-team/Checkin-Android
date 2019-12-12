@@ -8,7 +8,6 @@ import android.graphics.drawable.ShapeDrawable;
 import android.graphics.drawable.shapes.RoundRectShape;
 import android.view.Gravity;
 import android.view.View;
-
 import androidx.core.content.ContextCompat;
 
 

@@ -1,12 +1,13 @@
 package com.checkin.app.checkin.Home;
 
+import android.content.Intent;
 import android.os.Bundle;
-
-import androidx.annotation.Nullable;
 
 import com.checkin.app.checkin.Misc.BaseActivity;
 import com.checkin.app.checkin.R;
 
+import androidx.annotation.Nullable;
+import butterknife.BindView;
 import butterknife.ButterKnife;
 
 public class CurrentLocationActivity extends BaseActivity {

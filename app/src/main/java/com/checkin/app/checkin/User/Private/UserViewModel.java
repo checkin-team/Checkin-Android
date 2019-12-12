@@ -93,7 +93,7 @@ public class UserViewModel extends BaseViewModel {
     }
 
     public void postUserData(String firstName, String lastName, String phone_token, String bio) {
-        ObjectNode data = Converters.objectMapper.createObjectNode();
+        ObjectNode data = Converters.INSTANCE.getObjectMapper().createObjectNode();
         data.put("first_name", firstName);
         data.put("last_name", lastName);
         data.put("bio", bio);

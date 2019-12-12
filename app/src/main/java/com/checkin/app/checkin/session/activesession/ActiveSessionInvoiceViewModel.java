@@ -56,7 +56,7 @@ public class ActiveSessionInvoiceViewModel extends BaseViewModel {
     }
 
     public void requestCheckout(double tip, ShopModel.PAYMENT_MODE paymentMode, boolean override) {
-        ObjectNode data = Converters.objectMapper.createObjectNode()
+        ObjectNode data = Converters.INSTANCE.getObjectMapper().createObjectNode()
                 .put("tip", tip)
                 .put("payment_mode", paymentMode.tag)
                 .put("override", override);
@@ -72,7 +72,7 @@ public class ActiveSessionInvoiceViewModel extends BaseViewModel {
     }
 
     public void postPaytmCallback(Bundle bundle) {
-        ObjectNode data = Converters.objectMapper.createObjectNode();
+        ObjectNode data = Converters.INSTANCE.getObjectMapper().createObjectNode();
         Set<String> keys = bundle.keySet();
         for (String key : keys) {
             data.put(key, String.valueOf(bundle.get(key)));
@@ -117,12 +117,12 @@ public class ActiveSessionInvoiceViewModel extends BaseViewModel {
     }
 
     public void availPromoCode(String code) {
-        final ObjectNode data = Converters.objectMapper.createObjectNode()
+        final ObjectNode data = Converters.INSTANCE.getObjectMapper().createObjectNode()
                 .put("code", code);
         mSessionPromo.addSource(mRepository.postAvailPromoCode(data), sessionPromoModelResource -> {
             if (sessionPromoModelResource == null)
                 return;
-            mData.setValue(Resource.Companion.cloneResource(sessionPromoModelResource, data));
+            getMData().setValue(Resource.Companion.cloneResource(sessionPromoModelResource, data));
             if (sessionPromoModelResource.getStatus() == Resource.Status.SUCCESS && sessionPromoModelResource.getData() != null)
                 mSessionPromo.setValue(sessionPromoModelResource);
         });

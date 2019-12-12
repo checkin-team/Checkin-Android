@@ -11,7 +11,9 @@
             <item>
                 <shape>
                     <solid android:color="@color/white" />
-                    <stroke android:width="0dp" android:color="#000" />
+                    <stroke
+                        android:width="0dp"
+                        android:color="#000" />
                     <corners android:radius="@dimen/card_corner_radius" />
                 </shape>
             </item>

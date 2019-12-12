@@ -49,7 +49,7 @@ public class AuthViewModel extends BaseViewModel {
     public void login() {
         if (firebaseIdToken == null)
             Log.e(TAG, "FireBase ID Token is NULL");
-        ObjectNode data = Converters.objectMapper.createObjectNode();
+        ObjectNode data = Converters.INSTANCE.getObjectMapper().createObjectNode();
         data.put("id_token", firebaseIdToken);
         if (providerIdToken != null)
             data.put("provider_token", providerIdToken);
@@ -60,7 +60,7 @@ public class AuthViewModel extends BaseViewModel {
     public void register(@NonNull String firstName, @Nullable String lastName, @NonNull UserModel.GENDER gender, @NonNull String username) {
         if (firebaseIdToken == null)
             Log.e(TAG, "FireBase ID Token is NULL");
-        ObjectNode data = Converters.objectMapper.createObjectNode();
+        ObjectNode data = Converters.INSTANCE.getObjectMapper().createObjectNode();
         data.put("username", username);
         data.put("id_token", firebaseIdToken);
         if (providerIdToken != null)

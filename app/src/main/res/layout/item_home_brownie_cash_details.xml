@@ -41,7 +41,7 @@
                 android:layout_height="match_parent"
                 android:text="Reveal"
                 android:gravity="center"
-                android:background="@color/aqua_blue" />
+                android:background="@color/aqua_blue"/>
 
         </androidx.cardview.widget.CardView>
 

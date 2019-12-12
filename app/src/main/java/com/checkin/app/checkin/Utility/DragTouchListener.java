@@ -14,7 +14,7 @@ public abstract class DragTouchListener implements View.OnTouchListener {
     @Override
     public boolean onTouch(View v, MotionEvent event) {
         final int action = event.getActionMasked();
-        final int location[] = {0, 0};
+        final int[] location = {0, 0};
         v.getLocationOnScreen(location);
         float x, y;
         final int actionIndex = action >> MotionEvent.ACTION_POINTER_INDEX_SHIFT;

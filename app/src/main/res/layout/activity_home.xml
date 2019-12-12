@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.drawerlayout.widget.DrawerLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/drawer_home"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -41,42 +42,42 @@
                         android:orientation="vertical">
 
 
-                        <ImageView
-                            android:id="@+id/im_checkin_logo"
-                            android:layout_width="@dimen/width_checkin_logo_icon"
-                            android:layout_height="@dimen/height_checkin_logo_icon"
-                            android:layout_gravity="center"
-                            android:scaleType="fitXY"
-                            android:src="@drawable/check_in_logo_no_background"
-                            app:layout_constraintStart_toStartOf="parent"
-                            app:layout_constraintTop_toTopOf="parent"
-                            app:layout_constraintBottom_toBottomOf="parent" />
+                            <ImageView
+                                android:id="@+id/im_checkin_logo"
+                                android:layout_width="@dimen/width_checkin_logo_icon"
+                                android:layout_height="@dimen/height_checkin_logo_icon"
+                                android:layout_gravity="center"
+                                android:scaleType="fitXY"
+                                android:src="@drawable/check_in_logo_no_background"
+                                app:layout_constraintStart_toStartOf="parent"
+                                app:layout_constraintTop_toTopOf="parent"
+                                app:layout_constraintBottom_toBottomOf="parent"/>
 
-                        <TextView
-                            android:id="@+id/tv_home_location_title"
-                            style="@style/GreySmallTextStyle"
-                            android:layout_width="wrap_content"
-                            android:layout_height="0dp"
-                            android:text="Location"
-                            android:autoSizeTextType="uniform"
-                            android:layout_marginStart="@dimen/spacing_extra_small"
-                            app:layout_constraintStart_toEndOf="@id/im_checkin_logo"
-                            app:layout_constraintBottom_toTopOf="@+id/tv_action_bar_home_location"
-                            app:layout_constraintTop_toTopOf="@+id/im_checkin_logo" />
+                                <TextView
+                                    android:id="@+id/tv_home_location_title"
+                                    style="@style/GreySmallTextStyle"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="0dp"
+                                    android:text="Location"
+                                    android:autoSizeTextType="uniform"
+                                    android:layout_marginStart="@dimen/spacing_extra_small"
+                                    app:layout_constraintStart_toEndOf="@id/im_checkin_logo"
+                                    app:layout_constraintBottom_toTopOf="@+id/tv_action_bar_home_location"
+                                    app:layout_constraintTop_toTopOf="@+id/im_checkin_logo"/>
 
-                        <TextView
-                            android:id="@+id/tv_action_bar_home_location"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:fontFamily="@font/josefinsans_regular"
-                            android:text="Bengaluru"
-                            android:gravity="top"
-                            android:layout_marginStart="@dimen/spacing_extra_small"
-                            android:textColor="@color/aqua_blue"
-                            android:textSize="@dimen/font_normal"
-                            app:layout_constraintStart_toEndOf="@id/im_checkin_logo"
-                            app:layout_constraintTop_toBottomOf="@+id/tv_home_location_title"
-                            app:layout_constraintBottom_toBottomOf="@+id/im_checkin_logo" />
+                                <TextView
+                                    android:id="@+id/tv_action_bar_home_location"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:fontFamily="@font/josefinsans_regular"
+                                    android:text="Bengaluru"
+                                    android:gravity="top"
+                                    android:layout_marginStart="@dimen/spacing_extra_small"
+                                    android:textColor="@color/aqua_blue"
+                                    android:textSize="@dimen/font_normal"
+                                    app:layout_constraintStart_toEndOf="@id/im_checkin_logo"
+                                    app:layout_constraintTop_toBottomOf="@+id/tv_home_location_title"
+                                    app:layout_constraintBottom_toBottomOf="@+id/im_checkin_logo" />
 
                         <View
                             android:layout_width="0dp"
@@ -87,7 +88,7 @@
                             app:layout_constraintTop_toBottomOf="@+id/im_checkin_logo"
                             app:layout_constraintStart_toStartOf="parent"
                             app:layout_constraintBottom_toBottomOf="parent"
-                            app:layout_constraintEnd_toEndOf="@id/tv_action_bar_home_location" />
+                            app:layout_constraintEnd_toEndOf="@id/tv_action_bar_home_location"/>
 
                     </androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -177,7 +178,7 @@
                 android:src="@drawable/ic_location_marker_red"
                 android:visibility="gone"
                 android:layout_above="@+id/container_bottom_bar"
-                android:layout_alignParentEnd="true" />
+                android:layout_alignParentEnd="true"/>
 
             <ImageView
                 android:id="@+id/container_home_session_waiting_status"
@@ -208,34 +209,34 @@
                 app:tabMode="fixed" />
 
 
-                <LinearLayout
-                    android:id="@+id/btn_home_scanner"
-                    android:layout_width="@dimen/business_icon"
-                    android:layout_height="@dimen/business_icon"
-                    android:layout_gravity="center|bottom"
-                    android:layout_marginBottom="@dimen/spacing_extra_small"
-                    android:background="@drawable/shape_oval_aqua_blue_gradient"
-                    android:elevation="@dimen/spacing_elevation_fix_extreme_tiny"
+            <LinearLayout
+                android:id="@+id/btn_home_scanner"
+                android:layout_width="@dimen/business_icon"
+                android:layout_height="@dimen/business_icon"
+                android:layout_gravity="center|bottom"
+                android:layout_marginBottom="@dimen/spacing_extra_small"
+                android:background="@drawable/shape_oval_aqua_blue_gradient"
+                android:elevation="@dimen/spacing_elevation_fix_extreme_tiny"
+                android:gravity="center"
+                android:orientation="vertical">
+
+                <ImageView
+                    android:layout_width="@dimen/size_qr_scanner"
+                    android:layout_height="@dimen/size_qr_scanner"
+                    android:layout_marginBottom="@dimen/spacing_elevation_fix_extreme_tiny"
+                    android:src="@drawable/ic_qr_code_scanner_white" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:fontFamily="@font/josefinsans_semibold"
                     android:gravity="center"
-                    android:orientation="vertical">
+                    android:text="CHECKIN"
+                    android:textColor="@color/white"
+                    android:textSize="@dimen/font_extra_tiny" />
 
-                    <ImageView
-                        android:layout_width="@dimen/size_qr_scanner"
-                        android:layout_height="@dimen/size_qr_scanner"
-                        android:layout_marginBottom="@dimen/spacing_elevation_fix_extreme_tiny"
-                        android:src="@drawable/ic_qr_code_scanner_white" />
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="center"
-                        android:fontFamily="@font/josefinsans_semibold"
-                        android:gravity="center"
-                        android:text="CHECKIN"
-                        android:textColor="@color/white"
-                        android:textSize="@dimen/font_extra_tiny" />
-
-                </LinearLayout>
+            </LinearLayout>
 
             </FrameLayout>
 
@@ -248,7 +249,7 @@
                 android:contentDescription="@null"
                 android:src="@drawable/ic_navigation_white"
                 android:elevation="@dimen/spacing_elevation_fix_extreme_tiny"
-                android:tint="@color/brownish_grey" />
+                android:tint="@color/brownish_grey"/>
 
 
         </RelativeLayout>

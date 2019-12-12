@@ -120,7 +120,7 @@ public class CookSessionViewModel extends BaseViewModel {
     }
 
     public void updateOrderStatus(int orderId, int statusType) {
-        ObjectNode data = Converters.objectMapper.createObjectNode();
+        ObjectNode data = Converters.INSTANCE.getObjectMapper().createObjectNode();
         data.put("status", statusType);
         mOrderStatusData.addSource(mWaiterRepository.changeOrderStatus(orderId, data), mOrderStatusData::setValue);
     }

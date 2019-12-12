@@ -228,8 +228,7 @@
             android:background="@color/translucent_black"
             android:gravity="center"
             android:text="Available on\n12th July at 10:00 Am"
-            android:visibility="gone" />
-        />
+            android:visibility="gone" /> />
 
     </androidx.cardview.widget.CardView>
 

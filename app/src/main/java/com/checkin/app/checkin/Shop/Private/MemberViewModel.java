@@ -26,7 +26,7 @@ public class MemberViewModel extends BaseViewModel {
 
     public MemberViewModel(@NonNull Application application) {
         super(application);
-        mRepository = ShopRepository.getInstance(application);
+        mRepository = ShopRepository.Companion.getInstance(application);
     }
 
     public void fetchShopMembers(long shopPk) {
@@ -42,14 +42,14 @@ public class MemberViewModel extends BaseViewModel {
         if (mCurrentMember == null)
             return;
         mCurrentMember.assignRoles(roles);
-        mData.addSource(mRepository.addRestaurantMember(mShopPk, mCurrentMember), mData::setValue);
+        getMData().addSource(mRepository.addRestaurantMember(mShopPk, mCurrentMember), getMData()::setValue);
     }
 
     public void updateShopMember(CharSequence[] roles) {
         if (mCurrentMember == null)
             return;
         mCurrentMember.assignRoles(roles);
-        mData.addSource(mRepository.updateRestaurantMember(mShopPk, mCurrentMember), mData::setValue);
+        getMData().addSource(mRepository.updateRestaurantMember(mShopPk, mCurrentMember), getMData()::setValue);
     }
 
     public void deleteShopMember() {

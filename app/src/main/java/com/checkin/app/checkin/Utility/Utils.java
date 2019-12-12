@@ -226,7 +226,7 @@ public final class Utils {
     public static String formatCount(long count) {
         String res;
         if (count > 1000)
-            res = String.valueOf(count / 1000) + "k";
+            res = count / 1000 + "k";
         else
             res = String.valueOf(count);
         return res;

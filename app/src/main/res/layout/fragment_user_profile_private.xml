@@ -101,7 +101,7 @@
                     android:layout_height="wrap_content"
                     android:textColor="@color/brownish_grey"
                     tools:text="Alex Norris"
-                    android:textSize="@dimen/font_heading" />
+                    android:textSize="@dimen/font_heading"/>
 
                 <TextView
                     android:id="@+id/tv_user_private_locality"
@@ -133,7 +133,7 @@
                         android:layout_height="wrap_content"
                         android:paddingTop="@dimen/spacing_extra_tiny"
                         android:text="@string/action_profile_edit"
-                        android:textSize="@dimen/font_extra_small" />
+                        android:textSize="@dimen/font_extra_small"/>
 
                 </LinearLayout>
 
@@ -161,10 +161,10 @@
                     android:fontFamily="@font/josefinsans_regular"
                     android:text="Follow our Food and Travel Journey 🍔🍕✈⛵\n🎥: Content Creators\n📍: MIA / NYC / LA 🌎" />
 
-                <!-- <View
-                     android:layout_width="@dimen/button_width_wide"
-                     android:layout_height="@dimen/height_horizontal_line"
-                     android:background="@drawable/ic_line" />-->
+               <!-- <View
+                    android:layout_width="@dimen/button_width_wide"
+                    android:layout_height="@dimen/height_horizontal_line"
+                    android:background="@drawable/ic_line" />-->
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -181,7 +181,7 @@
                     android:layout_marginTop="@dimen/spacing_small"
                     android:layout_marginStart="@dimen/spacing_normal"
                     android:layout_marginEnd="@dimen/spacing_normal"
-                    android:visibility="gone" />
+                    android:visibility="gone"/>
 
             </LinearLayout>
         </LinearLayout>

@@ -115,14 +115,13 @@
 
             <ImageView
                 android:id="@+id/im_restaurant_banner_cover"
-
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_centerVertical="true" />
             <FrameLayout
                 android:translationX="-10dp"
-
                 style="@style/ButtonNeutralAction"
+                android:id="@+id/container_restaurant_banner_offer"
                 android:layout_marginTop="20dp"
                 android:layout_width="120dp"
                 android:layout_height="60dp">
@@ -130,11 +129,10 @@
                     android:layout_width="match_parent"
                     android:layout_height="match_parent">
                     <TextView
-
-                        android:id="@+id/tv_restaurant_banner_offer_title"
+                        android:id="@+id/tv_restaurant_banner_offer_special"
                         android:layout_marginLeft="3dp"
                         android:layout_marginTop="4dp"
-                        android:text="Get 40% off"
+                        android:text="Exclusive offer*"
                         android:textSize="9dp"
                         android:fontFamily="@font/josefinsans_regular"
                         android:layout_width="match_parent"
@@ -142,11 +140,11 @@
 
                     </TextView>
                     <TextView
-                        android:id="@+id/tv_restaurant_banner_coupon_code"
-                        android:layout_below="@id/tv_restaurant_banner_offer_title"
+                        android:id="@+id/tv_restaurant_banner_offer_summary"
+                        android:layout_below="@id/tv_restaurant_banner_offer_special"
                         android:layout_marginLeft="3dp"
                         android:layout_marginTop="1dp"
-                        android:text="Coupon:SUPER50"
+                        tools:text="Get 40% off"
                         android:textSize="11dp"
                         android:fontFamily="@font/josefinsans_regular"
                         android:layout_width="match_parent"
@@ -154,11 +152,11 @@
 
                     </TextView>
                     <TextView
-                        android:id="@+id/tv_home_restaurant_offer"
-                        android:layout_below="@id/tv_restaurant_banner_coupon_code"
+                        android:id="@+id/tv_restaurant_banner_offer_code"
+                        android:layout_below="@id/tv_restaurant_banner_offer_summary"
                         android:layout_marginLeft="3dp"
                         android:layout_marginTop="1dp"
-                        android:text="Get 40% off"
+                        tools:text="CODE: SUPER40"
                         android:textSize="11dp"
                         android:fontFamily="@font/josefinsans_regular"
                         android:layout_width="match_parent"

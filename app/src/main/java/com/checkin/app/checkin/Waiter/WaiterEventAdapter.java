@@ -6,7 +6,6 @@ import android.content.DialogInterface;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -183,7 +182,7 @@ public class WaiterEventAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
                 case DONE:
                     containerStatusProgress.setVisibility(View.GONE);
                     containerStatusOpen.setVisibility(View.GONE);
-                    ((FrameLayout) itemView).setForeground(itemView.getResources().getDrawable(R.color.translucent_white));
+                    itemView.setForeground(itemView.getResources().getDrawable(R.color.translucent_white));
                     break;
             }
         }
@@ -222,7 +221,7 @@ public class WaiterEventAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
             imEventType.setImageResource(SessionEventBasicModel.getEventIcon(eventModel.getType(), eventModel.getService(), null));
             if (eventModel.getStatus() == SessionChatModel.CHAT_STATUS_TYPE.DONE || eventModel.getStatus() == SessionChatModel.CHAT_STATUS_TYPE.CANCELLED) {
                 imEventMarkDone.setVisibility(View.GONE);
-                ((FrameLayout) itemView).setForeground(itemView.getResources().getDrawable(R.color.translucent_white));
+                itemView.setForeground(itemView.getResources().getDrawable(R.color.translucent_white));
             }
         }
     }

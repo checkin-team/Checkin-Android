@@ -6,10 +6,12 @@ import android.view.GestureDetector.SimpleOnGestureListener;
 import android.view.MotionEvent;
 import android.view.View;
 
+import androidx.core.view.GestureDetectorCompat;
+
 public class SwipeTouchListener implements View.OnTouchListener {
     private final GestureDetector gestureDetector;
 
-    public SwipeTouchListener(Context ctx) {
+    public SwipeTouchListener (Context ctx){
         gestureDetector = new GestureDetector(ctx, new GestureListener());
     }
 
@@ -44,7 +46,8 @@ public class SwipeTouchListener implements View.OnTouchListener {
                         }
                         result = true;
                     }
-                } else if (Math.abs(diffY) > SWIPE_THRESHOLD && Math.abs(velocityY) > SWIPE_VELOCITY_THRESHOLD) {
+                }
+                else if (Math.abs(diffY) > SWIPE_THRESHOLD && Math.abs(velocityY) > SWIPE_VELOCITY_THRESHOLD) {
                     if (diffY > 0) {
                         onSwipeBottom();
                     } else {

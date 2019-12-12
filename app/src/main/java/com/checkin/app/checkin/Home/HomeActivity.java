@@ -66,7 +66,7 @@ public class HomeActivity extends BaseAccountActivity implements NavigationView.
     TabLayout tabLayout;
     @BindView(R.id.vp_home)
     DynamicSwipableViewPager vpHome;
-    //    @BindView(R.id.container_home_session_status)
+//    @BindView(R.id.container_home_session_status)
 //    ViewGroup vSessionStatus;
     @BindView(R.id.container_home_session_active_status)
     ImageView vSessionActiveStatus;
@@ -74,7 +74,7 @@ public class HomeActivity extends BaseAccountActivity implements NavigationView.
     ImageView vSessionWaitingStatus;
     @BindView(R.id.sr_home)
     SwipeRefreshLayout swipeRefreshLayout;
-    //    @BindView(R.id.tv_home_session_active_status)
+//    @BindView(R.id.tv_home_session_active_status)
 //    TextView tvSessionStatus;
 //    @BindView(R.id.tv_home_session_wait_qr_busy)
 //    TextView tvSessionWaitQRBusy;
@@ -125,12 +125,12 @@ public class HomeActivity extends BaseAccountActivity implements NavigationView.
                     toolbarHome.setVisibility(View.GONE);
                     imNavigation.setColorFilter(0);
                     imTabUserIcon.setBackground(getResources().getDrawable(R.drawable.shape_oval_orange_gradient));
-                    imTabUserIcon.setPadding(6, 6, 6, 6);
-                } else if (position == 1) {
+                    imTabUserIcon.setPadding(6,6,6,6);
+                }else if (position == 1){
                     launchScanner();
                     vpHome.setCurrentItem(0);
                     resetUserIcon();
-                } else {
+                }else{
                     toolbarHome.setVisibility(View.VISIBLE);
                     imNavigation.setColorFilter(R.color.brownish_grey);
                     resetUserIcon();
@@ -217,6 +217,7 @@ public class HomeActivity extends BaseAccountActivity implements NavigationView.
         });
 
         mViewModel.fetchSessionStatus();
+        mViewModel.fetchNearbyRestaurants();
     }
 
     private void sessionInactive() {
@@ -239,9 +240,9 @@ public class HomeActivity extends BaseAccountActivity implements NavigationView.
 //        vSessionStatus.setEnabled(false);
     }
 
-    private void resetUserIcon() {
+    private void resetUserIcon(){
         imTabUserIcon.setBackground(null);
-        imTabUserIcon.setPadding(0, 0, 0, 0);
+        imTabUserIcon.setPadding(0,0,0,0);
     }
 
     private void explainQr() {
@@ -253,8 +254,8 @@ public class HomeActivity extends BaseAccountActivity implements NavigationView.
     }
 
     @OnClick(R.id.container_home_user_location)
-    public void onLocationClick() {
-        startActivity(new Intent(this, CurrentLocationActivity.class));
+    public void onLocationClick(){
+        startActivity(new Intent(this, CurrentLocationActivity.class ));
     }
 
     @OnClick(R.id.iv_home_navigation)

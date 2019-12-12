@@ -49,13 +49,13 @@ class Resource<T> private constructor(val status: Status, val data: T?, val mess
 
         fun <T> error(status: Status, msg: String?, data: T?, errorBody: JsonNode?): Resource<T> = Resource(status, data, msg, errorBody)
 
-        fun <T> error(msg: String, data: T?, errorBody: JsonNode?): Resource<T> = error(Status.ERROR_UNKNOWN, msg, data, errorBody)
+        fun <T> error(msg: String?, data: T?, errorBody: JsonNode?): Resource<T> = error(Status.ERROR_UNKNOWN, msg, data, errorBody)
 
-        fun <T> error(msg: String, data: T?): Resource<T> = error(msg, data, null)
+        fun <T> error(msg: String?, data: T?): Resource<T> = error(msg, data, null)
 
-        fun <T> errorNotFound(msg: String, errorBody: JsonNode?): Resource<T> = error(Status.ERROR_NOT_FOUND, msg, null, errorBody)
+        fun <T> errorNotFound(msg: String?, errorBody: JsonNode?): Resource<T> = error(Status.ERROR_NOT_FOUND, msg, null, errorBody)
 
-        fun <T> errorNotFound(msg: String): Resource<T> = error(msg, null)
+        fun <T> errorNotFound(msg: String?): Resource<T> = error(msg, null)
 
         fun <T> loading(data: T?): Resource<T> = Resource(Status.LOADING, data, null, null)
 
@@ -68,6 +68,7 @@ class Resource<T> private constructor(val status: Status, val data: T?, val mess
                     apiResponse.errorThrowable is RequestCanceledException -> error<T>(Status.ERROR_CANCELLED, null, null, null)
                     apiResponse.errorThrowable is NoConnectivityException -> error(Status.ERROR_DISCONNECTED, apiResponse.errorMessage, apiResponse.data, null)
                     else -> {
+                        Log.e(TAG, apiResponse.errorMessage, apiResponse.errorThrowable)
                         Crashlytics.log(Log.ERROR, TAG, apiResponse.errorMessage)
                         Crashlytics.logException(apiResponse.errorThrowable)
                         error(Status.ERROR_UNKNOWN, apiResponse.errorMessage, apiResponse.data, apiResponse.errorData)

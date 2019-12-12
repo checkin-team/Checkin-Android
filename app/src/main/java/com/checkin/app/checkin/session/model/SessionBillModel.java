@@ -10,6 +10,9 @@ public class SessionBillModel {
     @JsonProperty("subtotal")
     private Double subtotal;
 
+    @JsonProperty("total_charges")
+    private Double charges;
+
     @JsonProperty("tax")
     private Double tax;
 
@@ -59,6 +62,10 @@ public class SessionBillModel {
 
     public Double getOffers() {
         return offers;
+    }
+
+    public Double getCharges() {
+        return charges;
     }
 
     @JsonProperty("offers")
@@ -149,6 +156,8 @@ public class SessionBillModel {
             this.total += this.subtotal;
         if (this.tip != null)
             this.total += this.tip;
+        if (this.charges != null)
+            this.total += this.charges;
         if (this.tax != null)
             this.total += this.tax;
         if (this.discount != null)

@@ -145,12 +145,16 @@ dependencies {
 
     // Network libraries and JSON <-> POJO
     implementation(
+            // Jackson
             [group: 'com.fasterxml.jackson.core', name: 'jackson-core', version: versions.jackson],
             [group: 'com.fasterxml.jackson.core', name: 'jackson-annotations', version: versions.jackson],
-            [group: 'com.fasterxml.jackson.core', name: 'jackson-databind', version: versions.jackson]
+            [group: 'com.fasterxml.jackson.core', name: 'jackson-databind', version: versions.jackson],
+            [group: 'com.fasterxml.jackson.module', name: 'jackson-module-kotlin', version: versions.jackson],
+
+            // Retrofit + okhttp3
+            [group: 'com.squareup.retrofit2', name: 'retrofit', version: versions.retrofit],
+            [group: 'com.squareup.retrofit2', name: 'converter-jackson', version: versions.retrofit]
     )
-    implementation 'com.squareup.retrofit2:retrofit:' + versions.retrofit
-    implementation 'com.squareup.retrofit2:converter-jackson:' + versions.retrofit
 
     // Include okhttp3 library of lower version because 3.13.x supports only API 21+
     //noinspection GradleDependency

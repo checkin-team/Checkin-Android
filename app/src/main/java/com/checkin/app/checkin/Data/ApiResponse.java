@@ -11,7 +11,6 @@ import com.checkin.app.checkin.Utility.NoConnectivityException;
 import com.checkin.app.checkin.Utility.RequestCanceledException;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonNode;
-import com.fasterxml.jackson.databind.exc.UnrecognizedPropertyException;
 
 import java.io.IOException;
 
@@ -64,7 +63,7 @@ public class ApiResponse<T> {
             } finally {
                 if (str != null) {
                     errorMessage = str;
-                    errorData = Converters.getJsonNode(errorMessage);
+                    errorData = Converters.INSTANCE.getJsonNode(errorMessage);
                 } else {
                     errorData = null;
                     errorMessage = null;

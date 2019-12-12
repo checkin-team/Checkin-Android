@@ -223,7 +223,7 @@ public class ShopModel {
     public ObjectNode serializeWorkingTimeRange() {
         if (this.openingHour == this.closingHour)
             return null;
-        ObjectNode data = Converters.objectMapper.createObjectNode();
+        ObjectNode data = Converters.INSTANCE.getObjectMapper().createObjectNode();
         data.put("lower", this.openingHour);
         data.put("upper", this.closingHour);
         return data;

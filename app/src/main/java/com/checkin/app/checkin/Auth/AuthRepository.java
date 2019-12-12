@@ -79,7 +79,7 @@ public class AuthRepository extends BaseRepository {
     }
 
     public Call<ObjectNode> postDeviceToken(String token) {
-        ObjectNode data = Converters.objectMapper.createObjectNode();
+        ObjectNode data = Converters.INSTANCE.getObjectMapper().createObjectNode();
         data.put("device_token", token);
         return mWebService.postFCMToken(data);
     }

@@ -83,6 +83,9 @@
         <activity
             android:name=".Menu.UserMenu.SessionMenuActivity"
             android:windowSoftInputMode="adjustPan"/>
+        <activity android:name=".Home.UserBrownieCashActivity" />
+        <activity android:name=".Home.UserClaimRewardsActivity" />
+
         <activity android:name=".Cook.CookSessionActivity" />
         <activity android:name=".Cook.CookWorkActivity" />
         <activity android:name=".Home.UserBrownieCashActivity" />
@@ -90,6 +93,8 @@
 
 
         <activity android:name=".Home.CurrentLocationActivity" />
+
+        <activity android:name=".Home.CurrentLocationActivity"/>
 
         <service
             android:name=".Auth.AuthenticatorService"

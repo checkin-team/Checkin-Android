@@ -2,11 +2,10 @@ package com.checkin.app.checkin.Home;
 
 import android.os.Bundle;
 
-import androidx.annotation.Nullable;
-
 import com.checkin.app.checkin.Misc.BaseActivity;
 import com.checkin.app.checkin.R;
 
+import androidx.annotation.Nullable;
 import butterknife.OnClick;
 
 public class UserBrownieCashActivity extends BaseActivity {
@@ -18,7 +17,7 @@ public class UserBrownieCashActivity extends BaseActivity {
     }
 
     @OnClick(R.id.im_home_brownie_cash_back)
-    public void onBackPress() {
+    public void onBackPress(){
         onBackPressed();
 
     }

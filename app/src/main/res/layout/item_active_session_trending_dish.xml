@@ -69,7 +69,7 @@
             android:paddingBottom="@dimen/spacing_extra_small"
             android:textSize="@dimen/font_extra_small"
             android:text="Avail Free"
-            android:visibility="gone" />
+            android:visibility="gone"/>
 
     </LinearLayout>
 
@@ -78,6 +78,6 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:background="@color/translucent_white"
-        android:visibility="gone" />
+        android:visibility="gone"/>
 
 </FrameLayout>

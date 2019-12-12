@@ -59,13 +59,13 @@
         android:drawableStart="@drawable/ic_gps_fixed_indicator"
         android:drawablePadding="@dimen/spacing_medium"
         android:textSize="@dimen/font_large"
-        android:text="Current Location" />
+        android:text="Current Location"/>
 
     <View
         android:layout_width="match_parent"
         android:layout_height="@dimen/height_horizontal_line"
         android:layout_marginTop="@dimen/spacing_tiny"
-        android:background="@color/pinkish_grey" />
+        android:background="@color/pinkish_grey"/>
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -146,11 +146,11 @@
 
         </LinearLayout>
 
-        <!-- <LinearLayout
-             android:layout_width="match_parent"
-             android:layout_height="wrap_content"
-             android:layout_margin="@dimen/spacing_small"
-             android:gravity="center">-->
+       <!-- <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/spacing_small"
+            android:gravity="center">-->
 
         <LinearLayout
             android:id="@+id/hyderabad_container"
@@ -183,7 +183,9 @@
         <!--</LinearLayout>-->
 
 
+
     </LinearLayout>
+
 
 
 </LinearLayout>
