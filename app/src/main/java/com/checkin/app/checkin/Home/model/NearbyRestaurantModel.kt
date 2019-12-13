@@ -1,6 +1,5 @@
 package com.checkin.app.checkin.Home.model
 
-import com.checkin.app.checkin.Home.RestaurantListingOfferModel
 import com.checkin.app.checkin.Misc.GeolocationModel
 import com.checkin.app.checkin.Utility.Utils
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties
@@ -18,7 +17,7 @@ data class NearbyRestaurantModel(val name: String,
                                  val distance: Double,
                                  val ratings: Double,
                                  val cuisines: List<String>,
-                                 val offers: RestaurantListingOfferModel?
+                                 val offer: RestaurantListingOfferModel?
 ) {
     val formatDistance: String
         get() = "$distance ${if (distance <= 1.0) "km" else "kms"}"

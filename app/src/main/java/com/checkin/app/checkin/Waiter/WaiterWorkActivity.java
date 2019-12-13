@@ -1,12 +1,10 @@
 package com.checkin.app.checkin.Waiter;
 
-import android.annotation.SuppressLint;
 import android.app.AlertDialog;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
-import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.View;
@@ -16,6 +14,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.widget.Toolbar;
+import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
@@ -50,6 +49,8 @@ import com.checkin.app.checkin.session.model.SessionOrderedItemModel;
 import com.checkin.app.checkin.session.model.TableSessionModel;
 import com.google.android.material.navigation.NavigationView;
 import com.google.android.material.tabs.TabLayout;
+
+import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -430,10 +431,9 @@ public class WaiterWorkActivity extends BaseAccountActivity implements
         return new AccountModel.ACCOUNT_TYPE[]{AccountModel.ACCOUNT_TYPE.RESTAURANT_WAITER};
     }
 
-    @SuppressLint("WrongConstant")
     @Override
     public void onTableClick(RestaurantTableModel restaurantTableModel) {
-        drawerLayout.closeDrawer(Gravity.END, false);
+        drawerLayout.closeDrawer(GravityCompat.END, false);
         newWaiterSessionDialog(restaurantTableModel.getQrPk(), restaurantTableModel.getTable());
     }
 
@@ -453,9 +453,10 @@ public class WaiterWorkActivity extends BaseAccountActivity implements
         private List<WaiterTableModel> mTableList = new ArrayList<>();
 
         WaiterTablePagerAdapter(FragmentManager fm) {
-            super(fm);
+            super(fm, BEHAVIOR_RESUME_ONLY_CURRENT_FRAGMENT);
         }
 
+        @NotNull
         @Override
         public Fragment getItem(int position) {
             return mFragmentList.get(position);

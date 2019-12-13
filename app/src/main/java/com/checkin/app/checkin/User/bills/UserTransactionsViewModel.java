@@ -7,14 +7,10 @@ import androidx.lifecycle.LiveData;
 
 import com.checkin.app.checkin.Data.BaseViewModel;
 import com.checkin.app.checkin.Data.Resource;
-import com.checkin.app.checkin.Misc.BriefModel;
 import com.checkin.app.checkin.User.ReviewRepository;
 import com.checkin.app.checkin.Utility.SourceMappedLiveData;
 import com.checkin.app.checkin.session.SessionRepository;
 import com.fasterxml.jackson.databind.node.ObjectNode;
-
-import java.util.Arrays;
-import java.util.List;
 
 public class UserTransactionsViewModel extends BaseViewModel {
     private final SessionRepository mRepository;
@@ -28,7 +24,7 @@ public class UserTransactionsViewModel extends BaseViewModel {
 
     public UserTransactionsViewModel(@NonNull Application application) {
         super(application);
-        mRepository = SessionRepository.getInstance(application);
+        mRepository = SessionRepository.Companion.getInstance(application);
         mReviewRepository = ReviewRepository.getInstance(application);
     }
 

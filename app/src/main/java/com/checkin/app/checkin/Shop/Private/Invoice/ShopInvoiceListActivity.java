@@ -113,7 +113,7 @@ public class ShopInvoiceListActivity extends BaseActivity implements ShopInvoice
     private String updateDate(TextView tvDate, int year, int month, int day) {
         String initialDate = String.format(Locale.ENGLISH, "%04d-%02d-%02d", year, month, day);
         try {
-            String result = Utils.formatDate(initialDate, "yyyy-MM-dd", "MMM dd, yyyy");
+            String result = Utils.convertFormatDate(initialDate, "yyyy-MM-dd", "MMM dd, yyyy");
             tvDate.setText(result);
         } catch (ParseException e) {
             e.printStackTrace();

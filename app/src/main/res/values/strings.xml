@@ -235,7 +235,8 @@
 
     <string name="get_percent_discount" ><![CDATA[<b>Get</b><font color="#ff4f19"> %1$s</font> <b>off*</b>]]></string>
     <string name="discount_code" ><![CDATA[Code: <font color="#ff4f19">%1$s</font>]]></string>
-
-
-
+    <string name="format_live_session_qsr_message">Hi %s, you have placed your order.</string>
+    <string name="format_live_session_predining_message">Hi %s, you have dine-in scheduled.</string>
+    <string name="msg_order_status_in_progress">Food is being prepared</string>
+    <string name="msg_order_status_being_served">Food is being served</string>
 </resources>

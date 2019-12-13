@@ -64,6 +64,7 @@
     <dimen name="button_height_medium">50dp</dimen>
     <dimen name="button_height_normal">40dp</dimen>
     <dimen name="button_height_short">32dp</dimen>
+    <dimen name="button_height_tiny">24dp</dimen>
 
     <dimen name="button_width_wide">150dp</dimen>
     <dimen name="button_width_normal">100dp</dimen>
@@ -226,8 +227,11 @@
     <dimen name="width_current_location">150dp</dimen>
     <dimen name="height_current_location">140dp</dimen>
 
-    <dimen name="height_restaurant_banner">240dp</dimen>
+    <dimen name="height_restaurant_banner">220dp</dimen>
     <dimen name="height_restaurant_image_banner">165dp</dimen>
     <dimen name="height_advertisement_banner">150dp</dimen>
+    <dimen name="height_home_session_live_card">190dp</dimen>
+
+    <dimen name="height_vertical_line">16dp</dimen>
 
 </resources>

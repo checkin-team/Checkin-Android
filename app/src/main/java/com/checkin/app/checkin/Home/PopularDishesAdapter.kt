@@ -19,13 +19,12 @@ class PopularDishesAdapter : RecyclerView.Adapter<PopularDishesAdapter.ViewHolde
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int) = LayoutInflater.from(parent.context).inflate(viewType, parent, false).run { ViewHolder(this) }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        holder.bindData(mDishesList!![position])
+        holder.bindData(SuggestedDishModel())
     }
 
-    override fun getItemCount() = mDishesList?.size ?: 0
+    override fun getItemCount() = 3//mDishesList?.size ?: 0
 
     override fun getItemViewType(position: Int) = R.layout.item_home_suggested_dish
-
 
     class ViewHolder internal constructor(itemView: View) : RecyclerView.ViewHolder(itemView) {
         private var mItemModel: SuggestedDishModel? = null

@@ -45,7 +45,7 @@ public class CookSessionViewModel extends BaseViewModel {
 
     public CookSessionViewModel(@NonNull Application application) {
         super(application);
-        mSessionRepository = SessionRepository.getInstance(application);
+        mSessionRepository = SessionRepository.Companion.getInstance(application);
         mWaiterRepository = WaiterRepository.getInstance(application);
     }
 

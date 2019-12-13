@@ -7,13 +7,13 @@
     android:layout_marginTop="@dimen/spacing_small">
 
     <androidx.cardview.widget.CardView
-        android:layout_marginBottom="8dp"
         android:layout_width="match_parent"
         android:layout_height="@dimen/height_restaurant_banner"
         android:layout_gravity="center_horizontal"
-        android:layout_marginLeft="@dimen/spacing_small"
+        android:layout_marginStart="@dimen/spacing_extra_small"
         android:layout_marginTop="@dimen/spacing_large"
-        android:layout_marginRight="@dimen/spacing_small"
+        android:layout_marginEnd="@dimen/spacing_extra_small"
+        android:layout_marginBottom="@dimen/spacing_extra_small"
         app:cardCornerRadius="@dimen/card_corner_radius_small"
         app:cardElevation="@dimen/card_elevation">
 
@@ -22,10 +22,9 @@
             android:layout_height="match_parent">
 
             <ImageView
-
                 android:id="@+id/im_restaurant_banner_distance"
                 android:layout_width="wrap_content"
-                android:layout_height="@dimen/size_small_icon"
+                android:layout_height="@dimen/size_extra_small_icon"
                 android:src="@drawable/ic_distance_walking"
                 app:layout_constraintBottom_toBottomOf="@id/tv_restaurant_banner_navigate"
                 app:layout_constraintEnd_toEndOf="@id/im_restaurant_banner_cuisines"
@@ -37,43 +36,44 @@
                 style="@style/GreyJosefinsSmallTextStyle"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="@dimen/spacing_small"
                 app:layout_constraintBottom_toBottomOf="@id/im_restaurant_banner_distance"
-                app:layout_constraintStart_toEndOf="@id/im_restaurant_banner_distance"
+                app:layout_constraintStart_toStartOf="@id/tv_restaurant_banner_cuisines"
                 app:layout_constraintTop_toTopOf="@id/im_restaurant_banner_distance"
                 tools:text="3 KM" />
 
             <TextView
                 android:id="@+id/tv_restaurant_banner_count_checkins"
                 style="@style/WhiteJosefinsExtraSmallTextStyle"
-                android:layout_width="@dimen/button_width_short"
-                android:layout_height="wrap_content"
-                android:layout_alignParentEnd="true"
-                android:layout_marginEnd="@dimen/spacing_medium"
+                android:layout_width="0dp"
+                android:layout_height="@dimen/button_height_tiny"
                 android:layout_marginBottom="@dimen/spacing_tiny"
                 android:background="@drawable/background_rectangle_purple_gradient"
+                android:clickable="true"
+                android:focusable="true"
                 android:gravity="center"
-                android:textSize="@dimen/font_extra_small"
+                android:paddingTop="@dimen/spacing_tiny"
+                android:paddingBottom="@dimen/spacing_tiny"
                 app:layout_constraintBottom_toTopOf="@id/tv_restaurant_banner_navigate"
-                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintEnd_toEndOf="@id/tv_restaurant_banner_navigate"
+                app:layout_constraintStart_toStartOf="@id/tv_restaurant_banner_navigate"
                 tools:text="Checkin 2k" />
 
             <TextView
                 android:id="@+id/tv_restaurant_banner_navigate"
-                style="@style/GreyJosefinsExtraSmallTextStyle"
-                android:layout_width="@dimen/button_width_short"
-                android:layout_height="@dimen/button_height_short"
+                style="@style/GreyJosefinsSmallTextStyle"
+                android:layout_width="wrap_content"
+                android:layout_height="@dimen/button_height_tiny"
                 android:layout_marginEnd="@dimen/spacing_medium"
                 android:layout_marginBottom="@dimen/spacing_small"
-                android:background="@drawable/btn_small_bordered_grey"
+                android:background="@drawable/background_pinkish_grey_stroke"
                 android:clickable="true"
                 android:drawableStart="@drawable/ic_navigate_arrow"
-                android:drawablePadding="@dimen/spacing_tiny"
+                android:drawablePadding="@dimen/spacing_extra_tiny"
                 android:focusable="true"
                 android:gravity="center_vertical"
                 android:paddingStart="@dimen/spacing_tiny"
+                android:paddingEnd="@dimen/spacing_tiny"
                 android:text="Navigate"
-                android:textSize="@dimen/font_tiny"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 tools:ignore="RtlSymmetry" />
@@ -81,7 +81,7 @@
             <ImageView
                 android:id="@+id/im_restaurant_banner_cuisines"
                 android:layout_width="wrap_content"
-                android:layout_height="@dimen/size_small_icon"
+                android:layout_height="@dimen/size_extra_small_icon"
                 android:layout_marginStart="@dimen/spacing_medium"
                 android:src="@drawable/ic_banner_cuisines"
                 app:layout_constraintBottom_toBottomOf="@id/tv_restaurant_banner_count_checkins"
@@ -93,8 +93,10 @@
                 style="@style/GreyJosefinsSmallTextStyle"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="@dimen/spacing_small"
+                android:layout_marginStart="@dimen/spacing_extra_small"
                 app:layout_constraintBottom_toBottomOf="@id/im_restaurant_banner_cuisines"
+                app:layout_constraintEnd_toStartOf="@id/tv_restaurant_banner_count_checkins"
+                app:layout_constraintHorizontal_bias="0"
                 app:layout_constraintStart_toEndOf="@id/im_restaurant_banner_cuisines"
                 app:layout_constraintTop_toTopOf="@id/im_restaurant_banner_cuisines"
                 tools:text="Pure Veg  American  Burgers" />
@@ -104,8 +106,8 @@
     <androidx.cardview.widget.CardView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="@dimen/spacing_medium"
-        android:layout_marginRight="@dimen/spacing_medium"
+        android:layout_marginStart="@dimen/spacing_medium"
+        android:layout_marginEnd="@dimen/spacing_medium"
         app:cardCornerRadius="@dimen/card_corner_radius_small"
         app:cardElevation="@dimen/card_elevation">
 
@@ -117,52 +119,54 @@
                 android:id="@+id/im_restaurant_banner_cover"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:layout_centerVertical="true" />
+                android:layout_centerVertical="true"
+                android:scaleType="centerCrop"
+                tools:src="@drawable/cover_restaurant_unknown" />
+
             <FrameLayout
-                android:translationX="-10dp"
-                style="@style/ButtonNeutralAction"
                 android:id="@+id/container_restaurant_banner_offer"
-                android:layout_marginTop="20dp"
-                android:layout_width="120dp"
-                android:layout_height="60dp">
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/spacing_medium"
+                android:background="@drawable/btn_small_bordered_grey"
+                android:paddingStart="@dimen/spacing_small"
+                android:paddingTop="@dimen/spacing_extra_small"
+                android:paddingEnd="@dimen/spacing_small"
+                android:paddingBottom="@dimen/spacing_extra_small"
+                android:translationX="-10dp">
+
                 <RelativeLayout
                     android:layout_width="match_parent"
                     android:layout_height="match_parent">
+
                     <TextView
                         android:id="@+id/tv_restaurant_banner_offer_special"
-                        android:layout_marginLeft="3dp"
-                        android:layout_marginTop="4dp"
+                        style="@style/GreyJosefinsExtraSmallTextStyle"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="@dimen/spacing_extra_tiny"
+                        android:layout_marginBottom="@dimen/spacing_extra_tiny"
                         android:text="Exclusive offer*"
-                        android:textSize="9dp"
-                        android:fontFamily="@font/josefinsans_regular"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content">
+                        android:textSize="@dimen/font_tiny" />
 
-                    </TextView>
                     <TextView
                         android:id="@+id/tv_restaurant_banner_offer_summary"
+                        style="@style/GreyJosefinsSmallTextStyle"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
                         android:layout_below="@id/tv_restaurant_banner_offer_special"
-                        android:layout_marginLeft="3dp"
-                        android:layout_marginTop="1dp"
-                        tools:text="Get 40% off"
-                        android:textSize="11dp"
-                        android:fontFamily="@font/josefinsans_regular"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content">
+                        android:layout_marginStart="@dimen/spacing_extra_tiny"
+                        android:layout_marginBottom="@dimen/spacing_extra_tiny"
+                        tools:text="Get 40% off" />
 
-                    </TextView>
                     <TextView
                         android:id="@+id/tv_restaurant_banner_offer_code"
+                        style="@style/GreyJosefinsExtraSmallTextStyle"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
                         android:layout_below="@id/tv_restaurant_banner_offer_summary"
-                        android:layout_marginLeft="3dp"
-                        android:layout_marginTop="1dp"
-                        tools:text="CODE: SUPER40"
-                        android:textSize="11dp"
-                        android:fontFamily="@font/josefinsans_regular"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content">
-
-                    </TextView>
+                        android:layout_marginStart="@dimen/spacing_extra_tiny"
+                        tools:text="CODE: SUPER40" />
                 </RelativeLayout>
 
             </FrameLayout>
@@ -182,7 +186,7 @@
                 android:layout_height="wrap_content"
                 android:layout_alignParentBottom="true"
                 android:layout_centerHorizontal="true"
-                android:layout_marginBottom="@dimen/spacing_elevation_fix_extreme_tiny"
+                android:layout_marginBottom="@dimen/spacing_tiny"
                 android:fontFamily="@font/josefinsans_semibold"
                 android:gravity="center_horizontal"
                 android:shadowColor="#80ffffff"
@@ -196,10 +200,12 @@
                 android:layout_height="wrap_content"
                 android:layout_alignParentEnd="true"
                 android:layout_margin="@dimen/spacing_extra_small"
-                android:background="@drawable/background_rectangle_green_gradient"
-                android:paddingStart="@dimen/spacing_tiny"
-                android:paddingEnd="@dimen/spacing_tiny"
-                android:text="4.4" />
+                android:background="@drawable/background_rounded_green_gradient"
+                android:paddingStart="@dimen/spacing_extra_small"
+                android:paddingTop="@dimen/spacing_extra_tiny"
+                android:paddingEnd="@dimen/spacing_extra_small"
+                android:paddingBottom="@dimen/spacing_extra_tiny"
+                tools:text="4.4" />
         </RelativeLayout>
     </androidx.cardview.widget.CardView>
 </FrameLayout>

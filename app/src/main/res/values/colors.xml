@@ -38,4 +38,7 @@
 
     <color name="shimmer_background">#dddddd</color>
     <color name="white_alpha">#CCFFFFFF</color>
+    <color name="white_four">#f1f1f1</color>
+    <color name="orange_red">#ff4f19</color>
+    <color name="teal_blue">#0295aa</color>
 </resources>

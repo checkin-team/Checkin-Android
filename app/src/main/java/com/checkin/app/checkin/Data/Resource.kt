@@ -8,7 +8,7 @@ import com.fasterxml.jackson.databind.JsonNode
 import java.net.HttpURLConnection.*
 
 // A generic class that describes data with a status.
-class Resource<T> private constructor(val status: Status, val data: T?, val message: String?, val errorBody: JsonNode?) {
+class Resource<out T> private constructor(val status: Status, val data: T?, val message: String?, val errorBody: JsonNode?) {
     private var problemModel: ProblemModel? = null
 
     var isCached = false

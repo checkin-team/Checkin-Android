@@ -33,6 +33,7 @@ import android.preference.PreferenceManager;
 import android.provider.DocumentsContract;
 import android.provider.MediaStore;
 import android.provider.OpenableColumns;
+import android.text.Html;
 import android.text.TextUtils;
 import android.util.DisplayMetrics;
 import android.util.Log;
@@ -278,6 +279,10 @@ public final class Utils {
         return new SimpleDateFormat("HH:mm", Locale.ENGLISH).format(dateTime);
     }
 
+    public static String formatDateTo12HoursTime(Date dateTime) {
+        return new SimpleDateFormat("HH:mm a", Locale.ENGLISH).format(dateTime);
+    }
+
     public static String getCurrentFormattedDateInvoice() {
         Date date = Calendar.getInstance().getTime();
         SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault());
@@ -299,10 +304,14 @@ public final class Utils {
         return formatter.format(date);
     }
 
-    public static String formatDate(String date, String initDateFormat, String endDateFormat) throws ParseException {
+    public static String convertFormatDate(String date, String initDateFormat, String endDateFormat) throws ParseException {
         Date initDate = new SimpleDateFormat(initDateFormat, Locale.getDefault()).parse(date);
         SimpleDateFormat formatter = new SimpleDateFormat(endDateFormat, Locale.getDefault());
         return formatter.format(initDate);
+    }
+
+    public static String formatDate(Date date, String dateFormat) {
+        return new SimpleDateFormat(dateFormat, Locale.getDefault()).format(date);
     }
 
     public static String formatTimeDuration(long milliSec) {
@@ -349,6 +358,11 @@ public final class Utils {
         if (elapsedMinutes > 0)
             return String.format(Locale.ENGLISH, "%d minutes ago", elapsedMinutes);
         return "Now";
+    }
+
+    public static CharSequence fromHtml(String html) {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) return Html.fromHtml(html, 0);
+        else return Html.fromHtml(html);
     }
 
     /* ============================================================

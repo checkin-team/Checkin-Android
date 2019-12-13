@@ -74,6 +74,8 @@ public abstract class BaseAccountActivity extends BaseActivity {
         mHeaderViewHolder = getHeaderViewHolder();
 
         ACCOUNT_TYPE[] accountTypes = getAccountTypes();
+        String userName = PreferenceManager.getDefaultSharedPreferences(this)
+                .getString(Constants.SP_USER_PROFILE_NAME, null);
 
         mViewModel = ViewModelProviders.of(this).get(AccountViewModel.class);
         mViewModel.getAccounts().observe(this, listResource -> {
@@ -82,6 +84,18 @@ public abstract class BaseAccountActivity extends BaseActivity {
             if (listResource.getStatus() == Resource.Status.SUCCESS && listResource.getData() != null) {
                 List<AccountModel> accounts = listResource.getData();
                 mAccountAdapter.setData(accounts);
+
+                if (userName == null) {
+                    for (AccountModel accountModel : accounts) {
+                        if (accountModel.getAccountType() == ACCOUNT_TYPE.USER) {
+                            String[] split = accountModel.getName().split("\\s");
+                            PreferenceManager.getDefaultSharedPreferences(this).edit()
+                                    .putString(Constants.SP_USER_PROFILE_NAME, split[0])
+                                    .apply();
+                            break;
+                        }
+                    }
+                }
 
                 for (ACCOUNT_TYPE accountType : accountTypes) {
                     AccountModel account = AccountModel.getByAccountType(accounts, accountType);

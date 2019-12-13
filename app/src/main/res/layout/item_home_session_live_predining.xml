@@ -1,0 +1,249 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layout_margin="@dimen/spacing_tiny"
+    android:orientation="vertical"
+    app:cardCornerRadius="@dimen/card_corner_radius_small"
+    app:cardElevation="@dimen/card_elevation">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <ImageView
+            android:id="@+id/im_item_session_live_predining_share"
+            android:layout_width="@dimen/size_small_icon"
+            android:layout_height="@dimen/size_small_icon"
+            android:layout_marginTop="@dimen/spacing_small"
+            android:layout_marginEnd="@dimen/spacing_normal"
+            android:clickable="true"
+            android:focusable="true"
+            android:src="@android:drawable/ic_menu_share"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/tv_home_session_live_predining_message"
+            style="@style/GreyJosefinsSmallTextStyle"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/spacing_normal"
+            android:textColor="@color/orange_red"
+            app:layout_constraintBottom_toBottomOf="@id/im_item_session_live_predining_share"
+            app:layout_constraintEnd_toStartOf="@id/im_item_session_live_predining_share"
+            app:layout_constraintHorizontal_bias="0"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="@id/im_item_session_live_predining_share"
+            tools:text="Hii shivansh, Your have successfully placed your order" />
+
+        <androidx.cardview.widget.CardView
+            android:id="@+id/cv_home_session_live_predining_restaurant"
+            android:layout_width="@dimen/size_logo_large"
+            android:layout_height="@dimen/size_logo_large"
+            app:cardCornerRadius="@dimen/card_corner_radius_small"
+            app:cardElevation="@dimen/card_elevation"
+            app:layout_constraintBottom_toTopOf="@id/tv_item_session_live_predining_amount_title"
+            app:layout_constraintStart_toStartOf="@id/tv_home_session_live_predining_message"
+            app:layout_constraintTop_toBottomOf="@id/tv_home_session_live_predining_message">
+
+            <ImageView
+                android:id="@+id/im_home_session_live_predining_logo"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:scaleType="centerCrop"
+                android:src="@drawable/cover_restaurant_unknown" />
+
+            <TextView
+                android:id="@+id/tv_home_session_live_predining_status"
+                style="@style/WhiteJosefinsExtraSmallTextStyle"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="bottom"
+                android:background="@drawable/background_rectangle_orange_gradient"
+                android:paddingTop="@dimen/spacing_extra_tiny"
+                android:paddingBottom="@dimen/spacing_extra_tiny"
+                android:textAlignment="center"
+                tools:text="Pending" />
+        </androidx.cardview.widget.CardView>
+
+        <TextView
+            android:id="@+id/tv_home_session_live_predining_restaurant_name"
+            style="@style/GreyTextStyle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/spacing_normal"
+            android:fontFamily="@font/josefinsans_semibold"
+            android:translationY="-5dp"
+            app:layout_constraintStart_toEndOf="@id/cv_home_session_live_predining_restaurant"
+            app:layout_constraintTop_toTopOf="@id/cv_home_session_live_predining_restaurant"
+            tools:text="Grey Orange - Lavel Road " />
+
+        <TextView
+            android:id="@+id/tv_item_session_live_scheduled_time"
+            style="@style/GreyJosefinsSmallTextStyle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@color/teal_blue"
+            app:layout_constraintBottom_toBottomOf="@id/container_line"
+            app:layout_constraintStart_toStartOf="@id/tv_home_session_live_predining_restaurant_name"
+            app:layout_constraintTop_toTopOf="@id/container_line"
+            tools:text="4:23pm" />
+
+        <FrameLayout
+            android:id="@+id/container_line"
+            android:layout_width="wrap_content"
+            android:layout_height="@dimen/height_vertical_line"
+            android:layout_marginStart="@dimen/spacing_small"
+            android:layout_marginTop="@dimen/spacing_small"
+            app:layout_constraintStart_toEndOf="@id/tv_item_session_live_scheduled_time"
+            app:layout_constraintTop_toBottomOf="@id/tv_home_session_live_predining_restaurant_name">
+
+            <include layout="@layout/incl_vertical_line" />
+        </FrameLayout>
+
+        <TextView
+            android:id="@+id/tv_item_session_live_scheduled_date"
+            style="@style/GreyJosefinsSmallTextStyle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/spacing_small"
+            android:textColor="@color/teal_blue"
+            app:layout_constraintBottom_toBottomOf="@id/container_line"
+            app:layout_constraintStart_toEndOf="@id/container_line"
+            app:layout_constraintTop_toTopOf="@id/container_line"
+            tools:text="21st October 2019" />
+
+        <TextView
+            android:id="@+id/tv_item_session_live_predining_diner_title"
+            style="@style/GreyJosefinsExtraSmallTextStyle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/spacing_extra_small"
+            android:text="Diners"
+            android:textColor="@color/pinkish_grey"
+            app:layout_constraintEnd_toStartOf="@id/tv_item_session_live_predining_orders_title"
+            app:layout_constraintStart_toStartOf="@id/tv_item_session_live_scheduled_time"
+            app:layout_constraintTop_toBottomOf="@id/tv_item_session_live_scheduled_time" />
+
+        <TextView
+            android:id="@+id/tv_item_session_live_predining_orders_title"
+            style="@style/GreyJosefinsExtraSmallTextStyle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/spacing_extra_small"
+            android:text="@string/label_orders"
+            android:textColor="@color/pinkish_grey"
+            app:layout_constraintEnd_toEndOf="@id/tv_item_session_live_scheduled_date"
+            app:layout_constraintStart_toEndOf="@id/tv_item_session_live_predining_diner_title"
+            app:layout_constraintTop_toBottomOf="@id/tv_item_session_live_scheduled_time" />
+
+        <TextView
+            android:id="@+id/tv_item_session_live_predining_diners"
+            style="@style/GreyJosefinsExtraSmallTextStyle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintBottom_toBottomOf="@id/cv_home_session_live_predining_restaurant"
+            app:layout_constraintEnd_toEndOf="@id/tv_item_session_live_predining_diner_title"
+            app:layout_constraintStart_toStartOf="@id/tv_item_session_live_predining_diner_title"
+            app:layout_constraintTop_toBottomOf="@id/tv_item_session_live_predining_diner_title"
+            tools:text="3" />
+
+        <TextView
+            android:id="@+id/tv_item_session_live_predining_orders"
+            style="@style/GreyJosefinsExtraSmallTextStyle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintBottom_toBottomOf="@id/tv_item_session_live_predining_diners"
+            app:layout_constraintEnd_toEndOf="@id/tv_item_session_live_predining_orders_title"
+            app:layout_constraintStart_toStartOf="@id/tv_item_session_live_predining_orders_title"
+            app:layout_constraintTop_toBottomOf="@id/tv_item_session_live_predining_orders_title"
+            tools:text="3" />
+
+        <TextView
+            android:id="@+id/tv_item_session_live_predining_amount_title"
+            style="@style/GreyJosefinsExtraSmallTextStyle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="@dimen/spacing_tiny"
+            android:text="Amount Paid: "
+            android:textColor="@color/pinkish_grey"
+            app:layout_constraintBottom_toTopOf="@id/tv_item_session_live_predining_session_id_title"
+            app:layout_constraintStart_toStartOf="@id/tv_item_session_live_predining_session_id_title"
+            app:layout_constraintVertical_chainStyle="packed" />
+
+        <TextView
+            android:id="@+id/tv_item_session_live_predining_amount"
+            style="@style/GreyJosefinsExtraSmallTextStyle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintStart_toEndOf="@id/tv_item_session_live_predining_amount_title"
+            app:layout_constraintTop_toTopOf="@id/tv_item_session_live_predining_amount_title"
+            tools:text="$211" />
+
+        <TextView
+            android:id="@+id/tv_item_session_live_predining_session_id_title"
+            style="@style/GreyJosefinsExtraSmallTextStyle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/spacing_normal"
+            android:layout_marginBottom="@dimen/spacing_small"
+            android:text="Order ID: "
+            android:textColor="@color/pinkish_grey"
+            android:textSize="@dimen/font_tiny"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent" />
+
+        <TextView
+            android:id="@+id/tv_item_session_live_predining_session_id"
+            style="@style/GreyJosefinsExtraSmallTextStyle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@color/pinkish_grey"
+            android:textSize="@dimen/font_tiny"
+            app:layout_constraintStart_toEndOf="@id/tv_item_session_live_predining_session_id_title"
+            app:layout_constraintTop_toTopOf="@id/tv_item_session_live_predining_session_id_title"
+            tools:text="#123456" />
+
+        <TextView
+            android:id="@+id/tv_item_session_live_predining_call"
+            style="@style/GreyJosefinsSmallTextStyle"
+            android:layout_width="wrap_content"
+            android:layout_height="@dimen/button_height_tiny"
+            android:layout_marginEnd="@dimen/spacing_extra_small"
+            android:background="@drawable/background_pinkish_grey_stroke"
+            android:clickable="true"
+            android:drawableStart="@drawable/ic_telephone_auricular_with_cable"
+            android:drawablePadding="@dimen/spacing_extra_tiny"
+            android:focusable="true"
+            android:gravity="center_vertical"
+            android:paddingStart="@dimen/spacing_small"
+            android:paddingEnd="@dimen/spacing_small"
+            android:text="Call"
+            app:layout_constraintBottom_toBottomOf="@id/tv_item_session_live_predining_navigate"
+            app:layout_constraintEnd_toStartOf="@id/tv_item_session_live_predining_navigate"
+            tools:ignore="RtlSymmetry" />
+
+        <TextView
+            android:id="@+id/tv_item_session_live_predining_navigate"
+            style="@style/GreyJosefinsSmallTextStyle"
+            android:layout_width="wrap_content"
+            android:layout_height="@dimen/button_height_tiny"
+            android:layout_marginEnd="@dimen/spacing_normal"
+            android:layout_marginBottom="@dimen/spacing_small"
+            android:background="@drawable/background_pinkish_grey_stroke"
+            android:clickable="true"
+            android:drawableStart="@drawable/ic_navigate_arrow"
+            android:drawablePadding="@dimen/spacing_extra_tiny"
+            android:focusable="true"
+            android:gravity="center_vertical"
+            android:paddingStart="@dimen/spacing_tiny"
+            android:paddingEnd="@dimen/spacing_tiny"
+            android:text="Navigate"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            tools:ignore="RtlSymmetry" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</androidx.cardview.widget.CardView>

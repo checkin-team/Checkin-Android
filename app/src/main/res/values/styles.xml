@@ -217,8 +217,8 @@
         <item name="android:fontFamily">@font/josefinsans_regular</item>
     </style>
 
-    <style name="GreyJosefinsExtraSmallTextStyle" parent="GreySmallTextStyle">
-        <item name="android:fontFamily">@font/josefinsans_regular</item>
+    <style name="GreyJosefinsExtraSmallTextStyle" parent="GreyJosefinsSmallTextStyle">
+        <item name="android:textSize">@dimen/font_extra_small</item>
     </style>
 
     <style name="GreyTextStyle" parent="TextAppearance.AppCompat">

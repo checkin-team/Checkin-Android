@@ -1,0 +1,151 @@
+package com.checkin.app.checkin.Home.fragment
+
+import android.content.Intent
+import android.net.Uri
+import android.preference.PreferenceManager
+import android.view.View
+import android.view.ViewGroup
+import android.widget.ImageView
+import android.widget.TextView
+import androidx.core.content.ContextCompat
+import butterknife.BindView
+import butterknife.ButterKnife
+import com.checkin.app.checkin.Home.LiveSessionViewHolder
+import com.checkin.app.checkin.Home.model.ActiveLiveSessionDetailModel
+import com.checkin.app.checkin.Home.model.ScheduledLiveSessionDetailModel
+import com.checkin.app.checkin.R
+import com.checkin.app.checkin.Utility.Constants
+import com.checkin.app.checkin.Utility.Utils
+
+class ActiveLiveSessionViewHolder(itemView: View) : LiveSessionViewHolder<ActiveLiveSessionDetailModel>(itemView) {
+    override fun bindData(data: ActiveLiveSessionDetailModel) {
+    }
+}
+
+class QsrLiveSessionViewHolder(itemView: View) : LiveSessionViewHolder<ScheduledLiveSessionDetailModel>(itemView) {
+    @BindView(R.id.im_home_session_live_qsr_logo)
+    internal lateinit var imRestaurantLogo: ImageView
+    @BindView(R.id.container_home_session_live_qsr_order_more)
+    internal lateinit var containerOrderMore: ViewGroup
+    @BindView(R.id.im_home_session_live_qsr_order_status)
+    internal lateinit var imOrderStatus: ImageView
+    @BindView(R.id.tv_home_session_live_qsr_order_status)
+    internal lateinit var tvOrderStatus: TextView
+    @BindView(R.id.tv_home_session_live_qsr_message)
+    internal lateinit var tvMessage: TextView
+    @BindView(R.id.tv_home_session_live_qsr_name)
+    internal lateinit var tvRestaurantName: TextView
+    @BindView(R.id.tv_home_session_live_qsr_orders_summary)
+    internal lateinit var tvOrderSummary: TextView
+    @BindView(R.id.tv_item_session_live_qsr_amount)
+    internal lateinit var tvAmount: TextView
+    @BindView(R.id.tv_item_session_live_qsr_session_id)
+    internal lateinit var tvSessionId: TextView
+    @BindView(R.id.tv_home_session_live_qsr_status)
+    internal lateinit var tvSessionStatus: TextView
+
+    private var mData: ScheduledLiveSessionDetailModel? = null
+
+    init {
+        ButterKnife.bind(this, itemView)
+
+        containerOrderMore.setOnClickListener {
+            mData?.let {
+                Utils.toast(itemView.context, "TODO: Order More!")
+            }
+        }
+    }
+
+    override fun bindData(data: ScheduledLiveSessionDetailModel) {
+        mData = data
+
+        val username = PreferenceManager.getDefaultSharedPreferences(itemView.context)
+                .getString(Constants.SP_USER_PROFILE_NAME, "")
+        tvAmount.text = Utils.formatCurrencyAmount(itemView.context, data.paidAmount)
+        tvSessionStatus.text = data.scheduled.status.repr
+        tvMessage.text = itemView.context.getString(R.string.format_live_session_qsr_message).format(username)
+        tvRestaurantName.text = data.restaurant.name
+        Utils.loadImageOrDefault(imRestaurantLogo, data.restaurant.logo, R.drawable.cover_restaurant_unknown)
+        tvSessionId.text = data.formatSessionId
+        if (data.isOrderInProgress) {
+            imOrderStatus.setImageResource(R.drawable.ic_order_status_cooking)
+            tvOrderStatus.text = itemView.context.getString(R.string.msg_order_status_in_progress)
+        } else {
+            imOrderStatus.setImageResource(R.drawable.ic_order_status_cooking)
+            tvOrderStatus.text = itemView.context.getString(R.string.msg_order_status_being_served)
+        }
+        tvOrderSummary.text = if (data.orderedItems.isNullOrEmpty()) "-"
+        else "${data.orderedItems[0].name} (${data.orderedItems[0].quantity})... ${data.orderedItems.size - 1} more"
+    }
+}
+
+class PreDiningLiveSessionViewHolder(itemView: View) : LiveSessionViewHolder<ScheduledLiveSessionDetailModel>(itemView) {
+    @BindView(R.id.im_home_session_live_predining_logo)
+    internal lateinit var imRestaurantLogo: ImageView
+    @BindView(R.id.im_item_session_live_predining_share)
+    internal lateinit var imShare: ImageView
+    @BindView(R.id.tv_home_session_live_predining_message)
+    internal lateinit var tvMessage: TextView
+    @BindView(R.id.tv_home_session_live_predining_restaurant_name)
+    internal lateinit var tvRestaurantName: TextView
+    @BindView(R.id.tv_home_session_live_predining_status)
+    internal lateinit var tvSessionStatus: TextView
+    @BindView(R.id.tv_item_session_live_predining_amount)
+    internal lateinit var tvAmount: TextView
+    @BindView(R.id.tv_item_session_live_predining_call)
+    internal lateinit var tvCallButton: TextView
+    @BindView(R.id.tv_item_session_live_predining_navigate)
+    internal lateinit var tvNavigateButton: TextView
+    @BindView(R.id.tv_item_session_live_predining_diners)
+    internal lateinit var tvDiners: TextView
+    @BindView(R.id.tv_item_session_live_predining_orders)
+    internal lateinit var tvOrders: TextView
+    @BindView(R.id.tv_item_session_live_scheduled_date)
+    internal lateinit var tvScheduledDate: TextView
+    @BindView(R.id.tv_item_session_live_scheduled_time)
+    internal lateinit var tvScheduledTime: TextView
+    @BindView(R.id.tv_item_session_live_predining_session_id)
+    internal lateinit var tvSessionId: TextView
+
+    private var mData: ScheduledLiveSessionDetailModel? = null
+
+    init {
+        ButterKnife.bind(this, itemView)
+
+        tvNavigateButton.setOnClickListener {
+            mData?.restaurant?.geolocation?.let {
+                val gmmIntentUri = Uri.parse("google.navigation:q=${it.latitude},${it.longitude}")
+                Intent(Intent.ACTION_VIEW, gmmIntentUri).apply {
+                    `package` = "com.google.android.apps.maps"
+                    ContextCompat.startActivity(itemView.context, this, null)
+                }
+            }
+        }
+
+        tvCallButton.setOnClickListener {
+            mData?.restaurant?.phone?.let {
+                val phoneIntent = Uri.parse("tel:$it")
+                ContextCompat.startActivity(itemView.context, Intent(Intent.ACTION_DIAL, phoneIntent), null)
+            }
+        }
+
+        imShare.setOnClickListener { Utils.toast(itemView.context, "TODO: Share!") }
+    }
+
+    override fun bindData(data: ScheduledLiveSessionDetailModel) {
+        mData = data
+        val username = PreferenceManager.getDefaultSharedPreferences(itemView.context)
+                .getString(Constants.SP_USER_PROFILE_NAME, "")
+
+        tvOrders.text = data.countOrders.toString()
+        tvDiners.text = data.scheduled.countPeople.toString()
+        tvAmount.text = Utils.formatCurrencyAmount(itemView.context, data.paidAmount)
+        tvSessionStatus.text = data.scheduled.status.repr
+        tvMessage.text = itemView.context.getString(R.string.format_live_session_predining_message).format(username)
+        tvRestaurantName.text = if (data.restaurant.locality != null) data.restaurant.name + " - " + data.restaurant.locality else data.restaurant.name
+        Utils.loadImageOrDefault(imRestaurantLogo, data.restaurant.logo, R.drawable.cover_restaurant_unknown)
+        tvScheduledDate.text = data.scheduled.formatDate
+        tvScheduledTime.text = data.scheduled.formatTime
+        tvSessionId.text = data.formatSessionId
+    }
+}

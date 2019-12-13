@@ -22,7 +22,7 @@ public class SessionBillModel {
     @JsonProperty("discount")
     private Double discount;
 
-    @JsonProperty("offers")
+    @JsonProperty("offer")
     private Double offers;
 
     @JsonProperty("total")
@@ -68,7 +68,7 @@ public class SessionBillModel {
         return charges;
     }
 
-    @JsonProperty("offers")
+    @JsonProperty("offer")
     public void setOffers(@Nullable Double offers) {
         this.offers = (offers != null && offers > 0) ? offers : null;
     }

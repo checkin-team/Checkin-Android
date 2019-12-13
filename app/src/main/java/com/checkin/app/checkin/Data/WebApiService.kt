@@ -4,6 +4,7 @@ import com.checkin.app.checkin.Account.AccountModel
 import com.checkin.app.checkin.Auth.AuthResultModel
 import com.checkin.app.checkin.Cook.Model.CookTableModel
 import com.checkin.app.checkin.Home.model.NearbyRestaurantModel
+import com.checkin.app.checkin.Home.model.ScheduledLiveSessionDetailModel
 import com.checkin.app.checkin.Inventory.Model.InventoryAvailabilityModel
 import com.checkin.app.checkin.Inventory.Model.InventoryModel
 import com.checkin.app.checkin.Manager.Model.ManagerSessionEventModel
@@ -121,6 +122,13 @@ interface WebApiService {
 
     @POST("sessions/active/pay/paytm/")
     fun postPaytmRequest(): Call<PaytmModel>
+
+    // endregion
+
+    // region SCHEDULED_SESSION
+
+    @get:GET("sessions/customer/scheduled/")
+    val customerScheduledSessions: Call<List<ScheduledLiveSessionDetailModel>>
 
     // endregion
 

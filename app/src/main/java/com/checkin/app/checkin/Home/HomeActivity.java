@@ -28,6 +28,7 @@ import com.checkin.app.checkin.Data.Message.MessageModel;
 import com.checkin.app.checkin.Data.Message.MessageUtils;
 import com.checkin.app.checkin.Data.ProblemModel;
 import com.checkin.app.checkin.Data.Resource;
+import com.checkin.app.checkin.Home.fragment.UserHomeFragment;
 import com.checkin.app.checkin.Misc.BaseFragmentAdapterBottomNav;
 import com.checkin.app.checkin.Misc.BlankFragment;
 import com.checkin.app.checkin.Misc.QRScannerActivity;
@@ -41,7 +42,6 @@ import com.checkin.app.checkin.Utility.OnBoardingUtils;
 import com.checkin.app.checkin.Utility.OnBoardingUtils.OnBoardingModel;
 import com.checkin.app.checkin.Utility.Utils;
 import com.checkin.app.checkin.session.activesession.ActiveSessionActivity;
-import com.getkeepsafe.taptargetview.TapTargetSequence;
 import com.google.android.material.navigation.NavigationView;
 import com.google.android.material.tabs.TabLayout;
 
@@ -53,7 +53,7 @@ import static com.checkin.app.checkin.Data.Message.ActiveSessionNotificationServ
 import static com.checkin.app.checkin.Data.Message.ActiveSessionNotificationService.ACTIVE_SESSION_PK;
 
 public class HomeActivity extends BaseAccountActivity implements NavigationView.OnNavigationItemSelectedListener {
-    public static final String SP_QR_SCANNER = "qrscanner";
+    public static final String SP_ONBOARDING_QR_SCANNER = "onboarding.qrscanner";
     private static final int REQUEST_QR_SCANNER = 212;
 
     @BindView(R.id.toolbar_home)
@@ -83,7 +83,6 @@ public class HomeActivity extends BaseAccountActivity implements NavigationView.
 
     private HomeViewModel mViewModel;
     private UserViewModel mUserViewModel;
-    private TapTargetSequence.Listener mListener;
     private BroadcastReceiver mReceiver = new BroadcastReceiver() {
         @Override
         public void onReceive(Context context, Intent intent) {
@@ -249,7 +248,7 @@ public class HomeActivity extends BaseAccountActivity implements NavigationView.
         TabLayout.Tab tab = tabLayout.getTabAt(1);
         if (tab != null) {
             View qrView = tab.getCustomView();
-            OnBoardingUtils.conditionalOnBoarding(this, SP_QR_SCANNER, true, new OnBoardingModel("Scan Checkin QR!", qrView, false));
+            OnBoardingUtils.conditionalOnBoarding(this, SP_ONBOARDING_QR_SCANNER, true, new OnBoardingModel("Scan Checkin QR!", qrView, false));
         }
     }
 
@@ -341,7 +340,7 @@ public class HomeActivity extends BaseAccountActivity implements NavigationView.
     }
 
     @OnClick(R.id.btn_home_scanner)
-    public void onInsight() {
+    public void onScannerClick() {
         launchScanner();
     }
 
