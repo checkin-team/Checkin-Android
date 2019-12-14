@@ -233,9 +233,11 @@
     <string name="label_cooked">Cooked</string>
     <string name="status_order_cooked">Cooked</string>
 
-    <string name="get_percent_discount" ><![CDATA[<b>Get</b><font color="#ff4f19"> %1$s</font> <b>off*</b>]]></string>
-    <string name="discount_code" ><![CDATA[Code: <font color="#ff4f19">%1$s</font>]]></string>
+    <string name="get_percent_discount"><![CDATA[<b>Get</b><font color="#ff4f19"> %1$s</font> <b>off*</b>]]></string>
+    <string name="discount_code"><![CDATA[Code: <font color="#ff4f19">%1$s</font>]]></string>
 
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 
 
 </resources>

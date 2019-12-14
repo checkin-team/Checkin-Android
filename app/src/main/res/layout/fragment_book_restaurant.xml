@@ -1,0 +1,154 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_height="500dp"
+    android:layout_margin="8dp"
+    tools:context=".Home.BookRestaurant">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <TextView
+            android:id="@+id/tv_book_restaurant_restaurant_name"
+            style="@style/JosefinAquaBlueTextStyleLarge"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/spacing_extra_large"
+            android:layout_marginTop="@dimen/spacing_large"
+            android:text="Grey Orange"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/tv_book_restaurant_restaurant_locality"
+            style="@style/LightGreyJosefinsTextStyle"
+            android:layout_width="wrap_content"
+
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/spacing_small"
+            android:text="Level Road- Bengaluru"
+            app:layout_constraintStart_toStartOf="@+id/tv_book_restaurant_restaurant_name"
+            app:layout_constraintTop_toBottomOf="@+id/tv_book_restaurant_restaurant_name" />
+
+        <TextView
+            android:id="@+id/tv_book_restaurant_time_heading"
+            style="@style/TextAppearance.AppCompat.Large"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/spacing_large"
+            android:text="What time?"
+            app:layout_constraintStart_toStartOf="@+id/margin"
+            app:layout_constraintTop_toBottomOf="@+id/margin" />
+
+        <TextView
+            android:id="@+id/tv_book_restaurant_peoples_heading"
+            style="@style/TextAppearance.AppCompat.Large"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="@dimen/spacing_large"
+            android:text="How many people?"
+            app:layout_constraintBottom_toTopOf="@+id/tv_book_restaurant_people_count"
+            app:layout_constraintStart_toStartOf="@+id/tv_book_restaurant_time_heading" />
+
+        <ImageView
+            android:id="@+id/im_book_restaurant_people_count_sub"
+            android:layout_width="48dp"
+
+            android:layout_height="48dp"
+            android:src="@drawable/ic_member_add"
+            app:layout_constraintBottom_toBottomOf="@+id/tv_book_restaurant_people_count"
+            app:layout_constraintEnd_toStartOf="@+id/tv_book_restaurant_people_count"
+            app:layout_constraintHorizontal_bias="0.455"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/tv_book_restaurant_people_count" />
+
+        <ImageView
+            android:id="@+id/im_book_restaurant_people_count_add"
+            android:layout_width="wrap_content"
+
+
+            android:layout_height="wrap_content"
+            android:src="@drawable/ic_member_add"
+            app:layout_constraintBottom_toBottomOf="@+id/tv_book_restaurant_people_count"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/tv_book_restaurant_people_count"
+            app:layout_constraintTop_toTopOf="@+id/tv_book_restaurant_people_count" />
+
+        <TextView
+            android:id="@+id/tv_book_restaurant_people_count"
+            style="@style/TextAppearance.AppCompat.Large"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="@dimen/spacing_extra_large"
+            android:text="1"
+            app:layout_constraintBottom_toTopOf="@+id/button_book_restaurant_continue"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent" />
+
+        <androidx.cardview.widget.CardView
+            android:id="@+id/margin"
+            android:layout_width="0dp"
+            android:layout_height="60dp"
+            android:layout_marginRight="36dp"
+            app:layout_constraintTop_toBottomOf="@+id/tv_book_restaurant_restaurant_locality"
+            app:cardElevation="0dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:layout_marginTop="24dp"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="@+id/tv_book_restaurant_restaurant_locality"
+            tools:layout_editor_absoluteY="115dp">
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+
+            <ImageView
+                android:id="@+id/iv_book_restaurant_calendar_icon"
+
+                android:layout_width="60dp"
+
+                android:layout_height="match_parent"
+                android:src="@drawable/ic_calendar_grey"/>
+
+
+                    <LinearLayout
+                        android:layout_toEndOf="@+id/iv_book_restaurant_calendar_icon"
+                        android:id="@+id/container_book_restaurant_date_picker"
+                        android:layout_marginStart="12dp"
+                        android:layout_width="match_parent"
+
+                        android:layout_height="match_parent"
+                        android:orientation="horizontal">
+
+
+                    </LinearLayout>
+            </RelativeLayout>
+        </androidx.cardview.widget.CardView>
+
+        <Button
+            android:id="@+id/button_book_restaurant_continue"
+            style="@style/Widget.AppCompat.Button.Borderless"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/spacing_extra_large"
+            android:layout_marginRight="@dimen/spacing_extra_large"
+            android:layout_marginBottom="16dp"
+
+            android:background="#0ebfe9"
+            android:fontFamily="@font/josefinsans_regular"
+            android:text="Continue"
+            android:textAllCaps="false"
+            android:textColor="@color/white"
+            android:textSize="@dimen/font_large"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"/>
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+</androidx.cardview.widget.CardView>

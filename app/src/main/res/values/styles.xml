@@ -208,6 +208,11 @@
     <style name="WhiteJosefinsTextStyle" parent="WhiteTextStyle">
         <item name="android:fontFamily">@font/josefinsans_regular</item>
     </style>
+    <style name="LightGreyJosefinsTextStyle" parent="TextAppearance.AppCompat">
+        <item name="android:fontFamily">@font/josefinsans_regular</item>
+        <item name="android:textSize">@dimen/font_small</item>
+        <item name="android:textColor">@color/pinkish_grey</item>
+    </style>
 
     <style name="WhiteJosefinsExtraSmallTextStyle" parent="WhiteJosefinsTextStyle">
         <item name="android:textSize">@dimen/font_extra_small</item>
@@ -252,7 +257,11 @@
         <item name="android:fontFamily">@font/arial_rounded_mt_bold</item>
         <item name="android:textSize">@dimen/font_normal</item>
     </style>
-
+<style name="JosefinAquaBlueTextStyleLarge" parent="TextAppearance.AppCompat">
+    <item name="android:textColor">@color/aqua_blue</item>
+    <item name="android:fontFamily">@font/josefinsans_regular</item>
+    <item name="android:textSize">@dimen/font_extra_large</item>
+</style>
     <style name="AquaBlueSmallTextStyle" parent="AquaBlueTextStyle">
         <item name="android:textSize">@dimen/font_small</item>
     </style>
