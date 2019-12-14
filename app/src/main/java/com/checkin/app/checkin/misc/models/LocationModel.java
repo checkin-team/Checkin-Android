@@ -110,6 +110,12 @@ public class LocationModel {
                 .put("longitude", longitude);
     }
 
+    @JsonProperty("point")
+    public void setPoint(ObjectNode data) {
+        latitude = data.get("latitude").asDouble();
+        longitude = data.get("longitude").asDouble();
+    }
+
     @NonNull
     @Override
     public String toString() {
