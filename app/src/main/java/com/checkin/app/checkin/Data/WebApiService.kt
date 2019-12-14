@@ -3,6 +3,7 @@ package com.checkin.app.checkin.Data
 import com.checkin.app.checkin.Account.AccountModel
 import com.checkin.app.checkin.Auth.AuthResultModel
 import com.checkin.app.checkin.Cook.Model.CookTableModel
+import com.checkin.app.checkin.Home.model.ActiveLiveSessionDetailModel
 import com.checkin.app.checkin.Home.model.NearbyRestaurantModel
 import com.checkin.app.checkin.Home.model.ScheduledLiveSessionDetailModel
 import com.checkin.app.checkin.Inventory.Model.InventoryAvailabilityModel
@@ -63,6 +64,9 @@ interface WebApiService {
     // endregion
 
     // region SESSION
+    @get:GET("sessions/customer/active/status/")
+    val activeSessionLiveStatus: Call<ActiveLiveSessionDetailModel>
+
     @POST("sessions/customer/new/")
     fun postNewCustomerSession(@Body data: ObjectNode): Call<QRResultModel>
 

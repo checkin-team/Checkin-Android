@@ -80,6 +80,7 @@ class UserHomeFragment : BaseFragment() {
         })
 
         mLiveSessionViewModel.fetchScheduledSessions()
+        mLiveSessionViewModel.fetchLiveActiveSession()
     }
 
     fun enableDisableSwipeRefresh(enable: Boolean) {

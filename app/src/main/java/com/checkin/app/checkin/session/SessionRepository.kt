@@ -4,6 +4,7 @@ import android.app.Application
 import android.content.Context
 import androidx.lifecycle.LiveData
 import com.checkin.app.checkin.Data.*
+import com.checkin.app.checkin.Home.model.ActiveLiveSessionDetailModel
 import com.checkin.app.checkin.Home.model.ScheduledLiveSessionDetailModel
 import com.checkin.app.checkin.Manager.Model.ManagerSessionEventModel
 import com.checkin.app.checkin.User.bills.UserTransactionBriefModel
@@ -17,6 +18,21 @@ import com.fasterxml.jackson.databind.node.ObjectNode
 
 class SessionRepository private constructor(context: Context) : BaseRepository() {
     private val mWebService: WebApiService = ApiClient.getApiService(context)
+
+    val activeSessionLiveStatus: LiveData<Resource<ActiveLiveSessionDetailModel>>
+        get() = object : NetworkBoundResource<ActiveLiveSessionDetailModel, ActiveLiveSessionDetailModel>() {
+            override fun shouldUseLocalDb(): Boolean {
+                return false
+            }
+
+            override fun createCall(): LiveData<ApiResponse<ActiveLiveSessionDetailModel>> {
+                return RetrofitLiveData(mWebService.activeSessionLiveStatus)
+            }
+
+            override fun saveCallResult(data: ActiveLiveSessionDetailModel) {
+
+            }
+        }.asLiveData
 
     val activeSessionCheck: LiveData<Resource<SessionBasicModel>>
         get() = object : NetworkBoundResource<SessionBasicModel, SessionBasicModel>() {

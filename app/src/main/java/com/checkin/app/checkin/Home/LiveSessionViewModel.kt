@@ -41,10 +41,15 @@ class LiveSessionViewModel(application: Application) : BaseViewModel(application
 
     override fun updateResults() {
         fetchScheduledSessions()
+        fetchLiveActiveSession()
     }
 
     fun fetchScheduledSessions() {
         mScheduledSessionData.addSource(mSessionRepository.getScheduledSessions(), mScheduledSessionData::setValue)
+    }
+
+    fun fetchLiveActiveSession() {
+        mActiveSessionData.addSource(mSessionRepository.activeSessionLiveStatus, mActiveSessionData::setValue)
     }
 
     fun getSessionDetailByPk(pk: Long) = Transformations.map(mLiveSessionData) {

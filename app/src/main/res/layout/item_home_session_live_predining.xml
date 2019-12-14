@@ -27,7 +27,7 @@
 
         <TextView
             android:id="@+id/tv_home_session_live_predining_message"
-            style="@style/GreyJosefinsSmallTextStyle"
+            style="@style/GreySmallTextStyle"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="@dimen/spacing_normal"
@@ -58,7 +58,7 @@
 
             <TextView
                 android:id="@+id/tv_home_session_live_predining_status"
-                style="@style/WhiteJosefinsExtraSmallTextStyle"
+                style="@style/WhiteExtraSmallTextStyle"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_gravity="bottom"
@@ -83,7 +83,7 @@
 
         <TextView
             android:id="@+id/tv_item_session_live_scheduled_time"
-            style="@style/GreyJosefinsSmallTextStyle"
+            style="@style/GreySmallTextStyle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textColor="@color/teal_blue"
@@ -106,7 +106,7 @@
 
         <TextView
             android:id="@+id/tv_item_session_live_scheduled_date"
-            style="@style/GreyJosefinsSmallTextStyle"
+            style="@style/GreySmallTextStyle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="@dimen/spacing_small"
@@ -118,7 +118,7 @@
 
         <TextView
             android:id="@+id/tv_item_session_live_predining_diner_title"
-            style="@style/GreyJosefinsExtraSmallTextStyle"
+            style="@style/GreyExtraSmallTextStyle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/spacing_extra_small"
@@ -130,7 +130,7 @@
 
         <TextView
             android:id="@+id/tv_item_session_live_predining_orders_title"
-            style="@style/GreyJosefinsExtraSmallTextStyle"
+            style="@style/GreyExtraSmallTextStyle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/spacing_extra_small"
@@ -142,7 +142,7 @@
 
         <TextView
             android:id="@+id/tv_item_session_live_predining_diners"
-            style="@style/GreyJosefinsExtraSmallTextStyle"
+            style="@style/GreyExtraSmallTextStyle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             app:layout_constraintBottom_toBottomOf="@id/cv_home_session_live_predining_restaurant"
@@ -153,7 +153,7 @@
 
         <TextView
             android:id="@+id/tv_item_session_live_predining_orders"
-            style="@style/GreyJosefinsExtraSmallTextStyle"
+            style="@style/GreyExtraSmallTextStyle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             app:layout_constraintBottom_toBottomOf="@id/tv_item_session_live_predining_diners"
@@ -164,7 +164,7 @@
 
         <TextView
             android:id="@+id/tv_item_session_live_predining_amount_title"
-            style="@style/GreyJosefinsExtraSmallTextStyle"
+            style="@style/GreyExtraSmallTextStyle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginBottom="@dimen/spacing_tiny"
@@ -176,7 +176,7 @@
 
         <TextView
             android:id="@+id/tv_item_session_live_predining_amount"
-            style="@style/GreyJosefinsExtraSmallTextStyle"
+            style="@style/GreyExtraSmallTextStyle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             app:layout_constraintStart_toEndOf="@id/tv_item_session_live_predining_amount_title"
@@ -185,7 +185,7 @@
 
         <TextView
             android:id="@+id/tv_item_session_live_predining_session_id_title"
-            style="@style/GreyJosefinsExtraSmallTextStyle"
+            style="@style/GreyExtraSmallTextStyle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="@dimen/spacing_normal"
@@ -198,7 +198,7 @@
 
         <TextView
             android:id="@+id/tv_item_session_live_predining_session_id"
-            style="@style/GreyJosefinsExtraSmallTextStyle"
+            style="@style/GreyExtraSmallTextStyle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textColor="@color/pinkish_grey"
@@ -209,7 +209,7 @@
 
         <TextView
             android:id="@+id/tv_item_session_live_predining_call"
-            style="@style/GreyJosefinsSmallTextStyle"
+            style="@style/GreySmallTextStyle"
             android:layout_width="wrap_content"
             android:layout_height="@dimen/button_height_tiny"
             android:layout_marginEnd="@dimen/spacing_extra_small"
@@ -228,7 +228,7 @@
 
         <TextView
             android:id="@+id/tv_item_session_live_predining_navigate"
-            style="@style/GreyJosefinsSmallTextStyle"
+            style="@style/GreySmallTextStyle"
             android:layout_width="wrap_content"
             android:layout_height="@dimen/button_height_tiny"
             android:layout_marginEnd="@dimen/spacing_normal"

@@ -4,6 +4,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
+import com.checkin.app.checkin.Account.AccountUtil
 import com.checkin.app.checkin.Home.fragment.ActiveLiveSessionViewHolder
 import com.checkin.app.checkin.Home.fragment.PreDiningLiveSessionViewHolder
 import com.checkin.app.checkin.Home.fragment.QsrLiveSessionViewHolder
@@ -25,7 +26,7 @@ class LiveSessionTrackerAdapter : RecyclerView.Adapter<LiveSessionViewHolder<Liv
     override fun getItemViewType(position: Int): Int = mSessionsData[position].let {
         when (it) {
             is ScheduledLiveSessionDetailModel -> if (it.isPreDining) R.layout.item_home_session_live_predining else R.layout.item_home_session_live_qsr
-            is ActiveLiveSessionDetailModel -> 0 // TODO active session design
+            is ActiveLiveSessionDetailModel -> R.layout.item_home_session_live_active
         }
     }
 
@@ -44,4 +45,7 @@ class LiveSessionTrackerAdapter : RecyclerView.Adapter<LiveSessionViewHolder<Liv
     }
 }
 
-abstract class LiveSessionViewHolder<in T : LiveSessionDetail>(itemView: View) : BaseViewHolder<T>(itemView)
+abstract class LiveSessionViewHolder<in T : LiveSessionDetail>(itemView: View) : BaseViewHolder<T>(itemView) {
+    val username: String
+        get() = AccountUtil.getUsername(itemView.context)
+}

@@ -2,7 +2,6 @@ package com.checkin.app.checkin.Home.fragment
 
 import android.content.Intent
 import android.net.Uri
-import android.preference.PreferenceManager
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
@@ -14,11 +13,60 @@ import com.checkin.app.checkin.Home.LiveSessionViewHolder
 import com.checkin.app.checkin.Home.model.ActiveLiveSessionDetailModel
 import com.checkin.app.checkin.Home.model.ScheduledLiveSessionDetailModel
 import com.checkin.app.checkin.R
-import com.checkin.app.checkin.Utility.Constants
 import com.checkin.app.checkin.Utility.Utils
 
 class ActiveLiveSessionViewHolder(itemView: View) : LiveSessionViewHolder<ActiveLiveSessionDetailModel>(itemView) {
+    @BindView(R.id.container_home_session_live_active_call_waiter)
+    internal lateinit var containerCallWaiter: ViewGroup
+    @BindView(R.id.container_home_session_live_active_menu)
+    internal lateinit var containerMenu: ViewGroup
+    @BindView(R.id.tv_home_session_live_active_message)
+    internal lateinit var tvMessage: TextView
+    @BindView(R.id.im_home_session_live_active_logo)
+    internal lateinit var imRestaurantLogo: ImageView
+    @BindView(R.id.tv_home_session_live_active_status)
+    internal lateinit var tvStatus: TextView
+    @BindView(R.id.tv_home_session_live_active_name)
+    internal lateinit var tvRestaurantName: TextView
+    @BindView(R.id.tv_home_session_live_order_new_count)
+    internal lateinit var tvNewCount: TextView
+    @BindView(R.id.tv_home_session_live_order_progress_count)
+    internal lateinit var tvProgressCount: TextView
+    @BindView(R.id.tv_home_session_live_order_done_count)
+    internal lateinit var tvDoneCount: TextView
+    @BindView(R.id.tv_home_session_live_active_promo_name)
+    internal lateinit var tvPromoName: TextView
+
+    private var mData: ActiveLiveSessionDetailModel? = null
+
+    init {
+        ButterKnife.bind(this, itemView)
+
+        containerCallWaiter.setOnClickListener {
+            mData?.let {
+                Utils.toast(itemView.context, "TODO: call waiter")
+            }
+        }
+
+        containerMenu.setOnClickListener {
+            mData?.let {
+                Utils.toast(itemView.context, "TODO: open menu")
+            }
+        }
+    }
+
     override fun bindData(data: ActiveLiveSessionDetailModel) {
+        mData = data
+
+        tvMessage.text = itemView.context.getString(R.string.format_live_session_qsr_message).format(username)
+        tvRestaurantName.text = data.restaurant.name
+        Utils.loadImageOrDefault(imRestaurantLogo, data.restaurant.logo, R.drawable.cover_restaurant_unknown)
+        data.offers.getOrNull(0)?.let {
+            tvPromoName.text = Utils.fromHtml(it.name)
+        }
+        tvNewCount.text = data.newOrdersCount.toString()
+        tvDoneCount.text = data.doneOrdersCount.toString()
+        tvProgressCount.text = data.progressOrdersCount.toString()
     }
 }
 
@@ -59,11 +107,9 @@ class QsrLiveSessionViewHolder(itemView: View) : LiveSessionViewHolder<Scheduled
     override fun bindData(data: ScheduledLiveSessionDetailModel) {
         mData = data
 
-        val username = PreferenceManager.getDefaultSharedPreferences(itemView.context)
-                .getString(Constants.SP_USER_PROFILE_NAME, "")
-        tvAmount.text = Utils.formatCurrencyAmount(itemView.context, data.paidAmount)
+        tvAmount.text = Utils.formatCurrencyAmount(itemView.context, data.amount)
         tvSessionStatus.text = data.scheduled.status.repr
-        tvMessage.text = itemView.context.getString(R.string.format_live_session_qsr_message).format(username)
+        tvMessage.text = itemView.context.getString(R.string.format_live_session_active_message).format(username)
         tvRestaurantName.text = data.restaurant.name
         Utils.loadImageOrDefault(imRestaurantLogo, data.restaurant.logo, R.drawable.cover_restaurant_unknown)
         tvSessionId.text = data.formatSessionId
@@ -134,12 +180,10 @@ class PreDiningLiveSessionViewHolder(itemView: View) : LiveSessionViewHolder<Sch
 
     override fun bindData(data: ScheduledLiveSessionDetailModel) {
         mData = data
-        val username = PreferenceManager.getDefaultSharedPreferences(itemView.context)
-                .getString(Constants.SP_USER_PROFILE_NAME, "")
 
         tvOrders.text = data.countOrders.toString()
         tvDiners.text = data.scheduled.countPeople.toString()
-        tvAmount.text = Utils.formatCurrencyAmount(itemView.context, data.paidAmount)
+        tvAmount.text = Utils.formatCurrencyAmount(itemView.context, data.amount)
         tvSessionStatus.text = data.scheduled.status.repr
         tvMessage.text = itemView.context.getString(R.string.format_live_session_predining_message).format(username)
         tvRestaurantName.text = if (data.restaurant.locality != null) data.restaurant.name + " - " + data.restaurant.locality else data.restaurant.name

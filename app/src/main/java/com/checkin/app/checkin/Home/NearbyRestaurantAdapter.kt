@@ -108,7 +108,7 @@ class NearbyRestaurantAdapter : RecyclerView.Adapter<BaseViewHolder<Any>>() {
             imDistance.setImageResource(if (data.distance > 10) R.drawable.ic_distance_vehicle else R.drawable.ic_distance_walking)
 
             tvRestaurantName.text = data.locality.let {
-                if (it != null) data.name + "-" + data.locality
+                if (it != null) data.name + " - " + data.locality
                 else data.name
             }
 

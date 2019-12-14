@@ -15,7 +15,7 @@
 
         <TextView
             android:id="@+id/tv_item_session_live_qsr_session_id_title"
-            style="@style/GreyJosefinsExtraSmallTextStyle"
+            style="@style/GreyExtraSmallTextStyle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Order ID: "
@@ -26,7 +26,7 @@
 
         <TextView
             android:id="@+id/tv_item_session_live_qsr_session_id"
-            style="@style/GreyJosefinsExtraSmallTextStyle"
+            style="@style/GreyExtraSmallTextStyle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/spacing_small"
@@ -39,7 +39,7 @@
 
         <TextView
             android:id="@+id/tv_item_session_live_qsr_amount_title"
-            style="@style/GreyJosefinsExtraSmallTextStyle"
+            style="@style/GreyExtraSmallTextStyle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Amount Paid: "
@@ -49,7 +49,7 @@
 
         <TextView
             android:id="@+id/tv_item_session_live_qsr_amount"
-            style="@style/GreyJosefinsExtraSmallTextStyle"
+            style="@style/GreyExtraSmallTextStyle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/spacing_extra_tiny"
@@ -59,7 +59,7 @@
 
         <TextView
             android:id="@+id/tv_home_session_live_qsr_message"
-            style="@style/GreyJosefinsSmallTextStyle"
+            style="@style/GreySmallTextStyle"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="@dimen/spacing_normal"
@@ -90,7 +90,7 @@
 
             <TextView
                 android:id="@+id/tv_home_session_live_qsr_status"
-                style="@style/WhiteJosefinsExtraSmallTextStyle"
+                style="@style/WhiteExtraSmallTextStyle"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_gravity="bottom"
@@ -103,7 +103,7 @@
 
         <TextView
             android:id="@+id/tv_home_session_live_qsr_orders_title"
-            style="@style/GreyJosefinsExtraSmallTextStyle"
+            style="@style/GreyExtraSmallTextStyle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="@dimen/spacing_normal"
@@ -114,7 +114,7 @@
 
         <TextView
             android:id="@+id/tv_home_session_live_qsr_orders_summary"
-            style="@style/GreyJosefinsSmallTextStyle"
+            style="@style/GreySmallTextStyle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             app:layout_constraintEnd_toEndOf="parent"
@@ -148,7 +148,7 @@
 
             <TextView
                 android:id="@+id/tv_home_session_live_qsr_order_status"
-                style="@style/GreyJosefinsSmallTextStyle"
+                style="@style/GreySmallTextStyle"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_vertical"
@@ -171,7 +171,7 @@
 
             <TextView
                 android:id="@+id/tv_home_session_live_order_more"
-                style="@style/WhiteJosefinsTextStyle"
+                style="@style/WhiteTextStyle"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Order More"
@@ -197,7 +197,7 @@
 
         <TextView
             android:id="@+id/tv_home_session_live_qsr_name"
-            style="@style/GreyJosefinsSmallTextStyle"
+            style="@style/GreySmallTextStyle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             app:layout_constraintBottom_toTopOf="@id/container_home_session_live_qsr_order_more"

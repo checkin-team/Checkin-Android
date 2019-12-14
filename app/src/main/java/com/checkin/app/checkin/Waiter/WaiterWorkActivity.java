@@ -453,7 +453,7 @@ public class WaiterWorkActivity extends BaseAccountActivity implements
         private List<WaiterTableModel> mTableList = new ArrayList<>();
 
         WaiterTablePagerAdapter(FragmentManager fm) {
-            super(fm, BEHAVIOR_RESUME_ONLY_CURRENT_FRAGMENT);
+            super(fm, BEHAVIOR_SET_USER_VISIBLE_HINT);
         }
 
         @NotNull

@@ -33,7 +33,7 @@
 
             <TextView
                 android:id="@+id/tv_restaurant_banner_distance"
-                style="@style/GreyJosefinsSmallTextStyle"
+                style="@style/GreySmallTextStyle"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 app:layout_constraintBottom_toBottomOf="@id/im_restaurant_banner_distance"
@@ -43,7 +43,7 @@
 
             <TextView
                 android:id="@+id/tv_restaurant_banner_count_checkins"
-                style="@style/WhiteJosefinsExtraSmallTextStyle"
+                style="@style/WhiteExtraSmallTextStyle"
                 android:layout_width="0dp"
                 android:layout_height="@dimen/button_height_tiny"
                 android:layout_marginBottom="@dimen/spacing_tiny"
@@ -60,7 +60,7 @@
 
             <TextView
                 android:id="@+id/tv_restaurant_banner_navigate"
-                style="@style/GreyJosefinsSmallTextStyle"
+                style="@style/GreySmallTextStyle"
                 android:layout_width="wrap_content"
                 android:layout_height="@dimen/button_height_tiny"
                 android:layout_marginEnd="@dimen/spacing_medium"
@@ -90,7 +90,7 @@
 
             <TextView
                 android:id="@+id/tv_restaurant_banner_cuisines"
-                style="@style/GreyJosefinsSmallTextStyle"
+                style="@style/GreySmallTextStyle"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="@dimen/spacing_extra_small"
@@ -141,7 +141,7 @@
 
                     <TextView
                         android:id="@+id/tv_restaurant_banner_offer_special"
-                        style="@style/GreyJosefinsExtraSmallTextStyle"
+                        style="@style/GreyExtraSmallTextStyle"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginStart="@dimen/spacing_extra_tiny"
@@ -151,7 +151,7 @@
 
                     <TextView
                         android:id="@+id/tv_restaurant_banner_offer_summary"
-                        style="@style/GreyJosefinsSmallTextStyle"
+                        style="@style/GreySmallTextStyle"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_below="@id/tv_restaurant_banner_offer_special"
@@ -161,7 +161,7 @@
 
                     <TextView
                         android:id="@+id/tv_restaurant_banner_offer_code"
-                        style="@style/GreyJosefinsExtraSmallTextStyle"
+                        style="@style/GreyExtraSmallTextStyle"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_below="@id/tv_restaurant_banner_offer_summary"
@@ -181,7 +181,7 @@
 
             <TextView
                 android:id="@+id/tv_restaurant_banner_name_locality"
-                style="@style/WhiteJosefinsTextStyle"
+                style="@style/WhiteTextStyle"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignParentBottom="true"

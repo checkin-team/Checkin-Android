@@ -6,7 +6,7 @@
         <item name="colorPrimary">@color/primary_red</item>
         <item name="colorAccent">@color/colorAccent</item>
         <item name="actionBarStyle">@style/AppTheme.AppBarOverlay</item>
-        <item name="android:fontFamily">@font/arial_rounded_mt_bold</item>
+        <item name="android:fontFamily">@font/josefinsans_regular</item>
     </style>
 
     <style name="MyCheckBox" parent="Theme.AppCompat.Light">
@@ -47,8 +47,8 @@
     <style name="AppThemeWithBar" parent="Theme.AppCompat.Light">
         <item name="colorPrimary">@color/primary_red</item>
         <item name="colorAccent">@color/colorAccent</item>
-        <item name="android:fontFamily">@font/arial_rounded_mt_bold</item>
-        <item name="fontFamily">@font/arial_rounded_mt_bold</item>
+        <item name="android:fontFamily">@font/josefinsans_regular</item>
+        <item name="fontFamily">@font/josefinsans_regular</item>
         <item name="actionBarStyle">@style/RougeActionBarTheme</item>
     </style>
 
@@ -82,19 +82,19 @@
     </style>
 
     <style name="GreyTitleStyle" parent="TextAppearance.AppCompat">
-        <item name="android:fontFamily">@font/arial_rounded_mt_bold</item>
+        <item name="android:fontFamily">@font/josefinsans_regular</item>
         <item name="android:textColor">@color/brownish_grey</item>
         <item name="android:textSize">@dimen/font_larger</item>
     </style>
 
     <style name="GreyHeadingStyle" parent="TextAppearance.AppCompat">
-        <item name="android:fontFamily">@font/arial_rounded_mt_bold</item>
+        <item name="android:fontFamily">@font/josefinsans_regular</item>
         <item name="android:textColor">@color/brownish_grey</item>
         <item name="android:textSize">@dimen/font_heading</item>
     </style>
 
     <style name="WhiteTitleStyle" parent="TextAppearance.AppCompat">
-        <item name="android:fontFamily">@font/arial_rounded_mt_bold</item>
+        <item name="android:fontFamily">@font/josefinsans_regular</item>
         <item name="android:textColor">@color/white</item>
         <item name="android:textSize">@dimen/font_larger</item>
     </style>
@@ -146,13 +146,13 @@
     </style>
 
     <style name="InputLabelGreyLargeStyle" parent="TextAppearance.AppCompat">
-        <item name="android:fontFamily">@font/arial_rounded_mt_bold</item>
+        <item name="android:fontFamily">@font/josefinsans_regular</item>
         <item name="android:textColor">@color/pinkish_grey</item>
         <item name="android:textSize">@dimen/font_large</item>
     </style>
 
     <style name="InputLabelRougeSmallStyle" parent="TextAppearance.AppCompat">
-        <item name="android:fontFamily">@font/arial_rounded_mt_bold</item>
+        <item name="android:fontFamily">@font/josefinsans_regular</item>
         <item name="android:textColor">@color/primary_red</item>
         <item name="android:textSize">@dimen/font_normal</item>
     </style>
@@ -197,7 +197,7 @@
 
     <style name="WhiteTextStyle" parent="TextAppearance.AppCompat">
         <item name="android:textColor">@color/white</item>
-        <item name="android:fontFamily">@font/arial_rounded_mt_bold</item>
+        <item name="android:fontFamily">@font/josefinsans_regular</item>
         <item name="android:textSize">@dimen/font_normal</item>
     </style>
 
@@ -205,25 +205,17 @@
         <item name="android:textSize">@dimen/font_small</item>
     </style>
 
-    <style name="WhiteJosefinsTextStyle" parent="WhiteTextStyle">
-        <item name="android:fontFamily">@font/josefinsans_regular</item>
-    </style>
-
-    <style name="WhiteJosefinsExtraSmallTextStyle" parent="WhiteJosefinsTextStyle">
+    <style name="WhiteExtraSmallTextStyle" parent="WhiteTextStyle">
         <item name="android:textSize">@dimen/font_extra_small</item>
     </style>
 
-    <style name="GreyJosefinsSmallTextStyle" parent="GreySmallTextStyle">
-        <item name="android:fontFamily">@font/josefinsans_regular</item>
-    </style>
-
-    <style name="GreyJosefinsExtraSmallTextStyle" parent="GreyJosefinsSmallTextStyle">
+    <style name="GreyExtraSmallTextStyle" parent="GreyTextStyle">
         <item name="android:textSize">@dimen/font_extra_small</item>
     </style>
 
     <style name="GreyTextStyle" parent="TextAppearance.AppCompat">
         <item name="android:textColor">@color/brownish_grey</item>
-        <item name="android:fontFamily">@font/arial_rounded_mt_bold</item>
+        <item name="android:fontFamily">@font/josefinsans_regular</item>
         <item name="android:textSize">@dimen/font_normal</item>
     </style>
 
@@ -239,7 +231,7 @@
     <style name="GreyLinkStyle" parent="TextAppearance.AppCompat">
         <item name="android:textColor">@color/brownish_grey</item>
         <item name="android:textSize">@dimen/font_small</item>
-        <item name="android:fontFamily">@font/arial_rounded_mt_bold</item>
+        <item name="android:fontFamily">@font/josefinsans_regular</item>
         <item name="android:textAllCaps">false</item>
     </style>
 
@@ -249,7 +241,7 @@
 
     <style name="AquaBlueTextStyle" parent="TextAppearance.AppCompat">
         <item name="android:textColor">@color/aqua_blue</item>
-        <item name="android:fontFamily">@font/arial_rounded_mt_bold</item>
+        <item name="android:fontFamily">@font/josefinsans_regular</item>
         <item name="android:textSize">@dimen/font_normal</item>
     </style>
 
@@ -278,7 +270,7 @@
     </style>
 
     <style name="TextShadowCover" parent="TextAppearance.AppCompat">
-        <item name="android:fontFamily">@font/arial_rounded_mt_bold</item>
+        <item name="android:fontFamily">@font/josefinsans_regular</item>
         <item name="android:textColor">@color/white</item>
         <item name="android:shadowColor">@color/white</item>
         <item name="android:shadowRadius">10</item>
@@ -330,7 +322,7 @@
     </style>
 
     <style name="ButtonLargeGreyTitle" parent="Widget.AppCompat.Button">
-        <item name="android:fontFamily">@font/arial_rounded_mt_bold</item>
+        <item name="android:fontFamily">@font/josefinsans_regular</item>
         <item name="android:background">@drawable/bordered_card_brownish_grey</item>
         <item name="android:textColor">@color/white</item>
         <item name="android:paddingStart">@dimen/spacing_small</item>
@@ -343,7 +335,7 @@
     </style>
 
     <style name="ButtonSmallGreyText" parent="Widget.AppCompat.Button">
-        <item name="android:fontFamily">@font/arial_rounded_mt_bold</item>
+        <item name="android:fontFamily">@font/josefinsans_regular</item>
         <item name="android:background">@drawable/bordered_card_brownish_grey</item>
         <item name="android:textColor">@color/white</item>
         <item name="android:paddingStart">@dimen/spacing_small</item>
@@ -361,7 +353,7 @@
         <item name="android:paddingTop">@dimen/spacing_extra_tiny</item>
         <item name="android:paddingEnd">@dimen/spacing_tiny</item>
         <item name="android:paddingBottom">@dimen/spacing_extra_tiny</item>
-        <item name="android:fontFamily">@font/arial_rounded_mt_bold</item>
+        <item name="android:fontFamily">@font/josefinsans_regular</item>
         <item name="android:textSize">@dimen/font_normal</item>
         <item name="android:textColor">@color/brownish_grey</item>
     </style>
