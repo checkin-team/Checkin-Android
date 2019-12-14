@@ -46,7 +46,7 @@ class ActiveSessionModel {
     val shopPk: Int
         get() = Integer.valueOf(restaurant.pk!!)
 
-    fun addCustomer(customerModel: SessionCustomerModel) = customers.add(customerModel)
+    fun addCustomer(customerModel: SessionCustomerModel) = customers.add(0, customerModel)
 
     fun formatBill(context: Context) = "Total: ${Utils.formatCurrencyAmount(context, bill)}"
 }
