@@ -167,29 +167,6 @@
 
             </FrameLayout>-->
 
-            <ImageView
-                android:id="@+id/container_home_session_active_status"
-                style="@style/LogoImageStyle"
-                android:layout_above="@+id/container_bottom_bar"
-                android:layout_alignParentEnd="true"
-                android:layout_gravity="bottom|end"
-                android:layout_marginEnd="@dimen/spacing_tiny"
-                android:background="@drawable/ic_floating_oval"
-                android:padding="16dp"
-                android:src="@drawable/ic_location_marker_red"
-                android:visibility="gone" />
-
-            <ImageView
-                android:id="@+id/container_home_session_waiting_status"
-                style="@style/LogoImageStyle"
-                android:layout_above="@+id/container_bottom_bar"
-                android:layout_alignParentEnd="true"
-                android:layout_gravity="bottom|end"
-                android:layout_marginEnd="@dimen/spacing_tiny"
-                android:background="@drawable/ic_floating_oval"
-                android:padding="16dp"
-                android:src="@drawable/ic_dining_qr_busy" />
-
             <FrameLayout
                 android:id="@+id/container_bottom_bar"
                 android:layout_width="match_parent"
@@ -249,7 +226,6 @@
                 android:elevation="@dimen/spacing_elevation_fix_extreme_tiny"
                 android:src="@drawable/ic_navigation_white"
                 android:tint="@color/brownish_grey" />
-
 
         </RelativeLayout>
 

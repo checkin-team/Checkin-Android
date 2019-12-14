@@ -2,8 +2,8 @@ ext.versions = [
         minSdk            : 17,
         compileSdk        : 28,
         buildTools        : '28.0.3',
-        publishVersion    : '0.8.6',
-        publishVersionCode: 40,
+        publishVersion    : '0.8.6-dev',
+        publishVersionCode: 41,
 
         gradlePlugin      : '3.3.2',
         bintrayPlugin     : '0.8.1',
@@ -15,7 +15,7 @@ ext.versions = [
         objectBox         : '2.3.3',
         jackson           : '2.9.8',
         dagger            : '2.15',
-        butterknife       : '10.0.0',
+        butterknife       : '10.2.0',
         glide             : '4.8.0',
         retrofit          : '2.5.0'
 ]

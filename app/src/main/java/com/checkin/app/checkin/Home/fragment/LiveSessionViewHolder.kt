@@ -9,13 +9,15 @@ import android.widget.TextView
 import androidx.core.content.ContextCompat
 import butterknife.BindView
 import butterknife.ButterKnife
+import com.checkin.app.checkin.Home.LiveSessionTrackerInteraction
 import com.checkin.app.checkin.Home.LiveSessionViewHolder
 import com.checkin.app.checkin.Home.model.ActiveLiveSessionDetailModel
+import com.checkin.app.checkin.Home.model.LiveSessionDetailModel
 import com.checkin.app.checkin.Home.model.ScheduledLiveSessionDetailModel
 import com.checkin.app.checkin.R
 import com.checkin.app.checkin.Utility.Utils
 
-class ActiveLiveSessionViewHolder(itemView: View) : LiveSessionViewHolder<ActiveLiveSessionDetailModel>(itemView) {
+class ActiveLiveSessionViewHolder(itemView: View, interactionListener: LiveSessionTrackerInteraction) : LiveSessionViewHolder<ActiveLiveSessionDetailModel>(itemView, interactionListener) {
     @BindView(R.id.container_home_session_live_active_call_waiter)
     internal lateinit var containerCallWaiter: ViewGroup
     @BindView(R.id.container_home_session_live_active_menu)
@@ -50,15 +52,17 @@ class ActiveLiveSessionViewHolder(itemView: View) : LiveSessionViewHolder<Active
 
         containerMenu.setOnClickListener {
             mData?.let {
-                Utils.toast(itemView.context, "TODO: open menu")
+                interactionListener.onOpenRestaurantMenu(it.restaurant)
             }
         }
     }
 
+    override fun getData(): LiveSessionDetailModel? = mData
+
     override fun bindData(data: ActiveLiveSessionDetailModel) {
         mData = data
 
-        tvMessage.text = itemView.context.getString(R.string.format_live_session_qsr_message).format(username)
+        tvMessage.text = itemView.context.getString(R.string.format_live_session_active_message).format(username)
         tvRestaurantName.text = data.restaurant.name
         Utils.loadImageOrDefault(imRestaurantLogo, data.restaurant.logo, R.drawable.cover_restaurant_unknown)
         data.offers.getOrNull(0)?.let {
@@ -70,7 +74,7 @@ class ActiveLiveSessionViewHolder(itemView: View) : LiveSessionViewHolder<Active
     }
 }
 
-class QsrLiveSessionViewHolder(itemView: View) : LiveSessionViewHolder<ScheduledLiveSessionDetailModel>(itemView) {
+class QsrLiveSessionViewHolder(itemView: View, interactionListener: LiveSessionTrackerInteraction) : LiveSessionViewHolder<ScheduledLiveSessionDetailModel>(itemView, interactionListener) {
     @BindView(R.id.im_home_session_live_qsr_logo)
     internal lateinit var imRestaurantLogo: ImageView
     @BindView(R.id.container_home_session_live_qsr_order_more)
@@ -99,17 +103,19 @@ class QsrLiveSessionViewHolder(itemView: View) : LiveSessionViewHolder<Scheduled
 
         containerOrderMore.setOnClickListener {
             mData?.let {
-                Utils.toast(itemView.context, "TODO: Order More!")
+                interactionListener.onOpenRestaurantMenu(it.restaurant)
             }
         }
     }
+
+    override fun getData(): LiveSessionDetailModel? = mData
 
     override fun bindData(data: ScheduledLiveSessionDetailModel) {
         mData = data
 
         tvAmount.text = Utils.formatCurrencyAmount(itemView.context, data.amount)
         tvSessionStatus.text = data.scheduled.status.repr
-        tvMessage.text = itemView.context.getString(R.string.format_live_session_active_message).format(username)
+        tvMessage.text = itemView.context.getString(R.string.format_live_session_qsr_message).format(username)
         tvRestaurantName.text = data.restaurant.name
         Utils.loadImageOrDefault(imRestaurantLogo, data.restaurant.logo, R.drawable.cover_restaurant_unknown)
         tvSessionId.text = data.formatSessionId
@@ -125,7 +131,7 @@ class QsrLiveSessionViewHolder(itemView: View) : LiveSessionViewHolder<Scheduled
     }
 }
 
-class PreDiningLiveSessionViewHolder(itemView: View) : LiveSessionViewHolder<ScheduledLiveSessionDetailModel>(itemView) {
+class PreDiningLiveSessionViewHolder(itemView: View, interactionListener: LiveSessionTrackerInteraction) : LiveSessionViewHolder<ScheduledLiveSessionDetailModel>(itemView, interactionListener) {
     @BindView(R.id.im_home_session_live_predining_logo)
     internal lateinit var imRestaurantLogo: ImageView
     @BindView(R.id.im_item_session_live_predining_share)
@@ -177,6 +183,8 @@ class PreDiningLiveSessionViewHolder(itemView: View) : LiveSessionViewHolder<Sch
 
         imShare.setOnClickListener { Utils.toast(itemView.context, "TODO: Share!") }
     }
+
+    override fun getData(): LiveSessionDetailModel? = mData
 
     override fun bindData(data: ScheduledLiveSessionDetailModel) {
         mData = data

@@ -1,5 +1,6 @@
 package com.checkin.app.checkin.Home.fragment
 
+import android.content.Intent
 import android.os.Bundle
 import android.view.View
 import android.view.ViewGroup
@@ -11,11 +12,15 @@ import androidx.viewpager2.widget.ViewPager2
 import butterknife.BindView
 import com.checkin.app.checkin.Data.Resource
 import com.checkin.app.checkin.Home.*
+import com.checkin.app.checkin.Home.model.LiveSessionDetailModel
+import com.checkin.app.checkin.Home.model.SessionType
 import com.checkin.app.checkin.Misc.BaseFragment
 import com.checkin.app.checkin.R
+import com.checkin.app.checkin.Shop.RestaurantLocationModel
 import com.checkin.app.checkin.Utility.pass
+import com.checkin.app.checkin.session.activesession.ActiveSessionActivity
 
-class UserHomeFragment : BaseFragment() {
+class UserHomeFragment : BaseFragment(), LiveSessionTrackerInteraction {
     @BindView(R.id.rv_home_suggested_dishes)
     internal lateinit var rvSuggestedDishes: RecyclerView
     @BindView(R.id.rv_home_nearby_restaurants)
@@ -42,7 +47,7 @@ class UserHomeFragment : BaseFragment() {
 
         mRestAdapter = NearbyRestaurantAdapter()
         mPopularDishAdapter = PopularDishesAdapter()
-        mLiveSessionAdapter = LiveSessionTrackerAdapter()
+        mLiveSessionAdapter = LiveSessionTrackerAdapter(this)
 
         vpLiveSession.adapter = mLiveSessionAdapter
 
@@ -90,6 +95,21 @@ class UserHomeFragment : BaseFragment() {
     override fun updateScreen() {
         super.updateScreen()
         mLiveSessionViewModel.updateResults()
+    }
+
+    override fun onOpenSessionDetails(session: LiveSessionDetailModel) {
+        when (session.sessionType) {
+            SessionType.DINING -> startActivity(Intent(requireContext(), ActiveSessionActivity::class.java))
+            else -> pass
+        }
+    }
+
+    override fun onOpenRestaurantProfile(restaurant: RestaurantLocationModel) {
+        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+    }
+
+    override fun onOpenRestaurantMenu(restaurant: RestaurantLocationModel) {
+        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
     }
 
     companion object {

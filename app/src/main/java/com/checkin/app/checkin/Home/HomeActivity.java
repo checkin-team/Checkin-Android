@@ -68,10 +68,6 @@ public class HomeActivity extends BaseAccountActivity implements NavigationView.
     DynamicSwipableViewPager vpHome;
 //    @BindView(R.id.container_home_session_status)
 //    ViewGroup vSessionStatus;
-    @BindView(R.id.container_home_session_active_status)
-    ImageView vSessionActiveStatus;
-    @BindView(R.id.container_home_session_waiting_status)
-    ImageView vSessionWaitingStatus;
     @BindView(R.id.sr_home)
     SwipeRefreshLayout swipeRefreshLayout;
 //    @BindView(R.id.tv_home_session_active_status)
@@ -92,7 +88,7 @@ public class HomeActivity extends BaseAccountActivity implements NavigationView.
             switch (message.getType()) {
                 case USER_SESSION_ADDED_BY_OWNER:
                     mViewModel.updateResults();
-                    onSessionStatusClick();
+                    openActiveSession();
                     break;
                 case SHOP_MEMBER_ADDED:
                     getAccountViewModel().updateResults();
@@ -179,7 +175,7 @@ public class HomeActivity extends BaseAccountActivity implements NavigationView.
             if (resource == null) return;
             if (resource.getStatus() == Resource.Status.SUCCESS && resource.getData() != null) {
                 mViewModel.updateResults();
-                onSessionStatusClick();
+                openActiveSession();
                 Utils.toast(this, resource.getData().getDetail());
             } else if (resource.getStatus() != Resource.Status.LOADING) {
                 Utils.toast(this, resource.getMessage());
@@ -190,19 +186,14 @@ public class HomeActivity extends BaseAccountActivity implements NavigationView.
                 return;
 
             if (resource.getStatus() == Resource.Status.SUCCESS && resource.getData() != null) {
-                sessionActiveStatus();
-//                tvSessionStatus.setText(resource.getData().getLiveStatus());
-
                 Intent serviceIntent = new Intent(this, ActiveSessionNotificationService.class);
                 serviceIntent.setAction(Constants.SERVICE_ACTION_FOREGROUND_START);
                 serviceIntent.putExtra(ACTIVE_RESTAURANT_DETAIL, resource.getData().getRestaurant());
                 serviceIntent.putExtra(ACTIVE_SESSION_PK, resource.getData().getPk());
                 startService(serviceIntent);
             } else if (resource.getStatus() == Resource.Status.ERROR_NOT_FOUND) {
-                sessionInactive();
                 ActiveSessionNotificationService.clearNotification(getApplicationContext());
             } else if (resource.getProblem() != null && resource.getProblem().getErrorCode() == ProblemModel.ERROR_CODE.SESSION_USER_PENDING_MEMBER) {
-                sessionWaitingStatus();
 //                tvSessionWaitQRBusy.setText(resource.getProblem().getDetail());
             }
         });
@@ -211,32 +202,11 @@ public class HomeActivity extends BaseAccountActivity implements NavigationView.
             if (objectNodeResource == null)
                 return;
             if (objectNodeResource.getStatus() == Resource.Status.SUCCESS) {
-                sessionInactive();
             }
         });
 
         mViewModel.fetchSessionStatus();
         mViewModel.fetchNearbyRestaurants();
-    }
-
-    private void sessionInactive() {
-//        vSessionStatus.setVisibility(View.GONE);
-        vSessionActiveStatus.setVisibility(View.GONE);
-        vSessionWaitingStatus.setVisibility(View.GONE);
-    }
-
-    private void sessionActiveStatus() {
-//        vSessionStatus.setVisibility(View.GONE);
-        vSessionActiveStatus.setVisibility(View.VISIBLE);
-        vSessionWaitingStatus.setVisibility(View.GONE);
-//        vSessionStatus.setEnabled(true);
-    }
-
-    private void sessionWaitingStatus() {
-//        vSessionStatus.setVisibility(View.GONE);
-        vSessionActiveStatus.setVisibility(View.GONE);
-        vSessionWaitingStatus.setVisibility(View.VISIBLE);
-//        vSessionStatus.setEnabled(false);
     }
 
     private void resetUserIcon(){
@@ -261,20 +231,6 @@ public class HomeActivity extends BaseAccountActivity implements NavigationView.
     public void onViewClicked() {
         drawerLayout.openDrawer(GravityCompat.START);
     }
-
-    @OnClick(R.id.container_home_session_active_status)
-    public void onSessionStatusClick() {
-//        vSessionStatus.setEnabled(false);
-        startActivity(new Intent(this, ActiveSessionActivity.class));
-    }
-
-    /*@OnClick(R.id.im_home_session_wait_cancel)
-    public void onCancelClicked() {
-        AlertDialog.Builder builder = new AlertDialog.Builder(this).setTitle("Are you sure you want to cancel the request?")
-                .setPositiveButton("Ok", (dialog, which) -> mViewModel.cancelUserWaitingDineIn())
-                .setNegativeButton("Cancel", (dialog, which) -> dialog.dismiss());
-        builder.show();
-    }*/
 
     @Override
     protected int getDrawerRootId() {
@@ -331,6 +287,10 @@ public class HomeActivity extends BaseAccountActivity implements NavigationView.
         };
 
         MessageUtils.registerLocalReceiver(this, mReceiver, types);
+    }
+
+    protected void openActiveSession() {
+        startActivity(new Intent(this, ActiveSessionActivity.class));
     }
 
     @Override

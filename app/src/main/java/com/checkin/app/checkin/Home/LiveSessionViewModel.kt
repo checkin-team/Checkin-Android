@@ -7,7 +7,7 @@ import androidx.lifecycle.Transformations
 import com.checkin.app.checkin.Data.BaseViewModel
 import com.checkin.app.checkin.Data.Resource
 import com.checkin.app.checkin.Home.model.ActiveLiveSessionDetailModel
-import com.checkin.app.checkin.Home.model.LiveSessionDetail
+import com.checkin.app.checkin.Home.model.LiveSessionDetailModel
 import com.checkin.app.checkin.Home.model.ScheduledLiveSessionDetailModel
 import com.checkin.app.checkin.session.SessionRepository
 
@@ -17,7 +17,7 @@ class LiveSessionViewModel(application: Application) : BaseViewModel(application
     private val mScheduledSessionData = createNetworkLiveData<List<ScheduledLiveSessionDetailModel>>()
     private val mActiveSessionData = createNetworkLiveData<ActiveLiveSessionDetailModel>()
 
-    private val mLiveSessionData = MediatorLiveData<Resource<List<LiveSessionDetail>>>().apply {
+    private val mLiveSessionData = MediatorLiveData<Resource<List<LiveSessionDetailModel>>>().apply {
         addSource(mScheduledSessionData) {
             it?.let { listResource ->
                 value = if (listResource.status == Resource.Status.SUCCESS && listResource.data != null) {
@@ -36,7 +36,7 @@ class LiveSessionViewModel(application: Application) : BaseViewModel(application
         }
     }
 
-    val liveSessionData: LiveData<Resource<List<LiveSessionDetail>>>
+    val liveSessionData: LiveData<Resource<List<LiveSessionDetailModel>>>
         get() = mLiveSessionData
 
     override fun updateResults() {
