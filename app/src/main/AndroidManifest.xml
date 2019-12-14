@@ -36,7 +36,7 @@
 
         <activity
             android:name=".Home.SplashActivity"
-            android:theme="@style/Theme.AppCompat.Light.NoActionBar"></activity>
+            android:theme="@style/Theme.AppCompat.Light.NoActionBar" />
 
         <activity-alias
             android:name="checkin.app.launcher"

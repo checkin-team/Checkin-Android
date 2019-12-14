@@ -12,12 +12,12 @@ buildscript {
         }
     }
     dependencies {
-        classpath 'com.android.tools.build:gradle:' + versions.gradlePlugin
-        classpath 'io.objectbox:objectbox-gradle-plugin:' + versions.objectBox
-        classpath 'com.google.gms:google-services:4.3.2'
+        classpath "com.android.tools.build:gradle:$versions.gradlePlugin"
+        classpath "io.objectbox:objectbox-gradle-plugin:$versions.objectBox"
+        classpath "com.google.gms:google-services:4.3.3"
         classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$versions.kotlin"
-        // Fabric for Crashlytics
-        classpath 'io.fabric.tools:gradle:1.26.1'
+        // Fabric Crashlytics plugin
+        classpath 'io.fabric.tools:gradle:1.31.2'
     }
 }
 

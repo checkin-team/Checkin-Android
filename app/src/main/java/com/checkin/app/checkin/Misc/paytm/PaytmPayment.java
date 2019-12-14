@@ -57,7 +57,7 @@ public abstract class PaytmPayment {
     }
 
     public static PaytmPGService getPaytmService() {
-        return Constants.INSTANCE.IS_RELEASE_BUILD() ? PaytmPGService.getProductionService() : PaytmPGService.getStagingService();
+        return Constants.INSTANCE.IS_RELEASE_BUILD() ? PaytmPGService.getProductionService() : PaytmPGService.getStagingService("");
     }
 
     protected abstract void onPaytmTransactionResponse(Bundle inResponse);

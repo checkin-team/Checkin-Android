@@ -69,7 +69,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginStart="@dimen/spacing_extra_small"
-                            android:fontFamily="@font/josefinsans_regular"
+                            android:fontFamily="@font/josefinsans"
                             android:gravity="top"
                             android:text="Bengaluru"
                             android:textColor="@color/aqua_blue"

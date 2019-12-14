@@ -22,7 +22,7 @@ object Converters {
         return null
     }
 
-    fun <T> getObjectFromJson(json: String, typeReference: TypeReference<*>): T? {
+    fun <T> getObjectFromJson(json: String, typeReference: TypeReference<T>): T? {
         var res: T?
         try {
             res = objectMapper.readValue<T>(json, typeReference)
@@ -37,7 +37,7 @@ object Converters {
     class ListConverter<T> : PropertyConverter<List<T>, String> {
         override fun convertToEntityProperty(databaseValue: String): List<T>? {
             val type = object : TypeReference<List<T>>() {}
-            return getObjectFromJson<List<T>>(databaseValue, type)
+            return getObjectFromJson(databaseValue, type)
         }
 
         override fun convertToDatabaseValue(entityProperty: List<T>): String {

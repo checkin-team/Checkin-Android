@@ -158,7 +158,7 @@
                     android:layout_height="wrap_content"
                     android:textColor="@color/brownish_grey"
                     android:layout_marginBottom="@dimen/spacing_small"
-                    android:fontFamily="@font/josefinsans_regular"
+                    android:fontFamily="@font/josefinsans"
                     android:text="Follow our Food and Travel Journey 🍔🍕✈⛵\n🎥: Content Creators\n📍: MIA / NYC / LA 🌎" />
 
                <!-- <View

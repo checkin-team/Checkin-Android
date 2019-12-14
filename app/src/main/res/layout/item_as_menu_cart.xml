@@ -50,7 +50,7 @@
                         android:layout_marginEnd="@dimen/spacing_small"
                         android:drawableEnd="@drawable/ic_setting"
                         android:drawablePadding="@dimen/spacing_tiny"
-                        android:fontFamily="@font/josefinsans_regular"
+                        android:fontFamily="@font/josefinsans"
                         android:gravity="start"
                         android:text="Customized"
                         android:visibility="gone" />

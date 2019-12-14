@@ -93,7 +93,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 style="@style/GreyTextStyle"
-                android:fontFamily="@font/josefinsans_regular"
+                android:fontFamily="@font/josefinsans"
                 android:text="Big Brewsky, Kormangla"/>
 
             <LinearLayout
@@ -112,7 +112,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     style="@style/GreySmallTextStyle"
-                    android:fontFamily="@font/josefinsans_regular"
+                    android:fontFamily="@font/josefinsans"
                     android:paddingStart="@dimen/spacing_tiny"
                     android:text="Days Remaining"/>
 
@@ -163,7 +163,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 style="@style/GreyTextStyle"
-                android:fontFamily="@font/josefinsans_regular"
+                android:fontFamily="@font/josefinsans"
                 android:text="Big Brewsky, Kormangla"/>
 
             <LinearLayout
@@ -182,7 +182,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     style="@style/GreySmallTextStyle"
-                    android:fontFamily="@font/josefinsans_regular"
+                    android:fontFamily="@font/josefinsans"
                     android:paddingStart="@dimen/spacing_tiny"
                     android:text="Days Remaining"/>
 
