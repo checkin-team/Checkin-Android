@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
@@ -7,222 +7,223 @@
     android:layout_height="match_parent"
     tools:context=".Home.fragment.HomeTransaction">
 
-    <androidx.constraintlayout.widget.ConstraintLayout
+
+    <TextView
+        android:id="@+id/tv_home_transaction_order_id"
+        style="@style/PinkishGreySmallTextStyle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="end"
+
+        android:layout_marginEnd="16dp"
+        android:text="Order Id: 12345"
+        android:textAlignment="textEnd"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintBottom_toTopOf="@+id/tv_home_transaction_restaurant_name" />
+
+    <TextView
+        android:id="@+id/tv_home_transaction_restaurant_name"
+
+        style="@style/AquaBlueLargeTextStyle"
+        android:layout_width="wrap_content"
+
+
+        android:layout_height="wrap_content"
+
+        android:layout_marginLeft="@dimen/spacing_large"
+
+        android:layout_marginTop="@dimen/spacing_small"
+        android:text="Grey Orange"
+
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/tv_home_transaction_cost"
+        style="@style/PinkishGreySmallTextStyle"
+
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+
+        android:text="Amount paid: $998"
+        android:textAlignment="textEnd"
+        app:layout_constraintBottom_toTopOf="@+id/tv_home_transaction_locality"
+        app:layout_constraintEnd_toEndOf="@+id/tv_home_transaction_order_id" />
+
+    <TextView
+        android:id="@+id/tv_home_transaction_locality"
+        style="@style/PinkishGreyTextStyle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="2dp"
+
+
+        android:text="Level Road-Bengaluru"
+        app:layout_constraintStart_toStartOf="@+id/tv_home_transaction_restaurant_name"
+        app:layout_constraintTop_toBottomOf="@id/tv_home_transaction_restaurant_name" />
+
+
+    <ImageView
+        android:id="@+id/im_container_food_status"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="160dp"
+        android:layout_marginTop="12dp"
+        android:src="@drawable/ic_collect_from_the_counter"
+        app:layout_constraintTop_toBottomOf="@+id/tv_home_transaction_locality"
+        tools:layout_editor_absoluteX="0dp" />
 
-        <TextView
-            android:id="@+id/tv_home_transaction_order_id"
-            style="@style/PinkishGreySmallTextStyle"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="end"
+    <TextView
+        android:id="@+id/tv_home_transaction_food_status"
+        style="@style/OrangeRedLargeTextStyle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/spacing_extra_large"
+        android:layout_marginEnd="@dimen/spacing_large"
+        android:text="Food Ready"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/im_container_food_status" />
 
-            android:layout_marginEnd="16dp"
-            android:text="Order Id: 12345"
-            android:textAlignment="textEnd"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="@+id/tv_home_transaction_restaurant_name" />
+    <TextView
+        android:id="@+id/tv_home_transaction_collect_info"
+        style="@style/GreySmallTextStyle"
+        android:layout_width="wrap_content"
 
-        <TextView
-            android:id="@+id/tv_home_transaction_restaurant_name"
+        android:layout_height="wrap_content"
+        android:text="Collect form the counter"
+        app:layout_constraintEnd_toEndOf="@+id/tv_home_transaction_food_status"
+        app:layout_constraintTop_toBottomOf="@+id/tv_home_transaction_food_status" />
 
-            style="@style/AquaBlueLargeTextStyle"
-            android:layout_width="wrap_content"
-
-
-            android:layout_height="wrap_content"
-
-            android:layout_marginLeft="@dimen/spacing_large"
-
-            android:layout_marginTop="@dimen/spacing_large"
-            android:text="Grey Orange"
-
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
-
-        <TextView
-            android:id="@+id/tv_home_transaction_cost"
-            style="@style/PinkishGreySmallTextStyle"
-
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-
-            android:text="Amount paid: $998"
-            android:textAlignment="textEnd"
-            app:layout_constraintBottom_toTopOf="@+id/tv_home_transaction_locality"
-            app:layout_constraintEnd_toEndOf="@+id/tv_home_transaction_order_id" />
-
-        <TextView
-            android:id="@+id/tv_home_transaction_locality"
-            style="@style/PinkishGreyTextStyle"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="2dp"
+    <androidx.core.widget.NestedScrollView
+        android:id="@+id/scrollView"
+        android:layout_width="match_parent"
+        android:layout_marginBottom="@dimen/spacing_large"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:background="#f1f1f1"
+        app:layout_constraintBottom_toTopOf="@+id/tv_home_transaction_rate"
 
 
-            android:text="Level Road-Bengaluru"
-            app:layout_constraintStart_toStartOf="@+id/tv_home_transaction_restaurant_name"
-            app:layout_constraintTop_toBottomOf="@id/tv_home_transaction_restaurant_name" />
-
-
-        <ImageView
-            android:id="@+id/im_container_food_status"
-            android:layout_width="match_parent"
-            android:layout_height="160dp"
-            android:layout_marginTop="12dp"
-            android:src="@drawable/ic_collect_from_the_counter"
-            app:layout_constraintTop_toBottomOf="@+id/tv_home_transaction_locality"
-            tools:layout_editor_absoluteX="0dp" />
-
-        <TextView
-            android:id="@+id/tv_home_transaction_food_status"
-            style="@style/OrangeRedLargeTextStyle"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/spacing_extra_large"
-            android:layout_marginEnd="@dimen/spacing_large"
-            android:text="Food Ready"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="@+id/im_container_food_status" />
-
-        <TextView
-            android:id="@+id/tv_home_transaction_collect_info"
-            style="@style/GreySmallTextStyle"
-            android:layout_width="wrap_content"
-
-            android:layout_height="wrap_content"
-            android:text="Collect form the counter"
-            app:layout_constraintEnd_toEndOf="@+id/tv_home_transaction_food_status"
-            app:layout_constraintTop_toBottomOf="@+id/tv_home_transaction_food_status" />
-
-        <androidx.core.widget.NestedScrollView
-            android:id="@+id/scrollView"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:background="#f1f1f1"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/im_container_food_status">
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="vertical">
-
-
-                <include layout="@layout/incl_horizontal_line" />
-
-                <androidx.recyclerview.widget.RecyclerView
-
-
-                    android:id="@+id/rv_user_transaction_session_orders"
-                    android:layout_width="match_parent"
-                    tools:listitem="@layout/item_invoice_ordered_item"
-                    android:layout_height="wrap_content"
-                    android:nestedScrollingEnabled="false"
-                    android:padding="@dimen/spacing_small" />
-
-                <include layout="@layout/incl_session_invoice" />
-
-
-            </LinearLayout>
-        </androidx.core.widget.NestedScrollView>
-
-        <TextView
-            android:id="@+id/tv_home_transaction_rate"
-            style="@style/AquaBlueTextStyle"
-            android:fontFamily="@font/josefinsans_semibold"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/spacing_extra_large"
-
-            android:text="Plase rate your experience"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/scrollView"/>
-
-        <Button
-            android:id="@+id/button_home_transaction_done"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="@dimen/spacing_extra_large"
-            android:layout_marginTop="@dimen/spacing_incredible"
-            android:layout_marginRight="@dimen/spacing_extra_large"
-            android:layout_marginBottom="@dimen/spacing_large"
-            android:background="@color/pinkish_grey"
-            android:text="Done"
-            android:textAllCaps="false"
-
-            android:textColor="@color/white"
-            android:textSize="@dimen/font_large"
-
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/longText" />
-
-        <TextView
-            android:id="@+id/longText"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_margin="@dimen/spacing_large"
-            android:lineSpacingExtra="4sp"
-            android:text="Your rating will impact restaurant overall
-rating and would help other to make informed chioces."
-            android:textAlignment="center"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/emojis"/>
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/im_container_food_status">
 
         <LinearLayout
-            android:id="@+id/emojis"
             android:layout_width="match_parent"
-            android:layout_height="@dimen/button_height_medium"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
 
-            android:layout_marginLeft="@dimen/spacing_extra_large"
-            android:layout_marginTop="@dimen/spacing_normal"
-            android:layout_marginRight="@dimen/spacing_extra_large"
-            android:layout_marginBottom="@dimen/spacing_normal"
-            android:weightSum="5"
-            app:layout_constraintTop_toBottomOf="@+id/tv_home_transaction_rate">
 
-            <ImageView
-                android:id="@+id/im_emoji_angry_1"
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:layout_weight="1"
-                android:src="@drawable/ic_emoji_angry" />
+            <include layout="@layout/incl_horizontal_line" />
 
-            <ImageView
-                android:id="@+id/im_emoji_sad_2"
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:layout_weight="1"
-                android:src="@drawable/ic_emoji_sad" />
+            <androidx.recyclerview.widget.RecyclerView
 
-            <ImageView
-                android:id="@+id/im_emoji_confused_3"
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:layout_weight="1"
-                android:src="@drawable/ic_emoji_confused" />
 
-            <ImageView
-                android:id="@+id/im_emoji_smile_4"
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:layout_weight="1"
-                android:src="@drawable/ic_emoji_smiling" />
+                android:id="@+id/rv_user_transaction_session_orders"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:nestedScrollingEnabled="false"
+                android:padding="@dimen/spacing_small"
+                tools:listitem="@layout/item_invoice_ordered_item" />
 
-            <ImageView
-                android:id="@+id/im_emoji_love_5"
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:layout_weight="1"
-                android:src="@drawable/ic_emoji_in_love" />
+            <include layout="@layout/incl_session_invoice" />
+
+
         </LinearLayout>
-    </androidx.constraintlayout.widget.ConstraintLayout>
+    </androidx.core.widget.NestedScrollView>
 
-</ScrollView>
+    <TextView
+        android:id="@+id/tv_home_transaction_rate"
+        style="@style/AquaBlueTextStyle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="@dimen/spacing_small"
+
+        android:fontFamily="@font/josefinsans_semibold"
+        android:text="Plase rate your experience"
+        app:layout_constraintBottom_toTopOf="@+id/emojis"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.497"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <Button
+        android:id="@+id/button_home_transaction_done"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="@dimen/spacing_small"
+        android:layout_marginLeft="@dimen/spacing_extra_large"
+        android:layout_marginTop="@dimen/spacing_incredible"
+        android:layout_marginRight="@dimen/spacing_extra_large"
+        android:background="@color/pinkish_grey"
+        android:text="Done"
+        android:textAllCaps="false"
+
+        android:textColor="@color/white"
+        android:textSize="@dimen/font_large"
+
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"/>
+
+    <TextView
+        android:id="@+id/longText"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/spacing_large"
+        android:lineSpacingExtra="4sp"
+        android:text="Your rating will impact restaurant overall
+rating and would help other to make informed chioces."
+        android:textAlignment="center"
+        app:layout_constraintBottom_toTopOf="@+id/button_home_transaction_done"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <LinearLayout
+        android:layout_marginLeft="@dimen/spacing_large"
+        android:layout_marginRight="@dimen/spacing_large"
+        android:id="@+id/emojis"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/button_height_medium"
+
+        android:weightSum="5"
+        android:layout_marginBottom="@dimen/spacing_large"
+        app:layout_constraintBottom_toTopOf="@+id/longText"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent">
+
+        <ImageView
+            android:id="@+id/im_emoji_angry_1"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:src="@drawable/ic_emoji_angry" />
+
+        <ImageView
+            android:id="@+id/im_emoji_sad_2"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:src="@drawable/ic_emoji_sad" />
+
+        <ImageView
+            android:id="@+id/im_emoji_confused_3"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:src="@drawable/ic_emoji_confused" />
+
+        <ImageView
+            android:id="@+id/im_emoji_smile_4"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:src="@drawable/ic_emoji_smiling" />
+
+        <ImageView
+            android:id="@+id/im_emoji_love_5"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:src="@drawable/ic_emoji_in_love" />
+    </LinearLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>
+
