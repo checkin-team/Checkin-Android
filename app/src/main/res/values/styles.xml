@@ -227,6 +227,10 @@
         <item name="android:textColor">@color/pinkish_grey</item>
         <item name="android:textSize">@dimen/font_extra_small</item>
     </style>
+    <style name="PinkishGreyTextStyle" parent="GreyTextStyle">
+        <item name="android:textColor">@color/pinkish_grey</item>
+        <item name="android:textSize">@dimen/font_small</item>
+    </style>
 
     <style name="GreyLinkStyle" parent="TextAppearance.AppCompat">
         <item name="android:textColor">@color/brownish_grey</item>
@@ -247,6 +251,13 @@
 
     <style name="AquaBlueSmallTextStyle" parent="AquaBlueTextStyle">
         <item name="android:textSize">@dimen/font_small</item>
+    </style>
+    <style name="AquaBlueLargeTextStyle" parent="AquaBlueTextStyle">
+        <item name="android:textSize">@dimen/font_largest</item>
+    </style>
+    <style name="OrangeRedLargeTextStyle" parent="TextAppearance.AppCompat">
+        <item name="android:textSize">@dimen/font_normal</item>
+        <item name="android:textColor">@color/orange_red</item>
     </style>
 
     <!--<style name="WhiteCardStyle" parent="CardView">
