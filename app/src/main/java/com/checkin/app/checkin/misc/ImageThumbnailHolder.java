@@ -1,4 +1,4 @@
-package com.checkin.app.checkin.Misc;
+package com.checkin.app.checkin.misc;
 
 import android.graphics.drawable.Drawable;
 import android.view.View;

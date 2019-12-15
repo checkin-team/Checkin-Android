@@ -9,7 +9,7 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.checkin.app.checkin.Misc.BriefModel;
+import com.checkin.app.checkin.misc.models.BriefModel;
 import com.checkin.app.checkin.R;
 import com.checkin.app.checkin.Utility.Utils;
 import com.checkin.app.checkin.session.activesession.chat.SessionEventBasicModel;

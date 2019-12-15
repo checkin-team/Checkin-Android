@@ -1,4 +1,4 @@
-package com.checkin.app.checkin.Menu.Model
+package com.checkin.app.checkin.menu.models
 
 import com.checkin.app.checkin.session.activesession.chat.SessionChatModel
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties

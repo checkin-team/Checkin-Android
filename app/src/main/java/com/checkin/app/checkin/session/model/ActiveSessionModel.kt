@@ -1,7 +1,7 @@
 package com.checkin.app.checkin.session.model
 
 import android.content.Context
-import com.checkin.app.checkin.Misc.BriefModel
+import com.checkin.app.checkin.misc.models.BriefModel
 import com.checkin.app.checkin.Shop.RestaurantBriefModel
 import com.checkin.app.checkin.Utility.Utils
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties

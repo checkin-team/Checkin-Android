@@ -15,7 +15,7 @@ import com.checkin.app.checkin.Data.RetrofitLiveData;
 import com.checkin.app.checkin.Data.WebApiService;
 import com.checkin.app.checkin.Manager.Model.ManagerSessionInvoiceModel;
 import com.checkin.app.checkin.Manager.Model.ManagerStatsModel;
-import com.checkin.app.checkin.Misc.GenericDetailModel;
+import com.checkin.app.checkin.misc.models.GenericDetailModel;
 import com.checkin.app.checkin.session.model.CheckoutStatusModel;
 import com.checkin.app.checkin.session.model.QRResultModel;
 import com.fasterxml.jackson.databind.node.ObjectNode;

@@ -7,7 +7,7 @@ import android.view.ViewGroup
 import android.widget.EditText
 import butterknife.BindView
 import butterknife.OnClick
-import com.checkin.app.checkin.Misc.BaseFragment
+import com.checkin.app.checkin.misc.fragments.BaseFragment
 import com.checkin.app.checkin.R
 import com.checkin.app.checkin.Utility.ParentActivityDelegate
 import com.checkin.app.checkin.Utility.Utils
@@ -38,7 +38,8 @@ class AuthOptionsFragment : BaseFragment() {
             } else false
         } ?: false
 
-    override fun getRootLayout() = R.layout.fragment_auth_options
+    override val rootLayout: Int
+        get() = R.layout.fragment_auth_options
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         mFacebookCallbackManager.let { callbackManager ->

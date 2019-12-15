@@ -16,7 +16,7 @@ import androidx.viewpager.widget.ViewPager;
 
 import com.checkin.app.checkin.Data.Resource;
 import com.checkin.app.checkin.Manager.Adapter.ManagerStatsOrderAdapter;
-import com.checkin.app.checkin.Misc.BaseFragment;
+import com.checkin.app.checkin.misc.fragments.BaseFragment;
 import com.checkin.app.checkin.R;
 import com.checkin.app.checkin.Utility.Utils;
 import com.rd.PageIndicatorView;

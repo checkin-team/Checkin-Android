@@ -1,4 +1,4 @@
-package com.checkin.app.checkin.Misc;
+package com.checkin.app.checkin.misc.activities;
 
 import android.Manifest;
 import android.content.Intent;
@@ -7,6 +7,7 @@ import android.view.View;
 import android.widget.ImageView;
 
 import com.checkin.app.checkin.R;
+import com.checkin.app.checkin.misc.fragments.QRScannerFragment;
 import com.google.zxing.Result;
 
 import androidx.annotation.NonNull;

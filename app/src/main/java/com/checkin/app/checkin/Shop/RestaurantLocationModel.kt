@@ -1,6 +1,6 @@
 package com.checkin.app.checkin.Shop
 
-import com.checkin.app.checkin.Misc.GeolocationModel
+import com.checkin.app.checkin.misc.models.GeolocationModel
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties
 
 @JsonIgnoreProperties(ignoreUnknown = true)

@@ -1,4 +1,4 @@
-package com.checkin.app.checkin.Misc.paytm;
+package com.checkin.app.checkin.misc.paytm;
 
 import android.content.Context;
 import android.os.Bundle;

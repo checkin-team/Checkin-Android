@@ -5,7 +5,7 @@ import android.view.View;
 import android.widget.TextView;
 
 import com.checkin.app.checkin.Data.Resource;
-import com.checkin.app.checkin.Misc.BaseFragment;
+import com.checkin.app.checkin.misc.fragments.BaseFragment;
 import com.checkin.app.checkin.R;
 import com.checkin.app.checkin.session.activesession.chat.SessionChatModel;
 import com.checkin.app.checkin.session.model.SessionOrderedItemModel;

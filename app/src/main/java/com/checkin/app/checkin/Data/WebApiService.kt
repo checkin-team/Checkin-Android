@@ -13,8 +13,8 @@ import com.checkin.app.checkin.Manager.Model.ManagerSessionInvoiceModel
 import com.checkin.app.checkin.Manager.Model.ManagerStatsModel
 import com.checkin.app.checkin.Menu.Model.MenuModel
 import com.checkin.app.checkin.Menu.Model.OrderedItemModel
-import com.checkin.app.checkin.Misc.GenericDetailModel
-import com.checkin.app.checkin.Misc.paytm.PaytmModel
+import com.checkin.app.checkin.misc.models.GenericDetailModel
+import com.checkin.app.checkin.misc.paytm.PaytmModel
 import com.checkin.app.checkin.Search.SearchResultPeopleModel
 import com.checkin.app.checkin.Search.SearchResultShopModel
 import com.checkin.app.checkin.Shop.Private.Finance.FinanceModel

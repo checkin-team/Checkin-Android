@@ -1,4 +1,4 @@
-package com.checkin.app.checkin.Misc
+package com.checkin.app.checkin.misc
 
 import android.content.Context
 import android.view.View

@@ -2,7 +2,7 @@ package com.checkin.app.checkin.Cook.Model;
 
 import androidx.annotation.Nullable;
 
-import com.checkin.app.checkin.Misc.BriefModel;
+import com.checkin.app.checkin.misc.models.BriefModel;
 import com.checkin.app.checkin.Utility.Utils;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;

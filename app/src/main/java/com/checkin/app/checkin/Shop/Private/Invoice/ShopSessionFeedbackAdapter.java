@@ -6,9 +6,6 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.appyvet.materialrangebar.RangeBar;
-import com.checkin.app.checkin.Misc.ImageThumbnailHolder;
-import com.checkin.app.checkin.Misc.ImageThumbnailHolder.ImageThumbnailInteraction;
 import com.checkin.app.checkin.R;
 import com.checkin.app.checkin.User.bills.UserTransactionBriefModel;
 

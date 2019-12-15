@@ -18,7 +18,7 @@ import com.checkin.app.checkin.Menu.Model.MenuGroupModel
 import com.checkin.app.checkin.Menu.UserMenu.Adapter.MenuBestSellerAdapter
 import com.checkin.app.checkin.Menu.UserMenu.Adapter.MenuGroupAdapter
 import com.checkin.app.checkin.Menu.UserMenu.MenuViewModel
-import com.checkin.app.checkin.Misc.BaseFragment
+import com.checkin.app.checkin.misc.fragments.BaseFragment
 import com.checkin.app.checkin.R
 import com.checkin.app.checkin.Utility.Utils
 import com.checkin.app.checkin.session.model.TrendingDishModel
@@ -47,9 +47,8 @@ class MenuGroupsFragment : BaseFragment(), MenuGroupAdapter.OnGroupInteractionIn
     private val isGroupExpanded: Boolean
         get() = mAdapter.isGroupExpanded
 
-    override fun getRootLayout(): Int {
-        return R.layout.fragment_as_menu_group
-    }
+    override val rootLayout: Int
+        get() = R.layout.fragment_as_menu_group
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         setupGroupRecycler()

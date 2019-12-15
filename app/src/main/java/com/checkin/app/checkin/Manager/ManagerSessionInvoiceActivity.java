@@ -27,7 +27,7 @@ import com.checkin.app.checkin.Data.Message.MessageObjectModel;
 import com.checkin.app.checkin.Data.Message.MessageUtils;
 import com.checkin.app.checkin.Data.Resource;
 import com.checkin.app.checkin.Manager.Model.ManagerSessionInvoiceModel;
-import com.checkin.app.checkin.Misc.BillHolder;
+import com.checkin.app.checkin.misc.BillHolder;
 import com.checkin.app.checkin.R;
 import com.checkin.app.checkin.Utility.Utils;
 import com.checkin.app.checkin.Waiter.Model.SessionContactModel;

@@ -228,6 +228,10 @@ repositories {
     mavenCentral()
 }
 
+kapt {
+    correctErrorTypes = true
+}
+
 static def buildTime() {
     return new Date().format("yyyy-MM-dd", TimeZone.getTimeZone("UTC"))
 }

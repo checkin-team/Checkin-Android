@@ -8,8 +8,8 @@ import android.widget.Button;
 import android.widget.TextView;
 
 import com.checkin.app.checkin.Data.Resource;
-import com.checkin.app.checkin.Misc.BaseActivity;
-import com.checkin.app.checkin.Misc.GenericDetailModel;
+import com.checkin.app.checkin.misc.activities.BaseActivity;
+import com.checkin.app.checkin.misc.models.GenericDetailModel;
 import com.checkin.app.checkin.R;
 import com.checkin.app.checkin.Shop.Private.Edit.EditAspectFragment;
 import com.checkin.app.checkin.Shop.Private.ShopPrivateActivity;

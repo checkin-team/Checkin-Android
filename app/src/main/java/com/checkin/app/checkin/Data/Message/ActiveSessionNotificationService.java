@@ -13,7 +13,7 @@ import androidx.core.app.NotificationCompat;
 
 import com.bumptech.glide.request.target.NotificationTarget;
 import com.checkin.app.checkin.Menu.UserMenu.SessionMenuActivity;
-import com.checkin.app.checkin.Misc.BriefModel;
+import com.checkin.app.checkin.misc.models.BriefModel;
 import com.checkin.app.checkin.R;
 import com.checkin.app.checkin.Utility.GlideApp;
 import com.checkin.app.checkin.session.activesession.ActiveSessionActivity;

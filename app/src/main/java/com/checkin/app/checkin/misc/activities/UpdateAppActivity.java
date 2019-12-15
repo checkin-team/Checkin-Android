@@ -1,4 +1,4 @@
-package com.checkin.app.checkin.Misc;
+package com.checkin.app.checkin.misc.activities;
 
 import android.app.AlertDialog;
 import android.content.Intent;

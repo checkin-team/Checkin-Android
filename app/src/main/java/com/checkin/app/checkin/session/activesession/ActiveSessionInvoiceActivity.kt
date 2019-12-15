@@ -29,9 +29,9 @@ import com.checkin.app.checkin.Data.Message.MessageModel
 import com.checkin.app.checkin.Data.Message.MessageUtils
 import com.checkin.app.checkin.Data.ProblemModel
 import com.checkin.app.checkin.Data.Resource
-import com.checkin.app.checkin.Misc.BaseActivity
-import com.checkin.app.checkin.Misc.BillHolder
-import com.checkin.app.checkin.Misc.paytm.PaytmPayment
+import com.checkin.app.checkin.misc.activities.BaseActivity
+import com.checkin.app.checkin.misc.BillHolder
+import com.checkin.app.checkin.misc.paytm.PaytmPayment
 import com.checkin.app.checkin.R
 import com.checkin.app.checkin.Shop.ShopModel
 import com.checkin.app.checkin.Shop.ShopModel.PAYMENT_MODE.PAYTM

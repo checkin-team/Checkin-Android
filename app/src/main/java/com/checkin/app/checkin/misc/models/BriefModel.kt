@@ -1,4 +1,4 @@
-package com.checkin.app.checkin.Misc
+package com.checkin.app.checkin.misc.models
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties
 import com.fasterxml.jackson.annotation.JsonProperty

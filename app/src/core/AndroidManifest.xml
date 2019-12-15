@@ -78,7 +78,7 @@
             android:screenOrientation="portrait"
             android:theme="@style/AppThemeWhiteActionBar" />
         <activity
-            android:name=".Misc.QRScannerActivity"
+            android:name=".misc.activities.QRScannerActivity"
             android:label="Scan CheckIn QR"
             android:theme="@style/AppThemeWhiteActionBar" />
         <activity

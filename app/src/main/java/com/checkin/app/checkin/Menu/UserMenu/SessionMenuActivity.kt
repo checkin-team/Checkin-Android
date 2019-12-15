@@ -25,13 +25,12 @@ import com.checkin.app.checkin.Menu.ShopMenu.Fragment.MenuGroupsFragment.KEY_SES
 import com.checkin.app.checkin.Menu.ShopMenu.Fragment.MenuInfoFragment
 import com.checkin.app.checkin.Menu.ShopMenu.SessionMenuActivity.*
 import com.checkin.app.checkin.Menu.UserMenu.Fragment.*
-import com.checkin.app.checkin.Misc.BaseActivity
+import com.checkin.app.checkin.misc.activities.BaseActivity
 import com.checkin.app.checkin.R
 import com.checkin.app.checkin.Utility.OnBoardingUtils
 import com.checkin.app.checkin.Utility.Utils
 import com.checkin.app.checkin.session.activesession.ActiveSessionActivity.KEY_INTERACT_WITH_US
 import com.miguelcatalan.materialsearchview.MaterialSearchView
-import kotlinx.coroutines.launch
 
 class SessionMenuActivity : BaseActivity(), MenuItemInteraction, ItemCustomizationFragment.ItemCustomizationInteraction, MenuFilterFragment.MenuFilterInteraction {
 

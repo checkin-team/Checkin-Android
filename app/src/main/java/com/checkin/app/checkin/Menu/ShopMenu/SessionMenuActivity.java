@@ -34,7 +34,7 @@ import com.checkin.app.checkin.Menu.ShopMenu.Fragment.MenuGroupsFragment;
 import com.checkin.app.checkin.Menu.ShopMenu.Fragment.MenuGroupsFragment.SESSION_STATUS;
 import com.checkin.app.checkin.Menu.ShopMenu.Fragment.MenuInfoFragment;
 import com.checkin.app.checkin.Menu.ShopMenu.Fragment.MenuItemSearchFragment;
-import com.checkin.app.checkin.Misc.BaseActivity;
+import com.checkin.app.checkin.misc.activities.BaseActivity;
 import com.checkin.app.checkin.R;
 import com.checkin.app.checkin.Utility.EndDrawerToggle;
 import com.checkin.app.checkin.Utility.OnBoardingUtils;

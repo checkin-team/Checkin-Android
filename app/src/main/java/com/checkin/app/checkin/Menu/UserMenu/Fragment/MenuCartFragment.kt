@@ -17,7 +17,7 @@ import com.checkin.app.checkin.Menu.Model.OrderedItemModel
 import com.checkin.app.checkin.Menu.UserMenu.Adapter.MenuCartAdapter
 import com.checkin.app.checkin.Menu.UserMenu.Adapter.MenuTreatYourselfAdapter
 import com.checkin.app.checkin.Menu.UserMenu.MenuViewModel
-import com.checkin.app.checkin.Misc.BaseFragment
+import com.checkin.app.checkin.misc.fragments.BaseFragment
 import com.checkin.app.checkin.R
 import com.checkin.app.checkin.Utility.Utils
 import com.checkin.app.checkin.session.model.TrendingDishModel
@@ -39,6 +39,9 @@ class MenuCartFragment : BaseFragment(), MenuCartAdapter.MenuCartInteraction, Me
     private lateinit var mViewModel: MenuViewModel
     private var mCartAdapter: MenuCartAdapter? = null
     private var mTreatYourselfAdapter: MenuTreatYourselfAdapter? = null
+
+    override val rootLayout: Int
+        get() = R.layout.fragment_menu_cart
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         mViewModel = ViewModelProviders.of(requireActivity()).get(MenuViewModel::class.java)
@@ -86,10 +89,6 @@ class MenuCartFragment : BaseFragment(), MenuCartAdapter.MenuCartInteraction, Me
                     mTreatYourselfAdapter!!.setData(inventoryItemModels.data!!)
             }
         })
-    }
-
-    override fun getRootLayout(): Int {
-        return R.layout.fragment_menu_cart
     }
 
     @OnClick(R.id.btn_menu_cart_proceed)

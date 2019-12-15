@@ -11,7 +11,7 @@ import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.checkin.app.checkin.Data.Resource;
-import com.checkin.app.checkin.Misc.SelectCropImageActivity;
+import com.checkin.app.checkin.misc.activities.SelectCropImageActivity;
 import com.checkin.app.checkin.R;
 import com.checkin.app.checkin.Utility.Utils;
 

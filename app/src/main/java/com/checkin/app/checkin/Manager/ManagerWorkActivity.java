@@ -29,7 +29,7 @@ import com.checkin.app.checkin.Manager.Fragment.ManagerInvoiceFragment;
 import com.checkin.app.checkin.Manager.Fragment.ManagerStatsFragment;
 import com.checkin.app.checkin.Manager.Fragment.ManagerTablesActivateFragment;
 import com.checkin.app.checkin.Manager.Fragment.ManagerTablesFragment;
-import com.checkin.app.checkin.Misc.BaseFragmentAdapterBottomNav;
+import com.checkin.app.checkin.misc.adapters.BaseFragmentAdapterBottomNav;
 import com.checkin.app.checkin.R;
 import com.checkin.app.checkin.Shop.Private.Invoice.ShopInvoiceViewModel;
 import com.checkin.app.checkin.Shop.ShopPreferences;

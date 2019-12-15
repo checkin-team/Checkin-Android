@@ -4,8 +4,9 @@ import android.content.Intent
 import android.os.Bundle
 import android.view.View
 import android.view.ViewGroup
+import androidx.fragment.app.activityViewModels
+import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import androidx.viewpager2.widget.ViewPager2
@@ -14,7 +15,7 @@ import com.checkin.app.checkin.Data.Resource
 import com.checkin.app.checkin.Home.*
 import com.checkin.app.checkin.Home.model.LiveSessionDetailModel
 import com.checkin.app.checkin.Home.model.SessionType
-import com.checkin.app.checkin.Misc.BaseFragment
+import com.checkin.app.checkin.misc.fragments.BaseFragment
 import com.checkin.app.checkin.R
 import com.checkin.app.checkin.Shop.RestaurantLocationModel
 import com.checkin.app.checkin.Utility.pass
@@ -34,15 +35,13 @@ class UserHomeFragment : BaseFragment(), LiveSessionTrackerInteraction {
     private lateinit var mRestAdapter: NearbyRestaurantAdapter
     private lateinit var mLiveSessionAdapter: LiveSessionTrackerAdapter
 
-    private lateinit var mViewModel: HomeViewModel
-    private lateinit var mLiveSessionViewModel: LiveSessionViewModel
+    private val mViewModel: HomeViewModel by activityViewModels()
+    private val mLiveSessionViewModel: LiveSessionViewModel by viewModels()
 
-    override fun getRootLayout() = R.layout.fragment_user_home
+    override val rootLayout: Int
+        get() = R.layout.fragment_user_home
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        mViewModel = ViewModelProviders.of(requireActivity()).get(HomeViewModel::class.java)
-        mLiveSessionViewModel = ViewModelProviders.of(this).get(LiveSessionViewModel::class.java)
-
         enableDisableSwipeRefresh(true)
 
         mRestAdapter = NearbyRestaurantAdapter()

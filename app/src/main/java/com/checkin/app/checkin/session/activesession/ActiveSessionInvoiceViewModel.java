@@ -12,7 +12,7 @@ import com.checkin.app.checkin.Data.BaseViewModel;
 import com.checkin.app.checkin.Data.Converters;
 import com.checkin.app.checkin.Data.Resource;
 import com.checkin.app.checkin.Data.RetrofitCallAsyncTask;
-import com.checkin.app.checkin.Misc.paytm.PaytmModel;
+import com.checkin.app.checkin.misc.paytm.PaytmModel;
 import com.checkin.app.checkin.Shop.ShopModel;
 import com.checkin.app.checkin.Utility.ProgressRequestBody;
 import com.checkin.app.checkin.Utility.SourceMappedLiveData;

@@ -16,7 +16,7 @@ import com.checkin.app.checkin.Menu.ShopMenu.Adapter.MenuItemAdapter;
 import com.checkin.app.checkin.Menu.MenuItemInteraction;
 import com.checkin.app.checkin.Menu.ShopMenu.MenuViewModel;
 import com.checkin.app.checkin.Menu.Model.MenuGroupModel;
-import com.checkin.app.checkin.Misc.BaseFragment;
+import com.checkin.app.checkin.misc.fragments.BaseFragment;
 import com.checkin.app.checkin.R;
 import com.checkin.app.checkin.Utility.Utils;
 import com.facebook.shimmer.ShimmerFrameLayout;

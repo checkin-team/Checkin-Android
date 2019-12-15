@@ -1,4 +1,4 @@
-package com.checkin.app.checkin.Misc;
+package com.checkin.app.checkin.misc.adapters;
 
 import android.view.View;
 import android.widget.ImageView;
