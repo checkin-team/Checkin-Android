@@ -74,6 +74,6 @@ class BillHolder(itemView: View) {
             } else containerInvoiceDiscount.visibility = View.GONE
         }
         // Tip
-       // tvInvoiceTip.text = Utils.formatCurrencyAmount(mContext, bill.tip)
+        tvInvoiceTip.text = Utils.formatCurrencyAmount(mContext, bill.tip)
     }
 }

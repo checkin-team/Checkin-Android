@@ -19,7 +19,7 @@
         android:text="Order Id: 12345"
         android:textAlignment="textEnd"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintBottom_toTopOf="@+id/tv_home_transaction_restaurant_name" />
+        app:layout_constraintTop_toTopOf="@+id/tv_home_transaction_restaurant_name" />
 
     <TextView
         android:id="@+id/tv_home_transaction_restaurant_name"
@@ -96,13 +96,13 @@
     <androidx.core.widget.NestedScrollView
         android:id="@+id/scrollView"
         android:layout_width="match_parent"
-        android:layout_marginBottom="@dimen/spacing_large"
-        android:layout_height="0dp"
+        android:layout_height="wrap_content"
         android:layout_weight="1"
         android:background="#f1f1f1"
-        app:layout_constraintBottom_toTopOf="@+id/tv_home_transaction_rate"
+        app:layout_constraintVertical_bias="0"
 
 
+        app:layout_constraintBottom_toTopOf="@+id/button_home_transaction_done"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/im_container_food_status">
@@ -131,19 +131,7 @@
         </LinearLayout>
     </androidx.core.widget.NestedScrollView>
 
-    <TextView
-        android:id="@+id/tv_home_transaction_rate"
-        style="@style/AquaBlueTextStyle"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="@dimen/spacing_small"
 
-        android:fontFamily="@font/josefinsans_semibold"
-        android:text="Plase rate your experience"
-        app:layout_constraintBottom_toTopOf="@+id/emojis"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.497"
-        app:layout_constraintStart_toStartOf="parent" />
 
     <Button
         android:id="@+id/button_home_transaction_done"
@@ -153,6 +141,7 @@
         android:layout_marginLeft="@dimen/spacing_extra_large"
         android:layout_marginTop="@dimen/spacing_incredible"
         android:layout_marginRight="@dimen/spacing_extra_large"
+        style="@style/Widget.AppCompat.Button.Borderless"
         android:background="@color/pinkish_grey"
         android:text="Done"
         android:textAllCaps="false"
@@ -164,66 +153,6 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"/>
 
-    <TextView
-        android:id="@+id/longText"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_margin="@dimen/spacing_large"
-        android:lineSpacingExtra="4sp"
-        android:text="Your rating will impact restaurant overall
-rating and would help other to make informed chioces."
-        android:textAlignment="center"
-        app:layout_constraintBottom_toTopOf="@+id/button_home_transaction_done"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
 
-    <LinearLayout
-        android:layout_marginLeft="@dimen/spacing_large"
-        android:layout_marginRight="@dimen/spacing_large"
-        android:id="@+id/emojis"
-        android:layout_width="match_parent"
-        android:layout_height="@dimen/button_height_medium"
-
-        android:weightSum="5"
-        android:layout_marginBottom="@dimen/spacing_large"
-        app:layout_constraintBottom_toTopOf="@+id/longText"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent">
-
-        <ImageView
-            android:id="@+id/im_emoji_angry_1"
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:src="@drawable/ic_emoji_angry" />
-
-        <ImageView
-            android:id="@+id/im_emoji_sad_2"
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:src="@drawable/ic_emoji_sad" />
-
-        <ImageView
-            android:id="@+id/im_emoji_confused_3"
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:src="@drawable/ic_emoji_confused" />
-
-        <ImageView
-            android:id="@+id/im_emoji_smile_4"
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:src="@drawable/ic_emoji_smiling" />
-
-        <ImageView
-            android:id="@+id/im_emoji_love_5"
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:src="@drawable/ic_emoji_in_love" />
-    </LinearLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>
 

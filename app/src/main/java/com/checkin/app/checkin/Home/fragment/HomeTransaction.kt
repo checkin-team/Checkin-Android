@@ -32,7 +32,7 @@ class HomeTransaction : Fragment() {
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
         val v=inflater.inflate(R.layout.fragment_home_transaction, container, false);
-        ButterKnife.bind(this,v);
+        ButterKnife.bind(this,v)
 
         var mOrdersAdapter = InvoiceOrdersAdapter(null, null)
         rvSessionOrders.setLayoutManager(LinearLayoutManager(context, RecyclerView.VERTICAL, false))
