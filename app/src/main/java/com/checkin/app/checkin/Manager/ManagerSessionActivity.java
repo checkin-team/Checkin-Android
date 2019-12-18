@@ -16,6 +16,8 @@ import android.widget.TextView;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.lifecycle.ViewModelProviders;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.checkin.app.checkin.Data.Message.MessageModel;
 import com.checkin.app.checkin.Data.Message.MessageObjectModel;
@@ -25,19 +27,17 @@ import com.checkin.app.checkin.Manager.Adapter.ManagerInactiveTableAdapter;
 import com.checkin.app.checkin.Manager.Fragment.ManagerSessionEventFragment;
 import com.checkin.app.checkin.Manager.Fragment.ManagerSessionOrderFragment;
 import com.checkin.app.checkin.Manager.Model.ManagerSessionEventModel;
-import com.checkin.app.checkin.misc.models.BriefModel;
 import com.checkin.app.checkin.R;
 import com.checkin.app.checkin.Utility.Utils;
 import com.checkin.app.checkin.Waiter.Model.OrderStatusModel;
+import com.checkin.app.checkin.misc.models.BriefModel;
 import com.checkin.app.checkin.session.activesession.chat.SessionChatModel;
-import com.checkin.app.checkin.session.model.RestaurantTableModel;
-import com.checkin.app.checkin.session.model.SessionBriefModel;
-import com.checkin.app.checkin.session.model.SessionOrderedItemModel;
+import com.checkin.app.checkin.session.models.RestaurantTableModel;
+import com.checkin.app.checkin.session.models.SessionBriefModel;
+import com.checkin.app.checkin.session.models.SessionOrderedItemModel;
 
 import java.util.Locale;
 
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;

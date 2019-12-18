@@ -11,9 +11,9 @@ import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.checkin.app.checkin.R;
-import com.checkin.app.checkin.session.model.RestaurantTableModel;
-import com.checkin.app.checkin.session.model.TableSessionModel;
 import com.checkin.app.checkin.Utility.DebouncedOnClickListener;
+import com.checkin.app.checkin.session.models.RestaurantTableModel;
+import com.checkin.app.checkin.session.models.TableSessionModel;
 
 import java.util.List;
 

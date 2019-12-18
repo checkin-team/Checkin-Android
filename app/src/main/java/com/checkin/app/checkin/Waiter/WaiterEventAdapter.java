@@ -20,7 +20,7 @@ import com.checkin.app.checkin.Waiter.Model.WaiterEventModel;
 import com.checkin.app.checkin.session.activesession.chat.SessionChatModel;
 import com.checkin.app.checkin.session.activesession.chat.SessionChatModel.CHAT_EVENT_TYPE;
 import com.checkin.app.checkin.session.activesession.chat.SessionEventBasicModel;
-import com.checkin.app.checkin.session.model.SessionOrderedItemModel;
+import com.checkin.app.checkin.session.models.SessionOrderedItemModel;
 
 import java.util.List;
 

@@ -10,10 +10,10 @@ import com.checkin.app.checkin.Manager.Model.ManagerSessionEventModel
 import com.checkin.app.checkin.User.bills.UserTransactionBriefModel
 import com.checkin.app.checkin.User.bills.UserTransactionDetailsModel
 import com.checkin.app.checkin.Utility.SingletonHolder
-import com.checkin.app.checkin.session.model.QRResultModel
-import com.checkin.app.checkin.session.model.SessionBasicModel
-import com.checkin.app.checkin.session.model.SessionBriefModel
-import com.checkin.app.checkin.session.model.SessionOrderedItemModel
+import com.checkin.app.checkin.session.models.QRResultModel
+import com.checkin.app.checkin.session.models.SessionBasicModel
+import com.checkin.app.checkin.session.models.SessionBriefModel
+import com.checkin.app.checkin.session.models.SessionOrderedItemModel
 import com.fasterxml.jackson.databind.node.ObjectNode
 
 class SessionRepository private constructor(context: Context) : BaseRepository() {

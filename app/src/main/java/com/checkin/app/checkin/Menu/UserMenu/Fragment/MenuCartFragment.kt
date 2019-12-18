@@ -17,10 +17,10 @@ import com.checkin.app.checkin.Menu.Model.OrderedItemModel
 import com.checkin.app.checkin.Menu.UserMenu.Adapter.MenuCartAdapter
 import com.checkin.app.checkin.Menu.UserMenu.Adapter.MenuTreatYourselfAdapter
 import com.checkin.app.checkin.Menu.UserMenu.MenuViewModel
-import com.checkin.app.checkin.misc.fragments.BaseFragment
 import com.checkin.app.checkin.R
 import com.checkin.app.checkin.Utility.Utils
-import com.checkin.app.checkin.session.model.TrendingDishModel
+import com.checkin.app.checkin.misc.fragments.BaseFragment
+import com.checkin.app.checkin.session.models.TrendingDishModel
 import kotlinx.coroutines.launch
 
 class MenuCartFragment : BaseFragment(), MenuCartAdapter.MenuCartInteraction, MenuTreatYourselfAdapter.TreatYourselfInteraction {
@@ -119,7 +119,7 @@ class MenuCartFragment : BaseFragment(), MenuCartAdapter.MenuCartInteraction, Me
         onBackPressed()
     }
 
-    fun onBackPressed(): Boolean {
+    override fun onBackPressed(): Boolean {
         if (fragmentManager != null) {
             fragmentManager!!.beginTransaction()
                     .remove(this)

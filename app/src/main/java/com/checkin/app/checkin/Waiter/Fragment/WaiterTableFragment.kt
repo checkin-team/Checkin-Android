@@ -18,14 +18,14 @@ import com.checkin.app.checkin.Data.Message.MessageObjectModel
 import com.checkin.app.checkin.Data.Message.MessageUtils
 import com.checkin.app.checkin.Data.Resource.Status
 import com.checkin.app.checkin.Menu.ShopMenu.SessionMenuActivity
-import com.checkin.app.checkin.misc.fragments.BaseFragment
 import com.checkin.app.checkin.R
 import com.checkin.app.checkin.Utility.ParentActivityDelegate
 import com.checkin.app.checkin.Utility.Utils
 import com.checkin.app.checkin.Waiter.Model.SessionContactModel
 import com.checkin.app.checkin.Waiter.WaiterTableViewModel
 import com.checkin.app.checkin.Waiter.WaiterWorkViewModel
-import com.checkin.app.checkin.session.model.SessionBriefModel
+import com.checkin.app.checkin.misc.fragments.BaseFragment
+import com.checkin.app.checkin.session.models.SessionBriefModel
 
 class WaiterTableFragment : BaseFragment() {
 

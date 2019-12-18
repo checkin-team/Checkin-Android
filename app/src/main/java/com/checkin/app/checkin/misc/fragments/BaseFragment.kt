@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.annotation.CallSuper
 
 import androidx.annotation.IdRes
 import androidx.annotation.LayoutRes
@@ -20,6 +21,7 @@ abstract class BaseFragment : Fragment() {
     @get:LayoutRes
     protected abstract val rootLayout: Int
 
+    @CallSuper
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         val view = inflater.inflate(rootLayout, container, false)
         unbinder = ButterKnife.bind(this, view)
@@ -31,6 +33,7 @@ abstract class BaseFragment : Fragment() {
         swipeRefreshLayout?.setOnRefreshListener { this.updateScreen() }
     }
 
+    @CallSuper
     protected open fun updateScreen() {}
 
     protected fun startRefreshing() {
@@ -41,8 +44,14 @@ abstract class BaseFragment : Fragment() {
         swipeRefreshLayout?.isRefreshing = false
     }
 
+    open fun onBackPressed(): Boolean = false
+
     override fun onDestroyView() {
         super.onDestroyView()
         unbinder?.unbind()
     }
+}
+
+interface FragmentInteraction {
+    fun onAddFragment(fragment: Fragment, tag: String? = null)
 }

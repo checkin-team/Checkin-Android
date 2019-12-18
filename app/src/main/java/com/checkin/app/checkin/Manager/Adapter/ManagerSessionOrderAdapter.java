@@ -16,7 +16,7 @@ import com.checkin.app.checkin.R;
 import com.checkin.app.checkin.Utility.HeaderFooterRecyclerViewAdapter;
 import com.checkin.app.checkin.Utility.Utils;
 import com.checkin.app.checkin.session.activesession.chat.SessionChatModel;
-import com.checkin.app.checkin.session.model.SessionOrderedItemModel;
+import com.checkin.app.checkin.session.models.SessionOrderedItemModel;
 
 import java.util.List;
 

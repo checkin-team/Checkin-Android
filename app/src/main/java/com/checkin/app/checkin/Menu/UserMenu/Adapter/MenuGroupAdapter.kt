@@ -24,12 +24,11 @@ import butterknife.ButterKnife
 import com.checkin.app.checkin.Menu.MenuItemInteraction
 import com.checkin.app.checkin.Menu.Model.MenuGroupModel
 import com.checkin.app.checkin.Menu.Model.MenuItemModel
-import com.checkin.app.checkin.Menu.UserMenu.Fragment.MenuItemsHolder
 import com.checkin.app.checkin.R
 import com.checkin.app.checkin.Utility.GlideApp
 import com.checkin.app.checkin.Utility.HeaderFooterRecyclerViewAdapter
 import com.checkin.app.checkin.Utility.Utils
-import com.checkin.app.checkin.session.model.TrendingDishModel
+import com.checkin.app.checkin.session.models.TrendingDishModel
 import com.facebook.shimmer.ShimmerFrameLayout
 import com.google.android.material.tabs.TabLayout
 
@@ -214,7 +213,6 @@ class MenuGroupAdapter(private var mGroupList: List<MenuGroupModel>?, private va
 
             collapsedCs = ConstraintSet().apply { clone(containerMenuGroup) }
             expandedCs = ConstraintSet().apply { clone(itemView.context, R.layout.item_as_menu_group_expanded) }
-
         }
 
         internal fun applyState(state: Int, animate: Boolean = true) {
@@ -322,7 +320,7 @@ class MenuGroupAdapter(private var mGroupList: List<MenuGroupModel>?, private va
 
         override fun getCount(): Int = mListItems.size
 
-        override fun instantiateItem(container: ViewGroup, position: Int): Any = MenuItemsHolder(mListItems[position], mListener, container).getView().apply { container.addView(this) }
+        override fun instantiateItem(container: ViewGroup, position: Int): Any = 1//MenuItemsHolder(mListItems[position], mListener, container).getView().apply { container.addView(this) }
 
         override fun destroyItem(container: ViewGroup, position: Int, obj: Any) {
             container.removeView(obj as View)

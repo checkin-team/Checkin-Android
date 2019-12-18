@@ -6,16 +6,15 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.checkin.app.checkin.R;
-import com.checkin.app.checkin.Utility.Utils;
-import com.checkin.app.checkin.session.model.TrendingDishModel;
-
-
-import java.util.List;
-import java.util.Locale;
-
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
+
+import com.checkin.app.checkin.R;
+import com.checkin.app.checkin.Utility.Utils;
+import com.checkin.app.checkin.session.models.TrendingDishModel;
+
+import java.util.List;
+
 import butterknife.BindView;
 import butterknife.ButterKnife;
 

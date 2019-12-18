@@ -13,8 +13,6 @@ import com.checkin.app.checkin.Manager.Model.ManagerSessionInvoiceModel
 import com.checkin.app.checkin.Manager.Model.ManagerStatsModel
 import com.checkin.app.checkin.Menu.Model.MenuModel
 import com.checkin.app.checkin.Menu.Model.OrderedItemModel
-import com.checkin.app.checkin.misc.models.GenericDetailModel
-import com.checkin.app.checkin.misc.paytm.PaytmModel
 import com.checkin.app.checkin.Search.SearchResultPeopleModel
 import com.checkin.app.checkin.Search.SearchResultShopModel
 import com.checkin.app.checkin.Shop.Private.Finance.FinanceModel
@@ -33,8 +31,10 @@ import com.checkin.app.checkin.User.bills.NewReviewModel
 import com.checkin.app.checkin.User.bills.UserTransactionBriefModel
 import com.checkin.app.checkin.User.bills.UserTransactionDetailsModel
 import com.checkin.app.checkin.Waiter.Model.*
+import com.checkin.app.checkin.misc.models.GenericDetailModel
+import com.checkin.app.checkin.misc.paytm.PaytmModel
 import com.checkin.app.checkin.session.activesession.chat.SessionChatModel
-import com.checkin.app.checkin.session.model.*
+import com.checkin.app.checkin.session.models.*
 import com.fasterxml.jackson.databind.node.ArrayNode
 import com.fasterxml.jackson.databind.node.ObjectNode
 import okhttp3.MultipartBody

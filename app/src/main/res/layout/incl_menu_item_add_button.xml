@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="utf-8"?>
+<merge xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <FrameLayout
+        android:layout_width="55dp"
+        android:layout_height="wrap_content"
+        android:background="@drawable/strip_background_menu_item_add"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/tv_menu_item_add"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_gravity="center"
+            android:clickable="true"
+            android:focusable="true"
+            android:fontFamily="@font/arial_rounded_mt_bold"
+            android:paddingStart="@dimen/spacing_tiny"
+            android:paddingEnd="@dimen/spacing_tiny"
+            android:text="ADD"
+            android:textAlignment="center"
+            android:textColor="@color/greenish_teal"
+            android:textSize="@dimen/font_extra_small" />
+
+        <RelativeLayout
+            android:id="@+id/container_menu_item_add_quantity"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_gravity="center">
+
+            <ImageView
+                android:id="@+id/im_menu_item_quantity_decrement"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentStart="true"
+                android:layout_centerVertical="true"
+                android:layout_marginStart="2dp"
+                android:clickable="true"
+                android:focusable="true"
+                android:src="@drawable/ic_menu_item_add_minus" />
+
+            <View
+                android:layout_width="0.5dp"
+                android:layout_height="15dp"
+                android:layout_centerVertical="true"
+                android:layout_toEndOf="@id/im_menu_item_quantity_decrement"
+                android:background="#cdcccc" />
+
+            <TextView
+                android:id="@+id/tv_menu_item_add_quantity"
+                style="@style/GreySmallBoldTextStyle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerInParent="true"
+                android:fontFamily="@font/arial_rounded_mt_bold"
+                tools:text="2" />
+
+            <View
+                android:layout_width="0.5dp"
+                android:layout_height="15dp"
+                android:layout_centerVertical="true"
+                android:layout_toStartOf="@id/im_menu_item_quantity_increment"
+                android:background="#cdcccc" />
+
+            <ImageView
+                android:id="@+id/im_menu_item_quantity_increment"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentEnd="true"
+                android:layout_centerVertical="true"
+                android:layout_marginEnd="2dp"
+                android:clickable="true"
+                android:focusable="true"
+                android:src="@drawable/ic_menu_item_add_plus" />
+        </RelativeLayout>
+
+    </FrameLayout>
+</merge>

@@ -1,71 +1,90 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="@dimen/height_menu_bestseller_item"
-    android:layout_marginEnd="@dimen/spacing_extra_small"
-    android:layout_marginBottom="@dimen/spacing_extra_small"
-    android:background="@drawable/rounded_rectangle_white"
-    android:orientation="vertical"
-    android:padding="@dimen/spacing_extra_small">
+    android:layout_height="@dimen/height_menu_bestseller_item">
 
     <FrameLayout
+        android:id="@+id/cv_menu_item_bestseller"
         android:layout_width="match_parent"
-        android:layout_height="@dimen/height_menu_bestseller_item_thumbnail">
-        <ImageView
-            android:id="@+id/im_menu_dish"
+        android:layout_height="match_parent"
+        android:layout_margin="@dimen/spacing_extra_tiny">
+
+        <androidx.cardview.widget.CardView
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:src="@drawable/ic_action_clean_table" />
+            android:background="@drawable/rounded_rectangle_white"
+            android:padding="@dimen/spacing_extra_small"
+            app:cardCornerRadius="@dimen/card_corner_radius_small"
+            app:cardElevation="@dimen/card_elevation">
 
-        <TextView
-            style="@style/WhiteSmallTextStyle"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="top"
-            android:layout_marginTop="@dimen/spacing_tiny"
-            android:background="@color/primary_red"
-            android:paddingStart="@dimen/spacing_tiny"
-            android:paddingTop="@dimen/spacing_elevation_fix_extreme_tiny"
-            android:paddingEnd="@dimen/spacing_tiny"
-            android:text="BESTSELLER"
-            android:textSize="@dimen/font_tiny" />
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+                <ImageView
+                    android:id="@+id/im_menu_bestseller_item_photo"
+                    android:layout_width="0dp"
+                    android:layout_height="0dp"
+                    android:scaleType="centerCrop"
+                    app:layout_constraintBottom_toTopOf="@id/tv_menu_bestseller_item_name"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    tools:src="@drawable/ic_action_clean_table" />
+
+                <TextView
+                    android:id="@+id/tv_menu_bestseller_item_name"
+                    style="@style/GreySmallBoldTextStyle"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/spacing_extra_small"
+                    android:layout_marginBottom="@dimen/spacing_small"
+                    android:ellipsize="end"
+                    android:maxLines="2"
+                    app:layout_constraintBottom_toTopOf="@id/tv_menu_bestseller_item_price"
+                    app:layout_constraintStart_toStartOf="@id/tv_menu_bestseller_item_price"
+                    app:layout_constraintTop_toBottomOf="@id/im_menu_bestseller_item_photo"
+                    tools:text="Paneer Butter Masala" />
+
+
+                <TextView
+                    android:id="@+id/tv_menu_bestseller_item_price"
+                    style="@style/GreySmallBoldTextStyle"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/spacing_small"
+                    android:layout_marginBottom="@dimen/spacing_small"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    tools:text="$ 234" />
+
+                <FrameLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="@dimen/spacing_small"
+                    android:layout_marginBottom="@dimen/spacing_small"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent">
+
+                    <include layout="@layout/incl_menu_item_add_button" />
+                </FrameLayout>
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+        </androidx.cardview.widget.CardView>
     </FrameLayout>
 
     <TextView
-        android:id="@+id/im_menu_dish_name"
-        style="@style/GreySmallTextStyle"
-        android:layout_width="match_parent"
+        style="@style/WhiteExtraSmallTextStyle"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/spacing_extra_small"
-        android:ellipsize="end"
-        android:maxLines="2"
-        tools:text="Paneer Butter Masala" />
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/spacing_tiny">
-
-        <TextView
-            android:id="@+id/tv_menu_dish_price"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            tools:text="$ 234" />
-
-        <TextView
-            style="@style/RedSmallTextStyle"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:background="@drawable/bordered_small_green_stroke"
-            android:paddingStart="@dimen/spacing_extra_small"
-            android:paddingTop="@dimen/spacing_extra_tiny"
-            android:textColor="@color/apple_green"
-            android:paddingEnd="@dimen/spacing_extra_small"
-            android:paddingBottom="@dimen/spacing_extra_tiny"
-            android:text="Add" />
-
-    </LinearLayout>
-
-</LinearLayout>
+        android:layout_alignTop="@id/cv_menu_item_bestseller"
+        android:layout_gravity="top|start"
+        android:layout_marginTop="@dimen/spacing_extra_tiny"
+        android:background="@drawable/strip_background_menu_bestseller"
+        android:fontFamily="@font/josefinsans_bold"
+        android:gravity="center"
+        android:paddingBottom="@dimen/spacing_tiny"
+        android:text="BESTSELLER" />
+</RelativeLayout>

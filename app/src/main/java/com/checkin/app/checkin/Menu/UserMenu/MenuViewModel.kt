@@ -2,16 +2,18 @@ package com.checkin.app.checkin.Menu.UserMenu
 
 import android.app.Application
 import android.os.Handler
-import androidx.lifecycle.*
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.MediatorLiveData
+import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.Transformations
 import com.checkin.app.checkin.Data.BaseViewModel
 import com.checkin.app.checkin.Data.Resource
 import com.checkin.app.checkin.Menu.MenuRepository
 import com.checkin.app.checkin.Menu.Model.*
 import com.checkin.app.checkin.session.activesession.ActiveSessionRepository
-import com.checkin.app.checkin.session.model.TrendingDishModel
+import com.checkin.app.checkin.session.models.TrendingDishModel
 import com.fasterxml.jackson.databind.node.ArrayNode
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import java.util.ArrayList
 import kotlin.Comparator

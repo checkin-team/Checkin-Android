@@ -1,6 +1,6 @@
 package com.checkin.app.checkin.Manager.Model;
 
-import com.checkin.app.checkin.session.model.SessionInvoiceModel;
+import com.checkin.app.checkin.session.models.SessionInvoiceModel;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 import java.util.Locale;

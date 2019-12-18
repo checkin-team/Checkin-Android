@@ -86,8 +86,8 @@
 
     <ImageView
         android:id="@+id/im_as_menu_drop_down"
-        android:layout_width="@dimen/width_small_icon"
-        android:layout_height="@dimen/width_small_icon"
+        android:layout_width="wrap_content"
+        android:layout_height="@dimen/size_tiny_button"
         android:layout_gravity="center"
         android:layout_marginEnd="@dimen/spacing_small"
         android:layout_marginBottom="@dimen/spacing_extra_small"

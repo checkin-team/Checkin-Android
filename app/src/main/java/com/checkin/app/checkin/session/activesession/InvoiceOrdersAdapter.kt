@@ -10,7 +10,7 @@ import butterknife.BindView
 import butterknife.ButterKnife
 import com.checkin.app.checkin.R
 import com.checkin.app.checkin.Utility.Utils
-import com.checkin.app.checkin.session.model.SessionOrderedItemModel
+import com.checkin.app.checkin.session.models.SessionOrderedItemModel
 
 class InvoiceOrdersAdapter(private var mOrderedItems: List<SessionOrderedItemModel>?, private val mClickListener: OrderedItemClick?) : RecyclerView.Adapter<InvoiceOrdersAdapter.ViewHolder>() {
 

@@ -4,16 +4,6 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.TextView;
 
-import com.checkin.app.checkin.Data.Resource;
-import com.checkin.app.checkin.misc.fragments.BaseFragment;
-import com.checkin.app.checkin.R;
-import com.checkin.app.checkin.session.activesession.chat.SessionChatModel;
-import com.checkin.app.checkin.session.model.SessionOrderedItemModel;
-import com.checkin.app.checkin.Utility.Utils;
-import com.checkin.app.checkin.Waiter.Model.WaiterEventModel;
-import com.checkin.app.checkin.Waiter.WaiterEventAdapter;
-import com.checkin.app.checkin.Waiter.WaiterTableViewModel;
-
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.core.widget.NestedScrollView;
@@ -21,6 +11,17 @@ import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProviders;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+
+import com.checkin.app.checkin.Data.Resource;
+import com.checkin.app.checkin.R;
+import com.checkin.app.checkin.Utility.Utils;
+import com.checkin.app.checkin.Waiter.Model.WaiterEventModel;
+import com.checkin.app.checkin.Waiter.WaiterEventAdapter;
+import com.checkin.app.checkin.Waiter.WaiterTableViewModel;
+import com.checkin.app.checkin.misc.fragments.BaseFragment;
+import com.checkin.app.checkin.session.activesession.chat.SessionChatModel;
+import com.checkin.app.checkin.session.models.SessionOrderedItemModel;
+
 import butterknife.BindView;
 
 public class WaiterTableEventFragment extends BaseFragment implements WaiterEventAdapter.WaiterEventInteraction {

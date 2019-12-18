@@ -18,7 +18,7 @@ import com.checkin.app.checkin.Menu.Model.MenuModel;
 import com.checkin.app.checkin.Menu.Model.OrderedItemModel;
 import com.checkin.app.checkin.Utility.SourceMappedLiveData;
 import com.checkin.app.checkin.session.activesession.ActiveSessionRepository;
-import com.checkin.app.checkin.session.model.TrendingDishModel;
+import com.checkin.app.checkin.session.models.TrendingDishModel;
 import com.fasterxml.jackson.databind.node.ArrayNode;
 
 import java.util.ArrayList;

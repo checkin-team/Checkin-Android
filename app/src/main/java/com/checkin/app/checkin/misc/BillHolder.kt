@@ -8,7 +8,7 @@ import butterknife.BindView
 import butterknife.ButterKnife
 import com.checkin.app.checkin.R
 import com.checkin.app.checkin.Utility.Utils
-import com.checkin.app.checkin.session.model.SessionBillModel
+import com.checkin.app.checkin.session.models.SessionBillModel
 
 class BillHolder(itemView: View) {
     @BindView(R.id.tv_invoice_subtotal)
