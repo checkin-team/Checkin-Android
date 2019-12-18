@@ -10,6 +10,7 @@ import com.checkin.app.checkin.Inventory.Model.InventoryAvailabilityModel
 import com.checkin.app.checkin.Inventory.Model.InventoryModel
 import com.checkin.app.checkin.Manager.Model.ManagerSessionEventModel
 import com.checkin.app.checkin.Manager.Model.ManagerSessionInvoiceModel
+import com.checkin.app.checkin.Manager.Model.ManagerSessionScheduledModel
 import com.checkin.app.checkin.Manager.Model.ManagerStatsModel
 import com.checkin.app.checkin.Menu.Model.MenuModel
 import com.checkin.app.checkin.Menu.Model.OrderedItemModel
@@ -134,6 +135,8 @@ interface WebApiService {
     @get:GET("sessions/customer/scheduled/")
     val customerScheduledSessions: Call<List<ScheduledLiveSessionDetailModel>>
 
+    @GET("sessions/restaurant/{restaurant_id}/scheduled")
+    fun managerScheduledSession(@Path("restaurant_id") restaurantId:Long): Call<List<ManagerSessionScheduledModel>>
     // endregion
 
     // region MISC
@@ -234,6 +237,7 @@ interface WebApiService {
 
     @GET("restaurants/{restaurant_id}/finance/")
     fun getRestaurantFinanceById(@Path("restaurant_id") restaurantId: Long): Call<FinanceModel>
+
 
     @POST("sessions/manage/{session_id}/contacts/")
     fun postSessionContact(@Path("session_id") sessionId: Long, @Body data: SessionContactModel): Call<ObjectNode>

@@ -7,6 +7,7 @@ import com.checkin.app.checkin.Data.*
 import com.checkin.app.checkin.Home.model.ActiveLiveSessionDetailModel
 import com.checkin.app.checkin.Home.model.ScheduledLiveSessionDetailModel
 import com.checkin.app.checkin.Manager.Model.ManagerSessionEventModel
+import com.checkin.app.checkin.Manager.Model.ManagerSessionScheduledModel
 import com.checkin.app.checkin.User.bills.UserTransactionBriefModel
 import com.checkin.app.checkin.User.bills.UserTransactionDetailsModel
 import com.checkin.app.checkin.Utility.SingletonHolder
@@ -159,13 +160,13 @@ class SessionRepository private constructor(context: Context) : BaseRepository()
         }.asLiveData
     }
 
-    fun getScheduledSessions(): LiveData<Resource<List<ScheduledLiveSessionDetailModel>>> {
-        return object : NetworkBoundResource<List<ScheduledLiveSessionDetailModel>, List<ScheduledLiveSessionDetailModel>>() {
+    fun getScheduledSessions(resturant_id:Long): LiveData<Resource<List<ManagerSessionScheduledModel>>> {
+        return object : NetworkBoundResource<List<ManagerSessionScheduledModel>, List<ManagerSessionScheduledModel>>() {
             override fun shouldUseLocalDb(): Boolean = false
 
-            override fun createCall() = RetrofitLiveData(mWebService.customerScheduledSessions)
+            override fun createCall() = RetrofitLiveData(mWebService.managerScheduledSession(resturant_id))
 
-            override fun saveCallResult(data: List<ScheduledLiveSessionDetailModel>?) {
+            override fun saveCallResult(data: List<ManagerSessionScheduledModel>?) {
             }
 
         }.asLiveData

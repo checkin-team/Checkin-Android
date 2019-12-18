@@ -13,6 +13,7 @@ import com.checkin.app.checkin.Data.Converters;
 import com.checkin.app.checkin.Data.Resource;
 import com.checkin.app.checkin.Manager.Model.ManagerSessionEventModel;
 import com.checkin.app.checkin.Manager.Model.ManagerSessionInvoiceModel;
+import com.checkin.app.checkin.Manager.Model.ManagerSessionScheduledModel;
 import com.checkin.app.checkin.Misc.GenericDetailModel;
 import com.checkin.app.checkin.Utility.SourceMappedLiveData;
 import com.checkin.app.checkin.Waiter.Model.OrderStatusModel;
@@ -51,9 +52,9 @@ public class ManagerSessionViewModel extends BaseViewModel {
     private SourceMappedLiveData<Resource<List<OrderStatusModel>>> mResultOrderStatus = createNetworkLiveData();
     private SourceMappedLiveData<Resource<ManagerSessionInvoiceModel>> mInvoiceData = createNetworkLiveData();
     private SourceMappedLiveData<Resource<ObjectNode>> mSwitchTableData = createNetworkLiveData();
+    private SourceMappedLiveData<Resource<ManagerSessionScheduledModel>> mManagerScheduledData=createNetworkLiveData();
 
     private MutableLiveData<List<OrderStatusModel>> mNewOrderStatus = new MutableLiveData<>();
-
     private boolean discountInINR;
     private long mSessionPk;
     private long mShopPk;
@@ -117,6 +118,11 @@ public class ManagerSessionViewModel extends BaseViewModel {
 
     public LiveData<Resource<GenericDetailModel>> getDetailData() {
         return mDetailData;
+    }
+
+    public void fetchManagerSessionScheduledLiveData(long sessionId){
+       // mManagerScheduledData.addSource(mSessionRepository.getScheduledSessions(sessionId), mManagerScheduledData::setValue);
+
     }
 
     public void fetchSessionBriefData(long sessionId) {

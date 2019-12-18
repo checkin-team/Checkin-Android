@@ -1,0 +1,134 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_margin="@dimen/spacing_tiny"
+    app:cardCornerRadius="@dimen/card_corner_radius_small"
+    app:cardElevation="0dp"
+    android:layout_height="133dp">
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:background="#e7fcff"
+            android:layout_above="@id/ll"
+            android:layout_height="match_parent">
+
+            <de.hdodenhof.circleimageview.CircleImageView
+                android:id="@+id/tv_item_manager_account_customer_image"
+                style="@style/LogoImageStyle"
+                android:layout_marginStart="36dp"
+                android:src="@drawable/dummy_alex"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintVertical_bias="0.483"
+                app:srcCompat="@drawable/cover_restaurant_unknown" />
+
+            <TextView
+                android:id="@+id/item_manager_account_customer_name"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="20dp"
+                android:textColor="#6d6d6d"
+
+                android:text="Shivansh Saini"
+                android:fontFamily="@font/josefinsans_semibold"
+                android:textSize="@dimen/font_large"
+                app:layout_constraintStart_toEndOf="@+id/tv_item_manager_account_customer_image"
+                app:layout_constraintTop_toTopOf="@+id/tv_item_manager_account_customer_image" />
+
+            <TextView
+                android:id="@+id/item_manager_account_customer_details"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="#6d6d6d"
+                android:layout_marginTop="12dp"
+                android:layout_marginBottom="13dp"
+                android:fontFamily="@font/josefinsans_regular"
+                android:text="Jan 1 | 3:30 PM | table for 2"
+                app:layout_constraintBottom_toBottomOf="@+id/tv_item_manager_account_customer_image"
+                app:layout_constraintStart_toStartOf="@+id/item_manager_account_customer_name"
+                app:layout_constraintTop_toBottomOf="@+id/item_manager_account_customer_name"
+                app:layout_constraintVertical_bias="1.0" />
+
+            <TextView
+                android:id="@+id/textView3"
+                android:layout_width="0dp"
+                android:textSize="@dimen/font_small"
+                android:layout_marginTop="4dp"
+                android:layout_marginRight="4dp"
+                android:layout_height="wrap_content"
+                android:textColor="@color/white"
+                android:textAlignment="textEnd"
+                android:text="Now"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
+        <LinearLayout
+            android:id="@+id/ll"
+            android:orientation="horizontal"
+            android:layout_alignParentBottom="true"
+            android:layout_width="match_parent"
+
+            android:layout_height="40dp">
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_weight="1"
+                android:textAllCaps="false"
+                android:textSize="15sp"
+                android:background="@color/white"
+                android:textColor="@color/pinkish_grey"
+                android:text="Gest about to reach"
+                style="@style/Widget.AppCompat.Button.Borderless"
+                android:layout_height="match_parent"/>
+
+            <FrameLayout
+                android:id="@+id/item_manager_account_food_served"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_gravity="center"
+                android:layout_weight="1"
+                android:background="#32c282"
+                android:gravity="center"
+                >
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
+
+                    <TextView
+                        android:id="@+id/textView4"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+
+                        android:text="Food served"
+                        android:textColor="@color/white"
+                        android:textSize="15sp"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintHorizontal_bias="0.595"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:layout_constraintVertical_bias="0.521" />
+
+                    <ImageView
+                        android:layout_width="15dp"
+                        android:layout_height="15dp"
+                        android:src="@drawable/ic_noun_waiter_1473037"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        android:layout_marginRight="@dimen/spacing_normal"
+
+                        app:layout_constraintEnd_toStartOf="@+id/textView4"
+                        app:layout_constraintTop_toTopOf="parent" />
+                </androidx.constraintlayout.widget.ConstraintLayout>
+            </FrameLayout>
+
+
+        </LinearLayout>
+    </RelativeLayout>
+
+</androidx.cardview.widget.CardView>

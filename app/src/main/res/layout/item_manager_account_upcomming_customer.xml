@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="100dp"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_margin="@dimen/spacing_small"
+    app:cardCornerRadius="@dimen/spacing_small"
+    app:cardElevation="0dp"
+    android:orientation="vertical">
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <de.hdodenhof.circleimageview.CircleImageView
+            android:id="@+id/tv_item_manager_account_customer_image"
+            android:layout_width="65dp"
+            android:layout_height="65dp"
+            android:layout_marginStart="28dp"
+            android:src="@drawable/dummy_alex"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.514" />
+
+        <TextView
+            android:id="@+id/item_manager_account_customer_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="20dp"
+            android:text="Shivansh Saini"
+            android:fontFamily="@font/josefinsans_semibold"
+            android:textSize="@dimen/font_large"
+            app:layout_constraintStart_toEndOf="@+id/tv_item_manager_account_customer_image"
+            app:layout_constraintTop_toTopOf="@+id/tv_item_manager_account_customer_image" />
+
+        <TextView
+            android:id="@+id/item_manager_account_customer_details"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="12dp"
+            android:layout_marginBottom="13dp"
+            android:fontFamily="@font/josefinsans_regular"
+            android:text="Jan 1 | 3:30 PM | table for 2"
+            app:layout_constraintBottom_toBottomOf="@+id/tv_item_manager_account_customer_image"
+            app:layout_constraintStart_toStartOf="@+id/item_manager_account_customer_name"
+            app:layout_constraintTop_toBottomOf="@+id/item_manager_account_customer_name" />
+
+        <TextView
+            android:id="@+id/tv_restaurant_banner_navigate"
+            style="@style/GreySmallTextStyle"
+            android:layout_width="wrap_content"
+            android:layout_height="@dimen/button_height_tiny"
+            android:layout_marginRight="8dp"
+            android:layout_marginTop="2dp"
+            android:background="@drawable/background_pinkish_grey_stroke"
+            android:clickable="true"
+            android:drawableStart="@drawable/ic_telephone_auricular_with_cable"
+            android:drawablePadding="@dimen/spacing_extra_tiny"
+            android:focusable="true"
+            android:gravity="center_vertical"
+            android:paddingStart="@dimen/spacing_tiny"
+            android:paddingEnd="@dimen/spacing_tiny"
+            android:text="Call"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:ignore="RtlSymmetry" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</androidx.cardview.widget.CardView>
