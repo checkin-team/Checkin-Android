@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     android:background="@color/white_two"
     android:fitsSystemWindows="true"
-    android:theme="@style/AppThemeWithBar">
+    android:theme="@style/AppTheme">
 
     <com.google.android.material.appbar.AppBarLayout
         android:id="@+id/appbar_restaurant_public"
@@ -14,7 +14,7 @@
         android:layout_height="wrap_content"
         android:background="@color/white_two"
         android:fitsSystemWindows="true"
-        android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar">
+        android:theme="@style/Theme.Native.Blue.AppBar">
 
         <com.google.android.material.appbar.CollapsingToolbarLayout
             android:layout_width="match_parent"
@@ -31,7 +31,6 @@
                 android:layout_height="@dimen/height_toolbar"
                 android:layout_gravity="top"
                 android:layout_marginBottom="@dimen/height_toolbar"
-                android:background="@android:color/transparent"
                 app:layout_collapseMode="pin"
                 app:popupTheme="@style/ThemeOverlay.AppCompat.Light" />
 
@@ -85,16 +84,23 @@
         </LinearLayout>
     </androidx.core.widget.NestedScrollView>
 
-    <com.checkin.app.checkin.session.scheduled.ScheduledSessionCartView
-        android:id="@+id/scheduled_cart_restaurant_public"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        app:behavior_hideable="false"
-        app:behavior_peekHeight="@dimen/height_cart_header_topbar"
-        app:layout_behavior="com.google.android.material.bottomsheet.BottomSheetBehavior" />
-
     <include
         layout="@layout/incl_activity_base"
         android:layout_width="match_parent"
         android:layout_height="match_parent" />
+
+    <androidx.coordinatorlayout.widget.CoordinatorLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_gravity="bottom"
+        android:layout_marginTop="96dp">
+
+        <com.checkin.app.checkin.session.scheduled.ScheduledSessionCartView
+            android:id="@+id/scheduled_cart_restaurant_public"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            app:behavior_hideable="false"
+            app:behavior_peekHeight="@dimen/height_cart_header_topbar"
+            app:layout_behavior="com.checkin.app.checkin.Utility.LockableBottomSheetBehavior" />
+    </androidx.coordinatorlayout.widget.CoordinatorLayout>
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

@@ -1,4 +1,4 @@
-package com.checkin.app.checkin.Shop
+package com.checkin.app.checkin.restaurant.models
 
 import com.checkin.app.checkin.misc.models.LocationModel
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties

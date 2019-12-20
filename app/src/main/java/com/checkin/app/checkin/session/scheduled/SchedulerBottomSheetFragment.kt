@@ -7,6 +7,7 @@ import android.view.ViewStub
 import android.widget.Button
 import android.widget.LinearLayout
 import android.widget.TextView
+import androidx.core.content.ContextCompat
 import butterknife.BindView
 import butterknife.ButterKnife
 import com.checkin.app.checkin.R
@@ -46,6 +47,7 @@ class SchedulerBottomSheetFragment : BaseBottomSheetFragment(), TimePickerDialog
         val diffMinutes = listOf(15 - nowMinutes, 30 - nowMinutes, 45 - nowMinutes, 60 - nowMinutes).find { it >= 0 }
                 ?: 0
         minCalendar.add(Calendar.MINUTE, diffMinutes)
+        mPickedCalendar = minCalendar
         setMinTime(minCalendar[Calendar.HOUR_OF_DAY], minCalendar[Calendar.MINUTE], 0)
         setTimeInterval(1, 15)
     }
@@ -62,7 +64,7 @@ class SchedulerBottomSheetFragment : BaseBottomSheetFragment(), TimePickerDialog
                 DateHolder(mNextCalendars[3], view.findViewById<ViewStub>(R.id.stub_scheduled_date_4).inflate()),
                 DateHolder(mNextCalendars[4], view.findViewById<ViewStub>(R.id.stub_scheduled_date_5).inflate())
         )
-
+        mHolders[0].select()
         setupUi()
     }
 
@@ -129,13 +131,23 @@ class SchedulerBottomSheetFragment : BaseBottomSheetFragment(), TimePickerDialog
             tvDate.setOnClickListener {
                 val oldValue = it.isSelected
                 resetDateSelection()
-                if (!oldValue) it.isSelected = true
+                if (!oldValue) {
+                    it.isSelected = true
+                    tvDate.setTextColor(ContextCompat.getColor(context!!, R.color.white))
+                    tvDay.setTextColor(ContextCompat.getColor(context!!, R.color.brownish_grey))
+                }
                 updateCalendar(calendar)
             }
         }
 
+        fun select() {
+            tvDate.performClick()
+        }
+
         fun resetSelection() {
             tvDate.isSelected = false
+            tvDate.setTextColor(ContextCompat.getColor(context!!, R.color.brownish_grey))
+            tvDate.setTextColor(ContextCompat.getColor(context!!, R.color.pinkish_grey))
         }
     }
 

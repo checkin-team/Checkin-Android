@@ -240,4 +240,6 @@
     <string name="format_live_session_predining_message">Hi %s, you have dine-in scheduled.</string>
     <string name="msg_order_status_in_progress">Food is being prepared</string>
     <string name="msg_order_status_being_served">Food is being served</string>
+    <string name="text_error_network_disconnected">Slow or no internet connection\nPlease check your internet settings</string>
+    <string name="button_label_try_again">Try Again</string>
 </resources>

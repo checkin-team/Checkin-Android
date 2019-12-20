@@ -11,8 +11,8 @@ import com.checkin.app.checkin.Home.fragment.QsrLiveSessionViewHolder
 import com.checkin.app.checkin.Home.model.LiveSessionDetailModel
 import com.checkin.app.checkin.Home.model.SessionType
 import com.checkin.app.checkin.R
-import com.checkin.app.checkin.Shop.RestaurantLocationModel
 import com.checkin.app.checkin.Utility.BaseViewHolder
+import com.checkin.app.checkin.restaurant.models.RestaurantLocationModel
 
 class LiveSessionTrackerAdapter(val interactionListener: LiveSessionTrackerInteraction) : RecyclerView.Adapter<LiveSessionViewHolder<LiveSessionDetailModel>>() {
     private val mSessionsData = mutableListOf<LiveSessionDetailModel>()

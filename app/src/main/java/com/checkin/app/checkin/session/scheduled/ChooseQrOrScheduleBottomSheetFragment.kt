@@ -25,6 +25,10 @@ class ChooseQrOrScheduleBottomSheetFragment : BaseBottomSheetFragment() {
         dismiss()
         listener.onChooseSchedule()
     }
+
+    companion object {
+        const val FRAGMENT_TAG = "new_session"
+    }
 }
 
 interface NewSessionCreationInteraction {

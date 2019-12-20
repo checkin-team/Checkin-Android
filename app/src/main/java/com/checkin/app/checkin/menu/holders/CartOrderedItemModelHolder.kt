@@ -1,6 +1,7 @@
 package com.checkin.app.checkin.menu.holders
 
 import android.view.View
+import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
 import butterknife.BindView
@@ -34,6 +35,10 @@ abstract class CartOrderedItemModelHolder : EpoxyModelWithHolder<CartOrderedItem
         internal lateinit var tvCustomize: TextView
         @BindView(R.id.tv_cart_ordered_item_price)
         internal lateinit var tvItemPrice: TextView
+        @BindView(R.id.container_menu_item_add_quantity)
+        internal lateinit var containerAddQuantity: ViewGroup
+        @BindView(R.id.tv_menu_item_add)
+        internal lateinit var tvMenuItemAdd: TextView
         @BindView(R.id.tv_menu_item_add_quantity)
         internal lateinit var tvItemQuantity: TextView
         @BindView(R.id.im_menu_item_quantity_increment)
@@ -57,6 +62,12 @@ abstract class CartOrderedItemModelHolder : EpoxyModelWithHolder<CartOrderedItem
             tvItemQuantity.text = data.quantity.toString()
             tvItemPrice.text = Utils.formatCurrencyAmount(context, data.cost)
             imItemType.setImageResource(if (!data.itemModel.isVegetarian) R.drawable.ic_non_veg else R.drawable.ic_veg)
+            showAddQuantity()
+        }
+
+        fun showAddQuantity() {
+            containerAddQuantity.visibility = View.VISIBLE
+            tvMenuItemAdd.visibility = View.GONE
         }
     }
 }

@@ -3,8 +3,8 @@ package com.checkin.app.checkin.Data
 import android.content.Context
 import com.checkin.app.checkin.Menu.Model.*
 import com.checkin.app.checkin.MyObjectBox
-import com.checkin.app.checkin.Shop.RestaurantLocationModel
 import com.checkin.app.checkin.menu.models.CartStatusModel
+import com.checkin.app.checkin.restaurant.models.RestaurantBriefModel
 import io.objectbox.Box
 import io.objectbox.BoxStore
 
@@ -13,11 +13,7 @@ object AppDatabase {
 
     private fun getBoxStore(context: Context?): BoxStore? {
         if (mBoxStore == null) {
-            synchronized(AppDatabase::class.java) {
-                if (mBoxStore == null) {
-                    mBoxStore = MyObjectBox.builder().androidContext(context!!).buildDefault()
-                }
-            }
+            mBoxStore = MyObjectBox.builder().androidContext(context!!).buildDefault()
         }
         return mBoxStore
     }
@@ -48,7 +44,7 @@ object AppDatabase {
     }
 
     @JvmStatic
-    fun getRestaurantLocationModel(context: Context?): Box<RestaurantLocationModel> = getBoxStore(context)!!.boxFor(RestaurantLocationModel::class.java)
+    fun getRestaurantBriefModel(context: Context?): Box<RestaurantBriefModel> = getBoxStore(context)!!.boxFor(RestaurantBriefModel::class.java)
 
     @JvmStatic
     fun getCartStatusModel(context: Context?): Box<CartStatusModel> = getBoxStore(context)!!.boxFor(CartStatusModel::class.java)

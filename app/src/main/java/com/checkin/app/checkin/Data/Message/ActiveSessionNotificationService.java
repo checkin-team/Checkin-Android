@@ -13,9 +13,9 @@ import androidx.core.app.NotificationCompat;
 
 import com.bumptech.glide.request.target.NotificationTarget;
 import com.checkin.app.checkin.Menu.UserMenu.SessionMenuActivity;
-import com.checkin.app.checkin.misc.models.BriefModel;
 import com.checkin.app.checkin.R;
 import com.checkin.app.checkin.Utility.GlideApp;
+import com.checkin.app.checkin.misc.models.BriefModel;
 import com.checkin.app.checkin.session.activesession.ActiveSessionActivity;
 
 public class ActiveSessionNotificationService extends Service {
@@ -54,7 +54,7 @@ public class ActiveSessionNotificationService extends Service {
     private void showNotification(Intent intent) {
         BriefModel restaurantDetail = (BriefModel) intent.getSerializableExtra(ACTIVE_RESTAURANT_DETAIL);
         mSessionPk = intent.getLongExtra(ACTIVE_SESSION_PK, 0);
-        mRestaurantPk = Long.parseLong(restaurantDetail.getPk());
+        mRestaurantPk = restaurantDetail.getPk();
         if (mSessionPk == 0) return;
 
         String restaurant_name = "At " + restaurantDetail.getDisplayName();

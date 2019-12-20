@@ -307,7 +307,7 @@ public class ActiveSessionRepository extends BaseRepository {
         return mWebService.postPaytmCallback(data);
     }
 
-    public LiveData<Resource<GenericDetailModel>> acceptSessionMemberRequest(String userId) {
+    public LiveData<Resource<GenericDetailModel>> acceptSessionMemberRequest(long userId) {
         return new NetworkBoundResource<GenericDetailModel, GenericDetailModel>() {
             @Override
             protected boolean shouldUseLocalDb() {
@@ -326,7 +326,7 @@ public class ActiveSessionRepository extends BaseRepository {
         }.getAsLiveData();
     }
 
-    public LiveData<Resource<GenericDetailModel>> deleteSessionMember(String userId) {
+    public LiveData<Resource<GenericDetailModel>> deleteSessionMember(long userId) {
         return new NetworkBoundResource<GenericDetailModel, GenericDetailModel>() {
             @Override
             protected boolean shouldUseLocalDb() {

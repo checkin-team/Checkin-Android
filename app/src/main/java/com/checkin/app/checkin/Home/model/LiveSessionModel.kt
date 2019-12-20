@@ -1,7 +1,7 @@
 package com.checkin.app.checkin.Home.model
 
-import com.checkin.app.checkin.Shop.RestaurantLocationModel
 import com.checkin.app.checkin.menu.models.OrderedItemStatusModel
+import com.checkin.app.checkin.restaurant.models.RestaurantLocationModel
 import com.checkin.app.checkin.session.activesession.chat.SessionChatModel
 import com.checkin.app.checkin.session.models.PromoBriefModel
 import com.checkin.app.checkin.session.models.ScheduledSessionBriefModel

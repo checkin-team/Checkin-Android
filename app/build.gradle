@@ -235,6 +235,7 @@ repositories {
 
 kapt {
     correctErrorTypes = true
+    generateStubs = true
 }
 
 androidExtensions {

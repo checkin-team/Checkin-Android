@@ -8,7 +8,10 @@ import android.os.Bundle
 import android.widget.TextView
 import androidx.activity.viewModels
 import androidx.appcompat.widget.Toolbar
+import androidx.coordinatorlayout.widget.CoordinatorLayout
 import androidx.core.content.ContextCompat
+import androidx.core.view.ViewCompat
+import androidx.core.widget.NestedScrollView
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentActivity
 import androidx.lifecycle.Observer
@@ -21,7 +24,6 @@ import butterknife.OnClick
 import com.checkin.app.checkin.Data.ProblemModel
 import com.checkin.app.checkin.Data.Resource
 import com.checkin.app.checkin.R
-import com.checkin.app.checkin.Shop.RestaurantLocationModel
 import com.checkin.app.checkin.Utility.*
 import com.checkin.app.checkin.menu.fragments.UserMenuFragment
 import com.checkin.app.checkin.menu.viewmodels.CartViewModel
@@ -29,10 +31,8 @@ import com.checkin.app.checkin.menu.viewmodels.SessionType
 import com.checkin.app.checkin.misc.activities.BaseActivity
 import com.checkin.app.checkin.misc.activities.QRScannerActivity
 import com.checkin.app.checkin.misc.adapters.CoverPagerAdapter
-import com.checkin.app.checkin.misc.fragments.BaseFragment
-import com.checkin.app.checkin.misc.fragments.BlankFragment
-import com.checkin.app.checkin.misc.fragments.QRScannerWrapperFragment
-import com.checkin.app.checkin.misc.fragments.QRScannerWrapperInteraction
+import com.checkin.app.checkin.misc.fragments.*
+import com.checkin.app.checkin.restaurant.models.RestaurantBriefModel
 import com.checkin.app.checkin.restaurant.models.RestaurantModel
 import com.checkin.app.checkin.restaurant.viewmodels.RestaurantPublicViewModel
 import com.checkin.app.checkin.session.activesession.ActiveSessionActivity
@@ -69,21 +69,25 @@ class PublicRestaurantProfileActivity : BaseActivity(), AppBarLayout.OnOffsetCha
     internal lateinit var appbar: AppBarLayout
     @BindView(R.id.toolbar_restaurant_public)
     internal lateinit var toolbar: Toolbar
+    @BindView(R.id.nested_sv_restaurant_public)
+    internal lateinit var nestedSv: NestedScrollView
     @BindView(R.id.scheduled_cart_restaurant_public)
     internal lateinit var scheduledCartView: ScheduledSessionCartView
 
-    lateinit var fragmentAdapter: PublicRestaurantProfileAdapter
-    val coverAdapter = CoverPagerAdapter()
+    private lateinit var fragmentAdapter: PublicRestaurantProfileAdapter
+    private val coverAdapter = CoverPagerAdapter()
 
-    val cartViewModel: CartViewModel by viewModels()
-    val restaurantViewModel: RestaurantPublicViewModel by viewModels()
-    val scheduledSessionViewModel: ScheduledSessionViewModel by viewModels()
+    private val cartViewModel: CartViewModel by viewModels()
+    private val restaurantViewModel: RestaurantPublicViewModel by viewModels()
+    private val scheduledSessionViewModel: ScheduledSessionViewModel by viewModels()
+
     var restaurantId: Long = 0
-
     private var isTabAtTop = false
     private var mRestaurantData: RestaurantModel? = null
     private var title = ""
     private var allowOrder = true
+
+    private var networkFragment: NetworkBlockingFragment = NetworkBlockingFragment()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -107,7 +111,6 @@ class PublicRestaurantProfileActivity : BaseActivity(), AppBarLayout.OnOffsetCha
         indicatorTopCover.setAnimationType(AnimationType.FILL)
         indicatorTopCover.setClickListener { position -> vpRestaurantCovers.currentItem = position }
 
-
         fragmentAdapter = PublicRestaurantProfileAdapter(this, restaurantId)
         vpFragment.adapter = fragmentAdapter
         TabLayoutMediator(tabsFragment, vpFragment) { _, _ -> }
@@ -120,6 +123,21 @@ class PublicRestaurantProfileActivity : BaseActivity(), AppBarLayout.OnOffsetCha
         cartViewModel.sessionType = SessionType.SCHEDULED
 
         scheduledCartView.setup(this)
+
+        val params = appbar.layoutParams as CoordinatorLayout.LayoutParams
+        if (params.behavior == null)
+            params.behavior = AppBarLayout.Behavior()
+        val behaviour = params.behavior as AppBarLayout.Behavior
+        behaviour.setDragCallback(object : AppBarLayout.Behavior.DragCallback() {
+            override fun canDrag(appBarLayout: AppBarLayout): Boolean {
+                // Disable flicking the appbar when cart view is expanded
+                return !scheduledCartView.isExpanded()
+            }
+        })
+
+        supportFragmentManager.inTransaction {
+            add(android.R.id.content, networkFragment, NetworkBlockingFragment.FRAGMENT_TAG)
+        }
     }
 
     private fun setupObservers() {
@@ -129,7 +147,10 @@ class PublicRestaurantProfileActivity : BaseActivity(), AppBarLayout.OnOffsetCha
             it?.let {
                 if (it.status == Resource.Status.SUCCESS && it.data != null) {
                     allowOrder = it.data.restaurant.targetId == restaurantId
-                    if (allowOrder) successNewSession(it.data.pk)
+                    if (allowOrder) {
+                        successNewSession(it.data.pk)
+                        cartViewModel.fetchCartOrders()
+                    }
                 }
             }
         })
@@ -173,10 +194,10 @@ class PublicRestaurantProfileActivity : BaseActivity(), AppBarLayout.OnOffsetCha
         })
     }
 
-    private fun handleErrorCartExists(cartRestaurant: RestaurantLocationModel) {
+    private fun handleErrorCartExists(cartRestaurant: RestaurantBriefModel) {
         AlertDialog.Builder(this)
                 .setTitle("Cart item exists")
-                .setMessage("Are you sure you want to clear the cart of ${cartRestaurant.name}?")
+                .setMessage("Are you sure you want to clear the cart of ${cartRestaurant.displayName}?")
                 .setPositiveButton("Yes") { _, _ -> scheduledSessionViewModel.clearCart() }
                 .setNegativeButton("No, take me to restaurant") { dialog, _ ->
                     dialog.cancel()
@@ -251,8 +272,21 @@ class PublicRestaurantProfileActivity : BaseActivity(), AppBarLayout.OnOffsetCha
         }
     }
 
+    override fun onResume() {
+        super.onResume()
+        scheduledCartView.dismiss()
+    }
+
+    override fun onCartClose() {
+        ViewCompat.setNestedScrollingEnabled(nestedSv, true)
+    }
+
+    override fun onCartOpen() {
+        ViewCompat.setNestedScrollingEnabled(nestedSv, false)
+    }
+
     override fun onCreateNewScheduledSession() {
-        ChooseQrOrScheduleBottomSheetFragment().show(supportFragmentManager, "new_session")
+        ChooseQrOrScheduleBottomSheetFragment().show(supportFragmentManager, ChooseQrOrScheduleBottomSheetFragment.FRAGMENT_TAG)
     }
 
     override fun onScanResult(result: Int, bundle: Intent?) {
@@ -281,8 +315,12 @@ class PublicRestaurantProfileActivity : BaseActivity(), AppBarLayout.OnOffsetCha
         SchedulerBottomSheetFragment().show(supportFragmentManager, SchedulerBottomSheetFragment.FRAGMENT_TAG)
     }
 
+    override fun updateSessionTime() {
+        onChooseSchedule()
+    }
+
     override fun onSchedulerSet(selectedDate: Date, countPeople: Int) {
-        scheduledSessionViewModel.syncScheduleInfo(selectedDate, countPeople)
+        scheduledSessionViewModel.syncScheduleInfo(selectedDate, countPeople, restaurantId)
     }
 
     override fun onBackPressed() {

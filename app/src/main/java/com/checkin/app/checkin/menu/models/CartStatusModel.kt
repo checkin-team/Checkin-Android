@@ -1,6 +1,7 @@
 package com.checkin.app.checkin.menu.models
 
-import com.checkin.app.checkin.Shop.RestaurantLocationModel
+import com.checkin.app.checkin.Data.AppDatabase
+import com.checkin.app.checkin.restaurant.models.RestaurantBriefModel
 import com.fasterxml.jackson.annotation.JsonIgnore
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties
 import com.fasterxml.jackson.annotation.JsonProperty
@@ -11,11 +12,16 @@ import io.objectbox.relation.ToOne
 @JsonIgnoreProperties(ignoreUnknown = true)
 @Entity
 data class CartStatusModel(
-        @Id(assignable = true) var pk: Long,
-        @JsonIgnore val restaurant: ToOne<RestaurantLocationModel>
+        @Id(assignable = true) var pk: Long
 ) {
+
     @JsonProperty("restaurant")
-    fun setRestaurantInfo(restaurantLocationModel: RestaurantLocationModel) {
-        restaurant.setAndPutTarget(restaurantLocationModel)
+    fun setRestaurantInfo(data: RestaurantBriefModel) {
+        AppDatabase.getCartStatusModel(null).attach(this)
+        AppDatabase.getRestaurantBriefModel(null).put(data)
+        this.restaurant.target = data
     }
+
+    @JsonIgnore
+    lateinit var restaurant: ToOne<RestaurantBriefModel>
 }

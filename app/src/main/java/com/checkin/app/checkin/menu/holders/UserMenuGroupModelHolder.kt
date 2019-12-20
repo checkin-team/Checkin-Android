@@ -217,7 +217,7 @@ abstract class UserMenuGroupModelHolder : EpoxyModelWithHolder<UserMenuGroupMode
         }
 
         override fun destroyItem(container: ViewGroup, position: Int, obj: Any) = container.removeView(obj as View).also {
-            mListHolders.removeAt(position)
+            if (position < mListHolders.size) mListHolders.removeAt(position)
         }
 
         override fun getPageTitle(position: Int): CharSequence? = when (position) {

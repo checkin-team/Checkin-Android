@@ -130,7 +130,9 @@ class MenuRepository private constructor(context: Context) {
 
     val checkCartStatus: LiveData<Resource<CartStatusModel>>
         get() = object : NetworkBoundResource<CartStatusModel, CartStatusModel>() {
-            override fun shouldUseLocalDb(): Boolean = true
+            override fun shouldUseLocalDb(): Boolean = false
+
+            override fun shouldFetch(data: CartStatusModel?): Boolean = true
 
             override fun loadFromDb(): LiveData<CartStatusModel> = ObjectBoxInstanceLiveData(mCartBox.query().build())
 

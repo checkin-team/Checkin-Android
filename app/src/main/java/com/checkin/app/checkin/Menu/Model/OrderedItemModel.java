@@ -103,6 +103,10 @@ public class OrderedItemModel implements Cloneable, Serializable {
         return selectedFields;
     }
 
+    public void setSelectedFields(List<ItemCustomizationFieldModel> customizations) {
+        selectedFields = customizations;
+    }
+
     public void addCustomizationField(ItemCustomizationFieldModel field) {
         if (selectedFields == null)
             selectedFields = new ArrayList<>();

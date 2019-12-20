@@ -4,12 +4,16 @@ import android.util.Log
 import com.fasterxml.jackson.core.JsonProcessingException
 import com.fasterxml.jackson.core.type.TypeReference
 import com.fasterxml.jackson.databind.JsonNode
+import com.fasterxml.jackson.databind.SerializationFeature
 import com.fasterxml.jackson.module.kotlin.jacksonObjectMapper
 import io.objectbox.converter.PropertyConverter
 import java.io.IOException
 
 object Converters {
-    val objectMapper = jacksonObjectMapper()
+    val objectMapper = jacksonObjectMapper().apply {
+        disable(SerializationFeature.WRITE_DATES_AS_TIMESTAMPS)
+    }
+
     private val TAG = Converters::class.java.simpleName
 
     fun getJsonNode(json: String): JsonNode? {

@@ -83,10 +83,10 @@ interface WebApiService {
     fun putActiveSessionSelfCustomer(@Body data: ObjectNode): Call<ObjectNode>
 
     @POST("sessions/active/customers/{user_id}/")
-    fun postActiveSessionCustomerRequest(@Path("user_id") userId: String): Call<GenericDetailModel>
+    fun postActiveSessionCustomerRequest(@Path("user_id") userId: Long): Call<GenericDetailModel>
 
     @DELETE("sessions/active/customers/{user_id}/")
-    fun deleteActiveSessionCustomer(@Path("user_id") userId: String): Call<GenericDetailModel>
+    fun deleteActiveSessionCustomer(@Path("user_id") userId: Long): Call<GenericDetailModel>
 
     @POST("sessions/active/message/")
     fun postCustomerMessage(@Body data: ObjectNode): Call<ObjectNode>
@@ -357,7 +357,7 @@ interface WebApiService {
     @POST("sessions/customer/scheduled/{session_id}/order/")
     fun postScheduledSessionOrders(@Path("session_id") sessionId: Long, @Body orderedItemModels: List<OrderedItemModel>): Call<List<NewOrderModel>>
 
-    @POST("sessions/customer/scheduled/{session_id}/orders/{order_id}/")
+    @PATCH("sessions/customer/scheduled/{session_id}/orders/{order_id}/")
     fun patchScheduledSessionOrder(@Path("session_id") sessionId: Long, @Path("order_id") orderId: Long, @Body data: ObjectNode): Call<OrderedItemModel>
 
     @DELETE("sessions/customer/scheduled/{session_id}/orders/{order_id}/")

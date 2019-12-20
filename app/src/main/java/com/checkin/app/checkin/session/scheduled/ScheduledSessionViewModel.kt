@@ -13,18 +13,20 @@ import java.util.*
 
 class ScheduledSessionViewModel(application: Application) : BaseViewModel(application) {
     var sessionPk: Long = 0
-    val sessionRepository = SessionRepository.getInstance(application)
+    private val sessionRepository = SessionRepository.getInstance(application)
 
-    val mNewSessionData = createNetworkLiveData<NewScheduledSessionModel>()
-    val mClearCart = createNetworkLiveData<ObjectNode>()
-    val mQrResult = createNetworkLiveData<QRResultModel>()
+    private val mNewSessionData = createNetworkLiveData<NewScheduledSessionModel>()
+    private val mClearCart = createNetworkLiveData<ObjectNode>()
+    private val mQrResult = createNetworkLiveData<QRResultModel>()
 
     val newScheduledSessionData: LiveData<Resource<NewScheduledSessionModel>> = mNewSessionData
     val newQrSessionData: LiveData<Resource<QRResultModel>> = mQrResult
     val clearCartData: LiveData<Resource<ObjectNode>> = mClearCart
 
-    private fun createNewScheduledSession(countPeople: Int, plannedTime: Date, remarks: String?) {
-        val body = NewScheduledSessionModel(countPeople = countPeople, plannedDatetime = plannedTime, remarks = remarks)
+    private fun createNewScheduledSession(countPeople: Int, plannedTime: Date, restaurantId: Long, remarks: String?) {
+        val body = NewScheduledSessionModel(countPeople = countPeople, plannedDatetime = plannedTime, remarks = remarks).apply {
+            this.restaurantId = restaurantId
+        }
         mNewSessionData.addSource(sessionRepository.newScheduledSession(body), mNewSessionData::setValue)
     }
 
@@ -44,8 +46,8 @@ class ScheduledSessionViewModel(application: Application) : BaseViewModel(applic
         mQrResult.addSource(sessionRepository.newCustomerSession(requestJson), mQrResult::setValue)
     }
 
-    fun syncScheduleInfo(selectedDate: Date, countPeople: Int) {
-        if (sessionPk == 0L) createNewScheduledSession(countPeople, selectedDate, null)
+    fun syncScheduleInfo(selectedDate: Date, countPeople: Int, restaurantId: Long) {
+        if (sessionPk == 0L) createNewScheduledSession(countPeople, selectedDate, restaurantId, null)
         else updateScheduledSessionInfo(countPeople, selectedDate)
     }
 

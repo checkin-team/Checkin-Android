@@ -5,7 +5,7 @@
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="match_parent"
         android:orientation="vertical">
 
         <FrameLayout
@@ -41,6 +41,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_vertical|start"
+                android:text=" - "
                 tools:text="30 Sep, 11:30 AM, Table for 1" />
 
             <ImageView
@@ -51,19 +52,15 @@
                 android:tint="@color/white" />
         </FrameLayout>
 
-        <!--        <androidx.core.widget.NestedScrollView-->
-        <!--            android:layout_width="match_parent"-->
-        <!--            android:layout_height="wrap_content"-->
-        <!--            android:clipToPadding="false">-->
-
-        <LinearLayout
+        <androidx.core.widget.NestedScrollView
+            android:id="@+id/nested_sv_cart"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:orientation="vertical">
+            android:layout_height="0dp"
+            android:layout_weight="1">
 
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="match_parent"
                 android:background="@color/white"
                 android:orientation="vertical"
                 android:padding="@dimen/spacing_small">
@@ -71,14 +68,13 @@
                 <com.airbnb.epoxy.EpoxyRecyclerView
                     android:id="@+id/epoxy_rv_scheduled_cart_orders"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginBottom="@dimen/spacing_extra_small"
-                    android:nestedScrollingEnabled="false"
-                    android:orientation="vertical" />
+                    android:layout_height="match_parent"
+                    android:layout_marginBottom="@dimen/spacing_extra_small" />
 
                 <include layout="@layout/incl_horizontal_line" />
 
                 <EditText
+                    android:id="@+id/et_cart_scheduled_remarks"
                     style="@style/PinkishGreySmallTextStyle"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -88,88 +84,61 @@
                     android:drawablePadding="@dimen/spacing_tiny"
                     android:hint="Write Special Instructions" />
 
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@color/white"
+                    android:orientation="vertical"
+                    android:padding="@dimen/spacing_small">
+
+                    <TextView
+                        style="@style/GreyTextStyle"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Guest Details" />
+
+                    <TextView
+                        android:id="@+id/tv_cart_guest_detail_name"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/spacing_extra_small"
+                        tools:text="Ishu Darshan" />
+                </LinearLayout>
+
+                <include layout="@layout/incl_cart_promo_card" />
+
+                <include layout="@layout/incl_session_invoice" />
+
+                <include layout="@layout/incl_horizontal_line" />
+
+                <FrameLayout
+                    android:id="@+id/container_invoice_total"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:padding="@dimen/spacing_small">
+
+                    <TextView
+                        style="@style/TealBlueRoundedHeadingStyle"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_vertical|start"
+                        android:text="Grand Total" />
+
+                    <TextView
+                        android:id="@+id/tv_cart_invoice_total"
+                        style="@style/TealBlueRoundedHeadingStyle"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_vertical|end"
+                        tools:text="54" />
+                </FrameLayout>
             </LinearLayout>
+        </androidx.core.widget.NestedScrollView>
 
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="vertical"
-                android:padding="@dimen/spacing_small"
-                android:paddingEnd="0dp"
-                android:visibility="gone"
-                tools:ignore="RtlSymmetry">
-
-                <TextView
-                    style="@style/GreySmallTextStyle"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Treat Yourself" />
-
-                <com.airbnb.epoxy.EpoxyRecyclerView
-                    android:id="@+id/epoxy_rv_scheduled_cart_trending_dishes"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/spacing_extra_small"
-                    android:nestedScrollingEnabled="false"
-                    android:orientation="horizontal" />
-            </LinearLayout>
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:background="@color/white"
-                android:orientation="vertical"
-                android:padding="@dimen/spacing_small">
-
-                <TextView
-                    style="@style/GreyTextStyle"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Guest Details" />
-
-                <TextView
-                    android:id="@+id/tv_cart_guest_detail_name"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/spacing_extra_small"
-                    tools:text="Ishu Darshan" />
-            </LinearLayout>
-
-            <include layout="@layout/incl_cart_promo_card" />
-
-            <include layout="@layout/incl_session_invoice" />
-
-            <include layout="@layout/incl_horizontal_line" />
-
-            <FrameLayout
-                android:id="@+id/container_invoice_total"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:padding="@dimen/spacing_small">
-
-                <TextView
-                    style="@style/TealBlueRoundedHeadingStyle"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center_vertical|start"
-                    android:text="Grand Total" />
-
-                <TextView
-                    android:id="@+id/tv_invoice_total"
-                    style="@style/TealBlueRoundedHeadingStyle"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center_vertical|end"
-                    tools:text="54" />
-            </FrameLayout>
-        </LinearLayout>
-        <!--        </androidx.core.widget.NestedScrollView>-->
+        <include
+            layout="@layout/incl_session_cart_footer"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="bottom" />
     </LinearLayout>
-
-    <include
-        layout="@layout/incl_session_cart_footer"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_gravity="bottom" />
-
 </merge>

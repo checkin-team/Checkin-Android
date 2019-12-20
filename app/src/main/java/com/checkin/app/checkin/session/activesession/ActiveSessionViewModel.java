@@ -109,11 +109,11 @@ public class ActiveSessionViewModel extends BaseViewModel {
         mSessionData.setValue(resource);
     }
 
-    public void acceptSessionMember(String userId) {
+    public void acceptSessionMember(long userId) {
         mMemberUpdate.addSource(mRepository.acceptSessionMemberRequest(userId), mMemberUpdate::setValue);
     }
 
-    public void removeSessionMember(String userId) {
+    public void removeSessionMember(long userId) {
         mMemberUpdate.addSource(mRepository.deleteSessionMember(userId), mMemberUpdate::setValue);
     }
 

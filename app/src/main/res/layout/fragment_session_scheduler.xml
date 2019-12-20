@@ -22,7 +22,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="start"
-            android:src="@drawable/ic_calendar_schedule" />
+            android:src="@drawable/ic_calendar_color" />
 
         <ScrollView
             android:layout_width="wrap_content"
@@ -39,30 +39,35 @@
                     android:id="@+id/stub_scheduled_date_1"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/spacing_normal"
                     android:layout="@layout/item_session_scheduled_day_date" />
 
                 <ViewStub
                     android:id="@+id/stub_scheduled_date_2"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/spacing_normal"
                     android:layout="@layout/item_session_scheduled_day_date" />
 
                 <ViewStub
                     android:id="@+id/stub_scheduled_date_3"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/spacing_normal"
                     android:layout="@layout/item_session_scheduled_day_date" />
 
                 <ViewStub
                     android:id="@+id/stub_scheduled_date_4"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/spacing_normal"
                     android:layout="@layout/item_session_scheduled_day_date" />
 
                 <ViewStub
                     android:id="@+id/stub_scheduled_date_5"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/spacing_normal"
                     android:layout="@layout/item_session_scheduled_day_date" />
 
             </LinearLayout>
@@ -133,7 +138,7 @@
         style="@style/TealBlueTextStyle"
         android:layout_width="@dimen/size_normal_icon"
         android:layout_height="@dimen/size_normal_icon"
-        android:background="@drawable/selector_oval_white_focusable"
+        android:background="@drawable/shape_oval_dark"
         android:clickable="true"
         android:focusable="true"
         android:fontFamily="@font/lucida_grande"

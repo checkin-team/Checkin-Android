@@ -5,12 +5,15 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MediatorLiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.Transformations
+import com.checkin.app.checkin.Data.AppDatabase
 import com.checkin.app.checkin.Data.BaseViewModel
 import com.checkin.app.checkin.Data.Resource
 import com.checkin.app.checkin.Menu.Model.MenuItemModel
 import com.checkin.app.checkin.Menu.Model.OrderedItemModel
+import com.checkin.app.checkin.Utility.pass
 import com.checkin.app.checkin.menu.MenuRepository
 import com.checkin.app.checkin.menu.models.CartBillModel
+import com.checkin.app.checkin.menu.models.CartDetailModel
 import com.checkin.app.checkin.menu.models.CartStatusModel
 import com.checkin.app.checkin.menu.models.NewOrderModel
 import com.fasterxml.jackson.databind.node.ObjectNode
@@ -24,7 +27,7 @@ class CartViewModel(application: Application) : BaseViewModel(application) {
     private val mCartStatusData = createNetworkLiveData<CartStatusModel>()
     private val mCartBillData = createNetworkLiveData<CartBillModel>()
 
-    private val mServerPendingData = createNetworkLiveData<Any?>()
+    private val mServerPendingData = createNetworkLiveData<Any>()
     private val mCurrentItem = MutableLiveData<OrderedItemModel>()
 
     private val mOrderedItems = MediatorLiveData<List<OrderedItemModel>>()
@@ -34,6 +37,7 @@ class CartViewModel(application: Application) : BaseViewModel(application) {
 
     val cartStatus: LiveData<Resource<CartStatusModel>> = mCartStatusData
     val cartBillData: LiveData<Resource<CartBillModel>> = mCartBillData
+    val cartDetailData: MutableLiveData<Resource<CartDetailModel>> = MutableLiveData()
     val orderedItems: LiveData<List<OrderedItemModel>>
         get() {
             if (mOrderedItems.value == null) mOrderedItems.value = emptyList()
@@ -41,12 +45,12 @@ class CartViewModel(application: Application) : BaseViewModel(application) {
         }
 
     init {
-        mServerPendingData.addSource(mNewOrders) { mServerPendingData.value = Resource.cloneResource(it, null) }
-        mServerPendingData.addSource(mUpdatedOrder) { mServerPendingData.value = Resource.cloneResource(it, null) }
-        mServerPendingData.addSource(mDeletedOrder) { mServerPendingData.value = Resource.cloneResource(it, null) }
+        mServerPendingData.addSource(mNewOrders) { mServerPendingData.value = Resource.cloneResource(it, pass) }
+        mServerPendingData.addSource(mUpdatedOrder) { mServerPendingData.value = Resource.cloneResource(it, pass) }
+        mServerPendingData.addSource(mDeletedOrder) { mServerPendingData.value = Resource.cloneResource(it, pass) }
     }
 
-    val serverPendingData: LiveData<Resource<Any?>> = mServerPendingData
+    val serverPendingData: LiveData<Resource<Any>> = mServerPendingData
 
     val currentItem: LiveData<OrderedItemModel> = mCurrentItem
 
@@ -88,15 +92,18 @@ class CartViewModel(application: Application) : BaseViewModel(application) {
     fun fetchCartOrders() {
         mOrderedItems.addSource(menuRepository.cartDetails) {
             it?.let { resource ->
-                if (resource.status == Resource.Status.SUCCESS && resource.data != null)
+                if (resource.status == Resource.Status.SUCCESS && resource.data != null) {
                     mOrderedItems.value = resource.data.orderedItems.map {
-                        OrderedItemModel(it.item, it.quantity, it.typeIndex).apply {
+                        val menuItem = AppDatabase.getMenuItemModel(null).get(it.item.pk) ?: it.item
+                        OrderedItemModel(menuItem, it.quantity, it.typeIndex).apply {
                             pk = it.longPk
                             cost = it.cost
-                            selectedFields.addAll(it.customizations.flatMap { it.customizationFields }.distinct())
+                            selectedFields = it.customizations.flatMap { it.customizationFields }.distinct()
                             remarks = it.remarks
                         }
                     }
+                    cartDetailData.value = resource
+                }
             }
         }
     }
@@ -158,7 +165,13 @@ class CartViewModel(application: Application) : BaseViewModel(application) {
     }
 
     private fun updateCartFromServer(order: OrderedItemModel) {
-
+        val orderedItems = mOrderedItems.value?.toMutableList() ?: mutableListOf()
+        val index = orderedItems.indexOfFirst { it.pk == order.pk }
+        if (index != -1) {
+            orderedItems[index].quantity = order.quantity
+            if (orderedItems[index].quantity == 0) orderedItems.removeAt(index)
+        }
+        mOrderedItems.value = orderedItems
     }
 
     private fun updateCartFromServer(items: List<NewOrderModel>) {
@@ -167,8 +180,10 @@ class CartViewModel(application: Application) : BaseViewModel(application) {
             val index = orderedItems.indexOfFirst {
                 newOrder.item == it.item && newOrder.customizations == it.selectedFields.map { it.pk }
             }
-            if (index != -1) orderedItems[index].quantity = newOrder.quantity
-            if (orderedItems[index].quantity == 0) orderedItems.removeAt(index)
+            if (index != -1) {
+                orderedItems[index].quantity = newOrder.quantity
+                if (orderedItems[index].quantity == 0) orderedItems.removeAt(index)
+            }
         }
         mOrderedItems.value = orderedItems
     }
@@ -228,7 +243,6 @@ class CartViewModel(application: Application) : BaseViewModel(application) {
     }
 
     override fun updateResults() {
-
     }
 }
 

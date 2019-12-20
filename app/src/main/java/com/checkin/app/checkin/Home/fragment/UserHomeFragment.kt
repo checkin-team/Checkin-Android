@@ -16,10 +16,10 @@ import com.checkin.app.checkin.Home.*
 import com.checkin.app.checkin.Home.model.LiveSessionDetailModel
 import com.checkin.app.checkin.Home.model.SessionType
 import com.checkin.app.checkin.R
-import com.checkin.app.checkin.Shop.RestaurantLocationModel
 import com.checkin.app.checkin.Utility.pass
 import com.checkin.app.checkin.misc.fragments.BaseFragment
 import com.checkin.app.checkin.restaurant.activities.openPublicRestaurantProfile
+import com.checkin.app.checkin.restaurant.models.RestaurantLocationModel
 import com.checkin.app.checkin.session.activesession.ActiveSessionActivity
 
 class UserHomeFragment : BaseFragment(), LiveSessionTrackerInteraction {

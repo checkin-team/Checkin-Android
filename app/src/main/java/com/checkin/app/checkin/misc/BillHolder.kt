@@ -89,7 +89,7 @@ class BillHolder(itemView: View) {
     }
 
     private fun stopLoading() {
-        labelViews.forEach { it.visibility = View.GONE }
+        labelViews.forEach { it.visibility = View.VISIBLE }
         shimmerViews.forEach { it.visibility = View.GONE }
         shimmerHolder.stopShimmer()
     }
