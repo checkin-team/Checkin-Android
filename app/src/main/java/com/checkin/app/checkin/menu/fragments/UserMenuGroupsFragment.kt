@@ -5,6 +5,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
 import androidx.core.view.ViewCompat
+import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.Observer
 import androidx.lifecycle.lifecycleScope
 import butterknife.BindView
@@ -19,6 +20,7 @@ import com.checkin.app.checkin.Utility.parentFragmentDelegate
 import com.checkin.app.checkin.Utility.parentViewModels
 import com.checkin.app.checkin.menu.controllers.UserMenuGroupController
 import com.checkin.app.checkin.menu.holders.SessionTrendingDishInteraction
+import com.checkin.app.checkin.menu.viewmodels.CartViewModel
 import com.checkin.app.checkin.menu.viewmodels.UserMenuViewModel
 import com.checkin.app.checkin.misc.fragments.BaseFragment
 import com.checkin.app.checkin.session.models.TrendingDishModel
@@ -39,6 +41,7 @@ class UserMenuGroupsFragment : BaseFragment(), MenuGroupAdapter.OnGroupInteracti
 
     val itemListener: MenuItemInteraction by parentFragmentDelegate()
     val viewModel: UserMenuViewModel by parentViewModels()
+    val cartViewModel: CartViewModel by activityViewModels()
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         setupEpoxyModels()
@@ -83,7 +86,7 @@ class UserMenuGroupsFragment : BaseFragment(), MenuGroupAdapter.OnGroupInteracti
             }
         })
 
-        viewModel.itemOrderedCounts.observe(this, Observer {
+        cartViewModel.itemOrderedCounts.observe(this, Observer {
             it?.also { groupController.orderedCounts = it }
         })
     }

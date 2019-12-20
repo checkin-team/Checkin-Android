@@ -10,13 +10,13 @@ import androidx.lifecycle.Transformations;
 
 import com.checkin.app.checkin.Data.BaseViewModel;
 import com.checkin.app.checkin.Data.Resource;
-import com.checkin.app.checkin.Menu.MenuRepository;
 import com.checkin.app.checkin.Menu.Model.ItemCustomizationFieldModel;
 import com.checkin.app.checkin.Menu.Model.MenuGroupModel;
 import com.checkin.app.checkin.Menu.Model.MenuItemModel;
 import com.checkin.app.checkin.Menu.Model.MenuModel;
 import com.checkin.app.checkin.Menu.Model.OrderedItemModel;
 import com.checkin.app.checkin.Utility.SourceMappedLiveData;
+import com.checkin.app.checkin.menu.MenuRepository;
 import com.checkin.app.checkin.session.activesession.ActiveSessionRepository;
 import com.checkin.app.checkin.session.models.TrendingDishModel;
 import com.fasterxml.jackson.databind.node.ArrayNode;
@@ -49,7 +49,7 @@ public class MenuViewModel extends BaseViewModel {
 
     public MenuViewModel(@NonNull Application application) {
         super(application);
-        mRepository = MenuRepository.getInstance(application);
+        mRepository = MenuRepository.Companion.getInstance(application);
         mActiveSessionRepository = ActiveSessionRepository.getInstance(application);
     }
 
@@ -413,10 +413,10 @@ public class MenuViewModel extends BaseViewModel {
     }
 
     public void confirmOrder() {
-        if (mSessionPk == null)
-            mResultOrder.addSource(mRepository.postMenuOrders(mOrderedItems.getValue()), mResultOrder::setValue);
-        else
-            mResultOrder.addSource(mRepository.postMenuManageOrders(mSessionPk, mOrderedItems.getValue()), mResultOrder::setValue);
+//        if (mSessionPk == null)
+//            mResultOrder.addSource(mRepository.postActiveSessionOrders(mOrderedItems.getValue()), mResultOrder::setValue);
+//        else
+//            mResultOrder.addSource(mRepository.postManageSessionOrders(mSessionPk, mOrderedItems.getValue()), mResultOrder::setValue);
     }
 
     public void manageSession(long sessionPk) {

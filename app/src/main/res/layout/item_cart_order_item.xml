@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginTop="@dimen/spacing_small"
+    android:orientation="vertical">
+
+    <ImageView
+        android:id="@+id/im_cart_ordered_item_type"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/spacing_small"
+        android:src="@drawable/ic_veg"
+        app:layout_constraintBottom_toBottomOf="@id/tv_cart_ordered_item_name"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@id/tv_cart_ordered_item_name" />
+
+    <TextView
+        android:id="@+id/tv_cart_ordered_item_name"
+        style="@style/GreyTextStyle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/spacing_small"
+        android:gravity="center|start"
+        app:layout_constraintStart_toEndOf="@id/im_cart_ordered_item_type"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:text="pizza x 1" />
+
+    <TextView
+        android:id="@+id/tv_cart_ordered_item_customize"
+        style="@style/RedSmallTextStyle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/spacing_small"
+        android:drawableEnd="@drawable/ic_setting"
+        android:drawablePadding="@dimen/spacing_tiny"
+        android:text="Customize"
+        android:textColor="@color/greenish_teal"
+        app:layout_constraintBottom_toBottomOf="@id/tv_cart_ordered_item_price"
+        app:layout_constraintStart_toEndOf="@id/barrier_cart_ordered_item"
+        app:layout_constraintTop_toTopOf="@id/tv_cart_ordered_item_price" />
+
+    <TextView
+        android:id="@+id/tv_cart_ordered_item_price"
+        style="@style/GreyRoundedSmallTextStyle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/spacing_small"
+        android:layout_marginTop="@dimen/spacing_extra_small"
+        android:textSize="@dimen/font_normal"
+        app:layout_constraintStart_toEndOf="@id/tv_cart_ordered_item_customize"
+        app:layout_constraintTop_toBottomOf="@id/tv_cart_ordered_item_name"
+        tools:text="$ 400" />
+
+    <androidx.constraintlayout.widget.Barrier
+        android:id="@+id/barrier_cart_ordered_item"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:barrierDirection="end"
+        app:constraint_referenced_ids="im_cart_ordered_item_type" />
+
+    <FrameLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="@dimen/spacing_small"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <include layout="@layout/incl_menu_item_add_button" />
+    </FrameLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>

@@ -1,8 +1,7 @@
 package com.checkin.app.checkin.menu.fragments
 
-import android.app.Dialog
+import android.content.DialogInterface
 import android.os.Bundle
-import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.*
@@ -10,9 +9,7 @@ import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.constraintlayout.widget.ConstraintSet
 import androidx.lifecycle.Observer
 import butterknife.BindView
-import butterknife.ButterKnife
 import butterknife.OnClick
-import butterknife.Unbinder
 import com.checkin.app.checkin.Menu.Model.ItemCustomizationFieldModel
 import com.checkin.app.checkin.Menu.Model.MenuItemModel
 import com.checkin.app.checkin.Menu.UserMenu.ItemCustomizationGroupHolder
@@ -21,10 +18,10 @@ import com.checkin.app.checkin.Utility.Utils
 import com.checkin.app.checkin.Utility.parentFragmentDelegate
 import com.checkin.app.checkin.Utility.parentViewModels
 import com.checkin.app.checkin.menu.viewmodels.UserMenuViewModel
-import com.google.android.material.bottomsheet.BottomSheetDialogFragment
+import com.checkin.app.checkin.misc.fragments.BaseBottomSheetFragment
 
-class ItemCustomizationBottomSheetFragment : BottomSheetDialogFragment(), ItemCustomizationGroupHolder.CustomizationGroupInteraction {
-    private var unbinder: Unbinder? = null
+class ItemCustomizationBottomSheetFragment : BaseBottomSheetFragment(), ItemCustomizationGroupHolder.CustomizationGroupInteraction {
+    override val rootLayout = R.layout.fragment_as_menu_item_customization
 
     @BindView(R.id.container_menu_customization)
     internal lateinit var vMenuCustomizations: ConstraintLayout
@@ -110,7 +107,12 @@ class ItemCustomizationBottomSheetFragment : BottomSheetDialogFragment(), ItemCu
         exitFragment()
     }
 
-    internal fun exitFragment() = dismiss()
+    override fun onCancel(dialog: DialogInterface) {
+        super.onCancel(dialog)
+        listener.onCustomizationCancel()
+    }
+
+    private fun exitFragment() = dismiss()
 
     private fun hideViews(vararg views: View) {
         for (v in views) v.visibility = View.GONE
@@ -156,22 +158,7 @@ class ItemCustomizationBottomSheetFragment : BottomSheetDialogFragment(), ItemCu
         constraintSet.applyTo(containerRadioButtons)
     }
 
-    fun selectType(position: Int) = viewModel.setSelectedType(position)
-
-    override fun setupDialog(dialog: Dialog, style: Int) {
-        super.setupDialog(dialog, style)
-        LayoutInflater.from(requireContext()).inflate(R.layout.fragment_as_menu_item_customization, null, false).also {
-            unbinder = ButterKnife.bind(this, it)
-            dialog.setContentView(it)
-            onViewCreated(it, null)
-        }
-    }
-
-    override fun onDestroyView() {
-        1
-        super.onDestroyView()
-        unbinder?.unbind()
-    }
+    private fun selectType(position: Int) = viewModel.setSelectedType(position)
 
     companion object {
         fun newInstance(item: MenuItemModel) = ItemCustomizationBottomSheetFragment().apply { itemModel = item }

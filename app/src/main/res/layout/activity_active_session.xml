@@ -400,7 +400,7 @@
 
                             <TextView
                                 android:id="@+id/tv_as_brownie_cash_amount"
-                                style="@style/AquaBlueTextStyle"
+                                style="@style/TealBlueTextStyle"
                                 android:layout_width="wrap_content"
                                 android:layout_height="match_parent"
                                 android:gravity="center"

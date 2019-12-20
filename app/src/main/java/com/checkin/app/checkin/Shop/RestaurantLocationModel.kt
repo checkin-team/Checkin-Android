@@ -1,14 +1,17 @@
 package com.checkin.app.checkin.Shop
 
-import com.checkin.app.checkin.misc.models.GeolocationModel
+import com.checkin.app.checkin.misc.models.LocationModel
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties
+import io.objectbox.annotation.Entity
+import io.objectbox.annotation.Id
+import io.objectbox.annotation.Transient
 
 @JsonIgnoreProperties(ignoreUnknown = true)
+@Entity
 data class RestaurantLocationModel(
-        val pk: Long,
+        @Id(assignable = true) var pk: Long,
         val name: String,
         val phone: String?,
-        val locality: String?,
         val logo: String?,
-        val geolocation: GeolocationModel?
+        @Transient val location: LocationModel?
 )

@@ -8,8 +8,8 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.Transformations
 import com.checkin.app.checkin.Data.BaseViewModel
 import com.checkin.app.checkin.Data.Resource
-import com.checkin.app.checkin.Menu.MenuRepository
 import com.checkin.app.checkin.Menu.Model.*
+import com.checkin.app.checkin.menu.MenuRepository
 import com.checkin.app.checkin.session.activesession.ActiveSessionRepository
 import com.checkin.app.checkin.session.models.TrendingDishModel
 import com.fasterxml.jackson.databind.node.ArrayNode
@@ -390,10 +390,10 @@ class MenuViewModel(application: Application) : BaseViewModel(application) {
     }
 
     fun confirmOrder() {
-        if (mSessionPk == null)
-            mResultOrder.addSource(mRepository.postMenuOrders(mOrderedItems.value)) { mResultOrder.setValue(it) }
-        else
-            mResultOrder.addSource(mRepository.postMenuManageOrders(mSessionPk!!, mOrderedItems.value)) { mResultOrder.setValue(it) }
+//        if (mSessionPk == null)
+//            mResultOrder.addSource(mRepository.postActiveSessionOrders(mOrderedItems.value!!)) { mResultOrder.setValue(it) }
+//        else
+//            mResultOrder.addSource(mRepository.postManageSessionOrders(mSessionPk!!, mOrderedItems.value!!)) { mResultOrder.setValue(it) }
     }
 
     fun manageSession(sessionPk: Long) {

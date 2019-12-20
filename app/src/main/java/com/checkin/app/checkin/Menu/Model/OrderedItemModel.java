@@ -7,13 +7,14 @@ import com.fasterxml.jackson.annotation.JsonAutoDetect;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
 @JsonIgnoreProperties(ignoreUnknown = true)
 @JsonAutoDetect(fieldVisibility = JsonAutoDetect.Visibility.NONE, getterVisibility = JsonAutoDetect.Visibility.NONE, isGetterVisibility = JsonAutoDetect.Visibility.NONE)
-public class OrderedItemModel implements Cloneable {
+public class OrderedItemModel implements Cloneable, Serializable {
     private static final String TAG = OrderedItemModel.class.getSimpleName();
 
     @JsonProperty("pk")
@@ -60,6 +61,10 @@ public class OrderedItemModel implements Cloneable {
     public double getCost() {
         updateCost();
         return this.cost;
+    }
+
+    public void setPk(long pk) {
+        this.pk = pk;
     }
 
     @JsonProperty("cost")
@@ -191,6 +196,8 @@ public class OrderedItemModel implements Cloneable {
         if (!(obj instanceof OrderedItemModel)) {
             return false;
         }
+        if (this.pk != 0 && ((OrderedItemModel) obj).getPk() != 0 && this.pk == ((OrderedItemModel) obj).getPk())
+            return true;
         if (item.equals(((OrderedItemModel) obj).getItemModel()) && this.typeIndex == ((OrderedItemModel) obj).getTypeIndex()) {
             if (this.selectedFields == null && ((OrderedItemModel) obj).getSelectedFields() == null)
                 return true;

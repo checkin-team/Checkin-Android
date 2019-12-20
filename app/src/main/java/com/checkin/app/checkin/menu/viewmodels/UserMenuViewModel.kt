@@ -8,11 +8,10 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.Transformations
 import com.checkin.app.checkin.Data.BaseViewModel
 import com.checkin.app.checkin.Data.Resource
-import com.checkin.app.checkin.Menu.MenuRepository
 import com.checkin.app.checkin.Menu.Model.*
+import com.checkin.app.checkin.menu.MenuRepository
 import com.checkin.app.checkin.session.activesession.ActiveSessionRepository
 import com.checkin.app.checkin.session.models.TrendingDishModel
-import com.fasterxml.jackson.databind.node.ArrayNode
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 import java.util.ArrayList
@@ -20,18 +19,16 @@ import kotlin.Comparator
 
 class UserMenuViewModel(application: Application) : BaseViewModel(application) {
     private val mHandler = Handler()
-    private val mRepository: MenuRepository
-    private val mActiveSessionRepository: ActiveSessionRepository
+    private val mRepository: MenuRepository = MenuRepository.getInstance(application)
+    private val mActiveSessionRepository: ActiveSessionRepository = ActiveSessionRepository.getInstance(application)
 
     private val mMenuData = createNetworkLiveData<MenuModel>()
     private var mOriginalMenuGroups = createNetworkLiveData<List<MenuGroupModel>>()
     private val mMenuGroups = MediatorLiveData<Resource<List<MenuGroupModel>>>()
     private val mMenuItems = createNetworkLiveData<List<MenuItemModel>>()
-    private val mResultOrder = createNetworkLiveData<ArrayNode>()
     private val mTrendingData = createNetworkLiveData<List<TrendingDishModel>>()
     private val mRecommendedData = createNetworkLiveData<List<TrendingDishModel>>()
 
-    private val mOrderedItems = MutableLiveData<List<OrderedItemModel>>()
     private val mCurrentItem = MutableLiveData<OrderedItemModel>()
     private val mFilteredString = MutableLiveData<String>()
     private val mSelectedCategory: MutableLiveData<String> = MutableLiveData()
@@ -51,29 +48,6 @@ class UserMenuViewModel(application: Application) : BaseViewModel(application) {
 
     val itemCost: LiveData<Double>
         get() = Transformations.map<OrderedItemModel, Double>(mCurrentItem) { orderedItem -> if (orderedItem != null) orderedItem.cost / orderedItem.quantity else 0.0 }
-
-    val orderedItems: LiveData<List<OrderedItemModel>>
-        get() {
-            if (mOrderedItems.value == null)
-                mOrderedItems.value = ArrayList()
-            return mOrderedItems
-        }
-
-    val totalOrderedCount: LiveData<Int>
-        get() = Transformations.map(mOrderedItems) { input ->
-            var res = 0
-            for (item in input)
-                res += item.quantity
-            res
-        }
-
-    val orderedSubTotal: LiveData<Double>
-        get() = Transformations.map(mOrderedItems) { input ->
-            var res = 0.0
-            for (item in input)
-                res += item.cost
-            res
-        }
 
     val categories: LiveData<List<String>>
         get() = Transformations.map(mOriginalMenuGroups) { input ->
@@ -101,16 +75,6 @@ class UserMenuViewModel(application: Application) : BaseViewModel(application) {
             }
         }
 
-    val itemOrderedCounts: LiveData<Map<Long, Int>>
-        get() = Transformations.map(mOrderedItems) {
-            it?.let {
-                it.groupBy({ it.itemModel.pk }, { it.quantity }).mapValues { it.value.sum() }
-            }
-        }
-
-    val serverOrderedItems: LiveData<Resource<ArrayNode>>
-        get() = mResultOrder
-
     val filteredString: LiveData<String>
         get() = mFilteredString
 
@@ -120,22 +84,17 @@ class UserMenuViewModel(application: Application) : BaseViewModel(application) {
     val menuTrendingItems: LiveData<Resource<List<TrendingDishModel>>>
         get() = mTrendingData
 
-    init {
-        mRepository = MenuRepository.getInstance(application)
-        mActiveSessionRepository = ActiveSessionRepository.getInstance(application)
-    }
-
     override fun updateResults() {
-        mMenuData.addSource(mRepository.getAvailableMenu(mShopPk), { mMenuData.setValue(it) })
+        mMenuData.addSource(mRepository.getAvailableMenu(mShopPk), mMenuData::setValue)
     }
 
     fun fetchAvailableMenu(shopId: Long) {
         mShopPk = shopId
-        mMenuData.addSource(mRepository.getAvailableMenu(shopId), { mMenuData.setValue(it) })
+        mMenuData.addSource(mRepository.getAvailableMenu(shopId), mMenuData::setValue)
         resetMenuGroups()
 
         val resourceLiveData = Transformations.map(mMenuData) { menuModelResource ->
-            mOriginalMenuGroups.setValue(Resource.loading(null))
+            mOriginalMenuGroups.value = Resource.loading(null)
             if (menuModelResource?.data == null)
                 return@map null
             val groups = menuModelResource.data.groups
@@ -240,7 +199,6 @@ class UserMenuViewModel(application: Application) : BaseViewModel(application) {
             mCurrentItem.value = item.clone()
         } catch (e: CloneNotSupportedException) {
         }
-
     }
 
     fun removeItemCustomization(customizationField: ItemCustomizationFieldModel) {
@@ -255,12 +213,6 @@ class UserMenuViewModel(application: Application) : BaseViewModel(application) {
         mCurrentItem.value = item
     }
 
-    fun changeQuantity(diff: Int) {
-        val item = mCurrentItem.value ?: return
-        if (diff != 0)
-            setQuantity(item.quantity + diff)
-    }
-
     fun cancelItem() = mCurrentItem.value?.let {
         it.quantity = 0
         it.changeCount = 0
@@ -270,22 +222,6 @@ class UserMenuViewModel(application: Application) : BaseViewModel(application) {
 
     fun canOrder(): Boolean = mCurrentItem.value?.canOrder() ?: false
 
-    fun setQuantity(quantity: Int) {
-        val item = mCurrentItem.value ?: return
-        if (quantity != item.quantity) {
-            item.quantity = quantity
-            mCurrentItem.value = item
-        }
-        if (quantity == 0) {
-            removeItem(item)
-        }
-    }
-
-    fun orderItem() {
-        updateCart()
-        resetItem()
-    }
-
     fun resetItem() {
         mCurrentItem.value = null
     }
@@ -293,85 +229,6 @@ class UserMenuViewModel(application: Application) : BaseViewModel(application) {
     fun newOrderedItem(item: MenuItemModel) {
         val orderedItem = item.order(1)
         mCurrentItem.value = orderedItem
-    }
-
-    fun updateOrderedItem(item: MenuItemModel, count: Int): Boolean {
-        val items = mOrderedItems.value
-        var result = false
-        if (items == null) {
-            return result
-        }
-        var orderedItem: OrderedItemModel? = null
-        var cartCount = 0
-        for (listItem in items) {
-            if (item == listItem.itemModel) {
-                cartCount += listItem.quantity
-                if (!item.isComplexItem) {
-                    try {
-                        orderedItem = listItem.clone()
-                    } catch (e: CloneNotSupportedException) {
-                    }
-
-                    break
-                }
-            }
-        }
-        if (cartCount == 0) {
-            return result
-        }
-        if (item.isComplexItem && cartCount != count) {
-            orderedItem = item.order(1)
-            setCurrentItem(orderedItem)
-            result = true
-        } else if (orderedItem != null && orderedItem.quantity != count) {
-            orderedItem.quantity = count
-            setCurrentItem(orderedItem)
-            result = true
-        }
-        return result
-    }
-
-    private fun updateCart() {
-        val item = mCurrentItem.value ?: return
-        val orderedItems: MutableList<OrderedItemModel> = mOrderedItems.value?.toMutableList()
-                ?: mutableListOf()
-        val index = orderedItems.indexOf(item)
-        if (index != -1) {
-            if (item.quantity > 0) {
-                item.quantity = orderedItems[index].quantity + item.changeCount
-                orderedItems[index] = item
-            } else
-                orderedItems.removeAt(index)
-        } else {
-            if (item.itemModel.isComplexItem)
-                item.quantity = item.changeCount
-            orderedItems.add(item)
-        }
-        mOrderedItems.value = orderedItems
-    }
-
-    fun getOrderedCount(item: MenuItemModel): Int {
-        var count = 0
-        val orderedItems = orderedItems.value
-        if (orderedItems != null) {
-            for (orderedItem in orderedItems) {
-                if (orderedItem.itemModel == item) {
-                    count += orderedItem.quantity
-                    if (!item.isComplexItem)
-                        break
-                }
-            }
-        }
-        return count
-    }
-
-    fun removeItem(item: OrderedItemModel) {
-        item.quantity = 0
-        mCurrentItem.value = item
-        mOrderedItems.value?.let {
-            mOrderedItems.value = it.toMutableList().apply { remove(item) }
-        }
-        mCurrentItem.value = null
     }
 
     fun sortMenuItems(low2high: Boolean) {
@@ -394,13 +251,6 @@ class UserMenuViewModel(application: Application) : BaseViewModel(application) {
             mMenuItems.removeSource(resourceLiveData)
             mMenuItems.setValue(it)
         }
-    }
-
-    fun confirmOrder() {
-        if (mSessionPk == null)
-            mResultOrder.addSource(mRepository.postMenuOrders(mOrderedItems.value)) { mResultOrder.setValue(it) }
-        else
-            mResultOrder.addSource(mRepository.postMenuManageOrders(mSessionPk!!, mOrderedItems.value)) { mResultOrder.setValue(it) }
     }
 
     fun manageSession(sessionPk: Long) {

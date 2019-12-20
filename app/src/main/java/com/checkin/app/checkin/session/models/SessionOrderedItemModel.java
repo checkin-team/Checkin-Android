@@ -28,6 +28,9 @@ public class SessionOrderedItemModel implements Serializable {
     @JsonProperty("item_type")
     private String itemType;
 
+    @JsonProperty("type_index")
+    public int typeIndex;
+
     @JsonProperty("quantity")
     private int quantity;
 
@@ -51,6 +54,10 @@ public class SessionOrderedItemModel implements Serializable {
 
     public int getPk() {
         return pk;
+    }
+
+    public long getLongPk() {
+        return (long) pk;
     }
 
     public void setPk(int pk) {

@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="@dimen/button_height_medium"
+    android:layout_marginTop="@dimen/thickness_line"
+    android:background="@color/white"
+    android:paddingStart="@dimen/spacing_small"
+    android:paddingEnd="@dimen/spacing_small">
+
+    <TextView
+        android:id="@+id/tv_as_promo_invalid_status"
+        style="@style/RedTextStyle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_vertical|start"
+        android:text="@string/active_session_fetching_offers"
+        android:textColor="@color/orange_red" />
+
+    <LinearLayout
+        android:id="@+id/container_promo_code_apply"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:gravity="center"
+        android:orientation="horizontal"
+        android:visibility="gone">
+
+        <TextView
+            android:id="@+id/tv_promo_code"
+            style="@style/RedTextStyle"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:drawableStart="@drawable/ic_discount_percent"
+            android:drawablePadding="@dimen/spacing_small"
+            android:fontFamily="@font/josefinsans_semibold"
+            android:gravity="center|left"
+            android:text="@string/session_benefits_apply_promo_code"
+            android:textColor="@color/orange_red" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/container_remove_promo_code"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="horizontal"
+        android:visibility="gone">
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginEnd="@dimen/spacing_small"
+            android:src="@drawable/ic_discount_percent" />
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_weight="1"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/tv_as_promo_applied_details"
+                style="@style/RedTextStyle"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                tools:text="CODE - Name" />
+
+            <TextView
+                style="@style/PinkishGreySmallTextStyle"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:text="Promo Applied"
+                android:textSize="@dimen/font_small" />
+
+        </LinearLayout>
+
+        <ImageView
+            android:id="@+id/im_invoice_remove_promo_code"
+            android:layout_width="@dimen/size_small_button"
+            android:layout_height="@dimen/size_small_button"
+            android:layout_gravity="center"
+            android:clickable="true"
+            android:focusable="true"
+            android:padding="@dimen/spacing_tiny"
+            android:src="@drawable/ic_cancel" />
+
+    </LinearLayout>
+</FrameLayout>

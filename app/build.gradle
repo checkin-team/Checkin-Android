@@ -1,6 +1,6 @@
 apply plugin: 'com.android.application'
-apply plugin: 'kotlin-android-extensions'
 apply plugin: 'kotlin-android'
+apply plugin: 'kotlin-android-extensions'
 apply plugin: 'kotlin-kapt'
 apply plugin: 'io.objectbox'
 apply plugin: 'com.google.gms.google-services'
@@ -202,16 +202,17 @@ dependencies {
     kapt "io.objectbox:objectbox-processor:$versions.objectBox"
 
     // Design Libraries
-    implementation 'de.hdodenhof:circleimageview:2.2.0'
-    implementation 'com.yarolegovich:discrete-scrollview:1.4.9'
-    implementation 'com.appyvet:materialrangebar:1.4.4'
-    implementation 'com.github.antonygolovin:fluentsnackbar:1.0.0'
-    implementation 'com.romandanylyk:pageindicatorview:1.0.3'
-    implementation 'com.lyft:scissors:1.1.1'
-    implementation 'com.borjabravo:readmoretextview:2.1.0'
+    implementation "de.hdodenhof:circleimageview:2.2.0"
+    implementation "com.yarolegovich:discrete-scrollview:1.4.9"
+    implementation "com.appyvet:materialrangebar:1.4.4"
+    implementation "com.github.antonygolovin:fluentsnackbar:1.0.0"
+    implementation "com.romandanylyk:pageindicatorview:1.0.3"
+    implementation "com.lyft:scissors:1.1.1"
+    implementation "com.borjabravo:readmoretextview:2.1.0"
+    implementation "com.wdullaer:materialdatetimepicker:4.2.3"
 
     // Onboarding Screens
-    implementation 'com.getkeepsafe.taptargetview:taptargetview:1.12.0'
+    implementation "com.getkeepsafe.taptargetview:taptargetview:1.12.0"
 
     // PayTM sdk
     implementation ("com.paytm:pgplussdk:$versions.paytm") { transitive = true }
@@ -234,6 +235,10 @@ repositories {
 
 kapt {
     correctErrorTypes = true
+}
+
+androidExtensions {
+    experimental = true
 }
 
 static def buildTime() {

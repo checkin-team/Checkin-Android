@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:layout_marginStart="@dimen/spacing_normal"
+    android:orientation="vertical">
+
+    <TextView
+        android:id="@+id/tv_scheduler_item_date"
+        style="@style/GreySmallBoldTextStyle"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:background="@drawable/selector_date_background"
+        android:paddingTop="@dimen/spacing_extra_small"
+        android:paddingBottom="@dimen/spacing_extra_small"
+        android:textAlignment="center"
+        tools:text="1" />
+
+    <TextView
+        android:id="@+id/tv_scheduler_item_day"
+        style="@style/PinkishGreySmallTextStyle"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="@dimen/spacing_tiny"
+        android:textAlignment="center"
+        tools:text="MON" />
+</LinearLayout>

@@ -6,6 +6,7 @@ import android.view.ViewGroup
 import android.widget.TextView
 import androidx.core.content.ContextCompat
 import androidx.core.os.bundleOf
+import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
 import butterknife.BindView
@@ -13,8 +14,9 @@ import butterknife.OnClick
 import com.checkin.app.checkin.Menu.MenuItemInteraction
 import com.checkin.app.checkin.Menu.Model.MenuItemModel
 import com.checkin.app.checkin.R
-import com.checkin.app.checkin.Utility.Utils
 import com.checkin.app.checkin.Utility.inTransaction
+import com.checkin.app.checkin.Utility.parentActivityDelegate
+import com.checkin.app.checkin.menu.viewmodels.CartViewModel
 import com.checkin.app.checkin.menu.viewmodels.UserMenuViewModel
 import com.checkin.app.checkin.misc.fragments.BaseFragment
 
@@ -31,20 +33,15 @@ class UserMenuFragment : BaseFragment(), MenuItemInteraction, ItemCustomizationB
     internal lateinit var tvDessertCategory: TextView
     @BindView(R.id.tv_as_menu_specials)
     internal lateinit var tvSpecialCategory: TextView
-    @BindView(R.id.tv_menu_count_ordered_items)
-    internal lateinit var tvCountOrderedItems: TextView
-    @BindView(R.id.tv_as_menu_cart_item_price)
-    internal lateinit var tvCartSubtotal: TextView
-    @BindView(R.id.container_as_menu_cart)
-    internal lateinit var menuCart: ViewGroup
 
     val viewModel: UserMenuViewModel by viewModels()
+    val cartViewModel: CartViewModel by activityViewModels()
+    val menuListener: MenuInteraction by parentActivityDelegate()
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         childFragmentManager.inTransaction {
             add(R.id.container_as_menu, UserMenuGroupsFragment.newInstance())
         }
-        menuCart.visibility = View.GONE
 
         setupObservers()
     }
@@ -55,27 +52,6 @@ class UserMenuFragment : BaseFragment(), MenuItemInteraction, ItemCustomizationB
         viewModel.fetchRecommendedItems(restaurantId)
 
         viewModel.getOriginalMenuGroups().observe(this, Observer { })
-        viewModel.totalOrderedCount.observe(this, Observer {
-            it?.let { count ->
-                if (count > 0) {
-                    tvCountOrderedItems.text = Utils.formatCount(count.toLong())
-                    tvCountOrderedItems.visibility = View.VISIBLE
-                } else {
-                    menuCart.visibility = View.GONE
-                    tvCountOrderedItems.visibility = View.GONE
-                }
-            }
-        })
-        viewModel.orderedSubTotal.observe(this, Observer {
-            it?.let { subtotal ->
-                if (subtotal <= 0.0) {
-                    menuCart.visibility = View.GONE
-                } else {
-                    menuCart.visibility = View.VISIBLE
-                    tvCartSubtotal.text = Utils.formatCurrencyAmount(requireContext(), subtotal)
-                }
-            }
-        })
     }
 
     @OnClick(R.id.tv_as_menu_drinks, R.id.tv_as_menu_food, R.id.tv_as_menu_dessert, R.id.tv_as_menu_specials)
@@ -109,10 +85,11 @@ class UserMenuFragment : BaseFragment(), MenuItemInteraction, ItemCustomizationB
         true
     }
 
-    override fun onMenuItemChanged(item: MenuItemModel, count: Int): Boolean = if (viewModel.updateOrderedItem(item, count)) {
+    override fun onMenuItemChanged(item: MenuItemModel, count: Int): Boolean = cartViewModel.updateOrderedItem(item, count)?.let {
+        viewModel.setCurrentItem(it)
         this.onItemInteraction(item)
         true
-    } else onMenuItemAdded(item)
+    } ?: onMenuItemAdded(item)
 
     override fun onMenuItemShowInfo(item: MenuItemModel) {
 
@@ -120,17 +97,22 @@ class UserMenuFragment : BaseFragment(), MenuItemInteraction, ItemCustomizationB
 
     private fun onItemInteraction(item: MenuItemModel) {
         if (item.isComplexItem) ItemCustomizationBottomSheetFragment.newInstance(item).show(childFragmentManager, "menu.item_customization")
-        else viewModel.orderItem()
+        else order()
     }
 
-    override fun getItemOrderedCount(item: MenuItemModel) = viewModel.getOrderedCount(item)
+    override fun getItemOrderedCount(item: MenuItemModel) = 0
 
     override fun onCustomizationCancel() {
         viewModel.cancelItem()
     }
 
     override fun onCustomizationDone() {
-        viewModel.orderItem()
+        order()
+    }
+
+    private fun order() {
+        cartViewModel.orderItem(viewModel.currentItem.value!!)
+        viewModel.resetItem()
     }
 
     override fun updateScreen() {
@@ -146,3 +128,5 @@ class UserMenuFragment : BaseFragment(), MenuItemInteraction, ItemCustomizationB
         }
     }
 }
+
+interface MenuInteraction

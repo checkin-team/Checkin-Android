@@ -1,5 +1,7 @@
 package com.checkin.app.checkin.restaurant.activities
 
+import android.app.Activity
+import android.app.AlertDialog
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
@@ -15,27 +17,36 @@ import androidx.viewpager2.adapter.FragmentStateAdapter
 import androidx.viewpager2.widget.ViewPager2
 import butterknife.BindView
 import butterknife.ButterKnife
+import butterknife.OnClick
+import com.checkin.app.checkin.Data.ProblemModel
 import com.checkin.app.checkin.Data.Resource
-import com.checkin.app.checkin.Menu.MenuItemInteraction
-import com.checkin.app.checkin.Menu.Model.MenuItemModel
 import com.checkin.app.checkin.R
-import com.checkin.app.checkin.Shop.Private.ShopProfileViewModel
-import com.checkin.app.checkin.Shop.RestaurantModel
-import com.checkin.app.checkin.Utility.inTransaction
-import com.checkin.app.checkin.Utility.setTabBackground
+import com.checkin.app.checkin.Shop.RestaurantLocationModel
+import com.checkin.app.checkin.Utility.*
 import com.checkin.app.checkin.menu.fragments.UserMenuFragment
+import com.checkin.app.checkin.menu.viewmodels.CartViewModel
+import com.checkin.app.checkin.menu.viewmodels.SessionType
 import com.checkin.app.checkin.misc.activities.BaseActivity
+import com.checkin.app.checkin.misc.activities.QRScannerActivity
 import com.checkin.app.checkin.misc.adapters.CoverPagerAdapter
+import com.checkin.app.checkin.misc.fragments.BaseFragment
 import com.checkin.app.checkin.misc.fragments.BlankFragment
-import com.checkin.app.checkin.misc.fragments.FragmentInteraction
+import com.checkin.app.checkin.misc.fragments.QRScannerWrapperFragment
+import com.checkin.app.checkin.misc.fragments.QRScannerWrapperInteraction
+import com.checkin.app.checkin.restaurant.models.RestaurantModel
+import com.checkin.app.checkin.restaurant.viewmodels.RestaurantPublicViewModel
+import com.checkin.app.checkin.session.activesession.ActiveSessionActivity
+import com.checkin.app.checkin.session.scheduled.*
 import com.google.android.material.appbar.AppBarLayout
 import com.google.android.material.tabs.TabLayout
 import com.google.android.material.tabs.TabLayoutMediator
 import com.rd.PageIndicatorView
 import com.rd.animation.type.AnimationType
+import java.util.*
 import kotlin.math.abs
 
-class PublicRestaurantProfileActivity : BaseActivity(), MenuItemInteraction, AppBarLayout.OnOffsetChangedListener, FragmentInteraction {
+class PublicRestaurantProfileActivity : BaseActivity(), AppBarLayout.OnOffsetChangedListener,
+        ScheduledSessionInteraction, QRScannerWrapperInteraction, NewSessionCreationInteraction, SchedulerInteraction {
     @BindView(R.id.indicator_restaurant_public_covers)
     internal lateinit var indicatorTopCover: PageIndicatorView
     @BindView(R.id.fragment_vp_restaurant_public)
@@ -58,19 +69,21 @@ class PublicRestaurantProfileActivity : BaseActivity(), MenuItemInteraction, App
     internal lateinit var appbar: AppBarLayout
     @BindView(R.id.toolbar_restaurant_public)
     internal lateinit var toolbar: Toolbar
+    @BindView(R.id.scheduled_cart_restaurant_public)
+    internal lateinit var scheduledCartView: ScheduledSessionCartView
 
-    val fragmentAdapter = PublicRestaurantProfileAdapter(this)
+    lateinit var fragmentAdapter: PublicRestaurantProfileAdapter
     val coverAdapter = CoverPagerAdapter()
 
-    val restaurantViewModel: ShopProfileViewModel by viewModels()
+    val cartViewModel: CartViewModel by viewModels()
+    val restaurantViewModel: RestaurantPublicViewModel by viewModels()
+    val scheduledSessionViewModel: ScheduledSessionViewModel by viewModels()
     var restaurantId: Long = 0
 
-    private var fragmentList = mutableListOf<Fragment>()
-
     private var isTabAtTop = false
+    private var mRestaurantData: RestaurantModel? = null
     private var title = ""
-
-    val adapter = PublicRestaurantProfileAdapter(this)
+    private var allowOrder = true
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -82,6 +95,8 @@ class PublicRestaurantProfileActivity : BaseActivity(), MenuItemInteraction, App
     }
 
     private fun initUi() {
+        restaurantId = intent.getLongExtra(KEY_RESTAURANT_ID, 0)
+
         toolbar.title = ""
         setSupportActionBar(toolbar)
         supportActionBar!!.setDisplayHomeAsUpEnabled(true)
@@ -92,6 +107,8 @@ class PublicRestaurantProfileActivity : BaseActivity(), MenuItemInteraction, App
         indicatorTopCover.setAnimationType(AnimationType.FILL)
         indicatorTopCover.setClickListener { position -> vpRestaurantCovers.currentItem = position }
 
+
+        fragmentAdapter = PublicRestaurantProfileAdapter(this, restaurantId)
         vpFragment.adapter = fragmentAdapter
         TabLayoutMediator(tabsFragment, vpFragment) { _, _ -> }
         tabsFragment.addOnTabSelectedListener(object : TabLayout.ViewPagerOnTabSelectedListener(null) {
@@ -99,49 +116,111 @@ class PublicRestaurantProfileActivity : BaseActivity(), MenuItemInteraction, App
                 vpFragment.currentItem = tab.position
             }
         })
-        restaurantId = intent.getLongExtra(KEY_RESTAURANT_ID, 0)
-        restaurantViewModel.fetchShopDetails(restaurantId)
+        restaurantViewModel.fetchRestaurantWithId(restaurantId)
+        cartViewModel.sessionType = SessionType.SCHEDULED
+
+        scheduledCartView.setup(this)
     }
 
     private fun setupObservers() {
-        restaurantViewModel.shopData.observe(this, Observer {
-            it?.also { restaurantResource ->
-                when (restaurantResource.status) {
-                    Resource.Status.SUCCESS -> restaurantResource.data?.let { setupData(it) }
+        cartViewModel.fetchCartStatus()
+
+        cartViewModel.cartStatus.observe(this, Observer {
+            it?.let {
+                if (it.status == Resource.Status.SUCCESS && it.data != null) {
+                    allowOrder = it.data.restaurant.targetId == restaurantId
+                    if (allowOrder) successNewSession(it.data.pk)
                 }
             }
         })
+
+        restaurantViewModel.restaurantData.observe(this, Observer {
+            it?.also { restaurantResource ->
+                when (restaurantResource.status) {
+                    Resource.Status.SUCCESS -> restaurantResource.data?.let { setupData(it) }
+                    else -> pass
+                }
+            }
+        })
+
+        scheduledSessionViewModel.newScheduledSessionData.observe(this, Observer {
+            it?.let { resource ->
+                when (resource.status) {
+                    Resource.Status.SUCCESS -> successNewSession(resource.data!!.pk)
+                    Resource.Status.ERROR_INVALID_REQUEST -> if (resource.problem?.getErrorCode() == ProblemModel.ERROR_CODE.SESSION_SCHEDULED_PENDING_CART) {
+                        val cartRestaurant = cartViewModel.cartStatus.value?.data?.restaurant?.target
+                        if (cartRestaurant != null) handleErrorCartExists(cartRestaurant)
+                    }
+                }
+            }
+        })
+
+        scheduledSessionViewModel.newQrSessionData.observe(this, Observer {
+            it?.let { resource ->
+                when (resource.status) {
+                    Resource.Status.SUCCESS -> resource.data?.run {
+                        if (isMasterQr && restaurantPk == restaurantId) successNewSession(sessionPk)
+                        else if (isMasterQr) wrongRestaurantQrScanned()
+                        else startActivity(Intent(this@PublicRestaurantProfileActivity, ActiveSessionActivity::class.java))
+                    }
+                    else -> pass
+                }
+            }
+        })
+
+        scheduledSessionViewModel.clearCartData.observe(this, Observer {
+            if (it?.status == Resource.Status.SUCCESS) clearSession()
+        })
+    }
+
+    private fun handleErrorCartExists(cartRestaurant: RestaurantLocationModel) {
+        AlertDialog.Builder(this)
+                .setTitle("Cart item exists")
+                .setMessage("Are you sure you want to clear the cart of ${cartRestaurant.name}?")
+                .setPositiveButton("Yes") { _, _ -> scheduledSessionViewModel.clearCart() }
+                .setNegativeButton("No, take me to restaurant") { dialog, _ ->
+                    dialog.cancel()
+                    openPublicRestaurantProfile(cartRestaurant.pk)
+                    finish()
+                }
+    }
+
+    private fun wrongRestaurantQrScanned() {
+        Utils.toast(this, "Wrong Restaurant!")
+    }
+
+    @OnClick(R.id.tv_restaurant_public_navigate)
+    fun onClickNavigate() {
+        mRestaurantData?.location?.run { navigateToLocation(this@PublicRestaurantProfileActivity) }
+    }
+
+    private fun successNewSession(sessionPk: Long) {
+        cartViewModel.sessionPk = sessionPk
+        scheduledSessionViewModel.sessionPk = sessionPk
+        cartViewModel.syncOrdersWithServer()
+    }
+
+    private fun clearSession() {
+        cartViewModel.sessionPk = 0L
+        scheduledSessionViewModel.sessionPk = 0L
     }
 
     private fun setupData(restaurantModel: RestaurantModel) {
+        mRestaurantData = restaurantModel
+
         title = restaurantModel.name
         if (isTabAtTop) toolbar.title = title
         tvName.text = title
         tvCountCheckins.text = "Checkins ${restaurantModel.formatCheckins()}"
-        coverAdapter.setData(*restaurantModel.covers)
+        coverAdapter.setData(restaurantModel.covers)
         tvRestaurantCuisines.text = restaurantModel.cuisines?.let {
             if (it.isNotEmpty()) {
                 val maxLen = it.size.coerceAtMost(3)
                 it.slice(0 until maxLen).joinToString(" ")
             } else "-"
         } ?: "-"
-        tvRating.text = "1.2"
-        tvDistance.text = "3kms"
-    }
-
-    override fun onMenuItemAdded(item: MenuItemModel): Boolean {
-        TODO()
-    }
-
-    override fun onMenuItemChanged(item: MenuItemModel, count: Int): Boolean {
-        TODO()
-    }
-
-    override fun onMenuItemShowInfo(item: MenuItemModel) {
-    }
-
-    override fun getItemOrderedCount(item: MenuItemModel): Int {
-        TODO()
+        tvRating.text = restaurantModel.rating.toString()
+        tvDistance.text = ""
     }
 
     override fun onSupportNavigateUp(): Boolean {
@@ -172,18 +251,53 @@ class PublicRestaurantProfileActivity : BaseActivity(), MenuItemInteraction, App
         }
     }
 
-    override fun onAddFragment(fragment: Fragment, tag: String?) {
-        fragmentList.add(fragment)
+    override fun onCreateNewScheduledSession() {
+        ChooseQrOrScheduleBottomSheetFragment().show(supportFragmentManager, "new_session")
+    }
+
+    override fun onScanResult(result: Int, bundle: Intent?) {
+        if (result == Activity.RESULT_OK && bundle != null) {
+            val data = bundle.getStringExtra(QRScannerActivity.KEY_QR_RESULT)
+            scheduledSessionViewModel.createNewQrSession(data)
+        } else if (result == Activity.RESULT_CANCELED) scheduledCartView.dismiss()
+    }
+
+    override fun onChooseQr() {
         supportFragmentManager.inTransaction {
-            add(R.id.frg_container_activity, fragment, tag)
+            add(android.R.id.content, QRScannerWrapperFragment(), QRScannerWrapperFragment.FRAGMENT_TAG)
+            addToBackStack(null)
         }
+    }
+
+    override fun onCancelChooseNewSession() {
+        scheduledCartView.dismiss()
+    }
+
+    override fun onCancelScheduler() {
+        if (cartViewModel.sessionPk != 0L) scheduledCartView.dismiss()
+    }
+
+    override fun onChooseSchedule() {
+        SchedulerBottomSheetFragment().show(supportFragmentManager, SchedulerBottomSheetFragment.FRAGMENT_TAG)
+    }
+
+    override fun onSchedulerSet(selectedDate: Date, countPeople: Int) {
+        scheduledSessionViewModel.syncScheduleInfo(selectedDate, countPeople)
+    }
+
+    override fun onBackPressed() {
+        var result = supportFragmentManager.findFragmentByTag(QRScannerWrapperFragment.FRAGMENT_TAG)?.let { (it as BaseFragment).onBackPressed() }
+                ?: false
+        if (result) scheduledCartView.dismiss()
+        if (!result) super.onBackPressed()
     }
 
     companion object {
         const val KEY_RESTAURANT_ID = "restaurant_profile.public.id"
+        const val KEY_SESSION_ID = "session.new.id"
     }
 
-    inner class PublicRestaurantProfileAdapter(fragmentActivity: FragmentActivity) : FragmentStateAdapter(fragmentActivity) {
+    class PublicRestaurantProfileAdapter(fragmentActivity: FragmentActivity, val restaurantId: Long) : FragmentStateAdapter(fragmentActivity) {
         val tabs = listOf(RestaurantTab.MENU, RestaurantTab.INFO, RestaurantTab.REVIEWS)
 
         override fun getItemCount() = tabs.size
@@ -192,8 +306,6 @@ class PublicRestaurantProfileActivity : BaseActivity(), MenuItemInteraction, App
             RestaurantTab.MENU -> UserMenuFragment.newInstance(restaurantId)
             else -> BlankFragment.newInstance()
         }
-
-        fun getTitle(position: Int): CharSequence? = tabs[position].name
     }
 
     enum class RestaurantTab {
@@ -201,8 +313,9 @@ class PublicRestaurantProfileActivity : BaseActivity(), MenuItemInteraction, App
     }
 }
 
-fun Context.openPublicRestaurantProfile(restaurantId: Long) {
+fun Context.openPublicRestaurantProfile(restaurantId: Long, sessionId: Long = 0) {
     startActivity(Intent(this, PublicRestaurantProfileActivity::class.java).apply {
         putExtra(PublicRestaurantProfileActivity.KEY_RESTAURANT_ID, restaurantId)
+        putExtra(PublicRestaurantProfileActivity.KEY_SESSION_ID, sessionId)
     })
 }

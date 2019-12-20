@@ -15,7 +15,7 @@
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        style="@style/AquaBlueTextStyle"
+        style="@style/TealBlueTextStyle"
         android:textSize="@dimen/font_large"
         android:layout_marginEnd="@dimen/spacing_extra_small"
         tools:text="234"/>

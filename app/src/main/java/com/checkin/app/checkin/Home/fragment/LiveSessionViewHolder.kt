@@ -165,7 +165,7 @@ class PreDiningLiveSessionViewHolder(itemView: View, interactionListener: LiveSe
         ButterKnife.bind(this, itemView)
 
         tvNavigateButton.setOnClickListener {
-            mData?.restaurant?.geolocation?.let {
+            mData?.restaurant?.location?.let {
                 val gmmIntentUri = Uri.parse("google.navigation:q=${it.latitude},${it.longitude}")
                 Intent(Intent.ACTION_VIEW, gmmIntentUri).apply {
                     `package` = "com.google.android.apps.maps"
@@ -194,7 +194,7 @@ class PreDiningLiveSessionViewHolder(itemView: View, interactionListener: LiveSe
         tvAmount.text = Utils.formatCurrencyAmount(itemView.context, data.amount)
         tvSessionStatus.text = data.scheduled.status.repr
         tvMessage.text = itemView.context.getString(R.string.format_live_session_predining_message).format(username)
-        tvRestaurantName.text = if (data.restaurant.locality != null) data.restaurant.name + " - " + data.restaurant.locality else data.restaurant.name
+        tvRestaurantName.text = if (data.restaurant.location != null) data.restaurant.name + " - " + data.restaurant.location.locality else data.restaurant.name
         Utils.loadImageOrDefault(imRestaurantLogo, data.restaurant.logo, R.drawable.cover_restaurant_unknown)
         tvScheduledDate.text = data.scheduled.formatDate
         tvScheduledTime.text = data.scheduled.formatTime

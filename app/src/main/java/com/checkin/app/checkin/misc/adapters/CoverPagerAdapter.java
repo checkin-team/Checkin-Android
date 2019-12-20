@@ -4,15 +4,15 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 
+import androidx.annotation.NonNull;
+import androidx.viewpager.widget.PagerAdapter;
+
 import com.checkin.app.checkin.R;
 import com.checkin.app.checkin.Utility.GlideApp;
 
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
-
-import androidx.annotation.NonNull;
-import androidx.viewpager.widget.PagerAdapter;
 
 public class CoverPagerAdapter extends PagerAdapter {
     private List<String> mData;
@@ -25,6 +25,11 @@ public class CoverPagerAdapter extends PagerAdapter {
 
     public void setData(String... data) {
         mData = Arrays.asList(data);
+        notifyDataSetChanged();
+    }
+
+    public void setData(List<String> data) {
+        mData = data;
         notifyDataSetChanged();
     }
 

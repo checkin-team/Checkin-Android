@@ -10,10 +10,7 @@ import com.checkin.app.checkin.Manager.Model.ManagerSessionEventModel
 import com.checkin.app.checkin.User.bills.UserTransactionBriefModel
 import com.checkin.app.checkin.User.bills.UserTransactionDetailsModel
 import com.checkin.app.checkin.Utility.SingletonHolder
-import com.checkin.app.checkin.session.models.QRResultModel
-import com.checkin.app.checkin.session.models.SessionBasicModel
-import com.checkin.app.checkin.session.models.SessionBriefModel
-import com.checkin.app.checkin.session.models.SessionOrderedItemModel
+import com.checkin.app.checkin.session.models.*
 import com.fasterxml.jackson.databind.node.ObjectNode
 
 class SessionRepository private constructor(context: Context) : BaseRepository() {
@@ -61,6 +58,48 @@ class SessionRepository private constructor(context: Context) : BaseRepository()
             }
 
             override fun saveCallResult(data: QRResultModel) {}
+        }.asLiveData
+    }
+
+    val clearCustomerCart: LiveData<Resource<ObjectNode>>
+        get() = object : NetworkBoundResource<ObjectNode, ObjectNode>() {
+            override fun shouldUseLocalDb(): Boolean = false
+
+            override fun createCall(): LiveData<ApiResponse<ObjectNode>> {
+                return RetrofitLiveData(mWebService.deleteCustomerCart)
+            }
+
+            override fun saveCallResult(data: ObjectNode) {
+            }
+        }.asLiveData
+
+    fun newScheduledSession(data: NewScheduledSessionModel): LiveData<Resource<NewScheduledSessionModel>> {
+        return object : NetworkBoundResource<NewScheduledSessionModel, NewScheduledSessionModel>() {
+
+            override fun shouldUseLocalDb(): Boolean {
+                return false
+            }
+
+            override fun createCall(): LiveData<ApiResponse<NewScheduledSessionModel>> {
+                return RetrofitLiveData(mWebService.postNewScheduledSession(data))
+            }
+
+            override fun saveCallResult(data: NewScheduledSessionModel) {}
+        }.asLiveData
+    }
+
+    fun editScheduledSession(sessionId: Long, data: NewScheduledSessionModel): LiveData<Resource<NewScheduledSessionModel>> {
+        return object : NetworkBoundResource<NewScheduledSessionModel, NewScheduledSessionModel>() {
+
+            override fun shouldUseLocalDb(): Boolean {
+                return false
+            }
+
+            override fun createCall(): LiveData<ApiResponse<NewScheduledSessionModel>> {
+                return RetrofitLiveData(mWebService.patchScheduledSession(sessionId, data))
+            }
+
+            override fun saveCallResult(data: NewScheduledSessionModel) {}
         }.asLiveData
     }
 
