@@ -21,6 +21,7 @@ class PhoneEditDialog(context: Context, val listener: PhoneInteraction) : AlertD
     init {
         val contentView = layoutInflater.inflate(R.layout.fragment_edit_phone_dialog, null) as ViewGroup
         ButterKnife.bind(this, contentView)
+        setView(contentView)
 
         init()
     }
@@ -37,9 +38,11 @@ class PhoneEditDialog(context: Context, val listener: PhoneInteraction) : AlertD
     }
 
     @OnClick(R.id.btn_proceed)
-    fun onConfirm(v: EditText) {
-        listener.onPhoneSubmit(v.text.toString())
-        v.setText("")
+    fun onConfirm() {
+        if (!btnProceed.isActivated) return
+        listener.onPhoneSubmit(etPhone.text.toString())
+        etPhone.setText("")
+        dismiss()
     }
 
     override fun dismiss() {

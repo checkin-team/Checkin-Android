@@ -22,7 +22,7 @@ public class SessionBillModel {
     @JsonProperty("discount")
     private Double discount;
 
-    @JsonProperty("offer")
+    @JsonProperty("offers")
     private Double offers;
 
     @JsonProperty("total")

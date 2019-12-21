@@ -5,9 +5,7 @@ import android.content.Context
 import android.content.DialogInterface
 import android.content.Intent
 import android.os.Bundle
-import android.text.InputType
 import android.util.Log
-import android.widget.EditText
 import android.widget.TextView
 import androidx.activity.viewModels
 import androidx.appcompat.app.AlertDialog
@@ -32,11 +30,11 @@ import com.checkin.app.checkin.Data.ProblemModel
 import com.checkin.app.checkin.Data.Resource
 import com.checkin.app.checkin.R
 import com.checkin.app.checkin.User.Private.UserViewModel
-import com.checkin.app.checkin.User.bills.SuccessfulTransactionActivity
 import com.checkin.app.checkin.Utility.*
 import com.checkin.app.checkin.menu.fragments.UserMenuFragment
 import com.checkin.app.checkin.menu.viewmodels.CartViewModel
 import com.checkin.app.checkin.menu.viewmodels.SessionType
+import com.checkin.app.checkin.misc.BlockingNetworkViewModel
 import com.checkin.app.checkin.misc.activities.BaseActivity
 import com.checkin.app.checkin.misc.activities.QRScannerActivity
 import com.checkin.app.checkin.misc.adapters.CoverPagerAdapter
@@ -98,6 +96,7 @@ class PublicRestaurantProfileActivity : BaseActivity(), AppBarLayout.OnOffsetCha
     private val restaurantViewModel: RestaurantPublicViewModel by viewModels()
     private val scheduledSessionViewModel: ScheduledSessionViewModel by viewModels()
     private val userViewModel: UserViewModel by viewModels()
+    private val networkViewModel: BlockingNetworkViewModel by viewModels()
 
     var restaurantId: Long = 0
     private var isTabAtTop = false
@@ -191,6 +190,7 @@ class PublicRestaurantProfileActivity : BaseActivity(), AppBarLayout.OnOffsetCha
                     if (allowOrder) {
                         successNewSession(it.data.pk)
                         cartViewModel.fetchCartOrders()
+                        scheduledSessionViewModel.fetchSessionAppliedPromo()
                     }
                 }
             }
@@ -236,10 +236,16 @@ class PublicRestaurantProfileActivity : BaseActivity(), AppBarLayout.OnOffsetCha
 
         userViewModel.userData.observe(this, Observer {
             it?.let { resource ->
-                if (resource.status == Resource.Status.SUCCESS) scheduledSessionViewModel.isPhoneVerified = true
-                else if (resource.problem?.getErrorCode() == ProblemModel.ERROR_CODE.ACCOUNT__ALREADY_REGISTERED) {
-                    Utils.toast(this, "This number already exists.")
-                    onVerifyPhoneOfUser()
+                networkViewModel.updateStatus(resource)
+                when {
+                    resource.status == Resource.Status.SUCCESS -> scheduledSessionViewModel.isPhoneVerified = true
+                    resource.problem?.getErrorCode() == ProblemModel.ERROR_CODE.ACCOUNT_ALREADY_REGISTERED -> {
+                        Utils.toast(this, "This number already exists.")
+                        onVerifyPhoneOfUser()
+                    }
+                    resource.status != Resource.Status.LOADING -> {
+                        Utils.toast(this, resource.message)
+                    }
                 }
             }
         })
@@ -248,6 +254,7 @@ class PublicRestaurantProfileActivity : BaseActivity(), AppBarLayout.OnOffsetCha
     private fun setupPaytm() {
         scheduledSessionViewModel.paytmData.observe(this, Observer {
             it?.let { paytmModelResource ->
+                networkViewModel.updateStatus(paytmModelResource)
                 if (paytmModelResource.status === Resource.Status.SUCCESS && paytmModelResource.data != null) {
                     paytmPayment.initializePayment(paytmModelResource.data, this)
                 } else if (paytmModelResource.status !== Resource.Status.LOADING) {
@@ -259,6 +266,7 @@ class PublicRestaurantProfileActivity : BaseActivity(), AppBarLayout.OnOffsetCha
 
         scheduledSessionViewModel.paytmCallbackData.observe(this, Observer {
             it?.let { objectNodeResource ->
+                networkViewModel.updateStatus(objectNodeResource)
                 if (objectNodeResource.status === Resource.Status.SUCCESS) {
                     Utils.navigateBackToHome(this)
                 }
@@ -373,7 +381,7 @@ class PublicRestaurantProfileActivity : BaseActivity(), AppBarLayout.OnOffsetCha
 
     override fun onOpenPromoList() {
         supportFragmentManager.inTransaction {
-            add(android.R.id.content, ScheduledSessionPromoFragment.newInstance(), ScheduledSessionPromoFragment.FRAGMENT_TAG)
+            add(R.id.frg_container_activity, ScheduledSessionPromoFragment.newInstance(), ScheduledSessionPromoFragment.FRAGMENT_TAG)
             addToBackStack(null)
         }
     }

@@ -13,6 +13,7 @@ import butterknife.OnClick
 import com.checkin.app.checkin.Data.Resource
 import com.checkin.app.checkin.R
 import com.checkin.app.checkin.Utility.Utils
+import com.checkin.app.checkin.Utility.inTransaction
 import com.checkin.app.checkin.misc.fragments.BaseFragment
 import com.checkin.app.checkin.session.activesession.ActiveSessionPromoAdapter
 import com.checkin.app.checkin.session.activesession.ActiveSessionPromoAdapter.onPromoCodeItemListener
@@ -52,7 +53,9 @@ class ScheduledSessionPromoFragment : BaseFragment(), onPromoCodeItemListener {
                 var msg = objectNodeResource.message
                 if (objectNodeResource.status === Resource.Status.SUCCESS) {
                     mViewModel.resetObservableData()
-                    parentFragmentManager.popBackStack()
+                    parentFragmentManager.inTransaction {
+                        remove(this@ScheduledSessionPromoFragment)
+                    }
                     if (objectNodeResource.data != null && objectNodeResource.data.has("code")) {
                         msg = "Successfully applied " + objectNodeResource.data["code"]
                     }
@@ -62,6 +65,8 @@ class ScheduledSessionPromoFragment : BaseFragment(), onPromoCodeItemListener {
                 Utils.toast(requireContext(), msg)
             }
         })
+
+        mViewModel.fetchPromoCodes()
     }
 
     @OnClick(R.id.tv_apply_promo)

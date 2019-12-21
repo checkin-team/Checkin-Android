@@ -11,7 +11,6 @@ import android.widget.EditText
 import android.widget.FrameLayout
 import android.widget.ImageView
 import android.widget.TextView
-import androidx.annotation.StringRes
 import androidx.core.content.ContextCompat
 import androidx.core.widget.NestedScrollView
 import androidx.fragment.app.FragmentActivity
@@ -24,7 +23,6 @@ import com.airbnb.epoxy.EpoxyRecyclerView
 import com.checkin.app.checkin.Account.AccountUtil
 import com.checkin.app.checkin.Data.ProblemModel
 import com.checkin.app.checkin.Data.Resource
-import com.checkin.app.checkin.menu.models.OrderedItemModel
 import com.checkin.app.checkin.R
 import com.checkin.app.checkin.Utility.LockableBottomSheetBehavior
 import com.checkin.app.checkin.Utility.Utils
@@ -32,10 +30,10 @@ import com.checkin.app.checkin.Utility.pass
 import com.checkin.app.checkin.menu.controllers.CartOrderedItemController
 import com.checkin.app.checkin.menu.holders.CartOrderInteraction
 import com.checkin.app.checkin.menu.models.CartDetailModel
+import com.checkin.app.checkin.menu.models.OrderedItemModel
 import com.checkin.app.checkin.menu.viewmodels.CartViewModel
 import com.checkin.app.checkin.misc.BillHolder
 import com.checkin.app.checkin.misc.BlockingNetworkViewModel
-import com.checkin.app.checkin.session.models.PromoDetailModel
 import com.checkin.app.checkin.session.models.ScheduledSessionDetailModel
 import com.checkin.app.checkin.session.models.SessionPromoModel
 import com.google.android.material.bottomsheet.BottomSheetBehavior
@@ -214,22 +212,19 @@ class ScheduledSessionCartView @JvmOverloads constructor(
             it?.let { sessionPromoModelResource ->
                 if (sessionPromoModelResource.status === Resource.Status.SUCCESS && sessionPromoModelResource.data != null) {
                     showPromoDetails(sessionPromoModelResource.data)
+                    viewModel.fetchCartBill()
 //                    tryShowTotalSavings()
                 } else if (sessionPromoModelResource.status === Resource.Status.ERROR_NOT_FOUND) {
                     showPromoApply()
-                }
-            }
-        })
-
-        scheduledSessionViewModel.promoCodes.observe(activity, Observer {
-            it?.let { listResource ->
-                if (listResource.problem?.getErrorCode() == ProblemModel.ERROR_CODE.USER_MISSING_PHONE) {
+                } else if (sessionPromoModelResource.problem?.getErrorCode() == ProblemModel.ERROR_CODE.USER_MISSING_PHONE) {
                     scheduledSessionViewModel.isPhoneVerified = false
-                    if (isExpanded())   listener.onVerifyPhoneOfUser()
+                    if (isExpanded()) listener.onVerifyPhoneOfUser()
                 }
             }
         })
-        scheduledSessionViewModel.fetchPromoCodes()
+        scheduledSessionViewModel.promoDeletedData.observe(activity, Observer {
+            if (it?.status == Resource.Status.SUCCESS) viewModel.fetchCartBill()
+        })
     }
 
     private fun showPromoApply() {

@@ -32,7 +32,7 @@ class ProblemModel(@JsonProperty("type") val type: String, @JsonProperty("status
 
         INVALID_PAYMENT_MODE_PROMO_AVAILED("offer__apply_invalid_payment_mode"), OFFER_REJECTED_APPLYING("offer__apply_rejected"),
 
-        USER_MISSING_PHONE("user__missing_phone"), ACCOUNT__ALREADY_REGISTERED("account__already_registered");
+        USER_MISSING_PHONE("user__missing_phone"), ACCOUNT_ALREADY_REGISTERED("account__already_registered");
 
 
         companion object {

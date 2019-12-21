@@ -54,13 +54,7 @@ class ScheduledSessionViewModel(application: Application) : BaseViewModel(applic
         input
     }
 
-    val sessionAppliedPromo: LiveData<Resource<SessionPromoModel>> = mSessionPromo/*Transformations.map(mSessionPromo) {
-        it?.let { input ->
-            if (input.status === Resource.Status.SUCCESS && input.data != null) updateOfferInInvoice(input.data.code, input.data.offerAmount)
-            else if (input.status === Resource.Status.ERROR_NOT_FOUND) updateOfferInInvoice(null, null)
-            input
-        } ?: it
-    }*/
+    val sessionAppliedPromo: LiveData<Resource<SessionPromoModel>> = mSessionPromo
 
     private fun createNewScheduledSession(countPeople: Int, plannedTime: Date, restaurantId: Long, remarks: String?) {
         val body = NewScheduledSessionModel(countPeople = countPeople, plannedDatetime = plannedTime, remarks = remarks).apply {

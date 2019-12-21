@@ -84,11 +84,6 @@
         </LinearLayout>
     </androidx.core.widget.NestedScrollView>
 
-    <include
-        layout="@layout/incl_activity_base"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent" />
-
     <androidx.coordinatorlayout.widget.CoordinatorLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -102,4 +97,10 @@
             app:behavior_peekHeight="@dimen/height_cart_header_topbar"
             app:layout_behavior="com.checkin.app.checkin.Utility.LockableBottomSheetBehavior" />
     </androidx.coordinatorlayout.widget.CoordinatorLayout>
+
+    <include
+        layout="@layout/incl_activity_base"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
+
 </androidx.coordinatorlayout.widget.CoordinatorLayout>
