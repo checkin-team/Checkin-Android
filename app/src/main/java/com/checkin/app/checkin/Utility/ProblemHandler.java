@@ -10,7 +10,7 @@ import androidx.annotation.Nullable;
 import com.checkin.app.checkin.Data.ProblemModel;
 import com.checkin.app.checkin.Data.ProblemModel.ERROR_CODE;
 import com.checkin.app.checkin.Data.Resource;
-import com.checkin.app.checkin.Misc.UpdateAppActivity;
+import com.checkin.app.checkin.misc.activities.UpdateAppActivity;
 import com.checkin.app.checkin.R;
 import com.crashlytics.android.Crashlytics;
 

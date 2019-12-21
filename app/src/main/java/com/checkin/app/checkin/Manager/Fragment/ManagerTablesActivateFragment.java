@@ -3,7 +3,7 @@ package com.checkin.app.checkin.Manager.Fragment;
 import android.content.Context;
 import android.widget.Button;
 
-import com.checkin.app.checkin.Misc.BaseFragment;
+import com.checkin.app.checkin.misc.fragments.BaseFragment;
 import com.checkin.app.checkin.R;
 
 import butterknife.BindView;

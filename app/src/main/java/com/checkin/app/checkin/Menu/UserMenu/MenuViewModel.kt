@@ -2,16 +2,19 @@ package com.checkin.app.checkin.Menu.UserMenu
 
 import android.app.Application
 import android.os.Handler
-import androidx.lifecycle.*
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.MediatorLiveData
+import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.Transformations
 import com.checkin.app.checkin.Data.BaseViewModel
 import com.checkin.app.checkin.Data.Resource
-import com.checkin.app.checkin.Menu.MenuRepository
 import com.checkin.app.checkin.Menu.Model.*
+import com.checkin.app.checkin.menu.MenuRepository
+import com.checkin.app.checkin.menu.models.OrderedItemModel
 import com.checkin.app.checkin.session.activesession.ActiveSessionRepository
-import com.checkin.app.checkin.session.model.TrendingDishModel
+import com.checkin.app.checkin.session.models.TrendingDishModel
 import com.fasterxml.jackson.databind.node.ArrayNode
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import java.util.ArrayList
 import kotlin.Comparator
@@ -227,11 +230,7 @@ class MenuViewModel(application: Application) : BaseViewModel(application) {
     }
 
     fun setCurrentItem(item: OrderedItemModel) {
-        try {
-            mCurrentItem.value = item.clone()
-        } catch (e: CloneNotSupportedException) {
-        }
-
+        mCurrentItem.value = item
     }
 
     fun removeItemCustomization(customizationField: ItemCustomizationFieldModel) {
@@ -241,9 +240,9 @@ class MenuViewModel(application: Application) : BaseViewModel(application) {
     }
 
     fun setSelectedType(selectedType: Int) {
-        val item = mCurrentItem.value ?: return
-        item.typeIndex = selectedType
-        mCurrentItem.value = item
+//        val item = mCurrentItem.value ?: return
+//        item.typeIndex = selectedType
+//        mCurrentItem.value = item
     }
 
     fun changeQuantity(diff: Int) {
@@ -253,10 +252,10 @@ class MenuViewModel(application: Application) : BaseViewModel(application) {
     }
 
     fun cancelItem() = mCurrentItem.value?.let {
-        it.quantity = 0
-        it.changeCount = 0
-        mCurrentItem.value = it
-        resetItem()
+//        it.quantity = 0
+//        it.changeCount = 0
+//        mCurrentItem.value = it
+//        resetItem()
     }
 
     fun canOrder(): Boolean = mCurrentItem.value?.canOrder() ?: false
@@ -264,7 +263,7 @@ class MenuViewModel(application: Application) : BaseViewModel(application) {
     fun setQuantity(quantity: Int) {
         val item = mCurrentItem.value ?: return
         if (quantity != item.quantity) {
-            item.quantity = quantity
+//            item.quantity = quantity
             mCurrentItem.value = item
         }
         if (quantity == 0) {
@@ -287,7 +286,7 @@ class MenuViewModel(application: Application) : BaseViewModel(application) {
     }
 
     fun updateOrderedItem(item: MenuItemModel, count: Int): Boolean {
-        val items = mOrderedItems.value
+        /*val items = mOrderedItems.value
         var result = false
         if (items == null) {
             return result
@@ -319,11 +318,12 @@ class MenuViewModel(application: Application) : BaseViewModel(application) {
             setCurrentItem(orderedItem)
             result = true
         }
-        return result
+        return result*/
+        return false
     }
 
     private fun updateCart() {
-        val item = mCurrentItem.value ?: return
+       /* val item = mCurrentItem.value ?: return
         val orderedItems: MutableList<OrderedItemModel> = mOrderedItems.value?.toMutableList()
                 ?: mutableListOf()
         val index = orderedItems.indexOf(item)
@@ -338,7 +338,7 @@ class MenuViewModel(application: Application) : BaseViewModel(application) {
                 item.quantity = item.changeCount
             orderedItems.add(item)
         }
-        mOrderedItems.value = orderedItems
+        mOrderedItems.value = orderedItems*/
     }
 
     fun getOrderedCount(item: MenuItemModel): Int {
@@ -357,12 +357,12 @@ class MenuViewModel(application: Application) : BaseViewModel(application) {
     }
 
     fun removeItem(item: OrderedItemModel) {
-        item.quantity = 0
+       /* item.quantity = 0
         mCurrentItem.value = item
         mOrderedItems.value?.let {
             mOrderedItems.value = it.toMutableList().apply { remove(item) }
         }
-        mCurrentItem.value = null
+        mCurrentItem.value = null*/
     }
 
     fun sortMenuItems(low2high: Boolean) {
@@ -388,10 +388,10 @@ class MenuViewModel(application: Application) : BaseViewModel(application) {
     }
 
     fun confirmOrder() {
-        if (mSessionPk == null)
-            mResultOrder.addSource(mRepository.postMenuOrders(mOrderedItems.value)) { mResultOrder.setValue(it) }
-        else
-            mResultOrder.addSource(mRepository.postMenuManageOrders(mSessionPk!!, mOrderedItems.value)) { mResultOrder.setValue(it) }
+//        if (mSessionPk == null)
+//            mResultOrder.addSource(mRepository.postActiveSessionOrders(mOrderedItems.value!!)) { mResultOrder.setValue(it) }
+//        else
+//            mResultOrder.addSource(mRepository.postManageSessionOrders(mSessionPk!!, mOrderedItems.value!!)) { mResultOrder.setValue(it) }
     }
 
     fun manageSession(sessionPk: Long) {

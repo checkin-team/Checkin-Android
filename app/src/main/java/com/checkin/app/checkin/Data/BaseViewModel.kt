@@ -8,13 +8,17 @@ import com.checkin.app.checkin.Utility.ProblemHandler
 import com.checkin.app.checkin.Utility.SourceMappedLiveData
 import com.fasterxml.jackson.databind.node.ObjectNode
 
-abstract class BaseViewModel(private val mApplication: Application) : AndroidViewModel(mApplication) {
+interface IBaseViewModel {
+    fun <T> createNetworkLiveData(): SourceMappedLiveData<Resource<T>>
+}
+
+abstract class BaseViewModel(private val mApplication: Application) : AndroidViewModel(mApplication), IBaseViewModel {
     protected var mData = createNetworkLiveData<ObjectNode>()
 
     val observableData: LiveData<Resource<ObjectNode>>
         get() = mData
 
-    protected fun <T> createNetworkLiveData(): SourceMappedLiveData<Resource<T>> = SourceMappedLiveData { resource ->
+    final override fun <T> createNetworkLiveData(): SourceMappedLiveData<Resource<T>> = SourceMappedLiveData { resource ->
         if (ProblemHandler.handleProblems(mApplication, resource)) null else resource
     }
 

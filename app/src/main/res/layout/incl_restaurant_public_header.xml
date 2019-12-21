@@ -1,0 +1,149 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layout_marginBottom="@dimen/spacing_very_huge"
+    android:orientation="vertical">
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/height_cover_restaurant_profile"
+        android:background="@color/black"
+        android:orientation="vertical"
+        app:layout_collapseMode="parallax"
+        app:layout_collapseParallaxMultiplier="0.5">
+
+        <com.checkin.app.checkin.Utility.DynamicSwipableViewPager
+            android:id="@+id/vp_restaurant_public_covers"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/spacing_small">
+
+            <com.rd.PageIndicatorView
+                android:id="@+id/indicator_restaurant_public_covers"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerHorizontal="true"
+                android:layout_centerVertical="true"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:piv_animationType="scale"
+                app:piv_dynamicCount="true"
+                app:piv_interactiveAnimation="true"
+                app:piv_selectedColor="@color/white"
+                app:piv_unselectedColor="@color/pinkish_grey"
+                app:piv_viewPager="@id/vp_restaurant_public_covers" />
+
+            <TextView
+                android:id="@+id/tv_restaurant_public_rating"
+                style="@style/WhiteSmallTextStyle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentEnd="true"
+                android:layout_marginEnd="@dimen/spacing_extra_small"
+                android:background="@drawable/background_rounded_green_gradient"
+                android:paddingStart="@dimen/spacing_extra_small"
+                android:paddingTop="@dimen/spacing_extra_tiny"
+                android:paddingEnd="@dimen/spacing_extra_small"
+                android:paddingBottom="@dimen/spacing_extra_tiny"
+                tools:text="4.4" />
+        </RelativeLayout>
+    </FrameLayout>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/white"
+        android:paddingBottom="@dimen/spacing_small">
+
+        <TextView
+            android:id="@+id/tv_restaurant_public_name_locality"
+            style="@style/GreyHeadingStyle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/spacing_normal"
+            android:layout_marginTop="@dimen/spacing_normal"
+            android:fontFamily="@font/josefinsans_semibold"
+            android:gravity="center_horizontal"
+            android:shadowColor="#80000000"
+            android:shadowRadius="3"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:text="Grey Orange - Lavel Road " />
+
+        <ImageView
+            android:id="@+id/im_restaurant_banner_distance"
+            android:layout_width="wrap_content"
+            android:layout_height="@dimen/size_extra_small_icon"
+            android:layout_marginTop="@dimen/spacing_normal"
+            android:src="@drawable/ic_distance_walking"
+            app:layout_constraintEnd_toEndOf="@id/im_restaurant_banner_cuisines"
+            app:layout_constraintStart_toStartOf="@id/im_restaurant_banner_cuisines"
+            app:layout_constraintTop_toBottomOf="@id/im_restaurant_banner_cuisines" />
+
+        <TextView
+            android:id="@+id/tv_restaurant_public_distance"
+            style="@style/GreySmallTextStyle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintBottom_toBottomOf="@id/im_restaurant_banner_distance"
+            app:layout_constraintStart_toStartOf="@id/tv_restaurant_public_cuisines"
+            app:layout_constraintTop_toTopOf="@id/im_restaurant_banner_distance"
+            tools:text="3 KM" />
+
+        <TextView
+            android:id="@+id/tv_restaurant_public_count_checkins"
+            style="@style/RoundedPurpleGradientButtonStyle"
+            android:layout_width="0dp"
+            app:layout_constraintEnd_toEndOf="@id/tv_restaurant_public_navigate"
+            app:layout_constraintStart_toStartOf="@id/tv_restaurant_public_navigate"
+            app:layout_constraintTop_toBottomOf="@id/tv_restaurant_public_name_locality"
+            tools:text="Checkin 2k" />
+
+        <TextView
+            android:id="@+id/tv_restaurant_public_navigate"
+            style="@style/RoundedWhiteWithGreyBorderButtonStyle"
+            android:layout_marginTop="@dimen/spacing_small"
+            android:layout_marginEnd="@dimen/spacing_medium"
+            android:layout_marginBottom="@dimen/spacing_small"
+            android:drawableStart="@drawable/ic_navigate_arrow"
+            android:drawablePadding="@dimen/spacing_extra_tiny"
+            android:text="Navigate"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tv_restaurant_public_count_checkins"
+            tools:ignore="RtlSymmetry" />
+
+        <ImageView
+            android:id="@+id/im_restaurant_banner_cuisines"
+            android:layout_width="wrap_content"
+            android:layout_height="@dimen/size_extra_small_icon"
+            android:layout_marginStart="@dimen/spacing_normal"
+            android:layout_marginTop="@dimen/spacing_normal"
+            android:src="@drawable/ic_banner_cuisines"
+            app:layout_constraintBottom_toBottomOf="@id/tv_restaurant_public_count_checkins"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tv_restaurant_public_name_locality" />
+
+        <TextView
+            android:id="@+id/tv_restaurant_public_cuisines"
+            style="@style/GreySmallTextStyle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/spacing_extra_small"
+            app:layout_constraintBottom_toBottomOf="@id/im_restaurant_banner_cuisines"
+            app:layout_constraintEnd_toStartOf="@id/tv_restaurant_public_count_checkins"
+            app:layout_constraintHorizontal_bias="0"
+            app:layout_constraintStart_toEndOf="@id/im_restaurant_banner_cuisines"
+            app:layout_constraintTop_toTopOf="@id/im_restaurant_banner_cuisines"
+            tools:text="Pure Veg  American  Burgers" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</LinearLayout>

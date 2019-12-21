@@ -10,15 +10,15 @@ import androidx.lifecycle.Transformations;
 
 import com.checkin.app.checkin.Data.BaseViewModel;
 import com.checkin.app.checkin.Data.Resource;
-import com.checkin.app.checkin.Menu.MenuRepository;
 import com.checkin.app.checkin.Menu.Model.ItemCustomizationFieldModel;
 import com.checkin.app.checkin.Menu.Model.MenuGroupModel;
 import com.checkin.app.checkin.Menu.Model.MenuItemModel;
 import com.checkin.app.checkin.Menu.Model.MenuModel;
-import com.checkin.app.checkin.Menu.Model.OrderedItemModel;
+import com.checkin.app.checkin.menu.models.OrderedItemModel;
 import com.checkin.app.checkin.Utility.SourceMappedLiveData;
+import com.checkin.app.checkin.menu.MenuRepository;
 import com.checkin.app.checkin.session.activesession.ActiveSessionRepository;
-import com.checkin.app.checkin.session.model.TrendingDishModel;
+import com.checkin.app.checkin.session.models.TrendingDishModel;
 import com.fasterxml.jackson.databind.node.ArrayNode;
 
 import java.util.ArrayList;
@@ -49,7 +49,7 @@ public class MenuViewModel extends BaseViewModel {
 
     public MenuViewModel(@NonNull Application application) {
         super(application);
-        mRepository = MenuRepository.getInstance(application);
+        mRepository = MenuRepository.Companion.getInstance(application);
         mActiveSessionRepository = ActiveSessionRepository.getInstance(application);
     }
 
@@ -152,10 +152,10 @@ public class MenuViewModel extends BaseViewModel {
     }
 
     public void addItemCustomization(ItemCustomizationFieldModel customizationField) {
-        OrderedItemModel item = mCurrentItem.getValue();
-        if (item == null) return;
-        item.addCustomizationField(customizationField);
-        mCurrentItem.setValue(item);
+//        OrderedItemModel item = mCurrentItem.getValue();
+//        if (item == null) return;
+//        item.addCustomizationField(customizationField);
+//        mCurrentItem.setValue(item);
     }
 
     public LiveData<OrderedItemModel> getCurrentItem() {
@@ -163,40 +163,37 @@ public class MenuViewModel extends BaseViewModel {
     }
 
     public void setCurrentItem(OrderedItemModel item) {
-        try {
-            mCurrentItem.setValue(item.clone());
-        } catch (CloneNotSupportedException e) {
-        }
+            mCurrentItem.setValue(item);
     }
 
     public void removeItemCustomization(ItemCustomizationFieldModel customizationField) {
-        OrderedItemModel item = mCurrentItem.getValue();
-        if (item == null) return;
-        item.removeCustomizationField(customizationField);
-        mCurrentItem.setValue(item);
+//        OrderedItemModel item = mCurrentItem.getValue();
+//        if (item == null) return;
+//        item.removeCustomizationField(customizationField);
+//        mCurrentItem.setValue(item);
     }
 
     public void setSelectedType(int selectedType) {
-        OrderedItemModel item = mCurrentItem.getValue();
-        if (item == null) return;
-        item.setTypeIndex(selectedType);
-        mCurrentItem.setValue(item);
+//        OrderedItemModel item = mCurrentItem.getValue();
+//        if (item == null) return;
+//        item.setTypeIndex(selectedType);
+//        mCurrentItem.setValue(item);
     }
 
     public void changeQuantity(int diff) {
-        OrderedItemModel item = mCurrentItem.getValue();
-        if (item == null) return;
-        if (diff != 0)
-            setQuantity(item.getQuantity() + diff);
+//        OrderedItemModel item = mCurrentItem.getValue();
+//        if (item == null) return;
+//        if (diff != 0)
+//            setQuantity(item.getQuantity() + diff);
     }
 
     public void cancelItem() {
-        OrderedItemModel item = mCurrentItem.getValue();
-        if (item == null) return;
-        item.setQuantity(0);
-        item.setChangeCount(0);
-        mCurrentItem.setValue(item);
-        resetItem();
+//        OrderedItemModel item = mCurrentItem.getValue();
+//        if (item == null) return;
+//        item.setQuantity(0);
+//        item.setChangeCount(0);
+//        mCurrentItem.setValue(item);
+//        resetItem();
     }
 
     public boolean canOrder() {
@@ -213,15 +210,15 @@ public class MenuViewModel extends BaseViewModel {
     }
 
     public void setQuantity(int quantity) {
-        OrderedItemModel item = mCurrentItem.getValue();
-        if (item == null) return;
-        if (quantity != item.getQuantity()) {
-            item.setQuantity(quantity);
-            mCurrentItem.setValue(item);
-        }
-        if (quantity == 0) {
-            removeItem(item);
-        }
+//        OrderedItemModel item = mCurrentItem.getValue();
+//        if (item == null) return;
+//        if (quantity != item.getQuantity()) {
+//            item.setQuantity(quantity);
+//            mCurrentItem.setValue(item);
+//        }
+//        if (quantity == 0) {
+//            removeItem(item);
+//        }
     }
 
     public void orderItem() {
@@ -245,62 +242,63 @@ public class MenuViewModel extends BaseViewModel {
     }
 
     public boolean updateOrderedItem(@NonNull MenuItemModel item, int count) {
-        List<OrderedItemModel> items = mOrderedItems.getValue();
-        boolean result = false;
-        if (items == null) {
-            return result;
-        }
-        OrderedItemModel orderedItem = null;
-        int cartCount = 0;
-        for (OrderedItemModel listItem : items) {
-            if (item.equals(listItem.getItemModel())) {
-                cartCount += listItem.getQuantity();
-                if (!item.isComplexItem()) {
-                    try {
-                        orderedItem = listItem.clone();
-                    } catch (CloneNotSupportedException e) {
-                    }
-                    break;
-                }
-            }
-        }
-        if (cartCount == 0) {
-            return result;
-        }
-        if (item.isComplexItem() && cartCount != count) {
-            orderedItem = item.order(1);
-            setCurrentItem(orderedItem);
-            result = true;
-        } else if (orderedItem != null && orderedItem.getQuantity() != count) {
-            orderedItem.setQuantity(count);
-            setCurrentItem(orderedItem);
-            result = true;
-        }
-        return result;
+//        List<OrderedItemModel> items = mOrderedItems.getValue();
+//        boolean result = false;
+//        if (items == null) {
+//            return result;
+//        }
+//        OrderedItemModel orderedItem = null;
+//        int cartCount = 0;
+//        for (OrderedItemModel listItem : items) {
+//            if (item.equals(listItem.getItemModel())) {
+//                cartCount += listItem.getQuantity();
+//                if (!item.isComplexItem()) {
+//                    try {
+//                        orderedItem = listItem.clone();
+//                    } catch (CloneNotSupportedException e) {
+//                    }
+//                    break;
+//                }
+//            }
+//        }
+//        if (cartCount == 0) {
+//            return result;
+//        }
+//        if (item.isComplexItem() && cartCount != count) {
+//            orderedItem = item.order(1);
+//            setCurrentItem(orderedItem);
+//            result = true;
+//        } else if (orderedItem != null && orderedItem.getQuantity() != count) {
+//            orderedItem.setQuantity(count);
+//            setCurrentItem(orderedItem);
+//            result = true;
+//        }
+//        return result;
+        return false;
     }
 
     private void updateCart() {
-        OrderedItemModel item = mCurrentItem.getValue();
-        if (item == null) {
-            return;
-        }
-        List<OrderedItemModel> orderedItems = mOrderedItems.getValue();
-        int index;
-        if (orderedItems == null) {
-            orderedItems = new ArrayList<>();
-            orderedItems.add(item);
-        } else if ((index = orderedItems.indexOf(item)) != -1) {
-            if (item.getQuantity() > 0) {
-                item.setQuantity(orderedItems.get(index).getQuantity() + item.getChangeCount());
-                orderedItems.set(index, item);
-            } else
-                orderedItems.remove(index);
-        } else {
-            if (item.getItemModel().isComplexItem())
-                item.setQuantity(item.getChangeCount());
-            orderedItems.add(item);
-        }
-        mOrderedItems.setValue(orderedItems);
+//        OrderedItemModel item = mCurrentItem.getValue();
+//        if (item == null) {
+//            return;
+//        }
+//        List<OrderedItemModel> orderedItems = mOrderedItems.getValue();
+//        int index;
+//        if (orderedItems == null) {
+//            orderedItems = new ArrayList<>();
+//            orderedItems.add(item);
+//        } else if ((index = orderedItems.indexOf(item)) != -1) {
+//            if (item.getQuantity() > 0) {
+//                item.setQuantity(orderedItems.get(index).getQuantity() + item.getChangeCount());
+//                orderedItems.set(index, item);
+//            } else
+//                orderedItems.remove(index);
+//        } else {
+//            if (item.getItemModel().isComplexItem())
+//                item.setQuantity(item.getChangeCount());
+//            orderedItems.add(item);
+//        }
+//        mOrderedItems.setValue(orderedItems);
     }
 
     public int getOrderedCount(MenuItemModel item) {
@@ -319,14 +317,14 @@ public class MenuViewModel extends BaseViewModel {
     }
 
     public void removeItem(OrderedItemModel item) {
-        item.setQuantity(0);
-        mCurrentItem.setValue(item);
-        List<OrderedItemModel> orderedItems = mOrderedItems.getValue();
-        if (orderedItems != null) {
-            orderedItems.remove(item);
-            mOrderedItems.setValue(orderedItems);
-        }
-        mCurrentItem.setValue(null);
+//        item.setQuantity(0);
+//        mCurrentItem.setValue(item);
+//        List<OrderedItemModel> orderedItems = mOrderedItems.getValue();
+//        if (orderedItems != null) {
+//            orderedItems.remove(item);
+//            mOrderedItems.setValue(orderedItems);
+//        }
+//        mCurrentItem.setValue(null);
     }
 
     public LiveData<Integer> getTotalOrderedCount() {
@@ -413,10 +411,10 @@ public class MenuViewModel extends BaseViewModel {
     }
 
     public void confirmOrder() {
-        if (mSessionPk == null)
-            mResultOrder.addSource(mRepository.postMenuOrders(mOrderedItems.getValue()), mResultOrder::setValue);
-        else
-            mResultOrder.addSource(mRepository.postMenuManageOrders(mSessionPk, mOrderedItems.getValue()), mResultOrder::setValue);
+//        if (mSessionPk == null)
+//            mResultOrder.addSource(mRepository.postActiveSessionOrders(mOrderedItems.getValue()), mResultOrder::setValue);
+//        else
+//            mResultOrder.addSource(mRepository.postManageSessionOrders(mSessionPk, mOrderedItems.getValue()), mResultOrder::setValue);
     }
 
     public void manageSession(long sessionPk) {

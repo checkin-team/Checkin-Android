@@ -6,7 +6,7 @@ import android.view.ViewGroup;
 import android.widget.ImageButton;
 import android.widget.TextView;
 
-import com.checkin.app.checkin.Menu.Model.OrderedItemModel;
+import com.checkin.app.checkin.menu.models.OrderedItemModel;
 import com.checkin.app.checkin.R;
 import com.checkin.app.checkin.Utility.ItemClickSupport;
 import com.checkin.app.checkin.Utility.QuantityPickerView;
@@ -108,16 +108,12 @@ public class MenuCartAdapter extends RecyclerView.Adapter<MenuCartAdapter.ViewHo
         }
 
         void bindData(final OrderedItemModel item) {
-            try {
-                mItem = item.clone();
-            } catch (CloneNotSupportedException e) {
-                e.printStackTrace();
-            }
+            mItem = item;
 
             tvItemName.setText(String.format(Locale.ENGLISH, "%s", item.getItemModel().getName()));
             tvItemPrice.setText(String.format(Locale.ENGLISH, "\u20B9 %.2f", item.getCost()));
             tvItemExtra.setText(String.format(
-                    Locale.ENGLISH, "%d %s %s", item.getQuantity(), (item.getTypeName() != null ? item.getTypeName() : ""), (item.isCustomized() ? "(Customized)" : "")));
+                    Locale.ENGLISH, "%d %s %s", item.getQuantity(), (item.typeName() != null ? item.typeName() : ""), (item.isCustomized() ? "(Customized)" : "")));
             qpItemQuantity.scrollToPosition(item.getQuantity());
             scrollPos = item.getQuantity();
         }

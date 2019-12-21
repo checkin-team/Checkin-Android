@@ -214,10 +214,75 @@
         }
       ],
       "relations": []
+    },
+    {
+      "id": "24:5817784011107940629",
+      "lastPropertyId": "4:1140475938689080965",
+      "name": "RestaurantLocationModel",
+      "properties": [
+        {
+          "id": "1:8754053131179271786",
+          "name": "pk",
+          "type": 6,
+          "flags": 129
+        },
+        {
+          "id": "2:1373465585141700960",
+          "name": "name",
+          "type": 9
+        },
+        {
+          "id": "3:7435755784669455932",
+          "name": "phone",
+          "type": 9
+        },
+        {
+          "id": "4:1140475938689080965",
+          "name": "logo",
+          "type": 9
+        }
+      ],
+      "relations": []
+    },
+    {
+      "id": "25:7088047893244057527",
+      "lastPropertyId": "2:4321180340430360627",
+      "name": "CartStatusModel",
+      "properties": [
+        {
+          "id": "1:1672936487347486814",
+          "name": "pk",
+          "type": 6,
+          "flags": 129
+        },
+        {
+          "id": "2:4321180340430360627",
+          "name": "restaurantId",
+          "indexId": "20:3529059293124018419",
+          "type": 11,
+          "flags": 1548,
+          "relationTarget": "RestaurantBriefModel"
+        }
+      ],
+      "relations": []
+    },
+    {
+      "id": "26:5401018163119146816",
+      "lastPropertyId": "1:9004845822844897500",
+      "name": "RestaurantBriefModel",
+      "properties": [
+        {
+          "id": "1:9004845822844897500",
+          "name": "pk",
+          "type": 6,
+          "flags": 129
+        }
+      ],
+      "relations": []
     }
   ],
-  "lastEntityId": "23:5149164517759451944",
-  "lastIndexId": "19:1283949302584266634",
+  "lastEntityId": "26:5401018163119146816",
+  "lastIndexId": "20:3529059293124018419",
   "lastRelationId": "11:5984758523878906706",
   "lastSequenceId": "0:0",
   "modelVersion": 5,

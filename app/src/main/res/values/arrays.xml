@@ -141,4 +141,11 @@
         <item>Lounge</item>
         <item>Micro Brewerie</item>
     </string-array>
+
+    <string-array name="menu_meal_slots">
+        <item>All</item>
+        <item>Breakfast</item>
+        <item>Lunch</item>
+        <item>Dinner</item>
+    </string-array>
 </resources>

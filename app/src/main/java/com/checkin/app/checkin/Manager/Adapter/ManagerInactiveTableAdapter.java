@@ -9,7 +9,7 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.checkin.app.checkin.R;
-import com.checkin.app.checkin.session.model.RestaurantTableModel;
+import com.checkin.app.checkin.session.models.RestaurantTableModel;
 
 import java.util.List;
 

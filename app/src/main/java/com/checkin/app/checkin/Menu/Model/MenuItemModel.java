@@ -5,8 +5,7 @@ import androidx.annotation.NonNull;
 import com.checkin.app.checkin.Data.AppDatabase;
 import com.checkin.app.checkin.Data.Converters;
 import com.checkin.app.checkin.Inventory.Adapter.InventoryItemAdapter;
-import com.checkin.app.checkin.Menu.UserMenu.Adapter.MenuItemAdapter;
-import com.checkin.app.checkin.session.model.TrendingDishModel;
+import com.checkin.app.checkin.menu.models.OrderedItemModel;
 import com.fasterxml.jackson.annotation.JsonAutoDetect;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
@@ -14,7 +13,6 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 
 import java.io.Serializable;
 import java.util.ArrayList;
-import java.util.EnumSet;
 import java.util.List;
 
 import io.objectbox.annotation.Convert;
@@ -72,10 +70,6 @@ public class MenuItemModel implements Serializable {
     @JsonIgnore
     @Transient
     private com.checkin.app.checkin.Menu.ShopMenu.Adapter.MenuItemAdapter.ItemViewHolder holder;
-
-    @JsonIgnore
-    @Transient
-    private MenuItemAdapter.ItemViewHolder asItemholder;
 
     @JsonIgnore
     @Transient
@@ -223,18 +217,9 @@ public class MenuItemModel implements Serializable {
         return holder;
     }
 
-    public MenuItemAdapter.ItemViewHolder getASItemHolder() {
-        return asItemholder;
-    }
-
     @JsonIgnore
     public void setItemHolder(com.checkin.app.checkin.Menu.ShopMenu.Adapter.MenuItemAdapter.ItemViewHolder holder) {
         this.holder = holder;
-    }
-
-    @JsonIgnore
-    public void setActiveSessionItemHolder(MenuItemAdapter.ItemViewHolder holder) {
-        this.asItemholder = holder;
     }
 
     @Override

@@ -10,28 +10,37 @@
       "properties": [
         {
           "id": "1:330678540894128577",
-          "name": "pk"
+          "name": "pk",
+          "type": 6,
+          "flags": 129
         },
         {
           "id": "2:8981090700142387797",
-          "name": "name"
+          "name": "name",
+          "type": 9
         },
         {
           "id": "3:2484978048785254384",
-          "name": "category"
+          "name": "category",
+          "type": 9
         },
         {
           "id": "4:5407665900932463087",
-          "name": "type"
+          "name": "type",
+          "type": 9
         },
         {
           "id": "5:8629907366672562523",
-          "name": "icon"
+          "name": "icon",
+          "type": 9
         },
         {
           "id": "6:6991398721053845164",
+          "name": "menuId",
           "indexId": "13:8652006727545222733",
-          "name": "menuId"
+          "type": 11,
+          "flags": 1548,
+          "relationTarget": "MenuModel"
         }
       ],
       "relations": []
@@ -43,25 +52,33 @@
       "properties": [
         {
           "id": "1:207534943954494057",
-          "name": "pk"
+          "name": "pk",
+          "type": 6,
+          "flags": 129
         },
         {
           "id": "2:8515513328950976830",
-          "name": "name"
+          "name": "name",
+          "type": 9
         },
         {
           "id": "3:8245775628266722420",
-          "name": "minSelection"
+          "name": "minSelection",
+          "type": 5,
+          "flags": 4
         },
         {
           "id": "4:8895726188210551706",
-          "name": "maxSelection"
+          "name": "maxSelection",
+          "type": 5,
+          "flags": 4
         }
       ],
       "relations": [
         {
           "id": "6:1379355884974702299",
-          "name": "menuItem"
+          "name": "menuItem",
+          "targetId": "19:7181022702862943602"
         }
       ]
     },
@@ -72,24 +89,34 @@
       "properties": [
         {
           "id": "1:3321164870791030618",
-          "name": "pk"
+          "name": "pk",
+          "type": 6,
+          "flags": 129
         },
         {
           "id": "2:6938887964521734306",
-          "name": "name"
+          "name": "name",
+          "type": 9
         },
         {
           "id": "3:6505839789185216878",
-          "name": "isVegetarian"
+          "name": "isVegetarian",
+          "type": 1,
+          "flags": 4
         },
         {
           "id": "4:7811856212933169619",
-          "name": "cost"
+          "name": "cost",
+          "type": 8,
+          "flags": 4
         },
         {
           "id": "6:7394882917244857677",
+          "name": "groupId",
           "indexId": "19:1283949302584266634",
-          "name": "groupId"
+          "type": 11,
+          "flags": 1548,
+          "relationTarget": "ItemCustomizationGroupModel"
         }
       ],
       "relations": []
@@ -101,50 +128,65 @@
       "properties": [
         {
           "id": "1:5749165096027695011",
-          "name": "pk"
+          "name": "pk",
+          "type": 6,
+          "flags": 129
         },
         {
           "id": "2:6018701389301224219",
-          "name": "name"
+          "name": "name",
+          "type": 9
         },
         {
           "id": "5:7693573928609699945",
-          "name": "description"
+          "name": "description",
+          "type": 9
         },
         {
           "id": "6:5328672436921400424",
-          "name": "tags"
+          "name": "tags",
+          "type": 9
         },
         {
           "id": "7:5030353290280544902",
-          "name": "availableMeals"
+          "name": "availableMeals",
+          "type": 9
         },
         {
           "id": "8:4572046133134441175",
-          "name": "isVegetarian"
+          "name": "isVegetarian",
+          "type": 1,
+          "flags": 4
         },
         {
           "id": "9:1358789618023447254",
-          "name": "image"
+          "name": "image",
+          "type": 9
         },
         {
           "id": "10:8851095569100008122",
-          "name": "typeNames"
+          "name": "typeNames",
+          "type": 9
         },
         {
           "id": "11:7583116003586545231",
-          "name": "typeCosts"
+          "name": "typeCosts",
+          "type": 9
         },
         {
           "id": "12:7913119623590446023",
+          "name": "groupId",
           "indexId": "16:3961878181504181650",
-          "name": "groupId"
+          "type": 11,
+          "flags": 1548,
+          "relationTarget": "MenuGroupModel"
         }
       ],
       "relations": [
         {
           "id": "11:5984758523878906706",
-          "name": "customizationGroups"
+          "name": "customizationGroups",
+          "targetId": "17:4640836545269477801"
         }
       ]
     },
@@ -155,26 +197,89 @@
       "properties": [
         {
           "id": "1:3115339440265059137",
-          "name": "pk"
+          "name": "pk",
+          "type": 6,
+          "flags": 129
         },
         {
           "id": "2:4211929500912800137",
-          "name": "name"
+          "name": "name",
+          "type": 9
         },
         {
           "id": "3:121909992912270888",
-          "name": "restaurantPk"
+          "name": "restaurantPk",
+          "type": 6,
+          "flags": 4
         }
       ],
       "relations": []
+    },
+    {
+      "id": "24:5817784011107940629",
+      "lastPropertyId": "4:1140475938689080965",
+      "name": "RestaurantLocationModel",
+      "properties": [
+        {
+          "id": "1:8754053131179271786",
+          "name": "pk",
+          "type": 6,
+          "flags": 129
+        },
+        {
+          "id": "2:1373465585141700960",
+          "name": "name",
+          "type": 9
+        },
+        {
+          "id": "3:7435755784669455932",
+          "name": "phone",
+          "type": 9
+        },
+        {
+          "id": "4:1140475938689080965",
+          "name": "logo",
+          "type": 9
+        }
+      ],
+      "relations": []
+    },
+    {
+      "id": "25:7088047893244057527",
+      "lastPropertyId": "2:4321180340430360627",
+      "name": "CartStatusModel",
+      "properties": [
+        {
+          "id": "1:1672936487347486814",
+          "name": "pk",
+          "type": 6,
+          "flags": 129
+        },
+        {
+          "id": "2:4321180340430360627",
+          "name": "restaurantId",
+          "indexId": "20:3529059293124018419",
+          "type": 11,
+          "flags": 1548,
+          "relationTarget": "RestaurantBriefModel"
+        }
+      ],
+      "relations": []
+    },
+    {
+      "id": "26:5401018163119146816",
+      "lastPropertyId": "0:0",
+      "name": "RestaurantBriefModel",
+      "properties": [],
+      "relations": []
     }
   ],
-  "lastEntityId": "23:5149164517759451944",
-  "lastIndexId": "19:1283949302584266634",
+  "lastEntityId": "26:5401018163119146816",
+  "lastIndexId": "20:3529059293124018419",
   "lastRelationId": "11:5984758523878906706",
   "lastSequenceId": "0:0",
-  "modelVersion": 4,
-  "modelVersionParserMinimum": 4,
+  "modelVersion": 5,
+  "modelVersionParserMinimum": 5,
   "retiredEntityUids": [
     4431701432253560041,
     8792488809676470805,

@@ -1,7 +1,7 @@
 package com.checkin.app.checkin.Data.Message;
 
 import com.checkin.app.checkin.Data.Converters;
-import com.checkin.app.checkin.Misc.BriefModel;
+import com.checkin.app.checkin.misc.models.BriefModel;
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;

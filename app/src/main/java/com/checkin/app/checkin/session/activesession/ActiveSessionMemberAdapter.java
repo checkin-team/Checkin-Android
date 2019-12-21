@@ -5,14 +5,15 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import androidx.recyclerview.widget.RecyclerView;
+
 import com.checkin.app.checkin.R;
-import com.checkin.app.checkin.session.model.SessionCustomerModel;
 import com.checkin.app.checkin.Utility.HeaderFooterRecyclerViewAdapter;
 import com.checkin.app.checkin.Utility.Utils;
+import com.checkin.app.checkin.session.models.SessionCustomerModel;
 
 import java.util.List;
 
-import androidx.recyclerview.widget.RecyclerView;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import de.hdodenhof.circleimageview.CircleImageView;

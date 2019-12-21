@@ -4,8 +4,9 @@ import android.content.Intent
 import android.os.Bundle
 import android.view.View
 import android.view.ViewGroup
+import androidx.fragment.app.activityViewModels
+import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import androidx.viewpager2.widget.ViewPager2
@@ -14,13 +15,16 @@ import com.checkin.app.checkin.Data.Resource
 import com.checkin.app.checkin.Home.*
 import com.checkin.app.checkin.Home.model.LiveSessionDetailModel
 import com.checkin.app.checkin.Home.model.SessionType
-import com.checkin.app.checkin.Misc.BaseFragment
 import com.checkin.app.checkin.R
-import com.checkin.app.checkin.Shop.RestaurantLocationModel
 import com.checkin.app.checkin.Utility.pass
+import com.checkin.app.checkin.misc.fragments.BaseFragment
+import com.checkin.app.checkin.restaurant.activities.openPublicRestaurantProfile
+import com.checkin.app.checkin.restaurant.models.RestaurantLocationModel
 import com.checkin.app.checkin.session.activesession.ActiveSessionActivity
 
 class UserHomeFragment : BaseFragment(), LiveSessionTrackerInteraction {
+    override val rootLayout = R.layout.fragment_user_home
+
     @BindView(R.id.rv_home_suggested_dishes)
     internal lateinit var rvSuggestedDishes: RecyclerView
     @BindView(R.id.rv_home_nearby_restaurants)
@@ -34,15 +38,10 @@ class UserHomeFragment : BaseFragment(), LiveSessionTrackerInteraction {
     private lateinit var mRestAdapter: NearbyRestaurantAdapter
     private lateinit var mLiveSessionAdapter: LiveSessionTrackerAdapter
 
-    private lateinit var mViewModel: HomeViewModel
-    private lateinit var mLiveSessionViewModel: LiveSessionViewModel
-
-    override fun getRootLayout() = R.layout.fragment_user_home
+    private val mViewModel: HomeViewModel by activityViewModels()
+    private val mLiveSessionViewModel: LiveSessionViewModel by viewModels()
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        mViewModel = ViewModelProviders.of(requireActivity()).get(HomeViewModel::class.java)
-        mLiveSessionViewModel = ViewModelProviders.of(this).get(LiveSessionViewModel::class.java)
-
         enableDisableSwipeRefresh(true)
 
         mRestAdapter = NearbyRestaurantAdapter()
@@ -105,11 +104,11 @@ class UserHomeFragment : BaseFragment(), LiveSessionTrackerInteraction {
     }
 
     override fun onOpenRestaurantProfile(restaurant: RestaurantLocationModel) {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+        requireContext().openPublicRestaurantProfile(restaurant.pk)
     }
 
     override fun onOpenRestaurantMenu(restaurant: RestaurantLocationModel) {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+        onOpenRestaurantProfile(restaurant)
     }
 
     companion object {

@@ -8,8 +8,8 @@ import com.checkin.app.checkin.Data.Resource
 import com.checkin.app.checkin.Home.model.NearbyRestaurantModel
 import com.checkin.app.checkin.Shop.ShopRepository
 import com.checkin.app.checkin.session.SessionRepository
-import com.checkin.app.checkin.session.model.QRResultModel
-import com.checkin.app.checkin.session.model.SessionBasicModel
+import com.checkin.app.checkin.session.models.QRResultModel
+import com.checkin.app.checkin.session.models.SessionBasicModel
 import com.fasterxml.jackson.databind.node.ObjectNode
 
 class HomeViewModel(application: Application) : BaseViewModel(application) {

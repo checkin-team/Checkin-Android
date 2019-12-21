@@ -11,7 +11,7 @@ import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import butterknife.BindView
 import butterknife.ButterKnife
-import com.checkin.app.checkin.Menu.Model.OrderedItemModel
+import com.checkin.app.checkin.menu.models.OrderedItemModel
 import com.checkin.app.checkin.R
 import com.checkin.app.checkin.Utility.Utils
 
@@ -74,14 +74,11 @@ class MenuCartAdapter(private val mListener: MenuCartInteraction) : RecyclerView
         }
 
         fun bindData(item: OrderedItemModel) {
-            try {
-                mItem = item.clone()
-            } catch (e: CloneNotSupportedException) {
-            }
+            mItem = item
 
             tvItemName.text = item.itemModel.name
             tvItemPrice.text = Utils.formatIntegralCurrencyAmount(tvItemPrice.context, item.cost)
-            if (item.isCustomized) tvItemCustomized.visibility = View.VISIBLE
+            if (item.isCustomized()) tvItemCustomized.visibility = View.VISIBLE
             else tvItemCustomized.visibility = View.GONE
 
             if (item.itemModel.isVegetarian) tvItemName.setCompoundDrawablesRelativeWithIntrinsicBounds(R.drawable.ic_veg, 0, 0, 0)

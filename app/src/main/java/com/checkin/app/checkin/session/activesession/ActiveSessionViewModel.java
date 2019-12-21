@@ -9,14 +9,14 @@ import androidx.lifecycle.Transformations;
 import com.checkin.app.checkin.Data.BaseViewModel;
 import com.checkin.app.checkin.Data.Converters;
 import com.checkin.app.checkin.Data.Resource;
-import com.checkin.app.checkin.Misc.BriefModel;
-import com.checkin.app.checkin.Misc.GenericDetailModel;
 import com.checkin.app.checkin.Utility.SourceMappedLiveData;
+import com.checkin.app.checkin.misc.models.BriefModel;
+import com.checkin.app.checkin.misc.models.GenericDetailModel;
 import com.checkin.app.checkin.session.activesession.chat.SessionChatModel;
-import com.checkin.app.checkin.session.model.ActiveSessionModel;
-import com.checkin.app.checkin.session.model.SessionCustomerModel;
-import com.checkin.app.checkin.session.model.SessionOrderedItemModel;
-import com.checkin.app.checkin.session.model.TrendingDishModel;
+import com.checkin.app.checkin.session.models.ActiveSessionModel;
+import com.checkin.app.checkin.session.models.SessionCustomerModel;
+import com.checkin.app.checkin.session.models.SessionOrderedItemModel;
+import com.checkin.app.checkin.session.models.TrendingDishModel;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 
 import java.util.ArrayList;
@@ -109,11 +109,11 @@ public class ActiveSessionViewModel extends BaseViewModel {
         mSessionData.setValue(resource);
     }
 
-    public void acceptSessionMember(String userId) {
+    public void acceptSessionMember(long userId) {
         mMemberUpdate.addSource(mRepository.acceptSessionMemberRequest(userId), mMemberUpdate::setValue);
     }
 
-    public void removeSessionMember(String userId) {
+    public void removeSessionMember(long userId) {
         mMemberUpdate.addSource(mRepository.deleteSessionMember(userId), mMemberUpdate::setValue);
     }
 

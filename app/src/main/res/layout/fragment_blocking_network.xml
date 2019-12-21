@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white">
+
+    <FrameLayout
+        android:id="@+id/container_blocking_network_loading"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:layout_gravity="top">
+
+        <ProgressBar
+            android:id="@+id/pb_network_blocking_loading"
+            style="@style/RougeProgressBar"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:indeterminate="true" />
+    </FrameLayout>
+
+    <LinearLayout
+        android:id="@+id/container_blocking_network_error"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:orientation="vertical">
+
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:src="@drawable/bitmap_network_error" />
+
+        <TextView
+            style="@style/GreyHeadingStyle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="@dimen/spacing_normal"
+            android:text="Whoops" />
+
+        <TextView
+            android:id="@+id/tv_blocking_error_message"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="@dimen/spacing_small"
+            android:lineSpacingExtra="@dimen/spacing_extra_small"
+            android:text="@string/text_error_network_disconnected"
+            android:textAlignment="center" />
+
+        <Button
+            android:id="@+id/btn_blocking_error_try_again"
+            style="@style/ButtonSmallGreenishStyle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="@dimen/spacing_medium"
+            android:text="@string/button_label_try_again" />
+    </LinearLayout>
+</FrameLayout>

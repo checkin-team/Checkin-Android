@@ -10,11 +10,11 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import butterknife.BindView
 import butterknife.OnClick
-import com.checkin.app.checkin.Misc.BaseFragment
 import com.checkin.app.checkin.R
 import com.checkin.app.checkin.User.UserModel.GENDER
 import com.checkin.app.checkin.Utility.DebouncedOnClickListener
 import com.checkin.app.checkin.Utility.ParentActivityDelegate
+import com.checkin.app.checkin.misc.fragments.BaseFragment
 
 class SignupUserInfoFragment : BaseFragment() {
     @BindView(R.id.ed_firstname)
@@ -33,7 +33,7 @@ class SignupUserInfoFragment : BaseFragment() {
     private val fragmentInteraction: AuthFragmentInteraction by ParentActivityDelegate(this)
     private var genderChosen: GENDER? = null
 
-    override fun getRootLayout() = R.layout.fragment_signup_user_info
+    override val rootLayout = R.layout.fragment_signup_user_info
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         if (arguments != null) {

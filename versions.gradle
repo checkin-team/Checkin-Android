@@ -7,7 +7,7 @@ ext.versions = [
 
         gradlePlugin      : '3.5.3',
 
-        kotlin            : '1.3.50',
+        kotlin            : '1.3.61',
         ktx               : '1.1.0',
 
         playService       : '17.0.0',
@@ -22,6 +22,6 @@ ext.versions = [
         // Include okhttp3 library of lower version because 3.13.x supports only API 21+
         okhttp            : '3.12.0',
         retrofit          : '2.7.0',
-        epoxy             : '3.8.0',
+        epoxy             : '3.9.0',
         paytm             : '1.4.4'
 ]

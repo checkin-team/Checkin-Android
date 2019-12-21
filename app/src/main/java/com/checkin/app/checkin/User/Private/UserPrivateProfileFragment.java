@@ -10,7 +10,6 @@ import android.view.Gravity;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.animation.AnimationUtils;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -24,16 +23,14 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.checkin.app.checkin.Data.Resource.Status;
 import com.checkin.app.checkin.Home.HomeActivity;
-import com.checkin.app.checkin.Misc.BaseFragment;
-import com.checkin.app.checkin.Misc.SelectCropImageActivity;
+import com.checkin.app.checkin.misc.fragments.BaseFragment;
+import com.checkin.app.checkin.misc.activities.SelectCropImageActivity;
 import com.checkin.app.checkin.R;
 import com.checkin.app.checkin.User.UserModel;
-import com.checkin.app.checkin.Utility.AnimUtils;
 import com.checkin.app.checkin.Utility.BackgroundShadow;
 import com.checkin.app.checkin.Utility.SwipeTouchListener;
 import com.checkin.app.checkin.Utility.Utils;
 import com.facebook.shimmer.ShimmerFrameLayout;
-import com.miguelcatalan.materialsearchview.utils.AnimationUtil;
 
 import java.io.File;
 import java.util.Objects;

@@ -3,15 +3,9 @@ package com.checkin.app.checkin.Menu.UserMenu.Adapter
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.ImageView
-import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
-import butterknife.BindView
-import butterknife.ButterKnife
 import com.checkin.app.checkin.R
-import com.checkin.app.checkin.Utility.Utils
-import com.checkin.app.checkin.session.model.TrendingDishModel
-import com.checkin.app.checkin.Utility.DebouncedOnClickListener
+import com.checkin.app.checkin.session.models.TrendingDishModel
 
 class MenuBestSellerAdapter(private val mListener: SessionTrendingDishInteraction?) : RecyclerView.Adapter<MenuBestSellerAdapter.ViewHolder>() {
     private var mItems: List<TrendingDishModel>? = null
@@ -34,28 +28,28 @@ class MenuBestSellerAdapter(private val mListener: SessionTrendingDishInteractio
     }
 
     inner class ViewHolder internal constructor(itemView: View) : RecyclerView.ViewHolder(itemView) {
-        @BindView(R.id.im_menu_dish)
-        internal lateinit var imDish: ImageView
-        @BindView(R.id.im_menu_dish_name)
-        internal lateinit var tvName: TextView
-        @BindView(R.id.tv_menu_dish_price)
-        internal lateinit var tvPrice: TextView
-
-        private lateinit var mItemModel: TrendingDishModel
-
-        init {
-            ButterKnife.bind(this, itemView)
-
-            itemView.setOnClickListener(DebouncedOnClickListener {
-                mListener?.onDishClick(mItemModel)
-            })
-        }
-
+        //        @BindView(R.id.im_menu_dish)
+//        internal lateinit var imDish: ImageView
+//        @BindView(R.id.im_menu_dish_name)
+//        internal lateinit var tvName: TextView
+//        @BindView(R.id.tv_menu_dish_price)
+//        internal lateinit var tvPrice: TextView
+//
+//        private lateinit var mItemModel: TrendingDishModel
+//
+//        init {
+//            ButterKnife.bind(this, itemView)
+//
+//            itemView.setOnClickListener(DebouncedOnClickListener {
+//                mListener?.onDishAdd(mItemModel)
+//            })
+//        }
+//
         internal fun bindData(itemModel: TrendingDishModel) {
-            this.mItemModel = itemModel
-            Utils.loadImageOrDefault(imDish, itemModel.image, 0)
-            tvName.text = itemModel.name
-            tvPrice.text = Utils.formatCurrencyAmount(itemView.context, itemModel.typeCosts[0])
+//            this.mItemModel = itemModel
+//            Utils.loadImageOrDefault(imDish, itemModel.image, 0)
+//            tvName.text = itemModel.name
+//            tvPrice.text = Utils.formatCurrencyAmount(itemView.context, itemModel.typeCosts[0])
         }
     }
 }

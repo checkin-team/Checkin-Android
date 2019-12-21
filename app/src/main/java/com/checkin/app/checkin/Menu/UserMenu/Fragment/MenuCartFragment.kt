@@ -13,14 +13,14 @@ import butterknife.BindView
 import butterknife.OnClick
 import com.checkin.app.checkin.Data.Resource
 import com.checkin.app.checkin.Menu.MenuItemInteraction
-import com.checkin.app.checkin.Menu.Model.OrderedItemModel
+import com.checkin.app.checkin.menu.models.OrderedItemModel
 import com.checkin.app.checkin.Menu.UserMenu.Adapter.MenuCartAdapter
 import com.checkin.app.checkin.Menu.UserMenu.Adapter.MenuTreatYourselfAdapter
 import com.checkin.app.checkin.Menu.UserMenu.MenuViewModel
-import com.checkin.app.checkin.Misc.BaseFragment
 import com.checkin.app.checkin.R
 import com.checkin.app.checkin.Utility.Utils
-import com.checkin.app.checkin.session.model.TrendingDishModel
+import com.checkin.app.checkin.misc.fragments.BaseFragment
+import com.checkin.app.checkin.session.models.TrendingDishModel
 import kotlinx.coroutines.launch
 
 class MenuCartFragment : BaseFragment(), MenuCartAdapter.MenuCartInteraction, MenuTreatYourselfAdapter.TreatYourselfInteraction {
@@ -39,6 +39,9 @@ class MenuCartFragment : BaseFragment(), MenuCartAdapter.MenuCartInteraction, Me
     private lateinit var mViewModel: MenuViewModel
     private var mCartAdapter: MenuCartAdapter? = null
     private var mTreatYourselfAdapter: MenuTreatYourselfAdapter? = null
+
+    override val rootLayout: Int
+        get() = R.layout.fragment_menu_cart
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         mViewModel = ViewModelProviders.of(requireActivity()).get(MenuViewModel::class.java)
@@ -88,10 +91,6 @@ class MenuCartFragment : BaseFragment(), MenuCartAdapter.MenuCartInteraction, Me
         })
     }
 
-    override fun getRootLayout(): Int {
-        return R.layout.fragment_menu_cart
-    }
-
     @OnClick(R.id.btn_menu_cart_proceed)
     fun onProceedBtnClicked(view: View) {
         if (mCartAdapter!!.itemCount > 0) {
@@ -104,15 +103,14 @@ class MenuCartFragment : BaseFragment(), MenuCartAdapter.MenuCartInteraction, Me
     }
 
     override fun onOrderedItemChanged(item: OrderedItemModel?, count: Int) {
-        item!!.quantity = count
-        mViewModel.setCurrentItem(item)
+        mViewModel.setCurrentItem(item!!.updateQuantity(count))
         mViewModel.orderItem()
     }
 
     override fun onOrderedItemRemark(item: OrderedItemModel, s: String) {
-        if (s.length > 0) {
-            item.remarks = s
-        }
+//        if (s.length > 0) {
+//            item.re
+//        }
     }
 
     @OnClick(R.id.im_menu_cart_back)
@@ -120,7 +118,7 @@ class MenuCartFragment : BaseFragment(), MenuCartAdapter.MenuCartInteraction, Me
         onBackPressed()
     }
 
-    fun onBackPressed(): Boolean {
+    override fun onBackPressed(): Boolean {
         if (fragmentManager != null) {
             fragmentManager!!.beginTransaction()
                     .remove(this)

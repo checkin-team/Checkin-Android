@@ -18,10 +18,10 @@ import com.checkin.app.checkin.Menu.Model.MenuGroupModel
 import com.checkin.app.checkin.Menu.UserMenu.Adapter.MenuBestSellerAdapter
 import com.checkin.app.checkin.Menu.UserMenu.Adapter.MenuGroupAdapter
 import com.checkin.app.checkin.Menu.UserMenu.MenuViewModel
-import com.checkin.app.checkin.Misc.BaseFragment
 import com.checkin.app.checkin.R
 import com.checkin.app.checkin.Utility.Utils
-import com.checkin.app.checkin.session.model.TrendingDishModel
+import com.checkin.app.checkin.misc.fragments.BaseFragment
+import com.checkin.app.checkin.session.models.TrendingDishModel
 import com.facebook.shimmer.ShimmerFrameLayout
 import com.miguelcatalan.materialsearchview.utils.AnimationUtil
 import kotlinx.coroutines.launch
@@ -47,9 +47,8 @@ class MenuGroupsFragment : BaseFragment(), MenuGroupAdapter.OnGroupInteractionIn
     private val isGroupExpanded: Boolean
         get() = mAdapter.isGroupExpanded
 
-    override fun getRootLayout(): Int {
-        return R.layout.fragment_as_menu_group
-    }
+    override val rootLayout: Int
+        get() = R.layout.fragment_as_menu_group
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         setupGroupRecycler()
@@ -84,11 +83,11 @@ class MenuGroupsFragment : BaseFragment(), MenuGroupAdapter.OnGroupInteractionIn
 
         mViewModel.currentItem.observe(this, Observer {
             it?.let { orderedItem ->
-                val holder = orderedItem.itemModel.asItemHolder
-
-                if (holder != null && holder.menuItem === orderedItem.itemModel) {
-                    holder.changeQuantity(mViewModel.getOrderedCount(orderedItem.itemModel) + orderedItem.changeCount)
-                }
+                //                val holder = orderedItem.itemModel.asItemHolder
+//
+//                if (holder != null && holder.menuItem === orderedItem.itemModel) {
+//                    holder.changeQuantity(mViewModel.getOrderedCount(orderedItem.itemModel) + orderedItem.changeCount)
+//                }
             }
         })
 
@@ -143,7 +142,7 @@ class MenuGroupsFragment : BaseFragment(), MenuGroupAdapter.OnGroupInteractionIn
         })
     }
 
-    fun onBackPressed(): Boolean {
+    override fun onBackPressed(): Boolean {
         if (isGroupExpanded) {
             mAdapter.contractView()
             return true
@@ -165,6 +164,7 @@ class MenuGroupsFragment : BaseFragment(), MenuGroupAdapter.OnGroupInteractionIn
     }
 
     override fun updateScreen() {
+        super.updateScreen()
         mViewModel.updateResults()
     }
 

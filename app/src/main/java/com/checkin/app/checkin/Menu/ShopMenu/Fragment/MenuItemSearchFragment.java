@@ -12,7 +12,7 @@ import com.checkin.app.checkin.Menu.MenuItemInteraction;
 import com.checkin.app.checkin.Menu.ShopMenu.MenuViewModel;
 import com.checkin.app.checkin.Menu.Model.MenuItemModel;
 import com.checkin.app.checkin.Menu.ShopMenu.SessionMenuActivity;
-import com.checkin.app.checkin.Misc.BaseSearchFragment;
+import com.checkin.app.checkin.misc.fragments.BaseSearchFragment;
 import com.checkin.app.checkin.R;
 
 import androidx.annotation.NonNull;

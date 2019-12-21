@@ -19,8 +19,8 @@ import androidx.lifecycle.ViewModelProviders;
 
 import com.checkin.app.checkin.Data.Resource;
 import com.checkin.app.checkin.Maps.MapsActivity;
-import com.checkin.app.checkin.Misc.GenericDetailModel;
-import com.checkin.app.checkin.Misc.LocationModel;
+import com.checkin.app.checkin.misc.models.GenericDetailModel;
+import com.checkin.app.checkin.misc.models.LocationModel;
 import com.checkin.app.checkin.R;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.checkin.app.checkin.Utility.DebouncedOnClickListener;

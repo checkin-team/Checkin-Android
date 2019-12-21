@@ -15,7 +15,7 @@ import com.checkin.app.checkin.Inventory.Adapter.InventoryGroupAdapter;
 import com.checkin.app.checkin.Inventory.Adapter.InventoryItemAdapter;
 import com.checkin.app.checkin.Inventory.InventoryViewModel;
 import com.checkin.app.checkin.Inventory.Model.InventoryItemModel;
-import com.checkin.app.checkin.Misc.BaseFragment;
+import com.checkin.app.checkin.misc.fragments.BaseFragment;
 import com.checkin.app.checkin.R;
 import com.checkin.app.checkin.Utility.Utils;
 import com.facebook.shimmer.ShimmerFrameLayout;

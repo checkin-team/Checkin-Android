@@ -12,7 +12,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.checkin.app.checkin.Data.Resource;
-import com.checkin.app.checkin.Misc.BaseActivity;
+import com.checkin.app.checkin.misc.activities.BaseActivity;
 import com.checkin.app.checkin.R;
 import com.checkin.app.checkin.Utility.Utils;
 

@@ -1,14 +1,11 @@
 package com.checkin.app.checkin.Home
 
 import android.content.Context
-import android.content.Intent
-import android.net.Uri
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
-import androidx.core.content.ContextCompat.startActivity
 import androidx.recyclerview.widget.RecyclerView
 import androidx.viewpager.widget.PagerAdapter
 import androidx.viewpager.widget.ViewPager
@@ -18,7 +15,9 @@ import com.checkin.app.checkin.Home.model.NearbyRestaurantModel
 import com.checkin.app.checkin.R
 import com.checkin.app.checkin.Utility.BaseViewHolder
 import com.checkin.app.checkin.Utility.Utils
+import com.checkin.app.checkin.Utility.navigateToLocation
 import com.checkin.app.checkin.Utility.pass
+import com.checkin.app.checkin.restaurant.activities.openPublicRestaurantProfile
 import com.rd.PageIndicatorView
 import com.rd.animation.type.AnimationType
 
@@ -82,13 +81,10 @@ class NearbyRestaurantAdapter : RecyclerView.Adapter<BaseViewHolder<Any>>() {
             ButterKnife.bind(this, itemView)
 
             tvNavigateBtn.setOnClickListener {
-                mRestaurantData?.geolocation?.let {
-                    val gmmIntentUri = Uri.parse("google.navigation:q=${it.latitude},${it.longitude}")
-                    Intent(Intent.ACTION_VIEW, gmmIntentUri).apply {
-                        `package` = "com.google.android.apps.maps"
-                        startActivity(itemView.context, this, null)
-                    }
-                }
+                mRestaurantData?.geolocation?.run { navigateToLocation(itemView.context) }
+            }
+            itemView.setOnClickListener {
+                mRestaurantData?.let { itemView.context.openPublicRestaurantProfile(it.pk) }
             }
         }
 
@@ -131,7 +127,7 @@ class NearbyRestaurantAdapter : RecyclerView.Adapter<BaseViewHolder<Any>>() {
         }
     }
 
-    inner class AdvertisementViewHolder(itemView: View) : BaseViewHolder<Any>(itemView) {
+    class AdvertisementViewHolder(itemView: View) : BaseViewHolder<Any>(itemView) {
         @BindView(R.id.vp_home_banner)
         internal lateinit var vpBanner: ViewPager
         @BindView(R.id.indicator_home_banner)
@@ -152,7 +148,7 @@ class NearbyRestaurantAdapter : RecyclerView.Adapter<BaseViewHolder<Any>>() {
         }
     }
 
-    internal inner class BannerPagerAdapter(context: Context) : PagerAdapter() {
+    class BannerPagerAdapter(context: Context) : PagerAdapter() {
         private val mResources = intArrayOf(R.drawable.first_banner, R.drawable.second_banner, R.drawable.third_banner)
         private val mLayoutInflater: LayoutInflater = LayoutInflater.from(context)
 

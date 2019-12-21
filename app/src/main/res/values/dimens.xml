@@ -80,6 +80,7 @@
     <dimen name="height_spinner_item">50dp</dimen>
 
     <dimen name="height_bottom_tab">50dp</dimen>
+    <dimen name="height_normal_tab">40dp</dimen>
 
     <!-- Cover dimensions -->
     <dimen name="height_shadow_top_cover">80dp</dimen>
@@ -235,5 +236,9 @@
     <dimen name="height_home_session_live_card">190dp</dimen>
 
     <dimen name="height_vertical_line">16dp</dimen>
+    <dimen name="height_cover_restaurant_profile">220dp</dimen>
+    <dimen name="height_toolbar">48dp</dimen>
+    <dimen name="height_appbar_large">100dp</dimen>
+    <dimen name="height_cart_header_topbar">40dp</dimen>
 
 </resources>

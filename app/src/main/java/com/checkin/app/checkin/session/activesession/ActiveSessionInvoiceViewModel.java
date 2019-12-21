@@ -12,15 +12,16 @@ import com.checkin.app.checkin.Data.BaseViewModel;
 import com.checkin.app.checkin.Data.Converters;
 import com.checkin.app.checkin.Data.Resource;
 import com.checkin.app.checkin.Data.RetrofitCallAsyncTask;
-import com.checkin.app.checkin.Misc.paytm.PaytmModel;
 import com.checkin.app.checkin.Shop.ShopModel;
 import com.checkin.app.checkin.Utility.ProgressRequestBody;
 import com.checkin.app.checkin.Utility.SourceMappedLiveData;
-import com.checkin.app.checkin.session.model.CheckoutStatusModel;
-import com.checkin.app.checkin.session.model.PromoDetailModel;
-import com.checkin.app.checkin.session.model.SessionBillModel;
-import com.checkin.app.checkin.session.model.SessionInvoiceModel;
-import com.checkin.app.checkin.session.model.SessionPromoModel;
+import com.checkin.app.checkin.misc.paytm.PaytmModel;
+import com.checkin.app.checkin.session.SessionRepository;
+import com.checkin.app.checkin.session.models.CheckoutStatusModel;
+import com.checkin.app.checkin.session.models.PromoDetailModel;
+import com.checkin.app.checkin.session.models.SessionBillModel;
+import com.checkin.app.checkin.session.models.SessionInvoiceModel;
+import com.checkin.app.checkin.session.models.SessionPromoModel;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 
 import java.util.List;
@@ -28,6 +29,7 @@ import java.util.Set;
 
 public class ActiveSessionInvoiceViewModel extends BaseViewModel {
     private final ActiveSessionRepository mRepository;
+    private SessionRepository mSessionRepository;
 
     private SourceMappedLiveData<Resource<SessionInvoiceModel>> mInvoiceData = createNetworkLiveData();
     private SourceMappedLiveData<Resource<CheckoutStatusModel>> mCheckoutData = createNetworkLiveData();
@@ -97,7 +99,7 @@ public class ActiveSessionInvoiceViewModel extends BaseViewModel {
     }
 
     private void doPostPaytmCallback(ObjectNode data, ProgressRequestBody.UploadCallbacks listener) {
-        new RetrofitCallAsyncTask<ObjectNode>(listener).execute(mRepository.synchPostPaytmCallback(data));
+        new RetrofitCallAsyncTask<ObjectNode>(listener).execute(mRepository.syncPostPaytmCallback(data));
     }
 
     public LiveData<Resource<ObjectNode>> getPaytmCallbackData() {
@@ -109,7 +111,7 @@ public class ActiveSessionInvoiceViewModel extends BaseViewModel {
     }
 
     public void fetchAvailablePromoCodes() {
-        mPromoList.addSource(mRepository.getAvailablePromoCodes(), mPromoList::setValue);
+        mPromoList.addSource(mSessionRepository.getAvailablePromoCodes(), mPromoList::setValue);
     }
 
     public LiveData<Resource<List<PromoDetailModel>>> getPromoCodes() {

@@ -14,11 +14,11 @@ import com.checkin.app.checkin.Manager.Model.ManagerStatsModel;
 import com.checkin.app.checkin.Utility.SourceMappedLiveData;
 import com.checkin.app.checkin.Waiter.WaiterRepository;
 import com.checkin.app.checkin.session.activesession.chat.SessionChatModel;
-import com.checkin.app.checkin.session.model.CheckoutStatusModel;
-import com.checkin.app.checkin.session.model.EventBriefModel;
-import com.checkin.app.checkin.session.model.QRResultModel;
-import com.checkin.app.checkin.session.model.RestaurantTableModel;
-import com.checkin.app.checkin.session.model.TableSessionModel;
+import com.checkin.app.checkin.session.models.CheckoutStatusModel;
+import com.checkin.app.checkin.session.models.EventBriefModel;
+import com.checkin.app.checkin.session.models.QRResultModel;
+import com.checkin.app.checkin.session.models.RestaurantTableModel;
+import com.checkin.app.checkin.session.models.TableSessionModel;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 
 import java.util.ArrayList;

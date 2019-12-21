@@ -23,7 +23,7 @@ import androidx.fragment.app.FragmentTransaction;
 import androidx.lifecycle.ViewModelProviders;
 
 import com.checkin.app.checkin.Home.HomeActivity;
-import com.checkin.app.checkin.Misc.EulaDialog;
+import com.checkin.app.checkin.misc.EulaDialog;
 import com.checkin.app.checkin.R;
 import com.checkin.app.checkin.User.UserModel.GENDER;
 import com.checkin.app.checkin.Utility.Constants;

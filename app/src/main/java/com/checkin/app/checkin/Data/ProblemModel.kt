@@ -27,8 +27,12 @@ class ProblemModel(@JsonProperty("type") val type: String, @JsonProperty("status
 
     enum class ERROR_CODE(internal var tag: String) {
         HTTP_ERROR(""), INVALID_VERSION("invalid_version"), DEPRECATED_VERSION("deprecated_version"),
-        SESSION_USER_PENDING_MEMBER("session__user_pending_member"), INVALID_PAYMENT_MODE_PROMO_AVAILED("offer__apply_invalid_payment_mode"),
-        OFFER_REJECTED_APPLYING("offer__apply_rejected");
+
+        SESSION_USER_PENDING_MEMBER("session__user_pending_member"), SESSION_SCHEDULED_PENDING_CART("session__scheduled_writable_exists"),
+
+        INVALID_PAYMENT_MODE_PROMO_AVAILED("offer__apply_invalid_payment_mode"), OFFER_REJECTED_APPLYING("offer__apply_rejected"),
+
+        USER_MISSING_PHONE("user__missing_phone"), ACCOUNT_ALREADY_REGISTERED("account__already_registered");
 
 
         companion object {
