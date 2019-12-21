@@ -7,7 +7,7 @@
     android:layout_margin="@dimen/spacing_small"
     app:cardCornerRadius="@dimen/card_corner_radius_small"
     app:cardBackgroundColor="@color/teal_blue"
-    app:cardElevation="0dp"
+    app:cardElevation="2dp"
     android:orientation="vertical">
 <androidx.constraintlayout.widget.ConstraintLayout
     android:layout_width="match_parent"

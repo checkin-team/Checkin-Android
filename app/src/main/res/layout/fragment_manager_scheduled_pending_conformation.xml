@@ -1,0 +1,221 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:background="@color/white_two"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".Manager.Fragment.ManagerScheduledOrderPending">
+
+    <ImageView
+        android:id="@+id/im_fragment_manager_schedule_back"
+        android:layout_width="wrap_content"
+        android:layout_height="@dimen/spacing_large"
+        android:layout_marginLeft="@dimen/spacing_small"
+        android:layout_marginTop="@dimen/spacing_small"
+        android:src="@drawable/ic_back_grey"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <include
+        android:id="@+id/item_fragment_manager_schedule_bill"
+        layout="@layout/item_manager_scheduled_session_bill"
+
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_marginLeft="@dimen/spacing_small"
+        android:layout_marginTop="@dimen/spacing_tiny"
+        android:layout_marginBottom="@dimen/spacing_medium"
+        android:layout_marginRight="@dimen/spacing_small"
+
+        app:layout_constraintBottom_toTopOf="@+id/tv_fragment_manager_schedule_preperation_time"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textView5"/>
+
+    <TextView
+        android:id="@+id/textView5"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/josefinsans_semibold"
+        android:text="Waiting for customer"
+        android:textColor="@color/orange_red"
+        android:textSize="@dimen/font_large"
+        android:layout_marginTop="@dimen/spacing_medium"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textView10" />
+
+    <TextView
+        android:id="@+id/tv_fragment_manager_schedule_preperation_time"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/josefinsans_semibold"
+        android:text="Preperation Time"
+        android:textColor="@color/teal_blue"
+        android:textSize="@dimen/font_large"
+        app:layout_constraintBottom_toTopOf="@+id/im_fragment_manager_schedule_set_time"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <ImageView
+        android:id="@+id/im_fragment_manager_schedule_set_time"
+        android:layout_width="wrap_content"
+        android:layout_height="@dimen/height_input_normal"
+        android:paddingLeft="@dimen/spacing_large"
+
+
+        android:paddingRight="24dp"
+        android:src="@drawable/ic_time_control"
+        app:layout_constraintBottom_toTopOf="@+id/textView8"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <Button
+        android:id="@+id/button_fragmetn_manager_schedule_add_time"
+        android:layout_width="@dimen/spacing_gigantic"
+
+        android:layout_height="@dimen/spacing_gigantic"
+        android:layout_marginEnd="@dimen/spacing_extra_large"
+        android:background="@color/transparent"
+        style="@style/Widget.AppCompat.Button.Borderless"
+        app:layout_constraintBottom_toBottomOf="@+id/im_fragment_manager_schedule_set_time"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/im_fragment_manager_schedule_set_time"
+        app:layout_constraintVertical_bias="0.55" />
+    <Button
+        android:layout_width="@dimen/spacing_gigantic"
+        android:id="@+id/button_fragmetn_manager_schedule_reduce_time"
+        android:layout_height="@dimen/spacing_gigantic"
+        android:layout_marginStart="@dimen/spacing_extra_large"
+        android:background="@color/transparent"
+        style="@style/Widget.AppCompat.Button.Borderless"
+        app:layout_constraintBottom_toBottomOf="@+id/im_fragment_manager_schedule_set_time"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/im_fragment_manager_schedule_set_time"
+        app:layout_constraintVertical_bias="0.55" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="10 minutes"
+        android:textSize="@dimen/font_large"
+        android:textColor="@color/brownish_grey"
+        app:layout_constraintBottom_toBottomOf="@+id/im_fragment_manager_schedule_set_time"
+        app:layout_constraintEnd_toEndOf="@+id/im_fragment_manager_schedule_set_time"
+        app:layout_constraintStart_toStartOf="@+id/im_fragment_manager_schedule_set_time"
+        app:layout_constraintTop_toTopOf="@+id/im_fragment_manager_schedule_set_time"
+        app:layout_constraintVertical_bias="0.64" />
+
+    <TextView
+        android:id="@+id/tv_restaurant_banner_navigate"
+        style="@style/GreySmallTextStyle"
+        android:layout_width="@dimen/spacing_gigantic"
+        android:layout_height="@dimen/button_height_extra_short"
+        android:layout_marginTop="@dimen/spacing_small"
+        android:layout_marginEnd="@dimen/spacing_small"
+
+        android:background="@drawable/background_pinkish_grey_stroke"
+        android:clickable="true"
+        android:drawableStart="@drawable/ic_telephone_auricular_with_cable"
+        android:drawablePadding="@dimen/spacing_extra_tiny"
+        android:focusable="true"
+        android:gravity="center_vertical"
+        android:paddingStart="@dimen/spacing_small"
+        android:paddingEnd="@dimen/spacing_tiny"
+
+        android:text="Call"
+        app:layout_constraintBottom_toTopOf="@+id/textView5"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.613"
+        tools:ignore="RtlSymmetry" />
+
+    <TextView
+        android:id="@+id/textView8"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="20dp"
+        android:fontFamily="@font/josefinsans_regular"
+        android:paddingLeft="@dimen/spacing_extra_large"
+        android:paddingRight="@dimen/spacing_extra_large"
+        android:text="Mention the preperation time. We will inform you when to start preperaing food"
+        android:textAlignment="center"
+        android:textColor="@color/pinkish_grey"
+        app:layout_constraintBottom_toTopOf="@+id/linearLayout2"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <LinearLayout
+        android:id="@+id/linearLayout2"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintBottom_toBottomOf="parent">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/height_bottom_tab"
+            android:layout_weight="1"
+            android:id="@+id/button_fragment_manageer_schedule_reject"
+
+            android:background="@color/white"
+            android:fontFamily="@font/josefinsans_semibold"
+            android:gravity="center"
+
+            android:text="Reject"
+            android:textColor="#d0021b" />
+
+        <TextView
+            android:id="@+id/button_fragment_manageer_schedule_accept"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/height_bottom_tab"
+            android:layout_gravity="center"
+            android:layout_weight="1"
+            android:background="@drawable/background_rectangle_green_gradient"
+            android:fontFamily="@font/josefinsans_semibold"
+            android:gravity="center"
+            android:text="Accept"
+            android:textColor="@color/white"
+            android:textSize="@dimen/font_large" />
+
+
+    </LinearLayout>
+
+    <TextView
+        android:id="@+id/tv_fragment_manager_schedule_customer_name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/josefinsans_semibold"
+        android:text="Shivansh Saini"
+        android:layout_marginLeft="@dimen/spacing_normal"
+        android:textSize="@dimen/font_largest"
+        app:layout_constraintBottom_toBottomOf="@+id/im_fragment_manager_schedule_back"
+        app:layout_constraintStart_toEndOf="@+id/im_fragment_manager_schedule_back"
+        app:layout_constraintTop_toTopOf="@+id/im_fragment_manager_schedule_back" />
+
+    <TextView
+        android:id="@+id/tv_fragment_manager_schedule_order_id"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Order Id : 12345"
+        android:layout_margin="8dp"
+        android:textSize="@dimen/font_tiny"
+        android:textColor="@color/pinkish_grey"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/textView10"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/spacing_extra_small"
+        android:text="New Customer"
+        android:fontFamily="@font/josefinsans_semibold"
+        android:textColor="@color/pinkish_grey"
+        app:layout_constraintStart_toStartOf="@+id/tv_fragment_manager_schedule_customer_name"
+        app:layout_constraintTop_toBottomOf="@+id/tv_fragment_manager_schedule_customer_name" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

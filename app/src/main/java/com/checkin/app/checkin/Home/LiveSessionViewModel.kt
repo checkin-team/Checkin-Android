@@ -45,7 +45,7 @@ class LiveSessionViewModel(application: Application) : BaseViewModel(application
     }
 
     fun fetchScheduledSessions() {
-        mScheduledSessionData.addSource(mSessionRepository.getScheduledSessions(), mScheduledSessionData::setValue)
+//        mScheduledSessionData.addSource(mSessionRepository.getScheduledSessions(), mScheduledSessionData::setValue)
     }
 
     fun fetchLiveActiveSession() {
