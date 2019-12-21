@@ -10,6 +10,7 @@ import com.checkin.app.checkin.Data.BaseViewModel
 import com.checkin.app.checkin.Data.Resource
 import com.checkin.app.checkin.Menu.Model.*
 import com.checkin.app.checkin.menu.MenuRepository
+import com.checkin.app.checkin.menu.models.OrderedItemModel
 import com.checkin.app.checkin.session.activesession.ActiveSessionRepository
 import com.checkin.app.checkin.session.models.TrendingDishModel
 import kotlinx.coroutines.Dispatchers
@@ -190,33 +191,25 @@ class UserMenuViewModel(application: Application) : BaseViewModel(application) {
 
     fun addItemCustomization(customizationField: ItemCustomizationFieldModel) {
         val item = mCurrentItem.value ?: return
-        item.addCustomizationField(customizationField)
-        mCurrentItem.value = item
+        mCurrentItem.value = item.addCustomizationField(customizationField)
     }
 
     fun setCurrentItem(item: OrderedItemModel) {
-        try {
-            mCurrentItem.value = item.clone()
-        } catch (e: CloneNotSupportedException) {
-        }
+        mCurrentItem.value = item
     }
 
     fun removeItemCustomization(customizationField: ItemCustomizationFieldModel) {
         val item = mCurrentItem.value ?: return
-        item.removeCustomizationField(customizationField)
-        mCurrentItem.value = item
+        mCurrentItem.value = item.removeCustomizationField(customizationField)
     }
 
     fun setSelectedType(selectedType: Int) {
         val item = mCurrentItem.value ?: return
-        item.typeIndex = selectedType
-        mCurrentItem.value = item
+        mCurrentItem.value = item.selectType(selectedType)
     }
 
     fun cancelItem() = mCurrentItem.value?.let {
-        it.quantity = 0
-        it.changeCount = 0
-        mCurrentItem.value = it
+        mCurrentItem.value = it.updateQuantity(0)
         resetItem()
     }
 

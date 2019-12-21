@@ -3,6 +3,8 @@ package com.checkin.app.checkin.menu.fragments
 import android.os.Bundle
 import android.view.View
 import android.view.ViewGroup
+import android.widget.AdapterView
+import android.widget.Spinner
 import android.widget.TextView
 import androidx.core.content.ContextCompat
 import androidx.core.os.bundleOf
@@ -33,6 +35,8 @@ class UserMenuFragment : BaseFragment(), MenuItemInteraction, ItemCustomizationB
     internal lateinit var tvDessertCategory: TextView
     @BindView(R.id.tv_as_menu_specials)
     internal lateinit var tvSpecialCategory: TextView
+    @BindView(R.id.spinner_menu_meal_slots)
+    internal lateinit var spinnerMealSlots: Spinner
 
     val viewModel: UserMenuViewModel by viewModels()
     val cartViewModel: CartViewModel by activityViewModels()
@@ -41,6 +45,17 @@ class UserMenuFragment : BaseFragment(), MenuItemInteraction, ItemCustomizationB
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         childFragmentManager.inTransaction {
             add(R.id.container_as_menu, UserMenuGroupsFragment.newInstance())
+        }
+        spinnerMealSlots.onItemSelectedListener = object: AdapterView.OnItemSelectedListener {
+            val mealSlots = listOf(MenuItemModel.AVAILABLE_MEAL.BREAKFAST, MenuItemModel.AVAILABLE_MEAL.LUNCH, MenuItemModel.AVAILABLE_MEAL.DINNER)
+
+            override fun onNothingSelected(parent: AdapterView<*>?) {
+            }
+
+            override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
+                if (position == 0)  viewModel.resetMenuGroups()
+                else viewModel.filterMenuGroups(mealSlots[position - 1])
+            }
         }
 
         setupObservers()
@@ -56,8 +71,9 @@ class UserMenuFragment : BaseFragment(), MenuItemInteraction, ItemCustomizationB
 
     @OnClick(R.id.tv_as_menu_drinks, R.id.tv_as_menu_food, R.id.tv_as_menu_dessert, R.id.tv_as_menu_specials)
     fun onClickOfCategories(v: View) {
+        val oldValue = v.isActivated
         resetCategoriesView()
-        v.isActivated = !v.isActivated
+        v.isActivated = !oldValue
         if (v.isActivated) {
             when (v.id) {
                 R.id.tv_as_menu_drinks -> viewModel.filterMenuCategories("Drinks")

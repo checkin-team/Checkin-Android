@@ -13,7 +13,7 @@ import butterknife.BindView
 import butterknife.OnClick
 import com.checkin.app.checkin.Data.Resource
 import com.checkin.app.checkin.Menu.MenuItemInteraction
-import com.checkin.app.checkin.Menu.Model.OrderedItemModel
+import com.checkin.app.checkin.menu.models.OrderedItemModel
 import com.checkin.app.checkin.Menu.UserMenu.Adapter.MenuCartAdapter
 import com.checkin.app.checkin.Menu.UserMenu.Adapter.MenuTreatYourselfAdapter
 import com.checkin.app.checkin.Menu.UserMenu.MenuViewModel
@@ -103,15 +103,14 @@ class MenuCartFragment : BaseFragment(), MenuCartAdapter.MenuCartInteraction, Me
     }
 
     override fun onOrderedItemChanged(item: OrderedItemModel?, count: Int) {
-        item!!.quantity = count
-        mViewModel.setCurrentItem(item)
+        mViewModel.setCurrentItem(item!!.updateQuantity(count))
         mViewModel.orderItem()
     }
 
     override fun onOrderedItemRemark(item: OrderedItemModel, s: String) {
-        if (s.length > 0) {
-            item.remarks = s
-        }
+//        if (s.length > 0) {
+//            item.re
+//        }
     }
 
     @OnClick(R.id.im_menu_cart_back)

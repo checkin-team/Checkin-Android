@@ -26,7 +26,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.checkin.app.checkin.Data.Resource.Status;
 import com.checkin.app.checkin.Menu.MenuItemInteraction;
 import com.checkin.app.checkin.Menu.Model.MenuItemModel;
-import com.checkin.app.checkin.Menu.Model.OrderedItemModel;
+import com.checkin.app.checkin.menu.models.OrderedItemModel;
 import com.checkin.app.checkin.Menu.ShopMenu.Adapter.MenuCartAdapter;
 import com.checkin.app.checkin.Menu.ShopMenu.Fragment.ItemCustomizationFragment;
 import com.checkin.app.checkin.Menu.ShopMenu.Fragment.MenuFilterFragment;
@@ -183,8 +183,8 @@ public class SessionMenuActivity extends BaseActivity implements
                 .setTitle("Enter Remarks")
                 .setView(input)
                 .setPositiveButton("OK", (dialog, which) -> {
-                    item.setRemarks(input.getText().toString());
-                    item.setChangeCount(0);
+//                    item.setRemarks(input.getText().toString());
+//                    item.setChangeCount(0);
                     mViewModel.setCurrentItem(item);
                     mViewModel.orderItem();
                     input.setText("");
@@ -388,7 +388,7 @@ public class SessionMenuActivity extends BaseActivity implements
 
     @Override
     public void onOrderedItemChanged(OrderedItemModel item, int count) {
-        item.setQuantity(count);
+//        item.setQuantity(count);
         mViewModel.setCurrentItem(item);
         mViewModel.orderItem();
     }

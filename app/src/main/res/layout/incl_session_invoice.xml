@@ -1,10 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 
 <com.facebook.shimmer.ShimmerFrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/shimmer_invoice_holder"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    app:shimmer_auto_start="false">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -190,10 +192,10 @@
             android:id="@+id/container_invoice_brownie_cash"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="@dimen/spacing_normal"
             android:paddingStart="@dimen/spacing_normal"
             android:paddingTop="@dimen/spacing_extra_small"
-            android:paddingEnd="@dimen/spacing_normal">
+            android:paddingEnd="@dimen/spacing_normal"
+            android:visibility="invisible">
 
             <include
                 android:id="@+id/shimmer_bill_brownie"

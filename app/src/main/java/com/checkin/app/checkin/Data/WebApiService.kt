@@ -12,7 +12,7 @@ import com.checkin.app.checkin.Manager.Model.ManagerSessionEventModel
 import com.checkin.app.checkin.Manager.Model.ManagerSessionInvoiceModel
 import com.checkin.app.checkin.Manager.Model.ManagerStatsModel
 import com.checkin.app.checkin.Menu.Model.MenuModel
-import com.checkin.app.checkin.Menu.Model.OrderedItemModel
+import com.checkin.app.checkin.menu.models.OrderedItemModel
 import com.checkin.app.checkin.Search.SearchResultPeopleModel
 import com.checkin.app.checkin.Search.SearchResultShopModel
 import com.checkin.app.checkin.Shop.Private.Finance.FinanceModel
@@ -145,6 +145,18 @@ interface WebApiService {
 
     @get:DELETE("sessions/customer/scheduled/cart/clear/")
     val deleteCustomerCart: Call<ObjectNode>
+
+    @GET("sessions/customer/scheduled/{session_id}/promo/")
+    fun getAvailedPromoForScheduledSession(@Path("session_id") sessionId: Long): Call<SessionPromoModel>
+
+    @POST("sessions/customer/scheduled/{session_id}/promos/avail/")
+    fun availPromoForScheduledSession(@Path("session_id") sessionId: Long, @Body data:ObjectNode): Call<SessionPromoModel>
+
+    @DELETE("sessions/customer/scheduled/{session_id}/promos/remove/")
+    fun deleteAvailedPromoForScheduledSession(@Path("session_id") sessionId: Long): Call<ObjectNode>
+
+    @POST("sessions/customer/scheduled/{session_id}/pay/paytm/")
+    fun postPaytmRequestForScheduledSession(@Path("session_id") sessionId: Long): Call<PaytmModel>
 
     // endregion
 
@@ -383,7 +395,7 @@ interface WebApiService {
 
     // endregion
 
-    // region payments
+    // region PAYTM
     @POST("payments/callback/paytm/")
     fun postPaytmCallback(@Body data: ObjectNode): Call<ObjectNode>
     //endregion

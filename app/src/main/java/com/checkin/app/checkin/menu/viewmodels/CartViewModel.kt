@@ -9,7 +9,7 @@ import com.checkin.app.checkin.Data.AppDatabase
 import com.checkin.app.checkin.Data.BaseViewModel
 import com.checkin.app.checkin.Data.Resource
 import com.checkin.app.checkin.Menu.Model.MenuItemModel
-import com.checkin.app.checkin.Menu.Model.OrderedItemModel
+import com.checkin.app.checkin.menu.models.OrderedItemModel
 import com.checkin.app.checkin.Utility.pass
 import com.checkin.app.checkin.menu.MenuRepository
 import com.checkin.app.checkin.menu.models.CartBillModel
@@ -77,7 +77,7 @@ class CartViewModel(application: Application) : BaseViewModel(application) {
     val itemOrderedCounts: LiveData<Map<Long, Int>>
         get() = Transformations.map(mOrderedItems) {
             it?.let {
-                it.groupBy({ it.itemModel.pk }, { it.quantity }).mapValues { it.value.sum() }
+                it.groupBy({ it.itemPk() }, { it.quantity }).mapValues { it.value.sum() }
             }
         }
 
@@ -95,12 +95,11 @@ class CartViewModel(application: Application) : BaseViewModel(application) {
                 if (resource.status == Resource.Status.SUCCESS && resource.data != null) {
                     mOrderedItems.value = resource.data.orderedItems.map {
                         val menuItem = AppDatabase.getMenuItemModel(null).get(it.item.pk) ?: it.item
-                        OrderedItemModel(menuItem, it.quantity, it.typeIndex).apply {
-                            pk = it.longPk
-                            cost = it.cost
-                            selectedFields = it.customizations.flatMap { it.customizationFields }.distinct()
-                            remarks = it.remarks
-                        }
+                        OrderedItemModel(
+                                it.longPk, menuItem, it.cost, it.quantity, it.typeIndex,
+                                it.customizations.flatMap { it.customizationFields }.distinct(),
+                                it.remarks, it.ordered
+                        )
                     }
                     cartDetailData.value = resource
                 }
@@ -116,10 +115,14 @@ class CartViewModel(application: Application) : BaseViewModel(application) {
         mCartBillData.addSource(menuRepository.cartBillData, mCartBillData::setValue)
     }
 
+    fun retryOrder() {
+        mCurrentItem.value?.let { orderItem(it) }
+    }
+
     fun orderItem(order: OrderedItemModel) {
-        updateCart(order)
         if (sessionType == SessionType.SCHEDULED && sessionPk != 0L)
             syncOrdersWithServer(order)
+        else updateCart(order)
     }
 
     fun syncOrdersWithServer() {
@@ -146,6 +149,9 @@ class CartViewModel(application: Application) : BaseViewModel(application) {
     private fun postScheduledOrder(order: OrderedItemModel) {
         mCurrentItem.value = order
         mNewOrders.addSource(menuRepository.postScheduledSessionOrders(sessionPk, listOf(order))) {
+            if (it?.status == Resource.Status.SUCCESS && it.data != null) {
+                mCurrentItem.value = mCurrentItem.value?.updatePk(it.data[0].pk)
+            }
             mNewOrders.value = processServerResult(it)
         }
     }
@@ -168,9 +174,9 @@ class CartViewModel(application: Application) : BaseViewModel(application) {
         val orderedItems = mOrderedItems.value?.toMutableList() ?: mutableListOf()
         val index = orderedItems.indexOfFirst { it.pk == order.pk }
         if (index != -1) {
-            orderedItems[index].quantity = order.quantity
+            orderedItems[index] = orderedItems[index].updateQuantity(order.quantity)
             if (orderedItems[index].quantity == 0) orderedItems.removeAt(index)
-        }
+        } else orderedItems.add(order)
         mOrderedItems.value = orderedItems
     }
 
@@ -178,10 +184,10 @@ class CartViewModel(application: Application) : BaseViewModel(application) {
         val orderedItems = mOrderedItems.value?.toMutableList() ?: mutableListOf()
         items.forEach { newOrder ->
             val index = orderedItems.indexOfFirst {
-                newOrder.item == it.item && newOrder.customizations == it.selectedFields.map { it.pk }
+                newOrder.item == it.itemPk() && newOrder.typeIndex == it.typeIndex && newOrder.customizations == it.customizations()
             }
             if (index != -1) {
-                orderedItems[index].quantity = newOrder.quantity
+                orderedItems[index] = orderedItems[index].updateQuantity(newOrder.quantity)
                 if (orderedItems[index].quantity == 0) orderedItems.removeAt(index)
             }
         }
@@ -189,48 +195,28 @@ class CartViewModel(application: Application) : BaseViewModel(application) {
     }
 
     private fun updateCart(item: OrderedItemModel) {
-        val orderedItems = mOrderedItems.value?.toMutableList() ?: mutableListOf()
-        val index = orderedItems.indexOf(item)
-        if (index != -1) {
-            if (item.quantity > 0) {
-                item.quantity = orderedItems[index].quantity + item.changeCount
-                orderedItems[index] = item
-            } else orderedItems.removeAt(index)
-        } else {
-            if (item.itemModel.isComplexItem)
-                item.quantity = item.changeCount
-            orderedItems.add(item)
+        val orderedItems
+                = mOrderedItems.value?.toMutableList() ?: mutableListOf()
+        val index = orderedItems.indexOfFirst {
+            it.equalsWithPk(item) || it.equalsWithoutPk(item)
         }
+        if (index != -1) {
+            if (item.quantity > 0) orderedItems[index] = item
+            else orderedItems.removeAt(index)
+        } else orderedItems.add(item)
         mOrderedItems.value = orderedItems
     }
 
     fun updateOrderedItem(item: MenuItemModel, count: Int): OrderedItemModel? {
-        val items = mOrderedItems.value
-        var orderedItem: OrderedItemModel? = null
-        if (items == null) {
-            return orderedItem
-        }
-        var cartCount = 0
-        for (listItem in items) {
-            if (item == listItem.itemModel) {
-                cartCount += listItem.quantity
-                if (!item.isComplexItem) {
-                    try {
-                        orderedItem = listItem.clone()
-                    } catch (e: CloneNotSupportedException) {
-                    }
-
-                    break
-                }
-            }
-        }
-        if (cartCount == 0) {
-            return orderedItem
-        }
+        val items = mOrderedItems.value ?: emptyList()
+        val cartCount = items.count { it.itemPk() == item.pk }
+        var orderedItem = items.find { item.pk == it.itemPk() }
+        if (cartCount == 0) return orderedItem
         if (item.isComplexItem && cartCount != count) {
+            // Under the assumption that count > cartCount for complex item, always
             orderedItem = item.order(1)
         } else if (orderedItem != null && orderedItem.quantity != count) {
-            orderedItem.quantity = count
+            orderedItem = orderedItem.updateQuantity(count)
         }
         return orderedItem
     }

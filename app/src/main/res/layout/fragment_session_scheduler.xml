@@ -39,35 +39,36 @@
                     android:id="@+id/stub_scheduled_date_1"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="@dimen/spacing_normal"
+                    android:layout_marginStart="@dimen/spacing_small"
+                    android:layout_marginEnd="@dimen/spacing_normal"
                     android:layout="@layout/item_session_scheduled_day_date" />
 
                 <ViewStub
                     android:id="@+id/stub_scheduled_date_2"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="@dimen/spacing_normal"
+                    android:layout_marginEnd="@dimen/spacing_normal"
                     android:layout="@layout/item_session_scheduled_day_date" />
 
                 <ViewStub
                     android:id="@+id/stub_scheduled_date_3"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="@dimen/spacing_normal"
+                    android:layout_marginEnd="@dimen/spacing_normal"
                     android:layout="@layout/item_session_scheduled_day_date" />
 
                 <ViewStub
                     android:id="@+id/stub_scheduled_date_4"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="@dimen/spacing_normal"
+                    android:layout_marginEnd="@dimen/spacing_normal"
                     android:layout="@layout/item_session_scheduled_day_date" />
 
                 <ViewStub
                     android:id="@+id/stub_scheduled_date_5"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="@dimen/spacing_normal"
+                    android:layout_marginEnd="@dimen/spacing_small"
                     android:layout="@layout/item_session_scheduled_day_date" />
 
             </LinearLayout>
@@ -112,13 +113,15 @@
         android:layout_width="@dimen/size_normal_icon"
         android:layout_height="@dimen/size_normal_icon"
         android:layout_marginTop="@dimen/spacing_normal"
-        android:background="@drawable/selector_oval_white_focusable"
+        android:layout_marginEnd="@dimen/spacing_large"
+        android:background="@drawable/shape_oval_pinkish_grey"
         android:clickable="true"
         android:focusable="true"
         android:fontFamily="@font/lucida_grande"
         android:gravity="center"
         android:text="-"
         app:layout_constraintEnd_toStartOf="@id/tv_session_scheduler_people_count"
+        app:layout_constraintHorizontal_chainStyle="packed"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/tv_book_restaurant_people_heading" />
 
@@ -138,7 +141,8 @@
         style="@style/TealBlueTextStyle"
         android:layout_width="@dimen/size_normal_icon"
         android:layout_height="@dimen/size_normal_icon"
-        android:background="@drawable/shape_oval_dark"
+        android:layout_marginStart="@dimen/spacing_large"
+        android:background="@drawable/shape_oval_egg_blue"
         android:clickable="true"
         android:focusable="true"
         android:fontFamily="@font/lucida_grande"

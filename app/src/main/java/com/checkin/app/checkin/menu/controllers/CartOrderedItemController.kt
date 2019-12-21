@@ -1,6 +1,6 @@
 package com.checkin.app.checkin.menu.controllers
 
-import com.checkin.app.checkin.Menu.Model.OrderedItemModel
+import com.checkin.app.checkin.menu.models.OrderedItemModel
 import com.checkin.app.checkin.menu.holders.CartOrderInteraction
 import com.checkin.app.checkin.menu.holders.cartOrderedItemModelHolder
 import com.checkin.app.checkin.misc.epoxy.BaseEpoxyController
@@ -15,10 +15,11 @@ class CartOrderedItemController(
         }
 
     override fun buildModels() {
-        orderedItems?.forEach {
+        orderedItems?.forEach {order ->
+//            val order = it.clone()
             cartOrderedItemModelHolder {
-                id(getUniqueId(it))
-                orderedItem(it)
+                id(getUniqueId(order))
+                orderedItem(order)
                 listener(listener)
             }
         }

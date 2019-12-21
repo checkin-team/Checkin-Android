@@ -83,7 +83,7 @@ public class MenuGroupsFragment extends BaseFragment {
             MenuItemAdapter.ItemViewHolder holder = orderedItem.getItemModel().getItemHolder();
 
             if (holder != null && holder.getMenuItem() == orderedItem.getItemModel()) {
-                holder.changeQuantity(mViewModel.getOrderedCount(orderedItem.getItemModel()) + orderedItem.getChangeCount());
+                holder.changeQuantity(mViewModel.getOrderedCount(orderedItem.getItemModel()));
             }
         });
     }
@@ -130,6 +130,7 @@ public class MenuGroupsFragment extends BaseFragment {
 
     @Override
     protected void updateScreen() {
+        super.updateScreen();
         mViewModel.updateResults();
     }
 

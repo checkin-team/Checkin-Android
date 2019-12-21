@@ -8,7 +8,7 @@ import butterknife.BindView
 import com.airbnb.epoxy.EpoxyAttribute
 import com.airbnb.epoxy.EpoxyModelClass
 import com.airbnb.epoxy.EpoxyModelWithHolder
-import com.checkin.app.checkin.Menu.Model.OrderedItemModel
+import com.checkin.app.checkin.menu.models.OrderedItemModel
 import com.checkin.app.checkin.R
 import com.checkin.app.checkin.Utility.DebouncedOnClickListener
 import com.checkin.app.checkin.Utility.Utils
@@ -58,7 +58,7 @@ abstract class CartOrderedItemModelHolder : EpoxyModelWithHolder<CartOrderedItem
             mData = data
 
             tvItemName.text = data.itemModel.name
-            tvCustomize.visibility = if (data.isCustomized) View.VISIBLE else View.GONE
+            tvCustomize.visibility = if (data.isCustomized()) View.VISIBLE else View.GONE
             tvItemQuantity.text = data.quantity.toString()
             tvItemPrice.text = Utils.formatCurrencyAmount(context, data.cost)
             imItemType.setImageResource(if (!data.itemModel.isVegetarian) R.drawable.ic_non_veg else R.drawable.ic_veg)

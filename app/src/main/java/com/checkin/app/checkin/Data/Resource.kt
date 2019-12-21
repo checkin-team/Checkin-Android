@@ -64,9 +64,9 @@ class Resource<out T> private constructor(val status: Status, val data: T?, val 
         fun <T> createResource(apiResponse: ApiResponse<T>): Resource<T> {
             return when {
                 apiResponse.isSuccessful -> success(apiResponse.data)
-                apiResponse.errorThrowable != null -> when {
-                    apiResponse.errorThrowable is RequestCanceledException -> error<T>(Status.ERROR_CANCELLED, null, null, null)
-                    apiResponse.errorThrowable is NoConnectivityException -> error(Status.ERROR_DISCONNECTED, apiResponse.errorMessage, apiResponse.data, null)
+                apiResponse.errorThrowable != null -> when (apiResponse.errorThrowable) {
+                    is RequestCanceledException -> error<T>(Status.ERROR_CANCELLED, null, null, null)
+                    is NoConnectivityException -> error(Status.ERROR_DISCONNECTED, apiResponse.errorMessage, apiResponse.data, null)
                     else -> {
                         Log.e(TAG, apiResponse.errorMessage, apiResponse.errorThrowable)
                         Crashlytics.log(Log.ERROR, TAG, apiResponse.errorMessage)
@@ -79,7 +79,11 @@ class Resource<out T> private constructor(val status: Status, val data: T?, val 
                 apiResponse.hasStatus(HTTP_UNAUTHORIZED) -> error(Status.ERROR_UNAUTHORIZED, apiResponse.errorMessage, apiResponse.data, apiResponse.errorData)
                 apiResponse.hasStatus(HTTP_FORBIDDEN) -> error(Status.ERROR_FORBIDDEN, apiResponse.errorMessage, apiResponse.data, apiResponse.errorData)
                 apiResponse.hasStatus(HTTP_NOT_ACCEPTABLE) -> error(Status.ERROR_NOT_ACCEPTABLE, apiResponse.errorMessage, apiResponse.data, apiResponse.errorData)
-                else -> error(Status.ERROR_UNKNOWN, apiResponse.errorMessage, apiResponse.data, apiResponse.errorData)
+                else -> {
+                    Crashlytics.log(Log.ERROR, TAG, apiResponse.errorMessage)
+                    Crashlytics.log(Log.ERROR, TAG, apiResponse.errorData?.toPrettyString())
+                    error(Status.ERROR_UNKNOWN, apiResponse.errorMessage, apiResponse.data, apiResponse.errorData)
+                }
             }
         }
 

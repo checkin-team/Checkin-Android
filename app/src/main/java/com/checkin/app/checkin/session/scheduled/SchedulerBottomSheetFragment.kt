@@ -11,10 +11,13 @@ import androidx.core.content.ContextCompat
 import butterknife.BindView
 import butterknife.ButterKnife
 import com.checkin.app.checkin.R
+import com.checkin.app.checkin.Utility.minus
 import com.checkin.app.checkin.Utility.parentActivityDelegate
 import com.checkin.app.checkin.misc.fragments.BaseBottomSheetFragment
+import com.checkin.app.checkin.session.models.ScheduledSessionDetailModel
 import com.wdullaer.materialdatetimepicker.time.TimePickerDialog
 import java.text.SimpleDateFormat
+import java.time.temporal.ChronoUnit
 import java.util.*
 
 class SchedulerBottomSheetFragment : BaseBottomSheetFragment(), TimePickerDialog.OnTimeSetListener {
@@ -54,9 +57,10 @@ class SchedulerBottomSheetFragment : BaseBottomSheetFragment(), TimePickerDialog
     private val mListener: SchedulerInteraction by parentActivityDelegate()
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        mPeopleCount = savedInstanceState?.getInt(SS_PEOPLE_COUNT, 1) ?: 1
+        mPeopleCount = savedInstanceState?.getInt(SS_PEOPLE_COUNT, 1)
+                ?: arguments?.getInt(SS_PEOPLE_COUNT, 1) ?: 1
         mPickedCalendar = (savedInstanceState?.getSerializable(SS_PICKED_CALENDAR)
-                ?: mNextCalendars[0]) as Calendar
+                ?: arguments?.getSerializable(SS_PICKED_CALENDAR) ?: mNextCalendars[0]) as Calendar
         mHolders = listOf(
                 DateHolder(mNextCalendars[0], view.findViewById<ViewStub>(R.id.stub_scheduled_date_1).inflate()),
                 DateHolder(mNextCalendars[1], view.findViewById<ViewStub>(R.id.stub_scheduled_date_2).inflate()),
@@ -64,11 +68,16 @@ class SchedulerBottomSheetFragment : BaseBottomSheetFragment(), TimePickerDialog
                 DateHolder(mNextCalendars[3], view.findViewById<ViewStub>(R.id.stub_scheduled_date_4).inflate()),
                 DateHolder(mNextCalendars[4], view.findViewById<ViewStub>(R.id.stub_scheduled_date_5).inflate())
         )
-        mHolders[0].select()
         setupUi()
     }
 
     private fun setupUi() {
+        var dayIndex = mPickedCalendar - mNextCalendars[0]
+        if (dayIndex > 4) {
+            mPickedCalendar = mNextCalendars[0]
+            dayIndex = 0
+        }
+        mHolders[dayIndex].select()
         updateCount(mPeopleCount)
         updateTime(mPickedCalendar[Calendar.HOUR_OF_DAY], mPickedCalendar[Calendar.MINUTE])
         tvDecrementPeople.setOnClickListener { updateCount(mPeopleCount - 1) }
@@ -98,7 +107,7 @@ class SchedulerBottomSheetFragment : BaseBottomSheetFragment(), TimePickerDialog
     }
 
     private fun updateTime(hourOfDay: Int, minute: Int) {
-        tvTimePicker.text = "$hourOfDay : $minute"
+        tvTimePicker.text = "${hourOfDay.toString().padStart(2, '0')} : ${minute.toString().padStart(2, '0')}"
     }
 
     private fun resetDateSelection() {
@@ -156,6 +165,14 @@ class SchedulerBottomSheetFragment : BaseBottomSheetFragment(), TimePickerDialog
 
         const val SS_PEOPLE_COUNT = "saved.people_count"
         const val SS_PICKED_CALENDAR = "saved.picked_time"
+
+        fun newInstance(scheduled: ScheduledSessionDetailModel) = SchedulerBottomSheetFragment().apply {
+            arguments = Bundle().apply {
+                putInt(SS_PEOPLE_COUNT, scheduled.countPeople)
+                if (scheduled.plannedDatetime > Calendar.getInstance().time)
+                    putSerializable(SS_PICKED_CALENDAR, scheduled.plannedDatetime.toCalendar())
+            }
+        }
     }
 }
 
@@ -163,3 +180,5 @@ interface SchedulerInteraction {
     fun onSchedulerSet(selectedDate: Date, countPeople: Int)
     fun onCancelScheduler()
 }
+
+fun Date.toCalendar() = Calendar.getInstance().apply { time = this@toCalendar }

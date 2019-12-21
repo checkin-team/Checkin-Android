@@ -92,8 +92,7 @@
     <androidx.coordinatorlayout.widget.CoordinatorLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_gravity="bottom"
-        android:layout_marginTop="96dp">
+        android:layout_gravity="bottom">
 
         <com.checkin.app.checkin.session.scheduled.ScheduledSessionCartView
             android:id="@+id/scheduled_cart_restaurant_public"

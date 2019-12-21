@@ -8,8 +8,8 @@
     <TextView
         android:id="@+id/tv_scheduler_item_date"
         style="@style/GreySmallBoldTextStyle"
-        android:layout_width="@dimen/size_normal_icon"
-        android:layout_height="@dimen/size_normal_icon"
+        android:layout_width="@dimen/size_medium_icon"
+        android:layout_height="@dimen/size_medium_icon"
         android:layout_gravity="center_horizontal"
         android:background="@drawable/selector_date_background"
         android:gravity="center"

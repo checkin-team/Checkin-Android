@@ -104,4 +104,10 @@ public class UserViewModel extends BaseViewModel {
 
         mUserData.addSource(mRepository.postUserData(data), mUserData::setValue);
     }
+
+    public void patchUserPhone(@NonNull String phoneToken) {
+        ObjectNode data = Converters.INSTANCE.getObjectMapper().createObjectNode()
+                .put("phone_token", phoneToken);
+        mUserData.addSource(mRepository.postUserData(data), mUserData::setValue);
+    }
 }

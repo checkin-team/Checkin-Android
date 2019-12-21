@@ -1,12 +1,16 @@
 package com.checkin.app.checkin.restaurant.activities
 
 import android.app.Activity
-import android.app.AlertDialog
 import android.content.Context
+import android.content.DialogInterface
 import android.content.Intent
 import android.os.Bundle
+import android.text.InputType
+import android.util.Log
+import android.widget.EditText
 import android.widget.TextView
 import androidx.activity.viewModels
+import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.widget.Toolbar
 import androidx.coordinatorlayout.widget.CoordinatorLayout
 import androidx.core.content.ContextCompat
@@ -21,9 +25,14 @@ import androidx.viewpager2.widget.ViewPager2
 import butterknife.BindView
 import butterknife.ButterKnife
 import butterknife.OnClick
+import com.checkin.app.checkin.Auth.OtpVerificationDialog
+import com.checkin.app.checkin.Auth.PhoneEditDialog
+import com.checkin.app.checkin.Auth.PhoneInteraction
 import com.checkin.app.checkin.Data.ProblemModel
 import com.checkin.app.checkin.Data.Resource
 import com.checkin.app.checkin.R
+import com.checkin.app.checkin.User.Private.UserViewModel
+import com.checkin.app.checkin.User.bills.SuccessfulTransactionActivity
 import com.checkin.app.checkin.Utility.*
 import com.checkin.app.checkin.menu.fragments.UserMenuFragment
 import com.checkin.app.checkin.menu.viewmodels.CartViewModel
@@ -32,21 +41,29 @@ import com.checkin.app.checkin.misc.activities.BaseActivity
 import com.checkin.app.checkin.misc.activities.QRScannerActivity
 import com.checkin.app.checkin.misc.adapters.CoverPagerAdapter
 import com.checkin.app.checkin.misc.fragments.*
+import com.checkin.app.checkin.misc.paytm.PaytmPayment
 import com.checkin.app.checkin.restaurant.models.RestaurantBriefModel
 import com.checkin.app.checkin.restaurant.models.RestaurantModel
 import com.checkin.app.checkin.restaurant.viewmodels.RestaurantPublicViewModel
 import com.checkin.app.checkin.session.activesession.ActiveSessionActivity
+import com.checkin.app.checkin.session.models.ScheduledSessionDetailModel
 import com.checkin.app.checkin.session.scheduled.*
+import com.crashlytics.android.Crashlytics
 import com.google.android.material.appbar.AppBarLayout
 import com.google.android.material.tabs.TabLayout
 import com.google.android.material.tabs.TabLayoutMediator
+import com.google.firebase.FirebaseException
+import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.auth.PhoneAuthCredential
 import com.rd.PageIndicatorView
 import com.rd.animation.type.AnimationType
 import java.util.*
 import kotlin.math.abs
 
 class PublicRestaurantProfileActivity : BaseActivity(), AppBarLayout.OnOffsetChangedListener,
-        ScheduledSessionInteraction, QRScannerWrapperInteraction, NewSessionCreationInteraction, SchedulerInteraction {
+        ScheduledSessionInteraction, QRScannerWrapperInteraction,
+        NewSessionCreationInteraction, SchedulerInteraction,
+        OtpVerificationDialog.AuthCallback {
     @BindView(R.id.indicator_restaurant_public_covers)
     internal lateinit var indicatorTopCover: PageIndicatorView
     @BindView(R.id.fragment_vp_restaurant_public)
@@ -80,6 +97,7 @@ class PublicRestaurantProfileActivity : BaseActivity(), AppBarLayout.OnOffsetCha
     private val cartViewModel: CartViewModel by viewModels()
     private val restaurantViewModel: RestaurantPublicViewModel by viewModels()
     private val scheduledSessionViewModel: ScheduledSessionViewModel by viewModels()
+    private val userViewModel: UserViewModel by viewModels()
 
     var restaurantId: Long = 0
     private var isTabAtTop = false
@@ -88,6 +106,28 @@ class PublicRestaurantProfileActivity : BaseActivity(), AppBarLayout.OnOffsetCha
     private var allowOrder = true
 
     private var networkFragment: NetworkBlockingFragment = NetworkBlockingFragment()
+    private val phoneDialog: AlertDialog by lazy { setupPhoneDialog() }
+    private val otpDialog: OtpVerificationDialog by lazy {
+        OtpVerificationDialog.Builder.with(this)
+                .setAuthCallback(this)
+                .build()
+    }
+    private val paytmPayment: PaytmPayment by lazy {
+        object : PaytmPayment() {
+            override fun onPaytmTransactionResponse(inResponse: Bundle) {
+                scheduledSessionViewModel.postPaytmCallback(inResponse)
+            }
+
+            override fun onPaytmError(inErrorMessage: String?) {
+                Utils.toast(this@PublicRestaurantProfileActivity, inErrorMessage)
+            }
+
+            override fun onPaytmTransactionCancel(inResponse: Bundle?, msg: String?) {
+                Utils.toast(this@PublicRestaurantProfileActivity, msg)
+            }
+        }
+    }
+    private val firebaseAuth: FirebaseAuth by lazy { FirebaseAuth.getInstance() }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -96,6 +136,7 @@ class PublicRestaurantProfileActivity : BaseActivity(), AppBarLayout.OnOffsetCha
 
         initUi()
         setupObservers()
+        setupPaytm()
     }
 
     private fun initUi() {
@@ -192,7 +233,43 @@ class PublicRestaurantProfileActivity : BaseActivity(), AppBarLayout.OnOffsetCha
         scheduledSessionViewModel.clearCartData.observe(this, Observer {
             if (it?.status == Resource.Status.SUCCESS) clearSession()
         })
+
+        userViewModel.userData.observe(this, Observer {
+            it?.let { resource ->
+                if (resource.status == Resource.Status.SUCCESS) scheduledSessionViewModel.isPhoneVerified = true
+                else if (resource.problem?.getErrorCode() == ProblemModel.ERROR_CODE.ACCOUNT__ALREADY_REGISTERED) {
+                    Utils.toast(this, "This number already exists.")
+                    onVerifyPhoneOfUser()
+                }
+            }
+        })
     }
+
+    private fun setupPaytm() {
+        scheduledSessionViewModel.paytmData.observe(this, Observer {
+            it?.let { paytmModelResource ->
+                if (paytmModelResource.status === Resource.Status.SUCCESS && paytmModelResource.data != null) {
+                    paytmPayment.initializePayment(paytmModelResource.data, this)
+                } else if (paytmModelResource.status !== Resource.Status.LOADING) {
+                    if (paytmModelResource.problem?.getErrorCode() == ProblemModel.ERROR_CODE.USER_MISSING_PHONE) onVerifyPhoneOfUser()
+                    Utils.toast(this, paytmModelResource.message)
+                }
+            }
+        })
+
+        scheduledSessionViewModel.paytmCallbackData.observe(this, Observer {
+            it?.let { objectNodeResource ->
+                if (objectNodeResource.status === Resource.Status.SUCCESS) {
+                    Utils.navigateBackToHome(this)
+                }
+                if (objectNodeResource.status !== Resource.Status.LOADING) {
+                    Utils.toast(this, objectNodeResource.message)
+                    hideProgressBar()
+                }
+            }
+        })
+    }
+
 
     private fun handleErrorCartExists(cartRestaurant: RestaurantBriefModel) {
         AlertDialog.Builder(this)
@@ -216,6 +293,7 @@ class PublicRestaurantProfileActivity : BaseActivity(), AppBarLayout.OnOffsetCha
     }
 
     private fun successNewSession(sessionPk: Long) {
+        if (sessionPk == 0L || cartViewModel.sessionPk == sessionPk) return
         cartViewModel.sessionPk = sessionPk
         scheduledSessionViewModel.sessionPk = sessionPk
         cartViewModel.syncOrdersWithServer()
@@ -277,6 +355,10 @@ class PublicRestaurantProfileActivity : BaseActivity(), AppBarLayout.OnOffsetCha
         scheduledCartView.dismiss()
     }
 
+    override fun onStartPayment() {
+        scheduledSessionViewModel.requestPaytmDetails()
+    }
+
     override fun onCartClose() {
         ViewCompat.setNestedScrollingEnabled(nestedSv, true)
     }
@@ -287,6 +369,17 @@ class PublicRestaurantProfileActivity : BaseActivity(), AppBarLayout.OnOffsetCha
 
     override fun onCreateNewScheduledSession() {
         ChooseQrOrScheduleBottomSheetFragment().show(supportFragmentManager, ChooseQrOrScheduleBottomSheetFragment.FRAGMENT_TAG)
+    }
+
+    override fun onOpenPromoList() {
+        supportFragmentManager.inTransaction {
+            add(android.R.id.content, ScheduledSessionPromoFragment.newInstance(), ScheduledSessionPromoFragment.FRAGMENT_TAG)
+            addToBackStack(null)
+        }
+    }
+
+    override fun onVerifyPhoneOfUser() {
+        phoneDialog.show()
     }
 
     override fun onScanResult(result: Int, bundle: Intent?) {
@@ -315,17 +408,62 @@ class PublicRestaurantProfileActivity : BaseActivity(), AppBarLayout.OnOffsetCha
         SchedulerBottomSheetFragment().show(supportFragmentManager, SchedulerBottomSheetFragment.FRAGMENT_TAG)
     }
 
-    override fun updateSessionTime() {
-        onChooseSchedule()
+    override fun updateSessionTime(scheduled: ScheduledSessionDetailModel) {
+        SchedulerBottomSheetFragment.newInstance(scheduled)
+                .show(supportFragmentManager, SchedulerBottomSheetFragment.FRAGMENT_TAG)
     }
 
     override fun onSchedulerSet(selectedDate: Date, countPeople: Int) {
         scheduledSessionViewModel.syncScheduleInfo(selectedDate, countPeople, restaurantId)
     }
 
+    override fun onSuccessVerification(dialog: DialogInterface?, credential: PhoneAuthCredential) {
+        firebaseAuth.signInWithCredential(credential).addOnCompleteListener { task ->
+            val status = if (task.isSuccessful) firebaseAuth.currentUser?.let {
+                it.getIdToken(false).addOnSuccessListener { result ->
+                    userViewModel.patchUserPhone(result.token!!)
+                }
+                true
+            } ?: false else false
+            if (!status) {
+                Crashlytics.log(Log.ERROR, TAG, getString(R.string.error_authentication_phone))
+                Crashlytics.logException(task.exception)
+                Utils.toast(this, R.string.error_authentication_phone)
+            }
+        }
+        dialog?.dismiss()
+    }
+
+    override fun onCancelVerification(dialog: DialogInterface?) {
+    }
+
+    override fun onFailedVerification(dialog: DialogInterface?, exception: FirebaseException) {
+        Utils.toast(applicationContext, exception.message)
+        dialog?.dismiss()
+    }
+
+    private fun setupPhoneDialog(): AlertDialog {
+        return PhoneEditDialog(this, object : PhoneInteraction {
+            override fun onPhoneSubmit(phone: String) {
+                otpDialog.verifyPhoneNumber(phone)
+                otpDialog.show()
+            }
+
+            override fun onPhoneCancel() {
+            }
+
+        })
+    }
+
     override fun onBackPressed() {
         var result = supportFragmentManager.findFragmentByTag(QRScannerWrapperFragment.FRAGMENT_TAG)?.let { (it as BaseFragment).onBackPressed() }
                 ?: false
+        if (result) {
+            scheduledCartView.dismiss()
+            return
+        }
+
+        result = scheduledCartView.isExpanded()
         if (result) scheduledCartView.dismiss()
         if (!result) super.onBackPressed()
     }
@@ -333,6 +471,7 @@ class PublicRestaurantProfileActivity : BaseActivity(), AppBarLayout.OnOffsetCha
     companion object {
         const val KEY_RESTAURANT_ID = "restaurant_profile.public.id"
         const val KEY_SESSION_ID = "session.new.id"
+        val TAG = PublicRestaurantProfileActivity::class.java.simpleName
     }
 
     class PublicRestaurantProfileAdapter(fragmentActivity: FragmentActivity, val restaurantId: Long) : FragmentStateAdapter(fragmentActivity) {

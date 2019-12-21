@@ -47,6 +47,7 @@
             android:text="@string/total"
             app:layout_constraintBottom_toTopOf="@id/tv_cart_footer_pay_total"
             app:layout_constraintStart_toStartOf="@id/tv_cart_footer_pay_total"
+            app:layout_constraintEnd_toEndOf="@id/tv_cart_footer_pay_total"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintVertical_chainStyle="packed" />
 

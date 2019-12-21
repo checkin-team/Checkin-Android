@@ -303,7 +303,7 @@ public class ActiveSessionRepository extends BaseRepository {
         }.getAsLiveData();
     }
 
-    public Call<ObjectNode> synchPostPaytmCallback(ObjectNode data) {
+    public Call<ObjectNode> syncPostPaytmCallback(ObjectNode data) {
         return mWebService.postPaytmCallback(data);
     }
 
@@ -361,26 +361,6 @@ public class ActiveSessionRepository extends BaseRepository {
             @Override
             protected LiveData<ApiResponse<List<TrendingDishModel>>> createCall() {
                 return new RetrofitLiveData<>(mWebService.getRestaurantTrendingItem(restaurantId));
-            }
-        }.getAsLiveData();
-    }
-
-    public LiveData<Resource<List<PromoDetailModel>>> getAvailablePromoCodes() {
-        return new NetworkBoundResource<List<PromoDetailModel>, List<PromoDetailModel>>() {
-            @Override
-            protected boolean shouldUseLocalDb() {
-                return false;
-            }
-
-            @NonNull
-            @Override
-            protected LiveData<ApiResponse<List<PromoDetailModel>>> createCall() {
-                return new RetrofitLiveData<>(mWebService.getPromoCodes());
-            }
-
-            @Override
-            protected void saveCallResult(List<PromoDetailModel> data) {
-
             }
         }.getAsLiveData();
     }

@@ -60,8 +60,9 @@ class NetworkBlockingFragment : BaseFragment() {
     private fun handleError(resource: Resource<Any?>) {
         hideProgressBar()
         view?.visibility = View.VISIBLE
-        containerError.visibility = View.GONE
-        containerLoading.visibility = View.VISIBLE
+        view?.setBackgroundColor(ContextCompat.getColor(requireContext(), R.color.white))
+        containerError.visibility = View.VISIBLE
+        containerLoading.visibility = View.GONE
     }
 
     @OnClick(R.id.btn_blocking_error_try_again)

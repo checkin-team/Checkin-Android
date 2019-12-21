@@ -7,7 +7,7 @@
     <FrameLayout
         android:id="@+id/container_blocking_network_loading"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="50dp"
         android:layout_gravity="top">
 
         <ProgressBar

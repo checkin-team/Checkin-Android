@@ -46,6 +46,19 @@ class SessionRepository private constructor(context: Context) : BaseRepository()
             }
         }.asLiveData
 
+    val availablePromoCodes: LiveData<Resource<List<PromoDetailModel>>>
+        get() =  object : NetworkBoundResource<List<PromoDetailModel>, List<PromoDetailModel>>() {
+            override fun shouldUseLocalDb(): Boolean {
+                return false
+            }
+
+            override fun createCall(): LiveData<ApiResponse<List<PromoDetailModel>>> {
+                return RetrofitLiveData<List<PromoDetailModel>>(mWebService.promoCodes)
+            }
+
+            override fun saveCallResult(data: List<PromoDetailModel>) {}
+        }.asLiveData
+
     fun newCustomerSession(data: ObjectNode): LiveData<Resource<QRResultModel>> {
         return object : NetworkBoundResource<QRResultModel, QRResultModel>() {
 
@@ -82,21 +95,6 @@ class SessionRepository private constructor(context: Context) : BaseRepository()
 
             override fun createCall(): LiveData<ApiResponse<NewScheduledSessionModel>> {
                 return RetrofitLiveData(mWebService.postNewScheduledSession(data))
-            }
-
-            override fun saveCallResult(data: NewScheduledSessionModel) {}
-        }.asLiveData
-    }
-
-    fun editScheduledSession(sessionId: Long, data: NewScheduledSessionModel): LiveData<Resource<NewScheduledSessionModel>> {
-        return object : NetworkBoundResource<NewScheduledSessionModel, NewScheduledSessionModel>() {
-
-            override fun shouldUseLocalDb(): Boolean {
-                return false
-            }
-
-            override fun createCall(): LiveData<ApiResponse<NewScheduledSessionModel>> {
-                return RetrofitLiveData(mWebService.patchScheduledSession(sessionId, data))
             }
 
             override fun saveCallResult(data: NewScheduledSessionModel) {}

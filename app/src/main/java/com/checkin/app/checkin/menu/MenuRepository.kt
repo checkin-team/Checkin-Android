@@ -7,7 +7,7 @@ import com.checkin.app.checkin.Data.*
 import com.checkin.app.checkin.Data.ApiClient.Companion.getApiService
 import com.checkin.app.checkin.Menu.Model.MenuModel
 import com.checkin.app.checkin.Menu.Model.MenuModel_
-import com.checkin.app.checkin.Menu.Model.OrderedItemModel
+import com.checkin.app.checkin.menu.models.OrderedItemModel
 import com.checkin.app.checkin.Utility.SingletonHolder
 import com.checkin.app.checkin.menu.models.CartBillModel
 import com.checkin.app.checkin.menu.models.CartDetailModel
