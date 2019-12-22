@@ -76,6 +76,10 @@
         <activity
             android:name=".Search.SearchActivity"
             android:theme="@style/AppTheme" />
+
+        <activity
+            android:name=".manager.activities.ManagerScheduledSessionDetailActivity"
+            android:theme="@style/AppTheme" />
         <activity
             android:name=".Shop.Private.MembersActivity"
             android:label="Members"

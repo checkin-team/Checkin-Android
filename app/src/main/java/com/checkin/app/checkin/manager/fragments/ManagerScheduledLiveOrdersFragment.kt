@@ -9,6 +9,7 @@ import butterknife.BindView
 import com.airbnb.epoxy.EpoxyRecyclerView
 import com.checkin.app.checkin.Data.Resource
 import com.checkin.app.checkin.R
+import com.checkin.app.checkin.manager.activities.ManagerScheduledSessionDetailActivity
 import com.checkin.app.checkin.manager.controllers.PreorderTablesController
 import com.checkin.app.checkin.manager.holders.PreorderTableInteraction
 import com.checkin.app.checkin.manager.models.ShopScheduledSessionModel
@@ -28,7 +29,7 @@ class ManagerScheduledLiveOrdersFragment : BaseFragment(), PreorderTableInteract
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         epoxyRvLivePreorders.setController(preorderController)
-        viewModel.fetchPreorders(workViewModel.shopPk)
+        viewModel.fetchPreOrders(workViewModel.shopPk)
 
         viewModel.preOrdersData.observe(this, Observer {
             it?.let {
@@ -44,7 +45,7 @@ class ManagerScheduledLiveOrdersFragment : BaseFragment(), PreorderTableInteract
     }
 
     override fun onClickNewTable(data: ShopScheduledSessionModel) {
-
+        ManagerScheduledSessionDetailActivity.startScheduledSessionDetailActivity(requireContext(), data.pk)
     }
 
     override fun onClickPreparationTable(data: ShopScheduledSessionModel) {

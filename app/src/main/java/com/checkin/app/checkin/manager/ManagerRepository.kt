@@ -8,6 +8,7 @@ import com.checkin.app.checkin.Data.ApiClient.Companion.getApiService
 import com.checkin.app.checkin.Utility.SingletonHolder
 import com.checkin.app.checkin.manager.models.ManagerSessionInvoiceModel
 import com.checkin.app.checkin.manager.models.ManagerStatsModel
+import com.checkin.app.checkin.manager.models.ShopScheduledSessionDetailModel
 import com.checkin.app.checkin.manager.models.ShopScheduledSessionModel
 import com.checkin.app.checkin.misc.models.GenericDetailModel
 import com.checkin.app.checkin.session.models.CheckoutStatusModel
@@ -112,6 +113,20 @@ class ManagerRepository private constructor(context: Context) : BaseRepository()
 
             override fun saveCallResult(data: List<ShopScheduledSessionModel>?) {
             }
+        }.asLiveData
+    }
+
+    fun getScheduledSessionDetail(sessionId: Long): LiveData<Resource<ShopScheduledSessionDetailModel>> {
+        return object : NetworkBoundResource<ShopScheduledSessionDetailModel, ShopScheduledSessionDetailModel>() {
+            override fun shouldUseLocalDb(): Boolean = false
+
+            override fun createCall(): LiveData<ApiResponse<ShopScheduledSessionDetailModel>> {
+                return RetrofitLiveData(mWebService.getManageScheduledSessionDetail(sessionId))
+            }
+
+            override fun saveCallResult(data: ShopScheduledSessionDetailModel?) {
+            }
+
         }.asLiveData
     }
 

@@ -1,5 +1,7 @@
 package com.checkin.app.checkin.session.models;
 
+import androidx.annotation.Nullable;
+
 import com.checkin.app.checkin.Menu.Model.ItemCustomizationGroupModel;
 import com.checkin.app.checkin.Menu.Model.MenuItemModel;
 import com.checkin.app.checkin.Utility.Constants;
@@ -38,6 +40,7 @@ public class SessionOrderedItemModel implements Serializable {
     private List<ItemCustomizationGroupModel> customizations;
 
     @JsonProperty("remarks")
+    @Nullable
     private String remarks;
 
     @JsonProperty("ordered")
@@ -125,6 +128,7 @@ public class SessionOrderedItemModel implements Serializable {
         this.customizations = groupModels;
     }
 
+    @Nullable
     public String getRemarks() {
         return remarks;
     }
@@ -134,7 +138,7 @@ public class SessionOrderedItemModel implements Serializable {
     }
 
     public boolean isCustomized() {
-        return isCustomized;
+        return customizations != null && !customizations.isEmpty();
     }
 
     public long getRemainingCancelTime() {

@@ -372,7 +372,7 @@ public final class Utils {
         return "Under 1 min";
     }
 
-    private static Pair<TimeUnit, Long> getTimeDifference(Date start, Date end) {
+    public static Pair<TimeUnit, Long> getTimeDifference(Date start, Date end) {
         long diffTime = end.getTime() - start.getTime();
         long secondsInMilli = 1000;
         long minutesInMilli = secondsInMilli * 60;

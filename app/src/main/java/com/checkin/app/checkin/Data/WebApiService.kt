@@ -26,10 +26,7 @@ import com.checkin.app.checkin.User.bills.NewReviewModel
 import com.checkin.app.checkin.User.bills.UserTransactionBriefModel
 import com.checkin.app.checkin.User.bills.UserTransactionDetailsModel
 import com.checkin.app.checkin.Waiter.Model.*
-import com.checkin.app.checkin.manager.models.ManagerSessionEventModel
-import com.checkin.app.checkin.manager.models.ManagerSessionInvoiceModel
-import com.checkin.app.checkin.manager.models.ManagerStatsModel
-import com.checkin.app.checkin.manager.models.ShopScheduledSessionModel
+import com.checkin.app.checkin.manager.models.*
 import com.checkin.app.checkin.menu.models.*
 import com.checkin.app.checkin.misc.models.GenericDetailModel
 import com.checkin.app.checkin.misc.paytm.PaytmModel
@@ -351,6 +348,9 @@ interface WebApiService {
 
     @DELETE("sessions/customer/cancel/")
     fun deleteCustomerSessionJoinRequest(): Call<ObjectNode>
+
+    @GET("sessions/manage/scheduled/{session_id}/detail/")
+    fun getManageScheduledSessionDetail(@Path("session_id") sessionId: Long): Call<ShopScheduledSessionDetailModel>
 
     // endregion
 

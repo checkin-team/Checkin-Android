@@ -9,7 +9,9 @@
         android:id="@+id/tabs_manager_orders"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        app:tabGravity="fill"
         app:tabIndicator="@color/primary_red"
+        app:tabIndicatorHeight="2dp"
         app:tabSelectedTextColor="@color/primary_red"
         app:tabTextColor="@color/pinkish_grey" />
 

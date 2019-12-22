@@ -247,4 +247,5 @@
     <string name="text_preorder_guest_status_reach_soon">Guest about to reach</string>
     <string name="text_preorder_guest_status_reached">Guest has reached</string>
     <string name="text_preorder_guest_status_delay">Guest is delayed</string>
+    <string name="label_scheduled_wait_for_confirmation">Waiting for Confirmation</string>
 </resources>

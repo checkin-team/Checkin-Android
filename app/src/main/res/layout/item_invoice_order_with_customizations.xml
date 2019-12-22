@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginTop="@dimen/spacing_small"
+    android:padding="@dimen/spacing_tiny">
+
+    <TextView
+        android:id="@+id/tv_invoice_order_item_name"
+        style="@style/GreySmallTextStyle"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:drawableStart="@drawable/ic_veg"
+        android:drawablePadding="@dimen/spacing_small"
+        android:gravity="center|start"
+        app:layout_constraintBottom_toTopOf="@id/container_invoice_order_customizations"
+        app:layout_constraintEnd_toStartOf="@id/tv_invoice_order_item_price"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0"
+        tools:text="Pizza " />
+
+    <TextView
+        android:id="@+id/tv_invoice_order_item_price"
+        style="@style/GreySmallTextStyle"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:paddingStart="@dimen/spacing_extra_tiny"
+        android:paddingEnd="@dimen/spacing_extra_tiny"
+        app:layout_constraintBottom_toBottomOf="@id/tv_invoice_order_item_name"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="@id/tv_invoice_order_item_name"
+        tools:text="$ 123" />
+
+    <LinearLayout
+        android:id="@+id/container_invoice_order_customizations"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/spacing_extra_small"
+        android:layout_marginTop="@dimen/spacing_normal"
+        android:layout_marginEnd="@dimen/spacing_extra_small"
+        android:orientation="horizontal"
+        android:visibility="gone"
+        app:layout_constraintBottom_toTopOf="@id/container_invoice_order_remarks"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/tv_invoice_order_item_name">
+
+        <LinearLayout
+            android:id="@+id/container_invoice_order_customizations_left"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/spacing_normal"
+            android:layout_marginEnd="@dimen/spacing_normal"
+            android:layout_weight="1"
+            android:gravity="start"
+            android:orientation="vertical" />
+
+        <LinearLayout
+            android:id="@+id/container_invoice_order_customizations_right"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/spacing_normal"
+            android:layout_marginEnd="@dimen/spacing_normal"
+            android:layout_weight="1"
+            android:gravity="end"
+            android:orientation="vertical" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/container_invoice_order_remarks"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/spacing_small"
+        android:orientation="vertical"
+        android:paddingTop="@dimen/spacing_normal"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="parent">
+
+        <include layout="@layout/incl_horizontal_line" />
+
+        <TextView
+            style="@style/GreyExtraSmallTextStyle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/spacing_normal"
+            android:layout_marginTop="@dimen/spacing_extra_small"
+            android:text="@string/title_your_request" />
+
+        <TextView
+            android:id="@+id/tv_invoice_order_remarks"
+            style="@style/RedSmallTextStyle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/spacing_normal"
+            android:layout_marginEnd="@dimen/spacing_normal"
+            android:textColor="@color/orange_red"
+            tools:text="requested no cheese" />
+
+    </LinearLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>

@@ -34,6 +34,7 @@ enum class ScheduledSessionStatus(val id: Int) {
             PENDING -> "Pending"
             ACCEPTED -> "Accepted"
             CANCELLED_BY_USER, CANCELLED_BY_RESTAURANT -> "Cancelled"
+            PREPARATION -> "Cooking"
             DONE -> "Done"
             else -> "Unknown"
         }
