@@ -22,10 +22,10 @@
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:paddingStart="@dimen/spacing_normal"
                 android:paddingTop="@dimen/spacing_extra_small"
-                android:paddingEnd="@dimen/spacing_normal"
-                android:paddingBottom="@dimen/spacing_extra_small">
+                android:paddingEnd="@dimen/spacing_extra_small"
+                android:paddingBottom="@dimen/spacing_extra_small"
+                tools:ignore="RtlSymmetry">
 
                 <TextView
                     android:id="@+id/tv_manager_scheduled_session_customer_name"
