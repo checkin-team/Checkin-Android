@@ -209,41 +209,17 @@
 
         <TextView
             android:id="@+id/tv_item_session_live_predining_call"
-            style="@style/GreySmallTextStyle"
-            android:layout_width="wrap_content"
-            android:layout_height="@dimen/button_height_tiny"
+            style="@style/CallButtonTextStyle"
             android:layout_marginEnd="@dimen/spacing_extra_small"
-            android:background="@drawable/background_pinkish_grey_stroke"
-            android:clickable="true"
-            android:drawableStart="@drawable/ic_telephone_auricular_with_cable"
-            android:drawablePadding="@dimen/spacing_extra_tiny"
-            android:focusable="true"
-            android:gravity="center_vertical"
-            android:paddingStart="@dimen/spacing_small"
-            android:paddingEnd="@dimen/spacing_small"
-            android:text="Call"
             app:layout_constraintBottom_toBottomOf="@id/tv_item_session_live_predining_navigate"
-            app:layout_constraintEnd_toStartOf="@id/tv_item_session_live_predining_navigate"
-            tools:ignore="RtlSymmetry" />
+            app:layout_constraintEnd_toStartOf="@id/tv_item_session_live_predining_navigate" />
 
         <TextView
             android:id="@+id/tv_item_session_live_predining_navigate"
-            style="@style/GreySmallTextStyle"
-            android:layout_width="wrap_content"
-            android:layout_height="@dimen/button_height_tiny"
+            style="@style/NavigateButtonTextStyle"
             android:layout_marginEnd="@dimen/spacing_normal"
             android:layout_marginBottom="@dimen/spacing_small"
-            android:background="@drawable/background_pinkish_grey_stroke"
-            android:clickable="true"
-            android:drawableStart="@drawable/ic_navigate_arrow"
-            android:drawablePadding="@dimen/spacing_extra_tiny"
-            android:focusable="true"
-            android:gravity="center_vertical"
-            android:paddingStart="@dimen/spacing_tiny"
-            android:paddingEnd="@dimen/spacing_tiny"
-            android:text="Navigate"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            tools:ignore="RtlSymmetry" />
+            app:layout_constraintEnd_toEndOf="parent" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 </androidx.cardview.widget.CardView>

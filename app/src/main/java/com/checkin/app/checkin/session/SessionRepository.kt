@@ -6,10 +6,10 @@ import androidx.lifecycle.LiveData
 import com.checkin.app.checkin.Data.*
 import com.checkin.app.checkin.Home.model.ActiveLiveSessionDetailModel
 import com.checkin.app.checkin.Home.model.ScheduledLiveSessionDetailModel
-import com.checkin.app.checkin.Manager.Model.ManagerSessionEventModel
 import com.checkin.app.checkin.User.bills.UserTransactionBriefModel
 import com.checkin.app.checkin.User.bills.UserTransactionDetailsModel
 import com.checkin.app.checkin.Utility.SingletonHolder
+import com.checkin.app.checkin.manager.models.ManagerSessionEventModel
 import com.checkin.app.checkin.session.models.*
 import com.fasterxml.jackson.databind.node.ObjectNode
 

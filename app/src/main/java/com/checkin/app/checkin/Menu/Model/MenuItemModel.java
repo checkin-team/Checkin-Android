@@ -1,6 +1,7 @@
 package com.checkin.app.checkin.Menu.Model;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 
 import com.checkin.app.checkin.Data.AppDatabase;
 import com.checkin.app.checkin.Data.Converters;
@@ -46,6 +47,7 @@ public class MenuItemModel implements Serializable {
     private List<Double> typeCosts;
 
     @JsonProperty("description")
+    @Nullable
     private String description;
 
     @Convert(converter = Converters.ListConverter.class, dbType = String.class)
@@ -109,11 +111,12 @@ public class MenuItemModel implements Serializable {
         this.group = group;
     }
 
+    @Nullable
     public String getDescription() {
         return description;
     }
 
-    public void setDescription(String description) {
+    public void setDescription(@Nullable String description) {
         this.description = description;
     }
 

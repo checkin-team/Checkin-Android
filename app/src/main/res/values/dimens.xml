@@ -240,5 +240,6 @@
     <dimen name="height_toolbar">48dp</dimen>
     <dimen name="height_appbar_large">100dp</dimen>
     <dimen name="height_cart_header_topbar">40dp</dimen>
-
+    <dimen name="height_card_manager_table">70dp</dimen>
+    <dimen name="height_card_manager_table_with_buttons">100dp</dimen>
 </resources>

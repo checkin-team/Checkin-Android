@@ -19,5 +19,11 @@ data class ScheduledSessionDetailModel(
         status = ScheduledSessionStatus.getById(statusCode)
     }
 
-    val formatPlannedTime: String = Utils.formatDate(plannedDatetime, "dd MMM, HH:mm a")
+    val formatGuestCount: String = "Table for $countPeople"
+
+    val formatPlannedDate: String = Utils.formatDate(plannedDatetime, "MMM dd")
+
+    val formatPlannedTime: String = Utils.formatDateTo12HoursTime(plannedDatetime)
+
+    val formatPlannedDateTime: String = "$formatPlannedDate, $formatPlannedTime"
 }

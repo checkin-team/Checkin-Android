@@ -1,12 +1,9 @@
 package com.checkin.app.checkin.Home.fragment
 
-import android.content.Intent
-import android.net.Uri
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
-import androidx.core.content.ContextCompat
 import butterknife.BindView
 import butterknife.ButterKnife
 import com.checkin.app.checkin.Home.LiveSessionTrackerInteraction
@@ -16,6 +13,8 @@ import com.checkin.app.checkin.Home.model.LiveSessionDetailModel
 import com.checkin.app.checkin.Home.model.ScheduledLiveSessionDetailModel
 import com.checkin.app.checkin.R
 import com.checkin.app.checkin.Utility.Utils
+import com.checkin.app.checkin.Utility.callPhoneNumber
+import com.checkin.app.checkin.Utility.navigateToLocation
 
 class ActiveLiveSessionViewHolder(itemView: View, interactionListener: LiveSessionTrackerInteraction) : LiveSessionViewHolder<ActiveLiveSessionDetailModel>(itemView, interactionListener) {
     @BindView(R.id.container_home_session_live_active_call_waiter)
@@ -165,20 +164,11 @@ class PreDiningLiveSessionViewHolder(itemView: View, interactionListener: LiveSe
         ButterKnife.bind(this, itemView)
 
         tvNavigateButton.setOnClickListener {
-            mData?.restaurant?.location?.let {
-                val gmmIntentUri = Uri.parse("google.navigation:q=${it.latitude},${it.longitude}")
-                Intent(Intent.ACTION_VIEW, gmmIntentUri).apply {
-                    `package` = "com.google.android.apps.maps"
-                    ContextCompat.startActivity(itemView.context, this, null)
-                }
-            }
+            mData?.restaurant?.location?.navigateToLocation(itemView.context)
         }
 
         tvCallButton.setOnClickListener {
-            mData?.restaurant?.phone?.let {
-                val phoneIntent = Uri.parse("tel:$it")
-                ContextCompat.startActivity(itemView.context, Intent(Intent.ACTION_DIAL, phoneIntent), null)
-            }
+            mData?.restaurant?.phone?.callPhoneNumber(itemView.context)
         }
 
         imShare.setOnClickListener { Utils.toast(itemView.context, "TODO: Share!") }

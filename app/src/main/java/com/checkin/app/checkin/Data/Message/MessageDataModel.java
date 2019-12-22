@@ -1,9 +1,9 @@
 package com.checkin.app.checkin.Data.Message;
 
 import com.checkin.app.checkin.Data.Converters;
-import com.checkin.app.checkin.Manager.Model.ManagerSessionEventModel;
 import com.checkin.app.checkin.Shop.ShopModel;
 import com.checkin.app.checkin.User.UserModel;
+import com.checkin.app.checkin.manager.models.ManagerSessionEventModel;
 import com.checkin.app.checkin.session.activesession.chat.SessionChatModel;
 import com.checkin.app.checkin.session.models.SessionOrderedItemModel;
 import com.fasterxml.jackson.annotation.JsonCreator;

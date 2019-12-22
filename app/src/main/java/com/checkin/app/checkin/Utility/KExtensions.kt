@@ -13,6 +13,8 @@ import java.util.concurrent.TimeUnit
 import kotlin.math.abs
 import kotlin.math.sign
 
+inline fun <T> Collection<T>?.isNotEmpty(): Boolean = this != null && !this.isEmpty()
+
 fun TabLayout.setTabBackground(@ColorInt color: Int) = (0 until tabCount).forEach {
     getTabAt(it)?.view?.setBackgroundColor(color)
 }
@@ -28,6 +30,11 @@ internal fun internalNavigateToLocation(context: Context, latitude: Double, long
 fun LocationModel.navigateToLocation(context: Context) = internalNavigateToLocation(context, latitude, longitude)
 
 fun GeolocationModel.navigateToLocation(context: Context) = internalNavigateToLocation(context, latitude, longitude)
+
+fun String.callPhoneNumber(context: Context) {
+    val phoneIntent = Uri.parse("tel:$this")
+    ContextCompat.startActivity(context, Intent(Intent.ACTION_DIAL, phoneIntent), null)
+}
 
 // Number of days between two Calendar instances
 operator fun Calendar.minus(other: Calendar): Int {

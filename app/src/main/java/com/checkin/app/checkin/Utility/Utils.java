@@ -75,8 +75,11 @@ import java.util.Date;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
+import java.util.concurrent.TimeUnit;
 import java.util.regex.MatchResult;
 import java.util.regex.Matcher;
+
+import kotlin.Pair;
 
 import static com.checkin.app.checkin.BuildConfig.DEBUG;
 
@@ -340,7 +343,37 @@ public final class Utils {
     }
 
     public static String formatElapsedTime(Date eventTime, Date currentTime) {
-        long diffTime = currentTime.getTime() - eventTime.getTime();
+        Pair<TimeUnit, Long> pair = getTimeDifference(eventTime, currentTime);
+        long value = pair.getSecond();
+        String suffix = value > 1 ? "s " : " ";
+        switch (pair.getFirst()) {
+            case DAYS:
+                return String.format(Locale.getDefault(), "%d day%sago", value, suffix);
+            case HOURS:
+                return String.format(Locale.getDefault(), "%d hour%sago", value, suffix);
+            case MINUTES:
+                return String.format(Locale.getDefault(), "%d min%sago", value, suffix);
+        }
+        return "Now";
+    }
+
+    public static String formatDueTime(Date eventTime, Date currentTime) {
+        Pair<TimeUnit, Long> pair = getTimeDifference(eventTime, currentTime);
+        long value = pair.getSecond();
+        String suffix = value > 1 ? "s " : " ";
+        switch (pair.getFirst()) {
+            case DAYS:
+                return String.format(Locale.getDefault(), "%d day%s", value, suffix);
+            case HOURS:
+                return String.format(Locale.getDefault(), "%d hour%s", value, suffix);
+            case MINUTES:
+                return String.format(Locale.getDefault(), "%d min%s", value, suffix);
+        }
+        return "Under 1 min";
+    }
+
+    private static Pair<TimeUnit, Long> getTimeDifference(Date start, Date end) {
+        long diffTime = end.getTime() - start.getTime();
         long secondsInMilli = 1000;
         long minutesInMilli = secondsInMilli * 60;
         long hoursInMilli = minutesInMilli * 60;
@@ -351,13 +384,10 @@ public final class Utils {
         diffTime = diffTime % hoursInMilli;
         long elapsedMinutes = diffTime / minutesInMilli;
         diffTime = diffTime % minutesInMilli;
-        if (elapsedDays > 0)
-            return String.format(Locale.ENGLISH, "%d days ago", elapsedDays);
-        if (elapsedHours > 0)
-            return String.format(Locale.ENGLISH, "%d hours ago", elapsedHours);
-        if (elapsedMinutes > 0)
-            return String.format(Locale.ENGLISH, "%d minutes ago", elapsedMinutes);
-        return "Now";
+        if (elapsedDays > 0) return new Pair(TimeUnit.DAYS, elapsedDays);
+        if (elapsedHours > 0) return new Pair(TimeUnit.HOURS, elapsedHours);
+        if (elapsedMinutes > 0) return new Pair(TimeUnit.MINUTES, elapsedMinutes);
+        else return new Pair(TimeUnit.SECONDS, diffTime / secondsInMilli);
     }
 
     public static CharSequence fromHtml(String html) {

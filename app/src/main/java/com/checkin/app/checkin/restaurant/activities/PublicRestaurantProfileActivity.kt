@@ -153,7 +153,7 @@ class PublicRestaurantProfileActivity : BaseActivity(), AppBarLayout.OnOffsetCha
 
         fragmentAdapter = PublicRestaurantProfileAdapter(this, restaurantId)
         vpFragment.adapter = fragmentAdapter
-        TabLayoutMediator(tabsFragment, vpFragment) { _, _ -> }
+        TabLayoutMediator(tabsFragment, vpFragment) { tab, pos -> tab.text = fragmentAdapter.tabs[pos].name.capitalize() }.attach()
         tabsFragment.addOnTabSelectedListener(object : TabLayout.ViewPagerOnTabSelectedListener(null) {
             override fun onTabSelected(tab: TabLayout.Tab) {
                 vpFragment.currentItem = tab.position
@@ -483,7 +483,7 @@ class PublicRestaurantProfileActivity : BaseActivity(), AppBarLayout.OnOffsetCha
     }
 
     class PublicRestaurantProfileAdapter(fragmentActivity: FragmentActivity, val restaurantId: Long) : FragmentStateAdapter(fragmentActivity) {
-        val tabs = listOf(RestaurantTab.MENU, RestaurantTab.INFO, RestaurantTab.REVIEWS)
+        val tabs = listOf(RestaurantTab.MENU, RestaurantTab.INFO)
 
         override fun getItemCount() = tabs.size
 

@@ -8,4 +8,4 @@ import androidx.lifecycle.ViewModel
 
 inline fun FragmentManager.inTransaction(func: FragmentTransaction.() -> FragmentTransaction) = beginTransaction().func().commit()
 
-inline fun <reified VM : ViewModel> Fragment.parentViewModels() = viewModels<VM>({ requireParentFragment() })
+inline fun <reified VM : ViewModel> Fragment.parentViewModels() = viewModels<VM>({ if (parentFragment != null) requireParentFragment() else requireActivity() })

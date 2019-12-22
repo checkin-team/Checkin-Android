@@ -42,24 +42,7 @@
                 android:layout_gravity="bottom"
                 app:tabGravity="fill"
                 app:tabIndicatorHeight="2dp"
-                app:tabMode="fixed">
-
-                <com.google.android.material.tabs.TabItem
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Menu" />
-
-                <com.google.android.material.tabs.TabItem
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Info" />
-
-                <com.google.android.material.tabs.TabItem
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Reviews" />
-
-            </com.google.android.material.tabs.TabLayout>
+                app:tabMode="fixed" />
         </com.google.android.material.appbar.CollapsingToolbarLayout>
 
     </com.google.android.material.appbar.AppBarLayout>

@@ -242,4 +242,9 @@
     <string name="msg_order_status_being_served">Food is being served</string>
     <string name="text_error_network_disconnected">Slow or no internet connection\nPlease check your internet settings</string>
     <string name="button_label_try_again">Try Again</string>
+    <string name="format_due_time">Due Time: %s</string>
+    <string name="format_delay_time">Delayed By: %s</string>
+    <string name="text_preorder_guest_status_reach_soon">Guest about to reach</string>
+    <string name="text_preorder_guest_status_reached">Guest has reached</string>
+    <string name="text_preorder_guest_status_delay">Guest is delayed</string>
 </resources>

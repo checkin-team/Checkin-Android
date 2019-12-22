@@ -8,11 +8,7 @@ import com.checkin.app.checkin.Home.model.NearbyRestaurantModel
 import com.checkin.app.checkin.Home.model.ScheduledLiveSessionDetailModel
 import com.checkin.app.checkin.Inventory.Model.InventoryAvailabilityModel
 import com.checkin.app.checkin.Inventory.Model.InventoryModel
-import com.checkin.app.checkin.Manager.Model.ManagerSessionEventModel
-import com.checkin.app.checkin.Manager.Model.ManagerSessionInvoiceModel
-import com.checkin.app.checkin.Manager.Model.ManagerStatsModel
 import com.checkin.app.checkin.Menu.Model.MenuModel
-import com.checkin.app.checkin.menu.models.OrderedItemModel
 import com.checkin.app.checkin.Search.SearchResultPeopleModel
 import com.checkin.app.checkin.Search.SearchResultShopModel
 import com.checkin.app.checkin.Shop.Private.Finance.FinanceModel
@@ -30,13 +26,15 @@ import com.checkin.app.checkin.User.bills.NewReviewModel
 import com.checkin.app.checkin.User.bills.UserTransactionBriefModel
 import com.checkin.app.checkin.User.bills.UserTransactionDetailsModel
 import com.checkin.app.checkin.Waiter.Model.*
-import com.checkin.app.checkin.menu.models.CartBillModel
-import com.checkin.app.checkin.menu.models.CartDetailModel
-import com.checkin.app.checkin.menu.models.CartStatusModel
-import com.checkin.app.checkin.menu.models.NewOrderModel
+import com.checkin.app.checkin.manager.models.ManagerSessionEventModel
+import com.checkin.app.checkin.manager.models.ManagerSessionInvoiceModel
+import com.checkin.app.checkin.manager.models.ManagerStatsModel
+import com.checkin.app.checkin.manager.models.ShopScheduledSessionModel
+import com.checkin.app.checkin.menu.models.*
 import com.checkin.app.checkin.misc.models.GenericDetailModel
 import com.checkin.app.checkin.misc.paytm.PaytmModel
 import com.checkin.app.checkin.restaurant.models.RestaurantModel
+import com.checkin.app.checkin.restaurant.models.RestaurantServiceModel
 import com.checkin.app.checkin.session.activesession.chat.SessionChatModel
 import com.checkin.app.checkin.session.models.*
 import com.fasterxml.jackson.databind.node.ObjectNode
@@ -201,6 +199,9 @@ interface WebApiService {
     @get:GET("restaurants/nearby/")
     val nearbyRestaurants: Call<List<NearbyRestaurantModel>>
 
+    @GET("restaurants/{restaurant_id}/brief/")
+    fun getRestaurantBriefDetail(@Path("restaurant_id") restaurantId: Long): Call<RestaurantServiceModel>
+
     @POST("restaurants/create/")
     fun postRegisterShop(@Body model: ShopJoinModel): Call<GenericDetailModel>
 
@@ -252,6 +253,9 @@ interface WebApiService {
 
     @GET("sessions/restaurants/{restaurant_id}/")
     fun getRestaurantSessionsById(@Path("restaurant_id") restaurantId: Long, @Query("checked_in_after") checkedOutAfter: String?, @Query("checked_in_before") checkedOutBefore: String?): Call<List<RestaurantSessionModel>>
+
+    @GET("sessions/restaurants/{restaurant_id}/scheduled/")
+    fun getScheduledSessionsById(@Path("restaurant_id") restaurantId: Long): Call<List<ShopScheduledSessionModel>>
 
     @GET("restaurants/{restaurant_id}/stats/admin")
     fun getRestaurantAdminStats(@Path("restaurant_id") restaurantId: Long, @Query("checked_in_after") checkedOutAfter: String?, @Query("checked_in_before") checkedOutBefore: String?): Call<RestaurantAdminStatsModel>
@@ -400,7 +404,7 @@ interface WebApiService {
     fun postPaytmCallback(@Body data: ObjectNode): Call<ObjectNode>
     //endregion
 
-    //region Review
+    //region REVIEW
 
     @GET("reviews/sessions/{session_id}/")
     fun getRestaurantSessionReviews(@Path("session_id") sessionId: Long): Call<List<ShopSessionFeedbackModel>>

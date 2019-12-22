@@ -116,7 +116,7 @@ abstract class UserMenuItemModelHolder : EpoxyModelWithHolder<UserMenuItemModelH
             menuItem = data
 
             tvItemName.text = data.name
-            tvDesc.text = data.description
+            tvDesc.text = data.description ?: ""
             if (data.image != null) {
                 applyState(DEFAULT_STATE)
                 Utils.loadImageOrDefault(imItem, data.image, null)

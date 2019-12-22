@@ -25,8 +25,9 @@ data class ScheduledSessionBriefModel(
 }
 
 enum class ScheduledSessionStatus(val id: Int) {
-    NONE(0), PENDING(3), CANCELLED_BY_RESTAURANT(8),
-    CANCELLED_BY_USER(9), ACCEPTED(5), DONE(10);
+    NONE(0), PENDING(3), PREPARATION(6),
+    CANCELLED_BY_RESTAURANT(8), CANCELLED_BY_USER(9),
+    ACCEPTED(5), DONE(10);
 
     val repr: String
         get() = when (this) {
