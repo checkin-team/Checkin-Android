@@ -1,0 +1,240 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:background="#f3f3f3"
+    android:orientation="vertical">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/spacing_medium"
+
+        android:orientation="vertical">
+
+        <RelativeLayout
+            android:layout_marginRight="@dimen/spacing_medium"
+            android:layout_marginLeft="@dimen/spacing_medium"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <ImageView
+                android:id="@+id/navigate"
+                android:layout_width="wrap_content"
+
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/spacing_extra_small"
+                android:src="@drawable/ic_navigate_arrow" />
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="@dimen/spacing_small"
+                android:layout_marginStart="@dimen/spacing_small"
+                android:layout_marginLeft="-18dp"
+                android:layout_marginEnd="@dimen/spacing_small"
+                android:layout_toLeftOf="@+id/forward"
+                android:layout_toRightOf="@id/navigate"
+                android:text="Ground, First and Second Floor, Orient Bestech Business
+Towers, National Highway 8, Block A, Sector 34,
+Gurugram, Haryana 122004" />
+
+            <ImageView
+                android:id="@+id/forward"
+                android:layout_width="7dp"
+                android:layout_height="7dp"
+                android:scaleY="2"
+                android:layout_alignParentEnd="true"
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="@dimen/spacing_small"
+                android:src="@drawable/ic_forward_arrow" />
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:layout_marginRight="@dimen/spacing_medium"
+            android:layout_marginLeft="@dimen/spacing_medium"
+            android:layout_width="match_parent"
+            android:layout_height="70dp">
+
+            <FrameLayout
+                android:layout_width="match_parent"
+                android:layout_height="0.5dp"
+                android:background="@color/pinkish_grey"
+                android:layout_alignParentTop="true"
+                 />
+
+            <ImageView
+                android:id="@+id/call"
+                android:layout_width="20dp"
+
+                android:layout_height="20dp"
+                android:layout_centerVertical="true"
+                android:src="@drawable/ic_telephone_auricular_with_cable" />
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_marginStart="@dimen/spacing_small"
+                android:layout_marginLeft="-18dp"
+                android:layout_marginEnd="@dimen/spacing_small"
+                android:layout_toLeftOf="@+id/forward2"
+                android:layout_toRightOf="@id/call"
+                android:text="+91 9848234332" />
+
+            <ImageView
+                android:id="@+id/forward2"
+                android:layout_width="7dp"
+                android:layout_height="7dp"
+                android:scaleY="2"
+                android:layout_alignParentEnd="true"
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="@dimen/spacing_small"
+                android:src="@drawable/ic_forward_arrow" />
+
+            <FrameLayout
+                android:layout_width="match_parent"
+                android:layout_height="0.5dp"
+                android:layout_alignParentBottom="true"
+                android:layout_marginBottom="2dp"
+                android:background="@color/pinkish_grey" />
+        </RelativeLayout>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_marginRight="@dimen/spacing_medium"
+            android:layout_marginLeft="@dimen/spacing_medium"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/font_large"
+            android:text="Insider Tip"
+            android:textColor="@color/brownish_grey"
+            android:textSize="@dimen/font_heading" />
+
+        <LinearLayout
+            android:layout_marginRight="@dimen/spacing_medium"
+            android:layout_marginLeft="@dimen/spacing_medium"
+            android:layout_width="match_parent"
+            android:orientation="vertical"
+            android:layout_height="wrap_content">
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/spacing_extra_small"
+                android:layout_marginRight="@dimen/spacing_small"
+                android:layout_marginLeft="@dimen/spacing_small">
+
+                <TextView
+                    android:id="@+id/dot"
+
+                    android:layout_width="wrap_content"
+
+                    android:layout_height="wrap_content"
+
+                    android:text="	•  "
+
+
+                    android:textColor="@color/brownish_grey"
+
+                    android:textSize="@dimen/font_extra_large"
+
+                    />
+                <TextView
+                    android:layout_marginEnd="@dimen/spacing_large"
+                    android:layout_toRightOf="@id/dot"
+                    android:text="Make sure your phone is charged. The place has some amazing sefie spots"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"/>
+            </RelativeLayout>
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/spacing_small"
+                android:layout_marginLeft="@dimen/spacing_small"
+                android:layout_marginRight="@dimen/spacing_small">
+
+                <TextView
+                    android:id="@+id/dot1"
+
+                    android:layout_width="wrap_content"
+
+                    android:layout_height="wrap_content"
+
+                    android:text="	•  "
+
+
+                    android:textColor="@color/brownish_grey"
+
+                    android:textSize="@dimen/font_extra_large"
+
+                    />
+                <TextView
+                    android:layout_marginEnd="@dimen/spacing_large"
+                    android:layout_toRightOf="@id/dot1"
+                    android:text="Make sure your phone is charged. The place has some amazing sefie spots"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"/>
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="@dimen/spacing_small">
+
+                <TextView
+                    android:id="@+id/dot2"
+
+                    android:layout_width="wrap_content"
+
+                    android:layout_height="wrap_content"
+
+                    android:text="	•  "
+
+
+                    android:textColor="@color/brownish_grey"
+
+                    android:textSize="@dimen/font_extra_large"
+
+                    />
+                <TextView
+                    android:layout_marginEnd="@dimen/spacing_large"
+                    android:layout_toRightOf="@id/dot2"
+                    android:text="Make sure your phone is charged. The place has some amazing sefie spots"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"/>
+            </RelativeLayout>
+
+        </LinearLayout>
+        <RelativeLayout
+            android:layout_weight="1"
+            android:layout_marginRight="@dimen/spacing_small"
+            android:layout_marginLeft="@dimen/spacing_small"
+            android:layout_marginTop="@dimen/spacing_small"
+            android:background="@drawable/rounded_rectangle_white"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:orientation="vertical"
+                android:layout_margin="@dimen/spacing_small"
+                android:layout_height="match_parent">
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:text="Features"
+                    android:textSize="@dimen/font_large"
+                    android:textColor="@color/brownish_grey"
+
+                    android:layout_height="wrap_content"/>
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:layout_width="match_parent"
+
+                    android:layout_height="wrap_content"/>
+            </LinearLayout>
+
+        </RelativeLayout>
+
+    </LinearLayout>
+
+</ScrollView>
