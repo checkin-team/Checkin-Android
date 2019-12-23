@@ -167,7 +167,7 @@ interface WebApiService {
     fun getSearchShopResults(@Query("search") query: String?, @Query("has_nonveg") hasNonVeg: Boolean?, @Query("has_alcohol") hasAlcohol: Boolean?): Call<List<SearchResultShopModel>>
     // endregion
 
-    // region promos
+    // region PROMOS
     @get:GET("promos/")
     val promoCodes: Call<List<PromoDetailModel>>
 
@@ -351,6 +351,15 @@ interface WebApiService {
 
     @GET("sessions/manage/scheduled/{session_id}/detail/")
     fun getManageScheduledSessionDetail(@Path("session_id") sessionId: Long): Call<ShopScheduledSessionDetailModel>
+
+    @PATCH("sessions/manage/scheduled/{session_id}/accept/")
+    fun patchManageScheduledSessionAccept(@Path("session_id") sessionId: Long, @Body data: PreparationTimeModel): Call<PreparationTimeModel>
+
+    @PATCH("sessions/manage/scheduled/{session_id}/done/")
+    fun patchManageScheduledSessionDone(@Path("session_id") sessionId: Long, @Body data: ObjectNode?): Call<ScheduledSessionDoneModel>
+
+    @POST("sessions/manage/scheduled/{session_id}/reject/")
+    fun postManageScheduledSessionReject(@Path("session_id") sessionId: Long, @Body data: ScheduledSessionCancelModel): Call<GenericDetailModel>
 
     // endregion
 

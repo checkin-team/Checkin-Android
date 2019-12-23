@@ -14,7 +14,7 @@
         android:id="@+id/ed_otp"
         android:layout_width="match_parent"
         android:layout_height="@dimen/height_input_normal"
-        style="@style/InputTextStyle"
+        style="@style/RoundedInputTextStyle"
         android:hint="Enter OTP"
         android:textAlignment="center"
         app:layout_constraintEnd_toEndOf="parent"

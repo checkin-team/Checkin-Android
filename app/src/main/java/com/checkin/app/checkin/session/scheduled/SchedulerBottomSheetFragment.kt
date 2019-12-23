@@ -13,11 +13,11 @@ import butterknife.ButterKnife
 import com.checkin.app.checkin.R
 import com.checkin.app.checkin.Utility.minus
 import com.checkin.app.checkin.Utility.parentActivityDelegate
+import com.checkin.app.checkin.Utility.toCalendar
 import com.checkin.app.checkin.misc.fragments.BaseBottomSheetFragment
 import com.checkin.app.checkin.session.models.ScheduledSessionDetailModel
 import com.wdullaer.materialdatetimepicker.time.TimePickerDialog
 import java.text.SimpleDateFormat
-import java.time.temporal.ChronoUnit
 import java.util.*
 
 class SchedulerBottomSheetFragment : BaseBottomSheetFragment(), TimePickerDialog.OnTimeSetListener {
@@ -169,7 +169,7 @@ class SchedulerBottomSheetFragment : BaseBottomSheetFragment(), TimePickerDialog
         fun newInstance(scheduled: ScheduledSessionDetailModel) = SchedulerBottomSheetFragment().apply {
             arguments = Bundle().apply {
                 putInt(SS_PEOPLE_COUNT, scheduled.countPeople)
-                if (scheduled.plannedDatetime > Calendar.getInstance().time)
+                if (scheduled.plannedDatetime != null && scheduled.plannedDatetime > Calendar.getInstance().time)
                     putSerializable(SS_PICKED_CALENDAR, scheduled.plannedDatetime.toCalendar())
             }
         }
@@ -180,5 +180,3 @@ interface SchedulerInteraction {
     fun onSchedulerSet(selectedDate: Date, countPeople: Int)
     fun onCancelScheduler()
 }
-
-fun Date.toCalendar() = Calendar.getInstance().apply { time = this@toCalendar }

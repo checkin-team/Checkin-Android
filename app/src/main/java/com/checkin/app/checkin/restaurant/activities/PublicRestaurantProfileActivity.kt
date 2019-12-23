@@ -212,7 +212,7 @@ class PublicRestaurantProfileActivity : BaseActivity(), AppBarLayout.OnOffsetCha
                     Resource.Status.ERROR_INVALID_REQUEST -> if (resource.problem?.getErrorCode() == ProblemModel.ERROR_CODE.SESSION_SCHEDULED_PENDING_CART) {
                         val cartRestaurant = cartViewModel.cartStatus.value?.data?.restaurant?.target
                         if (cartRestaurant != null) handleErrorCartExists(cartRestaurant)
-                    }
+                    } else Utils.toast(this, resource.message)
                 }
             }
         })
@@ -284,11 +284,8 @@ class PublicRestaurantProfileActivity : BaseActivity(), AppBarLayout.OnOffsetCha
                 .setTitle("Cart item exists")
                 .setMessage("Are you sure you want to clear the cart of ${cartRestaurant.displayName}?")
                 .setPositiveButton("Yes") { _, _ -> scheduledSessionViewModel.clearCart() }
-                .setNegativeButton("No, take me to restaurant") { dialog, _ ->
-                    dialog.cancel()
-                    openPublicRestaurantProfile(cartRestaurant.pk)
-                    finish()
-                }
+                .setNegativeButton("No") { dialog, _ -> dialog.cancel() }
+                .show()
     }
 
     private fun wrongRestaurantQrScanned() {
@@ -409,7 +406,7 @@ class PublicRestaurantProfileActivity : BaseActivity(), AppBarLayout.OnOffsetCha
     }
 
     override fun onCancelScheduler() {
-        if (cartViewModel.sessionPk != 0L) scheduledCartView.dismiss()
+        if (cartViewModel.sessionPk == 0L) scheduledCartView.dismiss()
     }
 
     override fun onChooseSchedule() {

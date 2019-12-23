@@ -56,3 +56,5 @@ operator fun Calendar.minus(other: Calendar): Int {
     val duration = end.timeInMillis - start.timeInMillis
     return (sign(duration.toDouble()) * TimeUnit.MILLISECONDS.toDays(abs(duration))).toInt()
 }
+
+fun Date.toCalendar() = Calendar.getInstance().apply { time = this@toCalendar }

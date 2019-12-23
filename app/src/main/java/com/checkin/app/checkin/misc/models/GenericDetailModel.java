@@ -38,6 +38,10 @@ public class GenericDetailModel {
         return pk;
     }
 
+    public Long getLongPk() {
+        return Long.valueOf(pk);
+    }
+
     public void setPk(String pk) {
         this.pk = pk;
     }

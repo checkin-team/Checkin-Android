@@ -8,7 +8,7 @@ import java.util.*
 @JsonIgnoreProperties(ignoreUnknown = true)
 data class ScheduledSessionBriefModel(
         @JsonProperty("count_people") val countPeople: Int,
-        @JsonProperty("planned_datetime") val plannedDatetime: Date
+        @JsonProperty("planned_datetime") val plannedDatetime: Date?
 ) {
     lateinit var status: ScheduledSessionStatus
 
@@ -18,10 +18,10 @@ data class ScheduledSessionBriefModel(
     }
 
     val formatDate: String
-        get() = Utils.formatDate(plannedDatetime, "dd MMMM YYY")
+        get() = Utils.formatDate(plannedDatetime!!, "dd MMMM YYY")
 
     val formatTime: String
-        get() = Utils.formatDateTo12HoursTime(plannedDatetime)
+        get() = Utils.formatDateTo12HoursTime(plannedDatetime!!)
 }
 
 enum class ScheduledSessionStatus(val id: Int) {

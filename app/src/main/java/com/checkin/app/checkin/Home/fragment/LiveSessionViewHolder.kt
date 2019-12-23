@@ -125,8 +125,11 @@ class QsrLiveSessionViewHolder(itemView: View, interactionListener: LiveSessionT
             imOrderStatus.setImageResource(R.drawable.ic_order_status_cooking)
             tvOrderStatus.text = itemView.context.getString(R.string.msg_order_status_being_served)
         }
-        tvOrderSummary.text = if (data.orderedItems.isNullOrEmpty()) "-"
-        else "${data.orderedItems[0].name} (${data.orderedItems[0].quantity})... ${data.orderedItems.size - 1} more"
+        tvOrderSummary.text = when {
+            data.orderedItems.isNullOrEmpty() -> "-"
+            data.orderedItems.size > 1 -> "${data.orderedItems[0].name} (${data.orderedItems[0].quantity})... ${data.orderedItems.size - 1} more"
+            else -> "${data.orderedItems[0].name} (${data.orderedItems[0].quantity})"
+        }
     }
 }
 

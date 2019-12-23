@@ -21,7 +21,7 @@
 
     <com.checkin.app.checkin.Utility.SingleBackEditText
         android:id="@+id/et_contact_phone"
-        style="@style/InputTextStyle"
+        style="@style/RoundedInputTextStyle"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/spacing_large"
@@ -61,7 +61,7 @@
 
     <com.checkin.app.checkin.Utility.SingleBackEditText
         android:id="@+id/et_contact_email"
-        style="@style/InputTextStyle"
+        style="@style/RoundedInputTextStyle"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/spacing_normal"

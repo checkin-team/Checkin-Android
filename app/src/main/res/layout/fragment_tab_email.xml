@@ -15,7 +15,7 @@
         android:layout_marginTop="@dimen/spacing_extra_large"
         android:hint="Business Email Address"
         android:inputType="textEmailAddress"
-        style="@style/InputTextStyle"
+        style="@style/RoundedInputTextStyle"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />

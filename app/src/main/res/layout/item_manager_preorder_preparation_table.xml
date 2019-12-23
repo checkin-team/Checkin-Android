@@ -115,7 +115,7 @@
                     android:layout_centerVertical="true"
                     android:layout_marginStart="@dimen/spacing_tiny"
                     android:layout_toEndOf="@id/im_serve_food"
-                    android:text="Food Served" />
+                    android:text="@string/action_mark_food_served" />
             </RelativeLayout>
         </LinearLayout>
     </androidx.constraintlayout.widget.ConstraintLayout>

@@ -6,10 +6,7 @@ import androidx.lifecycle.LiveData
 import com.checkin.app.checkin.Data.*
 import com.checkin.app.checkin.Data.ApiClient.Companion.getApiService
 import com.checkin.app.checkin.Utility.SingletonHolder
-import com.checkin.app.checkin.manager.models.ManagerSessionInvoiceModel
-import com.checkin.app.checkin.manager.models.ManagerStatsModel
-import com.checkin.app.checkin.manager.models.ShopScheduledSessionDetailModel
-import com.checkin.app.checkin.manager.models.ShopScheduledSessionModel
+import com.checkin.app.checkin.manager.models.*
 import com.checkin.app.checkin.misc.models.GenericDetailModel
 import com.checkin.app.checkin.session.models.CheckoutStatusModel
 import com.checkin.app.checkin.session.models.QRResultModel
@@ -127,6 +124,47 @@ class ManagerRepository private constructor(context: Context) : BaseRepository()
             override fun saveCallResult(data: ShopScheduledSessionDetailModel?) {
             }
 
+        }.asLiveData
+    }
+
+    fun acceptScheduledSession(sessionId: Long, data: PreparationTimeModel): LiveData<Resource<PreparationTimeModel>> {
+        return object : NetworkBoundResource<PreparationTimeModel, PreparationTimeModel>() {
+            override fun shouldUseLocalDb(): Boolean = false
+
+            override fun createCall(): LiveData<ApiResponse<PreparationTimeModel>> {
+                return RetrofitLiveData(mWebService.patchManageScheduledSessionAccept(sessionId, data))
+            }
+
+            override fun saveCallResult(data: PreparationTimeModel?) {
+            }
+
+        }.asLiveData
+    }
+
+    fun doneScheduledSession(sessionId: Long): LiveData<Resource<ScheduledSessionDoneModel>> {
+        return object : NetworkBoundResource<ScheduledSessionDoneModel, ScheduledSessionDoneModel>() {
+            override fun shouldUseLocalDb(): Boolean = false
+
+            override fun createCall(): LiveData<ApiResponse<ScheduledSessionDoneModel>> {
+                return RetrofitLiveData(mWebService.patchManageScheduledSessionDone(sessionId, null))
+            }
+
+            override fun saveCallResult(data: ScheduledSessionDoneModel?) {
+            }
+
+        }.asLiveData
+    }
+
+    fun rejectScheduledSession(sessionId: Long, data: ScheduledSessionCancelModel): LiveData<Resource<GenericDetailModel>> {
+        return object : NetworkBoundResource<GenericDetailModel, GenericDetailModel>() {
+            override fun shouldUseLocalDb(): Boolean = false
+
+            override fun createCall(): LiveData<ApiResponse<GenericDetailModel>> {
+                return RetrofitLiveData(mWebService.postManageScheduledSessionReject(sessionId, data))
+            }
+
+            override fun saveCallResult(data: GenericDetailModel?) {
+            }
         }.asLiveData
     }
 

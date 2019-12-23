@@ -19,7 +19,7 @@
             <FrameLayout
                 android:id="@+id/container_cuisines"
                 android:layout_width="wrap_content"
-                style="@style/InputTextStyle">
+                style="@style/RoundedInputTextStyle">
 
                 <com.checkin.app.checkin.Utility.MultiSpinner
                     android:id="@+id/spinner_cuisines"
@@ -32,7 +32,7 @@
             <FrameLayout
                 android:id="@+id/container_categories"
                 android:layout_width="wrap_content"
-                style="@style/InputTextStyle"
+                style="@style/RoundedInputTextStyle"
                 android:layout_toEndOf="@id/container_cuisines"
                 android:layout_marginStart="@dimen/spacing_large">
 

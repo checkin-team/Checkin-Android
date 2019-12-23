@@ -87,6 +87,6 @@ class Resource<out T> private constructor(val status: Status, val data: T?, val 
             }
         }
 
-        fun <X, T> cloneResource(resource: Resource<T>, data: X): Resource<X> = Resource(resource.status, data, resource.message, resource.errorBody).apply { isCached = resource.isCached }
+        fun <X, T> cloneResource(resource: Resource<T>?, data: X): Resource<X>? = resource?.let { Resource(it.status, data, it.message, it.errorBody).apply { isCached = it.isCached } }
     }
 }

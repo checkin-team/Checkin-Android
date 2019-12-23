@@ -3,6 +3,7 @@ package com.checkin.app.checkin.Data
 import android.util.Log
 import com.fasterxml.jackson.core.JsonProcessingException
 import com.fasterxml.jackson.core.type.TypeReference
+import com.fasterxml.jackson.databind.DeserializationFeature
 import com.fasterxml.jackson.databind.JsonNode
 import com.fasterxml.jackson.databind.SerializationFeature
 import com.fasterxml.jackson.module.kotlin.jacksonObjectMapper
@@ -11,7 +12,8 @@ import java.io.IOException
 
 object Converters {
     val objectMapper = jacksonObjectMapper().apply {
-        disable(SerializationFeature.WRITE_DATES_AS_TIMESTAMPS)
+        disable(SerializationFeature.WRITE_DATES_AS_TIMESTAMPS) // Serialize Date object to ISO-8601 standard
+        disable(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES) // Ignore unknown properties when deserializing data
     }
 
     private val TAG = Converters::class.java.simpleName

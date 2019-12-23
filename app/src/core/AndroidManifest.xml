@@ -78,8 +78,12 @@
             android:theme="@style/AppTheme" />
 
         <activity
-            android:name=".manager.activities.ManagerScheduledSessionDetailActivity"
+            android:name=".manager.activities.ManagerPreOrderDetailActivity"
             android:theme="@style/AppTheme" />
+        <activity
+            android:name=".manager.activities.ManagerQSRDetailActivity"
+            android:theme="@style/AppTheme" />
+
         <activity
             android:name=".Shop.Private.MembersActivity"
             android:label="Members"

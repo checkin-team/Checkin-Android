@@ -225,7 +225,7 @@
                 android:layout_height="@dimen/button_height_medium"
                 android:layout_gravity="center"
                 android:layout_marginBottom="-25dp"
-                android:background="@drawable/background_textbox"
+                android:background="@drawable/background_rounded_textbox"
                 android:orientation="horizontal"
                 android:paddingStart="@dimen/spacing_small"
                 android:paddingTop="@dimen/spacing_small"

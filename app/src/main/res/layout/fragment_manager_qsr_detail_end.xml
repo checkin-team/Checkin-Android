@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white_two">
+
+    <TextView
+        android:id="@+id/tv_manager_qsr_detail_heading"
+        style="@style/GreySmallTextStyle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/spacing_medium"
+        android:text="Order Summary"
+        android:textAllCaps="true"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <FrameLayout
+        android:id="@+id/frg_container_manager_qsr_detail"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_margin="@dimen/spacing_small"
+        android:background="@color/white"
+        app:layout_constraintBottom_toTopOf="@id/tv_manager_scheduled_heading_preparation_time"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/tv_manager_qsr_detail_heading" />
+
+    <TextView
+        android:id="@+id/tv_manager_scheduled_heading_preparation_time"
+        style="@style/TealBlueTextStyle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="@dimen/spacing_small"
+        android:text="Serving Time"
+        app:layout_constraintBottom_toTopOf="@id/container_preparation_time"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <FrameLayout
+        android:id="@+id/container_preparation_time"
+        android:layout_width="@dimen/width_preparation_time_selector"
+        android:layout_height="@dimen/height_preparation_time_selector"
+        android:layout_marginBottom="@dimen/spacing_normal"
+        android:background="#cce3e7"
+        android:orientation="horizontal"
+        app:layout_constraintBottom_toTopOf="@id/tv_text_manager_preparation_tip"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent">
+
+        <TextView
+            android:id="@+id/tv_manager_qsr_serving_time"
+            style="@style/GreySmallTextStyle"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_gravity="center"
+            android:gravity="center"
+            tools:text="10 minutes" />
+    </FrameLayout>
+
+    <TextView
+        android:id="@+id/tv_text_manager_preparation_tip"
+        style="@style/PinkishGreySmallTextStyle"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="@dimen/spacing_normal"
+        android:text="@string/text_manager_food_preparation_qsr_end"
+        android:textAlignment="center"
+        app:layout_constraintBottom_toTopOf="@id/btn_manager_qsr_session_end"
+        app:layout_constraintEnd_toEndOf="@id/container_preparation_time"
+        app:layout_constraintStart_toStartOf="@id/container_preparation_time" />
+
+    <Button
+        android:id="@+id/btn_manager_qsr_session_end"
+        style="@style/WhiteTextStyle"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:background="@color/primary_red"
+        android:text="@string/action_end_session"
+        android:textAllCaps="false"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

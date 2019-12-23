@@ -278,11 +278,11 @@ public final class Utils {
         return formatCurrencyAmount(context, format.format(amount));
     }
 
-    public static String formatDateTo24HoursTime(Date dateTime) {
+    public static String formatDateTo24HoursTime(@NonNull Date dateTime) {
         return new SimpleDateFormat("HH:mm", Locale.ENGLISH).format(dateTime);
     }
 
-    public static String formatDateTo12HoursTime(Date dateTime) {
+    public static String formatDateTo12HoursTime(@NonNull Date dateTime) {
         return new SimpleDateFormat("HH:mm a", Locale.ENGLISH).format(dateTime);
     }
 
@@ -313,7 +313,7 @@ public final class Utils {
         return formatter.format(initDate);
     }
 
-    public static String formatDate(Date date, String dateFormat) {
+    public static String formatDate(@NonNull Date date, String dateFormat) {
         return new SimpleDateFormat(dateFormat, Locale.getDefault()).format(date);
     }
 
@@ -338,11 +338,11 @@ public final class Utils {
         return "0 Sec";
     }
 
-    public static String formatElapsedTime(Date eventTime) {
+    public static String formatElapsedTime(@NonNull Date eventTime) {
         return formatElapsedTime(eventTime, Calendar.getInstance().getTime());
     }
 
-    public static String formatElapsedTime(Date eventTime, Date currentTime) {
+    public static String formatElapsedTime(@NonNull Date eventTime, @NonNull Date currentTime) {
         Pair<TimeUnit, Long> pair = getTimeDifference(eventTime, currentTime);
         long value = pair.getSecond();
         String suffix = value > 1 ? "s " : " ";
@@ -357,8 +357,8 @@ public final class Utils {
         return "Now";
     }
 
-    public static String formatDueTime(Date eventTime, Date currentTime) {
-        Pair<TimeUnit, Long> pair = getTimeDifference(eventTime, currentTime);
+    public static String formatDueTime(@NonNull Date startTime, @NonNull Date endTime) {
+        Pair<TimeUnit, Long> pair = getTimeDifference(startTime, endTime);
         long value = pair.getSecond();
         String suffix = value > 1 ? "s " : " ";
         switch (pair.getFirst()) {
@@ -372,7 +372,7 @@ public final class Utils {
         return "Under 1 min";
     }
 
-    public static Pair<TimeUnit, Long> getTimeDifference(Date start, Date end) {
+    public static Pair<TimeUnit, Long> getTimeDifference(@NonNull Date start, @NonNull Date end) {
         long diffTime = end.getTime() - start.getTime();
         long secondsInMilli = 1000;
         long minutesInMilli = secondsInMilli * 60;

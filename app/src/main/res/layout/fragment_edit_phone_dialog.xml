@@ -10,7 +10,7 @@
 
     <com.checkin.app.checkin.Utility.PrefixEditText
         android:id="@+id/et_dialog_phone"
-        style="@style/InputTextStyle"
+        style="@style/RoundedInputTextStyle"
         android:layout_width="match_parent"
         android:layout_height="@dimen/height_input_normal"
         android:layout_marginEnd="@dimen/spacing_normal"

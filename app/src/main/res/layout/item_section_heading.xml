@@ -11,7 +11,7 @@
 
     <TextView
         android:id="@+id/tv_section_heading"
-        style="@style/GreyLargeTextStyle"
+        style="@style/GreyTextStyle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         tools:text="heading" />

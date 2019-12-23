@@ -170,6 +170,7 @@
     <dimen name="text_spacing_from_right">18dp</dimen>
     <dimen name="width_input_large">75dp</dimen>
     <dimen name="height_input_large">35dp</dimen>
+    <dimen name="height_input_huge">70dp</dimen>
 
     <dimen name="height_horizontal_view">1.5dp</dimen>
 

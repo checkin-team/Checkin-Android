@@ -81,7 +81,7 @@ abstract class PreparationPreorderTableModelHolder : EpoxyModelWithHolder<Prepar
             Utils.loadImageOrDefault(imCustomer, data.owner.displayPic, R.drawable.fore_male_white)
             data.scheduled.let {
                 val time = Calendar.getInstance().time
-                if (it.plannedDatetime > time) {
+                if (it.plannedDatetime!! > time) {
                     tvPreorderDue.text = context.getString(R.string.format_due_time, Utils.formatDueTime(time, it.plannedDatetime))
                     tvPreorderDue.setTextColor(ContextCompat.getColor(context, R.color.brownish_grey))
                 } else {

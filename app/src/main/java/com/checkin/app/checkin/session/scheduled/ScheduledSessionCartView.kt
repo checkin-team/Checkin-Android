@@ -249,7 +249,10 @@ class ScheduledSessionCartView @JvmOverloads constructor(
     }
 
     private fun setupData(data: CartDetailModel) {
-        tvHeaderPlannedTime.text = "${data.scheduled.formatPlannedDateTime}, Table for ${data.scheduled.countPeople}"
+        if (data.scheduled.plannedDatetime != null) {
+            tvHeaderPlannedTime.text = "${data.scheduled.formatPlannedDateTime}, Table for ${data.scheduled.countPeople}"
+            containerTimeSwitcher.visibility = View.VISIBLE
+        } else containerTimeSwitcher.visibility = View.GONE
         etRemarks.removeTextChangedListener(this)
         etRemarks.setText(data.scheduled.remarks ?: "")
         etRemarks.addTextChangedListener(this)

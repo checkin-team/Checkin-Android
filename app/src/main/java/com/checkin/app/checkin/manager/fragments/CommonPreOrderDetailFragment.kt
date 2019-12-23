@@ -12,7 +12,7 @@ import com.checkin.app.checkin.R
 import com.checkin.app.checkin.Utility.Utils
 import com.checkin.app.checkin.Utility.isNotEmpty
 import com.checkin.app.checkin.manager.models.ShopScheduledSessionDetailModel
-import com.checkin.app.checkin.manager.viewmodels.ManagerLivePreOrdersViewModel
+import com.checkin.app.checkin.manager.viewmodels.ManagerLiveScheduledViewModel
 import com.checkin.app.checkin.menu.holders.invoiceOrderWithCustomizationModelHolder
 import com.checkin.app.checkin.misc.BillHolder
 import com.checkin.app.checkin.misc.fragments.BaseFragment
@@ -30,7 +30,7 @@ class CommonPreOrderDetailFragment : BaseFragment() {
     internal lateinit var tvRemarks: TextView
 
     lateinit var billHolder: BillHolder
-    val viewModel: ManagerLivePreOrdersViewModel by activityViewModels()
+    val viewModel: ManagerLiveScheduledViewModel by activityViewModels()
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         billHolder = BillHolder(view)
@@ -56,7 +56,8 @@ class CommonPreOrderDetailFragment : BaseFragment() {
     private fun setupData(data: ShopScheduledSessionDetailModel) {
         billHolder.bind(data.bill)
         tvRemarks.text = data.scheduled.remarks ?: ""
-        tvInfo.text = "${data.scheduled.formatPlannedDate} | ${data.scheduled.formatPlannedTime} | ${data.scheduled.formatGuestCount}"
+        tvInfo.text = if (data.scheduled.plannedDatetime != null) "${data.scheduled.formatPlannedDate} | ${data.scheduled.formatPlannedTime} | ${data.scheduled.formatGuestCount}"
+        else "Order Time: ${data.scheduled.formatOrderTime}"
         tvTotal.text = Utils.formatCurrencyAmount(requireContext(), data.bill.total)
     }
 }

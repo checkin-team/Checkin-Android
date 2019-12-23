@@ -8,9 +8,11 @@ import java.util.*
 @JsonIgnoreProperties(ignoreUnknown = true)
 data class ScheduledSessionDetailModel(
         @JsonProperty("count_people") val countPeople: Int,
-        @JsonProperty("planned_datetime") val plannedDatetime: Date,
+        @JsonProperty("planned_datetime") val plannedDatetime: Date?,
         val remarks: String?,
-        @JsonProperty("preparation_time") val preparationTime: Date?
+        @JsonProperty("order_time") val orderTime: Date?,
+        @JsonProperty("preparation_time") val preparationTime: Date?,
+        val modified: Date
 ) {
     lateinit var status: ScheduledSessionStatus
 
@@ -21,9 +23,18 @@ data class ScheduledSessionDetailModel(
 
     val formatGuestCount: String = "Table for $countPeople"
 
-    val formatPlannedDate: String = Utils.formatDate(plannedDatetime, "MMM dd")
+    val formatPlannedDate: String
+        get() = Utils.formatDate(plannedDatetime ?: orderTime!!, "MMM dd")
 
-    val formatPlannedTime: String = Utils.formatDateTo12HoursTime(plannedDatetime)
+    val formatPlannedTime: String
+        get() = Utils.formatDateTo12HoursTime(plannedDatetime!!)
 
-    val formatPlannedDateTime: String = "$formatPlannedDate, $formatPlannedTime"
+    val formatOrderTime: String
+        get() = Utils.formatDateTo12HoursTime(orderTime!!)
+
+    val formatPlannedDateTime: String?
+        get() = "$formatPlannedDate, $formatPlannedTime"
+
+    val formatOrderElapsedTime: String
+        get() = Utils.formatElapsedTime(orderTime!!)
 }
