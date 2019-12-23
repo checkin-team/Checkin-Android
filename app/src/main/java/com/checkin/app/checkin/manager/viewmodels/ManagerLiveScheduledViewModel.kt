@@ -101,7 +101,7 @@ class ManagerLiveScheduledViewModel(application: Application) : BaseViewModel(ap
     }
 
     fun markSessionDone(sessionId: Long) {
-
+        mDoneData.addSource(managerRepository.doneScheduledSession(sessionId), mDoneData::setValue)
     }
 
     override fun updateResults() {

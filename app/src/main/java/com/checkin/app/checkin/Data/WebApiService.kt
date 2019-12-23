@@ -356,7 +356,7 @@ interface WebApiService {
     fun patchManageScheduledSessionAccept(@Path("session_id") sessionId: Long, @Body data: PreparationTimeModel): Call<PreparationTimeModel>
 
     @PATCH("sessions/manage/scheduled/{session_id}/done/")
-    fun patchManageScheduledSessionDone(@Path("session_id") sessionId: Long, @Body data: ObjectNode?): Call<ScheduledSessionDoneModel>
+    fun patchManageScheduledSessionDone(@Path("session_id") sessionId: Long, @Body data: ObjectNode): Call<ScheduledSessionDoneModel>
 
     @POST("sessions/manage/scheduled/{session_id}/reject/")
     fun postManageScheduledSessionReject(@Path("session_id") sessionId: Long, @Body data: ScheduledSessionCancelModel): Call<GenericDetailModel>

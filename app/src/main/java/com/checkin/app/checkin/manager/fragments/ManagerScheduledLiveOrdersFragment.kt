@@ -50,10 +50,12 @@ class ManagerScheduledLiveOrdersFragment : BaseFragment(), PreorderTableInteract
 
     override fun onClickNewTable(data: ShopScheduledSessionModel) {
         ManagerPreOrderDetailActivity.startScheduledSessionDetailActivity(requireContext(), data.pk)
+        updateScreen()
     }
 
     override fun onClickPreparationTable(data: ShopScheduledSessionModel) {
         ManagerPreOrderDetailActivity.startScheduledSessionDetailActivity(requireContext(), data.pk)
+        updateScreen()
     }
 
     override fun onMarkFoodServed(data: ShopScheduledSessionModel) {
@@ -62,16 +64,12 @@ class ManagerScheduledLiveOrdersFragment : BaseFragment(), PreorderTableInteract
 
     override fun onClickUpcomingTable(data: ShopScheduledSessionModel) {
         ManagerPreOrderDetailActivity.startScheduledSessionDetailActivity(requireContext(), data.pk)
+        updateScreen()
     }
 
     override fun updateScreen() {
         super.updateScreen()
         viewModel.updateResults()
-    }
-
-    override fun onResume() {
-        super.onResume()
-        updateScreen()
     }
 
     companion object {

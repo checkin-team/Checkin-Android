@@ -146,7 +146,7 @@ class ManagerRepository private constructor(context: Context) : BaseRepository()
             override fun shouldUseLocalDb(): Boolean = false
 
             override fun createCall(): LiveData<ApiResponse<ScheduledSessionDoneModel>> {
-                return RetrofitLiveData(mWebService.patchManageScheduledSessionDone(sessionId, null))
+                return RetrofitLiveData(mWebService.patchManageScheduledSessionDone(sessionId, Converters.objectMapper.createObjectNode()))
             }
 
             override fun saveCallResult(data: ScheduledSessionDoneModel?) {

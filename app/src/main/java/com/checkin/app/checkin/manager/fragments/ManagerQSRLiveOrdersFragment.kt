@@ -50,10 +50,12 @@ class ManagerQSRLiveOrdersFragment : BaseFragment(), QSRTableInteraction {
 
     override fun onClickNewTable(data: ShopScheduledSessionModel) {
         ManagerQSRDetailActivity.startQsrSessionDetailActivity(requireContext(), data.pk)
+        updateScreen()
     }
 
     override fun onClickPreparationTable(data: ShopScheduledSessionModel) {
         ManagerQSRDetailActivity.startQsrSessionDetailActivity(requireContext(), data.pk)
+        updateScreen()
     }
 
     override fun onMarkFoodReady(data: ShopScheduledSessionModel) {
@@ -66,6 +68,12 @@ class ManagerQSRLiveOrdersFragment : BaseFragment(), QSRTableInteraction {
 
     override fun onClickEndTable(data: ShopScheduledSessionModel) {
         ManagerQSRDetailActivity.startQsrSessionDetailActivity(requireContext(), data.pk)
+        updateScreen()
+    }
+
+    override fun updateScreen() {
+        super.updateScreen()
+        viewModel.updateResults()
     }
 
     companion object {
