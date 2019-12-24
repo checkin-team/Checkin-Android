@@ -40,7 +40,8 @@ data class RestaurantModel(
         @JsonProperty("has_home_delivery") val hasHomeDelivery: Boolean = false,
         @JsonProperty("no_followers") val followers: Long,
         @JsonProperty("count_checkins") val checkins: Long,
-        @JsonProperty("no_reviews") val countReviews: Long
+        @JsonProperty("no_reviews") val countReviews: Long,
+        @JsonProperty("extra_data") val extraData: List<String>?
 ) : ShopModel(pk, name, tagline, logo, covers, phone, email, location, gstin, website), Serializable {
     fun formatFollowers(): String? = Utils.formatCount(followers)
 
