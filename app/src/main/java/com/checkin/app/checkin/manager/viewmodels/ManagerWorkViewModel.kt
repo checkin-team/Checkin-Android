@@ -2,6 +2,7 @@ package com.checkin.app.checkin.manager.viewmodels
 
 import android.app.Application
 import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
 import com.checkin.app.checkin.Data.BaseViewModel
 import com.checkin.app.checkin.Data.Resource
 import com.checkin.app.checkin.manager.ManagerRepository
@@ -21,6 +22,9 @@ class ManagerWorkViewModel(application: Application) : BaseViewModel(application
 
     val restaurantStatistics: LiveData<Resource<ManagerStatsModel>> = mStatsData
     val restaurantService: LiveData<Resource<RestaurantServiceModel>> = mRestaurantData
+    val activeSessionEvents = MutableLiveData<Int>()
+    val qsrEvents = MutableLiveData<Int>()
+    val preOrderEvents = MutableLiveData<Int>()
 
     fun fetchStatistics() {
         mStatsData.addSource(managerRepository.getManagerStats(shopPk), mStatsData::setValue)

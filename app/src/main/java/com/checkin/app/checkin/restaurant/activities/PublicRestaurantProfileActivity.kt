@@ -107,7 +107,7 @@ class PublicRestaurantProfileActivity : BaseActivity(), AppBarLayout.OnOffsetCha
     private var title = ""
     private var allowOrder = true
 
-    private var networkFragment: NetworkBlockingFragment = NetworkBlockingFragment()
+    private var networkFragment: NetworkBlockingFragment = NetworkBlockingFragment.withBlockingLoader()
     private val phoneDialog: AlertDialog by lazy { setupPhoneDialog() }
     private val otpDialog: OtpVerificationDialog by lazy {
         OtpVerificationDialog.Builder.with(this)
@@ -203,6 +203,7 @@ class PublicRestaurantProfileActivity : BaseActivity(), AppBarLayout.OnOffsetCha
 
         restaurantViewModel.restaurantData.observe(this, Observer {
             it?.also { restaurantResource ->
+                networkViewModel.updateStatus(restaurantResource)
                 when (restaurantResource.status) {
                     Resource.Status.SUCCESS -> restaurantResource.data?.let { setupData(it) }
                     else -> pass

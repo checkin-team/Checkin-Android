@@ -6,6 +6,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
 import androidx.core.content.ContextCompat
+import androidx.core.os.bundleOf
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.Observer
 import butterknife.BindView
@@ -50,11 +51,13 @@ class NetworkBlockingFragment : BaseFragment() {
     }
 
     private fun handleLoading() {
-        visibleProgressBar()
-        view?.visibility = View.VISIBLE
-        view?.setBackgroundColor(ContextCompat.getColor(requireContext(), R.color.translucent_white))
-        containerLoading.visibility = View.VISIBLE
-        containerError.visibility = View.GONE
+        if (arguments?.getBoolean(KEY_BLOCKING_LOADER, false) == true) {
+            visibleProgressBar()
+            view?.visibility = View.VISIBLE
+            view?.setBackgroundColor(ContextCompat.getColor(requireContext(), R.color.translucent_white))
+            containerLoading.visibility = View.VISIBLE
+            containerError.visibility = View.GONE
+        }
     }
 
     private fun handleError(resource: Resource<Any?>) {
@@ -72,5 +75,10 @@ class NetworkBlockingFragment : BaseFragment() {
 
     companion object {
         const val FRAGMENT_TAG = "network_blocking"
+        const val KEY_BLOCKING_LOADER = "block_loader"
+
+        fun withBlockingLoader() = NetworkBlockingFragment().apply {
+            arguments = bundleOf(KEY_BLOCKING_LOADER to true)
+        }
     }
 }

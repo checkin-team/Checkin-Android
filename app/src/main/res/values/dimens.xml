@@ -138,7 +138,7 @@
     <dimen name="height_manager_table_event_icon">18dp</dimen>
 
     <!-- Card dimensions -->
-    <dimen name="card_elevation">3dp</dimen>
+    <dimen name="card_elevation">2dp</dimen>
     <dimen name="card_corner_radius_small">5dp</dimen>
     <dimen name="card_corner_radius" format="float">10.5dp</dimen>
     <dimen name="card_corner_radius_large">12dp</dimen>
