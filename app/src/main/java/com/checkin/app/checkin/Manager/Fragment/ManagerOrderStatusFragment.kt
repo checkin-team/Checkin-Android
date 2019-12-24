@@ -1,5 +1,6 @@
 package com.checkin.app.checkin.Manager.Fragment
 
+import android.animation.ValueAnimator
 import android.content.Context
 import android.net.Uri
 import android.os.Bundle
@@ -9,6 +10,7 @@ import android.view.ViewGroup
 import android.view.animation.Animation
 import android.view.animation.Transformation
 import android.widget.ImageView
+import android.widget.Toast
 import androidx.fragment.app.Fragment
 import com.checkin.app.checkin.R
 
@@ -30,6 +32,7 @@ class ManagerOrderStatusFragment : Fragment() {
     // TODO: Rename and change types of parameters
     private var param1: String? = null
     private var param2: String? = null
+    private var height: Int = 0
     private var listener: OnFragmentInteractionListener? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -43,31 +46,34 @@ class ManagerOrderStatusFragment : Fragment() {
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
         // Inflate the layout for this fragment
-        var v = inflater.inflate(R.layout.fragment_manager_order_status, container, false)
-        var imageView = v.findViewById<ImageView>(R.id.im_manager_status_booking_arrow)
-        var view = v.findViewById(R.id.include_manager_status_booking_detail) as View
+        var v = inflater.inflate(R.layout.item_manager_order_status_confirmed, container, false)
+        var bottomArrowBookingStatus = v.findViewById<ImageView>(R.id.im_manager_status_booking_arrow)
+        var bookingDetailsView = v.findViewById(R.id.include_manager_status_booking_detail) as View
+        val bookingDetailsHeight = bookingDetailsView.layoutParams.height
+
+        height = bookingDetailsView.height
         var j = 0
-        imageView.setOnClickListener {
+        bottomArrowBookingStatus.setOnClickListener {
             if (j == 0) {
-                collapse(view);
-                j == 1
+                collapse(bookingDetailsView);
+                j = 1
             } else {
-                expand(view)
-                view.visibility = View.VISIBLE
+                expand(bookingDetailsView, bookingDetailsHeight)
                 j = 0
             }
         }
-        var imageView2 = v.findViewById<ImageView>(R.id.im_fragment_manager_status_details_arrow)
-        var view2 = v.findViewById(R.id.includ_fragment_order_status_bill) as View
+        var arrowBookingDetails = v.findViewById<ImageView>(R.id.im_fragment_manager_status_details_arrow)
+        var orderStatusView = v.findViewById(R.id.includ_fragment_order_status_bill) as View
+        val orderStatusViewHeight = orderStatusView.layoutParams.height
+
         var i = 0
-        imageView2.setOnClickListener {
+        arrowBookingDetails.setOnClickListener {
             if (i == 0) {
 
-                collapse(view2);
+                collapse(orderStatusView);
                 i = 1
             } else {
-                expand(view2)
-                view2.visibility = View.VISIBLE
+                expand(orderStatusView, orderStatusViewHeight)
                 i = 0
             }
 
@@ -76,32 +82,19 @@ class ManagerOrderStatusFragment : Fragment() {
         return v
     }
 
-    fun expand(v: View) {
-        val matchParentMeasureSpec = View.MeasureSpec.makeMeasureSpec((v.parent as View).width, View.MeasureSpec.EXACTLY)
-        val wrapContentMeasureSpec = View.MeasureSpec.makeMeasureSpec(0, View.MeasureSpec.UNSPECIFIED)
-        v.measure(matchParentMeasureSpec, wrapContentMeasureSpec)
-        val targetHeight = v.measuredHeight
-
-        // Older versions of android (pre API 21) cancel animations for views with a height of 0.
-        v.layoutParams.height = 1
-        v.visibility = View.VISIBLE
-        val a = object : Animation() {
-            override fun applyTransformation(interpolatedTime: Float, t: Transformation) {
-                v.layoutParams.height = if (interpolatedTime == 1f)
-                    ViewGroup.LayoutParams.WRAP_CONTENT
-                else
-                    (targetHeight * interpolatedTime).toInt()
-                v.requestLayout()
-            }
-
-            override fun willChangeBounds(): Boolean {
-                return true
-            }
+    fun expand(v: View, height: Int) {
+        Toast.makeText(context, "Clicked", Toast.LENGTH_LONG).show()
+        val anim = ValueAnimator.ofInt(v.getMeasuredHeight(), height)
+        anim.addUpdateListener { valueAnimator ->
+            val `val` = valueAnimator.animatedValue as Int
+            val layoutParams = v.getLayoutParams()
+            layoutParams.height = `val`
+            v.setLayoutParams(layoutParams)
         }
+        anim.duration = 500
+        anim.start()
+        v.visibility = View.VISIBLE
 
-        // Expansion speed of 1dp/ms
-        a.duration = (targetHeight / v.context.resources.displayMetrics.density).toInt().toLong()
-        v.startAnimation(a)
     }
 
     // TODO: Rename method, update argument and hook method into UI event
@@ -139,11 +132,22 @@ class ManagerOrderStatusFragment : Fragment() {
             override fun willChangeBounds(): Boolean {
                 return true
             }
+
+            override fun hasEnded(): Boolean {
+                return super.hasEnded()
+            }
         }
 
         // Collapse speed of 1dp/ms
         a.duration = (initialHeight / v.context.resources.displayMetrics.density).toInt().toLong()
         v.startAnimation(a)
+        if (a.hasEnded()) {
+            v.layoutParams.height = 700
+            v.requestLayout()
+            v.visibility = View.GONE
+
+        }
+
     }
 
 

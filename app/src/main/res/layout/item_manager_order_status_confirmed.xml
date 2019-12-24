@@ -1,0 +1,264 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#f3f3f3"
+
+    tools:context=".Manager.Fragment.ManagerOrderStatusFragment">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_above="@id/tv_fragment_manager_schedule_preperation_time"
+        android:layout_alignParentTop="true"
+        android:background="@color/white"
+        android:padding="@dimen/spacing_normal">
+
+        <RelativeLayout
+            android:id="@+id/rl_manager_status_topbar"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <ImageView
+                android:id="@+id/im_manager_status_back"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:scaleX="0.7"
+                android:scaleY="0.7"
+                android:src="@drawable/ic_back_grey" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/spacing_normal"
+                android:layout_toRightOf="@id/im_manager_status_back"
+                android:fontFamily="@font/josefinsans_regular"
+                android:text="Grey Orange"
+                android:textColor="@color/teal_blue"
+                android:textSize="@dimen/font_largest" />
+
+        </RelativeLayout>
+
+        <TextView
+            android:id="@+id/tv_manager_status_long_status"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/rl_manager_status_topbar"
+            android:layout_marginStart="@dimen/spacing_extra_large"
+            android:text="Full address"
+            android:textColor="@color/pinkish_grey" />
+
+        <Space
+
+            android:id="@+id/space"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/spacing_medium"
+            android:layout_below="@id/tv_manager_status_long_status" />
+
+        <RelativeLayout
+
+            android:id="@+id/rl_manager_status_conformation_section"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/space">
+
+            <TextView
+                android:id="@+id/fragment_manager_status_main_status"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Table Status-Confirmed"
+                android:textColor="#32c282"
+                android:textSize="@dimen/font_extra_large" />
+
+
+            <ImageView
+                android:layout_width="@dimen/size_small_icon"
+                android:layout_height="@dimen/size_small_icon"
+                android:layout_alignParentEnd="true"
+                android:src="@drawable/ic_green_check" />
+
+
+        </RelativeLayout>
+
+        <Space
+            android:id="@+id/space2"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/spacing_medium"
+            android:layout_below="@id/rl_manager_status_conformation_section" />
+
+        <RelativeLayout
+            android:id="@+id/rl_manager_status_call_navigate"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/space2">
+
+            <TextView
+                android:id="@+id/tv_manager_status_call"
+                android:layout_width="wrap_content"
+                android:layout_height="@dimen/button_height_extra_short"
+                android:layout_alignParentEnd="true"
+                android:layout_marginBottom="@dimen/spacing_small"
+                android:background="@drawable/background_pinkish_grey_stroke"
+                android:clickable="true"
+                android:drawableStart="@drawable/ic_navigate_arrow"
+                android:drawablePadding="@dimen/spacing_small"
+                android:focusable="true"
+                android:gravity="center_vertical"
+                android:paddingStart="@dimen/spacing_small"
+                android:paddingEnd="@dimen/spacing_small"
+                android:text="Navigate"
+
+                tools:ignore="RtlSymmetry" />
+
+            <TextView
+                android:id="@+id/tv_restaurant_banner_navigate"
+                android:layout_width="wrap_content"
+                android:layout_height="@dimen/button_height_extra_short"
+                android:layout_marginEnd="@dimen/spacing_medium"
+                android:layout_marginBottom="@dimen/spacing_small"
+                android:layout_toLeftOf="@+id/tv_manager_status_call"
+                android:background="@drawable/background_pinkish_grey_stroke"
+                android:clickable="true"
+                android:drawableStart="@drawable/ic_telephone_auricular_with_cable"
+                android:drawablePadding="@dimen/spacing_small"
+                android:focusable="true"
+                android:gravity="center_vertical"
+                android:paddingStart="@dimen/spacing_small"
+                android:paddingEnd="@dimen/spacing_small"
+                android:text="Call"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                tools:ignore="RtlSymmetry" />
+
+
+        </RelativeLayout>
+
+        <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/rl_manager_status_call_navigate"
+            android:minHeight="400dp">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="0.5dp"
+                    android:layout_marginBottom="@dimen/spacing_small"
+
+                    android:background="@color/pinkish_grey" />
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Booking detail"
+                        android:textColor="#af1014" />
+
+                    <ImageView
+                        android:id="@+id/im_manager_status_booking_arrow"
+                        android:layout_width="30dp"
+                        android:layout_height="30dp"
+                        android:layout_alignParentEnd="true"
+                        android:layout_marginRight="@dimen/spacing_small"
+                        android:padding="5dp"
+                        android:src="@drawable/ic_triangle_rouge_down" />
+                </RelativeLayout>
+
+                <include
+                    android:id="@+id/include_manager_status_booking_detail"
+                    layout="@layout/item_booking_details"></include>
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="0.5dp"
+                    android:layout_marginTop="@dimen/spacing_small"
+                    android:layout_marginBottom="@dimen/spacing_small"
+
+                    android:background="@color/pinkish_grey" />
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/spacing_extra_small">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Order Details"
+                        android:textColor="#af1014" />
+
+                    <ImageView
+                        android:id="@+id/im_fragment_manager_status_details_arrow"
+                        android:layout_width="30dp"
+                        android:layout_height="30dp"
+                        android:layout_alignParentEnd="true"
+                        android:layout_marginRight="@dimen/spacing_small"
+                        android:padding="5dp"
+                        android:src="@drawable/ic_triangle_rouge_down" />
+                </RelativeLayout>
+
+                <include
+                    android:id="@+id/includ_fragment_order_status_bill"
+
+                    layout="@layout/item_order_details" />
+            </LinearLayout>
+        </ScrollView>
+
+    </RelativeLayout>
+
+    <TextView
+
+        android:id="@+id/time"
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:layout_above="@+id/notify"
+        android:layout_marginLeft="60dp"
+        android:layout_marginRight="60dp"
+
+        android:layout_marginBottom="@dimen/spacing_small"
+        android:background="@color/quantum_teal100"
+        android:gravity="center"
+        android:text="10 minutes"
+        android:textColor="@color/brownish_grey"
+
+        android:textSize="@dimen/font_large" />
+
+    <TextView
+        android:id="@+id/tv_fragment_manager_schedule_preperation_time"
+
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+
+        android:layout_above="@+id/time"
+        android:layout_marginBottom="@dimen/spacing_small"
+        android:fontFamily="@font/josefinsans_semibold"
+
+
+        android:gravity="center_horizontal"
+        android:text="Preparation Time"
+        android:textAlignment="center"
+        android:textColor="@color/teal_blue"
+        android:textSize="@dimen/font_large" />
+
+    <TextView
+
+        android:id="@+id/notify"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+
+        android:layout_marginBottom="@dimen/spacing_medium"
+        android:gravity="center"
+        android:text="You will be notified once the food is ready."
+        android:textColor="@color/brownish_grey" />
+
+</RelativeLayout>
