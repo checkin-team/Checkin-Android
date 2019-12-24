@@ -64,11 +64,14 @@
     <dimen name="button_height_medium">50dp</dimen>
     <dimen name="button_height_normal">40dp</dimen>
     <dimen name="button_height_short">32dp</dimen>
+    <dimen name="button_height_extra_short">28dp</dimen>
+    <dimen name="button_height_tiny">24dp</dimen>
 
     <dimen name="button_width_wide">150dp</dimen>
     <dimen name="button_width_normal">100dp</dimen>
     <dimen name="button_width_short">70dp</dimen>
     <dimen name="button_width_tiny">50dp</dimen>
+    <dimen name="button_width_extra_tiny">25dp</dimen>
 
     <dimen name="button_oval_large">120dp</dimen>
     <dimen name="button_oval_normal">96dp</dimen>
@@ -77,6 +80,7 @@
     <dimen name="height_spinner_item">50dp</dimen>
 
     <dimen name="height_bottom_tab">50dp</dimen>
+    <dimen name="height_normal_tab">40dp</dimen>
 
     <!-- Cover dimensions -->
     <dimen name="height_shadow_top_cover">80dp</dimen>
@@ -166,6 +170,7 @@
     <dimen name="text_spacing_from_right">18dp</dimen>
     <dimen name="width_input_large">75dp</dimen>
     <dimen name="height_input_large">35dp</dimen>
+    <dimen name="height_input_huge">70dp</dimen>
 
     <dimen name="height_horizontal_view">1.5dp</dimen>
 
@@ -226,8 +231,18 @@
     <dimen name="width_current_location">150dp</dimen>
     <dimen name="height_current_location">140dp</dimen>
 
-    <dimen name="height_restaurant_banner">240dp</dimen>
+    <dimen name="height_restaurant_banner">220dp</dimen>
     <dimen name="height_restaurant_image_banner">165dp</dimen>
     <dimen name="height_advertisement_banner">150dp</dimen>
+    <dimen name="height_home_session_live_card">190dp</dimen>
 
+    <dimen name="height_vertical_line">16dp</dimen>
+    <dimen name="height_cover_restaurant_profile">220dp</dimen>
+    <dimen name="height_toolbar">48dp</dimen>
+    <dimen name="height_appbar_large">100dp</dimen>
+    <dimen name="height_cart_header_topbar">40dp</dimen>
+    <dimen name="height_card_manager_table">70dp</dimen>
+    <dimen name="height_card_manager_table_with_buttons">100dp</dimen>
+    <dimen name="height_preparation_time_selector">30dp</dimen>
+    <dimen name="width_preparation_time_selector">270dp</dimen>
 </resources>

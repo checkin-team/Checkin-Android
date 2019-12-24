@@ -26,7 +26,7 @@
             style="@style/RedSmallTextStyle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:fontFamily="@font/josefinsans_regular"
+            android:fontFamily="@font/josefinsans"
             android:layout_gravity="end"
             android:textAllCaps="true"
             android:textSize="@dimen/font_extra_small"

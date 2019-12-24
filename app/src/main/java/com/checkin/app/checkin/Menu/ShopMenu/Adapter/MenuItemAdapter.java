@@ -11,7 +11,7 @@ import androidx.annotation.Nullable;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.checkin.app.checkin.Menu.Model.MenuItemModel;
-import com.checkin.app.checkin.Misc.TextBaseAdapter;
+import com.checkin.app.checkin.misc.adapters.TextBaseAdapter;
 import com.checkin.app.checkin.R;
 import com.checkin.app.checkin.Utility.ItemClickSupport;
 import com.checkin.app.checkin.Utility.QuantityPickerView;

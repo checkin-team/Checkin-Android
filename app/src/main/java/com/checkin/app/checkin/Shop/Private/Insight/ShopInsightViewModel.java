@@ -8,7 +8,7 @@ import androidx.lifecycle.LiveData;
 import com.checkin.app.checkin.Data.BaseViewModel;
 import com.checkin.app.checkin.Data.Resource;
 import com.checkin.app.checkin.Utility.SourceMappedLiveData;
-import com.checkin.app.checkin.session.model.PromoDetailModel;
+import com.checkin.app.checkin.session.models.PromoDetailModel;
 
 import java.util.List;
 

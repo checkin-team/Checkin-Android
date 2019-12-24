@@ -1,0 +1,117 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white_two">
+
+    <TextView
+        android:id="@+id/tv_manager_qsr_detail_heading"
+        style="@style/WhiteSmallTextStyle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/spacing_medium"
+        android:textAllCaps="true"
+        android:textColor="@color/orange_red"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:text="Waiting for customer" />
+
+    <FrameLayout
+        android:id="@+id/frg_container_manager_qsr_detail"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_margin="@dimen/spacing_small"
+        android:background="@color/white"
+        app:layout_constraintBottom_toTopOf="@id/tv_manager_scheduled_heading_preparation_time"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/tv_manager_qsr_detail_heading" />
+
+    <TextView
+        android:id="@+id/tv_manager_scheduled_heading_preparation_time"
+        style="@style/TealBlueTextStyle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="@dimen/spacing_small"
+        android:text="Preparation Time"
+        app:layout_constraintBottom_toTopOf="@id/container_preparation_time"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <LinearLayout
+        android:id="@+id/container_preparation_time"
+        android:layout_width="@dimen/width_preparation_time_selector"
+        android:layout_height="@dimen/height_preparation_time_selector"
+        android:layout_marginBottom="@dimen/spacing_normal"
+        android:background="@drawable/combined_horizontal_time_selector"
+        android:orientation="horizontal"
+        app:layout_constraintBottom_toTopOf="@id/tv_text_manager_preparation_tip"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent">
+
+        <Button
+            android:id="@+id/btn_manager_qsr_preparation_time_decrement"
+            android:layout_width="40dp"
+            android:layout_height="match_parent"
+            android:background="@color/transparent" />
+
+        <TextView
+            android:id="@+id/tv_manager_qsr_preparation_time"
+            style="@style/GreySmallTextStyle"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:gravity="center"
+            tools:text="10 minutes" />
+
+        <Button
+            android:id="@+id/btn_manager_qsr_preparation_time_increment"
+            android:layout_width="40dp"
+            android:layout_height="match_parent"
+            android:background="@color/transparent" />
+    </LinearLayout>
+
+    <TextView
+        android:id="@+id/tv_text_manager_preparation_tip"
+        style="@style/PinkishGreySmallTextStyle"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="@dimen/spacing_normal"
+        android:text="Mention the preparation time. We will notify you when to start preparing food."
+        android:textAlignment="center"
+        app:layout_constraintBottom_toTopOf="@id/container_manager_scheduled_bottom"
+        app:layout_constraintEnd_toEndOf="@id/container_preparation_time"
+        app:layout_constraintStart_toStartOf="@id/container_preparation_time" />
+
+    <LinearLayout
+        android:id="@+id/container_manager_scheduled_bottom"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent">
+
+        <Button
+            android:id="@+id/btn_manager_qsr_session_cancel"
+            style="@style/RedHeadingStyle"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:background="@color/transparent"
+            android:text="@string/action_reject" />
+
+        <Button
+            android:id="@+id/btn_manager_qsr_session_accept"
+            style="@style/WhiteHeadingStyle"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:background="@drawable/background_rectangle_green_gradient"
+            android:text="@string/action_accept" />
+    </LinearLayout>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

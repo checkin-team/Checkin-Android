@@ -243,14 +243,5 @@
                 </LinearLayout>
             </LinearLayout>
         </RelativeLayout>
-
-        <include
-            layout="@layout/incl_manager_inactive_tables"/>
-
-
     </FrameLayout>
-
-
-
-
 </LinearLayout>

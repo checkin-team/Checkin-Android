@@ -12,7 +12,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.checkin.app.checkin.Data.Resource;
-import com.checkin.app.checkin.Misc.BaseActivity;
+import com.checkin.app.checkin.misc.activities.BaseActivity;
 import com.checkin.app.checkin.R;
 import com.checkin.app.checkin.Utility.Utils;
 
@@ -113,7 +113,7 @@ public class ShopInvoiceListActivity extends BaseActivity implements ShopInvoice
     private String updateDate(TextView tvDate, int year, int month, int day) {
         String initialDate = String.format(Locale.ENGLISH, "%04d-%02d-%02d", year, month, day);
         try {
-            String result = Utils.formatDate(initialDate, "yyyy-MM-dd", "MMM dd, yyyy");
+            String result = Utils.convertFormatDate(initialDate, "yyyy-MM-dd", "MMM dd, yyyy");
             tvDate.setText(result);
         } catch (ParseException e) {
             e.printStackTrace();

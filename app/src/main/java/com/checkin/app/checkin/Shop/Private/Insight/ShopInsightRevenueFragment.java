@@ -15,10 +15,10 @@ import androidx.viewpager.widget.PagerAdapter;
 import androidx.viewpager.widget.ViewPager;
 
 import com.checkin.app.checkin.Data.Resource;
-import com.checkin.app.checkin.Manager.Adapter.ManagerStatsOrderAdapter;
-import com.checkin.app.checkin.Misc.BaseFragment;
 import com.checkin.app.checkin.R;
 import com.checkin.app.checkin.Utility.Utils;
+import com.checkin.app.checkin.manager.adapters.ManagerStatsOrderAdapter;
+import com.checkin.app.checkin.misc.fragments.BaseFragment;
 import com.rd.PageIndicatorView;
 import com.rd.animation.type.AnimationType;
 

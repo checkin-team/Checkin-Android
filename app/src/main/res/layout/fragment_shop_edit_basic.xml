@@ -13,7 +13,7 @@
         android:id="@+id/et_name"
         android:layout_width="match_parent"
         android:layout_height="@dimen/height_input_normal"
-        style="@style/InputTextStyle"
+        style="@style/RoundedInputTextStyle"
         android:layout_marginTop="@dimen/spacing_large"
         android:hint="Business Name"
         android:inputType="text"
@@ -37,7 +37,7 @@
             android:inputType="phone"
             android:text="@string/prefix_country_code"
             android:hint="Phone Number"
-            style="@style/InputTextStyle" />
+            style="@style/RoundedInputTextStyle" />
 
         <ImageButton
             android:id="@+id/btn_verify_phone"
@@ -68,7 +68,7 @@
             android:layout_height="match_parent"
             android:inputType="textEmailAddress"
             android:hint="Email"
-            style="@style/InputTextStyle" />
+            style="@style/RoundedInputTextStyle" />
         <ImageButton
             android:id="@+id/btn_verify_email"
             android:layout_width="@dimen/button_height_short"
@@ -88,7 +88,7 @@
         android:layout_width="match_parent"
         android:layout_height="@dimen/height_input_normal"
         android:layout_marginTop="@dimen/spacing_normal"
-        style="@style/InputTextStyle"
+        style="@style/RoundedInputTextStyle"
         app:layout_constraintTop_toBottomOf="@id/container_email"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent">

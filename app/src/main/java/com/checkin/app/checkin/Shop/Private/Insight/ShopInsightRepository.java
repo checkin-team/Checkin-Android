@@ -13,7 +13,7 @@ import com.checkin.app.checkin.Data.NetworkBoundResource;
 import com.checkin.app.checkin.Data.Resource;
 import com.checkin.app.checkin.Data.RetrofitLiveData;
 import com.checkin.app.checkin.Data.WebApiService;
-import com.checkin.app.checkin.session.model.PromoDetailModel;
+import com.checkin.app.checkin.session.models.PromoDetailModel;
 
 import java.util.List;
 

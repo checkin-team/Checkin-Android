@@ -233,11 +233,34 @@
     <string name="label_cooked">Cooked</string>
     <string name="status_order_cooked">Cooked</string>
 
-    <string name="get_percent_discount"><![CDATA[<b>Get</b><font color="#ff4f19"> %1$s</font> <b>off*</b>]]></string>
-    <string name="discount_code"><![CDATA[Code: <font color="#ff4f19">%1$s</font>]]></string>
-
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
-
-
+    <string name="get_percent_discount" ><![CDATA[<b>Get</b><font color="#ff4f19"> %1$s</font> <b>off*</b>]]></string>
+    <string name="discount_code" ><![CDATA[Code: <font color="#ff4f19">%1$s</font>]]></string>
+    <string name="format_live_session_qsr_message">Hi %s, you have placed your order.</string>
+    <string name="format_live_session_active_message">Hi %s, enjoy your dine-in.</string>
+    <string name="format_live_session_predining_message">Hi %s, you have dine-in scheduled.</string>
+    <string name="msg_order_status_in_progress">Food is being prepared</string>
+    <string name="msg_order_status_being_served">Food is being served</string>
+    <string name="text_error_network_disconnected">Slow or no internet connection\nPlease check your internet settings</string>
+    <string name="button_label_try_again">Try Again</string>
+    <string name="format_due_time">Due Time: %s</string>
+    <string name="format_delay_time">Delayed By: %s</string>
+    <string name="text_preorder_guest_status_reach_soon">Guest about to reach</string>
+    <string name="text_preorder_guest_status_reached">Guest has reached</string>
+    <string name="text_preorder_guest_status_delay">Guest is running late</string>
+    <string name="label_scheduled_wait_for_confirmation">Waiting for Confirmation</string>
+    <string name="label_scheduled_accepted_request">Accepted request for Booking</string>
+    <string name="label_qsr_order_summary">Order Summary</string>
+    <string name="format_label_scheduled_preparation_food_guest_due"><![CDATA[Prepare food. Diner will arrive in <font color="#ff4f19">%s</font>]]></string>
+    <string name="format_label_scheduled_preparation_food_guest_late"><![CDATA[Prepare food. Diner is late by <font color="#ff4f19">%s</font>]]></string>
+    <string name="format_label_qsr_preparation_order_placed"><![CDATA[Order placed <font color="#ff4f19">%s</font>]]></string>
+    <string name="action_mark_food_served">Food Served</string>
+    <string name="action_mark_food_ready">Food Ready</string>
+    <string name="action_cancel_order">Cancel Order</string>
+    <string name="action_end_session">End Session</string>
+    <string name="text_qsr_mark_food_ready">Mark ready after preparing</string>
+    <string name="text_qsr_mark_session_end">Served the food</string>
+    <string name="text_manager_food_preparation_accepted">For a better customer experience, prepare the food in selected time.</string>
+    <string name="text_manager_food_preparation_preorder_new">Mention the preparation time. We will notify you when to start preparing food.</string>
+    <string name="text_manager_food_preparation_qsr_new">Mention the preparation time. We will notify you when the preparation time ends.</string>
+    <string name="text_manager_food_preparation_qsr_end">Order completed. Kindly end the session.</string>
 </resources>

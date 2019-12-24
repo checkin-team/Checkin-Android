@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:paddingStart="@dimen/spacing_extra_large"
+    android:paddingTop="@dimen/spacing_gigantic"
+    android:paddingEnd="@dimen/spacing_extra_large"
+    android:paddingBottom="@dimen/spacing_gigantic">
+
+    <com.checkin.app.checkin.Utility.PrefixEditText
+        android:id="@+id/et_dialog_phone"
+        style="@style/RoundedInputTextStyle"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/height_input_normal"
+        android:layout_marginEnd="@dimen/spacing_normal"
+        android:hint="Input Phone Number"
+        android:inputType="phone"
+        android:maxLength="13"
+        android:text="@string/prefix_country_code"
+        android:textAlignment="center"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <Button
+        android:id="@+id/btn_proceed"
+        style="@style/ButtonRedAlertAction"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/spacing_large"
+        android:layout_marginEnd="@dimen/spacing_normal"
+        android:text="Proceed"
+        android:textSize="@dimen/font_normal"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/et_dialog_phone" />
+</androidx.constraintlayout.widget.ConstraintLayout>

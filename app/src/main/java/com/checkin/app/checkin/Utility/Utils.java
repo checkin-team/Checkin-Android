@@ -33,6 +33,7 @@ import android.preference.PreferenceManager;
 import android.provider.DocumentsContract;
 import android.provider.MediaStore;
 import android.provider.OpenableColumns;
+import android.text.Html;
 import android.text.TextUtils;
 import android.util.DisplayMetrics;
 import android.util.Log;
@@ -74,8 +75,11 @@ import java.util.Date;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
+import java.util.concurrent.TimeUnit;
 import java.util.regex.MatchResult;
 import java.util.regex.Matcher;
+
+import kotlin.Pair;
 
 import static com.checkin.app.checkin.BuildConfig.DEBUG;
 
@@ -274,8 +278,12 @@ public final class Utils {
         return formatCurrencyAmount(context, format.format(amount));
     }
 
-    public static String formatDateTo24HoursTime(Date dateTime) {
+    public static String formatDateTo24HoursTime(@NonNull Date dateTime) {
         return new SimpleDateFormat("HH:mm", Locale.ENGLISH).format(dateTime);
+    }
+
+    public static String formatDateTo12HoursTime(@NonNull Date dateTime) {
+        return new SimpleDateFormat("HH:mm a", Locale.ENGLISH).format(dateTime);
     }
 
     public static String getCurrentFormattedDateInvoice() {
@@ -299,10 +307,14 @@ public final class Utils {
         return formatter.format(date);
     }
 
-    public static String formatDate(String date, String initDateFormat, String endDateFormat) throws ParseException {
+    public static String convertFormatDate(String date, String initDateFormat, String endDateFormat) throws ParseException {
         Date initDate = new SimpleDateFormat(initDateFormat, Locale.getDefault()).parse(date);
         SimpleDateFormat formatter = new SimpleDateFormat(endDateFormat, Locale.getDefault());
         return formatter.format(initDate);
+    }
+
+    public static String formatDate(@NonNull Date date, String dateFormat) {
+        return new SimpleDateFormat(dateFormat, Locale.getDefault()).format(date);
     }
 
     public static String formatTimeDuration(long milliSec) {
@@ -326,12 +338,42 @@ public final class Utils {
         return "0 Sec";
     }
 
-    public static String formatElapsedTime(Date eventTime) {
+    public static String formatElapsedTime(@NonNull Date eventTime) {
         return formatElapsedTime(eventTime, Calendar.getInstance().getTime());
     }
 
-    public static String formatElapsedTime(Date eventTime, Date currentTime) {
-        long diffTime = currentTime.getTime() - eventTime.getTime();
+    public static String formatElapsedTime(@NonNull Date eventTime, @NonNull Date currentTime) {
+        Pair<TimeUnit, Long> pair = getTimeDifference(eventTime, currentTime);
+        long value = pair.getSecond();
+        String suffix = value > 1 ? "s " : " ";
+        switch (pair.getFirst()) {
+            case DAYS:
+                return String.format(Locale.getDefault(), "%d day%sago", value, suffix);
+            case HOURS:
+                return String.format(Locale.getDefault(), "%d hour%sago", value, suffix);
+            case MINUTES:
+                return String.format(Locale.getDefault(), "%d min%sago", value, suffix);
+        }
+        return "Now";
+    }
+
+    public static String formatDueTime(@NonNull Date startTime, @NonNull Date endTime) {
+        Pair<TimeUnit, Long> pair = getTimeDifference(startTime, endTime);
+        long value = pair.getSecond();
+        String suffix = value > 1 ? "s " : " ";
+        switch (pair.getFirst()) {
+            case DAYS:
+                return String.format(Locale.getDefault(), "%d day%s", value, suffix);
+            case HOURS:
+                return String.format(Locale.getDefault(), "%d hour%s", value, suffix);
+            case MINUTES:
+                return String.format(Locale.getDefault(), "%d min%s", value, suffix);
+        }
+        return "Under 1 min";
+    }
+
+    public static Pair<TimeUnit, Long> getTimeDifference(@NonNull Date start, @NonNull Date end) {
+        long diffTime = end.getTime() - start.getTime();
         long secondsInMilli = 1000;
         long minutesInMilli = secondsInMilli * 60;
         long hoursInMilli = minutesInMilli * 60;
@@ -342,13 +384,15 @@ public final class Utils {
         diffTime = diffTime % hoursInMilli;
         long elapsedMinutes = diffTime / minutesInMilli;
         diffTime = diffTime % minutesInMilli;
-        if (elapsedDays > 0)
-            return String.format(Locale.ENGLISH, "%d days ago", elapsedDays);
-        if (elapsedHours > 0)
-            return String.format(Locale.ENGLISH, "%d hours ago", elapsedHours);
-        if (elapsedMinutes > 0)
-            return String.format(Locale.ENGLISH, "%d minutes ago", elapsedMinutes);
-        return "Now";
+        if (elapsedDays > 0) return new Pair(TimeUnit.DAYS, elapsedDays);
+        if (elapsedHours > 0) return new Pair(TimeUnit.HOURS, elapsedHours);
+        if (elapsedMinutes > 0) return new Pair(TimeUnit.MINUTES, elapsedMinutes);
+        else return new Pair(TimeUnit.SECONDS, diffTime / secondsInMilli);
+    }
+
+    public static CharSequence fromHtml(String html) {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) return Html.fromHtml(html, 0);
+        else return Html.fromHtml(html);
     }
 
     /* ============================================================

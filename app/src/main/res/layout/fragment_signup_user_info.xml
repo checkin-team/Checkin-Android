@@ -14,7 +14,7 @@
         android:layout_marginStart="@dimen/spacing_normal"
         android:layout_marginTop="@dimen/spacing_huge"
         android:hint="First Name"
-        style="@style/InputTextStyle"
+        style="@style/RoundedInputTextStyle"
         app:layout_constraintEnd_toStartOf="@+id/ed_lastname"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
@@ -26,7 +26,7 @@
         android:layout_marginEnd="@dimen/spacing_normal"
         android:layout_marginTop="@dimen/spacing_huge"
         android:hint="Last Name"
-        style="@style/InputTextStyle"
+        style="@style/RoundedInputTextStyle"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/ed_firstname"
         app:layout_constraintTop_toTopOf="parent" />
@@ -39,7 +39,7 @@
         android:layout_marginStart="@dimen/spacing_extra_large"
         android:layout_marginTop="@dimen/spacing_normal"
         android:hint="Username"
-        style="@style/InputTextStyle"
+        style="@style/RoundedInputTextStyle"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/im_female" />

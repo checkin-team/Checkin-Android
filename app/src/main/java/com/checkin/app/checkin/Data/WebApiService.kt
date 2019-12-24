@@ -3,16 +3,12 @@ package com.checkin.app.checkin.Data
 import com.checkin.app.checkin.Account.AccountModel
 import com.checkin.app.checkin.Auth.AuthResultModel
 import com.checkin.app.checkin.Cook.Model.CookTableModel
+import com.checkin.app.checkin.Home.model.ActiveLiveSessionDetailModel
 import com.checkin.app.checkin.Home.model.NearbyRestaurantModel
+import com.checkin.app.checkin.Home.model.ScheduledLiveSessionDetailModel
 import com.checkin.app.checkin.Inventory.Model.InventoryAvailabilityModel
 import com.checkin.app.checkin.Inventory.Model.InventoryModel
-import com.checkin.app.checkin.Manager.Model.ManagerSessionEventModel
-import com.checkin.app.checkin.Manager.Model.ManagerSessionInvoiceModel
-import com.checkin.app.checkin.Manager.Model.ManagerStatsModel
 import com.checkin.app.checkin.Menu.Model.MenuModel
-import com.checkin.app.checkin.Menu.Model.OrderedItemModel
-import com.checkin.app.checkin.Misc.GenericDetailModel
-import com.checkin.app.checkin.Misc.paytm.PaytmModel
 import com.checkin.app.checkin.Search.SearchResultPeopleModel
 import com.checkin.app.checkin.Search.SearchResultShopModel
 import com.checkin.app.checkin.Shop.Private.Finance.FinanceModel
@@ -23,7 +19,6 @@ import com.checkin.app.checkin.Shop.Private.Invoice.RestaurantSessionModel
 import com.checkin.app.checkin.Shop.Private.Invoice.ShopSessionDetailModel
 import com.checkin.app.checkin.Shop.Private.Invoice.ShopSessionFeedbackModel
 import com.checkin.app.checkin.Shop.Private.MemberModel
-import com.checkin.app.checkin.Shop.RestaurantModel
 import com.checkin.app.checkin.Shop.ShopJoin.ShopJoinModel
 import com.checkin.app.checkin.User.ShopCustomerModel
 import com.checkin.app.checkin.User.UserModel
@@ -31,9 +26,14 @@ import com.checkin.app.checkin.User.bills.NewReviewModel
 import com.checkin.app.checkin.User.bills.UserTransactionBriefModel
 import com.checkin.app.checkin.User.bills.UserTransactionDetailsModel
 import com.checkin.app.checkin.Waiter.Model.*
+import com.checkin.app.checkin.manager.models.*
+import com.checkin.app.checkin.menu.models.*
+import com.checkin.app.checkin.misc.models.GenericDetailModel
+import com.checkin.app.checkin.misc.paytm.PaytmModel
+import com.checkin.app.checkin.restaurant.models.RestaurantModel
+import com.checkin.app.checkin.restaurant.models.RestaurantServiceModel
 import com.checkin.app.checkin.session.activesession.chat.SessionChatModel
-import com.checkin.app.checkin.session.model.*
-import com.fasterxml.jackson.databind.node.ArrayNode
+import com.checkin.app.checkin.session.models.*
 import com.fasterxml.jackson.databind.node.ObjectNode
 import okhttp3.MultipartBody
 import retrofit2.Call
@@ -62,6 +62,9 @@ interface WebApiService {
     // endregion
 
     // region SESSION
+    @get:GET("sessions/active/status/")
+    val activeSessionLiveStatus: Call<ActiveLiveSessionDetailModel>
+
     @POST("sessions/customer/new/")
     fun postNewCustomerSession(@Body data: ObjectNode): Call<QRResultModel>
 
@@ -75,10 +78,10 @@ interface WebApiService {
     fun putActiveSessionSelfCustomer(@Body data: ObjectNode): Call<ObjectNode>
 
     @POST("sessions/active/customers/{user_id}/")
-    fun postActiveSessionCustomerRequest(@Path("user_id") userId: String): Call<GenericDetailModel>
+    fun postActiveSessionCustomerRequest(@Path("user_id") userId: Long): Call<GenericDetailModel>
 
     @DELETE("sessions/active/customers/{user_id}/")
-    fun deleteActiveSessionCustomer(@Path("user_id") userId: String): Call<GenericDetailModel>
+    fun deleteActiveSessionCustomer(@Path("user_id") userId: Long): Call<GenericDetailModel>
 
     @POST("sessions/active/message/")
     fun postCustomerMessage(@Body data: ObjectNode): Call<ObjectNode>
@@ -124,6 +127,34 @@ interface WebApiService {
 
     // endregion
 
+    // region SCHEDULED_SESSION
+
+    @POST("sessions/customer/schedule/")
+    fun postNewScheduledSession(@Body data: NewScheduledSessionModel): Call<NewScheduledSessionModel>
+
+    @PATCH("sessions/customer/scheduled/{session_id}/edit/")
+    fun patchScheduledSession(@Path("session_id") sessionId: Long, @Body data: NewScheduledSessionModel): Call<NewScheduledSessionModel>
+
+    @get:GET("sessions/customer/scheduled/")
+    val customerScheduledSessions: Call<List<ScheduledLiveSessionDetailModel>>
+
+    @get:DELETE("sessions/customer/scheduled/cart/clear/")
+    val deleteCustomerCart: Call<ObjectNode>
+
+    @GET("sessions/customer/scheduled/{session_id}/promo/")
+    fun getAvailedPromoForScheduledSession(@Path("session_id") sessionId: Long): Call<SessionPromoModel>
+
+    @POST("sessions/customer/scheduled/{session_id}/promos/avail/")
+    fun availPromoForScheduledSession(@Path("session_id") sessionId: Long, @Body data:ObjectNode): Call<SessionPromoModel>
+
+    @DELETE("sessions/customer/scheduled/{session_id}/promos/remove/")
+    fun deleteAvailedPromoForScheduledSession(@Path("session_id") sessionId: Long): Call<ObjectNode>
+
+    @POST("sessions/customer/scheduled/{session_id}/pay/paytm/")
+    fun postPaytmRequestForScheduledSession(@Path("session_id") sessionId: Long): Call<PaytmModel>
+
+    // endregion
+
     // region MISC
     @get:GET("accounts/self/")
     val selfAccounts: Call<List<AccountModel>>
@@ -136,7 +167,7 @@ interface WebApiService {
     fun getSearchShopResults(@Query("search") query: String?, @Query("has_nonveg") hasNonVeg: Boolean?, @Query("has_alcohol") hasAlcohol: Boolean?): Call<List<SearchResultShopModel>>
     // endregion
 
-    // region promos
+    // region PROMOS
     @get:GET("promos/")
     val promoCodes: Call<List<PromoDetailModel>>
 
@@ -157,16 +188,22 @@ interface WebApiService {
 
     // region SHOP
     @get:GET("restaurants/")
-    val restaurants: Call<List<RestaurantModel>>
+    val restaurants: Call<List<com.checkin.app.checkin.Shop.RestaurantModel>>
+
+    @GET("/restaurants/{restaurant_id}/profile/")
+    fun getRestaurantProfile(@Path("restaurant_id") restaurantId: Long): Call<RestaurantModel>
 
     @get:GET("restaurants/nearby/")
     val nearbyRestaurants: Call<List<NearbyRestaurantModel>>
+
+    @GET("restaurants/{restaurant_id}/brief/")
+    fun getRestaurantBriefDetail(@Path("restaurant_id") restaurantId: Long): Call<RestaurantServiceModel>
 
     @POST("restaurants/create/")
     fun postRegisterShop(@Body model: ShopJoinModel): Call<GenericDetailModel>
 
     @GET("restaurants/{shop_id}/")
-    fun getRestaurantDetails(@Path("shop_id") shopId: Long): Call<RestaurantModel>
+    fun getRestaurantDetails(@Path("shop_id") shopId: Long): Call<com.checkin.app.checkin.Shop.RestaurantModel>
 
     @Multipart
     @POST("restaurants/{shop_id}/logo/")
@@ -182,10 +219,10 @@ interface WebApiService {
     fun deleteRestaurantCover(@Path("shop_id") shopId: Long, @Path("index") index: Int): Call<ObjectNode>
 
     @GET("restaurants/{shop_id}/edit/")
-    fun getRestaurantManageDetails(@Path("shop_id") shopId: Long): Call<RestaurantModel>
+    fun getRestaurantManageDetails(@Path("shop_id") shopId: Long): Call<com.checkin.app.checkin.Shop.RestaurantModel>
 
     @PATCH("restaurants/{shop_id}/edit/")
-    fun putRestaurantManageDetails(@Path("shop_id") shopId: Long, @Body shopData: RestaurantModel): Call<ObjectNode>
+    fun putRestaurantManageDetails(@Path("shop_id") shopId: Long, @Body shopData: com.checkin.app.checkin.Shop.RestaurantModel): Call<ObjectNode>
 
     @PUT("restaurants/{shop_id}/verify/")
     fun putRestaurantContactVerify(@Path("shop_id") shopId: Long, @Body data: ObjectNode): Call<ObjectNode>
@@ -213,6 +250,9 @@ interface WebApiService {
 
     @GET("sessions/restaurants/{restaurant_id}/")
     fun getRestaurantSessionsById(@Path("restaurant_id") restaurantId: Long, @Query("checked_in_after") checkedOutAfter: String?, @Query("checked_in_before") checkedOutBefore: String?): Call<List<RestaurantSessionModel>>
+
+    @GET("sessions/restaurants/{restaurant_id}/scheduled/")
+    fun getScheduledSessionsById(@Path("restaurant_id") restaurantId: Long): Call<List<ShopScheduledSessionModel>>
 
     @GET("restaurants/{restaurant_id}/stats/admin")
     fun getRestaurantAdminStats(@Path("restaurant_id") restaurantId: Long, @Query("checked_in_after") checkedOutAfter: String?, @Query("checked_in_before") checkedOutBefore: String?): Call<RestaurantAdminStatsModel>
@@ -309,20 +349,50 @@ interface WebApiService {
     @DELETE("sessions/customer/cancel/")
     fun deleteCustomerSessionJoinRequest(): Call<ObjectNode>
 
+    @GET("sessions/manage/scheduled/{session_id}/detail/")
+    fun getManageScheduledSessionDetail(@Path("session_id") sessionId: Long): Call<ShopScheduledSessionDetailModel>
+
+    @PATCH("sessions/manage/scheduled/{session_id}/accept/")
+    fun patchManageScheduledSessionAccept(@Path("session_id") sessionId: Long, @Body data: PreparationTimeModel): Call<PreparationTimeModel>
+
+    @PATCH("sessions/manage/scheduled/{session_id}/done/")
+    fun patchManageScheduledSessionDone(@Path("session_id") sessionId: Long, @Body data: ObjectNode): Call<ScheduledSessionDoneModel>
+
+    @POST("sessions/manage/scheduled/{session_id}/reject/")
+    fun postManageScheduledSessionReject(@Path("session_id") sessionId: Long, @Body data: ScheduledSessionCancelModel): Call<GenericDetailModel>
+
     // endregion
 
     // region MENU
+    @get:GET("sessions/customer/scheduled/cart/")
+    val sessionCartStatus: Call<CartStatusModel>
+
+    @get:GET("sessions/customer/scheduled/cart/detail/")
+    val sessionCartDetail: Call<CartDetailModel>
+
+    @get:GET("sessions/customer/scheduled/cart/bill")
+    val sessionCartBillDetail: Call<CartBillModel>
+
     @GET("menus/restaurants/{shop_id}/available/")
     fun getAvailableMenu(@Path("shop_id") shopId: Long): Call<MenuModel>
 
     @POST("sessions/active/order/")
-    fun postActiveSessionOrders(@Body orderedItemModels: List<OrderedItemModel>): Call<ArrayNode>
+    fun postActiveSessionOrders(@Body orderedItemModels: List<OrderedItemModel>): Call<List<NewOrderModel>>
+
+    @POST("sessions/customer/scheduled/{session_id}/order/")
+    fun postScheduledSessionOrders(@Path("session_id") sessionId: Long, @Body orderedItemModels: List<OrderedItemModel>): Call<List<NewOrderModel>>
+
+    @PATCH("sessions/customer/scheduled/{session_id}/orders/{order_id}/")
+    fun patchScheduledSessionOrder(@Path("session_id") sessionId: Long, @Path("order_id") orderId: Long, @Body data: ObjectNode): Call<OrderedItemModel>
+
+    @DELETE("sessions/customer/scheduled/{session_id}/orders/{order_id}/")
+    fun deleteScheduledSessionOrder(@Path("session_id") sessionId: Long, @Path("order_id") orderId: Long): Call<ObjectNode>
 
     @DELETE("sessions/active/orders/{order_id}/")
     fun deleteSessionOrder(@Path("order_id") order_id: Long): Call<ObjectNode>
 
     @POST("sessions/{session_id}/manage/order/")
-    fun postSessionManagerOrders(@Path("session_id") sessionId: Long, @Body orderedItemModels: List<OrderedItemModel>): Call<ArrayNode>
+    fun postSessionManagerOrders(@Path("session_id") sessionId: Long, @Body orderedItemModels: List<OrderedItemModel>): Call<List<NewOrderModel>>
 
     @GET("menus/restaurants/{restaurant_id}/manage/available/")
     fun getAvailableRestaurantMenu(@Path("restaurant_id") restaurantId: Long): Call<InventoryModel>
@@ -338,12 +408,12 @@ interface WebApiService {
 
     // endregion
 
-    // region payments
+    // region PAYTM
     @POST("payments/callback/paytm/")
     fun postPaytmCallback(@Body data: ObjectNode): Call<ObjectNode>
     //endregion
 
-    //region Review
+    //region REVIEW
 
     @GET("reviews/sessions/{session_id}/")
     fun getRestaurantSessionReviews(@Path("session_id") sessionId: Long): Call<List<ShopSessionFeedbackModel>>

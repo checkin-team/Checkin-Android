@@ -3,9 +3,8 @@ package com.checkin.app.checkin.Shop.Private.Invoice;
 import android.os.Bundle;
 import android.widget.TextView;
 
-import com.checkin.app.checkin.Misc.BriefModel;
+import com.checkin.app.checkin.misc.models.BriefModel;
 import com.checkin.app.checkin.R;
-import com.checkin.app.checkin.Shop.ShopModel;
 import com.google.android.material.appbar.AppBarLayout;
 import com.google.android.material.tabs.TabLayout;
 

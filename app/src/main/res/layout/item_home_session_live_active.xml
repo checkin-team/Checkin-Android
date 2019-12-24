@@ -1,0 +1,322 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layout_margin="@dimen/spacing_tiny"
+    android:orientation="vertical"
+    app:cardCornerRadius="@dimen/card_corner_radius_small"
+    app:cardElevation="@dimen/card_elevation">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <LinearLayout
+            android:id="@+id/container_home_session_live_active_menu"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/spacing_extra_small"
+            android:clickable="true"
+            android:focusable="true"
+            android:orientation="vertical"
+            app:layout_constraintEnd_toEndOf="@id/container_home_session_live_active_call_waiter"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <ImageView
+                android:id="@+id/im_home_session_live_active_menu"
+                android:layout_width="wrap_content"
+                android:layout_height="@dimen/button_height_extra_short"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginBottom="@dimen/spacing_extra_tiny"
+                android:src="@drawable/ic_action_show_menu" />
+
+            <TextView
+                android:id="@+id/tv_home_session_live_active_menu"
+                style="@style/GreyExtraSmallTextStyle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/action_view_menu"
+                android:textAlignment="center" />
+        </LinearLayout>
+
+        <TextView
+            android:id="@+id/tv_home_session_live_active_message"
+            style="@style/GreySmallTextStyle"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/spacing_small"
+            android:textColor="@color/orange_red"
+            app:layout_constraintEnd_toStartOf="@id/container_home_session_live_active_menu"
+            app:layout_constraintStart_toStartOf="@id/cv_home_session_live_active_restaurant"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:text="Hi, Raushan enjoy your dine-in." />
+
+        <androidx.cardview.widget.CardView
+            android:id="@+id/cv_home_session_live_active_restaurant"
+            android:layout_width="@dimen/size_logo_large"
+            android:layout_height="@dimen/size_logo_large"
+            android:layout_marginTop="@dimen/spacing_extra_small"
+            app:cardCornerRadius="@dimen/card_corner_radius_small"
+            app:cardElevation="@dimen/card_elevation"
+            app:layout_constraintBottom_toTopOf="@id/tv_home_session_live_active_name"
+            app:layout_constraintStart_toStartOf="@id/container_home_session_live_active_promo"
+            app:layout_constraintTop_toBottomOf="@id/tv_home_session_live_active_message"
+            app:layout_constraintVertical_chainStyle="spread">
+
+            <ImageView
+                android:id="@+id/im_home_session_live_active_logo"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:scaleType="centerCrop"
+                android:src="@drawable/cover_restaurant_unknown" />
+
+            <TextView
+                android:id="@+id/tv_home_session_live_active_status"
+                style="@style/WhiteExtraSmallTextStyle"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="bottom"
+                android:background="@drawable/background_rectangle_brick_gradient"
+                android:paddingTop="@dimen/spacing_extra_tiny"
+                android:paddingBottom="@dimen/spacing_extra_tiny"
+                android:text="Live"
+                android:textAlignment="center" />
+        </androidx.cardview.widget.CardView>
+
+        <RelativeLayout
+            android:id="@+id/rl_home_session_live_active_orders_status"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_marginStart="@dimen/spacing_small"
+            android:layout_weight="1"
+            android:background="@drawable/background_container_order_status"
+            android:orientation="vertical"
+            android:visibility="visible"
+            app:layout_constraintBottom_toBottomOf="@id/cv_home_session_live_active_restaurant"
+            app:layout_constraintEnd_toEndOf="@id/container_home_session_live_active_call_waiter"
+            app:layout_constraintStart_toEndOf="@id/cv_home_session_live_active_restaurant"
+            app:layout_constraintTop_toTopOf="@id/cv_home_session_live_active_restaurant">
+
+            <TextView
+                android:id="@+id/title_orders_label"
+                style="@style/GreyExtraSmallTextStyle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentTop="true"
+                android:layout_marginStart="@dimen/spacing_tiny"
+                android:layout_marginTop="@dimen/spacing_tiny"
+                android:gravity="center"
+                android:text="Order Status" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_alignParentBottom="true"
+                android:layout_marginBottom="@dimen/spacing_tiny"
+                android:weightSum="3">
+
+                <LinearLayout
+                    android:id="@+id/container_as_order_new"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:gravity="center|start"
+                    android:orientation="vertical">
+
+                    <ImageView
+                        android:layout_width="@dimen/button_height_short"
+                        android:layout_height="@dimen/button_height_tiny"
+                        android:layout_gravity="center"
+                        android:src="@drawable/ic_order_new_grey" />
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="center"
+                        android:orientation="horizontal">
+
+                        <TextView
+                            android:id="@+id/tv_home_session_live_order_new_count"
+                            style="@style/GreySmallTextStyle"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center_vertical"
+                            tools:text="3" />
+
+                        <TextView
+                            style="@style/GreyExtraSmallTextStyle"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center"
+                            android:layout_marginStart="@dimen/spacing_tiny"
+                            android:text="@string/label_new"
+                            android:textSize="@dimen/font_extra_small" />
+                    </LinearLayout>
+
+                </LinearLayout>
+
+                <include layout="@layout/incl_vertical_line" />
+
+                <LinearLayout
+                    android:id="@+id/container_as_order_progress"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_marginStart="@dimen/spacing_extra_small"
+                    android:layout_weight="1"
+                    android:gravity="center|left"
+                    android:orientation="vertical">
+
+                    <ImageView
+                        android:layout_width="@dimen/button_height_short"
+                        android:layout_height="@dimen/button_height_tiny"
+                        android:layout_gravity="center"
+                        android:src="@drawable/ic_order_cooking_grey" />
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="center">
+
+                        <TextView
+                            android:id="@+id/tv_home_session_live_order_progress_count"
+                            style="@style/GreySmallTextStyle"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:gravity="center"
+                            tools:text="3" />
+
+                        <TextView
+                            style="@style/GreySmallTextStyle"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center"
+                            android:layout_marginStart="@dimen/spacing_tiny"
+                            android:text="Preparing"
+                            android:textSize="@dimen/font_extra_small" />
+                    </LinearLayout>
+                </LinearLayout>
+
+                <include layout="@layout/incl_vertical_line" />
+
+                <LinearLayout
+                    android:id="@+id/container_as_order_done"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_marginStart="@dimen/spacing_extra_small"
+                    android:layout_weight="1"
+                    android:gravity="center|left"
+                    android:orientation="vertical">
+
+                    <ImageView
+                        android:layout_width="@dimen/button_height_short"
+                        android:layout_height="@dimen/button_height_tiny"
+                        android:layout_gravity="center"
+                        android:src="@drawable/ic_order_delivered_grey" />
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="center">
+
+                        <TextView
+                            android:id="@+id/tv_home_session_live_order_done_count"
+                            style="@style/GreySmallTextStyle"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:gravity="center"
+                            tools:text="3" />
+
+                        <TextView
+                            style="@style/GreySmallTextStyle"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center"
+                            android:layout_marginStart="@dimen/spacing_tiny"
+                            android:text="@string/status_order_delivered"
+                            android:textSize="@dimen/font_extra_small" />
+                    </LinearLayout>
+
+                </LinearLayout>
+
+            </LinearLayout>
+        </RelativeLayout>
+
+        <LinearLayout
+            android:id="@+id/container_home_session_live_active_promo"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_marginStart="@dimen/spacing_normal"
+            android:layout_marginEnd="@dimen/spacing_normal"
+            android:background="@drawable/background_rounded_black"
+            android:orientation="horizontal"
+            android:paddingStart="@dimen/spacing_small"
+            android:paddingEnd="@dimen/spacing_small"
+            app:layout_constraintBottom_toBottomOf="@id/container_home_session_live_active_call_waiter"
+            app:layout_constraintEnd_toStartOf="@id/container_home_session_live_active_call_waiter"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="@id/container_home_session_live_active_call_waiter">
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="@dimen/size_extra_small_icon"
+                android:layout_gravity="center"
+                android:src="@drawable/ic_hot_deal" />
+
+            <TextView
+                android:id="@+id/tv_home_session_live_active_promo_name"
+                style="@style/WhiteExtraSmallTextStyle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginStart="@dimen/spacing_tiny"
+                android:layout_marginEnd="@dimen/spacing_extra_tiny"
+                tools:text="Get 40% off*" />
+        </LinearLayout>
+
+        <RelativeLayout
+            android:id="@+id/container_home_session_live_active_call_waiter"
+            android:layout_width="wrap_content"
+            android:layout_height="@dimen/size_small_button"
+            android:layout_marginEnd="@dimen/spacing_normal"
+            android:layout_marginBottom="@dimen/spacing_extra_small"
+            android:background="@drawable/background_rounded_green_gradient"
+            android:clickable="true"
+            android:focusable="true"
+            android:gravity="center_vertical"
+            android:padding="@dimen/spacing_extra_tiny"
+            android:paddingStart="@dimen/spacing_extra_small"
+            android:paddingEnd="@dimen/spacing_extra_small"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent">
+
+            <ImageView
+                android:id="@+id/im_home_session_live_active_waiter"
+                android:layout_width="@dimen/width_small_icon"
+                android:layout_height="wrap_content"
+                android:src="@drawable/ic_action_call_waiter" />
+
+            <TextView
+                android:id="@+id/tv_home_session_live_action_waiter"
+                style="@style/WhiteSmallTextStyle"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_marginStart="@dimen/spacing_extra_small"
+                android:layout_toEndOf="@id/im_home_session_live_active_waiter"
+                android:gravity="center_vertical"
+                android:text="Call Waiter"
+                android:textAlignment="center" />
+        </RelativeLayout>
+
+        <TextView
+            android:id="@+id/tv_home_session_live_active_name"
+            style="@style/GreySmallTextStyle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintBottom_toTopOf="@id/container_home_session_live_active_call_waiter"
+            app:layout_constraintStart_toStartOf="@+id/cv_home_session_live_active_restaurant"
+            app:layout_constraintTop_toBottomOf="@+id/cv_home_session_live_active_restaurant"
+            tools:text="Corner House" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</androidx.cardview.widget.CardView>

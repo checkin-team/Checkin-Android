@@ -11,7 +11,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.checkin.app.checkin.R;
 import com.checkin.app.checkin.Utility.Utils;
-import com.checkin.app.checkin.session.model.PromoDetailModel;
+import com.checkin.app.checkin.session.models.PromoDetailModel;
 
 import java.util.List;
 

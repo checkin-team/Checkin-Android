@@ -13,16 +13,16 @@ import com.checkin.app.checkin.Data.NetworkBoundResource;
 import com.checkin.app.checkin.Data.Resource;
 import com.checkin.app.checkin.Data.RetrofitLiveData;
 import com.checkin.app.checkin.Data.WebApiService;
-import com.checkin.app.checkin.Misc.GenericDetailModel;
-import com.checkin.app.checkin.Misc.paytm.PaytmModel;
+import com.checkin.app.checkin.misc.models.GenericDetailModel;
+import com.checkin.app.checkin.misc.paytm.PaytmModel;
 import com.checkin.app.checkin.session.activesession.chat.SessionChatModel;
-import com.checkin.app.checkin.session.model.ActiveSessionModel;
-import com.checkin.app.checkin.session.model.CheckoutStatusModel;
-import com.checkin.app.checkin.session.model.PromoDetailModel;
-import com.checkin.app.checkin.session.model.SessionInvoiceModel;
-import com.checkin.app.checkin.session.model.SessionOrderedItemModel;
-import com.checkin.app.checkin.session.model.SessionPromoModel;
-import com.checkin.app.checkin.session.model.TrendingDishModel;
+import com.checkin.app.checkin.session.models.ActiveSessionModel;
+import com.checkin.app.checkin.session.models.CheckoutStatusModel;
+import com.checkin.app.checkin.session.models.PromoDetailModel;
+import com.checkin.app.checkin.session.models.SessionInvoiceModel;
+import com.checkin.app.checkin.session.models.SessionOrderedItemModel;
+import com.checkin.app.checkin.session.models.SessionPromoModel;
+import com.checkin.app.checkin.session.models.TrendingDishModel;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 
 import java.util.List;
@@ -303,11 +303,11 @@ public class ActiveSessionRepository extends BaseRepository {
         }.getAsLiveData();
     }
 
-    public Call<ObjectNode> synchPostPaytmCallback(ObjectNode data) {
+    public Call<ObjectNode> syncPostPaytmCallback(ObjectNode data) {
         return mWebService.postPaytmCallback(data);
     }
 
-    public LiveData<Resource<GenericDetailModel>> acceptSessionMemberRequest(String userId) {
+    public LiveData<Resource<GenericDetailModel>> acceptSessionMemberRequest(long userId) {
         return new NetworkBoundResource<GenericDetailModel, GenericDetailModel>() {
             @Override
             protected boolean shouldUseLocalDb() {
@@ -326,7 +326,7 @@ public class ActiveSessionRepository extends BaseRepository {
         }.getAsLiveData();
     }
 
-    public LiveData<Resource<GenericDetailModel>> deleteSessionMember(String userId) {
+    public LiveData<Resource<GenericDetailModel>> deleteSessionMember(long userId) {
         return new NetworkBoundResource<GenericDetailModel, GenericDetailModel>() {
             @Override
             protected boolean shouldUseLocalDb() {
@@ -361,26 +361,6 @@ public class ActiveSessionRepository extends BaseRepository {
             @Override
             protected LiveData<ApiResponse<List<TrendingDishModel>>> createCall() {
                 return new RetrofitLiveData<>(mWebService.getRestaurantTrendingItem(restaurantId));
-            }
-        }.getAsLiveData();
-    }
-
-    public LiveData<Resource<List<PromoDetailModel>>> getAvailablePromoCodes() {
-        return new NetworkBoundResource<List<PromoDetailModel>, List<PromoDetailModel>>() {
-            @Override
-            protected boolean shouldUseLocalDb() {
-                return false;
-            }
-
-            @NonNull
-            @Override
-            protected LiveData<ApiResponse<List<PromoDetailModel>>> createCall() {
-                return new RetrofitLiveData<>(mWebService.getPromoCodes());
-            }
-
-            @Override
-            protected void saveCallResult(List<PromoDetailModel> data) {
-
             }
         }.getAsLiveData();
     }

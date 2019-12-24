@@ -10,7 +10,7 @@ import butterknife.BindView
 import butterknife.ButterKnife
 import com.checkin.app.checkin.R
 import com.checkin.app.checkin.Utility.Utils
-import com.checkin.app.checkin.session.model.TrendingDishModel
+import com.checkin.app.checkin.session.models.TrendingDishModel
 
 class MenuTreatYourselfAdapter(private val mListener: TreatYourselfInteraction) : RecyclerView.Adapter<MenuTreatYourselfAdapter.ViewHolder>() {
     private var mDishes: List<TrendingDishModel>? = null

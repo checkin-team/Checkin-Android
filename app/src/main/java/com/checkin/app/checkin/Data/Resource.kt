@@ -8,7 +8,7 @@ import com.fasterxml.jackson.databind.JsonNode
 import java.net.HttpURLConnection.*
 
 // A generic class that describes data with a status.
-class Resource<T> private constructor(val status: Status, val data: T?, val message: String?, val errorBody: JsonNode?) {
+class Resource<out T> private constructor(val status: Status, val data: T?, val message: String?, val errorBody: JsonNode?) {
     private var problemModel: ProblemModel? = null
 
     var isCached = false
@@ -64,9 +64,9 @@ class Resource<T> private constructor(val status: Status, val data: T?, val mess
         fun <T> createResource(apiResponse: ApiResponse<T>): Resource<T> {
             return when {
                 apiResponse.isSuccessful -> success(apiResponse.data)
-                apiResponse.errorThrowable != null -> when {
-                    apiResponse.errorThrowable is RequestCanceledException -> error<T>(Status.ERROR_CANCELLED, null, null, null)
-                    apiResponse.errorThrowable is NoConnectivityException -> error(Status.ERROR_DISCONNECTED, apiResponse.errorMessage, apiResponse.data, null)
+                apiResponse.errorThrowable != null -> when (apiResponse.errorThrowable) {
+                    is RequestCanceledException -> error<T>(Status.ERROR_CANCELLED, null, null, null)
+                    is NoConnectivityException -> error(Status.ERROR_DISCONNECTED, apiResponse.errorMessage, apiResponse.data, null)
                     else -> {
                         Log.e(TAG, apiResponse.errorMessage, apiResponse.errorThrowable)
                         Crashlytics.log(Log.ERROR, TAG, apiResponse.errorMessage)
@@ -79,10 +79,14 @@ class Resource<T> private constructor(val status: Status, val data: T?, val mess
                 apiResponse.hasStatus(HTTP_UNAUTHORIZED) -> error(Status.ERROR_UNAUTHORIZED, apiResponse.errorMessage, apiResponse.data, apiResponse.errorData)
                 apiResponse.hasStatus(HTTP_FORBIDDEN) -> error(Status.ERROR_FORBIDDEN, apiResponse.errorMessage, apiResponse.data, apiResponse.errorData)
                 apiResponse.hasStatus(HTTP_NOT_ACCEPTABLE) -> error(Status.ERROR_NOT_ACCEPTABLE, apiResponse.errorMessage, apiResponse.data, apiResponse.errorData)
-                else -> error(Status.ERROR_UNKNOWN, apiResponse.errorMessage, apiResponse.data, apiResponse.errorData)
+                else -> {
+                    Crashlytics.log(Log.ERROR, TAG, apiResponse.errorMessage)
+                    Crashlytics.log(Log.ERROR, TAG, apiResponse.errorData?.toPrettyString())
+                    error(Status.ERROR_UNKNOWN, apiResponse.errorMessage, apiResponse.data, apiResponse.errorData)
+                }
             }
         }
 
-        fun <X, T> cloneResource(resource: Resource<T>, data: X): Resource<X> = Resource(resource.status, data, resource.message, resource.errorBody).apply { isCached = resource.isCached }
+        fun <X, T> cloneResource(resource: Resource<T>?, data: X): Resource<X>? = resource?.let { Resource(it.status, data, it.message, it.errorBody).apply { isCached = it.isCached } }
     }
 }

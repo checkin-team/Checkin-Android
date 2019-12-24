@@ -22,7 +22,7 @@
         android:textSize="@dimen/font_normal"
         android:maxLength="13"
         android:text="@string/prefix_country_code"
-        android:background="@drawable/background_textbox"
+        android:background="@drawable/background_rounded_textbox"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />

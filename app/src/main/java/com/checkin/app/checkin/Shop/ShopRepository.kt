@@ -5,7 +5,7 @@ import android.content.Context
 import androidx.lifecycle.LiveData
 import com.checkin.app.checkin.Data.*
 import com.checkin.app.checkin.Home.model.NearbyRestaurantModel
-import com.checkin.app.checkin.Misc.GenericDetailModel
+import com.checkin.app.checkin.misc.models.GenericDetailModel
 import com.checkin.app.checkin.Shop.Private.MemberModel
 import com.checkin.app.checkin.Shop.ShopJoin.ShopJoinModel
 import com.checkin.app.checkin.Utility.ProgressRequestBody

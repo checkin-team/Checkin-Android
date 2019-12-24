@@ -11,7 +11,7 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 import com.checkin.app.checkin.Data.Resource;
-import com.checkin.app.checkin.Misc.StatusTextViewHolder;
+import com.checkin.app.checkin.misc.adapters.StatusTextViewHolder;
 import com.checkin.app.checkin.R;
 import com.checkin.app.checkin.Shop.Private.ShopProfileViewModel;
 import com.checkin.app.checkin.Shop.RestaurantModel;

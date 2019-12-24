@@ -3,14 +3,13 @@ package com.checkin.app.checkin.Shop.Private;
 import android.content.Intent;
 import android.os.Bundle;
 import android.widget.ImageView;
-import android.widget.TextView;
 
 import com.checkin.app.checkin.Account.AccountModel;
 import com.checkin.app.checkin.Account.BaseAccountActivity;
 import com.checkin.app.checkin.Data.Resource;
 import com.checkin.app.checkin.Inventory.InventoryActivity;
-import com.checkin.app.checkin.Misc.BaseFragmentAdapterBottomNav;
-import com.checkin.app.checkin.Misc.BlankFragment;
+import com.checkin.app.checkin.misc.adapters.BaseFragmentAdapterBottomNav;
+import com.checkin.app.checkin.misc.fragments.BlankFragment;
 import com.checkin.app.checkin.R;
 import com.checkin.app.checkin.Shop.Private.Insight.ShopInsightActivity;
 import com.checkin.app.checkin.Utility.DynamicSwipableViewPager;

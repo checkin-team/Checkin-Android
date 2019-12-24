@@ -15,11 +15,11 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.checkin.app.checkin.Cook.Adapter.CookSessionOrderAdapter;
 import com.checkin.app.checkin.Cook.CookSessionViewModel;
-import com.checkin.app.checkin.Misc.BaseFragment;
 import com.checkin.app.checkin.R;
 import com.checkin.app.checkin.Utility.Utils;
+import com.checkin.app.checkin.misc.fragments.BaseFragment;
 import com.checkin.app.checkin.session.activesession.chat.SessionChatModel;
-import com.checkin.app.checkin.session.model.SessionOrderedItemModel;
+import com.checkin.app.checkin.session.models.SessionOrderedItemModel;
 
 import butterknife.BindView;
 

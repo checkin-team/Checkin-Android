@@ -14,7 +14,7 @@ import com.checkin.app.checkin.Data.RetrofitLiveData;
 import com.checkin.app.checkin.Data.WebApiService;
 import com.checkin.app.checkin.Inventory.Model.InventoryAvailabilityModel;
 import com.checkin.app.checkin.Inventory.Model.InventoryModel;
-import com.checkin.app.checkin.Menu.MenuRepository;
+import com.checkin.app.checkin.menu.MenuRepository;
 
 import java.util.List;
 

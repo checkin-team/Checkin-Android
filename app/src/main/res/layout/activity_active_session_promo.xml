@@ -5,10 +5,8 @@
     android:background="@color/white"
     android:orientation="vertical"
     android:padding="@dimen/spacing_normal">
-
-
     <LinearLayout
-        style="@style/InputTextStyle"
+        style="@style/RoundedInputTextStyle"
         android:layout_width="match_parent"
         android:orientation="horizontal">
 

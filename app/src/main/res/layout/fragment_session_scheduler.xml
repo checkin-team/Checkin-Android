@@ -1,0 +1,170 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@color/white"
+    android:padding="@dimen/spacing_normal">
+
+    <androidx.cardview.widget.CardView
+        android:id="@+id/container_card_date_picker"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/spacing_small"
+        android:layout_marginTop="@dimen/spacing_small"
+        android:layout_marginEnd="@dimen/spacing_small"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="start"
+            android:src="@drawable/ic_calendar_color" />
+
+        <ScrollView
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_gravity="end|center_vertical">
+
+            <LinearLayout
+                android:id="@+id/ll_container_scheduler_dates"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <ViewStub
+                    android:id="@+id/stub_scheduled_date_1"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/spacing_small"
+                    android:layout_marginEnd="@dimen/spacing_normal"
+                    android:layout="@layout/item_session_scheduled_day_date" />
+
+                <ViewStub
+                    android:id="@+id/stub_scheduled_date_2"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="@dimen/spacing_normal"
+                    android:layout="@layout/item_session_scheduled_day_date" />
+
+                <ViewStub
+                    android:id="@+id/stub_scheduled_date_3"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="@dimen/spacing_normal"
+                    android:layout="@layout/item_session_scheduled_day_date" />
+
+                <ViewStub
+                    android:id="@+id/stub_scheduled_date_4"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="@dimen/spacing_normal"
+                    android:layout="@layout/item_session_scheduled_day_date" />
+
+                <ViewStub
+                    android:id="@+id/stub_scheduled_date_5"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="@dimen/spacing_small"
+                    android:layout="@layout/item_session_scheduled_day_date" />
+
+            </LinearLayout>
+        </ScrollView>
+    </androidx.cardview.widget.CardView>
+
+    <TextView
+        android:id="@+id/tv_book_restaurant_time_heading"
+        style="@style/GreyHeadingStyle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/spacing_large"
+        android:text="What time?"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/container_card_date_picker" />
+
+    <TextView
+        android:id="@+id/tv_scheduler_time_picker"
+        style="@style/GreyTitleStyle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/spacing_small"
+        android:background="#fcf0ed"
+        android:padding="@dimen/spacing_small"
+        app:layout_constraintStart_toStartOf="@id/tv_book_restaurant_time_heading"
+        app:layout_constraintTop_toBottomOf="@id/tv_book_restaurant_time_heading"
+        tools:text="9:45 AM" />
+
+    <TextView
+        android:id="@+id/tv_book_restaurant_people_heading"
+        style="@style/GreyHeadingStyle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/spacing_large"
+        android:text="How many people?"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/tv_scheduler_time_picker" />
+
+    <TextView
+        android:id="@+id/tv_scheduler_decrement_people"
+        style="@style/TealBlueTextStyle"
+        android:layout_width="@dimen/size_normal_icon"
+        android:layout_height="@dimen/size_normal_icon"
+        android:layout_marginTop="@dimen/spacing_normal"
+        android:layout_marginEnd="@dimen/spacing_large"
+        android:background="@drawable/shape_oval_pinkish_grey"
+        android:clickable="true"
+        android:focusable="true"
+        android:fontFamily="@font/lucida_grande"
+        android:gravity="center"
+        android:text="-"
+        app:layout_constraintEnd_toStartOf="@id/tv_session_scheduler_people_count"
+        app:layout_constraintHorizontal_chainStyle="packed"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/tv_book_restaurant_people_heading" />
+
+    <TextView
+        android:id="@+id/tv_session_scheduler_people_count"
+        style="@style/GreyTextStyle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintBottom_toBottomOf="@id/tv_scheduler_decrement_people"
+        app:layout_constraintEnd_toStartOf="@id/tv_scheduler_increment_people"
+        app:layout_constraintStart_toEndOf="@id/tv_scheduler_decrement_people"
+        app:layout_constraintTop_toTopOf="@id/tv_scheduler_decrement_people"
+        tools:text="1" />
+
+    <TextView
+        android:id="@+id/tv_scheduler_increment_people"
+        style="@style/TealBlueTextStyle"
+        android:layout_width="@dimen/size_normal_icon"
+        android:layout_height="@dimen/size_normal_icon"
+        android:layout_marginStart="@dimen/spacing_large"
+        android:background="@drawable/shape_oval_egg_blue"
+        android:clickable="true"
+        android:focusable="true"
+        android:fontFamily="@font/lucida_grande"
+        android:gravity="center"
+        android:text="+"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@id/tv_session_scheduler_people_count"
+        app:layout_constraintTop_toBottomOf="@id/tv_book_restaurant_people_heading"
+        app:layout_constraintTop_toTopOf="@id/tv_scheduler_decrement_people" />
+
+    <Button
+        android:id="@+id/btn_scheduler_confirm_schedule"
+        style="@style/ButtonGradientGreen"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/spacing_small"
+        android:layout_marginTop="@dimen/spacing_huge"
+        android:layout_marginEnd="@dimen/spacing_small"
+        android:text="Continue"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/tv_session_scheduler_people_count" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

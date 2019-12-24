@@ -29,9 +29,6 @@ import com.checkin.app.checkin.Data.Message.MessageModel
 import com.checkin.app.checkin.Data.Message.MessageUtils
 import com.checkin.app.checkin.Data.ProblemModel
 import com.checkin.app.checkin.Data.Resource
-import com.checkin.app.checkin.Misc.BaseActivity
-import com.checkin.app.checkin.Misc.BillHolder
-import com.checkin.app.checkin.Misc.paytm.PaytmPayment
 import com.checkin.app.checkin.R
 import com.checkin.app.checkin.Shop.ShopModel
 import com.checkin.app.checkin.Shop.ShopModel.PAYMENT_MODE.PAYTM
@@ -39,12 +36,15 @@ import com.checkin.app.checkin.User.bills.SuccessfulTransactionActivity
 import com.checkin.app.checkin.Utility.Constants
 import com.checkin.app.checkin.Utility.Utils
 import com.checkin.app.checkin.Utility.pass
+import com.checkin.app.checkin.misc.BillHolder
+import com.checkin.app.checkin.misc.activities.BaseActivity
+import com.checkin.app.checkin.misc.paytm.PaytmPayment
 import com.checkin.app.checkin.session.activesession.ActiveSessionPaymentOptionsActivity.KEY_PAYMENT_MODE_RESULT
 import com.checkin.app.checkin.session.activesession.ActiveSessionPaymentOptionsActivity.KEY_SESSION_AMOUNT
-import com.checkin.app.checkin.session.model.PromoDetailModel
-import com.checkin.app.checkin.session.model.SessionBillModel
-import com.checkin.app.checkin.session.model.SessionInvoiceModel
-import com.checkin.app.checkin.session.model.SessionPromoModel
+import com.checkin.app.checkin.session.models.PromoDetailModel
+import com.checkin.app.checkin.session.models.SessionBillModel
+import com.checkin.app.checkin.session.models.SessionInvoiceModel
+import com.checkin.app.checkin.session.models.SessionPromoModel
 
 class ActiveSessionInvoiceActivity : BaseActivity() {
 

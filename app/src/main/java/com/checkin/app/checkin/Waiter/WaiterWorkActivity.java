@@ -1,12 +1,10 @@
 package com.checkin.app.checkin.Waiter;
 
-import android.annotation.SuppressLint;
 import android.app.AlertDialog;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
-import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.View;
@@ -16,6 +14,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.widget.Toolbar;
+import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
@@ -32,8 +31,6 @@ import com.checkin.app.checkin.Data.Message.MessageModel.MESSAGE_TYPE;
 import com.checkin.app.checkin.Data.Message.MessageObjectModel;
 import com.checkin.app.checkin.Data.Message.MessageUtils;
 import com.checkin.app.checkin.Data.Resource.Status;
-import com.checkin.app.checkin.Misc.BriefModel;
-import com.checkin.app.checkin.Misc.QRScannerActivity;
 import com.checkin.app.checkin.R;
 import com.checkin.app.checkin.Shop.ShopModel;
 import com.checkin.app.checkin.Utility.DynamicSwipableViewPager;
@@ -43,13 +40,17 @@ import com.checkin.app.checkin.Waiter.Fragment.WaiterTableFragment;
 import com.checkin.app.checkin.Waiter.Model.WaiterEventModel;
 import com.checkin.app.checkin.Waiter.Model.WaiterStatsModel;
 import com.checkin.app.checkin.Waiter.Model.WaiterTableModel;
+import com.checkin.app.checkin.misc.activities.QRScannerActivity;
+import com.checkin.app.checkin.misc.models.BriefModel;
 import com.checkin.app.checkin.session.activesession.chat.SessionChatModel;
-import com.checkin.app.checkin.session.model.EventBriefModel;
-import com.checkin.app.checkin.session.model.RestaurantTableModel;
-import com.checkin.app.checkin.session.model.SessionOrderedItemModel;
-import com.checkin.app.checkin.session.model.TableSessionModel;
+import com.checkin.app.checkin.session.models.EventBriefModel;
+import com.checkin.app.checkin.session.models.RestaurantTableModel;
+import com.checkin.app.checkin.session.models.SessionOrderedItemModel;
+import com.checkin.app.checkin.session.models.TableSessionModel;
 import com.google.android.material.navigation.NavigationView;
 import com.google.android.material.tabs.TabLayout;
+
+import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -430,10 +431,9 @@ public class WaiterWorkActivity extends BaseAccountActivity implements
         return new AccountModel.ACCOUNT_TYPE[]{AccountModel.ACCOUNT_TYPE.RESTAURANT_WAITER};
     }
 
-    @SuppressLint("WrongConstant")
     @Override
     public void onTableClick(RestaurantTableModel restaurantTableModel) {
-        drawerLayout.closeDrawer(Gravity.END, false);
+        drawerLayout.closeDrawer(GravityCompat.END, false);
         newWaiterSessionDialog(restaurantTableModel.getQrPk(), restaurantTableModel.getTable());
     }
 
@@ -453,9 +453,10 @@ public class WaiterWorkActivity extends BaseAccountActivity implements
         private List<WaiterTableModel> mTableList = new ArrayList<>();
 
         WaiterTablePagerAdapter(FragmentManager fm) {
-            super(fm);
+            super(fm, BEHAVIOR_SET_USER_VISIBLE_HINT);
         }
 
+        @NotNull
         @Override
         public Fragment getItem(int position) {
             return mFragmentList.get(position);

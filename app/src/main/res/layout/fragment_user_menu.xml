@@ -1,0 +1,133 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/container_as_menu_parent"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white_two"
+    android:orientation="vertical">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:paddingTop="@dimen/spacing_small">
+
+        <FrameLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <Spinner
+                android:id="@+id/spinner_menu_meal_slots"
+                style="@style/GreySmallTextStyle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="start"
+                android:layout_marginStart="@dimen/spacing_small"
+                android:entries="@array/menu_meal_slots" />
+
+            <ImageView
+                android:id="@+id/btn_as_menu_search"
+                android:layout_width="@dimen/size_extra_small_button"
+                android:layout_height="@dimen/size_extra_small_button"
+                android:layout_gravity="end|center_vertical"
+                android:layout_marginEnd="@dimen/spacing_small"
+                android:background="@drawable/ic_search_grey" />
+
+        </FrameLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/spacing_extra_small"
+                android:layout_marginTop="@dimen/spacing_extra_small"
+                android:layout_marginEnd="@dimen/spacing_extra_small"
+                android:layout_marginBottom="@dimen/spacing_small"
+                android:weightSum="4">
+
+                <TextView
+                    android:id="@+id/tv_as_menu_drinks"
+                    style="@style/GreyTextStyle"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:drawableTop="@drawable/btn_menu_category_drink_toggle"
+                    android:drawablePadding="@dimen/spacing_extra_small"
+                    android:gravity="center"
+                    android:padding="@dimen/spacing_tiny"
+                    android:scaleX="0.85"
+                    android:scaleY="0.85"
+                    android:text="Drinks" />
+
+                <TextView
+                    android:id="@+id/tv_as_menu_food"
+                    style="@style/GreyTextStyle"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:drawableTop="@drawable/btn_menu_category_food_toggle"
+                    android:drawablePadding="@dimen/spacing_extra_small"
+                    android:gravity="center"
+                    android:padding="@dimen/spacing_tiny"
+                    android:scaleX="0.85"
+                    android:scaleY="0.85"
+                    android:text="Food" />
+
+                <TextView
+                    android:id="@+id/tv_as_menu_dessert"
+                    style="@style/GreyTextStyle"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:drawableTop="@drawable/btn_menu_category_dessert_toggle"
+                    android:drawablePadding="@dimen/spacing_extra_small"
+                    android:gravity="center"
+                    android:padding="@dimen/spacing_tiny"
+                    android:scaleX="0.85"
+                    android:scaleY="0.85"
+                    android:text="Dessert" />
+
+                <TextView
+                    android:id="@+id/tv_as_menu_specials"
+                    style="@style/GreyTextStyle"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:drawableTop="@drawable/btn_menu_category_special"
+                    android:drawablePadding="@dimen/spacing_extra_small"
+                    android:gravity="center"
+                    android:padding="@dimen/spacing_tiny"
+                    android:scaleX="0.85"
+                    android:scaleY="0.85"
+                    android:text="Special"
+                    android:textColor="@color/greenish_teal" />
+            </LinearLayout>
+
+            <FrameLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+                <FrameLayout
+                    android:id="@+id/container_as_menu"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content" />
+
+                <ImageView
+                    android:id="@+id/btn_as_menu_filter"
+                    android:layout_width="@dimen/button_height_medium"
+                    android:layout_height="@dimen/button_height_medium"
+                    android:layout_gravity="end|bottom"
+                    android:layout_marginEnd="@dimen/spacing_small"
+                    android:layout_marginBottom="@dimen/spacing_normal"
+                    android:src="@drawable/ic_menu_as_filter"
+                    android:visibility="gone" />
+            </FrameLayout>
+
+        </LinearLayout>
+
+    </LinearLayout>
+</FrameLayout>

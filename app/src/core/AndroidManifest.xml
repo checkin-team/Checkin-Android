@@ -50,8 +50,8 @@
             android:theme="@style/AppTheme" />
         <activity
             android:name=".session.activesession.ActiveSessionActivity"
-            android:windowSoftInputMode="adjustNothing"
-            android:screenOrientation="portrait"/>
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="adjustNothing" />
         <activity
             android:name=".Shop.ShopJoin.BusinessFeaturesActivity"
             android:screenOrientation="portrait"
@@ -70,15 +70,27 @@
             android:theme="@style/AppThemeWhiteActionBar" />
 
         <activity
+            android:name=".restaurant.activities.PublicRestaurantProfileActivity"
+            android:theme="@style/AppTheme" />
+
+        <activity
             android:name=".Search.SearchActivity"
             android:theme="@style/AppTheme" />
+
+        <activity
+            android:name=".manager.activities.ManagerPreOrderDetailActivity"
+            android:theme="@style/AppTheme" />
+        <activity
+            android:name=".manager.activities.ManagerQSRDetailActivity"
+            android:theme="@style/AppTheme" />
+
         <activity
             android:name=".Shop.Private.MembersActivity"
             android:label="Members"
             android:screenOrientation="portrait"
             android:theme="@style/AppThemeWhiteActionBar" />
         <activity
-            android:name=".Misc.QRScannerActivity"
+            android:name=".misc.activities.QRScannerActivity"
             android:label="Scan CheckIn QR"
             android:theme="@style/AppThemeWhiteActionBar" />
         <activity
@@ -105,18 +117,21 @@
             android:label="@string/action_discount"
             android:theme="@style/AppThemeWhiteActionBar" />
         <activity
-            android:name=".Manager.ManagerSessionActivity"
+            android:name=".manager.activities.ManagerSessionActivity"
             android:windowSoftInputMode="adjustNothing" />
         <activity
-            android:name=".Manager.ManagerWorkActivity"
+            android:name=".manager.activities.ManagerWorkActivity"
             android:label="Manager"
             android:theme="@style/AppTheme" />
-        <activity android:name=".Manager.ManagerSessionInvoiceActivity"
+        <activity
+            android:name=".manager.activities.ManagerSessionInvoiceActivity"
             android:label="Invoice"
-            android:theme="@style/AppThemeWhiteActionBar"/>
-        <activity android:name=".Shop.Private.ShopPrivateActivity"
-            android:screenOrientation="portrait"/>
-        <activity android:name=".session.activesession.ActiveSessionPaymentOptionsActivity"
+            android:theme="@style/AppThemeWhiteActionBar" />
+        <activity
+            android:name=".Shop.Private.ShopPrivateActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".session.activesession.ActiveSessionPaymentOptionsActivity"
             android:label="Payment Mode"
             android:theme="@style/AppThemeWhiteActionBar" />
         <activity

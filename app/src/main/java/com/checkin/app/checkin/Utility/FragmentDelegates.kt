@@ -11,7 +11,6 @@ import kotlin.reflect.KProperty
  * Delegate that sets and disposes the fragment's listener by casting it to the fragment's activity.
  */
 class ParentActivityDelegate<T>(fragment: Fragment) : BaseParentDelegate<T>(fragment) {
-
     override fun extractValue(fragment: Fragment): T? = fragment.activity as? T
 }
 
@@ -20,7 +19,6 @@ class ParentActivityDelegate<T>(fragment: Fragment) : BaseParentDelegate<T>(frag
  * parent fragment.
  */
 class ParentFragmentDelegate<T>(fragment: Fragment) : BaseParentDelegate<T>(fragment) {
-
     override fun extractValue(fragment: Fragment): T? = fragment.parentFragment as? T
 }
 
@@ -62,3 +60,7 @@ abstract class BaseParentDelegate<T>(private val fragment: Fragment) :
         return value!!
     }
 }
+
+fun <T> Fragment.parentActivityDelegate(): BaseParentDelegate<T> = ParentActivityDelegate(this)
+
+fun <T> Fragment.parentFragmentDelegate(): BaseParentDelegate<T> = ParentFragmentDelegate(this)

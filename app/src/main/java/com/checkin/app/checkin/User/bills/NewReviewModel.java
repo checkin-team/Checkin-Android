@@ -1,10 +1,6 @@
 package com.checkin.app.checkin.User.bills;
 
-import com.checkin.app.checkin.Misc.BriefModel;
 import com.fasterxml.jackson.annotation.JsonProperty;
-
-import java.util.ArrayList;
-import java.util.List;
 
 public class NewReviewModel {
 //    @JsonProperty("user")

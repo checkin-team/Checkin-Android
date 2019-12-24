@@ -36,7 +36,7 @@
 
         <activity
             android:name=".Home.SplashActivity"
-            android:theme="@style/Theme.AppCompat.Light.NoActionBar"></activity>
+            android:theme="@style/Theme.AppCompat.Light.NoActionBar" />
 
         <activity-alias
             android:name="checkin.app.launcher"
@@ -61,7 +61,7 @@
         <activity
             android:name=".Maps.MapsActivity"
             android:theme="@style/AppTheme" />
-        <activity android:name=".Misc.SelectCropImageActivity" />
+        <activity android:name=".misc.activities.SelectCropImageActivity" />
         <activity
             android:name="com.facebook.FacebookActivity"
             android:configChanges="keyboard|keyboardHidden|screenLayout|screenSize|orientation"
@@ -79,7 +79,7 @@
             </intent-filter>
         </activity>
 
-        <activity android:name=".Misc.UpdateAppActivity" />
+        <activity android:name=".misc.activities.UpdateAppActivity" />
         <activity
             android:name=".Menu.UserMenu.SessionMenuActivity"
             android:windowSoftInputMode="adjustPan"/>

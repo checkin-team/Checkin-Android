@@ -15,8 +15,8 @@ import com.checkin.app.checkin.Utility.SourceMappedLiveData;
 import com.checkin.app.checkin.Waiter.Model.OrderStatusModel;
 import com.checkin.app.checkin.Waiter.WaiterRepository;
 import com.checkin.app.checkin.session.SessionRepository;
-import com.checkin.app.checkin.session.model.SessionBriefModel;
-import com.checkin.app.checkin.session.model.SessionOrderedItemModel;
+import com.checkin.app.checkin.session.models.SessionBriefModel;
+import com.checkin.app.checkin.session.models.SessionOrderedItemModel;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 
 import java.util.ArrayList;
@@ -45,7 +45,7 @@ public class CookSessionViewModel extends BaseViewModel {
 
     public CookSessionViewModel(@NonNull Application application) {
         super(application);
-        mSessionRepository = SessionRepository.getInstance(application);
+        mSessionRepository = SessionRepository.Companion.getInstance(application);
         mWaiterRepository = WaiterRepository.getInstance(application);
     }
 

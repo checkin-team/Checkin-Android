@@ -10,7 +10,7 @@ import com.checkin.app.checkin.Inventory.Adapter.InventoryItemAdapter;
 import com.checkin.app.checkin.Inventory.Fragment.InventoryGroupsFragment;
 import com.checkin.app.checkin.Inventory.Model.InventoryItemModel;
 import com.checkin.app.checkin.Menu.ShopMenu.Fragment.MenuInfoFragment;
-import com.checkin.app.checkin.Misc.BaseActivity;
+import com.checkin.app.checkin.misc.activities.BaseActivity;
 import com.checkin.app.checkin.R;
 
 import java.util.Collections;

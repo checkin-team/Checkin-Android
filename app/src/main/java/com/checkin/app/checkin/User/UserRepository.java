@@ -13,7 +13,7 @@ import com.checkin.app.checkin.Data.NetworkBoundResource;
 import com.checkin.app.checkin.Data.Resource;
 import com.checkin.app.checkin.Data.RetrofitLiveData;
 import com.checkin.app.checkin.Data.WebApiService;
-import com.checkin.app.checkin.Misc.GenericDetailModel;
+import com.checkin.app.checkin.misc.models.GenericDetailModel;
 import com.checkin.app.checkin.Utility.ProgressRequestBody;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 

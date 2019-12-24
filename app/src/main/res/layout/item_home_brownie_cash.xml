@@ -15,7 +15,7 @@
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        style="@style/AquaBlueTextStyle"
+        style="@style/TealBlueTextStyle"
         android:textSize="@dimen/font_large"
         android:layout_marginEnd="@dimen/spacing_extra_small"
         tools:text="234"/>
@@ -37,7 +37,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             style="@style/GreyTextStyle"
-            android:fontFamily="@font/josefinsans_regular"
+            android:fontFamily="@font/josefinsans"
             tools:text="Big Brewsky, Kormangla"/>
 
         <LinearLayout
@@ -56,7 +56,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 style="@style/GreySmallTextStyle"
-                android:fontFamily="@font/josefinsans_regular"
+                android:fontFamily="@font/josefinsans"
                 android:paddingStart="@dimen/spacing_tiny"
                 tools:text="Days Remaining"/>
 

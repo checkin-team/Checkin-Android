@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/white"
-    tools:context=".Misc.DataStatusFragment">
+    tools:context=".misc.fragments.DataStatusFragment">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/container_progress"

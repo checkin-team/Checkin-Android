@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginTop="@dimen/spacing_small"
+    android:padding="@dimen/spacing_tiny">
+
+    <TextView
+        android:id="@+id/tv_invoice_order_item_name"
+        style="@style/GreySmallTextStyle"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="@dimen/spacing_tiny"
+        android:drawableStart="@drawable/ic_veg"
+        android:drawablePadding="@dimen/spacing_small"
+        android:gravity="center|start"
+        app:layout_constraintBottom_toTopOf="@id/tv_invoice_order_customized"
+        app:layout_constraintEnd_toStartOf="@id/tv_invoice_order_item_price"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0"
+        tools:text="Pizza " />
+
+    <TextView
+        android:id="@+id/tv_invoice_order_item_price"
+        style="@style/GreySmallTextStyle"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:paddingStart="@dimen/spacing_extra_tiny"
+        android:paddingEnd="@dimen/spacing_extra_tiny"
+        app:layout_constraintBottom_toBottomOf="@id/tv_invoice_order_item_name"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="@id/tv_invoice_order_item_name"
+        tools:text="$ 123" />
+
+    <TextView
+        android:id="@+id/tv_invoice_order_customized"
+        style="@style/RedSmallTextStyle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/spacing_medium"
+        android:drawableEnd="@drawable/ic_setting"
+        android:drawablePadding="@dimen/spacing_tiny"
+        android:text="Customized"
+        android:textSize="@dimen/font_tiny"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="@id/tv_invoice_order_item_name" />
+</androidx.constraintlayout.widget.ConstraintLayout>

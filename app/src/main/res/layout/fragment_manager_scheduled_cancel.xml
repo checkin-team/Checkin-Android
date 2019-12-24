@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@color/white"
+    android:orientation="vertical"
+    android:paddingTop="@dimen/spacing_normal">
+
+    <TextView
+        android:id="@+id/tv_manager_scheduled_heading_cancel_reason"
+        style="@style/TealBlueTextStyle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="@dimen/spacing_small"
+        android:text="Are you sure you want to cancel the order?"
+        app:layout_constraintBottom_toTopOf="@id/rg_manager_scheduled_cancel_reason"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <RadioGroup
+        android:id="@+id/rg_manager_scheduled_cancel_reason"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/spacing_small"
+        app:layout_constraintBottom_toTopOf="@id/til_manager_scheduled_cancel_reason"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent">
+
+        <com.google.android.material.radiobutton.MaterialRadioButton
+            android:id="@+id/rb_manager_scheduled_cancel_reason_customer_delayed"
+            style="@style/GreySmallTextStyle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Customer didn't show up on chosen time slot." />
+
+        <com.google.android.material.radiobutton.MaterialRadioButton
+            android:id="@+id/rb_manager_scheduled_cancel_reason_food_delayed"
+            style="@style/GreySmallTextStyle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Food was not prepared on time." />
+
+        <com.google.android.material.radiobutton.MaterialRadioButton
+            android:id="@+id/rb_manager_scheduled_cancel_reason_item_unavailable"
+            style="@style/GreySmallTextStyle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Item out of stock." />
+
+        <com.google.android.material.radiobutton.MaterialRadioButton
+            android:id="@+id/rb_manager_scheduled_cancel_reason_other"
+            style="@style/GreySmallTextStyle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Other" />
+
+    </RadioGroup>
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/til_manager_scheduled_cancel_reason"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/spacing_small"
+        app:layout_constraintBottom_toTopOf="@id/container_manager_cancel_bottom"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/tet_manager_scheduled_cancel_reason"
+            style="@style/LargeInputTextStyle"
+            android:layout_width="match_parent"
+            android:hint="Write down your reasons." />
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <LinearLayout
+        android:id="@+id/container_manager_cancel_bottom"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent">
+
+        <Button
+            android:id="@+id/btn_manager_scheduled_cancel_no"
+            style="@style/RedHeadingStyle"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:background="@color/transparent"
+            android:text="No" />
+
+        <Button
+            android:id="@+id/btn_manager_scheduled_cancel_yes"
+            style="@style/WhiteHeadingStyle"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:background="@drawable/background_rectangle_green_gradient"
+            android:text="I am sure!" />
+    </LinearLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>

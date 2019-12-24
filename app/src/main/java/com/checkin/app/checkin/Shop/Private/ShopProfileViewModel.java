@@ -13,7 +13,7 @@ import com.checkin.app.checkin.Data.Converters;
 import com.checkin.app.checkin.Data.Message.MessageUtils;
 import com.checkin.app.checkin.Data.Resource;
 import com.checkin.app.checkin.Data.RetrofitCallAsyncTask;
-import com.checkin.app.checkin.Misc.GenericDetailModel;
+import com.checkin.app.checkin.misc.models.GenericDetailModel;
 import com.checkin.app.checkin.Shop.RestaurantModel;
 import com.checkin.app.checkin.Shop.ShopRepository;
 import com.checkin.app.checkin.Utility.ProgressRequestBody;

@@ -2,20 +2,26 @@ ext.versions = [
         minSdk            : 17,
         compileSdk        : 28,
         buildTools        : '28.0.3',
-        publishVersion    : '0.8.6',
-        publishVersionCode: 40,
+        publishVersion    : '0.8.6-dev',
+        publishVersionCode: 41,
 
-        gradlePlugin      : '3.3.2',
-        bintrayPlugin     : '0.8.1',
+        gradlePlugin      : '3.5.3',
 
-        kotlin            : '1.3.50',
-        supportLib        : '28.0.0',
+        kotlin            : '1.3.61',
+        ktx               : '1.1.0',
 
-        lifecycle         : '2.2.0-alpha02',
-        objectBox         : '2.3.3',
-        jackson           : '2.9.8',
-        dagger            : '2.15',
-        butterknife       : '10.0.0',
-        glide             : '4.8.0',
-        retrofit          : '2.5.0'
+        playService       : '17.0.0',
+
+        lifecycle         : '2.2.0-rc03',
+        paging            : '2.1.0',
+        objectBox         : '2.5.0',
+        jackson           : '2.10.0',
+        facebook          : '4.37.0',
+        butterknife       : '10.2.0',
+        glide             : '4.10.0',
+        // Include okhttp3 library of lower version because 3.13.x supports only API 21+
+        okhttp            : '3.12.0',
+        retrofit          : '2.7.0',
+        epoxy             : '3.9.0',
+        paytm             : '1.4.4'
 ]

@@ -15,15 +15,11 @@
         app:cardElevation="@dimen/card_elevation"
         app:cardPreventCornerOverlap="true">
 
-        <com.joooonho.SelectableRoundedImageView
+        <ImageView
             android:id="@+id/im_sc_cover"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:scaleType="centerCrop"
-            app:sriv_left_bottom_corner_radius="@dimen/card_corner_radius"
-            app:sriv_left_top_corner_radius="@dimen/card_corner_radius"
-            app:sriv_right_bottom_corner_radius="@dimen/card_corner_radius"
-            app:sriv_right_top_corner_radius="@dimen/card_corner_radius" />
+            android:scaleType="centerCrop" />
 
         <TextView
             android:id="@+id/tv_sc_index"

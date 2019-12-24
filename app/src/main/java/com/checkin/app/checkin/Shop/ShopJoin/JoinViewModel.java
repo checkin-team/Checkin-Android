@@ -9,8 +9,8 @@ import androidx.lifecycle.MediatorLiveData;
 import androidx.lifecycle.MutableLiveData;
 
 import com.checkin.app.checkin.Data.Resource;
-import com.checkin.app.checkin.Misc.GenericDetailModel;
-import com.checkin.app.checkin.Misc.LocationModel;
+import com.checkin.app.checkin.misc.models.GenericDetailModel;
+import com.checkin.app.checkin.misc.models.LocationModel;
 import com.checkin.app.checkin.Shop.RestaurantModel;
 import com.checkin.app.checkin.Shop.ShopRepository;
 

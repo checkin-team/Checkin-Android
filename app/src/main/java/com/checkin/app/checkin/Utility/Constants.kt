@@ -17,7 +17,7 @@ object Constants {
 
     const val ACCOUNT_TYPE = "com.checkin.accounts"
     const val ACCOUNT_UID = "account_uid"
-    const val ACCOUNT_NAME = "account_name"
+    const val SP_USER_PROFILE_NAME = "user.profile.name"
     const val ACCOUNT_PIC = "account_pic"
 
     const val SP_SESSION_RESTAURANT_PK = "session_active.restaurant.pk"

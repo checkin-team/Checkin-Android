@@ -15,11 +15,11 @@ import androidx.core.app.NotificationCompat;
 
 import com.checkin.app.checkin.Data.Message.Constants.CHANNEL;
 import com.checkin.app.checkin.Data.Message.MessageObjectModel.MESSAGE_OBJECT_TYPE;
-import com.checkin.app.checkin.Manager.ManagerSessionActivity;
-import com.checkin.app.checkin.Manager.ManagerWorkActivity;
 import com.checkin.app.checkin.R;
 import com.checkin.app.checkin.User.bills.SuccessfulTransactionActivity;
 import com.checkin.app.checkin.Waiter.WaiterWorkActivity;
+import com.checkin.app.checkin.manager.activities.ManagerSessionActivity;
+import com.checkin.app.checkin.manager.activities.ManagerWorkActivity;
 import com.checkin.app.checkin.session.activesession.ActiveSessionActivity;
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;

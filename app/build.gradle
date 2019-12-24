@@ -1,6 +1,6 @@
 apply plugin: 'com.android.application'
-apply plugin: 'kotlin-android-extensions'
 apply plugin: 'kotlin-android'
+apply plugin: 'kotlin-android-extensions'
 apply plugin: 'kotlin-kapt'
 apply plugin: 'io.objectbox'
 apply plugin: 'com.google.gms.google-services'
@@ -95,53 +95,36 @@ dependencies {
     implementation fileTree(include: ['*.jar'], dir: 'libs')
 
     // Kotlin libraries
-    implementation "androidx.core:core-ktx:1.1.0"
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk8:$versions.kotlin"
 
-    //noinspection GradleDependency
-    implementation "androidx.fragment:fragment-ktx:1.0.0"
+    // Android KTX
+    implementation (
+            "androidx.core:core-ktx:$versions.ktx",
+            "androidx.fragment:fragment-ktx:$versions.ktx"
+    )
 
-    implementation "androidx.lifecycle:lifecycle-viewmodel-ktx:$versions.lifecycle"
-    implementation "androidx.lifecycle:lifecycle-runtime-ktx:$versions.lifecycle"
+    // Lifecycle Android KTX
+    implementation (
+            "androidx.lifecycle:lifecycle-viewmodel-ktx:$versions.lifecycle",
+            "androidx.lifecycle:lifecycle-runtime-ktx:$versions.lifecycle",
+            "androidx.lifecycle:lifecycle-livedata-ktx:$versions.lifecycle",
+    )
 
     // AndroidX libraries
-    implementation 'androidx.legacy:legacy-support-v4:1.0.0'
-    implementation 'androidx.core:core:1.1.0'
-    implementation 'androidx.constraintlayout:constraintlayout:1.1.3'
-    implementation 'androidx.cardview:cardview:1.0.0'
-    implementation 'androidx.recyclerview:recyclerview:1.0.0'
-    implementation 'androidx.exifinterface:exifinterface:1.0.0'
+    implementation (
+            "androidx.legacy:legacy-support-v4:1.0.0",
+            "androidx.core:core:1.1.0",
+            "androidx.constraintlayout:constraintlayout:1.1.3",
+            "androidx.cardview:cardview:1.0.0",
+            "androidx.multidex:multidex:2.0.1",
+            "androidx.paging:paging-runtime:$versions.paging",
+            "androidx.recyclerview:recyclerview:1.1.0",
+            "androidx.viewpager2:viewpager2:1.0.0",
+            "androidx.exifinterface:exifinterface:1.1.0",
 
-    testImplementation 'junit:junit:4.12'
-    androidTestImplementation 'androidx.test:runner:1.3.0-alpha02'
-    androidTestImplementation 'androidx.test.espresso:espresso-core:3.3.0-alpha02'
-
-    implementation 'com.google.android.gms:play-services-auth:17.0.0'
-    // FireBase libraries
-    implementation 'com.google.firebase:firebase-core:17.2.0'
-    implementation 'com.google.firebase:firebase-auth:19.0.0'
-    implementation 'com.google.firebase:firebase-messaging:20.0.0'
-    // Fabric Crashlytics
-    implementation 'com.crashlytics.sdk.android:crashlytics:2.10.1'
-    // Facebook SDK
-    implementation 'com.facebook.android:facebook-android-sdk:4.37.0'
-    implementation 'com.facebook.android:facebook-login:4.37.0'
-    // QR Scanner
-    implementation 'me.dm7.barcodescanner:zxing:1.9.8'
-    // Design Libraries
-    implementation 'de.hdodenhof:circleimageview:2.2.0'
-    implementation 'com.github.bumptech.glide:glide:' + versions.glide
-    kapt 'com.github.bumptech.glide:compiler:' + versions.glide
-    implementation 'jp.wasabeef:glide-transformations:3.3.0'
-    implementation 'com.jakewharton:butterknife:' + versions.butterknife
-    kapt 'com.jakewharton:butterknife-compiler:' + versions.butterknife
-    implementation 'com.yarolegovich:discrete-scrollview:1.4.9'
-    implementation 'com.appyvet:materialrangebar:1.4.4'
-    implementation 'com.github.antonygolovin:fluentsnackbar:1.0.0'
-    implementation 'com.joooonho:selectableroundedimageview:1.0.1'
-    implementation 'com.romandanylyk:pageindicatorview:1.0.3'
-    implementation 'com.lyft:scissors:1.1.1'
-    implementation 'com.borjabravo:readmoretextview:2.1.0'
+            "androidx.lifecycle:lifecycle-common-java8:$versions.lifecycle",
+            "androidx.lifecycle:lifecycle-extensions:$versions.lifecycle"
+    )
 
     // Network libraries and JSON <-> POJO
     implementation(
@@ -156,41 +139,89 @@ dependencies {
             [group: 'com.squareup.retrofit2', name: 'converter-jackson', version: versions.retrofit]
     )
 
-    // Include okhttp3 library of lower version because 3.13.x supports only API 21+
+
+    // OkHttp3
     //noinspection GradleDependency
-    implementation "com.squareup.okhttp3:okhttp:3.12.0"
-    //noinspection GradleDependency
-    implementation 'com.squareup.okhttp3:logging-interceptor:3.12.0'
+    implementation (
+            "com.squareup.okhttp3:okhttp:$versions.okhttp",
+            "com.squareup.okhttp3:logging-interceptor:$versions.okhttp"
+    )
+
+    // Play Services
+    implementation (
+            "com.google.android.gms:play-services-auth:$versions.playService",
+            // Google Maps
+            "com.google.android.gms:play-services-maps:$versions.playService",
+            "com.google.android.gms:play-services-location:$versions.playService"
+    )
+
+    // Google Places API
+    implementation "com.google.android.libraries.places:places:2.1.0"
+    // Google Material
+    implementation "com.google.android.material:material:1.2.0-alpha02"
+
+    // FireBase libraries
+    implementation (
+            "com.google.firebase:firebase-core:17.2.1",
+            "com.google.firebase:firebase-auth:19.2.0",
+            "com.google.firebase:firebase-messaging:20.1.0",
+            "com.google.firebase:firebase-analytics:17.2.1"
+    )
+
+    // Fabric Crashlytics
+    implementation "com.crashlytics.sdk.android:crashlytics:2.10.1"
+
+    // Facebook SDK
+    implementation (
+            "com.facebook.android:facebook-android-sdk:$versions.facebook",
+            "com.facebook.android:facebook-login:$versions.facebook"
+    )
+
+    // Glide
+    implementation (
+            "com.github.bumptech.glide:glide:$versions.glide",
+            "jp.wasabeef:glide-transformations:4.1.0"
+    )
+    kapt "com.github.bumptech.glide:compiler:$versions.glide"
+
+    // QR Scanner
+    implementation "me.dm7.barcodescanner:zxing:1.9.13"
+
+    // ButterKnife
+    implementation "com.jakewharton:butterknife:$versions.butterknife"
+    kapt "com.jakewharton:butterknife-compiler:$versions.butterknife"
+
+    // Epoxy
+    implementation "com.airbnb.android:epoxy:$versions.epoxy"
+    kapt "com.airbnb.android:epoxy-processor:$versions.epoxy"
 
     // ObjectBox components
-    implementation 'io.objectbox:objectbox-android:' + versions.objectBox
-    kapt 'io.objectbox:objectbox-processor:' + versions.objectBox
-    // Lifecycle components
-    implementation "androidx.lifecycle:lifecycle-common-java8:$versions.lifecycle"
-    implementation "androidx.lifecycle:lifecycle-extensions:$versions.lifecycle"
+    implementation "io.objectbox:objectbox-android:$versions.objectBox"
+    kapt "io.objectbox:objectbox-processor:$versions.objectBox"
 
-    // Dagger components
-    implementation 'com.google.dagger:dagger:' + versions.dagger
-    kapt 'com.google.dagger:dagger-compiler:' + versions.dagger
-
-    // Google Maps
-    implementation 'com.google.android.gms:play-services-maps:17.0.0'
-    implementation 'com.google.android.libraries.places:places:2.0.0'
-    implementation 'com.google.android.gms:play-services-location:17.0.0'
+    // Design Libraries
+    implementation "de.hdodenhof:circleimageview:2.2.0"
+    implementation "com.yarolegovich:discrete-scrollview:1.4.9"
+    implementation "com.appyvet:materialrangebar:1.4.4"
+    implementation "com.github.antonygolovin:fluentsnackbar:1.0.0"
+    implementation "com.romandanylyk:pageindicatorview:1.0.3"
+    implementation "com.lyft:scissors:1.1.1"
+    implementation "com.borjabravo:readmoretextview:2.1.0"
+    implementation "com.wdullaer:materialdatetimepicker:4.2.3"
 
     // Onboarding Screens
-    implementation 'com.getkeepsafe.taptargetview:taptargetview:1.12.0'
-
-    // Multidex
-    implementation 'com.android.support:multidex:1.0.3'
+    implementation "com.getkeepsafe.taptargetview:taptargetview:1.12.0"
 
     // PayTM sdk
-    implementation('com.paytm:pgplussdk:1.3.3') {
-        transitive = true
-    }
+    implementation ("com.paytm:pgplussdk:$versions.paytm") { transitive = true }
 
     // Shimmering Effects
-    implementation 'com.facebook.shimmer:shimmer:0.4.0'
+    implementation "com.facebook.shimmer:shimmer:0.5.0"
+
+    // Test libraries
+    testImplementation 'junit:junit:4.12'
+    androidTestImplementation 'androidx.test:runner:1.3.0-alpha03'
+    androidTestImplementation 'androidx.test.espresso:espresso-core:3.3.0-alpha03'
 
     // Modified libraries
     implementation project(':library:MaterialSearchView')
@@ -198,6 +229,15 @@ dependencies {
 
 repositories {
     mavenCentral()
+}
+
+kapt {
+    correctErrorTypes = true
+    generateStubs = true
+}
+
+androidExtensions {
+    experimental = true
 }
 
 static def buildTime() {

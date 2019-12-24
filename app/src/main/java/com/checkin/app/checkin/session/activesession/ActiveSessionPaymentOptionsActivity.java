@@ -4,7 +4,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.widget.TextView;
 
-import com.checkin.app.checkin.Misc.BaseActivity;
+import com.checkin.app.checkin.misc.activities.BaseActivity;
 import com.checkin.app.checkin.R;
 import com.checkin.app.checkin.Shop.ShopModel;
 

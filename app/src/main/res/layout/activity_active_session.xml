@@ -164,7 +164,6 @@
                                 android:layout_height="wrap_content"
                                 android:layout_centerInParent="true"
                                 android:background="@drawable/rounded_rectangle_white"
-
                                 android:weightSum="3">
 
                                 <LinearLayout
@@ -401,7 +400,7 @@
 
                             <TextView
                                 android:id="@+id/tv_as_brownie_cash_amount"
-                                style="@style/AquaBlueTextStyle"
+                                style="@style/TealBlueTextStyle"
                                 android:layout_width="wrap_content"
                                 android:layout_height="match_parent"
                                 android:gravity="center"

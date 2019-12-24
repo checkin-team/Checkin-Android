@@ -12,7 +12,7 @@
         android:layout_marginStart="@dimen/spacing_extra_large"
         android:layout_marginTop="@dimen/spacing_large"
         android:hint="Business Name"
-        style="@style/InputTextStyle"
+        style="@style/RoundedInputTextStyle"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
@@ -25,7 +25,7 @@
         android:layout_marginStart="@dimen/spacing_extra_large"
         android:layout_marginTop="@dimen/spacing_normal"
         android:hint="GST Identification Number"
-        style="@style/InputTextStyle"
+        style="@style/RoundedInputTextStyle"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/et_name" />
@@ -45,7 +45,7 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:hint="Address"
-            style="@style/InputTextStyle" />
+            style="@style/RoundedInputTextStyle" />
         <ImageView
             android:id="@+id/im_maps"
             android:layout_width="wrap_content"

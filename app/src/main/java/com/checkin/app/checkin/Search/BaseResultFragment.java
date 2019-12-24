@@ -6,7 +6,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.checkin.app.checkin.Data.Resource;
-import com.checkin.app.checkin.Misc.BaseSearchFragment;
+import com.checkin.app.checkin.misc.fragments.BaseSearchFragment;
 import com.checkin.app.checkin.R;
 import com.checkin.app.checkin.Utility.ItemClickSupport;
 

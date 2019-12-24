@@ -40,7 +40,7 @@
                     style="@style/RedTitleStyle"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:fontFamily="@font/josefinsans_regular"
+                    android:fontFamily="@font/josefinsans"
                     android:gravity="center"
                     android:paddingStart="@dimen/spacing_small"
                     android:text="Cart" />
@@ -100,7 +100,7 @@
             style="@style/GreySmallTextStyle"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:fontFamily="@font/josefinsans_regular"
+            android:fontFamily="@font/josefinsans"
             android:gravity="center"
             android:paddingTop="@dimen/spacing_extra_tiny"
             android:paddingBottom="@dimen/spacing_extra_small"
@@ -141,7 +141,7 @@
                 android:layout_alignParentEnd="true"
                 android:layout_centerInParent="true"
                 android:background="@null"
-                android:fontFamily="@font/josefinsans_regular"
+                android:fontFamily="@font/josefinsans"
                 android:paddingEnd="@dimen/spacing_normal"
                 android:text="Proceed" />
 

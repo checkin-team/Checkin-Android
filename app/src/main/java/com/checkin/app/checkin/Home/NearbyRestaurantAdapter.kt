@@ -1,7 +1,6 @@
 package com.checkin.app.checkin.Home
 
 import android.content.Context
-import android.text.Html
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -16,12 +15,14 @@ import com.checkin.app.checkin.Home.model.NearbyRestaurantModel
 import com.checkin.app.checkin.R
 import com.checkin.app.checkin.Utility.BaseViewHolder
 import com.checkin.app.checkin.Utility.Utils
+import com.checkin.app.checkin.Utility.navigateToLocation
 import com.checkin.app.checkin.Utility.pass
+import com.checkin.app.checkin.restaurant.activities.openPublicRestaurantProfile
 import com.rd.PageIndicatorView
 import com.rd.animation.type.AnimationType
 
 
-class NearbyRestaurantAdapter(var context: Context) : RecyclerView.Adapter<BaseViewHolder<Any>>() {
+class NearbyRestaurantAdapter : RecyclerView.Adapter<BaseViewHolder<Any>>() {
     var data: List<NearbyRestaurantModel> = emptyList()
 
     fun updateData(newData: List<NearbyRestaurantModel>) {
@@ -71,13 +72,25 @@ class NearbyRestaurantAdapter(var context: Context) : RecyclerView.Adapter<BaseV
         internal lateinit var imDistance: ImageView
         @BindView(R.id.container_restaurant_banner_offer)
         internal lateinit var containerOffer: ViewGroup
+        @BindView(R.id.tv_restaurant_banner_navigate)
+        internal lateinit var tvNavigateBtn: TextView
+
+        private var mRestaurantData: NearbyRestaurantModel? = null
 
         init {
             ButterKnife.bind(this, itemView)
-            imRestaurantBanner.scaleType = ImageView.ScaleType.FIT_XY
+
+            tvNavigateBtn.setOnClickListener {
+                mRestaurantData?.geolocation?.run { navigateToLocation(itemView.context) }
+            }
+            itemView.setOnClickListener {
+                mRestaurantData?.let { itemView.context.openPublicRestaurantProfile(it.pk) }
+            }
         }
 
         override fun bindData(data: NearbyRestaurantModel) {
+            mRestaurantData = data
+
             tvCuisines.text = data.cuisines.let {
                 if (it.isNotEmpty()) {
                     val maxLen = it.size.coerceAtMost(3)
@@ -88,24 +101,22 @@ class NearbyRestaurantAdapter(var context: Context) : RecyclerView.Adapter<BaseV
             tvRating.text = data.ratings.toString()
             tvDistance.text = data.formatDistance
 
-            if (data.distance > 10) {
-                imDistance.setImageResource(R.drawable.ic_road)
-            }
+            imDistance.setImageResource(if (data.distance > 10) R.drawable.ic_distance_vehicle else R.drawable.ic_distance_walking)
 
             tvRestaurantName.text = data.locality.let {
-                if (it != null) data.name + "-" + data.locality
+                if (it != null) data.name + " - " + data.locality
                 else data.name
             }
 
             tvCountCheckins.text = data.formatCheckins
 
-            data.offers.let {
+            data.offer.let {
                 if (it == null) containerOffer.visibility = View.GONE
                 else {
                     containerOffer.visibility = View.VISIBLE
-                    tvCouponCode.text = Html.fromHtml(context.getString(R.string.discount_code, it.code))
-                    tvExclusiveOffer.visibility = if (it.isGlobal) View.INVISIBLE else View.VISIBLE
-                    tvOfferSummary.text = it.name
+                    tvCouponCode.text = Utils.fromHtml(itemView.context.getString(R.string.discount_code, it.code))
+                    tvExclusiveOffer.visibility = if (it.isGlobal) View.GONE else View.VISIBLE
+                    tvOfferSummary.text = Utils.fromHtml(it.name)
                 }
             }
 
@@ -116,13 +127,13 @@ class NearbyRestaurantAdapter(var context: Context) : RecyclerView.Adapter<BaseV
         }
     }
 
-    inner class AdvertisementViewHolder(itemView: View) : BaseViewHolder<Any>(itemView) {
+    class AdvertisementViewHolder(itemView: View) : BaseViewHolder<Any>(itemView) {
         @BindView(R.id.vp_home_banner)
         internal lateinit var vpBanner: ViewPager
         @BindView(R.id.indicator_home_banner)
         internal lateinit var indicatorView: PageIndicatorView
 
-        private val mPagerAdapter: BannerPagerAdapter = BannerPagerAdapter(context)
+        private val mPagerAdapter: BannerPagerAdapter = BannerPagerAdapter(itemView.context)
 
         init {
             ButterKnife.bind(this, itemView)
@@ -135,10 +146,9 @@ class NearbyRestaurantAdapter(var context: Context) : RecyclerView.Adapter<BaseV
 
         override fun bindData(data: Any) {
         }
-
     }
 
-    internal inner class BannerPagerAdapter(context: Context) : PagerAdapter() {
+    class BannerPagerAdapter(context: Context) : PagerAdapter() {
         private val mResources = intArrayOf(R.drawable.first_banner, R.drawable.second_banner, R.drawable.third_banner)
         private val mLayoutInflater: LayoutInflater = LayoutInflater.from(context)
 
@@ -151,7 +161,7 @@ class NearbyRestaurantAdapter(var context: Context) : RecyclerView.Adapter<BaseV
         }
 
         override fun instantiateItem(container: ViewGroup, position: Int): Any {
-            val itemView = mLayoutInflater.inflate(R.layout.item_home_banner, container, false)
+            val itemView = mLayoutInflater.inflate(R.layout.item_banner_ad, container, false)
             val imageView = itemView.findViewById<View>(R.id.im_home_banner) as ImageView
             imageView.setImageResource(mResources[position])
             container.addView(itemView)
