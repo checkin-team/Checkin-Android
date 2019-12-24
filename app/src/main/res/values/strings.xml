@@ -263,4 +263,10 @@
     <string name="text_manager_food_preparation_preorder_new">Mention the preparation time. We will notify you when to start preparing food.</string>
     <string name="text_manager_food_preparation_qsr_new">Mention the preparation time. We will notify you when the preparation time ends.</string>
     <string name="text_manager_food_preparation_qsr_end">Order completed. Kindly end the session.</string>
+    <string name="text_section_booking_details">Booking Details</string>
+    <string name="title_order_details">Order Details</string>
+    <string name="text_preorder_scheduled_status_pending">Order Waitlisted</string>
+    <string name="text_preorder_scheduled_status_info_pending">You are on waitlist. It may take few minutes.</string>
+    <string name="text_preorder_scheduled_status_accepted">Order Confirmed</string>
+    <string name="text_preorder_scheduled_status_info_accepted">Your orders will be prepared on time.</string>
 </resources>

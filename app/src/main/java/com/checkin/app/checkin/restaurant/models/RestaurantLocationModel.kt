@@ -14,4 +14,7 @@ data class RestaurantLocationModel(
         val phone: String?,
         val logo: String?,
         @Transient val location: LocationModel?
-)
+) {
+    val formatAddress: String
+        get() = location?.address ?: ""
+}

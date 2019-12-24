@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <com.airbnb.epoxy.EpoxyRecyclerView
+        android:id="@+id/epoxy_rv_user_scheduled_orders"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginStart="@dimen/spacing_small"
+        android:layout_marginEnd="@dimen/spacing_small"
+        android:layout_marginBottom="@dimen/spacing_small"
+        android:nestedScrollingEnabled="false"
+        tools:itemCount="3"
+        tools:listitem="@layout/item_invoice_order_without_customizations" />
+
+    <include layout="@layout/incl_horizontal_line" />
+
+    <TextView
+        android:id="@+id/tv_user_scheduled_remarks"
+        style="@style/PinkishGreySmallTextStyle"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/spacing_small"
+        android:layout_marginTop="@dimen/spacing_extra_small"
+        android:layout_marginEnd="@dimen/spacing_small"
+        android:layout_marginBottom="@dimen/spacing_extra_small"
+        android:drawableStart="@drawable/ic_session_scheduled_remarks"
+        android:drawablePadding="@dimen/spacing_tiny"
+        tools:text="Remarks" />
+
+    <include layout="@layout/incl_horizontal_line" />
+
+    <include layout="@layout/incl_session_invoice" />
+
+    <include layout="@layout/incl_horizontal_line" />
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/spacing_small"
+        android:layout_marginTop="@dimen/spacing_extra_small"
+        android:layout_marginEnd="@dimen/spacing_small"
+        android:layout_marginBottom="@dimen/spacing_small">
+
+        <TextView
+            style="@style/TealBlueTextStyle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="start"
+            android:text="@string/total" />
+
+        <TextView
+            android:id="@+id/tv_user_scheduled_session_total"
+            style="@style/TealBlueTextStyle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="end"
+            android:text="$ 123" />
+    </FrameLayout>
+
+</LinearLayout>

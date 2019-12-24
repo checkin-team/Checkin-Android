@@ -145,13 +145,19 @@ interface WebApiService {
     fun getAvailedPromoForScheduledSession(@Path("session_id") sessionId: Long): Call<SessionPromoModel>
 
     @POST("sessions/customer/scheduled/{session_id}/promos/avail/")
-    fun availPromoForScheduledSession(@Path("session_id") sessionId: Long, @Body data:ObjectNode): Call<SessionPromoModel>
+    fun availPromoForScheduledSession(@Path("session_id") sessionId: Long, @Body data: ObjectNode): Call<SessionPromoModel>
 
     @DELETE("sessions/customer/scheduled/{session_id}/promos/remove/")
     fun deleteAvailedPromoForScheduledSession(@Path("session_id") sessionId: Long): Call<ObjectNode>
 
     @POST("sessions/customer/scheduled/{session_id}/pay/paytm/")
     fun postPaytmRequestForScheduledSession(@Path("session_id") sessionId: Long): Call<PaytmModel>
+
+    @GET("sessions/customer/scheduled/{session_id}/detail/")
+    fun getCustomerScheduledSessionDetail(@Path("session_id") sessionId: Long): Call<CustomerScheduledSessionDetailModel>
+
+    @DELETE("sessions/customer/scheduled/{session_id}/cancel/")
+    fun deleteCustomerScheduledSession(@Path("session_id") sessionId: Long): Call<ObjectNode>
 
     // endregion
 
@@ -381,6 +387,9 @@ interface WebApiService {
 
     @POST("sessions/customer/scheduled/{session_id}/order/")
     fun postScheduledSessionOrders(@Path("session_id") sessionId: Long, @Body orderedItemModels: List<OrderedItemModel>): Call<List<NewOrderModel>>
+
+    @GET("sessions/customer/scheduled/{session_id}/orders/")
+    fun getScheduledSessionOrders(@Path("session_id") sessionId: Long): Call<List<SessionOrderedItemModel>>
 
     @PATCH("sessions/customer/scheduled/{session_id}/orders/{order_id}/")
     fun patchScheduledSessionOrder(@Path("session_id") sessionId: Long, @Path("order_id") orderId: Long, @Body data: ObjectNode): Call<OrderedItemModel>

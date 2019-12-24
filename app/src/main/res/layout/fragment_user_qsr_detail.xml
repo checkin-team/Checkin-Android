@@ -1,0 +1,115 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.core.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:paddingTop="@dimen/spacing_small"
+        android:paddingBottom="@dimen/spacing_small">
+
+        <TextView
+            android:id="@+id/tv_qsr_detail_status"
+            style="@style/GreyTextStyle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/spacing_small"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:text="Table Status - Waitlisted" />
+
+        <TextView
+            android:id="@+id/tv_qsr_detail_status_text"
+            style="@style/GreySmallTextStyle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/spacing_small"
+            android:layout_marginTop="@dimen/spacing_tiny"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tv_qsr_detail_status"
+            tools:text="You are on waitlist. It may take few minutes." />
+
+        <ImageView
+            android:id="@+id/im_qsr_detail_status_icon"
+            android:layout_width="@dimen/size_small_icon"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="@dimen/spacing_small"
+            android:src="@drawable/ic_hourglass_orange"
+            app:layout_constraintBottom_toBottomOf="@id/tv_qsr_detail_status_text"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="@id/tv_qsr_detail_status" />
+
+        <com.checkin.app.checkin.misc.views.CollapsibleSectionView
+            android:id="@+id/csv_qsr_detail_billing"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/spacing_small"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tv_qsr_detail_status_text"
+            app:sectionText="@string/title_bill_details" />
+
+        <com.checkin.app.checkin.misc.views.CollapsibleSectionView
+            android:id="@+id/csv_qsr_detail_order"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/csv_qsr_detail_billing"
+            app:sectionText="@string/title_order_details" />
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/container_qsr_preparation_time"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/spacing_normal"
+            android:layout_marginTop="@dimen/spacing_small"
+            android:layout_marginEnd="@dimen/spacing_normal"
+            android:background="@color/white_two"
+            android:padding="@dimen/spacing_extra_small"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/csv_qsr_detail_order">
+
+            <TextView
+                android:id="@+id/tv_heading_preparation_time"
+                style="@style/TealBlueTextStyle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/spacing_tiny"
+                android:text="Preparation Time"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <TextView
+                android:id="@+id/tv_qsr_detail_preparation_time"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/spacing_tiny"
+                android:background="#cce3e7"
+                android:paddingTop="@dimen/spacing_tiny"
+                android:paddingBottom="@dimen/spacing_tiny"
+                android:textAlignment="center"
+                app:layout_constraintEnd_toEndOf="@id/tv_heading_preparation_time"
+                app:layout_constraintStart_toStartOf="@id/tv_heading_preparation_time"
+                app:layout_constraintTop_toBottomOf="@id/tv_heading_preparation_time"
+                tools:text="10 minutes" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/spacing_extra_small"
+                android:text="You will get notified once the food is ready."
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/tv_qsr_detail_preparation_time" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</androidx.core.widget.NestedScrollView>

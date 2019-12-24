@@ -1,4 +1,4 @@
-package com.checkin.app.checkin.session.scheduled
+package com.checkin.app.checkin.session.scheduled.fragments
 
 import android.content.DialogInterface
 import android.os.Bundle
@@ -40,19 +40,21 @@ class SchedulerBottomSheetFragment : BaseBottomSheetFragment(), TimePickerDialog
     private val mNextCalendars: List<Calendar> = (0 until 5).map { Calendar.getInstance().apply { add(Calendar.DATE, it) } }
     private var mPickedCalendar: Calendar = mNextCalendars[0]
     private var mHolders: List<DateHolder> = emptyList()
-    private val mTimePickerDialog = TimePickerDialog.newInstance(
-            this, mPickedCalendar[Calendar.HOUR_OF_DAY],
-            mPickedCalendar[Calendar.MINUTE], true
-    ).apply {
-        title = "What time?"
-        val minCalendar = Calendar.getInstance()
-        val nowMinutes = minCalendar[Calendar.MINUTE]
-        val diffMinutes = listOf(15 - nowMinutes, 30 - nowMinutes, 45 - nowMinutes, 60 - nowMinutes).find { it >= 0 }
+    private val minCalendar = Calendar.getInstance().apply {
+        val nowMinutes = this[Calendar.MINUTE]
+        val diffMinutes = listOf(15 - nowMinutes, 30 - nowMinutes, 45 - nowMinutes, 60 - nowMinutes).find { it >= 10 }
                 ?: 0
-        minCalendar.add(Calendar.MINUTE, diffMinutes)
-        mPickedCalendar = minCalendar
-        setMinTime(minCalendar[Calendar.HOUR_OF_DAY], minCalendar[Calendar.MINUTE], 0)
-        setTimeInterval(1, 15)
+        add(Calendar.MINUTE, diffMinutes)
+    }
+    private val mTimePickerDialog by lazy {
+        TimePickerDialog.newInstance(
+                this, mPickedCalendar[Calendar.HOUR_OF_DAY],
+                mPickedCalendar[Calendar.MINUTE], true
+        ).apply {
+            title = "What time?"
+            setMinTime(minCalendar[Calendar.HOUR_OF_DAY], minCalendar[Calendar.MINUTE], 0)
+            setTimeInterval(1, 15)
+        }
     }
     private val mListener: SchedulerInteraction by parentActivityDelegate()
 
@@ -60,7 +62,7 @@ class SchedulerBottomSheetFragment : BaseBottomSheetFragment(), TimePickerDialog
         mPeopleCount = savedInstanceState?.getInt(SS_PEOPLE_COUNT, 1)
                 ?: arguments?.getInt(SS_PEOPLE_COUNT, 1) ?: 1
         mPickedCalendar = (savedInstanceState?.getSerializable(SS_PICKED_CALENDAR)
-                ?: arguments?.getSerializable(SS_PICKED_CALENDAR) ?: mNextCalendars[0]) as Calendar
+                ?: arguments?.getSerializable(SS_PICKED_CALENDAR) ?: minCalendar) as Calendar
         mHolders = listOf(
                 DateHolder(mNextCalendars[0], view.findViewById<ViewStub>(R.id.stub_scheduled_date_1).inflate()),
                 DateHolder(mNextCalendars[1], view.findViewById<ViewStub>(R.id.stub_scheduled_date_2).inflate()),
@@ -116,6 +118,10 @@ class SchedulerBottomSheetFragment : BaseBottomSheetFragment(), TimePickerDialog
 
     private fun updateCalendar(calendar: Calendar) {
         mPickedCalendar.set(calendar[Calendar.YEAR], calendar[Calendar.MONTH], calendar[Calendar.DAY_OF_MONTH])
+        if (calendar == mNextCalendars[0])
+            mTimePickerDialog.setMinTime(minCalendar[Calendar.HOUR_OF_DAY], minCalendar[Calendar.MONTH], minCalendar[Calendar.DAY_OF_MONTH])
+        else
+            mTimePickerDialog.setMinTime(0, 0, 0)
     }
 
     override fun onCancel(dialog: DialogInterface) {

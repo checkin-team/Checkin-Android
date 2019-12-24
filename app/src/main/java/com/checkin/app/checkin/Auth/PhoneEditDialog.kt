@@ -19,7 +19,7 @@ class PhoneEditDialog(context: Context, val listener: PhoneInteraction) : AlertD
     internal lateinit var etPhone: EditText
 
     init {
-        val contentView = layoutInflater.inflate(R.layout.fragment_edit_phone_dialog, null) as ViewGroup
+        val contentView = layoutInflater.inflate(R.layout.view_edit_phone_dialog, null) as ViewGroup
         ButterKnife.bind(this, contentView)
         setView(contentView)
 

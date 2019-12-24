@@ -1,4 +1,4 @@
-package com.checkin.app.checkin.session.scheduled
+package com.checkin.app.checkin.session.scheduled.fragments
 
 import android.content.DialogInterface
 import butterknife.OnClick

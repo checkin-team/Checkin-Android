@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<merge xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:parentTag="androidx.constraintlayout.widget.ConstraintLayout">
+
+    <TextView
+        android:id="@+id/tv_collapsible_section_text"
+        style="@style/GreyTextStyle"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:padding="@dimen/spacing_small"
+        app:layout_constraintBottom_toTopOf="@id/frg_container_collapsible_section"
+        app:layout_constraintEnd_toStartOf="@id/im_collapsible_section_dropdown"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:text="GROUP" />
+
+    <ImageView
+        android:id="@+id/im_collapsible_section_dropdown"
+        android:layout_width="wrap_content"
+        android:layout_height="@dimen/size_tiny_button"
+        android:layout_gravity="center"
+        android:layout_marginEnd="@dimen/spacing_small"
+        android:src="@drawable/ic_drop_down_arrow"
+        app:layout_constraintBottom_toTopOf="@id/frg_container_collapsible_section"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <FrameLayout
+        android:id="@+id/frg_container_collapsible_section"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
+</merge>
