@@ -1,21 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/container"
-    android:layout_width="@dimen/size_small_icon"
-    android:layout_height="@dimen/size_small_icon"
-    android:layout_gravity="center"
-    android:layout_marginStart="@dimen/spacing_tiny"
-    android:layout_marginEnd="@dimen/spacing_tiny"
-    android:layout_marginTop="@dimen/spacing_tiny">
 
-    <TextView
-        android:id="@+id/tv_value"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        style="@style/GreyTextStyle"
-        android:textAlignment="center"
-        android:textSize="@dimen/font_heading"
-        android:layout_gravity="center"
-        tools:text="30" />
-</FrameLayout>
+<TextView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/tv_text_value"
+    style="@style/GreySmallTextStyle"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    tools:text="List Item #1" />

@@ -245,4 +245,5 @@
     <dimen name="height_card_manager_table_with_buttons">100dp</dimen>
     <dimen name="height_preparation_time_selector">30dp</dimen>
     <dimen name="width_preparation_time_selector">270dp</dimen>
+    <dimen name="height_image_qsr_food_ready">160dp</dimen>
 </resources>

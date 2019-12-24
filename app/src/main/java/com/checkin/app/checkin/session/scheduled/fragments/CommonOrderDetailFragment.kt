@@ -9,6 +9,7 @@ import butterknife.BindView
 import com.airbnb.epoxy.EpoxyRecyclerView
 import com.checkin.app.checkin.Data.Resource
 import com.checkin.app.checkin.R
+import com.checkin.app.checkin.Utility.Utils
 import com.checkin.app.checkin.Utility.isNotEmpty
 import com.checkin.app.checkin.menu.holders.invoiceOrderModelHolder
 import com.checkin.app.checkin.misc.BillHolder
@@ -55,5 +56,6 @@ class CommonOrderDetailFragment : BaseFragment() {
     private fun setupData(data: CustomerScheduledSessionDetailModel) {
         billHolder.bind(data.bill)
         tvRemarks.text = data.scheduled.remarks ?: ""
+        tvTotal.text = Utils.formatCurrencyAmount(requireContext(), data.bill.total)
     }
 }
