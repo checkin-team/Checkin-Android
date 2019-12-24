@@ -58,7 +58,10 @@ class ManagerQsrOrderDetailNewFragment : BaseFragment() {
     @OnClick(R.id.btn_manager_qsr_preparation_time_decrement, R.id.btn_manager_qsr_preparation_time_increment)
     fun onChangePreparationTime(v: View) {
         if (v.id == R.id.btn_manager_qsr_preparation_time_decrement)
-            viewModel.preparationTimeData.value = viewModel.preparationTimeData.value?.let { PreparationTimeModel(it.preparationTime - 2) }
+            viewModel.preparationTimeData.value = viewModel.preparationTimeData.value?.let {
+                if (it.preparationTime >= 8) PreparationTimeModel(it.preparationTime - 2)
+                else it
+            }
         else
             viewModel.preparationTimeData.value = viewModel.preparationTimeData.value?.let { PreparationTimeModel(it.preparationTime + 2) }
     }
