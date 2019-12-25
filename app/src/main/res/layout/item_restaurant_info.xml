@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+
+
+    android:layout_width="wrap_content"
+
+
+    android:layout_height="wrap_content">
+
+
+    <TextView
+
+
+        android:id="@+id/point1"
+
+
+        android:layout_width="wrap_content"
+
+
+        android:layout_height="wrap_content"
+
+
+        android:text="	•  "
+
+
+        android:textColor="@color/brownish_grey"
+
+
+        android:textSize="@dimen/font_extra_large"
+
+
+        />
+
+
+    <TextView
+        android:id="@+id/restaurant_info"
+
+
+        android:layout_width="wrap_content"
+
+
+        android:layout_height="wrap_content"
+
+
+        android:layout_centerVertical="true"
+
+
+        android:layout_toRightOf="@id/point1"
+
+
+        android:text="Pure Veg" />
+
+
+</RelativeLayout>

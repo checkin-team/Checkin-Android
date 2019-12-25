@@ -40,6 +40,7 @@ import com.checkin.app.checkin.misc.activities.QRScannerActivity
 import com.checkin.app.checkin.misc.adapters.CoverPagerAdapter
 import com.checkin.app.checkin.misc.fragments.*
 import com.checkin.app.checkin.misc.paytm.PaytmPayment
+import com.checkin.app.checkin.restaurant.Fragments.UserInfoFragment
 import com.checkin.app.checkin.restaurant.models.RestaurantBriefModel
 import com.checkin.app.checkin.restaurant.models.RestaurantModel
 import com.checkin.app.checkin.restaurant.viewmodels.RestaurantPublicViewModel
@@ -504,6 +505,7 @@ class PublicRestaurantProfileActivity : BaseActivity(), AppBarLayout.OnOffsetCha
 
         override fun createFragment(position: Int): Fragment = when (tabs[position]) {
             RestaurantTab.MENU -> UserMenuFragment.newInstance(restaurantId)
+            RestaurantTab.INFO-> UserInfoFragment.newInstance()
             else -> BlankFragment.newInstance()
         }
     }
