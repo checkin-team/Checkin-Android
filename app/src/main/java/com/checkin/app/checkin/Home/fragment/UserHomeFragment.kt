@@ -21,6 +21,8 @@ import com.checkin.app.checkin.misc.fragments.BaseFragment
 import com.checkin.app.checkin.restaurant.activities.openPublicRestaurantProfile
 import com.checkin.app.checkin.restaurant.models.RestaurantLocationModel
 import com.checkin.app.checkin.session.activesession.ActiveSessionActivity
+import com.checkin.app.checkin.session.scheduled.activities.PreorderSessionDetailActivity
+import com.checkin.app.checkin.session.scheduled.activities.QSRSessionDetailActivity
 
 class UserHomeFragment : BaseFragment(), LiveSessionTrackerInteraction {
     override val rootLayout = R.layout.fragment_user_home
@@ -99,8 +101,14 @@ class UserHomeFragment : BaseFragment(), LiveSessionTrackerInteraction {
     override fun onOpenSessionDetails(session: LiveSessionDetailModel) {
         when (session.sessionType) {
             SessionType.DINING -> startActivity(Intent(requireContext(), ActiveSessionActivity::class.java))
-            else -> pass
+            SessionType.PREDINING -> PreorderSessionDetailActivity.startScheduledSessionDetailActivity(requireContext(), session.pk)
+            SessionType.QSR -> QSRSessionDetailActivity.startScheduledSessionDetailActivity(requireContext(), session.pk)
         }
+    }
+
+    override fun onResume() {
+        super.onResume()
+        updateScreen()
     }
 
     override fun onOpenRestaurantProfile(restaurant: RestaurantLocationModel) {

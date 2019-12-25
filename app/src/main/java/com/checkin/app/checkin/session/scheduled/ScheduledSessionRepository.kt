@@ -6,7 +6,9 @@ import androidx.lifecycle.LiveData
 import com.checkin.app.checkin.Data.*
 import com.checkin.app.checkin.Utility.SingletonHolder
 import com.checkin.app.checkin.misc.paytm.PaytmModel
+import com.checkin.app.checkin.session.models.CustomerScheduledSessionDetailModel
 import com.checkin.app.checkin.session.models.NewScheduledSessionModel
+import com.checkin.app.checkin.session.models.SessionOrderedItemModel
 import com.checkin.app.checkin.session.models.SessionPromoModel
 import com.fasterxml.jackson.databind.node.ObjectNode
 import retrofit2.Call
@@ -84,6 +86,48 @@ class ScheduledSessionRepository private constructor(context: Context) : BaseRep
             }
 
             override fun saveCallResult(data: PaytmModel?) {
+            }
+
+        }.asLiveData
+    }
+
+    fun getCustomerScheduledSessionDetail(sessionId: Long): LiveData<Resource<CustomerScheduledSessionDetailModel>> {
+        return object : NetworkBoundResource<CustomerScheduledSessionDetailModel, CustomerScheduledSessionDetailModel>() {
+            override fun shouldUseLocalDb(): Boolean = false
+
+            override fun createCall(): LiveData<ApiResponse<CustomerScheduledSessionDetailModel>> {
+                return RetrofitLiveData(mWebService.getCustomerScheduledSessionDetail(sessionId))
+            }
+
+            override fun saveCallResult(data: CustomerScheduledSessionDetailModel?) {
+            }
+
+        }.asLiveData
+    }
+
+    fun deleteCustomerScheduledSession(sessionId: Long): LiveData<Resource<ObjectNode>> {
+        return object : NetworkBoundResource<ObjectNode, ObjectNode>() {
+            override fun shouldUseLocalDb(): Boolean = false
+
+            override fun createCall(): LiveData<ApiResponse<ObjectNode>> {
+                return RetrofitLiveData(mWebService.deleteCustomerScheduledSession(sessionId))
+            }
+
+            override fun saveCallResult(data: ObjectNode?) {
+            }
+
+        }.asLiveData
+    }
+
+    fun getScheduledSessionOrders(sessionId: Long): LiveData<Resource<List<SessionOrderedItemModel>>> {
+        return object : NetworkBoundResource<List<SessionOrderedItemModel>, List<SessionOrderedItemModel>>() {
+            override fun shouldUseLocalDb(): Boolean = false
+
+            override fun createCall(): LiveData<ApiResponse<List<SessionOrderedItemModel>>> {
+                return RetrofitLiveData(mWebService.getScheduledSessionOrders(sessionId))
+            }
+
+            override fun saveCallResult(data: List<SessionOrderedItemModel>?) {
             }
 
         }.asLiveData

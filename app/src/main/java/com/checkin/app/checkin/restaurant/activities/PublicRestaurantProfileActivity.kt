@@ -45,7 +45,10 @@ import com.checkin.app.checkin.restaurant.models.RestaurantModel
 import com.checkin.app.checkin.restaurant.viewmodels.RestaurantPublicViewModel
 import com.checkin.app.checkin.session.activesession.ActiveSessionActivity
 import com.checkin.app.checkin.session.models.ScheduledSessionDetailModel
-import com.checkin.app.checkin.session.scheduled.*
+import com.checkin.app.checkin.session.scheduled.ScheduledSessionCartView
+import com.checkin.app.checkin.session.scheduled.ScheduledSessionInteraction
+import com.checkin.app.checkin.session.scheduled.fragments.*
+import com.checkin.app.checkin.session.scheduled.viewmodels.NewScheduledSessionViewModel
 import com.crashlytics.android.Crashlytics
 import com.google.android.material.appbar.AppBarLayout
 import com.google.android.material.tabs.TabLayout
@@ -94,7 +97,7 @@ class PublicRestaurantProfileActivity : BaseActivity(), AppBarLayout.OnOffsetCha
 
     private val cartViewModel: CartViewModel by viewModels()
     private val restaurantViewModel: RestaurantPublicViewModel by viewModels()
-    private val scheduledSessionViewModel: ScheduledSessionViewModel by viewModels()
+    private val scheduledSessionViewModel: NewScheduledSessionViewModel by viewModels()
     private val userViewModel: UserViewModel by viewModels()
     private val networkViewModel: BlockingNetworkViewModel by viewModels()
 
@@ -104,7 +107,7 @@ class PublicRestaurantProfileActivity : BaseActivity(), AppBarLayout.OnOffsetCha
     private var title = ""
     private var allowOrder = true
 
-    private var networkFragment: NetworkBlockingFragment = NetworkBlockingFragment()
+    private var networkFragment: NetworkBlockingFragment = NetworkBlockingFragment.withBlockingLoader()
     private val phoneDialog: AlertDialog by lazy { setupPhoneDialog() }
     private val otpDialog: OtpVerificationDialog by lazy {
         OtpVerificationDialog.Builder.with(this)
@@ -183,6 +186,8 @@ class PublicRestaurantProfileActivity : BaseActivity(), AppBarLayout.OnOffsetCha
     private fun setupObservers() {
         cartViewModel.fetchCartStatus()
 
+        cartViewModel.pendingOrders.observe(this, Observer { })
+
         cartViewModel.cartStatus.observe(this, Observer {
             it?.let {
                 if (it.status == Resource.Status.SUCCESS && it.data != null) {
@@ -198,6 +203,7 @@ class PublicRestaurantProfileActivity : BaseActivity(), AppBarLayout.OnOffsetCha
 
         restaurantViewModel.restaurantData.observe(this, Observer {
             it?.also { restaurantResource ->
+                networkViewModel.updateStatus(restaurantResource)
                 when (restaurantResource.status) {
                     Resource.Status.SUCCESS -> restaurantResource.data?.let { setupData(it) }
                     else -> pass
@@ -208,11 +214,18 @@ class PublicRestaurantProfileActivity : BaseActivity(), AppBarLayout.OnOffsetCha
         scheduledSessionViewModel.newScheduledSessionData.observe(this, Observer {
             it?.let { resource ->
                 when (resource.status) {
-                    Resource.Status.SUCCESS -> successNewSession(resource.data!!.pk)
+                    Resource.Status.SUCCESS -> {
+                        successNewSession(resource.data!!.pk)
+                        supportFragmentManager.inTransaction {
+                            supportFragmentManager.findFragmentByTag(SchedulerBottomSheetFragment.FRAGMENT_TAG)?.let { remove(it) }
+                                    ?: this
+                        }
+                    }
                     Resource.Status.ERROR_INVALID_REQUEST -> if (resource.problem?.getErrorCode() == ProblemModel.ERROR_CODE.SESSION_SCHEDULED_PENDING_CART) {
                         val cartRestaurant = cartViewModel.cartStatus.value?.data?.restaurant?.target
-                        if (cartRestaurant != null) handleErrorCartExists(cartRestaurant)
+                        if (cartRestaurant != null) handleErrorCartExists(cartRestaurant) else pass
                     } else Utils.toast(this, resource.message)
+                    else -> pass
                 }
             }
         })
@@ -372,8 +385,13 @@ class PublicRestaurantProfileActivity : BaseActivity(), AppBarLayout.OnOffsetCha
         ViewCompat.setNestedScrollingEnabled(nestedSv, false)
     }
 
-    override fun onCreateNewScheduledSession() {
-        ChooseQrOrScheduleBottomSheetFragment().show(supportFragmentManager, ChooseQrOrScheduleBottomSheetFragment.FRAGMENT_TAG)
+    override fun shouldOpenCart(): Boolean {
+        if (cartViewModel.sessionPk == 0L) {
+            ChooseQrOrScheduleBottomSheetFragment().show(supportFragmentManager, ChooseQrOrScheduleBottomSheetFragment.FRAGMENT_TAG)
+        } else if (!scheduledSessionViewModel.isPhoneVerified) {
+            onVerifyPhoneOfUser()
+        } else return true
+        return false
     }
 
     override fun onOpenPromoList() {

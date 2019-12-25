@@ -83,6 +83,13 @@
         <activity
             android:name=".manager.activities.ManagerQSRDetailActivity"
             android:theme="@style/AppTheme" />
+        <activity
+            android:name=".session.scheduled.activities.PreorderSessionDetailActivity"
+            android:theme="@style/AppTheme" />
+
+        <activity
+            android:name=".session.scheduled.activities.QSRSessionDetailActivity"
+            android:theme="@style/AppTheme" />
 
         <activity
             android:name=".Shop.Private.MembersActivity"

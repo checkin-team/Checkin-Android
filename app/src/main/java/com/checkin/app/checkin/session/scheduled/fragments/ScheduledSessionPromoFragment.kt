@@ -1,4 +1,4 @@
-package com.checkin.app.checkin.session.scheduled
+package com.checkin.app.checkin.session.scheduled.fragments
 
 import android.os.Bundle
 import android.text.TextUtils
@@ -18,6 +18,7 @@ import com.checkin.app.checkin.misc.fragments.BaseFragment
 import com.checkin.app.checkin.session.activesession.ActiveSessionPromoAdapter
 import com.checkin.app.checkin.session.activesession.ActiveSessionPromoAdapter.onPromoCodeItemListener
 import com.checkin.app.checkin.session.models.PromoDetailModel
+import com.checkin.app.checkin.session.scheduled.viewmodels.NewScheduledSessionViewModel
 
 
 class ScheduledSessionPromoFragment : BaseFragment(), onPromoCodeItemListener {
@@ -28,7 +29,7 @@ class ScheduledSessionPromoFragment : BaseFragment(), onPromoCodeItemListener {
     @BindView(R.id.ed_promo_code)
     internal lateinit var edPromoCode: EditText
 
-    private val mViewModel: ScheduledSessionViewModel by activityViewModels()
+    private val mViewModel: NewScheduledSessionViewModel by activityViewModels()
     private lateinit var mAdapter: ActiveSessionPromoAdapter
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {

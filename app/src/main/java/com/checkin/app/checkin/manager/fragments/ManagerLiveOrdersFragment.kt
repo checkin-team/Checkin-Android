@@ -1,7 +1,9 @@
 package com.checkin.app.checkin.manager.fragments
 
 import android.os.Bundle
+import android.view.LayoutInflater
 import android.view.View
+import android.widget.TextView
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.Observer
@@ -29,11 +31,29 @@ class ManagerLiveOrdersFragment : BaseFragment() {
     val viewModel: ManagerWorkViewModel by activityViewModels()
     val networkViewModel: BlockingNetworkViewModel by activityViewModels()
     private lateinit var tabAdapter: RestaurantOrdersServiceAdapter
+    private val tabConfigurationStrategy: TabLayoutMediator.TabConfigurationStrategy by lazy {
+        TabLayoutMediator.TabConfigurationStrategy { tab, position ->
+            val view = LayoutInflater.from(context).inflate(R.layout.view_tab_badge, null, false)
+            val tvHeading = view.findViewById<TextView>(R.id.tv_tab_title)
+            val tvCount = view.findViewById<TextView>(R.id.tv_tab_badge)
+            tvHeading.text = tabAdapter.getTitle(position)
+            val count = when (tabAdapter.tabs[position]) {
+                RestaurantOrdersFragmentType.ACTIVE_SESSION -> viewModel.activeSessionEvents.value
+                RestaurantOrdersFragmentType.MASTER_QR -> viewModel.qsrEvents.value
+                RestaurantOrdersFragmentType.PRE_ORDER -> viewModel.preOrderEvents.value
+            }
+            if (count != null) {
+                tvCount.visibility = View.VISIBLE
+                tvCount.text = count.toString()
+            } else tvCount.visibility = View.GONE
+            tab.customView = view
+        }
+    }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         tabAdapter = RestaurantOrdersServiceAdapter(this, emptyList())
         vpOrdersFragment.adapter = tabAdapter
-        TabLayoutMediator(tabsFragment, vpOrdersFragment) { tab, pos -> tab.text = tabAdapter.getTitle(pos) }.attach()
+        TabLayoutMediator(tabsFragment, vpOrdersFragment, tabConfigurationStrategy).attach()
         tabsFragment.addOnTabSelectedListener(object : TabLayout.ViewPagerOnTabSelectedListener(null) {
             override fun onTabSelected(tab: TabLayout.Tab) {
                 vpOrdersFragment.currentItem = tab.position
@@ -46,6 +66,13 @@ class ManagerLiveOrdersFragment : BaseFragment() {
                 if (it.status == Resource.Status.SUCCESS) setupData(it.data!!)
             }
         })
+
+        networkViewModel.shouldTryAgain.observe(this, Observer {
+            viewModel.fetchRestaurantData(viewModel.shopPk)
+        })
+        viewModel.activeSessionEvents.observe(this, Observer { tabAdapter.notifyDataSetChanged() })
+        viewModel.preOrderEvents.observe(this, Observer { tabAdapter.notifyDataSetChanged() })
+        viewModel.qsrEvents.observe(this, Observer { tabAdapter.notifyDataSetChanged() })
     }
 
     private fun setupData(data: RestaurantServiceModel) {

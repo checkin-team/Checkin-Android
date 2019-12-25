@@ -89,6 +89,9 @@ class ManagerQSRDetailActivity : BaseActivity() {
         viewModel.doneData.observe(this, Observer {
             if (it?.status == Resource.Status.SUCCESS) if (it.data?.isCheckedOut == true) finish()
         })
+        networkViewModel.shouldTryAgain.observe(this, Observer {
+            viewModel.fetchSessionData(viewModel.sessionPk)
+        })
     }
 
     private fun addDetailFragment(status: ScheduledSessionStatus, pk: Long) {

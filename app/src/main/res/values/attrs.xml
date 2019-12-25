@@ -22,4 +22,7 @@
         </attr>
         <attr name="trimLines" format="integer" />
     </declare-styleable>
+    <declare-styleable name="SectionFragmentHolderView">
+        <attr name="sectionText" format="string" />
+    </declare-styleable>
 </resources>

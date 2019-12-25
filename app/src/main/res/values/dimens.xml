@@ -138,7 +138,7 @@
     <dimen name="height_manager_table_event_icon">18dp</dimen>
 
     <!-- Card dimensions -->
-    <dimen name="card_elevation">4dp</dimen>
+    <dimen name="card_elevation">2dp</dimen>
     <dimen name="card_corner_radius_small">5dp</dimen>
     <dimen name="card_corner_radius" format="float">10.5dp</dimen>
     <dimen name="card_corner_radius_large">12dp</dimen>
@@ -245,4 +245,5 @@
     <dimen name="height_card_manager_table_with_buttons">100dp</dimen>
     <dimen name="height_preparation_time_selector">30dp</dimen>
     <dimen name="width_preparation_time_selector">270dp</dimen>
+    <dimen name="height_image_qsr_food_ready">160dp</dimen>
 </resources>

@@ -1,0 +1,142 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <TextView
+        android:id="@+id/tv_qsr_ready_order_id"
+        style="@style/PinkishGreySmallTextStyle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="@dimen/spacing_small"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/tv_qsr_ready_restaurant"
+        tools:text="Order Id: 12345" />
+
+    <TextView
+        android:id="@+id/tv_qsr_ready_restaurant"
+        style="@style/TealBlueTextStyle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/spacing_small"
+        android:layout_marginTop="@dimen/spacing_small"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:text="Grey Orange" />
+
+    <TextView
+        android:id="@+id/tv_qsr_ready_amount_text"
+        style="@style/PinkishGreySmallTextStyle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Amount paid: "
+        app:layout_constraintEnd_toStartOf="@id/tv_qsr_ready_amount"
+        app:layout_constraintTop_toTopOf="@id/tv_qsr_ready_amount" />
+
+    <TextView
+        android:id="@+id/tv_qsr_ready_amount"
+        style="@style/PinkishGreySmallTextStyle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/spacing_extra_small"
+        app:layout_constraintEnd_toEndOf="@id/tv_qsr_ready_order_id"
+        app:layout_constraintTop_toBottomOf="@id/tv_qsr_ready_order_id"
+        tools:text="$123" />
+
+    <TextView
+        android:id="@+id/tv_qsr_ready_restaurant_location"
+        style="@style/PinkishGreySmallTextStyle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/spacing_extra_small"
+        app:layout_constraintStart_toStartOf="@id/tv_qsr_ready_restaurant"
+        app:layout_constraintTop_toBottomOf="@id/tv_qsr_ready_restaurant"
+        tools:text="Level Road-Bengaluru" />
+
+    <ImageView
+        android:id="@+id/im_container_food_status"
+        android:layout_width="0dp"
+        android:layout_height="@dimen/height_image_qsr_food_ready"
+        android:layout_marginTop="@dimen/spacing_small"
+        android:src="@drawable/image_qsr_food_ready"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tv_qsr_ready_restaurant_location" />
+
+
+    <androidx.core.widget.NestedScrollView
+        android:id="@+id/scrollView"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginTop="@dimen/spacing_small"
+        android:layout_marginBottom="@dimen/spacing_small"
+        android:background="@color/white_four"
+        app:layout_constraintBottom_toTopOf="@id/btn_qsr_ready_done"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/im_container_food_status">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:padding="@dimen/spacing_small">
+
+            <TextView
+                style="@style/PinkishGreySmallTextStyle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/title_order_details" />
+
+            <com.airbnb.epoxy.EpoxyRecyclerView
+                android:id="@+id/epoxy_rv_qsr_ready_orders_summary"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginBottom="@dimen/spacing_extra_small"
+                android:nestedScrollingEnabled="false"
+                android:padding="@dimen/spacing_small"
+                app:itemSpacing="@dimen/spacing_tiny"
+                tools:listitem="@layout/item_text" />
+
+            <include layout="@layout/incl_horizontal_line" />
+
+            <include layout="@layout/incl_session_invoice" />
+
+            <FrameLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/spacing_small"
+                android:layout_marginTop="@dimen/spacing_extra_small"
+                android:layout_marginEnd="@dimen/spacing_small"
+                android:layout_marginBottom="@dimen/spacing_small">
+
+                <TextView
+                    style="@style/TealBlueTextStyle"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="start"
+                    android:text="@string/total" />
+
+                <TextView
+                    android:id="@+id/tv_qsr_ready_total"
+                    style="@style/TealBlueTextStyle"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="end"
+                    android:text="$ 123" />
+            </FrameLayout>
+        </LinearLayout>
+    </androidx.core.widget.NestedScrollView>
+
+    <Button
+        android:id="@+id/btn_qsr_ready_done"
+        style="@style/ButtonGradientGreen"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:text="@string/label_done"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+</androidx.constraintlayout.widget.ConstraintLayout>

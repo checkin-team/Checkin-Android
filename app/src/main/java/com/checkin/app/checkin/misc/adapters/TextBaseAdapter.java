@@ -5,15 +5,15 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import androidx.annotation.NonNull;
+import androidx.core.graphics.ColorUtils;
+import androidx.recyclerview.widget.RecyclerView;
+
 import com.checkin.app.checkin.R;
 import com.yarolegovich.discretescrollview.DiscreteScrollView;
 import com.yarolegovich.discretescrollview.transform.ScaleTransformer;
 
 import java.util.Arrays;
-
-import androidx.annotation.NonNull;
-import androidx.core.graphics.ColorUtils;
-import androidx.recyclerview.widget.RecyclerView;
 
 public class TextBaseAdapter extends RecyclerView.Adapter<TextBaseAdapter.TextViewHolder> {
     private String[] data;
@@ -44,7 +44,7 @@ public class TextBaseAdapter extends RecyclerView.Adapter<TextBaseAdapter.TextVi
 
     @Override
     public int getItemViewType(final int position) {
-        return R.layout.item_text;
+        return R.layout.item_number_centered;
     }
 
     @NonNull

@@ -1,0 +1,123 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.core.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:paddingTop="@dimen/spacing_small"
+        android:paddingBottom="@dimen/spacing_small">
+
+        <TextView
+            android:id="@+id/tv_preorder_detail_status"
+            style="@style/GreyTextStyle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/spacing_small"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:text="Table Status - Waitlisted" />
+
+        <TextView
+            android:id="@+id/tv_preorder_detail_status_text"
+            style="@style/GreySmallTextStyle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/spacing_small"
+            android:layout_marginTop="@dimen/spacing_tiny"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tv_preorder_detail_status"
+            tools:text="You are on waitlist. It may take few minutes." />
+
+        <ImageView
+            android:id="@+id/im_preorder_detail_status_icon"
+            android:layout_width="@dimen/size_small_icon"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="@dimen/spacing_small"
+            android:src="@drawable/ic_hourglass_orange"
+            app:layout_constraintBottom_toBottomOf="@id/tv_preorder_detail_status_text"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="@id/tv_preorder_detail_status" />
+
+        <TextView
+            android:id="@+id/tv_preorder_detail_call"
+            style="@style/CallButtonTextStyle"
+            android:layout_marginEnd="@dimen/spacing_extra_small"
+            app:layout_constraintEnd_toStartOf="@id/tv_preorder_detail_navigate"
+            app:layout_constraintTop_toTopOf="@id/tv_preorder_detail_navigate" />
+
+        <TextView
+            android:id="@+id/tv_preorder_detail_navigate"
+            style="@style/NavigateButtonTextStyle"
+            android:layout_marginTop="@dimen/spacing_small"
+            app:layout_constraintEnd_toEndOf="@id/im_preorder_detail_status_icon"
+            app:layout_constraintTop_toBottomOf="@id/tv_preorder_detail_status_text" />
+
+        <com.checkin.app.checkin.misc.views.CollapsibleSectionView
+            android:id="@+id/csv_preorder_detail_billing"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/spacing_small"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tv_preorder_detail_call"
+            app:sectionText="@string/title_bill_details" />
+
+        <com.checkin.app.checkin.misc.views.CollapsibleSectionView
+            android:id="@+id/csv_preorder_detail_order"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/csv_preorder_detail_billing"
+            app:sectionText="@string/title_order_details" />
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/spacing_normal"
+            android:layout_marginTop="@dimen/spacing_small"
+            android:layout_marginEnd="@dimen/spacing_normal"
+            android:background="@color/white_two"
+            android:padding="@dimen/spacing_extra_small"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/csv_preorder_detail_order">
+
+            <ImageView
+                android:id="@+id/im_lightbulb"
+                android:layout_width="wrap_content"
+                android:layout_height="@dimen/size_extra_small_icon"
+                android:src="@drawable/ic_lightbulb"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <TextView
+                android:id="@+id/tv_heading_insider_tip"
+                style="@style/TealBlueTextStyle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/spacing_tiny"
+                android:text="Insider Tip"
+                android:textAllCaps="true"
+                android:textSize="@dimen/font_small"
+                app:layout_constraintBottom_toBottomOf="@id/im_lightbulb"
+                app:layout_constraintStart_toEndOf="@id/im_lightbulb"
+                app:layout_constraintTop_toTopOf="@id/im_lightbulb" />
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:text="Make sure to inform the restaurant, when running late on schedule!"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="@id/tv_heading_insider_tip"
+                app:layout_constraintTop_toBottomOf="@id/im_lightbulb" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</androidx.core.widget.NestedScrollView>

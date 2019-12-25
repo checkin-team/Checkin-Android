@@ -36,6 +36,7 @@ import com.checkin.app.checkin.misc.BillHolder
 import com.checkin.app.checkin.misc.BlockingNetworkViewModel
 import com.checkin.app.checkin.session.models.ScheduledSessionDetailModel
 import com.checkin.app.checkin.session.models.SessionPromoModel
+import com.checkin.app.checkin.session.scheduled.viewmodels.NewScheduledSessionViewModel
 import com.google.android.material.bottomsheet.BottomSheetBehavior
 
 class ScheduledSessionCartView @JvmOverloads constructor(
@@ -74,7 +75,7 @@ class ScheduledSessionCartView @JvmOverloads constructor(
     lateinit var viewModel: CartViewModel
     lateinit var networkViewModel: BlockingNetworkViewModel
     lateinit var listener: ScheduledSessionInteraction
-    lateinit var scheduledSessionViewModel: ScheduledSessionViewModel
+    lateinit var scheduledSessionViewModel: NewScheduledSessionViewModel
 
     private val ordersController = CartOrderedItemController(this)
     private val billHolder: BillHolder
@@ -105,10 +106,6 @@ class ScheduledSessionCartView @JvmOverloads constructor(
         epoxyRvCartOrders.setControllerAndBuildModels(ordersController)
     }
 
-    private fun showScheduler() {
-        listener.onCreateNewScheduledSession()
-    }
-
     fun isExpanded() = bottomSheetBehavior.state == BottomSheetBehavior.STATE_EXPANDED
 
     fun dismiss() {
@@ -117,7 +114,8 @@ class ScheduledSessionCartView @JvmOverloads constructor(
 
     @OnClick(R.id.container_cart_header_topbar)
     fun onClickedTopbar() {
-        bottomSheetBehavior.state = if (bottomSheetBehavior.state == BottomSheetBehavior.STATE_EXPANDED) BottomSheetBehavior.STATE_COLLAPSED else BottomSheetBehavior.STATE_EXPANDED
+        if (listener.shouldOpenCart())
+            bottomSheetBehavior.state = if (bottomSheetBehavior.state == BottomSheetBehavior.STATE_EXPANDED) BottomSheetBehavior.STATE_COLLAPSED else BottomSheetBehavior.STATE_EXPANDED
     }
 
     @OnClick(R.id.container_cart_header_time_switcher)
@@ -137,7 +135,7 @@ class ScheduledSessionCartView @JvmOverloads constructor(
         listener = activity as ScheduledSessionInteraction
         viewModel = ViewModelProviders.of(activity)[CartViewModel::class.java]
         networkViewModel = ViewModelProviders.of(activity)[BlockingNetworkViewModel::class.java]
-        scheduledSessionViewModel = ViewModelProviders.of(activity)[ScheduledSessionViewModel::class.java]
+        scheduledSessionViewModel = ViewModelProviders.of(activity)[NewScheduledSessionViewModel::class.java]
 
         bottomSheetBehavior = BottomSheetBehavior.from(this) as LockableBottomSheetBehavior<View>
         bottomSheetBehavior.addBottomSheetCallback(object : BottomSheetBehavior.BottomSheetCallback() {
@@ -147,11 +145,6 @@ class ScheduledSessionCartView @JvmOverloads constructor(
             override fun onStateChanged(bottomSheet: View, newState: Int) = when (newState) {
                 BottomSheetBehavior.STATE_EXPANDED -> {
                     bottomSheetBehavior.swipeEnabled = false
-                    if (viewModel.sessionPk == 0L) {
-                        showScheduler()
-                    } else if (!scheduledSessionViewModel.isPhoneVerified) {
-                        listener.onVerifyPhoneOfUser()
-                    }
                     listener.onCartOpen()
                 }
                 else -> {
@@ -293,8 +286,8 @@ class ScheduledSessionCartView @JvmOverloads constructor(
 }
 
 interface ScheduledSessionInteraction {
+    fun shouldOpenCart(): Boolean
     fun updateSessionTime(scheduled: ScheduledSessionDetailModel)
-    fun onCreateNewScheduledSession()
     fun onCartOpen()
     fun onCartClose()
     fun onOpenPromoList()

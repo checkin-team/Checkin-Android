@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layout_marginBottom="@dimen/spacing_normal"
+    android:orientation="vertical"
+    android:paddingStart="@dimen/spacing_small"
+    android:paddingEnd="@dimen/spacing_small">
+
+    <TextView
+        style="@style/PinkishGreySmallTextStyle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/spacing_small"
+        android:text="Name" />
+
+
+    <TextView
+        android:id="@+id/tv_preorder_confirmation_guest_name"
+        style="@style/GreySmallTextStyle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/spacing_tiny"
+        tools:text="Shivanh Saini" />
+
+
+    <TextView
+        style="@style/PinkishGreySmallTextStyle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/spacing_small"
+        android:text="Date &amp; Time" />
+
+    <TextView
+        android:id="@+id/tv_preorder_confirmation_due"
+        style="@style/GreySmallTextStyle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/spacing_tiny"
+        tools:text="4:30 PM | 21st October 2019" />
+
+
+    <TextView
+        style="@style/PinkishGreySmallTextStyle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/spacing_small"
+        android:text="Diners" />
+
+    <TextView
+        android:id="@+id/tv_preorder_confirmation_guest_count"
+        style="@style/GreySmallTextStyle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/spacing_tiny"
+        tools:text="2" />
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/spacing_small">
+
+        <TextView
+            style="@style/PinkishGreySmallTextStyle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="top|start"
+            android:text="Order ID" />
+
+
+        <TextView
+            android:id="@+id/tv_preorder_confirmation_order_id"
+            style="@style/GreySmallTextStyle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="bottom|start"
+            android:layout_marginTop="@dimen/spacing_tiny"
+            tools:text="#12312" />
+
+        <Button
+            android:id="@+id/btn_user_scheduled_cancel"
+            style="@style/ButtonRedAlertAction"
+            android:layout_width="wrap_content"
+            android:layout_height="@dimen/button_height_short"
+            android:layout_gravity="end"
+            android:text="@string/btn_cancel" />
+    </FrameLayout>
+</LinearLayout>

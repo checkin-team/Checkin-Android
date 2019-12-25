@@ -1,4 +1,4 @@
-package com.checkin.app.checkin.session.scheduled
+package com.checkin.app.checkin.session.scheduled.viewmodels
 
 import android.app.Application
 import android.os.Bundle
@@ -21,10 +21,11 @@ import com.checkin.app.checkin.session.models.NewScheduledSessionModel
 import com.checkin.app.checkin.session.models.PromoDetailModel
 import com.checkin.app.checkin.session.models.QRResultModel
 import com.checkin.app.checkin.session.models.SessionPromoModel
+import com.checkin.app.checkin.session.scheduled.ScheduledSessionRepository
 import com.fasterxml.jackson.databind.node.ObjectNode
 import java.util.*
 
-class ScheduledSessionViewModel(application: Application) : BaseViewModel(application) {
+class NewScheduledSessionViewModel(application: Application) : BaseViewModel(application) {
     var sessionPk: Long = 0
     private val sessionRepository = SessionRepository.getInstance(application)
     private val scheduledSessionRepository = ScheduledSessionRepository.getInstance(application)
