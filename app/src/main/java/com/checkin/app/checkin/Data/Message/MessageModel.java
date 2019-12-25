@@ -171,10 +171,18 @@ public class MessageModel implements Serializable {
         CHANNEL channel = this.getChannel();
         NotificationCompat.Builder builder = new NotificationCompat.Builder(context, channel.id);
         MessageUtils.createRequiredChannel(channel, context);
+        String summary = getDescription();
+        boolean isBigText = false;
+        if (description.length() > 30) {
+            isBigText = true;
+            summary = description.substring(0, 30) + "...";
+        }
         builder.setContentTitle(context.getString(R.string.app_name))
-                .setContentText(getDescription())
+                .setContentText(summary)
                 .setSmallIcon(R.drawable.ic_logo_notification)
                 .setAutoCancel(true);
+        if (isBigText)
+            builder.setStyle(new NotificationCompat.BigTextStyle().bigText(getDescription()));
         addNotificationExtra(context, builder, pendingIntent);
         return builder;
     }

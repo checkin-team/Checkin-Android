@@ -54,21 +54,9 @@ class CartViewModel(application: Application) : BaseViewModel(application) {
 
     val currentItem: LiveData<OrderedItemModel> = mCurrentItem
 
-    val totalOrderedCount: LiveData<Int>
-        get() = Transformations.map(mOrderedItems) { input ->
-            var res = 0
-            for (item in input)
-                res += item.quantity
-            res
-        }
+    val totalOrderedCount: LiveData<Int> = Transformations.map(mOrderedItems) { it.sumBy { it.quantity } }
 
-    val orderedSubTotal: LiveData<Double>
-        get() = Transformations.map(mOrderedItems) { input ->
-            var res = 0.0
-            for (item in input)
-                res += item.cost
-            res
-        }
+    val orderedSubTotal: LiveData<Double> = Transformations.map(mOrderedItems) { it.sumByDouble { it.cost } }
 
     val pendingOrders: LiveData<List<OrderedItemModel>> = Transformations.map(mOrderedItems) { list ->
         list.filter { it.pk == 0L }
@@ -195,8 +183,7 @@ class CartViewModel(application: Application) : BaseViewModel(application) {
     }
 
     private fun updateCart(item: OrderedItemModel) {
-        val orderedItems
-                = mOrderedItems.value?.toMutableList() ?: mutableListOf()
+        val orderedItems = mOrderedItems.value?.toMutableList() ?: mutableListOf()
         val index = orderedItems.indexOfFirst {
             it.equalsWithPk(item) || it.equalsWithoutPk(item)
         }

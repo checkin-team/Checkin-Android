@@ -108,4 +108,19 @@ class ManagerLiveScheduledViewModel(application: Application) : BaseViewModel(ap
         if (shopPk != 0L) fetchScheduledSessions(shopPk)
         if (sessionPk != 0L) fetchSessionData(sessionPk)
     }
+
+    fun removeSession(pk: Long) {
+        mScheduledOrders.value?.data?.let {
+            mScheduledOrders.value = Resource.cloneResource(mScheduledOrders.value, it.toMutableList().apply { removeAll { it.pk == pk } })
+        }
+    }
+
+    fun updateSessionStatus(pk: Long, status: ScheduledSessionStatus) {
+        mScheduledOrders.value?.data?.let {
+            val index = it.indexOfFirst { it.pk == pk }
+            mScheduledOrders.value = Resource.cloneResource(mScheduledOrders.value, it.toMutableList().apply {
+                this[index] = this[index].let { it.copy(scheduled = it.scheduled.apply { this.status = status }) }
+            })
+        }
+    }
 }

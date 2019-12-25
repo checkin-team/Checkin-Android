@@ -229,7 +229,7 @@ class ScheduledSessionCartView @JvmOverloads constructor(
             } else bottomSheetBehavior.setPeekHeight(0, true)
         })
         viewModel.orderedSubTotal.observe(activity, Observer {
-            tvHeaderPlannedTime.text = Utils.formatCurrencyAmount(context, it)
+            tvHeaderAmount.text = Utils.formatCurrencyAmount(context, it)
         })
     }
 

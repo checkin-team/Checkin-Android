@@ -3,6 +3,7 @@ package com.checkin.app.checkin.manager.fragments
 import android.os.Bundle
 import android.view.View
 import androidx.fragment.app.activityViewModels
+import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
 import butterknife.BindView
 import com.airbnb.epoxy.EpoxyRecyclerView
@@ -24,7 +25,7 @@ class ManagerQSRLiveOrdersFragment : BaseFragment(), QSRTableInteraction {
     internal lateinit var epoxyRvTables: EpoxyRecyclerView
 
     val qsrTablesController = QSRTablesController(this)
-    val viewModel: ManagerLiveScheduledViewModel by activityViewModels()
+    val viewModel: ManagerLiveScheduledViewModel by viewModels()
     val workViewModel: ManagerWorkViewModel by activityViewModels()
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
