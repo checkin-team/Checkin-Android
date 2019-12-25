@@ -62,5 +62,5 @@ abstract class LiveSessionViewHolder<in T : LiveSessionDetailModel>(itemView: Vi
 interface LiveSessionTrackerInteraction {
     fun onOpenSessionDetails(session: LiveSessionDetailModel)
     fun onOpenRestaurantProfile(restaurant: RestaurantLocationModel)
-    fun onOpenRestaurantMenu(restaurant: RestaurantLocationModel)
+    fun onOpenRestaurantMenu(session: LiveSessionDetailModel)
 }

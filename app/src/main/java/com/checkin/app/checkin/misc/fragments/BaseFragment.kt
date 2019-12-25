@@ -67,7 +67,3 @@ abstract class BaseFragment : Fragment() {
         unbinder?.unbind()
     }
 }
-
-interface FragmentInteraction {
-    fun onAddFragment(fragment: Fragment, tag: String? = null)
-}

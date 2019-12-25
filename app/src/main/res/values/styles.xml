@@ -295,6 +295,10 @@
         <item name="android:height">10dp</item>
     </style>
 
+    <style name="WhiteProgressStyle" parent="@style/Theme.AppCompat">
+        <item name="colorAccent">@color/white</item>
+    </style>
+
     <style name="TealBlueTextStyle" parent="GreyTextStyle">
         <item name="android:textColor">@color/teal_blue</item>
     </style>

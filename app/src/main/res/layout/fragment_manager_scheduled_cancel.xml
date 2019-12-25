@@ -59,8 +59,8 @@
 
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/til_manager_scheduled_cancel_reason"
+        style="@style/LargeInputTextStyle"
         android:layout_width="0dp"
-        android:layout_height="wrap_content"
         android:layout_margin="@dimen/spacing_small"
         app:layout_constraintBottom_toTopOf="@id/container_manager_cancel_bottom"
         app:layout_constraintEnd_toEndOf="parent"
@@ -68,9 +68,11 @@
 
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/tet_manager_scheduled_cancel_reason"
-            style="@style/LargeInputTextStyle"
             android:layout_width="match_parent"
-            android:hint="Write down your reasons." />
+            android:layout_height="match_parent"
+            android:gravity="top|start"
+            android:hint="Write down your reasons."
+            android:inputType="text" />
     </com.google.android.material.textfield.TextInputLayout>
 
     <LinearLayout

@@ -51,6 +51,7 @@ abstract class UserMenuGroupModelHolder : EpoxyModelWithHolder<UserMenuGroupMode
 
     override fun bind(holder: Holder) {
         holder.bindData(groupData)
+        holder.updateItemCounts(groupItemsOrderedCounts)
     }
 
     override fun bind(holder: Holder, previouslyBoundModel: EpoxyModel<*>) {

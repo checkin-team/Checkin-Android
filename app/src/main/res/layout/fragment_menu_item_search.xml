@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <FrameLayout
+        android:id="@+id/container_menu_search_status"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center">
+
+        <TextView
+            android:id="@+id/container_menu_search_status_not_found"
+            style="@style/RedTextStyle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Not found"
+            android:visibility="gone" />
+
+        <ProgressBar
+            android:id="@+id/pb_menu_search_loading"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:indeterminate="true" />
+    </FrameLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/white"
+        android:orientation="vertical">
+
+        <com.google.android.material.textfield.TextInputLayout
+            style="@style/InputTextStyleTransparentBackground"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/spacing_small"
+            android:layout_marginBottom="@dimen/spacing_small">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/et_menu_search"
+                style="@style/MaterialSearchViewStyleNew"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.airbnb.epoxy.EpoxyRecyclerView
+            android:id="@+id/epoxy_rv_menu_search"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            tools:itemCount="2"
+            tools:listitem="@layout/item_as_menu_group_item" />
+    </LinearLayout>
+</FrameLayout>

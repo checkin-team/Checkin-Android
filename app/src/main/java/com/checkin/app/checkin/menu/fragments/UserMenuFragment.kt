@@ -15,6 +15,7 @@ import butterknife.BindView
 import butterknife.OnClick
 import com.checkin.app.checkin.Menu.MenuItemInteraction
 import com.checkin.app.checkin.Menu.Model.MenuItemModel
+import com.checkin.app.checkin.Menu.UserMenu.Fragment.MenuDishSearchFragment
 import com.checkin.app.checkin.R
 import com.checkin.app.checkin.Utility.inTransaction
 import com.checkin.app.checkin.Utility.parentActivityDelegate
@@ -46,14 +47,14 @@ class UserMenuFragment : BaseFragment(), MenuItemInteraction, ItemCustomizationB
         childFragmentManager.inTransaction {
             add(R.id.container_as_menu, UserMenuGroupsFragment.newInstance())
         }
-        spinnerMealSlots.onItemSelectedListener = object: AdapterView.OnItemSelectedListener {
+        spinnerMealSlots.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
             val mealSlots = listOf(MenuItemModel.AVAILABLE_MEAL.BREAKFAST, MenuItemModel.AVAILABLE_MEAL.LUNCH, MenuItemModel.AVAILABLE_MEAL.DINNER)
 
             override fun onNothingSelected(parent: AdapterView<*>?) {
             }
 
             override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
-                if (position == 0)  viewModel.resetMenuGroups()
+                if (position == 0) viewModel.resetMenuGroups()
                 else viewModel.filterMenuGroups(mealSlots[position - 1])
             }
         }
@@ -85,6 +86,11 @@ class UserMenuFragment : BaseFragment(), MenuItemInteraction, ItemCustomizationB
                 }
             }
         } else viewModel.resetMenuGroups()
+    }
+
+    @OnClick(R.id.btn_user_menu_search)
+    fun onSearch() {
+        MenuDishSearchFragment().show(childFragmentManager, MenuDishSearchFragment.FRAGMENT_TAG)
     }
 
     private fun resetCategoriesView() {

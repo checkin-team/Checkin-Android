@@ -51,7 +51,7 @@ class ActiveLiveSessionViewHolder(itemView: View, interactionListener: LiveSessi
 
         containerMenu.setOnClickListener {
             mData?.let {
-                interactionListener.onOpenRestaurantMenu(it.restaurant)
+                interactionListener.onOpenRestaurantMenu(it)
             }
         }
     }
@@ -102,7 +102,7 @@ class QsrLiveSessionViewHolder(itemView: View, interactionListener: LiveSessionT
 
         containerOrderMore.setOnClickListener {
             mData?.let {
-                interactionListener.onOpenRestaurantMenu(it.restaurant)
+                interactionListener.onOpenRestaurantMenu(it)
             }
         }
     }

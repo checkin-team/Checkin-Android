@@ -74,6 +74,10 @@
             android:theme="@style/AppTheme" />
 
         <activity
+            android:name=".menu.activities.ActiveSessionMenuActivity"
+            android:theme="@style/AppThemeWhiteActionBar" />
+
+        <activity
             android:name=".Search.SearchActivity"
             android:theme="@style/AppTheme" />
 

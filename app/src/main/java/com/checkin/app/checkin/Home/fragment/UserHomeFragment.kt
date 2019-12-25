@@ -17,6 +17,7 @@ import com.checkin.app.checkin.Home.model.LiveSessionDetailModel
 import com.checkin.app.checkin.Home.model.SessionType
 import com.checkin.app.checkin.R
 import com.checkin.app.checkin.Utility.pass
+import com.checkin.app.checkin.menu.activities.ActiveSessionMenuActivity
 import com.checkin.app.checkin.misc.fragments.BaseFragment
 import com.checkin.app.checkin.restaurant.activities.openPublicRestaurantProfile
 import com.checkin.app.checkin.restaurant.models.RestaurantLocationModel
@@ -115,8 +116,11 @@ class UserHomeFragment : BaseFragment(), LiveSessionTrackerInteraction {
         requireContext().openPublicRestaurantProfile(restaurant.pk)
     }
 
-    override fun onOpenRestaurantMenu(restaurant: RestaurantLocationModel) {
-        onOpenRestaurantProfile(restaurant)
+    override fun onOpenRestaurantMenu(session: LiveSessionDetailModel) {
+        when (session.sessionType) {
+            SessionType.DINING -> ActiveSessionMenuActivity.openMenu(requireContext(), session.restaurant.pk)
+            else -> onOpenRestaurantProfile(session.restaurant)
+        }
     }
 
     companion object {

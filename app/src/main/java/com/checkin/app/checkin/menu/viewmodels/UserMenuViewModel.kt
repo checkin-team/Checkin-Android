@@ -1,25 +1,25 @@
 package com.checkin.app.checkin.menu.viewmodels
 
 import android.app.Application
-import android.os.Handler
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MediatorLiveData
-import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.Transformations
+import androidx.lifecycle.*
 import com.checkin.app.checkin.Data.BaseViewModel
 import com.checkin.app.checkin.Data.Resource
-import com.checkin.app.checkin.Menu.Model.*
+import com.checkin.app.checkin.Menu.Model.ItemCustomizationFieldModel
+import com.checkin.app.checkin.Menu.Model.MenuGroupModel
+import com.checkin.app.checkin.Menu.Model.MenuItemModel
+import com.checkin.app.checkin.Menu.Model.MenuModel
 import com.checkin.app.checkin.menu.MenuRepository
 import com.checkin.app.checkin.menu.models.OrderedItemModel
 import com.checkin.app.checkin.session.activesession.ActiveSessionRepository
 import com.checkin.app.checkin.session.models.TrendingDishModel
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import java.util.ArrayList
 import kotlin.Comparator
 
 class UserMenuViewModel(application: Application) : BaseViewModel(application) {
-    private val mHandler = Handler()
     private val mRepository: MenuRepository = MenuRepository.getInstance(application)
     private val mActiveSessionRepository: ActiveSessionRepository = ActiveSessionRepository.getInstance(application)
 
@@ -34,7 +34,6 @@ class UserMenuViewModel(application: Application) : BaseViewModel(application) {
     private val mFilteredString = MutableLiveData<String>()
     private val mSelectedCategory: MutableLiveData<String> = MutableLiveData()
 
-    private var mRunnable: Runnable? = null
     private var mSessionPk: Long? = null
     private var mShopPk: Long = 0
 
@@ -123,33 +122,28 @@ class UserMenuViewModel(application: Application) : BaseViewModel(application) {
         mMenuItems.value = Resource.noRequest()
     }
 
+    private suspend fun internalSearch(query: String) = withContext(viewModelScope.coroutineContext) {
+        val resourceLiveData: LiveData<Resource<List<MenuItemModel>>> = Transformations.map(mMenuData) { input ->
+            if (input?.data == null)
+                return@map null
+            val items = input.data.groups.flatMap { it.items.filter { it.name.contains(query, ignoreCase = true) } }
+            if (items.isEmpty()) return@map Resource.errorNotFound<List<MenuItemModel>>("Dish not found.")
+            Resource.cloneResource(input, items)
+        }
+        mMenuItems.addSource(resourceLiveData) {
+            mMenuItems.removeSource(resourceLiveData)
+            mMenuItems.value = it
+        }
+    }
+
     fun searchMenuItems(query: String?) {
         if (query.isNullOrEmpty())
             return
-        mMenuItems.setValue(Resource.loading(null))
-        if (mRunnable != null)
-            mHandler.removeCallbacks(mRunnable)
-        mRunnable = Runnable {
-            val resourceLiveData: LiveData<Resource<List<MenuItemModel>>> = Transformations.map(mMenuData) { input ->
-                if (input?.data == null)
-                    return@map null
-                val items = ArrayList<MenuItemModel>()
-                for (groupModel in input.data.groups) {
-                    for (itemModel in groupModel.items) {
-                        if (itemModel.name.toLowerCase().contains(query.toLowerCase()))
-                            items.add(itemModel)
-                    }
-                }
-                if (items.size == 0)
-                    return@map Resource.errorNotFound<List<MenuItemModel>>("Dish not found.")
-                Resource.cloneResource<List<MenuItemModel>, MenuModel>(input, items)
-            }
-            mMenuItems.addSource(resourceLiveData) {
-                mMenuItems.removeSource(resourceLiveData)
-                mMenuItems.setValue(it)
-            }
+        viewModelScope.launch {
+            mMenuItems.value = Resource.loading(null)
+            delay(500)
+            internalSearch(query)
         }
-        mHandler.postDelayed(mRunnable, 500)
     }
 
     fun filterMenuGroups(availableMeal: MenuItemModel.AVAILABLE_MEAL) {
