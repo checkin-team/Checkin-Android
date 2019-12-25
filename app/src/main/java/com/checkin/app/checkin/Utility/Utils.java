@@ -52,8 +52,8 @@ import androidx.annotation.StringRes;
 
 import com.checkin.app.checkin.Auth.AuthPreferences;
 import com.checkin.app.checkin.Data.Message.ActiveSessionNotificationService;
-import com.checkin.app.checkin.Home.HomeActivity;
-import com.checkin.app.checkin.Home.SplashActivity;
+import com.checkin.app.checkin.home.activities.HomeActivity;
+import com.checkin.app.checkin.home.activities.SplashActivity;
 import com.checkin.app.checkin.R;
 import com.golovin.fluentstackbar.FluentSnackbar;
 import com.google.android.material.snackbar.Snackbar;

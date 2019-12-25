@@ -1,4 +1,4 @@
-package com.checkin.app.checkin.Home
+package com.checkin.app.checkin.home.holders
 
 import android.content.Context
 import android.view.LayoutInflater
@@ -11,7 +11,7 @@ import androidx.viewpager.widget.PagerAdapter
 import androidx.viewpager.widget.ViewPager
 import butterknife.BindView
 import butterknife.ButterKnife
-import com.checkin.app.checkin.Home.model.NearbyRestaurantModel
+import com.checkin.app.checkin.home.model.NearbyRestaurantModel
 import com.checkin.app.checkin.R
 import com.checkin.app.checkin.Utility.BaseViewHolder
 import com.checkin.app.checkin.Utility.Utils

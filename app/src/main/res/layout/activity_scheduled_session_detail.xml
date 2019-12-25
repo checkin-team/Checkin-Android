@@ -10,7 +10,7 @@
 
     <com.google.android.material.appbar.AppBarLayout
         android:layout_width="match_parent"
-        android:layout_height="?attr/actionBarSize"
+        android:layout_height="wrap_content"
         android:background="@color/transparent"
         android:theme="@style/AppThemeWhiteActionBar.ActionBar">
 
@@ -32,7 +32,7 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:fontFamily="@font/josefinsans_semibold"
-                    app:layout_constraintEnd_toEndOf="@id/im_scheduled_session_header_share"
+                    app:layout_constraintEnd_toEndOf="@id/tv_scheduled_session_header_address"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent"
                     tools:text="Shivansh Saini" />
@@ -47,6 +47,7 @@
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toStartOf="@id/im_scheduled_session_header_share"
                     app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/tv_scheduled_session_header_restaurant"
                     tools:text="Address" />
 
                 <ImageView

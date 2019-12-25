@@ -204,4 +204,19 @@
     <dimen name="width_current_location">160dp</dimen>
     <dimen name="height_current_location">150dp</dimen>
 
+    <dimen name="height_restaurant_banner">230dp</dimen>
+    <dimen name="height_restaurant_image_banner">175dp</dimen>
+    <dimen name="height_advertisement_banner">160dp</dimen>
+    <dimen name="height_home_session_live_card">200dp</dimen>
+
+    <dimen name="height_vertical_line">18dp</dimen>
+    <dimen name="height_cover_restaurant_profile">235dp</dimen>
+    <dimen name="height_toolbar">52dp</dimen>
+    <dimen name="height_appbar_large">102dp</dimen>
+    <dimen name="height_cart_header_topbar">45dp</dimen>
+    <dimen name="height_card_manager_table">75dp</dimen>
+    <dimen name="height_card_manager_table_with_buttons">105dp</dimen>
+    <dimen name="height_preparation_time_selector">32dp</dimen>
+    <dimen name="width_preparation_time_selector">275dp</dimen>
+    <dimen name="height_image_qsr_food_ready">165dp</dimen>
 </resources>

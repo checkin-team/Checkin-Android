@@ -10,7 +10,7 @@
 
     <com.google.android.material.appbar.AppBarLayout
         android:layout_width="match_parent"
-        android:layout_height="?attr/actionBarSize"
+        android:layout_height="@dimen/height_toolbar"
         android:background="@color/transparent"
         android:theme="@style/AppThemeWhiteActionBar.ActionBar">
 
@@ -61,7 +61,8 @@
                     style="@style/CallButtonTextStyle"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/tv_manager_scheduled_session_order_id" />
+                    app:layout_constraintTop_toBottomOf="@id/tv_manager_scheduled_session_order_id"
+                    app:layout_constraintVertical_bias="1" />
             </androidx.constraintlayout.widget.ConstraintLayout>
         </androidx.appcompat.widget.Toolbar>
     </com.google.android.material.appbar.AppBarLayout>

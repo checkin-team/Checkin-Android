@@ -1,4 +1,4 @@
-package com.checkin.app.checkin.Home.fragment
+package com.checkin.app.checkin.home.fragments
 
 import android.content.Intent
 import android.os.Bundle
@@ -12,11 +12,17 @@ import androidx.recyclerview.widget.RecyclerView
 import androidx.viewpager2.widget.ViewPager2
 import butterknife.BindView
 import com.checkin.app.checkin.Data.Resource
-import com.checkin.app.checkin.Home.*
-import com.checkin.app.checkin.Home.model.LiveSessionDetailModel
-import com.checkin.app.checkin.Home.model.SessionType
+import com.checkin.app.checkin.home.model.LiveSessionDetailModel
+import com.checkin.app.checkin.home.model.SessionType
 import com.checkin.app.checkin.R
 import com.checkin.app.checkin.Utility.pass
+import com.checkin.app.checkin.home.activities.HomeActivity
+import com.checkin.app.checkin.home.holders.LiveSessionTrackerAdapter
+import com.checkin.app.checkin.home.holders.LiveSessionTrackerInteraction
+import com.checkin.app.checkin.home.holders.NearbyRestaurantAdapter
+import com.checkin.app.checkin.home.holders.PopularDishesAdapter
+import com.checkin.app.checkin.home.viewmodels.HomeViewModel
+import com.checkin.app.checkin.home.viewmodels.LiveSessionViewModel
 import com.checkin.app.checkin.menu.activities.ActiveSessionMenuActivity
 import com.checkin.app.checkin.misc.fragments.BaseFragment
 import com.checkin.app.checkin.restaurant.activities.openPublicRestaurantProfile
@@ -42,7 +48,7 @@ class UserHomeFragment : BaseFragment(), LiveSessionTrackerInteraction {
     private lateinit var mLiveSessionAdapter: LiveSessionTrackerAdapter
 
     private val mViewModel: HomeViewModel by activityViewModels()
-    private val mLiveSessionViewModel: LiveSessionViewModel by viewModels()
+    private val mLiveSessionViewModel: LiveSessionViewModel by activityViewModels()
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         enableDisableSwipeRefresh(true)

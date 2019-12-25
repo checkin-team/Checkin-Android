@@ -1,11 +1,11 @@
-package com.checkin.app.checkin.Home
+package com.checkin.app.checkin.home.viewmodels
 
 import android.app.Application
 import androidx.lifecycle.LiveData
 import com.checkin.app.checkin.Data.BaseViewModel
 import com.checkin.app.checkin.Data.Converters
 import com.checkin.app.checkin.Data.Resource
-import com.checkin.app.checkin.Home.model.NearbyRestaurantModel
+import com.checkin.app.checkin.home.model.NearbyRestaurantModel
 import com.checkin.app.checkin.Shop.ShopRepository
 import com.checkin.app.checkin.session.SessionRepository
 import com.checkin.app.checkin.session.models.QRResultModel

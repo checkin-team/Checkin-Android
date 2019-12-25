@@ -1,4 +1,4 @@
-package com.checkin.app.checkin.Home.model
+package com.checkin.app.checkin.home.model
 
 import com.checkin.app.checkin.Utility.Utils
 import com.checkin.app.checkin.misc.models.GeolocationModel

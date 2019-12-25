@@ -22,7 +22,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.checkin.app.checkin.Data.Resource.Status;
-import com.checkin.app.checkin.Home.HomeActivity;
+import com.checkin.app.checkin.home.activities.HomeActivity;
 import com.checkin.app.checkin.misc.fragments.BaseFragment;
 import com.checkin.app.checkin.misc.activities.SelectCropImageActivity;
 import com.checkin.app.checkin.R;

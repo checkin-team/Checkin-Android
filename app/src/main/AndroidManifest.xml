@@ -35,12 +35,12 @@
         tools:replace="android:theme">
 
         <activity
-            android:name=".Home.SplashActivity"
+            android:name=".home.activities.SplashActivity"
             android:theme="@style/Theme.AppCompat.Light.NoActionBar" />
 
         <activity-alias
             android:name="checkin.app.launcher"
-            android:targetActivity=".Home.SplashActivity">
+            android:targetActivity=".home.activities.SplashActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -53,7 +53,7 @@
             android:screenOrientation="portrait"
             android:theme="@style/Theme.AppCompat.Light.NoActionBar" />
         <activity
-            android:name=".Home.HomeActivity"
+            android:name=".home.activities.HomeActivity"
             android:screenOrientation="sensorPortrait"
             android:theme="@style/AppTheme"
             tools:replace="screenOrientation" />
@@ -83,13 +83,13 @@
         <activity
             android:name=".Menu.UserMenu.SessionMenuActivity"
             android:windowSoftInputMode="adjustPan"/>
-        <activity android:name=".Home.UserBrownieCashActivity" />
-        <activity android:name=".Home.UserClaimRewardsActivity" />
+        <activity android:name=".home.UserBrownieCashActivity" />
+        <activity android:name=".home.UserClaimRewardsActivity" />
 
         <activity android:name=".Cook.CookSessionActivity" />
         <activity android:name=".Cook.CookWorkActivity" />
 
-        <activity android:name=".Home.CurrentLocationActivity"/>
+        <activity android:name=".home.CurrentLocationActivity" />
 
         <service
             android:name=".Auth.AuthenticatorService"

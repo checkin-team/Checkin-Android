@@ -21,6 +21,8 @@ import com.checkin.app.checkin.Waiter.WaiterWorkActivity;
 import com.checkin.app.checkin.manager.activities.ManagerSessionActivity;
 import com.checkin.app.checkin.manager.activities.ManagerWorkActivity;
 import com.checkin.app.checkin.session.activesession.ActiveSessionActivity;
+import com.checkin.app.checkin.session.scheduled.activities.QSRFoodReadyActivity;
+import com.checkin.app.checkin.session.scheduled.activities.QSRSessionDetailActivity;
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
@@ -32,6 +34,7 @@ import java.util.Locale;
 import static com.checkin.app.checkin.Data.Message.MessageModel.MESSAGE_TYPE.MANAGER_SESSION_END;
 import static com.checkin.app.checkin.Data.Message.MessageModel.MESSAGE_TYPE.MANAGER_SESSION_ORDERS_PUSH;
 import static com.checkin.app.checkin.Data.Message.MessageModel.MESSAGE_TYPE.USER_ACTIVITY_REQUEST_REVIEW;
+import static com.checkin.app.checkin.Data.Message.MessageModel.MESSAGE_TYPE.USER_SCHEDULED_QSR_DONE;
 import static com.checkin.app.checkin.Data.Message.MessageModel.MESSAGE_TYPE.WAITER_ORDER_COOKED_NOTIFY_HOST;
 import static com.checkin.app.checkin.Data.Message.MessageModel.MESSAGE_TYPE.WAITER_SESSION_NEW;
 import static com.checkin.app.checkin.Data.Message.MessageModel.MESSAGE_TYPE.WAITER_SESSION_ORDERS_PUSH;
@@ -143,7 +146,9 @@ public class MessageModel implements Serializable {
             intent.putExtra(WaiterWorkActivity.KEY_SHOP_PK, shopDetail.getPk())
                     .putExtra(WaiterWorkActivity.KEY_SESSION_PK, sessionDetail != null ? sessionDetail.getPk() : 0L);
         } else if (isUserReviewNotification() && sessionDetail != null)
-            intent.putExtra(SuccessfulTransactionActivity.KEY_SESSION_ID, sessionDetail != null ? sessionDetail.getPk() : 0L);
+            intent.putExtra(SuccessfulTransactionActivity.KEY_SESSION_ID, sessionDetail.getPk());
+        else if (this.type == USER_SCHEDULED_QSR_DONE && sessionDetail != null)
+            intent.putExtra(QSRFoodReadyActivity.KEY_SESSION_ID, sessionDetail.getPk());
     }
 
     @Nullable
@@ -157,6 +162,8 @@ public class MessageModel implements Serializable {
             componentName = new ComponentName(context, ManagerWorkActivity.class);
         else if (isUserReviewNotification())
             componentName = new ComponentName(context, SuccessfulTransactionActivity.class);
+        else if (type == USER_SCHEDULED_QSR_DONE)
+            componentName = new ComponentName(context, QSRFoodReadyActivity.class);
         return componentName;
     }
 
@@ -178,6 +185,8 @@ public class MessageModel implements Serializable {
         if (this.type == MANAGER_SESSION_ORDERS_PUSH || this.type == WAITER_SESSION_ORDERS_PUSH) {
             builder.setSound(Constants.getAlertOrdersSoundUri(context))
                     .setFullScreenIntent(pendingIntent, true);
+        } else if (this.type == USER_SCHEDULED_QSR_DONE) {
+            builder.setFullScreenIntent(pendingIntent, true);
         }
         if (this.type == WAITER_SESSION_NEW) {
             Intent waiterIntent = new Intent(context, WaiterWorkActivity.class);
@@ -286,6 +295,13 @@ public class MessageModel implements Serializable {
             case WAITER_SESSION_COLLECT_CASH:
             case WAITER_SESSION_END:
             case COOK_SESSION_END:
+            case USER_SCHEDULED_ACCEPTED:
+            case USER_SCHEDULED_PREPARATION:
+            case USER_SCHEDULED_CANCELLED:
+            case USER_SCHEDULED_QSR_DONE:
+            case MANAGER_SCHEDULED_NEW_PAID:
+            case MANAGER_SCHEDULED_PREPARATION_START:
+            case MANAGER_SCHEDULED_CANCELLED:
                 return false;
             default:
                 return true;
@@ -300,6 +316,8 @@ public class MessageModel implements Serializable {
             case COOK_SESSION_ORDERS_PUSH:
             case USER_ACTIVITY_REQUEST_REVIEW:
             case WAITER_ORDER_COOKED_NOTIFY_HOST:
+            case USER_SCHEDULED_REMINDER:
+            case USER_SCHEDULED_LATE:
                 return false;
             default:
                 return true;
@@ -307,7 +325,11 @@ public class MessageModel implements Serializable {
     }
 
     private boolean isUserActiveSessionNotification() {
-        return this.type.id > 300 && this.type.id < 400;
+        return this.type.id > 300 && this.type.id < 350;
+    }
+
+    private boolean isUserScheduledSessionNotification() {
+        return this.type.id > 350 && this.type.id < 400;
     }
 
     private boolean isShopWaiterNotification() {
@@ -356,6 +378,12 @@ public class MessageModel implements Serializable {
         USER_SESSION_ORDER_NEW(314), USER_SESSION_ORDER_ACCEPTED_REJECTED(315), USER_SESSION_UPDATE_ORDER(316),
         USER_SESSION_PROMO_AVAILED(321), USER_SESSION_PROMO_REMOVED(322),
 
+        // Scheduled Session
+        USER_SCHEDULED_PAID(352), USER_SCHEDULED_ACCEPTED(354), USER_SCHEDULED_PREPARATION(355),
+        USER_SCHEDULED_CANCELLED(357), USER_SCHEDULED_DONE(358), USER_SCHEDULED_CHECKOUT(359),
+        USER_SCHEDULED_REMINDER(361), USER_SCHEDULED_LATE(362), USER_SCHEDULED_QSR_DONE(381),
+
+
         /* Restaurant */
 
         // Members
@@ -367,6 +395,9 @@ public class MessageModel implements Serializable {
         MANAGER_SESSION_EVENT_CONCERN(618), MANAGER_SESSION_EVENT_UPDATE(619), MANAGER_SESSION_ORDERS_PUSH(620),
         MANAGER_SESSION_BILL_CHANGE(623), MANAGER_SESSION_CHECKOUT_REQUEST(625), MANAGER_SESSION_END(626),
         MANAGER_SESSION_SWITCH_TABLE(621),
+
+        // Manager Scheduled
+        MANAGER_SCHEDULED_NEW_PAID(652), MANAGER_SCHEDULED_PREPARATION_START(655), MANAGER_SCHEDULED_CANCELLED(657),
 
         // Waiter
         WAITER_SESSION_NEW(711), WAITER_SESSION_MEMBER_CHANGE(712), WAITER_SESSION_HOST_ASSIGNED(713),

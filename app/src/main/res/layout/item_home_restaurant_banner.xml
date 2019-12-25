@@ -43,9 +43,9 @@
 
             <TextView
                 android:id="@+id/tv_restaurant_banner_count_checkins"
-                android:layout_marginBottom="@dimen/spacing_tiny"
                 style="@style/RoundedPurpleGradientButtonStyle"
                 android:layout_width="0dp"
+                android:layout_marginBottom="@dimen/spacing_tiny"
                 app:layout_constraintBottom_toTopOf="@id/tv_restaurant_banner_navigate"
                 app:layout_constraintEnd_toEndOf="@id/tv_restaurant_banner_navigate"
                 app:layout_constraintStart_toStartOf="@id/tv_restaurant_banner_navigate"
@@ -186,6 +186,7 @@
                 android:paddingTop="@dimen/spacing_extra_tiny"
                 android:paddingEnd="@dimen/spacing_extra_small"
                 android:paddingBottom="@dimen/spacing_extra_tiny"
+                android:visibility="gone"
                 tools:text="4.4" />
         </RelativeLayout>
     </androidx.cardview.widget.CardView>

@@ -17,8 +17,8 @@ class QSRBillingDetailFragment : BaseFragment() {
     @BindView(R.id.tv_qsr_confirmation_guest_name)
     internal lateinit var tvGuestName: TextView
     @BindView(R.id.tv_qsr_confirmation_order_time)
-    internal lateinit var tvPlannedTime: TextView
-    @BindView(R.id.tv_preorder_confirmation_order_id)
+    internal lateinit var tvOrderTime: TextView
+    @BindView(R.id.tv_qsr_confirmation_order_id)
     internal lateinit var tvOrderId: TextView
 
     val viewModel: ScheduledSessionDetailViewModel by activityViewModels()
@@ -27,9 +27,8 @@ class QSRBillingDetailFragment : BaseFragment() {
         tvGuestName.text = AccountUtil.getUsername(requireContext())
         viewModel.sessionData.observe(this, Observer {
             it.data?.let {
-                tvPlannedTime.text = it.scheduled.formatPlannedDateTime
                 tvOrderId.text = it.hashId
-                tvPlannedTime.text = it.scheduled.formatOrderTime
+                tvOrderTime.text = it.scheduled.formatOrderTime
             }
         })
     }

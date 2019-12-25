@@ -1,11 +1,11 @@
-package com.checkin.app.checkin.Home
+package com.checkin.app.checkin.home.holders
 
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import butterknife.ButterKnife
-import com.checkin.app.checkin.Home.model.SuggestedDishModel
+import com.checkin.app.checkin.home.model.SuggestedDishModel
 import com.checkin.app.checkin.R
 
 class PopularDishesAdapter : RecyclerView.Adapter<PopularDishesAdapter.ViewHolder>() {

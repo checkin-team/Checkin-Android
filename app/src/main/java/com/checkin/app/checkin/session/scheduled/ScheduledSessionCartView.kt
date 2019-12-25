@@ -70,6 +70,10 @@ class ScheduledSessionCartView @JvmOverloads constructor(
     internal lateinit var containerRemovePromo: ViewGroup
     @BindView(R.id.container_promo_code_apply)
     internal lateinit var containerApplyPromo: ViewGroup
+    @BindView(R.id.tv_cart_header_item_count)
+    internal lateinit var tvItemCount: TextView
+    @BindView(R.id.tv_cart_header_amount)
+    internal lateinit var tvHeaderAmount: TextView
 
     lateinit var activity: FragmentActivity
     lateinit var viewModel: CartViewModel
@@ -217,6 +221,15 @@ class ScheduledSessionCartView @JvmOverloads constructor(
         })
         scheduledSessionViewModel.promoDeletedData.observe(activity, Observer {
             if (it?.status == Resource.Status.SUCCESS) viewModel.fetchCartBill()
+        })
+        viewModel.totalOrderedCount.observe(activity, Observer {
+            if (it > 0) {
+                tvItemCount.text = "$it Item${if (it > 1) "s" else ""}"
+                if (bottomSheetBehavior.peekHeight == 0) bottomSheetBehavior.setPeekHeight(resources.getDimension(R.dimen.height_cart_header_topbar).toInt(), true)
+            } else bottomSheetBehavior.setPeekHeight(0, true)
+        })
+        viewModel.orderedSubTotal.observe(activity, Observer {
+            tvHeaderPlannedTime.text = Utils.formatCurrencyAmount(context, it)
         })
     }
 

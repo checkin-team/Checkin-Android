@@ -1,4 +1,4 @@
-package com.checkin.app.checkin.Home.fragment
+package com.checkin.app.checkin.home.holders
 
 import android.view.View
 import android.view.ViewGroup
@@ -6,11 +6,9 @@ import android.widget.ImageView
 import android.widget.TextView
 import butterknife.BindView
 import butterknife.ButterKnife
-import com.checkin.app.checkin.Home.LiveSessionTrackerInteraction
-import com.checkin.app.checkin.Home.LiveSessionViewHolder
-import com.checkin.app.checkin.Home.model.ActiveLiveSessionDetailModel
-import com.checkin.app.checkin.Home.model.LiveSessionDetailModel
-import com.checkin.app.checkin.Home.model.ScheduledLiveSessionDetailModel
+import com.checkin.app.checkin.home.model.ActiveLiveSessionDetailModel
+import com.checkin.app.checkin.home.model.LiveSessionDetailModel
+import com.checkin.app.checkin.home.model.ScheduledLiveSessionDetailModel
 import com.checkin.app.checkin.R
 import com.checkin.app.checkin.Utility.Utils
 import com.checkin.app.checkin.Utility.callPhoneNumber

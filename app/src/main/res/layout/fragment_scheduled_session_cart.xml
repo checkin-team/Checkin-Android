@@ -8,21 +8,54 @@
         android:layout_height="match_parent"
         android:orientation="vertical">
 
-        <FrameLayout
+        <LinearLayout
             android:id="@+id/container_cart_header_topbar"
             android:layout_width="match_parent"
             android:layout_height="@dimen/height_cart_header_topbar"
             android:layout_gravity="top"
-            android:background="@drawable/background_rectangle_green_gradient">
+            android:background="@color/greenish_teal"
+            android:gravity="center_vertical"
+            android:orientation="horizontal">
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="@dimen/size_extra_small_icon"
+                android:layout_marginStart="@dimen/spacing_extra_small"
+                android:src="@drawable/ic_cart_white" />
 
             <TextView
-                style="@style/WhiteHeadingStyle"
+                android:id="@+id/tv_cart_header_item_count"
+                style="@style/WhiteSmallTextStyle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/spacing_tiny"
+                tools:text="4 items" />
+
+            <TextView
+                style="@style/WhiteTextStyle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text=" | " />
+
+            <TextView
+                android:id="@+id/tv_cart_header_amount"
+                style="@style/WhiteSmallTextStyle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                tools:text="$ 123" />
+
+            <TextView
+                style="@style/WhiteTextStyle"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
+                android:layout_marginEnd="@dimen/spacing_extra_small"
+                android:drawableEnd="@drawable/ic_fast_forward"
+                android:drawablePadding="@dimen/spacing_tiny"
                 android:fontFamily="@font/josefinsans_bold"
-                android:text="Cart" />
-        </FrameLayout>
+                android:text="Continue" />
+        </LinearLayout>
 
         <FrameLayout
             android:id="@+id/container_cart_header_time_switcher"

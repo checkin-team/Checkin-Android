@@ -11,21 +11,20 @@
         android:id="@+id/iv_bnav_icon"
         android:layout_width="@dimen/buttom_bar_small_width"
         android:layout_height="@dimen/buttom_bar_small_icon"
-        android:minWidth="@dimen/size_small_icon"
-        android:minHeight="@dimen/size_small_icon"
         android:layout_gravity="center_horizontal"
         android:layout_marginTop="@dimen/spacing_tiny"
+        android:minWidth="@dimen/size_small_icon"
+        android:minHeight="@dimen/size_small_icon"
         tools:src="@drawable/ic_qr_code_grey" />
 
     <TextView
         android:id="@+id/tv_bnav_title"
+        style="@style/PinkishGreySmallTextStyle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"
         android:layout_marginTop="2dp"
         android:layout_marginBottom="@dimen/spacing_elevation_fix_extreme_tiny"
         android:textColor="@drawable/selector_tab_color"
-        android:textSize="@dimen/font_small"
-        android:fontFamily="@font/arial_rounded_mt_bold"
         tools:text="Option" />
 </LinearLayout>

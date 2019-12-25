@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.drawerlayout.widget.DrawerLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/drawer_home"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -12,225 +13,114 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content">
 
-        <RelativeLayout
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:fitsSystemWindows="true">
+            android:orientation="vertical">
 
-            <androidx.appcompat.widget.Toolbar
-                android:id="@+id/toolbar_home"
+            <com.google.android.material.appbar.AppBarLayout
                 android:layout_width="match_parent"
-                android:layout_height="?attr/actionBarSize"
-                android:layout_gravity="top"
-                app:contentInsetStart="0dp"
-                app:titleTextColor="@color/brownish_grey">
+                android:layout_height="wrap_content"
+                android:background="@color/white"
+                app:elevation="@dimen/card_elevation">
 
-                <FrameLayout
+                <androidx.appcompat.widget.Toolbar
+                    android:id="@+id/toolbar_home"
                     android:layout_width="match_parent"
-                    android:layout_height="?attr/actionBarSize"
-                    android:orientation="horizontal"
-                    android:paddingStart="@dimen/spacing_extra_small"
-                    android:paddingEnd="@dimen/spacing_extra_small">
-
-                    <androidx.constraintlayout.widget.ConstraintLayout
-                        android:id="@+id/container_home_user_location"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="center|start"
-                        android:layout_marginStart="@dimen/spacing_huge"
-                        android:orientation="vertical">
-
-
-                        <ImageView
-                            android:id="@+id/im_checkin_logo"
-                            android:layout_width="@dimen/width_checkin_logo_icon"
-                            android:layout_height="@dimen/height_checkin_logo_icon"
-                            android:layout_gravity="center"
-                            android:scaleType="fitXY"
-                            android:src="@drawable/check_in_logo_no_background"
-                            app:layout_constraintBottom_toBottomOf="parent"
-                            app:layout_constraintStart_toStartOf="parent"
-                            app:layout_constraintTop_toTopOf="parent" />
-
-                        <TextView
-                            android:id="@+id/tv_home_location_title"
-                            style="@style/GreySmallTextStyle"
-                            android:layout_width="wrap_content"
-                            android:layout_height="0dp"
-                            android:layout_marginStart="@dimen/spacing_extra_small"
-                            android:autoSizeTextType="uniform"
-                            android:text="Location"
-                            app:layout_constraintBottom_toTopOf="@+id/tv_action_bar_home_location"
-                            app:layout_constraintStart_toEndOf="@id/im_checkin_logo"
-                            app:layout_constraintTop_toTopOf="@+id/im_checkin_logo" />
-
-                        <TextView
-                            android:id="@+id/tv_action_bar_home_location"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginStart="@dimen/spacing_extra_small"
-                            android:fontFamily="@font/josefinsans"
-                            android:gravity="top"
-                            android:text="Bengaluru"
-                            android:textColor="@color/aqua_blue"
-                            android:textSize="@dimen/font_normal"
-                            app:layout_constraintBottom_toBottomOf="@+id/im_checkin_logo"
-                            app:layout_constraintStart_toEndOf="@id/im_checkin_logo"
-                            app:layout_constraintTop_toBottomOf="@+id/tv_home_location_title" />
-
-                        <View
-                            android:layout_width="0dp"
-                            android:layout_height="0.5dp"
-                            android:layout_marginStart="@dimen/spacing_extra_tiny"
-                            android:layout_marginTop="@dimen/spacing_tiny"
-                            android:background="@color/lightest_grey"
-                            app:layout_constraintBottom_toBottomOf="parent"
-                            app:layout_constraintEnd_toEndOf="@id/tv_action_bar_home_location"
-                            app:layout_constraintStart_toStartOf="parent"
-                            app:layout_constraintTop_toBottomOf="@+id/im_checkin_logo" />
-
-                    </androidx.constraintlayout.widget.ConstraintLayout>
+                    android:layout_height="?attr/actionBarSize">
 
                     <ImageView
-                        android:id="@+id/im_search_home"
-                        android:layout_width="@dimen/size_small_icon"
-                        android:layout_height="@dimen/size_small_icon"
-                        android:layout_gravity="end|center"
-                        android:src="@drawable/ic_search_grey" />
+                        android:id="@+id/im_checkin_logo"
+                        android:layout_width="@dimen/width_checkin_logo_icon"
+                        android:layout_height="@dimen/height_checkin_logo_icon"
+                        android:layout_gravity="center"
+                        android:scaleType="fitXY"
+                        android:src="@drawable/check_in_logo_no_background" />
 
-                </FrameLayout>
+                </androidx.appcompat.widget.Toolbar>
 
-            </androidx.appcompat.widget.Toolbar>
+            </com.google.android.material.appbar.AppBarLayout>
 
             <com.checkin.app.checkin.Utility.DynamicSwipableViewPager
                 android:id="@+id/vp_home"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_above="@id/container_bottom_bar"
-                android:layout_below="@id/toolbar_home" />
+                android:layout_height="0dp"
+                android:layout_weight="1" />
 
-            <!--<FrameLayout
-                android:id="@+id/container_home_session_status"
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_gravity="top"
-                android:visibility="gone">
+                android:layout_gravity="bottom"
+                android:orientation="vertical">
 
-                <LinearLayout
-                    android:id="@+id/container_home_session_active_status"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:background="@color/primary_red"
-                    android:gravity="center"
-                    android:padding="@dimen/spacing_small"
-                    android:visibility="gone">
-
-                    <TextView
-                        android:id="@+id/tv_home_session_active_status"
-                        style="@style/WhiteSmallTextStyle"
-                        android:layout_width="wrap_content"
-                        android:layout_height="match_parent"
-                        android:drawableStart="@drawable/ic_location_marker_white"
-                        android:drawablePadding="@dimen/spacing_extra_small"
-                        android:textAllCaps="true"
-                        tools:text="Live at Restaurant" />
-
-                </LinearLayout>
-
-                <LinearLayout
-                    android:id="@+id/container_home_session_waiting_status"
+                <RelativeLayout
+                    android:id="@+id/container_home_cart"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:background="@color/white_two"
-                    android:padding="@dimen/spacing_small"
-                    android:visibility="gone">
+                    android:paddingStart="@dimen/spacing_small"
+                    android:paddingTop="@dimen/spacing_tiny"
+                    android:paddingEnd="@dimen/spacing_small"
+                    android:paddingBottom="@dimen/spacing_tiny">
+
+                    <de.hdodenhof.circleimageview.CircleImageView
+                        android:id="@+id/im_home_cart_restaurant"
+                        android:layout_width="@dimen/size_image_tiny"
+                        android:layout_height="@dimen/size_image_tiny"
+                        android:layout_centerVertical="true"
+                        tools:src="@drawable/cover_restaurant_unknown" />
 
                     <TextView
-                        android:id="@+id/tv_home_session_wait_qr_busy"
-                        style="@style/GreySmallTextStyle"
-                        android:layout_width="match_parent"
+                        android:id="@+id/tv_home_cart_restaurant"
+                        style="@style/GreyExtraSmallTextStyle"
+                        android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginStart="@dimen/spacing_small"
-                        android:layout_weight="1"
-                        android:drawableStart="@drawable/ic_dining_qr_busy"
-                        android:drawablePadding="@dimen/spacing_extra_small"
-                        tools:text="Kindly Wait. Dine in request sent to Shivansh." />
+                        android:layout_marginStart="@dimen/spacing_extra_small"
+                        android:layout_toEndOf="@id/im_home_cart_restaurant"
+                        tools:text="Grey Orange" />
+
+                    <TextView
+                        style="@style/TealBlueTextStyle"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@id/tv_home_cart_restaurant"
+                        android:layout_alignStart="@id/tv_home_cart_restaurant"
+                        android:text="You have items added in cart."
+                        android:textSize="@dimen/font_tiny" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerVertical="true"
+                        android:layout_marginEnd="@dimen/spacing_extra_small"
+                        android:layout_toStartOf="@id/im_home_cart_cancel"
+                        android:text="View" />
 
                     <ImageView
-                        android:id="@+id/im_home_session_wait_cancel"
+                        android:id="@+id/im_home_cart_cancel"
                         android:layout_width="@dimen/size_extra_small_icon"
                         android:layout_height="@dimen/size_extra_small_icon"
-                        android:layout_gravity="center"
-                        android:src="@drawable/ic_cancel" />
-
-                </LinearLayout>
-
-            </FrameLayout>-->
-
-            <FrameLayout
-                android:id="@+id/container_bottom_bar"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_alignParentBottom="true"
-                android:background="@color/transparent">
+                        android:layout_alignParentEnd="true"
+                        android:layout_centerVertical="true"
+                        android:src="@drawable/ic_white_cancel" />
+                </RelativeLayout>
 
                 <com.google.android.material.tabs.TabLayout
                     android:id="@+id/tabs_home"
                     android:layout_width="match_parent"
                     android:layout_height="@dimen/height_bottom_tab"
-                    android:layout_gravity="bottom"
                     android:background="@drawable/background_tab_bottom_shadowed"
+                    app:elevation="@dimen/card_elevation"
                     app:tabGravity="fill"
                     app:tabIndicatorColor="@android:color/transparent"
                     app:tabIndicatorHeight="0dp"
                     app:tabMode="fixed" />
+            </LinearLayout>
 
-                <LinearLayout
-                    android:id="@+id/btn_home_scanner"
-                    android:layout_width="@dimen/business_icon"
-                    android:layout_height="@dimen/business_icon"
-                    android:layout_gravity="center|bottom"
-                    android:layout_marginBottom="@dimen/spacing_extra_small"
-                    android:background="@drawable/shape_oval_aqua_blue_gradient"
-                    android:elevation="@dimen/spacing_elevation_fix_extreme_tiny"
-                    android:gravity="center"
-                    android:orientation="vertical">
-
-                    <ImageView
-                        android:layout_width="@dimen/size_qr_scanner"
-                        android:layout_height="@dimen/size_qr_scanner"
-                        android:layout_marginBottom="@dimen/spacing_elevation_fix_extreme_tiny"
-                        android:src="@drawable/ic_qr_code_scanner_white" />
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="center"
-                        android:fontFamily="@font/josefinsans_semibold"
-                        android:gravity="center"
-                        android:text="CHECKIN"
-                        android:textColor="@color/white"
-                        android:textSize="@dimen/font_extra_tiny" />
-
-                </LinearLayout>
-
-            </FrameLayout>
-
-            <ImageView
-                android:id="@+id/iv_home_navigation"
-                android:layout_width="@dimen/size_small_icon"
-                android:layout_height="@dimen/size_small_icon"
-                android:layout_marginStart="@dimen/spacing_small"
-                android:layout_marginTop="@dimen/spacing_small"
-                android:contentDescription="@null"
-                android:elevation="@dimen/spacing_elevation_fix_extreme_tiny"
-                android:src="@drawable/ic_navigation_white"
-                android:tint="@color/brownish_grey" />
-
-        </RelativeLayout>
-
+        </LinearLayout>
     </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
 
-    <include layout="@layout/incl_account_base" />
+    <include layout="@layout/incl_activity_base" />
 
+    <include layout="@layout/incl_account_base" />
 </androidx.drawerlayout.widget.DrawerLayout>

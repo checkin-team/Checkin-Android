@@ -58,7 +58,7 @@
             android:theme="@style/AppThemeWhiteActionBar" />
         <activity
             android:name=".Shop.ShopJoin.ContactVerifyActivity"
-            android:parentActivityName=".Home.HomeActivity" />
+            android:parentActivityName=".home.activities.HomeActivity" />
         <activity
             android:name=".Shop.ShopJoin.ShopJoinActivity"
             android:parentActivityName=".Shop.ShopJoin.ContactVerifyActivity"
@@ -77,6 +77,9 @@
             android:name=".menu.activities.ActiveSessionMenuActivity"
             android:theme="@style/AppThemeWhiteActionBar" />
 
+        <activity
+            android:name=".session.scheduled.activities.QSRFoodReadyActivity"
+            android:theme="@style/AppTheme" />
         <activity
             android:name=".Search.SearchActivity"
             android:theme="@style/AppTheme" />

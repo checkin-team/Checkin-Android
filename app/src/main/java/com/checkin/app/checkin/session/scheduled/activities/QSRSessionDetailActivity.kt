@@ -19,6 +19,7 @@ import com.checkin.app.checkin.misc.activities.BaseActivity
 import com.checkin.app.checkin.misc.fragments.NetworkBlockingFragment
 import com.checkin.app.checkin.session.models.CustomerScheduledSessionDetailModel
 import com.checkin.app.checkin.session.scheduled.fragments.PreorderDetailFragment
+import com.checkin.app.checkin.session.scheduled.fragments.QSRDetailFragment
 import com.checkin.app.checkin.session.scheduled.viewmodels.ScheduledSessionDetailViewModel
 
 class QSRSessionDetailActivity : BaseActivity() {
@@ -30,7 +31,7 @@ class QSRSessionDetailActivity : BaseActivity() {
     internal lateinit var tvAddress: TextView
 
     private val networkFragment = NetworkBlockingFragment()
-    private val mainFragment = PreorderDetailFragment()
+    private val mainFragment = QSRDetailFragment()
 
     val networkViewModel: BlockingNetworkViewModel by viewModels()
     val viewModel: ScheduledSessionDetailViewModel by viewModels()

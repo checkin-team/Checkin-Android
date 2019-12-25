@@ -34,7 +34,7 @@ class QSRDetailFragment : BaseFragment(), CollapsibleSectionView.SectionListener
     internal lateinit var csvOrders: CollapsibleSectionView
     @BindView(R.id.tv_qsr_detail_preparation_time)
     internal lateinit var tvPreparationTime: TextView
-    @BindView(R.id.container_preparation_time)
+    @BindView(R.id.container_qsr_preparation_time)
     internal lateinit var containerPreparationTime: ViewGroup
 
     val viewModel: ScheduledSessionDetailViewModel by activityViewModels()

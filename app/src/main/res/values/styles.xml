@@ -573,8 +573,7 @@
     </style>
 
     <style name="RoundedPurpleGradientButtonStyle" parent="WhiteExtraSmallTextStyle">
-        <item name="android:paddingTop">@dimen/spacing_tiny</item>
-        <item name="android:paddingBottom">@dimen/spacing_tiny</item>
+        <item name="android:gravity">center</item>
         <item name="android:background">@drawable/background_rectangle_purple_gradient</item>
         <item name="android:layout_height">@dimen/button_height_tiny</item>
         <item name="android:layout_width">wrap_content</item>

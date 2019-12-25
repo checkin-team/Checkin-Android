@@ -148,7 +148,7 @@ class ManagerWorkActivity : BaseAccountActivity(), LiveOrdersInteraction {
         mViewModel.fetchStatistics()
     }
 
-    internal class ManagerFragmentAdapter(fm: FragmentManager?) : BaseFragmentAdapterBottomNav(fm) {
+    internal class ManagerFragmentAdapter(fm: FragmentManager) : BaseFragmentAdapterBottomNav(fm) {
         private var isActivated = true
         private val mTableFragment = ManagerLiveOrdersFragment.newInstance()
         private val mActiveTableFragment = ManagerTablesActivateFragment.newInstance()

@@ -38,6 +38,7 @@ abstract class BaseQsrTableHolder : BaseEpoxyHolder<ShopScheduledSessionModel>()
                 if (data.scheduled.plannedDatetime!! < currTime) {
                     tvScheduledInfo.setTextColor(ContextCompat.getColor(context, R.color.primary_red))
                     tvScheduledInfo.setCompoundDrawablesRelativeWithIntrinsicBounds(R.drawable.ic_error_exclamation, 0, 0, 0)
+                    tvScheduledInfo.compoundDrawablePadding = itemView.resources.getDimension(R.dimen.spacing_tiny).toInt()
                     "Delayed by: ${Utils.formatDueTime(data.scheduled.plannedDatetime, currTime)}"
                 } else {
                     tvScheduledInfo.setTextColor(ContextCompat.getColor(context, R.color.brownish_grey))

@@ -4,8 +4,8 @@ import android.app.Application
 import android.content.Context
 import androidx.lifecycle.LiveData
 import com.checkin.app.checkin.Data.*
-import com.checkin.app.checkin.Home.model.ActiveLiveSessionDetailModel
-import com.checkin.app.checkin.Home.model.ScheduledLiveSessionDetailModel
+import com.checkin.app.checkin.home.model.ActiveLiveSessionDetailModel
+import com.checkin.app.checkin.home.model.ScheduledLiveSessionDetailModel
 import com.checkin.app.checkin.User.bills.UserTransactionBriefModel
 import com.checkin.app.checkin.User.bills.UserTransactionDetailsModel
 import com.checkin.app.checkin.Utility.SingletonHolder

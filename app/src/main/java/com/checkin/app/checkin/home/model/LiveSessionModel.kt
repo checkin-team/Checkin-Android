@@ -1,4 +1,4 @@
-package com.checkin.app.checkin.Home.model
+package com.checkin.app.checkin.home.model
 
 import com.checkin.app.checkin.menu.models.OrderedItemStatusModel
 import com.checkin.app.checkin.restaurant.models.RestaurantLocationModel

@@ -19,9 +19,6 @@ import com.checkin.app.checkin.Utility.ProgressRequestBody.UploadCallbacks
 import com.checkin.app.checkin.misc.models.GenericDetailModel
 import java.io.File
 
-/**
- * Created by Jogi Miglani on 29-09-2018.
- */
 class UserViewModel(application: Application) : BaseViewModel(application) {
     private val mRepository: UserRepository = UserRepository.getInstance(application)
 

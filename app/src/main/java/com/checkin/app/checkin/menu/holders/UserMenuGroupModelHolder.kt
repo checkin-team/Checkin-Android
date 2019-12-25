@@ -96,7 +96,7 @@ abstract class UserMenuGroupModelHolder : EpoxyModelWithHolder<UserMenuGroupMode
                 Utils.setTabsFont(vTabs, itemView.resources.getFont(R.font.arial_rounded_mt_bold))
             }
 
-            itemView.setOnClickListener { tvGroupName.performClick() }
+            itemView.setOnClickListener { tvGroupName.callOnClick() }
             tvGroupName.setOnClickListener {
                 groupViewListener.contractView()
                 if (!isExpanded) groupViewListener.expandView(menuGroup)
