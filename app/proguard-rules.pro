@@ -56,6 +56,7 @@
 }
 -keep class com.fasterxml.jackson.annotation.** { *; }
 -dontwarn com.fasterxml.jackson.databind.**
+-keep class kotlin.Metadata { *; }
 
 ########### Glide
 -keep public class * implements com.bumptech.glide.module.GlideModule
@@ -113,6 +114,22 @@
 ##########
 -keepattributes SourceFile,LineNumberTable,*Annotation*,EnclosingMethod,Signature,Exceptions,InnerClasses
 -keep class com.checkin.app.checkin.**Model { *; }
+
+-keepclassmembers public class com.checkin.app.checkin.** {
+    public synthetic <methods>;
+}
+
+-keepclassmembers enum * {
+    public *;
+}
+
+-keep class Type {
+    public *;
+}
+
+-keep class * {
+    public enum **;
+}
 
 ##########
 # View - Gets and setters - keep setters in Views so that animations can still work.
