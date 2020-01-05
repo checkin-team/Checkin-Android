@@ -31,7 +31,7 @@ import com.checkin.app.checkin.menu.controllers.CartOrderedItemController
 import com.checkin.app.checkin.menu.holders.CartOrderInteraction
 import com.checkin.app.checkin.menu.models.CartDetailModel
 import com.checkin.app.checkin.menu.models.OrderedItemModel
-import com.checkin.app.checkin.menu.viewmodels.CartViewModel
+import com.checkin.app.checkin.menu.viewmodels.ScheduledCartViewModel
 import com.checkin.app.checkin.misc.BillHolder
 import com.checkin.app.checkin.misc.BlockingNetworkViewModel
 import com.checkin.app.checkin.session.models.ScheduledSessionDetailModel
@@ -76,7 +76,7 @@ class ScheduledSessionCartView @JvmOverloads constructor(
     internal lateinit var tvHeaderAmount: TextView
 
     lateinit var activity: FragmentActivity
-    lateinit var viewModel: CartViewModel
+    lateinit var viewModel: ScheduledCartViewModel
     lateinit var networkViewModel: BlockingNetworkViewModel
     lateinit var listener: ScheduledSessionInteraction
     lateinit var scheduledSessionViewModel: NewScheduledSessionViewModel
@@ -135,7 +135,7 @@ class ScheduledSessionCartView @JvmOverloads constructor(
     fun setup(activity: FragmentActivity) {
         this.activity = activity
         listener = activity as ScheduledSessionInteraction
-        viewModel = ViewModelProviders.of(activity)[CartViewModel::class.java]
+        viewModel = ViewModelProviders.of(activity)[ScheduledCartViewModel::class.java]
         networkViewModel = ViewModelProviders.of(activity)[BlockingNetworkViewModel::class.java]
         scheduledSessionViewModel = ViewModelProviders.of(activity)[NewScheduledSessionViewModel::class.java]
 

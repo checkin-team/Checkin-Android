@@ -70,7 +70,7 @@ data class OrderedItemModel(
 
     fun updatePk(pk: Long): OrderedItemModel = copy(pk = pk)
 
-    fun updateQuantity(quantity: Int): OrderedItemModel = copy(quantity = quantity)
+    fun updateQuantity(quantity: Int): OrderedItemModel = copy(quantity = quantity, cost = item.typeCosts[typeIndex] * quantity)
 
     fun equalsWithoutPk(other: OrderedItemModel): Boolean {
         return itemPk() == other.itemPk() && selectedFields == other.selectedFields && typeIndex == other.typeIndex

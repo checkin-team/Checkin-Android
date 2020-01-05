@@ -11,12 +11,12 @@ import androidx.lifecycle.ViewModelProviders;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.checkin.app.checkin.Menu.ShopMenu.SessionMenuActivity;
 import com.checkin.app.checkin.R;
 import com.checkin.app.checkin.Utility.Utils;
 import com.checkin.app.checkin.manager.adapters.ManagerSessionEventAdapter;
 import com.checkin.app.checkin.manager.models.ManagerSessionEventModel;
 import com.checkin.app.checkin.manager.viewmodels.ManagerSessionViewModel;
+import com.checkin.app.checkin.menu.activities.ShopMenuActivity;
 import com.checkin.app.checkin.misc.fragments.BaseFragment;
 import com.checkin.app.checkin.session.activesession.chat.SessionChatModel;
 import com.checkin.app.checkin.session.models.SessionBriefModel;
@@ -129,7 +129,7 @@ public class ManagerSessionEventFragment extends BaseFragment implements Manager
             Utils.toast(requireContext(), "Bill already approved for session.");
             return;
         }
-        SessionMenuActivity.startWithSession(getContext(), mViewModel.getShopPk(), mViewModel.getSessionPk(), null);
+        ShopMenuActivity.Companion.openMenu(requireContext(), mViewModel.getShopPk(), mViewModel.getSessionPk());
         mViewModel.updateResults();
     }
 

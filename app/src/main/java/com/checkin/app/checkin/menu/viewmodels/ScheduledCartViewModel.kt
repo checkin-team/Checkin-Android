@@ -2,15 +2,11 @@ package com.checkin.app.checkin.menu.viewmodels
 
 import android.app.Application
 import androidx.lifecycle.LiveData
-import androidx.lifecycle.MediatorLiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.Transformations
 import com.checkin.app.checkin.Data.AppDatabase
-import com.checkin.app.checkin.Data.BaseViewModel
 import com.checkin.app.checkin.Data.Resource
-import com.checkin.app.checkin.Menu.Model.MenuItemModel
 import com.checkin.app.checkin.Utility.pass
-import com.checkin.app.checkin.menu.MenuRepository
 import com.checkin.app.checkin.menu.models.*
 import com.checkin.app.checkin.restaurant.models.RestaurantLocationModel
 import com.checkin.app.checkin.session.models.NewScheduledSessionModel
@@ -19,9 +15,7 @@ import com.checkin.app.checkin.session.models.SessionBillModel
 import com.fasterxml.jackson.databind.node.ObjectNode
 import java.util.*
 
-class CartViewModel(application: Application) : BaseViewModel(application) {
-    private val menuRepository = MenuRepository.getInstance(application)
-
+class ScheduledCartViewModel(application: Application) : BaseCartViewModel(application) {
     private val mNewOrders = createNetworkLiveData<List<NewOrderModel>>()
     private val mUpdatedOrder = createNetworkLiveData<OrderedItemModel>()
     private val mDeletedOrder = createNetworkLiveData<ObjectNode>()
@@ -31,19 +25,9 @@ class CartViewModel(application: Application) : BaseViewModel(application) {
     private val mServerPendingData = createNetworkLiveData<Any>()
     private val mCurrentItem = MutableLiveData<OrderedItemModel>()
 
-    private val mOrderedItems = MediatorLiveData<List<OrderedItemModel>>()
-
-    var sessionPk: Long = 0
-    lateinit var sessionType: SessionType
-
     val cartStatus: LiveData<Resource<CartStatusModel>> = mCartStatusData
     val cartBillData: LiveData<Resource<CartBillModel>> = mCartBillData
     val cartDetailData: MutableLiveData<Resource<CartDetailModel>> = MutableLiveData()
-    val orderedItems: LiveData<List<OrderedItemModel>>
-        get() {
-            if (mOrderedItems.value == null) mOrderedItems.value = emptyList()
-            return mOrderedItems
-        }
 
     init {
         mServerPendingData.addSource(mNewOrders) { mServerPendingData.value = Resource.cloneResource(it, pass) }
@@ -53,22 +37,9 @@ class CartViewModel(application: Application) : BaseViewModel(application) {
 
     val serverPendingData: LiveData<Resource<Any>> = mServerPendingData
 
-    val currentItem: LiveData<OrderedItemModel> = mCurrentItem
-
-    val totalOrderedCount: LiveData<Int> = Transformations.map(mOrderedItems) { it.sumBy { it.quantity } }
-
-    val orderedSubTotal: LiveData<Double> = Transformations.map(mOrderedItems) { it.sumByDouble { it.cost } }
-
     val pendingOrders: LiveData<List<OrderedItemModel>> = Transformations.map(mOrderedItems) { list ->
         list.filter { it.pk == 0L }
     }
-
-    val itemOrderedCounts: LiveData<Map<Long, Int>>
-        get() = Transformations.map(mOrderedItems) {
-            it?.let {
-                it.groupBy({ it.itemPk() }, { it.quantity }).mapValues { it.value.sum() }
-            }
-        }
 
     private fun <T> processServerResult(resource: Resource<T>): Resource<T> {
         if (resource.status == Resource.Status.SUCCESS) {
@@ -106,12 +77,6 @@ class CartViewModel(application: Application) : BaseViewModel(application) {
 
     fun retryOrder() {
         mCurrentItem.value?.let { orderItem(it) }
-    }
-
-    fun orderItem(order: OrderedItemModel) {
-        if (sessionType == SessionType.SCHEDULED && sessionPk != 0L)
-            syncOrdersWithServer(order)
-        else updateCart(order)
     }
 
     fun syncOrdersWithServer() {
@@ -183,37 +148,9 @@ class CartViewModel(application: Application) : BaseViewModel(application) {
         mOrderedItems.value = orderedItems
     }
 
-    private fun updateCart(item: OrderedItemModel) {
-        val orderedItems = mOrderedItems.value?.toMutableList() ?: mutableListOf()
-        val index = orderedItems.indexOfFirst {
-            it.equalsWithPk(item) || it.equalsWithoutPk(item)
-        }
-        if (index != -1) {
-            if (item.quantity > 0) orderedItems[index] = item
-            else orderedItems.removeAt(index)
-        } else orderedItems.add(item)
-        mOrderedItems.value = orderedItems
-    }
-
-    fun updateOrderedItem(item: MenuItemModel, count: Int): OrderedItemModel? {
-        val items = mOrderedItems.value ?: emptyList()
-        val cartCount = items.count { it.itemPk() == item.pk }
-        var orderedItem = items.find { item.pk == it.itemPk() }
-        if (cartCount == 0) return orderedItem
-        if (item.isComplexItem && cartCount != count) {
-            // Under the assumption that count > cartCount for complex item, always
-            orderedItem = item.order(1)
-        } else if (orderedItem != null && orderedItem.quantity != count) {
-            orderedItem = orderedItem.updateQuantity(count)
-        }
-        return orderedItem
-    }
-
-    fun confirmOrder() {
-        if (sessionPk == 0L)
-            mNewOrders.addSource(menuRepository.postActiveSessionOrders(mOrderedItems.value!!)) { mNewOrders.setValue(it) }
-        else
-            mNewOrders.addSource(menuRepository.postManageSessionOrders(sessionPk, mOrderedItems.value!!)) { mNewOrders.setValue(it) }
+    override fun orderItem(order: OrderedItemModel) {
+        if (sessionPk != 0L) syncOrdersWithServer(order)
+        else super.orderItem(order)
     }
 
     fun updateCartDataWithNewSession(data: NewScheduledSessionModel) {
@@ -228,8 +165,4 @@ class CartViewModel(application: Application) : BaseViewModel(application) {
 
     override fun updateResults() {
     }
-}
-
-enum class SessionType {
-    ACTIVE, SCHEDULED
 }

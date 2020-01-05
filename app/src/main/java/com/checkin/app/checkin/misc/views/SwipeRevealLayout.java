@@ -1,4 +1,4 @@
-package com.checkin.app.checkin.Utility;
+package com.checkin.app.checkin.misc.views;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
@@ -14,12 +14,12 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.checkin.app.checkin.R;
-
 import androidx.annotation.Nullable;
 import androidx.core.view.GestureDetectorCompat;
 import androidx.core.view.ViewCompat;
 import androidx.customview.widget.ViewDragHelper;
+
+import com.checkin.app.checkin.R;
 
 /**
  * Created by Mark O'Sullivan on 25th February 2018.

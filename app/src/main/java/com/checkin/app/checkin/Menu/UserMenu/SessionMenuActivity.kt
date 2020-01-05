@@ -12,23 +12,17 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
-import androidx.appcompat.widget.Toolbar
 import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModelProviders
-import androidx.lifecycle.lifecycleScope
 import butterknife.BindView
 import butterknife.ButterKnife
 import butterknife.OnClick
 import com.checkin.app.checkin.Menu.MenuItemInteraction
 import com.checkin.app.checkin.Menu.Model.MenuItemModel
-import com.checkin.app.checkin.Menu.ShopMenu.Fragment.MenuGroupsFragment.KEY_SESSION_STATUS
-import com.checkin.app.checkin.Menu.ShopMenu.Fragment.MenuInfoFragment
-import com.checkin.app.checkin.Menu.ShopMenu.SessionMenuActivity.*
 import com.checkin.app.checkin.Menu.UserMenu.Fragment.*
-import com.checkin.app.checkin.misc.activities.BaseActivity
 import com.checkin.app.checkin.R
 import com.checkin.app.checkin.Utility.OnBoardingUtils
 import com.checkin.app.checkin.Utility.Utils
+import com.checkin.app.checkin.misc.activities.BaseActivity
 import com.checkin.app.checkin.session.activesession.ActiveSessionActivity.KEY_INTERACT_WITH_US
 import com.miguelcatalan.materialsearchview.MaterialSearchView
 
@@ -73,13 +67,13 @@ class SessionMenuActivity : BaseActivity(), MenuItemInteraction, ItemCustomizati
         setContentView(R.layout.activity_user_session_menu)
         ButterKnife.bind(this)
 
-        val args = intent.getBundleExtra(SESSION_ARG)
-        mSessionStatus = args.getSerializable(KEY_SESSION_STATUS) as MenuGroupsFragment.SESSION_STATUS
-        mViewModel = ViewModelProviders.of(this).get(MenuViewModel::class.java)
-        mViewModel.fetchRecommendedItems(args.getLong(KEY_RESTAURANT_PK))
-        mViewModel.fetchAvailableMenu(args.getLong(KEY_RESTAURANT_PK))
-        val sessionPk = args.getLong(KEY_SESSION_PK, 0L)
-        if (sessionPk > 0L) mViewModel.manageSession(sessionPk)
+//        val args = intent.getBundleExtra(SESSION_ARG)
+//        mSessionStatus = args.getSerializable(KEY_SESSION_STATUS) as MenuGroupsFragment.SESSION_STATUS
+//        mViewModel = ViewModelProviders.of(this).get(MenuViewModel::class.java)
+//        mViewModel.fetchRecommendedItems(args.getLong(KEY_RESTAURANT_PK))
+//        mViewModel.fetchAvailableMenu(args.getLong(KEY_RESTAURANT_PK))
+//        val sessionPk = args.getLong(KEY_SESSION_PK, 0L)
+//        if (sessionPk > 0L) mViewModel.manageSession(sessionPk)
 
         OnBoardingUtils.setOnBoardingIsShown(this, KEY_INTERACT_WITH_US, true)
 
@@ -91,21 +85,21 @@ class SessionMenuActivity : BaseActivity(), MenuItemInteraction, ItemCustomizati
         setupMenuFragment()
         setupSearch()
 
-        val itemPk = args.getLong(KEY_SESSION_TRENDING_ITEM, 0L)
-        if (itemPk > 0L) {
-            lifecycleScope.launchWhenStarted {
-                // Busy waiting for data to come.. Since it's on another thread no issues.
-                while (mViewModel.getOriginalMenuGroups().value?.data?.isEmpty() != false) {
-                }
-                mViewModel.getMenuItemById(itemPk)?.let {
-                    onMenuItemAdded(it)
-                    if (!it.isComplexItem)
-                        onCartClick()
-                }
-            }
-        } else {
-            if (isSessionActive) explainMenu()
-        }
+//        val itemPk = args.getLong(KEY_SESSION_TRENDING_ITEM, 0L)
+//        if (itemPk > 0L) {
+//            lifecycleScope.launchWhenStarted {
+//                // Busy waiting for data to come.. Since it's on another thread no issues.
+//                while (mViewModel.getOriginalMenuGroups().value?.data?.isEmpty() != false) {
+//                }
+//                mViewModel.getMenuItemById(itemPk)?.let {
+//                    onMenuItemAdded(it)
+//                    if (!it.isComplexItem)
+//                        onCartClick()
+//                }
+//            }
+//        } else {
+//            if (isSessionActive) explainMenu()
+//        }
     }
 
     @OnClick(R.id.tv_as_menu_drinks, R.id.tv_as_menu_food, R.id.tv_as_menu_dessert, R.id.tv_as_menu_specials)
@@ -201,14 +195,14 @@ class SessionMenuActivity : BaseActivity(), MenuItemInteraction, ItemCustomizati
 
     @SuppressLint("ClickableViewAccessibility")
     private fun setupUiStuff() {
-        val toolbar = findViewById<Toolbar>(R.id.toolbar_menu)
-        setSupportActionBar(toolbar)
-        if (supportActionBar != null) {
-            supportActionBar!!.title = ""
-            supportActionBar!!.elevation = 0f
-        }
-        mCartFragment = MenuCartFragment.newInstance(this)
-        menuCart.visibility = View.GONE
+//        val toolbar = findViewById<Toolbar>(R.id.toolbar_menu)
+//        setSupportActionBar(toolbar)
+//        if (supportActionBar != null) {
+//            supportActionBar!!.title = ""
+//            supportActionBar!!.elevation = 0f
+//        }
+//        mCartFragment = MenuCartFragment.newInstance(this)
+//        menuCart.visibility = View.GONE
     }
 
     private fun explainMenu() {
@@ -400,17 +394,15 @@ class SessionMenuActivity : BaseActivity(), MenuItemInteraction, ItemCustomizati
             context.startActivity(withSession(context, restaurantPk, sessionPk, itemModel))
         }
 
-        fun withSession(context: Context, restaurantPk: Long?, sessionPk: Long?, itemModel: Long?): Intent {
-            val intent = Intent(context, SessionMenuActivity::class.java)
-            val args = Bundle()
-            args.putSerializable(KEY_SESSION_STATUS, MenuGroupsFragment.SESSION_STATUS.ACTIVE)
-            args.putLong(KEY_RESTAURANT_PK, restaurantPk!!)
-            if (sessionPk != null)
-                args.putLong(KEY_SESSION_PK, sessionPk)
-            if (itemModel != null)
-                args.putLong(KEY_SESSION_TRENDING_ITEM, itemModel)
-            intent.putExtra(SESSION_ARG, args)
-            return intent
-        }
+        fun withSession(context: Context, restaurantPk: Long?, sessionPk: Long?, itemModel: Long?): Intent = Intent(context, SessionMenuActivity::class.java)
+//            val args = Bundle()
+//            args.putSerializable(KEY_SESSION_STATUS, MenuGroupsFragment.SESSION_STATUS.ACTIVE)
+//            args.putLong(KEY_RESTAURANT_PK, restaurantPk!!)
+//            if (sessionPk != null)
+//                args.putLong(KEY_SESSION_PK, sessionPk)
+//            if (itemModel != null)
+//                args.putLong(KEY_SESSION_TRENDING_ITEM, itemModel)
+//            intent.putExtra(SESSION_ARG, args)
+//            return intent
     }
 }

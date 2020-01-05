@@ -7,16 +7,12 @@ import androidx.activity.viewModels
 import butterknife.ButterKnife
 import com.checkin.app.checkin.R
 import com.checkin.app.checkin.Utility.inTransaction
-import com.checkin.app.checkin.menu.fragments.UserMenuFragment
-import com.checkin.app.checkin.menu.viewmodels.CartViewModel
-import com.checkin.app.checkin.menu.viewmodels.SessionType
-import com.checkin.app.checkin.menu.viewmodels.UserMenuViewModel
+import com.checkin.app.checkin.menu.fragments.MenuFragment
+import com.checkin.app.checkin.menu.viewmodels.ActiveSessionCartViewModel
 import com.checkin.app.checkin.misc.activities.BaseActivity
 
 class ActiveSessionMenuActivity : BaseActivity() {
-
-    val menuViewModel: UserMenuViewModel by viewModels()
-    val cartViewModel: CartViewModel by viewModels()
+    private val cartViewModel: ActiveSessionCartViewModel by viewModels()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -28,18 +24,13 @@ class ActiveSessionMenuActivity : BaseActivity() {
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
 
         initUi()
-        setupObservers()
     }
 
     private fun initUi() {
         val restaurantId = intent.getLongExtra(KEY_RESTAURANT_ID, 0L)
         supportFragmentManager.inTransaction {
-            add(R.id.frg_container_activity, UserMenuFragment.newInstance(restaurantId), null)
+            add(R.id.frg_container_activity, MenuFragment.newInstanceForActiveSession(restaurantId), null)
         }
-    }
-
-    private fun setupObservers() {
-        cartViewModel.sessionType = SessionType.ACTIVE
     }
 
     override fun onSupportNavigateUp(): Boolean {

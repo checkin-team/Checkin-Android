@@ -23,7 +23,8 @@
 
     <style name="SessionTheme" parent="Theme.AppCompat.Light.NoActionBar">
         <item name="android:windowNoTitle">true</item>
-        <item name="actionBarStyle">@style/AppTheme.AppBarOverlay</item>
+        <item name="actionBarStyle">@style/RougeActionBarTheme</item>
+        <item name="android:actionBarStyle">@style/RougeActionBarTheme</item>
     </style>
 
     <style name="AppThemeWhiteActionBar" parent="AppThemeWithBar">
@@ -74,6 +75,7 @@
         <item name="titleTextStyle">@style/WhiteHeadingStyle</item>
         <item name="background">@color/primary_red</item>
         <item name="android:homeAsUpIndicator">@drawable/ic_back_white</item>
+        <item name="homeAsUpIndicator">@drawable/ic_back_white</item>
     </style>
 
     <style name="SessionChatTheme" parent="AppThemeWithBar">

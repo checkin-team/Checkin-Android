@@ -199,6 +199,11 @@ dependencies {
     implementation "io.objectbox:objectbox-android:$versions.objectBox"
     kapt "io.objectbox:objectbox-processor:$versions.objectBox"
 
+    // Koin
+    implementation "org.koin:koin-androidx-scope:$versions.koin"
+    implementation "org.koin:koin-androidx-viewmodel:$versions.koin"
+    implementation "org.koin:koin-androidx-fragment:$versions.koin"
+
     // Design Libraries
     implementation "de.hdodenhof:circleimageview:2.2.0"
     implementation "com.yarolegovich:discrete-scrollview:1.4.9"

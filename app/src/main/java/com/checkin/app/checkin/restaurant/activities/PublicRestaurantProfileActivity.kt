@@ -31,9 +31,8 @@ import com.checkin.app.checkin.Data.Resource
 import com.checkin.app.checkin.R
 import com.checkin.app.checkin.User.Private.UserViewModel
 import com.checkin.app.checkin.Utility.*
-import com.checkin.app.checkin.menu.fragments.UserMenuFragment
-import com.checkin.app.checkin.menu.viewmodels.CartViewModel
-import com.checkin.app.checkin.menu.viewmodels.SessionType
+import com.checkin.app.checkin.menu.fragments.ScheduledMenuFragment
+import com.checkin.app.checkin.menu.viewmodels.ScheduledCartViewModel
 import com.checkin.app.checkin.misc.BlockingNetworkViewModel
 import com.checkin.app.checkin.misc.activities.BaseActivity
 import com.checkin.app.checkin.misc.activities.QRScannerActivity
@@ -58,6 +57,8 @@ import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.PhoneAuthCredential
 import com.rd.PageIndicatorView
 import com.rd.animation.type.AnimationType
+import org.koin.androidx.fragment.android.setupKoinFragmentFactory
+import org.koin.androidx.scope.lifecycleScope
 import java.util.*
 import java.util.concurrent.TimeUnit
 import kotlin.math.abs
@@ -96,7 +97,7 @@ class PublicRestaurantProfileActivity : BaseActivity(), AppBarLayout.OnOffsetCha
     private lateinit var fragmentAdapter: PublicRestaurantProfileAdapter
     private val coverAdapter = CoverPagerAdapter()
 
-    private val cartViewModel: CartViewModel by viewModels()
+    private val cartViewModel: ScheduledCartViewModel by viewModels()
     private val restaurantViewModel: RestaurantPublicViewModel by viewModels()
     private val scheduledSessionViewModel: NewScheduledSessionViewModel by viewModels()
     private val userViewModel: UserViewModel by viewModels()
@@ -133,6 +134,8 @@ class PublicRestaurantProfileActivity : BaseActivity(), AppBarLayout.OnOffsetCha
     private val firebaseAuth: FirebaseAuth by lazy { FirebaseAuth.getInstance() }
 
     override fun onCreate(savedInstanceState: Bundle?) {
+        setupKoinFragmentFactory(lifecycleScope)
+
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_public_restaurant_profile)
         ButterKnife.bind(this)
@@ -164,7 +167,6 @@ class PublicRestaurantProfileActivity : BaseActivity(), AppBarLayout.OnOffsetCha
             }
         })
         restaurantViewModel.fetchRestaurantWithId(restaurantId)
-        cartViewModel.sessionType = SessionType.SCHEDULED
 
         scheduledCartView.setup(this)
 
@@ -514,7 +516,7 @@ class PublicRestaurantProfileActivity : BaseActivity(), AppBarLayout.OnOffsetCha
         override fun getItemCount() = tabs.size
 
         override fun createFragment(position: Int): Fragment = when (tabs[position]) {
-            RestaurantTab.MENU -> UserMenuFragment.newInstance(restaurantId)
+            RestaurantTab.MENU -> ScheduledMenuFragment.newInstance(restaurantId)
             else -> BlankFragment.newInstance()
         }
     }

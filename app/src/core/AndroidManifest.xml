@@ -34,11 +34,6 @@
             android:label="Edit Profile"
             android:theme="@style/AppThemeWhiteActionBar" />
         <activity
-            android:name=".Menu.ShopMenu.SessionMenuActivity"
-            android:screenOrientation="portrait"
-            android:theme="@style/SessionTheme"
-            android:windowSoftInputMode="adjustPan" />
-        <activity
             android:name=".Inventory.InventoryActivity"
             android:screenOrientation="portrait"
             android:theme="@style/SessionTheme"
@@ -76,6 +71,11 @@
         <activity
             android:name=".menu.activities.ActiveSessionMenuActivity"
             android:theme="@style/AppThemeWhiteActionBar" />
+
+        <activity
+            android:name=".menu.activities.ShopMenuActivity"
+            android:theme="@style/SessionTheme"
+            android:windowSoftInputMode="adjustPan" />
 
         <activity
             android:name=".session.scheduled.activities.QSRFoodReadyActivity"

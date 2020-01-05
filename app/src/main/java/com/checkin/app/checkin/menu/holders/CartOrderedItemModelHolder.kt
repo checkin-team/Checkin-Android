@@ -8,10 +8,10 @@ import butterknife.BindView
 import com.airbnb.epoxy.EpoxyAttribute
 import com.airbnb.epoxy.EpoxyModelClass
 import com.airbnb.epoxy.EpoxyModelWithHolder
-import com.checkin.app.checkin.menu.models.OrderedItemModel
 import com.checkin.app.checkin.R
 import com.checkin.app.checkin.Utility.DebouncedOnClickListener
 import com.checkin.app.checkin.Utility.Utils
+import com.checkin.app.checkin.menu.models.OrderedItemModel
 import com.checkin.app.checkin.misc.epoxy.BaseEpoxyHolder
 
 @EpoxyModelClass(layout = R.layout.item_cart_order_item)
@@ -52,6 +52,7 @@ abstract class CartOrderedItemModelHolder : EpoxyModelWithHolder<CartOrderedItem
             super.bindView(itemView)
             imQuantityIncrement.setOnClickListener(DebouncedOnClickListener { listener.onItemChange(mData, mData.quantity + 1) })
             imQuantityDecrement.setOnClickListener(DebouncedOnClickListener { listener.onItemChange(mData, mData.quantity - 1) })
+            showAddQuantity()
         }
 
         override fun bindData(data: OrderedItemModel) {
@@ -62,10 +63,9 @@ abstract class CartOrderedItemModelHolder : EpoxyModelWithHolder<CartOrderedItem
             tvItemQuantity.text = data.quantity.toString()
             tvItemPrice.text = Utils.formatCurrencyAmount(context, data.cost)
             imItemType.setImageResource(if (!data.itemModel.isVegetarian) R.drawable.ic_non_veg else R.drawable.ic_veg)
-            showAddQuantity()
         }
 
-        fun showAddQuantity() {
+        private fun showAddQuantity() {
             containerAddQuantity.visibility = View.VISIBLE
             tvMenuItemAdd.visibility = View.GONE
         }

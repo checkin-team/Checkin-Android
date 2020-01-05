@@ -17,7 +17,7 @@ import com.checkin.app.checkin.Utility.parentFragmentDelegate
 import com.checkin.app.checkin.Utility.parentViewModels
 import com.checkin.app.checkin.menu.controllers.UserMenuItemController
 import com.checkin.app.checkin.menu.holders.OnItemInteractionListener
-import com.checkin.app.checkin.menu.viewmodels.CartViewModel
+import com.checkin.app.checkin.menu.viewmodels.ScheduledCartViewModel
 import com.checkin.app.checkin.menu.viewmodels.UserMenuViewModel
 import com.checkin.app.checkin.misc.fragments.BaseDialogFragment
 import com.google.android.material.textfield.TextInputEditText
@@ -38,7 +38,7 @@ class MenuDishSearchFragment : BaseDialogFragment(), OnItemInteractionListener {
     internal lateinit var pbLoading: ProgressBar
 
     val viewModel: UserMenuViewModel by parentViewModels()
-    val cartViewModel: CartViewModel by parentViewModels()
+    val cartViewModel: ScheduledCartViewModel by parentViewModels()
     val itemController = UserMenuItemController(this)
     val listener: MenuItemInteraction by parentFragmentDelegate()
 

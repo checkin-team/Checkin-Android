@@ -71,10 +71,6 @@ public class MenuItemModel implements Serializable {
 
     @JsonIgnore
     @Transient
-    private com.checkin.app.checkin.Menu.ShopMenu.Adapter.MenuItemAdapter.ItemViewHolder holder;
-
-    @JsonIgnore
-    @Transient
     private InventoryItemAdapter.ItemViewHolder inventoryHolder;
 
     public MenuItemModel() {
@@ -214,15 +210,6 @@ public class MenuItemModel implements Serializable {
 
     public OrderedItemModel order(int quantity, int type) {
         return new OrderedItemModel(this, quantity, type);
-    }
-
-    public com.checkin.app.checkin.Menu.ShopMenu.Adapter.MenuItemAdapter.ItemViewHolder getItemHolder() {
-        return holder;
-    }
-
-    @JsonIgnore
-    public void setItemHolder(com.checkin.app.checkin.Menu.ShopMenu.Adapter.MenuItemAdapter.ItemViewHolder holder) {
-        this.holder = holder;
     }
 
     @Override

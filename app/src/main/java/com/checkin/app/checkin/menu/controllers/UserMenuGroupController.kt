@@ -41,29 +41,36 @@ class UserMenuGroupController(
             field = value
             requestModelBuild()
         }
+    var doShowBestseller: Boolean = false
+        set(value) {
+            field = value
+            requestModelBuild()
+        }
 
     val hasData = menuGroups?.isNotEmpty() ?: false
 
     private var expandedGroupId: Long? = null
 
     override fun buildModels() {
-        val bestsellerModels: List<EpoxyModel<*>> = trendingDishes.let {
-            it?.map { dish ->
-                BestSellerModelHolder_().apply {
-                    id(dish.pk)
-                    trendingItem(dish)
-                    bestSellerListener?.let { listener(it) }
-                    orderedCounts?.also { itemOrderedCount(it[dish.pk] ?: 0) }
-                }
-            } ?: listOf(
-                    ShimmerModelHolder_().apply { withAsMenuBestsellerItemLayout().id("sb1") },
-                    ShimmerModelHolder_().apply { withAsMenuBestsellerItemLayout().id("sb2") }
-            )
-        }
-        verticalGridCarousel {
-            id("bestseller")
-            models(bestsellerModels)
-            itemSpacing(bestSellerItemSpacing)
+        if (doShowBestseller) {
+            val bestsellerModels: List<EpoxyModel<*>> = trendingDishes.let {
+                it?.map { dish ->
+                    BestSellerModelHolder_().apply {
+                        id(dish.pk)
+                        trendingItem(dish)
+                        bestSellerListener?.let { listener(it) }
+                        orderedCounts?.also { itemOrderedCount(it[dish.pk] ?: 0) }
+                    }
+                } ?: listOf(
+                        ShimmerModelHolder_().apply { withAsMenuBestsellerItemLayout().id("sb1") },
+                        ShimmerModelHolder_().apply { withAsMenuBestsellerItemLayout().id("sb2") }
+                )
+            }
+            verticalGridCarousel {
+                id("bestseller")
+                models(bestsellerModels)
+                itemSpacing(bestSellerItemSpacing)
+            }
         }
 
         menuGroups.let {

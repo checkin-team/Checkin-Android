@@ -1,8 +1,8 @@
 package com.checkin.app.checkin.menu.controllers
 
-import com.checkin.app.checkin.menu.models.OrderedItemModel
 import com.checkin.app.checkin.menu.holders.CartOrderInteraction
 import com.checkin.app.checkin.menu.holders.cartOrderedItemModelHolder
+import com.checkin.app.checkin.menu.models.OrderedItemModel
 import com.checkin.app.checkin.misc.epoxy.BaseEpoxyController
 
 class CartOrderedItemController(
@@ -18,12 +18,12 @@ class CartOrderedItemController(
         orderedItems?.forEach {order ->
 //            val order = it.clone()
             cartOrderedItemModelHolder {
-                id(getUniqueId(order))
+                id(order.getUniqueId())
                 orderedItem(order)
                 listener(listener)
             }
         }
     }
-
-    private fun getUniqueId(orderedItemModel: OrderedItemModel) = if (orderedItemModel.pk != 0L) orderedItemModel.pk else orderedItemModel.hashCode().toLong()
 }
+
+fun OrderedItemModel.getUniqueId(): Long = if (pk != 0L) pk else hashCode().toLong()

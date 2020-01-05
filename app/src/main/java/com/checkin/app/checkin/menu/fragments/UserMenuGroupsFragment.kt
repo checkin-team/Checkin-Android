@@ -5,7 +5,6 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
 import androidx.core.view.ViewCompat
-import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.Observer
 import androidx.lifecycle.lifecycleScope
 import butterknife.BindView
@@ -16,18 +15,26 @@ import com.checkin.app.checkin.Menu.Model.MenuGroupModel
 import com.checkin.app.checkin.Menu.UserMenu.Adapter.MenuGroupAdapter
 import com.checkin.app.checkin.R
 import com.checkin.app.checkin.Utility.Utils
+import com.checkin.app.checkin.Utility.isNotEmpty
 import com.checkin.app.checkin.Utility.parentFragmentDelegate
 import com.checkin.app.checkin.Utility.parentViewModels
+import com.checkin.app.checkin.menu.activities.ShopMenuActivity
 import com.checkin.app.checkin.menu.controllers.UserMenuGroupController
 import com.checkin.app.checkin.menu.holders.SessionTrendingDishInteraction
-import com.checkin.app.checkin.menu.viewmodels.CartViewModel
+import com.checkin.app.checkin.menu.viewmodels.ActiveSessionCartViewModel
+import com.checkin.app.checkin.menu.viewmodels.BaseCartViewModel
+import com.checkin.app.checkin.menu.viewmodels.ScheduledCartViewModel
 import com.checkin.app.checkin.menu.viewmodels.UserMenuViewModel
 import com.checkin.app.checkin.misc.fragments.BaseFragment
+import com.checkin.app.checkin.restaurant.activities.PublicRestaurantProfileActivity
 import com.checkin.app.checkin.session.models.TrendingDishModel
 import com.miguelcatalan.materialsearchview.utils.AnimationUtil
 import kotlinx.coroutines.launch
+import org.koin.androidx.viewmodel.ext.android.sharedViewModel
+import org.koin.dsl.module
+import kotlin.reflect.KClass
 
-class UserMenuGroupsFragment : BaseFragment(), MenuGroupAdapter.OnGroupInteractionInterface {
+class UserMenuGroupsFragment<CartVM : BaseCartViewModel>(cartVmClass: KClass<CartVM>) : BaseFragment(), MenuGroupAdapter.OnGroupInteractionInterface {
     override val rootLayout: Int = R.layout.fragment_user_menu_groups
 
     @BindView(R.id.epoxy_rv_user_menu_groups)
@@ -39,9 +46,9 @@ class UserMenuGroupsFragment : BaseFragment(), MenuGroupAdapter.OnGroupInteracti
 
     private lateinit var groupController: UserMenuGroupController
 
-    val itemListener: MenuItemInteraction by parentFragmentDelegate()
-    val viewModel: UserMenuViewModel by parentViewModels()
-    val cartViewModel: CartViewModel by activityViewModels()
+    private val itemListener: MenuItemInteraction by parentFragmentDelegate()
+    private val viewModel: UserMenuViewModel by parentViewModels()
+    private val cartViewModel: CartVM by sharedViewModel(cartVmClass)
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         setupEpoxyModels()
@@ -66,8 +73,9 @@ class UserMenuGroupsFragment : BaseFragment(), MenuGroupAdapter.OnGroupInteracti
         viewModel.recommendedItems.observe(this, Observer {
             it?.also { listResource ->
                 if (listResource.status === Resource.Status.SUCCESS && listResource.data != null) {
+                    groupController.doShowBestseller = listResource.data.isNotEmpty()
                     groupController.trendingDishes = listResource.data
-                }
+                } else groupController.doShowBestseller = listResource.status == Resource.Status.LOADING
             }
         })
 
@@ -104,8 +112,13 @@ class UserMenuGroupsFragment : BaseFragment(), MenuGroupAdapter.OnGroupInteracti
             AnimationUtil.fadeOutView(containerCurrentCategory)
         }
     }
+}
 
-    companion object {
-        fun newInstance() = UserMenuGroupsFragment()
+val menuCartModule = module {
+    scope<ShopMenuActivity> {
+        scoped { UserMenuGroupsFragment(ActiveSessionCartViewModel::class) }
+    }
+    scope<PublicRestaurantProfileActivity> {
+        scoped { UserMenuGroupsFragment(ScheduledCartViewModel::class) }
     }
 }

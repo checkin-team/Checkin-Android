@@ -1,4 +1,4 @@
-package com.checkin.app.checkin.Menu.ShopMenu.Fragment;
+package com.checkin.app.checkin.Menu.UserMenu.Fragment;
 
 import android.annotation.SuppressLint;
 import android.os.Bundle;
