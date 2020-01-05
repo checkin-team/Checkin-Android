@@ -40,6 +40,10 @@ public class ItemCustomizationFieldModel {
         this.cost = cost;
     }
 
+    @JsonProperty("group")
+    public void setGroup(String group) {
+    }
+
     public long getPk() {
         return pk;
     }

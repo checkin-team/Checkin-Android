@@ -3,6 +3,7 @@ package com.checkin.app.checkin.home.viewmodels
 import android.app.Application
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MediatorLiveData
+import androidx.lifecycle.Transformations
 import com.checkin.app.checkin.Data.BaseViewModel
 import com.checkin.app.checkin.Data.Resource
 import com.checkin.app.checkin.Utility.isNotEmpty
@@ -13,6 +14,7 @@ import com.checkin.app.checkin.menu.MenuRepository
 import com.checkin.app.checkin.menu.models.CartStatusModel
 import com.checkin.app.checkin.session.SessionRepository
 import com.checkin.app.checkin.session.models.ScheduledSessionStatus
+import com.fasterxml.jackson.databind.node.ObjectNode
 
 class LiveSessionViewModel(application: Application) : BaseViewModel(application) {
     private val mSessionRepository = SessionRepository.getInstance(application)
@@ -21,6 +23,7 @@ class LiveSessionViewModel(application: Application) : BaseViewModel(application
     private val mScheduledSessionData = createNetworkLiveData<List<ScheduledLiveSessionDetailModel>>()
     private val mActiveSessionData = createNetworkLiveData<ActiveLiveSessionDetailModel>()
     private val mCartStatusData = createNetworkLiveData<CartStatusModel>()
+    private val mClearCart = createNetworkLiveData<ObjectNode>()
     private val mLiveData = MediatorLiveData<Resource<List<LiveSessionDetailModel>>>().apply {
         addSource(mScheduledSessionData) {
             it?.let { listResource ->
@@ -55,6 +58,10 @@ class LiveSessionViewModel(application: Application) : BaseViewModel(application
     }
 
     val cartStatus: LiveData<Resource<CartStatusModel>> = mCartStatusData
+    val clearCartData: LiveData<Resource<ObjectNode>> = Transformations.map(mClearCart) { input ->
+        if (input.status == Resource.Status.SUCCESS) mCartStatusData.value = Resource.errorNotFound(null)
+        input
+    }
     val liveSessionData: LiveData<Resource<List<LiveSessionDetailModel>>> = mLiveData
 
     override fun resetData() {
@@ -82,5 +89,9 @@ class LiveSessionViewModel(application: Application) : BaseViewModel(application
 
     fun fetchLiveActiveSession() {
         mActiveSessionData.addSource(mSessionRepository.activeSessionLiveStatus, mActiveSessionData::setValue)
+    }
+
+    fun clearCart() {
+        mClearCart.addSource(mSessionRepository.clearCustomerCart, mClearCart::setValue)
     }
 }

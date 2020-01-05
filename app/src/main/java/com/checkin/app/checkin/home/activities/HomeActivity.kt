@@ -179,8 +179,11 @@ class HomeActivity : BaseAccountActivity(), NavigationView.OnNavigationItemSelec
                 containerCart.visibility = View.VISIBLE
                 Utils.loadImageOrDefault(imCartRestaurant, it.restaurant.target.displayPic, R.drawable.cover_restaurant_unknown)
                 tvCartRestaurant.text = it.restaurant.target.displayName
-            } ?: onCancelCartView()
+            } ?: run {
+                containerCart.visibility = View.GONE
+            }
         })
+        liveViewModel.clearCartData.observe(this, Observer { })
         mViewModel.fetchSessionStatus()
         mViewModel.fetchNearbyRestaurants()
         liveViewModel.fetchCartStatus()
@@ -253,7 +256,7 @@ class HomeActivity : BaseAccountActivity(), NavigationView.OnNavigationItemSelec
 
     @OnClick(R.id.im_home_cart_cancel)
     fun onCancelCartView() {
-        containerCart.visibility = View.GONE
+        liveViewModel.clearCart()
     }
 
     @OnClick(R.id.container_home_cart)
