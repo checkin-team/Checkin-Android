@@ -4,8 +4,8 @@ import android.app.Application
 import android.os.Bundle
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.Transformations
+import androidx.lifecycle.viewModelScope
 import com.checkin.app.checkin.Data.BaseViewModel
-import com.checkin.app.checkin.Data.Converters
 import com.checkin.app.checkin.Data.Converters.objectMapper
 import com.checkin.app.checkin.Data.Resource
 import com.checkin.app.checkin.Data.Resource.Companion.cloneResource
@@ -23,10 +23,13 @@ import com.checkin.app.checkin.session.models.QRResultModel
 import com.checkin.app.checkin.session.models.SessionPromoModel
 import com.checkin.app.checkin.session.scheduled.ScheduledSessionRepository
 import com.fasterxml.jackson.databind.node.ObjectNode
+import kotlinx.coroutines.Job
+import kotlinx.coroutines.cancel
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.launch
 import java.util.*
 
 class NewScheduledSessionViewModel(application: Application) : BaseViewModel(application) {
-    var sessionPk: Long = 0
     private val sessionRepository = SessionRepository.getInstance(application)
     private val scheduledSessionRepository = ScheduledSessionRepository.getInstance(application)
 
@@ -39,6 +42,9 @@ class NewScheduledSessionViewModel(application: Application) : BaseViewModel(app
     private val mPromoData = createNetworkLiveData<List<PromoDetailModel>>()
     private val mSessionPromo = createNetworkLiveData<SessionPromoModel>()
 
+    private var sessionRemarksJob: Job? = null
+
+    var sessionPk: Long = 0
     var isPhoneVerified = true
 
     val newScheduledSessionData: LiveData<Resource<NewScheduledSessionModel>> = mNewSessionData
@@ -50,7 +56,7 @@ class NewScheduledSessionViewModel(application: Application) : BaseViewModel(app
 
     val promoDeletedData: LiveData<Resource<ObjectNode>> = Transformations.map(mPromoRemove) { input ->
         if (input != null && input.status === Resource.Status.SUCCESS) {
-            mSessionPromo.value = errorNotFound("Not Found")
+            mSessionPromo.value = errorNotFound(null)
         }
         input
     }
@@ -70,8 +76,13 @@ class NewScheduledSessionViewModel(application: Application) : BaseViewModel(app
     }
 
     fun updateScheduledSessionRemarks(remarks: String?) {
-        val body = NewScheduledSessionModel(remarks = remarks)
-        mNewSessionData.addSource(scheduledSessionRepository.editScheduledSession(sessionPk, body), mNewSessionData::setValue)
+        sessionRemarksJob?.cancel("Overridden by new job")
+
+        sessionRemarksJob = viewModelScope.launch {
+            delay(500)
+            val body = NewScheduledSessionModel(remarks = remarks)
+            mNewSessionData.addSource(scheduledSessionRepository.editScheduledSession(sessionPk, body), mNewSessionData::setValue)
+        }
     }
 
     fun postPaytmCallback(bundle: Bundle) {
@@ -105,7 +116,7 @@ class NewScheduledSessionViewModel(application: Application) : BaseViewModel(app
     }
 
     fun createNewQrSession(data: String) {
-        val requestJson = Converters.objectMapper.createObjectNode()
+        val requestJson = objectMapper.createObjectNode()
         requestJson.put("data", data)
         mQrResult.addSource(sessionRepository.newCustomerSession(requestJson), mQrResult::setValue)
     }

@@ -59,6 +59,7 @@ import com.google.firebase.auth.PhoneAuthCredential
 import com.rd.PageIndicatorView
 import com.rd.animation.type.AnimationType
 import java.util.*
+import java.util.concurrent.TimeUnit
 import kotlin.math.abs
 
 class PublicRestaurantProfileActivity : BaseActivity(), AppBarLayout.OnOffsetChangedListener,
@@ -195,7 +196,6 @@ class PublicRestaurantProfileActivity : BaseActivity(), AppBarLayout.OnOffsetCha
                     if (allowOrder) {
                         successNewSession(it.data.pk)
                         cartViewModel.fetchCartOrders()
-                        scheduledSessionViewModel.fetchSessionAppliedPromo()
                     }
                 }
             }
@@ -216,6 +216,7 @@ class PublicRestaurantProfileActivity : BaseActivity(), AppBarLayout.OnOffsetCha
                 when (resource.status) {
                     Resource.Status.SUCCESS -> {
                         successNewSession(resource.data!!.pk)
+                        cartViewModel.updateCartDataWithNewSession(resource.data)
                         supportFragmentManager.inTransaction {
                             supportFragmentManager.findFragmentByTag(SchedulerBottomSheetFragment.FRAGMENT_TAG)?.let { remove(it) }
                                     ?: this
@@ -224,6 +225,8 @@ class PublicRestaurantProfileActivity : BaseActivity(), AppBarLayout.OnOffsetCha
                     Resource.Status.ERROR_INVALID_REQUEST -> if (resource.problem?.getErrorCode() == ProblemModel.ERROR_CODE.SESSION_SCHEDULED_PENDING_CART) {
                         val cartRestaurant = cartViewModel.cartStatus.value?.data?.restaurant?.target
                         if (cartRestaurant != null) handleErrorCartExists(cartRestaurant) else pass
+                    } else if (resource.errorBody?.has("planned_datetime") == true) {
+                        Utils.toast(this, resource.errorBody.get("planned_datetime").get(0).asText())
                     } else Utils.toast(this, resource.message)
                     else -> pass
                 }
@@ -315,6 +318,7 @@ class PublicRestaurantProfileActivity : BaseActivity(), AppBarLayout.OnOffsetCha
         cartViewModel.sessionPk = sessionPk
         scheduledSessionViewModel.sessionPk = sessionPk
         cartViewModel.syncOrdersWithServer()
+        scheduledSessionViewModel.fetchSessionAppliedPromo()
     }
 
     private fun clearSession() {
@@ -374,6 +378,12 @@ class PublicRestaurantProfileActivity : BaseActivity(), AppBarLayout.OnOffsetCha
     }
 
     override fun onStartPayment() {
+        cartViewModel.cartDetailData.value?.data?.scheduled?.plannedDatetime?.let {
+            if (it.time < Calendar.getInstance().time.time + TimeUnit.MINUTES.toMillis(10)) {
+                Utils.toast(this, "Booking time must at least be 10 minutes from now")
+                return
+            }
+        }
         scheduledSessionViewModel.requestPaytmDetails()
     }
 
@@ -428,7 +438,8 @@ class PublicRestaurantProfileActivity : BaseActivity(), AppBarLayout.OnOffsetCha
     }
 
     override fun onChooseSchedule() {
-        SchedulerBottomSheetFragment().show(supportFragmentManager, SchedulerBottomSheetFragment.FRAGMENT_TAG)
+        SchedulerBottomSheetFragment.newInstance(null)
+                .show(supportFragmentManager, SchedulerBottomSheetFragment.FRAGMENT_TAG)
     }
 
     override fun updateSessionTime(scheduled: ScheduledSessionDetailModel) {
@@ -494,7 +505,7 @@ class PublicRestaurantProfileActivity : BaseActivity(), AppBarLayout.OnOffsetCha
     companion object {
         const val KEY_RESTAURANT_ID = "restaurant_profile.public.id"
         const val KEY_SESSION_ID = "session.new.id"
-        val TAG = PublicRestaurantProfileActivity::class.java.simpleName
+        val TAG: String = PublicRestaurantProfileActivity::class.java.simpleName
     }
 
     class PublicRestaurantProfileAdapter(fragmentActivity: FragmentActivity, val restaurantId: Long) : FragmentStateAdapter(fragmentActivity) {

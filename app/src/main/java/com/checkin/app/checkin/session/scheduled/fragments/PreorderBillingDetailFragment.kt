@@ -3,6 +3,7 @@ package com.checkin.app.checkin.session.scheduled.fragments
 import android.os.Bundle
 import android.view.View
 import android.widget.TextView
+import androidx.appcompat.app.AlertDialog
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.Observer
 import butterknife.BindView
@@ -25,6 +26,13 @@ class PreorderBillingDetailFragment : BaseFragment() {
     internal lateinit var tvOrderId: TextView
 
     val viewModel: ScheduledSessionDetailViewModel by activityViewModels()
+    val cancelDialog by lazy {
+        AlertDialog.Builder(requireContext())
+                .setTitle("Are you sure you want to cancel?")
+                .setPositiveButton("Yes") { _, _ -> viewModel.cancelSession() }
+                .setNegativeButton("No") { dialog, _ -> dialog.dismiss() }
+                .create()
+    }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         tvGuestName.text = AccountUtil.getUsername(requireContext())
@@ -39,6 +47,6 @@ class PreorderBillingDetailFragment : BaseFragment() {
 
     @OnClick(R.id.btn_user_scheduled_cancel)
     fun onCancel() {
-        viewModel.cancelSession()
+        cancelDialog.show()
     }
 }

@@ -55,7 +55,7 @@ class Resource<out T> private constructor(val status: Status, val data: T?, val 
 
         fun <T> errorNotFound(msg: String?, errorBody: JsonNode?): Resource<T> = error(Status.ERROR_NOT_FOUND, msg, null, errorBody)
 
-        fun <T> errorNotFound(msg: String?): Resource<T> = error(msg, null)
+        fun <T> errorNotFound(msg: String?): Resource<T> = errorNotFound(msg, null)
 
         fun <T> loading(data: T?): Resource<T> = Resource(Status.LOADING, data, null, null)
 
@@ -87,6 +87,6 @@ class Resource<out T> private constructor(val status: Status, val data: T?, val 
             }
         }
 
-        fun <X, T> cloneResource(resource: Resource<T>?, data: X): Resource<X>? = resource?.let { Resource(it.status, data, it.message, it.errorBody).apply { isCached = it.isCached } }
+        fun <X, T> cloneResource(resource: Resource<T>?, data: X?): Resource<X>? = resource?.let { Resource(it.status, data, it.message, it.errorBody).apply { isCached = it.isCached } }
     }
 }

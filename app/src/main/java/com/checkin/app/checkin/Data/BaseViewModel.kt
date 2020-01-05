@@ -1,6 +1,7 @@
 package com.checkin.app.checkin.Data
 
 import android.app.Application
+import androidx.annotation.CallSuper
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 
@@ -27,4 +28,10 @@ abstract class BaseViewModel(private val mApplication: Application) : AndroidVie
     }
 
     abstract fun updateResults()
+
+    open fun fetchMissing() {}
+
+    @CallSuper
+    open fun resetData() {
+    }
 }

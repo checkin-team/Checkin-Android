@@ -60,6 +60,7 @@ class PreorderSessionDetailActivity : BaseActivity() {
         viewModel.sessionData.observe(this, Observer {
             networkViewModel.updateStatus(it)
             if (it.status == Resource.Status.SUCCESS && it.data != null) setupHeader(it.data)
+            else if (it.status == Resource.Status.ERROR_NOT_FOUND) finish()
         })
         viewModel.cancelData.observe(this, Observer {
             if (it.status == Resource.Status.SUCCESS) finish()

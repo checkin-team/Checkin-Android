@@ -19,6 +19,10 @@ class BlockingNetworkViewModel(application: Application) : BaseViewModel(applica
         mNetworkData.value = resource
     }
 
+    fun resetStatus() {
+        mNetworkData.value = null
+    }
+
     fun tryAgain() {
         mTryAgain.value = mResourceDataClass
     }

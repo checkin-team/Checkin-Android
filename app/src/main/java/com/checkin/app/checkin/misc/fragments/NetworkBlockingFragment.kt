@@ -39,7 +39,7 @@ class NetworkBlockingFragment : BaseFragment() {
                     Resource.Status.LOADING -> handleLoading()
                     Resource.Status.SUCCESS -> handleSuccess()
                 }
-            }
+            } ?: handleSuccess()
         })
     }
 

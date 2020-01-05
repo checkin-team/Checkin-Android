@@ -18,7 +18,6 @@ import com.checkin.app.checkin.misc.BlockingNetworkViewModel
 import com.checkin.app.checkin.misc.activities.BaseActivity
 import com.checkin.app.checkin.misc.fragments.NetworkBlockingFragment
 import com.checkin.app.checkin.session.models.CustomerScheduledSessionDetailModel
-import com.checkin.app.checkin.session.scheduled.fragments.PreorderDetailFragment
 import com.checkin.app.checkin.session.scheduled.fragments.QSRDetailFragment
 import com.checkin.app.checkin.session.scheduled.viewmodels.ScheduledSessionDetailViewModel
 
@@ -61,6 +60,7 @@ class QSRSessionDetailActivity : BaseActivity() {
         viewModel.sessionData.observe(this, Observer {
             networkViewModel.updateStatus(it)
             if (it.status == Resource.Status.SUCCESS && it.data != null) setupHeader(it.data)
+            else if (it.status == Resource.Status.ERROR_NOT_FOUND) finish()
         })
     }
 

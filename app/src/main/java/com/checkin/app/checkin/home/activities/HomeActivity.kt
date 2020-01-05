@@ -18,7 +18,6 @@ import androidx.drawerlayout.widget.DrawerLayout
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import androidx.lifecycle.Observer
-import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import androidx.viewpager.widget.ViewPager.SimpleOnPageChangeListener
 import butterknife.BindView
 import butterknife.ButterKnife
@@ -31,7 +30,6 @@ import com.checkin.app.checkin.Data.Message.MessageModel.MESSAGE_TYPE
 import com.checkin.app.checkin.Data.Message.MessageUtils
 import com.checkin.app.checkin.Data.ProblemModel
 import com.checkin.app.checkin.Data.Resource
-import com.checkin.app.checkin.home.fragments.UserHomeFragment
 import com.checkin.app.checkin.R
 import com.checkin.app.checkin.Shop.ShopJoin.BusinessFeaturesActivity
 import com.checkin.app.checkin.User.Private.UserPrivateProfileFragment
@@ -41,6 +39,7 @@ import com.checkin.app.checkin.Utility.DynamicSwipableViewPager
 import com.checkin.app.checkin.Utility.OnBoardingUtils
 import com.checkin.app.checkin.Utility.OnBoardingUtils.OnBoardingModel
 import com.checkin.app.checkin.Utility.Utils
+import com.checkin.app.checkin.home.fragments.UserHomeFragment
 import com.checkin.app.checkin.home.viewmodels.HomeViewModel
 import com.checkin.app.checkin.home.viewmodels.LiveSessionViewModel
 import com.checkin.app.checkin.misc.activities.QRScannerActivity
@@ -60,8 +59,6 @@ class HomeActivity : BaseAccountActivity(), NavigationView.OnNavigationItemSelec
     internal lateinit var tabLayout: TabLayout
     @BindView(R.id.vp_home)
     internal lateinit var vpHome: DynamicSwipableViewPager
-    @BindView(R.id.sr_home)
-    internal lateinit var swipeRefreshLayout: SwipeRefreshLayout
     @BindView(R.id.container_home_cart)
     internal lateinit var containerCart: ViewGroup
     @BindView(R.id.tv_home_cart_restaurant)
@@ -93,7 +90,6 @@ class HomeActivity : BaseAccountActivity(), NavigationView.OnNavigationItemSelec
         ButterKnife.bind(this)
 
         configureToolbar()
-        initRefreshScreen(R.id.sr_home)
 
         val adapter = HomeFragmentAdapter(supportFragmentManager)
         tabLayout.setupWithViewPager(vpHome)
@@ -138,13 +134,7 @@ class HomeActivity : BaseAccountActivity(), NavigationView.OnNavigationItemSelec
     }
 
     override fun updateScreen() {
-        mViewModel.updateResults()
-        userViewModel.updateResults()
         accountViewModel.updateResults()
-    }
-
-    fun enableDisableSwipeRefresh(enable: Boolean) {
-        swipeRefreshLayout.isEnabled = enable
     }
 
     private fun setupObserver() {
@@ -240,13 +230,14 @@ class HomeActivity : BaseAccountActivity(), NavigationView.OnNavigationItemSelec
 
     override fun onResume() {
         super.onResume()
+        accountViewModel.fetchAccounts()
         mViewModel.updateResults()
-        enableDisableSwipeRefresh(true)
+        liveViewModel.updateResults()
         val types = arrayOf(MESSAGE_TYPE.USER_SESSION_ADDED_BY_OWNER, MESSAGE_TYPE.SHOP_MEMBER_ADDED)
         MessageUtils.registerLocalReceiver(this, mReceiver, *types)
     }
 
-    protected fun openActiveSession() {
+    private fun openActiveSession() {
         startActivity(Intent(this, ActiveSessionActivity::class.java))
     }
 

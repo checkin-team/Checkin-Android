@@ -4,18 +4,6 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.widget.ImageView;
 
-import com.checkin.app.checkin.Account.AccountModel;
-import com.checkin.app.checkin.Account.BaseAccountActivity;
-import com.checkin.app.checkin.Data.Resource;
-import com.checkin.app.checkin.Inventory.InventoryActivity;
-import com.checkin.app.checkin.misc.adapters.BaseFragmentAdapterBottomNav;
-import com.checkin.app.checkin.misc.fragments.BlankFragment;
-import com.checkin.app.checkin.R;
-import com.checkin.app.checkin.Shop.Private.Insight.ShopInsightActivity;
-import com.checkin.app.checkin.Utility.DynamicSwipableViewPager;
-import com.checkin.app.checkin.Utility.Utils;
-import com.google.android.material.tabs.TabLayout;
-
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.core.view.GravityCompat;
@@ -25,6 +13,19 @@ import androidx.fragment.app.FragmentManager;
 import androidx.lifecycle.ViewModelProviders;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 import androidx.viewpager.widget.ViewPager;
+
+import com.checkin.app.checkin.Account.AccountModel;
+import com.checkin.app.checkin.Account.BaseAccountActivity;
+import com.checkin.app.checkin.Data.Resource;
+import com.checkin.app.checkin.Inventory.InventoryActivity;
+import com.checkin.app.checkin.R;
+import com.checkin.app.checkin.Shop.Private.Insight.ShopInsightActivity;
+import com.checkin.app.checkin.Utility.DynamicSwipableViewPager;
+import com.checkin.app.checkin.Utility.Utils;
+import com.checkin.app.checkin.misc.adapters.BaseFragmentAdapterBottomNav;
+import com.checkin.app.checkin.misc.fragments.BlankFragment;
+import com.google.android.material.tabs.TabLayout;
+
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
@@ -144,7 +145,7 @@ public class ShopPrivateActivity extends BaseAccountActivity {
     }
 
     @Override
-    protected void updateScreen() {
+    public void updateScreen() {
         getAccountViewModel().updateResults();
         mViewModel.updateResults();
     }

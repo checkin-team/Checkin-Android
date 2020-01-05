@@ -13,21 +13,22 @@ import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 import android.widget.ImageView;
 
+import androidx.annotation.Nullable;
+import androidx.lifecycle.ViewModelProviders;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+
 import com.checkin.app.checkin.Data.Message.MessageModel;
 import com.checkin.app.checkin.Data.Message.MessageModel.MESSAGE_TYPE;
 import com.checkin.app.checkin.Data.Message.MessageObjectModel;
 import com.checkin.app.checkin.Data.Message.MessageUtils;
 import com.checkin.app.checkin.Data.Resource;
-import com.checkin.app.checkin.misc.activities.BaseActivity;
 import com.checkin.app.checkin.R;
+import com.checkin.app.checkin.Utility.Utils;
+import com.checkin.app.checkin.misc.activities.BaseActivity;
 import com.checkin.app.checkin.session.activesession.chat.SessionChatDataModel.EVENT_CONCERN_TYPE;
 import com.checkin.app.checkin.session.activesession.chat.SessionChatDataModel.EVENT_REQUEST_SERVICE_TYPE;
-import com.checkin.app.checkin.Utility.Utils;
 
-import androidx.annotation.Nullable;
-import androidx.lifecycle.ViewModelProviders;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
@@ -264,7 +265,7 @@ public class SessionChatActivity extends BaseActivity implements ActiveSessionCh
     }
 
     @Override
-    protected void updateScreen() {
+    public void updateScreen() {
         mViewModel.updateResults();
     }
 

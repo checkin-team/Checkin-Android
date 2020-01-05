@@ -4,7 +4,10 @@ import android.content.DialogInterface
 import android.os.Bundle
 import android.view.View
 import android.view.ViewGroup
-import android.widget.*
+import android.widget.LinearLayout
+import android.widget.RadioButton
+import android.widget.RadioGroup
+import android.widget.TextView
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.constraintlayout.widget.ConstraintSet
 import androidx.lifecycle.Observer
@@ -25,8 +28,6 @@ class ItemCustomizationBottomSheetFragment : BaseBottomSheetFragment(), ItemCust
 
     @BindView(R.id.container_menu_customization)
     internal lateinit var vMenuCustomizations: ConstraintLayout
-    @BindView(R.id.btn_menu_customization_done)
-    internal lateinit var btnDone: Button
     @BindView(R.id.tv_menu_customization_bill)
     internal lateinit var tvBill: TextView
     @BindView(R.id.tv_menu_customization_item_name)
@@ -97,7 +98,7 @@ class ItemCustomizationBottomSheetFragment : BaseBottomSheetFragment(), ItemCust
         }
     }
 
-    @OnClick(R.id.btn_menu_customization_done)
+    @OnClick(R.id.footer_menu_customization)
     fun onDoneClick() {
         if (!viewModel.canOrder() && view != null) {
             Utils.warningSnack(view, "Not all required customizations are selected.")

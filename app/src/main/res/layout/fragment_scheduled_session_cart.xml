@@ -40,7 +40,7 @@
             <TextView
                 android:id="@+id/tv_cart_header_amount"
                 style="@style/WhiteSmallTextStyle"
-                android:layout_width="wrap_content"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 tools:text="$ 123" />
@@ -50,11 +50,16 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
-                android:layout_marginEnd="@dimen/spacing_extra_small"
-                android:drawableEnd="@drawable/ic_fast_forward"
-                android:drawablePadding="@dimen/spacing_tiny"
-                android:fontFamily="@font/josefinsans_bold"
+                android:layout_marginEnd="@dimen/spacing_tiny"
+                android:fontFamily="@font/opensans_bold"
+                android:paddingBottom="@dimen/spacing_extra_tiny"
                 android:text="Continue" />
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="@dimen/spacing_extra_small"
+                android:src="@drawable/ic_fast_forward" />
         </LinearLayout>
 
         <FrameLayout
@@ -115,7 +120,8 @@
                     android:background="@color/transparent"
                     android:drawableStart="@drawable/ic_session_scheduled_remarks"
                     android:drawablePadding="@dimen/spacing_tiny"
-                    android:hint="Write Special Instructions" />
+                    android:hint="Write Special Instructions"
+                    android:inputType="textAutoComplete|textAutoCorrect" />
 
                 <LinearLayout
                     android:layout_width="match_parent"

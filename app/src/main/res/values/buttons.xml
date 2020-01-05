@@ -12,7 +12,7 @@
         <item name="android:layout_height">@dimen/button_height_tiny</item>
         <item name="android:background">@drawable/background_pinkish_grey_stroke</item>
         <item name="android:textSize">@dimen/font_small</item>
-        <item name="android:fontFamily">@font/josefinsans_semibold</item>
+        <item name="android:fontFamily">@font/opensans_semibold</item>
         <item name="android:textColor">@color/brownish_grey</item>
     </style>
 

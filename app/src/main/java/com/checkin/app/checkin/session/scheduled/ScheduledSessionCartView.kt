@@ -85,8 +85,6 @@ class ScheduledSessionCartView @JvmOverloads constructor(
     private val billHolder: BillHolder
     private lateinit var bottomSheetBehavior: LockableBottomSheetBehavior<View>
 
-    private var isSessionPromoInvalid = false
-
     init {
         View.inflate(context, R.layout.fragment_scheduled_session_cart, this).apply {
             setBackgroundColor(ContextCompat.getColor(context, R.color.white_two))
@@ -234,8 +232,6 @@ class ScheduledSessionCartView @JvmOverloads constructor(
     }
 
     private fun showPromoApply() {
-        if (isSessionPromoInvalid)
-            return
         resetPromoCards()
         containerApplyPromo.visibility = View.VISIBLE
     }
@@ -259,12 +255,17 @@ class ScheduledSessionCartView @JvmOverloads constructor(
             tvHeaderPlannedTime.text = "${data.scheduled.formatPlannedDateTime}, Table for ${data.scheduled.countPeople}"
             containerTimeSwitcher.visibility = View.VISIBLE
         } else containerTimeSwitcher.visibility = View.GONE
-        etRemarks.removeTextChangedListener(this)
-        etRemarks.setText(data.scheduled.remarks ?: "")
-        etRemarks.addTextChangedListener(this)
+        if (etRemarks.text.toString().isEmpty()) {
+            etRemarks.removeTextChangedListener(this)
+            etRemarks.setText(data.scheduled.remarks ?: "")
+            etRemarks.setSelection(etRemarks.text.length)
+            etRemarks.addTextChangedListener(this)
+        }
         tvGuestName.text = AccountUtil.getUsername(context)
-        billHolder.bind(data.bill)
-        setTotal(data.bill.total)
+        if (data.bill.total != null) {
+            billHolder.bind(data.bill)
+            setTotal(data.bill.total)
+        }
     }
 
     private fun setTotal(total: Double) {

@@ -302,7 +302,7 @@ public class WaiterWorkActivity extends BaseAccountActivity implements
     }
 
     @Override
-    protected void updateScreen() {
+    public void updateScreen() {
         getAccountViewModel().updateResults();
         mViewModel.updateResults();
         mViewModel.fetchWaiterServedTables();

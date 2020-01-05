@@ -6,86 +6,92 @@
     android:layout_height="match_parent"
     android:background="@color/white">
 
-    <androidx.core.widget.NestedScrollView
-        android:id="@+id/nested_sv_home"
+    <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+        android:id="@+id/sr_home"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        app:layout_behavior="@string/appbar_scrolling_view_behavior">
+        android:layout_height="wrap_content">
 
-        <LinearLayout
+        <androidx.core.widget.NestedScrollView
+            android:id="@+id/nested_sv_home"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:paddingBottom="@dimen/spacing_medium">
+            android:layout_height="match_parent"
+            app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
-            <RelativeLayout
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:background="@color/white_four"
-                android:paddingStart="@dimen/spacing_normal"
-                android:paddingTop="@dimen/spacing_small"
-                android:paddingEnd="@dimen/spacing_normal"
-                android:paddingBottom="@dimen/spacing_normal">
+                android:orientation="vertical"
+                android:paddingBottom="@dimen/spacing_medium">
 
-                <TextView
-                    android:id="@+id/tv_home_suggested_dishes_title"
-                    style="@style/GreySmallTextStyle"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:paddingBottom="@dimen/spacing_tiny"
-                    android:text="Recommended Dishes" />
-
-                <androidx.recyclerview.widget.RecyclerView
-                    android:id="@+id/rv_home_suggested_dishes"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_below="@id/tv_home_suggested_dishes_title"
-                    android:layout_marginTop="@dimen/spacing_tiny"
-                    android:orientation="horizontal" />
-            </RelativeLayout>
-
-            <FrameLayout
-                android:id="@+id/container_home_live_session"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:background="@color/white_four"
-                android:padding="@dimen/spacing_small"
-                android:visibility="gone">
-
-                <androidx.viewpager2.widget.ViewPager2
-                    android:id="@+id/vp_home_session_live"
-                    android:layout_width="match_parent"
-                    android:layout_height="@dimen/height_home_session_live_card" />
-            </FrameLayout>
-
-            <RelativeLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:paddingStart="@dimen/spacing_small"
-                android:paddingTop="@dimen/spacing_small"
-                android:paddingEnd="@dimen/spacing_small">
-
-                <TextView
-                    android:id="@+id/tv_home_nearby_restaurants_title"
-                    style="@style/GreySmallTextStyle"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:paddingBottom="@dimen/spacing_tiny"
-                    android:text="Around You" />
-
-                <androidx.recyclerview.widget.RecyclerView
-                    android:id="@+id/rv_home_nearby_restaurants"
+                <RelativeLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_below="@id/tv_home_nearby_restaurants_title"
-                    android:layout_marginTop="@dimen/spacing_tiny"
-                    android:nestedScrollingEnabled="false"
-                    android:orientation="horizontal"
-                    tools:listitem="@layout/item_home_restaurant_banner" />
-            </RelativeLayout>
+                    android:background="@color/white_four"
+                    android:paddingStart="@dimen/spacing_normal"
+                    android:paddingTop="@dimen/spacing_small"
+                    android:paddingEnd="@dimen/spacing_normal"
+                    android:paddingBottom="@dimen/spacing_normal">
 
-        </LinearLayout>
-    </androidx.core.widget.NestedScrollView>
+                    <TextView
+                        android:id="@+id/tv_home_suggested_dishes_title"
+                        style="@style/GreySmallTextStyle"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:paddingBottom="@dimen/spacing_tiny"
+                        android:text="Recommended Dishes" />
+
+                    <androidx.recyclerview.widget.RecyclerView
+                        android:id="@+id/rv_home_suggested_dishes"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@id/tv_home_suggested_dishes_title"
+                        android:layout_marginTop="@dimen/spacing_tiny"
+                        android:orientation="horizontal" />
+                </RelativeLayout>
+
+                <FrameLayout
+                    android:id="@+id/container_home_live_session"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@color/white_four"
+                    android:padding="@dimen/spacing_small"
+                    android:visibility="gone">
+
+                    <androidx.viewpager2.widget.ViewPager2
+                        android:id="@+id/vp_home_session_live"
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/height_home_session_live_card" />
+                </FrameLayout>
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:paddingStart="@dimen/spacing_small"
+                    android:paddingTop="@dimen/spacing_small"
+                    android:paddingEnd="@dimen/spacing_small">
+
+                    <TextView
+                        android:id="@+id/tv_home_nearby_restaurants_title"
+                        style="@style/GreySmallTextStyle"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:paddingBottom="@dimen/spacing_tiny"
+                        android:text="Around You" />
+
+                    <androidx.recyclerview.widget.RecyclerView
+                        android:id="@+id/rv_home_nearby_restaurants"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@id/tv_home_nearby_restaurants_title"
+                        android:layout_marginTop="@dimen/spacing_tiny"
+                        android:nestedScrollingEnabled="false"
+                        android:orientation="horizontal"
+                        tools:listitem="@layout/item_home_restaurant_banner" />
+                </RelativeLayout>
+
+            </LinearLayout>
+        </androidx.core.widget.NestedScrollView>
+    </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>
 

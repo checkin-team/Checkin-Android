@@ -3,6 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/black"
     tools:context=".misc.activities.QRScannerActivity">
 
     <FrameLayout
@@ -14,10 +15,10 @@
         android:id="@+id/btn_flash_toggle"
         android:layout_width="@dimen/size_normal_icon"
         android:layout_height="@dimen/size_normal_icon"
-        android:src="@drawable/ic_flash_toggle"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="80dp"
         android:clickable="true"
         android:focusable="true"
-        android:layout_gravity="center_horizontal"
-        android:layout_marginTop="80dp"/>
+        android:src="@drawable/ic_flash_toggle" />
 
 </FrameLayout>

@@ -5,8 +5,8 @@ import androidx.lifecycle.LiveData
 import com.checkin.app.checkin.Data.BaseViewModel
 import com.checkin.app.checkin.Data.Converters
 import com.checkin.app.checkin.Data.Resource
-import com.checkin.app.checkin.home.model.NearbyRestaurantModel
 import com.checkin.app.checkin.Shop.ShopRepository
+import com.checkin.app.checkin.home.model.NearbyRestaurantModel
 import com.checkin.app.checkin.session.SessionRepository
 import com.checkin.app.checkin.session.models.QRResultModel
 import com.checkin.app.checkin.session.models.SessionBasicModel
@@ -35,6 +35,10 @@ class HomeViewModel(application: Application) : BaseViewModel(application) {
 
     override fun updateResults() {
         fetchSessionStatus()
+    }
+
+    override fun fetchMissing() {
+        if (mNearbyRestaurants.value?.status != Resource.Status.SUCCESS) fetchNearbyRestaurants()
     }
 
     fun processQr(data: String) {

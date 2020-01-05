@@ -17,6 +17,7 @@ import com.checkin.app.checkin.Utility.toCalendar
 import com.checkin.app.checkin.misc.fragments.BaseBottomSheetFragment
 import com.checkin.app.checkin.session.models.ScheduledSessionDetailModel
 import com.wdullaer.materialdatetimepicker.time.TimePickerDialog
+import com.wdullaer.materialdatetimepicker.time.Timepoint
 import java.text.SimpleDateFormat
 import java.util.*
 
@@ -54,6 +55,7 @@ class SchedulerBottomSheetFragment : BaseBottomSheetFragment(), TimePickerDialog
             title = "What time?"
             setMinTime(minCalendar[Calendar.HOUR_OF_DAY], minCalendar[Calendar.MINUTE], 0)
             setTimeInterval(1, 15)
+            dismissOnPause(true)
         }
     }
     private val mListener: SchedulerInteraction by parentActivityDelegate()
@@ -118,9 +120,10 @@ class SchedulerBottomSheetFragment : BaseBottomSheetFragment(), TimePickerDialog
 
     private fun updateCalendar(calendar: Calendar) {
         mPickedCalendar.set(calendar[Calendar.YEAR], calendar[Calendar.MONTH], calendar[Calendar.DAY_OF_MONTH])
-        if (calendar == mNextCalendars[0])
-            mTimePickerDialog.setMinTime(minCalendar[Calendar.HOUR_OF_DAY], minCalendar[Calendar.MONTH], minCalendar[Calendar.DAY_OF_MONTH])
-        else
+        if (calendar == mNextCalendars[0]) {
+            val minTp = Timepoint(minCalendar[Calendar.HOUR_OF_DAY], minCalendar[Calendar.MONTH], minCalendar[Calendar.DAY_OF_MONTH])
+            mTimePickerDialog.setMinTime(minTp)
+        } else
             mTimePickerDialog.setMinTime(0, 0, 0)
     }
 
@@ -172,11 +175,13 @@ class SchedulerBottomSheetFragment : BaseBottomSheetFragment(), TimePickerDialog
         const val SS_PEOPLE_COUNT = "saved.people_count"
         const val SS_PICKED_CALENDAR = "saved.picked_time"
 
-        fun newInstance(scheduled: ScheduledSessionDetailModel) = SchedulerBottomSheetFragment().apply {
-            arguments = Bundle().apply {
-                putInt(SS_PEOPLE_COUNT, scheduled.countPeople)
-                if (scheduled.plannedDatetime != null && scheduled.plannedDatetime > Calendar.getInstance().time)
-                    putSerializable(SS_PICKED_CALENDAR, scheduled.plannedDatetime.toCalendar())
+        fun newInstance(scheduled: ScheduledSessionDetailModel?) = SchedulerBottomSheetFragment().apply {
+            if (scheduled != null) {
+                arguments = Bundle().apply {
+                    putInt(SS_PEOPLE_COUNT, scheduled.countPeople)
+                    if (scheduled.plannedDatetime != null && scheduled.plannedDatetime > Calendar.getInstance().time)
+                        putSerializable(SS_PICKED_CALENDAR, scheduled.plannedDatetime.toCalendar())
+                }
             }
         }
     }

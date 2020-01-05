@@ -4,12 +4,10 @@ import android.annotation.SuppressLint
 import android.util.Log
 import android.view.View
 import android.widget.ProgressBar
-
-import com.checkin.app.checkin.Data.Resource.Status
-
 import androidx.annotation.IdRes
 import androidx.appcompat.app.AppCompatActivity
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+import com.checkin.app.checkin.Data.Resource.Status
 import com.checkin.app.checkin.misc.fragments.DataStatusFragment
 
 @SuppressLint("Registered")
@@ -67,7 +65,7 @@ open class BaseActivity : AppCompatActivity() {
         swipeRefreshLayout?.setOnRefreshListener { this.updateScreen() }
     }
 
-    protected open fun updateScreen() {}
+    open fun updateScreen() {}
 
     protected fun startRefreshing() {
         swipeRefreshLayout?.isRefreshing = true

@@ -5,7 +5,7 @@ import butterknife.ButterKnife
 import com.checkin.app.checkin.R
 import com.checkin.app.checkin.Utility.inTransaction
 import com.checkin.app.checkin.misc.activities.BaseActivity
-import com.checkin.app.checkin.session.scheduled.fragments.QsrFoodReadyFragment
+import com.checkin.app.checkin.session.scheduled.fragments.QSRFoodReadyFragment
 
 class QSRFoodReadyActivity : BaseActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -14,7 +14,7 @@ class QSRFoodReadyActivity : BaseActivity() {
         ButterKnife.bind(this)
 
         supportFragmentManager.inTransaction {
-            add(R.id.frg_container_activity, QsrFoodReadyFragment.newInstance(intent.getLongExtra(KEY_SESSION_ID, 0L)))
+            add(R.id.frg_container_activity, QSRFoodReadyFragment.newInstance(intent.getLongExtra(KEY_SESSION_ID, 0L)))
         }
     }
 

@@ -22,18 +22,16 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.checkin.app.checkin.Data.Resource.Status;
-import com.checkin.app.checkin.home.activities.HomeActivity;
-import com.checkin.app.checkin.misc.fragments.BaseFragment;
-import com.checkin.app.checkin.misc.activities.SelectCropImageActivity;
 import com.checkin.app.checkin.R;
 import com.checkin.app.checkin.User.UserModel;
 import com.checkin.app.checkin.Utility.BackgroundShadow;
 import com.checkin.app.checkin.Utility.SwipeTouchListener;
 import com.checkin.app.checkin.Utility.Utils;
+import com.checkin.app.checkin.misc.activities.SelectCropImageActivity;
+import com.checkin.app.checkin.misc.fragments.BaseFragment;
 import com.facebook.shimmer.ShimmerFrameLayout;
 
 import java.io.File;
-import java.util.Objects;
 
 import butterknife.BindView;
 import butterknife.OnClick;
@@ -98,7 +96,7 @@ public class UserPrivateProfileFragment extends BaseFragment {
         containerUserPrivateTop.setOnTouchListener(new View.OnTouchListener() {
             @Override
             public boolean onTouch(View v, MotionEvent event) {
-                ((HomeActivity) Objects.requireNonNull(getActivity())).enableDisableSwipeRefresh(true);
+//                ((HomeActivity) Objects.requireNonNull(getActivity())).enableDisableSwipeRefresh(true);
                 return true;
             }
         });
@@ -108,7 +106,7 @@ public class UserPrivateProfileFragment extends BaseFragment {
             @Override
             public void onSwipeTop() {
                 super.onSwipeTop();
-                ((HomeActivity) Objects.requireNonNull(getActivity())).enableDisableSwipeRefresh(false);
+//                ((HomeActivity) Objects.requireNonNull(getActivity())).enableDisableSwipeRefresh(false);
                 toggleView(false);
             }
 
@@ -123,7 +121,7 @@ public class UserPrivateProfileFragment extends BaseFragment {
         rvRecentShops.addOnItemTouchListener(new RecyclerView.SimpleOnItemTouchListener() {
             @Override
             public boolean onInterceptTouchEvent(RecyclerView rv, MotionEvent e) {
-                ((HomeActivity) Objects.requireNonNull(getActivity())).enableDisableSwipeRefresh(false);
+//                ((HomeActivity) Objects.requireNonNull(getActivity())).enableDisableSwipeRefresh(false);
                 toggleView(true);
                 return false;
             }
@@ -132,7 +130,7 @@ public class UserPrivateProfileFragment extends BaseFragment {
         containerUserPrivateTop.setOnTouchListener(new View.OnTouchListener() {
             @Override
             public boolean onTouch(View v, MotionEvent event) {
-                ((HomeActivity) Objects.requireNonNull(getActivity())).enableDisableSwipeRefresh(true);
+//                ((HomeActivity) Objects.requireNonNull(getActivity())).enableDisableSwipeRefresh(true);
                 return true;
             }
         });

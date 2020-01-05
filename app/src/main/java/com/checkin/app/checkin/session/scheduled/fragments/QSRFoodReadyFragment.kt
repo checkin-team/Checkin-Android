@@ -18,7 +18,7 @@ import com.checkin.app.checkin.misc.holders.textModelHolder
 import com.checkin.app.checkin.session.models.CustomerScheduledSessionDetailModel
 import com.checkin.app.checkin.session.scheduled.viewmodels.ScheduledSessionDetailViewModel
 
-class QsrFoodReadyFragment : BaseFragment() {
+class QSRFoodReadyFragment : BaseFragment() {
     override val rootLayout: Int = R.layout.fragment_qsr_order_ready
 
     @BindView(R.id.tv_qsr_ready_restaurant)
@@ -45,6 +45,7 @@ class QsrFoodReadyFragment : BaseFragment() {
         viewModel.sessionData.observe(this, Observer {
             if (it?.status == Resource.Status.SUCCESS && it.data != null) setupData(it.data)
             else if (it.status == Resource.Status.LOADING) billHolder.showLoading()
+            else if (it.status == Resource.Status.ERROR_NOT_FOUND) requireActivity().finish()
         })
 
         epoxyRvOrders.withModels {
@@ -72,7 +73,7 @@ class QsrFoodReadyFragment : BaseFragment() {
     companion object {
         const val KEY_SESSION_ID = "qsr.session_id"
 
-        fun newInstance(sessionId: Long) = QsrFoodReadyFragment().apply {
+        fun newInstance(sessionId: Long) = QSRFoodReadyFragment().apply {
             arguments = bundleOf(KEY_SESSION_ID to sessionId)
         }
     }

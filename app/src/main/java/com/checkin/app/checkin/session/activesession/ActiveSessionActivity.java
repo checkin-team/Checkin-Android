@@ -261,7 +261,7 @@ public class ActiveSessionActivity extends BaseActivity implements
     }
 
     @Override
-    protected void updateScreen() {
+    public void updateScreen() {
         mViewModel.updateResults();
     }
 

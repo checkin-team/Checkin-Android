@@ -4,14 +4,15 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 
+import androidx.appcompat.app.ActionBar;
+import androidx.lifecycle.ViewModelProviders;
+
 import com.checkin.app.checkin.Data.Resource;
-import com.checkin.app.checkin.misc.activities.BaseActivity;
 import com.checkin.app.checkin.R;
 import com.checkin.app.checkin.Search.SearchActivity;
 import com.checkin.app.checkin.Utility.Utils;
+import com.checkin.app.checkin.misc.activities.BaseActivity;
 
-import androidx.appcompat.app.ActionBar;
-import androidx.lifecycle.ViewModelProviders;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 
@@ -121,7 +122,7 @@ public class MembersActivity extends BaseActivity implements ShopMembersListFrag
     }
 
     @Override
-    protected void updateScreen() {
+    public void updateScreen() {
         super.updateScreen();
         mViewModel.updateResults();
     }

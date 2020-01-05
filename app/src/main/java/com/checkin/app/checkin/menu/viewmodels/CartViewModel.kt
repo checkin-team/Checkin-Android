@@ -9,14 +9,15 @@ import com.checkin.app.checkin.Data.AppDatabase
 import com.checkin.app.checkin.Data.BaseViewModel
 import com.checkin.app.checkin.Data.Resource
 import com.checkin.app.checkin.Menu.Model.MenuItemModel
-import com.checkin.app.checkin.menu.models.OrderedItemModel
 import com.checkin.app.checkin.Utility.pass
 import com.checkin.app.checkin.menu.MenuRepository
-import com.checkin.app.checkin.menu.models.CartBillModel
-import com.checkin.app.checkin.menu.models.CartDetailModel
-import com.checkin.app.checkin.menu.models.CartStatusModel
-import com.checkin.app.checkin.menu.models.NewOrderModel
+import com.checkin.app.checkin.menu.models.*
+import com.checkin.app.checkin.restaurant.models.RestaurantLocationModel
+import com.checkin.app.checkin.session.models.NewScheduledSessionModel
+import com.checkin.app.checkin.session.models.ScheduledSessionDetailModel
+import com.checkin.app.checkin.session.models.SessionBillModel
 import com.fasterxml.jackson.databind.node.ObjectNode
+import java.util.*
 
 class CartViewModel(application: Application) : BaseViewModel(application) {
     private val menuRepository = MenuRepository.getInstance(application)
@@ -175,7 +176,7 @@ class CartViewModel(application: Application) : BaseViewModel(application) {
                 newOrder.item == it.itemPk() && newOrder.typeIndex == it.typeIndex && newOrder.customizations == it.customizations()
             }
             if (index != -1) {
-                orderedItems[index] = orderedItems[index].updateQuantity(newOrder.quantity)
+                orderedItems[index] = orderedItems[index].updatePk(newOrder.pk).updateQuantity(newOrder.quantity)
                 if (orderedItems[index].quantity == 0) orderedItems.removeAt(index)
             }
         }
@@ -213,6 +214,16 @@ class CartViewModel(application: Application) : BaseViewModel(application) {
             mNewOrders.addSource(menuRepository.postActiveSessionOrders(mOrderedItems.value!!)) { mNewOrders.setValue(it) }
         else
             mNewOrders.addSource(menuRepository.postManageSessionOrders(sessionPk, mOrderedItems.value!!)) { mNewOrders.setValue(it) }
+    }
+
+    fun updateCartDataWithNewSession(data: NewScheduledSessionModel) {
+        cartDetailData.value = Resource.success(CartDetailModel(
+                data.pk, emptyList(),
+                ScheduledSessionDetailModel(data.countPeople
+                        ?: 1, data.plannedDatetime, data.remarks, null, null, Calendar.getInstance().time),
+                RestaurantLocationModel(data.restaurantId, "", null, null, null),
+                SessionBillModel()
+        ))
     }
 
     override fun updateResults() {

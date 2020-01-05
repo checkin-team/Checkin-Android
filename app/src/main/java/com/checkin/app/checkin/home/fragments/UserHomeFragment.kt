@@ -5,22 +5,20 @@ import android.os.Bundle
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.activityViewModels
-import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import androidx.viewpager2.widget.ViewPager2
 import butterknife.BindView
 import com.checkin.app.checkin.Data.Resource
-import com.checkin.app.checkin.home.model.LiveSessionDetailModel
-import com.checkin.app.checkin.home.model.SessionType
 import com.checkin.app.checkin.R
 import com.checkin.app.checkin.Utility.pass
-import com.checkin.app.checkin.home.activities.HomeActivity
 import com.checkin.app.checkin.home.holders.LiveSessionTrackerAdapter
 import com.checkin.app.checkin.home.holders.LiveSessionTrackerInteraction
 import com.checkin.app.checkin.home.holders.NearbyRestaurantAdapter
 import com.checkin.app.checkin.home.holders.PopularDishesAdapter
+import com.checkin.app.checkin.home.model.LiveSessionDetailModel
+import com.checkin.app.checkin.home.model.SessionType
 import com.checkin.app.checkin.home.viewmodels.HomeViewModel
 import com.checkin.app.checkin.home.viewmodels.LiveSessionViewModel
 import com.checkin.app.checkin.menu.activities.ActiveSessionMenuActivity
@@ -51,6 +49,7 @@ class UserHomeFragment : BaseFragment(), LiveSessionTrackerInteraction {
     private val mLiveSessionViewModel: LiveSessionViewModel by activityViewModels()
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        initRefreshScreen(R.id.sr_home)
         enableDisableSwipeRefresh(true)
 
         mRestAdapter = NearbyRestaurantAdapter()
@@ -85,9 +84,14 @@ class UserHomeFragment : BaseFragment(), LiveSessionTrackerInteraction {
                     Resource.Status.SUCCESS -> it.data?.let {
                         containerLiveSession.visibility = View.VISIBLE
                         mLiveSessionAdapter.updateData(it)
+                        stopRefreshing()
                     }
-                    Resource.Status.ERROR_NOT_FOUND -> containerLiveSession.visibility = View.GONE
-                    else -> pass
+                    Resource.Status.LOADING -> startRefreshing()
+                    Resource.Status.ERROR_NOT_FOUND -> {
+                        containerLiveSession.visibility = View.GONE
+                        stopRefreshing()
+                    }
+                    else -> stopRefreshing()
                 }
             }
         })
@@ -96,12 +100,10 @@ class UserHomeFragment : BaseFragment(), LiveSessionTrackerInteraction {
         mLiveSessionViewModel.fetchLiveActiveSession()
     }
 
-    fun enableDisableSwipeRefresh(enable: Boolean) {
-        (activity as? HomeActivity)?.enableDisableSwipeRefresh(enable)
-    }
-
     override fun updateScreen() {
         super.updateScreen()
+        mViewModel.fetchMissing()
+        mViewModel.updateResults()
         mLiveSessionViewModel.updateResults()
     }
 
@@ -111,11 +113,6 @@ class UserHomeFragment : BaseFragment(), LiveSessionTrackerInteraction {
             SessionType.PREDINING -> PreorderSessionDetailActivity.startScheduledSessionDetailActivity(requireContext(), session.pk)
             SessionType.QSR -> QSRSessionDetailActivity.startScheduledSessionDetailActivity(requireContext(), session.pk)
         }
-    }
-
-    override fun onResume() {
-        super.onResume()
-        updateScreen()
     }
 
     override fun onOpenRestaurantProfile(restaurant: RestaurantLocationModel) {

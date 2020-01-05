@@ -72,9 +72,11 @@
             <TextView
                 android:id="@+id/tv_restaurant_banner_cuisines"
                 style="@style/GreySmallTextStyle"
-                android:layout_width="wrap_content"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="@dimen/spacing_extra_small"
+                android:layout_marginEnd="@dimen/spacing_extra_small"
+                android:ellipsize="end"
                 app:layout_constraintBottom_toBottomOf="@id/im_restaurant_banner_cuisines"
                 app:layout_constraintEnd_toStartOf="@id/tv_restaurant_banner_count_checkins"
                 app:layout_constraintHorizontal_bias="0"

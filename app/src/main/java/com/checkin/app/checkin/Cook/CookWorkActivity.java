@@ -95,7 +95,7 @@ public class CookWorkActivity extends BaseAccountActivity {
     }
 
     @Override
-    protected void updateScreen() {
+    public void updateScreen() {
         super.updateScreen();
         getAccountViewModel().updateResults();
         mViewModel.updateResults();
