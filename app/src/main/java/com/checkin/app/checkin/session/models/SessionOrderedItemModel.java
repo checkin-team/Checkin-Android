@@ -2,10 +2,10 @@ package com.checkin.app.checkin.session.models;
 
 import androidx.annotation.Nullable;
 
-import com.checkin.app.checkin.Menu.Model.ItemCustomizationGroupModel;
-import com.checkin.app.checkin.Menu.Model.MenuItemModel;
 import com.checkin.app.checkin.Utility.Constants;
 import com.checkin.app.checkin.Utility.Utils;
+import com.checkin.app.checkin.menu.models.ItemCustomizationGroupModel;
+import com.checkin.app.checkin.menu.models.MenuItemModel;
 import com.checkin.app.checkin.session.activesession.chat.SessionChatModel.CHAT_STATUS_TYPE;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;

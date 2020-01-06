@@ -19,13 +19,13 @@ import com.airbnb.epoxy.EpoxyAttribute
 import com.airbnb.epoxy.EpoxyModel
 import com.airbnb.epoxy.EpoxyModelClass
 import com.airbnb.epoxy.EpoxyModelWithHolder
-import com.checkin.app.checkin.Menu.MenuItemInteraction
-import com.checkin.app.checkin.Menu.Model.MenuGroupModel
-import com.checkin.app.checkin.Menu.Model.MenuItemModel
-import com.checkin.app.checkin.Menu.UserMenu.Fragment.MenuItemsHolder
 import com.checkin.app.checkin.R
 import com.checkin.app.checkin.Utility.GlideApp
 import com.checkin.app.checkin.Utility.Utils
+import com.checkin.app.checkin.menu.fragments.MenuItemsHolder
+import com.checkin.app.checkin.menu.listeners.MenuItemInteraction
+import com.checkin.app.checkin.menu.models.MenuGroupModel
+import com.checkin.app.checkin.menu.models.MenuItemModel
 import com.checkin.app.checkin.misc.epoxy.BaseEpoxyHolder
 import com.google.android.material.tabs.TabLayout
 

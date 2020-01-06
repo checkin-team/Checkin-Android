@@ -12,9 +12,9 @@ import androidx.annotation.Nullable;
 import androidx.core.app.NotificationCompat;
 
 import com.bumptech.glide.request.target.NotificationTarget;
-import com.checkin.app.checkin.Menu.UserMenu.SessionMenuActivity;
 import com.checkin.app.checkin.R;
 import com.checkin.app.checkin.Utility.GlideApp;
+import com.checkin.app.checkin.menu.activities.ActiveSessionMenuActivity;
 import com.checkin.app.checkin.misc.models.BriefModel;
 import com.checkin.app.checkin.session.activesession.ActiveSessionActivity;
 
@@ -105,7 +105,7 @@ public class ActiveSessionNotificationService extends Service {
     }
 
     private void openMenu() {
-        Intent menuIntent = SessionMenuActivity.Companion.withSession(this, mRestaurantPk, mSessionPk, null);
+        Intent menuIntent = ActiveSessionMenuActivity.Companion.openMenu(this, mRestaurantPk);
         menuIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
         startActivity(menuIntent);
     }

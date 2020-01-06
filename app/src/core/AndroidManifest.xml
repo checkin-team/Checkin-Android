@@ -64,6 +64,9 @@
             android:screenOrientation="portrait"
             android:theme="@style/AppThemeWhiteActionBar" />
 
+        <activity android:name=".Cook.CookSessionActivity" />
+        <activity android:name=".Cook.CookWorkActivity" />
+
         <activity
             android:name=".restaurant.activities.PublicRestaurantProfileActivity"
             android:theme="@style/AppTheme" />

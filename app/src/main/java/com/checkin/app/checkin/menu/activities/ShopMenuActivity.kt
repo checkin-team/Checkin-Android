@@ -23,7 +23,7 @@ import com.checkin.app.checkin.Utility.inTransaction
 import com.checkin.app.checkin.Utility.isNotEmpty
 import com.checkin.app.checkin.menu.controllers.getUniqueId
 import com.checkin.app.checkin.menu.fragments.MenuFragment
-import com.checkin.app.checkin.menu.holders.MenuCartInteraction
+import com.checkin.app.checkin.menu.holders.ShopMenuCartModelHolder
 import com.checkin.app.checkin.menu.holders.shopMenuCartModelHolder
 import com.checkin.app.checkin.menu.models.OrderedItemModel
 import com.checkin.app.checkin.menu.viewmodels.ActiveSessionCartViewModel
@@ -34,7 +34,7 @@ import com.checkin.app.checkin.misc.views.EndDrawerToggle
 import org.koin.androidx.fragment.android.setupKoinFragmentFactory
 import org.koin.androidx.scope.lifecycleScope
 
-class ShopMenuActivity : BaseActivity(), MenuCartInteraction {
+class ShopMenuActivity : BaseActivity(), ShopMenuCartModelHolder.MenuCartInteraction {
     @BindView(R.id.epoxy_rv_shop_menu_cart)
     internal lateinit var epoxyRvCart: EpoxyRecyclerView
     @BindView(R.id.drawer_shop_menu)
@@ -126,8 +126,7 @@ class ShopMenuActivity : BaseActivity(), MenuCartInteraction {
                 .setTitle("Enter Remarks")
                 .setView(input)
                 .setPositiveButton("OK") { _, _ ->
-                    //                    cartViewModel.setCurrentItem(item)
-//                    mViewModel.orderItem()
+                    cartViewModel.orderItem(item.updateRemarks(input.toString()))
                     input.setText("")
                 }
                 .setNegativeButton("Cancel") { dialog, _ ->

@@ -1,4 +1,4 @@
-package com.checkin.app.checkin.Menu.UserMenu.Fragment
+package com.checkin.app.checkin.menu.fragments
 
 import android.view.LayoutInflater
 import android.view.View
@@ -6,11 +6,11 @@ import android.view.ViewGroup
 import butterknife.BindView
 import butterknife.ButterKnife
 import com.airbnb.epoxy.EpoxyRecyclerView
-import com.checkin.app.checkin.Menu.MenuItemInteraction
-import com.checkin.app.checkin.Menu.Model.MenuItemModel
 import com.checkin.app.checkin.R
 import com.checkin.app.checkin.menu.controllers.UserMenuItemController
 import com.checkin.app.checkin.menu.holders.OnItemInteractionListener
+import com.checkin.app.checkin.menu.listeners.MenuItemInteraction
+import com.checkin.app.checkin.menu.models.MenuItemModel
 
 class MenuItemsHolder(
         menuItems: List<MenuItemModel>,

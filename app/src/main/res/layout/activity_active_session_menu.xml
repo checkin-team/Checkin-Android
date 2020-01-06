@@ -1,9 +1,27 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical">
 
-    <include layout="@layout/incl_activity_base" />
+    <androidx.core.widget.NestedScrollView
+        android:id="@+id/nested_sv_active_session_menu"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:clipToPadding="false"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
-</LinearLayout>
+        <include layout="@layout/incl_activity_base" />
+
+    </androidx.core.widget.NestedScrollView>
+
+    <com.checkin.app.checkin.menu.views.ActiveSessionCartView
+        android:id="@+id/view_as_menu_cart"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        app:behavior_hideable="false"
+        app:behavior_peekHeight="@dimen/height_cart_header_topbar"
+        app:layout_behavior="com.checkin.app.checkin.Utility.LockableBottomSheetBehavior" />
+
+</androidx.coordinatorlayout.widget.CoordinatorLayout>

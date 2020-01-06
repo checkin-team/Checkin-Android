@@ -1,4 +1,4 @@
-package com.checkin.app.checkin.Menu.Model;
+package com.checkin.app.checkin.menu.models;
 
 import com.checkin.app.checkin.Data.AppDatabase;
 import com.fasterxml.jackson.annotation.JsonAutoDetect;

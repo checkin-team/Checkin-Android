@@ -1,7 +1,7 @@
 package com.checkin.app.checkin.manager.models;
 
-import com.checkin.app.checkin.Menu.Model.MenuItemBriefModel;
 import com.checkin.app.checkin.Utility.Utils;
+import com.checkin.app.checkin.menu.models.MenuItemBriefModel;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
 

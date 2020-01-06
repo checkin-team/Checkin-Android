@@ -9,9 +9,9 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.checkin.app.checkin.Menu.Model.MenuItemBriefModel;
 import com.checkin.app.checkin.R;
 import com.checkin.app.checkin.manager.models.ManagerStatsModel;
+import com.checkin.app.checkin.menu.models.MenuItemBriefModel;
 
 import java.util.List;
 import java.util.Locale;

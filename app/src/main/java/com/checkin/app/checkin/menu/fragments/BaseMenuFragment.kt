@@ -11,10 +11,9 @@ import androidx.core.content.ContextCompat
 import androidx.lifecycle.Observer
 import butterknife.BindView
 import butterknife.OnClick
-import com.checkin.app.checkin.Menu.MenuItemInteraction
-import com.checkin.app.checkin.Menu.Model.MenuItemModel
-import com.checkin.app.checkin.Menu.UserMenu.Fragment.MenuDishSearchFragment
 import com.checkin.app.checkin.R
+import com.checkin.app.checkin.menu.listeners.MenuItemInteraction
+import com.checkin.app.checkin.menu.models.MenuItemModel
 import com.checkin.app.checkin.menu.viewmodels.BaseCartViewModel
 import com.checkin.app.checkin.menu.viewmodels.BaseMenuViewModel
 import com.checkin.app.checkin.misc.fragments.BaseFragment

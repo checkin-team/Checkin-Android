@@ -1,4 +1,4 @@
-package com.checkin.app.checkin.Menu.UserMenu;
+package com.checkin.app.checkin.menu.fragments;
 
 import android.content.Context;
 import android.view.LayoutInflater;
@@ -8,13 +8,14 @@ import android.widget.CheckBox;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.checkin.app.checkin.Menu.Model.ItemCustomizationFieldModel;
+import androidx.annotation.NonNull;
+
 import com.checkin.app.checkin.R;
 import com.checkin.app.checkin.Utility.Utils;
+import com.checkin.app.checkin.menu.models.ItemCustomizationFieldModel;
 
 import java.util.Locale;
 
-import androidx.annotation.NonNull;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 

@@ -1,7 +1,5 @@
 package com.checkin.app.checkin.menu.models
 
-import com.checkin.app.checkin.Menu.Model.ItemCustomizationFieldModel
-import com.checkin.app.checkin.Menu.Model.MenuItemModel
 import com.checkin.app.checkin.Utility.Constants.DEFAULT_ORDER_CANCEL_DURATION
 import com.fasterxml.jackson.annotation.*
 import java.util.*
@@ -71,6 +69,8 @@ data class OrderedItemModel(
     fun updatePk(pk: Long): OrderedItemModel = copy(pk = pk)
 
     fun updateQuantity(quantity: Int): OrderedItemModel = copy(quantity = quantity, cost = item.typeCosts[typeIndex] * quantity)
+
+    fun updateRemarks(remark: String): OrderedItemModel = copy(remarks = remark)
 
     fun equalsWithoutPk(other: OrderedItemModel): Boolean {
         return itemPk() == other.itemPk() && selectedFields == other.selectedFields && typeIndex == other.typeIndex

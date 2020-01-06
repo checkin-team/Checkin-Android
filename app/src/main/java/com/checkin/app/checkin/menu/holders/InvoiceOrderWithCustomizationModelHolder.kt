@@ -9,9 +9,9 @@ import butterknife.BindView
 import com.airbnb.epoxy.EpoxyAttribute
 import com.airbnb.epoxy.EpoxyModelClass
 import com.airbnb.epoxy.EpoxyModelWithHolder
-import com.checkin.app.checkin.Menu.Model.ItemCustomizationGroupModel
 import com.checkin.app.checkin.R
 import com.checkin.app.checkin.Utility.Utils
+import com.checkin.app.checkin.menu.models.ItemCustomizationGroupModel
 import com.checkin.app.checkin.misc.epoxy.BaseEpoxyHolder
 import com.checkin.app.checkin.session.models.SessionOrderedItemModel
 

@@ -13,13 +13,12 @@ import androidx.constraintlayout.widget.ConstraintSet
 import androidx.lifecycle.Observer
 import butterknife.BindView
 import butterknife.OnClick
-import com.checkin.app.checkin.Menu.Model.ItemCustomizationFieldModel
-import com.checkin.app.checkin.Menu.Model.MenuItemModel
-import com.checkin.app.checkin.Menu.UserMenu.ItemCustomizationGroupHolder
 import com.checkin.app.checkin.R
 import com.checkin.app.checkin.Utility.Utils
 import com.checkin.app.checkin.Utility.parentFragmentDelegate
 import com.checkin.app.checkin.Utility.parentViewModels
+import com.checkin.app.checkin.menu.models.ItemCustomizationFieldModel
+import com.checkin.app.checkin.menu.models.MenuItemModel
 import com.checkin.app.checkin.menu.viewmodels.UserMenuViewModel
 import com.checkin.app.checkin.misc.fragments.BaseBottomSheetFragment
 

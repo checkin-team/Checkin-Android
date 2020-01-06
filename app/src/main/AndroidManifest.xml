@@ -80,16 +80,6 @@
         </activity>
 
         <activity android:name=".misc.activities.UpdateAppActivity" />
-        <activity
-            android:name=".Menu.UserMenu.SessionMenuActivity"
-            android:windowSoftInputMode="adjustPan"/>
-        <activity android:name=".home.UserBrownieCashActivity" />
-        <activity android:name=".home.UserClaimRewardsActivity" />
-
-        <activity android:name=".Cook.CookSessionActivity" />
-        <activity android:name=".Cook.CookWorkActivity" />
-
-        <activity android:name=".home.CurrentLocationActivity" />
 
         <service
             android:name=".Auth.AuthenticatorService"

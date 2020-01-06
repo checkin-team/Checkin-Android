@@ -5,6 +5,9 @@ import android.content.Intent
 import android.net.Uri
 import androidx.annotation.ColorInt
 import androidx.core.content.ContextCompat
+import androidx.lifecycle.LifecycleCoroutineScope
+import androidx.lifecycle.LifecycleOwner
+import androidx.lifecycle.lifecycleScope
 import com.checkin.app.checkin.misc.models.GeolocationModel
 import com.checkin.app.checkin.misc.models.LocationModel
 import com.google.android.material.tabs.TabLayout
@@ -57,4 +60,7 @@ operator fun Calendar.minus(other: Calendar): Int {
     return (sign(duration.toDouble()) * TimeUnit.MILLISECONDS.toDays(abs(duration))).toInt()
 }
 
-fun Date.toCalendar() = Calendar.getInstance().apply { time = this@toCalendar }
+fun Date.toCalendar(): Calendar = Calendar.getInstance().apply { time = this@toCalendar }
+
+val LifecycleOwner.coroutineLifecycleScope: LifecycleCoroutineScope
+    get() = lifecycleScope

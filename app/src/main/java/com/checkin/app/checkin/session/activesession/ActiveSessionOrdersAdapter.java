@@ -11,9 +11,9 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.checkin.app.checkin.Menu.Model.ItemCustomizationGroupModel;
 import com.checkin.app.checkin.R;
 import com.checkin.app.checkin.Utility.Utils;
+import com.checkin.app.checkin.menu.models.ItemCustomizationGroupModel;
 import com.checkin.app.checkin.session.models.SessionOrderedItemModel;
 
 import java.util.List;

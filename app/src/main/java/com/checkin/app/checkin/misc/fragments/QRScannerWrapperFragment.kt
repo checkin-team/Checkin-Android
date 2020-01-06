@@ -62,6 +62,7 @@ class QRScannerWrapperFragment : BaseFragment(), QRScannerFragment.QRScannerInte
             PERMISSION_REQUEST_CAMERA -> {
                 if (grantResults[0] != PackageManager.PERMISSION_GRANTED) {
                     listener.onScanResult(Activity.RESULT_CANCELED, null)
+                    onBackPressed()
                 }
             }
         }

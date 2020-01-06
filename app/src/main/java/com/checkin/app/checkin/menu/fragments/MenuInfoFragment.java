@@ -1,4 +1,4 @@
-package com.checkin.app.checkin.Menu.UserMenu.Fragment;
+package com.checkin.app.checkin.menu.fragments;
 
 import android.annotation.SuppressLint;
 import android.os.Bundle;
@@ -14,8 +14,8 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
 import com.bumptech.glide.Glide;
-import com.checkin.app.checkin.Menu.Model.MenuItemModel;
 import com.checkin.app.checkin.R;
+import com.checkin.app.checkin.menu.models.MenuItemModel;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;

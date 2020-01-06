@@ -10,31 +10,26 @@ import androidx.lifecycle.lifecycleScope
 import butterknife.BindView
 import com.airbnb.epoxy.EpoxyRecyclerView
 import com.checkin.app.checkin.Data.Resource
-import com.checkin.app.checkin.Menu.MenuItemInteraction
-import com.checkin.app.checkin.Menu.Model.MenuGroupModel
-import com.checkin.app.checkin.Menu.UserMenu.Adapter.MenuGroupAdapter
 import com.checkin.app.checkin.R
 import com.checkin.app.checkin.Utility.Utils
 import com.checkin.app.checkin.Utility.isNotEmpty
 import com.checkin.app.checkin.Utility.parentFragmentDelegate
 import com.checkin.app.checkin.Utility.parentViewModels
-import com.checkin.app.checkin.menu.activities.ShopMenuActivity
+import com.checkin.app.checkin.menu.controllers.OnGroupInteraction
 import com.checkin.app.checkin.menu.controllers.UserMenuGroupController
 import com.checkin.app.checkin.menu.holders.SessionTrendingDishInteraction
-import com.checkin.app.checkin.menu.viewmodels.ActiveSessionCartViewModel
+import com.checkin.app.checkin.menu.listeners.MenuItemInteraction
+import com.checkin.app.checkin.menu.models.MenuGroupModel
 import com.checkin.app.checkin.menu.viewmodels.BaseCartViewModel
-import com.checkin.app.checkin.menu.viewmodels.ScheduledCartViewModel
 import com.checkin.app.checkin.menu.viewmodels.UserMenuViewModel
 import com.checkin.app.checkin.misc.fragments.BaseFragment
-import com.checkin.app.checkin.restaurant.activities.PublicRestaurantProfileActivity
 import com.checkin.app.checkin.session.models.TrendingDishModel
 import com.miguelcatalan.materialsearchview.utils.AnimationUtil
 import kotlinx.coroutines.launch
 import org.koin.androidx.viewmodel.ext.android.sharedViewModel
-import org.koin.dsl.module
 import kotlin.reflect.KClass
 
-class UserMenuGroupsFragment<CartVM : BaseCartViewModel>(cartVmClass: KClass<CartVM>) : BaseFragment(), MenuGroupAdapter.OnGroupInteractionInterface {
+class UserMenuGroupsFragment<CartVM : BaseCartViewModel>(cartVmClass: KClass<CartVM>) : BaseFragment(), OnGroupInteraction {
     override val rootLayout: Int = R.layout.fragment_user_menu_groups
 
     @BindView(R.id.epoxy_rv_user_menu_groups)
@@ -111,14 +106,5 @@ class UserMenuGroupsFragment<CartVM : BaseCartViewModel>(cartVmClass: KClass<Car
         } else {
             AnimationUtil.fadeOutView(containerCurrentCategory)
         }
-    }
-}
-
-val menuCartModule = module {
-    scope<ShopMenuActivity> {
-        scoped { UserMenuGroupsFragment(ActiveSessionCartViewModel::class) }
-    }
-    scope<PublicRestaurantProfileActivity> {
-        scoped { UserMenuGroupsFragment(ScheduledCartViewModel::class) }
     }
 }

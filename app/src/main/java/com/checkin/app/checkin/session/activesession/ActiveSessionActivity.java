@@ -29,11 +29,11 @@ import com.checkin.app.checkin.Data.Message.MessageModel.MESSAGE_TYPE;
 import com.checkin.app.checkin.Data.Message.MessageObjectModel;
 import com.checkin.app.checkin.Data.Message.MessageUtils;
 import com.checkin.app.checkin.Data.Resource;
-import com.checkin.app.checkin.Menu.UserMenu.SessionMenuActivity;
 import com.checkin.app.checkin.R;
 import com.checkin.app.checkin.Search.SearchActivity;
 import com.checkin.app.checkin.Utility.OnBoardingUtils;
 import com.checkin.app.checkin.Utility.Utils;
+import com.checkin.app.checkin.menu.activities.ActiveSessionMenuActivity;
 import com.checkin.app.checkin.misc.activities.BaseActivity;
 import com.checkin.app.checkin.misc.models.BriefModel;
 import com.checkin.app.checkin.session.activesession.chat.SessionChatActivity;
@@ -383,7 +383,7 @@ public class ActiveSessionActivity extends BaseActivity implements
             if (mViewModel.getShopPk() < 0)
                 return;
             btnSessionMenu.setEnabled(false);
-            SessionMenuActivity.Companion.startWithSession(this, mViewModel.getShopPk(), null, null);
+            ActiveSessionMenuActivity.Companion.openMenu(this, mViewModel.getShopPk());
         } else {
             Utils.toast(this, R.string.error_unavailable_network);
         }
@@ -501,7 +501,7 @@ public class ActiveSessionActivity extends BaseActivity implements
         if (Utils.isNetworkConnected(this)) {
             if (mViewModel.getShopPk() < 0 || mViewModel.isRequestedCheckout())
                 return;
-            SessionMenuActivity.Companion.startWithSession(this, mViewModel.getShopPk(), null, itemModel.getPk());
+            ActiveSessionMenuActivity.Companion.openMenu(this, mViewModel.getShopPk(), itemModel.getPk());
         } else {
             Utils.toast(this, R.string.error_unavailable_network);
         }

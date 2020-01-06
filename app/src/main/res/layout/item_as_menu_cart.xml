@@ -69,45 +69,13 @@
 
             </LinearLayout>
 
-            <LinearLayout
-                android:id="@+id/container_cart_item_quantity"
+            <RelativeLayout
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/spacing_small"
-                android:visibility="visible">
+                android:layout_height="match_parent"
+                android:gravity="center">
 
-                <TextView
-                    android:id="@+id/tv_menu_item_quantity_decrement"
-                    style="@style/RedTextStyle"
-                    android:layout_width="@dimen/size_small_icon"
-                    android:layout_height="@dimen/size_small_icon"
-                    android:layout_marginEnd="@dimen/spacing_small"
-                    android:background="@drawable/shape_oval_red_stroke"
-                    android:gravity="center"
-                    android:text="-"
-                    android:visibility="visible" />
-
-                <TextView
-                    android:id="@+id/tv_menu_item_quantity_number"
-                    style="@style/RedTextStyle"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center"
-                    android:layout_marginEnd="@dimen/spacing_small"
-                    android:text="12"
-                    android:visibility="visible" />
-
-                <TextView
-                    android:id="@+id/tv_menu_item_quantity_increment"
-                    style="@style/RedTextStyle"
-                    android:layout_width="@dimen/size_small_icon"
-                    android:layout_height="@dimen/size_small_icon"
-                    android:layout_gravity="end"
-                    android:background="@drawable/shape_oval_red_stroke"
-                    android:gravity="center"
-                    android:text="+"
-                    android:visibility="visible" />
-            </LinearLayout>
+                <include layout="@layout/incl_menu_item_add_button" />
+            </RelativeLayout>
         </LinearLayout>
 
         <EditText

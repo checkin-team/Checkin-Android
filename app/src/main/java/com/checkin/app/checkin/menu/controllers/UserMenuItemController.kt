@@ -1,8 +1,8 @@
 package com.checkin.app.checkin.menu.controllers
 
-import com.checkin.app.checkin.Menu.Model.MenuItemModel
 import com.checkin.app.checkin.menu.holders.OnItemInteractionListener
 import com.checkin.app.checkin.menu.holders.userMenuItemModelHolder
+import com.checkin.app.checkin.menu.models.MenuItemModel
 import com.checkin.app.checkin.misc.epoxy.BaseEpoxyController
 
 class UserMenuItemController(

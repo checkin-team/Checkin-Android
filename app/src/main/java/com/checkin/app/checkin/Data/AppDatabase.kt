@@ -1,9 +1,8 @@
 package com.checkin.app.checkin.Data
 
 import android.content.Context
-import com.checkin.app.checkin.Menu.Model.*
 import com.checkin.app.checkin.MyObjectBox
-import com.checkin.app.checkin.menu.models.CartStatusModel
+import com.checkin.app.checkin.menu.models.*
 import com.checkin.app.checkin.restaurant.models.RestaurantBriefModel
 import io.objectbox.Box
 import io.objectbox.BoxStore

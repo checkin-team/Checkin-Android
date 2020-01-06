@@ -3,12 +3,8 @@ package com.checkin.app.checkin.Data
 import com.checkin.app.checkin.Account.AccountModel
 import com.checkin.app.checkin.Auth.AuthResultModel
 import com.checkin.app.checkin.Cook.Model.CookTableModel
-import com.checkin.app.checkin.home.model.ActiveLiveSessionDetailModel
-import com.checkin.app.checkin.home.model.NearbyRestaurantModel
-import com.checkin.app.checkin.home.model.ScheduledLiveSessionDetailModel
 import com.checkin.app.checkin.Inventory.Model.InventoryAvailabilityModel
 import com.checkin.app.checkin.Inventory.Model.InventoryModel
-import com.checkin.app.checkin.Menu.Model.MenuModel
 import com.checkin.app.checkin.Search.SearchResultPeopleModel
 import com.checkin.app.checkin.Search.SearchResultShopModel
 import com.checkin.app.checkin.Shop.Private.Finance.FinanceModel
@@ -26,6 +22,9 @@ import com.checkin.app.checkin.User.bills.NewReviewModel
 import com.checkin.app.checkin.User.bills.UserTransactionBriefModel
 import com.checkin.app.checkin.User.bills.UserTransactionDetailsModel
 import com.checkin.app.checkin.Waiter.Model.*
+import com.checkin.app.checkin.home.model.ActiveLiveSessionDetailModel
+import com.checkin.app.checkin.home.model.NearbyRestaurantModel
+import com.checkin.app.checkin.home.model.ScheduledLiveSessionDetailModel
 import com.checkin.app.checkin.manager.models.*
 import com.checkin.app.checkin.menu.models.*
 import com.checkin.app.checkin.misc.models.GenericDetailModel

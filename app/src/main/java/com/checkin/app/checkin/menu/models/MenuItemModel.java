@@ -1,4 +1,4 @@
-package com.checkin.app.checkin.Menu.Model;
+package com.checkin.app.checkin.menu.models;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -6,7 +6,6 @@ import androidx.annotation.Nullable;
 import com.checkin.app.checkin.Data.AppDatabase;
 import com.checkin.app.checkin.Data.Converters;
 import com.checkin.app.checkin.Inventory.Adapter.InventoryItemAdapter;
-import com.checkin.app.checkin.menu.models.OrderedItemModel;
 import com.fasterxml.jackson.annotation.JsonAutoDetect;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;

@@ -1,4 +1,4 @@
-package com.checkin.app.checkin.Menu.Model;
+package com.checkin.app.checkin.menu.models;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonInclude;

@@ -108,11 +108,11 @@
                     tools:text="Subtotal: 213 *" />
 
                 <TextView
-                    style="@style/GreyTextStyle"
+                    style="@style/GreySmallBoldTextStyle"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginBottom="@dimen/spacing_extra_small"
-                    android:text="* Does not include extra charges or discounts."
+                    android:text="@string/disclaimer_menu_cart_no_extra_charge"
                     android:textAlignment="center"
                     android:textSize="@dimen/font_small" />
 

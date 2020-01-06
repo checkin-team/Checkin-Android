@@ -4,24 +4,13 @@ import android.app.Application
 import androidx.lifecycle.*
 import com.checkin.app.checkin.Data.BaseViewModel
 import com.checkin.app.checkin.Data.Resource
-import com.checkin.app.checkin.Menu.Model.ItemCustomizationFieldModel
-import com.checkin.app.checkin.Menu.Model.MenuGroupModel
-import com.checkin.app.checkin.Menu.Model.MenuItemModel
-import com.checkin.app.checkin.Menu.Model.MenuModel
 import com.checkin.app.checkin.menu.MenuRepository
-import com.checkin.app.checkin.menu.models.OrderedItemModel
+import com.checkin.app.checkin.menu.models.*
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import java.util.ArrayList
-import kotlin.Boolean
 import kotlin.Comparator
-import kotlin.Double
-import kotlin.Int
-import kotlin.Long
-import kotlin.String
-import kotlin.apply
-import kotlin.let
 
 abstract class BaseMenuViewModel(application: Application) : BaseViewModel(application) {
     protected val mRepository: MenuRepository = MenuRepository.getInstance(application)

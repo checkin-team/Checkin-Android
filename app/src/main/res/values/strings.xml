@@ -269,4 +269,5 @@
     <string name="text_preorder_scheduled_status_info_pending">You are on waitlist. It may take few minutes.</string>
     <string name="text_preorder_scheduled_status_accepted">Order Confirmed</string>
     <string name="text_preorder_scheduled_status_info_accepted">Your orders will be prepared on time.</string>
+    <string name="disclaimer_menu_cart_no_extra_charge">*Does not include extra charges or discounts*</string>
 </resources>

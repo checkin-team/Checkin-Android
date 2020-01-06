@@ -4,13 +4,12 @@ import android.animation.ValueAnimator
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.airbnb.epoxy.EpoxyModel
-import com.checkin.app.checkin.Menu.MenuItemInteraction
-import com.checkin.app.checkin.Menu.Model.MenuGroupModel
-import com.checkin.app.checkin.Menu.UserMenu.Adapter.MenuGroupAdapter
 import com.checkin.app.checkin.menu.holders.BestSellerModelHolder_
 import com.checkin.app.checkin.menu.holders.SessionTrendingDishInteraction
 import com.checkin.app.checkin.menu.holders.ViewGroupInteraction
 import com.checkin.app.checkin.menu.holders.userMenuGroupModelHolder
+import com.checkin.app.checkin.menu.listeners.MenuItemInteraction
+import com.checkin.app.checkin.menu.models.MenuGroupModel
 import com.checkin.app.checkin.misc.epoxy.BaseEpoxyController
 import com.checkin.app.checkin.misc.holders.ShimmerModelHolder_
 import com.checkin.app.checkin.misc.holders.ShimmerVerticalModelGroup
@@ -20,7 +19,7 @@ import com.checkin.app.checkin.session.models.TrendingDishModel
 class UserMenuGroupController(
         val bestSellerItemSpacing: Int = 0,
         val menuItemListener: MenuItemInteraction?,
-        val groupInteractionListener: MenuGroupAdapter.OnGroupInteractionInterface?,
+        val groupInteractionListener: OnGroupInteraction?,
         val bestSellerListener: SessionTrendingDishInteraction?
 ) : BaseEpoxyController(), ViewGroupInteraction {
     private var mRecyclerView: RecyclerView? = null
@@ -123,4 +122,8 @@ class UserMenuGroupController(
     companion object {
         private const val GROUP_ANIMATION_DURATION = 300L
     }
+}
+
+interface OnGroupInteraction {
+    fun onGroupExpandCollapse(isExpanded: Boolean, groupModel: MenuGroupModel?)
 }

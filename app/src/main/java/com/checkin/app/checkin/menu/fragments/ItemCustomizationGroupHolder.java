@@ -1,4 +1,4 @@
-package com.checkin.app.checkin.Menu.UserMenu;
+package com.checkin.app.checkin.menu.fragments;
 
 import android.content.Context;
 import android.view.LayoutInflater;
@@ -7,9 +7,11 @@ import android.view.ViewGroup;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import com.checkin.app.checkin.Menu.Model.ItemCustomizationFieldModel;
-import com.checkin.app.checkin.Menu.Model.ItemCustomizationGroupModel;
+import androidx.annotation.NonNull;
+
 import com.checkin.app.checkin.R;
+import com.checkin.app.checkin.menu.models.ItemCustomizationFieldModel;
+import com.checkin.app.checkin.menu.models.ItemCustomizationGroupModel;
 import com.golovin.fluentstackbar.FluentSnackbar;
 import com.google.android.material.snackbar.Snackbar;
 
@@ -17,7 +19,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 
-import androidx.annotation.NonNull;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
