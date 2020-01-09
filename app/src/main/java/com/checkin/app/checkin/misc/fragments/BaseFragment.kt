@@ -13,6 +13,7 @@ import androidx.fragment.app.Fragment
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import butterknife.ButterKnife
 import butterknife.Unbinder
+import com.checkin.app.checkin.Data.Resource
 import com.checkin.app.checkin.misc.activities.BaseActivity
 
 abstract class BaseFragment : Fragment() {
@@ -36,8 +37,7 @@ abstract class BaseFragment : Fragment() {
         swipeRefreshLayout?.setOnRefreshListener { this.updateScreen() }
     }
 
-    @CallSuper
-    protected open fun updateScreen() {
+    open fun updateScreen() {
         (activity as? BaseActivity)?.updateScreen()
     }
 
@@ -64,6 +64,13 @@ abstract class BaseFragment : Fragment() {
 
     protected fun hideProgressBar() {
         progressBar?.visibility = View.GONE
+    }
+
+    protected fun handleLoadingRefresh(resource: Resource<*>) {
+        when (resource.status) {
+            Resource.Status.LOADING -> startRefreshing()
+            else -> stopRefreshing()
+        }
     }
 
     open fun onBackPressed(): Boolean = false

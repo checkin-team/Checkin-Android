@@ -1,12 +1,19 @@
 package com.checkin.app.checkin.manager.fragments
 
+import android.content.BroadcastReceiver
+import android.content.Context
+import android.content.Intent
 import android.os.Bundle
 import android.view.View
+import androidx.fragment.app.FragmentActivity
 import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
 import butterknife.BindView
 import com.airbnb.epoxy.EpoxyRecyclerView
+import com.checkin.app.checkin.Data.Message.MessageModel
+import com.checkin.app.checkin.Data.Message.MessageModel.MESSAGE_TYPE
+import com.checkin.app.checkin.Data.Message.MessageUtils
 import com.checkin.app.checkin.Data.Resource
 import com.checkin.app.checkin.R
 import com.checkin.app.checkin.Utility.pass
@@ -17,6 +24,7 @@ import com.checkin.app.checkin.manager.models.ShopScheduledSessionModel
 import com.checkin.app.checkin.manager.viewmodels.ManagerLiveScheduledViewModel
 import com.checkin.app.checkin.manager.viewmodels.ManagerWorkViewModel
 import com.checkin.app.checkin.misc.fragments.BaseFragment
+import com.checkin.app.checkin.session.models.ScheduledSessionStatus
 
 class ManagerQSRLiveOrdersFragment : BaseFragment(), QSRTableInteraction {
     override val rootLayout: Int = R.layout.fragment_manager_qsr_live_orders
@@ -24,9 +32,24 @@ class ManagerQSRLiveOrdersFragment : BaseFragment(), QSRTableInteraction {
     @BindView(R.id.epoxy_rv_manager_live_qsr_orders)
     internal lateinit var epoxyRvTables: EpoxyRecyclerView
 
-    val qsrTablesController = QSRTablesController(this)
-    val viewModel: ManagerLiveScheduledViewModel by viewModels()
-    val workViewModel: ManagerWorkViewModel by activityViewModels()
+    private val qsrTablesController = QSRTablesController(this)
+    private val viewModel: ManagerLiveScheduledViewModel by activityViewModels()
+    private val workViewModel: ManagerWorkViewModel by activityViewModels()
+
+    private val mReceiver by lazy {
+        object : BroadcastReceiver() {
+            override fun onReceive(context: Context?, intent: Intent?) {
+                val message = MessageUtils.parseMessage(intent) ?: return
+                val session = message.sessionDetail ?: return
+                val shop = message.shopDetail
+                if (shop != null && shop.pk != viewModel.shopPk) return
+                when (message.type) {
+                    MESSAGE_TYPE.MANAGER_SCHEDULED_QSR_NEW_PAID -> viewModel.updateResults()
+                    MESSAGE_TYPE.MANAGER_SCHEDULED_QSR_CANCELLED -> viewModel.removeSession(session.pk)
+                }
+            }
+        }
+    }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         epoxyRvTables.setController(qsrTablesController)
@@ -50,13 +73,11 @@ class ManagerQSRLiveOrdersFragment : BaseFragment(), QSRTableInteraction {
     }
 
     override fun onClickNewTable(data: ShopScheduledSessionModel) {
-        ManagerQSRDetailActivity.startQsrSessionDetailActivity(requireContext(), data.pk)
-        updateScreen()
+        startActivityForResult(ManagerQSRDetailActivity.withSessionIntent(requireContext(), data.pk), RC_INTENT_RESULT)
     }
 
     override fun onClickPreparationTable(data: ShopScheduledSessionModel) {
-        ManagerQSRDetailActivity.startQsrSessionDetailActivity(requireContext(), data.pk)
-        updateScreen()
+        startActivityForResult(ManagerQSRDetailActivity.withSessionIntent(requireContext(), data.pk), RC_INTENT_RESULT)
     }
 
     override fun onMarkFoodReady(data: ShopScheduledSessionModel) {
@@ -68,16 +89,31 @@ class ManagerQSRLiveOrdersFragment : BaseFragment(), QSRTableInteraction {
     }
 
     override fun onClickEndTable(data: ShopScheduledSessionModel) {
-        ManagerQSRDetailActivity.startQsrSessionDetailActivity(requireContext(), data.pk)
-        updateScreen()
+        startActivityForResult(ManagerQSRDetailActivity.withSessionIntent(requireContext(), data.pk), RC_INTENT_RESULT)
+    }
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+        when (requestCode) {
+            RC_INTENT_RESULT -> if (resultCode == FragmentActivity.RESULT_OK) viewModel.updateResults()
+        }
     }
 
     override fun updateScreen() {
-        super.updateScreen()
         viewModel.updateResults()
     }
 
+    override fun onResume() {
+        super.onResume()
+        MessageUtils.registerLocalReceiver(
+                requireContext(), mReceiver, MESSAGE_TYPE.MANAGER_SCHEDULED_QSR_NEW_PAID,
+                MESSAGE_TYPE.MANAGER_SCHEDULED_QSR_CANCELLED
+        )
+    }
+
     companion object {
+        private const val RC_INTENT_RESULT = 190
+
         fun newInstance() = ManagerQSRLiveOrdersFragment()
     }
 }

@@ -7,6 +7,7 @@ import android.widget.ProgressBar
 import androidx.annotation.IdRes
 import androidx.appcompat.app.AppCompatActivity
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+import com.checkin.app.checkin.Data.Resource
 import com.checkin.app.checkin.Data.Resource.Status
 import com.checkin.app.checkin.misc.fragments.DataStatusFragment
 
@@ -86,6 +87,13 @@ open class BaseActivity : AppCompatActivity() {
 
     protected fun hideProgressBar() {
         progressBar?.visibility = View.GONE
+    }
+
+    protected fun handleLoadingRefresh(resource: Resource<*>) {
+        when (resource.status) {
+            Status.LOADING -> startRefreshing()
+            else -> stopRefreshing()
+        }
     }
 
     companion object {

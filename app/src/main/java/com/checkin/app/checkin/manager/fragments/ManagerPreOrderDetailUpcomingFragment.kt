@@ -19,8 +19,8 @@ class ManagerPreOrderDetailUpcomingFragment : BaseFragment() {
     @BindView(R.id.tv_manager_scheduled_preparation_time)
     internal lateinit var tvPreparationTime: TextView
 
-    val commonFragment = CommonPreOrderDetailFragment()
-    val viewModel: ManagerLiveScheduledViewModel by activityViewModels()
+    private val commonFragment = CommonPreOrderDetailFragment()
+    private val viewModel: ManagerLiveScheduledViewModel by activityViewModels()
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         childFragmentManager.inTransaction {

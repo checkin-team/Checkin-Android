@@ -36,5 +36,6 @@ class ManagerWorkViewModel(application: Application) : BaseViewModel(application
     }
 
     override fun updateResults() {
+        if (mRestaurantData.value?.data == null)    fetchRestaurantData(shopPk)
     }
 }

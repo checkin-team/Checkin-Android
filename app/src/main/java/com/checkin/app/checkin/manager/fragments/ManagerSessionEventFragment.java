@@ -139,7 +139,7 @@ public class ManagerSessionEventFragment extends BaseFragment implements Manager
     }
 
     @Override
-    protected void updateScreen() {
+    public void updateScreen() {
         mViewModel.updateResults();
     }
 }

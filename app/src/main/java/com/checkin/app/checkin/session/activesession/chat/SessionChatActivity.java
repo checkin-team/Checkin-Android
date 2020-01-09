@@ -67,8 +67,6 @@ public class SessionChatActivity extends BaseActivity implements ActiveSessionCh
                     SessionChatActivity.this.addEvent(message.getRawData().getSessionEventDetail());
                     break;
                 case USER_SESSION_EVENT_UPDATE:
-                    SessionChatActivity.this.updateEvent(message.getObject(), message.getRawData().getSessionEventStatus());
-                    break;
                 case WAITER_SESSION_UPDATE_ORDER:
                     SessionChatActivity.this.updateEvent(message.getObject(), message.getRawData().getSessionEventStatus());
                     break;

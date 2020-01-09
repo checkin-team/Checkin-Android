@@ -2,7 +2,6 @@ package com.checkin.app.checkin.manager.activities
 
 import android.content.Intent
 import android.os.Bundle
-import android.widget.CompoundButton
 import android.widget.TextView
 import androidx.activity.viewModels
 import androidx.appcompat.app.ActionBarDrawerToggle
@@ -23,10 +22,7 @@ import com.checkin.app.checkin.Shop.ShopPreferences
 import com.checkin.app.checkin.Utility.DynamicSwipableViewPager
 import com.checkin.app.checkin.Utility.Utils
 import com.checkin.app.checkin.Utility.inTransaction
-import com.checkin.app.checkin.manager.fragments.ManagerInvoiceFragment
-import com.checkin.app.checkin.manager.fragments.ManagerLiveOrdersFragment
-import com.checkin.app.checkin.manager.fragments.ManagerStatsFragment
-import com.checkin.app.checkin.manager.fragments.ManagerTablesActivateFragment
+import com.checkin.app.checkin.manager.fragments.*
 import com.checkin.app.checkin.manager.fragments.ManagerTablesActivateFragment.LiveOrdersInteraction
 import com.checkin.app.checkin.manager.viewmodels.ManagerWorkViewModel
 import com.checkin.app.checkin.misc.BlockingNetworkViewModel
@@ -67,7 +63,6 @@ class ManagerWorkActivity : BaseAccountActivity(), LiveOrdersInteraction {
             drawerLayout.addDrawerListener(startToggle)
             startToggle.syncState()
         }
-        initRefreshScreen(R.id.sr_manager_work)
         setupObservers(intent.getLongExtra(KEY_RESTAURANT_PK, 0L))
         pagerManager.isEnabled = false
         val pagerAdapter = ManagerFragmentAdapter(supportFragmentManager)
@@ -77,33 +72,33 @@ class ManagerWorkActivity : BaseAccountActivity(), LiveOrdersInteraction {
         pagerManager.addOnPageChangeListener(object : SimpleOnPageChangeListener() {
             override fun onPageSelected(position: Int) {
                 if (actionBar != null) {
-                    if (position == 0) {
-                        tvActionBarTitle.text = "Live Orders"
-                    } else if (position == 1) {
-                        tvActionBarTitle.text = "Insight"
-                    } else if (position == 2) {
-                        tvActionBarTitle.text = "Invoice"
-                    }
+                    tvActionBarTitle.text = pagerAdapter.getPageTitle(position)
                 }
             }
         })
-        swLiveOrdersToggle.setOnCheckedChangeListener { buttonView: CompoundButton?, isChecked: Boolean ->
+        swLiveOrdersToggle.setOnCheckedChangeListener { _, isChecked ->
             pagerAdapter.setActivated(isChecked)
             pagerAdapter.setupWithTab(tabLayout, pagerManager)
             ShopPreferences.setManagerLiveOrdersActivated(this, isChecked)
         }
         setLiveOrdersActivation(ShopPreferences.isManagerLiveOrdersActivated(this))
-        val shouldOpenInvoice = intent.getBooleanExtra(KEY_OPEN_LAST_TABLES, false)
+        val shouldOpenInvoice = intent.getBooleanExtra(KEY_NOTIF_OPEN_LAST_TABLES, false)
         if (shouldOpenInvoice) {
             pagerManager.setCurrentItem(2, true)
         } else {
-            val sessionBundle = intent.getBundleExtra(KEY_SESSION_BUNDLE)
+            val sessionBundle = intent.getBundleExtra(KEY_SESSION_NOTIFICATION_BUNDLE)
             if (sessionBundle != null) {
-                val intent = Intent(this, ManagerSessionActivity::class.java)
-                intent.putExtra(ManagerSessionActivity.KEY_SESSION_PK, sessionBundle.getLong(ManagerSessionActivity.KEY_SESSION_PK))
-                        .putExtra(ManagerSessionActivity.KEY_SHOP_PK, mViewModel.shopPk)
-                        .putExtra(ManagerSessionActivity.KEY_OPEN_ORDERS, sessionBundle.getBoolean(ManagerSessionActivity.KEY_OPEN_ORDERS))
-                startActivity(intent)
+                val sessionPk = sessionBundle.getLong(KEY_NOTIF_SESSION_PK)
+                val intent = when (sessionBundle.getSerializable(KEY_NOTIF_LIVE_ORDER_TYPE) as RestaurantOrdersFragmentType) {
+                    RestaurantOrdersFragmentType.ACTIVE_SESSION -> Intent(this, ManagerSessionActivity::class.java).apply {
+                        putExtra(ManagerSessionActivity.KEY_SESSION_PK, sessionPk)
+                        putExtra(ManagerSessionActivity.KEY_SHOP_PK, mViewModel.shopPk)
+                        putExtra(ManagerSessionActivity.KEY_OPEN_ORDERS, sessionBundle.getBoolean(ManagerSessionActivity.KEY_OPEN_ORDERS))
+                    }
+                    RestaurantOrdersFragmentType.MASTER_QR -> ManagerQSRDetailActivity.withSessionIntent(this, sessionPk)
+                    RestaurantOrdersFragmentType.PRE_ORDER -> ManagerPreOrderDetailActivity.withSessionIntent(this, sessionPk)
+                }
+                startActivityForResult(intent, RC_INTENT_RESULT_SESSION_DETAIL)
             }
         }
         supportFragmentManager.inTransaction {
@@ -121,13 +116,9 @@ class ManagerWorkActivity : BaseAccountActivity(), LiveOrdersInteraction {
         })
     }
 
-    override fun getDrawerRootId(): Int {
-        return R.id.drawer_manager_work
-    }
+    override fun getDrawerRootId(): Int = R.id.drawer_manager_work
 
-    override fun getNavMenu(): Int {
-        return R.menu.drawer_manager_work
-    }
+    override fun getNavMenu(): Int = R.menu.drawer_manager_work
 
     override fun <T : AccountHeaderViewHolder?> getHeaderViewHolder(): T {
         return AccountHeaderViewHolder(this, R.layout.layout_header_account) as T
@@ -145,7 +136,6 @@ class ManagerWorkActivity : BaseAccountActivity(), LiveOrdersInteraction {
         super.updateScreen()
         accountViewModel.updateResults()
         mViewModel.updateResults()
-        mViewModel.fetchStatistics()
     }
 
     override fun onResume() {
@@ -153,17 +143,23 @@ class ManagerWorkActivity : BaseAccountActivity(), LiveOrdersInteraction {
         accountViewModel.fetchAccounts()
     }
 
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+        when (requestCode) {
+            RC_INTENT_RESULT_SESSION_DETAIL -> updateScreen()
+        }
+    }
+
     internal class ManagerFragmentAdapter(fm: FragmentManager) : BaseFragmentAdapterBottomNav(fm) {
         private var isActivated = true
         private val mTableFragment = ManagerLiveOrdersFragment.newInstance()
         private val mActiveTableFragment = ManagerTablesActivateFragment.newInstance()
-        override fun getTabDrawable(position: Int): Int {
-            return when (position) {
-                0 -> R.drawable.ic_orders_list_toggle
-                1 -> R.drawable.ic_stats_toggle
-                2 -> R.drawable.ic_invoice_toggle
-                else -> 0
-            }
+
+        override fun getTabDrawable(position: Int): Int = when (position) {
+            0 -> R.drawable.ic_orders_list_toggle
+            1 -> R.drawable.ic_stats_toggle
+            2 -> R.drawable.ic_invoice_toggle
+            else -> 0
         }
 
         override fun getItem(position: Int): Fragment = when (position) {
@@ -172,17 +168,13 @@ class ManagerWorkActivity : BaseAccountActivity(), LiveOrdersInteraction {
             else -> ManagerInvoiceFragment.newInstance()
         }
 
-        override fun getCount(): Int {
-            return 3
-        }
+        override fun getCount(): Int = 3
 
-        override fun getPageTitle(position: Int): CharSequence? {
-            when (position) {
-                0 -> return "Live Orders"
-                1 -> return "Insight"
-                2 -> return "Invoice"
-            }
-            return null
+        override fun getPageTitle(position: Int): CharSequence? = when (position) {
+            0 -> "Live Orders"
+            1 -> "Insight"
+            2 -> "Invoice"
+            else -> null
         }
 
         fun setActivated(isChecked: Boolean) {
@@ -192,8 +184,12 @@ class ManagerWorkActivity : BaseAccountActivity(), LiveOrdersInteraction {
     }
 
     companion object {
-        const val KEY_OPEN_LAST_TABLES = "manager.show_last_tables"
+        private const val RC_INTENT_RESULT_SESSION_DETAIL = 12
+
         const val KEY_RESTAURANT_PK = "manager.restaurant_pk"
-        const val KEY_SESSION_BUNDLE = "manager.session_bundle"
+        const val KEY_NOTIF_OPEN_LAST_TABLES = "manager.notif.show_last_tables"
+        const val KEY_NOTIF_LIVE_ORDER_TYPE = "manager.notif.live_order.type"
+        const val KEY_NOTIF_SESSION_PK = "manager.notif.session_pk"
+        const val KEY_SESSION_NOTIFICATION_BUNDLE = "manager.session_notification_bundle"
     }
 }

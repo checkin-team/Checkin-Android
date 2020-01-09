@@ -12,6 +12,7 @@ import androidx.viewpager2.widget.ViewPager2
 import butterknife.BindView
 import com.checkin.app.checkin.Data.Resource
 import com.checkin.app.checkin.R
+import com.checkin.app.checkin.Utility.inTransaction
 import com.checkin.app.checkin.manager.viewmodels.ManagerWorkViewModel
 import com.checkin.app.checkin.misc.BlockingNetworkViewModel
 import com.checkin.app.checkin.misc.fragments.BaseFragment
@@ -28,8 +29,8 @@ class ManagerLiveOrdersFragment : BaseFragment() {
     @BindView(R.id.tabs_manager_orders)
     internal lateinit var tabsFragment: TabLayout
 
-    val viewModel: ManagerWorkViewModel by activityViewModels()
-    val networkViewModel: BlockingNetworkViewModel by activityViewModels()
+    private val viewModel: ManagerWorkViewModel by activityViewModels()
+    private val networkViewModel: BlockingNetworkViewModel by activityViewModels()
     private lateinit var tabAdapter: RestaurantOrdersServiceAdapter
     private val tabConfigurationStrategy: TabLayoutMediator.TabConfigurationStrategy by lazy {
         TabLayoutMediator.TabConfigurationStrategy { tab, position ->
@@ -51,6 +52,7 @@ class ManagerLiveOrdersFragment : BaseFragment() {
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        initRefreshScreen(R.id.sr_manager_live_orders)
         tabAdapter = RestaurantOrdersServiceAdapter(this, emptyList())
         vpOrdersFragment.adapter = tabAdapter
         TabLayoutMediator(tabsFragment, vpOrdersFragment, tabConfigurationStrategy).attach()
@@ -61,6 +63,7 @@ class ManagerLiveOrdersFragment : BaseFragment() {
         })
 
         viewModel.restaurantService.observe(this, Observer {
+            handleLoadingRefresh(it)
             it?.let {
                 networkViewModel.updateStatus(it)
                 if (it.status == Resource.Status.SUCCESS) setupData(it.data!!)
@@ -83,8 +86,16 @@ class ManagerLiveOrdersFragment : BaseFragment() {
         tabAdapter.notifyDataSetChanged()
     }
 
+    override fun updateScreen() {
+        super.updateScreen()
+        viewModel.updateResults()
+        (childFragmentManager.findFragmentByTag("f0") as? BaseFragment)?.updateScreen()
+        (childFragmentManager.findFragmentByTag("f1") as? BaseFragment)?.let {
+            (childFragmentManager.findFragmentByTag("f2") as? BaseFragment)?.updateScreen() ?: it.updateScreen()
+        } ?: (childFragmentManager.findFragmentByTag("f2") as? BaseFragment)?.updateScreen()
+    }
+
     companion object {
-        @JvmStatic
         fun newInstance() = ManagerLiveOrdersFragment()
     }
 
@@ -98,6 +109,14 @@ class ManagerLiveOrdersFragment : BaseFragment() {
         }
 
         fun getTitle(pos: Int) = tabs[pos].title
+
+        override fun containsItem(itemId: Long): Boolean = itemId in 0..2
+
+        override fun getItemId(position: Int): Long = when (tabs[position]) {
+            RestaurantOrdersFragmentType.ACTIVE_SESSION -> 0
+            RestaurantOrdersFragmentType.MASTER_QR -> 1
+            RestaurantOrdersFragmentType.PRE_ORDER -> 2
+        }
     }
 }
 

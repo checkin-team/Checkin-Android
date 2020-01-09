@@ -118,7 +118,7 @@ public class InventoryGroupsFragment extends BaseFragment implements InventoryGr
     }
 
     @Override
-    protected void updateScreen() {
+    public void updateScreen() {
         mViewModel.updateResults();
     }
 

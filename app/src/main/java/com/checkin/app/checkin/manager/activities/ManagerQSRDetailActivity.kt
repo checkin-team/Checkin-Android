@@ -118,9 +118,8 @@ class ManagerQSRDetailActivity : BaseActivity() {
     companion object {
         private const val KEY_SESSION_ID = "manager.qsr.session_id"
 
-        fun startQsrSessionDetailActivity(context: Context, sessionId: Long) = Intent(context, ManagerQSRDetailActivity::class.java).apply {
+        fun withSessionIntent(context: Context, sessionId: Long) = Intent(context, ManagerQSRDetailActivity::class.java).apply {
             putExtra(KEY_SESSION_ID, sessionId)
-            context.startActivity(this)
         }
     }
 }

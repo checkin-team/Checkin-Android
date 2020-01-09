@@ -51,34 +51,36 @@ class ManagerActiveSessionLiveTablesFragment : BaseFragment(), ManagerTableInter
             val message = MessageUtils.parseMessage(intent) ?: return
             val shop = message.shopDetail
             if (shop != null && shop.pk != mViewModel.shopPk) return
-            val eventModel: EventBriefModel
-            val user: BriefModel
+            val sessionData = message.sessionDetail ?: return
             when (message.type) {
                 MessageModel.MESSAGE_TYPE.MANAGER_SESSION_NEW -> {
-                    val tableName = message.rawData.sessionTableName
-                    eventModel = EventBriefModel.getFromManagerEventModel(message.rawData.sessionEventBrief)
-                    eventModel.type = SessionChatModel.CHAT_EVENT_TYPE.EVENT_SESSION_CHECKIN
-                    val sessionData = message.sessionDetail!!
-                    val tableSessionModel = TableSessionModel(sessionData.pk, null, eventModel)
-                    tableSessionModel.created = Calendar.getInstance().time
-                    val tableModel = RestaurantTableModel(message.getObject().pk, tableName, tableSessionModel)
-                    if (message.actor.type == MessageObjectModel.MESSAGE_OBJECT_TYPE.RESTAURANT_MEMBER) {
-                        user = message.actor.briefModel
-                        if (tableModel.tableSession != null) {
-                            tableModel.tableSession!!.host = user
-                        }
+                    val qrPk = message.`object`?.pk ?: return
+                    val tableName = message.rawData?.sessionTableName ?: return
+                    val actor = message.actor ?: return
+                    val eventModel = EventBriefModel.getFromManagerEventModel(message.rawData.sessionEventBrief
+                            ?: return).apply {
+                        type = SessionChatModel.CHAT_EVENT_TYPE.EVENT_SESSION_CHECKIN
+                    }
+                    val tableSessionModel = TableSessionModel(sessionData.pk, null, eventModel).apply {
+                        created = Calendar.getInstance().time
+                    }
+                    val tableModel = RestaurantTableModel(qrPk, tableName, tableSessionModel)
+                    if (actor.type == MessageObjectModel.MESSAGE_OBJECT_TYPE.RESTAURANT_MEMBER) {
+                        tableModel.tableSession?.host = message.actor.briefModel
                     }
                     this@ManagerActiveSessionLiveTablesFragment.addTable(tableModel)
                 }
-                MessageModel.MESSAGE_TYPE.MANAGER_SESSION_NEW_ORDER, MessageModel.MESSAGE_TYPE.MANAGER_SESSION_EVENT_SERVICE, MessageModel.MESSAGE_TYPE.MANAGER_SESSION_EVENT_CONCERN, MessageModel.MESSAGE_TYPE.MANAGER_SESSION_CHECKOUT_REQUEST -> {
-                    eventModel = EventBriefModel.getFromManagerEventModel(message.rawData.sessionEventBrief)
-                    this@ManagerActiveSessionLiveTablesFragment.updateSessionEventCount(message.target.pk, eventModel)
+                MessageModel.MESSAGE_TYPE.MANAGER_SESSION_NEW_ORDER, MessageModel.MESSAGE_TYPE.MANAGER_SESSION_EVENT_SERVICE,
+                MessageModel.MESSAGE_TYPE.MANAGER_SESSION_EVENT_CONCERN, MessageModel.MESSAGE_TYPE.MANAGER_SESSION_CHECKOUT_REQUEST -> {
+                    val eventModel = EventBriefModel.getFromManagerEventModel(message.rawData?.sessionEventBrief
+                            ?: return)
+                    this@ManagerActiveSessionLiveTablesFragment.updateSessionEventCount(sessionData.pk, eventModel)
                 }
                 MessageModel.MESSAGE_TYPE.MANAGER_SESSION_HOST_ASSIGNED -> {
-                    user = message.getObject().briefModel
-                    this@ManagerActiveSessionLiveTablesFragment.updateSessionHost(message.target.pk, user)
+                    val user = message.`object`?.briefModel ?: return
+                    this@ManagerActiveSessionLiveTablesFragment.updateSessionHost(sessionData.pk, user)
                 }
-                MessageModel.MESSAGE_TYPE.MANAGER_SESSION_END -> this@ManagerActiveSessionLiveTablesFragment.removeTable(message.sessionDetail!!.pk)
+                MessageModel.MESSAGE_TYPE.MANAGER_SESSION_END -> this@ManagerActiveSessionLiveTablesFragment.removeTable(sessionData.pk)
             }
         }
     }
@@ -201,6 +203,9 @@ class ManagerActiveSessionLiveTablesFragment : BaseFragment(), ManagerTableInter
         MessageUtils.unregisterLocalReceiver(requireContext(), mReceiver)
     }
 
+    override fun updateScreen() {
+        mViewModel.updateResults()
+    }
 
     companion object {
         fun newInstance(): ManagerActiveSessionLiveTablesFragment {

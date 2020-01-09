@@ -46,34 +46,46 @@ class ManagerLiveScheduledViewModel(application: Application) : BaseViewModel(ap
     }
     val sessionData: LiveData<Resource<ShopScheduledSessionDetailModel>> = mSessionData
     val acceptData: LiveData<Resource<PreparationTimeModel>> = Transformations.map(mAcceptData) { input ->
-        if (input?.status == Resource.Status.SUCCESS) mSessionData.value?.data?.let {
-            mSessionData.value = Resource.cloneResource(mSessionData.value, it.copy(scheduled = it.scheduled.copy().apply { status = ScheduledSessionStatus.ACCEPTED }))
+        if (input?.status == Resource.Status.SUCCESS && input.data != null) {
+            mSessionData.value?.data?.let {
+                mSessionData.value = Resource.cloneResource(mSessionData.value, it.copy(scheduled = it.scheduled.copy().apply { status = ScheduledSessionStatus.ACCEPTED }))
+            }
+            mScheduledOrders.value?.data?.let {
+                val index = it.indexOfFirst { it.pk == input.data.pk }
+                if (index != -1) mScheduledOrders.value = Resource.cloneResource(mScheduledOrders.value, it.toMutableList().apply {
+                    this[index] = this[index].run { copy(scheduled = scheduled.copy().apply { status = ScheduledSessionStatus.ACCEPTED }) }
+                })
+            }
         }
         input
     }
     val rejectData: LiveData<Resource<GenericDetailModel>> = Transformations.map(mRejectData) { input ->
-        if (input?.status == Resource.Status.SUCCESS && input.data != null) mSessionData.value?.data?.let {
-            mSessionData.value = Resource.cloneResource(mSessionData.value, it.copy(scheduled = it.scheduled.copy().apply { status = ScheduledSessionStatus.CANCELLED_BY_RESTAURANT }))
-            mScheduledOrders.value?.let {
-                val index = it.data?.indexOfFirst { it.pk == input.data.longPk }
-                if (index != null) mScheduledOrders.value = Resource.cloneResource(it, it.data.toMutableList().apply { removeAt(index) })
+        if (input?.status == Resource.Status.SUCCESS && input.data != null) {
+            mSessionData.value?.data?.let {
+                mSessionData.value = Resource.cloneResource(mSessionData.value, it.copy(scheduled = it.scheduled.copy().apply { status = ScheduledSessionStatus.CANCELLED_BY_RESTAURANT }))
+            }
+            mScheduledOrders.value?.data?.let {
+                val index = it.indexOfFirst { it.pk == input.data.longPk }
+                if (index != -1) mScheduledOrders.value = Resource.cloneResource(mScheduledOrders.value, it.toMutableList().apply { removeAt(index) })
             }
         }
         input
     }
     val doneData: LiveData<Resource<ScheduledSessionDoneModel>> = Transformations.map(mDoneData) { input ->
-        if (input?.status == Resource.Status.SUCCESS && input.data != null) mSessionData.value?.data?.let {
+        if (input?.status == Resource.Status.SUCCESS && input.data != null) {
             val currTime = Calendar.getInstance().time
-            mSessionData.value = Resource.cloneResource(mSessionData.value, it.copy(scheduled = it.scheduled.copy(modified = currTime).apply { status = ScheduledSessionStatus.DONE }))
-            mScheduledOrders.value?.let {
-                val index = it.data?.indexOfFirst { it.pk == input.data.pk }
-                if (index != null) {
-                    mScheduledOrders.value = if (input.data.isCheckedOut) Resource.cloneResource(it, it.data.toMutableList().apply { removeAt(index) })
+            mSessionData.value?.data?.let {
+                mSessionData.value = Resource.cloneResource(mSessionData.value, it.copy(scheduled = it.scheduled.copy(modified = currTime).apply { status = ScheduledSessionStatus.DONE }))
+            }
+            mScheduledOrders.value?.data?.let {
+                val index = it.indexOfFirst { it.pk == input.data.pk }
+                if (index != -1) {
+                    mScheduledOrders.value = if (input.data.isCheckedOut) Resource.cloneResource(mScheduledOrders.value, it.toMutableList().apply { removeAt(index) })
                     else {
-                        val data = it.data.toMutableList().apply {
+                        val data = it.toMutableList().apply {
                             this[index] = this[index].run { copy(scheduled = scheduled.copy(modified = currTime).apply { status = ScheduledSessionStatus.DONE }) }
                         }
-                        Resource.cloneResource(it, data)
+                        Resource.cloneResource(mScheduledOrders.value, data)
                     }
                 }
             }

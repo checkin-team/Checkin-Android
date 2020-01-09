@@ -3,6 +3,7 @@ package com.checkin.app.checkin.manager.fragments
 import android.os.Bundle
 import android.view.View
 import android.widget.TextView
+import androidx.fragment.app.FragmentActivity
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.Observer
 import butterknife.BindView
@@ -23,8 +24,8 @@ class ManagerQsrOrderDetailNewFragment : BaseFragment() {
     @BindView(R.id.tv_manager_qsr_preparation_time)
     internal lateinit var tvPreparationTime: TextView
 
-    val commonFragment = CommonPreOrderDetailFragment()
-    val viewModel: ManagerLiveScheduledViewModel by activityViewModels()
+    private val commonFragment = CommonPreOrderDetailFragment()
+    private val viewModel: ManagerLiveScheduledViewModel by activityViewModels()
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         childFragmentManager.inTransaction {
@@ -48,11 +49,13 @@ class ManagerQsrOrderDetailNewFragment : BaseFragment() {
     @OnClick(R.id.btn_manager_qsr_session_accept)
     fun onAcceptSession() {
         viewModel.acceptSession(viewModel.sessionPk)
+        requireActivity().setResult(FragmentActivity.RESULT_OK)
     }
 
     @OnClick(R.id.btn_manager_qsr_session_cancel)
     fun onCancelSession() {
         ManagerScheduledSessionCancelReasonBottomSheetFragment().show(childFragmentManager, null)
+        requireActivity().setResult(FragmentActivity.RESULT_OK)
     }
 
     @OnClick(R.id.btn_manager_qsr_preparation_time_decrement, R.id.btn_manager_qsr_preparation_time_increment)

@@ -159,7 +159,7 @@ public class MessageUtils {
         IntentFilter intentFilter = new IntentFilter();
         intentFilter.addCategory(Constants.FCM_INTENT_CATEGORY);
         for (MESSAGE_TYPE type : types)
-            intentFilter.addAction(type.actionTag());
+            intentFilter.addAction(type.getActionTag());
         LocalBroadcastManager.getInstance(context.getApplicationContext())
                 .registerReceiver(receiver, intentFilter);
     }
@@ -171,7 +171,7 @@ public class MessageUtils {
         intentFilter.addDataAuthority(Constants.FILTER_DATA_HOST, "");
         intentFilter.addDataPath(String.format(Locale.ENGLISH, Constants.FILTER_DATA_TARGET_PATH, targetPk), 0);
         for (MESSAGE_TYPE type : types)
-            intentFilter.addAction(type.actionTag());
+            intentFilter.addAction(type.getActionTag());
         LocalBroadcastManager.getInstance(context.getApplicationContext())
                 .registerReceiver(receiver, intentFilter);
     }
@@ -182,7 +182,7 @@ public class MessageUtils {
     }
 
     public static boolean sendLocalBroadcast(Context context, @NonNull MessageModel data) {
-        Intent intent = new Intent(data.getType().actionTag());
+        Intent intent = new Intent(data.getType().getActionTag());
         intent.addCategory(Constants.FCM_INTENT_CATEGORY);
         intent.putExtra(Constants.KEY_DATA, data);
         return LocalBroadcastManager.getInstance(context.getApplicationContext()).sendBroadcast(intent);

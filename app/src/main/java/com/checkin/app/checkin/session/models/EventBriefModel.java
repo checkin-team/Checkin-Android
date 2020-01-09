@@ -1,6 +1,8 @@
 package com.checkin.app.checkin.session.models;
 
 
+import androidx.annotation.NonNull;
+
 import com.checkin.app.checkin.Utility.Utils;
 import com.checkin.app.checkin.manager.models.ManagerSessionEventModel;
 import com.checkin.app.checkin.session.activesession.chat.SessionChatDataModel.EVENT_CONCERN_TYPE;
@@ -42,6 +44,7 @@ public class EventBriefModel {
         this.timestamp = Calendar.getInstance().getTime();
     }
 
+    @NonNull
     public static EventBriefModel getFromManagerEventModel(ManagerSessionEventModel eventModel) {
         EventBriefModel result = new EventBriefModel(eventModel.getPk(), eventModel.getType(), eventModel.getMessage());
         if (eventModel.getModified() != null)

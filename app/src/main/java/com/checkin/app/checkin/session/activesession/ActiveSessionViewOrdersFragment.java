@@ -88,9 +88,8 @@ public class ActiveSessionViewOrdersFragment extends BaseFragment implements Act
     }
 
     @Override
-    protected void updateScreen() {
+    public void updateScreen() {
         mViewModel.fetchSessionOrders();
-
     }
 
     @OnClick(R.id.im_session_view_orders_back)

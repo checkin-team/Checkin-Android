@@ -67,6 +67,7 @@ public class Constants {
         // User group
         ACTIVE_SESSION("channel.active_session", "Active Session"),
         ACTIVE_SESSION_PERSISTENT("channel.active_session_persistent", "Active Session Persistent"),
+        SCHEDULED_SESSION("channel.scheduled_session", "Scheduled Session"),
 
         // Restaurant Member group
         MEMBER("channel.restaurant_member", "Restaurant Member"),

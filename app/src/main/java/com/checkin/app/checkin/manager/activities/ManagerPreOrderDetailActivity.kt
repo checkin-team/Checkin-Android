@@ -125,9 +125,8 @@ class ManagerPreOrderDetailActivity : BaseActivity() {
     companion object {
         private const val KEY_SESSION_ID = "manager.scheduled.session_id"
 
-        fun startScheduledSessionDetailActivity(context: Context, sessionId: Long) = Intent(context, ManagerPreOrderDetailActivity::class.java).apply {
+        fun withSessionIntent(context: Context, sessionId: Long) = Intent(context, ManagerPreOrderDetailActivity::class.java).apply {
             putExtra(KEY_SESSION_ID, sessionId)
-            context.startActivity(this)
         }
     }
 }

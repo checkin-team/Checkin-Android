@@ -193,7 +193,7 @@ class WaiterTableFragment : BaseFragment() {
                 .commit()
     }
 
-    public override fun updateScreen() {
+    override fun updateScreen() {
         viewModel?.updateResults()
     }
 

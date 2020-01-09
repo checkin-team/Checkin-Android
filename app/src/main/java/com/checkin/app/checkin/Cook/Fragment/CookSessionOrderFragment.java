@@ -178,7 +178,7 @@ public class CookSessionOrderFragment extends BaseFragment implements CookSessio
     }
 
     @Override
-    protected void updateScreen() {
+    public void updateScreen() {
         mViewModel.updateResults();
     }
 
