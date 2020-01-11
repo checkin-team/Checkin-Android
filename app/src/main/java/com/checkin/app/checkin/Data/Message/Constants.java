@@ -17,7 +17,7 @@ public class Constants {
     public static final String FILTER_DATA_TARGET_PATH = "target/%d";
 
     public static final String FORMAT_NOTIFICATION_GROUP = "com.checkin.message.group.%s_%d";
-    public static final String FORMAT_NOTIFICATION_TAG = "com.checkin.message.tag.%s_%d";
+    public static final String FORMAT_NOTIFICATION_TAG = "com.checkin.message.locationTag.%s_%d";
     public static final String NOTIFICATION_GROUP_SUMMARY = "com.checkin.message.group.summary";
 
     public static final String FORMAT_SP_KEY_NOTIFICATION_CHANNEL = "com.checkin.app.checkin.Data.Message.notif.%s";

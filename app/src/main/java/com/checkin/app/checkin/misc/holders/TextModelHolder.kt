@@ -10,6 +10,7 @@ import com.checkin.app.checkin.misc.epoxy.BaseEpoxyHolder
 
 @EpoxyModelClass(layout = R.layout.item_text)
 abstract class TextModelHolder : EpoxyModelWithHolder<TextModelHolder.Holder>() {
+
     @EpoxyAttribute
     lateinit var text: String
 

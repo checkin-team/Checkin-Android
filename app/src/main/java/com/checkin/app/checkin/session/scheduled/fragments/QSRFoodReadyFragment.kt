@@ -42,7 +42,7 @@ class QSRFoodReadyFragment : BaseFragment() {
         viewModel.fetchSessionData(sessionId)
 
         billHolder = BillHolder(view)
-        viewModel.sessionData.observe(this, Observer {
+        viewModel.sessionData.observe(viewLifecycleOwner, Observer {
             if (it?.status == Resource.Status.SUCCESS && it.data != null) setupData(it.data)
             else if (it.status == Resource.Status.LOADING) billHolder.showLoading()
             else if (it.status == Resource.Status.ERROR_NOT_FOUND) requireActivity().finish()
@@ -56,7 +56,7 @@ class QSRFoodReadyFragment : BaseFragment() {
                 }
             }
         }
-        viewModel.ordersData.observe(this, Observer {
+        viewModel.ordersData.observe(viewLifecycleOwner, Observer {
             if (it.status == Resource.Status.SUCCESS && it.data != null) epoxyRvOrders.requestModelBuild()
         })
     }

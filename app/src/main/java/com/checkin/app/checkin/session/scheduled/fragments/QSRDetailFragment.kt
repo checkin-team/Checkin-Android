@@ -43,7 +43,7 @@ class QSRDetailFragment : BaseFragment(), CollapsibleSectionView.SectionListener
         csvBilling.attachFragment(childFragmentManager, QSRBillingDetailFragment())
         csvOrders.attachFragment(childFragmentManager, CommonOrderDetailFragment())
 
-        viewModel.sessionData.observe(this, Observer {
+        viewModel.sessionData.observe(viewLifecycleOwner, Observer {
             if (it.status == Resource.Status.SUCCESS && it.data != null) setupData(it.data)
         })
     }

@@ -1,0 +1,172 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <ImageView
+        android:id="@+id/im_public_restaurant_address"
+        android:layout_width="14dp"
+        android:layout_height="14dp"
+        android:layout_marginStart="13dp"
+        android:layout_marginTop="20dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/ic_info_address" />
+
+    <TextView
+        android:id="@+id/tv_public_restaurant_address"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="11dp"
+        android:layout_marginTop="20dp"
+        android:layout_marginEnd="64dp"
+        android:textColor="@color/brownish_grey"
+        android:textSize="12sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/im_public_restaurant_address"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:text="Ground, First and Second Floor, Orient Bestech Business
+Towers, National Highway 8, Block A, Sector 34,
+Gurugram, Haryana 122004
+" />
+
+    <ImageView
+        android:id="@+id/im_public_restaurant_address_btn"
+        android:layout_width="12dp"
+        android:layout_height="12dp"
+        app:layout_constraintBottom_toBottomOf="@+id/tv_public_restaurant_address"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/tv_public_restaurant_address"
+        app:layout_constraintTop_toTopOf="@+id/tv_public_restaurant_address"
+        app:srcCompat="@drawable/ic_info_right" />
+
+    <View
+        android:id="@+id/div"
+        android:layout_width="0dp"
+        android:layout_height="0.3dp"
+        android:layout_marginStart="13dp"
+        android:layout_marginTop="14dp"
+        android:layout_marginEnd="13dp"
+        android:background="?android:attr/listDivider"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tv_public_restaurant_address" />
+
+    <ImageView
+        android:id="@+id/im_public_restaurant_number"
+        android:layout_width="12dp"
+        android:layout_height="12dp"
+        android:layout_marginStart="13dp"
+        android:layout_marginTop="15dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/div"
+        app:srcCompat="@drawable/ic_info_call" />
+
+    <TextView
+        android:id="@+id/tv_public_restaurant_phone"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="11dp"
+        android:layout_marginTop="15dp"
+        android:layout_marginEnd="64dp"
+        android:textColor="@color/brownish_grey"
+        android:textSize="12sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/im_public_restaurant_number"
+        app:layout_constraintTop_toBottomOf="@+id/div"
+        tools:text="+91 1234567890" />
+
+    <ImageView
+        android:id="@+id/im_public_restaurant_phone_btn"
+        android:layout_width="12dp"
+        android:layout_height="12dp"
+        app:layout_constraintBottom_toBottomOf="@+id/tv_public_restaurant_phone"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/tv_public_restaurant_phone"
+        app:layout_constraintTop_toTopOf="@+id/tv_public_restaurant_phone"
+        app:srcCompat="@drawable/ic_info_right" />
+
+    <View
+        android:id="@+id/div2"
+        android:layout_width="0dp"
+        android:layout_height="0.3dp"
+        android:layout_marginStart="13dp"
+        android:layout_marginTop="14dp"
+        android:layout_marginEnd="13dp"
+        android:background="?android:attr/listDivider"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tv_public_restaurant_phone" />
+
+    <TextView
+        android:id="@+id/tv_public_restaurant_insider_heading"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="15dp"
+        android:layout_marginTop="13dp"
+        android:textColor="@color/brownish_grey"
+        android:textSize="16sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/div2"
+        android:text="Insider Tip" />
+
+    <com.airbnb.epoxy.EpoxyRecyclerView
+        android:id="@+id/epoxy_rv_public_restaurant_insider"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="15dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginEnd="80dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tv_public_restaurant_insider_heading"
+        tools:listitem="@layout/item_public_restaurant" />
+
+    <androidx.cardview.widget.CardView
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="6dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="6dp"
+        app:cardCornerRadius="10dp"
+        android:elevation="0dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/epoxy_rv_public_restaurant_insider">
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <TextView
+                android:id="@+id/tv_public_restaurant_features_heading"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="10dp"
+                android:layout_marginTop="6dp"
+                android:text="Features"
+                android:textSize="16sp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <com.airbnb.epoxy.EpoxyRecyclerView
+                android:id="@+id/epoxy_rv_public_restaurant_features"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="16dp"
+                android:layout_marginEnd="16dp"
+                tools:layoutManager = "androidx.recyclerview.widget.GridLayoutManager"
+                tools:spanCount = "2"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/tv_public_restaurant_features_heading"
+                tools:itemCount="3"
+                tools:listitem="@layout/item_public_restaurant" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </androidx.cardview.widget.CardView>
+
+</androidx.constraintlayout.widget.ConstraintLayout>
