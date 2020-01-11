@@ -6,8 +6,8 @@ import androidx.annotation.NonNull;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.Transformations;
 
-import com.checkin.app.checkin.Data.BaseViewModel;
-import com.checkin.app.checkin.Data.Resource;
+import com.checkin.app.checkin.data.BaseViewModel;
+import com.checkin.app.checkin.data.resource.Resource;
 import com.checkin.app.checkin.Inventory.Model.InventoryAvailabilityModel;
 import com.checkin.app.checkin.Inventory.Model.InventoryGroupModel;
 import com.checkin.app.checkin.Inventory.Model.InventoryItemModel;

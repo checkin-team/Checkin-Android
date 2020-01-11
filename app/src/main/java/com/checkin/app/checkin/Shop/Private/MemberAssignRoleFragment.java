@@ -10,7 +10,7 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.checkin.app.checkin.Data.Resource.Status;
+import com.checkin.app.checkin.data.resource.Resource.Status;
 import com.checkin.app.checkin.R;
 import com.checkin.app.checkin.Utility.GlideApp;
 import com.checkin.app.checkin.Utility.MultiSpinner;

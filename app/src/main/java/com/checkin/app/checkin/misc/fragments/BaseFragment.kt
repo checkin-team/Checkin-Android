@@ -13,7 +13,7 @@ import androidx.fragment.app.Fragment
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import butterknife.ButterKnife
 import butterknife.Unbinder
-import com.checkin.app.checkin.Data.Resource
+import com.checkin.app.checkin.data.resource.Resource
 import com.checkin.app.checkin.misc.activities.BaseActivity
 
 abstract class BaseFragment : Fragment() {
@@ -66,7 +66,7 @@ abstract class BaseFragment : Fragment() {
         progressBar?.visibility = View.GONE
     }
 
-    protected fun handleLoadingRefresh(resource: Resource<*>) {
+    fun handleLoadingRefresh(resource: Resource<*>) {
         when (resource.status) {
             Resource.Status.LOADING -> startRefreshing()
             else -> stopRefreshing()

@@ -1,4 +1,4 @@
-package com.checkin.app.checkin.Data.Message;
+package com.checkin.app.checkin.data.notifications;
 
 import android.annotation.SuppressLint;
 import android.app.Notification;
@@ -14,7 +14,7 @@ import androidx.annotation.RequiresApi;
 import androidx.core.app.NotificationCompat;
 
 import com.checkin.app.checkin.Auth.DeviceTokenService;
-import com.checkin.app.checkin.Data.Converters;
+import com.checkin.app.checkin.data.Converters;
 import com.checkin.app.checkin.R;
 import com.checkin.app.checkin.Utility.Utils;
 import com.google.firebase.messaging.FirebaseMessagingService;
@@ -24,7 +24,7 @@ import java.io.IOException;
 import java.util.Locale;
 import java.util.Map;
 
-import static com.checkin.app.checkin.Data.Message.MessageUtils.isNotificationEnabled;
+import static com.checkin.app.checkin.data.notifications.MessageUtils.isNotificationEnabled;
 
 public class AppMessagingService extends FirebaseMessagingService {
     private static final String TAG = AppMessagingService.class.getSimpleName();

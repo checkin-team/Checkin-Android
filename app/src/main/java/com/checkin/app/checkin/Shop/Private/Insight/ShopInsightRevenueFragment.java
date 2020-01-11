@@ -14,7 +14,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import androidx.viewpager.widget.PagerAdapter;
 import androidx.viewpager.widget.ViewPager;
 
-import com.checkin.app.checkin.Data.Resource;
+import com.checkin.app.checkin.data.resource.Resource;
 import com.checkin.app.checkin.R;
 import com.checkin.app.checkin.Utility.Utils;
 import com.checkin.app.checkin.manager.adapters.ManagerStatsOrderAdapter;

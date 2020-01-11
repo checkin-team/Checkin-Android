@@ -7,13 +7,12 @@ import android.os.Bundle
 import android.view.View
 import androidx.fragment.app.FragmentActivity
 import androidx.fragment.app.activityViewModels
-import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
 import butterknife.BindView
 import com.airbnb.epoxy.EpoxyRecyclerView
-import com.checkin.app.checkin.Data.Message.MessageModel.MESSAGE_TYPE
-import com.checkin.app.checkin.Data.Message.MessageUtils
-import com.checkin.app.checkin.Data.Resource
+import com.checkin.app.checkin.data.notifications.MessageModel.MESSAGE_TYPE
+import com.checkin.app.checkin.data.notifications.MessageUtils
+import com.checkin.app.checkin.data.resource.Resource
 import com.checkin.app.checkin.R
 import com.checkin.app.checkin.Utility.pass
 import com.checkin.app.checkin.manager.activities.ManagerPreOrderDetailActivity
@@ -57,6 +56,7 @@ class ManagerScheduledLiveOrdersFragment : BaseFragment(), PreorderTableInteract
 
         viewModel.preOrdersData.observe(this, Observer {
             it?.let {
+                (parentFragment as? BaseFragment)?.handleLoadingRefresh(it)
                 when (it.status) {
                     Resource.Status.SUCCESS -> updateList(it.data!!)
                     else -> pass
@@ -104,6 +104,11 @@ class ManagerScheduledLiveOrdersFragment : BaseFragment(), PreorderTableInteract
                 requireContext(), mReceiver, MESSAGE_TYPE.MANAGER_SCHEDULED_CBYG_NEW_PAID,
                 MESSAGE_TYPE.MANAGER_SCHEDULED_CBYG_CANCELLED, MESSAGE_TYPE.MANAGER_SCHEDULED_CBYG_PREPARATION_START
         )
+    }
+
+    override fun onPause() {
+        super.onPause()
+        MessageUtils.unregisterLocalReceiver(requireContext(), mReceiver)
     }
 
     companion object {

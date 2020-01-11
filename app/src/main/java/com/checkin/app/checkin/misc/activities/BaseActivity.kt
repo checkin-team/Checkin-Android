@@ -7,8 +7,8 @@ import android.widget.ProgressBar
 import androidx.annotation.IdRes
 import androidx.appcompat.app.AppCompatActivity
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
-import com.checkin.app.checkin.Data.Resource
-import com.checkin.app.checkin.Data.Resource.Status
+import com.checkin.app.checkin.data.resource.Resource
+import com.checkin.app.checkin.data.resource.Resource.Status
 import com.checkin.app.checkin.misc.fragments.DataStatusFragment
 
 @SuppressLint("Registered")

@@ -11,7 +11,7 @@ import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.Observer
 import butterknife.BindView
 import butterknife.OnClick
-import com.checkin.app.checkin.Data.Resource
+import com.checkin.app.checkin.data.resource.Resource
 import com.checkin.app.checkin.R
 import com.checkin.app.checkin.misc.BlockingNetworkViewModel
 

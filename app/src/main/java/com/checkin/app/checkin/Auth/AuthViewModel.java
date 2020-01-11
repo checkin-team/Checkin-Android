@@ -9,9 +9,9 @@ import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MediatorLiveData;
 import androidx.lifecycle.MutableLiveData;
 
-import com.checkin.app.checkin.Data.BaseViewModel;
-import com.checkin.app.checkin.Data.Converters;
-import com.checkin.app.checkin.Data.Resource;
+import com.checkin.app.checkin.data.BaseViewModel;
+import com.checkin.app.checkin.data.Converters;
+import com.checkin.app.checkin.data.resource.Resource;
 import com.checkin.app.checkin.User.UserModel;
 import com.checkin.app.checkin.Utility.SourceMappedLiveData;
 import com.fasterxml.jackson.databind.JsonNode;

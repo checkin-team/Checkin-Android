@@ -1,4 +1,4 @@
-package com.checkin.app.checkin.Data;
+package com.checkin.app.checkin.data.resource;
 
 import android.os.AsyncTask;
 import android.util.Log;
@@ -8,6 +8,8 @@ import androidx.annotation.NonNull;
 import androidx.annotation.WorkerThread;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MediatorLiveData;
+
+import com.checkin.app.checkin.data.network.ApiResponse;
 
 // ResultType: Type for the Resource data
 // RequestType: Type for the API response

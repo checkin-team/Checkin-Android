@@ -26,11 +26,11 @@ import androidx.viewpager.widget.ViewPager;
 
 import com.checkin.app.checkin.Account.AccountModel;
 import com.checkin.app.checkin.Account.BaseAccountActivity;
-import com.checkin.app.checkin.Data.Message.MessageModel;
-import com.checkin.app.checkin.Data.Message.MessageModel.MESSAGE_TYPE;
-import com.checkin.app.checkin.Data.Message.MessageObjectModel;
-import com.checkin.app.checkin.Data.Message.MessageUtils;
-import com.checkin.app.checkin.Data.Resource.Status;
+import com.checkin.app.checkin.data.notifications.MessageModel;
+import com.checkin.app.checkin.data.notifications.MessageModel.MESSAGE_TYPE;
+import com.checkin.app.checkin.data.notifications.MessageObjectModel;
+import com.checkin.app.checkin.data.notifications.MessageUtils;
+import com.checkin.app.checkin.data.resource.Resource.Status;
 import com.checkin.app.checkin.R;
 import com.checkin.app.checkin.Shop.ShopModel;
 import com.checkin.app.checkin.Utility.DynamicSwipableViewPager;

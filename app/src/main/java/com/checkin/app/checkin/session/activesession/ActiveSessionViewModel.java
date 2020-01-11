@@ -6,9 +6,9 @@ import androidx.annotation.NonNull;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.Transformations;
 
-import com.checkin.app.checkin.Data.BaseViewModel;
-import com.checkin.app.checkin.Data.Converters;
-import com.checkin.app.checkin.Data.Resource;
+import com.checkin.app.checkin.data.BaseViewModel;
+import com.checkin.app.checkin.data.Converters;
+import com.checkin.app.checkin.data.resource.Resource;
 import com.checkin.app.checkin.Utility.SourceMappedLiveData;
 import com.checkin.app.checkin.misc.models.BriefModel;
 import com.checkin.app.checkin.misc.models.GenericDetailModel;

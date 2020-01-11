@@ -26,8 +26,8 @@ import butterknife.OnClick
 import com.checkin.app.checkin.Auth.OtpVerificationDialog
 import com.checkin.app.checkin.Auth.PhoneEditDialog
 import com.checkin.app.checkin.Auth.PhoneInteraction
-import com.checkin.app.checkin.Data.ProblemModel
-import com.checkin.app.checkin.Data.Resource
+import com.checkin.app.checkin.data.resource.ProblemModel
+import com.checkin.app.checkin.data.resource.Resource
 import com.checkin.app.checkin.R
 import com.checkin.app.checkin.User.Private.UserViewModel
 import com.checkin.app.checkin.Utility.*

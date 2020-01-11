@@ -3,9 +3,14 @@ package com.checkin.app.checkin.manager
 import android.app.Application
 import android.content.Context
 import androidx.lifecycle.LiveData
-import com.checkin.app.checkin.Data.*
-import com.checkin.app.checkin.Data.ApiClient.Companion.getApiService
+import com.checkin.app.checkin.data.*
+import com.checkin.app.checkin.data.network.ApiClient.Companion.getApiService
 import com.checkin.app.checkin.Utility.SingletonHolder
+import com.checkin.app.checkin.data.network.ApiResponse
+import com.checkin.app.checkin.data.network.RetrofitLiveData
+import com.checkin.app.checkin.data.network.WebApiService
+import com.checkin.app.checkin.data.resource.NetworkBoundResource
+import com.checkin.app.checkin.data.resource.Resource
 import com.checkin.app.checkin.manager.models.*
 import com.checkin.app.checkin.misc.models.GenericDetailModel
 import com.checkin.app.checkin.session.models.CheckoutStatusModel

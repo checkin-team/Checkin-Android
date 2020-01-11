@@ -6,12 +6,12 @@ import android.content.Context;
 import androidx.annotation.NonNull;
 import androidx.lifecycle.LiveData;
 
-import com.checkin.app.checkin.Data.ApiClient;
-import com.checkin.app.checkin.Data.ApiResponse;
-import com.checkin.app.checkin.Data.NetworkBoundResource;
-import com.checkin.app.checkin.Data.Resource;
-import com.checkin.app.checkin.Data.RetrofitLiveData;
-import com.checkin.app.checkin.Data.WebApiService;
+import com.checkin.app.checkin.data.network.ApiClient;
+import com.checkin.app.checkin.data.network.ApiResponse;
+import com.checkin.app.checkin.data.resource.NetworkBoundResource;
+import com.checkin.app.checkin.data.resource.Resource;
+import com.checkin.app.checkin.data.network.RetrofitLiveData;
+import com.checkin.app.checkin.data.network.WebApiService;
 import com.checkin.app.checkin.misc.models.GenericDetailModel;
 
 public class FinanceRepository {

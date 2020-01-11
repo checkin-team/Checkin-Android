@@ -1,8 +1,9 @@
-package com.checkin.app.checkin.Data
+package com.checkin.app.checkin.data.resource
 
 import android.util.Log
 import com.checkin.app.checkin.Utility.NoConnectivityException
 import com.checkin.app.checkin.Utility.RequestCanceledException
+import com.checkin.app.checkin.data.network.ApiResponse
 import com.crashlytics.android.Crashlytics
 import com.fasterxml.jackson.databind.JsonNode
 import java.net.HttpURLConnection.*

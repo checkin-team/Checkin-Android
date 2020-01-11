@@ -18,7 +18,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.ViewModelProviders;
 
 import com.checkin.app.checkin.Auth.OtpVerificationDialog;
-import com.checkin.app.checkin.Data.Resource;
+import com.checkin.app.checkin.data.resource.Resource;
 import com.checkin.app.checkin.R;
 import com.checkin.app.checkin.User.UserModel;
 import com.checkin.app.checkin.Utility.Utils;

@@ -2,8 +2,8 @@ package com.checkin.app.checkin.Shop;
 
 import android.content.Context;
 
-import com.checkin.app.checkin.Data.Message.Constants.CHANNEL;
-import com.checkin.app.checkin.Data.Message.MessageUtils;
+import com.checkin.app.checkin.data.notifications.Constants.CHANNEL;
+import com.checkin.app.checkin.data.notifications.MessageUtils;
 import com.checkin.app.checkin.Utility.Constants;
 
 public class ShopPreferences {

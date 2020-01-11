@@ -1,9 +1,9 @@
-package com.checkin.app.checkin.Data.Message;
+package com.checkin.app.checkin.data.notifications;
 
 import android.content.Context;
 import android.net.Uri;
 
-import com.checkin.app.checkin.Data.Message.MessageObjectModel.MESSAGE_OBJECT_TYPE;
+import com.checkin.app.checkin.data.notifications.MessageObjectModel.MESSAGE_OBJECT_TYPE;
 import com.checkin.app.checkin.R;
 
 import java.util.Locale;

@@ -1,4 +1,4 @@
-package com.checkin.app.checkin.Data.Message;
+package com.checkin.app.checkin.data.notifications;
 
 import android.app.Notification;
 import android.app.PendingIntent;

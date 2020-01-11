@@ -1,4 +1,4 @@
-package com.checkin.app.checkin.Data
+package com.checkin.app.checkin.data.network
 
 import android.accounts.AccountManager
 import android.content.Context
@@ -9,6 +9,7 @@ import com.checkin.app.checkin.BuildConfig
 import com.checkin.app.checkin.Utility.Constants
 import com.checkin.app.checkin.Utility.NoConnectivityException
 import com.checkin.app.checkin.Utility.Utils.isNetworkConnected
+import com.checkin.app.checkin.data.Converters
 import com.facebook.FacebookSdk.getCacheDir
 import dagger.Module
 import dagger.Provides

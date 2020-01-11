@@ -5,7 +5,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.checkin.app.checkin.Data.Resource.Status;
+import com.checkin.app.checkin.data.resource.Resource.Status;
 import com.checkin.app.checkin.R;
 
 import androidx.annotation.NonNull;

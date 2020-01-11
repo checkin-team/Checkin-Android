@@ -24,7 +24,7 @@ import androidx.lifecycle.ViewModelProviders;
 
 import com.checkin.app.checkin.Account.AccountModel.ACCOUNT_TYPE;
 import com.checkin.app.checkin.Cook.CookWorkActivity;
-import com.checkin.app.checkin.Data.Resource;
+import com.checkin.app.checkin.data.resource.Resource;
 import com.checkin.app.checkin.R;
 import com.checkin.app.checkin.Shop.Private.ShopPrivateActivity;
 import com.checkin.app.checkin.Utility.Constants;

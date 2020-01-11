@@ -1,4 +1,4 @@
-package com.checkin.app.checkin.Data.Message;
+package com.checkin.app.checkin.data.notifications;
 
 import android.app.Notification;
 import android.app.NotificationChannel;
@@ -15,9 +15,9 @@ import android.os.Handler;
 import android.os.Looper;
 import android.util.Log;
 
-import com.checkin.app.checkin.Data.Message.Constants.CHANNEL;
-import com.checkin.app.checkin.Data.Message.Constants.CHANNEL_GROUP;
-import com.checkin.app.checkin.Data.Message.MessageModel.MESSAGE_TYPE;
+import com.checkin.app.checkin.data.notifications.Constants.CHANNEL;
+import com.checkin.app.checkin.data.notifications.Constants.CHANNEL_GROUP;
+import com.checkin.app.checkin.data.notifications.MessageModel.MESSAGE_TYPE;
 import com.checkin.app.checkin.R;
 import com.checkin.app.checkin.Utility.ProgressRequestBody;
 import com.checkin.app.checkin.Utility.Utils;
@@ -34,9 +34,9 @@ import androidx.core.app.NotificationCompat;
 import androidx.localbroadcastmanager.content.LocalBroadcastManager;
 
 import static androidx.core.app.NotificationCompat.PRIORITY_LOW;
-import static com.checkin.app.checkin.Data.Message.Constants.FORMAT_SP_KEY_NOTIFICATION_CHANNEL;
-import static com.checkin.app.checkin.Data.Message.Constants.KEY_DATA;
-import static com.checkin.app.checkin.Data.Message.Constants.SP_TABLE_NOTIFICATION;
+import static com.checkin.app.checkin.data.notifications.Constants.FORMAT_SP_KEY_NOTIFICATION_CHANNEL;
+import static com.checkin.app.checkin.data.notifications.Constants.KEY_DATA;
+import static com.checkin.app.checkin.data.notifications.Constants.SP_TABLE_NOTIFICATION;
 
 public class MessageUtils {
     private static final String TAG = MessageUtils.class.getSimpleName();

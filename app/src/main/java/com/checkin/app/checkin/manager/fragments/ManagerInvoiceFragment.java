@@ -10,7 +10,7 @@ import androidx.lifecycle.ViewModelProviders;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.checkin.app.checkin.Data.Resource;
+import com.checkin.app.checkin.data.resource.Resource;
 import com.checkin.app.checkin.R;
 import com.checkin.app.checkin.Shop.Private.Invoice.RestaurantSessionModel;
 import com.checkin.app.checkin.Shop.Private.Invoice.ShopInvoiceDetailActivity;

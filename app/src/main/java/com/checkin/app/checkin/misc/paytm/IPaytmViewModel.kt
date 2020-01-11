@@ -2,8 +2,7 @@ package com.checkin.app.checkin.misc.paytm
 
 import android.os.Bundle
 import androidx.lifecycle.LiveData
-import com.checkin.app.checkin.Data.IBaseViewModel
-import com.checkin.app.checkin.Data.Resource
+import com.checkin.app.checkin.data.resource.Resource
 import com.fasterxml.jackson.databind.node.ObjectNode
 
 interface IPaytmViewModel {

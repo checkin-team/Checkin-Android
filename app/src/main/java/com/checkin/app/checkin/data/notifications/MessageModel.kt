@@ -1,4 +1,4 @@
-package com.checkin.app.checkin.Data.Message
+package com.checkin.app.checkin.data.notifications
 
 import android.app.Notification
 import android.app.PendingIntent
@@ -9,10 +9,10 @@ import android.os.Bundle
 import android.text.TextUtils
 import androidx.core.app.NotificationCompat
 import androidx.core.os.bundleOf
-import com.checkin.app.checkin.Data.Message.Constants.CHANNEL
-import com.checkin.app.checkin.Data.Message.MessageDataModel.MessageDataDeserializer
-import com.checkin.app.checkin.Data.Message.MessageObjectModel.MESSAGE_OBJECT_TYPE
-import com.checkin.app.checkin.Data.Message.MessageObjectModel.MessageObjectDeserializer
+import com.checkin.app.checkin.data.notifications.Constants.CHANNEL
+import com.checkin.app.checkin.data.notifications.MessageDataModel.MessageDataDeserializer
+import com.checkin.app.checkin.data.notifications.MessageObjectModel.MESSAGE_OBJECT_TYPE
+import com.checkin.app.checkin.data.notifications.MessageObjectModel.MessageObjectDeserializer
 import com.checkin.app.checkin.R
 import com.checkin.app.checkin.User.bills.SuccessfulTransactionActivity
 import com.checkin.app.checkin.Utility.Utils
@@ -65,7 +65,7 @@ data class MessageModel(
                 isUserActiveSessionNotification -> CHANNEL.ACTIVE_SESSION
                 isShopManagerNotification -> CHANNEL.MANAGER
                 isShopWaiterNotification -> CHANNEL.WAITER
-                isUserScheduledSessionNotification -> CHANNEL.SCHEDULED_SESSION
+                isUserCBYGSessionNotification or isUserQSRSessionNotification -> CHANNEL.SCHEDULED_SESSION
                 else -> CHANNEL.DEFAULT
             }
         }
@@ -268,7 +268,9 @@ data class MessageModel(
 
     private val isUserActiveSessionNotification: Boolean = type.id in 301..349
 
-    private val isUserScheduledSessionNotification: Boolean = type.id in 351..399
+    private val isUserCBYGSessionNotification: Boolean = type.id in 351..370
+
+    private val isUserQSRSessionNotification: Boolean = type.id in 371..399
 
     private val isShopWaiterNotification: Boolean = type.id in 701..799
 

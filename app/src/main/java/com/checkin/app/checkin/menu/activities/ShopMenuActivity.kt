@@ -16,7 +16,7 @@ import butterknife.BindView
 import butterknife.ButterKnife
 import butterknife.OnClick
 import com.airbnb.epoxy.EpoxyRecyclerView
-import com.checkin.app.checkin.Data.Resource
+import com.checkin.app.checkin.data.resource.Resource
 import com.checkin.app.checkin.R
 import com.checkin.app.checkin.Utility.Utils
 import com.checkin.app.checkin.Utility.inTransaction

@@ -4,7 +4,7 @@ import android.app.Application
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MediatorLiveData
 import androidx.lifecycle.Transformations
-import com.checkin.app.checkin.Data.BaseViewModel
+import com.checkin.app.checkin.data.BaseViewModel
 import com.checkin.app.checkin.menu.MenuRepository
 import com.checkin.app.checkin.menu.models.MenuItemModel
 import com.checkin.app.checkin.menu.models.OrderedItemModel

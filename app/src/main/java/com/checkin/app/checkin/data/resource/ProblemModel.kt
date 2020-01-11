@@ -1,6 +1,7 @@
-package com.checkin.app.checkin.Data
+package com.checkin.app.checkin.data.resource
 
 import android.webkit.URLUtil
+import com.checkin.app.checkin.data.Converters
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties
 import com.fasterxml.jackson.annotation.JsonProperty

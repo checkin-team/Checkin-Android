@@ -12,7 +12,7 @@ import android.widget.EditText;
 import android.widget.ImageButton;
 
 import com.checkin.app.checkin.Auth.OtpVerificationDialog;
-import com.checkin.app.checkin.Data.Resource;
+import com.checkin.app.checkin.data.resource.Resource;
 import com.checkin.app.checkin.R;
 import com.checkin.app.checkin.Shop.Private.ShopProfileViewModel;
 import com.checkin.app.checkin.Shop.RestaurantModel;

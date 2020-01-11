@@ -1,4 +1,4 @@
-package com.checkin.app.checkin.Data
+package com.checkin.app.checkin.data.db
 
 import android.content.Context
 import com.checkin.app.checkin.MyObjectBox

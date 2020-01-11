@@ -1,7 +1,7 @@
 package com.checkin.app.checkin.restaurant.viewmodels
 
 import android.app.Application
-import com.checkin.app.checkin.Data.BaseViewModel
+import com.checkin.app.checkin.data.BaseViewModel
 import com.checkin.app.checkin.restaurant.RestaurantRepository
 import com.checkin.app.checkin.restaurant.models.RestaurantModel
 

@@ -12,7 +12,7 @@ import androidx.lifecycle.ViewModelProviders;
 import com.checkin.app.checkin.Account.AccountModel;
 import com.checkin.app.checkin.Account.BaseAccountActivity;
 import com.checkin.app.checkin.Cook.Fragment.CookTablesFragment;
-import com.checkin.app.checkin.Data.Resource;
+import com.checkin.app.checkin.data.resource.Resource;
 import com.checkin.app.checkin.R;
 import com.checkin.app.checkin.Utility.Utils;
 

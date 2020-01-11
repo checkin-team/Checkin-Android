@@ -1,4 +1,4 @@
-package com.checkin.app.checkin.Data
+package com.checkin.app.checkin.data.network
 
 import com.checkin.app.checkin.Account.AccountModel
 import com.checkin.app.checkin.Auth.AuthResultModel

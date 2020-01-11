@@ -5,7 +5,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.Toast;
 
-import com.checkin.app.checkin.Data.Resource;
+import com.checkin.app.checkin.data.resource.Resource;
 import com.checkin.app.checkin.R;
 import com.checkin.app.checkin.Shop.Private.ShopProfileViewModel;
 import com.checkin.app.checkin.Shop.RestaurantModel;

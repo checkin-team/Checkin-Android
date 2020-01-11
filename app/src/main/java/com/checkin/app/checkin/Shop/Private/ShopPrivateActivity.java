@@ -16,7 +16,7 @@ import androidx.viewpager.widget.ViewPager;
 
 import com.checkin.app.checkin.Account.AccountModel;
 import com.checkin.app.checkin.Account.BaseAccountActivity;
-import com.checkin.app.checkin.Data.Resource;
+import com.checkin.app.checkin.data.resource.Resource;
 import com.checkin.app.checkin.Inventory.InventoryActivity;
 import com.checkin.app.checkin.R;
 import com.checkin.app.checkin.Shop.Private.Insight.ShopInsightActivity;

@@ -2,7 +2,7 @@ package com.checkin.app.checkin.menu.viewmodels
 
 import android.app.Application
 import androidx.lifecycle.LiveData
-import com.checkin.app.checkin.Data.Resource
+import com.checkin.app.checkin.data.resource.Resource
 import com.checkin.app.checkin.menu.models.MenuItemModel
 import com.checkin.app.checkin.session.activesession.ActiveSessionRepository
 import com.checkin.app.checkin.session.models.TrendingDishModel

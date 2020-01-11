@@ -2,7 +2,7 @@ package com.checkin.app.checkin.Shop;
 
 import androidx.annotation.DrawableRes;
 
-import com.checkin.app.checkin.Data.Converters;
+import com.checkin.app.checkin.data.Converters;
 import com.checkin.app.checkin.R;
 import com.checkin.app.checkin.misc.models.LocationModel;
 import com.fasterxml.jackson.annotation.JsonAutoDetect;

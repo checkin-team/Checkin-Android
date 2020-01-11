@@ -8,11 +8,11 @@ import androidx.core.app.NotificationCompat;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 
-import com.checkin.app.checkin.Data.BaseViewModel;
-import com.checkin.app.checkin.Data.Converters;
-import com.checkin.app.checkin.Data.Message.MessageUtils;
-import com.checkin.app.checkin.Data.Resource;
-import com.checkin.app.checkin.Data.RetrofitCallAsyncTask;
+import com.checkin.app.checkin.data.BaseViewModel;
+import com.checkin.app.checkin.data.Converters;
+import com.checkin.app.checkin.data.notifications.MessageUtils;
+import com.checkin.app.checkin.data.resource.Resource;
+import com.checkin.app.checkin.data.network.RetrofitCallAsyncTask;
 import com.checkin.app.checkin.misc.models.GenericDetailModel;
 import com.checkin.app.checkin.Shop.RestaurantModel;
 import com.checkin.app.checkin.Shop.ShopRepository;

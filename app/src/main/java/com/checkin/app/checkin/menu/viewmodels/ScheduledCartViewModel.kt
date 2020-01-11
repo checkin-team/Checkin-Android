@@ -4,8 +4,8 @@ import android.app.Application
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.Transformations
-import com.checkin.app.checkin.Data.AppDatabase
-import com.checkin.app.checkin.Data.Resource
+import com.checkin.app.checkin.data.db.AppDatabase
+import com.checkin.app.checkin.data.resource.Resource
 import com.checkin.app.checkin.Utility.pass
 import com.checkin.app.checkin.menu.models.*
 import com.checkin.app.checkin.restaurant.models.RestaurantLocationModel

@@ -1,6 +1,6 @@
-package com.checkin.app.checkin.Data.Message;
+package com.checkin.app.checkin.data.notifications;
 
-import com.checkin.app.checkin.Data.Converters;
+import com.checkin.app.checkin.data.Converters;
 import com.checkin.app.checkin.misc.models.BriefModel;
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;

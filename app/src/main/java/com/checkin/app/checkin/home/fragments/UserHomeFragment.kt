@@ -10,7 +10,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import androidx.viewpager2.widget.ViewPager2
 import butterknife.BindView
-import com.checkin.app.checkin.Data.Resource
+import com.checkin.app.checkin.data.resource.Resource
 import com.checkin.app.checkin.R
 import com.checkin.app.checkin.Utility.pass
 import com.checkin.app.checkin.home.holders.LiveSessionTrackerAdapter
@@ -80,18 +80,17 @@ class UserHomeFragment : BaseFragment(), LiveSessionTrackerInteraction {
 
         mLiveSessionViewModel.liveSessionData.observe(this, Observer {
             it?.let {
+                handleLoadingRefresh(it)
                 when (it.status) {
                     Resource.Status.SUCCESS -> it.data?.let {
                         containerLiveSession.visibility = View.VISIBLE
                         mLiveSessionAdapter.updateData(it)
-                        stopRefreshing()
                     }
                     Resource.Status.LOADING -> startRefreshing()
                     Resource.Status.ERROR_NOT_FOUND -> {
                         containerLiveSession.visibility = View.GONE
-                        stopRefreshing()
                     }
-                    else -> stopRefreshing()
+                    else -> pass
                 }
             }
         })

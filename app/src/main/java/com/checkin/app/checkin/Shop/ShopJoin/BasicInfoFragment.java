@@ -17,7 +17,7 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProviders;
 
-import com.checkin.app.checkin.Data.Resource;
+import com.checkin.app.checkin.data.resource.Resource;
 import com.checkin.app.checkin.Maps.MapsActivity;
 import com.checkin.app.checkin.misc.models.GenericDetailModel;
 import com.checkin.app.checkin.misc.models.LocationModel;

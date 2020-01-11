@@ -1,6 +1,6 @@
 package com.checkin.app.checkin.menu.models;
 
-import com.checkin.app.checkin.Data.AppDatabase;
+import com.checkin.app.checkin.data.db.AppDatabase;
 import com.fasterxml.jackson.annotation.JsonAutoDetect;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;

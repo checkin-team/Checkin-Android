@@ -4,8 +4,8 @@ import android.app.Application
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.Transformations
-import com.checkin.app.checkin.Data.BaseViewModel
-import com.checkin.app.checkin.Data.Resource
+import com.checkin.app.checkin.data.BaseViewModel
+import com.checkin.app.checkin.data.resource.Resource
 import com.checkin.app.checkin.Utility.isNotEmpty
 import com.checkin.app.checkin.manager.ManagerRepository
 import com.checkin.app.checkin.manager.models.*

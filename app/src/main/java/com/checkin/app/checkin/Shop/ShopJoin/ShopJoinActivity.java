@@ -7,7 +7,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 
-import com.checkin.app.checkin.Data.Resource;
+import com.checkin.app.checkin.data.resource.Resource;
 import com.checkin.app.checkin.misc.activities.BaseActivity;
 import com.checkin.app.checkin.misc.models.GenericDetailModel;
 import com.checkin.app.checkin.R;

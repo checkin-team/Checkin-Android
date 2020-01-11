@@ -5,9 +5,9 @@ import android.app.Application;
 import androidx.annotation.NonNull;
 import androidx.lifecycle.LiveData;
 
-import com.checkin.app.checkin.Data.BaseViewModel;
-import com.checkin.app.checkin.Data.Converters;
-import com.checkin.app.checkin.Data.Resource;
+import com.checkin.app.checkin.data.BaseViewModel;
+import com.checkin.app.checkin.data.Converters;
+import com.checkin.app.checkin.data.resource.Resource;
 import com.checkin.app.checkin.Utility.SourceMappedLiveData;
 import com.checkin.app.checkin.session.activesession.ActiveSessionRepository;
 import com.checkin.app.checkin.session.activesession.chat.SessionChatDataModel.EVENT_REQUEST_SERVICE_TYPE;

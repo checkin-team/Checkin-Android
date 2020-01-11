@@ -8,7 +8,7 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.checkin.app.checkin.Data.Resource;
+import com.checkin.app.checkin.data.resource.Resource;
 import com.checkin.app.checkin.misc.adapters.CoverPagerAdapter;
 import com.checkin.app.checkin.misc.adapters.StatusTextAdapter;
 import com.checkin.app.checkin.R;

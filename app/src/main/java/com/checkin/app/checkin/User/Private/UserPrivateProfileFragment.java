@@ -21,7 +21,7 @@ import androidx.lifecycle.ViewModelProviders;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.checkin.app.checkin.Data.Resource.Status;
+import com.checkin.app.checkin.data.resource.Resource.Status;
 import com.checkin.app.checkin.R;
 import com.checkin.app.checkin.User.UserModel;
 import com.checkin.app.checkin.Utility.BackgroundShadow;

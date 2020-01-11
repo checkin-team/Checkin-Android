@@ -1,13 +1,12 @@
-package com.checkin.app.checkin.Data.Message
+package com.checkin.app.checkin.data.notifications
 
-import com.checkin.app.checkin.Data.Converters.objectMapper
+import com.checkin.app.checkin.data.Converters.objectMapper
 import com.checkin.app.checkin.Shop.ShopModel.PAYMENT_MODE
 import com.checkin.app.checkin.User.UserModel.GENDER
 import com.checkin.app.checkin.manager.models.ManagerSessionEventModel
 import com.checkin.app.checkin.session.activesession.chat.SessionChatModel
 import com.checkin.app.checkin.session.activesession.chat.SessionChatModel.CHAT_STATUS_TYPE
 import com.checkin.app.checkin.session.models.SessionOrderedItemModel
-import com.fasterxml.jackson.annotation.JsonCreator
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties
 import com.fasterxml.jackson.annotation.JsonProperty
 import com.fasterxml.jackson.core.JsonParser

@@ -2,8 +2,8 @@ package com.checkin.app.checkin.menu.viewmodels
 
 import android.app.Application
 import androidx.lifecycle.*
-import com.checkin.app.checkin.Data.BaseViewModel
-import com.checkin.app.checkin.Data.Resource
+import com.checkin.app.checkin.data.BaseViewModel
+import com.checkin.app.checkin.data.resource.Resource
 import com.checkin.app.checkin.menu.MenuRepository
 import com.checkin.app.checkin.menu.models.*
 import kotlinx.coroutines.delay

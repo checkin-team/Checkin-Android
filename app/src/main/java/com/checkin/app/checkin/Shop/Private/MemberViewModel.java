@@ -6,8 +6,8 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.lifecycle.LiveData;
 
-import com.checkin.app.checkin.Data.BaseViewModel;
-import com.checkin.app.checkin.Data.Resource;
+import com.checkin.app.checkin.data.BaseViewModel;
+import com.checkin.app.checkin.data.resource.Resource;
 import com.checkin.app.checkin.Shop.ShopRepository;
 import com.checkin.app.checkin.Utility.SourceMappedLiveData;
 import com.fasterxml.jackson.databind.node.ObjectNode;

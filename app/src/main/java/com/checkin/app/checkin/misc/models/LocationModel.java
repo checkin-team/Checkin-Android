@@ -4,7 +4,7 @@ import android.location.Address;
 
 import androidx.annotation.NonNull;
 
-import com.checkin.app.checkin.Data.Converters;
+import com.checkin.app.checkin.data.Converters;
 import com.fasterxml.jackson.annotation.JsonAutoDetect;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;

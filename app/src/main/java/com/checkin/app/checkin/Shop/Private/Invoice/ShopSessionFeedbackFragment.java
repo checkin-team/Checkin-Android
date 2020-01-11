@@ -5,13 +5,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.checkin.app.checkin.Data.Resource;
+import com.checkin.app.checkin.data.resource.Resource;
 import com.checkin.app.checkin.R;
-import com.checkin.app.checkin.Shop.ShopModel;
-import com.checkin.app.checkin.Utility.Utils;
-import com.checkin.app.checkin.session.activesession.InvoiceOrdersAdapter;
-
-import java.util.Locale;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;

@@ -24,11 +24,11 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
-import com.checkin.app.checkin.Data.Message.MessageModel;
-import com.checkin.app.checkin.Data.Message.MessageModel.MESSAGE_TYPE;
-import com.checkin.app.checkin.Data.Message.MessageObjectModel;
-import com.checkin.app.checkin.Data.Message.MessageUtils;
-import com.checkin.app.checkin.Data.Resource;
+import com.checkin.app.checkin.data.notifications.MessageModel;
+import com.checkin.app.checkin.data.notifications.MessageModel.MESSAGE_TYPE;
+import com.checkin.app.checkin.data.notifications.MessageObjectModel;
+import com.checkin.app.checkin.data.notifications.MessageUtils;
+import com.checkin.app.checkin.data.resource.Resource;
 import com.checkin.app.checkin.R;
 import com.checkin.app.checkin.Search.SearchActivity;
 import com.checkin.app.checkin.Utility.OnBoardingUtils;

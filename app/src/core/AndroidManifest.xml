@@ -156,7 +156,7 @@
             android:label="Insight"
             android:theme="@style/AppTheme" />
 
-        <service android:name=".Data.Message.AppMessagingService">
+        <service android:name=".data.notifications.AppMessagingService">
             <intent-filter>
                 <action android:name="com.google.firebase.MESSAGING_EVENT" />
             </intent-filter>

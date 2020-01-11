@@ -9,7 +9,7 @@ import androidx.lifecycle.Observer
 import butterknife.BindView
 import butterknife.OnTextChanged
 import com.airbnb.epoxy.EpoxyRecyclerView
-import com.checkin.app.checkin.Data.Resource
+import com.checkin.app.checkin.data.resource.Resource
 import com.checkin.app.checkin.R
 import com.checkin.app.checkin.Utility.parentFragmentDelegate
 import com.checkin.app.checkin.Utility.parentViewModels

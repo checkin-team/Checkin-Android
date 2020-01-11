@@ -5,7 +5,7 @@ import android.content.Intent;
 import android.preference.PreferenceManager;
 import android.util.Log;
 
-import com.checkin.app.checkin.Data.ApiResponse;
+import com.checkin.app.checkin.data.network.ApiResponse;
 import com.checkin.app.checkin.Utility.Constants;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 import com.google.android.gms.tasks.OnSuccessListener;

@@ -25,10 +25,10 @@ import butterknife.BindView
 import butterknife.ButterKnife
 import butterknife.OnClick
 import butterknife.OnTextChanged
-import com.checkin.app.checkin.Data.Message.MessageModel
-import com.checkin.app.checkin.Data.Message.MessageUtils
-import com.checkin.app.checkin.Data.ProblemModel
-import com.checkin.app.checkin.Data.Resource
+import com.checkin.app.checkin.data.notifications.MessageModel
+import com.checkin.app.checkin.data.notifications.MessageUtils
+import com.checkin.app.checkin.data.resource.ProblemModel
+import com.checkin.app.checkin.data.resource.Resource
 import com.checkin.app.checkin.R
 import com.checkin.app.checkin.Shop.ShopModel
 import com.checkin.app.checkin.Shop.ShopModel.PAYMENT_MODE.PAYTM

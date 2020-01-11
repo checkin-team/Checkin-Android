@@ -1,4 +1,4 @@
-package com.checkin.app.checkin.Data
+package com.checkin.app.checkin.data
 
 import android.util.Log
 import com.fasterxml.jackson.core.JsonProcessingException
