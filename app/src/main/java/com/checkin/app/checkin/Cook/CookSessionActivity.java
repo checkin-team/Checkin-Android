@@ -12,12 +12,13 @@ import androidx.appcompat.widget.Toolbar;
 import androidx.lifecycle.ViewModelProviders;
 
 import com.checkin.app.checkin.Cook.Fragment.CookSessionOrderFragment;
-import com.checkin.app.checkin.data.notifications.MessageModel;
-import com.checkin.app.checkin.data.notifications.MessageObjectModel;
-import com.checkin.app.checkin.data.notifications.MessageUtils;
 import com.checkin.app.checkin.R;
 import com.checkin.app.checkin.Utility.Utils;
 import com.checkin.app.checkin.Waiter.Model.OrderStatusModel;
+import com.checkin.app.checkin.data.notifications.MESSAGE_TYPE;
+import com.checkin.app.checkin.data.notifications.MessageModel;
+import com.checkin.app.checkin.data.notifications.MessageObjectModel;
+import com.checkin.app.checkin.data.notifications.MessageUtils;
 import com.checkin.app.checkin.misc.models.BriefModel;
 import com.checkin.app.checkin.session.activesession.chat.SessionChatModel;
 import com.checkin.app.checkin.session.models.SessionBriefModel;
@@ -27,11 +28,11 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 
-import static com.checkin.app.checkin.data.notifications.MessageModel.MESSAGE_TYPE.COOK_SESSION_END;
-import static com.checkin.app.checkin.data.notifications.MessageModel.MESSAGE_TYPE.COOK_SESSION_HOST_ASSIGNED;
-import static com.checkin.app.checkin.data.notifications.MessageModel.MESSAGE_TYPE.COOK_SESSION_NEW_ORDER;
-import static com.checkin.app.checkin.data.notifications.MessageModel.MESSAGE_TYPE.COOK_SESSION_SWITCH_TABLE;
-import static com.checkin.app.checkin.data.notifications.MessageModel.MESSAGE_TYPE.COOK_SESSION_UPDATE_ORDER;
+import static com.checkin.app.checkin.data.notifications.MESSAGE_TYPE.COOK_SESSION_END;
+import static com.checkin.app.checkin.data.notifications.MESSAGE_TYPE.COOK_SESSION_HOST_ASSIGNED;
+import static com.checkin.app.checkin.data.notifications.MESSAGE_TYPE.COOK_SESSION_NEW_ORDER;
+import static com.checkin.app.checkin.data.notifications.MESSAGE_TYPE.COOK_SESSION_SWITCH_TABLE;
+import static com.checkin.app.checkin.data.notifications.MESSAGE_TYPE.COOK_SESSION_UPDATE_ORDER;
 
 public class CookSessionActivity extends AppCompatActivity {
     public static final String KEY_SESSION_PK = "cook.session.session_pk";
@@ -169,7 +170,7 @@ public class CookSessionActivity extends AppCompatActivity {
     @Override
     protected void onResume() {
         super.onResume();
-        MessageModel.MESSAGE_TYPE[] types = new MessageModel.MESSAGE_TYPE[]{
+        MESSAGE_TYPE[] types = new MESSAGE_TYPE[]{
                 COOK_SESSION_NEW_ORDER, COOK_SESSION_HOST_ASSIGNED, COOK_SESSION_UPDATE_ORDER,
                 COOK_SESSION_END, COOK_SESSION_SWITCH_TABLE
         };

@@ -24,12 +24,6 @@ import butterknife.ButterKnife
 import butterknife.OnClick
 import com.checkin.app.checkin.Account.AccountModel.ACCOUNT_TYPE
 import com.checkin.app.checkin.Account.BaseAccountActivity
-import com.checkin.app.checkin.data.notifications.ActiveSessionNotificationService
-import com.checkin.app.checkin.data.notifications.Constants
-import com.checkin.app.checkin.data.notifications.MessageModel.MESSAGE_TYPE
-import com.checkin.app.checkin.data.notifications.MessageUtils
-import com.checkin.app.checkin.data.resource.ProblemModel
-import com.checkin.app.checkin.data.resource.Resource
 import com.checkin.app.checkin.R
 import com.checkin.app.checkin.Shop.ShopJoin.BusinessFeaturesActivity
 import com.checkin.app.checkin.User.Private.UserPrivateProfileFragment
@@ -39,6 +33,12 @@ import com.checkin.app.checkin.Utility.DynamicSwipableViewPager
 import com.checkin.app.checkin.Utility.OnBoardingUtils
 import com.checkin.app.checkin.Utility.OnBoardingUtils.OnBoardingModel
 import com.checkin.app.checkin.Utility.Utils
+import com.checkin.app.checkin.data.notifications.ActiveSessionNotificationService
+import com.checkin.app.checkin.data.notifications.Constants
+import com.checkin.app.checkin.data.notifications.MESSAGE_TYPE
+import com.checkin.app.checkin.data.notifications.MessageUtils
+import com.checkin.app.checkin.data.resource.ProblemModel
+import com.checkin.app.checkin.data.resource.Resource
 import com.checkin.app.checkin.home.fragments.UserHomeFragment
 import com.checkin.app.checkin.home.viewmodels.HomeViewModel
 import com.checkin.app.checkin.home.viewmodels.LiveSessionViewModel

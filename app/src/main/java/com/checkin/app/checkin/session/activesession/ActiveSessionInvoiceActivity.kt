@@ -25,10 +25,6 @@ import butterknife.BindView
 import butterknife.ButterKnife
 import butterknife.OnClick
 import butterknife.OnTextChanged
-import com.checkin.app.checkin.data.notifications.MessageModel
-import com.checkin.app.checkin.data.notifications.MessageUtils
-import com.checkin.app.checkin.data.resource.ProblemModel
-import com.checkin.app.checkin.data.resource.Resource
 import com.checkin.app.checkin.R
 import com.checkin.app.checkin.Shop.ShopModel
 import com.checkin.app.checkin.Shop.ShopModel.PAYMENT_MODE.PAYTM
@@ -36,6 +32,10 @@ import com.checkin.app.checkin.User.bills.SuccessfulTransactionActivity
 import com.checkin.app.checkin.Utility.Constants
 import com.checkin.app.checkin.Utility.Utils
 import com.checkin.app.checkin.Utility.pass
+import com.checkin.app.checkin.data.notifications.MESSAGE_TYPE
+import com.checkin.app.checkin.data.notifications.MessageUtils
+import com.checkin.app.checkin.data.resource.ProblemModel
+import com.checkin.app.checkin.data.resource.Resource
 import com.checkin.app.checkin.misc.BillHolder
 import com.checkin.app.checkin.misc.activities.BaseActivity
 import com.checkin.app.checkin.misc.paytm.PaytmPayment
@@ -97,8 +97,8 @@ class ActiveSessionInvoiceActivity : BaseActivity() {
             val message = MessageUtils.parseMessage(intent) ?: return
 
             when (message.type) {
-                MessageModel.MESSAGE_TYPE.USER_SESSION_PROMO_AVAILED, MessageModel.MESSAGE_TYPE.USER_SESSION_PROMO_REMOVED -> mViewModel.fetchSessionAppliedPromo()
-                MessageModel.MESSAGE_TYPE.USER_SESSION_BILL_CHANGE -> mViewModel.fetchSessionInvoice()
+                MESSAGE_TYPE.USER_SESSION_PROMO_AVAILED, MESSAGE_TYPE.USER_SESSION_PROMO_REMOVED -> mViewModel.fetchSessionAppliedPromo()
+                MESSAGE_TYPE.USER_SESSION_BILL_CHANGE -> mViewModel.fetchSessionInvoice()
             }
         }
     }
@@ -479,7 +479,7 @@ class ActiveSessionInvoiceActivity : BaseActivity() {
 
     override fun onResume() {
         super.onResume()
-        val types = arrayOf(MessageModel.MESSAGE_TYPE.USER_SESSION_PROMO_AVAILED, MessageModel.MESSAGE_TYPE.USER_SESSION_PROMO_REMOVED, MessageModel.MESSAGE_TYPE.USER_SESSION_BILL_CHANGE)
+        val types = arrayOf(MESSAGE_TYPE.USER_SESSION_PROMO_AVAILED, MESSAGE_TYPE.USER_SESSION_PROMO_REMOVED, MESSAGE_TYPE.USER_SESSION_BILL_CHANGE)
         MessageUtils.registerLocalReceiver(this, mReceiver, *types)
     }
 

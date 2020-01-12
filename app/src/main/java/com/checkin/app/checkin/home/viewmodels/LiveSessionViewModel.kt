@@ -4,9 +4,9 @@ import android.app.Application
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MediatorLiveData
 import androidx.lifecycle.Transformations
+import com.checkin.app.checkin.Utility.isNotEmpty
 import com.checkin.app.checkin.data.BaseViewModel
 import com.checkin.app.checkin.data.resource.Resource
-import com.checkin.app.checkin.Utility.isNotEmpty
 import com.checkin.app.checkin.home.model.ActiveLiveSessionDetailModel
 import com.checkin.app.checkin.home.model.LiveSessionDetailModel
 import com.checkin.app.checkin.home.model.ScheduledLiveSessionDetailModel
@@ -93,5 +93,23 @@ class LiveSessionViewModel(application: Application) : BaseViewModel(application
 
     fun clearCart() {
         mClearCart.addSource(mSessionRepository.clearCustomerCart, mClearCart::setValue)
+    }
+
+    fun updateScheduledStatus(sessionPk: Long, status: ScheduledSessionStatus) {
+        mScheduledSessionData.value?.data?.let { list ->
+            val index = list.indexOfFirst { it.pk == sessionPk }
+            if (index != -1) mScheduledSessionData.value = Resource.cloneResource(mScheduledSessionData.value, list.toMutableList().apply {
+                this[index] = this[index].run { copy(scheduled = scheduled.copy().apply { this.status = status }) }
+            })
+        }
+    }
+
+    fun removeScheduledSession(pk: Long) {
+        mScheduledSessionData.value?.data?.let {
+            val index = it.indexOfFirst { it.pk == pk }
+            if (index != -1) mScheduledSessionData.value = Resource.cloneResource(mScheduledSessionData.value, it.toMutableList().apply {
+                removeAt(index)
+            })
+        }
     }
 }

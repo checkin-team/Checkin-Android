@@ -11,8 +11,8 @@ import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.Observer
 import butterknife.BindView
 import butterknife.OnClick
-import com.checkin.app.checkin.data.resource.Resource
 import com.checkin.app.checkin.R
+import com.checkin.app.checkin.data.resource.Resource
 import com.checkin.app.checkin.misc.BlockingNetworkViewModel
 
 class NetworkBlockingFragment : BaseFragment() {
@@ -66,6 +66,10 @@ class NetworkBlockingFragment : BaseFragment() {
         view?.setBackgroundColor(ContextCompat.getColor(requireContext(), R.color.white))
         containerError.visibility = View.VISIBLE
         containerLoading.visibility = View.GONE
+        if (resource.status == Resource.Status.ERROR_DISCONNECTED)
+            tvErrorMessage.setText(R.string.text_error_network_disconnected)
+        else
+            tvErrorMessage.setText(R.string.text_error_network_unknown)
     }
 
     @OnClick(R.id.btn_blocking_error_try_again)

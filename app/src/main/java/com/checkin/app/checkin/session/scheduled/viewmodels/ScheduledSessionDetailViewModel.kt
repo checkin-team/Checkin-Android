@@ -6,6 +6,7 @@ import androidx.lifecycle.Transformations
 import com.checkin.app.checkin.data.BaseViewModel
 import com.checkin.app.checkin.data.resource.Resource
 import com.checkin.app.checkin.session.models.CustomerScheduledSessionDetailModel
+import com.checkin.app.checkin.session.models.ScheduledSessionStatus
 import com.checkin.app.checkin.session.models.SessionOrderedItemModel
 import com.checkin.app.checkin.session.scheduled.ScheduledSessionRepository
 import com.fasterxml.jackson.databind.node.ObjectNode
@@ -38,5 +39,11 @@ class ScheduledSessionDetailViewModel(application: Application) : BaseViewModel(
     }
 
     override fun updateResults() {
+    }
+
+    fun updateStatus(status: ScheduledSessionStatus) {
+        mSessionData.value?.data?.run {
+            mSessionData.value = Resource.cloneResource(mSessionData.value, copy(scheduled = scheduled.copy().apply { this.status = status }))
+        }
     }
 }

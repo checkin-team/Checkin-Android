@@ -1,5 +1,7 @@
 package com.checkin.app.checkin.session.scheduled.activities
 
+import android.content.Context
+import android.content.Intent
 import android.os.Bundle
 import butterknife.ButterKnife
 import com.checkin.app.checkin.R
@@ -19,6 +21,10 @@ class QSRFoodReadyActivity : BaseActivity() {
     }
 
     companion object {
-        const val KEY_SESSION_ID = "qsr.session_id"
+        private const val KEY_SESSION_ID = "qsr.session_id"
+
+        fun withSessionIntent(context: Context, sessionId: Long) = Intent(context, QSRFoodReadyActivity::class.java).apply {
+            putExtra(KEY_SESSION_ID, sessionId)
+        }
     }
 }

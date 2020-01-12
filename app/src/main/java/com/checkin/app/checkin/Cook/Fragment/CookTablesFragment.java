@@ -17,26 +17,27 @@ import com.checkin.app.checkin.Cook.Adapter.CookWorkTableAdapter;
 import com.checkin.app.checkin.Cook.CookSessionActivity;
 import com.checkin.app.checkin.Cook.CookWorkViewModel;
 import com.checkin.app.checkin.Cook.Model.CookTableModel;
+import com.checkin.app.checkin.R;
+import com.checkin.app.checkin.Utility.Utils;
+import com.checkin.app.checkin.data.notifications.MESSAGE_TYPE;
 import com.checkin.app.checkin.data.notifications.MessageModel;
 import com.checkin.app.checkin.data.notifications.MessageObjectModel;
 import com.checkin.app.checkin.data.notifications.MessageUtils;
 import com.checkin.app.checkin.data.resource.Resource;
 import com.checkin.app.checkin.misc.fragments.BaseFragment;
 import com.checkin.app.checkin.misc.models.BriefModel;
-import com.checkin.app.checkin.R;
-import com.checkin.app.checkin.Utility.Utils;
 
 import java.util.Calendar;
 import java.util.List;
 
 import butterknife.BindView;
 
-import static com.checkin.app.checkin.data.notifications.MessageModel.MESSAGE_TYPE.COOK_SESSION_END;
-import static com.checkin.app.checkin.data.notifications.MessageModel.MESSAGE_TYPE.COOK_SESSION_HOST_ASSIGNED;
-import static com.checkin.app.checkin.data.notifications.MessageModel.MESSAGE_TYPE.COOK_SESSION_NEW;
-import static com.checkin.app.checkin.data.notifications.MessageModel.MESSAGE_TYPE.COOK_SESSION_NEW_ORDER;
-import static com.checkin.app.checkin.data.notifications.MessageModel.MESSAGE_TYPE.COOK_SESSION_SWITCH_TABLE;
-import static com.checkin.app.checkin.data.notifications.MessageModel.MESSAGE_TYPE.COOK_SESSION_UPDATE_ORDER;
+import static com.checkin.app.checkin.data.notifications.MESSAGE_TYPE.COOK_SESSION_END;
+import static com.checkin.app.checkin.data.notifications.MESSAGE_TYPE.COOK_SESSION_HOST_ASSIGNED;
+import static com.checkin.app.checkin.data.notifications.MESSAGE_TYPE.COOK_SESSION_NEW;
+import static com.checkin.app.checkin.data.notifications.MESSAGE_TYPE.COOK_SESSION_NEW_ORDER;
+import static com.checkin.app.checkin.data.notifications.MESSAGE_TYPE.COOK_SESSION_SWITCH_TABLE;
+import static com.checkin.app.checkin.data.notifications.MESSAGE_TYPE.COOK_SESSION_UPDATE_ORDER;
 
 public class CookTablesFragment extends BaseFragment implements CookWorkTableAdapter.CookTableInteraction {
 
@@ -158,7 +159,7 @@ public class CookTablesFragment extends BaseFragment implements CookWorkTableAda
     @Override
     public void onResume() {
         super.onResume();
-        MessageModel.MESSAGE_TYPE[] types = new MessageModel.MESSAGE_TYPE[]{
+        MESSAGE_TYPE[] types = new MESSAGE_TYPE[]{
                 COOK_SESSION_NEW, COOK_SESSION_NEW_ORDER, COOK_SESSION_UPDATE_ORDER, COOK_SESSION_HOST_ASSIGNED,
                 COOK_SESSION_SWITCH_TABLE, COOK_SESSION_END
         };

@@ -9,23 +9,29 @@ import android.os.Bundle
 import android.text.TextUtils
 import androidx.core.app.NotificationCompat
 import androidx.core.os.bundleOf
-import com.checkin.app.checkin.data.notifications.Constants.CHANNEL
-import com.checkin.app.checkin.data.notifications.MessageDataModel.MessageDataDeserializer
-import com.checkin.app.checkin.data.notifications.MessageObjectModel.MESSAGE_OBJECT_TYPE
-import com.checkin.app.checkin.data.notifications.MessageObjectModel.MessageObjectDeserializer
 import com.checkin.app.checkin.R
 import com.checkin.app.checkin.User.bills.SuccessfulTransactionActivity
 import com.checkin.app.checkin.Utility.Utils
 import com.checkin.app.checkin.Waiter.WaiterWorkActivity
+import com.checkin.app.checkin.data.notifications.Constants.CHANNEL
+import com.checkin.app.checkin.data.notifications.MessageDataModel.MessageDataDeserializer
+import com.checkin.app.checkin.data.notifications.MessageObjectModel.MESSAGE_OBJECT_TYPE
+import com.checkin.app.checkin.data.notifications.MessageObjectModel.MessageObjectDeserializer
 import com.checkin.app.checkin.home.activities.SplashActivity
 import com.checkin.app.checkin.manager.activities.ManagerSessionActivity
 import com.checkin.app.checkin.manager.activities.ManagerWorkActivity
 import com.checkin.app.checkin.manager.fragments.RestaurantOrdersFragmentType
 import com.checkin.app.checkin.session.activesession.ActiveSessionActivity
+import com.checkin.app.checkin.session.scheduled.activities.PreorderSessionDetailActivity
 import com.checkin.app.checkin.session.scheduled.activities.QSRFoodReadyActivity
+import com.checkin.app.checkin.session.scheduled.activities.QSRSessionDetailActivity
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties
 import com.fasterxml.jackson.annotation.JsonProperty
+import com.fasterxml.jackson.core.JsonParser
+import com.fasterxml.jackson.databind.DeserializationContext
+import com.fasterxml.jackson.databind.JsonDeserializer
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize
+import java.io.IOException
 import java.io.Serializable
 import java.util.*
 
@@ -36,26 +42,15 @@ data class MessageModel(
         @JsonDeserialize(using = MessageObjectDeserializer::class) val `object`: MessageObjectModel?,
         @JsonDeserialize(using = MessageObjectDeserializer::class) val target: MessageObjectModel?,
         @JsonDeserialize(using = MessageDataDeserializer::class)
-        @JsonProperty("data") val rawData: MessageDataModel?
+        @JsonProperty("data") val rawData: MessageDataModel?,
+        @JsonDeserialize(using = MessageTypeDeserializer::class) val type: MESSAGE_TYPE
 ) : Serializable {
-    lateinit var type: MESSAGE_TYPE
-        private set
 
-    @JsonProperty("type")
-    fun setType(type: Int) {
-        this.type = MESSAGE_TYPE.getById(type)
-    }
-
-    @JsonProperty("data")
-    fun getData(): String {
-        return rawData.toString()
-    }
+    @get:JsonProperty("data")
+    val data: String
+        get() = rawData.toString()
 
     val formatDescription: String? = description?.let { Utils.fromHtml(it).toString() }
-
-    override fun toString(): String {
-        return type.name + " -- " + description
-    }
 
     val channel: CHANNEL
         get() = when (type) {
@@ -70,9 +65,16 @@ data class MessageModel(
             }
         }
 
+    private fun getDefaultIntent(context: Context): Intent? = when {
+        type == MESSAGE_TYPE.USER_SCHEDULED_QSR_DONE && sessionDetail != null -> QSRFoodReadyActivity.withSessionIntent(context, sessionDetail!!.pk)
+        isUserCBYGSessionNotification && sessionDetail != null -> PreorderSessionDetailActivity.withSessionIntent(context, sessionDetail!!.pk)
+        isUserQSRSessionNotification && sessionDetail != null -> QSRSessionDetailActivity.withSessionIntent(context, sessionDetail!!.pk)
+        else -> null
+    }
+
     private fun getNotificationIntent(context: Context): Intent {
         val componentName = getTargetComponent(context)
-        return Intent.makeRestartActivityTask(componentName
+        return getDefaultIntent(context) ?: Intent.makeRestartActivityTask(componentName
                 ?: ComponentName(context, SplashActivity::class.java)).apply {
             addIntentExtra(this, componentName?.className)
         }
@@ -101,8 +103,6 @@ data class MessageModel(
                     .putExtra(WaiterWorkActivity.KEY_SESSION_PK, sessionDetail?.pk ?: 0L)
         } else if (isUserReviewNotification && sessionDetail != null)
             intent.putExtra(SuccessfulTransactionActivity.KEY_SESSION_ID, sessionDetail.pk)
-        else if (type == MESSAGE_TYPE.USER_SCHEDULED_QSR_DONE && sessionDetail != null)
-            intent.putExtra(QSRFoodReadyActivity.KEY_SESSION_ID, sessionDetail.pk)
     }
 
     private fun getTargetComponent(context: Context) = when {
@@ -110,7 +110,6 @@ data class MessageModel(
         isShopWaiterNotification -> ComponentName(context, WaiterWorkActivity::class.java)
         isShopManagerNotification -> ComponentName(context, ManagerWorkActivity::class.java)
         isUserReviewNotification -> ComponentName(context, SuccessfulTransactionActivity::class.java)
-        type == MESSAGE_TYPE.USER_SCHEDULED_QSR_DONE -> ComponentName(context, QSRFoodReadyActivity::class.java)
         else -> null
     }
 
@@ -260,7 +259,6 @@ data class MessageModel(
         MESSAGE_TYPE.USER_SCHEDULED_CBYG_CANCELLED,
         MESSAGE_TYPE.USER_SCHEDULED_CBYG_REMINDER,
         MESSAGE_TYPE.USER_SCHEDULED_CBYG_LATE,
-        MESSAGE_TYPE.USER_SCHEDULED_QSR_DONE,
         MESSAGE_TYPE.USER_SCHEDULED_QSR_CANCELLED
         -> false
         else -> true
@@ -287,64 +285,73 @@ data class MessageModel(
         get() = target?.takeIf { it.type == MESSAGE_OBJECT_TYPE.SESSION }
                 ?: `object`?.takeIf { it.type == MESSAGE_OBJECT_TYPE.SESSION }
 
-    enum class MESSAGE_TYPE(var id: Int) {
-        NONE(0),
+    override fun toString(): String = "${type.name} -- $description"
+}
 
-        /* Users */
-        // Activity
-        USER_ACTIVITY_REQUEST_REVIEW(220),
+enum class MESSAGE_TYPE(var id: Int) {
+    NONE(0),
 
-        // Active Session
-        USER_SESSION_MEMBER_ADD_REQUEST(302),
-        USER_SESSION_ADDED_BY_OWNER(303), USER_SESSION_MEMBER_REMOVED(304),
-        USER_SESSION_HOST_ASSIGNED(305), USER_SESSION_MEMBER_ADDED(306), USER_SESSION_END(309),
-        USER_SESSION_BILL_CHANGE(311), USER_SESSION_EVENT_NEW(312), USER_SESSION_EVENT_UPDATE(313),
-        USER_SESSION_ORDER_NEW(314), USER_SESSION_ORDER_ACCEPTED_REJECTED(315), USER_SESSION_UPDATE_ORDER(316),
-        USER_SESSION_PROMO_AVAILED(321), USER_SESSION_PROMO_REMOVED(322),
+    /* Users */
+    // Activity
+    USER_ACTIVITY_REQUEST_REVIEW(220),
 
-        // Scheduled Session
-        USER_SCHEDULED_CBYG_PAID(352),
-        USER_SCHEDULED_CBYG_ACCEPTED(354), USER_SCHEDULED_CBYG_PREPARATION(355),
-        USER_SCHEDULED_CBYG_CANCELLED(357), USER_SCHEDULED_CBYG_DONE(358), USER_SCHEDULED_CBYG_CHECKOUT(359),
-        USER_SCHEDULED_CBYG_REMINDER(361), USER_SCHEDULED_CBYG_LATE(362), USER_SCHEDULED_QSR_PAID(372),
-        USER_SCHEDULED_QSR_ACCEPTED(374), USER_SCHEDULED_QSR_PREPARATION(375), USER_SCHEDULED_QSR_CANCELLED(377),
-        USER_SCHEDULED_QSR_CHECKOUT(379), USER_SCHEDULED_QSR_DONE(381),
+    // Active Session
+    USER_SESSION_MEMBER_ADD_REQUEST(302),
+    USER_SESSION_ADDED_BY_OWNER(303), USER_SESSION_MEMBER_REMOVED(304),
+    USER_SESSION_HOST_ASSIGNED(305), USER_SESSION_MEMBER_ADDED(306), USER_SESSION_END(309),
+    USER_SESSION_BILL_CHANGE(311), USER_SESSION_EVENT_NEW(312), USER_SESSION_EVENT_UPDATE(313),
+    USER_SESSION_ORDER_NEW(314), USER_SESSION_ORDER_ACCEPTED_REJECTED(315), USER_SESSION_UPDATE_ORDER(316),
+    USER_SESSION_PROMO_AVAILED(321), USER_SESSION_PROMO_REMOVED(322),
 
-        /* Restaurant */
-        // Members
-        SHOP_MEMBER_ADDED(505),
+    // Scheduled Session
+    USER_SCHEDULED_CBYG_ACCEPTED(354),
+    USER_SCHEDULED_CBYG_PREPARATION(355),
+    USER_SCHEDULED_CBYG_CANCELLED(357), USER_SCHEDULED_CBYG_DONE(358), USER_SCHEDULED_CBYG_CHECKOUT(359),
+    USER_SCHEDULED_CBYG_REMINDER(361), USER_SCHEDULED_CBYG_LATE(362),
+    USER_SCHEDULED_QSR_ACCEPTED(374), USER_SCHEDULED_QSR_PREPARATION(375), USER_SCHEDULED_QSR_CANCELLED(377),
+    USER_SCHEDULED_QSR_CHECKOUT(379), USER_SCHEDULED_QSR_DONE(381),
 
-        // Manager
-        MANAGER_SESSION_NEW(611),
-        MANAGER_SESSION_MEMBER_CHANGE(612), MANAGER_SESSION_HOST_ASSIGNED(613),
-        MANAGER_SESSION_NEW_ORDER(615), MANAGER_SESSION_UPDATE_ORDER(616), MANAGER_SESSION_EVENT_SERVICE(617),
-        MANAGER_SESSION_EVENT_CONCERN(618), MANAGER_SESSION_EVENT_UPDATE(619), MANAGER_SESSION_ORDERS_PUSH(620),
-        MANAGER_SESSION_BILL_CHANGE(623), MANAGER_SESSION_CHECKOUT_REQUEST(625), MANAGER_SESSION_END(626),
-        MANAGER_SESSION_SWITCH_TABLE(621),
+    /* Restaurant */
+    // Members
+    SHOP_MEMBER_ADDED(505),
 
-        // Manager Scheduled
-        MANAGER_SCHEDULED_CBYG_NEW_PAID(652),
-        MANAGER_SCHEDULED_CBYG_PREPARATION_START(655),
-        MANAGER_SCHEDULED_CBYG_CANCELLED(657), MANAGER_SCHEDULED_QSR_NEW_PAID(672),
-        MANAGER_SCHEDULED_QSR_CANCELLED(677),
+    // Manager
+    MANAGER_SESSION_NEW(611),
+    MANAGER_SESSION_MEMBER_CHANGE(612), MANAGER_SESSION_HOST_ASSIGNED(613),
+    MANAGER_SESSION_NEW_ORDER(615), MANAGER_SESSION_UPDATE_ORDER(616), MANAGER_SESSION_EVENT_SERVICE(617),
+    MANAGER_SESSION_EVENT_CONCERN(618), MANAGER_SESSION_EVENT_UPDATE(619), MANAGER_SESSION_ORDERS_PUSH(620),
+    MANAGER_SESSION_BILL_CHANGE(623), MANAGER_SESSION_CHECKOUT_REQUEST(625), MANAGER_SESSION_END(626),
+    MANAGER_SESSION_SWITCH_TABLE(621),
 
-        // Waiter
-        WAITER_SESSION_NEW(711),
-        WAITER_SESSION_MEMBER_CHANGE(712), WAITER_SESSION_HOST_ASSIGNED(713),
-        WAITER_SESSION_NEW_ORDER(715), WAITER_SESSION_UPDATE_ORDER(716), WAITER_SESSION_EVENT_SERVICE(717),
-        WAITER_ORDER_COOKED_NOTIFY_HOST(718), WAITER_SESSION_EVENT_UPDATE(719), WAITER_SESSION_ORDERS_PUSH(720),
-        WAITER_SESSION_COLLECT_CASH(725), WAITER_SESSION_END(726), WAITER_SESSION_SWITCH_TABLE(721),
+    // Manager Scheduled
+    MANAGER_SCHEDULED_CBYG_NEW_PAID(652),
+    MANAGER_SCHEDULED_CBYG_PREPARATION_START(655),
+    MANAGER_SCHEDULED_CBYG_CANCELLED(657), MANAGER_SCHEDULED_QSR_NEW_PAID(672),
+    MANAGER_SCHEDULED_QSR_CANCELLED(677),
 
-        // Cook
-        COOK_SESSION_NEW(811),
-        COOK_SESSION_HOST_ASSIGNED(813), COOK_SESSION_NEW_ORDER(815),
-        COOK_SESSION_UPDATE_ORDER(816), COOK_SESSION_ORDERS_PUSH(820), COOK_SESSION_SWITCH_TABLE(821),
-        COOK_SESSION_END(826);
+    // Waiter
+    WAITER_SESSION_NEW(711),
+    WAITER_SESSION_MEMBER_CHANGE(712), WAITER_SESSION_HOST_ASSIGNED(713),
+    WAITER_SESSION_NEW_ORDER(715), WAITER_SESSION_UPDATE_ORDER(716), WAITER_SESSION_EVENT_SERVICE(717),
+    WAITER_ORDER_COOKED_NOTIFY_HOST(718), WAITER_SESSION_EVENT_UPDATE(719), WAITER_SESSION_ORDERS_PUSH(720),
+    WAITER_SESSION_COLLECT_CASH(725), WAITER_SESSION_END(726), WAITER_SESSION_SWITCH_TABLE(721),
 
-        val actionTag: String = String.format(Locale.ENGLISH, "CHECKIN.MESSAGE_TYPE.%d", id)
+    // Cook
+    COOK_SESSION_NEW(811),
+    COOK_SESSION_HOST_ASSIGNED(813), COOK_SESSION_NEW_ORDER(815),
+    COOK_SESSION_UPDATE_ORDER(816), COOK_SESSION_ORDERS_PUSH(820), COOK_SESSION_SWITCH_TABLE(821),
+    COOK_SESSION_END(826);
 
-        companion object {
-            fun getById(id: Int): MESSAGE_TYPE = values().find { it.id == id } ?: NONE
-        }
+    val actionTag: String = String.format(Locale.ENGLISH, "CHECKIN.MESSAGE_TYPE.%d", id)
+
+    companion object {
+        fun getById(id: Int): MESSAGE_TYPE = values().find { it.id == id } ?: NONE
+    }
+}
+
+class MessageTypeDeserializer : JsonDeserializer<MESSAGE_TYPE>() {
+    @Throws(IOException::class)
+    override fun deserialize(jsonParser: JsonParser, deserializationContext: DeserializationContext): MESSAGE_TYPE {
+        return MESSAGE_TYPE.getById(jsonParser.text.toInt())
     }
 }

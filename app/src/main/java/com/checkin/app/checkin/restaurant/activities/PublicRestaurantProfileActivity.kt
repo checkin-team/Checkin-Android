@@ -26,11 +26,11 @@ import butterknife.OnClick
 import com.checkin.app.checkin.Auth.OtpVerificationDialog
 import com.checkin.app.checkin.Auth.PhoneEditDialog
 import com.checkin.app.checkin.Auth.PhoneInteraction
-import com.checkin.app.checkin.data.resource.ProblemModel
-import com.checkin.app.checkin.data.resource.Resource
 import com.checkin.app.checkin.R
 import com.checkin.app.checkin.User.Private.UserViewModel
 import com.checkin.app.checkin.Utility.*
+import com.checkin.app.checkin.data.resource.ProblemModel
+import com.checkin.app.checkin.data.resource.Resource
 import com.checkin.app.checkin.menu.fragments.ScheduledMenuFragment
 import com.checkin.app.checkin.menu.viewmodels.ScheduledCartViewModel
 import com.checkin.app.checkin.misc.BlockingNetworkViewModel
@@ -61,7 +61,6 @@ import com.rd.animation.type.AnimationType
 import org.koin.androidx.fragment.android.setupKoinFragmentFactory
 import org.koin.androidx.scope.lifecycleScope
 import java.util.*
-import java.util.concurrent.TimeUnit
 import kotlin.math.abs
 
 class PublicRestaurantProfileActivity : BaseActivity(), AppBarLayout.OnOffsetChangedListener,
@@ -277,7 +276,10 @@ class PublicRestaurantProfileActivity : BaseActivity(), AppBarLayout.OnOffsetCha
                 if (paytmModelResource.status === Resource.Status.SUCCESS && paytmModelResource.data != null) {
                     paytmPayment.initializePayment(paytmModelResource.data, this)
                 } else if (paytmModelResource.status !== Resource.Status.LOADING) {
-                    if (paytmModelResource.problem?.getErrorCode() == ProblemModel.ERROR_CODE.USER_MISSING_PHONE) onVerifyPhoneOfUser()
+                    when (paytmModelResource.problem?.getErrorCode()) {
+                        ProblemModel.ERROR_CODE.USER_MISSING_PHONE -> onVerifyPhoneOfUser()
+                        ProblemModel.ERROR_CODE.SESSION_SCHEDULED_CBYG_INVALID_PLANNED_TIME -> scheduledCartView.switchTime()
+                    }
                     Utils.toast(this, paytmModelResource.message)
                 }
             }
@@ -382,8 +384,9 @@ class PublicRestaurantProfileActivity : BaseActivity(), AppBarLayout.OnOffsetCha
 
     override fun onStartPayment() {
         cartViewModel.cartDetailData.value?.data?.scheduled?.plannedDatetime?.let {
-            if (it.time < Calendar.getInstance().time.time + TimeUnit.MINUTES.toMillis(10)) {
-                Utils.toast(this, "Booking time must at least be 10 minutes from now")
+            if (it.time < Calendar.getInstance().time.time) {
+                Utils.toast(this, "Booking time must be set in future.")
+                scheduledCartView.switchTime()
                 return
             }
         }

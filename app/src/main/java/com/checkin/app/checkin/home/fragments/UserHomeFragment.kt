@@ -1,5 +1,7 @@
 package com.checkin.app.checkin.home.fragments
 
+import android.content.BroadcastReceiver
+import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.view.View
@@ -10,9 +12,11 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import androidx.viewpager2.widget.ViewPager2
 import butterknife.BindView
-import com.checkin.app.checkin.data.resource.Resource
 import com.checkin.app.checkin.R
 import com.checkin.app.checkin.Utility.pass
+import com.checkin.app.checkin.data.notifications.MESSAGE_TYPE
+import com.checkin.app.checkin.data.notifications.MessageUtils
+import com.checkin.app.checkin.data.resource.Resource
 import com.checkin.app.checkin.home.holders.LiveSessionTrackerAdapter
 import com.checkin.app.checkin.home.holders.LiveSessionTrackerInteraction
 import com.checkin.app.checkin.home.holders.NearbyRestaurantAdapter
@@ -26,7 +30,9 @@ import com.checkin.app.checkin.misc.fragments.BaseFragment
 import com.checkin.app.checkin.restaurant.activities.openPublicRestaurantProfile
 import com.checkin.app.checkin.restaurant.models.RestaurantLocationModel
 import com.checkin.app.checkin.session.activesession.ActiveSessionActivity
+import com.checkin.app.checkin.session.models.ScheduledSessionStatus
 import com.checkin.app.checkin.session.scheduled.activities.PreorderSessionDetailActivity
+import com.checkin.app.checkin.session.scheduled.activities.QSRFoodReadyActivity
 import com.checkin.app.checkin.session.scheduled.activities.QSRSessionDetailActivity
 
 class UserHomeFragment : BaseFragment(), LiveSessionTrackerInteraction {
@@ -47,6 +53,27 @@ class UserHomeFragment : BaseFragment(), LiveSessionTrackerInteraction {
 
     private val mViewModel: HomeViewModel by activityViewModels()
     private val mLiveSessionViewModel: LiveSessionViewModel by activityViewModels()
+
+    private val receiver by lazy {
+        object : BroadcastReceiver() {
+            override fun onReceive(context: Context?, intent: Intent?) {
+                val message = MessageUtils.parseMessage(intent) ?: return
+                val session = message.sessionDetail ?: return
+                when (message.type) {
+                    MESSAGE_TYPE.USER_SCHEDULED_CBYG_ACCEPTED,
+                    MESSAGE_TYPE.USER_SCHEDULED_QSR_ACCEPTED
+                    -> mLiveSessionViewModel.updateScheduledStatus(session.pk, ScheduledSessionStatus.ACCEPTED)
+                    MESSAGE_TYPE.USER_SCHEDULED_CBYG_PREPARATION
+                    -> mLiveSessionViewModel.updateScheduledStatus(session.pk, ScheduledSessionStatus.PREPARATION)
+                    MESSAGE_TYPE.USER_SCHEDULED_CBYG_CHECKOUT,
+                    MESSAGE_TYPE.USER_SCHEDULED_QSR_CHECKOUT
+                    -> mLiveSessionViewModel.removeScheduledSession(session.pk)
+                    MESSAGE_TYPE.USER_SCHEDULED_QSR_DONE
+                    -> openQsrReady(session.pk)
+                }
+            }
+        }
+    }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         initRefreshScreen(R.id.sr_home)
@@ -107,11 +134,12 @@ class UserHomeFragment : BaseFragment(), LiveSessionTrackerInteraction {
     }
 
     override fun onOpenSessionDetails(session: LiveSessionDetailModel) {
-        when (session.sessionType) {
-            SessionType.DINING -> startActivity(Intent(requireContext(), ActiveSessionActivity::class.java))
-            SessionType.PREDINING -> PreorderSessionDetailActivity.startScheduledSessionDetailActivity(requireContext(), session.pk)
-            SessionType.QSR -> QSRSessionDetailActivity.startScheduledSessionDetailActivity(requireContext(), session.pk)
+        val intent = when (session.sessionType) {
+            SessionType.DINING -> Intent(requireContext(), ActiveSessionActivity::class.java)
+            SessionType.PREDINING -> PreorderSessionDetailActivity.withSessionIntent(requireContext(), session.pk)
+            SessionType.QSR -> QSRSessionDetailActivity.withSessionIntent(requireContext(), session.pk)
         }
+        startActivity(intent)
     }
 
     override fun onOpenRestaurantProfile(restaurant: RestaurantLocationModel) {
@@ -123,6 +151,26 @@ class UserHomeFragment : BaseFragment(), LiveSessionTrackerInteraction {
             SessionType.DINING -> ActiveSessionMenuActivity.openMenu(requireContext(), session.restaurant.pk)
             else -> onOpenRestaurantProfile(session.restaurant)
         }
+    }
+
+    fun openQsrReady(sessionPk: Long) {
+        startActivity(QSRFoodReadyActivity.withSessionIntent(requireContext(), sessionPk))
+    }
+
+    override fun onResume() {
+        super.onResume()
+        val types = arrayOf(
+                MESSAGE_TYPE.USER_SCHEDULED_CBYG_ACCEPTED, MESSAGE_TYPE.USER_SCHEDULED_CBYG_CHECKOUT,
+                MESSAGE_TYPE.USER_SCHEDULED_CBYG_PREPARATION,
+                MESSAGE_TYPE.USER_SCHEDULED_QSR_ACCEPTED, MESSAGE_TYPE.USER_SCHEDULED_QSR_CHECKOUT,
+                MESSAGE_TYPE.USER_SCHEDULED_QSR_DONE
+        )
+        MessageUtils.registerLocalReceiver(requireContext(), receiver, *types)
+    }
+
+    override fun onPause() {
+        super.onPause()
+        MessageUtils.unregisterLocalReceiver(requireContext(), receiver)
     }
 
     companion object {

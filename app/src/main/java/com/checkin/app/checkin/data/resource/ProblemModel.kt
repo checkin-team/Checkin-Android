@@ -26,15 +26,14 @@ class ProblemModel(@JsonProperty("type") val type: String, @JsonProperty("status
         return this.errorCode
     }
 
+    fun hasErrorCode(code: ERROR_CODE) = getErrorCode() == code
+
     enum class ERROR_CODE(internal var tag: String) {
         HTTP_ERROR(""), INVALID_VERSION("invalid_version"), DEPRECATED_VERSION("deprecated_version"),
-
         SESSION_USER_PENDING_MEMBER("session__user_pending_member"), SESSION_SCHEDULED_PENDING_CART("session__scheduled_writable_exists"),
-
         INVALID_PAYMENT_MODE_PROMO_AVAILED("offer__apply_invalid_payment_mode"), OFFER_REJECTED_APPLYING("offer__apply_rejected"),
-
-        USER_MISSING_PHONE("user__missing_phone"), ACCOUNT_ALREADY_REGISTERED("account__already_registered");
-
+        USER_MISSING_PHONE("user__missing_phone"), ACCOUNT_ALREADY_REGISTERED("account__already_registered"),
+        SESSION_SCHEDULED_CBYG_INVALID_PLANNED_TIME("session__scheduled_invalid_time");
 
         companion object {
             internal fun findByTag(tag: String): ERROR_CODE {

@@ -1,5 +1,6 @@
 package com.checkin.app.checkin.session.scheduled.activities
 
+import android.content.BroadcastReceiver
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
@@ -10,14 +11,17 @@ import androidx.lifecycle.Observer
 import butterknife.BindView
 import butterknife.ButterKnife
 import butterknife.OnClick
-import com.checkin.app.checkin.data.resource.Resource
 import com.checkin.app.checkin.R
 import com.checkin.app.checkin.Utility.Utils
 import com.checkin.app.checkin.Utility.inTransaction
+import com.checkin.app.checkin.data.notifications.MESSAGE_TYPE
+import com.checkin.app.checkin.data.notifications.MessageUtils
+import com.checkin.app.checkin.data.resource.Resource
 import com.checkin.app.checkin.misc.BlockingNetworkViewModel
 import com.checkin.app.checkin.misc.activities.BaseActivity
 import com.checkin.app.checkin.misc.fragments.NetworkBlockingFragment
 import com.checkin.app.checkin.session.models.CustomerScheduledSessionDetailModel
+import com.checkin.app.checkin.session.models.ScheduledSessionStatus
 import com.checkin.app.checkin.session.scheduled.fragments.PreorderDetailFragment
 import com.checkin.app.checkin.session.scheduled.viewmodels.ScheduledSessionDetailViewModel
 
@@ -34,6 +38,22 @@ class PreorderSessionDetailActivity : BaseActivity() {
 
     val networkViewModel: BlockingNetworkViewModel by viewModels()
     val viewModel: ScheduledSessionDetailViewModel by viewModels()
+
+    private val receiver by lazy {
+        object : BroadcastReceiver() {
+            override fun onReceive(context: Context?, intent: Intent?) {
+                val message = MessageUtils.parseMessage(intent) ?: return
+                when (message.type) {
+                    MESSAGE_TYPE.USER_SCHEDULED_CBYG_ACCEPTED -> viewModel.updateStatus(ScheduledSessionStatus.ACCEPTED)
+                    MESSAGE_TYPE.USER_SCHEDULED_CBYG_PREPARATION -> viewModel.updateStatus(ScheduledSessionStatus.PREPARATION)
+                    MESSAGE_TYPE.USER_SCHEDULED_CBYG_CANCELLED, MESSAGE_TYPE.USER_SCHEDULED_CBYG_CHECKOUT -> {
+                        Utils.toast(this@PreorderSessionDetailActivity, "Session ended!")
+                        finish()
+                    }
+                }
+            }
+        }
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -82,12 +102,30 @@ class PreorderSessionDetailActivity : BaseActivity() {
         return true
     }
 
+    override fun onResume() {
+        super.onResume()
+        val sessionId = intent.getLongExtra(KEY_SESSION_ID, 0)
+        if (sessionId == 0L) {
+            finish()
+            return
+        }
+        MessageUtils.registerLocalReceiver(
+                this, receiver, sessionId,
+                MESSAGE_TYPE.USER_SCHEDULED_CBYG_ACCEPTED, MESSAGE_TYPE.USER_SCHEDULED_CBYG_PREPARATION,
+                MESSAGE_TYPE.USER_SCHEDULED_CBYG_CHECKOUT, MESSAGE_TYPE.USER_SCHEDULED_CBYG_CANCELLED
+        )
+    }
+
+    override fun onPause() {
+        super.onPause()
+        MessageUtils.unregisterLocalReceiver(this, receiver)
+    }
+
     companion object {
         private const val KEY_SESSION_ID = "session_detail.preorder.id"
 
-        fun startScheduledSessionDetailActivity(context: Context, sessionId: Long) = Intent(context, PreorderSessionDetailActivity::class.java).apply {
+        fun withSessionIntent(context: Context, sessionId: Long) = Intent(context, PreorderSessionDetailActivity::class.java).apply {
             putExtra(KEY_SESSION_ID, sessionId)
-            context.startActivity(this)
         }
     }
 }

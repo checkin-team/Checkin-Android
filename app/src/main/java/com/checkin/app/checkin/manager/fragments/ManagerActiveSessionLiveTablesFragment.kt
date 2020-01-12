@@ -13,13 +13,13 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import butterknife.BindView
 import butterknife.OnClick
-import com.checkin.app.checkin.data.notifications.MessageModel
-import com.checkin.app.checkin.data.notifications.MessageObjectModel
-import com.checkin.app.checkin.data.notifications.MessageUtils
-import com.checkin.app.checkin.data.resource.Resource
 import com.checkin.app.checkin.R
 import com.checkin.app.checkin.Utility.Utils
 import com.checkin.app.checkin.Utility.isNotEmpty
+import com.checkin.app.checkin.data.notifications.MESSAGE_TYPE
+import com.checkin.app.checkin.data.notifications.MessageObjectModel
+import com.checkin.app.checkin.data.notifications.MessageUtils
+import com.checkin.app.checkin.data.resource.Resource
 import com.checkin.app.checkin.manager.activities.ManagerSessionActivity
 import com.checkin.app.checkin.manager.activities.ManagerSessionInvoiceActivity
 import com.checkin.app.checkin.manager.adapters.ManagerWorkTableAdapter
@@ -53,7 +53,7 @@ class ManagerActiveSessionLiveTablesFragment : BaseFragment(), ManagerTableInter
             if (shop != null && shop.pk != mViewModel.shopPk) return
             val sessionData = message.sessionDetail ?: return
             when (message.type) {
-                MessageModel.MESSAGE_TYPE.MANAGER_SESSION_NEW -> {
+                MESSAGE_TYPE.MANAGER_SESSION_NEW -> {
                     val qrPk = message.`object`?.pk ?: return
                     val tableName = message.rawData?.sessionTableName ?: return
                     val actor = message.actor ?: return
@@ -70,17 +70,17 @@ class ManagerActiveSessionLiveTablesFragment : BaseFragment(), ManagerTableInter
                     }
                     this@ManagerActiveSessionLiveTablesFragment.addTable(tableModel)
                 }
-                MessageModel.MESSAGE_TYPE.MANAGER_SESSION_NEW_ORDER, MessageModel.MESSAGE_TYPE.MANAGER_SESSION_EVENT_SERVICE,
-                MessageModel.MESSAGE_TYPE.MANAGER_SESSION_EVENT_CONCERN, MessageModel.MESSAGE_TYPE.MANAGER_SESSION_CHECKOUT_REQUEST -> {
+                MESSAGE_TYPE.MANAGER_SESSION_NEW_ORDER, MESSAGE_TYPE.MANAGER_SESSION_EVENT_SERVICE,
+                MESSAGE_TYPE.MANAGER_SESSION_EVENT_CONCERN, MESSAGE_TYPE.MANAGER_SESSION_CHECKOUT_REQUEST -> {
                     val eventModel = EventBriefModel.getFromManagerEventModel(message.rawData?.sessionEventBrief
                             ?: return)
                     this@ManagerActiveSessionLiveTablesFragment.updateSessionEventCount(sessionData.pk, eventModel)
                 }
-                MessageModel.MESSAGE_TYPE.MANAGER_SESSION_HOST_ASSIGNED -> {
+                MESSAGE_TYPE.MANAGER_SESSION_HOST_ASSIGNED -> {
                     val user = message.`object`?.briefModel ?: return
                     this@ManagerActiveSessionLiveTablesFragment.updateSessionHost(sessionData.pk, user)
                 }
-                MessageModel.MESSAGE_TYPE.MANAGER_SESSION_END -> this@ManagerActiveSessionLiveTablesFragment.removeTable(sessionData.pk)
+                MESSAGE_TYPE.MANAGER_SESSION_END -> this@ManagerActiveSessionLiveTablesFragment.removeTable(sessionData.pk)
             }
         }
     }
@@ -193,7 +193,7 @@ class ManagerActiveSessionLiveTablesFragment : BaseFragment(), ManagerTableInter
 
     override fun onResume() {
         super.onResume()
-        val types = arrayOf(MessageModel.MESSAGE_TYPE.MANAGER_SESSION_NEW, MessageModel.MESSAGE_TYPE.MANAGER_SESSION_NEW_ORDER, MessageModel.MESSAGE_TYPE.MANAGER_SESSION_EVENT_SERVICE, MessageModel.MESSAGE_TYPE.MANAGER_SESSION_CHECKOUT_REQUEST, MessageModel.MESSAGE_TYPE.MANAGER_SESSION_EVENT_CONCERN, MessageModel.MESSAGE_TYPE.MANAGER_SESSION_HOST_ASSIGNED, MessageModel.MESSAGE_TYPE.MANAGER_SESSION_END)
+        val types = arrayOf(MESSAGE_TYPE.MANAGER_SESSION_NEW, MESSAGE_TYPE.MANAGER_SESSION_NEW_ORDER, MESSAGE_TYPE.MANAGER_SESSION_EVENT_SERVICE, MESSAGE_TYPE.MANAGER_SESSION_CHECKOUT_REQUEST, MESSAGE_TYPE.MANAGER_SESSION_EVENT_CONCERN, MESSAGE_TYPE.MANAGER_SESSION_HOST_ASSIGNED, MESSAGE_TYPE.MANAGER_SESSION_END)
         MessageUtils.registerLocalReceiver(requireContext(), mReceiver, *types)
         //        MessageUtils.dismissNotification(this, MessageObjectModel.MESSAGE_OBJECT_TYPE.SESSION, mViewModel.getSessionPk());
     }

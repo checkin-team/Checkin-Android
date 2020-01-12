@@ -15,23 +15,22 @@ import android.os.Handler;
 import android.os.Looper;
 import android.util.Log;
 
-import com.checkin.app.checkin.data.notifications.Constants.CHANNEL;
-import com.checkin.app.checkin.data.notifications.Constants.CHANNEL_GROUP;
-import com.checkin.app.checkin.data.notifications.MessageModel.MESSAGE_TYPE;
+import androidx.annotation.NonNull;
+import androidx.annotation.RequiresApi;
+import androidx.core.app.NotificationCompat;
+import androidx.localbroadcastmanager.content.LocalBroadcastManager;
+
 import com.checkin.app.checkin.R;
 import com.checkin.app.checkin.Utility.ProgressRequestBody;
 import com.checkin.app.checkin.Utility.Utils;
+import com.checkin.app.checkin.data.notifications.Constants.CHANNEL;
+import com.checkin.app.checkin.data.notifications.Constants.CHANNEL_GROUP;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
-
-import androidx.annotation.NonNull;
-import androidx.annotation.RequiresApi;
-import androidx.core.app.NotificationCompat;
-import androidx.localbroadcastmanager.content.LocalBroadcastManager;
 
 import static androidx.core.app.NotificationCompat.PRIORITY_LOW;
 import static com.checkin.app.checkin.data.notifications.Constants.FORMAT_SP_KEY_NOTIFICATION_CHANNEL;

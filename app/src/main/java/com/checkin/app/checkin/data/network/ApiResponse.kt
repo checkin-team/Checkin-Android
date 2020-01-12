@@ -51,7 +51,7 @@ class ApiResponse<T>(
                                 Log.d("APIResponse", "Detail")
                                 data["detail"].asText()
                             }
-                            data.has("errors") and data["errors"].isArray -> {
+                            data["errors"]?.isArray == true -> {
                                 Log.d("APIResponse", "Errors")
                                 data["errors"][0].asText()
                             }

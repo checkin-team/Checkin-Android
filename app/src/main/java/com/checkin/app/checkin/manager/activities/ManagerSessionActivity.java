@@ -15,13 +15,14 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.lifecycle.ViewModelProviders;
 
+import com.checkin.app.checkin.R;
+import com.checkin.app.checkin.Utility.Utils;
+import com.checkin.app.checkin.Waiter.Model.OrderStatusModel;
+import com.checkin.app.checkin.data.notifications.MESSAGE_TYPE;
 import com.checkin.app.checkin.data.notifications.MessageModel;
 import com.checkin.app.checkin.data.notifications.MessageObjectModel;
 import com.checkin.app.checkin.data.notifications.MessageUtils;
 import com.checkin.app.checkin.data.resource.Resource;
-import com.checkin.app.checkin.R;
-import com.checkin.app.checkin.Utility.Utils;
-import com.checkin.app.checkin.Waiter.Model.OrderStatusModel;
 import com.checkin.app.checkin.manager.fragments.ManagerInactiveTableBottomSheetFragment;
 import com.checkin.app.checkin.manager.fragments.ManagerSessionEventFragment;
 import com.checkin.app.checkin.manager.fragments.ManagerSessionOrderFragment;
@@ -42,16 +43,16 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 
-import static com.checkin.app.checkin.data.notifications.MessageModel.MESSAGE_TYPE.MANAGER_SESSION_BILL_CHANGE;
-import static com.checkin.app.checkin.data.notifications.MessageModel.MESSAGE_TYPE.MANAGER_SESSION_CHECKOUT_REQUEST;
-import static com.checkin.app.checkin.data.notifications.MessageModel.MESSAGE_TYPE.MANAGER_SESSION_END;
-import static com.checkin.app.checkin.data.notifications.MessageModel.MESSAGE_TYPE.MANAGER_SESSION_EVENT_CONCERN;
-import static com.checkin.app.checkin.data.notifications.MessageModel.MESSAGE_TYPE.MANAGER_SESSION_EVENT_SERVICE;
-import static com.checkin.app.checkin.data.notifications.MessageModel.MESSAGE_TYPE.MANAGER_SESSION_EVENT_UPDATE;
-import static com.checkin.app.checkin.data.notifications.MessageModel.MESSAGE_TYPE.MANAGER_SESSION_HOST_ASSIGNED;
-import static com.checkin.app.checkin.data.notifications.MessageModel.MESSAGE_TYPE.MANAGER_SESSION_MEMBER_CHANGE;
-import static com.checkin.app.checkin.data.notifications.MessageModel.MESSAGE_TYPE.MANAGER_SESSION_NEW_ORDER;
-import static com.checkin.app.checkin.data.notifications.MessageModel.MESSAGE_TYPE.MANAGER_SESSION_UPDATE_ORDER;
+import static com.checkin.app.checkin.data.notifications.MESSAGE_TYPE.MANAGER_SESSION_BILL_CHANGE;
+import static com.checkin.app.checkin.data.notifications.MESSAGE_TYPE.MANAGER_SESSION_CHECKOUT_REQUEST;
+import static com.checkin.app.checkin.data.notifications.MESSAGE_TYPE.MANAGER_SESSION_END;
+import static com.checkin.app.checkin.data.notifications.MESSAGE_TYPE.MANAGER_SESSION_EVENT_CONCERN;
+import static com.checkin.app.checkin.data.notifications.MESSAGE_TYPE.MANAGER_SESSION_EVENT_SERVICE;
+import static com.checkin.app.checkin.data.notifications.MESSAGE_TYPE.MANAGER_SESSION_EVENT_UPDATE;
+import static com.checkin.app.checkin.data.notifications.MESSAGE_TYPE.MANAGER_SESSION_HOST_ASSIGNED;
+import static com.checkin.app.checkin.data.notifications.MESSAGE_TYPE.MANAGER_SESSION_MEMBER_CHANGE;
+import static com.checkin.app.checkin.data.notifications.MESSAGE_TYPE.MANAGER_SESSION_NEW_ORDER;
+import static com.checkin.app.checkin.data.notifications.MESSAGE_TYPE.MANAGER_SESSION_UPDATE_ORDER;
 
 public class ManagerSessionActivity extends AppCompatActivity implements ManagerSessionOrderFragment.ManagerOrdersInteraction {
     public static final String KEY_SESSION_PK = "manager.session.session_pk";
@@ -294,7 +295,7 @@ public class ManagerSessionActivity extends AppCompatActivity implements Manager
     @Override
     protected void onResume() {
         super.onResume();
-        MessageModel.MESSAGE_TYPE[] types = new MessageModel.MESSAGE_TYPE[]{
+        MESSAGE_TYPE[] types = new MESSAGE_TYPE[]{
                 MANAGER_SESSION_NEW_ORDER, MANAGER_SESSION_EVENT_SERVICE, MANAGER_SESSION_CHECKOUT_REQUEST,
                 MANAGER_SESSION_EVENT_CONCERN, MANAGER_SESSION_HOST_ASSIGNED, MANAGER_SESSION_BILL_CHANGE,
                 MANAGER_SESSION_MEMBER_CHANGE, MANAGER_SESSION_UPDATE_ORDER, MANAGER_SESSION_EVENT_UPDATE,

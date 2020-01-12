@@ -10,11 +10,11 @@ import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.Observer
 import butterknife.BindView
 import com.airbnb.epoxy.EpoxyRecyclerView
-import com.checkin.app.checkin.data.notifications.MessageModel.MESSAGE_TYPE
-import com.checkin.app.checkin.data.notifications.MessageUtils
-import com.checkin.app.checkin.data.resource.Resource
 import com.checkin.app.checkin.R
 import com.checkin.app.checkin.Utility.pass
+import com.checkin.app.checkin.data.notifications.MESSAGE_TYPE
+import com.checkin.app.checkin.data.notifications.MessageUtils
+import com.checkin.app.checkin.data.resource.Resource
 import com.checkin.app.checkin.manager.activities.ManagerQSRDetailActivity
 import com.checkin.app.checkin.manager.controllers.QSRTablesController
 import com.checkin.app.checkin.manager.holders.QSRTableInteraction

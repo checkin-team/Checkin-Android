@@ -22,13 +22,14 @@ import androidx.lifecycle.ViewModelProviders;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.checkin.app.checkin.R;
+import com.checkin.app.checkin.Utility.Utils;
+import com.checkin.app.checkin.Waiter.Model.SessionContactModel;
+import com.checkin.app.checkin.data.notifications.MESSAGE_TYPE;
 import com.checkin.app.checkin.data.notifications.MessageModel;
 import com.checkin.app.checkin.data.notifications.MessageObjectModel;
 import com.checkin.app.checkin.data.notifications.MessageUtils;
 import com.checkin.app.checkin.data.resource.Resource;
-import com.checkin.app.checkin.R;
-import com.checkin.app.checkin.Utility.Utils;
-import com.checkin.app.checkin.Waiter.Model.SessionContactModel;
 import com.checkin.app.checkin.manager.models.ManagerSessionInvoiceModel;
 import com.checkin.app.checkin.manager.viewmodels.ManagerSessionViewModel;
 import com.checkin.app.checkin.misc.BillHolder;
@@ -245,8 +246,8 @@ public class ManagerSessionInvoiceActivity extends AppCompatActivity implements 
     @Override
     protected void onResume() {
         super.onResume();
-        MessageModel.MESSAGE_TYPE[] types = new MessageModel.MESSAGE_TYPE[]{
-                MessageModel.MESSAGE_TYPE.MANAGER_SESSION_BILL_CHANGE, MessageModel.MESSAGE_TYPE.MANAGER_SESSION_END};
+        MESSAGE_TYPE[] types = new MESSAGE_TYPE[]{
+                MESSAGE_TYPE.MANAGER_SESSION_BILL_CHANGE, MESSAGE_TYPE.MANAGER_SESSION_END};
         MessageUtils.registerLocalReceiver(this, mReceiver, types);
     }
 
