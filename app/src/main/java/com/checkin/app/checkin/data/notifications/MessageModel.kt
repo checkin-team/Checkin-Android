@@ -6,7 +6,6 @@ import android.content.ComponentName
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
-import android.text.TextUtils
 import androidx.core.app.NotificationCompat
 import androidx.core.os.bundleOf
 import com.checkin.app.checkin.R
@@ -70,7 +69,7 @@ data class MessageModel(
         isUserCBYGSessionNotification && sessionDetail != null -> PreorderSessionDetailActivity.withSessionIntent(context, sessionDetail!!.pk)
         isUserQSRSessionNotification && sessionDetail != null -> QSRSessionDetailActivity.withSessionIntent(context, sessionDetail!!.pk)
         else -> null
-    }
+    }.also { it?.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK) }
 
     private fun getNotificationIntent(context: Context): Intent {
         val componentName = getTargetComponent(context)
@@ -158,15 +157,10 @@ data class MessageModel(
                 .build()
     }
 
-    fun shouldShowNotification(): Boolean {
-        return !TextUtils.isEmpty(description)
-    }
+    fun shouldShowNotification(): Boolean = !description.isNullOrBlank()
 
     private fun tryGroupNotification(builder: NotificationCompat.Builder) {
-        val group = groupKey
-        if (group != null) {
-            builder.setGroup(group)
-        }
+        groupKey?.let { builder.setGroup(it) }
     }
 
     val groupKey: String?

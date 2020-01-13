@@ -41,9 +41,10 @@ class QSRSessionDetailActivity : BaseActivity() {
 
     private val receiver by lazy {
         object : BroadcastReceiver() {
-            override fun onReceive(context: Context?, intent: Intent?) {
+            override fun onReceive(context: Context?, intent: Intent) {
                 val message = MessageUtils.parseMessage(intent) ?: return
                 val session = message.sessionDetail ?: return
+                if (session.pk == viewModel.sessionId) return
                 when (message.type) {
                     MESSAGE_TYPE.USER_SCHEDULED_QSR_ACCEPTED -> viewModel.updateStatus(ScheduledSessionStatus.ACCEPTED)
                     MESSAGE_TYPE.USER_SCHEDULED_QSR_PREPARATION -> viewModel.updateStatus(ScheduledSessionStatus.PREPARATION)
@@ -106,13 +107,8 @@ class QSRSessionDetailActivity : BaseActivity() {
 
     override fun onResume() {
         super.onResume()
-        val sessionId = intent.getLongExtra(KEY_SESSION_ID, 0)
-        if (sessionId == 0L) {
-            finish()
-            return
-        }
         MessageUtils.registerLocalReceiver(
-                this, receiver, sessionId,
+                this, receiver,
                 MESSAGE_TYPE.USER_SCHEDULED_QSR_ACCEPTED, MESSAGE_TYPE.USER_SCHEDULED_QSR_PREPARATION,
                 MESSAGE_TYPE.USER_SCHEDULED_QSR_CHECKOUT, MESSAGE_TYPE.USER_SCHEDULED_QSR_CANCELLED,
                 MESSAGE_TYPE.USER_SCHEDULED_QSR_DONE

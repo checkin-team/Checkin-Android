@@ -3,19 +3,19 @@ package com.checkin.app.checkin.User.Private
 import android.app.Application
 import android.content.Context
 import androidx.lifecycle.LiveData
+import com.checkin.app.checkin.User.ShopCustomerModel
+import com.checkin.app.checkin.User.UserModel
+import com.checkin.app.checkin.User.UserRepository
+import com.checkin.app.checkin.Utility.ProgressRequestBody.UploadCallbacks
 import com.checkin.app.checkin.data.BaseViewModel
 import com.checkin.app.checkin.data.Converters.objectMapper
+import com.checkin.app.checkin.data.network.RetrofitCallAsyncTask
 import com.checkin.app.checkin.data.notifications.MessageUtils
 import com.checkin.app.checkin.data.notifications.MessageUtils.NotificationUpdate
 import com.checkin.app.checkin.data.resource.Resource
 import com.checkin.app.checkin.data.resource.Resource.Companion.error
 import com.checkin.app.checkin.data.resource.Resource.Companion.loading
 import com.checkin.app.checkin.data.resource.Resource.Companion.success
-import com.checkin.app.checkin.data.network.RetrofitCallAsyncTask
-import com.checkin.app.checkin.User.ShopCustomerModel
-import com.checkin.app.checkin.User.UserModel
-import com.checkin.app.checkin.User.UserRepository
-import com.checkin.app.checkin.Utility.ProgressRequestBody.UploadCallbacks
 import com.checkin.app.checkin.misc.models.GenericDetailModel
 import java.io.File
 
@@ -47,7 +47,7 @@ class UserViewModel(application: Application) : BaseViewModel(application) {
     val imageUploadResult: LiveData<Resource<Void>>
         get() = mImageUploadResult
 
-    fun updateProfilePic(pictureFile: File, context: Context?) {
+    fun updateProfilePic(pictureFile: File, context: Context) {
         val builder = MessageUtils.createUploadNotification(context)
         val notificationUpdate: NotificationUpdate = object : NotificationUpdate(context, builder) {
             override fun onProgressUpdate(percentage: Int) {

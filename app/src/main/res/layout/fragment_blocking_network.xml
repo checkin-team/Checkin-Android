@@ -7,15 +7,16 @@
     <FrameLayout
         android:id="@+id/container_blocking_network_loading"
         android:layout_width="match_parent"
-        android:layout_height="50dp"
+        android:layout_height="wrap_content"
         android:layout_gravity="top">
 
         <ProgressBar
             android:id="@+id/pb_network_blocking_loading"
-            style="@style/RougeProgressBar"
+            style="@style/WhiteProgressBar"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:indeterminate="true" />
+            android:indeterminate="true"
+            android:progressDrawable="@drawable/progress" />
     </FrameLayout>
 
     <LinearLayout

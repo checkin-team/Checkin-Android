@@ -35,7 +35,7 @@ class ManagerQSRLiveOrdersFragment : BaseFragment(), QSRTableInteraction {
 
     private val mReceiver by lazy {
         object : BroadcastReceiver() {
-            override fun onReceive(context: Context?, intent: Intent?) {
+            override fun onReceive(context: Context?, intent: Intent) {
                 val message = MessageUtils.parseMessage(intent) ?: return
                 val session = message.sessionDetail ?: return
                 val shop = message.shopDetail

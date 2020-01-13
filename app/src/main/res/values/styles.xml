@@ -297,6 +297,10 @@
         <item name="android:height">10dp</item>
     </style>
 
+    <style name="WhiteProgressBar" parent="Widget.AppCompat.ProgressBar.Horizontal">
+        <item name="android:progressTint">@color/white</item>
+    </style>
+
     <style name="WhiteProgressStyle" parent="@style/Theme.AppCompat">
         <item name="colorAccent">@color/white</item>
     </style>

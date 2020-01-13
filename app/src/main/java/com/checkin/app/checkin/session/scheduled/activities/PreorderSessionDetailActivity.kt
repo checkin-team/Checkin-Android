@@ -41,8 +41,9 @@ class PreorderSessionDetailActivity : BaseActivity() {
 
     private val receiver by lazy {
         object : BroadcastReceiver() {
-            override fun onReceive(context: Context?, intent: Intent?) {
+            override fun onReceive(context: Context?, intent: Intent) {
                 val message = MessageUtils.parseMessage(intent) ?: return
+                if (message.sessionDetail?.pk == viewModel.sessionId) return
                 when (message.type) {
                     MESSAGE_TYPE.USER_SCHEDULED_CBYG_ACCEPTED -> viewModel.updateStatus(ScheduledSessionStatus.ACCEPTED)
                     MESSAGE_TYPE.USER_SCHEDULED_CBYG_PREPARATION -> viewModel.updateStatus(ScheduledSessionStatus.PREPARATION)
@@ -104,13 +105,8 @@ class PreorderSessionDetailActivity : BaseActivity() {
 
     override fun onResume() {
         super.onResume()
-        val sessionId = intent.getLongExtra(KEY_SESSION_ID, 0)
-        if (sessionId == 0L) {
-            finish()
-            return
-        }
         MessageUtils.registerLocalReceiver(
-                this, receiver, sessionId,
+                this, receiver,
                 MESSAGE_TYPE.USER_SCHEDULED_CBYG_ACCEPTED, MESSAGE_TYPE.USER_SCHEDULED_CBYG_PREPARATION,
                 MESSAGE_TYPE.USER_SCHEDULED_CBYG_CHECKOUT, MESSAGE_TYPE.USER_SCHEDULED_CBYG_CANCELLED
         )

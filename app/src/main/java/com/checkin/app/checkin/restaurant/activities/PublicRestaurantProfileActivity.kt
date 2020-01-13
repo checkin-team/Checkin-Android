@@ -223,6 +223,7 @@ class PublicRestaurantProfileActivity : BaseActivity(), AppBarLayout.OnOffsetCha
                             supportFragmentManager.findFragmentByTag(SchedulerBottomSheetFragment.FRAGMENT_TAG)?.let { remove(it) }
                                     ?: this
                         }
+                        scheduledCartView.show()
                     }
                     Resource.Status.ERROR_INVALID_REQUEST -> if (resource.problem?.getErrorCode() == ProblemModel.ERROR_CODE.SESSION_SCHEDULED_PENDING_CART) {
                         val cartRestaurant = cartViewModel.cartStatus.value?.data?.restaurant?.target
