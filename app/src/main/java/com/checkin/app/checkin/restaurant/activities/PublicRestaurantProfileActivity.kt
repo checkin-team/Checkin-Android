@@ -522,7 +522,7 @@ class PublicRestaurantProfileActivity : BaseActivity(), AppBarLayout.OnOffsetCha
 
         override fun createFragment(position: Int): Fragment = when (tabs[position]) {
             RestaurantTab.MENU -> ScheduledMenuFragment.newInstance(restaurantId)
-            RestaurantTab.INFO -> PublicRestaurantInfoFragment.newInstance(restaurantId)
+            RestaurantTab.INFO -> PublicRestaurantInfoFragment.newInstance()
             else -> BlankFragment.newInstance()
         }
     }

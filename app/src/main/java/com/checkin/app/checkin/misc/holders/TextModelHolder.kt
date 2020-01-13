@@ -8,9 +8,8 @@ import com.airbnb.epoxy.EpoxyModelWithHolder
 import com.checkin.app.checkin.R
 import com.checkin.app.checkin.misc.epoxy.BaseEpoxyHolder
 
-@EpoxyModelClass(layout = R.layout.item_text)
+@EpoxyModelClass(layout = R.layout.item_text, useLayoutOverloads = true)
 abstract class TextModelHolder : EpoxyModelWithHolder<TextModelHolder.Holder>() {
-
     @EpoxyAttribute
     lateinit var text: String
 

@@ -4,11 +4,12 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.widget.TextView;
 
-import com.checkin.app.checkin.misc.activities.BaseActivity;
+import androidx.annotation.Nullable;
+
 import com.checkin.app.checkin.R;
 import com.checkin.app.checkin.Shop.ShopModel;
+import com.checkin.app.checkin.misc.activities.BaseActivity;
 
-import androidx.annotation.Nullable;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
@@ -50,15 +51,6 @@ public class ActiveSessionPaymentOptionsActivity extends BaseActivity {
         setResult(RESULT_OK, data);
         finish();
     }
-
-    @OnClick(R.id.gpay_container)
-    public void onGPayClick(){
-//        Intent data = new Intent();
-//        data.putExtra(KEY_PAYMENT_MODE_RESULT, SessionBillModel.PAYMENT_MODES.GOOGLE_PAY);
-//        setResult(RESULT_OK, data);
-//        finish();
-    }
-
 
     @Override
     public boolean onSupportNavigateUp() {

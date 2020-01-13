@@ -8,10 +8,10 @@ import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
 import butterknife.BindView
 import com.airbnb.epoxy.EpoxyRecyclerView
-import com.checkin.app.checkin.data.resource.Resource
 import com.checkin.app.checkin.R
 import com.checkin.app.checkin.Utility.Utils
 import com.checkin.app.checkin.Utility.isNotEmpty
+import com.checkin.app.checkin.data.resource.Resource
 import com.checkin.app.checkin.misc.BillHolder
 import com.checkin.app.checkin.misc.fragments.BaseFragment
 import com.checkin.app.checkin.misc.holders.textModelHolder
@@ -42,7 +42,7 @@ class QSRFoodReadyFragment : BaseFragment() {
         viewModel.fetchSessionData(sessionId)
 
         billHolder = BillHolder(view)
-        viewModel.sessionData.observe(viewLifecycleOwner, Observer {
+        viewModel.sessionData.observe(this, Observer {
             if (it?.status == Resource.Status.SUCCESS && it.data != null) setupData(it.data)
             else if (it.status == Resource.Status.LOADING) billHolder.showLoading()
             else if (it.status == Resource.Status.ERROR_NOT_FOUND) requireActivity().finish()
@@ -56,7 +56,7 @@ class QSRFoodReadyFragment : BaseFragment() {
                 }
             }
         }
-        viewModel.ordersData.observe(viewLifecycleOwner, Observer {
+        viewModel.ordersData.observe(this, Observer {
             if (it.status == Resource.Status.SUCCESS && it.data != null) epoxyRvOrders.requestModelBuild()
         })
     }

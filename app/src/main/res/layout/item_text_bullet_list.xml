@@ -7,27 +7,24 @@
     android:orientation="vertical">
 
     <TextView
-        android:id="@+id/bullet"
+        android:id="@+id/tv_bullet"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
         android:text="•"
         android:textColor="@color/brownish_grey"
-        android:textSize="12sp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
-        android:id="@+id/tv_public_resturant_text"
+        android:id="@+id/tv_text_value"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
-        android:layout_marginBottom="8dp"
-        android:textColor="@color/brownish_grey"
-        android:textSize="12sp"
+        android:layout_marginStart="@dimen/spacing_tiny"
+        android:layout_marginTop="@dimen/spacing_extra_tiny"
+        android:textAppearance="@style/GreySmallTextStyle"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/bullet"
-        app:layout_constraintTop_toTopOf="parent"
-        tools:text="Make sure your phone is charged. the place has some amazing selfie spots." />
+        app:layout_constraintStart_toEndOf="@id/tv_bullet"
+        app:layout_constraintTop_toTopOf="@id/tv_bullet"
+        tools:text="Make sure your phone is charged. the place has some amazing selfie spots.\nthe place has some amazing selfie spots." />
 </androidx.constraintlayout.widget.ConstraintLayout>
