@@ -11,12 +11,12 @@ import androidx.lifecycle.Observer
 import butterknife.BindView
 import butterknife.ButterKnife
 import butterknife.OnClick
-import com.checkin.app.checkin.data.resource.Resource
 import com.checkin.app.checkin.R
 import com.checkin.app.checkin.Utility.Utils
 import com.checkin.app.checkin.Utility.callPhoneNumber
 import com.checkin.app.checkin.Utility.inTransaction
 import com.checkin.app.checkin.Utility.pass
+import com.checkin.app.checkin.data.resource.Resource
 import com.checkin.app.checkin.manager.fragments.ManagerPreOrderDetailNewFragment
 import com.checkin.app.checkin.manager.fragments.ManagerPreOrderDetailPreparationFragment
 import com.checkin.app.checkin.manager.fragments.ManagerPreOrderDetailUpcomingFragment
@@ -81,6 +81,7 @@ class ManagerPreOrderDetailActivity : BaseActivity() {
                             viewModel.preparationTimeData.value = PreparationTimeModel(diff)
                         }
                     }
+                    Resource.Status.ERROR_NOT_FOUND -> finish()
                     else -> pass
                 }
             }
