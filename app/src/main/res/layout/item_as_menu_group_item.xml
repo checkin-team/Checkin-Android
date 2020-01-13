@@ -23,7 +23,7 @@
         app:layout_constraintTop_toTopOf="@id/im_as_menu_item"
         tools:text="ITEM TITLE " />
 
-    <com.checkin.app.checkin.Utility.ExpandableTextView
+    <com.checkin.app.checkin.misc.views.ExpandableTextView
         android:id="@+id/tv_as_menu_item_desc"
         style="@style/PinkishGreySmallTextStyle"
         android:layout_width="0dp"

@@ -12,7 +12,7 @@ import com.bumptech.glide.request.target.NotificationTarget
 import com.checkin.app.checkin.R
 import com.checkin.app.checkin.Utility.GlideApp
 import com.checkin.app.checkin.data.notifications.MessageUtils.createRequiredChannel
-import com.checkin.app.checkin.menu.activities.ActiveSessionMenuActivity.Companion.openMenu
+import com.checkin.app.checkin.menu.activities.ActiveSessionMenuActivity
 import com.checkin.app.checkin.misc.models.BriefModel
 import com.checkin.app.checkin.session.activesession.ActiveSessionActivity
 
@@ -84,7 +84,7 @@ class ActiveSessionNotificationService : Service() {
     }
 
     private fun openMenu() {
-        val menuIntent = openMenu(this, mRestaurantPk)
+        val menuIntent = ActiveSessionMenuActivity.withRestaurantIntent(this, mRestaurantPk)
         menuIntent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
         startActivity(menuIntent)
     }

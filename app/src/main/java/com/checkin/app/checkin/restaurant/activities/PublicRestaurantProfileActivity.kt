@@ -18,7 +18,6 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentActivity
 import androidx.lifecycle.Observer
 import androidx.viewpager.widget.ViewPager
-import androidx.viewpager2.adapter.FragmentStateAdapter
 import androidx.viewpager2.widget.ViewPager2
 import butterknife.BindView
 import butterknife.ButterKnife
@@ -36,6 +35,7 @@ import com.checkin.app.checkin.menu.viewmodels.ScheduledCartViewModel
 import com.checkin.app.checkin.misc.BlockingNetworkViewModel
 import com.checkin.app.checkin.misc.activities.BaseActivity
 import com.checkin.app.checkin.misc.activities.QRScannerActivity
+import com.checkin.app.checkin.misc.adapters.BaseFragmentStateAdapter
 import com.checkin.app.checkin.misc.adapters.CoverPagerAdapter
 import com.checkin.app.checkin.misc.fragments.*
 import com.checkin.app.checkin.misc.paytm.PaytmPayment
@@ -160,6 +160,7 @@ class PublicRestaurantProfileActivity : BaseActivity(), AppBarLayout.OnOffsetCha
 
         fragmentAdapter = PublicRestaurantProfileAdapter(this, restaurantId)
         vpFragment.adapter = fragmentAdapter
+        vpFragment.offscreenPageLimit = fragmentAdapter.itemCount
         TabLayoutMediator(tabsFragment, vpFragment) { tab, pos -> tab.text = fragmentAdapter.tabs[pos].name.capitalize() }.attach()
         tabsFragment.addOnTabSelectedListener(object : TabLayout.ViewPagerOnTabSelectedListener(null) {
             override fun onTabSelected(tab: TabLayout.Tab) {
@@ -184,6 +185,8 @@ class PublicRestaurantProfileActivity : BaseActivity(), AppBarLayout.OnOffsetCha
         supportFragmentManager.inTransaction {
             add(android.R.id.content, networkFragment, NetworkBlockingFragment.FRAGMENT_TAG)
         }
+
+        lifecycle.addObserver(ChildSizeMeasureViewPager2(vpFragment))
     }
 
     private fun setupObservers() {
@@ -515,12 +518,12 @@ class PublicRestaurantProfileActivity : BaseActivity(), AppBarLayout.OnOffsetCha
         val TAG: String = PublicRestaurantProfileActivity::class.java.simpleName
     }
 
-    class PublicRestaurantProfileAdapter(fragmentActivity: FragmentActivity, val restaurantId: Long) : FragmentStateAdapter(fragmentActivity) {
+    class PublicRestaurantProfileAdapter(fragmentActivity: FragmentActivity, val restaurantId: Long) : BaseFragmentStateAdapter(fragmentActivity) {
         val tabs = listOf(RestaurantTab.MENU, RestaurantTab.INFO)
 
         override fun getItemCount() = tabs.size
 
-        override fun createFragment(position: Int): Fragment = when (tabs[position]) {
+        override fun newFragment(position: Int): Fragment = when (tabs[position]) {
             RestaurantTab.MENU -> ScheduledMenuFragment.newInstance(restaurantId)
             RestaurantTab.INFO -> PublicRestaurantInfoFragment.newInstance()
             else -> BlankFragment.newInstance()

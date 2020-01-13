@@ -96,6 +96,7 @@ Gurugram, Haryana 122004
         android:layout_marginStart="@dimen/spacing_small"
         android:layout_marginTop="@dimen/spacing_tiny"
         android:layout_marginEnd="@dimen/spacing_small"
+        android:nestedScrollingEnabled="false"
         android:paddingStart="@dimen/spacing_extra_small"
         app:itemSpacing="@dimen/spacing_tiny"
         tools:listitem="@layout/item_text_bullet_list" />

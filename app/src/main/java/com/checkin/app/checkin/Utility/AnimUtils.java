@@ -23,6 +23,8 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.annotation.RequiresApi;
 
+import com.checkin.app.checkin.misc.views.ChildSizeMeasureViewPager;
+
 public final class AnimUtils {
     public static final int NO_CHANGE = -1;
     public static final long DEFAULT_DURATION = 300L;

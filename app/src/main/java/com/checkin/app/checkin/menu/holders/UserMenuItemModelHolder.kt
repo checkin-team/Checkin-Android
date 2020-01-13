@@ -12,10 +12,10 @@ import com.airbnb.epoxy.EpoxyAttribute
 import com.airbnb.epoxy.EpoxyModelClass
 import com.airbnb.epoxy.EpoxyModelWithHolder
 import com.checkin.app.checkin.R
-import com.checkin.app.checkin.Utility.ExpandableTextView
 import com.checkin.app.checkin.Utility.Utils
 import com.checkin.app.checkin.menu.models.MenuItemModel
 import com.checkin.app.checkin.misc.epoxy.BaseEpoxyHolder
+import com.checkin.app.checkin.misc.views.ExpandableTextView
 
 @EpoxyModelClass(layout = R.layout.item_as_menu_group_item)
 abstract class UserMenuItemModelHolder : EpoxyModelWithHolder<UserMenuItemModelHolder.Holder>() {

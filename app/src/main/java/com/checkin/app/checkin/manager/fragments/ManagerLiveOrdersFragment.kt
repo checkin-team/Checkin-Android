@@ -7,13 +7,13 @@ import android.widget.TextView
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.Observer
-import androidx.viewpager2.adapter.FragmentStateAdapter
 import androidx.viewpager2.widget.ViewPager2
 import butterknife.BindView
-import com.checkin.app.checkin.data.resource.Resource
 import com.checkin.app.checkin.R
+import com.checkin.app.checkin.data.resource.Resource
 import com.checkin.app.checkin.manager.viewmodels.ManagerWorkViewModel
 import com.checkin.app.checkin.misc.BlockingNetworkViewModel
+import com.checkin.app.checkin.misc.adapters.BaseFragmentStateAdapter
 import com.checkin.app.checkin.misc.fragments.BaseFragment
 import com.checkin.app.checkin.restaurant.models.RestaurantServiceModel
 import com.checkin.app.checkin.restaurant.models.RestaurantServiceType
@@ -98,10 +98,10 @@ class ManagerLiveOrdersFragment : BaseFragment() {
         fun newInstance() = ManagerLiveOrdersFragment()
     }
 
-    class RestaurantOrdersServiceAdapter(fragment: Fragment, var tabs: List<RestaurantOrdersFragmentType>) : FragmentStateAdapter(fragment) {
+    class RestaurantOrdersServiceAdapter(fragment: Fragment, var tabs: List<RestaurantOrdersFragmentType>) : BaseFragmentStateAdapter(fragment) {
         override fun getItemCount(): Int = tabs.count()
 
-        override fun createFragment(position: Int): Fragment = when (tabs[position]) {
+        override fun newFragment(position: Int): Fragment = when (tabs[position]) {
             RestaurantOrdersFragmentType.ACTIVE_SESSION -> ManagerActiveSessionLiveTablesFragment.newInstance()
             RestaurantOrdersFragmentType.MASTER_QR -> ManagerQSRLiveOrdersFragment.newInstance()
             RestaurantOrdersFragmentType.PRE_ORDER -> ManagerScheduledLiveOrdersFragment.newInstance()

@@ -7,11 +7,11 @@ import androidx.activity.viewModels
 import androidx.lifecycle.Observer
 import butterknife.BindView
 import butterknife.ButterKnife
-import com.checkin.app.checkin.data.resource.Resource
 import com.checkin.app.checkin.R
 import com.checkin.app.checkin.Utility.Utils
 import com.checkin.app.checkin.Utility.coroutineLifecycleScope
 import com.checkin.app.checkin.Utility.inTransaction
+import com.checkin.app.checkin.data.resource.Resource
 import com.checkin.app.checkin.menu.fragments.MenuFragment
 import com.checkin.app.checkin.menu.viewmodels.ActiveSessionCartViewModel
 import com.checkin.app.checkin.menu.views.ActiveSessionCartView
@@ -93,10 +93,11 @@ class ActiveSessionMenuActivity : BaseActivity() {
         private const val KEY_PRE_SELECTED_ITEM = "as.menu.pre_selected.item_id"
 
         @JvmOverloads
-        fun openMenu(context: Context, restaurantId: Long, itemPk: Long = 0L) = Intent(context, ActiveSessionMenuActivity::class.java).apply {
+        fun openMenu(context: Context, restaurantId: Long, itemPk: Long = 0L) = context.startActivity(withRestaurantIntent(context, restaurantId, itemPk))
+
+        fun withRestaurantIntent(context: Context, restaurantId: Long, itemPk: Long = 0L) = Intent(context, ActiveSessionMenuActivity::class.java).apply {
             putExtra(KEY_RESTAURANT_ID, restaurantId)
             putExtra(KEY_PRE_SELECTED_ITEM, itemPk)
-            context.startActivity(this)
         }
     }
 }

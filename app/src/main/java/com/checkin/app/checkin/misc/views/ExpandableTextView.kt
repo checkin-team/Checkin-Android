@@ -1,4 +1,4 @@
-package com.checkin.app.checkin.Utility
+package com.checkin.app.checkin.misc.views
 
 import android.annotation.SuppressLint
 import android.content.Context

@@ -52,7 +52,7 @@
 
         </com.google.android.material.tabs.TabLayout>
 
-        <com.checkin.app.checkin.Utility.ChildSizeMeasureViewPager
+        <com.checkin.app.checkin.misc.views.ChildSizeMeasureViewPager
             android:id="@+id/pager_as_menu_items"
             android:layout_width="match_parent"
             android:layout_height="wrap_content" />
