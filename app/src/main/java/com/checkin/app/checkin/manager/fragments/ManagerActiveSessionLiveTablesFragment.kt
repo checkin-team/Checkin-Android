@@ -127,6 +127,7 @@ class ManagerActiveSessionLiveTablesFragment : BaseFragment(), ManagerTableInter
                 }
             }
         })
+        mViewModel.inactiveTables.observe(this, Observer { })
 
         mViewModel.fetchActiveTables(workViewModel.shopPk)
     }

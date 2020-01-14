@@ -8,9 +8,9 @@ import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import butterknife.BindView
-import com.checkin.app.checkin.data.resource.Resource
 import com.checkin.app.checkin.R
 import com.checkin.app.checkin.Utility.parentViewModels
+import com.checkin.app.checkin.data.resource.Resource
 import com.checkin.app.checkin.manager.adapters.ManagerInactiveTableAdapter
 import com.checkin.app.checkin.manager.adapters.ManagerInactiveTableAdapter.ManagerTableInitiate
 import com.checkin.app.checkin.manager.viewmodels.ManagerASLiveTablesViewModel
@@ -30,7 +30,9 @@ class ManagerInactiveTableBottomSheetFragment : BaseBottomSheetFragment(), Manag
         rvTable.layoutManager = LinearLayoutManager(requireContext(), RecyclerView.VERTICAL, false)
         rvTable.adapter = mInactiveAdapter
 
-        viewModel.inactiveTables.observe(this, Observer { if (it?.status == Resource.Status.SUCCESS && it.data != null) mInactiveAdapter.setData(it.data) })
+        viewModel.inactiveTables.observe(this, Observer {
+            if (it?.status == Resource.Status.SUCCESS && it.data != null) mInactiveAdapter.setData(it.data)
+        })
     }
 
     override fun onClickInactiveTable(tableModel: RestaurantTableModel) {

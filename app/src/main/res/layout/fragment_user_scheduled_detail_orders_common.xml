@@ -13,6 +13,7 @@
         android:layout_marginStart="@dimen/spacing_small"
         android:layout_marginEnd="@dimen/spacing_small"
         android:layout_marginBottom="@dimen/spacing_small"
+        android:nestedScrollingEnabled="false"
         tools:itemCount="3"
         tools:listitem="@layout/item_invoice_order_without_customizations" />
 

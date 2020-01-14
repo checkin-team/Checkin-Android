@@ -3,10 +3,10 @@ package com.checkin.app.checkin.manager.viewmodels
 import android.app.Application
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.Transformations
+import com.checkin.app.checkin.Waiter.WaiterRepository
 import com.checkin.app.checkin.data.BaseViewModel
 import com.checkin.app.checkin.data.Converters
 import com.checkin.app.checkin.data.resource.Resource
-import com.checkin.app.checkin.Waiter.WaiterRepository
 import com.checkin.app.checkin.manager.ManagerRepository
 import com.checkin.app.checkin.session.activesession.chat.SessionChatModel
 import com.checkin.app.checkin.session.models.CheckoutStatusModel
@@ -15,9 +15,6 @@ import com.checkin.app.checkin.session.models.QRResultModel
 import com.checkin.app.checkin.session.models.RestaurantTableModel
 import java.util.ArrayList
 import kotlin.Comparator
-import kotlin.Int
-import kotlin.Long
-import kotlin.apply
 
 class ManagerASLiveTablesViewModel(application: Application) : BaseViewModel(application) {
     private val mManagerRepository: ManagerRepository = ManagerRepository.getInstance(application)
@@ -34,34 +31,29 @@ class ManagerASLiveTablesViewModel(application: Application) : BaseViewModel(app
     val checkoutData: LiveData<Resource<CheckoutStatusModel>> = mCheckoutData
 
 
-    val activeTables: LiveData<Resource<List<RestaurantTableModel>>>
-        get() = Transformations.map(mTablesData) { input ->
-            if (input?.data == null || input.status !== Resource.Status.SUCCESS) return@map input
-            val result: MutableList<RestaurantTableModel> = ArrayList()
-            for (i in input.data.indices) {
-                val tableModel = input.data[i]
-                if (tableModel.tableSession != null) result.add(tableModel)
-            }
-            result.sortWith(Comparator { t1: RestaurantTableModel, t2: RestaurantTableModel ->
-                if (t2.tableSession!!.event != null && t1.tableSession!!.event != null) {
-                    t2.tableSession!!.event.timestamp.compareTo(t1.tableSession!!.event.timestamp)
-                } else {
-                    t2.tableSession!!.created.compareTo(t1.tableSession!!.created)
-                }
-            })
-            Resource.cloneResource(input, result)
+    val activeTables: LiveData<Resource<List<RestaurantTableModel>>> = Transformations.map(mTablesData) { input ->
+        if (input?.data == null || input.status !== Resource.Status.SUCCESS) return@map input
+        val result: MutableList<RestaurantTableModel> = ArrayList()
+        for (i in input.data.indices) {
+            val tableModel = input.data[i]
+            if (tableModel.tableSession != null) result.add(tableModel)
         }
+        result.sortWith(Comparator { t1: RestaurantTableModel, t2: RestaurantTableModel ->
+            if (t2.tableSession!!.event != null && t1.tableSession!!.event != null) {
+                t2.tableSession!!.event.timestamp.compareTo(t1.tableSession!!.event.timestamp)
+            } else {
+                t2.tableSession!!.created.compareTo(t1.tableSession!!.created)
+            }
+        })
+        Resource.cloneResource(input, result)
+    }
 
-    val inactiveTables: LiveData<Resource<List<RestaurantTableModel>>>
-        get() = Transformations.map(mTablesData) { input ->
-            if (input?.data == null || input.status !== Resource.Status.SUCCESS) return@map input
-            val result: MutableList<RestaurantTableModel> = ArrayList()
-            for (i in input.data.indices) {
-                val tableModel = input.data[i]
-                if (tableModel.tableSession == null) result.add(tableModel)
-            }
-            Resource.cloneResource(input, result)
-        }
+    val inactiveTables: LiveData<Resource<List<RestaurantTableModel>>> = Transformations.map(mTablesData) {
+        it?.data?.let { list ->
+            val data = list.filter { it.tableSession == null }
+            Resource.cloneResource(it, data)
+        } ?: it
+    }
 
     fun markSessionDone(sessionId: Long) {
         val data = Converters.objectMapper.createObjectNode()

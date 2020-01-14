@@ -152,10 +152,12 @@ class ScheduledSessionCartView @JvmOverloads constructor(
             override fun onStateChanged(bottomSheet: View, newState: Int) = when (newState) {
                 BottomSheetBehavior.STATE_EXPANDED -> {
                     bottomSheetBehavior.swipeEnabled = false
+                    containerCartTopbar.visibility = View.GONE
                     listener.onCartOpen()
                 }
                 else -> {
                     bottomSheetBehavior.swipeEnabled = true
+                    containerCartTopbar.visibility = View.VISIBLE
                     listener.onCartClose()
                 }
             }
