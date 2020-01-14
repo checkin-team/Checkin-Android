@@ -16,11 +16,11 @@ import butterknife.BindView
 import butterknife.ButterKnife
 import butterknife.OnClick
 import com.airbnb.epoxy.EpoxyRecyclerView
-import com.checkin.app.checkin.data.resource.Resource
 import com.checkin.app.checkin.R
 import com.checkin.app.checkin.Utility.Utils
 import com.checkin.app.checkin.Utility.inTransaction
 import com.checkin.app.checkin.Utility.isNotEmpty
+import com.checkin.app.checkin.data.resource.Resource
 import com.checkin.app.checkin.menu.controllers.getUniqueId
 import com.checkin.app.checkin.menu.fragments.MenuFragment
 import com.checkin.app.checkin.menu.holders.ShopMenuCartModelHolder
@@ -31,8 +31,6 @@ import com.checkin.app.checkin.misc.BlockingNetworkViewModel
 import com.checkin.app.checkin.misc.activities.BaseActivity
 import com.checkin.app.checkin.misc.fragments.NetworkBlockingFragment
 import com.checkin.app.checkin.misc.views.EndDrawerToggle
-import org.koin.androidx.fragment.android.setupKoinFragmentFactory
-import org.koin.androidx.scope.lifecycleScope
 
 class ShopMenuActivity : BaseActivity(), ShopMenuCartModelHolder.MenuCartInteraction {
     @BindView(R.id.epoxy_rv_shop_menu_cart)
@@ -50,8 +48,6 @@ class ShopMenuActivity : BaseActivity(), ShopMenuCartModelHolder.MenuCartInterac
     private val networkViewModel: BlockingNetworkViewModel by viewModels()
 
     override fun onCreate(savedInstanceState: Bundle?) {
-        setupKoinFragmentFactory(lifecycleScope)
-
         super.onCreate(savedInstanceState)
 
         setContentView(R.layout.activity_shop_session_menu)

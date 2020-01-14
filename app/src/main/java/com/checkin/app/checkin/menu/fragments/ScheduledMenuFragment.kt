@@ -17,7 +17,7 @@ class ScheduledMenuFragment : BaseMenuFragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         childFragmentManager.inTransaction {
-            add(R.id.container_as_menu, UserMenuGroupsFragment::class.java, null)
+            add(R.id.container_as_menu, UserMenuGroupsFragment.withScheduledCart(), null)
         }
 
         menuViewModel.fetchRecommendedItems()

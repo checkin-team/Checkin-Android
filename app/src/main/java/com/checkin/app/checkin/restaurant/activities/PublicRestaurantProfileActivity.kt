@@ -58,8 +58,6 @@ import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.PhoneAuthCredential
 import com.rd.PageIndicatorView
 import com.rd.animation.type.AnimationType
-import org.koin.androidx.fragment.android.setupKoinFragmentFactory
-import org.koin.androidx.scope.lifecycleScope
 import java.util.*
 import kotlin.math.abs
 
@@ -134,8 +132,6 @@ class PublicRestaurantProfileActivity : BaseActivity(), AppBarLayout.OnOffsetCha
     private val firebaseAuth: FirebaseAuth by lazy { FirebaseAuth.getInstance() }
 
     override fun onCreate(savedInstanceState: Bundle?) {
-        setupKoinFragmentFactory(lifecycleScope)
-
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_public_restaurant_profile)
         ButterKnife.bind(this)
@@ -160,7 +156,6 @@ class PublicRestaurantProfileActivity : BaseActivity(), AppBarLayout.OnOffsetCha
 
         fragmentAdapter = PublicRestaurantProfileAdapter(this, restaurantId)
         vpFragment.adapter = fragmentAdapter
-        vpFragment.offscreenPageLimit = fragmentAdapter.itemCount
         TabLayoutMediator(tabsFragment, vpFragment) { tab, pos -> tab.text = fragmentAdapter.tabs[pos].name.capitalize() }.attach()
         tabsFragment.addOnTabSelectedListener(object : TabLayout.ViewPagerOnTabSelectedListener(null) {
             override fun onTabSelected(tab: TabLayout.Tab) {

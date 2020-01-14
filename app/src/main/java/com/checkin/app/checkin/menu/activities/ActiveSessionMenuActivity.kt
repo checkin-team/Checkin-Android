@@ -18,8 +18,6 @@ import com.checkin.app.checkin.menu.views.ActiveSessionCartView
 import com.checkin.app.checkin.misc.BlockingNetworkViewModel
 import com.checkin.app.checkin.misc.activities.BaseActivity
 import com.checkin.app.checkin.misc.fragments.NetworkBlockingFragment
-import org.koin.androidx.fragment.android.setupKoinFragmentFactory
-import org.koin.androidx.scope.lifecycleScope
 
 class ActiveSessionMenuActivity : BaseActivity() {
     @BindView(R.id.view_as_menu_cart)
@@ -31,7 +29,6 @@ class ActiveSessionMenuActivity : BaseActivity() {
     private val networkViewModel: BlockingNetworkViewModel by viewModels()
 
     override fun onCreate(savedInstanceState: Bundle?) {
-        setupKoinFragmentFactory(lifecycleScope)
         super.onCreate(savedInstanceState)
 
         setContentView(R.layout.activity_active_session_menu)

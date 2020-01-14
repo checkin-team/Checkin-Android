@@ -3,9 +3,9 @@ package com.checkin.app.checkin
 import android.app.Application
 import android.content.Context
 import androidx.multidex.MultiDex
-import com.checkin.app.checkin.menu.di.menuCartModule
 import org.koin.android.ext.koin.androidContext
 import org.koin.android.ext.koin.androidLogger
+import org.koin.androidx.fragment.koin.fragmentFactory
 import org.koin.core.context.startKoin
 
 class CheckinApplication : Application() {
@@ -15,7 +15,7 @@ class CheckinApplication : Application() {
         startKoin {
             androidContext(this@CheckinApplication)
             androidLogger()
-            modules(menuCartModule)
+            fragmentFactory()
         }
     }
 }

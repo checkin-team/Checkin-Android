@@ -4,32 +4,34 @@ import android.os.Bundle
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
+import androidx.core.os.bundleOf
 import androidx.core.view.ViewCompat
 import androidx.lifecycle.Observer
 import androidx.lifecycle.lifecycleScope
 import butterknife.BindView
 import com.airbnb.epoxy.EpoxyRecyclerView
-import com.checkin.app.checkin.data.resource.Resource
 import com.checkin.app.checkin.R
 import com.checkin.app.checkin.Utility.Utils
 import com.checkin.app.checkin.Utility.isNotEmpty
 import com.checkin.app.checkin.Utility.parentFragmentDelegate
 import com.checkin.app.checkin.Utility.parentViewModels
+import com.checkin.app.checkin.data.resource.Resource
 import com.checkin.app.checkin.menu.controllers.OnGroupInteraction
 import com.checkin.app.checkin.menu.controllers.UserMenuGroupController
 import com.checkin.app.checkin.menu.holders.SessionTrendingDishInteraction
 import com.checkin.app.checkin.menu.listeners.MenuItemInteraction
 import com.checkin.app.checkin.menu.models.MenuGroupModel
+import com.checkin.app.checkin.menu.viewmodels.ActiveSessionCartViewModel
 import com.checkin.app.checkin.menu.viewmodels.BaseCartViewModel
+import com.checkin.app.checkin.menu.viewmodels.ScheduledCartViewModel
 import com.checkin.app.checkin.menu.viewmodels.UserMenuViewModel
 import com.checkin.app.checkin.misc.fragments.BaseFragment
 import com.checkin.app.checkin.session.models.TrendingDishModel
 import com.miguelcatalan.materialsearchview.utils.AnimationUtil
 import kotlinx.coroutines.launch
-import org.koin.androidx.viewmodel.ext.android.sharedViewModel
-import kotlin.reflect.KClass
+import org.koin.androidx.viewmodel.ext.android.getSharedViewModel
 
-class UserMenuGroupsFragment<CartVM : BaseCartViewModel>(cartVmClass: KClass<CartVM>) : BaseFragment(), OnGroupInteraction {
+class UserMenuGroupsFragment : BaseFragment(), OnGroupInteraction {
     override val rootLayout: Int = R.layout.fragment_user_menu_groups
 
     @BindView(R.id.epoxy_rv_user_menu_groups)
@@ -43,7 +45,12 @@ class UserMenuGroupsFragment<CartVM : BaseCartViewModel>(cartVmClass: KClass<Car
 
     private val itemListener: MenuItemInteraction by parentFragmentDelegate()
     private val viewModel: UserMenuViewModel by parentViewModels()
-    private val cartViewModel: CartVM by sharedViewModel(cartVmClass)
+    private val cartViewModel: BaseCartViewModel by lazy {
+        when (arguments?.getInt(KEY_CART_VM_TYPE) ?: 0) {
+            0 -> getSharedViewModel(ActiveSessionCartViewModel::class)
+            else -> getSharedViewModel(ScheduledCartViewModel::class)
+        }
+    }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         setupEpoxyModels()
@@ -105,6 +112,18 @@ class UserMenuGroupsFragment<CartVM : BaseCartViewModel>(cartVmClass: KClass<Car
             tvCurrentCategory.text = groupModel!!.name
         } else {
             AnimationUtil.fadeOutView(containerCurrentCategory)
+        }
+    }
+
+    companion object {
+        private const val KEY_CART_VM_TYPE = "menu.groups.cart_vm"
+
+        fun withScheduledCart() = UserMenuGroupsFragment().apply {
+            arguments = bundleOf(KEY_CART_VM_TYPE to 1)
+        }
+
+        fun withAsCart() = UserMenuGroupsFragment().apply {
+            arguments = bundleOf(KEY_CART_VM_TYPE to 0)
         }
     }
 }
