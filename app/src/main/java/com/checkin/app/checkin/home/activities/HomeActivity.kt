@@ -210,7 +210,7 @@ class HomeActivity : BaseAccountsActivity(), NavigationView.OnNavigationItemSele
 //
 //    override fun getNavMenu(): Int = R.menu.drawer_home
 
-    override fun <T : AccountHeaderViewHolder?> getHeaderViewHolder(): T = AccountHeaderViewHolder(this, R.layout.layout_header_account) as T
+//    override fun <T : AccountHeaderViewHolder?> getHeaderViewHolder(): T = AccountHeaderViewHolder(this) as T
 
     override fun getAccountTypes(): Array<ACCOUNT_TYPE> = arrayOf(ACCOUNT_TYPE.USER)
 
