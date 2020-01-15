@@ -14,7 +14,6 @@ import androidx.activity.viewModels
 import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.appcompat.widget.Toolbar
 import androidx.core.view.GravityCompat
-import androidx.drawerlayout.widget.DrawerLayout
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import androidx.lifecycle.Observer
@@ -23,7 +22,7 @@ import butterknife.BindView
 import butterknife.ButterKnife
 import butterknife.OnClick
 import com.checkin.app.checkin.Account.AccountModel.ACCOUNT_TYPE
-import com.checkin.app.checkin.Account.BaseAccountActivity
+import com.checkin.app.checkin.Account.BaseAccountsActivity
 import com.checkin.app.checkin.Data.Message.ActiveSessionNotificationService
 import com.checkin.app.checkin.Data.Message.Constants
 import com.checkin.app.checkin.Data.Message.MessageModel.MESSAGE_TYPE
@@ -50,11 +49,14 @@ import com.checkin.app.checkin.session.activesession.ActiveSessionActivity
 import com.google.android.material.navigation.NavigationView
 import com.google.android.material.tabs.TabLayout
 
-class HomeActivity : BaseAccountActivity(), NavigationView.OnNavigationItemSelectedListener {
+class HomeActivity : BaseAccountsActivity(), NavigationView.OnNavigationItemSelectedListener {
+
+
+
     @BindView(R.id.toolbar_home)
     internal lateinit var toolbarHome: Toolbar
-    @BindView(R.id.drawer_home)
-    internal lateinit var drawerLayout: DrawerLayout
+    //@BindView(R.id.drawer_home)
+    //internal lateinit var drawerLayout: DrawerLayout
     @BindView(R.id.tabs_home)
     internal lateinit var tabLayout: TabLayout
     @BindView(R.id.vp_home)
@@ -84,11 +86,11 @@ class HomeActivity : BaseAccountActivity(), NavigationView.OnNavigationItemSelec
         }
     }
 
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_home)
         ButterKnife.bind(this)
-
         configureToolbar()
 
         val adapter = HomeFragmentAdapter(supportFragmentManager)
@@ -123,15 +125,17 @@ class HomeActivity : BaseAccountActivity(), NavigationView.OnNavigationItemSelec
     }
 
     private fun configureToolbar() {
-        navAccount.setNavigationItemSelectedListener(this)
-        val startToggle = ActionBarDrawerToggle(this, drawerLayout, R.string.navigation_drawer_open, R.string.navigation_drawer_close)
-        drawerLayout.addDrawerListener(startToggle)
-        startToggle.syncState()
+//        navAccount.setNavigationItemSelectedListener(this)
+//        val startToggle = ActionBarDrawerToggle(this, drawerLayout, R.string.navigation_drawer_open, R.string.navigation_drawer_close)
+//        drawerLayout.addDrawerListener(startToggle)
+//       startToggle.syncState()
         setSupportActionBar(toolbarHome)
         supportActionBar?.title = ""
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
         supportActionBar?.setHomeAsUpIndicator(R.drawable.ic_navigation_grey)
     }
+
+    override fun getToolbarId() = R.id.toolbar_home
 
     override fun updateScreen() {
         accountViewModel.updateResults()
@@ -202,9 +206,9 @@ class HomeActivity : BaseAccountActivity(), NavigationView.OnNavigationItemSelec
         }
     }
 
-    override fun getDrawerRootId(): Int = R.id.drawer_home
-
-    override fun getNavMenu(): Int = R.menu.drawer_home
+//    override fun getDrawerRootId(): Int = R.id.drawer_home
+//
+//    override fun getNavMenu(): Int = R.menu.drawer_home
 
     override fun <T : AccountHeaderViewHolder?> getHeaderViewHolder(): T = AccountHeaderViewHolder(this, R.layout.layout_header_account) as T
 
@@ -250,7 +254,7 @@ class HomeActivity : BaseAccountActivity(), NavigationView.OnNavigationItemSelec
     }
 
     override fun onSupportNavigateUp(): Boolean {
-        drawerLayout.openDrawer(GravityCompat.START)
+      //  drawerLayout.openDrawer(GravityCompat.START)
         return true
     }
 

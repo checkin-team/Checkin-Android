@@ -11,7 +11,7 @@ import com.checkin.app.checkin.Data.Resource.Status
 import com.checkin.app.checkin.misc.fragments.DataStatusFragment
 
 @SuppressLint("Registered")
-open class BaseActivity : AppCompatActivity() {
+open class BaseActivity() : AppCompatActivity() {
     private var mFragment: DataStatusFragment? = null
     private var isFragmentShown = false
 
