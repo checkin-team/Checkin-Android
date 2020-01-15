@@ -8,8 +8,8 @@ import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.Observer
 import butterknife.BindView
 import butterknife.OnClick
-import com.checkin.app.checkin.Account.AccountUtil
 import com.checkin.app.checkin.R
+import com.checkin.app.checkin.accounts.AccountUtil
 import com.checkin.app.checkin.misc.fragments.BaseFragment
 import com.checkin.app.checkin.session.scheduled.viewmodels.ScheduledSessionDetailViewModel
 

@@ -42,4 +42,12 @@
     <color name="white_four">#f1f1f1</color>
     <color name="orange_red">#ff4f19</color>
     <color name="teal_blue">#0295aa</color>
+
+    <!-- Material Drawer colors -->
+    <color name="material_drawer_primary">@color/brownish_grey</color>
+    <color name="material_drawer_primary_dark">@color/teal_blue</color>
+    <color name="material_drawer_primary_light">@color/white</color>
+    <color name="material_drawer_accent">#FF4081</color>
+    <color name="material_drawer_header_selection_text">@color/white</color>
+    <color name="material_drawer_header_selection_subtext">@color/white_two</color>
 </resources>

@@ -4,24 +4,23 @@ import android.content.Intent
 import android.os.Bundle
 import android.widget.TextView
 import androidx.activity.viewModels
-import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.appcompat.widget.SwitchCompat
 import androidx.appcompat.widget.Toolbar
-import androidx.drawerlayout.widget.DrawerLayout
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import androidx.lifecycle.Observer
 import androidx.viewpager.widget.ViewPager.SimpleOnPageChangeListener
 import butterknife.BindView
 import butterknife.ButterKnife
-import com.checkin.app.checkin.Account.AccountModel.ACCOUNT_TYPE
-import com.checkin.app.checkin.Account.BaseAccountActivity
+import co.zsmb.materialdrawerkt.builders.DrawerBuilderKt
 import com.checkin.app.checkin.R
 import com.checkin.app.checkin.Shop.Private.Invoice.ShopInvoiceViewModel
 import com.checkin.app.checkin.Shop.ShopPreferences
 import com.checkin.app.checkin.Utility.DynamicSwipableViewPager
 import com.checkin.app.checkin.Utility.Utils
 import com.checkin.app.checkin.Utility.inTransaction
+import com.checkin.app.checkin.accounts.ACCOUNT_TYPE
+import com.checkin.app.checkin.accounts.BaseAccountActivity
 import com.checkin.app.checkin.manager.fragments.*
 import com.checkin.app.checkin.manager.fragments.ManagerTablesActivateFragment.LiveOrdersInteraction
 import com.checkin.app.checkin.manager.viewmodels.ManagerWorkViewModel
@@ -35,8 +34,6 @@ class ManagerWorkActivity : BaseAccountActivity(), LiveOrdersInteraction {
     internal lateinit var pagerManager: DynamicSwipableViewPager
     @BindView(R.id.tabs_manager_work)
     internal lateinit var tabLayout: TabLayout
-    @BindView(R.id.drawer_manager_work)
-    internal lateinit var drawerLayout: DrawerLayout
     @BindView(R.id.toolbar_manager_work)
     internal lateinit var toolbar: Toolbar
     @BindView(R.id.tv_action_bar_title)
@@ -49,19 +46,22 @@ class ManagerWorkActivity : BaseAccountActivity(), LiveOrdersInteraction {
     private val networkViewModel: BlockingNetworkViewModel by viewModels()
     private val networkFragment = NetworkBlockingFragment()
 
+    override val accountTypes: Array<ACCOUNT_TYPE> = arrayOf(ACCOUNT_TYPE.RESTAURANT_MANAGER)
+
+    override val toolbarView: Toolbar?
+        get() = toolbar
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_manager_work)
         ButterKnife.bind(this)
 
+        setupUi()
+
         setSupportActionBar(toolbar)
-        val actionBar = supportActionBar
-        if (actionBar != null) {
-            actionBar.elevation = resources.getDimension(R.dimen.card_elevation)
-            actionBar.setDisplayHomeAsUpEnabled(true)
-            val startToggle = ActionBarDrawerToggle(this, drawerLayout, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close)
-            drawerLayout.addDrawerListener(startToggle)
-            startToggle.syncState()
+        supportActionBar?.apply {
+            elevation = resources.getDimension(R.dimen.card_elevation)
+            setDisplayHomeAsUpEnabled(true)
         }
         setupObservers(intent.getLongExtra(KEY_RESTAURANT_PK, 0L))
         pagerManager.isEnabled = false
@@ -106,6 +106,9 @@ class ManagerWorkActivity : BaseAccountActivity(), LiveOrdersInteraction {
         }
     }
 
+    override fun setupDrawerItems(builder: DrawerBuilderKt) {
+    }
+
     private fun setupObservers(shopId: Long) {
         mViewModel.fetchRestaurantData(shopId)
         mShopViewModel.fetchShopSessions(shopId)
@@ -114,18 +117,6 @@ class ManagerWorkActivity : BaseAccountActivity(), LiveOrdersInteraction {
         networkViewModel.shouldTryAgain.observe(this, Observer {
             mViewModel.fetchRestaurantData(shopId)
         })
-    }
-
-    override fun getDrawerRootId(): Int = R.id.drawer_manager_work
-
-    override fun getNavMenu(): Int = R.menu.drawer_manager_work
-
-    override fun <T : AccountHeaderViewHolder?> getHeaderViewHolder(): T {
-        return AccountHeaderViewHolder(this, R.layout.layout_header_account) as T
-    }
-
-    override fun getAccountTypes(): Array<ACCOUNT_TYPE> {
-        return arrayOf(ACCOUNT_TYPE.RESTAURANT_MANAGER)
     }
 
     override fun setLiveOrdersActivation(isActivated: Boolean) {

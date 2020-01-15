@@ -20,11 +20,11 @@ import butterknife.BindView
 import butterknife.ButterKnife
 import butterknife.OnClick
 import com.airbnb.epoxy.EpoxyRecyclerView
-import com.checkin.app.checkin.Account.AccountUtil
 import com.checkin.app.checkin.R
 import com.checkin.app.checkin.Utility.LockableBottomSheetBehavior
 import com.checkin.app.checkin.Utility.Utils
 import com.checkin.app.checkin.Utility.pass
+import com.checkin.app.checkin.accounts.AccountUtil
 import com.checkin.app.checkin.data.resource.ProblemModel
 import com.checkin.app.checkin.data.resource.Resource
 import com.checkin.app.checkin.menu.controllers.CartOrderedItemController

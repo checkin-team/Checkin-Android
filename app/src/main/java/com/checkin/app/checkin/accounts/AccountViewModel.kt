@@ -1,4 +1,4 @@
-package com.checkin.app.checkin.Account
+package com.checkin.app.checkin.accounts
 
 import android.app.Application
 import androidx.lifecycle.LiveData
@@ -10,22 +10,22 @@ class AccountViewModel(application: Application) : BaseViewModel(application) {
     private val mRepository: AccountRepository = AccountRepository.getInstance(application)
 
     private val mAccounts = createNetworkLiveData<List<AccountModel>>()
-    private val mCurrentAccount = MutableLiveData<AccountModel>()
+    private val mCurrentAccount = MutableLiveData<Long>()
+
     val accounts: LiveData<Resource<List<AccountModel>>>
         get() {
             fetchAccounts()
             return mAccounts
         }
+    val currentAccount: LiveData<Long> = mCurrentAccount
 
     fun fetchAccounts() {
         if (mAccounts.value?.status != Resource.Status.SUCCESS)
             mAccounts.addSource(mRepository.selfAccounts, mAccounts::setValue)
     }
 
-    val currentAccount: LiveData<AccountModel> = mCurrentAccount
-
-    fun setCurrentAccount(account: AccountModel) {
-        mCurrentAccount.value = account
+    fun setCurrentAccount(identifier: Long) {
+        mCurrentAccount.value = identifier
     }
 
     override fun updateResults() {

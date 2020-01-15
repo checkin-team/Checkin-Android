@@ -1,4 +1,4 @@
-package com.checkin.app.checkin.Account
+package com.checkin.app.checkin.accounts
 
 import android.content.Context
 import android.preference.PreferenceManager

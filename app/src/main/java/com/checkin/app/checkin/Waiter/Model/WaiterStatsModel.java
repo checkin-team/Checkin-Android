@@ -1,7 +1,5 @@
 package com.checkin.app.checkin.Waiter.Model;
 
-import android.content.Context;
-
 import com.checkin.app.checkin.Utility.Utils;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
@@ -27,9 +25,5 @@ public class WaiterStatsModel {
 
     public String formatOrdersTaken() {
         return Utils.formatCount(orderOfDay);
-    }
-
-    public String formatTotalTip(Context context) {
-        return Utils.formatCurrencyAmount(context, tipOfDay);
     }
 }

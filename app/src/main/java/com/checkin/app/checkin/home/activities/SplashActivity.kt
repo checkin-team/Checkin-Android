@@ -4,7 +4,6 @@ import android.content.Intent
 import android.os.Bundle
 import android.preference.PreferenceManager
 import androidx.appcompat.app.AppCompatActivity
-import com.checkin.app.checkin.Account.AccountModel.ACCOUNT_TYPE
 import com.checkin.app.checkin.Auth.AuthActivity
 import com.checkin.app.checkin.Auth.AuthPreferences
 import com.checkin.app.checkin.Auth.DeviceTokenService
@@ -12,7 +11,7 @@ import com.checkin.app.checkin.Cook.CookWorkActivity
 import com.checkin.app.checkin.Shop.Private.ShopPrivateActivity
 import com.checkin.app.checkin.Utility.Constants
 import com.checkin.app.checkin.Waiter.WaiterWorkActivity
-import com.checkin.app.checkin.home.activities.HomeActivity
+import com.checkin.app.checkin.accounts.ACCOUNT_TYPE
 import com.checkin.app.checkin.manager.activities.ManagerWorkActivity
 
 class SplashActivity : AppCompatActivity() {

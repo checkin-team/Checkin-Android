@@ -11,17 +11,13 @@ import android.net.Uri
 import android.os.Build
 import android.os.Bundle
 import android.provider.Settings
-import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.activity.viewModels
-import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.appcompat.widget.Toolbar
 import androidx.core.app.ActivityCompat
-import androidx.core.view.GravityCompat
-import androidx.drawerlayout.widget.DrawerLayout
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import androidx.lifecycle.Observer
@@ -30,16 +26,15 @@ import androidx.viewpager.widget.ViewPager.SimpleOnPageChangeListener
 import butterknife.BindView
 import butterknife.ButterKnife
 import butterknife.OnClick
-import com.checkin.app.checkin.Account.AccountModel.ACCOUNT_TYPE
-import com.checkin.app.checkin.Account.BaseAccountActivity
+import co.zsmb.materialdrawerkt.builders.DrawerBuilderKt
+import co.zsmb.materialdrawerkt.draweritems.badgeable.primaryItem
 import com.checkin.app.checkin.BuildConfig
 import com.checkin.app.checkin.R
 import com.checkin.app.checkin.Shop.ShopJoin.BusinessFeaturesActivity
-import com.checkin.app.checkin.Utility.DynamicSwipableViewPager
-import com.checkin.app.checkin.Utility.OnBoardingUtils
+import com.checkin.app.checkin.Utility.*
 import com.checkin.app.checkin.Utility.OnBoardingUtils.OnBoardingModel
-import com.checkin.app.checkin.Utility.Utils
-import com.checkin.app.checkin.Utility.hasLocationPermission
+import com.checkin.app.checkin.accounts.ACCOUNT_TYPE
+import com.checkin.app.checkin.accounts.BaseAccountActivity
 import com.checkin.app.checkin.data.notifications.ActiveSessionNotificationService
 import com.checkin.app.checkin.data.notifications.Constants
 import com.checkin.app.checkin.data.notifications.MESSAGE_TYPE
@@ -59,15 +54,12 @@ import com.checkin.app.checkin.user.fragments.UserPrivateProfileFragment
 import com.checkin.app.checkin.user.models.UserModel
 import com.checkin.app.checkin.user.viewmodels.UserViewModel
 import com.golovin.fluentstackbar.FluentSnackbar
-import com.google.android.material.navigation.NavigationView
 import com.google.android.material.snackbar.Snackbar
 import com.google.android.material.tabs.TabLayout
 
-class HomeActivity : BaseAccountActivity(), NavigationView.OnNavigationItemSelectedListener {
+class HomeActivity : BaseAccountActivity() {
     @BindView(R.id.toolbar_home)
     internal lateinit var toolbarHome: Toolbar
-    @BindView(R.id.drawer_home)
-    internal lateinit var drawerLayout: DrawerLayout
     @BindView(R.id.tabs_home)
     internal lateinit var tabLayout: TabLayout
     @BindView(R.id.vp_home)
@@ -104,12 +96,16 @@ class HomeActivity : BaseAccountActivity(), NavigationView.OnNavigationItemSelec
         }
     }
 
+    override val toolbarView: Toolbar?
+        get() = toolbarHome
+
+    override val accountTypes: Array<ACCOUNT_TYPE> = arrayOf(ACCOUNT_TYPE.USER)
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_home)
         ButterKnife.bind(this)
-
-        configureToolbar()
+        setupUi()
 
         val adapter = HomeFragmentAdapter(supportFragmentManager)
         tabLayout.setupWithViewPager(vpHome)
@@ -141,17 +137,6 @@ class HomeActivity : BaseAccountActivity(), NavigationView.OnNavigationItemSelec
         setupUserLocationTracker()
         setupObserver()
         explainQr()
-    }
-
-    private fun configureToolbar() {
-        navAccount.setNavigationItemSelectedListener(this)
-        val startToggle = ActionBarDrawerToggle(this, drawerLayout, R.string.navigation_drawer_open, R.string.navigation_drawer_close)
-        drawerLayout.addDrawerListener(startToggle)
-        startToggle.syncState()
-        setSupportActionBar(toolbarHome)
-        supportActionBar?.title = ""
-        supportActionBar?.setDisplayHomeAsUpEnabled(true)
-        supportActionBar?.setHomeAsUpIndicator(R.drawable.ic_navigation_grey)
     }
 
     override fun updateScreen() {
@@ -223,13 +208,16 @@ class HomeActivity : BaseAccountActivity(), NavigationView.OnNavigationItemSelec
         }
     }
 
-    override fun getDrawerRootId(): Int = R.id.drawer_home
-
-    override fun getNavMenu(): Int = R.menu.drawer_home
-
-    override fun <T : AccountHeaderViewHolder?> getHeaderViewHolder(): T = AccountHeaderViewHolder(this, R.layout.layout_header_account) as T
-
-    override fun getAccountTypes(): Array<ACCOUNT_TYPE> = arrayOf(ACCOUNT_TYPE.USER)
+    override fun setupDrawerItems(builder: DrawerBuilderKt) = builder.run {
+        selectedItem = -1
+        primaryItem("Create Shop Profile") {
+            onClick { view, position, drawerItem ->
+                startActivity(Intent(this@HomeActivity, BusinessFeaturesActivity::class.java))
+                true
+            }
+        }
+        pass
+    }
 
     private fun setupUserLocationTracker() {
         if (hasLocationPermission) trackUserCurrentLocation()
@@ -297,14 +285,6 @@ class HomeActivity : BaseAccountActivity(), NavigationView.OnNavigationItemSelec
         }
     }
 
-    override fun onNavigationItemSelected(item: MenuItem): Boolean = when (item.itemId) {
-        R.id.nav_new_shop -> {
-            startActivity(Intent(this, BusinessFeaturesActivity::class.java))
-            true
-        }
-        else -> false
-    }
-
     private fun launchScanner() {
         val intent = Intent(this, QRScannerActivity::class.java)
         startActivityForResult(intent, REQUEST_QR_SCANNER)
@@ -330,11 +310,6 @@ class HomeActivity : BaseAccountActivity(), NavigationView.OnNavigationItemSelec
         super.onPause()
         MessageUtils.unregisterLocalReceiver(this, mReceiver)
         LocalBroadcastManager.getInstance(this).unregisterReceiver(locationReceiver)
-    }
-
-    override fun onSupportNavigateUp(): Boolean {
-        drawerLayout.openDrawer(GravityCompat.START)
-        return true
     }
 
     @OnClick(R.id.im_home_cart_cancel)

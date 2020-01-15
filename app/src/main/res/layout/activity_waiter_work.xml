@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.drawerlayout.widget.DrawerLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:id="@+id/drawer_waiter_work"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:fitsSystemWindows="true">
+    android:fitsSystemWindows="true"
+    android:orientation="vertical">
 
     <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
         android:id="@+id/sr_waiter_work"
@@ -28,10 +28,22 @@
                     android:id="@+id/toolbar_waiter"
                     android:layout_width="match_parent"
                     android:layout_height="?android:attr/actionBarSize"
-                    android:gravity="center_vertical"
                     app:layout_scrollFlags="snap"
                     app:popupTheme="@style/PopupOverlay"
-                    app:titleTextColor="@color/brownish_grey" />
+                    app:titleTextColor="@color/brownish_grey">
+
+                    <FrameLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent">
+
+                        <ImageView
+                            android:id="@+id/im_toolbar_waiter_table"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="end|center_vertical"
+                            android:src="@drawable/ic_table_grey" />
+                    </FrameLayout>
+                </androidx.appcompat.widget.Toolbar>
 
                 <com.google.android.material.tabs.TabLayout
                     android:id="@+id/tabs_waiter"
@@ -71,15 +83,4 @@
 
     <include layout="@layout/incl_account_base" />
 
-    <com.google.android.material.navigation.NavigationView
-        android:id="@+id/nav_waiter_end"
-        android:layout_width="wrap_content"
-        android:layout_height="match_parent"
-        android:layout_gravity="end"
-        android:fitsSystemWindows="false"
-        app:itemTextColor="@color/brownish_grey">
-
-        <include layout="@layout/incl_waiter_drawer_tables" />
-    </com.google.android.material.navigation.NavigationView>
-
-</androidx.drawerlayout.widget.DrawerLayout>
+</LinearLayout>
