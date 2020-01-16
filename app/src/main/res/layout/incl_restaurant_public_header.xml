@@ -72,8 +72,6 @@
             android:layout_marginTop="@dimen/spacing_normal"
             android:fontFamily="@font/josefinsans_semibold"
             android:gravity="center_horizontal"
-            android:shadowColor="#80000000"
-            android:shadowRadius="3"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             tools:text="Grey Orange - Lavel Road " />
@@ -102,9 +100,10 @@
             android:id="@+id/tv_restaurant_public_count_checkins"
             style="@style/RoundedPurpleGradientButtonStyle"
             android:layout_width="0dp"
+            android:layout_marginTop="24dp"
             app:layout_constraintEnd_toEndOf="@id/tv_restaurant_public_navigate"
             app:layout_constraintStart_toStartOf="@id/tv_restaurant_public_navigate"
-            app:layout_constraintTop_toBottomOf="@id/tv_restaurant_public_name_locality"
+            app:layout_constraintTop_toTopOf="parent"
             tools:text="Checkin 2k" />
 
         <TextView
@@ -112,7 +111,7 @@
             style="@style/RoundedWhiteWithGreyBorderButtonStyle"
             android:layout_marginTop="@dimen/spacing_small"
             android:layout_marginEnd="@dimen/spacing_medium"
-            android:layout_marginBottom="@dimen/spacing_small"
+            android:layout_marginBottom="32dp"
             android:drawableStart="@drawable/ic_navigate_arrow"
             android:drawablePadding="@dimen/spacing_extra_tiny"
             android:text="Navigate"
@@ -126,7 +125,7 @@
             android:layout_width="wrap_content"
             android:layout_height="@dimen/size_extra_small_icon"
             android:layout_marginStart="@dimen/spacing_normal"
-            android:layout_marginTop="@dimen/spacing_normal"
+            android:layout_marginTop="32dp"
             android:src="@drawable/ic_banner_cuisines"
             app:layout_constraintBottom_toBottomOf="@id/tv_restaurant_public_count_checkins"
             app:layout_constraintStart_toStartOf="parent"

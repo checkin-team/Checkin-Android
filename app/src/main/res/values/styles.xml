@@ -280,6 +280,9 @@
         <item name="android:fontFamily">@font/opensans_semibold</item>
     </style>
 
+    <style name="GreyBoldTextStyle" parent="GreyTextStyle">
+        <item name="android:fontFamily">@font/opensans_semibold</item>
+    </style>
 
     <style name="PinkishGreySmallTextStyle" parent="GreyTextStyle">
         <item name="android:textColor">@color/pinkish_grey</item>
