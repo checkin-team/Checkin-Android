@@ -53,9 +53,12 @@
 
             <TextView
                 android:id="@+id/tv_restaurant_banner_navigate"
-                style="@style/NavigateButtonTextStyle"
-                android:layout_marginEnd="@dimen/spacing_medium"
+                style="@style/RoundedWhiteWithGreyBorderButtonStyle"
+                android:layout_marginEnd="13dp"
                 android:layout_marginBottom="@dimen/spacing_small"
+                android:drawableStart="@drawable/ic_navigate_arrow"
+                android:drawablePadding="@dimen/spacing_extra_tiny"
+                android:text="Navigate"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent" />
 
@@ -63,7 +66,7 @@
                 android:id="@+id/im_restaurant_banner_cuisines"
                 android:layout_width="wrap_content"
                 android:layout_height="@dimen/size_extra_small_icon"
-                android:layout_marginStart="@dimen/spacing_medium"
+                android:layout_marginStart="13dp"
                 android:src="@drawable/ic_banner_cuisines"
                 app:layout_constraintBottom_toBottomOf="@id/tv_restaurant_banner_count_checkins"
                 app:layout_constraintStart_toStartOf="parent"
@@ -188,7 +191,6 @@
                 android:paddingTop="@dimen/spacing_extra_tiny"
                 android:paddingEnd="@dimen/spacing_extra_small"
                 android:paddingBottom="@dimen/spacing_extra_tiny"
-                android:visibility="gone"
                 tools:text="4.4" />
         </RelativeLayout>
     </androidx.cardview.widget.CardView>
