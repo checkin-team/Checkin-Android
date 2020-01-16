@@ -1,4 +1,4 @@
-package com.checkin.app.checkin.Maps;
+package com.checkin.app.checkin.location;
 
 import android.Manifest;
 import android.app.AlertDialog;
@@ -15,6 +15,10 @@ import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.Toast;
+
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.ActivityCompat;
 
 import com.checkin.app.checkin.R;
 import com.google.android.gms.common.ConnectionResult;
@@ -39,9 +43,6 @@ import com.google.android.libraries.places.widget.model.AutocompleteActivityMode
 import java.util.Arrays;
 import java.util.List;
 
-import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.app.ActivityCompat;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;

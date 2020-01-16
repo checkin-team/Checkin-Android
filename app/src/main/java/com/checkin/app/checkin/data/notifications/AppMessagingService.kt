@@ -25,10 +25,12 @@ import java.io.IOException
 import java.util.*
 
 class AppMessagingService : FirebaseMessagingService() {
-    private var mNotificationManager: NotificationManager? = null
+    private val mNotificationManager: NotificationManager by lazy {
+        getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
+    }
+
     override fun onCreate() {
         super.onCreate()
-        mNotificationManager = this.getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
         createDefaultChannels(mNotificationManager)
     }
 
@@ -57,7 +59,7 @@ class AppMessagingService : FirebaseMessagingService() {
         val notifGroup = data.groupKey
         var notifCount = 1
         val style = NotificationCompat.InboxStyle()
-        for (statusBarNotification in mNotificationManager!!.activeNotifications) {
+        for (statusBarNotification in mNotificationManager.activeNotifications) {
             if (statusBarNotification.notification.group == null) continue
             if (statusBarNotification.notification.group == notifGroup && statusBarNotification.tag != null) {
                 style.addLine(statusBarNotification.notification.extras.getString(Notification.EXTRA_TEXT, ""))
@@ -84,7 +86,7 @@ class AppMessagingService : FirebaseMessagingService() {
                 .build()
         val notifTag = data.notificationTag
         val notifId = data.groupSummaryID
-        mNotificationManager!!.notify(notifTag, notifId, summaryNotif)
+        mNotificationManager.notify(notifTag, notifId, summaryNotif)
         saveNotificationId(notifTag, notifId)
     }
 
@@ -94,7 +96,7 @@ class AppMessagingService : FirebaseMessagingService() {
             val notificationId = notificationID
             val notification = data.showNotification(this)
             val notifTag = data.notificationTag
-            mNotificationManager!!.notify(notifTag, notificationId, notification)
+            mNotificationManager.notify(notifTag, notificationId, notification)
             saveNotificationId(notifTag, notificationId)
             if (Utils.isMarshMallowOrLater && data.isGroupedNotification) showGroupedNotifications(data)
         }

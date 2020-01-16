@@ -28,7 +28,6 @@ import butterknife.OnTextChanged
 import com.checkin.app.checkin.R
 import com.checkin.app.checkin.Shop.ShopModel
 import com.checkin.app.checkin.Shop.ShopModel.PAYMENT_MODE.PAYTM
-import com.checkin.app.checkin.User.bills.SuccessfulTransactionActivity
 import com.checkin.app.checkin.Utility.Constants
 import com.checkin.app.checkin.Utility.Utils
 import com.checkin.app.checkin.Utility.pass
@@ -45,6 +44,7 @@ import com.checkin.app.checkin.session.models.PromoDetailModel
 import com.checkin.app.checkin.session.models.SessionBillModel
 import com.checkin.app.checkin.session.models.SessionInvoiceModel
 import com.checkin.app.checkin.session.models.SessionPromoModel
+import com.checkin.app.checkin.user.activities.SuccessfulTransactionActivity
 
 class ActiveSessionInvoiceActivity : BaseActivity() {
 

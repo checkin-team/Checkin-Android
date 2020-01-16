@@ -17,13 +17,13 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProviders;
 
+import com.checkin.app.checkin.R;
+import com.checkin.app.checkin.Utility.DebouncedOnClickListener;
 import com.checkin.app.checkin.data.resource.Resource;
-import com.checkin.app.checkin.Maps.MapsActivity;
+import com.checkin.app.checkin.location.MapsActivity;
 import com.checkin.app.checkin.misc.models.GenericDetailModel;
 import com.checkin.app.checkin.misc.models.LocationModel;
-import com.checkin.app.checkin.R;
 import com.fasterxml.jackson.databind.JsonNode;
-import com.checkin.app.checkin.Utility.DebouncedOnClickListener;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;

@@ -26,7 +26,6 @@ import com.checkin.app.checkin.Auth.OtpVerificationDialog
 import com.checkin.app.checkin.Auth.PhoneEditDialog
 import com.checkin.app.checkin.Auth.PhoneInteraction
 import com.checkin.app.checkin.R
-import com.checkin.app.checkin.User.Private.UserViewModel
 import com.checkin.app.checkin.Utility.*
 import com.checkin.app.checkin.data.resource.ProblemModel
 import com.checkin.app.checkin.data.resource.Resource
@@ -49,6 +48,7 @@ import com.checkin.app.checkin.session.scheduled.ScheduledSessionCartView
 import com.checkin.app.checkin.session.scheduled.ScheduledSessionInteraction
 import com.checkin.app.checkin.session.scheduled.fragments.*
 import com.checkin.app.checkin.session.scheduled.viewmodels.NewScheduledSessionViewModel
+import com.checkin.app.checkin.user.viewmodels.UserViewModel
 import com.crashlytics.android.Crashlytics
 import com.google.android.material.appbar.AppBarLayout
 import com.google.android.material.tabs.TabLayout

@@ -1,4 +1,4 @@
-package com.checkin.app.checkin.User.Private;
+package com.checkin.app.checkin.user.fragments;
 
 import android.animation.Animator;
 import android.animation.AnimatorSet;
@@ -21,14 +21,16 @@ import androidx.lifecycle.ViewModelProviders;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.checkin.app.checkin.data.resource.Resource.Status;
 import com.checkin.app.checkin.R;
-import com.checkin.app.checkin.User.UserModel;
 import com.checkin.app.checkin.Utility.BackgroundShadow;
 import com.checkin.app.checkin.Utility.SwipeTouchListener;
 import com.checkin.app.checkin.Utility.Utils;
 import com.checkin.app.checkin.misc.activities.SelectCropImageActivity;
 import com.checkin.app.checkin.misc.fragments.BaseFragment;
+import com.checkin.app.checkin.user.activities.ProfileEditActivity;
+import com.checkin.app.checkin.user.adapters.UserCheckinAdapter;
+import com.checkin.app.checkin.user.models.UserModel;
+import com.checkin.app.checkin.user.viewmodels.UserViewModel;
 import com.facebook.shimmer.ShimmerFrameLayout;
 
 import java.io.File;
@@ -37,7 +39,9 @@ import butterknife.BindView;
 import butterknife.OnClick;
 
 import static android.app.Activity.RESULT_OK;
-import static com.checkin.app.checkin.User.Private.ProfileEditActivity.KEY_USER_DATA;
+import static com.checkin.app.checkin.data.resource.Resource.Status.LOADING;
+import static com.checkin.app.checkin.data.resource.Resource.Status.SUCCESS;
+import static com.checkin.app.checkin.user.activities.ProfileEditActivity.KEY_USER_DATA;
 
 public class UserPrivateProfileFragment extends BaseFragment {
     @BindView(R.id.shimmer_user_private_cover)
@@ -141,9 +145,9 @@ public class UserPrivateProfileFragment extends BaseFragment {
         mViewModel.getUserData().observe(this, resource -> {
             if (resource == null)
                 return;
-            if (resource.getStatus() == Status.SUCCESS && resource.getData() != null) {
+            if (resource.getStatus() == SUCCESS && resource.getData() != null) {
                 setupData(resource.getData());
-            } else if (resource.getStatus() == Status.LOADING) {
+            } else if (resource.getStatus() == LOADING) {
 
             } else {
                 Utils.toast(requireContext(), "Error: " + resource.getMessage());
@@ -153,7 +157,7 @@ public class UserPrivateProfileFragment extends BaseFragment {
         mViewModel.getUserRecentCheckinsData().observe(this, input -> {
             if (input == null)
                 return;
-            if (input.getStatus() == Status.SUCCESS && input.getData() != null) {
+            if (input.getStatus() == SUCCESS && input.getData() != null) {
                 if (input.getData().size() > 0) {
                     mUserCheckinAdapter.setUserCheckinsData(input.getData());
                 }

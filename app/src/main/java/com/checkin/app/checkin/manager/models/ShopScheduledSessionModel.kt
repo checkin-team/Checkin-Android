@@ -1,7 +1,7 @@
 package com.checkin.app.checkin.manager.models
 
-import com.checkin.app.checkin.User.UserBriefModel
 import com.checkin.app.checkin.session.models.ScheduledSessionDetailModel
+import com.checkin.app.checkin.user.models.UserBriefModel
 import com.fasterxml.jackson.annotation.JsonProperty
 import java.util.*
 

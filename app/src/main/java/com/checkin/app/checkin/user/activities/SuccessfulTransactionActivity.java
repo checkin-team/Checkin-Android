@@ -1,4 +1,4 @@
-package com.checkin.app.checkin.User.bills;
+package com.checkin.app.checkin.user.activities;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -11,11 +11,13 @@ import android.widget.TextView;
 import androidx.annotation.Nullable;
 import androidx.lifecycle.ViewModelProviders;
 
-import com.checkin.app.checkin.data.resource.Resource;
-import com.checkin.app.checkin.misc.activities.BaseActivity;
 import com.checkin.app.checkin.R;
 import com.checkin.app.checkin.Utility.Constants;
 import com.checkin.app.checkin.Utility.Utils;
+import com.checkin.app.checkin.data.resource.Resource;
+import com.checkin.app.checkin.misc.activities.BaseActivity;
+import com.checkin.app.checkin.user.models.UserTransactionBriefModel;
+import com.checkin.app.checkin.user.viewmodels.UserTransactionsViewModel;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;

@@ -36,14 +36,10 @@ object MessageUtils {
     private val sHandler = Handler(Looper.myLooper())
 
     @RequiresApi(api = Build.VERSION_CODES.O)
-    private fun createChannels(group: CHANNEL_GROUP, importance: Int, vararg channelTypes: CHANNEL): MutableList<NotificationChannel> {
-        val channels: MutableList<NotificationChannel> = ArrayList(channelTypes.size)
-        for (channelType in channelTypes) {
-            val channel = NotificationChannel(channelType.id, channelType.title, importance).apply { this.group = group.id }
-            channels.add(channel)
-        }
-        return channels
+    private fun createChannels(group: CHANNEL_GROUP, importance: Int, vararg channelTypes: CHANNEL) = channelTypes.map {
+        NotificationChannel(it.id, it.title, importance).apply { this.group = group.id }
     }
+
 
     @RequiresApi(api = Build.VERSION_CODES.O)
     private fun createChannelGroups(notificationManager: NotificationManager, vararg channelGroups: CHANNEL_GROUP) {
@@ -55,44 +51,38 @@ object MessageUtils {
     }
 
     @JvmStatic
-    fun createDefaultChannels(notificationManager: NotificationManager?) {
-        if (notificationManager == null) return
+    fun createDefaultChannels(notificationManager: NotificationManager) {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
             createChannelGroups(notificationManager, CHANNEL_GROUP.DEFAULT_USER, CHANNEL_GROUP.RESTAURANT_CUSTOMER, CHANNEL_GROUP.MISC)
-            val channels = createChannels(CHANNEL_GROUP.DEFAULT_USER, NotificationManager.IMPORTANCE_DEFAULT, CHANNEL.DEFAULT)
-            channels.addAll(createChannels(CHANNEL_GROUP.RESTAURANT_CUSTOMER, NotificationManager.IMPORTANCE_DEFAULT, CHANNEL.ACTIVE_SESSION))
-            channels.addAll(createChannels(CHANNEL_GROUP.RESTAURANT_CUSTOMER, NotificationManager.IMPORTANCE_DEFAULT, CHANNEL.ACTIVE_SESSION_PERSISTENT))
-            channels.addAll(createChannels(CHANNEL_GROUP.MISC, NotificationManager.IMPORTANCE_LOW, CHANNEL.MEDIA_UPLOAD))
+            val channels = createChannels(CHANNEL_GROUP.DEFAULT_USER, NotificationManager.IMPORTANCE_DEFAULT, CHANNEL.DEFAULT) +
+                    createChannels(CHANNEL_GROUP.RESTAURANT_CUSTOMER, NotificationManager.IMPORTANCE_DEFAULT, CHANNEL.ACTIVE_SESSION) +
+                    createChannels(CHANNEL_GROUP.RESTAURANT_CUSTOMER, NotificationManager.IMPORTANCE_DEFAULT, CHANNEL.ACTIVE_SESSION_PERSISTENT) +
+                    createChannels(CHANNEL_GROUP.MISC, NotificationManager.IMPORTANCE_LOW, CHANNEL.MEDIA_UPLOAD) +
+                    createChannels(CHANNEL_GROUP.MISC, NotificationManager.IMPORTANCE_LOW, CHANNEL.LOCATION_TRACK)
             notificationManager.createNotificationChannels(channels)
         }
     }
 
-    fun createManagerChannels(notificationManager: NotificationManager?) {
-        if (notificationManager == null) return
+    fun createManagerChannels(notificationManager: NotificationManager) {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
             createChannelGroups(notificationManager, CHANNEL_GROUP.RESTAURANT_MEMBER)
-            val channels: List<NotificationChannel>
-            channels = createChannels(CHANNEL_GROUP.RESTAURANT_MEMBER, NotificationManager.IMPORTANCE_HIGH, CHANNEL.MEMBER, CHANNEL.MANAGER)
+            val channels = createChannels(CHANNEL_GROUP.RESTAURANT_MEMBER, NotificationManager.IMPORTANCE_HIGH, CHANNEL.MEMBER, CHANNEL.MANAGER)
             notificationManager.createNotificationChannels(channels)
         }
     }
 
-    fun createWaiterChannels(notificationManager: NotificationManager?) {
-        if (notificationManager == null) return
+    fun createWaiterChannels(notificationManager: NotificationManager) {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
             createChannelGroups(notificationManager, CHANNEL_GROUP.RESTAURANT_MEMBER)
-            val channels: List<NotificationChannel>
-            channels = createChannels(CHANNEL_GROUP.RESTAURANT_MEMBER, NotificationManager.IMPORTANCE_HIGH, CHANNEL.MEMBER, CHANNEL.WAITER)
+            val channels = createChannels(CHANNEL_GROUP.RESTAURANT_MEMBER, NotificationManager.IMPORTANCE_HIGH, CHANNEL.MEMBER, CHANNEL.WAITER)
             notificationManager.createNotificationChannels(channels)
         }
     }
 
-    fun createAdminChannels(notificationManager: NotificationManager?) {
-        if (notificationManager == null) return
+    fun createAdminChannels(notificationManager: NotificationManager) {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
             createChannelGroups(notificationManager, CHANNEL_GROUP.RESTAURANT_MEMBER)
-            val channels: List<NotificationChannel>
-            channels = createChannels(CHANNEL_GROUP.RESTAURANT_MEMBER, NotificationManager.IMPORTANCE_DEFAULT, CHANNEL.MEMBER, CHANNEL.ADMIN)
+            val channels = createChannels(CHANNEL_GROUP.RESTAURANT_MEMBER, NotificationManager.IMPORTANCE_DEFAULT, CHANNEL.MEMBER, CHANNEL.ADMIN)
             notificationManager.createNotificationChannels(channels)
         }
     }
@@ -101,34 +91,29 @@ object MessageUtils {
         if (notificationManager == null) return
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
             createChannelGroups(notificationManager, CHANNEL_GROUP.RESTAURANT_CUSTOMER)
-            val channels: List<NotificationChannel>
-            channels = createChannels(CHANNEL_GROUP.RESTAURANT_CUSTOMER, NotificationManager.IMPORTANCE_MAX, CHANNEL.ACTIVE_SESSION_PERSISTENT)
+            val channels = createChannels(CHANNEL_GROUP.RESTAURANT_CUSTOMER, NotificationManager.IMPORTANCE_MAX, CHANNEL.ACTIVE_SESSION_PERSISTENT)
             notificationManager.createNotificationChannels(channels)
             channels[0].lockscreenVisibility = Notification.VISIBILITY_PUBLIC
         }
     }
 
-    fun createScheduledSessionChannel(notificationManager: NotificationManager?) {
-        if (notificationManager == null) return
+    fun createScheduledSessionChannel(notificationManager: NotificationManager) {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
             createChannelGroups(notificationManager, CHANNEL_GROUP.RESTAURANT_CUSTOMER)
-            val channels: List<NotificationChannel>
-            channels = createChannels(CHANNEL_GROUP.RESTAURANT_CUSTOMER, NotificationManager.IMPORTANCE_MAX, CHANNEL.SCHEDULED_SESSION)
+            val channels = createChannels(CHANNEL_GROUP.RESTAURANT_CUSTOMER, NotificationManager.IMPORTANCE_MAX, CHANNEL.SCHEDULED_SESSION)
             notificationManager.createNotificationChannels(channels)
             channels[0].lockscreenVisibility = Notification.VISIBILITY_PUBLIC
         }
     }
 
-    fun createOrderChannels(context: Context?, notificationManager: NotificationManager?) {
-        if (notificationManager == null || context == null) return
+    fun createOrderChannels(context: Context, notificationManager: NotificationManager) {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
             createChannelGroups(notificationManager, CHANNEL_GROUP.RESTAURANT_MEMBER)
             val audioAttributes = AudioAttributes.Builder()
                     .setUsage(AudioAttributes.USAGE_NOTIFICATION)
                     .setContentType(AudioAttributes.CONTENT_TYPE_SONIFICATION)
                     .build()
-            val channels: List<NotificationChannel>
-            channels = createChannels(CHANNEL_GROUP.RESTAURANT_MEMBER, NotificationManager.IMPORTANCE_HIGH, CHANNEL.ORDERS)
+            val channels = createChannels(CHANNEL_GROUP.RESTAURANT_MEMBER, NotificationManager.IMPORTANCE_HIGH, CHANNEL.ORDERS)
             channels.map {
                 it.setSound(getAlertOrdersSoundUri(context), audioAttributes)
                 it.enableVibration(true)
@@ -174,14 +159,22 @@ object MessageUtils {
     }
 
     @JvmStatic
-    fun createUploadNotification(context: Context?): NotificationCompat.Builder {
-        val builder = NotificationCompat.Builder(context!!, CHANNEL.MEDIA_UPLOAD.id)
+    fun createUploadNotification(context: Context): NotificationCompat.Builder {
+        val builder = NotificationCompat.Builder(context, CHANNEL.MEDIA_UPLOAD.id)
         builder.setContentTitle("Media upload")
                 .setContentText("Upload in progress")
                 .setSmallIcon(R.drawable.ic_logo_notification)
                 .setPriority(NotificationCompat.PRIORITY_LOW)
+                .setOngoing(true)
                 .setProgress(100, 0, false)
         return builder
+    }
+
+    fun createLocationTrackNotification(context: Context) = NotificationCompat.Builder(context, CHANNEL.LOCATION_TRACK.id).apply {
+        setContentTitle("Checkin")
+        setContentText("Detecting Location")
+        setOngoing(true)
+        setTicker("Now")
     }
 
     @JvmStatic

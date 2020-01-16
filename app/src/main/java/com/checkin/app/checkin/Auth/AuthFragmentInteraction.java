@@ -1,6 +1,6 @@
 package com.checkin.app.checkin.Auth;
 
-import com.checkin.app.checkin.User.UserModel.GENDER;
+import com.checkin.app.checkin.user.models.UserModel.GENDER;
 import com.facebook.login.LoginResult;
 
 public interface AuthFragmentInteraction {

@@ -1,4 +1,4 @@
-package com.checkin.app.checkin.Maps;
+package com.checkin.app.checkin.location;
 
 import android.content.Context;
 import android.provider.Settings;
@@ -29,5 +29,6 @@ public class AppUtils {
         public static final String LOCATION_DATA_CITY = "LOCATION_DATA_CITY";
         public static final String LOCATION_DATA_STREET = "LOCATION_DATA_STREET";
         public static final String LOCATION_DATA_ADDRESS_BUNDLE = "LOCATION_DATA_ADDRESS_BUNDLE";
+        public static final String LOCATION_DATA_LOCATION_BUNDLE = "LOCATION_DATA_LOCATION_BUNDLE";
     }
 }

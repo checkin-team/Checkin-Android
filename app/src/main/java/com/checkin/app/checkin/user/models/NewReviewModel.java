@@ -1,4 +1,4 @@
-package com.checkin.app.checkin.User.bills;
+package com.checkin.app.checkin.user.models;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 

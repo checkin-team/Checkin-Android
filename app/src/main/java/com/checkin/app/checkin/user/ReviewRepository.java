@@ -1,4 +1,4 @@
-package com.checkin.app.checkin.User;
+package com.checkin.app.checkin.user;
 
 import android.app.Application;
 import android.content.Context;
@@ -8,11 +8,11 @@ import androidx.lifecycle.LiveData;
 
 import com.checkin.app.checkin.data.network.ApiClient;
 import com.checkin.app.checkin.data.network.ApiResponse;
-import com.checkin.app.checkin.data.resource.NetworkBoundResource;
-import com.checkin.app.checkin.data.resource.Resource;
 import com.checkin.app.checkin.data.network.RetrofitLiveData;
 import com.checkin.app.checkin.data.network.WebApiService;
-import com.checkin.app.checkin.User.bills.NewReviewModel;
+import com.checkin.app.checkin.data.resource.NetworkBoundResource;
+import com.checkin.app.checkin.data.resource.Resource;
+import com.checkin.app.checkin.user.models.NewReviewModel;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 
 

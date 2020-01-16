@@ -11,10 +11,10 @@ import androidx.lifecycle.ViewModelProviders
 import butterknife.BindView
 import butterknife.OnClick
 import com.checkin.app.checkin.R
-import com.checkin.app.checkin.User.UserModel.GENDER
 import com.checkin.app.checkin.Utility.DebouncedOnClickListener
 import com.checkin.app.checkin.Utility.ParentActivityDelegate
 import com.checkin.app.checkin.misc.fragments.BaseFragment
+import com.checkin.app.checkin.user.models.UserModel.GENDER
 
 class SignupUserInfoFragment : BaseFragment() {
     @BindView(R.id.ed_firstname)

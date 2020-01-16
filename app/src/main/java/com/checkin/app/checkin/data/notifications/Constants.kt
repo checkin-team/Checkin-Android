@@ -62,6 +62,7 @@ object Constants {
         WAITER("channel.restaurant_waiter", "Restaurant Waiter"),
 
         // Misc group
-        MEDIA_UPLOAD("channel.media_upload", "Media upload progress");
+        MEDIA_UPLOAD("channel.media_upload", "Media upload progress"),
+        LOCATION_TRACK("channel.track_location", "Track current location");
     }
 }

@@ -1,10 +1,16 @@
 package com.checkin.app.checkin.home.activities
 
+import android.Manifest
 import android.app.Activity
 import android.content.BroadcastReceiver
 import android.content.Context
 import android.content.Intent
+import android.content.IntentFilter
+import android.content.pm.PackageManager
+import android.net.Uri
+import android.os.Build
 import android.os.Bundle
+import android.provider.Settings
 import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
@@ -13,26 +19,27 @@ import android.widget.TextView
 import androidx.activity.viewModels
 import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.appcompat.widget.Toolbar
+import androidx.core.app.ActivityCompat
 import androidx.core.view.GravityCompat
 import androidx.drawerlayout.widget.DrawerLayout
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import androidx.lifecycle.Observer
+import androidx.localbroadcastmanager.content.LocalBroadcastManager
 import androidx.viewpager.widget.ViewPager.SimpleOnPageChangeListener
 import butterknife.BindView
 import butterknife.ButterKnife
 import butterknife.OnClick
 import com.checkin.app.checkin.Account.AccountModel.ACCOUNT_TYPE
 import com.checkin.app.checkin.Account.BaseAccountActivity
+import com.checkin.app.checkin.BuildConfig
 import com.checkin.app.checkin.R
 import com.checkin.app.checkin.Shop.ShopJoin.BusinessFeaturesActivity
-import com.checkin.app.checkin.User.Private.UserPrivateProfileFragment
-import com.checkin.app.checkin.User.Private.UserViewModel
-import com.checkin.app.checkin.User.UserModel
 import com.checkin.app.checkin.Utility.DynamicSwipableViewPager
 import com.checkin.app.checkin.Utility.OnBoardingUtils
 import com.checkin.app.checkin.Utility.OnBoardingUtils.OnBoardingModel
 import com.checkin.app.checkin.Utility.Utils
+import com.checkin.app.checkin.Utility.hasLocationPermission
 import com.checkin.app.checkin.data.notifications.ActiveSessionNotificationService
 import com.checkin.app.checkin.data.notifications.Constants
 import com.checkin.app.checkin.data.notifications.MESSAGE_TYPE
@@ -42,12 +49,18 @@ import com.checkin.app.checkin.data.resource.Resource
 import com.checkin.app.checkin.home.fragments.UserHomeFragment
 import com.checkin.app.checkin.home.viewmodels.HomeViewModel
 import com.checkin.app.checkin.home.viewmodels.LiveSessionViewModel
+import com.checkin.app.checkin.location.UserCurrentLocationService
 import com.checkin.app.checkin.misc.activities.QRScannerActivity
 import com.checkin.app.checkin.misc.adapters.BaseFragmentAdapterBottomNav
 import com.checkin.app.checkin.misc.fragments.BlankFragment
 import com.checkin.app.checkin.restaurant.activities.openPublicRestaurantProfile
 import com.checkin.app.checkin.session.activesession.ActiveSessionActivity
+import com.checkin.app.checkin.user.fragments.UserPrivateProfileFragment
+import com.checkin.app.checkin.user.models.UserModel
+import com.checkin.app.checkin.user.viewmodels.UserViewModel
+import com.golovin.fluentstackbar.FluentSnackbar
 import com.google.android.material.navigation.NavigationView
+import com.google.android.material.snackbar.Snackbar
 import com.google.android.material.tabs.TabLayout
 
 class HomeActivity : BaseAccountActivity(), NavigationView.OnNavigationItemSelectedListener {
@@ -81,6 +94,13 @@ class HomeActivity : BaseAccountActivity(), NavigationView.OnNavigationItemSelec
                 }
                 MESSAGE_TYPE.SHOP_MEMBER_ADDED -> accountViewModel.updateResults()
             }
+        }
+    }
+
+    private val locationReceiver = object : BroadcastReceiver() {
+        override fun onReceive(context: Context?, intent: Intent?) {
+//            val coords = intent?.getSerializableExtra(UserCurrentLocationService.KEY_ACTION_LOCATION_COORDINATES) as Pair<Double, Double>
+            mViewModel.fetchNearbyRestaurants()
         }
     }
 
@@ -118,6 +138,7 @@ class HomeActivity : BaseAccountActivity(), NavigationView.OnNavigationItemSelec
             }
         })
 
+        setupUserLocationTracker()
         setupObserver()
         explainQr()
     }
@@ -210,11 +231,69 @@ class HomeActivity : BaseAccountActivity(), NavigationView.OnNavigationItemSelec
 
     override fun getAccountTypes(): Array<ACCOUNT_TYPE> = arrayOf(ACCOUNT_TYPE.USER)
 
+    private fun setupUserLocationTracker() {
+        if (hasLocationPermission) trackUserCurrentLocation()
+        else requestLocationPermission()
+    }
+
+    private fun requestLocationPermission() {
+        val permission = Manifest.permission.ACCESS_FINE_LOCATION
+        val shouldProvideRationale = ActivityCompat.shouldShowRequestPermissionRationale(this, permission)
+        if (shouldProvideRationale) {
+            FluentSnackbar.create(this)
+                    .create(R.string.user_location_permission_rationale)
+                    .duration(Snackbar.LENGTH_INDEFINITE)
+                    .neutralBackgroundColor()
+                    .maxLines(2)
+                    .actionTextRes(R.string.allow)
+                    .action {
+                        ActivityCompat.requestPermissions(this, arrayOf(permission), REQUEST_LOCATION_PERMISSION)
+                    }
+                    .show()
+        } else ActivityCompat.requestPermissions(this, arrayOf(permission), REQUEST_LOCATION_PERMISSION)
+    }
+
+    private fun trackUserCurrentLocation() {
+        val serviceIntent = Intent(this, UserCurrentLocationService::class.java)
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) startForegroundService(serviceIntent)
+        else startService(serviceIntent)
+    }
+
     public override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
         if (requestCode == REQUEST_QR_SCANNER && resultCode == Activity.RESULT_OK) {
             val qrData = data!!.getStringExtra(QRScannerActivity.KEY_QR_RESULT)
             mViewModel.processQr(qrData)
+        }
+    }
+
+    override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<out String>, grantResults: IntArray) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults)
+        when (requestCode) {
+            REQUEST_LOCATION_PERMISSION -> {
+                when {
+                    grantResults.isEmpty() -> setupUserLocationTracker()
+                    grantResults[0] == PackageManager.PERMISSION_GRANTED -> trackUserCurrentLocation()
+                    else -> {
+                        FluentSnackbar.create(this)
+                                .create(R.string.location_permission_denied_explanation)
+                                .duration(Snackbar.LENGTH_INDEFINITE)
+                                .errorBackgroundColor()
+                                .maxLines(2)
+                                .actionTextRes(R.string.settings)
+                                .action {
+                                    // Build intent that displays the App settings screen.
+                                    val intent = Intent().apply {
+                                        action = Settings.ACTION_APPLICATION_DETAILS_SETTINGS
+                                        data = Uri.fromParts("package", BuildConfig.APPLICATION_ID, null)
+                                        flags = Intent.FLAG_ACTIVITY_NEW_TASK
+                                    }
+                                    startActivity(intent)
+                                }
+                                .show()
+                    }
+                }
+            }
         }
     }
 
@@ -238,6 +317,9 @@ class HomeActivity : BaseAccountActivity(), NavigationView.OnNavigationItemSelec
         liveViewModel.updateResults()
         val types = arrayOf(MESSAGE_TYPE.USER_SESSION_ADDED_BY_OWNER, MESSAGE_TYPE.SHOP_MEMBER_ADDED)
         MessageUtils.registerLocalReceiver(this, mReceiver, *types)
+        LocalBroadcastManager.getInstance(this).registerReceiver(locationReceiver, IntentFilter().apply {
+            addAction(UserCurrentLocationService.ACTION_BROADCAST_LOCATION)
+        })
     }
 
     private fun openActiveSession() {
@@ -247,6 +329,7 @@ class HomeActivity : BaseAccountActivity(), NavigationView.OnNavigationItemSelec
     override fun onPause() {
         super.onPause()
         MessageUtils.unregisterLocalReceiver(this, mReceiver)
+        LocalBroadcastManager.getInstance(this).unregisterReceiver(locationReceiver)
     }
 
     override fun onSupportNavigateUp(): Boolean {
@@ -300,5 +383,6 @@ class HomeActivity : BaseAccountActivity(), NavigationView.OnNavigationItemSelec
     companion object {
         const val SP_ONBOARDING_QR_SCANNER = "onboarding.qrscanner"
         private const val REQUEST_QR_SCANNER = 212
+        private const val REQUEST_LOCATION_PERMISSION = 123
     }
 }

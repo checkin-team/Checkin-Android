@@ -1,11 +1,11 @@
-package com.checkin.app.checkin.User.bills;
+package com.checkin.app.checkin.user.models;
 
 import androidx.annotation.DrawableRes;
 
-import com.checkin.app.checkin.misc.models.BriefModel;
 import com.checkin.app.checkin.R;
 import com.checkin.app.checkin.Shop.ShopModel;
 import com.checkin.app.checkin.Utility.Utils;
+import com.checkin.app.checkin.misc.models.BriefModel;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
 

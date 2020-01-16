@@ -1,4 +1,4 @@
-package com.checkin.app.checkin.User
+package com.checkin.app.checkin.user.models
 
 import com.checkin.app.checkin.misc.models.BriefModel
 import com.fasterxml.jackson.annotation.JsonProperty

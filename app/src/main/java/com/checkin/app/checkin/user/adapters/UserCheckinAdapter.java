@@ -1,18 +1,19 @@
-package com.checkin.app.checkin.User.Private;
+package com.checkin.app.checkin.user.adapters;
 
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import androidx.annotation.NonNull;
+import androidx.recyclerview.widget.RecyclerView;
+
 import com.checkin.app.checkin.R;
-import com.checkin.app.checkin.User.ShopCustomerModel;
 import com.checkin.app.checkin.Utility.Utils;
+import com.checkin.app.checkin.user.models.ShopCustomerModel;
 
 import java.util.List;
 
-import androidx.annotation.NonNull;
-import androidx.recyclerview.widget.RecyclerView;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import de.hdodenhof.circleimageview.CircleImageView;
@@ -21,7 +22,7 @@ public class UserCheckinAdapter extends RecyclerView.Adapter<UserCheckinAdapter.
 
     private List<ShopCustomerModel> mList;
 
-    UserCheckinAdapter() {
+    public UserCheckinAdapter() {
     }
 
     @NonNull
@@ -46,7 +47,7 @@ public class UserCheckinAdapter extends RecyclerView.Adapter<UserCheckinAdapter.
         return mList != null ? mList.size() : 0;
     }
 
-    void setUserCheckinsData(List<ShopCustomerModel> data) {
+    public void setUserCheckinsData(List<ShopCustomerModel> data) {
         mList = data;
         notifyDataSetChanged();
     }

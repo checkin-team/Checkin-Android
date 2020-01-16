@@ -16,12 +16,6 @@ import com.checkin.app.checkin.Shop.Private.Invoice.ShopSessionDetailModel
 import com.checkin.app.checkin.Shop.Private.Invoice.ShopSessionFeedbackModel
 import com.checkin.app.checkin.Shop.Private.MemberModel
 import com.checkin.app.checkin.Shop.ShopJoin.ShopJoinModel
-import com.checkin.app.checkin.User.ShopCustomerModel
-import com.checkin.app.checkin.User.UserLocationModel
-import com.checkin.app.checkin.User.UserModel
-import com.checkin.app.checkin.User.bills.NewReviewModel
-import com.checkin.app.checkin.User.bills.UserTransactionBriefModel
-import com.checkin.app.checkin.User.bills.UserTransactionDetailsModel
 import com.checkin.app.checkin.Waiter.Model.*
 import com.checkin.app.checkin.home.model.ActiveLiveSessionDetailModel
 import com.checkin.app.checkin.home.model.NearbyRestaurantModel
@@ -34,6 +28,7 @@ import com.checkin.app.checkin.restaurant.models.RestaurantModel
 import com.checkin.app.checkin.restaurant.models.RestaurantServiceModel
 import com.checkin.app.checkin.session.activesession.chat.SessionChatModel
 import com.checkin.app.checkin.session.models.*
+import com.checkin.app.checkin.user.models.*
 import com.fasterxml.jackson.databind.node.ObjectNode
 import okhttp3.MultipartBody
 import retrofit2.Call

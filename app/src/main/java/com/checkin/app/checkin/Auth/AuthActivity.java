@@ -22,12 +22,12 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 import androidx.lifecycle.ViewModelProviders;
 
-import com.checkin.app.checkin.home.activities.HomeActivity;
-import com.checkin.app.checkin.misc.EulaDialog;
 import com.checkin.app.checkin.R;
-import com.checkin.app.checkin.User.UserModel.GENDER;
 import com.checkin.app.checkin.Utility.Constants;
 import com.checkin.app.checkin.Utility.Utils;
+import com.checkin.app.checkin.home.activities.HomeActivity;
+import com.checkin.app.checkin.misc.EulaDialog;
+import com.checkin.app.checkin.user.models.UserModel.GENDER;
 import com.facebook.AccessToken;
 import com.facebook.CallbackManager;
 import com.facebook.login.LoginResult;

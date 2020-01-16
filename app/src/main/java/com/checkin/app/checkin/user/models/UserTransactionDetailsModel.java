@@ -1,4 +1,4 @@
-package com.checkin.app.checkin.User.bills;
+package com.checkin.app.checkin.user.models;
 
 import com.checkin.app.checkin.Shop.ShopModel;
 import com.checkin.app.checkin.Utility.Utils;

@@ -59,7 +59,7 @@
             tools:replace="screenOrientation" />
 
         <activity
-            android:name=".Maps.MapsActivity"
+            android:name=".location.MapsActivity"
             android:theme="@style/AppTheme" />
         <activity android:name=".misc.activities.SelectCropImageActivity" />
         <activity
@@ -94,9 +94,10 @@
                 android:resource="@xml/authenticator" />
         </service>
 
-        <service android:name=".Maps.FetchAddressIntentService" />
+        <service android:name=".location.FetchAddressIntentService" />
         <service android:name=".Auth.DeviceTokenService" />
         <service android:name=".data.notifications.ActiveSessionNotificationService" />
+        <service android:name=".location.UserCurrentLocationService" />
 
         <meta-data
             android:name="com.facebook.sdk.ApplicationId"

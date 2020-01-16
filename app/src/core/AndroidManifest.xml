@@ -30,7 +30,7 @@
         tools:replace="android:theme">
 
         <activity
-            android:name=".User.Private.ProfileEditActivity"
+            android:name=".user.activities.ProfileEditActivity"
             android:label="Edit Profile"
             android:theme="@style/AppThemeWhiteActionBar" />
         <activity
@@ -121,9 +121,9 @@
             android:windowSoftInputMode="adjustResize" />
         <activity android:name=".session.activesession.ActiveSessionInvoiceActivity" />
         <activity
-            android:name=".User.bills.SuccessfulTransactionActivity"
+            android:name=".user.activities.SuccessfulTransactionActivity"
             android:theme="@style/Theme.Design.NoActionBar" />
-        <activity android:name=".User.bills.TransactionDetailsActivity" />
+        <activity android:name=".user.activities.TransactionDetailsActivity" />
         <activity
             android:name=".Shop.Private.Invoice.ShopInvoiceListActivity"
             android:label="@string/action_invoice"

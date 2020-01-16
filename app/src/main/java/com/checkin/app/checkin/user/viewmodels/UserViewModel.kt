@@ -1,11 +1,8 @@
-package com.checkin.app.checkin.User.Private
+package com.checkin.app.checkin.user.viewmodels
 
 import android.app.Application
 import android.content.Context
 import androidx.lifecycle.LiveData
-import com.checkin.app.checkin.User.ShopCustomerModel
-import com.checkin.app.checkin.User.UserModel
-import com.checkin.app.checkin.User.UserRepository
 import com.checkin.app.checkin.Utility.ProgressRequestBody.UploadCallbacks
 import com.checkin.app.checkin.data.BaseViewModel
 import com.checkin.app.checkin.data.Converters.objectMapper
@@ -17,6 +14,9 @@ import com.checkin.app.checkin.data.resource.Resource.Companion.error
 import com.checkin.app.checkin.data.resource.Resource.Companion.loading
 import com.checkin.app.checkin.data.resource.Resource.Companion.success
 import com.checkin.app.checkin.misc.models.GenericDetailModel
+import com.checkin.app.checkin.user.UserRepository
+import com.checkin.app.checkin.user.models.ShopCustomerModel
+import com.checkin.app.checkin.user.models.UserModel
 import java.io.File
 
 class UserViewModel(application: Application) : BaseViewModel(application) {

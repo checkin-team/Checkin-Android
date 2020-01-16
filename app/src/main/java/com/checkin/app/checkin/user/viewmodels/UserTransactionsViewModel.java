@@ -1,15 +1,18 @@
-package com.checkin.app.checkin.User.bills;
+package com.checkin.app.checkin.user.viewmodels;
 
 import android.app.Application;
 
 import androidx.annotation.NonNull;
 import androidx.lifecycle.LiveData;
 
+import com.checkin.app.checkin.Utility.SourceMappedLiveData;
 import com.checkin.app.checkin.data.BaseViewModel;
 import com.checkin.app.checkin.data.resource.Resource;
-import com.checkin.app.checkin.User.ReviewRepository;
-import com.checkin.app.checkin.Utility.SourceMappedLiveData;
 import com.checkin.app.checkin.session.SessionRepository;
+import com.checkin.app.checkin.user.ReviewRepository;
+import com.checkin.app.checkin.user.models.NewReviewModel;
+import com.checkin.app.checkin.user.models.UserTransactionBriefModel;
+import com.checkin.app.checkin.user.models.UserTransactionDetailsModel;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 
 public class UserTransactionsViewModel extends BaseViewModel {
