@@ -43,7 +43,7 @@ class ManagerScheduledLiveOrdersFragment : BaseFragment(), PreorderTableInteract
                 if (shop != null && shop.pk != viewModel.shopPk) return
                 when (message.type) {
                     MESSAGE_TYPE.MANAGER_SCHEDULED_CBYG_NEW_PAID -> viewModel.updateResults()
-                    MESSAGE_TYPE.MANAGER_SCHEDULED_CBYG_CANCELLED -> viewModel.removeSession(session.pk)
+                    MESSAGE_TYPE.MANAGER_SCHEDULED_CBYG_CANCELLED, MESSAGE_TYPE.MANAGER_SCHEDULED_CBYG_AUTO_CANCELLED -> viewModel.removeSession(session.pk)
                     MESSAGE_TYPE.MANAGER_SCHEDULED_CBYG_PREPARATION_START -> viewModel.updateSessionStatus(session.pk, ScheduledSessionStatus.PREPARATION)
                 }
             }
@@ -101,7 +101,7 @@ class ManagerScheduledLiveOrdersFragment : BaseFragment(), PreorderTableInteract
     override fun onResume() {
         super.onResume()
         MessageUtils.registerLocalReceiver(
-                requireContext(), mReceiver, MESSAGE_TYPE.MANAGER_SCHEDULED_CBYG_NEW_PAID,
+                requireContext(), mReceiver, MESSAGE_TYPE.MANAGER_SCHEDULED_CBYG_NEW_PAID, MESSAGE_TYPE.MANAGER_SCHEDULED_CBYG_AUTO_CANCELLED,
                 MESSAGE_TYPE.MANAGER_SCHEDULED_CBYG_CANCELLED, MESSAGE_TYPE.MANAGER_SCHEDULED_CBYG_PREPARATION_START
         )
     }
