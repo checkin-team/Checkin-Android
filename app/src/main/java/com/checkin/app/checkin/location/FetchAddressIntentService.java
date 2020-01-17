@@ -143,7 +143,6 @@ public class FetchAddressIntentService extends IntentService {
         } catch (Exception e) {
             e.printStackTrace();
         }
+        stopSelf();
     }
-
-
 }

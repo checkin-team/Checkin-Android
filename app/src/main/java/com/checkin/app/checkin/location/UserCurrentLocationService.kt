@@ -55,8 +55,7 @@ class UserCurrentLocationService : Service(), Callback<UserLocationModel> {
         when {
             it.action == Constants.SERVICE_ACTION_FOREGROUND_STOP -> {
                 if (shouldTrackLocation) removeLocationUpdates()
-                stopForeground(true)
-                stopSelf()
+                exitService()
             }
             it.getBooleanExtra(KEY_TRACK_LOCATION, false) -> {
                 shouldTrackLocation = true
@@ -107,27 +106,38 @@ class UserCurrentLocationService : Service(), Callback<UserLocationModel> {
         }
     }
 
+    private fun exitService() {
+        stopForeground(true)
+        stopSelf()
+    }
+
     private fun removeLocationUpdates() {
         Log.i(TAG, "Removing location updates")
 
         try {
             fusedLocationProviderClient.removeLocationUpdates(locationCallback)
-            stopSelf()
         } catch (unlikely: SecurityException) {
             Log.e(TAG, "Lost location permission. Could not remove updates.", unlikely)
         }
     }
 
-    private fun getNotification(): Notification = MessageUtils.createLocationTrackNotification(this).build()
+    private fun getNotification(): Notification {
+        MessageUtils.createRequiredChannel(Constants.CHANNEL.LOCATION_TRACK, this)
+        return MessageUtils.createLocationTrackNotification(this).build()
+    }
 
     private fun getLastLocation() {
         try {
             fusedLocationProviderClient.lastLocation.addOnCompleteListener { task ->
-                if (task.isSuccessful) task.result?.let { onNewLocation(it) }
-                else Log.w(TAG, "Failed to get last location.")
+                if (task.isSuccessful) task.result?.let { onNewLocation(it) } ?: exitService()
+                else {
+                    Log.w(TAG, "Failed to get last location.")
+                    exitService()
+                }
             }
         } catch (unlikely: SecurityException) {
             Log.e(TAG, "Lost location permission.", unlikely)
+            exitService()
         }
     }
 
@@ -161,7 +171,7 @@ class UserCurrentLocationService : Service(), Callback<UserLocationModel> {
                         putExtra(KEY_TRACK_LOCATION, shouldTrackLocation)
                         putExtra(KEY_ACTION_LOCATION_COORDINATES, response.data?.location?.coordinates)
                     })
-            if (!shouldTrackLocation) stopSelf()
+            if (!shouldTrackLocation) exitService()
         } else {
             Log.e(TAG, response.errorMessage, response.errorThrowable)
             if (!shouldTrackLocation) getLastLocation()

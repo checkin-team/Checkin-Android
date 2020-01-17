@@ -170,12 +170,11 @@ object MessageUtils {
         return builder
     }
 
-    fun createLocationTrackNotification(context: Context) = NotificationCompat.Builder(context, CHANNEL.LOCATION_TRACK.id).apply {
-        setContentTitle("Checkin")
-        setContentText("Detecting Location")
-        setOngoing(true)
-        setTicker("Now")
-    }
+    fun createLocationTrackNotification(context: Context) = NotificationCompat.Builder(context, CHANNEL.LOCATION_TRACK.id)
+            .setContentTitle("Checkin")
+            .setContentText("Detecting Location")
+            .setOngoing(true)
+            .setTicker("Now")
 
     @JvmStatic
     fun parseMessage(intent: Intent): MessageModel? = try {
