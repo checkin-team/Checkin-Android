@@ -22,7 +22,6 @@
     <uses-permission android:name="android.permission.FOREGROUND_SERVICE" />
     <uses-permission android:name="android.permission.ACCESS_DOWNLOAD_MANAGER" />
 
-
     <uses-feature android:name="android.hardware.camera" />
 
     <application
@@ -33,7 +32,7 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         tools:replace="android:theme">
-
+        <activity android:name=".misc.activities.AboutUsActivity"></activity>
         <activity
             android:name=".home.activities.SplashActivity"
             android:theme="@style/Theme.AppCompat.Light.NoActionBar" />
@@ -57,7 +56,6 @@
             android:screenOrientation="sensorPortrait"
             android:theme="@style/AppTheme"
             tools:replace="screenOrientation" />
-
         <activity
             android:name=".location.MapsActivity"
             android:theme="@style/AppTheme" />
@@ -78,7 +76,6 @@
                 <data android:scheme="@string/fb_login_protocol_scheme" />
             </intent-filter>
         </activity>
-
         <activity android:name=".misc.activities.UpdateAppActivity" />
 
         <service
@@ -93,7 +90,6 @@
                 android:name="android.accounts.AccountAuthenticator"
                 android:resource="@xml/authenticator" />
         </service>
-
         <service android:name=".location.FetchAddressIntentService" />
         <service android:name=".Auth.DeviceTokenService" />
         <service android:name=".data.notifications.ActiveSessionNotificationService" />
