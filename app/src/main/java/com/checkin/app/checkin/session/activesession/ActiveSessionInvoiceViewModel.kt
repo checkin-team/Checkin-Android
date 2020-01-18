@@ -5,17 +5,17 @@ import android.os.Bundle
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.Transformations
+import com.checkin.app.checkin.Shop.ShopModel.PAYMENT_MODE
+import com.checkin.app.checkin.Utility.ProgressRequestBody.UploadCallbacks
 import com.checkin.app.checkin.data.BaseViewModel
 import com.checkin.app.checkin.data.Converters.objectMapper
+import com.checkin.app.checkin.data.network.RetrofitCallAsyncTask
 import com.checkin.app.checkin.data.resource.Resource
 import com.checkin.app.checkin.data.resource.Resource.Companion.cloneResource
 import com.checkin.app.checkin.data.resource.Resource.Companion.error
 import com.checkin.app.checkin.data.resource.Resource.Companion.errorNotFound
 import com.checkin.app.checkin.data.resource.Resource.Companion.loading
 import com.checkin.app.checkin.data.resource.Resource.Companion.success
-import com.checkin.app.checkin.data.network.RetrofitCallAsyncTask
-import com.checkin.app.checkin.Shop.ShopModel.PAYMENT_MODE
-import com.checkin.app.checkin.Utility.ProgressRequestBody.UploadCallbacks
 import com.checkin.app.checkin.misc.paytm.PaytmModel
 import com.checkin.app.checkin.session.SessionRepository
 import com.checkin.app.checkin.session.models.CheckoutStatusModel
@@ -92,7 +92,7 @@ class ActiveSessionInvoiceViewModel(application: Application) : BaseViewModel(ap
     val checkoutData: LiveData<Resource<CheckoutStatusModel>> = mCheckoutData
 
     fun fetchAvailablePromoCodes() {
-        mPromoList.addSource(mSessionRepository.availablePromoCodes, mPromoList::setValue)
+        mPromoList.addSource(mSessionRepository.allPromoCodes, mPromoList::setValue)
     }
 
     val promoCodes: LiveData<Resource<List<PromoDetailModel>>>

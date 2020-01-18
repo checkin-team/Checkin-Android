@@ -2,7 +2,7 @@
 <resources>
     <color name="colorAccent">#af1014</color>
     <color name="shadow_gradient">#20000000</color>
-    <color name="transparent">#00000000</color>
+    <color name="transparent">@android:color/transparent</color>
     <color name="dark_back_filter">#ab000000</color>
     <color name="white_two">#f3f3f3</color>
     <color name="white_one">#f2f2f2</color>

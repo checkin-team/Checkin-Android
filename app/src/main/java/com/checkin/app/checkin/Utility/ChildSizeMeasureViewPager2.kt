@@ -8,9 +8,14 @@ import androidx.viewpager2.widget.ViewPager2
 import com.checkin.app.checkin.misc.adapters.BaseFragmentStateAdapter
 
 class ChildSizeMeasureViewPager2(private val pager: ViewPager2) : ViewPager2.OnPageChangeCallback(), LifecycleObserver {
+    private val adapter = pager.adapter as BaseFragmentStateAdapter
+
+    fun refreshPageSizes() {
+        adapter.getViewAtPosition(pager.currentItem)?.let { updatePagerHeightForChild(it) }
+    }
+
     override fun onPageSelected(position: Int) {
-        val view = (pager.adapter as BaseFragmentStateAdapter).getViewAtPosition(position)
-        view?.let { updatePagerHeightForChild(it) }
+        adapter.getViewAtPosition(position)?.let { updatePagerHeightForChild(it) }
     }
 
     private fun updatePagerHeightForChild(view: View) {
@@ -26,12 +31,12 @@ class ChildSizeMeasureViewPager2(private val pager: ViewPager2) : ViewPager2.OnP
     }
 
     @OnLifecycleEvent(Lifecycle.Event.ON_CREATE)
-    fun onCreate() {
+    private fun onCreate() {
         pager.registerOnPageChangeCallback(this)
     }
 
     @OnLifecycleEvent(Lifecycle.Event.ON_DESTROY)
-    fun onDestory() {
+    private fun onDestory() {
         pager.unregisterOnPageChangeCallback(this)
     }
 }

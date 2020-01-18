@@ -5,16 +5,16 @@ import android.os.Bundle
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.Transformations
 import androidx.lifecycle.viewModelScope
+import com.checkin.app.checkin.Utility.ProgressRequestBody.UploadCallbacks
 import com.checkin.app.checkin.data.BaseViewModel
 import com.checkin.app.checkin.data.Converters.objectMapper
+import com.checkin.app.checkin.data.network.RetrofitCallAsyncTask
 import com.checkin.app.checkin.data.resource.Resource
 import com.checkin.app.checkin.data.resource.Resource.Companion.cloneResource
 import com.checkin.app.checkin.data.resource.Resource.Companion.error
 import com.checkin.app.checkin.data.resource.Resource.Companion.errorNotFound
 import com.checkin.app.checkin.data.resource.Resource.Companion.loading
 import com.checkin.app.checkin.data.resource.Resource.Companion.success
-import com.checkin.app.checkin.data.network.RetrofitCallAsyncTask
-import com.checkin.app.checkin.Utility.ProgressRequestBody.UploadCallbacks
 import com.checkin.app.checkin.misc.paytm.PaytmModel
 import com.checkin.app.checkin.session.SessionRepository
 import com.checkin.app.checkin.session.models.NewScheduledSessionModel
@@ -142,7 +142,7 @@ class NewScheduledSessionViewModel(application: Application) : BaseViewModel(app
     }
 
     fun fetchPromoCodes() {
-        mPromoData.addSource(sessionRepository.availablePromoCodes, mPromoData::setValue)
+        mPromoData.addSource(sessionRepository.allPromoCodes, mPromoData::setValue)
     }
 
     val isOfferApplied: Boolean = mSessionPromo.value?.data != null

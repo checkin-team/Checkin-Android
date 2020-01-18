@@ -173,7 +173,7 @@ class HomeActivity : BaseAccountActivity() {
             } else if (resource.status === Resource.Status.ERROR_NOT_FOUND) {
                 ActiveSessionNotificationService.clearNotification(applicationContext)
             } else if (resource.problem != null && resource.problem!!.getErrorCode() === ProblemModel.ERROR_CODE.SESSION_USER_PENDING_MEMBER) {
-                //                tvSessionWaitQRBusy.setText(resource.getProblem().getDetail());
+                // User is pending member of a active session
             }
         })
         mViewModel.cancelDineInData.observe(this, Observer { objectNodeResource ->

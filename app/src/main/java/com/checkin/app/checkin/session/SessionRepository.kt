@@ -52,18 +52,29 @@ class SessionRepository private constructor(context: Context) : BaseRepository()
             }
         }.asLiveData
 
-    val availablePromoCodes: LiveData<Resource<List<PromoDetailModel>>>
+    val allPromoCodes: LiveData<Resource<List<PromoDetailModel>>>
         get() =  object : NetworkBoundResource<List<PromoDetailModel>, List<PromoDetailModel>>() {
             override fun shouldUseLocalDb(): Boolean {
                 return false
             }
 
             override fun createCall(): LiveData<ApiResponse<List<PromoDetailModel>>> {
-                return RetrofitLiveData<List<PromoDetailModel>>(mWebService.promoCodes)
+                return RetrofitLiveData(mWebService.promoCodes)
             }
 
             override fun saveCallResult(data: List<PromoDetailModel>) {}
         }.asLiveData
+
+    fun getRestaurantPromoCodes(restaurantId: Long): LiveData<Resource<List<PromoDetailModel>>> {
+        return object : NetworkBoundResource<List<PromoDetailModel>, List<PromoDetailModel>>() {
+            override fun shouldUseLocalDb(): Boolean = false
+
+            override fun createCall() = RetrofitLiveData(mWebService.getRestaurantActivePromos(restaurantId))
+
+            override fun saveCallResult(data: List<PromoDetailModel>?) {}
+
+        }.asLiveData
+    }
 
     fun newCustomerSession(data: ObjectNode): LiveData<Resource<QRResultModel>> {
         return object : NetworkBoundResource<QRResultModel, QRResultModel>() {
