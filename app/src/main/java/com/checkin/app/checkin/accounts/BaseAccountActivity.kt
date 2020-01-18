@@ -4,7 +4,7 @@ import android.annotation.SuppressLint
 import android.content.ComponentName
 import android.content.Intent
 import android.preference.PreferenceManager
-import android.view.View
+import android.widget.Button
 import androidx.activity.viewModels
 import androidx.annotation.CallSuper
 import androidx.appcompat.widget.Toolbar
@@ -24,6 +24,7 @@ import com.checkin.app.checkin.Utility.pass
 import com.checkin.app.checkin.Waiter.WaiterWorkActivity
 import com.checkin.app.checkin.data.resource.Resource
 import com.checkin.app.checkin.manager.activities.ManagerWorkActivity
+import com.checkin.app.checkin.misc.activities.AboutUsActivity
 import com.checkin.app.checkin.misc.activities.BaseActivity
 import com.mikepenz.materialdrawer.Drawer
 import com.mikepenz.materialdrawer.util.DrawerUIUtils
@@ -74,6 +75,18 @@ abstract class BaseAccountActivity : BaseActivity() {
         accountViewModel.currentAccount.observe(this, Observer { })
     }
 
+    protected open fun setupFooter() {
+        val btnAboutUs: Button = findViewById(R.id.btn_about_us)
+
+        btnAboutUs.setOnClickListener {
+            startActivity(Intent(this, AboutUsActivity::class.java))
+        }
+        val btnLogout: Button = findViewById(R.id.btn_logout)
+        btnLogout.setOnClickListener {
+            onLogoutClick()
+        }
+    }
+
     @CallSuper
     protected open fun buildDrawer() {
         mainDrawer = drawer {
@@ -119,7 +132,10 @@ abstract class BaseAccountActivity : BaseActivity() {
                             .into(imageView)
                 }
             }
+            stickyFooterShadow = false
+            stickyFooterRes = R.layout.incl_leftnav_footer
         }
+        setupFooter()
     }
 
     @CallSuper
@@ -161,7 +177,7 @@ abstract class BaseAccountActivity : BaseActivity() {
         startActivity(intent)
     }
 
-    protected open fun onLogoutClick(v: View?) {
+    protected open fun onLogoutClick() {
         if (!Utils.logoutFromApp(applicationContext))
             Utils.toast(applicationContext, "Unable to logout. Manually remove account from settings.")
     }
