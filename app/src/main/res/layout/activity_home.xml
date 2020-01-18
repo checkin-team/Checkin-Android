@@ -87,7 +87,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     style="@style/TealBlueTextStyle"
-                    android:textSize = "12sp"
+                    android:textSize = "@dimen/font_tiny"
                     android:layout_centerVertical="true"
                     android:layout_marginEnd="@dimen/spacing_extra_small"
                     android:layout_toStartOf="@id/im_home_cart_cancel"

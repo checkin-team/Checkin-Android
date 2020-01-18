@@ -248,4 +248,5 @@
     <dimen name="width_preparation_time_selector">270dp</dimen>
     <dimen name="height_image_qsr_food_ready">160dp</dimen>
     <dimen name="pager_radius_small">4dp</dimen>
+    <dimen name="size_extra_tiny_icon">8dp</dimen>
 </resources>
