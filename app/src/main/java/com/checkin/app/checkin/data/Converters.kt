@@ -4,6 +4,7 @@ import android.util.Log
 import com.fasterxml.jackson.core.JsonProcessingException
 import com.fasterxml.jackson.core.type.TypeReference
 import com.fasterxml.jackson.databind.DeserializationFeature
+import com.fasterxml.jackson.databind.JavaType
 import com.fasterxml.jackson.databind.JsonNode
 import com.fasterxml.jackson.databind.SerializationFeature
 import com.fasterxml.jackson.module.kotlin.jacksonObjectMapper
@@ -28,16 +29,18 @@ object Converters {
         return null
     }
 
-    fun <T> getObjectFromJson(json: String, typeReference: TypeReference<T>): T? {
-        var res: T?
-        try {
-            res = objectMapper.readValue<T>(json, typeReference)
-        } catch (exception: IOException) {
-            res = null
-            Log.e(TAG, "JSON invalid! $json")
-        }
+    fun <T> getObjectFromJson(json: String, typeReference: TypeReference<T>): T? = try {
+        objectMapper.readValue<T>(json, typeReference)
+    } catch (exception: IOException) {
+        Log.e(TAG, "JSON invalid! $json")
+        null
+    }
 
-        return res
+    fun <T> getObjectFromJson(json: String, typeReference: JavaType): T? = try {
+        objectMapper.readValue<T>(json, typeReference)
+    } catch (exception: IOException) {
+        Log.e(TAG, "JSON invalid! $json")
+        null
     }
 
     class ListConverter<T> : PropertyConverter<List<T>, String> {

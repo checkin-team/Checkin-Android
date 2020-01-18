@@ -1,23 +1,60 @@
 package com.checkin.app.checkin.home.activities
 
+import android.animation.Animator
 import android.content.Intent
 import android.os.Bundle
 import android.preference.PreferenceManager
 import androidx.appcompat.app.AppCompatActivity
+import butterknife.BindView
+import butterknife.ButterKnife
+import com.airbnb.lottie.LottieAnimationView
 import com.checkin.app.checkin.Auth.AuthActivity
 import com.checkin.app.checkin.Auth.AuthPreferences
 import com.checkin.app.checkin.Auth.DeviceTokenService
 import com.checkin.app.checkin.Cook.CookWorkActivity
+import com.checkin.app.checkin.R
 import com.checkin.app.checkin.Shop.Private.ShopPrivateActivity
 import com.checkin.app.checkin.Utility.Constants
+import com.checkin.app.checkin.Utility.Utils
+import com.checkin.app.checkin.Utility.coroutineLifecycleScope
 import com.checkin.app.checkin.Waiter.WaiterWorkActivity
 import com.checkin.app.checkin.accounts.ACCOUNT_TYPE
+import com.checkin.app.checkin.data.config.RemoteConfig
 import com.checkin.app.checkin.manager.activities.ManagerWorkActivity
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.launch
 
-class SplashActivity : AppCompatActivity() {
+class SplashActivity : AppCompatActivity(), Animator.AnimatorListener {
+    @BindView(R.id.lottie_splash)
+    internal lateinit var lottieSplash: LottieAnimationView
+
+    private var doubleBackPressedToExit = false
+    private var loaded = false
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        goForScreens()
+        setContentView(R.layout.activity_splash)
+        ButterKnife.bind(this)
+        // Activates the fetched config from Firebase Remote Config
+        RemoteConfig.activate()
+
+        lottieSplash.addAnimatorListener(this)
+    }
+
+    override fun onAnimationEnd(animation: Animator?) {
+    }
+
+    override fun onAnimationRepeat(animation: Animator?) {
+        if (!loaded) {
+            loaded = true
+            coroutineLifecycleScope.launch { goForScreens() }
+        }
+    }
+
+    override fun onAnimationCancel(animation: Animator?) {
+    }
+
+    override fun onAnimationStart(animation: Animator?) {
     }
 
     private fun goForScreens() {
@@ -46,5 +83,17 @@ class SplashActivity : AppCompatActivity() {
         }
         startActivity(intent)
         finish()
+    }
+
+    override fun onBackPressed() {
+        if (doubleBackPressedToExit) super.onBackPressed()
+        else {
+            doubleBackPressedToExit = true
+            Utils.toast(this, "Press back again to exit")
+            coroutineLifecycleScope.launch {
+                delay(2000)
+                doubleBackPressedToExit = false
+            }
+        }
     }
 }

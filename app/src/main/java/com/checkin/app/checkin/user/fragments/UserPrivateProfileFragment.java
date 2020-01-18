@@ -56,6 +56,8 @@ public class UserPrivateProfileFragment extends BaseFragment {
     ImageView imCover;
     @BindView(R.id.rv_user_private_recent_shops)
     RecyclerView rvRecentShops;
+    @BindView(R.id.tv_bio)
+    TextView tvBio;
     @BindView(R.id.container_checkedin_count)
     LinearLayout containerCheckedinCount;
     @BindView(R.id.container_user_info)
@@ -187,6 +189,7 @@ public class UserPrivateProfileFragment extends BaseFragment {
 
         shimmerLayout.stopShimmer();
         shimmerLayout.setVisibility(View.GONE);
+        tvBio.setText(data.getBio());
     }
 
     @OnClick({R.id.btn_user_private_add_logo, R.id.btn_user_private_edit})

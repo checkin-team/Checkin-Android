@@ -244,6 +244,7 @@ data class MessageModel(
     }
 
     fun shouldTryUpdateUi(): Boolean = when (type) {
+        MESSAGE_TYPE.NONE,
         MESSAGE_TYPE.USER_SESSION_ORDER_ACCEPTED_REJECTED,
         MESSAGE_TYPE.MANAGER_SESSION_ORDERS_PUSH,
         MESSAGE_TYPE.WAITER_SESSION_ORDERS_PUSH,

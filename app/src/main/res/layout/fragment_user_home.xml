@@ -23,31 +23,19 @@
                 android:orientation="vertical"
                 android:paddingBottom="@dimen/spacing_medium">
 
-                <RelativeLayout
+                <FrameLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:background="@color/white_four"
-                    android:paddingStart="@dimen/spacing_normal"
-                    android:paddingTop="@dimen/spacing_small"
-                    android:paddingEnd="@dimen/spacing_normal"
-                    android:paddingBottom="@dimen/spacing_normal">
+                    android:background="@color/white_four">
 
-                    <TextView
-                        android:id="@+id/tv_home_suggested_dishes_title"
-                        style="@style/GreySmallTextStyle"
-                        android:layout_width="wrap_content"
+                    <com.airbnb.epoxy.EpoxyRecyclerView
+                        android:id="@+id/epoxy_rv_home_banner"
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:paddingBottom="@dimen/spacing_tiny"
-                        android:text="Recommended Dishes" />
-
-                    <androidx.recyclerview.widget.RecyclerView
-                        android:id="@+id/rv_home_suggested_dishes"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_below="@id/tv_home_suggested_dishes_title"
-                        android:layout_marginTop="@dimen/spacing_tiny"
-                        android:orientation="horizontal" />
-                </RelativeLayout>
+                        android:layout_marginTop="@dimen/spacing_extra_small"
+                        app:itemSpacing="@dimen/spacing_tiny"
+                        tools:listitem="@layout/item_ad_banner" />
+                </FrameLayout>
 
                 <FrameLayout
                     android:id="@+id/container_home_live_session"
@@ -75,8 +63,8 @@
                         style="@style/GreyBoldTextStyle"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:paddingBottom="@dimen/spacing_tiny"
                         android:layout_marginStart="@dimen/spacing_large"
+                        android:paddingBottom="@dimen/spacing_tiny"
                         android:text="Around You" />
 
                     <androidx.recyclerview.widget.RecyclerView

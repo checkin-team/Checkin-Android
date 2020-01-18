@@ -35,6 +35,7 @@ import com.checkin.app.checkin.Utility.*
 import com.checkin.app.checkin.Utility.OnBoardingUtils.OnBoardingModel
 import com.checkin.app.checkin.accounts.ACCOUNT_TYPE
 import com.checkin.app.checkin.accounts.BaseAccountActivity
+import com.checkin.app.checkin.data.config.RemoteConfig
 import com.checkin.app.checkin.data.notifications.ActiveSessionNotificationService
 import com.checkin.app.checkin.data.notifications.Constants
 import com.checkin.app.checkin.data.notifications.MESSAGE_TYPE
@@ -137,6 +138,11 @@ class HomeActivity : BaseAccountActivity() {
         setupUserLocationTracker()
         setupObserver()
         explainQr()
+
+        // Refresh Remote Config
+        RemoteConfig.refresh().addOnSuccessListener {
+            RemoteConfig.activate()
+        }
     }
 
     override fun updateScreen() {

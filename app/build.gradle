@@ -158,14 +158,15 @@ dependencies {
     // Google Places API
     implementation "com.google.android.libraries.places:places:2.1.0"
     // Google Material
-    implementation "com.google.android.material:material:1.2.0-alpha02"
+    implementation "com.google.android.material:material:1.2.0-alpha03"
 
     // FireBase libraries
     implementation (
-            "com.google.firebase:firebase-core:17.2.1",
+            "com.google.firebase:firebase-common-ktx:19.3.0",
             "com.google.firebase:firebase-auth:19.2.0",
             "com.google.firebase:firebase-messaging:20.1.0",
-            "com.google.firebase:firebase-analytics:17.2.1"
+            "com.google.firebase:firebase-analytics:17.2.2",
+            "com.google.firebase:firebase-config-ktx:19.1.0"
     )
 
     // Fabric Crashlytics
@@ -194,6 +195,9 @@ dependencies {
     // Epoxy
     implementation "com.airbnb.android:epoxy:$versions.epoxy"
     kapt "com.airbnb.android:epoxy-processor:$versions.epoxy"
+
+    // Lottie
+    implementation "com.airbnb.android:lottie:$versions.lottie"
 
     // ObjectBox components
     implementation "io.objectbox:objectbox-android:$versions.objectBox"

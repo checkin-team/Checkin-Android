@@ -12,21 +12,24 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import androidx.viewpager2.widget.ViewPager2
 import butterknife.BindView
+import com.airbnb.epoxy.EpoxyRecyclerView
 import com.checkin.app.checkin.R
 import com.checkin.app.checkin.Utility.pass
+import com.checkin.app.checkin.data.config.RemoteConfig
 import com.checkin.app.checkin.data.notifications.MESSAGE_TYPE
 import com.checkin.app.checkin.data.notifications.MessageUtils
 import com.checkin.app.checkin.data.resource.Resource
 import com.checkin.app.checkin.home.holders.LiveSessionTrackerAdapter
 import com.checkin.app.checkin.home.holders.LiveSessionTrackerInteraction
 import com.checkin.app.checkin.home.holders.NearbyRestaurantAdapter
-import com.checkin.app.checkin.home.holders.PopularDishesAdapter
 import com.checkin.app.checkin.home.model.LiveSessionDetailModel
 import com.checkin.app.checkin.home.model.SessionType
+import com.checkin.app.checkin.home.model.TopAdBanner
 import com.checkin.app.checkin.home.viewmodels.HomeViewModel
 import com.checkin.app.checkin.home.viewmodels.LiveSessionViewModel
 import com.checkin.app.checkin.menu.activities.ActiveSessionMenuActivity
 import com.checkin.app.checkin.misc.fragments.BaseFragment
+import com.checkin.app.checkin.misc.holders.adBannerModelHolder
 import com.checkin.app.checkin.restaurant.activities.openPublicRestaurantProfile
 import com.checkin.app.checkin.restaurant.models.RestaurantLocationModel
 import com.checkin.app.checkin.session.activesession.ActiveSessionActivity
@@ -38,8 +41,8 @@ import com.checkin.app.checkin.session.scheduled.activities.QSRSessionDetailActi
 class UserHomeFragment : BaseFragment(), LiveSessionTrackerInteraction {
     override val rootLayout = R.layout.fragment_user_home
 
-    @BindView(R.id.rv_home_suggested_dishes)
-    internal lateinit var rvSuggestedDishes: RecyclerView
+    @BindView(R.id.epoxy_rv_home_banner)
+    internal lateinit var epoxyRvHomeBanner: EpoxyRecyclerView
     @BindView(R.id.rv_home_nearby_restaurants)
     internal lateinit var rvNearbyRestaurants: RecyclerView
     @BindView(R.id.container_home_live_session)
@@ -47,7 +50,6 @@ class UserHomeFragment : BaseFragment(), LiveSessionTrackerInteraction {
     @BindView(R.id.vp_home_session_live)
     internal lateinit var vpLiveSession: ViewPager2
 
-    private lateinit var mPopularDishAdapter: PopularDishesAdapter
     private lateinit var mRestAdapter: NearbyRestaurantAdapter
     private lateinit var mLiveSessionAdapter: LiveSessionTrackerAdapter
 
@@ -79,8 +81,15 @@ class UserHomeFragment : BaseFragment(), LiveSessionTrackerInteraction {
         initRefreshScreen(R.id.sr_home)
         enableDisableSwipeRefresh(true)
 
+        epoxyRvHomeBanner.withModels {
+            RemoteConfig.getListData<TopAdBanner>(RemoteConfig.Constants.HOME_TOP_BANNERS_AD)?.forEachIndexed { index, data ->
+                adBannerModelHolder {
+                    id("ad", index.toLong())
+                    imageUrl(data.url)
+                }
+            }
+        }
         mRestAdapter = NearbyRestaurantAdapter()
-        mPopularDishAdapter = PopularDishesAdapter()
         mLiveSessionAdapter = LiveSessionTrackerAdapter(this)
 
         vpLiveSession.adapter = mLiveSessionAdapter
@@ -88,8 +97,6 @@ class UserHomeFragment : BaseFragment(), LiveSessionTrackerInteraction {
         rvNearbyRestaurants.layoutManager = LinearLayoutManager(context)
         rvNearbyRestaurants.adapter = mRestAdapter
 
-        rvSuggestedDishes.layoutManager = LinearLayoutManager(context, RecyclerView.HORIZONTAL, false)
-        rvSuggestedDishes.adapter = mPopularDishAdapter
         rvNearbyRestaurants.addOnScrollListener(object : RecyclerView.OnScrollListener() {
             override fun onScrollStateChanged(recyclerView: RecyclerView, newState: Int) {
                 enableDisableSwipeRefresh(newState == RecyclerView.SCROLL_STATE_IDLE)

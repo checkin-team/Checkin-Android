@@ -11,12 +11,12 @@ import androidx.viewpager.widget.PagerAdapter
 import androidx.viewpager.widget.ViewPager
 import butterknife.BindView
 import butterknife.ButterKnife
-import com.checkin.app.checkin.home.model.NearbyRestaurantModel
 import com.checkin.app.checkin.R
 import com.checkin.app.checkin.Utility.BaseViewHolder
 import com.checkin.app.checkin.Utility.Utils
 import com.checkin.app.checkin.Utility.navigateToLocation
 import com.checkin.app.checkin.Utility.pass
+import com.checkin.app.checkin.home.model.NearbyRestaurantModel
 import com.checkin.app.checkin.restaurant.activities.openPublicRestaurantProfile
 import com.rd.PageIndicatorView
 import com.rd.animation.type.AnimationType
@@ -39,7 +39,7 @@ class NearbyRestaurantAdapter : RecyclerView.Adapter<BaseViewHolder<Any>>() {
 
     override fun getItemCount(): Int = data.count() + 1
 
-    override fun getItemViewType(position: Int): Int = if (position == adPosition) R.layout.item_advertisement_banner else R.layout.item_home_restaurant_banner
+    override fun getItemViewType(position: Int): Int = if (position == adPosition) R.layout.item_ad_banner_with_viewpager else R.layout.item_home_restaurant_banner
 
     override fun onBindViewHolder(holder: BaseViewHolder<Any>, position: Int) {
         when {
@@ -161,8 +161,9 @@ class NearbyRestaurantAdapter : RecyclerView.Adapter<BaseViewHolder<Any>>() {
         }
 
         override fun instantiateItem(container: ViewGroup, position: Int): Any {
-            val itemView = mLayoutInflater.inflate(R.layout.item_banner_ad, container, false)
-            val imageView = itemView.findViewById<View>(R.id.im_home_banner) as ImageView
+            val itemView = mLayoutInflater.inflate(R.layout.item_ad_banner, container, false)
+            val imageView = itemView.findViewById<View>(R.id.im_item_banner) as ImageView
+            imageView.scaleType = ImageView.ScaleType.FIT_CENTER
             imageView.setImageResource(mResources[position])
             container.addView(itemView)
 
