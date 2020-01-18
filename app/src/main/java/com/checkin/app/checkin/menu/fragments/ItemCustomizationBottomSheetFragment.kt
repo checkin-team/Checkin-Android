@@ -9,7 +9,6 @@ import android.widget.RadioButton
 import android.widget.RadioGroup
 import android.widget.TextView
 import androidx.constraintlayout.widget.ConstraintLayout
-import androidx.constraintlayout.widget.ConstraintSet
 import androidx.lifecycle.Observer
 import butterknife.BindView
 import butterknife.OnClick
@@ -62,19 +61,20 @@ class ItemCustomizationBottomSheetFragment : BaseBottomSheetFragment(), ItemCust
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         tvItemName.text = itemModel.name
-        viewModel.itemCost.observe(this, Observer<Double> { value: Double? -> tvBill.text = String.format("Item Total   %s", Utils.formatIntegralCurrencyAmount(requireContext(), value)) })
+        viewModel.itemCost.observe(this, Observer { value ->
+            tvBill.text = String.format("Item Total   %s", Utils.formatIntegralCurrencyAmount(requireContext(), value))
+        })
         tvRadioLabel1.text = itemModel.typeNames.get(0)
         groupRadio.visibility = View.VISIBLE
         when (itemModel.typeNames.size) {
             3 -> {
-                tvRadioLabel2.text = itemModel.typeNames.get(1)
-                tvRadioLabel3.text = itemModel.typeNames.get(2)
+                tvRadioLabel2.text = itemModel.typeNames[1]
+                tvRadioLabel3.text = itemModel.typeNames[2]
                 btnRadio1.performClick()
             }
             2 -> {
                 hideViews(btnRadio3, tvRadioLabel3, vLineHorizontalTwo)
-                setViewInCenter()
-                tvRadioLabel2.text = itemModel.typeNames.get(1)
+                tvRadioLabel2.text = itemModel.typeNames[1]
                 btnRadio1.performClick()
             }
             else -> groupRadio.visibility = View.GONE
@@ -90,11 +90,8 @@ class ItemCustomizationBottomSheetFragment : BaseBottomSheetFragment(), ItemCust
     }
 
     override fun onFieldClick(field: ItemCustomizationFieldModel, isSelected: Boolean) {
-        if (isSelected) {
-            viewModel.addItemCustomization(field)
-        } else {
-            viewModel.removeItemCustomization(field)
-        }
+        if (isSelected) viewModel.addItemCustomization(field)
+        else viewModel.removeItemCustomization(field)
     }
 
     @OnClick(R.id.footer_menu_customization)
@@ -138,24 +135,6 @@ class ItemCustomizationBottomSheetFragment : BaseBottomSheetFragment(), ItemCust
             }
             else -> selectType(0)
         }
-    }
-
-    private fun setViewInCenter() {
-        val constraintSet = ConstraintSet()
-        constraintSet.clone(containerRadioButtons)
-        constraintSet.connect(R.id.rb_menu_customization_type_1, ConstraintSet.START, ConstraintSet.PARENT_ID, ConstraintSet.START)
-        constraintSet.connect(R.id.rb_menu_customization_type_1, ConstraintSet.END, R.id.line_horizontal, ConstraintSet.START)
-        constraintSet.setHorizontalChainStyle(R.id.rb_menu_customization_type_1, ConstraintSet.CHAIN_SPREAD)
-        constraintSet.connect(R.id.rb_menu_customization_type_2, ConstraintSet.END, ConstraintSet.PARENT_ID, ConstraintSet.END)
-        constraintSet.connect(R.id.rb_menu_customization_type_2, ConstraintSet.START, R.id.line_horizontal, ConstraintSet.END)
-        constraintSet.connect(R.id.tv_menu_customization_radio_1, ConstraintSet.START, ConstraintSet.PARENT_ID, ConstraintSet.START)
-        constraintSet.connect(R.id.tv_menu_customization_radio_1, ConstraintSet.TOP, R.id.rb_menu_customization_type_1, ConstraintSet.BOTTOM)
-        //        constraintSet.connect(R.id.tv_menu_customization_radio_1, ConstraintSet.END ,R.id.line_horizontal, ConstraintSet.START);
-        constraintSet.setHorizontalChainStyle(R.id.tv_menu_customization_radio_1, ConstraintSet.HORIZONTAL_GUIDELINE)
-        constraintSet.connect(R.id.tv_menu_customization_radio_2, ConstraintSet.END, ConstraintSet.PARENT_ID, ConstraintSet.END)
-        constraintSet.connect(R.id.tv_menu_customization_radio_2, ConstraintSet.TOP, R.id.rb_menu_customization_type_2, ConstraintSet.BOTTOM)
-        constraintSet.connect(R.id.tv_menu_customization_radio_2, ConstraintSet.START, R.id.line_horizontal, ConstraintSet.END, 30)
-        constraintSet.applyTo(containerRadioButtons)
     }
 
     private fun selectType(position: Int) = viewModel.setSelectedType(position)

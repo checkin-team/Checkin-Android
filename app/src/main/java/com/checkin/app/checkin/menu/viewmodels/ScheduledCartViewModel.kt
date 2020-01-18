@@ -4,9 +4,9 @@ import android.app.Application
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.Transformations
+import com.checkin.app.checkin.Utility.pass
 import com.checkin.app.checkin.data.db.AppDatabase
 import com.checkin.app.checkin.data.resource.Resource
-import com.checkin.app.checkin.Utility.pass
 import com.checkin.app.checkin.menu.models.*
 import com.checkin.app.checkin.restaurant.models.RestaurantLocationModel
 import com.checkin.app.checkin.session.models.NewScheduledSessionModel
@@ -54,7 +54,8 @@ class ScheduledCartViewModel(application: Application) : BaseCartViewModel(appli
             it?.let { resource ->
                 if (resource.status == Resource.Status.SUCCESS && resource.data != null) {
                     mOrderedItems.value = resource.data.orderedItems.map {
-                        val menuItem = AppDatabase.getMenuItemModel(null).get(it.item.pk) ?: it.item
+                        val menuItem = AppDatabase.getMenuItemModel(null).get(it.item.pk)
+                                ?: return@addSource
                         OrderedItemModel(
                                 it.longPk, menuItem, it.cost, it.quantity, it.typeIndex,
                                 it.customizations.flatMap { it.customizationFields }.distinct(),

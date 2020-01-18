@@ -2,6 +2,8 @@ package com.checkin.app.checkin.menu.viewmodels
 
 import android.app.Application
 import androidx.lifecycle.LiveData
+import androidx.lifecycle.MediatorLiveData
+import com.checkin.app.checkin.Utility.hasAtleastSize
 import com.checkin.app.checkin.data.resource.Resource
 import com.checkin.app.checkin.menu.models.MenuItemModel
 import com.checkin.app.checkin.session.activesession.ActiveSessionRepository
@@ -18,6 +20,25 @@ class UserMenuViewModel(application: Application) : BaseMenuViewModel(applicatio
     val recommendedItems: LiveData<Resource<List<TrendingDishModel>>> = mRecommendedData
 
     val menuTrendingItems: LiveData<Resource<List<TrendingDishModel>>> = mTrendingData
+
+    val doShowBestseller: LiveData<Boolean> = MediatorLiveData<Boolean>().apply {
+        value = null
+        addSource(filteredString) {
+            value = hasEnoughRecommendedItems() && it == null
+        }
+
+        addSource(selectedCategory) {
+            value = hasEnoughRecommendedItems() && it == null
+        }
+
+        addSource(recommendedItems) {
+            value = (value != false) && hasEnoughRecommendedItems()
+        }
+    }
+
+    private fun hasEnoughRecommendedItems() = recommendedItems.value.let {
+        (it?.data.hasAtleastSize(2) || it?.status == Resource.Status.LOADING)
+    }
 
     fun fetchRecommendedItems() {
         mRecommendedData.addSource(mRepository.getRecommendedDishes(mShopPk), mRecommendedData::setValue)

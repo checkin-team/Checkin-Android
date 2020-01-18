@@ -9,10 +9,10 @@ import androidx.lifecycle.Observer
 import butterknife.BindView
 import butterknife.OnTextChanged
 import com.airbnb.epoxy.EpoxyRecyclerView
-import com.checkin.app.checkin.data.resource.Resource
 import com.checkin.app.checkin.R
 import com.checkin.app.checkin.Utility.parentFragmentDelegate
 import com.checkin.app.checkin.Utility.parentViewModels
+import com.checkin.app.checkin.data.resource.Resource
 import com.checkin.app.checkin.menu.controllers.UserMenuItemController
 import com.checkin.app.checkin.menu.holders.OnItemInteractionListener
 import com.checkin.app.checkin.menu.listeners.MenuItemInteraction
@@ -38,8 +38,8 @@ class MenuDishSearchFragment : BaseDialogFragment(), OnItemInteractionListener {
     internal lateinit var pbLoading: ProgressBar
 
     val viewModel: UserMenuViewModel by parentViewModels()
-    val cartViewModel: ScheduledCartViewModel by parentViewModels()
-    val itemController = UserMenuItemController(this)
+    private val cartViewModel: ScheduledCartViewModel by parentViewModels()
+    private val itemController = UserMenuItemController(this)
     val listener: MenuItemInteraction by parentFragmentDelegate()
 
 //    override fun onCreate(savedInstanceState: Bundle?) {

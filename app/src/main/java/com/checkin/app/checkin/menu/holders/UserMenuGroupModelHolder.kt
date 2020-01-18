@@ -10,6 +10,7 @@ import android.widget.TextView
 import androidx.annotation.ColorRes
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.constraintlayout.widget.ConstraintSet
+import androidx.core.content.ContextCompat
 import androidx.core.widget.ImageViewCompat
 import androidx.transition.TransitionManager
 import androidx.viewpager.widget.PagerAdapter
@@ -52,6 +53,7 @@ abstract class UserMenuGroupModelHolder : EpoxyModelWithHolder<UserMenuGroupMode
     override fun bind(holder: Holder) {
         holder.bindData(groupData)
         holder.updateItemCounts(groupItemsOrderedCounts)
+        holder.updateExpansion(isExpanded, animate = false)
     }
 
     override fun bind(holder: Holder, previouslyBoundModel: EpoxyModel<*>) {
@@ -59,7 +61,7 @@ abstract class UserMenuGroupModelHolder : EpoxyModelWithHolder<UserMenuGroupMode
             if (groupItemsOrderedCounts != previouslyBoundModel.groupItemsOrderedCounts)
                 holder.updateItemCounts(groupItemsOrderedCounts)
             if (isExpanded != previouslyBoundModel.isExpanded)
-                holder.updateExpansion(isExpanded)
+                holder.updateExpansion(isExpanded, animate = true)
         } else super.bind(holder, previouslyBoundModel)
     }
 
@@ -123,12 +125,10 @@ abstract class UserMenuGroupModelHolder : EpoxyModelWithHolder<UserMenuGroupMode
                 setupTabIcons()
                 vTabs.addOnTabSelectedListener(object : TabLayout.OnTabSelectedListener {
                     @ColorRes
-                    fun getTabColor(position: Int): Int {
-                        return if (position == 0) R.color.apple_green else R.color.primary_red
-                    }
+                    private fun getTabColor(position: Int): Int = if (position == 0) R.color.apple_green else R.color.primary_red
 
                     override fun onTabSelected(tab: TabLayout.Tab) {
-                        vTabs.setSelectedTabIndicatorColor(context.resources.getColor(getTabColor(tab.position)))
+                        vTabs.setSelectedTabIndicatorColor(ContextCompat.getColor(context, getTabColor(tab.position)))
                     }
 
                     override fun onTabUnselected(tab: TabLayout.Tab) {}
@@ -140,9 +140,9 @@ abstract class UserMenuGroupModelHolder : EpoxyModelWithHolder<UserMenuGroupMode
             }
         }
 
-        private fun show() = applyState(STATE_EXPANDED)
+        private fun show(animate: Boolean) = applyState(STATE_EXPANDED, animate)
 
-        private fun hide() = applyState(STATE_COLLAPSED)
+        private fun hide(animate: Boolean) = applyState(STATE_COLLAPSED, animate)
 
         private fun setupTabIcons() {
             var tab: TabLayout.Tab? = vTabs.getTabAt(0)
@@ -151,7 +151,7 @@ abstract class UserMenuGroupModelHolder : EpoxyModelWithHolder<UserMenuGroupMode
                 val tv = tabOne.findViewById<TextView>(R.id.tv_tab)
                 val im = tabOne.findViewById<ImageView>(R.id.im_tab)
                 tv.text = "  Veg"
-                im.setImageDrawable(context.resources.getDrawable(R.drawable.ic_veg))
+                im.setImageDrawable(ContextCompat.getDrawable(context, R.drawable.ic_veg))
                 tab.customView = tabOne
             }
 
@@ -161,7 +161,7 @@ abstract class UserMenuGroupModelHolder : EpoxyModelWithHolder<UserMenuGroupMode
                 val tvTwo = tabTwo.findViewById<TextView>(R.id.tv_tab)
                 val imTwo = tabTwo.findViewById<ImageView>(R.id.im_tab)
                 tvTwo.text = "  Non-Veg"
-                imTwo.setImageDrawable(context.resources.getDrawable(R.drawable.ic_non_veg))
+                imTwo.setImageDrawable(ContextCompat.getDrawable(context, R.drawable.ic_non_veg))
                 tab.customView = tabTwo
             }
         }
@@ -170,13 +170,13 @@ abstract class UserMenuGroupModelHolder : EpoxyModelWithHolder<UserMenuGroupMode
             when (state) {
                 STATE_EXPANDED -> {
                     expandedCs.applyTo(containerMenuGroup)
-                    val color = context.resources.getColor(R.color.primary_red)
+                    val color = ContextCompat.getColor(context, R.color.primary_red)
                     tvGroupName.setTextColor(color)
                     ImageViewCompat.setImageTintList(imDropDown, ColorStateList.valueOf(color))
                 }
                 STATE_COLLAPSED -> {
                     collapsedCs.applyTo(containerMenuGroup)
-                    val color = context.resources.getColor(R.color.brownish_grey)
+                    val color = ContextCompat.getColor(context, R.color.brownish_grey)
                     tvGroupName.setTextColor(color)
                     ImageViewCompat.setImageTintList(imDropDown, ColorStateList.valueOf(color))
                 }
@@ -184,15 +184,18 @@ abstract class UserMenuGroupModelHolder : EpoxyModelWithHolder<UserMenuGroupMode
             if (animate) TransitionManager.beginDelayedTransition(containerMenuGroup)
         }
 
-        fun updateExpansion(expanded: Boolean) {
+        fun updateExpansion(expanded: Boolean, animate: Boolean = true) {
             isExpanded = expanded
-            if (isExpanded) show() else hide()
+            if (isExpanded) {
+                show(animate)
+                if (menuGroup.hasSubGroups() && vTabs.childCount > 1) setupTabIcons()
+            } else hide(animate)
         }
     }
 
     class SubGroupPagerAdapter internal constructor(
             menuGroup: MenuGroupModel,
-            val itemListener: MenuItemInteraction
+            private val itemListener: MenuItemInteraction
     ) : PagerAdapter() {
         private val mListItems: MutableList<List<MenuItemModel>> = ArrayList()
         private val mListHolders: MutableList<MenuItemsHolder> = mutableListOf()

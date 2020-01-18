@@ -52,10 +52,6 @@ abstract class BaseParentDelegate<T>(private val fragment: Fragment) :
         value = null
     }
 
-    operator fun setValue(thisRef: Fragment, property: KProperty<*>, value: T) {
-        throw IllegalStateException("Cannot set value on a ReadOnlyProperty")
-    }
-
     override operator fun getValue(thisRef: Fragment, property: KProperty<*>): T {
         return value!!
     }

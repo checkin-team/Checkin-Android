@@ -24,6 +24,8 @@ import kotlin.math.sign
  */
 inline fun <T> Collection<T>?.isNotEmpty(): Boolean = this != null && !this.isEmpty()
 
+inline fun <T> Collection<T>?.hasAtleastSize(minSize: Int): Boolean = this != null && this.size >= minSize
+
 /*
     Views
  */

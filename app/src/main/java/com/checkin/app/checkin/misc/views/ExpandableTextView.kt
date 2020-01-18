@@ -75,7 +75,7 @@ class ExpandableTextView @JvmOverloads constructor(context: Context, attrs: Attr
         val shortenSuffix = SpannableString(SHORTEN_SUFFIX)
         shortenSuffix.setSpan(ForegroundColorSpan(ContextCompat.getColor(context, R.color.greenish_teal)), 0, SHORTEN_SUFFIX.length, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE)
 
-        fullText = SpannableStringBuilder(text).append(shortenSuffix).toString()
+        fullText = SpannableStringBuilder(text).append(shortenSuffix)
         bufferType = type
         setText()
     }
@@ -91,7 +91,6 @@ class ExpandableTextView @JvmOverloads constructor(context: Context, attrs: Attr
 
         val shortenSuffix = SpannableString(ELLIPSIS)
         shortenSuffix.setSpan(ForegroundColorSpan(ContextCompat.getColor(context, R.color.greenish_teal)), 0, ELLIPSIS.length, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE)
-
 
         return if (trimEndIndex < text.length) SpannableStringBuilder(text, 0, trimEndIndex).append(shortenSuffix) else text
     }
@@ -121,12 +120,10 @@ class ExpandableTextView @JvmOverloads constructor(context: Context, attrs: Attr
 
     private fun refreshLineEndIndex() {
         try {
-            if (trimLines == 0) {
-                lineEndIndex = layout.getLineEnd(0)
-            } else if (trimLines in 1..lineCount) {
-                lineEndIndex = layout.getLineEnd(trimLines - 1)
-            } else {
-                lineEndIndex = INVALID_END_INDEX
+            lineEndIndex = when (trimLines) {
+                0 -> layout.getLineEnd(0)
+                in 1..lineCount -> layout.getLineEnd(trimLines - 1)
+                else -> INVALID_END_INDEX
             }
         } catch (e: Exception) {
             e.printStackTrace()

@@ -1,7 +1,5 @@
 package com.checkin.app.checkin.menu.controllers
 
-import android.animation.ValueAnimator
-import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.airbnb.epoxy.EpoxyModel
 import com.checkin.app.checkin.menu.holders.BestSellerModelHolder_
@@ -46,16 +44,17 @@ class UserMenuGroupController(
             requestModelBuild()
         }
 
-    val hasData = menuGroups?.isNotEmpty() ?: false
+    val hasData: Boolean
+        get() = menuGroups?.isNotEmpty() ?: false
 
-    private var expandedGroupId: Long? = null
+    var expandedGroupId: Long? = null
 
     override fun buildModels() {
         if (doShowBestseller) {
             val bestsellerModels: List<EpoxyModel<*>> = trendingDishes.let {
                 it?.map { dish ->
                     BestSellerModelHolder_().apply {
-                        id(dish.pk)
+                        id("best", dish.pk)
                         trendingItem(dish)
                         bestSellerListener?.let { listener(it) }
                         orderedCounts?.also { itemOrderedCount(it[dish.pk] ?: 0) }
@@ -108,19 +107,6 @@ class UserMenuGroupController(
     override fun expandView(group: MenuGroupModel) {
         expandedGroupId = group.pk
         requestModelBuild()
-
-        val scrollAnim = ValueAnimator.ofInt(1, 2, 3, 4)
-        scrollAnim.duration = GROUP_ANIMATION_DURATION
-        scrollAnim.addUpdateListener {
-            (mRecyclerView?.layoutManager as LinearLayoutManager).scrollToPositionWithOffset(adapter.run {
-                getModelById(group.pk)?.let { getModelPosition(it) } ?: 0
-            }, 0)
-        }
-        scrollAnim.start()
-    }
-
-    companion object {
-        private const val GROUP_ANIMATION_DURATION = 300L
     }
 }
 

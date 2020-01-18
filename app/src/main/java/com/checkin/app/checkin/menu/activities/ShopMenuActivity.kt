@@ -2,6 +2,7 @@ package com.checkin.app.checkin.menu.activities
 
 import android.content.Context
 import android.content.Intent
+import android.graphics.Rect
 import android.os.Bundle
 import android.text.InputType
 import android.view.View
@@ -10,6 +11,7 @@ import android.widget.TextView
 import androidx.activity.viewModels
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.widget.Toolbar
+import androidx.core.widget.NestedScrollView
 import androidx.drawerlayout.widget.DrawerLayout
 import androidx.lifecycle.Observer
 import butterknife.BindView
@@ -23,6 +25,7 @@ import com.checkin.app.checkin.Utility.isNotEmpty
 import com.checkin.app.checkin.data.resource.Resource
 import com.checkin.app.checkin.menu.controllers.getUniqueId
 import com.checkin.app.checkin.menu.fragments.MenuFragment
+import com.checkin.app.checkin.menu.fragments.MenuGroupScreenInteraction
 import com.checkin.app.checkin.menu.holders.ShopMenuCartModelHolder
 import com.checkin.app.checkin.menu.holders.shopMenuCartModelHolder
 import com.checkin.app.checkin.menu.models.OrderedItemModel
@@ -32,7 +35,7 @@ import com.checkin.app.checkin.misc.activities.BaseActivity
 import com.checkin.app.checkin.misc.fragments.NetworkBlockingFragment
 import com.checkin.app.checkin.misc.views.EndDrawerToggle
 
-class ShopMenuActivity : BaseActivity(), ShopMenuCartModelHolder.MenuCartInteraction {
+class ShopMenuActivity : BaseActivity(), ShopMenuCartModelHolder.MenuCartInteraction, MenuGroupScreenInteraction {
     @BindView(R.id.epoxy_rv_shop_menu_cart)
     internal lateinit var epoxyRvCart: EpoxyRecyclerView
     @BindView(R.id.drawer_shop_menu)
@@ -41,6 +44,8 @@ class ShopMenuActivity : BaseActivity(), ShopMenuCartModelHolder.MenuCartInterac
     internal lateinit var toolbar: Toolbar
     @BindView(R.id.tv_shop_menu_count_ordered_items)
     internal lateinit var tvCountOrderedItems: TextView
+    @BindView(R.id.nested_sv_shop_menu)
+    internal lateinit var nestedSv: NestedScrollView
     @BindView(R.id.tv_shop_menu_subtotal)
     internal lateinit var tvSubtotal: TextView
 
@@ -107,6 +112,16 @@ class ShopMenuActivity : BaseActivity(), ShopMenuCartModelHolder.MenuCartInterac
         networkViewModel.shouldTryAgain.observe(this, Observer {
             cartViewModel.confirmOrder()
         })
+    }
+
+    override fun onExpandGroupView(view: View) {
+        val outRect = Rect()
+        view.getDrawingRect(outRect)
+        nestedSv.offsetDescendantRectToMyCoords(view, outRect)
+        nestedSv.smoothScrollTo(0, outRect.top)
+    }
+
+    override fun onListBuilt() {
     }
 
     override fun onSupportNavigateUp(): Boolean {

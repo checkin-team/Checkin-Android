@@ -53,24 +53,22 @@ data class OrderedItemModel(
     fun isCustomized() = item.isComplexItem || selectedFields.isNotEmpty()
 
     fun addCustomizationField(field: ItemCustomizationFieldModel): OrderedItemModel = copy(
-            selectedFields = selectedFields.toMutableList().apply { add(field) },
-            cost = cost + (field.cost * quantity)
-    )
+            selectedFields = selectedFields.toMutableList().apply { add(field) }
+    ).updateCost()
 
     fun removeCustomizationField(field: ItemCustomizationFieldModel): OrderedItemModel = copy(
-            selectedFields = selectedFields.toMutableList().apply { remove(field) },
-            cost = cost - (field.cost * quantity)
-    )
+            selectedFields = selectedFields.toMutableList().apply { remove(field) }
+    ).updateCost()
 
-    fun selectType(typeIndex: Int): OrderedItemModel = copy(
-            typeIndex = typeIndex
-    )
+    fun selectType(typeIndex: Int): OrderedItemModel = copy(typeIndex = typeIndex).updateCost()
 
     fun updatePk(pk: Long): OrderedItemModel = copy(pk = pk)
 
-    fun updateQuantity(quantity: Int): OrderedItemModel = copy(quantity = quantity, cost = item.typeCosts[typeIndex] * quantity)
+    fun updateQuantity(quantity: Int): OrderedItemModel = copy(quantity = quantity).updateCost()
 
     fun updateRemarks(remark: String): OrderedItemModel = copy(remarks = remark)
+
+    private fun updateCost() = copy(cost = calculateCost(this))
 
     fun equalsWithoutPk(other: OrderedItemModel): Boolean {
         return itemPk() == other.itemPk() && selectedFields == other.selectedFields && typeIndex == other.typeIndex
@@ -82,5 +80,9 @@ data class OrderedItemModel(
 
     companion object {
         val TAG = OrderedItemModel::class.simpleName
+
+        fun calculateCost(item: OrderedItemModel) = item.run {
+            (itemModel.typeCosts[typeIndex] + selectedFields.sumByDouble { it.cost }) * quantity
+        }
     }
 }

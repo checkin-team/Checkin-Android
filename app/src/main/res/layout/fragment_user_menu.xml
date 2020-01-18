@@ -104,7 +104,7 @@
                     android:scaleX="0.85"
                     android:scaleY="0.85"
                     android:text="Special"
-                    android:textColor="@color/greenish_teal" />
+                    android:textColor="@color/brownish_grey" />
             </LinearLayout>
 
             <FrameLayout

@@ -4,8 +4,10 @@ import android.app.Activity
 import android.content.Context
 import android.content.DialogInterface
 import android.content.Intent
+import android.graphics.Rect
 import android.os.Bundle
 import android.util.Log
+import android.view.View
 import android.widget.TextView
 import androidx.activity.viewModels
 import androidx.appcompat.app.AlertDialog
@@ -29,6 +31,7 @@ import com.checkin.app.checkin.R
 import com.checkin.app.checkin.Utility.*
 import com.checkin.app.checkin.data.resource.ProblemModel
 import com.checkin.app.checkin.data.resource.Resource
+import com.checkin.app.checkin.menu.fragments.MenuGroupScreenInteraction
 import com.checkin.app.checkin.menu.fragments.ScheduledMenuFragment
 import com.checkin.app.checkin.menu.viewmodels.ScheduledCartViewModel
 import com.checkin.app.checkin.misc.BlockingNetworkViewModel
@@ -64,7 +67,7 @@ import kotlin.math.abs
 class PublicRestaurantProfileActivity : BaseActivity(), AppBarLayout.OnOffsetChangedListener,
         ScheduledSessionInteraction, QRScannerWrapperInteraction,
         NewSessionCreationInteraction, SchedulerInteraction,
-        OtpVerificationDialog.AuthCallback {
+        OtpVerificationDialog.AuthCallback, MenuGroupScreenInteraction {
     @BindView(R.id.indicator_restaurant_public_covers)
     internal lateinit var indicatorTopCover: PageIndicatorView
     @BindView(R.id.fragment_vp_restaurant_public)
@@ -131,6 +134,8 @@ class PublicRestaurantProfileActivity : BaseActivity(), AppBarLayout.OnOffsetCha
     }
     private val firebaseAuth: FirebaseAuth by lazy { FirebaseAuth.getInstance() }
 
+    private val childSizeUtil by lazy { ChildSizeMeasureViewPager2(vpFragment) }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_public_restaurant_profile)
@@ -155,13 +160,16 @@ class PublicRestaurantProfileActivity : BaseActivity(), AppBarLayout.OnOffsetCha
         indicatorTopCover.setClickListener { position -> vpRestaurantCovers.currentItem = position }
 
         fragmentAdapter = PublicRestaurantProfileAdapter(this, restaurantId)
+        vpFragment.isUserInputEnabled = false
         vpFragment.adapter = fragmentAdapter
         TabLayoutMediator(tabsFragment, vpFragment) { tab, pos -> tab.text = fragmentAdapter.tabs[pos].name.capitalize() }.attach()
         tabsFragment.addOnTabSelectedListener(object : TabLayout.ViewPagerOnTabSelectedListener(null) {
             override fun onTabSelected(tab: TabLayout.Tab) {
+                if (tab.position > 0) nestedSv.smoothScrollTo(0, 0)
                 vpFragment.currentItem = tab.position
             }
         })
+        tabsFragment.setBackgroundResource(R.color.white)
         restaurantViewModel.fetchRestaurantWithId(restaurantId)
 
         scheduledCartView.setup(this)
@@ -181,7 +189,7 @@ class PublicRestaurantProfileActivity : BaseActivity(), AppBarLayout.OnOffsetCha
             add(android.R.id.content, networkFragment, NetworkBlockingFragment.FRAGMENT_TAG)
         }
 
-        lifecycle.addObserver(ChildSizeMeasureViewPager2(vpFragment))
+        lifecycle.addObserver(childSizeUtil)
     }
 
     private fun setupObservers() {
@@ -308,6 +316,17 @@ class PublicRestaurantProfileActivity : BaseActivity(), AppBarLayout.OnOffsetCha
                 .show()
     }
 
+    override fun onListBuilt() {
+        childSizeUtil.refreshPageSizes()
+    }
+
+    override fun onExpandGroupView(view: View) {
+        val outRect = Rect()
+        view.getDrawingRect(outRect)
+        nestedSv.offsetDescendantRectToMyCoords(view, outRect)
+        nestedSv.smoothScrollTo(0, outRect.top)
+    }
+
     private fun wrongRestaurantQrScanned() {
         Utils.toast(this, "Wrong Restaurant!")
     }
@@ -358,9 +377,9 @@ class PublicRestaurantProfileActivity : BaseActivity(), AppBarLayout.OnOffsetCha
         val percentOffset = abs(verticalOffset).toFloat() / maxScroll
         if (percentOffset >= .7f && !isTabAtTop) {
             tabsFragment.run {
+                setBackgroundResource(R.color.teal_blue)
                 setSelectedTabIndicatorColor(ContextCompat.getColor(context, R.color.white))
                 setTabTextColors(ContextCompat.getColor(context, R.color.pinkish_grey), ContextCompat.getColor(context, R.color.white))
-                setTabBackground(ContextCompat.getColor(context, R.color.teal_blue))
             }
             isTabAtTop = true
             toolbar.title = title
@@ -368,9 +387,9 @@ class PublicRestaurantProfileActivity : BaseActivity(), AppBarLayout.OnOffsetCha
             title = toolbar.title.toString()
             toolbar.title = ""
             tabsFragment.run {
+                setBackgroundResource(R.color.white)
                 setSelectedTabIndicatorColor(ContextCompat.getColor(context, R.color.teal_blue))
                 setTabTextColors(ContextCompat.getColor(context, R.color.brownish_grey), ContextCompat.getColor(context, R.color.teal_blue))
-                setTabBackground(ContextCompat.getColor(context, R.color.white))
             }
             isTabAtTop = false
         }

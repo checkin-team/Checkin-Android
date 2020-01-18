@@ -10,6 +10,7 @@ import androidx.lifecycle.Observer
 import androidx.viewpager2.widget.ViewPager2
 import butterknife.BindView
 import com.checkin.app.checkin.R
+import com.checkin.app.checkin.Utility.Utils
 import com.checkin.app.checkin.data.resource.Resource
 import com.checkin.app.checkin.manager.viewmodels.ManagerWorkViewModel
 import com.checkin.app.checkin.misc.BlockingNetworkViewModel
@@ -83,6 +84,11 @@ class ManagerLiveOrdersFragment : BaseFragment() {
         if (data.isPreorder) tabs.add(RestaurantOrdersFragmentType.PRE_ORDER)
         tabAdapter.tabs = tabs
         tabAdapter.notifyDataSetChanged()
+        if (tabAdapter.itemCount == 0) {
+            Utils.toast(requireContext(), "Restaurant is not activated for service")
+        }
+        if (tabAdapter.itemCount < 2) tabsFragment.visibility = View.GONE
+        else tabsFragment.visibility = View.VISIBLE
     }
 
     override fun updateScreen() {

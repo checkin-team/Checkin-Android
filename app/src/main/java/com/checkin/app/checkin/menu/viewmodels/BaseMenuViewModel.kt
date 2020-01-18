@@ -16,13 +16,13 @@ abstract class BaseMenuViewModel(application: Application) : BaseViewModel(appli
     protected val mRepository: MenuRepository = MenuRepository.getInstance(application)
 
     protected val mMenuData = createNetworkLiveData<MenuModel>()
-    protected var mOriginalMenuGroups = createNetworkLiveData<List<MenuGroupModel>>()
+    private var mOriginalMenuGroups = createNetworkLiveData<List<MenuGroupModel>>()
     private val mMenuGroups = MediatorLiveData<Resource<List<MenuGroupModel>>>()
     private val mMenuItems = createNetworkLiveData<List<MenuItemModel>>()
 
-    protected val mCurrentItem = MutableLiveData<OrderedItemModel>()
+    private val mCurrentItem = MutableLiveData<OrderedItemModel>()
     private val mFilteredString = MutableLiveData<String>()
-    private val mSelectedCategory: MutableLiveData<String> = MutableLiveData()
+    private val mSelectedCategory = MutableLiveData<String>()
 
     protected var mShopPk: Long = 0
 
@@ -32,7 +32,9 @@ abstract class BaseMenuViewModel(application: Application) : BaseViewModel(appli
 
     val currentItem: LiveData<OrderedItemModel> = mCurrentItem
 
-    val itemCost: LiveData<Double> = Transformations.map<OrderedItemModel, Double>(mCurrentItem) { orderedItem -> if (orderedItem != null) orderedItem.cost / orderedItem.quantity else 0.0 }
+    val itemCost: LiveData<Double> = Transformations.map(mCurrentItem) { orderedItem ->
+        if (orderedItem != null) orderedItem.cost / orderedItem.quantity else 0.0
+    }
 
     val selectedCategory: LiveData<String> = mSelectedCategory
 
@@ -49,8 +51,7 @@ abstract class BaseMenuViewModel(application: Application) : BaseViewModel(appli
             }
         }
 
-    val filteredString: LiveData<String>
-        get() = mFilteredString
+    val filteredString: LiveData<String> = mFilteredString
 
     val categories: LiveData<List<String>>
         get() = Transformations.map(mOriginalMenuGroups) { input ->
@@ -68,7 +69,7 @@ abstract class BaseMenuViewModel(application: Application) : BaseViewModel(appli
         }
 
     fun resetMenuGroups() {
-        mSelectedCategory.value = "default"
+        mSelectedCategory.value = null
         mMenuGroups.value = mOriginalMenuGroups.value
     }
 
@@ -107,8 +108,7 @@ abstract class BaseMenuViewModel(application: Application) : BaseViewModel(appli
 
     fun clearFilters() {
         mFilteredString.value = null
-        resetMenuItems()
-        resetMenuGroups()
+        mMenuGroups.value = mOriginalMenuGroups.value
     }
 
     fun resetMenuItems() {
@@ -222,12 +222,11 @@ abstract class BaseMenuViewModel(application: Application) : BaseViewModel(appli
     fun filterMenuCategories(category: String) {
         mSelectedCategory.value?.let {
             if (it.equals(category, ignoreCase = true)) {
-                mSelectedCategory.value = "default"
                 resetMenuGroups()
                 return
             }
-            mSelectedCategory.value = category
         }
+        mSelectedCategory.value = category
 
         val resourceLiveData: LiveData<Resource<List<MenuGroupModel>>> = Transformations.map(mOriginalMenuGroups) { listResource ->
             if (listResource?.data == null)

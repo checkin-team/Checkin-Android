@@ -47,7 +47,7 @@ abstract class BaseMenuFragment :
             }
 
             override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
-                if (position == 0) menuViewModel.resetMenuGroups()
+                if (position == 0) menuViewModel.clearFilters()
                 else menuViewModel.filterMenuGroups(mealSlots[position - 1])
             }
         }
@@ -57,7 +57,11 @@ abstract class BaseMenuFragment :
     private fun setupObservers() {
         val restaurantId = arguments!!.getLong(KEY_RESTAURANT_ID)
         menuViewModel.fetchAvailableMenu(restaurantId)
-        menuViewModel.originalMenuGroups.observe(this, Observer { })
+        menuViewModel.originalMenuGroups.observe(this, Observer { onMenuFetched() })
+    }
+
+    protected open fun onMenuFetched() {
+
     }
 
     @OnClick(R.id.tv_as_menu_drinks, R.id.tv_as_menu_food, R.id.tv_as_menu_dessert, R.id.tv_as_menu_specials)
@@ -71,7 +75,7 @@ abstract class BaseMenuFragment :
                 R.id.tv_as_menu_food -> menuViewModel.filterMenuCategories("Food")
                 R.id.tv_as_menu_dessert -> menuViewModel.filterMenuCategories("Dessert")
                 R.id.tv_as_menu_specials -> {
-                    tvSpecialCategory.setTextColor(ContextCompat.getColor(requireContext(), R.color.brownish_grey))
+                    tvSpecialCategory.setTextColor(ContextCompat.getColor(requireContext(), R.color.greenish_teal))
                     menuViewModel.filterMenuCategories("Specials")
                 }
             }
@@ -88,7 +92,7 @@ abstract class BaseMenuFragment :
         tvFoodCategory.isActivated = false
         tvDessertCategory.isActivated = false
         tvSpecialCategory.isActivated = false
-        tvSpecialCategory.setTextColor(ContextCompat.getColor(requireContext(), R.color.greenish_teal))
+        tvSpecialCategory.setTextColor(ContextCompat.getColor(requireContext(), R.color.brownish_grey))
     }
 
     override fun getItemOrderedCount(item: MenuItemModel) = 0

@@ -8,11 +8,12 @@ import androidx.core.os.bundleOf
 import androidx.core.view.ViewCompat
 import androidx.lifecycle.Observer
 import androidx.lifecycle.lifecycleScope
+import androidx.recyclerview.widget.LinearLayoutManager
 import butterknife.BindView
 import com.airbnb.epoxy.EpoxyRecyclerView
 import com.checkin.app.checkin.R
 import com.checkin.app.checkin.Utility.Utils
-import com.checkin.app.checkin.Utility.isNotEmpty
+import com.checkin.app.checkin.Utility.parentActivityDelegate
 import com.checkin.app.checkin.Utility.parentFragmentDelegate
 import com.checkin.app.checkin.Utility.parentViewModels
 import com.checkin.app.checkin.data.resource.Resource
@@ -31,7 +32,7 @@ import com.miguelcatalan.materialsearchview.utils.AnimationUtil
 import kotlinx.coroutines.launch
 import org.koin.androidx.viewmodel.ext.android.getSharedViewModel
 
-class UserMenuGroupsFragment : BaseFragment(), OnGroupInteraction {
+class MenuGroupsFragment : BaseFragment(), OnGroupInteraction {
     override val rootLayout: Int = R.layout.fragment_user_menu_groups
 
     @BindView(R.id.epoxy_rv_user_menu_groups)
@@ -51,6 +52,7 @@ class UserMenuGroupsFragment : BaseFragment(), OnGroupInteraction {
             else -> getSharedViewModel(ScheduledCartViewModel::class)
         }
     }
+    private val screenListener: MenuGroupScreenInteraction by parentActivityDelegate()
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         setupEpoxyModels()
@@ -69,16 +71,29 @@ class UserMenuGroupsFragment : BaseFragment(), OnGroupInteraction {
             }
         })
         epoxyRvMenuGroups.setControllerAndBuildModels(groupController)
+        groupController.addModelBuildListener {
+            screenListener.onListBuilt()
+            epoxyRvMenuGroups.post {
+                groupController.expandedGroupId?.let { groupId ->
+                    val pos = groupController.adapter.run {
+                        getModelById(groupId)?.let { getModelPosition(it) } ?: 0
+                    }
+                    (epoxyRvMenuGroups.layoutManager as LinearLayoutManager).findViewByPosition(pos)?.also { screenListener.onExpandGroupView(it) }
+                }
+            }
+        }
     }
 
     private fun setupObservers() {
         viewModel.recommendedItems.observe(this, Observer {
             it?.also { listResource ->
                 if (listResource.status === Resource.Status.SUCCESS && listResource.data != null) {
-                    groupController.doShowBestseller = listResource.data.isNotEmpty()
                     groupController.trendingDishes = listResource.data
-                } else groupController.doShowBestseller = listResource.status == Resource.Status.LOADING
+                }
             }
+        })
+        viewModel.doShowBestseller.observe(this, Observer {
+            groupController.doShowBestseller = it == true
         })
 
         viewModel.menuGroups.observe(this, Observer {
@@ -118,12 +133,17 @@ class UserMenuGroupsFragment : BaseFragment(), OnGroupInteraction {
     companion object {
         private const val KEY_CART_VM_TYPE = "menu.groups.cart_vm"
 
-        fun withScheduledCart() = UserMenuGroupsFragment().apply {
+        fun withScheduledCart() = MenuGroupsFragment().apply {
             arguments = bundleOf(KEY_CART_VM_TYPE to 1)
         }
 
-        fun withAsCart() = UserMenuGroupsFragment().apply {
+        fun withAsCart() = MenuGroupsFragment().apply {
             arguments = bundleOf(KEY_CART_VM_TYPE to 0)
         }
     }
+}
+
+interface MenuGroupScreenInteraction {
+    fun onListBuilt()
+    fun onExpandGroupView(view: View)
 }
