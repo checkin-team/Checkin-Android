@@ -12,9 +12,9 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginStart="@dimen/spacing_small"
-        android:layout_marginTop="@dimen/spacing_normal"
+        android:layout_marginTop="@dimen/spacing_large"
         android:layout_marginEnd="@dimen/spacing_small"
-        android:layout_marginBottom="@dimen/spacing_small"
+        android:layout_marginBottom="@dimen/spacing_large"
         android:clickable="true"
         android:focusable="true"
         android:orientation="horizontal">
@@ -38,7 +38,7 @@ Gurugram, Haryana 122004
 
         <ImageView
             android:id="@+id/im_restaurant_info_address_arrow"
-            android:layout_width="@dimen/size_tiny_icon"
+            android:layout_width="8dp"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:layout_marginStart="@dimen/spacing_extra_small"
@@ -52,9 +52,9 @@ Gurugram, Haryana 122004
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginStart="@dimen/spacing_small"
-        android:layout_marginTop="@dimen/spacing_small"
+        android:layout_marginTop="@dimen/spacing_large"
         android:layout_marginEnd="@dimen/spacing_small"
-        android:layout_marginBottom="@dimen/spacing_small"
+        android:layout_marginBottom="@dimen/spacing_large"
         android:orientation="horizontal">
 
         <ImageView
@@ -72,7 +72,7 @@ Gurugram, Haryana 122004
             tools:text="+91 1234567890" />
 
         <ImageView
-            android:layout_width="@dimen/size_tiny_icon"
+            android:layout_width="8dp"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:layout_marginStart="@dimen/spacing_extra_small"

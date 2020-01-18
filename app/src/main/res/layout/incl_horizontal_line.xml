@@ -4,7 +4,7 @@
         android:layout_width="match_parent"
         android:layout_height="@dimen/height_horizontal_line"
         android:layout_gravity="center_horizontal"
-        android:layout_marginEnd="@dimen/spacing_normal"
-        android:layout_marginStart="@dimen/spacing_normal"
+        android:layout_marginEnd="@dimen/spacing_small"
+        android:layout_marginStart="@dimen/spacing_small"
         android:background="@drawable/ic_line" />
 </merge>

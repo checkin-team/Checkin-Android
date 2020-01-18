@@ -107,7 +107,7 @@
                     android:id="@+id/epoxy_rv_scheduled_cart_orders"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:layout_marginBottom="@dimen/spacing_extra_small" />
+                    android:layout_marginBottom="@dimen/spacing_small" />
 
                 <include layout="@layout/incl_horizontal_line" />
 
@@ -117,11 +117,16 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="@dimen/spacing_extra_small"
+                    android:textColor="@color/aqua_blue"
                     android:background="@color/transparent"
                     android:drawableStart="@drawable/ic_session_scheduled_remarks"
                     android:drawablePadding="@dimen/spacing_tiny"
+                    android:layout_marginStart="@dimen/spacing_small"
+                    android:layout_marginBottom="@dimen/spacing_extra_small"
                     android:hint="Write Special Instructions"
                     android:inputType="textAutoComplete|textAutoCorrect" />
+
+                <include layout="@layout/incl_horizontal_line" />
 
                 <LinearLayout
                     android:layout_width="match_parent"
