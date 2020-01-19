@@ -176,7 +176,7 @@ interface WebApiService {
     val promoCodes: Call<List<PromoDetailModel>>
 
     @GET("promos/active/restaurants/{restaurant_id}/")
-    fun getRestaurantActivePromos(@Path("restaurant_id") restaurantId: Long): Call<List<PromoDetailModel>>
+    fun getRestaurantActivePromos(@Path("restaurant_id") restaurantId: Long, @Query("filter_choice") filterChoice: String?): Call<List<PromoDetailModel>>
     // endregion
 
     // region AUTH

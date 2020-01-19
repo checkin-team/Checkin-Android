@@ -91,8 +91,11 @@ class ActiveSessionInvoiceViewModel(application: Application) : BaseViewModel(ap
 
     val checkoutData: LiveData<Resource<CheckoutStatusModel>> = mCheckoutData
 
-    fun fetchAvailablePromoCodes() {
-        mPromoList.addSource(mSessionRepository.allPromoCodes, mPromoList::setValue)
+    fun fetchAvailablePromoCodes(restaurantId: Long) {
+        val liveData = if (restaurantId > 0) {
+            mSessionRepository.getRestaurantPromoCodes(restaurantId, true)
+        } else mSessionRepository.allPromoCodes
+        mPromoList.addSource(liveData, mPromoList::setValue)
     }
 
     val promoCodes: LiveData<Resource<List<PromoDetailModel>>>

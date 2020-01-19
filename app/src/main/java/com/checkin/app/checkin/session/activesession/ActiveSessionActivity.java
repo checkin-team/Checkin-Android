@@ -404,9 +404,9 @@ public class ActiveSessionActivity extends BaseActivity implements
     @OnClick({R.id.tv_active_session_bill, R.id.container_bottom_total_price})
     public void openBillDetails() {
         if (Utils.isNetworkConnected(this)) {
-            startActivity(new Intent(
-                    this, ActiveSessionInvoiceActivity.class)
-                    .putExtra(ActiveSessionInvoiceActivity.KEY_SESSION_REQUESTED_CHECKOUT, mViewModel.isRequestedCheckout()));
+            startActivity(
+                    ActiveSessionInvoiceActivity.Companion.withIntent(
+                            this, mViewModel.isRequestedCheckout(), mViewModel.getShopPk()));
         } else {
             Utils.toast(this, R.string.error_unavailable_network);
         }

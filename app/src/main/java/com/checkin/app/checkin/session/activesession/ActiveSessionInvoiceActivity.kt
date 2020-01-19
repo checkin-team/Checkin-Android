@@ -15,10 +15,10 @@ import android.widget.Button
 import android.widget.EditText
 import android.widget.ImageView
 import android.widget.TextView
+import androidx.activity.viewModels
 import androidx.annotation.StringRes
 import androidx.appcompat.app.AlertDialog
 import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import butterknife.BindView
@@ -47,7 +47,6 @@ import com.checkin.app.checkin.session.models.SessionPromoModel
 import com.checkin.app.checkin.user.activities.SuccessfulTransactionActivity
 
 class ActiveSessionInvoiceActivity : BaseActivity() {
-
     @BindView(R.id.rv_invoice_ordered_items)
     internal lateinit var rvOrderedItems: RecyclerView
     @BindView(R.id.im_invoice_waiter)
@@ -82,7 +81,7 @@ class ActiveSessionInvoiceActivity : BaseActivity() {
     private var sessionId: Long = 0
     private var pendingPromoRemove = false
 
-    private lateinit var mViewModel: ActiveSessionInvoiceViewModel
+    private val mViewModel: ActiveSessionInvoiceViewModel by viewModels()
     private lateinit var mAdapter: InvoiceOrdersAdapter
     private var mBillModel: SessionBillModel? = null
     private var mBillHolder: BillHolder? = null
@@ -110,8 +109,6 @@ class ActiveSessionInvoiceActivity : BaseActivity() {
         ButterKnife.bind(this)
 
         initProgressBar(R.id.pb_as_checkout)
-
-        mViewModel = ViewModelProviders.of(this).get(ActiveSessionInvoiceViewModel::class.java)
 
         setupUi()
         getData()
@@ -153,7 +150,7 @@ class ActiveSessionInvoiceActivity : BaseActivity() {
 
     private fun getData() {
         mViewModel.fetchSessionInvoice()
-        mViewModel.fetchAvailablePromoCodes()
+        mViewModel.fetchAvailablePromoCodes(intent.getLongExtra(KEY_RESTAURANT_ID, 0L))
         mViewModel.fetchSessionAppliedPromo()
 
         val isRequestedCheckout = intent.getBooleanExtra(KEY_SESSION_REQUESTED_CHECKOUT, false)
@@ -259,7 +256,7 @@ class ActiveSessionInvoiceActivity : BaseActivity() {
 
         mViewModel.promoCodes.observe(this, Observer {
             it?.let { listResource ->
-                if (listResource.status === Resource.Status.SUCCESS && listResource.data != null && listResource.data.size > 0) {
+                if (listResource.status === Resource.Status.SUCCESS && listResource.data != null && listResource.data.isNotEmpty()) {
                     tryShowAvailableOffer(listResource.data.get(0))
                 } else if (listResource.status === Resource.Status.ERROR_FORBIDDEN) {
                     showPromoInvalid(R.string.label_session_offer_not_allowed_phone_not_registered)
@@ -272,7 +269,7 @@ class ActiveSessionInvoiceActivity : BaseActivity() {
 
     private fun tryShowAvailableOffer(promoDetailModel: PromoDetailModel) {
         if (!mViewModel.isSessionBenefitsShown)
-            showSessionBenefit(String.format("RestaurantListingOfferModel available! %s", promoDetailModel.name))
+            showSessionBenefit(String.format("Offer available! %s", promoDetailModel.name))
     }
 
     private fun tryShowTotalSavings() {
@@ -303,8 +300,7 @@ class ActiveSessionInvoiceActivity : BaseActivity() {
     }
 
     private fun showPromoApply() {
-        if (mViewModel.isSessionPromoInvalid)
-            return
+        if (mViewModel.isSessionPromoInvalid) return
         resetPromoCards()
         containerApplyPromo.visibility = View.VISIBLE
     }
@@ -493,7 +489,13 @@ class ActiveSessionInvoiceActivity : BaseActivity() {
     }
 
     companion object {
-        const val KEY_SESSION_REQUESTED_CHECKOUT = "invoice.session.requested_checkout"
+        private const val KEY_SESSION_REQUESTED_CHECKOUT = "invoice.session.requested_checkout"
+        private const val KEY_RESTAURANT_ID = "invoice.session.restaurant_id"
         private const val REQUEST_PAYMENT_MODE = 141
+
+        fun withIntent(context: Context, requestedCheckout: Boolean, restaurantId: Long) = Intent(context, ActiveSessionInvoiceActivity::class.java).apply {
+            putExtra(KEY_SESSION_REQUESTED_CHECKOUT, requestedCheckout)
+            putExtra(KEY_RESTAURANT_ID, restaurantId)
+        }
     }
 }

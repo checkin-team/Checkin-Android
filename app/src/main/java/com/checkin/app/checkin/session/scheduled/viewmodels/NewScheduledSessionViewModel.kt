@@ -141,8 +141,11 @@ class NewScheduledSessionViewModel(application: Application) : BaseViewModel(app
         }
     }
 
-    fun fetchPromoCodes() {
-        mPromoData.addSource(sessionRepository.allPromoCodes, mPromoData::setValue)
+    fun fetchPromoCodes(restaurantId: Long) {
+        val liveData = if (restaurantId > 0) {
+            sessionRepository.getRestaurantPromoCodes(restaurantId, false)
+        } else sessionRepository.allPromoCodes
+        mPromoData.addSource(liveData, mPromoData::setValue)
     }
 
     val isOfferApplied: Boolean = mSessionPromo.value?.data != null

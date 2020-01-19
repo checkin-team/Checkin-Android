@@ -6,13 +6,13 @@ import android.content.Context;
 import androidx.annotation.NonNull;
 import androidx.lifecycle.LiveData;
 
+import com.checkin.app.checkin.data.BaseRepository;
 import com.checkin.app.checkin.data.network.ApiClient;
 import com.checkin.app.checkin.data.network.ApiResponse;
-import com.checkin.app.checkin.data.BaseRepository;
-import com.checkin.app.checkin.data.resource.NetworkBoundResource;
-import com.checkin.app.checkin.data.resource.Resource;
 import com.checkin.app.checkin.data.network.RetrofitLiveData;
 import com.checkin.app.checkin.data.network.WebApiService;
+import com.checkin.app.checkin.data.resource.NetworkBoundResource;
+import com.checkin.app.checkin.data.resource.Resource;
 import com.checkin.app.checkin.session.models.PromoDetailModel;
 
 import java.util.List;
@@ -88,7 +88,7 @@ public class ShopInsightRepository extends BaseRepository {
             @NonNull
             @Override
             protected LiveData<ApiResponse<List<PromoDetailModel>>> createCall() {
-                return new RetrofitLiveData<>(mWebService.getRestaurantActivePromos(shopId));
+                return new RetrofitLiveData<>(mWebService.getRestaurantActivePromos(shopId, null));
             }
 
             @Override

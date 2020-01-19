@@ -65,11 +65,16 @@ class SessionRepository private constructor(context: Context) : BaseRepository()
             override fun saveCallResult(data: List<PromoDetailModel>) {}
         }.asLiveData
 
-    fun getRestaurantPromoCodes(restaurantId: Long): LiveData<Resource<List<PromoDetailModel>>> {
+    fun getRestaurantPromoCodes(restaurantId: Long, forActive: Boolean?): LiveData<Resource<List<PromoDetailModel>>> {
+        val filterChoice = when (forActive) {
+            true -> "rest.active"
+            false -> "rest.cbyg"
+            else -> "rest.all"
+        }
         return object : NetworkBoundResource<List<PromoDetailModel>, List<PromoDetailModel>>() {
             override fun shouldUseLocalDb(): Boolean = false
 
-            override fun createCall() = RetrofitLiveData(mWebService.getRestaurantActivePromos(restaurantId))
+            override fun createCall() = RetrofitLiveData(mWebService.getRestaurantActivePromos(restaurantId, filterChoice))
 
             override fun saveCallResult(data: List<PromoDetailModel>?) {}
 

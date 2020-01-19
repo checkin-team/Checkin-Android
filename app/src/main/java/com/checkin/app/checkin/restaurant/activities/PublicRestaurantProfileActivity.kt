@@ -175,8 +175,7 @@ class PublicRestaurantProfileActivity : BaseActivity(), AppBarLayout.OnOffsetCha
         scheduledCartView.setup(this)
 
         val params = appbar.layoutParams as CoordinatorLayout.LayoutParams
-        if (params.behavior == null)
-            params.behavior = AppBarLayout.Behavior()
+        if (params.behavior == null) params.behavior = AppBarLayout.Behavior()
         val behaviour = params.behavior as AppBarLayout.Behavior
         behaviour.setDragCallback(object : AppBarLayout.Behavior.DragCallback() {
             override fun canDrag(appBarLayout: AppBarLayout): Boolean {
@@ -430,7 +429,8 @@ class PublicRestaurantProfileActivity : BaseActivity(), AppBarLayout.OnOffsetCha
 
     override fun onOpenPromoList() {
         supportFragmentManager.inTransaction {
-            add(R.id.frg_container_activity, ScheduledSessionPromoFragment.newInstance(), ScheduledSessionPromoFragment.FRAGMENT_TAG)
+            add(R.id.frg_container_activity, ScheduledSessionPromoFragment.newInstance(mRestaurantData?.pk
+                    ?: 0L), ScheduledSessionPromoFragment.FRAGMENT_TAG)
             addToBackStack(null)
         }
     }

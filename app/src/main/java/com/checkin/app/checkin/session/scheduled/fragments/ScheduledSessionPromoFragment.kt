@@ -4,16 +4,17 @@ import android.os.Bundle
 import android.text.TextUtils
 import android.view.View
 import android.widget.EditText
+import androidx.core.os.bundleOf
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import butterknife.BindView
 import butterknife.OnClick
-import com.checkin.app.checkin.data.resource.Resource
 import com.checkin.app.checkin.R
 import com.checkin.app.checkin.Utility.Utils
 import com.checkin.app.checkin.Utility.inTransaction
+import com.checkin.app.checkin.data.resource.Resource
 import com.checkin.app.checkin.misc.fragments.BaseFragment
 import com.checkin.app.checkin.session.activesession.ActiveSessionPromoAdapter
 import com.checkin.app.checkin.session.activesession.ActiveSessionPromoAdapter.onPromoCodeItemListener
@@ -67,7 +68,7 @@ class ScheduledSessionPromoFragment : BaseFragment(), onPromoCodeItemListener {
             }
         })
 
-        mViewModel.fetchPromoCodes()
+        mViewModel.fetchPromoCodes(arguments?.getLong(KEY_RESTAURANT_ID) ?: 0L)
     }
 
     @OnClick(R.id.tv_apply_promo)
@@ -83,10 +84,11 @@ class ScheduledSessionPromoFragment : BaseFragment(), onPromoCodeItemListener {
     }
 
     companion object {
+        private val KEY_RESTAURANT_ID = "scheduled.promos.restaurant_id"
         const val FRAGMENT_TAG = "scheduled.promo"
 
-        fun newInstance(): ScheduledSessionPromoFragment {
-            return ScheduledSessionPromoFragment()
+        fun newInstance(restaurantId: Long) = ScheduledSessionPromoFragment().apply {
+            arguments = bundleOf(KEY_RESTAURANT_ID to restaurantId)
         }
     }
 }
