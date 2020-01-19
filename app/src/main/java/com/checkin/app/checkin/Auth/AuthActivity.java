@@ -25,6 +25,7 @@ import androidx.lifecycle.ViewModelProviders;
 import com.checkin.app.checkin.R;
 import com.checkin.app.checkin.Utility.Constants;
 import com.checkin.app.checkin.Utility.Utils;
+import com.checkin.app.checkin.data.config.RemoteConfig;
 import com.checkin.app.checkin.home.activities.HomeActivity;
 import com.checkin.app.checkin.misc.EulaDialog;
 import com.checkin.app.checkin.user.models.UserModel.GENDER;
@@ -75,6 +76,8 @@ public class AuthActivity extends AppCompatActivity implements AuthFragmentInter
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_auth);
         ButterKnife.bind(this);
+
+        RemoteConfig.INSTANCE.refreshAndActivate();
 
         if (savedInstanceState == null) {
             mFacebookCallbackManager = CallbackManager.Factory.create();

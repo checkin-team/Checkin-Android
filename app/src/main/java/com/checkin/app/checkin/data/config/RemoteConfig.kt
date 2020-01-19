@@ -33,6 +33,8 @@ object RemoteConfig {
 
     fun activate() = instance.activate()
 
+    fun refreshAndActivate() = instance.fetchAndActivate()
+
     object Constants {
         const val SUPPORT_PHONE_NO = "checkin_support_phone_no"
         const val SUPPORT_EMAIL_ADDRESS = "checkin_support_email"
