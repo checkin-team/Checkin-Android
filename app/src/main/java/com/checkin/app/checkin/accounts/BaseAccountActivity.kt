@@ -12,6 +12,8 @@ import androidx.lifecycle.Observer
 import co.zsmb.materialdrawerkt.builders.DrawerBuilderKt
 import co.zsmb.materialdrawerkt.builders.accountHeader
 import co.zsmb.materialdrawerkt.builders.drawer
+import co.zsmb.materialdrawerkt.builders.footer
+import co.zsmb.materialdrawerkt.draweritems.badgeable.primaryItem
 import co.zsmb.materialdrawerkt.draweritems.profile.profile
 import co.zsmb.materialdrawerkt.imageloader.drawerImageLoader
 import com.checkin.app.checkin.Cook.CookWorkActivity
@@ -77,11 +79,10 @@ abstract class BaseAccountActivity : BaseActivity() {
 
     protected open fun setupFooter() {
         val btnAboutUs: Button = findViewById(R.id.btn_about_us)
-
+        val btnLogout: Button = findViewById(R.id.btn_logout)
         btnAboutUs.setOnClickListener {
             startActivity(Intent(this, AboutUsActivity::class.java))
         }
-        val btnLogout: Button = findViewById(R.id.btn_logout)
         btnLogout.setOnClickListener {
             onLogoutClick()
         }
@@ -133,9 +134,27 @@ abstract class BaseAccountActivity : BaseActivity() {
                 }
             }
             stickyFooterShadow = false
-            stickyFooterRes = R.layout.incl_leftnav_footer
+            footer {
+                primaryItem("About Us") {
+                    onClick { _ ->
+                        startActivity(Intent(this@BaseAccountActivity, AboutUsActivity::class.java))
+                        false
+                    }
+                    selectable = false
+                }
+                primaryItem("Log out") {
+                    onClick {
+                         _ ->
+                        onLogoutClick()
+                        false
+
+                    }
+                    selectable = false
+                }
+            }
+
+            // stickyFooterRes = R.layout.incl_leftnav_footer
         }
-        setupFooter()
     }
 
     @CallSuper

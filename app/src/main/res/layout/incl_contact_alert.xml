@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <TextView
+        android:id="@+id/tv_contact_number"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:drawableLeft="@drawable/ic_call"
+        android:gravity="center"
+        android:textSize="@dimen/font_large"
+        android:padding="@dimen/spacing_normal"
+        android:text="+91 7406270659" />
+
+    <TextView
+        android:id="@+id/tv_contact_mail"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textSize="@dimen/font_large"
+        android:drawableStart="@drawable/ic_email_grey"
+        android:gravity="center"
+        android:padding="@dimen/spacing_normal"
+        android:text="info@check-in.in" />
+</LinearLayout>
