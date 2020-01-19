@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<defaultsMap>
+    <entry>
+        <key>checkin_support_phone_no</key>
+        <value>+917406270659</value>
+    </entry>
+    <entry>
+        <key>checkin_support_email</key>
+        <value>info@check-in.in</value>
+    </entry>
+    <entry>
+        <key>checkin_support_facebook_page_id</key>
+        <value>checkinapp</value>
+    </entry>
+    <entry>
+        <key>checkin_support_instagram_page_id</key>
+        <value>checkin.app</value>
+    </entry>
+    <entry>
+        <key>checkin_support_youtube_channel_id</key>
+        <value>UCdQcZz5zv7zJZscHKL5-ZOw</value>
+    </entry>
+</defaultsMap>

@@ -21,6 +21,7 @@
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
     <uses-permission android:name="android.permission.FOREGROUND_SERVICE" />
     <uses-permission android:name="android.permission.ACCESS_DOWNLOAD_MANAGER" />
+    <uses-permission android:name="android.permission.CALL_PHONE" />
 
     <uses-feature android:name="android.hardware.camera" />
 
@@ -32,7 +33,9 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         tools:replace="android:theme">
-        <activity android:name=".misc.activities.AboutUsActivity"></activity>
+        <activity
+            android:name=".home.activities.AboutUsActivity"
+            android:theme="@style/AppThemeWhiteActionBar" />
         <activity
             android:name=".home.activities.SplashActivity"
             android:theme="@style/Theme.AppCompat.Light.NoActionBar" />

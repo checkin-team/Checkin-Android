@@ -7,6 +7,7 @@ import android.preference.PreferenceManager
 import android.widget.Button
 import androidx.activity.viewModels
 import androidx.annotation.CallSuper
+import androidx.annotation.LayoutRes
 import androidx.appcompat.widget.Toolbar
 import androidx.lifecycle.Observer
 import co.zsmb.materialdrawerkt.builders.DrawerBuilderKt
@@ -23,8 +24,8 @@ import com.checkin.app.checkin.Utility.Utils
 import com.checkin.app.checkin.Utility.pass
 import com.checkin.app.checkin.Waiter.WaiterWorkActivity
 import com.checkin.app.checkin.data.resource.Resource
+import com.checkin.app.checkin.home.activities.AboutUsActivity
 import com.checkin.app.checkin.manager.activities.ManagerWorkActivity
-import com.checkin.app.checkin.misc.activities.AboutUsActivity
 import com.checkin.app.checkin.misc.activities.BaseActivity
 import com.mikepenz.materialdrawer.Drawer
 import com.mikepenz.materialdrawer.util.DrawerUIUtils
@@ -33,8 +34,10 @@ import com.mikepenz.materialdrawer.util.DrawerUIUtils
 abstract class BaseAccountActivity : BaseActivity() {
     private val prefs by lazy { PreferenceManager.getDefaultSharedPreferences(this) }
 
-    open val toolbarView: Toolbar?
-        get() = null
+    open val toolbarView: Toolbar? = null
+
+    @LayoutRes
+    open val footerRes: Int = R.layout.incl_leftnav_footer
 
     abstract val accountTypes: Array<ACCOUNT_TYPE>
 
@@ -76,15 +79,10 @@ abstract class BaseAccountActivity : BaseActivity() {
     }
 
     protected open fun setupFooter() {
-        val btnAboutUs: Button = findViewById(R.id.btn_about_us)
-
-        btnAboutUs.setOnClickListener {
-            startActivity(Intent(this, AboutUsActivity::class.java))
-        }
-        val btnLogout: Button = findViewById(R.id.btn_logout)
-        btnLogout.setOnClickListener {
-            onLogoutClick()
-        }
+        val btnAboutUs: Button = mainDrawer.stickyFooter!!.findViewById(R.id.btn_about_us)
+        val btnLogout: Button = mainDrawer.stickyFooter!!.findViewById(R.id.btn_logout)
+        btnAboutUs.setOnClickListener { startActivity(Intent(this, AboutUsActivity::class.java)) }
+        btnLogout.setOnClickListener { onLogoutClick() }
     }
 
     @CallSuper
@@ -133,7 +131,7 @@ abstract class BaseAccountActivity : BaseActivity() {
                 }
             }
             stickyFooterShadow = false
-            stickyFooterRes = R.layout.incl_leftnav_footer
+            stickyFooterRes = footerRes
         }
         setupFooter()
     }
