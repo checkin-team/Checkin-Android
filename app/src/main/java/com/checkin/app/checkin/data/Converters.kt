@@ -32,14 +32,14 @@ object Converters {
     fun <T> getObjectFromJson(json: String, typeReference: TypeReference<T>): T? = try {
         objectMapper.readValue<T>(json, typeReference)
     } catch (exception: IOException) {
-        Log.e(TAG, "JSON invalid! $json")
+        Log.e(TAG, "JSON invalid! $json", exception)
         null
     }
 
     fun <T> getObjectFromJson(json: String, typeReference: JavaType): T? = try {
         objectMapper.readValue<T>(json, typeReference)
     } catch (exception: IOException) {
-        Log.e(TAG, "JSON invalid! $json")
+        Log.e(TAG, "JSON invalid! $json", exception)
         null
     }
 

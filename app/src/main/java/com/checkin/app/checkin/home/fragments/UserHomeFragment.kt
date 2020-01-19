@@ -24,7 +24,7 @@ import com.checkin.app.checkin.home.holders.LiveSessionTrackerInteraction
 import com.checkin.app.checkin.home.holders.NearbyRestaurantAdapter
 import com.checkin.app.checkin.home.model.LiveSessionDetailModel
 import com.checkin.app.checkin.home.model.SessionType
-import com.checkin.app.checkin.home.model.TopAdBanner
+import com.checkin.app.checkin.home.model.TopAdBannerModel
 import com.checkin.app.checkin.home.viewmodels.HomeViewModel
 import com.checkin.app.checkin.home.viewmodels.LiveSessionViewModel
 import com.checkin.app.checkin.menu.activities.ActiveSessionMenuActivity
@@ -82,7 +82,7 @@ class UserHomeFragment : BaseFragment(), LiveSessionTrackerInteraction {
         enableDisableSwipeRefresh(true)
 
         epoxyRvHomeBanner.withModels {
-            RemoteConfig.getListData<TopAdBanner>(RemoteConfig.Constants.HOME_TOP_BANNERS_AD)?.forEachIndexed { index, data ->
+            RemoteConfig.getListData<TopAdBannerModel>(RemoteConfig.Constants.HOME_TOP_BANNERS_AD)?.forEachIndexed { index, data ->
                 adBannerModelHolder {
                     id("ad", index.toLong())
                     imageUrl(data.url)

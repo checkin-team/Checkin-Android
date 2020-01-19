@@ -32,8 +32,8 @@
                         android:id="@+id/epoxy_rv_home_banner"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="@dimen/spacing_extra_small"
-                        app:itemSpacing="@dimen/spacing_tiny"
+                        android:layout_marginTop="@dimen/spacing_small"
+                        app:itemSpacing="@dimen/spacing_extra_small"
                         tools:listitem="@layout/item_ad_banner" />
                 </FrameLayout>
 

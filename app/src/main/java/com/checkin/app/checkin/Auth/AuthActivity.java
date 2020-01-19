@@ -77,6 +77,7 @@ public class AuthActivity extends AppCompatActivity implements AuthFragmentInter
         setContentView(R.layout.activity_auth);
         ButterKnife.bind(this);
 
+        // Refresh and activate the remote config
         RemoteConfig.INSTANCE.refreshAndActivate();
 
         if (savedInstanceState == null) {

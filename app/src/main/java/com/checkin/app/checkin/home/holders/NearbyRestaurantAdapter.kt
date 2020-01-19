@@ -15,7 +15,6 @@ import com.checkin.app.checkin.R
 import com.checkin.app.checkin.Utility.BaseViewHolder
 import com.checkin.app.checkin.Utility.Utils
 import com.checkin.app.checkin.Utility.navigateToLocation
-import com.checkin.app.checkin.Utility.pass
 import com.checkin.app.checkin.home.model.NearbyRestaurantModel
 import com.checkin.app.checkin.restaurant.activities.openPublicRestaurantProfile
 import com.rd.PageIndicatorView
@@ -37,16 +36,17 @@ class NearbyRestaurantAdapter : RecyclerView.Adapter<BaseViewHolder<Any>>() {
     private val adPosition: Int
         get() = data.count().coerceAtMost(1)
 
-    override fun getItemCount(): Int = data.count() + 1
+    override fun getItemCount(): Int = data.count() //+1
 
-    override fun getItemViewType(position: Int): Int = if (position == adPosition) R.layout.item_ad_banner_with_viewpager else R.layout.item_home_restaurant_banner
+    override fun getItemViewType(position: Int): Int = R.layout.item_home_restaurant_banner
 
     override fun onBindViewHolder(holder: BaseViewHolder<Any>, position: Int) {
-        when {
+        /*when {
             position < adPosition -> holder.bindData(data[position])
             position > adPosition -> holder.bindData(data[position - 1])
             else -> holder.bindData(pass)
-        }
+        }*/
+        holder.bindData(data[position])
     }
 
     inner class NearbyRestaurantViewHolder(itemView: View) : BaseViewHolder<NearbyRestaurantModel>(itemView) {
