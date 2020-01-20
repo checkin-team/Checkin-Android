@@ -60,8 +60,6 @@ class MenuGroupsFragment : BaseFragment(), OnGroupInteraction {
     }
 
     private fun setupEpoxyModels() {
-        epoxyRvMenuGroups.setHasFixedSize(false)
-        ViewCompat.setNestedScrollingEnabled(epoxyRvMenuGroups, false)
         val bestSellerItemSpacing = resources.getDimension(R.dimen.spacing_small).toInt()
         groupController = UserMenuGroupController(bestSellerItemSpacing, itemListener, this, object : SessionTrendingDishInteraction {
             override fun onDishChange(itemModel: TrendingDishModel, changeCount: Int) {
@@ -70,7 +68,14 @@ class MenuGroupsFragment : BaseFragment(), OnGroupInteraction {
                 }
             }
         })
-        epoxyRvMenuGroups.setControllerAndBuildModels(groupController)
+        epoxyRvMenuGroups.apply {
+            setHasFixedSize(false)
+            ViewCompat.setNestedScrollingEnabled(this, false)
+            setControllerAndBuildModels(groupController)
+            layoutManager = object : LinearLayoutManager(requireContext()) {
+                override fun canScrollVertically(): Boolean = false
+            }
+        }
         groupController.addModelBuildListener {
             screenListener.onListBuilt()
             epoxyRvMenuGroups.post {

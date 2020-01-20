@@ -108,24 +108,9 @@
             </LinearLayout>
 
             <FrameLayout
+                android:id="@+id/container_as_menu"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent">
-
-                <FrameLayout
-                    android:id="@+id/container_as_menu"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content" />
-
-                <ImageView
-                    android:id="@+id/btn_as_menu_filter"
-                    android:layout_width="@dimen/button_height_medium"
-                    android:layout_height="@dimen/button_height_medium"
-                    android:layout_gravity="end|bottom"
-                    android:layout_marginEnd="@dimen/spacing_small"
-                    android:layout_marginBottom="@dimen/spacing_normal"
-                    android:src="@drawable/ic_menu_as_filter"
-                    android:visibility="gone" />
-            </FrameLayout>
+                android:layout_height="wrap_content" />
 
         </LinearLayout>
 

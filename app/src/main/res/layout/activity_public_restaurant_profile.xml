@@ -53,11 +53,15 @@
         android:layout_height="wrap_content"
         android:clipToPadding="false"
         android:fillViewport="true"
+        android:fitsSystemWindows="true"
+        android:overScrollMode="never"
         app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:clickable="true"
+            android:focusable="true"
             android:orientation="vertical">
 
             <androidx.viewpager2.widget.ViewPager2
