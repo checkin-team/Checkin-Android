@@ -100,6 +100,7 @@
         android:id="@+id/im_aboutus_googleplay"
         android:layout_width="wrap_content"
         android:layout_height="@dimen/size_logo"
+        android:layout_marginBottom="@dimen/spacing_small"
         android:src="@drawable/ic_google_play"
         app:layout_constraintBottom_toTopOf="@+id/im_aboutus_facebook"
         app:layout_constraintEnd_toEndOf="parent"
@@ -158,5 +159,6 @@
         android:text="App Version : "
         android:textSize="@dimen/font_extra_small"
         app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
 </androidx.constraintlayout.widget.ConstraintLayout>
