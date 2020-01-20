@@ -32,6 +32,8 @@ class AboutUsActivity : AppCompatActivity() {
     lateinit var imYoutube: ImageView
     @BindView(R.id.im_aboutus_instagram)
     lateinit var imInstagram: ImageView
+    @BindView(R.id.tv_aboutus_version)
+    lateinit var tvVersion: TextView
 
     private val contactDialog by lazy {
         val dialogView = layoutInflater.inflate(R.layout.incl_contact_alert, null)
@@ -57,6 +59,11 @@ class AboutUsActivity : AppCompatActivity() {
         }
 
         setupUi()
+        setupVersion()
+    }
+
+    private fun setupVersion() {
+        tvVersion.text = "App Version:  ${packageManager.getPackageInfo(this.packageName, PackageManager.GET_ACTIVITIES).versionName}"
     }
 
     private fun setupUi() {
