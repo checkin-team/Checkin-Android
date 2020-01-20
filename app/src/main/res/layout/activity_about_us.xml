@@ -1,147 +1,162 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.core.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
+    <androidx.core.widget.NestedScrollView
+        android:id="@+id/nestedScrollView"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginBottom="@dimen/spacing_normal"
+        app:layout_constraintBottom_toTopOf="@+id/im_aboutus_googleplay"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
 
-    <androidx.constraintlayout.widget.ConstraintLayout
-        android:layout_width="match_parent"
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            tools:context=".home.activities.AboutUsActivity">
+
+            <ImageView
+                android:id="@+id/imageView"
+                android:layout_width="@dimen/size_logo_extra_large"
+                android:layout_height="@dimen/size_logo_extra_large"
+                android:layout_marginTop="@dimen/spacing_normal"
+                android:src="@drawable/check_in_logo_with_name"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <TextView
+                android:id="@+id/textView"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/spacing_normal"
+                android:layout_marginTop="@dimen/spacing_large"
+                android:layout_marginEnd="@dimen/spacing_normal"
+                android:text="@string/about_us_new"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/imageView" />
+
+            <TextView
+                android:id="@+id/textView2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/spacing_normal"
+                android:layout_marginTop="@dimen/spacing_normal"
+                android:fontFamily="@font/opensans"
+                android:text="Skip the wait and \norder ahead"
+                android:textColor="@color/black"
+                android:textSize="@dimen/font_extra_large"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/im_aboutus_contact" />
+
+            <TextView
+                android:id="@+id/textView3"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/spacing_normal"
+                android:layout_marginTop="@dimen/spacing_normal"
+                android:text="The better way to eat out"
+                android:textSize="@dimen/font_small"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/textView2" />
+
+            <TextView
+                android:id="@+id/textView4"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/spacing_normal"
+                android:fontFamily="@font/opensans_bold"
+                android:text="Checkin before you get in!"
+                android:textColor="@color/greenish_teal"
+                android:textSize="@dimen/font_extra_large"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/textView3" />
+
+            <ImageView
+                android:id="@+id/im_aboutus_contact"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/spacing_normal"
+                android:layout_marginTop="@dimen/spacing_normal"
+                android:adjustViewBounds="true"
+                android:src="@drawable/ic_aboutus_refer"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/textView" />
+
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </androidx.core.widget.NestedScrollView>
+
+    <ImageView
+        android:id="@+id/im_aboutus_googleplay"
+        android:layout_width="wrap_content"
+        android:layout_height="@dimen/size_logo"
+        android:src="@drawable/ic_google_play"
+        app:layout_constraintBottom_toTopOf="@+id/im_aboutus_facebook"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <ImageView
+        android:id="@+id/im_aboutus_facebook"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        tools:context=".home.activities.AboutUsActivity">
+        android:layout_marginBottom="@dimen/spacing_small"
+        android:src="@drawable/ic_facebook"
+        app:layout_constraintBottom_toTopOf="@+id/tv_aboutus_version"
+        app:layout_constraintEnd_toStartOf="@+id/im_aboutus_youtube"
+        app:layout_constraintHorizontal_bias="0.51"
+        app:layout_constraintStart_toStartOf="parent" />
 
-        <ImageView
-            android:id="@+id/imageView"
-            android:layout_width="@dimen/size_logo_extra_large"
-            android:layout_height="@dimen/size_logo_extra_large"
-            android:layout_marginTop="@dimen/spacing_normal"
-            android:src="@drawable/check_in_logo_with_name"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+    <ImageView
+        android:id="@+id/im_aboutus_gmail"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/ic_gmail"
+        app:layout_constraintBottom_toBottomOf="@+id/im_aboutus_youtube"
+        app:layout_constraintEnd_toStartOf="@+id/im_aboutus_instagram"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toEndOf="@+id/im_aboutus_youtube"
+        app:layout_constraintTop_toTopOf="@+id/im_aboutus_youtube" />
 
-        <TextView
-            android:id="@+id/textView"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="@dimen/spacing_normal"
-            android:layout_marginTop="@dimen/spacing_large"
-            android:layout_marginEnd="@dimen/spacing_normal"
-            android:text="@string/about_us_new"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/imageView" />
+    <ImageView
+        android:id="@+id/im_aboutus_youtube"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/ic_youtube"
+        app:layout_constraintBottom_toBottomOf="@+id/im_aboutus_facebook"
+        app:layout_constraintEnd_toStartOf="@+id/im_aboutus_gmail"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toEndOf="@+id/im_aboutus_facebook"
+        app:layout_constraintTop_toTopOf="@+id/im_aboutus_facebook" />
 
-        <TextView
-            android:id="@+id/textView2"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="@dimen/spacing_normal"
-            android:layout_marginTop="@dimen/spacing_normal"
-            android:fontFamily="@font/opensans_bold"
-            android:text="Skip the wait and \norder ahead"
-            android:textColor="@color/black"
-            android:textSize="@dimen/font_extra_large"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/im_aboutus_contact" />
+    <ImageView
+        android:id="@+id/im_aboutus_instagram"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/ic_instagram"
+        app:layout_constraintBottom_toBottomOf="@+id/im_aboutus_gmail"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toEndOf="@+id/im_aboutus_gmail"
+        app:layout_constraintTop_toTopOf="@+id/im_aboutus_gmail" />
 
-        <TextView
-            android:id="@+id/textView3"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="@dimen/spacing_normal"
-            android:layout_marginTop="@dimen/spacing_normal"
-            android:text="The better way to eat out"
-            android:textSize="@dimen/font_small"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/textView2" />
-
-        <TextView
-            android:id="@+id/textView4"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="@dimen/spacing_normal"
-            android:fontFamily="@font/opensans_bold"
-            android:text="Checkin before you get in!"
-            android:textColor="@color/greenish_teal"
-            android:textSize="@dimen/font_extra_large"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/textView3" />
-
-        <ImageView
-            android:id="@+id/im_aboutus_contact"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="@dimen/spacing_normal"
-            android:layout_marginTop="@dimen/spacing_normal"
-            android:adjustViewBounds="true"
-            android:src="@drawable/ic_aboutus_refer"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/textView" />
-
-        <ImageView
-            android:id="@+id/im_aboutus_googleplay"
-            android:layout_width="wrap_content"
-            android:layout_height="@dimen/size_logo"
-            android:layout_marginTop="@dimen/spacing_normal"
-            android:src="@drawable/ic_google_play"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/textView4" />
-
-        <ImageView
-            android:id="@+id/im_aboutus_facebook"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/spacing_small"
-            android:layout_marginBottom="@dimen/spacing_normal"
-            android:src="@drawable/ic_facebook"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toStartOf="@+id/im_aboutus_gmail"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/im_aboutus_googleplay" />
-
-
-        <ImageView
-            android:id="@+id/im_aboutus_gmail"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/spacing_small"
-            android:layout_marginBottom="@dimen/spacing_normal"
-            android:src="@drawable/ic_gmail"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toStartOf="@+id/im_aboutus_youtube"
-            app:layout_constraintHorizontal_bias="0.5"
-            app:layout_constraintStart_toEndOf="@+id/im_aboutus_facebook"
-            app:layout_constraintTop_toBottomOf="@+id/im_aboutus_googleplay" />
-
-        <ImageView
-            android:id="@+id/im_aboutus_youtube"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/spacing_small"
-            android:layout_marginBottom="@dimen/spacing_normal"
-            android:src="@drawable/ic_youtube"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toStartOf="@+id/im_aboutus_instagram"
-            app:layout_constraintHorizontal_bias="0.5"
-            app:layout_constraintStart_toEndOf="@+id/im_aboutus_gmail"
-            app:layout_constraintTop_toBottomOf="@+id/im_aboutus_googleplay" />
-
-        <ImageView
-            android:id="@+id/im_aboutus_instagram"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/spacing_small"
-            android:layout_marginBottom="@dimen/spacing_normal"
-            android:src="@drawable/ic_instagram"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.5"
-            app:layout_constraintStart_toEndOf="@+id/im_aboutus_youtube"
-            app:layout_constraintTop_toBottomOf="@+id/im_aboutus_googleplay" />
-
-    </androidx.constraintlayout.widget.ConstraintLayout>
-</androidx.core.widget.NestedScrollView>
+    <TextView
+        android:id="@+id/tv_aboutus_version"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/spacing_normal"
+        android:layout_marginBottom="@dimen/spacing_small"
+        android:text="App Version : "
+        android:textSize="@dimen/font_extra_small"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+</androidx.constraintlayout.widget.ConstraintLayout>
