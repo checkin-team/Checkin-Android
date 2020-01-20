@@ -61,6 +61,7 @@ class NewScheduledSessionViewModel(application: Application) : BaseViewModel(app
         input
     }
 
+    private var lastPaymentBundle: Bundle? = null
     val sessionAppliedPromo: LiveData<Resource<SessionPromoModel>> = mSessionPromo
 
     private fun createNewScheduledSession(countPeople: Int, plannedTime: Date, restaurantId: Long, remarks: String?) {
@@ -86,6 +87,7 @@ class NewScheduledSessionViewModel(application: Application) : BaseViewModel(app
     }
 
     fun postPaytmCallback(bundle: Bundle) {
+        lastPaymentBundle = bundle
         val data = objectMapper.createObjectNode()
         val keys = bundle.keySet()
         for (key in keys) {
@@ -106,6 +108,8 @@ class NewScheduledSessionViewModel(application: Application) : BaseViewModel(app
         }
         doPostPaytmCallback(data, listener)
     }
+
+    fun retryPostPaytmCallback() = lastPaymentBundle?.let { postPaytmCallback(it) }
 
     fun requestPaytmDetails() {
         mPaytmData.addSource(scheduledSessionRepository.postPaytmDetailRequest(sessionPk), mPaytmData::setValue)

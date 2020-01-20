@@ -3,8 +3,8 @@ package com.checkin.app.checkin.restaurant
 import android.app.Application
 import android.content.Context
 import androidx.lifecycle.LiveData
-import com.checkin.app.checkin.data.*
 import com.checkin.app.checkin.Utility.SingletonHolder
+import com.checkin.app.checkin.data.BaseRepository
 import com.checkin.app.checkin.data.network.ApiClient
 import com.checkin.app.checkin.data.network.ApiResponse
 import com.checkin.app.checkin.data.network.RetrofitLiveData
@@ -21,10 +21,6 @@ class RestaurantRepository private constructor(context: Context) : BaseRepositor
             override fun shouldUseLocalDb(): Boolean = false
 
             override fun createCall(): LiveData<ApiResponse<RestaurantModel>> = RetrofitLiveData(mWebService.getRestaurantProfile(restaurantId))
-
-            override fun saveCallResult(data: RestaurantModel?) {
-            }
-
         }.asLiveData
     }
 
@@ -33,10 +29,6 @@ class RestaurantRepository private constructor(context: Context) : BaseRepositor
             override fun shouldUseLocalDb(): Boolean = false
 
             override fun createCall(): LiveData<ApiResponse<RestaurantServiceModel>> = RetrofitLiveData(mWebService.getRestaurantBriefDetail(restaurantId))
-
-            override fun saveCallResult(data: RestaurantServiceModel?) {
-            }
-
         }.asLiveData
     }
 

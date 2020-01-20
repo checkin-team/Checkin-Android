@@ -3,19 +3,19 @@ package com.checkin.app.checkin.Shop
 import android.app.Application
 import android.content.Context
 import androidx.lifecycle.LiveData
-import com.checkin.app.checkin.data.*
-import com.checkin.app.checkin.home.model.NearbyRestaurantModel
-import com.checkin.app.checkin.misc.models.GenericDetailModel
 import com.checkin.app.checkin.Shop.Private.MemberModel
 import com.checkin.app.checkin.Shop.ShopJoin.ShopJoinModel
 import com.checkin.app.checkin.Utility.ProgressRequestBody
 import com.checkin.app.checkin.Utility.SingletonHolder
+import com.checkin.app.checkin.data.BaseRepository
 import com.checkin.app.checkin.data.network.ApiClient
 import com.checkin.app.checkin.data.network.ApiResponse
 import com.checkin.app.checkin.data.network.RetrofitLiveData
 import com.checkin.app.checkin.data.network.WebApiService
 import com.checkin.app.checkin.data.resource.NetworkBoundResource
 import com.checkin.app.checkin.data.resource.Resource
+import com.checkin.app.checkin.home.model.NearbyRestaurantModel
+import com.checkin.app.checkin.misc.models.GenericDetailModel
 import com.fasterxml.jackson.databind.node.ObjectNode
 import okhttp3.MediaType
 import okhttp3.MultipartBody
@@ -36,8 +36,6 @@ class ShopRepository private constructor(context: Context) : BaseRepository() {
             override fun createCall(): LiveData<ApiResponse<List<NearbyRestaurantModel>>> {
                 return RetrofitLiveData(mWebService.nearbyRestaurants)
             }
-
-            override fun saveCallResult(data: List<NearbyRestaurantModel>) {}
         }.asLiveData
 
     fun registerShop(model: ShopJoinModel): LiveData<Resource<GenericDetailModel>> {
@@ -48,10 +46,6 @@ class ShopRepository private constructor(context: Context) : BaseRepository() {
 
             override fun createCall(): LiveData<ApiResponse<GenericDetailModel>> {
                 return RetrofitLiveData(mWebService.postRegisterShop(model))
-            }
-
-            override fun saveCallResult(data: GenericDetailModel) {
-
             }
         }.asLiveData
     }
@@ -65,10 +59,6 @@ class ShopRepository private constructor(context: Context) : BaseRepository() {
             override fun createCall(): LiveData<ApiResponse<ObjectNode>> {
                 return RetrofitLiveData(mWebService.putRestaurantManageDetails(restaurantModel.getPk(), restaurantModel))
             }
-
-            override fun saveCallResult(data: ObjectNode) {
-
-            }
         }.asLiveData
     }
 
@@ -80,10 +70,6 @@ class ShopRepository private constructor(context: Context) : BaseRepository() {
 
             override fun createCall(): LiveData<ApiResponse<ObjectNode>> {
                 return RetrofitLiveData(mWebService.putRestaurantContactVerify(shopId, data))
-            }
-
-            override fun saveCallResult(data: ObjectNode) {
-
             }
         }.asLiveData
     }
@@ -98,8 +84,6 @@ class ShopRepository private constructor(context: Context) : BaseRepository() {
             override fun createCall(): LiveData<ApiResponse<RestaurantModel>> {
                 return RetrofitLiveData(mWebService.getRestaurantDetails(shopId))
             }
-
-            override fun saveCallResult(data: RestaurantModel) {}
         }.asLiveData
     }
 
@@ -113,8 +97,6 @@ class ShopRepository private constructor(context: Context) : BaseRepository() {
             override fun createCall(): LiveData<ApiResponse<RestaurantModel>> {
                 return RetrofitLiveData(mWebService.getRestaurantManageDetails(shopId))
             }
-
-            override fun saveCallResult(data: RestaurantModel) {}
         }.asLiveData
     }
 
@@ -126,10 +108,6 @@ class ShopRepository private constructor(context: Context) : BaseRepository() {
 
             override fun createCall(): LiveData<ApiResponse<List<MemberModel>>> {
                 return RetrofitLiveData(mWebService.getRestaurantMembers(shopId))
-            }
-
-            override fun saveCallResult(data: List<MemberModel>) {
-
             }
         }.asLiveData
     }
@@ -143,8 +121,6 @@ class ShopRepository private constructor(context: Context) : BaseRepository() {
             override fun createCall(): LiveData<ApiResponse<ObjectNode>> {
                 return RetrofitLiveData(mWebService.postRestaurantMember(shopId, data))
             }
-
-            override fun saveCallResult(data: ObjectNode) {}
         }.asLiveData
     }
 
@@ -157,8 +133,6 @@ class ShopRepository private constructor(context: Context) : BaseRepository() {
             override fun createCall(): LiveData<ApiResponse<ObjectNode>> {
                 return RetrofitLiveData(mWebService.putRestaurantMember(shopId, shopMember.userId, shopMember))
             }
-
-            override fun saveCallResult(data: ObjectNode) {}
         }.asLiveData
     }
 
@@ -171,8 +145,6 @@ class ShopRepository private constructor(context: Context) : BaseRepository() {
             override fun createCall(): LiveData<ApiResponse<ObjectNode>> {
                 return RetrofitLiveData(mWebService.deleteRestaurantMember(shopId, userId))
             }
-
-            override fun saveCallResult(data: ObjectNode) {}
         }.asLiveData
     }
 
@@ -184,10 +156,6 @@ class ShopRepository private constructor(context: Context) : BaseRepository() {
 
             override fun createCall(): LiveData<ApiResponse<ObjectNode>> {
                 return RetrofitLiveData(mWebService.deleteRestaurantCover(shopId, index))
-            }
-
-            override fun saveCallResult(data: ObjectNode) {
-
             }
         }.asLiveData
     }

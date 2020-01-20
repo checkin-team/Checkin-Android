@@ -170,7 +170,7 @@ class ScheduledSessionCartView @JvmOverloads constructor(
     private fun setupObservers() {
         viewModel.serverPendingData.observe(activity, Observer {
             it?.let { listResource ->
-                networkViewModel.updateStatus(listResource)
+                networkViewModel.updateStatus(listResource, LOAD_SYNC_ORDERS)
                 when (listResource.status) {
                     Resource.Status.SUCCESS -> {
                         viewModel.fetchCartBill()
@@ -197,16 +197,19 @@ class ScheduledSessionCartView @JvmOverloads constructor(
         })
         viewModel.cartDetailData.observe(activity, Observer {
             it?.let { resource ->
-                networkViewModel.updateStatus(resource)
+                networkViewModel.updateStatus(resource, LOAD_DATA_CART_DETAILS)
                 if (resource.status == Resource.Status.SUCCESS && resource.data != null) {
                     setupData(resource.data)
                 }
             }
         })
         networkViewModel.shouldTryAgain.observe(activity, Observer {
-            it?.let { className ->
-                // Only retry ordering the current item if not related to cart detail
-                if (className != CartDetailModel::class.java.simpleName) viewModel.retryOrder()
+            it?.let {
+                when (it) {
+                    // Only retry ordering the current item if related to syncing orders
+                    LOAD_SYNC_ORDERS -> viewModel.retryOrder()
+                    LOAD_DATA_CART_DETAILS -> viewModel.fetchCartOrders()
+                }
             }
         })
 
@@ -303,6 +306,11 @@ class ScheduledSessionCartView @JvmOverloads constructor(
     }
 
     override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
+    }
+
+    companion object {
+        private const val LOAD_SYNC_ORDERS = "load.sync.orders"
+        private const val LOAD_DATA_CART_DETAILS = "load.data.cart"
     }
 }
 

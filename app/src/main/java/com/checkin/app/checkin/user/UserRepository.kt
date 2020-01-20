@@ -34,8 +34,6 @@ class UserRepository private constructor(context: Context) : BaseRepository() {
             override fun createCall(): LiveData<ApiResponse<List<ShopCustomerModel>>> {
                 return RetrofitLiveData(mWebService.userRecentCheckins)
             }
-
-            override fun saveCallResult(data: List<ShopCustomerModel>) {}
         }.asLiveData
 
     val allUsers: LiveData<Resource<List<UserModel>>>
@@ -45,8 +43,6 @@ class UserRepository private constructor(context: Context) : BaseRepository() {
             override fun createCall(): LiveData<ApiResponse<List<UserModel>>> {
                 return RetrofitLiveData(mWebService.users)
             }
-
-            override fun saveCallResult(data: List<UserModel>) {}
         }.asLiveData
 
     /**
@@ -64,20 +60,16 @@ class UserRepository private constructor(context: Context) : BaseRepository() {
                     RetrofitLiveData(mWebService.getNonPersonalUser(userPk))
                 }
             }
-
-            override fun saveCallResult(data: UserModel) {}
         }.asLiveData
     }
 
-    fun postUserData(objectNode: ObjectNode?): LiveData<Resource<UserModel>> {
+    fun postUserData(objectNode: ObjectNode): LiveData<Resource<UserModel>> {
         return object : NetworkBoundResource<UserModel, UserModel>() {
             override fun shouldUseLocalDb(): Boolean = false
 
             override fun createCall(): LiveData<ApiResponse<UserModel>> {
-                return RetrofitLiveData(mWebService.postUserData(objectNode!!))
+                return RetrofitLiveData(mWebService.postUserData(objectNode))
             }
-
-            override fun saveCallResult(data: UserModel) {}
         }.asLiveData
     }
 

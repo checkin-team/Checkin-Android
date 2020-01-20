@@ -8,6 +8,7 @@ import android.widget.Spinner
 import android.widget.TextView
 import androidx.annotation.CallSuper
 import androidx.core.content.ContextCompat
+import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.Observer
 import butterknife.BindView
 import butterknife.OnClick
@@ -16,6 +17,7 @@ import com.checkin.app.checkin.menu.listeners.MenuItemInteraction
 import com.checkin.app.checkin.menu.models.MenuItemModel
 import com.checkin.app.checkin.menu.viewmodels.BaseCartViewModel
 import com.checkin.app.checkin.menu.viewmodels.BaseMenuViewModel
+import com.checkin.app.checkin.misc.BlockingNetworkViewModel
 import com.checkin.app.checkin.misc.fragments.BaseFragment
 
 abstract class BaseMenuFragment :
@@ -35,6 +37,7 @@ abstract class BaseMenuFragment :
     @BindView(R.id.spinner_menu_meal_slots)
     internal lateinit var spinnerMealSlots: Spinner
 
+    private val networkViewModel: BlockingNetworkViewModel by activityViewModels()
     abstract val menuViewModel: BaseMenuViewModel
     abstract val cartViewModel: BaseCartViewModel
 
@@ -57,7 +60,13 @@ abstract class BaseMenuFragment :
     private fun setupObservers() {
         val restaurantId = arguments!!.getLong(KEY_RESTAURANT_ID)
         menuViewModel.fetchAvailableMenu(restaurantId)
-        menuViewModel.originalMenuGroups.observe(this, Observer { onMenuFetched() })
+        menuViewModel.originalMenuGroups.observe(this, Observer {
+            networkViewModel.updateStatusForOnlyError(it, LOAD_MENU_DATA)
+            onMenuFetched()
+        })
+        networkViewModel.shouldTryAgain.observe(this, Observer {
+            if (it == LOAD_MENU_DATA) menuViewModel.fetchAvailableMenu(restaurantId)
+        })
     }
 
     protected open fun onMenuFetched() {
@@ -138,5 +147,6 @@ abstract class BaseMenuFragment :
 
     companion object {
         const val KEY_RESTAURANT_ID = "menu.restaurant_id"
+        const val LOAD_MENU_DATA = "load.data.menu"
     }
 }

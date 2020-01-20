@@ -14,9 +14,16 @@ class BlockingNetworkViewModel(application: Application) : BaseViewModel(applica
     val networkBlockingData = mNetworkData
     val shouldTryAgain: LiveData<String> = mTryAgain
 
-    fun <T : Any> updateStatus(resource: Resource<T>) {
-        mResourceDataClass = resource.data?.javaClass?.simpleName
-        mNetworkData.value = resource
+    fun <T : Any> updateStatus(resource: Resource<T>?, key: String? = null) = resource?.let {
+        if (mResourceDataClass != key && mNetworkData.value?.inError == true) return@let
+        mResourceDataClass = key ?: it.data?.javaClass?.simpleName
+        mNetworkData.value = it
+        if (resource.status == Resource.Status.SUCCESS) tried()
+    }
+
+    fun <T : Any> updateStatusForOnlyError(resource: Resource<T>?, key: String? = null) = resource?.let {
+        if (mNetworkData.value?.inError == true && it.status != Resource.Status.LOADING && key == mResourceDataClass || it.inError)
+            updateStatus(it, key)
     }
 
     fun resetStatus() {

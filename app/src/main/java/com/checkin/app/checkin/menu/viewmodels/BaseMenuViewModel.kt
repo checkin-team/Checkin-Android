@@ -16,7 +16,7 @@ abstract class BaseMenuViewModel(application: Application) : BaseViewModel(appli
     protected val mRepository: MenuRepository = MenuRepository.getInstance(application)
 
     protected val mMenuData = createNetworkLiveData<MenuModel>()
-    private var mOriginalMenuGroups = createNetworkLiveData<List<MenuGroupModel>>()
+    private val mOriginalMenuGroups = createNetworkLiveData<List<MenuGroupModel>>()
     private val mMenuGroups = MediatorLiveData<Resource<List<MenuGroupModel>>>()
     private val mMenuItems = createNetworkLiveData<List<MenuItemModel>>()
 
@@ -207,11 +207,11 @@ abstract class BaseMenuViewModel(application: Application) : BaseViewModel(appli
 
         val resourceLiveData = Transformations.map(mMenuData) { menuModelResource ->
             mOriginalMenuGroups.value = Resource.loading(null)
-            if (menuModelResource?.data == null)
-                return@map null
-            val groups = menuModelResource.data.groups
-            groups.sortWith(Comparator { o1, o2 -> o1.category.compareTo(o2.category) })
-            Resource.cloneResource(menuModelResource, groups)
+            menuModelResource?.data?.let {
+                val groups = it.groups
+                groups.sortWith(Comparator { o1, o2 -> o1.category.compareTo(o2.category) })
+                Resource.cloneResource(menuModelResource, groups)
+            } ?: Resource.cloneResource<List<MenuGroupModel>, MenuModel>(menuModelResource, null)
         }
         mOriginalMenuGroups.addSource(resourceLiveData) { listResource ->
             mOriginalMenuGroups.value = listResource

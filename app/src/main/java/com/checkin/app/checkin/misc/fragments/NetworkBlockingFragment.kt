@@ -35,9 +35,12 @@ class NetworkBlockingFragment : BaseFragment() {
         viewModel.networkBlockingData.observe(this, Observer {
             it?.let { resource ->
                 when (resource.status) {
-                    Resource.Status.ERROR_DISCONNECTED, Resource.Status.ERROR_UNKNOWN -> handleError(resource)
+                    Resource.Status.ERROR_DISCONNECTED,
+                    Resource.Status.ERROR_UNKNOWN,
+                    Resource.Status.ERROR_NOT_FOUND_CACHED -> handleError(resource)
                     Resource.Status.LOADING -> handleLoading()
-                    Resource.Status.SUCCESS -> handleSuccess()
+                    Resource.Status.SUCCESS,
+                    Resource.Status.ERROR_BUT_LOADED_CACHED -> handleSuccess()
                 }
             } ?: handleSuccess()
         })

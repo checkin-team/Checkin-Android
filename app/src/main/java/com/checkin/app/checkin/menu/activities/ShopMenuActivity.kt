@@ -102,7 +102,7 @@ class ShopMenuActivity : BaseActivity(), ShopMenuCartModelHolder.MenuCartInterac
         })
         cartViewModel.serverOrders.observe(this, Observer {
             it?.let { resource ->
-                networkViewModel.updateStatus(resource)
+                networkViewModel.updateStatus(resource, LOAD_SYNC_SERVER_ORDER)
                 if (resource.status == Resource.Status.SUCCESS) {
                     Utils.toast(this, "Confirmed orders!")
                     finish()
@@ -110,7 +110,7 @@ class ShopMenuActivity : BaseActivity(), ShopMenuCartModelHolder.MenuCartInterac
             }
         })
         networkViewModel.shouldTryAgain.observe(this, Observer {
-            cartViewModel.confirmOrder()
+            if (it == LOAD_SYNC_SERVER_ORDER) cartViewModel.confirmOrder()
         })
     }
 
@@ -167,6 +167,7 @@ class ShopMenuActivity : BaseActivity(), ShopMenuCartModelHolder.MenuCartInterac
     companion object {
         private const val KEY_RESTAURANT_ID = "shop.menu.restaurant_id"
         private const val KEY_SESSION_ID = "shop.menu.session_id"
+        private const val LOAD_SYNC_SERVER_ORDER = "load.sync.orders"
 
         fun openMenu(context: Context, restaurantId: Long, sessionId: Long = 0L) = Intent(context, ShopMenuActivity::class.java).apply {
             putExtra(KEY_RESTAURANT_ID, restaurantId)

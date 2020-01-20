@@ -31,10 +31,6 @@ class SessionRepository private constructor(context: Context) : BaseRepository()
             override fun createCall(): LiveData<ApiResponse<ActiveLiveSessionDetailModel>> {
                 return RetrofitLiveData(mWebService.activeSessionLiveStatus)
             }
-
-            override fun saveCallResult(data: ActiveLiveSessionDetailModel) {
-
-            }
         }.asLiveData
 
     val activeSessionCheck: LiveData<Resource<SessionBasicModel>>
@@ -45,10 +41,6 @@ class SessionRepository private constructor(context: Context) : BaseRepository()
 
             override fun createCall(): LiveData<ApiResponse<SessionBasicModel>> {
                 return RetrofitLiveData(mWebService.activeSessionCheck)
-            }
-
-            override fun saveCallResult(data: SessionBasicModel) {
-
             }
         }.asLiveData
 
@@ -61,8 +53,6 @@ class SessionRepository private constructor(context: Context) : BaseRepository()
             override fun createCall(): LiveData<ApiResponse<List<PromoDetailModel>>> {
                 return RetrofitLiveData(mWebService.promoCodes)
             }
-
-            override fun saveCallResult(data: List<PromoDetailModel>) {}
         }.asLiveData
 
     fun getRestaurantPromoCodes(restaurantId: Long, forActive: Boolean?): LiveData<Resource<List<PromoDetailModel>>> {
@@ -75,9 +65,6 @@ class SessionRepository private constructor(context: Context) : BaseRepository()
             override fun shouldUseLocalDb(): Boolean = false
 
             override fun createCall() = RetrofitLiveData(mWebService.getRestaurantActivePromos(restaurantId, filterChoice))
-
-            override fun saveCallResult(data: List<PromoDetailModel>?) {}
-
         }.asLiveData
     }
 
@@ -91,8 +78,6 @@ class SessionRepository private constructor(context: Context) : BaseRepository()
             override fun createCall(): LiveData<ApiResponse<QRResultModel>> {
                 return RetrofitLiveData(mWebService.postNewCustomerSession(data))
             }
-
-            override fun saveCallResult(data: QRResultModel) {}
         }.asLiveData
     }
 
@@ -102,9 +87,6 @@ class SessionRepository private constructor(context: Context) : BaseRepository()
 
             override fun createCall(): LiveData<ApiResponse<ObjectNode>> {
                 return RetrofitLiveData(mWebService.deleteCustomerCart)
-            }
-
-            override fun saveCallResult(data: ObjectNode) {
             }
         }.asLiveData
 
@@ -118,8 +100,6 @@ class SessionRepository private constructor(context: Context) : BaseRepository()
             override fun createCall(): LiveData<ApiResponse<NewScheduledSessionModel>> {
                 return RetrofitLiveData(mWebService.postNewScheduledSession(data))
             }
-
-            override fun saveCallResult(data: NewScheduledSessionModel) {}
         }.asLiveData
     }
 
@@ -131,10 +111,6 @@ class SessionRepository private constructor(context: Context) : BaseRepository()
 
             override fun createCall(): LiveData<ApiResponse<SessionBriefModel>> {
                 return RetrofitLiveData(mWebService.getSessionBriefDetail(sessionPk))
-            }
-
-            override fun saveCallResult(data: SessionBriefModel) {
-
             }
         }.asLiveData
     }
@@ -149,8 +125,6 @@ class SessionRepository private constructor(context: Context) : BaseRepository()
             override fun createCall(): LiveData<ApiResponse<List<SessionOrderedItemModel>>> {
                 return RetrofitLiveData(mWebService.getSessionOrders(sessionId))
             }
-
-            override fun saveCallResult(data: List<SessionOrderedItemModel>) {}
         }.asLiveData
     }
 
@@ -164,8 +138,6 @@ class SessionRepository private constructor(context: Context) : BaseRepository()
             override fun createCall(): LiveData<ApiResponse<List<ManagerSessionEventModel>>> {
                 return RetrofitLiveData(mWebService.getManagerSessionEvents(sessionId))
             }
-
-            override fun saveCallResult(data: List<ManagerSessionEventModel>) {}
         }.asLiveData
     }
 
@@ -179,10 +151,6 @@ class SessionRepository private constructor(context: Context) : BaseRepository()
             override fun createCall(): LiveData<ApiResponse<UserTransactionDetailsModel>> {
                 return RetrofitLiveData(mWebService.getUserSessionDetailById(sessionId))
             }
-
-            override fun saveCallResult(data: UserTransactionDetailsModel) {
-
-            }
         }.asLiveData
     }
 
@@ -194,10 +162,6 @@ class SessionRepository private constructor(context: Context) : BaseRepository()
 
             override fun createCall(): LiveData<ApiResponse<UserTransactionBriefModel>> {
                 return RetrofitLiveData(mWebService.getUserSessionBrief(sessionPk))
-            }
-
-            override fun saveCallResult(data: UserTransactionBriefModel) {
-
             }
         }.asLiveData
     }
@@ -211,10 +175,6 @@ class SessionRepository private constructor(context: Context) : BaseRepository()
             override fun createCall(): LiveData<ApiResponse<ObjectNode>> {
                 return RetrofitLiveData(mWebService.deleteCustomerSessionJoinRequest())
             }
-
-            override fun saveCallResult(data: ObjectNode) {
-                //saveCallResult code
-            }
         }.asLiveData
     }
 
@@ -223,10 +183,6 @@ class SessionRepository private constructor(context: Context) : BaseRepository()
             override fun shouldUseLocalDb(): Boolean = false
 
             override fun createCall() = RetrofitLiveData(mWebService.customerScheduledSessions)
-
-            override fun saveCallResult(data: List<ScheduledLiveSessionDetailModel>?) {
-            }
-
         }.asLiveData
     }
 

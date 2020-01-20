@@ -17,6 +17,7 @@ import com.checkin.app.checkin.misc.models.GenericDetailModel
 import com.checkin.app.checkin.user.UserRepository
 import com.checkin.app.checkin.user.models.ShopCustomerModel
 import com.checkin.app.checkin.user.models.UserModel
+import com.fasterxml.jackson.databind.node.ObjectNode
 import java.io.File
 
 class UserViewModel(application: Application) : BaseViewModel(application) {
@@ -25,6 +26,8 @@ class UserViewModel(application: Application) : BaseViewModel(application) {
     private val mUserData = createNetworkLiveData<UserModel>()
     private val mUserRecentCheckinsData = createNetworkLiveData<List<ShopCustomerModel>>()
     private val mImageUploadResult = createNetworkLiveData<Void>()
+
+    private var mLastData: ObjectNode? = null
 
     override fun updateResults() {
         fetchUserData()
@@ -79,12 +82,18 @@ class UserViewModel(application: Application) : BaseViewModel(application) {
         data.put("bio", bio)
         data.put("is_public", true)
         if (phoneToken.isNotEmpty()) data.put("phone_token", phoneToken)
+        mLastData = data
         mUserData.addSource(mRepository.postUserData(data), mUserData::setValue)
     }
 
     fun patchUserPhone(phoneToken: String) {
         val data = objectMapper.createObjectNode()
                 .put("phone_token", phoneToken)
+        mLastData = data
         mUserData.addSource(mRepository.postUserData(data), mUserData::setValue)
+    }
+
+    fun retryUpdateProfile() = mLastData?.let {
+        mUserData.addSource(mRepository.postUserData(it), mUserData::setValue)
     }
 }

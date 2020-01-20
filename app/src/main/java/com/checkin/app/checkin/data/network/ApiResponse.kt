@@ -1,10 +1,11 @@
 package com.checkin.app.checkin.data.network
 
 import android.util.Log
-import com.checkin.app.checkin.Utility.JacksonProcessingException
-import com.checkin.app.checkin.Utility.NetworkIssueException
-import com.checkin.app.checkin.Utility.RequestCanceledException
 import com.checkin.app.checkin.data.Converters.getJsonNode
+import com.checkin.app.checkin.misc.exceptions.JacksonProcessingException
+import com.checkin.app.checkin.misc.exceptions.NetworkIssueException
+import com.checkin.app.checkin.misc.exceptions.NoConnectivityException
+import com.checkin.app.checkin.misc.exceptions.RequestCanceledException
 import com.fasterxml.jackson.core.JsonProcessingException
 import com.fasterxml.jackson.databind.JsonNode
 import retrofit2.Response
@@ -73,7 +74,7 @@ class ApiResponse<T>(
     }
 
     companion object {
-        fun getErrorThrowable(error: Throwable): Throwable = if (error is IOException) {
+        fun getErrorThrowable(error: Throwable): Throwable = if (error !is NoConnectivityException && error is IOException) {
             if ("Canceled" == error.message) RequestCanceledException(error) else NetworkIssueException(error)
         } else {
             (error as? JsonProcessingException)?.let { JacksonProcessingException(it) } ?: error

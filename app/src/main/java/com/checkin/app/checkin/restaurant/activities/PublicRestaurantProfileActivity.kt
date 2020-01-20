@@ -210,7 +210,7 @@ class PublicRestaurantProfileActivity : BaseActivity(), AppBarLayout.OnOffsetCha
 
         restaurantViewModel.restaurantData.observe(this, Observer {
             it?.also { restaurantResource ->
-                networkViewModel.updateStatus(restaurantResource)
+                networkViewModel.updateStatus(restaurantResource, LOAD_DATA_RESTAURANT)
                 when (restaurantResource.status) {
                     Resource.Status.SUCCESS -> restaurantResource.data?.let { setupData(it) }
                     else -> pass
@@ -232,11 +232,15 @@ class PublicRestaurantProfileActivity : BaseActivity(), AppBarLayout.OnOffsetCha
                     }
                     Resource.Status.ERROR_INVALID_REQUEST -> if (resource.problem?.getErrorCode() == ProblemModel.ERROR_CODE.SESSION_SCHEDULED_PENDING_CART) {
                         val cartRestaurant = cartViewModel.cartStatus.value?.data?.restaurant?.target
-                        if (cartRestaurant != null) handleErrorCartExists(cartRestaurant) else pass
+                        if (cartRestaurant != null) handleErrorCartExists(cartRestaurant) else {
+                            cartViewModel.fetchCartStatus()
+                            Utils.toast(this, resource.message)
+                        }
                     } else if (resource.errorBody?.has("planned_datetime") == true) {
                         Utils.toast(this, resource.errorBody.get("planned_datetime").get(0).asText())
                     } else Utils.toast(this, resource.message)
-                    else -> pass
+                    Resource.Status.LOADING -> pass
+                    else -> Utils.toast(this, resource.message)
                 }
             }
         })
@@ -260,7 +264,7 @@ class PublicRestaurantProfileActivity : BaseActivity(), AppBarLayout.OnOffsetCha
 
         userViewModel.userData.observe(this, Observer {
             it?.let { resource ->
-                networkViewModel.updateStatus(resource)
+                networkViewModel.updateStatus(resource, LOAD_SYNC_USER_DETAILS)
                 when {
                     resource.status == Resource.Status.SUCCESS -> scheduledSessionViewModel.isPhoneVerified = true
                     resource.problem?.getErrorCode() == ProblemModel.ERROR_CODE.ACCOUNT_ALREADY_REGISTERED -> {
@@ -273,12 +277,21 @@ class PublicRestaurantProfileActivity : BaseActivity(), AppBarLayout.OnOffsetCha
                 }
             }
         })
+
+        networkViewModel.shouldTryAgain.observe(this, Observer {
+            when (it) {
+                LOAD_DATA_RESTAURANT -> restaurantViewModel.fetchMissing()
+                LOAD_SYNC_PAY_REQUEST -> scheduledSessionViewModel.requestPaytmDetails()
+                LOAD_SYNC_PAYTM_CALLBACK -> scheduledSessionViewModel.retryPostPaytmCallback()
+                LOAD_SYNC_USER_DETAILS -> userViewModel.retryUpdateProfile()
+            }
+        })
     }
 
     private fun setupPaytm() {
         scheduledSessionViewModel.paytmData.observe(this, Observer {
             it?.let { paytmModelResource ->
-                networkViewModel.updateStatus(paytmModelResource)
+                networkViewModel.updateStatus(paytmModelResource, LOAD_SYNC_PAY_REQUEST)
                 if (paytmModelResource.status === Resource.Status.SUCCESS && paytmModelResource.data != null) {
                     paytmPayment.initializePayment(paytmModelResource.data, this)
                 } else if (paytmModelResource.status !== Resource.Status.LOADING) {
@@ -293,7 +306,7 @@ class PublicRestaurantProfileActivity : BaseActivity(), AppBarLayout.OnOffsetCha
 
         scheduledSessionViewModel.paytmCallbackData.observe(this, Observer {
             it?.let { objectNodeResource ->
-                networkViewModel.updateStatus(objectNodeResource)
+                networkViewModel.updateStatus(objectNodeResource, LOAD_SYNC_PAYTM_CALLBACK)
                 if (objectNodeResource.status === Resource.Status.SUCCESS) {
                     Utils.navigateBackToHome(this)
                 }
@@ -529,7 +542,13 @@ class PublicRestaurantProfileActivity : BaseActivity(), AppBarLayout.OnOffsetCha
     companion object {
         const val KEY_RESTAURANT_ID = "restaurant_profile.public.id"
         const val KEY_SESSION_ID = "session.new.id"
-        val TAG: String = PublicRestaurantProfileActivity::class.java.simpleName
+
+        private const val LOAD_SYNC_PAYTM_CALLBACK = "load.sync.paytm_callback"
+        private const val LOAD_SYNC_PAY_REQUEST = "load.sync.pay.request"
+        private const val LOAD_DATA_RESTAURANT = "load.data.restaurant"
+        private const val LOAD_SYNC_USER_DETAILS = "load.sync.user_detail"
+
+        private val TAG: String = PublicRestaurantProfileActivity::class.java.simpleName
     }
 
     class PublicRestaurantProfileAdapter(fragmentActivity: FragmentActivity, val restaurantId: Long) : BaseFragmentStateAdapter(fragmentActivity) {

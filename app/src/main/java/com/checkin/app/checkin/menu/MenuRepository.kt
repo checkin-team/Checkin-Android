@@ -3,11 +3,11 @@ package com.checkin.app.checkin.menu
 import android.app.Application
 import android.content.Context
 import androidx.lifecycle.LiveData
-import com.checkin.app.checkin.data.*
-import com.checkin.app.checkin.data.network.ApiClient.Companion.getApiService
 import com.checkin.app.checkin.Utility.SingletonHolder
+import com.checkin.app.checkin.data.Converters
 import com.checkin.app.checkin.data.db.AppDatabase
 import com.checkin.app.checkin.data.db.ObjectBoxInstanceLiveData
+import com.checkin.app.checkin.data.network.ApiClient.Companion.getApiService
 import com.checkin.app.checkin.data.network.ApiResponse
 import com.checkin.app.checkin.data.network.RetrofitLiveData
 import com.checkin.app.checkin.data.network.WebApiService
@@ -29,7 +29,7 @@ class MenuRepository private constructor(context: Context) {
 
             override fun shouldFetch(data: MenuModel?): Boolean = true
 
-            override fun loadFromDb(): LiveData<MenuModel?> {
+            override fun loadFromDb(): LiveData<MenuModel> {
                 return ObjectBoxInstanceLiveData(mMenuBox
                         .query().equal(MenuModel_.restaurantPk, shopId)
                         .build())
@@ -57,9 +57,6 @@ class MenuRepository private constructor(context: Context) {
             override fun createCall(): LiveData<ApiResponse<List<NewOrderModel>>> {
                 return RetrofitLiveData(mWebService.postActiveSessionOrders(orders))
             }
-
-            override fun saveCallResult(data: List<NewOrderModel>?) {
-            }
         }.asLiveData
     }
 
@@ -71,9 +68,6 @@ class MenuRepository private constructor(context: Context) {
 
             override fun createCall(): LiveData<ApiResponse<List<NewOrderModel>>> {
                 return RetrofitLiveData(mWebService.postSessionManagerOrders(sessionPk, orders))
-            }
-
-            override fun saveCallResult(data: List<NewOrderModel>?) {
             }
         }.asLiveData
     }
@@ -87,9 +81,6 @@ class MenuRepository private constructor(context: Context) {
             override fun createCall(): LiveData<ApiResponse<List<NewOrderModel>>> {
                 return RetrofitLiveData(mWebService.postScheduledSessionOrders(sessionPk, orders))
             }
-
-            override fun saveCallResult(data: List<NewOrderModel>?) {
-            }
         }.asLiveData
     }
 
@@ -101,8 +92,6 @@ class MenuRepository private constructor(context: Context) {
             override fun shouldUseLocalDb(): Boolean = false
 
             override fun createCall(): LiveData<ApiResponse<OrderedItemModel>> = RetrofitLiveData(mWebService.patchScheduledSessionOrder(sessionPk, orderId, body))
-
-            override fun saveCallResult(data: OrderedItemModel?) {}
         }.asLiveData
     }
 
@@ -111,16 +100,11 @@ class MenuRepository private constructor(context: Context) {
             override fun shouldUseLocalDb(): Boolean = false
 
             override fun createCall(): LiveData<ApiResponse<ObjectNode>> = RetrofitLiveData(mWebService.deleteScheduledSessionOrder(sessionPk, orderId))
-
-            override fun saveCallResult(data: ObjectNode?) {}
         }.asLiveData
     }
 
     fun getRecommendedDishes(restaurantId: Long): LiveData<Resource<List<TrendingDishModel>>> {
         return object : NetworkBoundResource<List<TrendingDishModel>, List<TrendingDishModel>>() {
-            override fun saveCallResult(data: List<TrendingDishModel>) {
-            }
-
             override fun shouldUseLocalDb(): Boolean = false
 
             override fun createCall(): LiveData<ApiResponse<List<TrendingDishModel>>> {
@@ -152,9 +136,6 @@ class MenuRepository private constructor(context: Context) {
             override fun shouldUseLocalDb(): Boolean = false
 
             override fun createCall(): LiveData<ApiResponse<CartDetailModel>> = RetrofitLiveData(mWebService.sessionCartDetail)
-
-            override fun saveCallResult(data: CartDetailModel?) {
-            }
         }.asLiveData
 
     val cartBillData: LiveData<Resource<CartBillModel>>
@@ -162,9 +143,6 @@ class MenuRepository private constructor(context: Context) {
             override fun shouldUseLocalDb(): Boolean = false
 
             override fun createCall(): LiveData<ApiResponse<CartBillModel>> = RetrofitLiveData(mWebService.sessionCartBillDetail)
-
-            override fun saveCallResult(data: CartBillModel?) {
-            }
         }.asLiveData
 
     companion object : SingletonHolder<MenuRepository, Application>({ MenuRepository(it.applicationContext) })

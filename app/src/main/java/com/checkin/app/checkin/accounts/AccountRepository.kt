@@ -24,9 +24,6 @@ class AccountRepository private constructor(context: Context) : BaseRepository()
             override fun createCall(): LiveData<ApiResponse<List<AccountModel>>> {
                 return RetrofitLiveData(mWebService.selfAccounts)
             }
-
-            override fun saveCallResult(data: List<AccountModel>?) {
-            }
         }.asLiveData
 
     companion object : SingletonHolder<AccountRepository, Application>({ AccountRepository(it.applicationContext) })

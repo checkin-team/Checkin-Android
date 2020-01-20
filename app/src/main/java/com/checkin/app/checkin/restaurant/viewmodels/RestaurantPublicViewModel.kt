@@ -9,12 +9,19 @@ class RestaurantPublicViewModel(application: Application) : BaseViewModel(applic
     private val mRestaurantRepository = RestaurantRepository.getInstance(application)
 
     private val mRestaurantData = createNetworkLiveData<RestaurantModel>()
+    private var mRestaurantId = 0L
 
     val restaurantData
         get() = mRestaurantData
 
     fun fetchRestaurantWithId(restaurantId: Long) {
+        mRestaurantId = restaurantId
         mRestaurantData.addSource(mRestaurantRepository.getRestaurantPublicProfile(restaurantId), mRestaurantData::setValue)
+    }
+
+    override fun fetchMissing() {
+        super.fetchMissing()
+        if (mRestaurantData.value?.data == null) fetchRestaurantWithId(mRestaurantId)
     }
 
     override fun updateResults() {

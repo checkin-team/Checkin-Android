@@ -1,9 +1,9 @@
 package com.checkin.app.checkin.data.resource
 
 import android.util.Log
-import com.checkin.app.checkin.Utility.NoConnectivityException
-import com.checkin.app.checkin.Utility.RequestCanceledException
 import com.checkin.app.checkin.data.network.ApiResponse
+import com.checkin.app.checkin.misc.exceptions.NoConnectivityException
+import com.checkin.app.checkin.misc.exceptions.RequestCanceledException
 import com.crashlytics.android.Crashlytics
 import com.fasterxml.jackson.databind.JsonNode
 import java.net.HttpURLConnection.*
@@ -22,9 +22,11 @@ class Resource<out T> private constructor(val status: Status, val data: T?, val 
             return problemModel
         }
 
-    fun hasErrorBody(): Boolean {
-        return errorBody != null
-    }
+    fun hasErrorBody(): Boolean = errorBody != null
+
+    val isSuccess: Boolean = status == Status.SUCCESS || status == Status.ERROR_BUT_LOADED_CACHED
+
+    val inError: Boolean = status != Status.NO_REQUEST && !isSuccess && status != Status.LOADING
 
     enum class Status {
         NO_REQUEST,
@@ -33,6 +35,8 @@ class Resource<out T> private constructor(val status: Status, val data: T?, val 
         ERROR_RESPONSE_INVALID,
         ERROR_DISCONNECTED,
         ERROR_NOT_FOUND,
+        ERROR_NOT_FOUND_CACHED,
+        ERROR_BUT_LOADED_CACHED,
         ERROR_INVALID_REQUEST,
         ERROR_FORBIDDEN,
         ERROR_UNAUTHORIZED,
@@ -57,6 +61,10 @@ class Resource<out T> private constructor(val status: Status, val data: T?, val 
         fun <T> errorNotFound(msg: String?, errorBody: JsonNode?): Resource<T> = error(Status.ERROR_NOT_FOUND, msg, null, errorBody)
 
         fun <T> errorNotFound(msg: String?): Resource<T> = errorNotFound(msg, null)
+
+        fun <T> errorNotFoundCached(msg: String?) = error(Status.ERROR_NOT_FOUND_CACHED, msg, null, null)
+
+        fun <T> errorButLoadedCached(msg: String?, data: T?) = error(Status.ERROR_BUT_LOADED_CACHED, msg, data, null)
 
         fun <T> loading(data: T?): Resource<T> = Resource(Status.LOADING, data, null, null)
 

@@ -52,7 +52,7 @@ class ActiveSessionMenuActivity : BaseActivity(), MenuGroupScreenInteraction {
     private fun setupObservers() {
         cartViewModel.serverOrders.observe(this, Observer {
             it?.let { resource ->
-                networkViewModel.updateStatus(resource)
+                networkViewModel.updateStatus(resource, LOAD_SYNC_SERVER_ORDER)
                 if (resource.status == Resource.Status.SUCCESS) {
                     Utils.toast(this, "Confirmed orders!")
                     finish()
@@ -60,7 +60,7 @@ class ActiveSessionMenuActivity : BaseActivity(), MenuGroupScreenInteraction {
             }
         })
         networkViewModel.shouldTryAgain.observe(this, Observer {
-            cartViewModel.confirmOrder()
+            if (it == LOAD_SYNC_SERVER_ORDER) cartViewModel.confirmOrder()
         })
     }
 
@@ -106,6 +106,7 @@ class ActiveSessionMenuActivity : BaseActivity(), MenuGroupScreenInteraction {
     companion object {
         private const val KEY_RESTAURANT_ID = "as.menu.restaurant_id"
         private const val KEY_PRE_SELECTED_ITEM = "as.menu.pre_selected.item_id"
+        private const val LOAD_SYNC_SERVER_ORDER = "load.sync.orders"
 
         @JvmOverloads
         fun openMenu(context: Context, restaurantId: Long, itemPk: Long = 0L) = context.startActivity(withRestaurantIntent(context, restaurantId, itemPk))

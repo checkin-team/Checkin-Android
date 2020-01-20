@@ -27,10 +27,8 @@ import butterknife.BindView
 import butterknife.ButterKnife
 import butterknife.OnClick
 import co.zsmb.materialdrawerkt.builders.DrawerBuilderKt
-import co.zsmb.materialdrawerkt.draweritems.badgeable.primaryItem
 import com.checkin.app.checkin.BuildConfig
 import com.checkin.app.checkin.R
-import com.checkin.app.checkin.Shop.ShopJoin.BusinessFeaturesActivity
 import com.checkin.app.checkin.Utility.*
 import com.checkin.app.checkin.Utility.OnBoardingUtils.OnBoardingModel
 import com.checkin.app.checkin.accounts.ACCOUNT_TYPE
@@ -216,12 +214,6 @@ class HomeActivity : BaseAccountActivity() {
 
     override fun setupDrawerItems(builder: DrawerBuilderKt) = builder.run {
         selectedItem = -1
-        primaryItem("Create Shop Profile") {
-            onClick { view, position, drawerItem ->
-                startActivity(Intent(this@HomeActivity, BusinessFeaturesActivity::class.java))
-                true
-            }
-        }
         pass
     }
 

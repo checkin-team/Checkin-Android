@@ -3,8 +3,8 @@ package com.checkin.app.checkin.session.scheduled
 import android.app.Application
 import android.content.Context
 import androidx.lifecycle.LiveData
-import com.checkin.app.checkin.data.*
 import com.checkin.app.checkin.Utility.SingletonHolder
+import com.checkin.app.checkin.data.BaseRepository
 import com.checkin.app.checkin.data.network.ApiClient
 import com.checkin.app.checkin.data.network.ApiResponse
 import com.checkin.app.checkin.data.network.RetrofitLiveData
@@ -32,8 +32,6 @@ class ScheduledSessionRepository private constructor(context: Context) : BaseRep
             override fun createCall(): LiveData<ApiResponse<NewScheduledSessionModel>> {
                 return RetrofitLiveData(mWebService.patchScheduledSession(sessionId, data))
             }
-
-            override fun saveCallResult(data: NewScheduledSessionModel) {}
         }.asLiveData
     }
 
@@ -44,10 +42,6 @@ class ScheduledSessionRepository private constructor(context: Context) : BaseRep
             override fun createCall(): LiveData<ApiResponse<ObjectNode>> {
                 return RetrofitLiveData(mWebService.deleteAvailedPromoForScheduledSession(sessionId))
             }
-
-            override fun saveCallResult(data: ObjectNode?) {
-            }
-
         }.asLiveData
     }
 
@@ -58,10 +52,6 @@ class ScheduledSessionRepository private constructor(context: Context) : BaseRep
             override fun createCall(): LiveData<ApiResponse<SessionPromoModel>> {
                 return RetrofitLiveData(mWebService.availPromoForScheduledSession(sessionId, data))
             }
-
-            override fun saveCallResult(data: SessionPromoModel?) {
-            }
-
         }.asLiveData
     }
 
@@ -72,10 +62,6 @@ class ScheduledSessionRepository private constructor(context: Context) : BaseRep
             override fun createCall(): LiveData<ApiResponse<SessionPromoModel>> {
                 return RetrofitLiveData(mWebService.getAvailedPromoForScheduledSession(sessionPk))
             }
-
-            override fun saveCallResult(data: SessionPromoModel?) {
-            }
-
         }.asLiveData
     }
 
@@ -90,10 +76,6 @@ class ScheduledSessionRepository private constructor(context: Context) : BaseRep
             override fun createCall(): LiveData<ApiResponse<PaytmModel>> {
                 return RetrofitLiveData(mWebService.postPaytmRequestForScheduledSession(sessionId))
             }
-
-            override fun saveCallResult(data: PaytmModel?) {
-            }
-
         }.asLiveData
     }
 
@@ -104,10 +86,6 @@ class ScheduledSessionRepository private constructor(context: Context) : BaseRep
             override fun createCall(): LiveData<ApiResponse<CustomerScheduledSessionDetailModel>> {
                 return RetrofitLiveData(mWebService.getCustomerScheduledSessionDetail(sessionId))
             }
-
-            override fun saveCallResult(data: CustomerScheduledSessionDetailModel?) {
-            }
-
         }.asLiveData
     }
 
@@ -118,10 +96,6 @@ class ScheduledSessionRepository private constructor(context: Context) : BaseRep
             override fun createCall(): LiveData<ApiResponse<ObjectNode>> {
                 return RetrofitLiveData(mWebService.deleteCustomerScheduledSession(sessionId))
             }
-
-            override fun saveCallResult(data: ObjectNode?) {
-            }
-
         }.asLiveData
     }
 
@@ -132,10 +106,6 @@ class ScheduledSessionRepository private constructor(context: Context) : BaseRep
             override fun createCall(): LiveData<ApiResponse<List<SessionOrderedItemModel>>> {
                 return RetrofitLiveData(mWebService.getScheduledSessionOrders(sessionId))
             }
-
-            override fun saveCallResult(data: List<SessionOrderedItemModel>?) {
-            }
-
         }.asLiveData
     }
 
