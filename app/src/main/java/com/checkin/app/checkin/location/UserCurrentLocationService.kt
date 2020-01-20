@@ -24,6 +24,7 @@ import com.google.android.gms.location.LocationRequest.PRIORITY_HIGH_ACCURACY
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
+import java.util.concurrent.atomic.AtomicInteger
 
 /**
  * An [IntentService] subclass for handling asynchronous task of users location
@@ -47,6 +48,7 @@ class UserCurrentLocationService : Service(), Callback<UserLocationModel> {
     private val repository by lazy { UserRepository.getInstance(application) }
     private val locationRequest: LocationRequest by lazy { createLocationRequest() }
     private val addressReceiver = AddressReceiver()
+    private val maxRetries = AtomicInteger(3)
 
     override fun onStartCommand(intent: Intent?, flags: Int, startId: Int): Int = intent?.let {
         Log.i(TAG, "Location Track service started")
@@ -127,6 +129,7 @@ class UserCurrentLocationService : Service(), Callback<UserLocationModel> {
     }
 
     private fun getLastLocation() {
+        if (maxRetries.decrementAndGet() < 0) exitService()
         try {
             fusedLocationProviderClient.lastLocation.addOnCompleteListener { task ->
                 if (task.isSuccessful) task.result?.let { onNewLocation(it) } ?: exitService()
