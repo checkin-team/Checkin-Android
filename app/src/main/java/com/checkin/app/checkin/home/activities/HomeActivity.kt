@@ -7,6 +7,7 @@ import android.content.Context
 import android.content.Intent
 import android.content.IntentFilter
 import android.content.pm.PackageManager
+import android.location.LocationManager
 import android.net.Uri
 import android.os.Build
 import android.os.Bundle
@@ -136,11 +137,23 @@ class HomeActivity : BaseAccountActivity() {
         setupUserLocationTracker()
         setupObserver()
         explainQr()
+        requestEnableLocation()
 
         // Refresh Remote Config
         RemoteConfig.refresh().addOnSuccessListener {
             RemoteConfig.activate()
         }
+    }
+
+    private fun requestEnableLocation() {
+        val manager = getSystemService(Context.LOCATION_SERVICE) as LocationManager
+        if (!manager.isProviderEnabled(LocationManager.GPS_PROVIDER)) {
+            FluentSnackbar.create(this)
+                    .create(R.string.turn_on_gps)
+                    .duration(Snackbar.LENGTH_INDEFINITE)
+                    .show()
+        }
+
     }
 
     override fun updateScreen() {
@@ -317,7 +330,7 @@ class HomeActivity : BaseAccountActivity() {
 
     @OnClick(R.id.container_home_cart)
     fun onClickCart() {
-        liveViewModel.cartStatus.value?.data?.let { openPublicRestaurantProfile(it.restaurant.targetId, it.pk) }
+        liveViewModel.cartStatus.value?.data?.let { openPublicRestaurantProfile(it.restaurant.targetId, it.pk, true) }
     }
 
     private inner class HomeFragmentAdapter(fm: FragmentManager) : BaseFragmentAdapterBottomNav(fm) {

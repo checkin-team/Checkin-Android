@@ -136,13 +136,17 @@ class PublicRestaurantProfileActivity : BaseActivity(), AppBarLayout.OnOffsetCha
 
     private val childSizeUtil by lazy { ChildSizeMeasureViewPager2(vpFragment) }
 
+    private val open by lazy {
+        intent.getBooleanExtra(KEY_OPEN_CART, false)
+    }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_public_restaurant_profile)
         ButterKnife.bind(this)
 
-        initUi()
         setupObservers()
+        initUi()
         setupPaytm()
     }
 
@@ -189,6 +193,18 @@ class PublicRestaurantProfileActivity : BaseActivity(), AppBarLayout.OnOffsetCha
         }
 
         lifecycle.addObserver(childSizeUtil)
+//
+//        if (open) {
+//            if (restaurantId > 0L) {
+//                coroutineLifecycleScope.launchWhenStarted {
+//                    // Busy waiting for data to come... Since it's on another thread no issues.
+//                    while (cartViewModel.sessionPk == 0L) {
+//
+//                    }
+//                    scheduledCartView.show()
+//                }
+//            }
+//        }
     }
 
     private fun setupObservers() {
@@ -542,6 +558,7 @@ class PublicRestaurantProfileActivity : BaseActivity(), AppBarLayout.OnOffsetCha
     companion object {
         const val KEY_RESTAURANT_ID = "restaurant_profile.public.id"
         const val KEY_SESSION_ID = "session.new.id"
+        const val KEY_OPEN_CART = "cart.open"
 
         private const val LOAD_SYNC_PAYTM_CALLBACK = "load.sync.paytm_callback"
         private const val LOAD_SYNC_PAY_REQUEST = "load.sync.pay.request"
@@ -568,9 +585,10 @@ class PublicRestaurantProfileActivity : BaseActivity(), AppBarLayout.OnOffsetCha
     }
 }
 
-fun Context.openPublicRestaurantProfile(restaurantId: Long, sessionId: Long = 0) {
+fun Context.openPublicRestaurantProfile(restaurantId: Long, sessionId: Long = 0, shopCart: Boolean = false) {
     startActivity(Intent(this, PublicRestaurantProfileActivity::class.java).apply {
         putExtra(PublicRestaurantProfileActivity.KEY_RESTAURANT_ID, restaurantId)
         putExtra(PublicRestaurantProfileActivity.KEY_SESSION_ID, sessionId)
+        putExtra(PublicRestaurantProfileActivity.KEY_OPEN_CART, shopCart)
     })
 }

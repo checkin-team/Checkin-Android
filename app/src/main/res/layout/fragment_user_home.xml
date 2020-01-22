@@ -31,8 +31,9 @@
                     <com.airbnb.epoxy.EpoxyRecyclerView
                         android:id="@+id/epoxy_rv_home_banner"
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="@dimen/spacing_small"
+                        android:layout_height="@dimen/height_home_ad_banner"
+                        android:layout_marginStart="@dimen/spacing_extra_tiny"
+                        android:layout_marginTop="@dimen/spacing_tiny"
                         app:itemSpacing="@dimen/spacing_extra_small"
                         tools:listitem="@layout/item_ad_banner" />
                 </FrameLayout>
@@ -42,7 +43,10 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:background="@color/white_four"
-                    android:padding="@dimen/spacing_small"
+                    android:paddingTop="@dimen/spacing_extra_tiny"
+                    android:paddingBottom="@dimen/spacing_small"
+                    android:paddingStart="@dimen/spacing_small"
+                    android:paddingEnd="@dimen/spacing_small"
                     android:visibility="gone">
 
                     <androidx.viewpager2.widget.ViewPager2
@@ -64,8 +68,7 @@
                         android:layout_width="wrap_content"
                         android:fontFamily="@font/opensans_bold"
                         android:layout_height="wrap_content"
-                        android:layout_marginStart="@dimen/spacing_small"
-                        android:paddingBottom="@dimen/spacing_tiny"
+                        android:layout_marginStart="@dimen/spacing_tiny"
                         android:text="Around You" />
 
                     <androidx.recyclerview.widget.RecyclerView
@@ -73,7 +76,6 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_below="@id/tv_home_nearby_restaurants_title"
-                        android:layout_marginTop="@dimen/spacing_tiny"
                         android:nestedScrollingEnabled="false"
                         android:orientation="horizontal"
                         tools:listitem="@layout/item_home_restaurant_banner" />
