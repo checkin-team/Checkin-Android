@@ -8,7 +8,6 @@ import androidx.appcompat.widget.SwitchCompat
 import androidx.appcompat.widget.Toolbar
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
-import androidx.lifecycle.Observer
 import androidx.viewpager.widget.ViewPager.SimpleOnPageChangeListener
 import butterknife.BindView
 import butterknife.ButterKnife
@@ -114,9 +113,6 @@ class ManagerWorkActivity : BaseAccountActivity(), LiveOrdersInteraction {
         mShopViewModel.fetchShopSessions(shopId)
         mShopViewModel.filterFrom(Utils.getCurrentFormattedDateInvoice())
         mShopViewModel.filterTo(Utils.getCurrentFormattedDateInvoice())
-        networkViewModel.shouldTryAgain.observe(this, Observer {
-            mViewModel.fetchRestaurantData(shopId)
-        })
     }
 
     override fun setLiveOrdersActivation(isActivated: Boolean) {

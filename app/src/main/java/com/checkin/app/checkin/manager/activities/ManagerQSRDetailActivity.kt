@@ -91,7 +91,7 @@ class ManagerQSRDetailActivity : BaseActivity() {
             if (it?.status == Resource.Status.SUCCESS) if (it.data?.isCheckedOut == true) finish()
         })
         networkViewModel.shouldTryAgain.observe(this, Observer {
-            viewModel.fetchSessionData(viewModel.sessionPk)
+            if (it != null) viewModel.fetchSessionData(viewModel.sessionPk)
         })
     }
 

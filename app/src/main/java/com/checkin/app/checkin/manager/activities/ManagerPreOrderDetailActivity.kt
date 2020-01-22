@@ -93,7 +93,7 @@ class ManagerPreOrderDetailActivity : BaseActivity() {
             if (it?.status == Resource.Status.SUCCESS) finish()
         })
         networkViewModel.shouldTryAgain.observe(this, Observer {
-            viewModel.fetchSessionData(viewModel.sessionPk)
+            if (it != null) viewModel.fetchSessionData(viewModel.sessionPk)
         })
     }
 

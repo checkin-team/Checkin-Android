@@ -71,7 +71,7 @@ class ManagerLiveOrdersFragment : BaseFragment() {
         })
 
         networkViewModel.shouldTryAgain.observe(this, Observer {
-            viewModel.fetchRestaurantData(viewModel.shopPk)
+            if (it != null) viewModel.fetchRestaurantData(viewModel.shopPk)
         })
         viewModel.activeSessionEvents.observe(this, Observer { tabAdapter.notifyDataSetChanged() })
         viewModel.preOrderEvents.observe(this, Observer { tabAdapter.notifyDataSetChanged() })
