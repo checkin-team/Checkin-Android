@@ -29,6 +29,7 @@ class BlockingNetworkViewModel(application: Application) : BaseViewModel(applica
             updateStatus(it, key)
     }
 
+    // Uses Broadcast channel to deal with the action to execute in a suspending function
     fun shouldTryAgain(action: (String?) -> Unit) = viewModelScope.launch {
         tryAgainChannel.openSubscription().consumeEach(action)
     }

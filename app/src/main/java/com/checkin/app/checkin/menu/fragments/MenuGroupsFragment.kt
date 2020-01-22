@@ -70,11 +70,11 @@ class MenuGroupsFragment : BaseFragment(), OnGroupInteraction {
         })
         epoxyRvMenuGroups.apply {
             setHasFixedSize(false)
-            ViewCompat.setNestedScrollingEnabled(this, false)
+            ViewCompat.setNestedScrollingEnabled(this, true)
             setControllerAndBuildModels(groupController)
-            layoutManager = object : LinearLayoutManager(requireContext()) {
-                override fun canScrollVertically(): Boolean = false
-            }
+//            layoutManager = object : LinearLayoutManager(requireContext()) {
+//                override fun canScrollVertically(): Boolean = false
+//            }
         }
         groupController.addModelBuildListener {
             screenListener.onListBuilt()
