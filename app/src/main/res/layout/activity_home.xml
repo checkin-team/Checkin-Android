@@ -66,7 +66,7 @@
 
                 <TextView
                     android:id="@+id/tv_home_cart_restaurant"
-                    style="@style/GreyExtraSmallTextStyle"
+                    style="@style/GreySmallTextStyle"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="@dimen/spacing_extra_small"
