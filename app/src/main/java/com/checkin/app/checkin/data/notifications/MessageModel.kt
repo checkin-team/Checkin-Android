@@ -138,7 +138,8 @@ data class MessageModel(
                     .setFullScreenIntent(pendingIntent, true)
         } else if (type == MESSAGE_TYPE.USER_SCHEDULED_QSR_DONE) {
             builder.setFullScreenIntent(pendingIntent, true)
-        }
+        } else if (type == MESSAGE_TYPE.MANAGER_SCHEDULED_CBYG_NEW_PAID || type == MESSAGE_TYPE.MANAGER_SCHEDULED_QSR_NEW_PAID)
+            builder.setFullScreenIntent(pendingIntent, true)
         if (type == MESSAGE_TYPE.WAITER_SESSION_NEW) {
             val waiterIntent = Intent(context, WaiterWorkActivity::class.java)
             waiterIntent.action = WaiterWorkActivity.ACTION_NEW_TABLE
