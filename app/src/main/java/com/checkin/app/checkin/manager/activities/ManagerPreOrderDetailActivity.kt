@@ -92,9 +92,9 @@ class ManagerPreOrderDetailActivity : BaseActivity() {
         viewModel.doneData.observe(this, Observer {
             if (it?.status == Resource.Status.SUCCESS) finish()
         })
-        networkViewModel.shouldTryAgain.observe(this, Observer {
-            if (it != null) viewModel.fetchSessionData(viewModel.sessionPk)
-        })
+        networkViewModel.shouldTryAgain {
+            viewModel.fetchSessionData(viewModel.sessionPk)
+        }
     }
 
     private fun addDetailFragment(status: ScheduledSessionStatus, pk: Long) {

@@ -64,9 +64,9 @@ abstract class BaseMenuFragment :
             networkViewModel.updateStatusForOnlyError(it, LOAD_MENU_DATA)
             onMenuFetched()
         })
-        networkViewModel.shouldTryAgain.observe(this, Observer {
+        networkViewModel.shouldTryAgain {
             if (it == LOAD_MENU_DATA) menuViewModel.fetchAvailableMenu(restaurantId)
-        })
+        }
     }
 
     protected open fun onMenuFetched() {

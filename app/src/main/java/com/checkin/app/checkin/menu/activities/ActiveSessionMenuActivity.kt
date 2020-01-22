@@ -59,9 +59,9 @@ class ActiveSessionMenuActivity : BaseActivity(), MenuGroupScreenInteraction {
                 }
             }
         })
-        networkViewModel.shouldTryAgain.observe(this, Observer {
+        networkViewModel.shouldTryAgain {
             if (it == LOAD_SYNC_SERVER_ORDER) cartViewModel.confirmOrder()
-        })
+        }
     }
 
     private fun initUi() {

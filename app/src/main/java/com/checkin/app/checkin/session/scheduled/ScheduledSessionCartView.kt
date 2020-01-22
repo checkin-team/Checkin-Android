@@ -203,15 +203,13 @@ class ScheduledSessionCartView @JvmOverloads constructor(
                 }
             }
         })
-        networkViewModel.shouldTryAgain.observe(activity, Observer {
-            it?.let {
-                when (it) {
-                    // Only retry ordering the current item if related to syncing orders
-                    LOAD_SYNC_ORDERS -> viewModel.retryOrder()
-                    LOAD_DATA_CART_DETAILS -> viewModel.fetchCartOrders()
-                }
+        networkViewModel.shouldTryAgain {
+            when (it) {
+                // Only retry ordering the current item if related to syncing orders
+                LOAD_SYNC_ORDERS -> viewModel.retryOrder()
+                LOAD_DATA_CART_DETAILS -> viewModel.fetchCartOrders()
             }
-        })
+        }
 
         scheduledSessionViewModel.sessionAppliedPromo.observe(activity, Observer {
             it?.let { sessionPromoModelResource ->

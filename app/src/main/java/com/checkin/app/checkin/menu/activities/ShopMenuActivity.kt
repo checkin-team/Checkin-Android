@@ -109,9 +109,9 @@ class ShopMenuActivity : BaseActivity(), ShopMenuCartModelHolder.MenuCartInterac
                 }
             }
         })
-        networkViewModel.shouldTryAgain.observe(this, Observer {
+        networkViewModel.shouldTryAgain {
             if (it == LOAD_SYNC_SERVER_ORDER) cartViewModel.confirmOrder()
-        })
+        }
     }
 
     override fun onExpandGroupView(view: View) {

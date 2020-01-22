@@ -10,10 +10,14 @@ import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.lifecycle.LifecycleCoroutineScope
 import androidx.lifecycle.LifecycleOwner
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.Observer
 import androidx.lifecycle.lifecycleScope
 import com.checkin.app.checkin.misc.models.GeolocationModel
 import com.checkin.app.checkin.misc.models.LocationModel
 import com.google.android.material.tabs.TabLayout
+import kotlinx.coroutines.ExperimentalCoroutinesApi
+import kotlinx.coroutines.flow.channelFlow
 import java.util.*
 import java.util.concurrent.TimeUnit
 import kotlin.math.abs
@@ -84,6 +88,16 @@ fun Date.toCalendar(): Calendar = Calendar.getInstance().apply { time = this@toC
  */
 val LifecycleOwner.coroutineLifecycleScope: LifecycleCoroutineScope
     get() = lifecycleScope
+
+@ExperimentalCoroutinesApi
+fun <T> LiveData<T>.asFlow() = channelFlow {
+    offer(value)
+    val observer = Observer<T> { t -> offer(t) }
+    observeForever(observer)
+    invokeOnClose {
+        removeObserver(observer)
+    }
+}
 
 /*
     Permissions

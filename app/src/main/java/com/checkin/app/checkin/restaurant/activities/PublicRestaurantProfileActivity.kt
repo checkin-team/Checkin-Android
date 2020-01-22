@@ -294,14 +294,14 @@ class PublicRestaurantProfileActivity : BaseActivity(), AppBarLayout.OnOffsetCha
             }
         })
 
-        networkViewModel.shouldTryAgain.observe(this, Observer {
+        networkViewModel.shouldTryAgain {
             when (it) {
                 LOAD_DATA_RESTAURANT -> restaurantViewModel.fetchMissing()
                 LOAD_SYNC_PAY_REQUEST -> scheduledSessionViewModel.requestPaytmDetails()
                 LOAD_SYNC_PAYTM_CALLBACK -> scheduledSessionViewModel.retryPostPaytmCallback()
                 LOAD_SYNC_USER_DETAILS -> userViewModel.retryUpdateProfile()
             }
-        })
+        }
     }
 
     private fun setupPaytm() {

@@ -70,9 +70,9 @@ class ManagerLiveOrdersFragment : BaseFragment() {
             }
         })
 
-        networkViewModel.shouldTryAgain.observe(this, Observer {
-            if (it != null) viewModel.fetchRestaurantData(viewModel.shopPk)
-        })
+        networkViewModel.shouldTryAgain {
+            viewModel.fetchRestaurantData(viewModel.shopPk)
+        }
         viewModel.activeSessionEvents.observe(this, Observer { tabAdapter.notifyDataSetChanged() })
         viewModel.preOrderEvents.observe(this, Observer { tabAdapter.notifyDataSetChanged() })
         viewModel.qsrEvents.observe(this, Observer { tabAdapter.notifyDataSetChanged() })
@@ -96,7 +96,8 @@ class ManagerLiveOrdersFragment : BaseFragment() {
         viewModel.updateResults()
         (childFragmentManager.findFragmentByTag("f0") as? BaseFragment)?.updateScreen()
         (childFragmentManager.findFragmentByTag("f1") as? BaseFragment)?.let {
-            (childFragmentManager.findFragmentByTag("f2") as? BaseFragment)?.updateScreen() ?: it.updateScreen()
+            (childFragmentManager.findFragmentByTag("f2") as? BaseFragment)?.updateScreen()
+                    ?: it.updateScreen()
         } ?: (childFragmentManager.findFragmentByTag("f2") as? BaseFragment)?.updateScreen()
     }
 
