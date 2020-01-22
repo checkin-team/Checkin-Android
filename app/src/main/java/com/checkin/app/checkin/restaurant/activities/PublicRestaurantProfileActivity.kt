@@ -136,10 +136,6 @@ class PublicRestaurantProfileActivity : BaseActivity(), AppBarLayout.OnOffsetCha
 
     private val childSizeUtil by lazy { ChildSizeMeasureViewPager2(vpFragment) }
 
-    private val open by lazy {
-        intent.getBooleanExtra(KEY_OPEN_CART, false)
-    }
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_public_restaurant_profile)
@@ -193,18 +189,6 @@ class PublicRestaurantProfileActivity : BaseActivity(), AppBarLayout.OnOffsetCha
         }
 
         lifecycle.addObserver(childSizeUtil)
-//
-//        if (open) {
-//            if (restaurantId > 0L) {
-//                coroutineLifecycleScope.launchWhenStarted {
-//                    // Busy waiting for data to come... Since it's on another thread no issues.
-//                    while (cartViewModel.sessionPk == 0L) {
-//
-//                    }
-//                    scheduledCartView.show()
-//                }
-//            }
-//        }
     }
 
     private fun setupObservers() {
@@ -222,6 +206,11 @@ class PublicRestaurantProfileActivity : BaseActivity(), AppBarLayout.OnOffsetCha
                     }
                 }
             }
+        })
+
+        cartViewModel.cartDetailData.observe(this, Observer {
+            if (it?.status == Resource.Status.SUCCESS && intent.getBooleanExtra(KEY_OPEN_CART, false))
+                scheduledCartView.show()
         })
 
         restaurantViewModel.restaurantData.observe(this, Observer {
@@ -585,10 +574,10 @@ class PublicRestaurantProfileActivity : BaseActivity(), AppBarLayout.OnOffsetCha
     }
 }
 
-fun Context.openPublicRestaurantProfile(restaurantId: Long, sessionId: Long = 0, shopCart: Boolean = false) {
+fun Context.openPublicRestaurantProfile(restaurantId: Long, sessionId: Long = 0, shouldOpenCart: Boolean = false) {
     startActivity(Intent(this, PublicRestaurantProfileActivity::class.java).apply {
         putExtra(PublicRestaurantProfileActivity.KEY_RESTAURANT_ID, restaurantId)
         putExtra(PublicRestaurantProfileActivity.KEY_SESSION_ID, sessionId)
-        putExtra(PublicRestaurantProfileActivity.KEY_OPEN_CART, shopCart)
+        putExtra(PublicRestaurantProfileActivity.KEY_OPEN_CART, shouldOpenCart)
     })
 }

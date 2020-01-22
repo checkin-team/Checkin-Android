@@ -209,21 +209,20 @@
                 style="@style/WhiteTextStyle"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
+                android:layout_marginStart="@dimen/spacing_small"
                 android:gravity="center"
-                android:paddingStart="@dimen/spacing_small"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
                 tools:text=" Item total  $4200" />
 
-            <Button
+            <TextView
                 android:id="@+id/btn_menu_customization_done"
                 style="@style/WhiteTextStyle"
                 android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:background="@null"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="@dimen/spacing_small"
                 android:text="Add"
-                android:textAllCaps="false"
                 android:textSize="@dimen/font_normal"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"

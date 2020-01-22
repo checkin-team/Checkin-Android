@@ -7,7 +7,6 @@ import android.content.Context
 import android.content.Intent
 import android.content.IntentFilter
 import android.content.pm.PackageManager
-import android.location.LocationManager
 import android.net.Uri
 import android.os.Build
 import android.os.Bundle
@@ -137,7 +136,6 @@ class HomeActivity : BaseAccountActivity() {
         setupUserLocationTracker()
         setupObserver()
         explainQr()
-        requestEnableLocation()
 
         // Refresh Remote Config
         RemoteConfig.refresh().addOnSuccessListener {
@@ -146,11 +144,21 @@ class HomeActivity : BaseAccountActivity() {
     }
 
     private fun requestEnableLocation() {
-        val manager = getSystemService(Context.LOCATION_SERVICE) as LocationManager
-        if (!manager.isProviderEnabled(LocationManager.GPS_PROVIDER)) {
+        if (isLocationEnabled)
+            trackUserCurrentLocation()
+        else {
             FluentSnackbar.create(this)
-                    .create(R.string.turn_on_gps)
+                    .create(R.string.request_turn_on_gps)
                     .duration(Snackbar.LENGTH_INDEFINITE)
+                    .neutralBackgroundColor()
+                    .actionTextRes(R.string.settings)
+                    .action {
+                        // Build intent that displays the App settings screen.
+                        val intent = Intent(Settings.ACTION_LOCATION_SOURCE_SETTINGS).apply {
+                            flags = Intent.FLAG_ACTIVITY_NEW_TASK
+                        }
+                        startActivityForResult(intent, REQUEST_SETTINGS_LOCATION)
+                    }
                     .show()
         }
 
@@ -165,7 +173,10 @@ class HomeActivity : BaseAccountActivity() {
             if (resource.status === Resource.Status.SUCCESS && resource.data != null) {
                 val data = resource.data
                 if (imTabUserIcon != null) {
-                    Utils.loadImageOrDefault(imTabUserIcon, data.profilePic, if (data.gender == UserModel.GENDER.MALE) R.drawable.cover_unknown_male else R.drawable.cover_unknown_female)
+                    Utils.loadImageOrDefault(
+                            imTabUserIcon, data.profilePic,
+                            if (data.gender == UserModel.GENDER.MALE) R.drawable.cover_unknown_male else R.drawable.cover_unknown_female
+                    )
                 }
                 stopRefreshing()
             } else if (resource.status === Resource.Status.LOADING) startRefreshing() else stopRefreshing()
@@ -231,7 +242,7 @@ class HomeActivity : BaseAccountActivity() {
     }
 
     private fun setupUserLocationTracker() {
-        if (hasLocationPermission) trackUserCurrentLocation()
+        if (hasLocationPermission) requestEnableLocation()
         else requestLocationPermission()
     }
 
@@ -263,6 +274,8 @@ class HomeActivity : BaseAccountActivity() {
         if (requestCode == REQUEST_QR_SCANNER && resultCode == Activity.RESULT_OK) {
             val qrData = data!!.getStringExtra(QRScannerActivity.KEY_QR_RESULT)
             mViewModel.processQr(qrData)
+        } else if (requestCode == REQUEST_SETTINGS_LOCATION) {
+            if (isLocationEnabled) trackUserCurrentLocation()
         }
     }
 
@@ -370,5 +383,6 @@ class HomeActivity : BaseAccountActivity() {
         const val SP_ONBOARDING_QR_SCANNER = "onboarding.qrscanner"
         private const val REQUEST_QR_SCANNER = 212
         private const val REQUEST_LOCATION_PERMISSION = 123
+        private const val REQUEST_SETTINGS_LOCATION = 111
     }
 }
