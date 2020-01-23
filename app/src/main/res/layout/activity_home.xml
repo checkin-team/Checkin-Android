@@ -45,17 +45,19 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_gravity="bottom"
+            android:background="@color/transparent"
             android:orientation="vertical">
 
             <RelativeLayout
                 android:id="@+id/container_home_cart"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:background="@color/white_two"
                 android:paddingStart="@dimen/spacing_small"
                 android:paddingTop="@dimen/spacing_tiny"
                 android:paddingEnd="@dimen/spacing_small"
-                android:translationY="@dimen/spacing_tiny"
-                android:paddingBottom="@dimen/spacing_small">
+                android:paddingBottom="@dimen/spacing_tiny"
+                android:translationY="@dimen/spacing_tiny">
 
                 <de.hdodenhof.circleimageview.CircleImageView
                     android:id="@+id/im_home_cart_restaurant"
@@ -83,14 +85,14 @@
                     android:textSize="@dimen/font_tiny" />
 
                 <TextView
+                    style="@style/TealBlueTextStyle"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    style="@style/TealBlueTextStyle"
-                    android:textSize = "@dimen/font_small"
                     android:layout_centerVertical="true"
                     android:layout_marginEnd="@dimen/spacing_extra_small"
                     android:layout_toStartOf="@id/im_home_cart_cancel"
-                    android:text="View" />
+                    android:text="View"
+                    android:textSize="@dimen/font_small" />
 
                 <ImageView
 
