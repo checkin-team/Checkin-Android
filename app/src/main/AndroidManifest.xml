@@ -42,6 +42,7 @@
 
         <activity-alias
             android:name="checkin.app.launcher"
+            android:screenOrientation="sensorPortrait"
             android:targetActivity=".home.activities.SplashActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
