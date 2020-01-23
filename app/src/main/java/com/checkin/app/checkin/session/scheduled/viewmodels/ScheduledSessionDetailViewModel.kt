@@ -41,6 +41,11 @@ class ScheduledSessionDetailViewModel(application: Application) : BaseViewModel(
     override fun updateResults() {
     }
 
+    override fun fetchMissing() {
+        super.fetchMissing()
+        if (sessionId != 0L && mSessionData.value?.data == null) fetchSessionData(sessionId)
+    }
+
     fun updateStatus(status: ScheduledSessionStatus) {
         mSessionData.value?.data?.run {
             mSessionData.value = Resource.cloneResource(mSessionData.value, copy(scheduled = scheduled.copy().apply { this.status = status }))

@@ -123,6 +123,11 @@ class ManagerPreOrderDetailActivity : BaseActivity() {
         return true
     }
 
+    override fun onResume() {
+        super.onResume()
+        viewModel.fetchMissing()
+    }
+
     companion object {
         private const val KEY_SESSION_ID = "manager.scheduled.session_id"
 

@@ -70,6 +70,11 @@ class QSRFoodReadyFragment : BaseFragment() {
         billHolder.bind(data.bill)
     }
 
+    override fun onResume() {
+        super.onResume()
+        viewModel.fetchMissing()
+    }
+
     companion object {
         const val KEY_SESSION_ID = "qsr.session_id"
 

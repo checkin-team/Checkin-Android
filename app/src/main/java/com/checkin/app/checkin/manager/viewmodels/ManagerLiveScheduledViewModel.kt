@@ -4,9 +4,9 @@ import android.app.Application
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.Transformations
+import com.checkin.app.checkin.Utility.isNotEmpty
 import com.checkin.app.checkin.data.BaseViewModel
 import com.checkin.app.checkin.data.resource.Resource
-import com.checkin.app.checkin.Utility.isNotEmpty
 import com.checkin.app.checkin.manager.ManagerRepository
 import com.checkin.app.checkin.manager.models.*
 import com.checkin.app.checkin.misc.models.GenericDetailModel
@@ -119,6 +119,11 @@ class ManagerLiveScheduledViewModel(application: Application) : BaseViewModel(ap
     override fun updateResults() {
         if (shopPk != 0L) fetchScheduledSessions(shopPk)
         if (sessionPk != 0L) fetchSessionData(sessionPk)
+    }
+
+    override fun fetchMissing() {
+        if (shopPk != 0L && mScheduledOrders.value?.data == null) fetchScheduledSessions(shopPk)
+        if (sessionPk != 0L && mSessionData.value?.data == null) fetchSessionData(sessionPk)
     }
 
     fun removeSession(pk: Long) {

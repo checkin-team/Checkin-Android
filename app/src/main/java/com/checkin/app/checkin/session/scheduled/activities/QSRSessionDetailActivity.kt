@@ -113,6 +113,7 @@ class QSRSessionDetailActivity : BaseActivity() {
                 MESSAGE_TYPE.USER_SCHEDULED_QSR_CHECKOUT, MESSAGE_TYPE.USER_SCHEDULED_QSR_CANCELLED,
                 MESSAGE_TYPE.USER_SCHEDULED_QSR_DONE
         )
+        viewModel.fetchMissing()
     }
 
     override fun onPause() {

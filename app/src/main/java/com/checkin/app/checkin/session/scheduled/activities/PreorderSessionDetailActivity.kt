@@ -110,6 +110,7 @@ class PreorderSessionDetailActivity : BaseActivity() {
                 MESSAGE_TYPE.USER_SCHEDULED_CBYG_ACCEPTED, MESSAGE_TYPE.USER_SCHEDULED_CBYG_PREPARATION,
                 MESSAGE_TYPE.USER_SCHEDULED_CBYG_CHECKOUT, MESSAGE_TYPE.USER_SCHEDULED_CBYG_CANCELLED
         )
+        viewModel.fetchMissing()
     }
 
     override fun onPause() {
