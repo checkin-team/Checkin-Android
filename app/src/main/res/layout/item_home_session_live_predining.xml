@@ -17,7 +17,7 @@
             android:id="@+id/im_item_session_live_predining_share"
             android:layout_width="@dimen/size_small_icon"
             android:layout_height="@dimen/size_small_icon"
-            android:layout_marginTop="@dimen/spacing_small"
+            android:layout_marginTop="@dimen/spacing_normal"
             android:layout_marginEnd="@dimen/spacing_normal"
             android:clickable="true"
             android:focusable="true"
@@ -31,21 +31,23 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="@dimen/spacing_normal"
+            android:layout_marginTop="@dimen/spacing_normal"
+            android:layout_marginEnd="16dp"
+            android:fontFamily="@font/josefinsans_semibold"
             android:textColor="@color/orange_red"
-            app:layout_constraintBottom_toBottomOf="@id/im_item_session_live_predining_share"
-            app:layout_constraintEnd_toStartOf="@id/im_item_session_live_predining_share"
-            app:layout_constraintHorizontal_bias="0"
+            app:layout_constraintEnd_toStartOf="@+id/im_item_session_live_predining_share"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="@id/im_item_session_live_predining_share"
-            tools:text="Hii shivansh, Your have successfully placed your order" />
+            app:layout_constraintTop_toTopOf="parent"
+
+            tools:text="Hii shivansh, Your have successfully placed your order." />
 
         <androidx.cardview.widget.CardView
             android:id="@+id/cv_home_session_live_predining_restaurant"
             android:layout_width="@dimen/size_logo_large"
             android:layout_height="@dimen/size_logo_large"
+            android:layout_marginTop="@dimen/spacing_medium"
             app:cardCornerRadius="@dimen/card_corner_radius_small"
             app:cardElevation="@dimen/card_elevation"
-            app:layout_constraintBottom_toTopOf="@id/tv_item_session_live_predining_amount_title"
             app:layout_constraintStart_toStartOf="@id/tv_home_session_live_predining_message"
             app:layout_constraintTop_toBottomOf="@id/tv_home_session_live_predining_message">
 
@@ -63,8 +65,8 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="bottom"
                 android:background="@drawable/background_rectangle_orange_gradient"
-                android:paddingTop="@dimen/spacing_extra_tiny"
-                android:paddingBottom="@dimen/spacing_extra_tiny"
+                android:paddingTop="@dimen/spacing_unit"
+                android:paddingBottom="@dimen/spacing_unit"
                 android:textAlignment="center"
                 tools:text="Pending" />
         </androidx.cardview.widget.CardView>
@@ -74,11 +76,10 @@
             style="@style/GreyTextStyle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="@dimen/spacing_normal"
+            android:layout_marginStart="@dimen/spacing_medium"
             android:fontFamily="@font/josefinsans_semibold"
-            android:translationY="-5dp"
             app:layout_constraintStart_toEndOf="@id/cv_home_session_live_predining_restaurant"
-            app:layout_constraintTop_toTopOf="@id/cv_home_session_live_predining_restaurant"
+            app:layout_constraintTop_toTopOf="@+id/cv_home_session_live_predining_restaurant"
             tools:text="Grey Orange - Lavel Road " />
 
         <TextView
@@ -86,20 +87,22 @@
             style="@style/GreySmallTextStyle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/spacing_tiny"
             android:textColor="@color/teal_blue"
-            app:layout_constraintBottom_toBottomOf="@id/container_line"
-            app:layout_constraintStart_toStartOf="@id/tv_home_session_live_predining_restaurant_name"
-            app:layout_constraintTop_toTopOf="@id/container_line"
+            app:layout_constraintStart_toStartOf="@+id/tv_home_session_live_predining_restaurant_name"
+            app:layout_constraintTop_toBottomOf="@+id/tv_home_session_live_predining_restaurant_name"
             tools:text="4:23pm" />
 
         <FrameLayout
             android:id="@+id/container_line"
             android:layout_width="wrap_content"
-            android:layout_height="@dimen/height_vertical_line"
-            android:layout_marginStart="@dimen/spacing_small"
-            android:layout_marginTop="@dimen/spacing_small"
-            app:layout_constraintStart_toEndOf="@id/tv_item_session_live_scheduled_time"
-            app:layout_constraintTop_toBottomOf="@id/tv_home_session_live_predining_restaurant_name">
+            android:layout_height="0dp"
+            android:layout_marginTop="@dimen/spacing_extra_tiny"
+            android:layout_marginBottom="@dimen/spacing_extra_tiny"
+            app:layout_constraintBottom_toBottomOf="@+id/tv_item_session_live_scheduled_time"
+            app:layout_constraintEnd_toStartOf="@+id/tv_item_session_live_scheduled_date"
+            app:layout_constraintStart_toEndOf="@+id/tv_item_session_live_scheduled_time"
+            app:layout_constraintTop_toTopOf="@+id/tv_item_session_live_scheduled_time">
 
             <include layout="@layout/incl_vertical_line" />
         </FrameLayout>
@@ -109,11 +112,9 @@
             style="@style/GreySmallTextStyle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="@dimen/spacing_small"
             android:textColor="@color/teal_blue"
-            app:layout_constraintBottom_toBottomOf="@id/container_line"
-            app:layout_constraintStart_toEndOf="@id/container_line"
-            app:layout_constraintTop_toTopOf="@id/container_line"
+            app:layout_constraintEnd_toEndOf="@+id/tv_home_session_live_predining_restaurant_name"
+            app:layout_constraintTop_toTopOf="@+id/tv_item_session_live_scheduled_time"
             tools:text="21st October 2019" />
 
         <TextView
@@ -124,28 +125,24 @@
             android:layout_marginTop="@dimen/spacing_extra_small"
             android:text="Diners"
             android:textColor="@color/pinkish_grey"
-            app:layout_constraintEnd_toStartOf="@id/tv_item_session_live_predining_orders_title"
             app:layout_constraintStart_toStartOf="@id/tv_item_session_live_scheduled_time"
             app:layout_constraintTop_toBottomOf="@id/tv_item_session_live_scheduled_time" />
 
         <TextView
             android:id="@+id/tv_item_session_live_predining_orders_title"
             style="@style/GreyExtraSmallTextStyle"
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/spacing_extra_small"
             android:text="@string/label_orders"
             android:textColor="@color/pinkish_grey"
-            app:layout_constraintEnd_toEndOf="@id/tv_item_session_live_scheduled_date"
-            app:layout_constraintStart_toEndOf="@id/tv_item_session_live_predining_diner_title"
-            app:layout_constraintTop_toBottomOf="@id/tv_item_session_live_scheduled_time" />
+            app:layout_constraintStart_toEndOf="@+id/container_line"
+            app:layout_constraintTop_toTopOf="@+id/tv_item_session_live_predining_diner_title" />
 
         <TextView
             android:id="@+id/tv_item_session_live_predining_diners"
             style="@style/GreyExtraSmallTextStyle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            app:layout_constraintBottom_toBottomOf="@id/cv_home_session_live_predining_restaurant"
             app:layout_constraintEnd_toEndOf="@id/tv_item_session_live_predining_diner_title"
             app:layout_constraintStart_toStartOf="@id/tv_item_session_live_predining_diner_title"
             app:layout_constraintTop_toBottomOf="@id/tv_item_session_live_predining_diner_title"
@@ -156,7 +153,6 @@
             style="@style/GreyExtraSmallTextStyle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            app:layout_constraintBottom_toBottomOf="@id/tv_item_session_live_predining_diners"
             app:layout_constraintEnd_toEndOf="@id/tv_item_session_live_predining_orders_title"
             app:layout_constraintStart_toStartOf="@id/tv_item_session_live_predining_orders_title"
             app:layout_constraintTop_toBottomOf="@id/tv_item_session_live_predining_orders_title"
@@ -167,11 +163,13 @@
             style="@style/GreyExtraSmallTextStyle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/spacing_tiny"
             android:layout_marginBottom="@dimen/spacing_tiny"
             android:text="Amount Paid: "
             android:textColor="@color/pinkish_grey"
             app:layout_constraintBottom_toTopOf="@id/tv_item_session_live_predining_session_id_title"
             app:layout_constraintStart_toStartOf="@id/tv_item_session_live_predining_session_id_title"
+            app:layout_constraintTop_toBottomOf="@+id/cv_home_session_live_predining_restaurant"
             app:layout_constraintVertical_chainStyle="packed" />
 
         <TextView

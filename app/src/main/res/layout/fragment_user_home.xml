@@ -32,7 +32,7 @@
                         android:id="@+id/epoxy_rv_home_banner"
                         android:layout_width="match_parent"
                         android:layout_height="@dimen/height_home_ad_banner"
-                        android:layout_marginStart="@dimen/spacing_extra_tiny"
+                        android:layout_marginStart="@dimen/spacing_tiny"
                         android:layout_marginTop="@dimen/spacing_tiny"
                         app:itemSpacing="@dimen/spacing_extra_small"
                         tools:listitem="@layout/item_ad_banner" />
