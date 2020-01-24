@@ -9,8 +9,8 @@
 
     <ImageView
         android:id="@+id/iv_bnav_icon"
-        android:layout_width="@dimen/buttom_bar_small_width"
-        android:layout_height="@dimen/buttom_bar_small_icon"
+        android:layout_width="@dimen/bottom_bar_tiny_width"
+        android:layout_height="@dimen/bottom_bar_tiny_icon"
         android:layout_gravity="center_horizontal"
         android:layout_marginTop="@dimen/spacing_tiny"
         android:minWidth="@dimen/size_small_icon"

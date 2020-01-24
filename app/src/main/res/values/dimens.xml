@@ -25,7 +25,7 @@
     <dimen name="spacing_extra_tiny">2dp</dimen>
     <dimen name="spacing_unit">1dp</dimen>
     <dimen name="spacing_medium">20dp</dimen>
-    <dimen name="spacing_elevation_fix_extreme_tiny">2dp</dimen>
+    <dimen name="spacing_elevation_fix_extreme_tiny">4dp</dimen>
 
     <!-- icon sizes -->
     <dimen name="size_tiny_icon">12dp</dimen>
@@ -225,8 +225,11 @@
     <dimen name="height_brownie_top_card">150dp</dimen>
 
     <!--Bottom Bar -->
-    <dimen name="buttom_bar_small_width">22dp</dimen>
-    <dimen name="buttom_bar_small_icon">26dp</dimen>
+    <dimen name="bottom_bar_small_width">22dp</dimen>
+    <dimen name="bottom_bar_small_icon">26dp</dimen>
+    <dimen name="bottom_bar_tiny_width">18dp</dimen>
+    <dimen name="bottom_bar_tiny_icon" >22dp</dimen>
+    
 
     <dimen name="new_bottom_user_height">800dp</dimen>
 
@@ -238,8 +241,8 @@
     <dimen name="height_restaurant_image_banner">165dp</dimen>
     <dimen name="height_advertisement_banner">150dp</dimen>
     <dimen name="height_home_session_live_card">190dp</dimen>
-    <dimen name="width_home_ad_banner">250dp</dimen>
-    <dimen name="height_home_ad_banner">160dp</dimen>
+    <dimen name="width_home_ad_banner">210dp</dimen>
+    <dimen name="height_home_ad_banner">140dp</dimen>
 
     <dimen name="height_vertical_line">16dp</dimen>
     <dimen name="height_cover_restaurant_profile">220dp</dimen>

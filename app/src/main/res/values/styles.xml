@@ -274,8 +274,7 @@
     <style name="GreyRoundedSmallTextStyle" parent="GreySmallTextStyle">
         <item name="android:fontFamily">@font/arial_rounded_mt_bold</item>
     </style>
-    w
-
+    
     <style name="GreySmallBoldTextStyle" parent="GreySmallTextStyle">
         <item name="android:fontFamily">@font/opensans_semibold</item>
     </style>
@@ -295,7 +294,22 @@
         <item name="android:fontFamily">@font/opensans</item>
         <item name="android:textAllCaps">false</item>
     </style>
-
+    
+    <style name="BlackTextStyle" parent="TextAppearance.AppCompat">
+        <item name="android:textColor">@color/black</item>
+        <item name="android:fontFamily">@font/opensans</item>
+        <item name="android:textSize">@dimen/font_normal</item>
+    </style>
+    
+    <style name="BlackSmallTextStyle" parent="BlackTextStyle">
+        <item name="android:textSize">@dimen/font_small</item>
+    </style>
+    
+    <style name="BlackRoundedSmallTextStyle" parent="BlackSmallTextStyle">
+        <item name="android:fontFamily">@font/arial_rounded_mt_bold</item>
+    </style>
+    
+    
     <style name="RougeProgressBar" parent="Widget.AppCompat.ProgressBar.Horizontal">
         <item name="android:height">10dp</item>
     </style>

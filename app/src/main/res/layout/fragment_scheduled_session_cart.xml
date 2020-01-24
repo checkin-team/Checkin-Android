@@ -116,13 +116,13 @@
                     style="@style/PinkishGreySmallTextStyle"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/spacing_extra_small"
+                    android:layout_marginTop="@dimen/spacing_normal"
                     android:textColor="@color/aqua_blue"
                     android:background="@color/transparent"
                     android:drawableStart="@drawable/ic_session_scheduled_remarks"
                     android:drawablePadding="@dimen/spacing_tiny"
                     android:layout_marginStart="@dimen/spacing_small"
-                    android:layout_marginBottom="@dimen/spacing_extra_small"
+                    android:layout_marginBottom="@dimen/spacing_normal"
                     android:hint="Write Special Instructions"
                     android:inputType="textAutoComplete|textAutoCorrect" />
 
@@ -133,6 +133,7 @@
                     android:layout_height="wrap_content"
                     android:background="@color/white"
                     android:orientation="vertical"
+                    android:visibility="gone"
                     android:padding="@dimen/spacing_small">
 
                     <TextView

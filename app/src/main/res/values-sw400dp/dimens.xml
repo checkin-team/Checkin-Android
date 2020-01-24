@@ -197,8 +197,10 @@
     <dimen name="spacing_home_bottom">68dp</dimen>
 
     <!--Bottom Bar -->
-    <dimen name="buttom_bar_small_width">26dp</dimen>
-    <dimen name="buttom_bar_small_icon">30dp</dimen>
+    <dimen name="bottom_bar_small_width">26dp</dimen>
+    <dimen name="bottom_bar_small_icon">30dp</dimen>
+    <dimen name="bottom_bar_tiny_width">22dp</dimen>
+    <dimen name="bottom_bar_tiny_icon" >26dp</dimen>
 
     <!--Location-->
     <dimen name="width_current_location">160dp</dimen>
@@ -207,7 +209,7 @@
     <dimen name="height_restaurant_banner">230dp</dimen>
     <dimen name="height_restaurant_image_banner">175dp</dimen>
     <dimen name="height_advertisement_banner">160dp</dimen>
-    <dimen name="height_home_session_live_card">200dp</dimen>
+    <dimen name="height_home_session_live_card">210dp</dimen>
 
     <dimen name="height_vertical_line">18dp</dimen>
     <dimen name="height_cover_restaurant_profile">235dp</dimen>
@@ -220,7 +222,7 @@
     <dimen name="width_preparation_time_selector">275dp</dimen>
     <dimen name="height_image_qsr_food_ready">165dp</dimen>
 
-    <dimen name="width_home_ad_banner">350dp</dimen>
-    <dimen name="height_home_ad_banner">212dp</dimen>
+    <dimen name="width_home_ad_banner">300dp</dimen>
+    <dimen name="height_home_ad_banner">192dp</dimen>
 
 </resources>
