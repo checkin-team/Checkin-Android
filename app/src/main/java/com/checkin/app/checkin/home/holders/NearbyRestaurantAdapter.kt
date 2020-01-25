@@ -149,7 +149,7 @@ class NearbyRestaurantAdapter : RecyclerView.Adapter<BaseViewHolder<Any>>() {
     }
 
     class BannerPagerAdapter(context: Context) : PagerAdapter() {
-        private val mResources = intArrayOf(R.drawable.first_banner, R.drawable.second_banner, R.drawable.third_banner)
+        private val mResources = intArrayOf()//R.drawable.first_banner, R.drawable.second_banner, R.drawable.third_banner)
         private val mLayoutInflater: LayoutInflater = LayoutInflater.from(context)
 
         override fun getCount(): Int {

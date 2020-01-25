@@ -6,13 +6,13 @@ import android.widget.ImageView
 import android.widget.TextView
 import butterknife.BindView
 import butterknife.ButterKnife
-import com.checkin.app.checkin.home.model.ActiveLiveSessionDetailModel
-import com.checkin.app.checkin.home.model.LiveSessionDetailModel
-import com.checkin.app.checkin.home.model.ScheduledLiveSessionDetailModel
 import com.checkin.app.checkin.R
 import com.checkin.app.checkin.Utility.Utils
 import com.checkin.app.checkin.Utility.callPhoneNumber
 import com.checkin.app.checkin.Utility.navigateToLocation
+import com.checkin.app.checkin.home.model.ActiveLiveSessionDetailModel
+import com.checkin.app.checkin.home.model.LiveSessionDetailModel
+import com.checkin.app.checkin.home.model.ScheduledLiveSessionDetailModel
 
 class ActiveLiveSessionViewHolder(itemView: View, interactionListener: LiveSessionTrackerInteraction) : LiveSessionViewHolder<ActiveLiveSessionDetailModel>(itemView, interactionListener) {
     @BindView(R.id.container_home_session_live_active_call_waiter)
@@ -63,7 +63,7 @@ class ActiveLiveSessionViewHolder(itemView: View, interactionListener: LiveSessi
         tvRestaurantName.text = data.restaurant.name
         Utils.loadImageOrDefault(imRestaurantLogo, data.restaurant.logo, R.drawable.cover_restaurant_unknown)
         data.offers.getOrNull(0)?.let {
-            tvPromoName.text = Utils.fromHtml(it.name)
+            tvPromoName.text = it.formatName
         }
         tvNewCount.text = data.newOrdersCount.toString()
         tvDoneCount.text = data.doneOrdersCount.toString()

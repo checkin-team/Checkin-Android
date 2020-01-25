@@ -88,7 +88,7 @@ public class ActiveSessionPromoAdapter extends RecyclerView.Adapter<ActiveSessio
                 tvPromoApply.setVisibility(View.GONE);
 
             tvPromoCode.setText(promoModel.getCode());
-            tvPromoName.setText(promoModel.getName());
+            tvPromoName.setText(promoModel.getFormatName());
             tvPromoSummary.setText(promoModel.getSummary());
             Utils.loadImageOrDefault(imPromoIcon, promoModel.getIcon(), 0);
         }
