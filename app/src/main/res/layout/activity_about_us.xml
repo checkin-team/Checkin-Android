@@ -112,7 +112,7 @@
         android:layout_height="wrap_content"
         android:layout_marginBottom="@dimen/spacing_small"
         android:src="@drawable/ic_facebook"
-        app:layout_constraintBottom_toTopOf="@+id/tv_aboutus_version"
+        app:layout_constraintBottom_toTopOf="@+id/tv_aboutus_tc"
         app:layout_constraintEnd_toStartOf="@+id/im_aboutus_youtube"
         app:layout_constraintHorizontal_bias="0.51"
         app:layout_constraintStart_toStartOf="parent" />
@@ -149,6 +149,26 @@
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toEndOf="@+id/im_aboutus_gmail"
         app:layout_constraintTop_toTopOf="@+id/im_aboutus_gmail" />
+
+    <TextView
+        android:id="@+id/tv_aboutus_tc"
+        style="@style/GreyExtraSmallTextStyle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/app_terms_and_condition_link"
+        app:layout_constraintBottom_toTopOf="@id/tv_aboutus_version"
+        app:layout_constraintEnd_toStartOf="@id/tv_about_refund"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <TextView
+        android:id="@+id/tv_about_refund"
+        style="@style/GreyExtraSmallTextStyle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/app_refund_policy_link"
+        app:layout_constraintBottom_toBottomOf="@id/tv_aboutus_tc"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@id/tv_aboutus_tc" />
 
     <TextView
         android:id="@+id/tv_aboutus_version"

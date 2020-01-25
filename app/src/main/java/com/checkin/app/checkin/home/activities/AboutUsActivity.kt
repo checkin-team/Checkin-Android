@@ -12,10 +12,12 @@ import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
+import androidx.core.net.toUri
 import butterknife.BindView
 import butterknife.ButterKnife
 import com.checkin.app.checkin.R
 import com.checkin.app.checkin.Utility.Constants.PLAY_STORE_URI
+import com.checkin.app.checkin.Utility.Utils
 import com.checkin.app.checkin.data.config.RemoteConfig
 
 
@@ -34,6 +36,10 @@ class AboutUsActivity : AppCompatActivity() {
     lateinit var imInstagram: ImageView
     @BindView(R.id.tv_aboutus_version)
     lateinit var tvVersion: TextView
+    @BindView(R.id.tv_aboutus_tc)
+    internal lateinit var tvTC: TextView
+    @BindView(R.id.tv_about_refund)
+    internal lateinit var tvRefund: TextView
 
     private val contactDialog by lazy {
         val dialogView = layoutInflater.inflate(R.layout.incl_contact_alert, null)
@@ -67,6 +73,14 @@ class AboutUsActivity : AppCompatActivity() {
     }
 
     private fun setupUi() {
+        tvTC.apply {
+            text = Utils.fromHtml(getString(R.string.app_terms_and_condition_link))
+            setOnClickListener { startActivity(Intent(Intent.ACTION_VIEW, getString(R.string.url_app_terms_conditions).toUri())) }
+        }
+        tvRefund.apply {
+            text = Utils.fromHtml(getString(R.string.app_refund_policy_link))
+            setOnClickListener { startActivity(Intent(Intent.ACTION_VIEW, getString(R.string.url_app_refund).toUri())) }
+        }
         imGooglePlay.setOnClickListener {
             startActivity(Intent(Intent.ACTION_VIEW, PLAY_STORE_URI))
         }

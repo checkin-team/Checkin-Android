@@ -1,13 +1,10 @@
 package com.checkin.app.checkin.home.activities
 
-import android.animation.Animator
 import android.content.Intent
 import android.os.Bundle
 import android.preference.PreferenceManager
 import androidx.appcompat.app.AppCompatActivity
-import butterknife.BindView
 import butterknife.ButterKnife
-import com.airbnb.lottie.LottieAnimationView
 import com.checkin.app.checkin.Auth.AuthActivity
 import com.checkin.app.checkin.Auth.AuthPreferences
 import com.checkin.app.checkin.Auth.DeviceTokenService
@@ -24,9 +21,9 @@ import com.checkin.app.checkin.manager.activities.ManagerWorkActivity
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 
-class SplashActivity : AppCompatActivity(), Animator.AnimatorListener {
-    @BindView(R.id.lottie_splash)
-    internal lateinit var lottieSplash: LottieAnimationView
+class SplashActivity : AppCompatActivity() {
+//    @BindView(R.id.lottie_splash)
+//    internal lateinit var lottieSplash: LottieAnimationView
 
     private var doubleBackPressedToExit = false
     private var loaded = false
@@ -38,10 +35,11 @@ class SplashActivity : AppCompatActivity(), Animator.AnimatorListener {
         // Activates the fetched config from Firebase Remote Config
         RemoteConfig.activate()
 
-        lottieSplash.addAnimatorListener(this)
+        goForScreens()
+//        lottieSplash.addAnimatorListener(this)
     }
 
-    override fun onAnimationEnd(animation: Animator?) {
+    /*override fun onAnimationEnd(animation: Animator?) {
     }
 
     override fun onAnimationRepeat(animation: Animator?) {
@@ -56,7 +54,7 @@ class SplashActivity : AppCompatActivity(), Animator.AnimatorListener {
 
     override fun onAnimationStart(animation: Animator?) {
     }
-
+*/
     private fun goForScreens() {
         val prefs = PreferenceManager.getDefaultSharedPreferences(applicationContext)
         val account = AuthPreferences.getCurrentAccount(this)
