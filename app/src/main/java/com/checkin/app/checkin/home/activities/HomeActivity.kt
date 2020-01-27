@@ -147,19 +147,21 @@ class HomeActivity : BaseAccountActivity() {
         if (isLocationEnabled)
             trackUserCurrentLocation()
         else {
-            FluentSnackbar.create(this)
-                    .create(R.string.request_turn_on_gps)
-                    .duration(Snackbar.LENGTH_INDEFINITE)
-                    .neutralBackgroundColor()
-                    .actionTextRes(R.string.settings)
-                    .action {
-                        // Build intent that displays the App settings screen.
-                        val intent = Intent(Settings.ACTION_LOCATION_SOURCE_SETTINGS).apply {
-                            flags = Intent.FLAG_ACTIVITY_NEW_TASK
+            runOnUiThread {
+                FluentSnackbar.create(this)
+                        .create(R.string.request_turn_on_gps)
+                        .duration(Snackbar.LENGTH_INDEFINITE)
+                        .neutralBackgroundColor()
+                        .actionTextRes(R.string.settings)
+                        .action {
+                            // Build intent that displays the App settings screen.
+                            val intent = Intent(Settings.ACTION_LOCATION_SOURCE_SETTINGS).apply {
+                                flags = Intent.FLAG_ACTIVITY_NEW_TASK
+                            }
+                            startActivityForResult(intent, REQUEST_SETTINGS_LOCATION)
                         }
-                        startActivityForResult(intent, REQUEST_SETTINGS_LOCATION)
-                    }
-                    .show()
+                        .show()
+            }
         }
 
     }

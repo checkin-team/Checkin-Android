@@ -48,19 +48,19 @@ android {
         release {
             minifyEnabled true
             shrinkResources true
-            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
             signingConfig signingConfigs.config
         }
         debug {
             debuggable true
-            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
             signingConfig signingConfigs.config
             versionNameSuffix ' - ' + revision()
         }
         staging {
             minifyEnabled true
             shrinkResources true
-            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
             signingConfig signingConfigs.config
             versionNameSuffix ' - ' + revision()
         }
@@ -87,7 +87,6 @@ android {
     }
     packagingOptions {
         pickFirst 'META-INF/*'
-//        pickFirst 'META-INF/proguard/coroutines.pro'
     }
 }
 
@@ -158,7 +157,7 @@ dependencies {
     // Google Places API
     implementation "com.google.android.libraries.places:places:2.1.0"
     // Google Material
-    implementation "com.google.android.material:material:1.2.0-alpha03"
+    implementation "com.google.android.material:material:1.2.0-alpha04"
 
     // FireBase libraries
     implementation (

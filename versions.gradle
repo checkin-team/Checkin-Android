@@ -3,7 +3,7 @@ ext.versions = [
         compileSdk        : 28,
         buildTools        : '28.0.3',
         publishVersion    : '0.9.9',
-        publishVersionCode: 43,
+        publishVersionCode: 44,
 
         gradlePlugin      : '3.5.3',
 
@@ -15,13 +15,15 @@ ext.versions = [
         lifecycle         : '2.2.0-rc03',
         paging            : '2.1.0',
         objectBox         : '2.5.0',
-        jackson           : '2.10.0',
+        // 2.9.7+ changes minSdk to API 26+
+        jackson           : '2.9.6',
         facebook          : '4.37.0',
         butterknife       : '10.2.0',
         glide             : '4.10.0',
         // Include okhttp3 library of lower version because 3.13.x supports only API 21+
         okhttp            : '3.12.0',
-        retrofit          : '2.7.0',
+        // Retrofit versions > 2.6.4 uses okhttp3 3.14.x
+        retrofit          : '2.6.4',
         epoxy             : '3.9.0',
         lottie            : '3.3.1',
         paytm             : '1.4.4',

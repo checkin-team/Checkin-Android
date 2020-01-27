@@ -90,7 +90,7 @@ class Resource<out T> private constructor(val status: Status, val data: T?, val 
                 apiResponse.hasStatus(HTTP_NOT_ACCEPTABLE) -> error(Status.ERROR_NOT_ACCEPTABLE, apiResponse.errorMessage, apiResponse.data, apiResponse.errorData)
                 else -> {
                     Crashlytics.log(Log.ERROR, TAG, apiResponse.errorMessage)
-                    Crashlytics.log(Log.ERROR, TAG, apiResponse.errorData?.toPrettyString())
+                    Crashlytics.log(Log.ERROR, TAG, apiResponse.errorData?.toString())
                     error(Status.ERROR_UNKNOWN, apiResponse.errorMessage, apiResponse.data, apiResponse.errorData)
                 }
             }

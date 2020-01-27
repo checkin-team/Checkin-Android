@@ -53,7 +53,7 @@ class UserCurrentLocationService : Service(), Callback<UserLocationModel> {
     override fun onStartCommand(intent: Intent?, flags: Int, startId: Int): Int = intent?.let {
         Log.i(TAG, "Location Track service started")
 
-        startInForeground()
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) startInForeground()
         when {
             it.action == Constants.SERVICE_ACTION_FOREGROUND_STOP -> {
                 if (shouldTrackLocation) removeLocationUpdates()
@@ -90,7 +90,7 @@ class UserCurrentLocationService : Service(), Callback<UserLocationModel> {
 
     override fun onUnbind(intent: Intent?): Boolean {
         Log.i(TAG, "Last client unbound from service")
-        if (!isConfigChanged) startInForeground()
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O && !isConfigChanged) startInForeground()
         return true
     }
 

@@ -68,14 +68,15 @@ abstract class BaseAccountActivity : BaseActivity() {
                         var currIndex = it.indexOfFirst { it.accountType.id == type && (pk == 0L || pk == it.targetPk) }
                         if (currIndex == -1) currIndex = 0
                         accountViewModel.setCurrentAccount(currIndex.toLong())
-                        onUpdateDrawer()
                     }
                     Resource.Status.LOADING -> pass
                     else -> accountViewModel.fetchAccounts()
                 }
             }
         })
-        accountViewModel.currentAccount.observe(this, Observer { })
+        accountViewModel.currentAccount.observe(this, Observer {
+            onUpdateDrawer()
+        })
     }
 
     protected open fun setupFooter() {
@@ -160,16 +161,16 @@ abstract class BaseAccountActivity : BaseActivity() {
                 return
             }
             ACCOUNT_TYPE.SHOP_OWNER, ACCOUNT_TYPE.SHOP_ADMIN -> Intent.makeRestartActivityTask(ComponentName(this, ShopPrivateActivity::class.java)).apply {
-                putExtra(ShopPrivateActivity.KEY_SHOP_PK, java.lang.Long.valueOf(account.targetPk))
+                putExtra(ShopPrivateActivity.KEY_SHOP_PK, account.targetPk)
             }
             ACCOUNT_TYPE.RESTAURANT_MANAGER -> Intent.makeRestartActivityTask(ComponentName(this, ManagerWorkActivity::class.java)).apply {
-                putExtra(ManagerWorkActivity.KEY_RESTAURANT_PK, java.lang.Long.valueOf(account.targetPk))
+                putExtra(ManagerWorkActivity.KEY_RESTAURANT_PK, account.targetPk)
             }
             ACCOUNT_TYPE.RESTAURANT_WAITER -> Intent.makeRestartActivityTask(ComponentName(this, WaiterWorkActivity::class.java)).apply {
-                putExtra(WaiterWorkActivity.KEY_SHOP_PK, java.lang.Long.valueOf(account.targetPk))
+                putExtra(WaiterWorkActivity.KEY_SHOP_PK, account.targetPk)
             }
             ACCOUNT_TYPE.RESTAURANT_COOK -> Intent.makeRestartActivityTask(ComponentName(this, CookWorkActivity::class.java)).apply {
-                putExtra(CookWorkActivity.KEY_RESTAURANT_PK, java.lang.Long.valueOf(account.targetPk))
+                putExtra(CookWorkActivity.KEY_RESTAURANT_PK, account.targetPk)
             }
         }
         startActivity(intent)
