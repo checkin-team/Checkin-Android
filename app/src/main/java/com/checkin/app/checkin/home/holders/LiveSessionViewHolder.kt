@@ -4,6 +4,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
+import androidx.core.content.ContextCompat
 import butterknife.BindView
 import butterknife.ButterKnife
 import com.checkin.app.checkin.R
@@ -13,6 +14,7 @@ import com.checkin.app.checkin.Utility.navigateToLocation
 import com.checkin.app.checkin.home.model.ActiveLiveSessionDetailModel
 import com.checkin.app.checkin.home.model.LiveSessionDetailModel
 import com.checkin.app.checkin.home.model.ScheduledLiveSessionDetailModel
+import com.checkin.app.checkin.session.models.ScheduledSessionStatus
 
 class ActiveLiveSessionViewHolder(itemView: View, interactionListener: LiveSessionTrackerInteraction) : LiveSessionViewHolder<ActiveLiveSessionDetailModel>(itemView, interactionListener) {
     @BindView(R.id.container_home_session_live_active_call_waiter)
@@ -184,6 +186,13 @@ class PreDiningLiveSessionViewHolder(itemView: View, interactionListener: LiveSe
         tvDiners.text = data.scheduled.countPeople.toString()
         tvAmount.text = Utils.formatCurrencyAmount(itemView.context, data.amount)
         tvSessionStatus.text = data.scheduled.status.repr
+        when (data.scheduled.status) {
+            ScheduledSessionStatus.PENDING -> tvSessionStatus.background = ContextCompat.getDrawable(itemView.context, R.drawable.background_rectangle_orange_gradient)
+            ScheduledSessionStatus.PREPARATION -> tvSessionStatus.background = ContextCompat.getDrawable(itemView.context, R.drawable.background_rectangle_brick_gradient)
+            ScheduledSessionStatus.ACCEPTED -> tvSessionStatus.background = ContextCompat.getDrawable(itemView.context, R.drawable.background_rectangle_green_gradient)
+            ScheduledSessionStatus.DONE -> tvSessionStatus.background = ContextCompat.getDrawable(itemView.context, R.drawable.background_rectangle_purple_gradient)
+            else ->tvSessionStatus.background = ContextCompat.getDrawable(itemView.context, R.drawable.background_rectangle_orange_gradient)
+        }
         tvMessage.text = itemView.context.getString(R.string.format_live_session_predining_message).format(username)
         tvRestaurantName.text = if (data.restaurant.location != null) data.restaurant.name + " - " + data.restaurant.location.locality else data.restaurant.name
         Utils.loadImageOrDefault(imRestaurantLogo, data.restaurant.logo, R.drawable.cover_restaurant_unknown)

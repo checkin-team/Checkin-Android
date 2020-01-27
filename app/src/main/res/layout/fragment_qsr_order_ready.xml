@@ -14,14 +14,16 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="@+id/tv_qsr_ready_restaurant"
         tools:text="Order Id: 12345" />
-
+    
     <TextView
         android:id="@+id/tv_qsr_ready_restaurant"
         style="@style/TealBlueTextStyle"
-        android:layout_width="wrap_content"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="@dimen/spacing_small"
         android:layout_marginTop="@dimen/spacing_small"
+        android:layout_marginEnd="@dimen/spacing_normal"
+        app:layout_constraintEnd_toStartOf="@+id/tv_qsr_ready_order_id"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         tools:text="Grey Orange" />
@@ -44,13 +46,15 @@
         app:layout_constraintEnd_toEndOf="@id/tv_qsr_ready_order_id"
         app:layout_constraintTop_toBottomOf="@id/tv_qsr_ready_order_id"
         tools:text="$123" />
-
+    
     <TextView
         android:id="@+id/tv_qsr_ready_restaurant_location"
         style="@style/PinkishGreySmallTextStyle"
-        android:layout_width="wrap_content"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/spacing_extra_small"
+        android:layout_marginEnd="@dimen/spacing_normal"
+        app:layout_constraintEnd_toStartOf="@+id/tv_qsr_ready_amount_text"
         app:layout_constraintStart_toStartOf="@id/tv_qsr_ready_restaurant"
         app:layout_constraintTop_toBottomOf="@id/tv_qsr_ready_restaurant"
         tools:text="Level Road-Bengaluru" />
@@ -72,6 +76,8 @@
         android:layout_height="0dp"
         android:layout_marginTop="@dimen/spacing_small"
         android:layout_marginBottom="@dimen/spacing_small"
+        android:isScrollContainer="true"
+        android:measureAllChildren="true"
         android:background="@color/white_four"
         app:layout_constraintBottom_toTopOf="@id/btn_qsr_ready_done"
         app:layout_constraintEnd_toEndOf="parent"

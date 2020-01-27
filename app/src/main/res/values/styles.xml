@@ -256,6 +256,10 @@
     <style name="WhiteExtraSmallTextStyle" parent="WhiteTextStyle">
         <item name="android:textSize">@dimen/font_extra_small</item>
     </style>
+    
+    <style name="WhiteTinySmallTextStyle" parent="WhiteTextStyle">
+        <item name="android:textSize">@dimen/font_tiny</item>
+    </style>
 
     <style name="GreyExtraSmallTextStyle" parent="GreyTextStyle">
         <item name="android:textSize">@dimen/font_extra_small</item>
