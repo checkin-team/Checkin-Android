@@ -407,7 +407,7 @@ interface WebApiService {
     @GET("menus/items/trending/restaurants/{restaurant_id}/")
     fun getRestaurantTrendingItem(@Path("restaurant_id") restaurantId: Long): Call<List<TrendingDishModel>>
 
-    @GET("menus/items/trending/restaurants/{restaurant_id}/")
+    @GET("menus/items/recommended/restaurants/{restaurant_id}/")
     fun getRestaurantRecommendedItems(@Path("restaurant_id") restaurantId: Long): Call<List<TrendingDishModel>>
 
     @POST("menus/restaurants/{restaurant_id}/manage/items/")

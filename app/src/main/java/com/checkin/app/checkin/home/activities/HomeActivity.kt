@@ -171,43 +171,51 @@ class HomeActivity : BaseAccountActivity() {
     }
 
     private fun setupObserver() {
-        userViewModel.userData.observe(this, Observer { resource ->
-            if (resource.status === Resource.Status.SUCCESS && resource.data != null) {
-                val data = resource.data
-                if (imTabUserIcon != null) {
-                    Utils.loadImageOrDefault(
-                            imTabUserIcon, data.profilePic,
-                            if (data.gender == UserModel.GENDER.MALE) R.drawable.cover_unknown_male else R.drawable.cover_unknown_female
-                    )
+        userViewModel.userData.observe(this, Observer {
+            it?.let { resource ->
+                if (resource.status === Resource.Status.SUCCESS && resource.data != null) {
+                    val data = resource.data
+                    if (imTabUserIcon != null) {
+                        Utils.loadImageOrDefault(
+                                imTabUserIcon, data.profilePic,
+                                if (data.gender == UserModel.GENDER.MALE) R.drawable.cover_unknown_male else R.drawable.cover_unknown_female
+                        )
+                    }
+                    stopRefreshing()
+                } else if (resource.status === Resource.Status.LOADING) startRefreshing() else stopRefreshing()
+            }
+        })
+        mViewModel.qrResult.observe(this, Observer {
+            it?.let { resource ->
+                if (resource.status === Resource.Status.SUCCESS && resource.data != null) {
+                    mViewModel.updateResults()
+                    liveViewModel.updateResults()
+                    if (!resource.data.isMasterQr) openActiveSession()
+                    else openPublicRestaurantProfile(resource.data.restaurantPk, resource.data.sessionPk)
+                } else if (resource.status !== Resource.Status.LOADING) {
+                    Utils.toast(this, resource.message)
                 }
-                stopRefreshing()
-            } else if (resource.status === Resource.Status.LOADING) startRefreshing() else stopRefreshing()
-        })
-        mViewModel.qrResult.observe(this, Observer { resource ->
-            if (resource.status === Resource.Status.SUCCESS && resource.data != null) {
-                mViewModel.updateResults()
-                liveViewModel.updateResults()
-                if (!resource.data.isMasterQr) openActiveSession()
-                else openPublicRestaurantProfile(resource.data.restaurantPk, resource.data.sessionPk)
-            } else if (resource.status !== Resource.Status.LOADING) {
-                Utils.toast(this, resource.message)
             }
         })
-        mViewModel.sessionStatus.observe(this, Observer { resource ->
-            if (resource.status === Resource.Status.SUCCESS && resource.data != null) {
-                val serviceIntent = Intent(this, ActiveSessionNotificationService::class.java)
-                serviceIntent.action = Constants.SERVICE_ACTION_FOREGROUND_START
-                serviceIntent.putExtra(ActiveSessionNotificationService.ACTIVE_RESTAURANT_DETAIL, resource.data.restaurant)
-                serviceIntent.putExtra(ActiveSessionNotificationService.ACTIVE_SESSION_PK, resource.data.pk)
-                startService(serviceIntent)
-            } else if (resource.status === Resource.Status.ERROR_NOT_FOUND) {
-                ActiveSessionNotificationService.clearNotification(applicationContext)
-            } else if (resource.problem != null && resource.problem!!.getErrorCode() === ProblemModel.ERROR_CODE.SESSION_USER_PENDING_MEMBER) {
-                // User is pending member of a active session
+        mViewModel.sessionStatus.observe(this, Observer {
+            it?.let { resource ->
+                if (resource.status === Resource.Status.SUCCESS && resource.data != null) {
+                    val serviceIntent = Intent(this, ActiveSessionNotificationService::class.java)
+                    serviceIntent.action = Constants.SERVICE_ACTION_FOREGROUND_START
+                    serviceIntent.putExtra(ActiveSessionNotificationService.ACTIVE_RESTAURANT_DETAIL, resource.data.restaurant)
+                    serviceIntent.putExtra(ActiveSessionNotificationService.ACTIVE_SESSION_PK, resource.data.pk)
+                    startService(serviceIntent)
+                } else if (resource.status === Resource.Status.ERROR_NOT_FOUND) {
+                    ActiveSessionNotificationService.clearNotification(applicationContext)
+                } else if (resource.problem != null && resource.problem!!.getErrorCode() === ProblemModel.ERROR_CODE.SESSION_USER_PENDING_MEMBER) {
+                    // User is pending member of a active session
+                } else pass
             }
         })
-        mViewModel.cancelDineInData.observe(this, Observer { objectNodeResource ->
-            if (objectNodeResource.status === Resource.Status.SUCCESS) {
+        mViewModel.cancelDineInData.observe(this, Observer {
+            it?.let { objectNodeResource ->
+                if (objectNodeResource.status === Resource.Status.SUCCESS) {
+                }
             }
         })
         liveViewModel.cartStatus.observe(this, Observer {
