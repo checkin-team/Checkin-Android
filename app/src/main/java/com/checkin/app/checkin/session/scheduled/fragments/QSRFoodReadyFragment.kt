@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.view.View
 import android.widget.TextView
 import androidx.core.os.bundleOf
+import androidx.core.view.ViewCompat
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
 import butterknife.BindView
@@ -38,6 +39,9 @@ class QSRFoodReadyFragment : BaseFragment() {
     lateinit var billHolder: BillHolder
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        ViewCompat.setNestedScrollingEnabled(epoxyRvOrders, false)
+        epoxyRvOrders.setHasFixedSize(false)
+
         val sessionId = arguments?.getLong(KEY_SESSION_ID, 0L) ?: 0L
         viewModel.fetchSessionData(sessionId)
 
