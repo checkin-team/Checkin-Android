@@ -7,10 +7,10 @@ import android.view.View;
 import androidx.appcompat.app.ActionBar;
 import androidx.lifecycle.ViewModelProviders;
 
-import com.checkin.app.checkin.data.resource.Resource;
 import com.checkin.app.checkin.R;
 import com.checkin.app.checkin.Search.SearchActivity;
 import com.checkin.app.checkin.Utility.Utils;
+import com.checkin.app.checkin.data.resource.Resource;
 import com.checkin.app.checkin.misc.activities.BaseActivity;
 
 import butterknife.ButterKnife;
@@ -68,9 +68,7 @@ public class MembersActivity extends BaseActivity implements ShopMembersListFrag
 
     @OnClick(R.id.btn_add_member)
     public void onClickAddMembers(View view) {
-        Intent pickUserIntent = new Intent(this, SearchActivity.class);
-        pickUserIntent.putExtra(SearchActivity.KEY_SEARCH_TYPE, SearchActivity.TYPE_PEOPLE);
-        pickUserIntent.putExtra(SearchActivity.KEY_SEARCH_MODE, SearchActivity.MODE_SELECT);
+        Intent pickUserIntent = SearchActivity.Companion.withIntent(this, SearchActivity.TYPE_PEOPLE, SearchActivity.MODE_SELECT);
         startActivityForResult(pickUserIntent, REQUEST_PICK_USER);
     }
 

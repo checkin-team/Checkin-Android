@@ -10,9 +10,9 @@ import androidx.lifecycle.MediatorLiveData;
 import androidx.lifecycle.Transformations;
 
 import com.checkin.app.checkin.data.BaseViewModel;
+import com.checkin.app.checkin.data.SingleSourceMediatorLiveData;
 import com.checkin.app.checkin.data.resource.Resource;
 import com.checkin.app.checkin.data.resource.Resource.Status;
-import com.checkin.app.checkin.data.SingleSourceMediatorLiveData;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -124,5 +124,12 @@ public class SearchViewModel extends BaseViewModel {
                 return Resource.Companion.errorNotFound("Not found");
             return input;
         });
+    }
+
+    public void resetResults() {
+        if (mPeopleResults != null)
+            mPeopleResults.setValue(Resource.Companion.success(new ArrayList<>()));
+        if (mShopResults != null)
+            mShopResults.setValue(Resource.Companion.success(new ArrayList<>()));
     }
 }

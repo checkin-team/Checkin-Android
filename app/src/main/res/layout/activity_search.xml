@@ -1,84 +1,44 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    tools:context=".Search.SearchActivity">
+    android:layout_height="match_parent">
 
-    <FrameLayout
+    <com.google.android.material.appbar.AppBarLayout
         android:layout_width="match_parent"
-        android:layout_height="?android:attr/actionBarSize"
-        android:background="@color/white">
+        android:layout_height="wrap_content"
+        android:background="@color/white"
+        android:theme="@style/AppThemeWhiteActionBar.ActionBar">
 
         <androidx.appcompat.widget.Toolbar
+            android:id="@+id/toolbar_search"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            app:layout_scrollFlags="snap" />
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:orientation="horizontal">
+            android:layout_height="?attr/actionBarSize"
+            android:layout_gravity="center"
+            android:gravity="center"
+            app:layout_scrollFlags="snap">
 
-            <Button
-                android:id="@+id/btn_back"
-                android:layout_width="@dimen/size_extra_small_button"
-                android:layout_height="@dimen/size_small_button"
-                android:layout_marginStart="@dimen/spacing_normal"
-                android:layout_gravity="center_vertical"
-                android:background="@drawable/ic_back_grey"/>
-
-            <TextView
-                android:id="@+id/tv_search"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:gravity="center_vertical"
-                android:layout_marginStart="@dimen/spacing_huge"
-                android:text="Search"
-                android:textColor="@color/pinkish_grey"
-                android:textSize="@dimen/font_large" />
-        </LinearLayout>
             <com.miguelcatalan.materialsearchview.MaterialSearchView
                 android:id="@+id/search_view"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent" />
-    </FrameLayout>
+                android:layout_height="match_parent"
+                android:hint="Search..." />
+        </androidx.appcompat.widget.Toolbar>
 
-    <LinearLayout
-        android:id="@+id/root_view"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_marginTop="?attr/actionBarSize"
-        android:orientation="vertical">
-
-        <com.google.android.material.appbar.AppBarLayout
+        <com.google.android.material.tabs.TabLayout
+            android:id="@+id/tabs_search"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@color/white">
+            android:visibility="gone"
+            app:tabGravity="fill"
+            app:tabMode="fixed"
+            app:tabSelectedTextColor="@color/primary_red"
+            app:tabTextColor="@color/pinkish_grey" />
+    </com.google.android.material.appbar.AppBarLayout>
 
-            <com.google.android.material.tabs.TabLayout
-                android:id="@+id/tabs_search"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                app:tabTextColor="@color/pinkish_grey"
-                app:tabSelectedTextColor="@color/primary_red"
-                app:tabGravity="fill"
-                app:tabMode="fixed"
-                android:visibility="gone"/>
-        </com.google.android.material.appbar.AppBarLayout>
-
-        <androidx.viewpager.widget.ViewPager
-            android:id="@+id/pager_search_type"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            app:layout_behavior="@string/appbar_scrolling_view_behavior"/>
-    </LinearLayout>
-
-    <FrameLayout
-        android:id="@+id/container_search_suggestions"
+    <androidx.viewpager.widget.ViewPager
+        android:id="@+id/pager_search_type"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_marginTop="?attr/actionBarSize">
-    </FrameLayout>
-
+        app:layout_behavior="@string/appbar_scrolling_view_behavior" />
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

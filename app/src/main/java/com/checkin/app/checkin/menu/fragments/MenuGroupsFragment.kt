@@ -28,7 +28,6 @@ import com.checkin.app.checkin.menu.viewmodels.ScheduledCartViewModel
 import com.checkin.app.checkin.menu.viewmodels.UserMenuViewModel
 import com.checkin.app.checkin.misc.fragments.BaseFragment
 import com.checkin.app.checkin.session.models.TrendingDishModel
-import com.miguelcatalan.materialsearchview.utils.AnimationUtil
 import kotlinx.coroutines.launch
 import org.koin.androidx.viewmodel.ext.android.getSharedViewModel
 
@@ -128,10 +127,10 @@ class MenuGroupsFragment : BaseFragment(), OnGroupInteraction {
 
     override fun onGroupExpandCollapse(isExpanded: Boolean, groupModel: MenuGroupModel?) {
         if (isExpanded) {
-            AnimationUtil.fadeInView(containerCurrentCategory)
+//            AnimationUtil.fadeInView(containerCurrentCategory)
             tvCurrentCategory.text = groupModel!!.name
         } else {
-            AnimationUtil.fadeOutView(containerCurrentCategory)
+//            AnimationUtil.fadeOutView(containerCurrentCategory)
         }
     }
 
