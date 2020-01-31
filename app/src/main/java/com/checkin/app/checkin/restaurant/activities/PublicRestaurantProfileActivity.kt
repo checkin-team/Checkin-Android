@@ -528,7 +528,9 @@ class PublicRestaurantProfileActivity : BaseActivity(), AppBarLayout.OnOffsetCha
             override fun onPhoneCancel() {
             }
 
-        })
+        }).apply {
+            headingText = "Verify phone number to continue"
+        }
     }
 
     override fun onBackPressed() {

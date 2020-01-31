@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:paddingStart="@dimen/spacing_extra_large"
@@ -8,11 +9,22 @@
     android:paddingEnd="@dimen/spacing_extra_large"
     android:paddingBottom="@dimen/spacing_gigantic">
 
+    <TextView
+        android:id="@+id/tv_dialog_phone_heading"
+        style="@style/GreyHeadingStyle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:text="Input phone number" />
+
     <com.checkin.app.checkin.Utility.PrefixEditText
         android:id="@+id/et_dialog_phone"
         style="@style/RoundedInputTextStyle"
         android:layout_width="match_parent"
         android:layout_height="@dimen/height_input_normal"
+        android:layout_marginTop="@dimen/spacing_small"
         android:layout_marginEnd="@dimen/spacing_normal"
         android:hint="Input Phone Number"
         android:inputType="phone"
@@ -21,7 +33,7 @@
         android:textAlignment="center"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toBottomOf="@id/tv_dialog_phone_heading" />
 
     <Button
         android:id="@+id/btn_proceed"

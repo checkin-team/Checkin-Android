@@ -1,11 +1,13 @@
 package com.checkin.app.checkin.Auth
 
 import android.content.Context
+import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
 import android.view.ViewGroup
 import android.widget.Button
 import android.widget.EditText
+import android.widget.TextView
 import androidx.appcompat.app.AlertDialog
 import butterknife.BindView
 import butterknife.ButterKnife
@@ -17,6 +19,14 @@ class PhoneEditDialog(context: Context, val listener: PhoneInteraction) : AlertD
     internal lateinit var btnProceed: Button
     @BindView(R.id.et_dialog_phone)
     internal lateinit var etPhone: EditText
+    @BindView(R.id.tv_dialog_phone_heading)
+    internal lateinit var tvHeading: TextView
+
+    var headingText: String = "Input phone number"
+        set(value) {
+            field = value
+            tvHeading.text = value
+        }
 
     init {
         val contentView = layoutInflater.inflate(R.layout.view_edit_phone_dialog, null) as ViewGroup
@@ -45,9 +55,26 @@ class PhoneEditDialog(context: Context, val listener: PhoneInteraction) : AlertD
         dismiss()
     }
 
+    override fun onRestoreInstanceState(savedInstanceState: Bundle) {
+        super.onRestoreInstanceState(savedInstanceState)
+        savedInstanceState.getString(STATE_HEADING_TEXT, null)?.let {
+            headingText = it
+        }
+    }
+
+    override fun onSaveInstanceState(): Bundle {
+        return super.onSaveInstanceState().apply {
+            putCharSequence(STATE_HEADING_TEXT, headingText)
+        }
+    }
+
     override fun dismiss() {
         super.dismiss()
         listener.onPhoneCancel()
+    }
+
+    companion object {
+        const val STATE_HEADING_TEXT = "state.heading"
     }
 }
 
