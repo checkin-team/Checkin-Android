@@ -7,6 +7,7 @@ import android.content.pm.PackageManager
 import android.location.LocationManager
 import android.net.Uri
 import androidx.annotation.ColorInt
+import androidx.annotation.StringRes
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.core.location.LocationManagerCompat
@@ -38,6 +39,9 @@ inline fun <T> Collection<T>?.hasAtleastSize(minSize: Int): Boolean = this != nu
 fun TabLayout.setTabBackground(@ColorInt color: Int) = (0 until tabCount).forEach {
     getTabAt(it)?.view?.setBackgroundColor(color)
 }
+
+fun Context.toast(msg: String) = Utils.toast(this, msg)
+fun Context.toast(@StringRes msgRes: Int) = Utils.toast(this, msgRes)
 
 /*
     Data Utils
