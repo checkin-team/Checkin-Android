@@ -242,7 +242,7 @@
     <dimen name="height_advertisement_banner">150dp</dimen>
     <dimen name="height_home_session_live_card">190dp</dimen>
     <dimen name="width_home_ad_banner">210dp</dimen>
-    <dimen name="height_home_ad_banner">140dp</dimen>
+    <dimen name="height_home_ad_banner">157.5dp</dimen>
 
     <dimen name="height_vertical_line">16dp</dimen>
     <dimen name="height_cover_restaurant_profile">220dp</dimen>

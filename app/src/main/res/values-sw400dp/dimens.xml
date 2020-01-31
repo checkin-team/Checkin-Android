@@ -223,6 +223,6 @@
     <dimen name="height_image_qsr_food_ready">165dp</dimen>
 
     <dimen name="width_home_ad_banner">300dp</dimen>
-    <dimen name="height_home_ad_banner">192dp</dimen>
+    <dimen name="height_home_ad_banner">225dp</dimen>
 
 </resources>
