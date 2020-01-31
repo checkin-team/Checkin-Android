@@ -104,9 +104,9 @@ class AppMessagingService : FirebaseMessagingService() {
 
     override fun onNewToken(token: String) {
         super.onNewToken(token)
-        val intent = Intent(applicationContext, DeviceTokenService::class.java)
-        intent.putExtra(DeviceTokenService.KEY_TOKEN, token)
-        startService(intent)
+        Intent(applicationContext, DeviceTokenService::class.java).apply {
+            putExtra(DeviceTokenService.KEY_TOKEN, token)
+        }.runCatching { startService(this) }
     }
 
     companion object {
