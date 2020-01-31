@@ -2,12 +2,14 @@ package com.checkin.app.checkin.manager.activities
 
 import android.content.Intent
 import android.os.Bundle
+import android.view.ViewGroup
 import android.widget.TextView
 import androidx.activity.viewModels
 import androidx.appcompat.widget.SwitchCompat
 import androidx.appcompat.widget.Toolbar
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
+import androidx.viewpager.widget.PagerAdapter
 import androidx.viewpager.widget.ViewPager.SimpleOnPageChangeListener
 import butterknife.BindView
 import butterknife.ButterKnife
@@ -27,6 +29,7 @@ import com.checkin.app.checkin.misc.views.DynamicSwipableViewPager
 import com.checkin.app.checkin.utility.Utils
 import com.checkin.app.checkin.utility.inTransaction
 import com.google.android.material.tabs.TabLayout
+
 
 class ManagerWorkActivity : BaseAccountActivity(), LiveOrdersInteraction {
     @BindView(R.id.pager_manager_work)
@@ -137,7 +140,7 @@ class ManagerWorkActivity : BaseAccountActivity(), LiveOrdersInteraction {
         }
     }
 
-    internal class ManagerFragmentAdapter(fm: FragmentManager) : BaseFragmentAdapterBottomNav(fm) {
+    internal class ManagerFragmentAdapter(val fm: FragmentManager) : BaseFragmentAdapterBottomNav(fm) {
         private var isActivated = true
         private val mTableFragment = ManagerLiveOrdersFragment.newInstance()
         private val mActiveTableFragment = ManagerTablesActivateFragment.newInstance()
@@ -155,6 +158,10 @@ class ManagerWorkActivity : BaseAccountActivity(), LiveOrdersInteraction {
             else -> ManagerInvoiceFragment.newInstance()
         }
 
+        override fun getItemPosition(`object`: Any): Int {
+            return PagerAdapter.POSITION_NONE
+        }
+
         override fun getCount(): Int = 3
 
         override fun getPageTitle(position: Int): CharSequence? = when (position) {
@@ -168,6 +175,12 @@ class ManagerWorkActivity : BaseAccountActivity(), LiveOrdersInteraction {
             isActivated = isChecked
             notifyDataSetChanged()
         }
+
+        override fun destroyItem(container: ViewGroup, position: Int, `object`: Any) {
+            super.destroyItem(container, position, `object`)
+            fm.beginTransaction().remove((`object` as Fragment)).commitNowAllowingStateLoss()
+        }
+
     }
 
     companion object {

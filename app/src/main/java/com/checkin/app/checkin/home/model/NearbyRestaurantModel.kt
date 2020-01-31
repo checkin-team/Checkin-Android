@@ -25,5 +25,9 @@ data class NearbyRestaurantModel(
         get() = "$distance ${if (distance <= 1.0) "km" else "kms"}"
 
     val formatCheckins: String
-        get() = "Checkins ${Utils.formatCount(countCheckins)}"
+        get() = if (countCheckins < 100) "New" else "Checkins ${Utils.formatCount(countCheckins)}"
+
+    val formatRating: String
+        get() = if (ratings < 1.0) "---" else ratings.toString()
+
 }
