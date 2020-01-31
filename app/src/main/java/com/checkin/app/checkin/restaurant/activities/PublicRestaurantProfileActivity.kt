@@ -364,6 +364,8 @@ class PublicRestaurantProfileActivity : BaseActivity(), AppBarLayout.OnOffsetCha
     private fun clearSession() {
         cartViewModel.sessionPk = 0L
         scheduledSessionViewModel.sessionPk = 0L
+
+
     }
 
     private fun setupData(restaurantModel: RestaurantModel) {
@@ -372,7 +374,7 @@ class PublicRestaurantProfileActivity : BaseActivity(), AppBarLayout.OnOffsetCha
         title = restaurantModel.name
         if (isTabAtTop) toolbar.title = title
         tvName.text = title
-        tvCountCheckins.text = "Checkins ${restaurantModel.formatCheckins()}"
+        tvCountCheckins.text = restaurantModel.formatCheckins()
         coverAdapter.setData(restaurantModel.covers)
         tvRestaurantCuisines.text = restaurantModel.cuisines?.let {
             if (it.isNotEmpty()) {
@@ -380,7 +382,7 @@ class PublicRestaurantProfileActivity : BaseActivity(), AppBarLayout.OnOffsetCha
                 it.slice(0 until maxLen).joinToString(" ")
             } else "-"
         } ?: "-"
-        tvRating.text = restaurantModel.rating.toString()
+        tvRating.text = restaurantModel.formatRating()
         tvDistance.text = ""
     }
 

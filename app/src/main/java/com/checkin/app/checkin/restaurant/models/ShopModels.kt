@@ -45,7 +45,9 @@ data class RestaurantModel(
 ) : ShopModel(pk, name, tagline, logo, covers, phone, email, location, gstin, website), Serializable {
     fun formatFollowers(): String? = Utils.formatCount(followers)
 
-    fun formatCheckins(): String? = Utils.formatCount(checkins)
+    fun formatCheckins(): String? = if (checkins < 100) "New" else "Checkins ${Utils.formatCount(checkins)}"
 
     fun formatReviews(): String? = Utils.formatCount(countReviews)
+
+    fun formatRating(): String? = if (rating < 1.0) "---" else rating.toString()
 }

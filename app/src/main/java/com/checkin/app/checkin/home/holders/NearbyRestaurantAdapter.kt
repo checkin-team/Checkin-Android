@@ -98,7 +98,7 @@ class NearbyRestaurantAdapter : RecyclerView.Adapter<BaseViewHolder<Any>>() {
                 } else "-"
             }
 
-            tvRating.text = data.ratings.toString()
+            tvRating.text = data.formatRating
             tvDistance.text = data.formatDistance
 
             imDistance.setImageResource(if (data.distance > 10) R.drawable.ic_distance_vehicle else R.drawable.ic_distance_walking)

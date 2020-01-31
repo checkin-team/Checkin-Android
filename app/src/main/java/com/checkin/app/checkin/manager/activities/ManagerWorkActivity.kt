@@ -137,7 +137,7 @@ class ManagerWorkActivity : BaseAccountActivity(), LiveOrdersInteraction {
         }
     }
 
-    internal class ManagerFragmentAdapter(fm: FragmentManager) : BaseFragmentAdapterBottomNav(fm) {
+    internal class ManagerFragmentAdapter(/*val*/ fm: FragmentManager) : BaseFragmentAdapterBottomNav(fm) {
         private var isActivated = true
         private val mTableFragment = ManagerLiveOrdersFragment.newInstance()
         private val mActiveTableFragment = ManagerTablesActivateFragment.newInstance()
@@ -168,6 +168,14 @@ class ManagerWorkActivity : BaseAccountActivity(), LiveOrdersInteraction {
             isActivated = isChecked
             notifyDataSetChanged()
         }
+//
+//        override fun destroyItem(container: ViewGroup, position: Int, `object`: Any) {
+//            fm.beginTransaction().remove((`object` as Fragment)).commitNowAllowingStateLoss()
+//        }
+//
+//        override fun getItemPosition(`object`: Any): Int {
+//            return PagerAdapter.POSITION_NONE
+//        }
     }
 
     companion object {
