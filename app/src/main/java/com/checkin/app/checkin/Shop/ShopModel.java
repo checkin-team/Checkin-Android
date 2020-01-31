@@ -2,14 +2,19 @@ package com.checkin.app.checkin.Shop;
 
 import androidx.annotation.DrawableRes;
 
-import com.checkin.app.checkin.data.Converters;
 import com.checkin.app.checkin.R;
+import com.checkin.app.checkin.data.Converters;
 import com.checkin.app.checkin.misc.models.LocationModel;
 import com.fasterxml.jackson.annotation.JsonAutoDetect;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.core.JsonParser;
+import com.fasterxml.jackson.databind.DeserializationContext;
+import com.fasterxml.jackson.databind.JsonDeserializer;
 import com.fasterxml.jackson.databind.node.ObjectNode;
+
+import java.io.IOException;
 
 @JsonInclude(value = JsonInclude.Include.NON_NULL)
 @JsonAutoDetect(fieldVisibility = JsonAutoDetect.Visibility.NONE, getterVisibility = JsonAutoDetect.Visibility.NONE, isGetterVisibility = JsonAutoDetect.Visibility.NONE)
@@ -257,6 +262,13 @@ public class ShopModel {
                     return mode;
             }
             return CASH;
+        }
+
+        public static class PaymentModeDeserializer extends JsonDeserializer<PAYMENT_MODE> {
+            @Override
+            public PAYMENT_MODE deserialize(JsonParser p, DeserializationContext ctxt) throws IOException {
+                return getByTag(p.getText());
+            }
         }
     }
 
