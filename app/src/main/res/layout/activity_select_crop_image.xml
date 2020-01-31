@@ -20,11 +20,10 @@
         android:layout_height="60dp"
         android:layout_gravity="bottom|end"
         android:layout_margin="@dimen/spacing_small"
-        android:background="@drawable/ic_floating_oval"
+        android:background="@drawable/ic_oval_red_white_tick"
         android:clickable="true"
         android:focusable="true"
         android:padding="@dimen/spacing_normal"
-        android:src="@drawable/ic_tick"
         android:visibility="gone"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent" />

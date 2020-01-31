@@ -83,6 +83,8 @@ public class ShopProfileViewModel extends BaseViewModel {
         shop.setTagline(tagLine);
         shop.setNonWorkingDays(nonWorkingDays);
         shop.setOpeningHour(openingTime);
+        if (closingTime < openingTime)
+            closingTime += 24 * 60;
         shop.setClosingHour(closingTime);
 
         mShopData.setValue(Resource.Companion.success(shop));
