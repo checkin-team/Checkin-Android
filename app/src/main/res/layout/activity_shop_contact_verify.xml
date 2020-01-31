@@ -14,7 +14,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <com.checkin.app.checkin.Utility.DynamicSwipableViewPager
+    <com.checkin.app.checkin.misc.views.DynamicSwipableViewPager
         android:id="@+id/pager"
         android:layout_width="match_parent"
         android:layout_height="match_parent"

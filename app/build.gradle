@@ -212,7 +212,7 @@ dependencies {
     implementation "com.yarolegovich:discrete-scrollview:1.4.9"
     implementation "com.appyvet:materialrangebar:1.4.4"
     implementation "com.github.antonygolovin:fluentsnackbar:1.0.0"
-    implementation "com.romandanylyk:pageindicatorview:1.0.3"
+    implementation "com.github.adrielcafe:PageIndicatorView:1.0.6" // original library doesn't support ViewPager2
     implementation "com.lyft:scissors:1.1.1"
     implementation "com.borjabravo:readmoretextview:2.1.0"
     implementation "com.wdullaer:materialdatetimepicker:4.2.3"

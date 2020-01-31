@@ -15,7 +15,6 @@ import co.zsmb.materialdrawerkt.builders.DrawerBuilderKt
 import com.checkin.app.checkin.R
 import com.checkin.app.checkin.Shop.Private.Invoice.ShopInvoiceViewModel
 import com.checkin.app.checkin.Shop.ShopPreferences
-import com.checkin.app.checkin.Utility.DynamicSwipableViewPager
 import com.checkin.app.checkin.Utility.Utils
 import com.checkin.app.checkin.Utility.inTransaction
 import com.checkin.app.checkin.accounts.ACCOUNT_TYPE
@@ -26,6 +25,7 @@ import com.checkin.app.checkin.manager.viewmodels.ManagerWorkViewModel
 import com.checkin.app.checkin.misc.BlockingNetworkViewModel
 import com.checkin.app.checkin.misc.adapters.BaseFragmentAdapterBottomNav
 import com.checkin.app.checkin.misc.fragments.NetworkBlockingFragment
+import com.checkin.app.checkin.misc.views.DynamicSwipableViewPager
 import com.google.android.material.tabs.TabLayout
 
 class ManagerWorkActivity : BaseAccountActivity(), LiveOrdersInteraction {

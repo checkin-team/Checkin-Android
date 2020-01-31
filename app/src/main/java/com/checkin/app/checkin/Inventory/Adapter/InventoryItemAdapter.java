@@ -37,7 +37,7 @@ public class InventoryItemAdapter extends RecyclerView.Adapter<InventoryItemAdap
 
     @Override
     public int getItemViewType(final int position) {
-        return R.layout.item_menu_item;
+        return R.layout.item_inventory_item;
     }
 
     @NonNull
@@ -66,8 +66,6 @@ public class InventoryItemAdapter extends RecyclerView.Adapter<InventoryItemAdap
     public class ItemViewHolder extends RecyclerView.ViewHolder {
         @BindView(R.id.tv_menu_item_name)
         TextView tvItemName;
-        @BindView(R.id.container_menu_quantity_picker)
-        ViewGroup containerQp;
         @BindView(R.id.tv_menu_item_price)
         TextView tvItemPrices;
         @BindView(R.id.switch_menu_item_availability)
@@ -79,15 +77,8 @@ public class InventoryItemAdapter extends RecyclerView.Adapter<InventoryItemAdap
             super(itemView);
             ButterKnife.bind(this, itemView);
 
-            containerQp.setVisibility(View.GONE);
-            switchItemAvailability.setVisibility(View.VISIBLE);
-
             itemView.setOnLongClickListener(v -> mItem != null && mListener.onMenuItemShowInfo(mItem));
-
             switchItemAvailability.setOnClickListener(view -> mListener.onClickItemAvailability(mItem, switchItemAvailability.isChecked()));
-
-            if (!mIsSessionActive)
-                containerQp.setVisibility(View.GONE);
         }
 
         void bindData(InventoryItemModel menuItem) {

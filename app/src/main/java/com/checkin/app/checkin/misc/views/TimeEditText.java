@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package com.checkin.app.checkin.Utility;
+package com.checkin.app.checkin.misc.views;
 
 import android.content.Context;
 import android.graphics.Color;
@@ -35,9 +35,9 @@ import android.view.inputmethod.EditorInfo;
 import android.view.inputmethod.InputConnection;
 import android.view.inputmethod.InputMethodManager;
 
-import java.util.Locale;
-
 import androidx.appcompat.widget.AppCompatTextView;
+
+import java.util.Locale;
 
 /**
  * A custom EditText (actually derived from TextView) to input time in 24h format.

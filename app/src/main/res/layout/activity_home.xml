@@ -35,7 +35,7 @@
 
         </com.google.android.material.appbar.AppBarLayout>
 
-        <com.checkin.app.checkin.Utility.DynamicSwipableViewPager
+        <com.checkin.app.checkin.misc.views.DynamicSwipableViewPager
             android:id="@+id/vp_home"
             android:layout_width="match_parent"
             android:layout_height="0dp"

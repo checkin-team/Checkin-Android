@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<com.checkin.app.checkin.Utility.ClipRevealFrame xmlns:android="http://schemas.android.com/apk/res/android"
+<com.checkin.app.checkin.misc.views.ClipRevealFrame xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/crf_as_menu_filter"
     android:layout_width="match_parent"
@@ -241,4 +241,4 @@
         </androidx.constraintlayout.widget.ConstraintLayout>
 
     </LinearLayout>
-</com.checkin.app.checkin.Utility.ClipRevealFrame>
+</com.checkin.app.checkin.misc.views.ClipRevealFrame>

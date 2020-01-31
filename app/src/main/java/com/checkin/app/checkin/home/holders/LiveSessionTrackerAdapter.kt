@@ -5,10 +5,10 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.checkin.app.checkin.R
-import com.checkin.app.checkin.Utility.BaseViewHolder
 import com.checkin.app.checkin.accounts.AccountUtil
 import com.checkin.app.checkin.home.model.LiveSessionDetailModel
 import com.checkin.app.checkin.home.model.SessionType
+import com.checkin.app.checkin.misc.holders.BaseViewHolder
 import com.checkin.app.checkin.restaurant.models.RestaurantLocationModel
 
 class LiveSessionTrackerAdapter(val interactionListener: LiveSessionTrackerInteraction) : RecyclerView.Adapter<LiveSessionViewHolder<LiveSessionDetailModel>>() {

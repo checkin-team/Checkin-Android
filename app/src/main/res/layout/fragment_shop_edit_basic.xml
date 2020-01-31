@@ -30,7 +30,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/et_name">
 
-        <com.checkin.app.checkin.Utility.PrefixEditText
+        <com.checkin.app.checkin.misc.views.PrefixEditText
             android:id="@+id/et_phone"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
@@ -117,7 +117,8 @@
             android:layout_height="wrap_content"
             style="@style/InputLabelGreyLargeStyle"
             android:text="Opening Time"/>
-        <com.checkin.app.checkin.Utility.TimeEditText
+
+        <com.checkin.app.checkin.misc.views.TimeEditText
             android:id="@+id/et_opening_time"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -140,7 +141,8 @@
             android:layout_height="wrap_content"
             style="@style/InputLabelGreyLargeStyle"
             android:text="Closing Time"/>
-        <com.checkin.app.checkin.Utility.TimeEditText
+
+        <com.checkin.app.checkin.misc.views.TimeEditText
             android:id="@+id/et_closing_time"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"

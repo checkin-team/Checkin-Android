@@ -8,19 +8,20 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Toast;
 
-import com.checkin.app.checkin.Auth.OtpVerificationDialog;
-import com.checkin.app.checkin.R;
-import com.checkin.app.checkin.Utility.DynamicSwipableViewPager;
-import com.google.android.material.tabs.TabLayout;
-import com.google.firebase.FirebaseException;
-import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.auth.PhoneAuthCredential;
-
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentStatePagerAdapter;
+
+import com.checkin.app.checkin.Auth.OtpVerificationDialog;
+import com.checkin.app.checkin.R;
+import com.checkin.app.checkin.misc.views.DynamicSwipableViewPager;
+import com.google.android.material.tabs.TabLayout;
+import com.google.firebase.FirebaseException;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.PhoneAuthCredential;
+
 import butterknife.BindView;
 import butterknife.ButterKnife;
 

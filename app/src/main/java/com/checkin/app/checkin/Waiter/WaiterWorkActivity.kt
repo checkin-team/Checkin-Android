@@ -29,7 +29,6 @@ import co.zsmb.materialdrawerkt.builders.drawer
 import co.zsmb.materialdrawerkt.draweritems.badgeable.primaryItem
 import com.checkin.app.checkin.R
 import com.checkin.app.checkin.Shop.ShopModel.PAYMENT_MODE
-import com.checkin.app.checkin.Utility.DynamicSwipableViewPager
 import com.checkin.app.checkin.Utility.Utils
 import com.checkin.app.checkin.Utility.pass
 import com.checkin.app.checkin.Waiter.Fragment.WaiterTableFragment
@@ -49,6 +48,7 @@ import com.checkin.app.checkin.data.notifications.MessageUtils.unregisterLocalRe
 import com.checkin.app.checkin.data.resource.Resource
 import com.checkin.app.checkin.misc.activities.QRScannerActivity
 import com.checkin.app.checkin.misc.models.BriefModel
+import com.checkin.app.checkin.misc.views.DynamicSwipableViewPager
 import com.checkin.app.checkin.session.activesession.chat.SessionChatModel.CHAT_STATUS_TYPE
 import com.checkin.app.checkin.session.models.EventBriefModel
 import com.checkin.app.checkin.session.models.RestaurantTableModel

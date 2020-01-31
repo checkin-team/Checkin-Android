@@ -11,24 +11,25 @@ import android.view.ViewGroup;
 import android.widget.EditText;
 import android.widget.ImageButton;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.fragment.app.Fragment;
+import androidx.lifecycle.ViewModelProviders;
+
 import com.checkin.app.checkin.Auth.OtpVerificationDialog;
-import com.checkin.app.checkin.data.resource.Resource;
 import com.checkin.app.checkin.R;
 import com.checkin.app.checkin.Shop.Private.ShopProfileViewModel;
 import com.checkin.app.checkin.Shop.RestaurantModel;
 import com.checkin.app.checkin.Utility.MultiSpinner;
-import com.checkin.app.checkin.Utility.PrefixEditText;
-import com.checkin.app.checkin.Utility.TimeEditText;
 import com.checkin.app.checkin.Utility.Utils;
+import com.checkin.app.checkin.data.resource.Resource;
+import com.checkin.app.checkin.misc.views.PrefixEditText;
+import com.checkin.app.checkin.misc.views.TimeEditText;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.google.firebase.FirebaseException;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.PhoneAuthCredential;
 
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.fragment.app.Fragment;
-import androidx.lifecycle.ViewModelProviders;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;

@@ -24,6 +24,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.RequiresApi;
 
 import com.checkin.app.checkin.misc.views.ChildSizeMeasureViewPager;
+import com.checkin.app.checkin.misc.views.ClipRevealFrame;
 
 public final class AnimUtils {
     public static final int NO_CHANGE = -1;

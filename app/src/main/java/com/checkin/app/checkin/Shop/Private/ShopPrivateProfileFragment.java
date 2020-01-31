@@ -8,19 +8,6 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.checkin.app.checkin.data.resource.Resource;
-import com.checkin.app.checkin.misc.adapters.CoverPagerAdapter;
-import com.checkin.app.checkin.misc.adapters.StatusTextAdapter;
-import com.checkin.app.checkin.R;
-import com.checkin.app.checkin.Shop.Private.Edit.EditProfileActivity;
-import com.checkin.app.checkin.Shop.Private.Finance.FinanceDetailActivity;
-import com.checkin.app.checkin.Shop.Private.Invoice.ShopInvoiceListActivity;
-import com.checkin.app.checkin.Shop.RestaurantModel;
-import com.checkin.app.checkin.Utility.DynamicSwipableViewPager;
-import com.checkin.app.checkin.Utility.Utils;
-import com.rd.PageIndicatorView;
-import com.rd.animation.type.AnimationType;
-
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
@@ -28,6 +15,20 @@ import androidx.lifecycle.ViewModelProviders;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.viewpager.widget.ViewPager;
+import androidx.viewpager2.widget.ViewPager2;
+
+import com.checkin.app.checkin.R;
+import com.checkin.app.checkin.Shop.Private.Edit.EditProfileActivity;
+import com.checkin.app.checkin.Shop.Private.Finance.FinanceDetailActivity;
+import com.checkin.app.checkin.Shop.Private.Invoice.ShopInvoiceListActivity;
+import com.checkin.app.checkin.Shop.RestaurantModel;
+import com.checkin.app.checkin.Utility.Utils;
+import com.checkin.app.checkin.data.resource.Resource;
+import com.checkin.app.checkin.misc.adapters.CoverPagerAdapter;
+import com.checkin.app.checkin.misc.adapters.StatusTextAdapter;
+import com.rd.PageIndicatorView2;
+import com.rd.animation.type.AnimationType;
+
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
@@ -36,11 +37,11 @@ import butterknife.Unbinder;
 public class ShopPrivateProfileFragment extends Fragment {
     public static final String KEY_SHOP_PK = "shop_private.pk";
     @BindView(R.id.indicator_shop_private_top_cover)
-    PageIndicatorView indicatorTopCover;
+    PageIndicatorView2 indicatorTopCover;
     @BindView(R.id.btn_shop_private_add_logo)
     ImageView btnAddImage;
     @BindView(R.id.vp_shop_private_cover)
-    DynamicSwipableViewPager vpImage;
+    ViewPager2 vpImage;
     @BindView(R.id.im_shop_private_status)
     ImageView imStatus;
     @BindView(R.id.tv_shop_private_checkins)
@@ -51,6 +52,7 @@ public class ShopPrivateProfileFragment extends Fragment {
     TextView tvShopName;
     @BindView(R.id.rv_shop_private_extra_data)
     RecyclerView rvAdditionalData;
+
     private Unbinder unbinder;
     private ShopProfileViewModel mViewModel;
     private CoverPagerAdapter mCoverPagerAdapter;
@@ -79,26 +81,16 @@ public class ShopPrivateProfileFragment extends Fragment {
         mViewModel = ViewModelProviders.of(requireActivity()).get(ShopProfileViewModel.class);
 
         mImageChangeIntent = new Intent(getContext(), LogoCoverActivity.class);
-        mCoverPagerAdapter = new CoverPagerAdapter();
+        mCoverPagerAdapter = new CoverPagerAdapter(R.drawable.cover_restaurant_unknown);
         vpImage.setAdapter(mCoverPagerAdapter);
         indicatorTopCover.setViewPager(vpImage);
         indicatorTopCover.setAnimationType(AnimationType.FILL);
         indicatorTopCover.setClickListener(position -> vpImage.setCurrentItem(position));
 
-        vpImage.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
-            @Override
-            public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
-
-            }
-
-            @Override
-            public void onPageSelected(int position) {
-
-            }
-
+        vpImage.registerOnPageChangeCallback(new ViewPager2.OnPageChangeCallback() {
             @Override
             public void onPageScrollStateChanged(int state) {
-                ((ShopPrivateActivity)getActivity()).enableDisableSwipeRefresh( state == ViewPager.SCROLL_STATE_IDLE );
+                ((ShopPrivateActivity) getActivity()).enableDisableSwipeRefresh(state == ViewPager.SCROLL_STATE_IDLE);
             }
         });
 
@@ -124,7 +116,6 @@ public class ShopPrivateProfileFragment extends Fragment {
         super.onDestroyView();
         unbinder.unbind();
     }
-
 
 
     private void setupData(RestaurantModel shop) {

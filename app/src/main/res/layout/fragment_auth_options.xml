@@ -8,7 +8,7 @@
     android:orientation="vertical"
     tools:context=".Auth.AuthOptionsFragment">
 
-    <com.checkin.app.checkin.Utility.PrefixEditText
+    <com.checkin.app.checkin.misc.views.PrefixEditText
         android:id="@+id/ed_phone"
         android:layout_width="match_parent"
         android:layout_height="@dimen/height_input_normal"

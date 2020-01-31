@@ -1,4 +1,4 @@
-package com.checkin.app.checkin.Utility
+package com.checkin.app.checkin.misc.holders
 
 import android.view.View
 import androidx.recyclerview.widget.RecyclerView

@@ -1,4 +1,4 @@
-package com.checkin.app.checkin.Utility;
+package com.checkin.app.checkin.misc.views;
 
 import android.content.Context;
 import android.graphics.Canvas;

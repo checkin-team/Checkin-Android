@@ -19,7 +19,6 @@ import androidx.core.widget.NestedScrollView
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentActivity
 import androidx.lifecycle.Observer
-import androidx.viewpager.widget.ViewPager
 import androidx.viewpager2.widget.ViewPager2
 import butterknife.BindView
 import butterknife.ButterKnife
@@ -59,7 +58,7 @@ import com.google.android.material.tabs.TabLayoutMediator
 import com.google.firebase.FirebaseException
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.PhoneAuthCredential
-import com.rd.PageIndicatorView
+import com.rd.PageIndicatorView2
 import com.rd.animation.type.AnimationType
 import java.util.*
 import kotlin.math.abs
@@ -69,7 +68,7 @@ class PublicRestaurantProfileActivity : BaseActivity(), AppBarLayout.OnOffsetCha
         NewSessionCreationInteraction, SchedulerInteraction,
         OtpVerificationDialog.AuthCallback, MenuGroupScreenInteraction {
     @BindView(R.id.indicator_restaurant_public_covers)
-    internal lateinit var indicatorTopCover: PageIndicatorView
+    internal lateinit var indicatorTopCover: PageIndicatorView2
     @BindView(R.id.fragment_vp_restaurant_public)
     internal lateinit var vpFragment: ViewPager2
     @BindView(R.id.tabs_restaurant_public)
@@ -77,7 +76,7 @@ class PublicRestaurantProfileActivity : BaseActivity(), AppBarLayout.OnOffsetCha
     @BindView(R.id.tv_restaurant_public_name_locality)
     internal lateinit var tvName: TextView
     @BindView(R.id.vp_restaurant_public_covers)
-    internal lateinit var vpRestaurantCovers: ViewPager
+    internal lateinit var vpRestaurantCovers: ViewPager2
     @BindView(R.id.tv_restaurant_public_cuisines)
     internal lateinit var tvRestaurantCuisines: TextView
     @BindView(R.id.tv_restaurant_public_count_checkins)
@@ -96,7 +95,7 @@ class PublicRestaurantProfileActivity : BaseActivity(), AppBarLayout.OnOffsetCha
     internal lateinit var scheduledCartView: ScheduledSessionCartView
 
     private lateinit var fragmentAdapter: PublicRestaurantProfileAdapter
-    private val coverAdapter = CoverPagerAdapter()
+    private val coverAdapter = CoverPagerAdapter(R.drawable.cover_restaurant_unknown)
 
     private val cartViewModel: ScheduledCartViewModel by viewModels()
     private val restaurantViewModel: RestaurantPublicViewModel by viewModels()
@@ -373,7 +372,7 @@ class PublicRestaurantProfileActivity : BaseActivity(), AppBarLayout.OnOffsetCha
         if (isTabAtTop) toolbar.title = title
         tvName.text = title
         tvCountCheckins.text = "Checkins ${restaurantModel.formatCheckins()}"
-        coverAdapter.setData(restaurantModel.covers)
+        coverAdapter.setData(restaurantModel.covers ?: emptyList())
         tvRestaurantCuisines.text = restaurantModel.cuisines?.let {
             if (it.isNotEmpty()) {
                 val maxLen = it.size.coerceAtMost(3)

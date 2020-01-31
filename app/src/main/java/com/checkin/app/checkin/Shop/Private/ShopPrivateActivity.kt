@@ -16,13 +16,13 @@ import co.zsmb.materialdrawerkt.builders.DrawerBuilderKt
 import com.checkin.app.checkin.Inventory.InventoryActivity
 import com.checkin.app.checkin.R
 import com.checkin.app.checkin.Shop.Private.Insight.ShopInsightActivity
-import com.checkin.app.checkin.Utility.DynamicSwipableViewPager
 import com.checkin.app.checkin.Utility.Utils
 import com.checkin.app.checkin.accounts.ACCOUNT_TYPE
 import com.checkin.app.checkin.accounts.BaseAccountActivity
 import com.checkin.app.checkin.data.resource.Resource
 import com.checkin.app.checkin.misc.adapters.BaseFragmentAdapterBottomNav
 import com.checkin.app.checkin.misc.fragments.BlankFragment
+import com.checkin.app.checkin.misc.views.DynamicSwipableViewPager
 import com.google.android.material.tabs.TabLayout
 
 class ShopPrivateActivity : BaseAccountActivity() {

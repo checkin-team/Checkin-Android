@@ -32,9 +32,9 @@ import com.checkin.app.checkin.Inventory.Model.InventoryGroupModel;
 import com.checkin.app.checkin.Inventory.Model.InventoryItemModel;
 import com.checkin.app.checkin.R;
 import com.checkin.app.checkin.Utility.AnimUtils;
-import com.checkin.app.checkin.Utility.DynamicSwipableViewPager;
 import com.checkin.app.checkin.Utility.GlideApp;
 import com.checkin.app.checkin.Utility.Utils;
+import com.checkin.app.checkin.misc.views.DynamicSwipableViewPager;
 import com.google.android.material.tabs.TabLayout;
 
 import java.util.ArrayList;
@@ -110,7 +110,7 @@ public class InventoryGroupAdapter extends RecyclerView.Adapter<InventoryGroupAd
 
     @Override
     public int getItemViewType(final int position) {
-        return R.layout.item_menu_group;
+        return R.layout.item_inventory_group;
     }
 
     @NonNull

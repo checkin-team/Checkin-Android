@@ -19,7 +19,7 @@
         app:layout_constraintTop_toTopOf="parent"
         tools:text="Input phone number" />
 
-    <com.checkin.app.checkin.Utility.PrefixEditText
+    <com.checkin.app.checkin.misc.views.PrefixEditText
         android:id="@+id/et_dialog_phone"
         style="@style/RoundedInputTextStyle"
         android:layout_width="match_parent"

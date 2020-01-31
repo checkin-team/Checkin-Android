@@ -16,7 +16,7 @@
         android:layout_marginTop="@dimen/spacing_small"
         android:layout_marginEnd="@dimen/spacing_normal"
         android:gravity="start"
-        app:layout_constraintEnd_toStartOf="@id/container_menu_quantity_picker"
+        app:layout_constraintEnd_toStartOf="@id/switch_menu_item_availability"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         tools:text="ITEM TITLE" />
@@ -48,45 +48,8 @@
         android:switchTextAppearance="@style/SwitchTextAppearance"
         android:thumb="@drawable/ic_switch_toggle"
         android:track="@drawable/rectangle_white_three"
-        android:visibility="gone"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
-
-    <FrameLayout
-        android:id="@+id/container_menu_quantity_picker"
-        android:layout_width="110dp"
-        android:layout_height="50dp"
-        android:layout_marginTop="@dimen/spacing_small"
-        android:layout_marginEnd="@dimen/spacing_small"
-        android:layout_marginBottom="@dimen/spacing_small"
-        android:background="@drawable/background_menu_quantity_selection"
-        android:clickable="true"
-        android:focusable="true"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
-
-        <Button
-            android:id="@+id/btn_menu_item_add"
-            style="@style/WhiteTextStyle"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:background="@drawable/btn_menu_item_add"
-            android:text="Add"
-            android:textAllCaps="false"
-            android:visibility="gone" />
-
-        <com.checkin.app.checkin.Utility.QuantityPickerView
-            android:id="@+id/qp_menu_item_quantity"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_gravity="center"
-            android:layout_marginStart="@dimen/spacing_tiny"
-            android:layout_marginEnd="@dimen/spacing_tiny"
-            android:clickable="false"
-            android:focusable="false"
-            app:dsv_orientation="horizontal" />
-    </FrameLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

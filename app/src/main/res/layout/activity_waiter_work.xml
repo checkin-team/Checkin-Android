@@ -58,7 +58,7 @@
 
             </com.google.android.material.appbar.AppBarLayout>
 
-            <com.checkin.app.checkin.Utility.DynamicSwipableViewPager
+            <com.checkin.app.checkin.misc.views.DynamicSwipableViewPager
                 android:id="@+id/pager_waiter"
                 android:layout_width="0dp"
                 android:layout_height="0dp"

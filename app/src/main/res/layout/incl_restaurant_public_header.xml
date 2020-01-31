@@ -15,7 +15,7 @@
         app:layout_collapseMode="parallax"
         app:layout_collapseParallaxMultiplier="0.5">
 
-        <com.checkin.app.checkin.Utility.DynamicSwipableViewPager
+        <androidx.viewpager2.widget.ViewPager2
             android:id="@+id/vp_restaurant_public_covers"
             android:layout_width="match_parent"
             android:layout_height="match_parent" />
@@ -25,7 +25,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/spacing_small">
 
-            <com.rd.PageIndicatorView
+            <com.rd.PageIndicatorView2
                 android:id="@+id/indicator_restaurant_public_covers"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
