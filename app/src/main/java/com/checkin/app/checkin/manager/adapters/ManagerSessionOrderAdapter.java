@@ -12,11 +12,11 @@ import android.widget.TextView;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.checkin.app.checkin.R;
-import com.checkin.app.checkin.Utility.HeaderFooterRecyclerViewAdapter;
-import com.checkin.app.checkin.Utility.Utils;
 import com.checkin.app.checkin.menu.models.ItemCustomizationGroupModel;
 import com.checkin.app.checkin.session.activesession.chat.SessionChatModel;
 import com.checkin.app.checkin.session.models.SessionOrderedItemModel;
+import com.checkin.app.checkin.utility.HeaderFooterRecyclerViewAdapter;
+import com.checkin.app.checkin.utility.Utils;
 
 import java.util.List;
 

@@ -12,14 +12,14 @@ import androidx.recyclerview.widget.RecyclerView
 import butterknife.BindView
 import butterknife.OnClick
 import com.checkin.app.checkin.R
-import com.checkin.app.checkin.Utility.Utils
-import com.checkin.app.checkin.Utility.inTransaction
 import com.checkin.app.checkin.data.resource.Resource
 import com.checkin.app.checkin.misc.fragments.BaseFragment
 import com.checkin.app.checkin.session.activesession.ActiveSessionPromoAdapter
 import com.checkin.app.checkin.session.activesession.ActiveSessionPromoAdapter.onPromoCodeItemListener
 import com.checkin.app.checkin.session.models.PromoDetailModel
 import com.checkin.app.checkin.session.scheduled.viewmodels.NewScheduledSessionViewModel
+import com.checkin.app.checkin.utility.Utils
+import com.checkin.app.checkin.utility.inTransaction
 
 
 class ScheduledSessionPromoFragment : BaseFragment(), onPromoCodeItemListener {

@@ -43,7 +43,7 @@
         android:ellipsize="end"
         tools:text="description ... " />
 
-    <com.checkin.app.checkin.Utility.FadingImageView
+    <com.checkin.app.checkin.utility.FadingImageView
         android:id="@+id/im_as_menu_item"
         android:layout_width="0dp"
         android:layout_height="@dimen/height_menu_item_thumbnail_small"

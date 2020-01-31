@@ -11,13 +11,13 @@ import com.checkin.app.checkin.Auth.DeviceTokenService
 import com.checkin.app.checkin.Cook.CookWorkActivity
 import com.checkin.app.checkin.R
 import com.checkin.app.checkin.Shop.Private.ShopPrivateActivity
-import com.checkin.app.checkin.Utility.Constants
-import com.checkin.app.checkin.Utility.Utils
-import com.checkin.app.checkin.Utility.coroutineLifecycleScope
 import com.checkin.app.checkin.Waiter.WaiterWorkActivity
 import com.checkin.app.checkin.accounts.ACCOUNT_TYPE
 import com.checkin.app.checkin.data.config.RemoteConfig
 import com.checkin.app.checkin.manager.activities.ManagerWorkActivity
+import com.checkin.app.checkin.utility.Constants
+import com.checkin.app.checkin.utility.Utils
+import com.checkin.app.checkin.utility.coroutineLifecycleScope
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 

@@ -8,13 +8,13 @@ import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.Observer
 import butterknife.BindView
 import butterknife.OnClick
-import com.checkin.app.checkin.data.resource.Resource
 import com.checkin.app.checkin.R
-import com.checkin.app.checkin.Utility.Utils
+import com.checkin.app.checkin.data.resource.Resource
 import com.checkin.app.checkin.manager.models.ShopScheduledSessionDetailModel
 import com.checkin.app.checkin.manager.viewmodels.ManagerLiveScheduledViewModel
 import com.checkin.app.checkin.misc.fragments.BaseBottomSheetFragment
 import com.checkin.app.checkin.session.models.ScheduledSessionStatus
+import com.checkin.app.checkin.utility.Utils
 import com.google.android.material.textfield.TextInputEditText
 
 class ManagerScheduledSessionCancelReasonBottomSheetFragment : BaseBottomSheetFragment() {

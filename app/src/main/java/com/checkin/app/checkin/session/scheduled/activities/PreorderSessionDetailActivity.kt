@@ -12,8 +12,6 @@ import butterknife.BindView
 import butterknife.ButterKnife
 import butterknife.OnClick
 import com.checkin.app.checkin.R
-import com.checkin.app.checkin.Utility.Utils
-import com.checkin.app.checkin.Utility.inTransaction
 import com.checkin.app.checkin.data.notifications.MESSAGE_TYPE
 import com.checkin.app.checkin.data.notifications.MessageUtils
 import com.checkin.app.checkin.data.resource.Resource
@@ -24,6 +22,8 @@ import com.checkin.app.checkin.session.models.CustomerScheduledSessionDetailMode
 import com.checkin.app.checkin.session.models.ScheduledSessionStatus
 import com.checkin.app.checkin.session.scheduled.fragments.PreorderDetailFragment
 import com.checkin.app.checkin.session.scheduled.viewmodels.ScheduledSessionDetailViewModel
+import com.checkin.app.checkin.utility.Utils
+import com.checkin.app.checkin.utility.inTransaction
 
 class PreorderSessionDetailActivity : BaseActivity() {
     @BindView(R.id.toolbar_user_scheduled_session_detail)

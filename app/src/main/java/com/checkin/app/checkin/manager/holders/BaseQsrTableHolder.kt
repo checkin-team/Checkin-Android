@@ -6,10 +6,10 @@ import androidx.annotation.CallSuper
 import androidx.core.content.ContextCompat
 import butterknife.BindView
 import com.checkin.app.checkin.R
-import com.checkin.app.checkin.Utility.Utils
 import com.checkin.app.checkin.manager.models.ShopScheduledSessionModel
 import com.checkin.app.checkin.misc.epoxy.BaseEpoxyHolder
 import com.checkin.app.checkin.session.models.ScheduledSessionStatus
+import com.checkin.app.checkin.utility.Utils
 import java.util.*
 
 abstract class BaseQsrTableHolder : BaseEpoxyHolder<ShopScheduledSessionModel>() {

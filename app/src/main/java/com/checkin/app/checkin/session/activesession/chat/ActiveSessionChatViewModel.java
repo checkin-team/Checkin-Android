@@ -8,10 +8,10 @@ import androidx.lifecycle.LiveData;
 import com.checkin.app.checkin.data.BaseViewModel;
 import com.checkin.app.checkin.data.Converters;
 import com.checkin.app.checkin.data.resource.Resource;
-import com.checkin.app.checkin.Utility.SourceMappedLiveData;
 import com.checkin.app.checkin.session.activesession.ActiveSessionRepository;
 import com.checkin.app.checkin.session.activesession.chat.SessionChatDataModel.EVENT_REQUEST_SERVICE_TYPE;
 import com.checkin.app.checkin.session.activesession.chat.SessionChatModel.CHAT_STATUS_TYPE;
+import com.checkin.app.checkin.utility.SourceMappedLiveData;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 
 import java.util.List;

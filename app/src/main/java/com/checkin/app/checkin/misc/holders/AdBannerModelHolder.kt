@@ -6,8 +6,8 @@ import com.airbnb.epoxy.EpoxyAttribute
 import com.airbnb.epoxy.EpoxyModelClass
 import com.airbnb.epoxy.EpoxyModelWithHolder
 import com.checkin.app.checkin.R
-import com.checkin.app.checkin.Utility.Utils
 import com.checkin.app.checkin.misc.epoxy.BaseEpoxyHolder
+import com.checkin.app.checkin.utility.Utils
 
 @EpoxyModelClass(layout = R.layout.item_ad_banner, useLayoutOverloads = true)
 abstract class AdBannerModelHolder : EpoxyModelWithHolder<AdBannerModelHolder.Holder>() {

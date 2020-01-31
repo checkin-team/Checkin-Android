@@ -3,7 +3,6 @@ package com.checkin.app.checkin.menu
 import android.app.Application
 import android.content.Context
 import androidx.lifecycle.LiveData
-import com.checkin.app.checkin.Utility.SingletonHolder
 import com.checkin.app.checkin.data.Converters
 import com.checkin.app.checkin.data.db.AppDatabase
 import com.checkin.app.checkin.data.db.ObjectBoxInstanceLiveData
@@ -15,6 +14,7 @@ import com.checkin.app.checkin.data.resource.NetworkBoundResource
 import com.checkin.app.checkin.data.resource.Resource
 import com.checkin.app.checkin.menu.models.*
 import com.checkin.app.checkin.session.models.TrendingDishModel
+import com.checkin.app.checkin.utility.SingletonHolder
 import com.fasterxml.jackson.databind.node.ObjectNode
 import io.objectbox.Box
 

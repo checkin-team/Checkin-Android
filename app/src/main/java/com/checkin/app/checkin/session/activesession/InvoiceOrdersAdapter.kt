@@ -9,8 +9,8 @@ import androidx.recyclerview.widget.RecyclerView
 import butterknife.BindView
 import butterknife.ButterKnife
 import com.checkin.app.checkin.R
-import com.checkin.app.checkin.Utility.Utils
 import com.checkin.app.checkin.session.models.SessionOrderedItemModel
+import com.checkin.app.checkin.utility.Utils
 
 class InvoiceOrdersAdapter(private var mOrderedItems: List<SessionOrderedItemModel>?, private val mClickListener: OrderedItemClick?) : RecyclerView.Adapter<InvoiceOrdersAdapter.ViewHolder>() {
 

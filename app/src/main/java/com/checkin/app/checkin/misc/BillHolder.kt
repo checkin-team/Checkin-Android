@@ -8,8 +8,8 @@ import butterknife.BindView
 import butterknife.BindViews
 import butterknife.ButterKnife
 import com.checkin.app.checkin.R
-import com.checkin.app.checkin.Utility.Utils
 import com.checkin.app.checkin.session.models.SessionBillModel
+import com.checkin.app.checkin.utility.Utils
 import com.facebook.shimmer.ShimmerFrameLayout
 
 class BillHolder(itemView: View) {

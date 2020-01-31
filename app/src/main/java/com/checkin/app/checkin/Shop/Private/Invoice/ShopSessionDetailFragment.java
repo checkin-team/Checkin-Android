@@ -6,21 +6,22 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
-import com.checkin.app.checkin.data.resource.Resource;
-import com.checkin.app.checkin.misc.BillHolder;
-import com.checkin.app.checkin.R;
-import com.checkin.app.checkin.Shop.ShopModel;
-import com.checkin.app.checkin.session.activesession.InvoiceOrdersAdapter;
-import com.checkin.app.checkin.Utility.Utils;
-
-import java.util.Locale;
-
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProviders;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+
+import com.checkin.app.checkin.R;
+import com.checkin.app.checkin.Shop.ShopModel;
+import com.checkin.app.checkin.data.resource.Resource;
+import com.checkin.app.checkin.misc.BillHolder;
+import com.checkin.app.checkin.session.activesession.InvoiceOrdersAdapter;
+import com.checkin.app.checkin.utility.Utils;
+
+import java.util.Locale;
+
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.Unbinder;

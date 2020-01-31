@@ -11,8 +11,8 @@ import androidx.core.app.ActivityCompat
 import butterknife.BindView
 import butterknife.OnClick
 import com.checkin.app.checkin.R
-import com.checkin.app.checkin.Utility.inTransaction
-import com.checkin.app.checkin.Utility.parentActivityDelegate
+import com.checkin.app.checkin.utility.inTransaction
+import com.checkin.app.checkin.utility.parentActivityDelegate
 import com.google.zxing.Result
 
 class QRScannerWrapperFragment : BaseFragment(), QRScannerFragment.QRScannerInteraction {

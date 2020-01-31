@@ -1,6 +1,6 @@
 package com.checkin.app.checkin.session.models
 
-import com.checkin.app.checkin.Utility.Utils
+import com.checkin.app.checkin.utility.Utils
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties
 
 @JsonIgnoreProperties(ignoreUnknown = true)

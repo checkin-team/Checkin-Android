@@ -3,7 +3,6 @@ package com.checkin.app.checkin.restaurant
 import android.app.Application
 import android.content.Context
 import androidx.lifecycle.LiveData
-import com.checkin.app.checkin.Utility.SingletonHolder
 import com.checkin.app.checkin.data.BaseRepository
 import com.checkin.app.checkin.data.network.ApiClient
 import com.checkin.app.checkin.data.network.ApiResponse
@@ -12,6 +11,7 @@ import com.checkin.app.checkin.data.resource.NetworkBoundResource
 import com.checkin.app.checkin.data.resource.Resource
 import com.checkin.app.checkin.restaurant.models.RestaurantModel
 import com.checkin.app.checkin.restaurant.models.RestaurantServiceModel
+import com.checkin.app.checkin.utility.SingletonHolder
 
 class RestaurantRepository private constructor(context: Context) : BaseRepository() {
     private val mWebService = ApiClient.getApiService(context)

@@ -19,9 +19,6 @@ import butterknife.ButterKnife
 import butterknife.OnClick
 import com.airbnb.epoxy.EpoxyRecyclerView
 import com.checkin.app.checkin.R
-import com.checkin.app.checkin.Utility.Utils
-import com.checkin.app.checkin.Utility.inTransaction
-import com.checkin.app.checkin.Utility.isNotEmpty
 import com.checkin.app.checkin.data.resource.Resource
 import com.checkin.app.checkin.menu.controllers.getUniqueId
 import com.checkin.app.checkin.menu.fragments.MenuFragment
@@ -34,6 +31,9 @@ import com.checkin.app.checkin.misc.BlockingNetworkViewModel
 import com.checkin.app.checkin.misc.activities.BaseActivity
 import com.checkin.app.checkin.misc.fragments.NetworkBlockingFragment
 import com.checkin.app.checkin.misc.views.EndDrawerToggle
+import com.checkin.app.checkin.utility.Utils
+import com.checkin.app.checkin.utility.inTransaction
+import com.checkin.app.checkin.utility.isNotEmpty
 
 class ShopMenuActivity : BaseActivity(), ShopMenuCartModelHolder.MenuCartInteraction, MenuGroupScreenInteraction {
     @BindView(R.id.epoxy_rv_shop_menu_cart)

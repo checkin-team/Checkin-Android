@@ -22,10 +22,10 @@ import com.checkin.app.checkin.Shop.Private.Edit.EditProfileActivity;
 import com.checkin.app.checkin.Shop.Private.Finance.FinanceDetailActivity;
 import com.checkin.app.checkin.Shop.Private.Invoice.ShopInvoiceListActivity;
 import com.checkin.app.checkin.Shop.RestaurantModel;
-import com.checkin.app.checkin.Utility.Utils;
 import com.checkin.app.checkin.data.resource.Resource;
 import com.checkin.app.checkin.misc.adapters.CoverPagerAdapter;
 import com.checkin.app.checkin.misc.adapters.StatusTextAdapter;
+import com.checkin.app.checkin.utility.Utils;
 import com.rd.PageIndicatorView2;
 import com.rd.animation.type.AnimationType;
 
@@ -105,7 +105,7 @@ public class ShopPrivateProfileFragment extends Fragment {
                 this.setupData(shopResource.getData());
             } else if (shopResource.getStatus() == Resource.Status.LOADING) {
                 // LOADING
-            } else {
+            } else if (shopResource.isInError()) {
                 Utils.toast(requireContext(), "Error!\n" + shopResource.getMessage());
             }
         });

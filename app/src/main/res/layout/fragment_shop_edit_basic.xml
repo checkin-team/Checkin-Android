@@ -93,7 +93,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent">
 
-        <com.checkin.app.checkin.Utility.MultiSpinner
+        <com.checkin.app.checkin.misc.views.MultiSpinner
             android:id="@+id/spinner_non_working_days"
             android:layout_width="match_parent"
             android:layout_height="match_parent"

@@ -15,9 +15,9 @@ import androidx.viewpager.widget.ViewPager
 import butterknife.BindView
 import butterknife.ButterKnife
 import com.checkin.app.checkin.R
-import com.checkin.app.checkin.Utility.Utils
 import com.checkin.app.checkin.misc.activities.BaseActivity
 import com.checkin.app.checkin.restaurant.activities.openPublicRestaurantProfile
+import com.checkin.app.checkin.utility.Utils
 import com.google.android.material.tabs.TabLayout
 import com.miguelcatalan.materialsearchview.MaterialSearchView
 import com.miguelcatalan.materialsearchview.MaterialSearchView.SearchViewListener

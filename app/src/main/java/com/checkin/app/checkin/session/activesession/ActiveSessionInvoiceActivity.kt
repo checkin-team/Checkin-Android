@@ -28,9 +28,6 @@ import butterknife.OnTextChanged
 import com.checkin.app.checkin.R
 import com.checkin.app.checkin.Shop.ShopModel
 import com.checkin.app.checkin.Shop.ShopModel.PAYMENT_MODE.PAYTM
-import com.checkin.app.checkin.Utility.Constants
-import com.checkin.app.checkin.Utility.Utils
-import com.checkin.app.checkin.Utility.pass
 import com.checkin.app.checkin.data.notifications.MESSAGE_TYPE
 import com.checkin.app.checkin.data.notifications.MessageUtils
 import com.checkin.app.checkin.data.resource.ProblemModel
@@ -45,6 +42,9 @@ import com.checkin.app.checkin.session.models.SessionBillModel
 import com.checkin.app.checkin.session.models.SessionInvoiceModel
 import com.checkin.app.checkin.session.models.SessionPromoModel
 import com.checkin.app.checkin.user.activities.SuccessfulTransactionActivity
+import com.checkin.app.checkin.utility.Constants
+import com.checkin.app.checkin.utility.Utils
+import com.checkin.app.checkin.utility.pass
 
 class ActiveSessionInvoiceActivity : BaseActivity() {
     @BindView(R.id.rv_invoice_ordered_items)

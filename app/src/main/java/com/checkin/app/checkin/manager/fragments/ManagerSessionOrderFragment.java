@@ -18,12 +18,12 @@ import androidx.recyclerview.widget.RecyclerView;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import com.checkin.app.checkin.R;
-import com.checkin.app.checkin.Utility.Utils;
 import com.checkin.app.checkin.manager.adapters.ManagerSessionOrderAdapter;
 import com.checkin.app.checkin.manager.viewmodels.ManagerSessionViewModel;
 import com.checkin.app.checkin.misc.fragments.BaseFragment;
 import com.checkin.app.checkin.session.activesession.chat.SessionChatModel;
 import com.checkin.app.checkin.session.models.SessionOrderedItemModel;
+import com.checkin.app.checkin.utility.Utils;
 
 import butterknife.BindView;
 import butterknife.OnClick;

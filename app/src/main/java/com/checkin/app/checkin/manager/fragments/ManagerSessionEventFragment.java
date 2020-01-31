@@ -12,7 +12,6 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.checkin.app.checkin.R;
-import com.checkin.app.checkin.Utility.Utils;
 import com.checkin.app.checkin.manager.adapters.ManagerSessionEventAdapter;
 import com.checkin.app.checkin.manager.models.ManagerSessionEventModel;
 import com.checkin.app.checkin.manager.viewmodels.ManagerSessionViewModel;
@@ -20,6 +19,7 @@ import com.checkin.app.checkin.menu.activities.ShopMenuActivity;
 import com.checkin.app.checkin.misc.fragments.BaseFragment;
 import com.checkin.app.checkin.session.activesession.chat.SessionChatModel;
 import com.checkin.app.checkin.session.models.SessionBriefModel;
+import com.checkin.app.checkin.utility.Utils;
 
 import java.util.Locale;
 

@@ -10,7 +10,6 @@ import androidx.lifecycle.Observer
 import androidx.viewpager2.widget.ViewPager2
 import butterknife.BindView
 import com.checkin.app.checkin.R
-import com.checkin.app.checkin.Utility.Utils
 import com.checkin.app.checkin.data.resource.Resource
 import com.checkin.app.checkin.manager.viewmodels.ManagerWorkViewModel
 import com.checkin.app.checkin.misc.BlockingNetworkViewModel
@@ -18,6 +17,7 @@ import com.checkin.app.checkin.misc.adapters.BaseFragmentStateAdapter
 import com.checkin.app.checkin.misc.fragments.BaseFragment
 import com.checkin.app.checkin.restaurant.models.RestaurantServiceModel
 import com.checkin.app.checkin.restaurant.models.RestaurantServiceType
+import com.checkin.app.checkin.utility.Utils
 import com.google.android.material.tabs.TabLayout
 import com.google.android.material.tabs.TabLayoutMediator
 

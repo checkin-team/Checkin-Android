@@ -10,7 +10,7 @@ import androidx.lifecycle.Transformations;
 import com.checkin.app.checkin.Cook.Model.CookTableModel;
 import com.checkin.app.checkin.data.BaseViewModel;
 import com.checkin.app.checkin.data.resource.Resource;
-import com.checkin.app.checkin.Utility.SourceMappedLiveData;
+import com.checkin.app.checkin.utility.SourceMappedLiveData;
 
 import java.util.ArrayList;
 import java.util.Collections;

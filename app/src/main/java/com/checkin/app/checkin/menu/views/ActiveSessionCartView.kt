@@ -14,14 +14,14 @@ import butterknife.ButterKnife
 import butterknife.OnClick
 import com.airbnb.epoxy.EpoxyRecyclerView
 import com.checkin.app.checkin.R
-import com.checkin.app.checkin.Utility.LockableBottomSheetBehavior
-import com.checkin.app.checkin.Utility.Utils
-import com.checkin.app.checkin.Utility.isNotEmpty
 import com.checkin.app.checkin.menu.controllers.getUniqueId
 import com.checkin.app.checkin.menu.holders.ActiveSessionMenuCartModelHolder
 import com.checkin.app.checkin.menu.holders.activeSessionMenuCartModelHolder
 import com.checkin.app.checkin.menu.models.OrderedItemModel
 import com.checkin.app.checkin.menu.viewmodels.ActiveSessionCartViewModel
+import com.checkin.app.checkin.utility.LockableBottomSheetBehavior
+import com.checkin.app.checkin.utility.Utils
+import com.checkin.app.checkin.utility.isNotEmpty
 import com.google.android.material.bottomsheet.BottomSheetBehavior
 import org.koin.core.KoinComponent
 

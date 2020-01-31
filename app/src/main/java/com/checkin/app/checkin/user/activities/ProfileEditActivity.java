@@ -19,10 +19,10 @@ import androidx.lifecycle.ViewModelProviders;
 
 import com.checkin.app.checkin.Auth.OtpVerificationDialog;
 import com.checkin.app.checkin.R;
-import com.checkin.app.checkin.Utility.Utils;
 import com.checkin.app.checkin.data.resource.Resource;
 import com.checkin.app.checkin.user.models.UserModel;
 import com.checkin.app.checkin.user.viewmodels.UserViewModel;
+import com.checkin.app.checkin.utility.Utils;
 import com.google.firebase.FirebaseException;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.PhoneAuthCredential;

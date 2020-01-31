@@ -5,9 +5,9 @@ import android.accounts.AccountManager;
 import android.content.Context;
 import android.os.Build;
 
-import com.checkin.app.checkin.Utility.Constants;
-
 import androidx.annotation.Nullable;
+
+import com.checkin.app.checkin.utility.Constants;
 
 public class AuthPreferences {
     public static String getAuthToken(Context context) {

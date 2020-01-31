@@ -1,6 +1,6 @@
 package com.checkin.app.checkin.Shop;
 
-import com.checkin.app.checkin.Utility.Utils;
+import com.checkin.app.checkin.utility.Utils;
 import com.fasterxml.jackson.annotation.JsonAutoDetect;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;

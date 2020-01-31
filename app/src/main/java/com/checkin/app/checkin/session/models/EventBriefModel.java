@@ -3,11 +3,11 @@ package com.checkin.app.checkin.session.models;
 
 import androidx.annotation.NonNull;
 
-import com.checkin.app.checkin.Utility.Utils;
 import com.checkin.app.checkin.manager.models.ManagerSessionEventModel;
 import com.checkin.app.checkin.session.activesession.chat.SessionChatDataModel.EVENT_CONCERN_TYPE;
 import com.checkin.app.checkin.session.activesession.chat.SessionChatDataModel.EVENT_REQUEST_SERVICE_TYPE;
 import com.checkin.app.checkin.session.activesession.chat.SessionChatModel.CHAT_EVENT_TYPE;
+import com.checkin.app.checkin.utility.Utils;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
 

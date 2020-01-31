@@ -4,8 +4,8 @@ import androidx.annotation.DrawableRes;
 
 import com.checkin.app.checkin.R;
 import com.checkin.app.checkin.Shop.ShopModel;
-import com.checkin.app.checkin.Utility.Utils;
 import com.checkin.app.checkin.misc.models.BriefModel;
+import com.checkin.app.checkin.utility.Utils;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
 

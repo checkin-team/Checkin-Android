@@ -8,16 +8,16 @@ import androidx.core.app.NotificationCompat;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 
-import com.checkin.app.checkin.data.BaseViewModel;
-import com.checkin.app.checkin.data.Converters;
-import com.checkin.app.checkin.data.notifications.MessageUtils;
-import com.checkin.app.checkin.data.resource.Resource;
-import com.checkin.app.checkin.data.network.RetrofitCallAsyncTask;
-import com.checkin.app.checkin.misc.models.GenericDetailModel;
 import com.checkin.app.checkin.Shop.RestaurantModel;
 import com.checkin.app.checkin.Shop.ShopRepository;
-import com.checkin.app.checkin.Utility.ProgressRequestBody;
-import com.checkin.app.checkin.Utility.SourceMappedLiveData;
+import com.checkin.app.checkin.data.BaseViewModel;
+import com.checkin.app.checkin.data.Converters;
+import com.checkin.app.checkin.data.network.RetrofitCallAsyncTask;
+import com.checkin.app.checkin.data.notifications.MessageUtils;
+import com.checkin.app.checkin.data.resource.Resource;
+import com.checkin.app.checkin.misc.models.GenericDetailModel;
+import com.checkin.app.checkin.utility.ProgressRequestBody;
+import com.checkin.app.checkin.utility.SourceMappedLiveData;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 

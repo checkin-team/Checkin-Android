@@ -12,11 +12,11 @@ import androidx.viewpager.widget.ViewPager
 import butterknife.BindView
 import butterknife.ButterKnife
 import com.checkin.app.checkin.R
-import com.checkin.app.checkin.Utility.Utils
-import com.checkin.app.checkin.Utility.navigateToLocation
 import com.checkin.app.checkin.home.model.NearbyRestaurantModel
 import com.checkin.app.checkin.misc.holders.BaseViewHolder
 import com.checkin.app.checkin.restaurant.activities.openPublicRestaurantProfile
+import com.checkin.app.checkin.utility.Utils
+import com.checkin.app.checkin.utility.navigateToLocation
 import com.rd.PageIndicatorView
 import com.rd.animation.type.AnimationType
 

@@ -8,13 +8,13 @@ import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import androidx.annotation.NonNull;
+
 import com.checkin.app.checkin.R;
-import com.checkin.app.checkin.Utility.GlideApp;
 import com.checkin.app.checkin.misc.SelectListItem;
+import com.checkin.app.checkin.utility.GlideApp;
 
 import java.util.List;
-
-import androidx.annotation.NonNull;
 
 public class SelectListViewAdapter extends ArrayAdapter<SelectListItem> {
 

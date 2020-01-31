@@ -4,7 +4,6 @@ import android.app.Application
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.Transformations
-import com.checkin.app.checkin.Utility.pass
 import com.checkin.app.checkin.data.db.AppDatabase
 import com.checkin.app.checkin.data.resource.Resource
 import com.checkin.app.checkin.menu.models.*
@@ -12,6 +11,7 @@ import com.checkin.app.checkin.restaurant.models.RestaurantLocationModel
 import com.checkin.app.checkin.session.models.NewScheduledSessionModel
 import com.checkin.app.checkin.session.models.ScheduledSessionDetailModel
 import com.checkin.app.checkin.session.models.SessionBillModel
+import com.checkin.app.checkin.utility.pass
 import com.fasterxml.jackson.databind.node.ObjectNode
 import java.util.*
 

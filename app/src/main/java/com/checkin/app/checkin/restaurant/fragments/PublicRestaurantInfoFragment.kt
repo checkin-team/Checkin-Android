@@ -9,14 +9,14 @@ import butterknife.BindView
 import butterknife.OnClick
 import com.airbnb.epoxy.EpoxyRecyclerView
 import com.checkin.app.checkin.R
-import com.checkin.app.checkin.Utility.callPhoneNumber
-import com.checkin.app.checkin.Utility.isNotEmpty
-import com.checkin.app.checkin.Utility.navigateToLocation
 import com.checkin.app.checkin.data.resource.Resource
 import com.checkin.app.checkin.misc.fragments.BaseFragment
 import com.checkin.app.checkin.misc.holders.textModelHolder
 import com.checkin.app.checkin.restaurant.models.RestaurantModel
 import com.checkin.app.checkin.restaurant.viewmodels.RestaurantPublicViewModel
+import com.checkin.app.checkin.utility.callPhoneNumber
+import com.checkin.app.checkin.utility.isNotEmpty
+import com.checkin.app.checkin.utility.navigateToLocation
 
 class PublicRestaurantInfoFragment : BaseFragment() {
     override val rootLayout: Int = R.layout.fragment_public_restaurant_info

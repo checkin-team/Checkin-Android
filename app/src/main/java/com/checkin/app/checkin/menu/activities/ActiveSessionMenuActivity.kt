@@ -11,9 +11,6 @@ import androidx.lifecycle.Observer
 import butterknife.BindView
 import butterknife.ButterKnife
 import com.checkin.app.checkin.R
-import com.checkin.app.checkin.Utility.Utils
-import com.checkin.app.checkin.Utility.coroutineLifecycleScope
-import com.checkin.app.checkin.Utility.inTransaction
 import com.checkin.app.checkin.data.resource.Resource
 import com.checkin.app.checkin.menu.fragments.MenuFragment
 import com.checkin.app.checkin.menu.fragments.MenuGroupScreenInteraction
@@ -22,6 +19,9 @@ import com.checkin.app.checkin.menu.views.ActiveSessionCartView
 import com.checkin.app.checkin.misc.BlockingNetworkViewModel
 import com.checkin.app.checkin.misc.activities.BaseActivity
 import com.checkin.app.checkin.misc.fragments.NetworkBlockingFragment
+import com.checkin.app.checkin.utility.Utils
+import com.checkin.app.checkin.utility.coroutineLifecycleScope
+import com.checkin.app.checkin.utility.inTransaction
 
 class ActiveSessionMenuActivity : BaseActivity(), MenuGroupScreenInteraction {
     @BindView(R.id.view_as_menu_cart)

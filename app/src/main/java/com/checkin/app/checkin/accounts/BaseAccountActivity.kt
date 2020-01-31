@@ -18,15 +18,15 @@ import co.zsmb.materialdrawerkt.imageloader.drawerImageLoader
 import com.checkin.app.checkin.Cook.CookWorkActivity
 import com.checkin.app.checkin.R
 import com.checkin.app.checkin.Shop.Private.ShopPrivateActivity
-import com.checkin.app.checkin.Utility.Constants
-import com.checkin.app.checkin.Utility.GlideApp
-import com.checkin.app.checkin.Utility.Utils
-import com.checkin.app.checkin.Utility.pass
 import com.checkin.app.checkin.Waiter.WaiterWorkActivity
 import com.checkin.app.checkin.data.resource.Resource
 import com.checkin.app.checkin.home.activities.AboutUsActivity
 import com.checkin.app.checkin.manager.activities.ManagerWorkActivity
 import com.checkin.app.checkin.misc.activities.BaseActivity
+import com.checkin.app.checkin.utility.Constants
+import com.checkin.app.checkin.utility.GlideApp
+import com.checkin.app.checkin.utility.Utils
+import com.checkin.app.checkin.utility.pass
 import com.mikepenz.materialdrawer.Drawer
 import com.mikepenz.materialdrawer.util.DrawerUIUtils
 

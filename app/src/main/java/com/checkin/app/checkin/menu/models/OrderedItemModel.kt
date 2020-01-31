@@ -1,6 +1,6 @@
 package com.checkin.app.checkin.menu.models
 
-import com.checkin.app.checkin.Utility.Constants.DEFAULT_ORDER_CANCEL_DURATION
+import com.checkin.app.checkin.utility.Constants.DEFAULT_ORDER_CANCEL_DURATION
 import com.fasterxml.jackson.annotation.*
 import java.util.*
 

@@ -5,7 +5,7 @@ import android.os.Bundle;
 import android.util.Log;
 
 import com.checkin.app.checkin.R;
-import com.checkin.app.checkin.Utility.Constants;
+import com.checkin.app.checkin.utility.Constants;
 import com.crashlytics.android.Crashlytics;
 import com.paytm.pgsdk.PaytmPGService;
 import com.paytm.pgsdk.PaytmPaymentTransactionCallback;

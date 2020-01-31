@@ -3,7 +3,6 @@ package com.checkin.app.checkin.manager
 import android.app.Application
 import android.content.Context
 import androidx.lifecycle.LiveData
-import com.checkin.app.checkin.Utility.SingletonHolder
 import com.checkin.app.checkin.data.BaseRepository
 import com.checkin.app.checkin.data.Converters
 import com.checkin.app.checkin.data.network.ApiClient.Companion.getApiService
@@ -16,6 +15,7 @@ import com.checkin.app.checkin.manager.models.*
 import com.checkin.app.checkin.misc.models.GenericDetailModel
 import com.checkin.app.checkin.session.models.CheckoutStatusModel
 import com.checkin.app.checkin.session.models.QRResultModel
+import com.checkin.app.checkin.utility.SingletonHolder
 import com.fasterxml.jackson.databind.node.ObjectNode
 
 class ManagerRepository private constructor(context: Context) : BaseRepository() {

@@ -14,7 +14,7 @@ import androidx.fragment.app.FragmentManager
 import butterknife.BindView
 import butterknife.ButterKnife
 import com.checkin.app.checkin.R
-import com.checkin.app.checkin.Utility.inTransaction
+import com.checkin.app.checkin.utility.inTransaction
 
 open class SectionFragmentHolderView @JvmOverloads constructor(
         context: Context, attrs: AttributeSet? = null, defStyleAttr: Int = 0,

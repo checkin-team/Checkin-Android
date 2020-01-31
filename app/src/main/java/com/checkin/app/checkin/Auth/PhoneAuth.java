@@ -2,7 +2,7 @@ package com.checkin.app.checkin.Auth;
 
 import android.app.Activity;
 
-import com.checkin.app.checkin.Utility.Constants;
+import com.checkin.app.checkin.utility.Constants;
 import com.google.firebase.FirebaseException;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.PhoneAuthCredential;

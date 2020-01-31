@@ -12,10 +12,6 @@ import butterknife.BindView
 import butterknife.ButterKnife
 import butterknife.OnClick
 import com.checkin.app.checkin.R
-import com.checkin.app.checkin.Utility.Utils
-import com.checkin.app.checkin.Utility.callPhoneNumber
-import com.checkin.app.checkin.Utility.inTransaction
-import com.checkin.app.checkin.Utility.pass
 import com.checkin.app.checkin.data.resource.Resource
 import com.checkin.app.checkin.manager.fragments.ManagerPreOrderDetailNewFragment
 import com.checkin.app.checkin.manager.fragments.ManagerPreOrderDetailPreparationFragment
@@ -26,6 +22,10 @@ import com.checkin.app.checkin.misc.BlockingNetworkViewModel
 import com.checkin.app.checkin.misc.activities.BaseActivity
 import com.checkin.app.checkin.misc.fragments.NetworkBlockingFragment
 import com.checkin.app.checkin.session.models.ScheduledSessionStatus
+import com.checkin.app.checkin.utility.Utils
+import com.checkin.app.checkin.utility.callPhoneNumber
+import com.checkin.app.checkin.utility.inTransaction
+import com.checkin.app.checkin.utility.pass
 import java.util.concurrent.TimeUnit
 
 class ManagerPreOrderDetailActivity : BaseActivity() {

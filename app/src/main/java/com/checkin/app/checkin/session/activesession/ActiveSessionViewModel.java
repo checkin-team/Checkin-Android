@@ -9,7 +9,6 @@ import androidx.lifecycle.Transformations;
 import com.checkin.app.checkin.data.BaseViewModel;
 import com.checkin.app.checkin.data.Converters;
 import com.checkin.app.checkin.data.resource.Resource;
-import com.checkin.app.checkin.Utility.SourceMappedLiveData;
 import com.checkin.app.checkin.misc.models.BriefModel;
 import com.checkin.app.checkin.misc.models.GenericDetailModel;
 import com.checkin.app.checkin.session.activesession.chat.SessionChatModel;
@@ -17,6 +16,7 @@ import com.checkin.app.checkin.session.models.ActiveSessionModel;
 import com.checkin.app.checkin.session.models.SessionCustomerModel;
 import com.checkin.app.checkin.session.models.SessionOrderedItemModel;
 import com.checkin.app.checkin.session.models.TrendingDishModel;
+import com.checkin.app.checkin.utility.SourceMappedLiveData;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 
 import java.util.ArrayList;

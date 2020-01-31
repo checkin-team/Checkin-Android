@@ -5,9 +5,9 @@ import android.content.Intent
 import android.os.Bundle
 import butterknife.ButterKnife
 import com.checkin.app.checkin.R
-import com.checkin.app.checkin.Utility.inTransaction
 import com.checkin.app.checkin.misc.activities.BaseActivity
 import com.checkin.app.checkin.session.scheduled.fragments.QSRFoodReadyFragment
+import com.checkin.app.checkin.utility.inTransaction
 
 class QSRFoodReadyActivity : BaseActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {

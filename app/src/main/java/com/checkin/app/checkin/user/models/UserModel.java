@@ -1,6 +1,6 @@
 package com.checkin.app.checkin.user.models;
 
-import com.checkin.app.checkin.Utility.Utils;
+import com.checkin.app.checkin.utility.Utils;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
 

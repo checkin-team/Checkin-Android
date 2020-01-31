@@ -7,10 +7,10 @@ import android.view.ViewGroup
 import android.widget.EditText
 import butterknife.BindView
 import butterknife.OnClick
-import com.checkin.app.checkin.misc.fragments.BaseFragment
 import com.checkin.app.checkin.R
-import com.checkin.app.checkin.Utility.ParentActivityDelegate
-import com.checkin.app.checkin.Utility.Utils
+import com.checkin.app.checkin.misc.fragments.BaseFragment
+import com.checkin.app.checkin.utility.ParentActivityDelegate
+import com.checkin.app.checkin.utility.Utils
 import com.facebook.CallbackManager
 import com.facebook.FacebookCallback
 import com.facebook.FacebookException

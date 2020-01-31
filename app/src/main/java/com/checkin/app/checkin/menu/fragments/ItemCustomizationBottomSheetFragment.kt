@@ -13,13 +13,13 @@ import androidx.lifecycle.Observer
 import butterknife.BindView
 import butterknife.OnClick
 import com.checkin.app.checkin.R
-import com.checkin.app.checkin.Utility.Utils
-import com.checkin.app.checkin.Utility.parentFragmentDelegate
-import com.checkin.app.checkin.Utility.parentViewModels
 import com.checkin.app.checkin.menu.models.ItemCustomizationFieldModel
 import com.checkin.app.checkin.menu.models.MenuItemModel
 import com.checkin.app.checkin.menu.viewmodels.UserMenuViewModel
 import com.checkin.app.checkin.misc.fragments.BaseBottomSheetFragment
+import com.checkin.app.checkin.utility.Utils
+import com.checkin.app.checkin.utility.parentFragmentDelegate
+import com.checkin.app.checkin.utility.parentViewModels
 
 class ItemCustomizationBottomSheetFragment : BaseBottomSheetFragment(), ItemCustomizationGroupHolder.CustomizationGroupInteraction {
     override val rootLayout = R.layout.fragment_as_menu_item_customization

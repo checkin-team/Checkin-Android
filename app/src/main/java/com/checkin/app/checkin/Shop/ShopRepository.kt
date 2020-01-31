@@ -5,8 +5,6 @@ import android.content.Context
 import androidx.lifecycle.LiveData
 import com.checkin.app.checkin.Shop.Private.MemberModel
 import com.checkin.app.checkin.Shop.ShopJoin.ShopJoinModel
-import com.checkin.app.checkin.Utility.ProgressRequestBody
-import com.checkin.app.checkin.Utility.SingletonHolder
 import com.checkin.app.checkin.data.BaseRepository
 import com.checkin.app.checkin.data.network.ApiClient
 import com.checkin.app.checkin.data.network.ApiResponse
@@ -16,6 +14,8 @@ import com.checkin.app.checkin.data.resource.NetworkBoundResource
 import com.checkin.app.checkin.data.resource.Resource
 import com.checkin.app.checkin.home.model.NearbyRestaurantModel
 import com.checkin.app.checkin.misc.models.GenericDetailModel
+import com.checkin.app.checkin.utility.ProgressRequestBody
+import com.checkin.app.checkin.utility.SingletonHolder
 import com.fasterxml.jackson.databind.node.ObjectNode
 import okhttp3.MediaType
 import okhttp3.MultipartBody

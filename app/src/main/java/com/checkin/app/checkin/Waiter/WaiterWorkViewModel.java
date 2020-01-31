@@ -6,17 +6,17 @@ import androidx.annotation.NonNull;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.Transformations;
 
+import com.checkin.app.checkin.Waiter.Model.WaiterStatsModel;
+import com.checkin.app.checkin.Waiter.Model.WaiterTableModel;
 import com.checkin.app.checkin.data.BaseViewModel;
 import com.checkin.app.checkin.data.Converters;
 import com.checkin.app.checkin.data.resource.Resource;
 import com.checkin.app.checkin.data.resource.Resource.Status;
-import com.checkin.app.checkin.Utility.SourceMappedLiveData;
-import com.checkin.app.checkin.Waiter.Model.WaiterStatsModel;
-import com.checkin.app.checkin.Waiter.Model.WaiterTableModel;
 import com.checkin.app.checkin.misc.models.BriefModel;
 import com.checkin.app.checkin.session.models.QRResultModel;
 import com.checkin.app.checkin.session.models.RestaurantTableModel;
 import com.checkin.app.checkin.session.models.TableSessionModel;
+import com.checkin.app.checkin.utility.SourceMappedLiveData;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 
 import java.util.ArrayList;

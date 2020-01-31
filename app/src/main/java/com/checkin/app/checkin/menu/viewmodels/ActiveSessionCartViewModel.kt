@@ -3,8 +3,8 @@ package com.checkin.app.checkin.menu.viewmodels
 import android.app.Application
 import androidx.lifecycle.LiveData
 import com.checkin.app.checkin.data.resource.Resource
-import com.checkin.app.checkin.Utility.isNotEmpty
 import com.checkin.app.checkin.menu.models.NewOrderModel
+import com.checkin.app.checkin.utility.isNotEmpty
 
 class ActiveSessionCartViewModel(application: Application) : BaseCartViewModel(application) {
     private val mNewOrders = createNetworkLiveData<List<NewOrderModel>>()

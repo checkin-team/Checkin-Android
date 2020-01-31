@@ -3,9 +3,6 @@ package com.checkin.app.checkin.user
 import android.app.Application
 import android.content.Context
 import androidx.lifecycle.LiveData
-import com.checkin.app.checkin.Utility.ProgressRequestBody
-import com.checkin.app.checkin.Utility.ProgressRequestBody.UploadCallbacks
-import com.checkin.app.checkin.Utility.SingletonHolder
 import com.checkin.app.checkin.data.BaseRepository
 import com.checkin.app.checkin.data.network.ApiClient.Companion.getApiService
 import com.checkin.app.checkin.data.network.ApiResponse
@@ -17,6 +14,9 @@ import com.checkin.app.checkin.misc.models.GenericDetailModel
 import com.checkin.app.checkin.user.models.ShopCustomerModel
 import com.checkin.app.checkin.user.models.UserLocationModel
 import com.checkin.app.checkin.user.models.UserModel
+import com.checkin.app.checkin.utility.ProgressRequestBody
+import com.checkin.app.checkin.utility.ProgressRequestBody.UploadCallbacks
+import com.checkin.app.checkin.utility.SingletonHolder
 import com.fasterxml.jackson.databind.node.ObjectNode
 import okhttp3.MediaType
 import okhttp3.MultipartBody

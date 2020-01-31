@@ -1,6 +1,5 @@
 package com.checkin.app.checkin.manager.controllers
 
-import com.checkin.app.checkin.Utility.isNotEmpty
 import com.checkin.app.checkin.manager.holders.QSRTableInteraction
 import com.checkin.app.checkin.manager.holders.endQsrTableModelHolder
 import com.checkin.app.checkin.manager.holders.newQsrTableModelHolder
@@ -9,6 +8,7 @@ import com.checkin.app.checkin.manager.models.ShopScheduledSessionModel
 import com.checkin.app.checkin.misc.epoxy.BaseEpoxyController
 import com.checkin.app.checkin.misc.holders.textSectionModelHolder
 import com.checkin.app.checkin.session.models.ScheduledSessionStatus
+import com.checkin.app.checkin.utility.isNotEmpty
 
 class QSRTablesController(
         val listener: QSRTableInteraction

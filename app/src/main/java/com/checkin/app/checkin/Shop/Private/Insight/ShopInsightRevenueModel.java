@@ -2,8 +2,8 @@ package com.checkin.app.checkin.Shop.Private.Insight;
 
 import android.content.Context;
 
-import com.checkin.app.checkin.Utility.Utils;
 import com.checkin.app.checkin.manager.models.ManagerStatsModel;
+import com.checkin.app.checkin.utility.Utils;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
 

@@ -16,9 +16,9 @@ import androidx.core.net.toUri
 import butterknife.BindView
 import butterknife.ButterKnife
 import com.checkin.app.checkin.R
-import com.checkin.app.checkin.Utility.Constants.PLAY_STORE_URI
-import com.checkin.app.checkin.Utility.Utils
 import com.checkin.app.checkin.data.config.RemoteConfig
+import com.checkin.app.checkin.utility.Constants.PLAY_STORE_URI
+import com.checkin.app.checkin.utility.Utils
 
 
 class AboutUsActivity : AppCompatActivity() {

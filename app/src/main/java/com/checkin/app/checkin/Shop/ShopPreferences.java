@@ -4,7 +4,7 @@ import android.content.Context;
 
 import com.checkin.app.checkin.data.notifications.Constants.CHANNEL;
 import com.checkin.app.checkin.data.notifications.MessageUtils;
-import com.checkin.app.checkin.Utility.Constants;
+import com.checkin.app.checkin.utility.Constants;
 
 public class ShopPreferences {
     public static void setManagerLiveOrdersActivated(Context context, boolean isEnabled) {

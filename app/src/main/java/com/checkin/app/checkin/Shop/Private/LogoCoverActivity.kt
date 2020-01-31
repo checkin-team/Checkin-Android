@@ -13,10 +13,10 @@ import butterknife.ButterKnife
 import butterknife.OnClick
 import com.checkin.app.checkin.R
 import com.checkin.app.checkin.Shop.Private.ShopCoverAdapter.ShopCoverInteraction
-import com.checkin.app.checkin.Utility.Utils
 import com.checkin.app.checkin.data.resource.Resource
 import com.checkin.app.checkin.misc.activities.BaseActivity
 import com.checkin.app.checkin.misc.activities.SelectCropImageActivity
+import com.checkin.app.checkin.utility.Utils
 import java.io.File
 
 class LogoCoverActivity : BaseActivity(), ShopCoverInteraction {

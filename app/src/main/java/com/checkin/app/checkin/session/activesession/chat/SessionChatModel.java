@@ -3,7 +3,7 @@ package com.checkin.app.checkin.session.activesession.chat;
 import androidx.annotation.Nullable;
 
 import com.checkin.app.checkin.misc.models.BriefModel;
-import com.checkin.app.checkin.Utility.Utils;
+import com.checkin.app.checkin.utility.Utils;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 import java.io.Serializable;

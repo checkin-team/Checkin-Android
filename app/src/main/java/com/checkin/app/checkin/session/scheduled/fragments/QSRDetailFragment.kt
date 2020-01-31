@@ -10,13 +10,13 @@ import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.Observer
 import butterknife.BindView
 import com.checkin.app.checkin.R
-import com.checkin.app.checkin.Utility.Utils
 import com.checkin.app.checkin.data.resource.Resource
 import com.checkin.app.checkin.misc.fragments.BaseFragment
 import com.checkin.app.checkin.misc.views.CollapsibleSectionView
 import com.checkin.app.checkin.session.models.CustomerScheduledSessionDetailModel
 import com.checkin.app.checkin.session.models.ScheduledSessionStatus
 import com.checkin.app.checkin.session.scheduled.viewmodels.ScheduledSessionDetailViewModel
+import com.checkin.app.checkin.utility.Utils
 import java.util.*
 
 class QSRDetailFragment : BaseFragment(), CollapsibleSectionView.SectionListener {

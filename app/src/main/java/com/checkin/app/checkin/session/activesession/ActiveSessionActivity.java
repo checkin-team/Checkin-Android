@@ -26,8 +26,6 @@ import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import com.checkin.app.checkin.R;
 import com.checkin.app.checkin.Search.SearchActivity;
-import com.checkin.app.checkin.Utility.OnBoardingUtils;
-import com.checkin.app.checkin.Utility.Utils;
 import com.checkin.app.checkin.data.notifications.MESSAGE_TYPE;
 import com.checkin.app.checkin.data.notifications.MessageModel;
 import com.checkin.app.checkin.data.notifications.MessageObjectModel;
@@ -43,6 +41,8 @@ import com.checkin.app.checkin.session.models.ActiveSessionModel;
 import com.checkin.app.checkin.session.models.SessionCustomerModel;
 import com.checkin.app.checkin.session.models.SessionOrderedItemModel;
 import com.checkin.app.checkin.session.models.TrendingDishModel;
+import com.checkin.app.checkin.utility.OnBoardingUtils;
+import com.checkin.app.checkin.utility.Utils;
 import com.facebook.shimmer.ShimmerFrameLayout;
 
 import butterknife.BindView;

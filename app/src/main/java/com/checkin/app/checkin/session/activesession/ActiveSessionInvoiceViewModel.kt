@@ -6,7 +6,6 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.Transformations
 import com.checkin.app.checkin.Shop.ShopModel.PAYMENT_MODE
-import com.checkin.app.checkin.Utility.ProgressRequestBody.UploadCallbacks
 import com.checkin.app.checkin.data.BaseViewModel
 import com.checkin.app.checkin.data.Converters.objectMapper
 import com.checkin.app.checkin.data.network.RetrofitCallAsyncTask
@@ -22,6 +21,7 @@ import com.checkin.app.checkin.session.models.CheckoutStatusModel
 import com.checkin.app.checkin.session.models.PromoDetailModel
 import com.checkin.app.checkin.session.models.SessionInvoiceModel
 import com.checkin.app.checkin.session.models.SessionPromoModel
+import com.checkin.app.checkin.utility.ProgressRequestBody.UploadCallbacks
 import com.fasterxml.jackson.databind.node.ObjectNode
 
 class ActiveSessionInvoiceViewModel(application: Application) : BaseViewModel(application) {

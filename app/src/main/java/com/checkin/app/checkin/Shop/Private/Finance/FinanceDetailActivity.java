@@ -7,15 +7,16 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 
-import com.checkin.app.checkin.data.resource.Resource;
-import com.checkin.app.checkin.R;
-import com.checkin.app.checkin.Utility.Utils;
-import com.fasterxml.jackson.databind.JsonNode;
-
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.ViewModelProviders;
+
+import com.checkin.app.checkin.R;
+import com.checkin.app.checkin.data.resource.Resource;
+import com.checkin.app.checkin.utility.Utils;
+import com.fasterxml.jackson.databind.JsonNode;
+
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;

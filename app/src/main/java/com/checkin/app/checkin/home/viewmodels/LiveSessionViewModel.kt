@@ -4,7 +4,6 @@ import android.app.Application
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MediatorLiveData
 import androidx.lifecycle.Transformations
-import com.checkin.app.checkin.Utility.isNotEmpty
 import com.checkin.app.checkin.data.BaseViewModel
 import com.checkin.app.checkin.data.resource.Resource
 import com.checkin.app.checkin.home.model.ActiveLiveSessionDetailModel
@@ -14,6 +13,7 @@ import com.checkin.app.checkin.menu.MenuRepository
 import com.checkin.app.checkin.menu.models.CartStatusModel
 import com.checkin.app.checkin.session.SessionRepository
 import com.checkin.app.checkin.session.models.ScheduledSessionStatus
+import com.checkin.app.checkin.utility.isNotEmpty
 import com.fasterxml.jackson.databind.node.ObjectNode
 
 class LiveSessionViewModel(application: Application) : BaseViewModel(application) {

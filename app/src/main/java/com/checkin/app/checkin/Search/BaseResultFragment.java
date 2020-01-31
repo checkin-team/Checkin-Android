@@ -5,19 +5,20 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.checkin.app.checkin.data.resource.Resource;
-import com.checkin.app.checkin.misc.fragments.BaseSearchFragment;
-import com.checkin.app.checkin.R;
-import com.checkin.app.checkin.Utility.ItemClickSupport;
-
-import java.util.List;
-
 import androidx.annotation.LayoutRes;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.lifecycle.ViewModelProviders;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+
+import com.checkin.app.checkin.R;
+import com.checkin.app.checkin.data.resource.Resource;
+import com.checkin.app.checkin.misc.fragments.BaseSearchFragment;
+import com.checkin.app.checkin.utility.ItemClickSupport;
+
+import java.util.List;
+
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.Unbinder;

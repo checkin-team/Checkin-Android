@@ -11,10 +11,10 @@ import androidx.lifecycle.ViewModelProviders;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.checkin.app.checkin.R;
 import com.checkin.app.checkin.data.resource.Resource;
 import com.checkin.app.checkin.misc.activities.BaseActivity;
-import com.checkin.app.checkin.R;
-import com.checkin.app.checkin.Utility.Utils;
+import com.checkin.app.checkin.utility.Utils;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;

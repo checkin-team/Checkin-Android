@@ -5,8 +5,8 @@ import androidx.recyclerview.widget.GridLayoutManager
 import com.airbnb.epoxy.Carousel
 import com.airbnb.epoxy.ModelProp
 import com.airbnb.epoxy.ModelView
-import com.checkin.app.checkin.Utility.GridItemDecoration
-import com.checkin.app.checkin.Utility.SpanCountLookup
+import com.checkin.app.checkin.utility.GridItemDecoration
+import com.checkin.app.checkin.utility.SpanCountLookup
 
 @ModelView(autoLayout = ModelView.Size.MATCH_WIDTH_WRAP_HEIGHT)
 class VerticalGridCarousel(context: Context) : Carousel(context) {

@@ -9,10 +9,10 @@ import androidx.lifecycle.Observer
 import butterknife.BindView
 import butterknife.OnClick
 import com.checkin.app.checkin.R
-import com.checkin.app.checkin.Utility.Utils
-import com.checkin.app.checkin.Utility.inTransaction
 import com.checkin.app.checkin.manager.viewmodels.ManagerLiveScheduledViewModel
 import com.checkin.app.checkin.misc.fragments.BaseFragment
+import com.checkin.app.checkin.utility.Utils
+import com.checkin.app.checkin.utility.inTransaction
 
 class ManagerQsrOrderDetailEndFragment : BaseFragment() {
     override val rootLayout: Int = R.layout.fragment_manager_qsr_detail_end

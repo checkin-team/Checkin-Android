@@ -14,13 +14,13 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.checkin.app.checkin.R;
-import com.checkin.app.checkin.Utility.Utils;
 import com.checkin.app.checkin.Waiter.Model.WaiterEventModel;
 import com.checkin.app.checkin.menu.models.ItemCustomizationGroupModel;
 import com.checkin.app.checkin.session.activesession.chat.SessionChatModel;
 import com.checkin.app.checkin.session.activesession.chat.SessionChatModel.CHAT_EVENT_TYPE;
 import com.checkin.app.checkin.session.activesession.chat.SessionEventBasicModel;
 import com.checkin.app.checkin.session.models.SessionOrderedItemModel;
+import com.checkin.app.checkin.utility.Utils;
 
 import java.util.List;
 

@@ -8,7 +8,7 @@ import androidx.lifecycle.LiveData;
 import com.checkin.app.checkin.data.BaseViewModel;
 import com.checkin.app.checkin.data.resource.Resource;
 import com.checkin.app.checkin.misc.models.GenericDetailModel;
-import com.checkin.app.checkin.Utility.SourceMappedLiveData;
+import com.checkin.app.checkin.utility.SourceMappedLiveData;
 
 public class FinanceViewModel extends BaseViewModel {
     private FinanceRepository financeRepository;

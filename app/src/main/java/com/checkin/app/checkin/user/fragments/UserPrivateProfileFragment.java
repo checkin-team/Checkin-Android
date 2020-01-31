@@ -22,15 +22,15 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.checkin.app.checkin.R;
-import com.checkin.app.checkin.Utility.BackgroundShadow;
-import com.checkin.app.checkin.Utility.SwipeTouchListener;
-import com.checkin.app.checkin.Utility.Utils;
 import com.checkin.app.checkin.misc.activities.SelectCropImageActivity;
 import com.checkin.app.checkin.misc.fragments.BaseFragment;
 import com.checkin.app.checkin.user.activities.ProfileEditActivity;
 import com.checkin.app.checkin.user.adapters.UserCheckinAdapter;
 import com.checkin.app.checkin.user.models.UserModel;
 import com.checkin.app.checkin.user.viewmodels.UserViewModel;
+import com.checkin.app.checkin.utility.BackgroundShadow;
+import com.checkin.app.checkin.utility.SwipeTouchListener;
+import com.checkin.app.checkin.utility.Utils;
 import com.facebook.shimmer.ShimmerFrameLayout;
 
 import java.io.File;

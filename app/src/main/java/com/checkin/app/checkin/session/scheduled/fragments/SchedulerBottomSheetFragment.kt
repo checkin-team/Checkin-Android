@@ -11,11 +11,11 @@ import androidx.core.content.ContextCompat
 import butterknife.BindView
 import butterknife.ButterKnife
 import com.checkin.app.checkin.R
-import com.checkin.app.checkin.Utility.minus
-import com.checkin.app.checkin.Utility.parentActivityDelegate
-import com.checkin.app.checkin.Utility.toCalendar
 import com.checkin.app.checkin.misc.fragments.BaseBottomSheetFragment
 import com.checkin.app.checkin.session.models.ScheduledSessionDetailModel
+import com.checkin.app.checkin.utility.minus
+import com.checkin.app.checkin.utility.parentActivityDelegate
+import com.checkin.app.checkin.utility.toCalendar
 import com.wdullaer.materialdatetimepicker.time.TimePickerDialog
 import com.wdullaer.materialdatetimepicker.time.Timepoint
 import java.text.SimpleDateFormat

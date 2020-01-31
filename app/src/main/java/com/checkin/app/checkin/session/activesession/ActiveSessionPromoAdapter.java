@@ -10,8 +10,8 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.checkin.app.checkin.R;
-import com.checkin.app.checkin.Utility.Utils;
 import com.checkin.app.checkin.session.models.PromoDetailModel;
+import com.checkin.app.checkin.utility.Utils;
 
 import java.util.List;
 

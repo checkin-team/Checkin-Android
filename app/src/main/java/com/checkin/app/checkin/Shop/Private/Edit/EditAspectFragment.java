@@ -10,19 +10,6 @@ import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.Toast;
 
-import com.checkin.app.checkin.data.resource.Resource;
-import com.checkin.app.checkin.misc.adapters.StatusTextViewHolder;
-import com.checkin.app.checkin.R;
-import com.checkin.app.checkin.Shop.Private.ShopProfileViewModel;
-import com.checkin.app.checkin.Shop.RestaurantModel;
-import com.checkin.app.checkin.Shop.ShopModel.PAYMENT_MODE;
-import com.checkin.app.checkin.Utility.HeaderFooterRecyclerViewAdapter;
-import com.checkin.app.checkin.Utility.MultiSpinner;
-
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AlertDialog;
@@ -30,6 +17,20 @@ import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProviders;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+
+import com.checkin.app.checkin.R;
+import com.checkin.app.checkin.Shop.Private.ShopProfileViewModel;
+import com.checkin.app.checkin.Shop.RestaurantModel;
+import com.checkin.app.checkin.Shop.ShopModel.PAYMENT_MODE;
+import com.checkin.app.checkin.data.resource.Resource;
+import com.checkin.app.checkin.misc.adapters.StatusTextViewHolder;
+import com.checkin.app.checkin.misc.views.MultiSpinner;
+import com.checkin.app.checkin.utility.HeaderFooterRecyclerViewAdapter;
+
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;

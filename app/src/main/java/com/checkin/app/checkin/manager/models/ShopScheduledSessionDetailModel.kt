@@ -1,10 +1,10 @@
 package com.checkin.app.checkin.manager.models
 
-import com.checkin.app.checkin.Utility.Utils
 import com.checkin.app.checkin.session.models.ScheduledSessionDetailModel
 import com.checkin.app.checkin.session.models.SessionBillModel
 import com.checkin.app.checkin.session.models.SessionOrderedItemModel
 import com.checkin.app.checkin.user.models.UserBriefModel
+import com.checkin.app.checkin.utility.Utils
 import com.fasterxml.jackson.annotation.JsonProperty
 import java.util.*
 

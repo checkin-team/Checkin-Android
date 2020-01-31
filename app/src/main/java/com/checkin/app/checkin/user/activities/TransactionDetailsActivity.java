@@ -11,13 +11,13 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.checkin.app.checkin.R;
 import com.checkin.app.checkin.Shop.ShopModel;
-import com.checkin.app.checkin.Utility.Utils;
 import com.checkin.app.checkin.data.resource.Resource;
 import com.checkin.app.checkin.misc.BillHolder;
 import com.checkin.app.checkin.misc.models.BriefModel;
 import com.checkin.app.checkin.session.activesession.InvoiceOrdersAdapter;
 import com.checkin.app.checkin.user.models.UserTransactionDetailsModel;
 import com.checkin.app.checkin.user.viewmodels.UserTransactionsViewModel;
+import com.checkin.app.checkin.utility.Utils;
 import com.google.android.material.appbar.AppBarLayout;
 
 import java.util.Locale;

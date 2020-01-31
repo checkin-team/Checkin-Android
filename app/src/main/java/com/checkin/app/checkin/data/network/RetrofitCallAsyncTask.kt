@@ -1,7 +1,7 @@
 package com.checkin.app.checkin.data.network
 
 import android.os.AsyncTask
-import com.checkin.app.checkin.Utility.ProgressRequestBody.UploadCallbacks
+import com.checkin.app.checkin.utility.ProgressRequestBody.UploadCallbacks
 import retrofit2.Call
 import java.io.IOException
 

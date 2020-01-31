@@ -12,9 +12,9 @@ import android.os.Bundle;
 import android.text.TextUtils;
 import android.util.Log;
 
-import com.checkin.app.checkin.Utility.Constants;
-
 import androidx.core.app.ActivityCompat;
+
+import com.checkin.app.checkin.utility.Constants;
 
 public class AccountAuthenticator extends AbstractAccountAuthenticator {
     private static final String TAG = AccountAuthenticator.class.getSimpleName();

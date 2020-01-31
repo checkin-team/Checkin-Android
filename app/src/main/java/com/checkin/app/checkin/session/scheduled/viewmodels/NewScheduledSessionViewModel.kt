@@ -5,7 +5,6 @@ import android.os.Bundle
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.Transformations
 import androidx.lifecycle.viewModelScope
-import com.checkin.app.checkin.Utility.ProgressRequestBody.UploadCallbacks
 import com.checkin.app.checkin.data.BaseViewModel
 import com.checkin.app.checkin.data.Converters.objectMapper
 import com.checkin.app.checkin.data.network.RetrofitCallAsyncTask
@@ -22,6 +21,7 @@ import com.checkin.app.checkin.session.models.PromoDetailModel
 import com.checkin.app.checkin.session.models.QRResultModel
 import com.checkin.app.checkin.session.models.SessionPromoModel
 import com.checkin.app.checkin.session.scheduled.ScheduledSessionRepository
+import com.checkin.app.checkin.utility.ProgressRequestBody.UploadCallbacks
 import com.fasterxml.jackson.databind.node.ObjectNode
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.cancel

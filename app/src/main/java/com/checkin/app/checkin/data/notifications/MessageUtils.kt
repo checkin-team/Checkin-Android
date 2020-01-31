@@ -17,8 +17,6 @@ import androidx.annotation.RequiresApi
 import androidx.core.app.NotificationCompat
 import androidx.localbroadcastmanager.content.LocalBroadcastManager
 import com.checkin.app.checkin.R
-import com.checkin.app.checkin.Utility.ProgressRequestBody.UploadCallbacks
-import com.checkin.app.checkin.Utility.Utils
 import com.checkin.app.checkin.data.notifications.Constants.CHANNEL
 import com.checkin.app.checkin.data.notifications.Constants.CHANNEL_GROUP
 import com.checkin.app.checkin.data.notifications.Constants.FORMAT_SP_KEY_NOTIFICATION_CHANNEL
@@ -28,6 +26,8 @@ import com.checkin.app.checkin.data.notifications.Constants.getAlertOrdersSoundU
 import com.checkin.app.checkin.data.notifications.Constants.getNotificationTag
 import com.checkin.app.checkin.data.notifications.Constants.notificationID
 import com.checkin.app.checkin.data.notifications.MessageObjectModel.MESSAGE_OBJECT_TYPE
+import com.checkin.app.checkin.utility.ProgressRequestBody.UploadCallbacks
+import com.checkin.app.checkin.utility.Utils
 import java.util.*
 
 object MessageUtils {
@@ -249,6 +249,7 @@ object MessageUtils {
             builder.setContentText("Upload completed.")
                     .setProgress(0, 0, false)
                     .setAutoCancel(true)
+                    .setOngoing(false)
             notificationManager.notify(notificationId, builder.build())
         }
 
@@ -256,6 +257,7 @@ object MessageUtils {
             builder.setContentText("Upload error.")
                     .setProgress(0, 0, false)
                     .setAutoCancel(true)
+                    .setOngoing(false)
             notificationManager.notify(notificationId, builder.build())
         }
 

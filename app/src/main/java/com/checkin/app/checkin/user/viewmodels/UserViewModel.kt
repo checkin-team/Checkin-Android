@@ -3,7 +3,6 @@ package com.checkin.app.checkin.user.viewmodels
 import android.app.Application
 import android.content.Context
 import androidx.lifecycle.LiveData
-import com.checkin.app.checkin.Utility.ProgressRequestBody.UploadCallbacks
 import com.checkin.app.checkin.data.BaseViewModel
 import com.checkin.app.checkin.data.Converters.objectMapper
 import com.checkin.app.checkin.data.network.RetrofitCallAsyncTask
@@ -17,6 +16,7 @@ import com.checkin.app.checkin.misc.models.GenericDetailModel
 import com.checkin.app.checkin.user.UserRepository
 import com.checkin.app.checkin.user.models.ShopCustomerModel
 import com.checkin.app.checkin.user.models.UserModel
+import com.checkin.app.checkin.utility.ProgressRequestBody.UploadCallbacks
 import com.fasterxml.jackson.databind.node.ObjectNode
 import java.io.File
 

@@ -11,8 +11,8 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 
 import com.checkin.app.checkin.R;
-import com.checkin.app.checkin.Utility.Utils;
 import com.checkin.app.checkin.menu.models.ItemCustomizationFieldModel;
+import com.checkin.app.checkin.utility.Utils;
 
 import java.util.Locale;
 

@@ -13,7 +13,6 @@ import androidx.lifecycle.ViewModelProviders;
 
 import com.checkin.app.checkin.Cook.Fragment.CookSessionOrderFragment;
 import com.checkin.app.checkin.R;
-import com.checkin.app.checkin.Utility.Utils;
 import com.checkin.app.checkin.Waiter.Model.OrderStatusModel;
 import com.checkin.app.checkin.data.notifications.MESSAGE_TYPE;
 import com.checkin.app.checkin.data.notifications.MessageModel;
@@ -23,6 +22,7 @@ import com.checkin.app.checkin.misc.models.BriefModel;
 import com.checkin.app.checkin.session.activesession.chat.SessionChatModel;
 import com.checkin.app.checkin.session.models.SessionBriefModel;
 import com.checkin.app.checkin.session.models.SessionOrderedItemModel;
+import com.checkin.app.checkin.utility.Utils;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;

@@ -14,8 +14,6 @@ import androidx.recyclerview.widget.RecyclerView
 import butterknife.BindView
 import butterknife.OnClick
 import com.checkin.app.checkin.R
-import com.checkin.app.checkin.Utility.Utils
-import com.checkin.app.checkin.Utility.isNotEmpty
 import com.checkin.app.checkin.data.notifications.MESSAGE_TYPE
 import com.checkin.app.checkin.data.notifications.MessageObjectModel
 import com.checkin.app.checkin.data.notifications.MessageUtils
@@ -32,6 +30,8 @@ import com.checkin.app.checkin.session.activesession.chat.SessionChatModel
 import com.checkin.app.checkin.session.models.EventBriefModel
 import com.checkin.app.checkin.session.models.RestaurantTableModel
 import com.checkin.app.checkin.session.models.TableSessionModel
+import com.checkin.app.checkin.utility.Utils
+import com.checkin.app.checkin.utility.isNotEmpty
 import java.util.*
 
 class ManagerActiveSessionLiveTablesFragment : BaseFragment(), ManagerTableInteraction {

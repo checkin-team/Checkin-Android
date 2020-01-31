@@ -8,7 +8,7 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.checkin.app.checkin.R;
-import com.checkin.app.checkin.Utility.Constants;
+import com.checkin.app.checkin.utility.Constants;
 
 public class UpdateAppActivity extends AppCompatActivity {
 

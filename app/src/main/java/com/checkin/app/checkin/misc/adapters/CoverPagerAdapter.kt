@@ -9,7 +9,7 @@ import androidx.recyclerview.widget.RecyclerView
 import butterknife.BindView
 import butterknife.ButterKnife
 import com.checkin.app.checkin.R
-import com.checkin.app.checkin.Utility.GlideApp
+import com.checkin.app.checkin.utility.GlideApp
 
 class CoverPagerAdapter(@DrawableRes val defaultImage: Int) : RecyclerView.Adapter<CoverPagerAdapter.ViewHolder>() {
     private var mData: List<String?> = emptyList()

@@ -29,8 +29,6 @@ import butterknife.OnClick
 import co.zsmb.materialdrawerkt.builders.DrawerBuilderKt
 import com.checkin.app.checkin.BuildConfig
 import com.checkin.app.checkin.R
-import com.checkin.app.checkin.Utility.*
-import com.checkin.app.checkin.Utility.OnBoardingUtils.OnBoardingModel
 import com.checkin.app.checkin.accounts.ACCOUNT_TYPE
 import com.checkin.app.checkin.accounts.BaseAccountActivity
 import com.checkin.app.checkin.data.config.RemoteConfig
@@ -53,6 +51,8 @@ import com.checkin.app.checkin.session.activesession.ActiveSessionActivity
 import com.checkin.app.checkin.user.fragments.UserPrivateProfileFragment
 import com.checkin.app.checkin.user.models.UserModel
 import com.checkin.app.checkin.user.viewmodels.UserViewModel
+import com.checkin.app.checkin.utility.*
+import com.checkin.app.checkin.utility.OnBoardingUtils.OnBoardingModel
 import com.golovin.fluentstackbar.FluentSnackbar
 import com.google.android.material.snackbar.Snackbar
 import com.google.android.material.tabs.TabLayout

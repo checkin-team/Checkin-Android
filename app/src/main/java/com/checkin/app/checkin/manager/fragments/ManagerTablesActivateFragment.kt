@@ -4,8 +4,8 @@ import android.widget.Button
 import butterknife.BindView
 import butterknife.OnClick
 import com.checkin.app.checkin.R
-import com.checkin.app.checkin.Utility.parentActivityDelegate
 import com.checkin.app.checkin.misc.fragments.BaseFragment
+import com.checkin.app.checkin.utility.parentActivityDelegate
 
 class ManagerTablesActivateFragment : BaseFragment() {
     override val rootLayout: Int = R.layout.fragment_manager_tables_activate

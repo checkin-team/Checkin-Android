@@ -3,8 +3,8 @@ package com.checkin.app.checkin.session.scheduled.fragments
 import android.content.DialogInterface
 import butterknife.OnClick
 import com.checkin.app.checkin.R
-import com.checkin.app.checkin.Utility.parentActivityDelegate
 import com.checkin.app.checkin.misc.fragments.BaseBottomSheetFragment
+import com.checkin.app.checkin.utility.parentActivityDelegate
 
 class ChooseQrOrScheduleBottomSheetFragment : BaseBottomSheetFragment() {
     override val rootLayout: Int = R.layout.fragment_session_new_qr_or_schedule

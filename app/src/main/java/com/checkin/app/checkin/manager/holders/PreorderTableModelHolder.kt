@@ -9,9 +9,9 @@ import com.airbnb.epoxy.EpoxyAttribute
 import com.airbnb.epoxy.EpoxyModelClass
 import com.airbnb.epoxy.EpoxyModelWithHolder
 import com.checkin.app.checkin.R
-import com.checkin.app.checkin.Utility.Utils
-import com.checkin.app.checkin.Utility.callPhoneNumber
 import com.checkin.app.checkin.manager.models.ShopScheduledSessionModel
+import com.checkin.app.checkin.utility.Utils
+import com.checkin.app.checkin.utility.callPhoneNumber
 import java.util.*
 
 @EpoxyModelClass(layout = R.layout.item_manager_preorder_new_table)

@@ -29,8 +29,6 @@ import co.zsmb.materialdrawerkt.builders.drawer
 import co.zsmb.materialdrawerkt.draweritems.badgeable.primaryItem
 import com.checkin.app.checkin.R
 import com.checkin.app.checkin.Shop.ShopModel.PAYMENT_MODE
-import com.checkin.app.checkin.Utility.Utils
-import com.checkin.app.checkin.Utility.pass
 import com.checkin.app.checkin.Waiter.Fragment.WaiterTableFragment
 import com.checkin.app.checkin.Waiter.Fragment.WaiterTableFragment.Companion.newInstance
 import com.checkin.app.checkin.Waiter.Fragment.WaiterTableFragment.WaiterTableInteraction
@@ -54,6 +52,8 @@ import com.checkin.app.checkin.session.models.EventBriefModel
 import com.checkin.app.checkin.session.models.RestaurantTableModel
 import com.checkin.app.checkin.session.models.SessionOrderedItemModel
 import com.checkin.app.checkin.session.models.TableSessionModel
+import com.checkin.app.checkin.utility.Utils
+import com.checkin.app.checkin.utility.pass
 import com.google.android.material.tabs.TabLayout
 import com.mikepenz.materialdrawer.Drawer
 import java.util.*

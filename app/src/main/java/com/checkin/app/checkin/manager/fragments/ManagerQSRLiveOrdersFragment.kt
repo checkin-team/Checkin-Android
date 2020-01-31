@@ -11,7 +11,6 @@ import androidx.lifecycle.Observer
 import butterknife.BindView
 import com.airbnb.epoxy.EpoxyRecyclerView
 import com.checkin.app.checkin.R
-import com.checkin.app.checkin.Utility.pass
 import com.checkin.app.checkin.data.notifications.MESSAGE_TYPE
 import com.checkin.app.checkin.data.notifications.MessageUtils
 import com.checkin.app.checkin.data.resource.Resource
@@ -22,6 +21,7 @@ import com.checkin.app.checkin.manager.models.ShopScheduledSessionModel
 import com.checkin.app.checkin.manager.viewmodels.ManagerLiveScheduledViewModel
 import com.checkin.app.checkin.manager.viewmodels.ManagerWorkViewModel
 import com.checkin.app.checkin.misc.fragments.BaseFragment
+import com.checkin.app.checkin.utility.pass
 
 class ManagerQSRLiveOrdersFragment : BaseFragment(), QSRTableInteraction {
     override val rootLayout: Int = R.layout.fragment_manager_qsr_live_orders

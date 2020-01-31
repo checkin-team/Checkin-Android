@@ -7,13 +7,14 @@ import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+
 import com.bumptech.glide.request.target.SimpleTarget;
 import com.bumptech.glide.request.transition.Transition;
 import com.checkin.app.checkin.R;
-import com.checkin.app.checkin.Utility.GlideApp;
+import com.checkin.app.checkin.utility.GlideApp;
 
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 

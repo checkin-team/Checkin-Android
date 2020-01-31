@@ -19,7 +19,7 @@
         android:layout_gravity="center_horizontal"
         android:text="Add contact details for bill" />
 
-    <com.checkin.app.checkin.Utility.SingleBackEditText
+    <com.checkin.app.checkin.misc.views.SingleBackEditText
         android:id="@+id/et_contact_phone"
         style="@style/RoundedInputTextStyle"
         android:layout_width="match_parent"
@@ -59,7 +59,7 @@
 
     </LinearLayout>
 
-    <com.checkin.app.checkin.Utility.SingleBackEditText
+    <com.checkin.app.checkin.misc.views.SingleBackEditText
         android:id="@+id/et_contact_email"
         style="@style/RoundedInputTextStyle"
         android:layout_width="match_parent"

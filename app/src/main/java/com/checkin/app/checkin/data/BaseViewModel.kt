@@ -4,10 +4,9 @@ import android.app.Application
 import androidx.annotation.CallSuper
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
-
-import com.checkin.app.checkin.Utility.ProblemHandler
-import com.checkin.app.checkin.Utility.SourceMappedLiveData
+import com.checkin.app.checkin.data.network.ProblemHandler
 import com.checkin.app.checkin.data.resource.Resource
+import com.checkin.app.checkin.utility.SourceMappedLiveData
 import com.fasterxml.jackson.databind.node.ObjectNode
 
 interface IBaseViewModel {

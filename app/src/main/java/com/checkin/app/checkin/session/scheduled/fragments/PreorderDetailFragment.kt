@@ -9,15 +9,15 @@ import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.Observer
 import butterknife.BindView
 import butterknife.OnClick
-import com.checkin.app.checkin.data.resource.Resource
 import com.checkin.app.checkin.R
-import com.checkin.app.checkin.Utility.callPhoneNumber
-import com.checkin.app.checkin.Utility.navigateToLocation
+import com.checkin.app.checkin.data.resource.Resource
 import com.checkin.app.checkin.misc.fragments.BaseFragment
 import com.checkin.app.checkin.misc.views.CollapsibleSectionView
 import com.checkin.app.checkin.session.models.CustomerScheduledSessionDetailModel
 import com.checkin.app.checkin.session.models.ScheduledSessionStatus
 import com.checkin.app.checkin.session.scheduled.viewmodels.ScheduledSessionDetailViewModel
+import com.checkin.app.checkin.utility.callPhoneNumber
+import com.checkin.app.checkin.utility.navigateToLocation
 
 class PreorderDetailFragment : BaseFragment(), CollapsibleSectionView.SectionListener {
     override val rootLayout: Int = R.layout.fragment_user_preorder_detail

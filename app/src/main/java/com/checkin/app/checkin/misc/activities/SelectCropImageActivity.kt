@@ -16,9 +16,9 @@ import butterknife.BindView
 import butterknife.ButterKnife
 import butterknife.OnClick
 import com.checkin.app.checkin.R
-import com.checkin.app.checkin.Utility.RealPathUtil.getRealPath
-import com.checkin.app.checkin.Utility.Utils
-import com.checkin.app.checkin.Utility.toast
+import com.checkin.app.checkin.utility.RealPathUtil.getRealPath
+import com.checkin.app.checkin.utility.Utils
+import com.checkin.app.checkin.utility.toast
 import com.lyft.android.scissors.CropView
 import java.io.File
 import java.io.FileOutputStream

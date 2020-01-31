@@ -5,15 +5,16 @@ import android.content.Intent;
 import android.preference.PreferenceManager;
 import android.util.Log;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+
 import com.checkin.app.checkin.data.network.ApiResponse;
-import com.checkin.app.checkin.Utility.Constants;
+import com.checkin.app.checkin.utility.Constants;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.iid.FirebaseInstanceId;
 import com.google.firebase.iid.InstanceIdResult;
 
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;

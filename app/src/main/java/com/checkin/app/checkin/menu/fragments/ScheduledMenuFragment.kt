@@ -6,9 +6,9 @@ import androidx.core.os.bundleOf
 import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
 import com.checkin.app.checkin.R
-import com.checkin.app.checkin.Utility.inTransaction
 import com.checkin.app.checkin.menu.viewmodels.ScheduledCartViewModel
 import com.checkin.app.checkin.menu.viewmodels.UserMenuViewModel
+import com.checkin.app.checkin.utility.inTransaction
 
 class ScheduledMenuFragment : BaseMenuFragment() {
     override val menuViewModel: UserMenuViewModel by viewModels()

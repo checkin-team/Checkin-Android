@@ -12,15 +12,15 @@ import androidx.lifecycle.ViewModelProviders;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.checkin.app.checkin.data.resource.Resource;
 import com.checkin.app.checkin.R;
-import com.checkin.app.checkin.Utility.Utils;
 import com.checkin.app.checkin.Waiter.Model.WaiterEventModel;
 import com.checkin.app.checkin.Waiter.WaiterEventAdapter;
 import com.checkin.app.checkin.Waiter.WaiterTableViewModel;
+import com.checkin.app.checkin.data.resource.Resource;
 import com.checkin.app.checkin.misc.fragments.BaseFragment;
 import com.checkin.app.checkin.session.activesession.chat.SessionChatModel;
 import com.checkin.app.checkin.session.models.SessionOrderedItemModel;
+import com.checkin.app.checkin.utility.Utils;
 
 import butterknife.BindView;
 

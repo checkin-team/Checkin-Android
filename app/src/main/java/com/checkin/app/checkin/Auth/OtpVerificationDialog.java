@@ -15,8 +15,8 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
 
 import com.checkin.app.checkin.R;
-import com.checkin.app.checkin.Utility.Constants;
-import com.checkin.app.checkin.Utility.Utils;
+import com.checkin.app.checkin.utility.Constants;
+import com.checkin.app.checkin.utility.Utils;
 import com.google.firebase.FirebaseException;
 import com.google.firebase.FirebaseNetworkException;
 import com.google.firebase.auth.FirebaseAuth;

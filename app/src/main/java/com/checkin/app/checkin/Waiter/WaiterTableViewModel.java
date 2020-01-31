@@ -7,19 +7,19 @@ import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.Transformations;
 
-import com.checkin.app.checkin.data.BaseViewModel;
-import com.checkin.app.checkin.data.Converters;
-import com.checkin.app.checkin.data.resource.Resource;
 import com.checkin.app.checkin.Shop.ShopModel;
-import com.checkin.app.checkin.Utility.SourceMappedLiveData;
 import com.checkin.app.checkin.Waiter.Model.OrderStatusModel;
 import com.checkin.app.checkin.Waiter.Model.SessionContactModel;
 import com.checkin.app.checkin.Waiter.Model.WaiterEventModel;
+import com.checkin.app.checkin.data.BaseViewModel;
+import com.checkin.app.checkin.data.Converters;
+import com.checkin.app.checkin.data.resource.Resource;
 import com.checkin.app.checkin.misc.models.GenericDetailModel;
 import com.checkin.app.checkin.session.SessionRepository;
 import com.checkin.app.checkin.session.activesession.chat.SessionChatModel.CHAT_STATUS_TYPE;
 import com.checkin.app.checkin.session.models.CheckoutStatusModel;
 import com.checkin.app.checkin.session.models.SessionBriefModel;
+import com.checkin.app.checkin.utility.SourceMappedLiveData;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 
 import java.util.ArrayList;

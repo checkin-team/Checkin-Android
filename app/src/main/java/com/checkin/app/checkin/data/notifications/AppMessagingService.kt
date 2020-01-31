@@ -12,13 +12,13 @@ import androidx.annotation.RequiresApi
 import androidx.core.app.NotificationCompat
 import com.checkin.app.checkin.Auth.DeviceTokenService
 import com.checkin.app.checkin.R
-import com.checkin.app.checkin.Utility.Utils
 import com.checkin.app.checkin.data.Converters.objectMapper
 import com.checkin.app.checkin.data.notifications.Constants.notificationID
 import com.checkin.app.checkin.data.notifications.MessageUtils.createDefaultChannels
 import com.checkin.app.checkin.data.notifications.MessageUtils.isNotificationEnabled
 import com.checkin.app.checkin.data.notifications.MessageUtils.saveNotificationId
 import com.checkin.app.checkin.data.notifications.MessageUtils.sendLocalBroadcast
+import com.checkin.app.checkin.utility.Utils
 import com.google.firebase.messaging.FirebaseMessagingService
 import com.google.firebase.messaging.RemoteMessage
 import java.io.IOException

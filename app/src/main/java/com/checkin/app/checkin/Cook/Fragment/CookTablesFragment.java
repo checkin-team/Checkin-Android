@@ -18,7 +18,6 @@ import com.checkin.app.checkin.Cook.CookSessionActivity;
 import com.checkin.app.checkin.Cook.CookWorkViewModel;
 import com.checkin.app.checkin.Cook.Model.CookTableModel;
 import com.checkin.app.checkin.R;
-import com.checkin.app.checkin.Utility.Utils;
 import com.checkin.app.checkin.data.notifications.MESSAGE_TYPE;
 import com.checkin.app.checkin.data.notifications.MessageModel;
 import com.checkin.app.checkin.data.notifications.MessageObjectModel;
@@ -26,6 +25,7 @@ import com.checkin.app.checkin.data.notifications.MessageUtils;
 import com.checkin.app.checkin.data.resource.Resource;
 import com.checkin.app.checkin.misc.fragments.BaseFragment;
 import com.checkin.app.checkin.misc.models.BriefModel;
+import com.checkin.app.checkin.utility.Utils;
 
 import java.util.Calendar;
 import java.util.List;

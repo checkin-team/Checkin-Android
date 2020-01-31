@@ -3,7 +3,6 @@ package com.checkin.app.checkin.session.scheduled
 import android.app.Application
 import android.content.Context
 import androidx.lifecycle.LiveData
-import com.checkin.app.checkin.Utility.SingletonHolder
 import com.checkin.app.checkin.data.BaseRepository
 import com.checkin.app.checkin.data.network.ApiClient
 import com.checkin.app.checkin.data.network.ApiResponse
@@ -16,6 +15,7 @@ import com.checkin.app.checkin.session.models.CustomerScheduledSessionDetailMode
 import com.checkin.app.checkin.session.models.NewScheduledSessionModel
 import com.checkin.app.checkin.session.models.SessionOrderedItemModel
 import com.checkin.app.checkin.session.models.SessionPromoModel
+import com.checkin.app.checkin.utility.SingletonHolder
 import com.fasterxml.jackson.databind.node.ObjectNode
 import retrofit2.Call
 

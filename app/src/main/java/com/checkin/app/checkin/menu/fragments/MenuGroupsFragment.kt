@@ -12,10 +12,6 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import butterknife.BindView
 import com.airbnb.epoxy.EpoxyRecyclerView
 import com.checkin.app.checkin.R
-import com.checkin.app.checkin.Utility.Utils
-import com.checkin.app.checkin.Utility.parentActivityDelegate
-import com.checkin.app.checkin.Utility.parentFragmentDelegate
-import com.checkin.app.checkin.Utility.parentViewModels
 import com.checkin.app.checkin.data.resource.Resource
 import com.checkin.app.checkin.menu.controllers.OnGroupInteraction
 import com.checkin.app.checkin.menu.controllers.UserMenuGroupController
@@ -28,6 +24,10 @@ import com.checkin.app.checkin.menu.viewmodels.ScheduledCartViewModel
 import com.checkin.app.checkin.menu.viewmodels.UserMenuViewModel
 import com.checkin.app.checkin.misc.fragments.BaseFragment
 import com.checkin.app.checkin.session.models.TrendingDishModel
+import com.checkin.app.checkin.utility.Utils
+import com.checkin.app.checkin.utility.parentActivityDelegate
+import com.checkin.app.checkin.utility.parentFragmentDelegate
+import com.checkin.app.checkin.utility.parentViewModels
 import kotlinx.coroutines.launch
 import org.koin.androidx.viewmodel.ext.android.getSharedViewModel
 

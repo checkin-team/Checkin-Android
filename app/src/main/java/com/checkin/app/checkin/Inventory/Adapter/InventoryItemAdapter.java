@@ -11,7 +11,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.checkin.app.checkin.Inventory.Model.InventoryItemModel;
 import com.checkin.app.checkin.R;
-import com.checkin.app.checkin.Utility.Utils;
+import com.checkin.app.checkin.utility.Utils;
 
 import java.util.List;
 import java.util.Locale;

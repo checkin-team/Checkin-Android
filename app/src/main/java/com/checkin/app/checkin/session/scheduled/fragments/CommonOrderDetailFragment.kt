@@ -7,15 +7,15 @@ import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.Observer
 import butterknife.BindView
 import com.airbnb.epoxy.EpoxyRecyclerView
-import com.checkin.app.checkin.data.resource.Resource
 import com.checkin.app.checkin.R
-import com.checkin.app.checkin.Utility.Utils
-import com.checkin.app.checkin.Utility.isNotEmpty
+import com.checkin.app.checkin.data.resource.Resource
 import com.checkin.app.checkin.menu.holders.invoiceOrderModelHolder
 import com.checkin.app.checkin.misc.BillHolder
 import com.checkin.app.checkin.misc.fragments.BaseFragment
 import com.checkin.app.checkin.session.models.CustomerScheduledSessionDetailModel
 import com.checkin.app.checkin.session.scheduled.viewmodels.ScheduledSessionDetailViewModel
+import com.checkin.app.checkin.utility.Utils
+import com.checkin.app.checkin.utility.isNotEmpty
 
 class CommonOrderDetailFragment : BaseFragment() {
     override val rootLayout: Int = R.layout.fragment_user_scheduled_detail_orders_common

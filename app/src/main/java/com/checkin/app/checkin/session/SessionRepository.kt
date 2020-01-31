@@ -3,7 +3,6 @@ package com.checkin.app.checkin.session
 import android.app.Application
 import android.content.Context
 import androidx.lifecycle.LiveData
-import com.checkin.app.checkin.Utility.SingletonHolder
 import com.checkin.app.checkin.data.BaseRepository
 import com.checkin.app.checkin.data.network.ApiClient
 import com.checkin.app.checkin.data.network.ApiResponse
@@ -17,6 +16,7 @@ import com.checkin.app.checkin.manager.models.ManagerSessionEventModel
 import com.checkin.app.checkin.session.models.*
 import com.checkin.app.checkin.user.models.UserTransactionBriefModel
 import com.checkin.app.checkin.user.models.UserTransactionDetailsModel
+import com.checkin.app.checkin.utility.SingletonHolder
 import com.fasterxml.jackson.databind.node.ObjectNode
 
 class SessionRepository private constructor(context: Context) : BaseRepository() {

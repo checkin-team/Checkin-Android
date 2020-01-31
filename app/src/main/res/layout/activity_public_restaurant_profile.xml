@@ -83,7 +83,7 @@
             android:layout_height="match_parent"
             app:behavior_hideable="false"
             app:behavior_peekHeight="@dimen/height_cart_header_topbar"
-            app:layout_behavior="com.checkin.app.checkin.Utility.LockableBottomSheetBehavior" />
+            app:layout_behavior="com.checkin.app.checkin.utility.LockableBottomSheetBehavior" />
     </androidx.coordinatorlayout.widget.CoordinatorLayout>
 
     <include

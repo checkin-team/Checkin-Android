@@ -9,13 +9,13 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import butterknife.BindView
 import com.checkin.app.checkin.R
-import com.checkin.app.checkin.Utility.parentViewModels
 import com.checkin.app.checkin.data.resource.Resource
 import com.checkin.app.checkin.manager.adapters.ManagerInactiveTableAdapter
 import com.checkin.app.checkin.manager.adapters.ManagerInactiveTableAdapter.ManagerTableInitiate
 import com.checkin.app.checkin.manager.viewmodels.ManagerASLiveTablesViewModel
 import com.checkin.app.checkin.misc.fragments.BaseBottomSheetFragment
 import com.checkin.app.checkin.session.models.RestaurantTableModel
+import com.checkin.app.checkin.utility.parentViewModels
 
 class ManagerInactiveTableBottomSheetFragment : BaseBottomSheetFragment(), ManagerTableInitiate {
     override val rootLayout: Int = R.layout.fragment_manager_inactive_tables

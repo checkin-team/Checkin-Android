@@ -10,14 +10,14 @@ import androidx.lifecycle.ViewModelProviders;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.checkin.app.checkin.data.resource.Resource;
 import com.checkin.app.checkin.R;
 import com.checkin.app.checkin.Shop.Private.Invoice.RestaurantSessionModel;
 import com.checkin.app.checkin.Shop.Private.Invoice.ShopInvoiceDetailActivity;
 import com.checkin.app.checkin.Shop.Private.Invoice.ShopInvoiceSessionAdapter;
 import com.checkin.app.checkin.Shop.Private.Invoice.ShopInvoiceViewModel;
-import com.checkin.app.checkin.Utility.Utils;
+import com.checkin.app.checkin.data.resource.Resource;
 import com.checkin.app.checkin.misc.fragments.BaseFragment;
+import com.checkin.app.checkin.utility.Utils;
 
 import butterknife.BindView;
 

@@ -9,9 +9,9 @@ import androidx.lifecycle.ViewModelProviders;
 
 import com.checkin.app.checkin.R;
 import com.checkin.app.checkin.Search.SearchActivity;
-import com.checkin.app.checkin.Utility.Utils;
 import com.checkin.app.checkin.data.resource.Resource;
 import com.checkin.app.checkin.misc.activities.BaseActivity;
+import com.checkin.app.checkin.utility.Utils;
 
 import butterknife.ButterKnife;
 import butterknife.OnClick;

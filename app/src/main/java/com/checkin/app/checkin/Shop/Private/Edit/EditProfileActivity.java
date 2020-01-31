@@ -5,13 +5,6 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.Toast;
 
-import com.checkin.app.checkin.data.resource.Resource;
-import com.checkin.app.checkin.R;
-import com.checkin.app.checkin.Shop.Private.ShopProfileViewModel;
-import com.checkin.app.checkin.Shop.RestaurantModel;
-import com.checkin.app.checkin.Utility.Utils;
-import com.google.android.material.tabs.TabLayout;
-
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
@@ -20,6 +13,14 @@ import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentPagerAdapter;
 import androidx.lifecycle.ViewModelProviders;
 import androidx.viewpager.widget.ViewPager;
+
+import com.checkin.app.checkin.R;
+import com.checkin.app.checkin.Shop.Private.ShopProfileViewModel;
+import com.checkin.app.checkin.Shop.RestaurantModel;
+import com.checkin.app.checkin.data.resource.Resource;
+import com.checkin.app.checkin.utility.Utils;
+import com.google.android.material.tabs.TabLayout;
+
 import butterknife.BindView;
 import butterknife.ButterKnife;
 

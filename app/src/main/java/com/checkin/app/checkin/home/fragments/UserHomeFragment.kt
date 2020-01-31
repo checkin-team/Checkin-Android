@@ -14,7 +14,6 @@ import androidx.viewpager2.widget.ViewPager2
 import butterknife.BindView
 import com.airbnb.epoxy.EpoxyRecyclerView
 import com.checkin.app.checkin.R
-import com.checkin.app.checkin.Utility.pass
 import com.checkin.app.checkin.data.config.RemoteConfig
 import com.checkin.app.checkin.data.notifications.MESSAGE_TYPE
 import com.checkin.app.checkin.data.notifications.MessageUtils
@@ -37,6 +36,7 @@ import com.checkin.app.checkin.session.models.ScheduledSessionStatus
 import com.checkin.app.checkin.session.scheduled.activities.PreorderSessionDetailActivity
 import com.checkin.app.checkin.session.scheduled.activities.QSRFoodReadyActivity
 import com.checkin.app.checkin.session.scheduled.activities.QSRSessionDetailActivity
+import com.checkin.app.checkin.utility.pass
 
 class UserHomeFragment : BaseFragment(), LiveSessionTrackerInteraction {
     override val rootLayout = R.layout.fragment_user_home

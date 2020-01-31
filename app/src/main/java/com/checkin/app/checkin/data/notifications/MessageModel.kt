@@ -9,7 +9,6 @@ import android.os.Bundle
 import androidx.core.app.NotificationCompat
 import androidx.core.os.bundleOf
 import com.checkin.app.checkin.R
-import com.checkin.app.checkin.Utility.Utils
 import com.checkin.app.checkin.Waiter.WaiterWorkActivity
 import com.checkin.app.checkin.data.notifications.Constants.CHANNEL
 import com.checkin.app.checkin.data.notifications.MessageDataModel.MessageDataDeserializer
@@ -24,6 +23,7 @@ import com.checkin.app.checkin.session.scheduled.activities.PreorderSessionDetai
 import com.checkin.app.checkin.session.scheduled.activities.QSRFoodReadyActivity
 import com.checkin.app.checkin.session.scheduled.activities.QSRSessionDetailActivity
 import com.checkin.app.checkin.user.activities.SuccessfulTransactionActivity
+import com.checkin.app.checkin.utility.Utils
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties
 import com.fasterxml.jackson.annotation.JsonProperty
 import com.fasterxml.jackson.core.JsonParser
