@@ -270,7 +270,10 @@ class PublicRestaurantProfileActivity : BaseActivity(), AppBarLayout.OnOffsetCha
             it?.let { resource ->
                 networkViewModel.updateStatus(resource, LOAD_SYNC_USER_DETAILS)
                 when {
-                    resource.status == Resource.Status.SUCCESS -> scheduledSessionViewModel.isPhoneVerified = true
+                    resource.status == Resource.Status.SUCCESS -> {
+                        scheduledSessionViewModel.isPhoneVerified = true
+                        scheduledSessionViewModel.fetchSessionAppliedPromo()
+                    }
                     resource.problem?.getErrorCode() == ProblemModel.ERROR_CODE.ACCOUNT_ALREADY_REGISTERED -> {
                         Utils.toast(this, "This number already exists.")
                         onVerifyPhoneOfUser()
@@ -300,7 +303,10 @@ class PublicRestaurantProfileActivity : BaseActivity(), AppBarLayout.OnOffsetCha
                     paytmPayment.initializePayment(paytmModelResource.data, this)
                 } else if (paytmModelResource.status !== Resource.Status.LOADING) {
                     when (paytmModelResource.problem?.getErrorCode()) {
-                        ProblemModel.ERROR_CODE.USER_MISSING_PHONE -> onVerifyPhoneOfUser()
+                        ProblemModel.ERROR_CODE.USER_MISSING_PHONE -> {
+                            scheduledSessionViewModel.isPhoneVerified = false
+                            onVerifyPhoneOfUser()
+                        }
                         ProblemModel.ERROR_CODE.SESSION_SCHEDULED_CBYG_INVALID_PLANNED_TIME -> scheduledCartView.switchTime()
                     }
                     Utils.toast(this, paytmModelResource.message)

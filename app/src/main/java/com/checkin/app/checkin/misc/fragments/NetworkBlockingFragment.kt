@@ -39,8 +39,7 @@ class NetworkBlockingFragment : BaseFragment() {
                     Resource.Status.ERROR_UNKNOWN,
                     Resource.Status.ERROR_NOT_FOUND_CACHED -> handleError(resource)
                     Resource.Status.LOADING -> handleLoading()
-                    Resource.Status.SUCCESS,
-                    Resource.Status.ERROR_BUT_LOADED_CACHED -> handleSuccess()
+                    else -> handleSuccess()
                 }
             } ?: handleSuccess()
         })

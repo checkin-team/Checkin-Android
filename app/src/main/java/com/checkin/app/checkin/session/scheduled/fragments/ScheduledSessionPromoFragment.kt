@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.text.TextUtils
 import android.view.View
 import android.widget.EditText
+import android.widget.TextView
 import androidx.core.os.bundleOf
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.Observer
@@ -19,7 +20,6 @@ import com.checkin.app.checkin.session.activesession.ActiveSessionPromoAdapter.o
 import com.checkin.app.checkin.session.models.PromoDetailModel
 import com.checkin.app.checkin.session.scheduled.viewmodels.NewScheduledSessionViewModel
 import com.checkin.app.checkin.utility.Utils
-import com.checkin.app.checkin.utility.inTransaction
 
 
 class ScheduledSessionPromoFragment : BaseFragment(), onPromoCodeItemListener {
@@ -29,6 +29,8 @@ class ScheduledSessionPromoFragment : BaseFragment(), onPromoCodeItemListener {
     internal lateinit var rvPromos: RecyclerView
     @BindView(R.id.ed_promo_code)
     internal lateinit var edPromoCode: EditText
+    @BindView(R.id.tv_session_promo_heading)
+    internal lateinit var tvHeading: TextView
 
     private val mViewModel: NewScheduledSessionViewModel by activityViewModels()
     private lateinit var mAdapter: ActiveSessionPromoAdapter
@@ -44,7 +46,10 @@ class ScheduledSessionPromoFragment : BaseFragment(), onPromoCodeItemListener {
     private fun setupObservers() {
         mViewModel.promoCodes.observe(this, Observer {
             it?.let { listResource ->
-                if (listResource.status === Resource.Status.SUCCESS && listResource.data != null) mAdapter.setData(listResource.data)
+                if (listResource.status === Resource.Status.SUCCESS && listResource.data != null) {
+                    tvHeading.setText(if (listResource.data.isNotEmpty()) R.string.heading_available_promo else R.string.heading_no_promo)
+                    mAdapter.setData(listResource.data)
+                }
                 else if (listResource.status == Resource.Status.ERROR_FORBIDDEN) parentFragmentManager.popBackStack()
                 else if (listResource.status !== Resource.Status.LOADING) Utils.toast(requireContext(), listResource.message)
             }
@@ -55,9 +60,7 @@ class ScheduledSessionPromoFragment : BaseFragment(), onPromoCodeItemListener {
                 var msg = objectNodeResource.message
                 if (objectNodeResource.status === Resource.Status.SUCCESS) {
                     mViewModel.resetObservableData()
-                    parentFragmentManager.inTransaction {
-                        remove(this@ScheduledSessionPromoFragment)
-                    }
+                    parentFragmentManager.popBackStack()
                     if (objectNodeResource.data != null && objectNodeResource.data.has("code")) {
                         msg = "Successfully applied " + objectNodeResource.data["code"]
                     }

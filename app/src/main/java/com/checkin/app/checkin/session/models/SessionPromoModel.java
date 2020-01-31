@@ -1,6 +1,7 @@
 package com.checkin.app.checkin.session.models;
 
 import com.checkin.app.checkin.misc.models.BriefModel;
+import com.checkin.app.checkin.utility.Utils;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
@@ -66,6 +67,6 @@ public class SessionPromoModel {
     }
 
     public String getDetails() {
-        return String.format("%s - %s", code, name);
+        return String.format("%s - %s", code, Utils.fromHtml(name));
     }
 }

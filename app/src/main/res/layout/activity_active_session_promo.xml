@@ -5,6 +5,7 @@
     android:background="@color/white"
     android:orientation="vertical"
     android:padding="@dimen/spacing_normal">
+
     <LinearLayout
         style="@style/RoundedInputTextStyle"
         android:layout_width="match_parent"
@@ -30,11 +31,12 @@
     </LinearLayout>
 
     <TextView
+        android:id="@+id/tv_session_promo_heading"
         style="@style/GreyTextStyle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/spacing_normal"
-        android:text="Available Promo" />
+        android:text="@string/heading_available_promo" />
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/rv_available_promos"

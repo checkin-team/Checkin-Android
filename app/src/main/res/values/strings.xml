@@ -212,6 +212,8 @@
     <string name="activate_fetch_live_order">activate!\nto fetch\n<font color="#af1014">live orders</font></string>
     <string name="session_benefits_apply_promo_code">Apply Promo Code</string>
     <string name="active_session_fetching_offers">Fetching Available Offers…</string>
+    <string name="heading_available_promo">Available Promos</string>
+    <string name="heading_no_promo">No Promo available right now.</string>
     <string name="button_apply">Apply</string>
     <string name="label_session_offer_not_allowed_phone_not_registered">Offers not allowed - Register your mobile number first.</string>
     <string name="label_session_offer_not_allowed_session_requested_checkout">Offers not allowed - Session already requested checkout.</string>
