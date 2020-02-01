@@ -146,11 +146,10 @@ class UserCurrentLocationService : Service(), Callback<UserLocationModel> {
 
     private fun onNewLocation(location: Location) {
         Log.i(TAG, "New location: $location")
-        val serviceIntent = Intent(this, FetchAddressIntentService::class.java).apply {
+        Intent(this, FetchAddressIntentService::class.java).apply {
             putExtra(AppUtils.LocationConstants.RECEIVER, addressReceiver)
             putExtra(AppUtils.LocationConstants.LOCATION_DATA_EXTRA, location)
-        }
-        startService(serviceIntent)
+        }.runCatching { startService(this) }
     }
 
     internal fun pushLocationData(location: Location, address: Address) {

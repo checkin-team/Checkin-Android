@@ -43,8 +43,10 @@ class ScheduledCartViewModel(application: Application) : BaseCartViewModel(appli
 
     private fun <T> processServerResult(resource: Resource<T>): Resource<T> {
         if (resource.status == Resource.Status.SUCCESS) {
-            updateCartFromServer(mCurrentItem.value!!)
-            mCurrentItem.value = null
+            mCurrentItem.value?.let {
+                updateCartFromServer(it)
+                mCurrentItem.value = null
+            }
         }
         return resource
     }

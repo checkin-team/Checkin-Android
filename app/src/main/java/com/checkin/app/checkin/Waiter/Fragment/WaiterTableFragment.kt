@@ -10,8 +10,8 @@ import android.view.*
 import android.widget.Button
 import android.widget.EditText
 import android.widget.TextView
+import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModelProviders
 import butterknife.BindView
 import butterknife.OnClick
 import com.checkin.app.checkin.R
@@ -24,10 +24,12 @@ import com.checkin.app.checkin.data.resource.Resource.Status
 import com.checkin.app.checkin.menu.activities.ShopMenuActivity
 import com.checkin.app.checkin.misc.fragments.BaseFragment
 import com.checkin.app.checkin.session.models.SessionBriefModel
-import com.checkin.app.checkin.utility.ParentActivityDelegate
 import com.checkin.app.checkin.utility.Utils
+import com.checkin.app.checkin.utility.parentActivityDelegate
+import org.koin.androidx.viewmodel.ext.android.getSharedViewModel
 
 class WaiterTableFragment : BaseFragment() {
+    override val rootLayout: Int = R.layout.fragment_waiter_table
 
     @BindView(R.id.container_waiter_table_actions)
     internal lateinit var containerActions: ViewGroup
@@ -40,14 +42,11 @@ class WaiterTableFragment : BaseFragment() {
     @BindView(R.id.container_waiter_members_count)
     internal lateinit var containerMembersCount: ViewGroup
 
-    private val mListener: WaiterTableInteraction by ParentActivityDelegate(this)
-    var viewModel: WaiterTableViewModel? = null
+    private val mListener: WaiterTableInteraction by parentActivityDelegate()
+    val viewModel: WaiterTableViewModel by viewModels()
 
-    private var shopPk: Long = 0
+    private val shopPk: Long by lazy { getSharedViewModel<WaiterWorkViewModel>().shopPk }
     private var mContactAddDialog: Dialog? = null
-
-    override val rootLayout: Int
-        get() = R.layout.fragment_waiter_table
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         if (arguments == null)
@@ -56,33 +55,28 @@ class WaiterTableFragment : BaseFragment() {
         buildContactAddDialog()
         mContactAddDialog?.setOnDismissListener { Utils.setKeyboardVisibility(tvSessionBill, false) }
 
-        shopPk = ViewModelProviders.of(requireActivity()).get(WaiterWorkViewModel::class.java).shopPk
+        viewModel.fetchSessionDetail(arguments!!.getLong(KEY_WAITER_TABLE_ID, 0))
 
-        viewModel = ViewModelProviders.of(this).get(WaiterTableViewModel::class.java)
-        viewModel!!.fetchSessionDetail(arguments!!.getLong(KEY_WAITER_TABLE_ID, 0))
-
-        viewModel!!.sessionDetail.observe(this, Observer {
+        viewModel.sessionDetail.observe(this, Observer {
             it?.let { resource ->
                 if (resource.status === Status.SUCCESS && resource.data != null) {
                     setupTableData(resource.data)
                 } else if (resource.status === Status.ERROR_NOT_FOUND) {
-                    mListener.endSession(viewModel!!.sessionPk)
+                    endSession()
                 }
             }
         })
-        viewModel!!.checkoutData.observe(this, Observer {
+        viewModel.checkoutData.observe(this, Observer {
             it?.let { resource ->
                 if (resource.status === Status.SUCCESS && resource.data != null) {
                     Utils.toast(requireContext(), resource.data.message)
-                    if (resource.data.isCheckout) {
-                        mListener.endSession(viewModel!!.sessionPk)
-                    }
+                    if (resource.data.isCheckout) endSession()
                 } else if (resource.status !== Status.LOADING && resource.message != null) {
                     Utils.toast(requireContext(), resource.message)
                 }
             }
         })
-        viewModel!!.observableData.observe(this, Observer {
+        viewModel.observableData.observe(this, Observer {
             it?.let { input ->
                 if (input.status === Status.SUCCESS && input.data != null)
                     Utils.toast(requireContext(), "User contact details added successfully.")
@@ -91,9 +85,9 @@ class WaiterTableFragment : BaseFragment() {
             }
         })
 
-        viewModel!!.fetchSessionContacts()
+        viewModel.fetchSessionContacts()
 
-        viewModel!!.sessionContactListData.observe(this, Observer {
+        viewModel.sessionContactListData.observe(this, Observer {
             it?.let { input ->
                 if (input.status === Status.SUCCESS && input.data != null) {
                     if (input.data.size > 0) {
@@ -143,7 +137,7 @@ class WaiterTableFragment : BaseFragment() {
                 Utils.toast(requireContext(), "Please enter valid email.")
                 return@setOnClickListener
             }
-            viewModel?.postSessionContact(email, phone)
+            viewModel.postSessionContact(email, phone)
             mContactAddDialog!!.dismiss()
         }
     }
@@ -159,6 +153,11 @@ class WaiterTableFragment : BaseFragment() {
             etEmail.setText(email)
         if (phone != null)
             etPhone.setText(phone)
+    }
+
+    // Most often causes NPE since fragment is over
+    private fun endSession() {
+        runCatching<Unit> { mListener.endSession(viewModel.sessionPk) }
     }
 
     private fun setupTableData(data: SessionBriefModel) {
@@ -194,17 +193,17 @@ class WaiterTableFragment : BaseFragment() {
     }
 
     override fun updateScreen() {
-        viewModel?.updateResults()
+        viewModel.updateResults()
     }
 
     @OnClick(R.id.btn_waiter_table_checkout)
     fun onClickCheckout() {
-        viewModel?.requestSessionCheckout()
+        viewModel.requestSessionCheckout()
     }
 
     @OnClick(R.id.btn_waiter_table_menu)
     fun onClickMenu() {
-        ShopMenuActivity.openMenu(requireContext(), shopPk, viewModel!!.sessionPk)
+        ShopMenuActivity.openMenu(requireContext(), shopPk, viewModel.sessionPk)
     }
 
     @OnClick(R.id.container_waiter_no_member)
@@ -218,7 +217,7 @@ class WaiterTableFragment : BaseFragment() {
 
     override fun onResume() {
         super.onResume()
-        MessageUtils.dismissNotification(requireContext(), MessageObjectModel.MESSAGE_OBJECT_TYPE.SESSION, viewModel!!.sessionPk)
+        MessageUtils.dismissNotification(requireContext(), MessageObjectModel.MESSAGE_OBJECT_TYPE.SESSION, viewModel.sessionPk)
         updateScreen()
     }
 

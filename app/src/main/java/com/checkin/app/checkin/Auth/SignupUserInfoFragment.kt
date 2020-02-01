@@ -36,10 +36,12 @@ class SignupUserInfoFragment : BaseFragment() {
     override val rootLayout = R.layout.fragment_signup_user_info
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        if (arguments != null) {
-            val name = arguments!!.getString(KEY_NAME)
-            edFirstName.setText(name!!.substring(0, name.indexOf(" ")))
+        val name = arguments?.getString(KEY_NAME) ?: ""
+        name.indexOf(" ").takeIf { it > 0 }?.let {
+            edFirstName.setText(name.substring(0, it))
             edLastName.setText(name.substring(name.lastIndexOf(" ")))
+        } ?: kotlin.run {
+            edFirstName.setText(name)
         }
 
         val viewModel = ViewModelProviders.of(requireActivity()).get(AuthViewModel::class.java)
