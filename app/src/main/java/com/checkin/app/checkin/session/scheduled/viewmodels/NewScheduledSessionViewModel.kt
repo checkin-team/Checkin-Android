@@ -44,6 +44,9 @@ class NewScheduledSessionViewModel(application: Application) : BaseViewModel(app
 
     private var sessionRemarksJob: Job? = null
 
+    lateinit var retrySessionBody: NewScheduledSessionModel
+    lateinit var retryQrData: String
+
     var sessionPk: Long = 0
     var isPhoneVerified = true
 
@@ -68,6 +71,12 @@ class NewScheduledSessionViewModel(application: Application) : BaseViewModel(app
         val body = NewScheduledSessionModel(countPeople = countPeople, plannedDatetime = plannedTime, remarks = remarks).apply {
             this.restaurantId = restaurantId
         }
+        retrySessionBody = body
+        mNewSessionData.addSource(sessionRepository.newScheduledSession(body), mNewSessionData::setValue)
+    }
+
+    private fun createNewScheduledSession(body: NewScheduledSessionModel) {
+        retrySessionBody = body
         mNewSessionData.addSource(sessionRepository.newScheduledSession(body), mNewSessionData::setValue)
     }
 
@@ -109,6 +118,15 @@ class NewScheduledSessionViewModel(application: Application) : BaseViewModel(app
         doPostPaytmCallback(data, listener)
     }
 
+    fun retrySessionCreation() {
+        if (::retryQrData.isInitialized) {
+            createNewQrSession(retryQrData)
+        }
+        if (::retrySessionBody.isInitialized) {
+            createNewScheduledSession(retrySessionBody)
+        }
+    }
+
     fun retryPostPaytmCallback() = lastPaymentBundle?.let { postPaytmCallback(it) }
 
     fun requestPaytmDetails() {
@@ -121,6 +139,7 @@ class NewScheduledSessionViewModel(application: Application) : BaseViewModel(app
 
     fun createNewQrSession(data: String) {
         val requestJson = objectMapper.createObjectNode()
+        retryQrData = data
         requestJson.put("data", data)
         mQrResult.addSource(sessionRepository.newCustomerSession(requestJson), mQrResult::setValue)
     }

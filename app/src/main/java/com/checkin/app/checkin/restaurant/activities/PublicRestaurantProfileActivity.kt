@@ -365,7 +365,7 @@ class PublicRestaurantProfileActivity : BaseActivity(), AppBarLayout.OnOffsetCha
         cartViewModel.sessionPk = 0L
         scheduledSessionViewModel.sessionPk = 0L
 
-
+        scheduledSessionViewModel.retrySessionCreation()
     }
 
     private fun setupData(restaurantModel: RestaurantModel) {
