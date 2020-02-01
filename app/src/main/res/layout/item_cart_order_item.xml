@@ -20,12 +20,13 @@
     <TextView
         android:id="@+id/tv_cart_ordered_item_name"
         style="@style/GreyTextStyle"
-        android:layout_width="wrap_content"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="@dimen/spacing_small"
         android:gravity="center|start"
         app:layout_constraintStart_toEndOf="@id/im_cart_ordered_item_type"
         app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintEnd_toStartOf="@id/container_cart_quantity_change"
         tools:text="pizza x 1" />
 
     <TextView
@@ -62,6 +63,7 @@
         app:constraint_referenced_ids="im_cart_ordered_item_type" />
 
     <FrameLayout
+        android:id="@+id/container_cart_quantity_change"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginEnd="@dimen/spacing_small"
