@@ -33,6 +33,8 @@ class BillHolder(itemView: View) {
     internal lateinit var containerInvoiceCharge: ViewGroup
     @BindView(R.id.container_invoice_tax)
     internal lateinit var containerInvoiceTax: ViewGroup
+    @BindView(R.id.container_invoice_tip)
+    internal lateinit var containerInvoiceTip: ViewGroup
     @BindView(R.id.container_invoice_promo)
     internal lateinit var containerInvoicePromo: ViewGroup
     @BindView(R.id.container_invoice_discount)
@@ -85,7 +87,10 @@ class BillHolder(itemView: View) {
             } else containerInvoiceDiscount.visibility = View.GONE
         }
         // Tip
-        tvInvoiceTip.text = Utils.formatCurrencyAmount(mContext, bill.tip)
+        if (bill.tip > 0) {
+            tvInvoiceTip.text = Utils.formatCurrencyAmount(mContext, bill.tip)
+            containerInvoiceTip.visibility = View.VISIBLE
+        } else containerInvoiceTip.visibility = View.GONE
     }
 
     private fun stopLoading() {
