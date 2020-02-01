@@ -2,7 +2,6 @@ package com.checkin.app.checkin.manager.activities
 
 import android.content.Intent
 import android.os.Bundle
-import android.view.ViewGroup
 import android.widget.TextView
 import androidx.activity.viewModels
 import androidx.appcompat.widget.SwitchCompat
@@ -83,7 +82,13 @@ class ManagerWorkActivity : BaseAccountActivity(), LiveOrdersInteraction {
             pagerAdapter.setupWithTab(tabLayout, pagerManager)
             ShopPreferences.setManagerLiveOrdersActivated(this, isChecked)
         }
-        setLiveOrdersActivation(ShopPreferences.isManagerLiveOrdersActivated(this))
+
+        // Set Initial state of orders activation
+        val isActivated = ShopPreferences.isManagerLiveOrdersActivated(this)
+        setLiveOrdersActivation(isActivated)
+        pagerAdapter.oldValActivated = isActivated
+
+
         val shouldOpenInvoice = intent.getBooleanExtra(KEY_NOTIF_OPEN_LAST_TABLES, false)
         if (shouldOpenInvoice) {
             pagerManager.setCurrentItem(2, true)
@@ -140,7 +145,8 @@ class ManagerWorkActivity : BaseAccountActivity(), LiveOrdersInteraction {
         }
     }
 
-    internal class ManagerFragmentAdapter(val fm: FragmentManager) : BaseFragmentAdapterBottomNav(fm) {
+    internal class ManagerFragmentAdapter(fm: FragmentManager) : BaseFragmentAdapterBottomNav(fm) {
+        var oldValActivated = true
         private var isActivated = true
         private val mTableFragment = ManagerLiveOrdersFragment.newInstance()
         private val mActiveTableFragment = ManagerTablesActivateFragment.newInstance()
@@ -158,9 +164,10 @@ class ManagerWorkActivity : BaseAccountActivity(), LiveOrdersInteraction {
             else -> ManagerInvoiceFragment.newInstance()
         }
 
-        override fun getItemPosition(`object`: Any): Int {
-            return PagerAdapter.POSITION_NONE
-        }
+        override fun getItemPosition(obj: Any): Int = if (oldValActivated != isActivated) {
+            oldValActivated = isActivated
+            PagerAdapter.POSITION_NONE
+        } else PagerAdapter.POSITION_UNCHANGED
 
         override fun getCount(): Int = 3
 
@@ -175,12 +182,6 @@ class ManagerWorkActivity : BaseAccountActivity(), LiveOrdersInteraction {
             isActivated = isChecked
             notifyDataSetChanged()
         }
-
-        override fun destroyItem(container: ViewGroup, position: Int, `object`: Any) {
-            super.destroyItem(container, position, `object`)
-            fm.beginTransaction().remove((`object` as Fragment)).commitNowAllowingStateLoss()
-        }
-
     }
 
     companion object {

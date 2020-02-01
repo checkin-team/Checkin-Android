@@ -26,7 +26,7 @@ abstract class BaseCartViewModel(application: Application) : BaseViewModel(appli
 
     val orderedSubTotal: LiveData<Double> = Transformations.map(mOrderedItems) { it.sumByDouble { it.cost } }
 
-    val itemOrderedCounts: LiveData<Map<Long, Int>> = Transformations.map(mOrderedItems) {
+    open val itemOrderedCounts: LiveData<Map<Long, Int>> = Transformations.map(mOrderedItems) {
         it?.let {
             it.groupBy({ it.itemPk() }, { it.quantity }).mapValues { it.value.sum() }
         }

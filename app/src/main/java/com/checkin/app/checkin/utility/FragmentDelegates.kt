@@ -53,6 +53,7 @@ abstract class BaseParentDelegate<T>(private val fragment: Fragment) :
     }
 
     override operator fun getValue(thisRef: Fragment, property: KProperty<*>): T {
+        if (value == null) value = extractValue(thisRef)
         return value!!
     }
 }

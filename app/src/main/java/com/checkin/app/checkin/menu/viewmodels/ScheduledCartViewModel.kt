@@ -7,6 +7,7 @@ import androidx.lifecycle.Transformations
 import com.checkin.app.checkin.data.db.AppDatabase
 import com.checkin.app.checkin.data.resource.Resource
 import com.checkin.app.checkin.menu.models.*
+import com.checkin.app.checkin.restaurant.models.RestaurantBriefModel
 import com.checkin.app.checkin.restaurant.models.RestaurantLocationModel
 import com.checkin.app.checkin.session.models.NewScheduledSessionModel
 import com.checkin.app.checkin.session.models.ScheduledSessionDetailModel
@@ -65,6 +66,13 @@ class ScheduledCartViewModel(application: Application) : BaseCartViewModel(appli
                         )
                     }
                     cartDetailData.value = resource
+                    if (mCartStatusData.value?.data == null) {
+                        mCartStatusData.value = Resource.success(CartStatusModel(resource.data.pk).apply {
+                            resource.data.restaurant.let {
+                                setRestaurantInfo(RestaurantBriefModel(it.pk, it.name, it.logo))
+                            }
+                        })
+                    }
                 }
             }
         }
@@ -167,5 +175,11 @@ class ScheduledCartViewModel(application: Application) : BaseCartViewModel(appli
     }
 
     override fun updateResults() {
+    }
+
+    fun resetCart() {
+        mOrderedItems.value = emptyList()
+        cartDetailData.value = Resource.errorNotFound(null)
+        mCartStatusData.value = Resource.errorNotFound(null)
     }
 }

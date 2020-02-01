@@ -25,9 +25,6 @@ class ManagerTablesActivateFragment : BaseFragment() {
     }
 
     companion object {
-        @JvmStatic
-        fun newInstance(): ManagerTablesActivateFragment {
-            return ManagerTablesActivateFragment()
-        }
+        fun newInstance(): ManagerTablesActivateFragment = ManagerTablesActivateFragment()
     }
 }

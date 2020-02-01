@@ -5,7 +5,9 @@ import io.objectbox.annotation.Entity
 import io.objectbox.annotation.Id
 
 @Entity
-class RestaurantBriefModel : BriefModel() {
+class RestaurantBriefModel(pk: Long, name: String?, logo: String?) : BriefModel(pk, name, logo) {
+    constructor() : this(0, null, null)
+
     @Id(assignable = true)
     override var pk: Long = 0
 

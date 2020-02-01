@@ -44,8 +44,8 @@ class NewScheduledSessionViewModel(application: Application) : BaseViewModel(app
 
     private var sessionRemarksJob: Job? = null
 
-    lateinit var retrySessionBody: NewScheduledSessionModel
-    lateinit var retryQrData: String
+    private lateinit var retrySessionBody: NewScheduledSessionModel
+    private lateinit var retryQrData: ObjectNode
 
     var sessionPk: Long = 0
     var isPhoneVerified = true
@@ -71,8 +71,7 @@ class NewScheduledSessionViewModel(application: Application) : BaseViewModel(app
         val body = NewScheduledSessionModel(countPeople = countPeople, plannedDatetime = plannedTime, remarks = remarks).apply {
             this.restaurantId = restaurantId
         }
-        retrySessionBody = body
-        mNewSessionData.addSource(sessionRepository.newScheduledSession(body), mNewSessionData::setValue)
+        createNewScheduledSession(body)
     }
 
     private fun createNewScheduledSession(body: NewScheduledSessionModel) {
@@ -138,9 +137,12 @@ class NewScheduledSessionViewModel(application: Application) : BaseViewModel(app
     }
 
     fun createNewQrSession(data: String) {
-        val requestJson = objectMapper.createObjectNode()
-        retryQrData = data
-        requestJson.put("data", data)
+        val requestJson = objectMapper.createObjectNode().apply { put("data", data) }
+        createNewQrSession(requestJson)
+    }
+
+    private fun createNewQrSession(requestJson: ObjectNode) {
+        retryQrData = requestJson
         mQrResult.addSource(sessionRepository.newCustomerSession(requestJson), mQrResult::setValue)
     }
 

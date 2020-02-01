@@ -24,7 +24,7 @@ abstract class BaseMenuViewModel(application: Application) : BaseViewModel(appli
     private val mFilteredString = MutableLiveData<String>()
     private val mSelectedCategory = MutableLiveData<String>()
 
-    protected var mShopPk: Long = 0
+    protected var shopPk: Long = 0
 
     val menuGroups: LiveData<Resource<List<MenuGroupModel>>> = mMenuGroups
 
@@ -199,7 +199,7 @@ abstract class BaseMenuViewModel(application: Application) : BaseViewModel(appli
     }
 
     open fun fetchAvailableMenu(shopId: Long) {
-        mShopPk = shopId
+        shopPk = shopId
         mMenuData.addSource(mRepository.getAvailableMenu(shopId), mMenuData::setValue)
         resetMenuGroups()
 
@@ -251,6 +251,6 @@ abstract class BaseMenuViewModel(application: Application) : BaseViewModel(appli
     }
 
     override fun updateResults() {
-        mMenuData.addSource(mRepository.getAvailableMenu(mShopPk), mMenuData::setValue)
+        mMenuData.addSource(mRepository.getAvailableMenu(shopPk), mMenuData::setValue)
     }
 }

@@ -68,7 +68,7 @@ import kotlin.math.abs
 class PublicRestaurantProfileActivity : BaseActivity(), AppBarLayout.OnOffsetChangedListener,
         ScheduledSessionInteraction, QRScannerWrapperInteraction,
         NewSessionCreationInteraction, SchedulerInteraction,
-        OtpVerificationDialog.AuthCallback, MenuGroupScreenInteraction {
+        OtpVerificationDialog.AuthCallback, MenuGroupScreenInteraction, ScheduledMenuFragment.CartInteraction {
     @BindView(R.id.indicator_restaurant_public_covers)
     internal lateinit var indicatorTopCover: PageIndicatorView2
     @BindView(R.id.fragment_vp_restaurant_public)
@@ -98,6 +98,7 @@ class PublicRestaurantProfileActivity : BaseActivity(), AppBarLayout.OnOffsetCha
 
     private lateinit var fragmentAdapter: PublicRestaurantProfileAdapter
     private val coverAdapter = CoverPagerAdapter(R.drawable.cover_restaurant_unknown)
+    private val autoOpenCart: Boolean by lazy { intent.getBooleanExtra(KEY_OPEN_CART, false) }
 
     @Suppress("UNUSED")
     private val menuViewModel: UserMenuViewModel by viewModels()
@@ -175,6 +176,7 @@ class PublicRestaurantProfileActivity : BaseActivity(), AppBarLayout.OnOffsetCha
             }
         })
         tabsFragment.setBackgroundResource(R.color.white)
+
         restaurantViewModel.fetchRestaurantWithId(restaurantId)
 
         scheduledCartView.setup(this)
@@ -214,8 +216,7 @@ class PublicRestaurantProfileActivity : BaseActivity(), AppBarLayout.OnOffsetCha
         })
 
         cartViewModel.cartDetailData.observe(this, Observer {
-            if (it?.status == Resource.Status.SUCCESS && intent.getBooleanExtra(KEY_OPEN_CART, false))
-                scheduledCartView.show()
+            if (it?.status == Resource.Status.SUCCESS && autoOpenCart && shouldOpenCart()) scheduledCartView.show()
         })
 
         restaurantViewModel.restaurantData.observe(this, Observer {
@@ -340,7 +341,10 @@ class PublicRestaurantProfileActivity : BaseActivity(), AppBarLayout.OnOffsetCha
                 .setTitle("Cart item exists")
                 .setMessage("Are you sure you want to clear the cart of ${cartRestaurant.displayName}?")
                 .setPositiveButton("Yes") { _, _ -> scheduledSessionViewModel.clearCart() }
-                .setNegativeButton("No") { dialog, _ -> dialog.cancel() }
+                .setNegativeButton("No") { dialog, _ ->
+                    scheduledCartView.dismiss()
+                    dialog.cancel()
+                }
                 .show()
     }
 
@@ -382,6 +386,7 @@ class PublicRestaurantProfileActivity : BaseActivity(), AppBarLayout.OnOffsetCha
     private fun clearSession() {
         cartViewModel.sessionPk = 0L
         scheduledSessionViewModel.sessionPk = 0L
+        cartViewModel.resetCart()
 
         scheduledSessionViewModel.retrySessionCreation()
     }
@@ -456,12 +461,17 @@ class PublicRestaurantProfileActivity : BaseActivity(), AppBarLayout.OnOffsetCha
         ViewCompat.setNestedScrollingEnabled(nestedSv, false)
     }
 
+    override fun shouldOrder(): Boolean = if (cartViewModel.sessionPk == 0L)
+        cartViewModel.cartStatus.value?.data?.let {
+            handleErrorCartExists(it.restaurant.target)
+            false
+        } ?: true else true
+
     override fun shouldOpenCart(): Boolean {
-        if (cartViewModel.sessionPk == 0L) {
+        if (shouldOrder() && cartViewModel.sessionPk == 0L)
             ChooseQrOrScheduleBottomSheetFragment().show(supportFragmentManager, ChooseQrOrScheduleBottomSheetFragment.FRAGMENT_TAG)
-        } else if (!scheduledSessionViewModel.isPhoneVerified) {
-            onVerifyPhoneOfUser()
-        } else return true
+        else if (!scheduledSessionViewModel.isPhoneVerified) onVerifyPhoneOfUser()
+        else return true
         return false
     }
 

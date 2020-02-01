@@ -41,11 +41,11 @@ class UserMenuViewModel(application: Application) : BaseMenuViewModel(applicatio
     }
 
     fun fetchRecommendedItems() {
-        mRecommendedData.addSource(mRepository.getRecommendedDishes(mShopPk), mRecommendedData::setValue)
+        mRecommendedData.addSource(mRepository.getRecommendedDishes(shopPk), mRecommendedData::setValue)
     }
 
     fun fetchTrendingItem() {
-        mTrendingData.addSource(mActiveSessionRepository.getTrendingDishes(mShopPk), mTrendingData::setValue)
+        mTrendingData.addSource(mActiveSessionRepository.getTrendingDishes(shopPk), mTrendingData::setValue)
     }
 
     suspend fun getMenuItemById(id: Long): MenuItemModel? = withContext(Dispatchers.Default) {

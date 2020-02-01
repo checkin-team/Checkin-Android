@@ -13,6 +13,7 @@ import androidx.lifecycle.Observer
 import butterknife.BindView
 import butterknife.OnClick
 import com.checkin.app.checkin.R
+import com.checkin.app.checkin.data.resource.Resource
 import com.checkin.app.checkin.menu.listeners.MenuItemInteraction
 import com.checkin.app.checkin.menu.models.MenuItemModel
 import com.checkin.app.checkin.menu.viewmodels.BaseCartViewModel
@@ -65,7 +66,7 @@ abstract class BaseMenuFragment :
         menuViewModel.fetchAvailableMenu(restaurantId)
         menuViewModel.originalMenuGroups.observe(this, Observer {
             networkViewModel.updateStatusForOnlyError(it, LOAD_MENU_DATA)
-            onMenuFetched()
+            if (it?.status == Resource.Status.SUCCESS) onMenuFetched()
         })
         networkViewModel.shouldTryAgain {
             if (it == LOAD_MENU_DATA) menuViewModel.fetchAvailableMenu(restaurantId)
@@ -134,7 +135,7 @@ abstract class BaseMenuFragment :
 
     }
 
-    private fun onItemInteraction(item: MenuItemModel) {
+    protected open fun onItemInteraction(item: MenuItemModel) {
         if (item.isComplexItem) ItemCustomizationBottomSheetFragment.newInstance(item).show(childFragmentManager, ItemCustomizationBottomSheetFragment.FRAGMENT_TAG)
         else order()
     }
