@@ -21,12 +21,14 @@ import com.airbnb.epoxy.EpoxyRecyclerView
 import com.checkin.app.checkin.R
 import com.checkin.app.checkin.data.resource.Resource
 import com.checkin.app.checkin.menu.controllers.getUniqueId
+import com.checkin.app.checkin.menu.fragments.MenuDishSearchFragment
 import com.checkin.app.checkin.menu.fragments.MenuFragment
 import com.checkin.app.checkin.menu.fragments.MenuGroupScreenInteraction
 import com.checkin.app.checkin.menu.holders.ShopMenuCartModelHolder
 import com.checkin.app.checkin.menu.holders.shopMenuCartModelHolder
 import com.checkin.app.checkin.menu.models.OrderedItemModel
 import com.checkin.app.checkin.menu.viewmodels.ActiveSessionCartViewModel
+import com.checkin.app.checkin.menu.viewmodels.UserMenuViewModel
 import com.checkin.app.checkin.misc.BlockingNetworkViewModel
 import com.checkin.app.checkin.misc.activities.BaseActivity
 import com.checkin.app.checkin.misc.fragments.NetworkBlockingFragment
@@ -48,6 +50,9 @@ class ShopMenuActivity : BaseActivity(), ShopMenuCartModelHolder.MenuCartInterac
     internal lateinit var nestedSv: NestedScrollView
     @BindView(R.id.tv_shop_menu_subtotal)
     internal lateinit var tvSubtotal: TextView
+
+    @Suppress("UNUSED")
+    private val menuViewModel: UserMenuViewModel by viewModels()
 
     private val cartViewModel: ActiveSessionCartViewModel by viewModels()
     private val networkViewModel: BlockingNetworkViewModel by viewModels()
@@ -74,6 +79,9 @@ class ShopMenuActivity : BaseActivity(), ShopMenuCartModelHolder.MenuCartInterac
     private fun initUi() {
         val restaurantId = intent.getLongExtra(KEY_RESTAURANT_ID, 0L)
         val sessionId = intent.getLongExtra(KEY_SESSION_ID, 0L)
+
+        menuViewModel.clearFilters() // Necessary to get viewmodel since its lazy property
+
         supportFragmentManager.inTransaction {
             add(R.id.frg_container_activity, MenuFragment.newInstanceForShop(restaurantId, sessionId), null)
             add(android.R.id.content, NetworkBlockingFragment.withBlockingLoader(), NetworkBlockingFragment.FRAGMENT_TAG)
@@ -122,6 +130,13 @@ class ShopMenuActivity : BaseActivity(), ShopMenuCartModelHolder.MenuCartInterac
     }
 
     override fun onListBuilt() {
+    }
+
+    override fun onOpenSearch() {
+        supportFragmentManager.inTransaction {
+            add(R.id.frg_container_activity, MenuDishSearchFragment.newInstance(), MenuDishSearchFragment.FRAGMENT_TAG)
+            addToBackStack(null)
+        }
     }
 
     override fun onSupportNavigateUp(): Boolean {

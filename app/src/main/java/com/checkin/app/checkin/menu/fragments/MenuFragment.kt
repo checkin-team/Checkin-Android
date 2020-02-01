@@ -4,14 +4,13 @@ import android.os.Bundle
 import android.view.View
 import androidx.core.os.bundleOf
 import androidx.fragment.app.activityViewModels
-import androidx.fragment.app.viewModels
 import com.checkin.app.checkin.R
 import com.checkin.app.checkin.menu.viewmodels.ActiveSessionCartViewModel
 import com.checkin.app.checkin.menu.viewmodels.UserMenuViewModel
 import com.checkin.app.checkin.utility.inTransaction
 
 class MenuFragment : BaseMenuFragment() {
-    override val menuViewModel: UserMenuViewModel by viewModels()
+    override val menuViewModel: UserMenuViewModel by activityViewModels()
     override val cartViewModel: ActiveSessionCartViewModel by activityViewModels()
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {

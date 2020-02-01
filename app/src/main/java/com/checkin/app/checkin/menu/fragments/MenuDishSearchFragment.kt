@@ -13,17 +13,15 @@ import com.checkin.app.checkin.R
 import com.checkin.app.checkin.data.resource.Resource
 import com.checkin.app.checkin.menu.controllers.UserMenuItemController
 import com.checkin.app.checkin.menu.holders.OnItemInteractionListener
-import com.checkin.app.checkin.menu.listeners.MenuItemInteraction
 import com.checkin.app.checkin.menu.models.MenuItemModel
 import com.checkin.app.checkin.menu.viewmodels.ScheduledCartViewModel
 import com.checkin.app.checkin.menu.viewmodels.UserMenuViewModel
-import com.checkin.app.checkin.misc.fragments.BaseDialogFragment
-import com.checkin.app.checkin.utility.parentFragmentDelegate
+import com.checkin.app.checkin.misc.fragments.BaseFragment
 import com.checkin.app.checkin.utility.parentViewModels
 import com.google.android.material.textfield.TextInputEditText
 
 
-class MenuDishSearchFragment : BaseDialogFragment(), OnItemInteractionListener {
+class MenuDishSearchFragment : BaseFragment(), OnItemInteractionListener, ItemCustomizationBottomSheetFragment.ItemCustomizationInteraction {
     override val rootLayout: Int = R.layout.fragment_menu_item_search
 
     @BindView(R.id.et_menu_search)
@@ -37,22 +35,9 @@ class MenuDishSearchFragment : BaseDialogFragment(), OnItemInteractionListener {
     @BindView(R.id.pb_menu_search_loading)
     internal lateinit var pbLoading: ProgressBar
 
-    val viewModel: UserMenuViewModel by parentViewModels()
+    private val viewModel: UserMenuViewModel by parentViewModels()
     private val cartViewModel: ScheduledCartViewModel by parentViewModels()
     private val itemController = UserMenuItemController(this)
-    val listener: MenuItemInteraction by parentFragmentDelegate()
-
-//    override fun onCreate(savedInstanceState: Bundle?) {
-//        super.onCreate(savedInstanceState)
-//        setStyle(STYLE_NORMAL, android.R.style.Theme_Black_NoTitleBar_Fullscreen)
-//    }
-
-    override fun onStart() {
-        super.onStart()
-        val width = ViewGroup.LayoutParams.MATCH_PARENT
-        val height = ViewGroup.LayoutParams.MATCH_PARENT
-        dialog?.window?.setLayout(width, height)
-    }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         epoxyRvItems.setControllerAndBuildModels(itemController)
@@ -95,20 +80,43 @@ class MenuDishSearchFragment : BaseDialogFragment(), OnItemInteractionListener {
         }
     }
 
-    override fun onItemAdded(item: MenuItemModel?): Boolean = item?.let {
-        listener.onMenuItemAdded(it)
-    } ?: false
-
-    override fun onItemLongPress(item: MenuItemModel): Boolean {
-        listener.onMenuItemShowInfo(item)
-        return true
+    override fun onCustomizationCancel() {
+        viewModel.cancelItem()
     }
 
-    override fun onItemChanged(item: MenuItemModel?, count: Int): Boolean = item?.let {
-        listener.onMenuItemChanged(it, count)
+    override fun onCustomizationDone() {
+        order()
+    }
+
+    private fun order() = viewModel.currentItem.value?.let {
+        cartViewModel.orderItem(it)
+        viewModel.resetItem()
+    }
+
+    private fun onItemInteraction(item: MenuItemModel) {
+        if (item.isComplexItem) ItemCustomizationBottomSheetFragment.newInstance(item).show(childFragmentManager, ItemCustomizationBottomSheetFragment.FRAGMENT_TAG)
+        else order()
+    }
+
+    override fun onItemAdded(item: MenuItemModel?): Boolean = item?.let {
+        viewModel.newOrderedItem(item)
+        onItemInteraction(item)
+        true
     } ?: false
+
+    override fun onItemLongPress(item: MenuItemModel): Boolean = true
+
+    override fun onItemChanged(item: MenuItemModel?, count: Int): Boolean = item?.let { menuItem ->
+        cartViewModel.updateOrderedItem(item, count)?.let {
+            viewModel.setCurrentItem(it)
+            this.onItemInteraction(item)
+            true
+        }
+    } ?: onItemAdded(item)
 
     companion object {
         const val FRAGMENT_TAG = "menu.search"
+
+        fun newInstance() = MenuDishSearchFragment()
     }
 }

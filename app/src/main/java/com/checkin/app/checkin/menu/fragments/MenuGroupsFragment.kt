@@ -27,9 +27,9 @@ import com.checkin.app.checkin.session.models.TrendingDishModel
 import com.checkin.app.checkin.utility.Utils
 import com.checkin.app.checkin.utility.parentActivityDelegate
 import com.checkin.app.checkin.utility.parentFragmentDelegate
-import com.checkin.app.checkin.utility.parentViewModels
 import kotlinx.coroutines.launch
 import org.koin.androidx.viewmodel.ext.android.getSharedViewModel
+import org.koin.androidx.viewmodel.ext.android.sharedViewModel
 
 class MenuGroupsFragment : BaseFragment(), OnGroupInteraction {
     override val rootLayout: Int = R.layout.fragment_user_menu_groups
@@ -44,7 +44,7 @@ class MenuGroupsFragment : BaseFragment(), OnGroupInteraction {
     private lateinit var groupController: UserMenuGroupController
 
     private val itemListener: MenuItemInteraction by parentFragmentDelegate()
-    private val viewModel: UserMenuViewModel by parentViewModels()
+    private val viewModel: UserMenuViewModel by sharedViewModel()
     private val cartViewModel: BaseCartViewModel by lazy {
         when (arguments?.getInt(KEY_CART_VM_TYPE) ?: 0) {
             0 -> getSharedViewModel(ActiveSessionCartViewModel::class)
@@ -150,4 +150,5 @@ class MenuGroupsFragment : BaseFragment(), OnGroupInteraction {
 interface MenuGroupScreenInteraction {
     fun onListBuilt()
     fun onExpandGroupView(view: View)
+    fun onOpenSearch()
 }

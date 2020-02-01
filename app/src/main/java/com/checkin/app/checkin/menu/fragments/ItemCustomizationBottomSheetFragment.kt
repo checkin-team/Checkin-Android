@@ -140,6 +140,8 @@ class ItemCustomizationBottomSheetFragment : BaseBottomSheetFragment(), ItemCust
     private fun selectType(position: Int) = viewModel.setSelectedType(position)
 
     companion object {
+        const val FRAGMENT_TAG = "menu.customization_fragment"
+
         fun newInstance(item: MenuItemModel) = ItemCustomizationBottomSheetFragment().apply { itemModel = item }
     }
 

@@ -19,6 +19,7 @@ import com.checkin.app.checkin.menu.viewmodels.BaseCartViewModel
 import com.checkin.app.checkin.menu.viewmodels.BaseMenuViewModel
 import com.checkin.app.checkin.misc.BlockingNetworkViewModel
 import com.checkin.app.checkin.misc.fragments.BaseFragment
+import com.checkin.app.checkin.utility.parentActivityDelegate
 
 abstract class BaseMenuFragment :
         BaseFragment(), MenuItemInteraction, ItemCustomizationBottomSheetFragment.ItemCustomizationInteraction {
@@ -40,6 +41,8 @@ abstract class BaseMenuFragment :
     private val networkViewModel: BlockingNetworkViewModel by activityViewModels()
     abstract val menuViewModel: BaseMenuViewModel
     abstract val cartViewModel: BaseCartViewModel
+
+    private val screenListener: MenuGroupScreenInteraction by parentActivityDelegate()
 
     @CallSuper
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -92,9 +95,7 @@ abstract class BaseMenuFragment :
     }
 
     @OnClick(R.id.btn_user_menu_search)
-    fun onSearch() {
-        MenuDishSearchFragment().show(childFragmentManager, MenuDishSearchFragment.FRAGMENT_TAG)
-    }
+    fun onSearch() = screenListener.onOpenSearch()
 
     private fun resetCategoriesView() {
         tvDrinkCategory.isActivated = false
@@ -103,8 +104,6 @@ abstract class BaseMenuFragment :
         tvSpecialCategory.isActivated = false
         tvSpecialCategory.setTextColor(ContextCompat.getColor(requireContext(), R.color.brownish_grey))
     }
-
-    override fun getItemOrderedCount(item: MenuItemModel) = 0
 
     override fun onCustomizationCancel() {
         menuViewModel.cancelItem()
@@ -136,7 +135,7 @@ abstract class BaseMenuFragment :
     }
 
     private fun onItemInteraction(item: MenuItemModel) {
-        if (item.isComplexItem) ItemCustomizationBottomSheetFragment.newInstance(item).show(childFragmentManager, "menu.item_customization")
+        if (item.isComplexItem) ItemCustomizationBottomSheetFragment.newInstance(item).show(childFragmentManager, ItemCustomizationBottomSheetFragment.FRAGMENT_TAG)
         else order()
     }
 

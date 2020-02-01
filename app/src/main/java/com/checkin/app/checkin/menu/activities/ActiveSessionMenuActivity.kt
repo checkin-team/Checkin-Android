@@ -12,9 +12,11 @@ import butterknife.BindView
 import butterknife.ButterKnife
 import com.checkin.app.checkin.R
 import com.checkin.app.checkin.data.resource.Resource
+import com.checkin.app.checkin.menu.fragments.MenuDishSearchFragment
 import com.checkin.app.checkin.menu.fragments.MenuFragment
 import com.checkin.app.checkin.menu.fragments.MenuGroupScreenInteraction
 import com.checkin.app.checkin.menu.viewmodels.ActiveSessionCartViewModel
+import com.checkin.app.checkin.menu.viewmodels.UserMenuViewModel
 import com.checkin.app.checkin.menu.views.ActiveSessionCartView
 import com.checkin.app.checkin.misc.BlockingNetworkViewModel
 import com.checkin.app.checkin.misc.activities.BaseActivity
@@ -30,6 +32,9 @@ class ActiveSessionMenuActivity : BaseActivity(), MenuGroupScreenInteraction {
     internal lateinit var nestedSv: NestedScrollView
 
     private lateinit var menuFragment: MenuFragment
+
+    @Suppress("UNUSED")
+    private val menuViewModel: UserMenuViewModel by viewModels()
 
     private val cartViewModel: ActiveSessionCartViewModel by viewModels()
     private val networkViewModel: BlockingNetworkViewModel by viewModels()
@@ -66,6 +71,9 @@ class ActiveSessionMenuActivity : BaseActivity(), MenuGroupScreenInteraction {
 
     private fun initUi() {
         val restaurantId = intent.getLongExtra(KEY_RESTAURANT_ID, 0L)
+
+        menuViewModel.clearFilters() // Necessary to get viewmodel since its lazy property
+
         menuFragment = MenuFragment.newInstanceForActiveSession(restaurantId)
 
         supportFragmentManager.inTransaction {
@@ -96,6 +104,13 @@ class ActiveSessionMenuActivity : BaseActivity(), MenuGroupScreenInteraction {
     }
 
     override fun onListBuilt() {
+    }
+
+    override fun onOpenSearch() {
+        supportFragmentManager.inTransaction {
+            add(R.id.frg_container_activity, MenuDishSearchFragment.newInstance(), MenuDishSearchFragment.FRAGMENT_TAG)
+            addToBackStack(null)
+        }
     }
 
     override fun onSupportNavigateUp(): Boolean {

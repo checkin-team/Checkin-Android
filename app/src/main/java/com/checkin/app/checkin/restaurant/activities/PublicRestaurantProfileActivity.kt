@@ -29,9 +29,11 @@ import com.checkin.app.checkin.Auth.PhoneInteraction
 import com.checkin.app.checkin.R
 import com.checkin.app.checkin.data.resource.ProblemModel
 import com.checkin.app.checkin.data.resource.Resource
+import com.checkin.app.checkin.menu.fragments.MenuDishSearchFragment
 import com.checkin.app.checkin.menu.fragments.MenuGroupScreenInteraction
 import com.checkin.app.checkin.menu.fragments.ScheduledMenuFragment
 import com.checkin.app.checkin.menu.viewmodels.ScheduledCartViewModel
+import com.checkin.app.checkin.menu.viewmodels.UserMenuViewModel
 import com.checkin.app.checkin.misc.BlockingNetworkViewModel
 import com.checkin.app.checkin.misc.activities.BaseActivity
 import com.checkin.app.checkin.misc.activities.QRScannerActivity
@@ -97,6 +99,9 @@ class PublicRestaurantProfileActivity : BaseActivity(), AppBarLayout.OnOffsetCha
     private lateinit var fragmentAdapter: PublicRestaurantProfileAdapter
     private val coverAdapter = CoverPagerAdapter(R.drawable.cover_restaurant_unknown)
 
+    @Suppress("UNUSED")
+    private val menuViewModel: UserMenuViewModel by viewModels()
+
     private val cartViewModel: ScheduledCartViewModel by viewModels()
     private val restaurantViewModel: RestaurantPublicViewModel by viewModels()
     private val scheduledSessionViewModel: NewScheduledSessionViewModel by viewModels()
@@ -147,6 +152,7 @@ class PublicRestaurantProfileActivity : BaseActivity(), AppBarLayout.OnOffsetCha
 
     private fun initUi() {
         restaurantId = intent.getLongExtra(KEY_RESTAURANT_ID, 0)
+        menuViewModel.clearFilters() // Necessary to get viewmodel since its lazy property
 
         toolbar.title = ""
         setSupportActionBar(toolbar)
@@ -347,6 +353,13 @@ class PublicRestaurantProfileActivity : BaseActivity(), AppBarLayout.OnOffsetCha
         view.getDrawingRect(outRect)
         nestedSv.offsetDescendantRectToMyCoords(view, outRect)
         nestedSv.smoothScrollTo(0, outRect.top)
+    }
+
+    override fun onOpenSearch() {
+        supportFragmentManager.inTransaction {
+            add(R.id.frg_container_activity, MenuDishSearchFragment.newInstance(), MenuDishSearchFragment.FRAGMENT_TAG)
+            addToBackStack(null)
+        }
     }
 
     private fun wrongRestaurantQrScanned() {
