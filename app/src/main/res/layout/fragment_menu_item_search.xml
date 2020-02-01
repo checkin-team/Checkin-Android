@@ -23,7 +23,8 @@
             android:id="@+id/pb_menu_search_loading"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:indeterminate="true" />
+            android:indeterminate="true"
+            android:visibility="gone" />
     </FrameLayout>
 
     <LinearLayout
@@ -43,6 +44,7 @@
                 android:id="@+id/et_menu_search"
                 style="@style/MaterialSearchViewStyleNew"
                 android:layout_width="match_parent"
+                android:hint="Search dishes..."
                 android:layout_height="match_parent"
                 android:maxLines="1" />
         </com.google.android.material.textfield.TextInputLayout>

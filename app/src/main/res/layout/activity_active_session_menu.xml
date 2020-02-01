@@ -6,16 +6,22 @@
     android:background="@color/white_two"
     android:orientation="vertical">
 
-    <androidx.core.widget.NestedScrollView
-        android:id="@+id/nested_sv_active_session_menu"
+    <FrameLayout
+        android:id="@+id/frg_container_menu_search"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:clipToPadding="false"
-        app:layout_behavior="@string/appbar_scrolling_view_behavior">
+        android:layout_height="match_parent">
 
-        <include layout="@layout/incl_activity_base" />
+        <androidx.core.widget.NestedScrollView
+            android:id="@+id/nested_sv_active_session_menu"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:clipToPadding="false"
+            app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
-    </androidx.core.widget.NestedScrollView>
+            <include layout="@layout/incl_activity_base" />
+
+        </androidx.core.widget.NestedScrollView>
+    </FrameLayout>
 
     <com.checkin.app.checkin.menu.views.ActiveSessionCartView
         android:id="@+id/view_as_menu_cart"

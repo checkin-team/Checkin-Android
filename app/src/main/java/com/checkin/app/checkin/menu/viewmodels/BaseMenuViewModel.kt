@@ -129,9 +129,7 @@ abstract class BaseMenuViewModel(application: Application) : BaseViewModel(appli
         }
     }
 
-    fun searchMenuItems(query: String?) {
-        if (query.isNullOrEmpty())
-            return
+    fun searchMenuItems(query: String) {
         viewModelScope.launch {
             mMenuItems.value = Resource.loading(null)
             delay(500)

@@ -357,7 +357,7 @@ class PublicRestaurantProfileActivity : BaseActivity(), AppBarLayout.OnOffsetCha
 
     override fun onOpenSearch() {
         supportFragmentManager.inTransaction {
-            add(R.id.frg_container_activity, MenuDishSearchFragment.newInstance(), MenuDishSearchFragment.FRAGMENT_TAG)
+            add(R.id.frg_container_activity, MenuDishSearchFragment.withScheduledCart(), MenuDishSearchFragment.FRAGMENT_TAG)
             addToBackStack(null)
         }
     }

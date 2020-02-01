@@ -108,7 +108,7 @@ class ActiveSessionMenuActivity : BaseActivity(), MenuGroupScreenInteraction {
 
     override fun onOpenSearch() {
         supportFragmentManager.inTransaction {
-            add(R.id.frg_container_activity, MenuDishSearchFragment.newInstance(), MenuDishSearchFragment.FRAGMENT_TAG)
+            add(R.id.frg_container_menu_search, MenuDishSearchFragment.withAsCart(), MenuDishSearchFragment.FRAGMENT_TAG)
             addToBackStack(null)
         }
     }

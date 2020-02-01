@@ -19,7 +19,7 @@ import com.checkin.app.checkin.menu.viewmodels.UserMenuViewModel
 import com.checkin.app.checkin.misc.fragments.BaseBottomSheetFragment
 import com.checkin.app.checkin.utility.Utils
 import com.checkin.app.checkin.utility.parentFragmentDelegate
-import com.checkin.app.checkin.utility.parentViewModels
+import org.koin.androidx.viewmodel.ext.android.sharedViewModel
 
 class ItemCustomizationBottomSheetFragment : BaseBottomSheetFragment(), ItemCustomizationGroupHolder.CustomizationGroupInteraction {
     override val rootLayout = R.layout.fragment_as_menu_item_customization
@@ -55,7 +55,7 @@ class ItemCustomizationBottomSheetFragment : BaseBottomSheetFragment(), ItemCust
     @BindView(R.id.container_as_radio_buttons)
     internal lateinit var containerRadioButtons: ConstraintLayout
 
-    val viewModel: UserMenuViewModel by parentViewModels()
+    val viewModel: UserMenuViewModel by sharedViewModel()
     lateinit var itemModel: MenuItemModel
     val listener: ItemCustomizationInteraction by parentFragmentDelegate()
 

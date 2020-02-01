@@ -4,7 +4,9 @@ import android.os.Bundle
 import android.text.Editable
 import android.view.View
 import android.view.ViewGroup
+import android.view.WindowManager
 import android.widget.ProgressBar
+import androidx.core.os.bundleOf
 import androidx.lifecycle.Observer
 import butterknife.BindView
 import butterknife.OnTextChanged
@@ -14,11 +16,14 @@ import com.checkin.app.checkin.data.resource.Resource
 import com.checkin.app.checkin.menu.controllers.UserMenuItemController
 import com.checkin.app.checkin.menu.holders.OnItemInteractionListener
 import com.checkin.app.checkin.menu.models.MenuItemModel
+import com.checkin.app.checkin.menu.viewmodels.ActiveSessionCartViewModel
+import com.checkin.app.checkin.menu.viewmodels.BaseCartViewModel
 import com.checkin.app.checkin.menu.viewmodels.ScheduledCartViewModel
 import com.checkin.app.checkin.menu.viewmodels.UserMenuViewModel
 import com.checkin.app.checkin.misc.fragments.BaseFragment
-import com.checkin.app.checkin.utility.parentViewModels
 import com.google.android.material.textfield.TextInputEditText
+import org.koin.androidx.viewmodel.ext.android.getSharedViewModel
+import org.koin.androidx.viewmodel.ext.android.sharedViewModel
 
 
 class MenuDishSearchFragment : BaseFragment(), OnItemInteractionListener, ItemCustomizationBottomSheetFragment.ItemCustomizationInteraction {
@@ -35,11 +40,17 @@ class MenuDishSearchFragment : BaseFragment(), OnItemInteractionListener, ItemCu
     @BindView(R.id.pb_menu_search_loading)
     internal lateinit var pbLoading: ProgressBar
 
-    private val viewModel: UserMenuViewModel by parentViewModels()
-    private val cartViewModel: ScheduledCartViewModel by parentViewModels()
+    private val viewModel: UserMenuViewModel by sharedViewModel()
+    private val cartViewModel: BaseCartViewModel by lazy {
+        when (arguments?.getInt(KEY_CART_VM_TYPE) ?: 0) {
+            0 -> getSharedViewModel(ActiveSessionCartViewModel::class)
+            else -> getSharedViewModel(ScheduledCartViewModel::class)
+        }
+    }
     private val itemController = UserMenuItemController(this)
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        activity?.window?.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_PAN)
         epoxyRvItems.setControllerAndBuildModels(itemController)
 
         viewModel.filteredMenuItems.observe(this, Observer {
@@ -74,10 +85,7 @@ class MenuDishSearchFragment : BaseFragment(), OnItemInteractionListener, ItemCu
 
     @OnTextChanged(R.id.et_menu_search, callback = OnTextChanged.Callback.AFTER_TEXT_CHANGED)
     fun onTextChanged(et: Editable?) {
-        if (et != null && et.toString().isNotEmpty()) viewModel.searchMenuItems(et.toString()) else {
-            viewModel.resetMenuItems()
-            containerStatus.visibility = View.GONE
-        }
+        viewModel.searchMenuItems(et?.toString() ?: "")
     }
 
     override fun onCustomizationCancel() {
@@ -116,7 +124,14 @@ class MenuDishSearchFragment : BaseFragment(), OnItemInteractionListener, ItemCu
 
     companion object {
         const val FRAGMENT_TAG = "menu.search"
+        private const val KEY_CART_VM_TYPE = "menu.search.cart_vm"
 
-        fun newInstance() = MenuDishSearchFragment()
+        fun withScheduledCart() = MenuDishSearchFragment().apply {
+            arguments = bundleOf(KEY_CART_VM_TYPE to 1)
+        }
+
+        fun withAsCart() = MenuDishSearchFragment().apply {
+            arguments = bundleOf(KEY_CART_VM_TYPE to 0)
+        }
     }
 }
