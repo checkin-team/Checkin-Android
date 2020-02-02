@@ -8,6 +8,7 @@ import android.graphics.Rect
 import android.os.Bundle
 import android.util.Log
 import android.view.View
+import android.widget.ImageView
 import android.widget.TextView
 import androidx.activity.viewModels
 import androidx.appcompat.app.AlertDialog
@@ -87,6 +88,8 @@ class PublicRestaurantProfileActivity : BaseActivity(), AppBarLayout.OnOffsetCha
     internal lateinit var tvRating: TextView
     @BindView(R.id.tv_restaurant_public_distance)
     internal lateinit var tvDistance: TextView
+    @BindView(R.id.im_restaurant_banner_distance)
+    internal lateinit var imDistance:ImageView
     @BindView(R.id.appbar_restaurant_public)
     internal lateinit var appbar: AppBarLayout
     @BindView(R.id.toolbar_restaurant_public)
@@ -406,7 +409,9 @@ class PublicRestaurantProfileActivity : BaseActivity(), AppBarLayout.OnOffsetCha
             } else "-"
         } ?: "-"
         tvRating.text = restaurantModel.formatRating()
-        tvDistance.text = ""
+        tvDistance.text = restaurantModel.formatDistance
+
+        imDistance.setImageResource(if (restaurantModel.distance > 1.5) R.drawable.ic_distance_vehicle else R.drawable.ic_distance_walking)
     }
 
     override fun onSupportNavigateUp(): Boolean {

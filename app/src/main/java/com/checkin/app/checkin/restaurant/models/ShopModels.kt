@@ -13,6 +13,7 @@ sealed class ShopModel(
         open val logo: String?,
         open val covers: ArrayList<String?>?,
         open var phone: String?,
+        open var distance: Double,
         open var email: String?,
         open val location: LocationModel?,
         open val gstin: String?,
@@ -33,6 +34,7 @@ data class RestaurantModel(
         override val gstin: String?,
         override var website: String?,
         override var phone: String?,
+        override var distance: Double,
         override val location: LocationModel?,
         val cuisines: ArrayList<String>?,
         val categories: ArrayList<String>?,
@@ -42,7 +44,7 @@ data class RestaurantModel(
         @JsonProperty("count_checkins") val checkins: Long,
         @JsonProperty("no_reviews") val countReviews: Long,
         @JsonProperty("extra_data") val extraData: List<String>?
-) : ShopModel(pk, name, tagline, logo, covers, phone, email, location, gstin, website), Serializable {
+) : ShopModel(pk, name, tagline, logo, covers, phone,distance, email, location, gstin, website), Serializable {
     fun formatFollowers(): String? = Utils.formatCount(followers)
 
     fun formatCheckins(): String? = if (checkins < 100) "New" else "Checkins ${Utils.formatCount(checkins)}"
@@ -50,4 +52,7 @@ data class RestaurantModel(
     fun formatReviews(): String? = Utils.formatCount(countReviews)
 
     fun formatRating(): String? = if (rating < 1.0) "---" else rating.toString()
+
+    val formatDistance: String
+        get() = "$distance ${if (distance <= 1.0) "km" else "kms"}"
 }
