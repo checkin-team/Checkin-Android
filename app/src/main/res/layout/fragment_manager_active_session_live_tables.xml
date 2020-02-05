@@ -9,47 +9,8 @@
         android:layout_height="match_parent"
         android:padding="@dimen/spacing_small"
         android:visibility="gone" />
-
-    <LinearLayout
-        android:id="@+id/ll_no_orders"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_centerInParent="true"
-        android:orientation="horizontal"
-        android:visibility="gone">
-
-        <ImageView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:contentDescription="@null"
-            android:src="@drawable/ic_relax_no_orders" />
-
-        <LinearLayout
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center_vertical"
-            android:layout_marginStart="@dimen/spacing_large"
-            android:orientation="vertical">
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/no_order"
-                android:textAllCaps="true"
-                android:textColor="@color/pinkish_grey"
-                android:textSize="@dimen/font_extra_large" />
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="new orders"
-                android:textAllCaps="true"
-                android:textColor="@color/primary_red"
-                android:textSize="@dimen/font_extra_large" />
-
-        </LinearLayout>
-
-    </LinearLayout>
+    
+    <include layout="@layout/incl_no_orders" />
 
     <ImageView
         android:id="@+id/im_manager_initiate_session"

@@ -5,6 +5,7 @@ import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.view.View
+import android.widget.LinearLayout
 import androidx.fragment.app.FragmentActivity
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.Observer
@@ -22,6 +23,7 @@ import com.checkin.app.checkin.manager.viewmodels.ManagerLiveScheduledViewModel
 import com.checkin.app.checkin.manager.viewmodels.ManagerWorkViewModel
 import com.checkin.app.checkin.misc.fragments.BaseFragment
 import com.checkin.app.checkin.session.models.ScheduledSessionStatus
+import com.checkin.app.checkin.utility.isNotEmpty
 import com.checkin.app.checkin.utility.pass
 
 class ManagerScheduledLiveOrdersFragment : BaseFragment(), PreorderTableInteraction {
@@ -29,6 +31,8 @@ class ManagerScheduledLiveOrdersFragment : BaseFragment(), PreorderTableInteract
 
     @BindView(R.id.epoxy_rv_manager_live_preorders)
     internal lateinit var epoxyRvLivePreorders: EpoxyRecyclerView
+    @BindView(R.id.ll_no_orders)
+    internal lateinit var llNoLiveOrders: LinearLayout
 
     private val preorderController = PreorderTablesController(this)
     private val viewModel: ManagerLiveScheduledViewModel by activityViewModels()
@@ -67,9 +71,21 @@ class ManagerScheduledLiveOrdersFragment : BaseFragment(), PreorderTableInteract
         })
     }
 
+    private fun updateUi(data: List<ShopScheduledSessionModel>) {
+        if (data.isNotEmpty()) {
+            epoxyRvLivePreorders.visibility = View.VISIBLE
+            llNoLiveOrders.visibility = View.GONE
+        } else {
+            epoxyRvLivePreorders.visibility = View.GONE
+            llNoLiveOrders.visibility = View.VISIBLE
+        }
+    }
+
     private fun updateList(data: List<ShopScheduledSessionModel>) {
+        updateUi(data)
         preorderController.sessions = data
     }
+
 
     override fun onClickNewTable(data: ShopScheduledSessionModel) {
         startActivityForResult(ManagerPreOrderDetailActivity.withSessionIntent(requireContext(), data.pk), RC_INTENT_RESULT)

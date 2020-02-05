@@ -25,13 +25,13 @@ class PublicRestaurantInfoFragment : BaseFragment() {
     internal lateinit var tvAddress: TextView
     @BindView(R.id.tv_restaurant_info_phone)
     internal lateinit var tvPhone: TextView
-    @BindView(R.id.epoxy_rv_public_restaurant_insider)
-    internal lateinit var epoxyRvInsider: EpoxyRecyclerView
+    @BindView(R.id.epoxy_rv_public_restaurant_features)
+    internal lateinit var epoxyRvFeatures: EpoxyRecyclerView
 
     val viewModel: RestaurantPublicViewModel by activityViewModels()
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        epoxyRvInsider.withModels {
+        epoxyRvFeatures.withModels {
             viewModel.restaurantData.value?.data?.extraData.takeIf { it.isNotEmpty() }?.forEachIndexed { index, text ->
                 textModelHolder {
                     withBulletListLayout()
@@ -45,7 +45,7 @@ class PublicRestaurantInfoFragment : BaseFragment() {
             it?.let {
                 if (it.status == Resource.Status.SUCCESS && it.data != null) {
                     setupInfo(it.data)
-                    epoxyRvInsider.requestModelBuild()
+                    epoxyRvFeatures.requestModelBuild()
                 }
             }
         })

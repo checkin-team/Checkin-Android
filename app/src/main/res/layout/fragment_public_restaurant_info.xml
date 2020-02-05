@@ -1,150 +1,151 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:background="@color/white_two"
-    android:orientation="vertical">
-
-    <LinearLayout
-        android:id="@+id/container_restaurant_info_address"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="@dimen/spacing_small"
-        android:layout_marginTop="@dimen/spacing_large"
-        android:layout_marginEnd="@dimen/spacing_small"
-        android:layout_marginBottom="@dimen/spacing_large"
-        android:clickable="true"
-        android:focusable="true"
-        android:orientation="horizontal">
-
-        <ImageView
-            android:layout_width="@dimen/size_extra_small_icon"
-            android:layout_height="@dimen/size_extra_small_icon"
-            android:layout_marginTop="@dimen/spacing_tiny"
-            android:layout_marginEnd="@dimen/spacing_extra_small"
-            android:src="@drawable/ic_navigate_arrow" />
-
-        <TextView
-            android:id="@+id/tv_restaurant_info_address"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:textAppearance="@style/GreySmallTextStyle"
-            tools:text="Ground, First and Second Floor, Orient Bestech Business Towers, National Highway 8, Block A, Sector 34,
+	xmlns:app="http://schemas.android.com/apk/res-auto"
+	xmlns:tools="http://schemas.android.com/tools"
+	android:layout_width="match_parent"
+	android:layout_height="match_parent"
+	android:background="@color/white_two"
+	android:orientation="vertical">
+	
+	<LinearLayout
+		android:id="@+id/container_restaurant_info_address"
+		android:layout_width="match_parent"
+		android:layout_height="wrap_content"
+		android:layout_marginStart="@dimen/spacing_small"
+		android:layout_marginTop="@dimen/spacing_large"
+		android:layout_marginEnd="@dimen/spacing_small"
+		android:layout_marginBottom="@dimen/spacing_large"
+		android:clickable="true"
+		android:focusable="true"
+		android:orientation="horizontal">
+		
+		<ImageView
+			android:layout_width="@dimen/size_extra_small_icon"
+			android:layout_height="@dimen/size_extra_small_icon"
+			android:layout_marginTop="@dimen/spacing_tiny"
+			android:layout_marginEnd="@dimen/spacing_extra_small"
+			android:src="@drawable/ic_navigate_arrow" />
+		
+		<TextView
+			android:id="@+id/tv_restaurant_info_address"
+			android:layout_width="0dp"
+			android:layout_height="wrap_content"
+			android:layout_weight="1"
+			android:textAppearance="@style/GreySmallTextStyle"
+			tools:text="Ground, First and Second Floor, Orient Bestech Business Towers, National Highway 8, Block A, Sector 34,
 Gurugram, Haryana 122004
 " />
-
-        <ImageView
-            android:id="@+id/im_restaurant_info_address_arrow"
-            android:layout_width="@dimen/size_extra_tiny_icon"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:layout_marginStart="@dimen/spacing_extra_small"
-            android:src="@drawable/ic_forward_arrow" />
-    </LinearLayout>
-
-    <include layout="@layout/incl_horizontal_line" />
-
-    <LinearLayout
-        android:id="@+id/container_restaurant_info_phone"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="@dimen/spacing_small"
-        android:layout_marginTop="@dimen/spacing_large"
-        android:layout_marginEnd="@dimen/spacing_small"
-        android:layout_marginBottom="@dimen/spacing_large"
-        android:orientation="horizontal">
-
-        <ImageView
-            android:layout_width="@dimen/size_extra_small_icon"
-            android:layout_height="@dimen/size_extra_small_icon"
-            android:layout_marginEnd="@dimen/spacing_extra_small"
-            android:src="@drawable/ic_telephone_auricular_with_cable" />
-
-        <TextView
-            android:id="@+id/tv_restaurant_info_phone"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:textAppearance="@style/GreySmallTextStyle"
-            tools:text="+91 1234567890" />
-
-        <ImageView
-            android:layout_width="@dimen/size_extra_tiny_icon"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:layout_marginStart="@dimen/spacing_extra_small"
-            android:src="@drawable/ic_forward_arrow" />
-    </LinearLayout>
-
-    <include layout="@layout/incl_horizontal_line" />
-
-    <TextView
-        style="@style/GreyHeadingStyle"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="@dimen/spacing_small"
-        android:layout_marginTop="@dimen/spacing_small"
-        android:text="Insider Tip" />
-
-    <com.airbnb.epoxy.EpoxyRecyclerView
-        android:id="@+id/epoxy_rv_public_restaurant_insider"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_marginStart="@dimen/spacing_small"
-        android:layout_marginTop="@dimen/spacing_tiny"
-        android:layout_marginEnd="@dimen/spacing_small"
-        android:nestedScrollingEnabled="false"
-        android:paddingStart="@dimen/spacing_extra_small"
-        app:itemSpacing="@dimen/spacing_tiny"
-        tools:listitem="@layout/item_text_bullet_list" />
-
-    <androidx.cardview.widget.CardView
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="6dp"
-        android:layout_marginTop="8dp"
-        android:layout_marginEnd="6dp"
-        android:elevation="0dp"
-        android:visibility="gone"
-        app:cardCornerRadius="10dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/epoxy_rv_public_restaurant_insider">
-
-        <androidx.constraintlayout.widget.ConstraintLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content">
-
-            <TextView
-                android:id="@+id/tv_public_restaurant_features_heading"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="10dp"
-                android:layout_marginTop="6dp"
-                android:text="Features"
-                android:textSize="16sp"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
-
-            <com.airbnb.epoxy.EpoxyRecyclerView
-                android:id="@+id/epoxy_rv_public_restaurant_features"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="16dp"
-                android:layout_marginTop="16dp"
-                android:layout_marginEnd="16dp"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/tv_public_restaurant_features_heading"
-                tools:itemCount="3"
-                tools:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
-                tools:listitem="@layout/item_text_bullet_list"
-                tools:spanCount="2" />
-        </androidx.constraintlayout.widget.ConstraintLayout>
-    </androidx.cardview.widget.CardView>
-
+		
+		<ImageView
+			android:id="@+id/im_restaurant_info_address_arrow"
+			android:layout_width="@dimen/size_extra_tiny_icon"
+			android:layout_height="wrap_content"
+			android:layout_gravity="center"
+			android:layout_marginStart="@dimen/spacing_extra_small"
+			android:src="@drawable/ic_forward_arrow" />
+	</LinearLayout>
+	
+	<include layout="@layout/incl_horizontal_line" />
+	
+	<LinearLayout
+		android:id="@+id/container_restaurant_info_phone"
+		android:layout_width="match_parent"
+		android:layout_height="wrap_content"
+		android:layout_marginStart="@dimen/spacing_small"
+		android:layout_marginTop="@dimen/spacing_large"
+		android:layout_marginEnd="@dimen/spacing_small"
+		android:layout_marginBottom="@dimen/spacing_large"
+		android:orientation="horizontal">
+		
+		<ImageView
+			android:layout_width="@dimen/size_extra_small_icon"
+			android:layout_height="@dimen/size_extra_small_icon"
+			android:layout_marginEnd="@dimen/spacing_extra_small"
+			android:src="@drawable/ic_telephone_auricular_with_cable" />
+		
+		<TextView
+			android:id="@+id/tv_restaurant_info_phone"
+			android:layout_width="0dp"
+			android:layout_height="wrap_content"
+			android:layout_weight="1"
+			android:textAppearance="@style/GreySmallTextStyle"
+			tools:text="+91 1234567890" />
+		
+		<ImageView
+			android:layout_width="@dimen/size_extra_tiny_icon"
+			android:layout_height="wrap_content"
+			android:layout_gravity="center"
+			android:layout_marginStart="@dimen/spacing_extra_small"
+			android:src="@drawable/ic_forward_arrow" />
+	</LinearLayout>
+	
+	<include layout="@layout/incl_horizontal_line" />
+	
+	<TextView
+		style="@style/GreyHeadingStyle"
+		android:layout_width="wrap_content"
+		android:layout_height="wrap_content"
+		android:layout_marginStart="@dimen/spacing_small"
+		android:layout_marginTop="@dimen/spacing_small"
+		android:text="Insider Tip"
+		android:visibility="gone" />
+	
+	<com.airbnb.epoxy.EpoxyRecyclerView
+		android:id="@+id/epoxy_rv_public_restaurant_insider"
+		android:layout_width="match_parent"
+		android:layout_height="match_parent"
+		android:layout_marginStart="@dimen/spacing_small"
+		android:layout_marginTop="@dimen/spacing_tiny"
+		android:layout_marginEnd="@dimen/spacing_small"
+		android:nestedScrollingEnabled="false"
+		android:paddingStart="@dimen/spacing_extra_small"
+		android:visibility="gone"
+		app:itemSpacing="@dimen/spacing_tiny"
+		tools:listitem="@layout/item_text_bullet_list" />
+	
+	<androidx.cardview.widget.CardView
+		android:layout_width="match_parent"
+		android:layout_height="wrap_content"
+		android:layout_marginStart="@dimen/spacing_tiny"
+		android:layout_marginTop="@dimen/spacing_tiny"
+		android:layout_marginEnd="@dimen/spacing_tiny"
+		app:cardCornerRadius="@dimen/card_corner_radius_small"
+		app:cardElevation="0dp"
+		app:layout_constraintEnd_toEndOf="parent"
+		app:layout_constraintStart_toStartOf="parent"
+		app:layout_constraintTop_toBottomOf="@+id/epoxy_rv_public_restaurant_insider">
+		
+		<androidx.constraintlayout.widget.ConstraintLayout
+			android:layout_width="match_parent"
+			android:layout_height="wrap_content">
+			
+			<TextView
+				android:id="@+id/tv_public_restaurant_features_heading"
+				android:layout_width="wrap_content"
+				android:layout_height="wrap_content"
+				android:layout_marginStart="@dimen/spacing_small"
+				android:layout_marginTop="@dimen/spacing_tiny"
+				android:text="Features"
+				android:textSize="@dimen/font_extra_large"
+				app:layout_constraintStart_toStartOf="parent"
+				app:layout_constraintTop_toTopOf="parent" />
+			
+			<com.airbnb.epoxy.EpoxyRecyclerView
+				android:id="@+id/epoxy_rv_public_restaurant_features"
+				android:layout_width="0dp"
+				android:layout_height="wrap_content"
+				android:layout_marginStart="@dimen/spacing_normal"
+				android:layout_marginTop="@dimen/spacing_tiny"
+				android:layout_marginEnd="@dimen/spacing_normal"
+				android:layout_marginBottom="@dimen/spacing_normal"
+				app:layout_constraintBottom_toBottomOf="parent"
+				app:layout_constraintEnd_toEndOf="parent"
+				app:layout_constraintStart_toStartOf="parent"
+				app:layout_constraintTop_toBottomOf="@+id/tv_public_restaurant_features_heading"
+				tools:itemCount="3"
+				tools:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
+				tools:listitem="@layout/item_text_bullet_list"
+				tools:spanCount="2" />
+		</androidx.constraintlayout.widget.ConstraintLayout>
+	</androidx.cardview.widget.CardView>
 </LinearLayout>

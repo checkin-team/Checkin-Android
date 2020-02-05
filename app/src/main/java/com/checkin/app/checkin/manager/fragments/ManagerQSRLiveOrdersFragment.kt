@@ -5,6 +5,7 @@ import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.view.View
+import android.widget.LinearLayout
 import androidx.fragment.app.FragmentActivity
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.Observer
@@ -21,6 +22,7 @@ import com.checkin.app.checkin.manager.models.ShopScheduledSessionModel
 import com.checkin.app.checkin.manager.viewmodels.ManagerLiveScheduledViewModel
 import com.checkin.app.checkin.manager.viewmodels.ManagerWorkViewModel
 import com.checkin.app.checkin.misc.fragments.BaseFragment
+import com.checkin.app.checkin.utility.isNotEmpty
 import com.checkin.app.checkin.utility.pass
 
 class ManagerQSRLiveOrdersFragment : BaseFragment(), QSRTableInteraction {
@@ -28,6 +30,8 @@ class ManagerQSRLiveOrdersFragment : BaseFragment(), QSRTableInteraction {
 
     @BindView(R.id.epoxy_rv_manager_live_qsr_orders)
     internal lateinit var epoxyRvTables: EpoxyRecyclerView
+    @BindView(R.id.ll_no_orders)
+    internal lateinit var llNoLiveOrders: LinearLayout
 
     private val qsrTablesController = QSRTablesController(this)
     private val viewModel: ManagerLiveScheduledViewModel by activityViewModels()
@@ -66,7 +70,18 @@ class ManagerQSRLiveOrdersFragment : BaseFragment(), QSRTableInteraction {
         })
     }
 
+    private fun updateUi(data: List<ShopScheduledSessionModel>) {
+        if (data.isNotEmpty()) {
+            epoxyRvTables.visibility = View.VISIBLE
+            llNoLiveOrders.visibility = View.GONE
+        } else {
+            epoxyRvTables.visibility = View.GONE
+            llNoLiveOrders.visibility = View.VISIBLE
+        }
+    }
+
     private fun updateList(data: List<ShopScheduledSessionModel>) {
+        updateUi(data)
         qsrTablesController.sessions = data
     }
 

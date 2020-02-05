@@ -3,7 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <FrameLayout
-        android:layout_width="55dp"
+        android:layout_width="@dimen/button_add"
         android:layout_height="wrap_content"
         android:background="@drawable/strip_background_menu_item_add"
         android:orientation="vertical">
@@ -63,11 +63,11 @@
                 android:layout_centerVertical="true"
                 android:layout_toStartOf="@id/im_menu_item_quantity_increment"
                 android:background="#cdcccc" />
-
+    
             <ImageView
                 android:id="@+id/im_menu_item_quantity_increment"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_height="19dp"
                 android:layout_alignParentEnd="true"
                 android:layout_centerVertical="true"
                 android:layout_marginEnd="2dp"
