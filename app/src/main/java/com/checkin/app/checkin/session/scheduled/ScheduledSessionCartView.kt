@@ -74,6 +74,8 @@ class ScheduledSessionCartView @JvmOverloads constructor(
     internal lateinit var tvItemCount: TextView
     @BindView(R.id.tv_cart_header_amount)
     internal lateinit var tvHeaderAmount: TextView
+    @BindView(R.id.tv_cart_header_restaurant_name)
+    internal lateinit var tvRestaurantName: TextView
 
     lateinit var activity: FragmentActivity
     lateinit var viewModel: ScheduledCartViewModel
@@ -274,6 +276,7 @@ class ScheduledSessionCartView @JvmOverloads constructor(
             billHolder.bind(data.bill)
             setTotal(data.bill.total)
         }
+        tvRestaurantName.text = data.restaurant.name
     }
 
     private fun setTotal(total: Double) {
