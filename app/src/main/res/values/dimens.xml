@@ -260,4 +260,9 @@
 	<dimen name="tg_size_normal">90dp</dimen>
     <dimen name="button_add_width">65dp</dimen>
     <dimen name="button_add_height">25dp</dimen>
+	<dimen name="payment_image_width">36dp</dimen>
+	<dimen name="payment_image_height">24dp</dimen>
+	<dimen name="payment_netbanking_image">44dp</dimen>
+	<dimen name="payment_button_pay_width">200dp</dimen>
+	<dimen name="payment_button_pay_height">30dp</dimen>
 </resources>

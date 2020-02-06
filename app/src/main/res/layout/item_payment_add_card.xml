@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+	xmlns:app="http://schemas.android.com/apk/res-auto"
+	android:layout_width="match_parent"
+	android:layout_height="wrap_content"
+	android:orientation="vertical">
+	
+	
+	<Button
+		android:id="@+id/btn_payment_add_item"
+		android:layout_width="@dimen/payment_image_width"
+		android:layout_height="@dimen/payment_image_height"
+		android:layout_marginStart="@dimen/spacing_normal"
+		android:layout_marginTop="@dimen/spacing_normal"
+		android:background="@drawable/round_border_button_orange"
+		android:text="+"
+		android:textColor="@color/orange_red"
+		app:layout_constraintStart_toStartOf="parent"
+		app:layout_constraintTop_toTopOf="parent" />
+	
+	<TextView
+		android:id="@+id/textView"
+		android:layout_width="wrap_content"
+		android:layout_height="wrap_content"
+		android:layout_marginStart="@dimen/spacing_large"
+		android:fontFamily="@font/opensans_bold"
+		android:text="ADD CARD"
+		android:textColor="@color/orange_red"
+		android:textStyle="bold"
+		app:layout_constraintBottom_toBottomOf="@+id/btn_payment_add_item"
+		app:layout_constraintStart_toEndOf="@+id/btn_payment_add_item"
+		app:layout_constraintTop_toTopOf="@+id/btn_payment_add_item" />
+	
+	<TextView
+		android:id="@+id/textView2"
+		android:layout_width="wrap_content"
+		android:layout_height="wrap_content"
+		android:layout_marginEnd="@dimen/spacing_normal"
+		android:text="Save and Pay via Cards."
+		android:textColor="@color/pinkish_grey"
+		app:layout_constraintBottom_toBottomOf="@+id/textView"
+		app:layout_constraintEnd_toEndOf="parent"
+		app:layout_constraintTop_toTopOf="@+id/textView" />
+	
+	<ImageView
+		android:id="@+id/imageView"
+		android:layout_width="66dp"
+		android:layout_height="0dp"
+		android:adjustViewBounds="true"
+		android:paddingStart="@dimen/spacing_tiny"
+		android:paddingEnd="@dimen/spacing_tiny"
+		android:src="@drawable/ic_payment_visa"
+		app:layout_constraintBottom_toBottomOf="@+id/imageView2"
+		app:layout_constraintEnd_toStartOf="@+id/imageView2"
+		app:layout_constraintTop_toTopOf="@+id/imageView2" />
+	
+	<ImageView
+		android:id="@+id/imageView2"
+		android:layout_width="54dp"
+		android:layout_height="0dp"
+		android:paddingStart="@dimen/spacing_tiny"
+		android:paddingEnd="@dimen/spacing_tiny"
+		android:src="@drawable/ic_payment_mastercard"
+		app:layout_constraintBottom_toBottomOf="@+id/imageView4"
+		app:layout_constraintEnd_toStartOf="@+id/imageView4"
+		app:layout_constraintTop_toTopOf="@+id/imageView4" />
+	
+	<ImageView
+		android:id="@+id/imageView3"
+		android:layout_width="48dp"
+		android:layout_height="0dp"
+		android:adjustViewBounds="true"
+		android:padding="@dimen/spacing_tiny"
+		android:src="@drawable/ic_payment_maestro"
+		app:layout_constraintBottom_toBottomOf="@+id/imageView5"
+		app:layout_constraintEnd_toStartOf="@+id/imageView5"
+		app:layout_constraintTop_toTopOf="@+id/imageView5" />
+	
+	<ImageView
+		android:id="@+id/imageView4"
+		android:layout_width="48dp"
+		android:layout_height="0dp"
+		android:adjustViewBounds="true"
+		android:src="@drawable/ic_payment_amex"
+		app:layout_constraintBottom_toBottomOf="@+id/imageView3"
+		app:layout_constraintEnd_toStartOf="@+id/imageView3"
+		app:layout_constraintTop_toTopOf="@+id/imageView3" />
+	
+	<ImageView
+		android:id="@+id/imageView5"
+		android:layout_width="48dp"
+		android:layout_height="48dp"
+		android:layout_marginTop="@dimen/spacing_normal"
+		android:layout_marginEnd="@dimen/spacing_normal"
+		android:layout_marginBottom="@dimen/spacing_tiny"
+		android:adjustViewBounds="true"
+		android:src="@drawable/ic_payment_rupay"
+		app:layout_constraintBottom_toBottomOf="parent"
+		app:layout_constraintEnd_toEndOf="parent"
+		app:layout_constraintTop_toBottomOf="@+id/textView2" />
+</androidx.constraintlayout.widget.ConstraintLayout>

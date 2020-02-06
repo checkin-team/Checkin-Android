@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+	xmlns:app="http://schemas.android.com/apk/res-auto"
+	android:layout_width="match_parent"
+	android:layout_height="wrap_content"
+	android:orientation="vertical">
+	
+	
+	<ImageView
+		android:id="@+id/im_payment_netbanking_sbi"
+		android:layout_width="wrap_content"
+		android:layout_height="@dimen/payment_netbanking_image"
+		android:layout_marginStart="@dimen/spacing_large"
+		android:layout_marginTop="@dimen/spacing_normal"
+		android:layout_marginBottom="@dimen/spacing_normal"
+		android:src="@drawable/ic_payment_sbi"
+		app:layout_constraintBottom_toBottomOf="parent"
+		app:layout_constraintEnd_toStartOf="@+id/im_payment_netbanking_axis"
+		app:layout_constraintHorizontal_bias="0.5"
+		app:layout_constraintStart_toStartOf="parent"
+		app:layout_constraintTop_toTopOf="parent" />
+	
+	<ImageView
+		android:id="@+id/im_payment_netbanking_axis"
+		android:layout_width="wrap_content"
+		android:layout_height="0dp"
+		android:src="@drawable/ic_payment_axis"
+		app:layout_constraintBottom_toBottomOf="@+id/im_payment_netbanking_sbi"
+		app:layout_constraintEnd_toStartOf="@+id/im_payment_netbanking_citi"
+		app:layout_constraintHorizontal_bias="0.5"
+		app:layout_constraintStart_toEndOf="@+id/im_payment_netbanking_sbi"
+		app:layout_constraintTop_toTopOf="@+id/im_payment_netbanking_sbi" />
+	
+	<ImageView
+		android:id="@+id/im_payment_netbanking_citi"
+		android:layout_width="wrap_content"
+		android:layout_height="0dp"
+		android:src="@drawable/ic_payment_citi"
+		app:layout_constraintBottom_toBottomOf="@+id/im_payment_netbanking_axis"
+		app:layout_constraintEnd_toStartOf="@+id/im_payment_netbanking_kotak"
+		app:layout_constraintHorizontal_bias="0.5"
+		app:layout_constraintStart_toEndOf="@+id/im_payment_netbanking_axis"
+		app:layout_constraintTop_toTopOf="@+id/im_payment_netbanking_axis" />
+	
+	<ImageView
+		android:id="@+id/im_payment_netbanking_kotak"
+		android:layout_width="wrap_content"
+		android:layout_height="0dp"
+		android:layout_marginEnd="@dimen/spacing_large"
+		android:src="@drawable/ic_payment_kotak"
+		app:layout_constraintBottom_toBottomOf="@+id/im_payment_netbanking_citi"
+		app:layout_constraintEnd_toEndOf="parent"
+		app:layout_constraintHorizontal_bias="0.5"
+		app:layout_constraintStart_toEndOf="@+id/im_payment_netbanking_citi"
+		app:layout_constraintTop_toTopOf="@+id/im_payment_netbanking_citi" />
+</androidx.constraintlayout.widget.ConstraintLayout>

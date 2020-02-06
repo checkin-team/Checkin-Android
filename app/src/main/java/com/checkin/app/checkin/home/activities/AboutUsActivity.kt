@@ -17,8 +17,10 @@ import butterknife.BindView
 import butterknife.ButterKnife
 import com.checkin.app.checkin.R
 import com.checkin.app.checkin.data.config.RemoteConfig
+import com.checkin.app.checkin.payment.activities.PaymentActivity
 import com.checkin.app.checkin.utility.Constants.PLAY_STORE_URI
 import com.checkin.app.checkin.utility.Utils
+import com.checkin.app.checkin.utility.toast
 
 
 class AboutUsActivity : AppCompatActivity() {
@@ -98,7 +100,11 @@ class AboutUsActivity : AppCompatActivity() {
 
             number?.apply {
                 text = supportPhone
-                setOnClickListener { callSupport() }
+                setOnClickListener {
+                    val intent = PaymentActivity.startPaymentIntent(context, 1234.45f)
+                    startActivityForResult(intent, PAYMENT_REQUEST_CODE)
+                    /*callSupport()*/
+                }
             }
         }
 
@@ -182,7 +188,19 @@ class AboutUsActivity : AppCompatActivity() {
         return true
     }
 
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+        if (requestCode == PAYMENT_REQUEST_CODE) {
+            when (resultCode) {
+                PaymentActivity.PAYMENT_SUCESSFULL -> toast("SucessFUll")
+                PaymentActivity.PAYMENT_CANCELLED -> toast("Cancelled")
+                PaymentActivity.PAYMENT_FAILED -> toast("Failed")
+            }
+        }
+    }
+
     companion object {
         private const val RC_CALL_PERMISSION = 100
+        private const val PAYMENT_REQUEST_CODE = 300
     }
 }

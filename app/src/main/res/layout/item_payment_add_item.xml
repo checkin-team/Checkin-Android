@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+	xmlns:app="http://schemas.android.com/apk/res-auto"
+	android:layout_width="match_parent"
+	android:layout_height="wrap_content"
+	android:orientation="vertical">
+	
+	
+	<TextView
+		android:id="@+id/tv_payment_add_content"
+		android:layout_width="wrap_content"
+		android:layout_height="wrap_content"
+		android:layout_marginStart="@dimen/spacing_large"
+		android:fontFamily="@font/opensans_bold"
+		android:text="ADD UPI ID"
+		android:textColor="@color/orange_red"
+		android:textStyle="bold"
+		app:layout_constraintBottom_toBottomOf="@+id/btn_payment_add_item"
+		app:layout_constraintStart_toEndOf="@+id/btn_payment_add_item"
+		app:layout_constraintTop_toTopOf="@+id/btn_payment_add_item" />
+	
+	<Button
+		android:id="@+id/btn_payment_add_item"
+		android:layout_width="@dimen/payment_image_width"
+		android:layout_height="@dimen/payment_image_height"
+		android:layout_marginStart="@dimen/spacing_normal"
+		android:layout_marginTop="@dimen/spacing_normal"
+		android:layout_marginBottom="@dimen/spacing_normal"
+		android:background="@drawable/round_border_button_orange"
+		android:text="+"
+		android:textColor="@color/orange_red"
+		app:layout_constraintBottom_toBottomOf="parent"
+		app:layout_constraintStart_toStartOf="parent"
+		app:layout_constraintTop_toTopOf="parent" />
+</androidx.constraintlayout.widget.ConstraintLayout>

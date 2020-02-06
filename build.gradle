@@ -18,6 +18,8 @@ buildscript {
         classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$versions.kotlin"
         // Fabric Crashlytics plugin
         classpath 'io.fabric.tools:gradle:1.31.2'
+        //safe args Navigation
+        classpath "androidx.navigation:navigation-safe-args-gradle-plugin:$versions.nav_version"
     }
 }
 
@@ -27,6 +29,9 @@ allprojects {
         jcenter()
         maven { url "https://maven.google.com" }
         maven { url 'https://jitpack.io' }
+        flatDir {
+            dirs 'libs'
+        }
     }
 }
 
