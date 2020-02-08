@@ -14,6 +14,7 @@ object Constants {
     const val FILTER_DATA_TARGET_PATH = "target/%d"
     const val FORMAT_NOTIFICATION_GROUP = "com.checkin.message.group.%s_%d"
     const val FORMAT_NOTIFICATION_TAG = "com.checkin.message.tag.%s_%d"
+    const val FORMAT_PROMO_NOTIFICATION_TAG = "com.checkin.promo.tag.%s"
     const val NOTIFICATION_GROUP_SUMMARY = "com.checkin.message.group.summary"
     const val FORMAT_SP_KEY_NOTIFICATION_CHANNEL = "com.checkin.app.checkin.Data.Message.notif.%s"
     const val SP_TABLE_NOTIFICATION = "com.checkin.app.checkin.Data.Message.notification"
@@ -30,6 +31,8 @@ object Constants {
     fun getNotificationTag(type: MESSAGE_OBJECT_TYPE, objectPk: Long): String {
         return String.format(Locale.getDefault(), FORMAT_NOTIFICATION_TAG, type.toString(), objectPk)
     }
+
+    fun getPromoNotificationTag(link: String) = FORMAT_PROMO_NOTIFICATION_TAG.format(link)
 
     fun getNotificationSummaryID(type: MESSAGE_OBJECT_TYPE, objectPk: Long): Int {
         return ((type.id + objectPk) % 100).toInt()
@@ -63,6 +66,7 @@ object Constants {
 
         // Misc group
         MEDIA_UPLOAD("channel.media_upload", "Media upload progress"),
-        LOCATION_TRACK("channel.track_location", "Track current location");
+        LOCATION_TRACK("channel.track_location", "Track current location"),
+        PROMOTIONAL("channel.promotional", "Promotional campaign");
     }
 }

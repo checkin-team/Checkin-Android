@@ -21,7 +21,6 @@ import com.checkin.app.checkin.data.notifications.MessageUtils.sendLocalBroadcas
 import com.checkin.app.checkin.utility.Utils
 import com.google.firebase.messaging.FirebaseMessagingService
 import com.google.firebase.messaging.RemoteMessage
-import java.io.IOException
 import java.util.*
 
 class AppMessagingService : FirebaseMessagingService() {
@@ -37,21 +36,29 @@ class AppMessagingService : FirebaseMessagingService() {
     override fun onMessageReceived(remoteMessage: RemoteMessage) {
         super.onMessageReceived(remoteMessage)
         val params = remoteMessage.data
-        val data: MessageModel = try {
-            val json = objectMapper.writeValueAsString(params)
-            objectMapper.readValue(json, MessageModel::class.java)
-        } catch (e: IOException) {
-            Log.e(TAG, "Couldn't parse FCM remote data.", e)
-            return
-        }
+        val clz = if (params.containsKey("type")) MessageModel::class.java else PromotionalMessageModel::class.java
+        val data = objectMapper.runCatching { writeValueAsString(params) }
+                .onFailure {
+                    Log.e(TAG, "Couldn't parse FCM remote data.", it)
+                    return
+                }.getOrNull()?.let {
+                    objectMapper.runCatching { readValue(it, clz) }
+                            .onFailure { Log.e(TAG, "Couldn't parse FCM remote data as ${clz.simpleName}.", it) }
+                            .getOrNull()
+                }
         Log.e(TAG, data.toString())
-        var shouldShowNotification: Boolean
-        if (data.shouldTryUpdateUi()) {
-            val result = sendLocalBroadcast(this, data)
-            shouldShowNotification = data.shouldShowNotification()
-            if (data.isOnlyUiUpdate) shouldShowNotification = !result && shouldShowNotification
-        } else shouldShowNotification = true
-        if (shouldShowNotification) showNotification(data)
+        when (data) {
+            is MessageModel -> {
+                var shouldShowNotification: Boolean
+                if (data.shouldTryUpdateUi()) {
+                    val result = sendLocalBroadcast(this, data)
+                    shouldShowNotification = data.shouldShowNotification()
+                    if (data.isOnlyUiUpdate) shouldShowNotification = !result && shouldShowNotification
+                } else shouldShowNotification = true
+                if (shouldShowNotification) showNotification(data)
+            }
+            is PromotionalMessageModel -> showPromoNotification(data)
+        }
     }
 
     @RequiresApi(Build.VERSION_CODES.M)
@@ -100,6 +107,13 @@ class AppMessagingService : FirebaseMessagingService() {
             saveNotificationId(notifTag, notificationId)
             if (Utils.isMarshMallowOrLater && data.isGroupedNotification) showGroupedNotifications(data)
         }
+    }
+
+    private fun showPromoNotification(data: PromotionalMessageModel) {
+        val notificationId = notificationID
+        val notification = data.showNotification(this)
+        val notifTag = data.notificationTag
+        mNotificationManager.notify(notifTag, notificationId, notification)
     }
 
     override fun onNewToken(token: String) {

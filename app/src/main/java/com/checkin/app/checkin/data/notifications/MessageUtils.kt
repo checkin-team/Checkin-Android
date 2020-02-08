@@ -58,7 +58,8 @@ object MessageUtils {
                     createChannels(CHANNEL_GROUP.RESTAURANT_CUSTOMER, NotificationManager.IMPORTANCE_DEFAULT, CHANNEL.ACTIVE_SESSION) +
                     createChannels(CHANNEL_GROUP.RESTAURANT_CUSTOMER, NotificationManager.IMPORTANCE_DEFAULT, CHANNEL.ACTIVE_SESSION_PERSISTENT) +
                     createChannels(CHANNEL_GROUP.MISC, NotificationManager.IMPORTANCE_LOW, CHANNEL.MEDIA_UPLOAD) +
-                    createChannels(CHANNEL_GROUP.MISC, NotificationManager.IMPORTANCE_LOW, CHANNEL.LOCATION_TRACK)
+                    createChannels(CHANNEL_GROUP.MISC, NotificationManager.IMPORTANCE_LOW, CHANNEL.LOCATION_TRACK) +
+                    createChannels(CHANNEL_GROUP.MISC, NotificationManager.IMPORTANCE_DEFAULT, CHANNEL.PROMOTIONAL)
             notificationManager.createNotificationChannels(channels)
         }
     }

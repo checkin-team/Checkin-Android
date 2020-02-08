@@ -28,6 +28,7 @@ import com.checkin.app.checkin.Auth.OtpVerificationDialog
 import com.checkin.app.checkin.Auth.PhoneEditDialog
 import com.checkin.app.checkin.Auth.PhoneInteraction
 import com.checkin.app.checkin.R
+import com.checkin.app.checkin.data.notifications.DeepLinkUtil
 import com.checkin.app.checkin.data.resource.ProblemModel
 import com.checkin.app.checkin.data.resource.Resource
 import com.checkin.app.checkin.menu.fragments.MenuDishSearchFragment
@@ -155,7 +156,8 @@ class PublicRestaurantProfileActivity : BaseActivity(), AppBarLayout.OnOffsetCha
     }
 
     private fun initUi() {
-        restaurantId = intent.getLongExtra(KEY_RESTAURANT_ID, 0)
+        restaurantId = intent.getLongExtra(KEY_RESTAURANT_ID, 0).takeIf { it != 0L }
+                ?: getRestaurantIdFromDeepLink(intent) ?: return
         menuViewModel.clearFilters() // Necessary to get viewmodel since its lazy property
 
         toolbar.title = ""
@@ -592,7 +594,11 @@ class PublicRestaurantProfileActivity : BaseActivity(), AppBarLayout.OnOffsetCha
         private const val LOAD_DATA_RESTAURANT = "load.data.restaurant"
         private const val LOAD_SYNC_USER_DETAILS = "load.sync.user_detail"
 
+        private val DEEP_LINK_RESTAURANT_PROFILE = Regex("/restaurants/(?<restaurantId>\\d+)/profile/")
+
         private val TAG: String = PublicRestaurantProfileActivity::class.java.simpleName
+
+        fun getRestaurantIdFromDeepLink(intent: Intent): Long? = DeepLinkUtil.getEndpointArgs(intent, DEEP_LINK_RESTAURANT_PROFILE)?.let { it[1]?.value?.toLong() }
     }
 
     class PublicRestaurantProfileAdapter(fragmentActivity: FragmentActivity, val restaurantId: Long) : BaseFragmentStateAdapter(fragmentActivity) {

@@ -50,6 +50,7 @@
         <activity
             android:name=".Shop.ShopJoin.BusinessFeaturesActivity"
             android:screenOrientation="portrait"
+            android:exported="true"
             android:theme="@style/AppThemeWhiteActionBar" />
         <activity
             android:name=".Shop.ShopJoin.ContactVerifyActivity"
@@ -70,7 +71,21 @@
         <activity
             android:name=".restaurant.activities.PublicRestaurantProfileActivity"
             android:windowSoftInputMode="adjustPan"
-            android:theme="@style/AppTheme" />
+            android:exported="true"
+            android:theme="@style/AppTheme">
+            <intent-filter>
+                <data android:scheme="checkin" />
+                <data
+                    android:host="check-in.in"
+                    android:pathPattern="/restaurants/..*/profile/*"
+                    android:scheme="app" />
+
+                <action android:name="android.intent.action.VIEW" />
+
+                <category android:name="android.intent.category.BROWSABLE" />
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </activity>
 
         <activity
             android:name=".menu.activities.ActiveSessionMenuActivity"

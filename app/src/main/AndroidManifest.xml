@@ -59,7 +59,20 @@
             android:name=".home.activities.HomeActivity"
             android:screenOrientation="sensorPortrait"
             android:theme="@style/AppTheme"
-            tools:replace="screenOrientation" />
+            tools:replace="screenOrientation">
+            <intent-filter>
+                <data android:scheme="checkin" />
+                <data
+                    android:host="check-in.in"
+                    android:path="/home"
+                    android:scheme="app" />
+
+                <action android:name="android.intent.action.VIEW" />
+
+                <category android:name="android.intent.category.BROWSABLE" />
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </activity>
         <activity
             android:name=".location.MapsActivity"
             android:theme="@style/AppTheme" />
