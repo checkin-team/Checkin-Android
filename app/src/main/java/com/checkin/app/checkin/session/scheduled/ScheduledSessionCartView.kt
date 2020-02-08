@@ -234,7 +234,10 @@ class ScheduledSessionCartView @JvmOverloads constructor(
             if (it > 0) {
                 tvItemCount.text = "$it Item${if (it > 1) "s" else ""}"
                 if (bottomSheetBehavior.peekHeight == 0) bottomSheetBehavior.setPeekHeight(resources.getDimension(R.dimen.height_cart_header_topbar).toInt(), true)
-            } else bottomSheetBehavior.setPeekHeight(0, true)
+            } else {
+                dismiss()
+                bottomSheetBehavior.setPeekHeight(0, true)
+            }
         })
         viewModel.orderedSubTotal.observe(activity, Observer {
             tvHeaderAmount.text = Utils.formatCurrencyAmount(context, it)

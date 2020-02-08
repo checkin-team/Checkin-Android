@@ -397,6 +397,7 @@ class PublicRestaurantProfileActivity : BaseActivity(), AppBarLayout.OnOffsetCha
     private fun setupData(restaurantModel: RestaurantModel) {
         mRestaurantData = restaurantModel
 
+        cartViewModel.restaurantName = restaurantModel.name
         title = restaurantModel.name
         if (isTabAtTop) toolbar.title = title
         tvName.text = title
@@ -476,7 +477,7 @@ class PublicRestaurantProfileActivity : BaseActivity(), AppBarLayout.OnOffsetCha
         if (shouldOrder() && cartViewModel.sessionPk == 0L)
             ChooseQrOrScheduleBottomSheetFragment().show(supportFragmentManager, ChooseQrOrScheduleBottomSheetFragment.FRAGMENT_TAG)
         else if (!scheduledSessionViewModel.isPhoneVerified) onVerifyPhoneOfUser()
-        else return true
+        else return cartViewModel.totalOrderedCount.value != 0
         return false
     }
 

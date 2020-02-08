@@ -30,6 +30,8 @@ class ScheduledCartViewModel(application: Application) : BaseCartViewModel(appli
     val cartBillData: LiveData<Resource<CartBillModel>> = mCartBillData
     val cartDetailData: MutableLiveData<Resource<CartDetailModel>> = MutableLiveData()
 
+    var restaurantName: String = ""
+
     init {
         mServerPendingData.addSource(mNewOrders) { mServerPendingData.value = Resource.cloneResource(it, pass) }
         mServerPendingData.addSource(mUpdatedOrder) { mServerPendingData.value = Resource.cloneResource(it, pass) }
@@ -169,7 +171,7 @@ class ScheduledCartViewModel(application: Application) : BaseCartViewModel(appli
                 data.pk, emptyList(),
                 ScheduledSessionDetailModel(data.countPeople
                         ?: 1, data.plannedDatetime, data.remarks, null, null, Calendar.getInstance().time),
-                RestaurantLocationModel(data.restaurantId, "", null, null, null),
+                RestaurantLocationModel(data.restaurantId, restaurantName, null, null, null),
                 SessionBillModel()
         ))
     }

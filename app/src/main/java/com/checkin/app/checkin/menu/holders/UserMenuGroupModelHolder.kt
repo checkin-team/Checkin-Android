@@ -12,23 +12,24 @@ import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.constraintlayout.widget.ConstraintSet
 import androidx.core.content.ContextCompat
 import androidx.core.widget.ImageViewCompat
+import androidx.recyclerview.widget.RecyclerView
 import androidx.transition.TransitionManager
-import androidx.viewpager.widget.PagerAdapter
-import androidx.viewpager.widget.ViewPager
+import androidx.viewpager2.widget.ViewPager2
 import butterknife.BindView
-import com.airbnb.epoxy.EpoxyAttribute
-import com.airbnb.epoxy.EpoxyModel
-import com.airbnb.epoxy.EpoxyModelClass
-import com.airbnb.epoxy.EpoxyModelWithHolder
+import butterknife.ButterKnife
+import com.airbnb.epoxy.*
 import com.checkin.app.checkin.R
-import com.checkin.app.checkin.menu.fragments.MenuItemsHolder
+import com.checkin.app.checkin.menu.controllers.UserMenuItemController
 import com.checkin.app.checkin.menu.listeners.MenuItemInteraction
 import com.checkin.app.checkin.menu.models.MenuGroupModel
 import com.checkin.app.checkin.menu.models.MenuItemModel
+import com.checkin.app.checkin.misc.adapters.BaseRecyclerViewAdapter
 import com.checkin.app.checkin.misc.epoxy.BaseEpoxyHolder
+import com.checkin.app.checkin.utility.ChildSizeMeasureViewPager2
 import com.checkin.app.checkin.utility.GlideApp
 import com.checkin.app.checkin.utility.Utils
 import com.google.android.material.tabs.TabLayout
+import com.google.android.material.tabs.TabLayoutMediator
 
 @EpoxyModelClass(layout = R.layout.item_as_menu_group_collapsed)
 abstract class UserMenuGroupModelHolder : EpoxyModelWithHolder<UserMenuGroupModelHolder.Holder>() {
@@ -78,7 +79,7 @@ abstract class UserMenuGroupModelHolder : EpoxyModelWithHolder<UserMenuGroupMode
         @BindView(R.id.tabs_as_menu_sub_groups)
         internal lateinit var vTabs: TabLayout
         @BindView(R.id.pager_as_menu_items)
-        internal lateinit var vPager: ViewPager
+        internal lateinit var vPager: ViewPager2
         @BindView(R.id.container_as_menu_sub_groups)
         internal lateinit var vSubGroupWrapper: ViewGroup
         @BindView(R.id.im_as_menu_drop_down)
@@ -89,10 +90,46 @@ abstract class UserMenuGroupModelHolder : EpoxyModelWithHolder<UserMenuGroupMode
 
         private lateinit var mAdapter: SubGroupPagerAdapter
         private lateinit var menuGroup: MenuGroupModel
+        private var itemOrderedCount: Map<Long, Int>? = null
         private var isExpanded: Boolean = false
+        private val childSizeUtil by lazy { ChildSizeMeasureViewPager2(vPager) }
 
         override fun bindView(itemView: View) {
             super.bindView(itemView)
+
+            mAdapter = SubGroupPagerAdapter(itemListener)
+            vPager.adapter = mAdapter
+            vPager.registerOnPageChangeCallback(childSizeUtil)
+
+            TabLayoutMediator(vTabs, vPager) { tab, pos ->
+                val tabOne = LayoutInflater.from(context).inflate(R.layout.tab_menu_subgroup, null)
+                val tv = tabOne.findViewById<TextView>(R.id.tv_tab)
+                val im = tabOne.findViewById<ImageView>(R.id.im_tab)
+                when (pos) {
+                    0 -> {
+                        tv.text = "  Veg"
+                        im.setImageDrawable(ContextCompat.getDrawable(context, R.drawable.ic_veg))
+                    }
+                    1 -> {
+                        tv.text = "  Non-Veg"
+                        im.setImageDrawable(ContextCompat.getDrawable(context, R.drawable.ic_non_veg))
+                    }
+                }
+                tab.customView = tabOne
+            }.attach()
+
+            vTabs.addOnTabSelectedListener(object : TabLayout.OnTabSelectedListener {
+                @ColorRes
+                private fun getTabColor(position: Int): Int = if (position == 0) R.color.apple_green else R.color.primary_red
+
+                override fun onTabSelected(tab: TabLayout.Tab) {
+                    vTabs.setSelectedTabIndicatorColor(ContextCompat.getColor(context, getTabColor(tab.position)))
+                }
+
+                override fun onTabUnselected(tab: TabLayout.Tab) {}
+
+                override fun onTabReselected(tab: TabLayout.Tab) {}
+            })
 
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
                 Utils.setTabsFont(vTabs, itemView.resources.getFont(R.font.arial_rounded_mt_bold))
@@ -109,62 +146,23 @@ abstract class UserMenuGroupModelHolder : EpoxyModelWithHolder<UserMenuGroupMode
         }
 
         fun updateItemCounts(itemCounts: Map<Long, Int>) {
+            itemOrderedCount = itemCounts
             mAdapter.updateCount(itemCounts)
         }
 
         override fun bindData(data: MenuGroupModel) {
             menuGroup = data
 
-            mAdapter = SubGroupPagerAdapter(data, itemListener)
+            mAdapter.setData(data)
+            itemOrderedCount?.let { mAdapter.updateCount(it) }
             tvGroupName.text = data.name
             GlideApp.with(itemView).load(data.icon).into(imGroupIcon)
-            vPager.adapter = mAdapter
-            if (data.hasSubGroups()) {
-                vTabs.visibility = View.VISIBLE
-                vTabs.setupWithViewPager(vPager)
-                setupTabIcons()
-                vTabs.addOnTabSelectedListener(object : TabLayout.OnTabSelectedListener {
-                    @ColorRes
-                    private fun getTabColor(position: Int): Int = if (position == 0) R.color.apple_green else R.color.primary_red
-
-                    override fun onTabSelected(tab: TabLayout.Tab) {
-                        vTabs.setSelectedTabIndicatorColor(ContextCompat.getColor(context, getTabColor(tab.position)))
-                    }
-
-                    override fun onTabUnselected(tab: TabLayout.Tab) {}
-
-                    override fun onTabReselected(tab: TabLayout.Tab) {}
-                })
-            } else {
-                vTabs.visibility = View.GONE
-            }
+            vTabs.visibility = if (data.hasSubGroups()) View.VISIBLE else View.GONE
         }
 
         private fun show(animate: Boolean) = applyState(STATE_EXPANDED, animate)
 
         private fun hide(animate: Boolean) = applyState(STATE_COLLAPSED, animate)
-
-        private fun setupTabIcons() {
-            var tab: TabLayout.Tab? = vTabs.getTabAt(0)
-            if (tab != null) {
-                val tabOne = LayoutInflater.from(context).inflate(R.layout.tab_menu_subgroup, null)
-                val tv = tabOne.findViewById<TextView>(R.id.tv_tab)
-                val im = tabOne.findViewById<ImageView>(R.id.im_tab)
-                tv.text = "  Veg"
-                im.setImageDrawable(ContextCompat.getDrawable(context, R.drawable.ic_veg))
-                tab.customView = tabOne
-            }
-
-            tab = vTabs.getTabAt(1)
-            if (tab != null) {
-                val tabTwo = LayoutInflater.from(context).inflate(R.layout.tab_menu_subgroup, null)
-                val tvTwo = tabTwo.findViewById<TextView>(R.id.tv_tab)
-                val imTwo = tabTwo.findViewById<ImageView>(R.id.im_tab)
-                tvTwo.text = "  Non-Veg"
-                imTwo.setImageDrawable(ContextCompat.getDrawable(context, R.drawable.ic_non_veg))
-                tab.customView = tabTwo
-            }
-        }
 
         private fun applyState(state: Int, animate: Boolean = true) {
             when (state) {
@@ -188,46 +186,75 @@ abstract class UserMenuGroupModelHolder : EpoxyModelWithHolder<UserMenuGroupMode
             isExpanded = expanded
             if (isExpanded) {
                 show(animate)
-                if (menuGroup.hasSubGroups() && vTabs.childCount > 1) setupTabIcons()
+                childSizeUtil.refreshPageSizes()
             } else hide(animate)
         }
     }
 
-    class SubGroupPagerAdapter internal constructor(
-            menuGroup: MenuGroupModel,
-            private val itemListener: MenuItemInteraction
-    ) : PagerAdapter() {
+    class SubGroupPagerAdapter(private val itemListener: MenuItemInteraction?
+    ) : BaseRecyclerViewAdapter<SubGroupPagerAdapter.ViewHolder>() {
         private val mListItems: MutableList<List<MenuItemModel>> = ArrayList()
-        private val mListHolders: MutableList<MenuItemsHolder> = mutableListOf()
+        private var mItemOrderedCount: Map<Long, Int>? = null
 
-        override fun isViewFromObject(view: View, obj: Any): Boolean = view == obj
+        fun updateCount(itemOrderedCount: Map<Long, Int>?) {
+            mItemOrderedCount = itemOrderedCount
+            notifyDataSetChanged()
+        }
 
-        init {
+        fun setData(menuGroup: MenuGroupModel) {
+            mListItems.clear()
+            mItemOrderedCount = null
             if (menuGroup.hasSubGroups()) {
                 mListItems.add(menuGroup.vegItems)
                 mListItems.add(menuGroup.nonVegItems)
             } else {
                 mListItems.add(menuGroup.items)
             }
+            notifyDataSetChanged()
         }
 
-        fun updateCount(itemOrderedCount: Map<Long, Int>?) = mListHolders.forEach { it.setItemCounts(itemOrderedCount) }
+        override fun getItemViewType(position: Int): Int = R.layout.fragment_as_menu_items
 
-        override fun getCount(): Int = mListItems.size
+        override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder = onCreateView(parent, viewType).run { ViewHolder(this) }
 
-        override fun instantiateItem(container: ViewGroup, position: Int): View = MenuItemsHolder(mListItems[position], itemListener, container).run {
-            mListHolders.add(position, this)
-            getView().also { container.addView(it) }
-        }
+        override fun onBindViewHolder(holder: ViewHolder, position: Int) = holder.bindData(mListItems[position])
 
-        override fun destroyItem(container: ViewGroup, position: Int, obj: Any) = container.removeView(obj as View).also {
-            if (position < mListHolders.size) mListHolders.removeAt(position)
-        }
+        override fun getItemCount(): Int = mListItems.size
 
-        override fun getPageTitle(position: Int): CharSequence? = when (position) {
-            0 -> "Veg"
-            1 -> "Non-Veg"
-            else -> null
+        inner class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView), OnItemInteractionListener {
+            @BindView(R.id.epoxy_rv_menu_items)
+            internal lateinit var rvMenuItems: EpoxyRecyclerView
+
+            private val controller = UserMenuItemController(this)
+
+            init {
+                ButterKnife.bind(this, itemView)
+
+                rvMenuItems.apply {
+                    isNestedScrollingEnabled = false
+                    setHasFixedSize(false)
+                    setControllerAndBuildModels(controller)
+                }
+            }
+
+            fun bindData(items: List<MenuItemModel>) {
+                controller.itemList = items
+
+                mItemOrderedCount?.let { controller.orderedCountMap = it }
+            }
+
+            override fun onItemAdded(item: MenuItemModel?): Boolean = item?.let {
+                itemListener?.onMenuItemAdded(it)
+            } ?: false
+
+            override fun onItemLongPress(item: MenuItemModel): Boolean = itemListener?.run {
+                onMenuItemShowInfo(item)
+                true
+            } ?: false
+
+            override fun onItemChanged(item: MenuItemModel?, count: Int): Boolean = item?.let {
+                itemListener?.onMenuItemChanged(it, count)
+            } ?: false
         }
     }
 

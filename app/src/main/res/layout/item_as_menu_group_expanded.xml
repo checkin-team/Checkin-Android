@@ -51,7 +51,7 @@
 
         </com.google.android.material.tabs.TabLayout>
 
-        <com.checkin.app.checkin.misc.views.ChildSizeMeasureViewPager
+        <androidx.viewpager2.widget.ViewPager2
             android:id="@+id/pager_as_menu_items"
             android:layout_width="match_parent"
             android:layout_height="wrap_content" />

@@ -71,18 +71,18 @@ class MenuGroupsFragment : BaseFragment(), OnGroupInteraction {
             setHasFixedSize(false)
             ViewCompat.setNestedScrollingEnabled(this, true)
             setControllerAndBuildModels(groupController)
-//            layoutManager = object : LinearLayoutManager(requireContext()) {
-//                override fun canScrollVertically(): Boolean = false
-//            }
         }
         groupController.addModelBuildListener {
             screenListener.onListBuilt()
             epoxyRvMenuGroups.post {
-                groupController.expandedGroupId?.let { groupId ->
-                    val pos = groupController.adapter.run {
-                        getModelById(groupId)?.let { getModelPosition(it) } ?: 0
+                if (groupController.pendingExpandUpdate) {
+                    groupController.expandedGroupId?.let { groupId ->
+                        val pos = groupController.adapter.run {
+                            getModelById(groupId)?.let { getModelPosition(it) } ?: 0
+                        }
+                        (epoxyRvMenuGroups.layoutManager as LinearLayoutManager).findViewByPosition(pos)?.also { screenListener.onExpandGroupView(it) }
                     }
-                    (epoxyRvMenuGroups.layoutManager as LinearLayoutManager).findViewByPosition(pos)?.also { screenListener.onExpandGroupView(it) }
+                    groupController.pendingExpandUpdate = false
                 }
             }
         }

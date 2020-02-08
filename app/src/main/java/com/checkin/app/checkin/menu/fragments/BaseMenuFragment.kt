@@ -127,7 +127,7 @@ abstract class BaseMenuFragment :
 
     override fun onMenuItemChanged(item: MenuItemModel, count: Int): Boolean = cartViewModel.updateOrderedItem(item, count)?.let {
         menuViewModel.setCurrentItem(it)
-        this.onItemInteraction(item)
+        onItemInteraction(item)
         true
     } ?: onMenuItemAdded(item)
 

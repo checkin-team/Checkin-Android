@@ -49,6 +49,8 @@ class UserMenuGroupController(
 
     var expandedGroupId: Long? = null
 
+    var pendingExpandUpdate = false
+
     override fun buildModels() {
         if (doShowBestseller) {
             val bestsellerModels: List<EpoxyModel<*>> = trendingDishes.let {
@@ -106,6 +108,7 @@ class UserMenuGroupController(
 
     override fun expandView(group: MenuGroupModel) {
         expandedGroupId = group.pk
+        pendingExpandUpdate = true
         requestModelBuild()
     }
 }

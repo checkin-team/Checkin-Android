@@ -56,8 +56,9 @@ abstract class BaseCartViewModel(application: Application) : BaseViewModel(appli
             it.equalsWithPk(item) || it.equalsWithoutPk(item)
         }
         if (index != -1) {
-            if (item.quantity > 0) orderedItems[index] = item
-            else orderedItems.removeAt(index)
+            if (item.quantity > 0) {
+                orderedItems[index] = if (item.isCustomized()) item.updateQuantity(orderedItems[index].quantity + 1) else item
+            } else orderedItems.removeAt(index)
         } else orderedItems.add(item)
         mOrderedItems.value = orderedItems
     }
