@@ -44,7 +44,7 @@ class SchedulerBottomSheetFragment : BaseBottomSheetFragment(), TimePickerDialog
     private val minCalendar = Calendar.getInstance().apply {
         val nowMinutes = this[Calendar.MINUTE]
         val diffMinutes = listOf(15 - nowMinutes, 30 - nowMinutes, 45 - nowMinutes, 60 - nowMinutes).find { it >= 10 }
-                ?: 0
+                ?: (75 - nowMinutes)
         add(Calendar.MINUTE, diffMinutes)
     }
     private val mTimePickerDialog by lazy {
