@@ -164,12 +164,10 @@
         <item name="android:layout_width">@dimen/size_logo_large</item>
         <item name="android:layout_height">@dimen/size_logo_large</item>
     </style>
-
     <style name="LogoSmallImageStyle">
         <item name="android:layout_width">@dimen/size_logo_small</item>
         <item name="android:layout_height">@dimen/size_logo_small</item>
     </style>
-
     <style name="InputLabelGreyLargeStyle" parent="TextAppearance.AppCompat">
         <item name="android:fontFamily">@font/opensans</item>
         <item name="android:textColor">@color/pinkish_grey</item>

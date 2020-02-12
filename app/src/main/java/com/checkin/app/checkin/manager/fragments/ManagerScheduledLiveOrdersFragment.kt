@@ -67,8 +67,7 @@ class ManagerScheduledLiveOrdersFragment : BaseFragment(), PreorderTableInteract
                 }
             }
         })
-        viewModel.doneData.observe(this, Observer {
-        })
+
     }
 
     private fun updateUi(data: List<ShopScheduledSessionModel>) {
