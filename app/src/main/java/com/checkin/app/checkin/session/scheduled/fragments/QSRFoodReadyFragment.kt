@@ -53,7 +53,7 @@ class QSRFoodReadyFragment : BaseFragment() {
         viewModel.sessionData.observe(this, Observer {
             if (it?.status == Resource.Status.SUCCESS && it.data != null) setupData(it.data)
             else if (it.status == Resource.Status.LOADING) billHolder.showLoading()
-            //else if (it.status == Resource.Status.ERROR_NOT_FOUND) requireActivity().finish()
+            else if (it.status == Resource.Status.ERROR_NOT_FOUND) requireActivity().finish()
         })
 
         epoxyRvOrders.withModels {

@@ -67,7 +67,6 @@ class ManagerScheduledLiveOrdersFragment : BaseFragment(), PreorderTableInteract
                 }
             }
         })
-
     }
 
     private fun updateUi(data: List<ShopScheduledSessionModel>) {
