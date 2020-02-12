@@ -2,12 +2,14 @@ package com.checkin.app.checkin.session.scheduled.fragments
 
 import android.os.Bundle
 import android.view.View
+import android.widget.Button
 import android.widget.TextView
 import androidx.core.os.bundleOf
 import androidx.core.view.ViewCompat
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
 import butterknife.BindView
+import butterknife.OnClick
 import com.airbnb.epoxy.EpoxyRecyclerView
 import com.checkin.app.checkin.R
 import com.checkin.app.checkin.data.resource.Resource
@@ -34,6 +36,8 @@ class QSRFoodReadyFragment : BaseFragment() {
     internal lateinit var tvTotal: TextView
     @BindView(R.id.epoxy_rv_qsr_ready_orders_summary)
     internal lateinit var epoxyRvOrders: EpoxyRecyclerView
+    @BindView(R.id.btn_qsr_ready_done)
+    internal lateinit var btnDone: Button
 
     val viewModel: ScheduledSessionDetailViewModel by viewModels()
     lateinit var billHolder: BillHolder
@@ -77,6 +81,11 @@ class QSRFoodReadyFragment : BaseFragment() {
     override fun onResume() {
         super.onResume()
         viewModel.fetchMissing()
+    }
+
+    @OnClick(R.id.btn_qsr_ready_done)
+    fun onFinishSession() {
+        Utils.navigateBackToHome(context)
     }
 
     companion object {

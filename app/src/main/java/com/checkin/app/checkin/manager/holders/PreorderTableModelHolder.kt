@@ -78,7 +78,7 @@ abstract class PreparationPreorderTableModelHolder : EpoxyModelWithHolder<Prepar
 
         override fun bindData(data: ShopScheduledSessionModel) {
             super.bindData(data)
-            Utils.loadImageOrDefault(imCustomer, data.owner.displayPic, R.drawable.fore_male_white)
+            Utils.loadImageOrDefault(imCustomer, data.owner.displayPic, R.drawable.fore_male_grey)
             data.scheduled.let {
                 val time = Calendar.getInstance().time
                 if (it.plannedDatetime!! > time) {
@@ -128,7 +128,7 @@ abstract class UpcomingPreorderTableModelHolder : EpoxyModelWithHolder<UpcomingP
 
         override fun bindData(data: ShopScheduledSessionModel) {
             super.bindData(data)
-            Utils.loadImageOrDefault(imCustomer, data.owner.displayPic, R.drawable.fore_male_white)
+            Utils.loadImageOrDefault(imCustomer, data.owner.displayPic, R.drawable.fore_male_grey)
         }
     }
 }

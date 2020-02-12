@@ -21,7 +21,6 @@ abstract class BasePreorderTableHolder : BaseEpoxyHolder<ShopScheduledSessionMod
     @CallSuper
     override fun bindData(data: ShopScheduledSessionModel) {
         mData = data
-
         tvCustomerName.text = data.owner.displayName!!
         tvScheduledInfo.text = "${data.scheduled.formatPlannedDate} | ${data.scheduled.formatPlannedTime} | ${data.scheduled.formatGuestCount}"
     }
