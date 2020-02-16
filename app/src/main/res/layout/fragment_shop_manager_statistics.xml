@@ -1,193 +1,201 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+
+<androidx.swiperefreshlayout.widget.SwipeRefreshLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/sr_manager_stats"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:paddingTop="@dimen/spacing_small"
-    android:paddingBottom="@dimen/spacing_small">
-
-    <TextView
-        android:id="@+id/title_manager_stats"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/spacing_tiny"
-        android:paddingStart="@dimen/spacing_small"
-        android:paddingEnd="@dimen/spacing_small"
-        android:text="@string/shop_manager_table_statics_title_description"
-        android:textSize="@dimen/font_extra_small" />
-
-    <androidx.cardview.widget.CardView
-        android:id="@+id/cv_shop_manager_table_statics"
-        style="@style/WhiteCardStyle"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/title_manager_stats"
-        android:layout_marginStart="@dimen/spacing_large"
-        android:layout_marginTop="@dimen/spacing_normal"
-        android:layout_marginEnd="@dimen/spacing_large">
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:paddingStart="@dimen/spacing_normal"
-            android:paddingTop="@dimen/spacing_extra_small"
-            android:paddingEnd="@dimen/spacing_normal"
-            android:paddingBottom="@dimen/spacing_extra_small">
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal">
-
-                <LinearLayout
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:orientation="vertical"
-                    android:padding="@dimen/spacing_extra_small">
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="Today's Revenue"
-                        android:textSize="@dimen/font_extra_small" />
-
-                    <TextView
-                        android:id="@+id/tv_manager_stats_revenue_day"
-                        style="@style/RedHeadingStyle"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="@dimen/spacing_extra_tiny"
-                        tools:text="2,120" />
-
-                    <TextView
-                        android:id="@+id/tv_manager_stats_orders_day"
-                        style="@style/GreySmallTextStyle"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="@dimen/spacing_tiny"
-                        tools:text="8 orders" />
-
-                </LinearLayout>
-
-                <View style="@style/DividerVertical" />
-
-                <LinearLayout
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:orientation="vertical"
-                    android:padding="@dimen/spacing_extra_small">
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginStart="@dimen/spacing_normal"
-                        android:text="Week's Revenue"
-                        android:textSize="@dimen/font_extra_small" />
-
-                    <TextView
-                        android:id="@+id/tv_manager_stats_revenue_week"
-                        style="@style/RedHeadingStyle"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginStart="@dimen/spacing_normal"
-                        android:layout_marginTop="@dimen/spacing_extra_tiny"
-                        tools:text="14,120" />
-
-                    <TextView
-                        android:id="@+id/tv_manager_stats_orders_week"
-                        style="@style/GreySmallTextStyle"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginStart="@dimen/spacing_normal"
-                        android:layout_marginTop="@dimen/spacing_tiny"
-                        tools:text="48 orders" />
-
-                </LinearLayout>
-
-            </LinearLayout>
-
-            <View style="@style/DividerHorizontal" />
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal">
-
-                <LinearLayout
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:orientation="vertical"
-                    android:padding="@dimen/spacing_extra_small">
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="Average Session Time"
-                        android:textSize="@dimen/font_extra_small" />
-
-                    <TextView
-                        android:id="@+id/tv_manager_stats_session_time"
-                        style="@style/RedHeadingStyle"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="@dimen/spacing_extra_tiny"
-                        tools:text="23.02 Min" />
-
-                </LinearLayout>
-
-                <View style="@style/DividerVertical" />
-
-                <LinearLayout
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:orientation="vertical"
-                    android:padding="@dimen/spacing_extra_small">
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginStart="@dimen/spacing_normal"
-                        android:text="Average Serving Time"
-                        android:textSize="@dimen/font_extra_small" />
-
-                    <TextView
-                        android:id="@+id/tv_manager_stats_serving_time"
-                        style="@style/RedHeadingStyle"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginStart="@dimen/spacing_normal"
-                        android:layout_marginTop="@dimen/spacing_extra_tiny"
-                        tools:text="15.16 Min" />
-
-                </LinearLayout>
-
-            </LinearLayout>
-
-        </LinearLayout>
-
-    </androidx.cardview.widget.CardView>
-
-    <TextView
-        android:id="@+id/title_manager_stats_trending"
-        style="@style/RedSmallTextStyle"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/cv_shop_manager_table_statics"
-        android:layout_marginStart="@dimen/spacing_small"
-        android:layout_marginTop="@dimen/spacing_large"
-        android:layout_marginEnd="@dimen/spacing_small"
-        android:text="TRENDING ITEMS IN LAST 30  DAYS" />
-
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/rv_manager_stats_trending_orders"
+    android:layout_height="match_parent">
+    
+    <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:tools="http://schemas.android.com/tools"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_below="@id/title_manager_stats_trending"
-        android:layout_marginTop="@dimen/spacing_small" />
-
-</RelativeLayout>
+        android:paddingTop="@dimen/spacing_small"
+        android:paddingBottom="@dimen/spacing_small">
+        
+        <TextView
+            android:id="@+id/title_manager_stats"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/spacing_tiny"
+            android:paddingStart="@dimen/spacing_small"
+            android:paddingEnd="@dimen/spacing_small"
+            android:text="@string/shop_manager_table_statics_title_description"
+            android:textSize="@dimen/font_extra_small" />
+        
+        <androidx.cardview.widget.CardView
+            android:id="@+id/cv_shop_manager_table_statics"
+            style="@style/WhiteCardStyle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/title_manager_stats"
+            android:layout_marginStart="@dimen/spacing_large"
+            android:layout_marginTop="@dimen/spacing_normal"
+            android:layout_marginEnd="@dimen/spacing_large">
+            
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:paddingStart="@dimen/spacing_normal"
+                android:paddingTop="@dimen/spacing_extra_small"
+                android:paddingEnd="@dimen/spacing_normal"
+                android:paddingBottom="@dimen/spacing_extra_small">
+                
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+                    
+                    <LinearLayout
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:orientation="vertical"
+                        android:padding="@dimen/spacing_extra_small">
+                        
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Today's Revenue"
+                            android:textSize="@dimen/font_extra_small" />
+                        
+                        <TextView
+                            android:id="@+id/tv_manager_stats_revenue_day"
+                            style="@style/RedHeadingStyle"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="@dimen/spacing_extra_tiny"
+                            tools:text="2,120" />
+                        
+                        <TextView
+                            android:id="@+id/tv_manager_stats_orders_day"
+                            style="@style/GreySmallTextStyle"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="@dimen/spacing_tiny"
+                            tools:text="8 orders" />
+                    
+                    </LinearLayout>
+                    
+                    <View style="@style/DividerVertical" />
+                    
+                    <LinearLayout
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:orientation="vertical"
+                        android:padding="@dimen/spacing_extra_small">
+                        
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="@dimen/spacing_normal"
+                            android:text="Week's Revenue"
+                            android:textSize="@dimen/font_extra_small" />
+                        
+                        <TextView
+                            android:id="@+id/tv_manager_stats_revenue_week"
+                            style="@style/RedHeadingStyle"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="@dimen/spacing_normal"
+                            android:layout_marginTop="@dimen/spacing_extra_tiny"
+                            tools:text="14,120" />
+                        
+                        <TextView
+                            android:id="@+id/tv_manager_stats_orders_week"
+                            style="@style/GreySmallTextStyle"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="@dimen/spacing_normal"
+                            android:layout_marginTop="@dimen/spacing_tiny"
+                            tools:text="48 orders" />
+                    
+                    </LinearLayout>
+                
+                </LinearLayout>
+                
+                <View style="@style/DividerHorizontal" />
+                
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+                    
+                    <LinearLayout
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:orientation="vertical"
+                        android:padding="@dimen/spacing_extra_small">
+                        
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Average Session Time"
+                            android:textSize="@dimen/font_extra_small" />
+                        
+                        <TextView
+                            android:id="@+id/tv_manager_stats_session_time"
+                            style="@style/RedHeadingStyle"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="@dimen/spacing_extra_tiny"
+                            tools:text="23.02 Min" />
+                    
+                    </LinearLayout>
+                    
+                    <View style="@style/DividerVertical" />
+                    
+                    <LinearLayout
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:orientation="vertical"
+                        android:padding="@dimen/spacing_extra_small">
+                        
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="@dimen/spacing_normal"
+                            android:text="Average Serving Time"
+                            android:textSize="@dimen/font_extra_small" />
+                        
+                        <TextView
+                            android:id="@+id/tv_manager_stats_serving_time"
+                            style="@style/RedHeadingStyle"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="@dimen/spacing_normal"
+                            android:layout_marginTop="@dimen/spacing_extra_tiny"
+                            tools:text="15.16 Min" />
+                    
+                    </LinearLayout>
+                
+                </LinearLayout>
+            
+            </LinearLayout>
+        
+        </androidx.cardview.widget.CardView>
+        
+        <TextView
+            android:id="@+id/title_manager_stats_trending"
+            style="@style/RedSmallTextStyle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/cv_shop_manager_table_statics"
+            android:layout_marginStart="@dimen/spacing_small"
+            android:layout_marginTop="@dimen/spacing_large"
+            android:layout_marginEnd="@dimen/spacing_small"
+            android:text="TRENDING ITEMS IN LAST 30  DAYS" />
+        
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/rv_manager_stats_trending_orders"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_below="@id/title_manager_stats_trending"
+            android:layout_marginTop="@dimen/spacing_small" />
+    
+    </RelativeLayout>
+</androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
