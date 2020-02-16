@@ -67,6 +67,9 @@ class ManagerScheduledLiveOrdersFragment : BaseFragment(), PreorderTableInteract
                 }
             }
         })
+        viewModel.doneData.observe(this, Observer {
+            // observer needed to ensure "mark food ready" POST request is fulfilled.
+        })
     }
 
     private fun updateUi(data: List<ShopScheduledSessionModel>) {
