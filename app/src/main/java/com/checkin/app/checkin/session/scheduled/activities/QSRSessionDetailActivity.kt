@@ -24,6 +24,7 @@ import com.checkin.app.checkin.session.scheduled.fragments.QSRDetailFragment
 import com.checkin.app.checkin.session.scheduled.viewmodels.ScheduledSessionDetailViewModel
 import com.checkin.app.checkin.utility.Utils
 import com.checkin.app.checkin.utility.inTransaction
+import com.checkin.app.checkin.utility.navigateBackToHome
 
 class QSRSessionDetailActivity : BaseActivity() {
     @BindView(R.id.toolbar_user_scheduled_session_detail)
@@ -101,7 +102,7 @@ class QSRSessionDetailActivity : BaseActivity() {
     }
 
     override fun onSupportNavigateUp(): Boolean {
-        finish()
+        navigateBackToHome()
         return true
     }
 

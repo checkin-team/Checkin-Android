@@ -43,6 +43,8 @@ fun TabLayout.setTabBackground(@ColorInt color: Int) = (0 until tabCount).forEac
 fun Context.toast(msg: String) = Utils.toast(this, msg)
 fun Context.toast(@StringRes msgRes: Int) = Utils.toast(this, msgRes)
 
+fun Context.navigateBackToHome() = Utils.navigateBackToHome(this)
+
 /*
     Data Utils
  */

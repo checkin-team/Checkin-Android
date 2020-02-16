@@ -2,7 +2,6 @@ package com.checkin.app.checkin.session.scheduled.fragments
 
 import android.os.Bundle
 import android.view.View
-import android.widget.Button
 import android.widget.TextView
 import androidx.core.os.bundleOf
 import androidx.core.view.ViewCompat
@@ -20,6 +19,8 @@ import com.checkin.app.checkin.session.models.CustomerScheduledSessionDetailMode
 import com.checkin.app.checkin.session.scheduled.viewmodels.ScheduledSessionDetailViewModel
 import com.checkin.app.checkin.utility.Utils
 import com.checkin.app.checkin.utility.isNotEmpty
+import com.checkin.app.checkin.utility.navigateBackToHome
+import com.checkin.app.checkin.utility.toast
 
 class QSRFoodReadyFragment : BaseFragment() {
     override val rootLayout: Int = R.layout.fragment_qsr_order_ready
@@ -36,8 +37,6 @@ class QSRFoodReadyFragment : BaseFragment() {
     internal lateinit var tvTotal: TextView
     @BindView(R.id.epoxy_rv_qsr_ready_orders_summary)
     internal lateinit var epoxyRvOrders: EpoxyRecyclerView
-    @BindView(R.id.btn_qsr_ready_done)
-    internal lateinit var btnDone: Button
 
     val viewModel: ScheduledSessionDetailViewModel by viewModels()
     lateinit var billHolder: BillHolder
@@ -53,7 +52,10 @@ class QSRFoodReadyFragment : BaseFragment() {
         viewModel.sessionData.observe(this, Observer {
             if (it?.status == Resource.Status.SUCCESS && it.data != null) setupData(it.data)
             else if (it.status == Resource.Status.LOADING) billHolder.showLoading()
-            else if (it.status == Resource.Status.ERROR_NOT_FOUND) requireActivity().finish()
+            else if (it.status == Resource.Status.ERROR_NOT_FOUND) {
+                requireContext().toast("Session marked done.")
+                onFinishSession()
+            }
         })
 
         epoxyRvOrders.withModels {
@@ -85,7 +87,7 @@ class QSRFoodReadyFragment : BaseFragment() {
 
     @OnClick(R.id.btn_qsr_ready_done)
     fun onFinishSession() {
-        Utils.navigateBackToHome(context)
+        requireContext().navigateBackToHome()
     }
 
     companion object {

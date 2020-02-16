@@ -8,6 +8,7 @@ import com.checkin.app.checkin.R
 import com.checkin.app.checkin.misc.activities.BaseActivity
 import com.checkin.app.checkin.session.scheduled.fragments.QSRFoodReadyFragment
 import com.checkin.app.checkin.utility.inTransaction
+import com.checkin.app.checkin.utility.navigateBackToHome
 
 class QSRFoodReadyActivity : BaseActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -18,6 +19,11 @@ class QSRFoodReadyActivity : BaseActivity() {
         supportFragmentManager.inTransaction {
             add(R.id.frg_container_activity, QSRFoodReadyFragment.newInstance(intent.getLongExtra(KEY_SESSION_ID, 0L)))
         }
+    }
+
+    override fun onSupportNavigateUp(): Boolean {
+        navigateBackToHome()
+        return true
     }
 
     companion object {

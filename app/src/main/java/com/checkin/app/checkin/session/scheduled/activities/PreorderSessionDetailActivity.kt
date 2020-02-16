@@ -24,6 +24,7 @@ import com.checkin.app.checkin.session.scheduled.fragments.PreorderDetailFragmen
 import com.checkin.app.checkin.session.scheduled.viewmodels.ScheduledSessionDetailViewModel
 import com.checkin.app.checkin.utility.Utils
 import com.checkin.app.checkin.utility.inTransaction
+import com.checkin.app.checkin.utility.navigateBackToHome
 
 class PreorderSessionDetailActivity : BaseActivity() {
     @BindView(R.id.toolbar_user_scheduled_session_detail)
@@ -99,7 +100,7 @@ class PreorderSessionDetailActivity : BaseActivity() {
     }
 
     override fun onSupportNavigateUp(): Boolean {
-        finish()
+        navigateBackToHome()
         return true
     }
 

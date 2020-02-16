@@ -64,7 +64,7 @@ abstract class PreparationQsrTableModelHolder : EpoxyModelWithHolder<Preparation
 
         override fun bindData(data: ShopScheduledSessionModel) {
             super.bindData(data)
-            Utils.loadImageOrDefault(imCustomer, data.owner.displayPic, R.drawable.fore_male_white)
+            Utils.loadImageOrDefault(imCustomer, data.owner.displayPic, R.drawable.fore_male_grey)
             tvFoodStatus.setText(R.string.text_qsr_mark_food_ready)
         }
     }
@@ -98,7 +98,7 @@ abstract class EndQsrTableModelHolder : EpoxyModelWithHolder<EndQsrTableModelHol
 
         override fun bindData(data: ShopScheduledSessionModel) {
             super.bindData(data)
-            Utils.loadImageOrDefault(imCustomer, data.owner.displayPic, R.drawable.fore_male_white)
+            Utils.loadImageOrDefault(imCustomer, data.owner.displayPic, R.drawable.fore_male_grey)
             tvFoodStatus.setText(R.string.text_qsr_mark_session_end)
         }
     }
