@@ -31,6 +31,7 @@ import android.widget.Toast;
 
 import androidx.annotation.DrawableRes;
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.annotation.StringRes;
 
 import com.checkin.app.checkin.Auth.AuthPreferences;
@@ -38,6 +39,7 @@ import com.checkin.app.checkin.R;
 import com.checkin.app.checkin.data.notifications.ActiveSessionNotificationService;
 import com.checkin.app.checkin.home.activities.HomeActivity;
 import com.checkin.app.checkin.home.activities.SplashActivity;
+import com.crashlytics.android.Crashlytics;
 import com.golovin.fluentstackbar.FluentSnackbar;
 import com.google.android.material.snackbar.Snackbar;
 import com.google.android.material.tabs.TabLayout;
@@ -53,8 +55,6 @@ import java.util.Date;
 import java.util.Locale;
 import java.util.Map;
 import java.util.concurrent.TimeUnit;
-import java.util.regex.MatchResult;
-import java.util.regex.Matcher;
 
 import kotlin.Pair;
 
@@ -186,22 +186,6 @@ public final class Utils {
     /* ============================================================
      * Text
      * ============================================================ */
-    public static String replaceAll(String text, Matcher matcher, @NonNull MatchResultFunction replacer) {
-        matcher.reset();
-        boolean result = matcher.find();
-        if (result) {
-            StringBuffer sb = new StringBuffer();
-            do {
-                String replacement = replacer.apply(matcher);
-                matcher.appendReplacement(sb, replacement);
-                result = matcher.find();
-            } while (result);
-            matcher.appendTail(sb);
-            return sb.toString();
-        }
-        return text;
-    }
-
     public static String formatCount(long count) {
         String res;
         if (count > 1000)
@@ -526,7 +510,14 @@ public final class Utils {
         return true;
     }
 
-    public interface MatchResultFunction {
-        String apply(MatchResult match);
+    public static void logErrors(String TAG, Throwable error, @Nullable String errMsg) {
+        String msg = errMsg != null ? errMsg : error.getLocalizedMessage();
+        Log.e(TAG, msg, error);
+        Crashlytics.log(Log.ERROR, TAG, msg);
+        Crashlytics.logException(error);
+    }
+
+    public static void logErrors(String TAG, Throwable error) {
+        logErrors(TAG, error, null);
     }
 }

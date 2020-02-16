@@ -6,14 +6,15 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.ImageView;
 
-import com.checkin.app.checkin.R;
-import com.checkin.app.checkin.misc.fragments.QRScannerFragment;
-import com.google.zxing.Result;
-
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
+
+import com.checkin.app.checkin.R;
+import com.checkin.app.checkin.misc.fragments.QRScannerFragment;
+import com.google.zxing.Result;
+
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
@@ -60,7 +61,7 @@ public class QRScannerActivity extends AppCompatActivity implements QRScannerFra
     }
 
     private void setupFragment() {
-        mScannerFragment = QRScannerFragment.newInstance(this);
+        mScannerFragment = QRScannerFragment.newInstance();
         getSupportFragmentManager().beginTransaction()
                 .add(R.id.fragment_scanner, mScannerFragment)
                 .commit();

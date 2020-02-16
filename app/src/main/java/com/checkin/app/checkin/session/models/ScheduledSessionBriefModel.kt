@@ -18,7 +18,7 @@ data class ScheduledSessionBriefModel(
     }
 
     val formatDate: String
-        get() = Utils.formatDate(plannedDatetime!!, "dd MMMM YYY")
+        get() = Utils.formatDate(plannedDatetime!!, "dd MMMM yyyy")
 
     val formatTime: String
         get() = Utils.formatDateTo12HoursTime(plannedDatetime!!)

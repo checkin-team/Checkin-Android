@@ -96,7 +96,7 @@ class ManagerWorkActivity : BaseAccountActivity(), LiveOrdersInteraction {
             val sessionBundle = intent.getBundleExtra(KEY_SESSION_NOTIFICATION_BUNDLE)
             if (sessionBundle != null) {
                 val sessionPk = sessionBundle.getLong(KEY_NOTIF_SESSION_PK)
-                val intent = when (sessionBundle.getSerializable(KEY_NOTIF_LIVE_ORDER_TYPE) as RestaurantOrdersFragmentType) {
+                val intent = when (sessionBundle.getSerializable(KEY_NOTIF_LIVE_ORDER_TYPE) as? RestaurantOrdersFragmentType) {
                     RestaurantOrdersFragmentType.ACTIVE_SESSION -> Intent(this, ManagerSessionActivity::class.java).apply {
                         putExtra(ManagerSessionActivity.KEY_SESSION_PK, sessionPk)
                         putExtra(ManagerSessionActivity.KEY_SHOP_PK, mViewModel.shopPk)
@@ -104,8 +104,9 @@ class ManagerWorkActivity : BaseAccountActivity(), LiveOrdersInteraction {
                     }
                     RestaurantOrdersFragmentType.MASTER_QR -> ManagerQSRDetailActivity.withSessionIntent(this, sessionPk)
                     RestaurantOrdersFragmentType.PRE_ORDER -> ManagerPreOrderDetailActivity.withSessionIntent(this, sessionPk)
+                    else -> null
                 }
-                startActivityForResult(intent, RC_INTENT_RESULT_SESSION_DETAIL)
+                intent?.let { startActivityForResult(it, RC_INTENT_RESULT_SESSION_DETAIL) }
             }
         }
         supportFragmentManager.inTransaction {

@@ -102,7 +102,7 @@ class MenuDishSearchFragment : BaseFragment(), OnItemInteractionListener, ItemCu
     }
 
     private fun onItemInteraction(item: MenuItemModel) {
-        if (item.isComplexItem) ItemCustomizationBottomSheetFragment.newInstance(item).show(childFragmentManager, ItemCustomizationBottomSheetFragment.FRAGMENT_TAG)
+        if (item.isComplexItem) ItemCustomizationBottomSheetFragment.newInstance().show(childFragmentManager, ItemCustomizationBottomSheetFragment.FRAGMENT_TAG)
         else order()
     }
 

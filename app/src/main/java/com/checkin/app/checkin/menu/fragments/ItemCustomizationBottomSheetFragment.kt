@@ -56,10 +56,14 @@ class ItemCustomizationBottomSheetFragment : BaseBottomSheetFragment(), ItemCust
     internal lateinit var containerRadioButtons: ConstraintLayout
 
     val viewModel: UserMenuViewModel by sharedViewModel()
-    lateinit var itemModel: MenuItemModel
+    private lateinit var itemModel: MenuItemModel
     val listener: ItemCustomizationInteraction by parentFragmentDelegate()
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        itemModel = viewModel.currentItem.value?.itemModel ?: kotlin.run {
+            dismiss()
+            return
+        }
         tvItemName.text = itemModel.name
         viewModel.itemCost.observe(this, Observer { value ->
             tvBill.text = String.format("Item Total   %s", Utils.formatIntegralCurrencyAmount(requireContext(), value))
@@ -142,7 +146,7 @@ class ItemCustomizationBottomSheetFragment : BaseBottomSheetFragment(), ItemCust
     companion object {
         const val FRAGMENT_TAG = "menu.customization_fragment"
 
-        fun newInstance(item: MenuItemModel) = ItemCustomizationBottomSheetFragment().apply { itemModel = item }
+        fun newInstance() = ItemCustomizationBottomSheetFragment()
     }
 
     interface ItemCustomizationInteraction {

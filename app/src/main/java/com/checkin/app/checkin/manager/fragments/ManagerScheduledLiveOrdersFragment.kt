@@ -25,6 +25,7 @@ import com.checkin.app.checkin.misc.fragments.BaseFragment
 import com.checkin.app.checkin.session.models.ScheduledSessionStatus
 import com.checkin.app.checkin.utility.isNotEmpty
 import com.checkin.app.checkin.utility.pass
+import com.checkin.app.checkin.utility.toast
 
 class ManagerScheduledLiveOrdersFragment : BaseFragment(), PreorderTableInteraction {
     override val rootLayout: Int = R.layout.fragment_manager_live_preorders
@@ -69,6 +70,9 @@ class ManagerScheduledLiveOrdersFragment : BaseFragment(), PreorderTableInteract
         })
         viewModel.doneData.observe(this, Observer {
             // observer needed to ensure "mark food ready" POST request is fulfilled.
+            it?.let {
+                if (it.inError && it.message != null) context?.toast(it.message)
+            }
         })
     }
 

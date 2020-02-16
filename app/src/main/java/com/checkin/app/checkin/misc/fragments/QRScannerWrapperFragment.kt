@@ -21,7 +21,7 @@ class QRScannerWrapperFragment : BaseFragment(), QRScannerFragment.QRScannerInte
     @BindView(R.id.btn_flash_toggle)
     internal lateinit var btnFlash: ImageView
 
-    private val mScannerFragment = QRScannerFragment.newInstance(this)
+    private val mScannerFragment = QRScannerFragment.newInstance()
     private val listener: QRScannerWrapperInteraction by parentActivityDelegate()
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {

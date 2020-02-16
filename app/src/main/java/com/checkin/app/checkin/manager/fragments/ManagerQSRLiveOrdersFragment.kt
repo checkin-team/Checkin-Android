@@ -24,6 +24,7 @@ import com.checkin.app.checkin.manager.viewmodels.ManagerWorkViewModel
 import com.checkin.app.checkin.misc.fragments.BaseFragment
 import com.checkin.app.checkin.utility.isNotEmpty
 import com.checkin.app.checkin.utility.pass
+import com.checkin.app.checkin.utility.toast
 
 class ManagerQSRLiveOrdersFragment : BaseFragment(), QSRTableInteraction {
     override val rootLayout: Int = R.layout.fragment_manager_qsr_live_orders
@@ -66,7 +67,10 @@ class ManagerQSRLiveOrdersFragment : BaseFragment(), QSRTableInteraction {
             }
         })
         viewModel.doneData.observe(this, Observer {
-            // Handle complex logic Checkedout null or not
+            // observer needed to ensure "mark food ready" POST request is fulfilled.
+            it?.let {
+                if (it.inError && it.message != null) context?.toast(it.message)
+            }
         })
     }
 
