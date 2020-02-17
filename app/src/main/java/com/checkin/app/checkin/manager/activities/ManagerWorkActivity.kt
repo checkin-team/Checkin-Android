@@ -132,11 +132,6 @@ class ManagerWorkActivity : BaseAccountActivity(), LiveOrdersInteraction {
         mViewModel.updateResults()
     }
 
-    override fun onResume() {
-        super.onResume()
-        accountViewModel.fetchAccounts()
-    }
-
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
         when (requestCode) {

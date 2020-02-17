@@ -118,7 +118,8 @@ class SelectCropImageActivity : AppCompatActivity() {
     override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<String>, grantResults: IntArray) {
         when (requestCode) {
             PERMISSION_REQUEST_READ_EXTERNAL -> {
-                if (grantResults[0] == PackageManager.PERMISSION_GRANTED) init() else finish()
+                if (grantResults.isNotEmpty() && grantResults[0] == PackageManager.PERMISSION_GRANTED)
+                    init() else finish()
             }
         }
         super.onRequestPermissionsResult(requestCode, permissions, grantResults)

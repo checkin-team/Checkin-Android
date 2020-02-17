@@ -578,11 +578,11 @@ class PublicRestaurantProfileActivity : BaseActivity(), AppBarLayout.OnOffsetCha
         private const val LOAD_DATA_RESTAURANT = "load.data.restaurant"
         private const val LOAD_SYNC_USER_DETAILS = "load.sync.user_detail"
 
-        private val DEEP_LINK_RESTAURANT_PROFILE = Regex("/restaurants/(?<restaurantId>\\d+)/profile/")
+        private val DEEP_LINK_RESTAURANT_PROFILE = Regex("/restaurants/(\\d+)/profile/")
 
         private val TAG: String = PublicRestaurantProfileActivity::class.java.simpleName
 
-        fun getRestaurantIdFromDeepLink(intent: Intent): Long? = DeepLinkUtil.getEndpointArgs(intent, DEEP_LINK_RESTAURANT_PROFILE)?.let { it[1]?.value?.toLong() }
+        fun getRestaurantIdFromDeepLink(intent: Intent): Long? = DeepLinkUtil.getEndpointArgs(intent, DEEP_LINK_RESTAURANT_PROFILE)?.takeIf { it.size > 1 }?.let { it[1]?.value?.toLong() }
     }
 
     class PublicRestaurantProfileAdapter(fragmentActivity: FragmentActivity, val restaurantId: Long) : BaseFragmentStateAdapter(fragmentActivity) {

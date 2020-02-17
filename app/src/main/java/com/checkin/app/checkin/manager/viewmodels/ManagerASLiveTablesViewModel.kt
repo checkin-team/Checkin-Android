@@ -91,7 +91,7 @@ class ManagerASLiveTablesViewModel(application: Application) : BaseViewModel(app
     }
 
     override fun updateResults() {
-        fetchActiveTables(shopPk)
+        if (mTablesData.value?.status != Resource.Status.LOADING) fetchActiveTables(shopPk)
     }
 
     fun updateRemoveTable(sessionPk: Long) {

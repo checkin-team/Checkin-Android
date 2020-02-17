@@ -117,8 +117,8 @@ class ManagerLiveScheduledViewModel(application: Application) : BaseViewModel(ap
     }
 
     override fun updateResults() {
-        if (shopPk != 0L) fetchScheduledSessions(shopPk)
-        if (sessionPk != 0L) fetchSessionData(sessionPk)
+        if (shopPk != 0L && mScheduledOrders.value?.status != Resource.Status.LOADING) fetchScheduledSessions(shopPk)
+        if (sessionPk != 0L && mSessionData.value?.status != Resource.Status.LOADING) fetchSessionData(sessionPk)
     }
 
     override fun fetchMissing() {

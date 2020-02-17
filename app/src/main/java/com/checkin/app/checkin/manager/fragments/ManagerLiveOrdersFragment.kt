@@ -87,6 +87,11 @@ class ManagerLiveOrdersFragment : BaseFragment() {
         })
     }
 
+    override fun onResume() {
+        super.onResume()
+        updateScreen()
+    }
+
     private fun setupData(data: RestaurantServiceModel) {
         val tabs = mutableListOf<RestaurantOrdersFragmentType>()
         if (data.isQr) tabs.add(if (data.serviceType == RestaurantServiceType.DINEIN) RestaurantOrdersFragmentType.ACTIVE_SESSION else RestaurantOrdersFragmentType.MASTER_QR)

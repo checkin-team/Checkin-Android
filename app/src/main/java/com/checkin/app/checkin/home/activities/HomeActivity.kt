@@ -177,6 +177,14 @@ class HomeActivity : BaseAccountActivity() {
     }
 
     private fun setupObserver() {
+        accountViewModel.accounts.observe(this, Observer {
+            if (it?.isSuccess == true && it.data != null) {
+                val acc = it.data.find { it.accountType == ACCOUNT_TYPE.USER } ?: return@Observer
+                if (imTabUserIcon != null) {
+                    Utils.loadImageOrDefault(imTabUserIcon, acc.pic, R.drawable.cover_unknown_male)
+                }
+            }
+        })
         userViewModel.userData.observe(this, Observer {
             it?.let { resource ->
                 if (resource.status === Resource.Status.SUCCESS && resource.data != null) {
