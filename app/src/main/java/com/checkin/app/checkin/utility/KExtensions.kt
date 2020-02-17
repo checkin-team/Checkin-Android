@@ -42,7 +42,7 @@ fun TabLayout.setTabBackground(@ColorInt color: Int) = (0 until tabCount).forEac
     getTabAt(it)?.view?.setBackgroundColor(color)
 }
 
-fun Context.toast(msg: String) = Utils.toast(this, msg)
+fun Context.toast(msg: String?) = Utils.toast(this, msg)
 fun Context.toast(@StringRes msgRes: Int) = Utils.toast(this, msgRes)
 
 fun Activity.snack(msg: String) = Utils.snack(this, msg)

@@ -52,7 +52,8 @@ class ApiResponse<T>(
                         when {
                             data.has("detail") -> {
                                 Log.d("APIResponse", "Detail")
-                                data["detail"].asText()
+                                val detail = data["detail"]
+                                if (detail.isArray) detail[0].asText() else detail.asText()
                             }
                             data["errors"]?.isArray == true -> {
                                 Log.d("APIResponse", "Errors")

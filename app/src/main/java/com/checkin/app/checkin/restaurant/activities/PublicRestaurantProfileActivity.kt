@@ -248,13 +248,13 @@ class PublicRestaurantProfileActivity : BaseActivity(), AppBarLayout.OnOffsetCha
                         val cartRestaurant = cartViewModel.cartStatus.value?.data?.restaurant?.target
                         if (cartRestaurant != null) handleErrorCartExists(cartRestaurant) else {
                             cartViewModel.fetchCartStatus()
-                            Utils.toast(this, resource.message)
+                            toast(resource.message)
                         }
                     } else if (resource.errorBody?.has("planned_datetime") == true) {
-                        Utils.toast(this, resource.errorBody.get("planned_datetime").get(0).asText())
-                    } else Utils.toast(this, resource.message)
+                        toast(resource.errorBody.get("planned_datetime").get(0).asText())
+                    } else toast(resource.message)
                     Resource.Status.LOADING -> pass
-                    else -> Utils.toast(this, resource.message)
+                    else -> toast(resource.message)
                 }
             }
         })
@@ -264,10 +264,14 @@ class PublicRestaurantProfileActivity : BaseActivity(), AppBarLayout.OnOffsetCha
                 when (resource.status) {
                     Resource.Status.SUCCESS -> resource.data?.run {
                         if (isMasterQr && restaurantPk == restaurantId) successNewSession(sessionPk)
-                        else if (isMasterQr) wrongRestaurantQrScanned()
+                        else if (isMasterQr) {
+                            wrongRestaurantQrScanned()
+                            scheduledSessionViewModel.clearCart()
+                        }
                         else startActivity(Intent(this@PublicRestaurantProfileActivity, ActiveSessionActivity::class.java))
                     }
-                    else -> pass
+                    Resource.Status.LOADING -> pass
+                    else -> toast(resource.message)
                 }
             }
         })
@@ -283,6 +287,7 @@ class PublicRestaurantProfileActivity : BaseActivity(), AppBarLayout.OnOffsetCha
                     resource.status == Resource.Status.SUCCESS -> {
                         scheduledSessionViewModel.isPhoneVerified = true
                         scheduledSessionViewModel.fetchSessionAppliedPromo()
+                        scheduledSessionViewModel.retrySessionCreation()
                     }
                     resource.problem?.getErrorCode() == ProblemModel.ERROR_CODE.ACCOUNT_ALREADY_REGISTERED -> {
                         Utils.toast(this, "This number already exists.")
@@ -558,9 +563,12 @@ class PublicRestaurantProfileActivity : BaseActivity(), AppBarLayout.OnOffsetCha
     }
 
     override fun onBackPressed() {
-        if (scheduledCartView.isExpanded())
+        var callSuper = supportFragmentManager.findFragmentByTag(ScheduledSessionPromoFragment.FRAGMENT_TAG) != null
+        if (!callSuper) {
+            callSuper = !scheduledCartView.isExpanded()
             scheduledCartView.dismiss()
-        else super.onBackPressed()
+        }
+        if (callSuper) super.onBackPressed()
     }
 
     companion object {
