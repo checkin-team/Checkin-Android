@@ -10,7 +10,7 @@
 
     <com.google.android.material.appbar.AppBarLayout
         android:layout_width="match_parent"
-        android:layout_height="@dimen/height_toolbar"
+        android:layout_height="wrap_content"
         android:background="@color/transparent"
         android:theme="@style/AppThemeWhiteActionBar.ActionBar">
 
@@ -22,11 +22,8 @@
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:paddingTop="@dimen/spacing_extra_small"
-                android:paddingEnd="@dimen/spacing_extra_small"
-                android:paddingBottom="@dimen/spacing_extra_small"
                 tools:ignore="RtlSymmetry">
-
+    
                 <TextView
                     android:id="@+id/tv_manager_scheduled_session_customer_name"
                     android:layout_width="wrap_content"
@@ -35,34 +32,37 @@
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent"
                     tools:text="Shivansh Saini" />
-
+    
                 <TextView
                     android:id="@+id/tv_manager_scheduled_session_customer_visits"
                     style="@style/PinkishGreySmallTextStyle"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_marginBottom="@dimen/spacing_extra_small"
                     android:gravity="bottom|start"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/tv_manager_scheduled_session_customer_name"
                     tools:text="New customer" />
-
+    
                 <TextView
                     android:id="@+id/tv_manager_scheduled_session_order_id"
                     style="@style/PinkishGreySmallTextStyle"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/spacing_extra_small"
                     android:textSize="@dimen/font_tiny"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintTop_toTopOf="parent"
                     tools:text="Order ID: #23123as" />
-
+    
                 <TextView
                     android:id="@+id/tv_manager_scheduled_call"
                     style="@style/CallButtonTextStyle"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/tv_manager_scheduled_session_order_id"
-                    app:layout_constraintVertical_bias="1" />
+                    app:layout_constraintTop_toBottomOf="@+id/tv_manager_scheduled_session_order_id"
+                    app:layout_constraintVertical_bias="0.0" />
             </androidx.constraintlayout.widget.ConstraintLayout>
         </androidx.appcompat.widget.Toolbar>
     </com.google.android.material.appbar.AppBarLayout>
