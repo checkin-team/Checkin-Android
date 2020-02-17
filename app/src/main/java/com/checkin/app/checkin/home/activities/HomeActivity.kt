@@ -46,6 +46,7 @@ import com.checkin.app.checkin.misc.activities.QRScannerActivity
 import com.checkin.app.checkin.misc.adapters.BaseFragmentAdapterBottomNav
 import com.checkin.app.checkin.misc.fragments.BlankFragment
 import com.checkin.app.checkin.misc.fragments.NetworkBlockingFragment
+import com.checkin.app.checkin.misc.fragments.QRScannerWrapperFragment
 import com.checkin.app.checkin.misc.views.DynamicSwipableViewPager
 import com.checkin.app.checkin.restaurant.activities.openPublicRestaurantProfile
 import com.checkin.app.checkin.session.activesession.ActiveSessionActivity
@@ -296,7 +297,7 @@ class HomeActivity : BaseAccountActivity() {
     public override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
         if (requestCode == REQUEST_QR_SCANNER && resultCode == Activity.RESULT_OK) {
-            val qrData = data!!.getStringExtra(QRScannerActivity.KEY_QR_RESULT)
+            val qrData = data!!.getStringExtra(QRScannerWrapperFragment.KEY_QR_RESULT)
             mViewModel.processQr(qrData)
         } else if (requestCode == REQUEST_SETTINGS_LOCATION) {
             if (isLocationEnabled) trackUserCurrentLocation()

@@ -38,10 +38,12 @@ import com.checkin.app.checkin.menu.viewmodels.ScheduledCartViewModel
 import com.checkin.app.checkin.menu.viewmodels.UserMenuViewModel
 import com.checkin.app.checkin.misc.BlockingNetworkViewModel
 import com.checkin.app.checkin.misc.activities.BaseActivity
-import com.checkin.app.checkin.misc.activities.QRScannerActivity
 import com.checkin.app.checkin.misc.adapters.BaseFragmentStateAdapter
 import com.checkin.app.checkin.misc.adapters.CoverPagerAdapter
-import com.checkin.app.checkin.misc.fragments.*
+import com.checkin.app.checkin.misc.fragments.BlankFragment
+import com.checkin.app.checkin.misc.fragments.NetworkBlockingFragment
+import com.checkin.app.checkin.misc.fragments.QRScannerWrapperFragment
+import com.checkin.app.checkin.misc.fragments.QRScannerWrapperInteraction
 import com.checkin.app.checkin.misc.paytm.PaytmPayment
 import com.checkin.app.checkin.restaurant.fragments.PublicRestaurantInfoFragment
 import com.checkin.app.checkin.restaurant.models.RestaurantBriefModel
@@ -368,7 +370,7 @@ class PublicRestaurantProfileActivity : BaseActivity(), AppBarLayout.OnOffsetCha
     }
 
     private fun wrongRestaurantQrScanned() {
-        Utils.toast(this, "Wrong Restaurant!")
+        errorSnack("QR for wrong restaurant is scanned.")
     }
 
     @OnClick(R.id.tv_restaurant_public_navigate)
@@ -493,7 +495,7 @@ class PublicRestaurantProfileActivity : BaseActivity(), AppBarLayout.OnOffsetCha
 
     override fun onScanResult(result: Int, bundle: Intent?) {
         if (result == Activity.RESULT_OK && bundle != null) {
-            val data = bundle.getStringExtra(QRScannerActivity.KEY_QR_RESULT)
+            val data = bundle.getStringExtra(QRScannerWrapperFragment.KEY_QR_RESULT)
             scheduledSessionViewModel.createNewQrSession(data)
         } else if (result == Activity.RESULT_CANCELED) scheduledCartView.dismiss()
     }
@@ -556,16 +558,9 @@ class PublicRestaurantProfileActivity : BaseActivity(), AppBarLayout.OnOffsetCha
     }
 
     override fun onBackPressed() {
-        var result = supportFragmentManager.findFragmentByTag(QRScannerWrapperFragment.FRAGMENT_TAG)?.let { (it as BaseFragment).onBackPressed() }
-                ?: false
-        if (result) {
+        if (scheduledCartView.isExpanded())
             scheduledCartView.dismiss()
-            return
-        }
-
-        result = scheduledCartView.isExpanded()
-        if (result) scheduledCartView.dismiss()
-        if (!result) super.onBackPressed()
+        else super.onBackPressed()
     }
 
     companion object {

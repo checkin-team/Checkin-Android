@@ -6,7 +6,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import com.checkin.app.checkin.utility.Utils
-import com.checkin.app.checkin.utility.parentActivityDelegate
+import com.checkin.app.checkin.utility.parentFragmentDelegate
 import com.google.zxing.BarcodeFormat
 import com.google.zxing.Result
 import me.dm7.barcodescanner.zxing.ZXingScannerView
@@ -14,7 +14,7 @@ import me.dm7.barcodescanner.zxing.ZXingScannerView.ResultHandler
 
 class QRScannerFragment : Fragment(), ResultHandler {
     private lateinit var mScannerView: ZXingScannerView
-    private val mListener: QRScannerInteraction by parentActivityDelegate()
+    private val mListener: QRScannerInteraction by parentFragmentDelegate()
     private var mFlash = false
     private var mAutoFocus = false
     private var mCameraId = 0

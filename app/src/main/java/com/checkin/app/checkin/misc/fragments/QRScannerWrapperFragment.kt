@@ -16,7 +16,7 @@ import com.checkin.app.checkin.utility.parentActivityDelegate
 import com.google.zxing.Result
 
 class QRScannerWrapperFragment : BaseFragment(), QRScannerFragment.QRScannerInteraction {
-    override val rootLayout: Int = R.layout.activity_qrscanner
+    override val rootLayout: Int = R.layout.fragment_qrscanner_wrapper
 
     @BindView(R.id.btn_flash_toggle)
     internal lateinit var btnFlash: ImageView
@@ -38,7 +38,7 @@ class QRScannerWrapperFragment : BaseFragment(), QRScannerFragment.QRScannerInte
     @OnClick(R.id.btn_flash_toggle)
     fun onFlashToggle(v: View?) {
         val value = !btnFlash.isActivated
-        mScannerFragment!!.setFlash(value)
+        mScannerFragment.setFlash(value)
         btnFlash.isActivated = value
     }
 
@@ -57,10 +57,15 @@ class QRScannerWrapperFragment : BaseFragment(), QRScannerFragment.QRScannerInte
         btnFlash.isActivated = isActivated
     }
 
+    override fun onBackPressed(): Boolean {
+        parentFragmentManager.inTransaction { remove(this@QRScannerWrapperFragment) }
+        return true
+    }
+
     override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<String>, grantResults: IntArray) {
         when (requestCode) {
             PERMISSION_REQUEST_CAMERA -> {
-                if (grantResults[0] != PackageManager.PERMISSION_GRANTED) {
+                if (grantResults.isNotEmpty() && grantResults[0] != PackageManager.PERMISSION_GRANTED) {
                     listener.onScanResult(Activity.RESULT_CANCELED, null)
                     onBackPressed()
                 }

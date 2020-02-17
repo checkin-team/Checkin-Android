@@ -372,7 +372,19 @@ public final class Utils {
                 .duration(Snackbar.LENGTH_SHORT);
     }
 
+    public static FluentSnackbar.Builder snack(View view, @StringRes int msg) {
+        return FluentSnackbar.create(view)
+                .create(msg)
+                .duration(Snackbar.LENGTH_SHORT);
+    }
+
     public static FluentSnackbar.Builder snack(Activity activity, String msg) {
+        return FluentSnackbar.create(activity)
+                .create(msg)
+                .duration(Snackbar.LENGTH_SHORT);
+    }
+
+    public static FluentSnackbar.Builder snack(Activity activity, @StringRes int msg) {
         return FluentSnackbar.create(activity)
                 .create(msg)
                 .duration(Snackbar.LENGTH_SHORT);

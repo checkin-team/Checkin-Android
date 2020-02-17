@@ -45,6 +45,7 @@ import com.checkin.app.checkin.data.notifications.MessageUtils.registerLocalRece
 import com.checkin.app.checkin.data.notifications.MessageUtils.unregisterLocalReceiver
 import com.checkin.app.checkin.data.resource.Resource
 import com.checkin.app.checkin.misc.activities.QRScannerActivity
+import com.checkin.app.checkin.misc.fragments.QRScannerWrapperFragment
 import com.checkin.app.checkin.misc.models.BriefModel
 import com.checkin.app.checkin.misc.views.DynamicSwipableViewPager
 import com.checkin.app.checkin.session.activesession.chat.SessionChatModel.CHAT_STATUS_TYPE
@@ -330,7 +331,7 @@ class WaiterWorkActivity : BaseAccountActivity(), WaiterTableInteraction, OnTabl
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         if (requestCode == REQUEST_QR_SCANNER && resultCode == Activity.RESULT_OK) {
-            val qrData = data!!.getStringExtra(QRScannerActivity.KEY_QR_RESULT)
+            val qrData = data!!.getStringExtra(QRScannerWrapperFragment.KEY_QR_RESULT)
             mViewModel.processQr(qrData)
         } else super.onActivityResult(requestCode, resultCode, data)
     }

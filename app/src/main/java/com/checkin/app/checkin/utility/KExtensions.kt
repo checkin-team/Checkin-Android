@@ -1,11 +1,13 @@
 package com.checkin.app.checkin.utility
 
 import android.Manifest
+import android.app.Activity
 import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.location.LocationManager
 import android.net.Uri
+import android.view.View
 import androidx.annotation.ColorInt
 import androidx.annotation.StringRes
 import androidx.core.app.ActivityCompat
@@ -42,6 +44,10 @@ fun TabLayout.setTabBackground(@ColorInt color: Int) = (0 until tabCount).forEac
 
 fun Context.toast(msg: String) = Utils.toast(this, msg)
 fun Context.toast(@StringRes msgRes: Int) = Utils.toast(this, msgRes)
+
+fun Activity.snack(msg: String) = Utils.snack(this, msg)
+fun View.snack(@StringRes msgRes: Int) = Utils.snack(this, msgRes)
+fun Activity.errorSnack(msg: String) = Utils.errorSnack(this, msg)
 
 fun Context.navigateBackToHome() = Utils.navigateBackToHome(this)
 

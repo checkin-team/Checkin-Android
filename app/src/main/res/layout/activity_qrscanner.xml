@@ -10,15 +10,4 @@
         android:id="@+id/fragment_scanner"
         android:layout_width="match_parent"
         android:layout_height="match_parent" />
-
-    <ImageView
-        android:id="@+id/btn_flash_toggle"
-        android:layout_width="@dimen/size_normal_icon"
-        android:layout_height="@dimen/size_normal_icon"
-        android:layout_gravity="center_horizontal"
-        android:layout_marginTop="80dp"
-        android:clickable="true"
-        android:focusable="true"
-        android:src="@drawable/ic_flash_toggle" />
-
 </FrameLayout>
