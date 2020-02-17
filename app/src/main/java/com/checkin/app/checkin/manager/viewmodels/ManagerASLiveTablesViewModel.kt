@@ -30,7 +30,6 @@ class ManagerASLiveTablesViewModel(application: Application) : BaseViewModel(app
 
     val checkoutData: LiveData<Resource<CheckoutStatusModel>> = mCheckoutData
 
-
     val activeTables: LiveData<Resource<List<RestaurantTableModel>>> = Transformations.map(mTablesData) { input ->
         if (input?.data == null || input.status !== Resource.Status.SUCCESS) return@map input
         val result: MutableList<RestaurantTableModel> = ArrayList()

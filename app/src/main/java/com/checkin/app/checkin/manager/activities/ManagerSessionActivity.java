@@ -162,6 +162,10 @@ public class ManagerSessionActivity extends AppCompatActivity implements Manager
         mViewModel.fetchSessionOrders();
         mLiveSessionViewModel.fetchActiveTables(shopId);
 
+        mLiveSessionViewModel.getInactiveTables().observe(this, listResource -> {
+            // Needed to load inactive tables
+        });
+
         mViewModel.getSessionBriefData().observe(this, resource -> {
             if (resource == null) return;
             SessionBriefModel data = resource.getData();
@@ -211,7 +215,6 @@ public class ManagerSessionActivity extends AppCompatActivity implements Manager
                 mViewModel.fetchSessionBriefData(sessionId);
             } else {
                 Utils.toast(this, qrResultModelResource.getMessage());
-
             }
         });
     }
@@ -351,7 +354,7 @@ public class ManagerSessionActivity extends AppCompatActivity implements Manager
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        Resource<List<RestaurantTableModel>> resource = mLiveSessionViewModel.getActiveTables().getValue();
+        Resource<List<RestaurantTableModel>> resource = mLiveSessionViewModel.getInactiveTables().getValue();
         switch (item.getItemId()) {
             case R.id.menu_ms_switch_table:
                 if (resource != null && resource.getData() != null && resource.getData().size() > 0)
