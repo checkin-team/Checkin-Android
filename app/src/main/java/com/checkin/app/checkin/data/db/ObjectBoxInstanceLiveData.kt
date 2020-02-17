@@ -5,6 +5,9 @@ import io.objectbox.query.Query
 import io.objectbox.reactive.DataObserver
 import io.objectbox.reactive.DataSubscription
 
+/**
+ * A {@link LiveData} which allows to observe changes to only the first result of the given query.
+ */
 class ObjectBoxInstanceLiveData<T>(private val query: Query<T>) : LiveData<T>() {
     private val listener = DataObserver { data: List<T> ->
         try {

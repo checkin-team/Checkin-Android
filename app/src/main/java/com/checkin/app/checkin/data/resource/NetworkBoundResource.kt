@@ -33,11 +33,14 @@ abstract class NetworkBoundResource<ResultType, RequestType> @MainThread constru
             if (useDb) mResult.removeSource(dbSource!!)
             if (response != null) {
                 val resource = createResource(response)
-                if (useDb && resource.status == Resource.Status.SUCCESS) saveResultAndReInit(resource) else postResultDirectly(resource)
+                if (useDb && resource.status == Resource.Status.SUCCESS) saveResultAndReInit(resource) else postResultDirectly(resource, response.requestUrl)
                 if (!response.isSuccessful) {
                     onFetchFailed(response)
                     if (useDb) {
-                        mResult.addSource(dbSource!!) { mResult.setValue(errorButLoadedCached(resource.message, it)) }
+                        mResult.addSource(dbSource!!) {
+                            if (it == null || (it is List<*> && it.isEmpty())) mResult.value = errorNotFoundCached<ResultType>(resource.message)
+                            else mResult.value = errorButLoadedCached(resource.message, it)
+                        }
                     }
                 }
             }
@@ -66,9 +69,9 @@ abstract class NetworkBoundResource<ResultType, RequestType> @MainThread constru
 
     // Called in case no Database interaction needed.
     @MainThread
-    protected fun postResultDirectly(resource: Resource<RequestType>) {
+    protected fun postResultDirectly(resource: Resource<RequestType>, url: String?) {
         val data = resource.data
-        Log.e(TAG, resource.status.name)
+        Log.e(TAG, "${resource.status.name} - $url")
         try {
             mResult.value = cloneResource(resource, data as? ResultType)
         } catch (e: ClassCastException) {

@@ -1,26 +1,28 @@
 package com.checkin.app.checkin.accounts
 
+import com.checkin.app.checkin.utility.*
 import com.fasterxml.jackson.annotation.JsonProperty
-import com.fasterxml.jackson.core.JsonGenerator
-import com.fasterxml.jackson.core.JsonParser
-import com.fasterxml.jackson.databind.DeserializationContext
-import com.fasterxml.jackson.databind.JsonDeserializer
-import com.fasterxml.jackson.databind.JsonSerializer
-import com.fasterxml.jackson.databind.SerializerProvider
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize
 import com.fasterxml.jackson.databind.annotation.JsonSerialize
 import com.fasterxml.jackson.databind.node.ObjectNode
+import io.objectbox.annotation.Convert
+import io.objectbox.annotation.Entity
+import io.objectbox.annotation.Id
+import io.objectbox.annotation.Transient
 
+@Entity
 data class AccountModel(
-        val pk: Long,
+        @Id(assignable = true)
+        var pk: Long,
         @JsonProperty("target_pk") val targetPk: Long,
         @JsonProperty("acc_type")
-        @JsonDeserialize(using = ACCOUNT_TYPE.AccountTypeDeserializer::class)
-        @JsonSerialize(using = ACCOUNT_TYPE.AccountTypeSerializer::class)
+        @JsonDeserialize(using = ACCOUNT_TYPE.Companion.Deserializer::class)
+        @JsonSerialize(using = ACCOUNT_TYPE.Companion.Serializer::class)
+        @Convert(converter = ACCOUNT_TYPE.Companion.Converter::class, dbType = Int::class)
         val accountType: ACCOUNT_TYPE,
         val pic: String?,
         val name: String,
-        val detail: ObjectNode?
+        @Transient val detail: ObjectNode?
 ) {
 
     val formatAccountType: String = when (accountType) {
@@ -35,20 +37,15 @@ data class AccountModel(
     override fun toString(): String = name
 }
 
-enum class ACCOUNT_TYPE(val id: Int) {
-    USER(201), SHOP_OWNER(202), SHOP_ADMIN(203), RESTAURANT_MANAGER(204), RESTAURANT_WAITER(205), RESTAURANT_COOK(206);
+enum class ACCOUNT_TYPE(override val value: Int) : EnumIntType {
+    USER(201), SHOP_OWNER(202), SHOP_ADMIN(203),
+    RESTAURANT_MANAGER(204), RESTAURANT_WAITER(205), RESTAURANT_COOK(206);
 
-    companion object {
-        fun getById(id: Int): ACCOUNT_TYPE = values().find { it.id == id } ?: USER
-    }
+    companion object : EnumIntGetter<ACCOUNT_TYPE>() {
+        override fun getByValue(value: Int): ACCOUNT_TYPE = EnumIntType.getByValue(value)
 
-    class AccountTypeDeserializer : JsonDeserializer<ACCOUNT_TYPE>() {
-        override fun deserialize(p: JsonParser, ctxt: DeserializationContext?): ACCOUNT_TYPE = getById(p.text.toInt())
-    }
-
-    class AccountTypeSerializer : JsonSerializer<ACCOUNT_TYPE>() {
-        override fun serialize(value: ACCOUNT_TYPE?, gen: JsonGenerator, serializers: SerializerProvider?) {
-            value?.id?.let { gen.writeNumber(it) }
-        }
+        class Deserializer : EnumDeserializer<ACCOUNT_TYPE, Int>(this)
+        class Serializer : EnumSerializer<ACCOUNT_TYPE, Int>(this)
+        class Converter : EnumConverter<ACCOUNT_TYPE, Int>(this)
     }
 }

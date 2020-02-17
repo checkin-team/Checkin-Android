@@ -15,10 +15,12 @@ import androidx.localbroadcastmanager.content.LocalBroadcastManager
 import com.checkin.app.checkin.data.network.ApiResponse
 import com.checkin.app.checkin.data.notifications.Constants
 import com.checkin.app.checkin.data.notifications.MessageUtils
+import com.checkin.app.checkin.misc.exceptions.NoConnectivityException
 import com.checkin.app.checkin.misc.models.LocationModel
 import com.checkin.app.checkin.user.UserRepository
 import com.checkin.app.checkin.user.models.LocationTag
 import com.checkin.app.checkin.user.models.UserLocationModel
+import com.checkin.app.checkin.utility.Utils
 import com.google.android.gms.location.*
 import com.google.android.gms.location.LocationRequest.PRIORITY_HIGH_ACCURACY
 import retrofit2.Call
@@ -129,7 +131,10 @@ class UserCurrentLocationService : Service(), Callback<UserLocationModel> {
     }
 
     private fun getLastLocation() {
-        if (maxRetries.decrementAndGet() < 0) exitService()
+        if (maxRetries.decrementAndGet() < 0) {
+            exitService()
+            return
+        }
         try {
             fusedLocationProviderClient.lastLocation.addOnCompleteListener { task ->
                 if (task.isSuccessful) task.result?.let { onNewLocation(it) } ?: exitService()
@@ -175,7 +180,7 @@ class UserCurrentLocationService : Service(), Callback<UserLocationModel> {
                     })
             if (!shouldTrackLocation) exitService()
         } else {
-            Log.e(TAG, response.errorMessage, response.errorThrowable)
+            if (response.errorThrowable !is NoConnectivityException) Utils.logErrors(TAG, response.errorThrowable, response.errorMessage)
             if (!shouldTrackLocation) getLastLocation()
         }
     }
@@ -218,7 +223,7 @@ class UserCurrentLocationService : Service(), Callback<UserLocationModel> {
                 val address = resultData.getParcelable<Address>(AppUtils.LocationConstants.LOCATION_DATA_ADDRESS_BUNDLE)
                 if (location != null && address != null) pushLocationData(location, address)
                 else if (!shouldTrackLocation) getLastLocation()
-            }
+            } else exitService() // Failure result when fetching address
         }
     }
 }

@@ -20,7 +20,7 @@ class AccountViewModel(application: Application) : BaseViewModel(application) {
     val currentAccount: LiveData<Long> = mCurrentAccount
 
     fun fetchAccounts() {
-        if (mAccounts.value?.status != Resource.Status.SUCCESS)
+        if (mAccounts.value?.isSuccess != true)
             mAccounts.addSource(mRepository.selfAccounts, mAccounts::setValue)
     }
 

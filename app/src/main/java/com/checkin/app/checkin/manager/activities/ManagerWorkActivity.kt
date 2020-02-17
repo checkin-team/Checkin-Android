@@ -21,7 +21,6 @@ import com.checkin.app.checkin.accounts.BaseAccountActivity
 import com.checkin.app.checkin.manager.fragments.*
 import com.checkin.app.checkin.manager.fragments.ManagerTablesActivateFragment.LiveOrdersInteraction
 import com.checkin.app.checkin.manager.viewmodels.ManagerWorkViewModel
-import com.checkin.app.checkin.misc.BlockingNetworkViewModel
 import com.checkin.app.checkin.misc.adapters.BaseFragmentAdapterBottomNav
 import com.checkin.app.checkin.misc.fragments.NetworkBlockingFragment
 import com.checkin.app.checkin.misc.views.DynamicSwipableViewPager
@@ -44,7 +43,6 @@ class ManagerWorkActivity : BaseAccountActivity(), LiveOrdersInteraction {
 
     private val mViewModel: ManagerWorkViewModel by viewModels()
     private val mShopViewModel: ShopInvoiceViewModel by viewModels()
-    private val networkViewModel: BlockingNetworkViewModel by viewModels()
     private val networkFragment = NetworkBlockingFragment()
 
     override val accountTypes: Array<ACCOUNT_TYPE> = arrayOf(ACCOUNT_TYPE.RESTAURANT_MANAGER)

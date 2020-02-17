@@ -19,14 +19,13 @@ import com.checkin.app.checkin.Cook.CookWorkActivity
 import com.checkin.app.checkin.R
 import com.checkin.app.checkin.Shop.Private.ShopPrivateActivity
 import com.checkin.app.checkin.Waiter.WaiterWorkActivity
-import com.checkin.app.checkin.data.resource.Resource
 import com.checkin.app.checkin.home.activities.AboutUsActivity
 import com.checkin.app.checkin.manager.activities.ManagerWorkActivity
+import com.checkin.app.checkin.misc.BlockingNetworkViewModel
 import com.checkin.app.checkin.misc.activities.BaseActivity
 import com.checkin.app.checkin.utility.Constants
 import com.checkin.app.checkin.utility.GlideApp
 import com.checkin.app.checkin.utility.Utils
-import com.checkin.app.checkin.utility.pass
 import com.mikepenz.materialdrawer.Drawer
 import com.mikepenz.materialdrawer.util.DrawerUIUtils
 
@@ -42,6 +41,7 @@ abstract class BaseAccountActivity : BaseActivity() {
     abstract val accountTypes: Array<ACCOUNT_TYPE>
 
     protected val accountViewModel: AccountViewModel by viewModels()
+    protected val networkViewModel: BlockingNetworkViewModel by viewModels()
 
     protected lateinit var mainDrawer: Drawer
 
@@ -55,28 +55,28 @@ abstract class BaseAccountActivity : BaseActivity() {
         val type = prefs.getInt(Constants.SP_LAST_ACCOUNT_TYPE, 201)
         val pk = prefs.getLong(Constants.SP_LAST_ACCOUNT_PK, 0)
         accountViewModel.accounts.observe(this, Observer {
-            it?.let {
-                when (it.status) {
-                    Resource.Status.SUCCESS -> it.data?.let {
-                        if (AccountUtil.getUsername(this) == null) {
-                            val name = it.find { it.accountType == ACCOUNT_TYPE.USER }?.name?.split("\\s")?.get(0)
-                                    ?: ""
-                            PreferenceManager.getDefaultSharedPreferences(this).edit()
-                                    .putString(Constants.SP_USER_PROFILE_NAME, name)
-                                    .apply()
-                        }
-                        var currIndex = it.indexOfFirst { it.accountType.id == type && (pk == 0L || pk == it.targetPk) }
-                        if (currIndex == -1) currIndex = 0
-                        accountViewModel.setCurrentAccount(currIndex.toLong())
+            it?.also {
+                networkViewModel.updateStatus(it, TAG)
+                if (it.isSuccess) it.data?.let {
+                    if (AccountUtil.getUsername(this).isNullOrBlank()) {
+                        val name = it.find { it.accountType == ACCOUNT_TYPE.USER }?.name?.split("\\s")?.get(0)
+                        AccountUtil.putUsername(this, name)
                     }
-                    Resource.Status.LOADING -> pass
-                    else -> accountViewModel.fetchAccounts()
+                    var currIndex = it.indexOfFirst { it.accountType.value == type && (pk == 0L || pk == it.targetPk) }
+                    if (currIndex == -1) currIndex = 0
+                    accountViewModel.setCurrentAccount(currIndex.toLong())
                 }
             }
         })
         accountViewModel.currentAccount.observe(this, Observer {
             onUpdateDrawer()
         })
+
+        networkViewModel.shouldTryAgain {
+            when (it) {
+                TAG -> accountViewModel.fetchAccounts()
+            }
+        }
     }
 
     protected open fun setupFooter() {
@@ -151,7 +151,7 @@ abstract class BaseAccountActivity : BaseActivity() {
 
     private fun switchAccount(account: AccountModel) {
         prefs.edit()
-                .putInt(Constants.SP_LAST_ACCOUNT_TYPE, account.accountType.id)
+                .putInt(Constants.SP_LAST_ACCOUNT_TYPE, account.accountType.value)
                 .putLong(Constants.SP_LAST_ACCOUNT_PK, account.targetPk)
                 .apply()
 

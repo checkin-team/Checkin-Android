@@ -68,7 +68,7 @@ class NetworkBlockingFragment : BaseFragment() {
         view?.setBackgroundColor(ContextCompat.getColor(requireContext(), R.color.white))
         containerError.visibility = View.VISIBLE
         containerLoading.visibility = View.GONE
-        if (resource.status == Resource.Status.ERROR_DISCONNECTED)
+        if (resource.status == Resource.Status.ERROR_DISCONNECTED || resource.status == Resource.Status.ERROR_NOT_FOUND_CACHED)
             tvErrorMessage.setText(R.string.text_error_network_disconnected)
         else
             tvErrorMessage.setText(R.string.text_error_network_unknown)

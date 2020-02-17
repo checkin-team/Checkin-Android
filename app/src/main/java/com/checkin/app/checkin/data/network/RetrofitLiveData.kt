@@ -10,12 +10,12 @@ open class RetrofitLiveData<T>(private val mCall: Call<T>) : LiveData<ApiRespons
     private var mResponseDispatched = false
     private val mCallback: Callback<T> = object : Callback<T> {
         override fun onResponse(call: Call<T>, response: Response<T>) {
-            postValue(ApiResponse(response))
+            postValue(ApiResponse(response).apply { requestUrl = call.request().url().toString() })
             mResponseDispatched = true
         }
 
         override fun onFailure(call: Call<T>, t: Throwable) {
-            postValue(ApiResponse(t))
+            postValue(ApiResponse<T>(t).apply { requestUrl = call.request().url().toString() })
         }
     }
     private val shouldCancel: Boolean

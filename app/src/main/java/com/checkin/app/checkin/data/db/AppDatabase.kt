@@ -2,6 +2,7 @@ package com.checkin.app.checkin.data.db
 
 import android.content.Context
 import com.checkin.app.checkin.MyObjectBox
+import com.checkin.app.checkin.accounts.AccountModel
 import com.checkin.app.checkin.menu.models.*
 import com.checkin.app.checkin.restaurant.models.RestaurantBriefModel
 import io.objectbox.Box
@@ -16,6 +17,9 @@ object AppDatabase {
         }
         return mBoxStore
     }
+
+    @JvmStatic
+    fun getAccountModel(context: Context?): Box<AccountModel> = getBoxStore(context)!!.boxFor(AccountModel::class.java)
 
     @JvmStatic
     fun getMenuItemCustomizationFieldModel(context: Context?): Box<ItemCustomizationFieldModel> {

@@ -80,11 +80,7 @@ class LiveSessionViewModel(application: Application) : BaseViewModel(application
     }
 
     fun fetchScheduledSessions() {
-        mScheduledSessionData.addSource(mSessionRepository.getScheduledSessions()) {
-            mScheduledSessionData.value = it?.data?.let { data ->
-                Resource.cloneResource(it, data.filter { it.scheduled.status != ScheduledSessionStatus.DONE })
-            } ?: it
-        }
+        mScheduledSessionData.addSource(mSessionRepository.getScheduledSessions(), mScheduledSessionData::setValue)
     }
 
     fun fetchLiveActiveSession() {

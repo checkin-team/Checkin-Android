@@ -66,9 +66,9 @@ class SplashActivity : AppCompatActivity() {
         if (!prefs.getBoolean(Constants.SP_SYNC_DEVICE_TOKEN, false)) {
             startService(Intent(applicationContext, DeviceTokenService::class.java))
         }
-        val accountTag = prefs.getInt(Constants.SP_LAST_ACCOUNT_TYPE, ACCOUNT_TYPE.USER.id)
+        val accountTag = prefs.getInt(Constants.SP_LAST_ACCOUNT_TYPE, ACCOUNT_TYPE.USER.value)
         val accountPk = prefs.getLong(Constants.SP_LAST_ACCOUNT_PK, 0)
-        val intent = when (ACCOUNT_TYPE.getById(accountTag)) {
+        val intent = when (ACCOUNT_TYPE.getByValue(accountTag)) {
             ACCOUNT_TYPE.SHOP_OWNER, ACCOUNT_TYPE.SHOP_ADMIN ->
                 Intent(this, ShopPrivateActivity::class.java).apply { putExtra(ShopPrivateActivity.KEY_SHOP_PK, accountPk) }
             ACCOUNT_TYPE.RESTAURANT_WAITER ->

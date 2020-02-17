@@ -279,9 +279,50 @@
         }
       ],
       "relations": []
+    },
+    {
+      "id": "27:8576342329397953849",
+      "lastPropertyId": "6:341889930540363515",
+      "name": "AccountModel",
+      "properties": [
+        {
+          "id": "1:2159691103210293",
+          "name": "formatAccountType",
+          "type": 9
+        },
+        {
+          "id": "2:971978216354515742",
+          "name": "pk",
+          "type": 6,
+          "flags": 129
+        },
+        {
+          "id": "3:2106734719002594427",
+          "name": "targetPk",
+          "type": 6,
+          "flags": 4
+        },
+        {
+          "id": "4:1237124748534206396",
+          "name": "accountType",
+          "type": 5,
+          "flags": 2
+        },
+        {
+          "id": "5:8719418798527599508",
+          "name": "pic",
+          "type": 9
+        },
+        {
+          "id": "6:341889930540363515",
+          "name": "name",
+          "type": 9
+        }
+      ],
+      "relations": []
     }
   ],
-  "lastEntityId": "26:5401018163119146816",
+  "lastEntityId": "27:8576342329397953849",
   "lastIndexId": "20:3529059293124018419",
   "lastRelationId": "11:5984758523878906706",
   "lastSequenceId": "0:0",

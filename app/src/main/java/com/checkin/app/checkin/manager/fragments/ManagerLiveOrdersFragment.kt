@@ -7,7 +7,9 @@ import android.widget.TextView
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.Observer
+import androidx.viewpager.widget.ViewPager
 import androidx.viewpager2.widget.ViewPager2
+import androidx.viewpager2.widget.ViewPager2.OnPageChangeCallback
 import butterknife.BindView
 import com.checkin.app.checkin.R
 import com.checkin.app.checkin.data.resource.Resource
@@ -76,6 +78,13 @@ class ManagerLiveOrdersFragment : BaseFragment() {
         viewModel.activeSessionEvents.observe(this, Observer { tabAdapter.notifyDataSetChanged() })
         viewModel.preOrderEvents.observe(this, Observer { tabAdapter.notifyDataSetChanged() })
         viewModel.qsrEvents.observe(this, Observer { tabAdapter.notifyDataSetChanged() })
+
+        // The callback is needed for smooth page change and not accidentally triggering refresh
+        vpOrdersFragment.registerOnPageChangeCallback(object : OnPageChangeCallback() {
+            override fun onPageScrollStateChanged(state: Int) {
+                enableDisableSwipeRefresh(state == ViewPager.SCROLL_STATE_IDLE)
+            }
+        })
     }
 
     private fun setupData(data: RestaurantServiceModel) {

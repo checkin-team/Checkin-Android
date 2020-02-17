@@ -18,6 +18,8 @@ class ApiResponse<T>(
         val data: T? = null,
         val errorThrowable: Throwable? = null
 ) {
+    var requestUrl: String? = null
+
     private val mErrorMsg: String? by lazy {
         mResponse?.errorBody()?.let {
             try {
@@ -67,7 +69,6 @@ class ApiResponse<T>(
                     else -> null
                 }
             } ?: mErrorMsg
-
 
     fun hasStatus(statusCode: Int): Boolean {
         return this.statusCode == statusCode

@@ -268,9 +268,16 @@
     },
     {
       "id": "26:5401018163119146816",
-      "lastPropertyId": "0:0",
+      "lastPropertyId": "1:9004845822844897500",
       "name": "RestaurantBriefModel",
-      "properties": [],
+      "properties": [
+        {
+          "id": "1:9004845822844897500",
+          "name": "pk",
+          "type": 6,
+          "flags": 129
+        }
+      ],
       "relations": []
     }
   ],

@@ -4,6 +4,7 @@ import android.util.Log
 import com.checkin.app.checkin.data.network.ApiResponse
 import com.checkin.app.checkin.misc.exceptions.NoConnectivityException
 import com.checkin.app.checkin.misc.exceptions.RequestCanceledException
+import com.checkin.app.checkin.utility.Utils
 import com.crashlytics.android.Crashlytics
 import com.fasterxml.jackson.databind.JsonNode
 import java.net.HttpURLConnection.*
@@ -78,9 +79,7 @@ class Resource<out T> private constructor(val status: Status, val data: T?, val 
                     is RequestCanceledException -> error<T>(Status.ERROR_CANCELLED, null, null, null)
                     is NoConnectivityException -> error(Status.ERROR_DISCONNECTED, apiResponse.errorMessage, apiResponse.data, null)
                     else -> {
-                        Log.e(TAG, apiResponse.errorMessage, apiResponse.errorThrowable)
-                        Crashlytics.log(Log.ERROR, TAG, apiResponse.errorMessage)
-                        Crashlytics.logException(apiResponse.errorThrowable)
+                        Utils.logErrors(TAG, apiResponse.errorThrowable, apiResponse.errorMessage)
                         error(Status.ERROR_UNKNOWN, apiResponse.errorMessage, apiResponse.data, apiResponse.errorData)
                     }
                 }
