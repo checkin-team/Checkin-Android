@@ -6,31 +6,11 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:background="@color/white">
-
-    <TextView
-        android:id="@+id/tv_cart_footer_pay_using"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="@dimen/spacing_large"
-        android:text="Pay using"
-        app:layout_constraintBottom_toTopOf="@id/im_cart_footer_payment_mode"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@id/container_cart_footer_pay_button" />
-
-    <ImageView
-        android:id="@+id/im_cart_footer_payment_mode"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/spacing_extra_small"
-        android:src="@drawable/ic_paytm_logo"
-        app:layout_constraintBottom_toBottomOf="@id/container_cart_footer_pay_button"
-        app:layout_constraintStart_toStartOf="@id/tv_cart_footer_pay_using"
-        app:layout_constraintTop_toBottomOf="@id/tv_cart_footer_pay_using" />
-
+    
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/container_cart_footer_pay_button"
         android:layout_width="wrap_content"
-        android:layout_height="0dp"
+        android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/spacing_small"
         android:layout_marginEnd="@dimen/spacing_normal"
         android:layout_marginBottom="@dimen/spacing_small"
@@ -38,30 +18,32 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent">
-
+        
         <TextView
             android:id="@+id/tv_cart_footer_pay_total_label"
             style="@style/WhiteSmallTextStyle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/spacing_extra_small"
             android:text="@string/total"
             app:layout_constraintBottom_toTopOf="@id/tv_cart_footer_pay_total"
-            app:layout_constraintStart_toStartOf="@id/tv_cart_footer_pay_total"
             app:layout_constraintEnd_toEndOf="@id/tv_cart_footer_pay_total"
+            app:layout_constraintStart_toStartOf="@id/tv_cart_footer_pay_total"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintVertical_chainStyle="packed" />
-
+        
         <TextView
             android:id="@+id/tv_cart_footer_pay_total"
             style="@style/WhiteTextStyle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="@dimen/spacing_small"
+            android:layout_marginBottom="@dimen/spacing_extra_small"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/tv_cart_footer_pay_total_label"
             tools:text="$ 123" />
-
+        
         <TextView
             style="@style/WhiteSmallTextStyle"
             android:layout_width="wrap_content"
@@ -73,6 +55,5 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@id/tv_cart_footer_pay_total"
             app:layout_constraintTop_toTopOf="parent" />
-
     </androidx.constraintlayout.widget.ConstraintLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>

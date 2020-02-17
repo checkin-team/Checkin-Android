@@ -224,6 +224,6 @@
 
     <dimen name="width_home_ad_banner">300dp</dimen>
     <dimen name="height_home_ad_banner">225dp</dimen>
-    <dimen name="button_add">55dp</dimen>
+    <dimen name="button_add_width">70dp</dimen>
 
 </resources>

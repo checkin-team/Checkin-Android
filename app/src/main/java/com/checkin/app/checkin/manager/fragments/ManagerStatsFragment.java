@@ -4,22 +4,22 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.TextView;
 
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.lifecycle.ViewModelProviders;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
-
 import com.checkin.app.checkin.R;
 import com.checkin.app.checkin.data.resource.Resource;
 import com.checkin.app.checkin.manager.adapters.ManagerStatsOrderAdapter;
 import com.checkin.app.checkin.manager.models.ManagerStatsModel;
 import com.checkin.app.checkin.manager.viewmodels.ManagerWorkViewModel;
+import com.checkin.app.checkin.misc.BlockingNetworkViewModel;
 import com.checkin.app.checkin.misc.fragments.BaseFragment;
 import com.checkin.app.checkin.utility.Utils;
 
 import java.util.Locale;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.lifecycle.ViewModelProviders;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 import butterknife.BindView;
 
 public class ManagerStatsFragment extends BaseFragment {
@@ -41,6 +41,7 @@ public class ManagerStatsFragment extends BaseFragment {
 
     private ManagerStatsOrderAdapter mAdapter;
     private ManagerWorkViewModel mViewModel;
+    private BlockingNetworkViewModel networkViewModel;
 
     public ManagerStatsFragment() {
     }
@@ -56,22 +57,30 @@ public class ManagerStatsFragment extends BaseFragment {
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
-
+        initRefreshScreen(R.id.sr_manager_stats);
         mAdapter = new ManagerStatsOrderAdapter();
         rvTrendingOrders.setLayoutManager(new LinearLayoutManager(getContext(), RecyclerView.VERTICAL, false));
         rvTrendingOrders.setAdapter(mAdapter);
 
         mViewModel = ViewModelProviders.of(requireActivity()).get(ManagerWorkViewModel.class);
+        networkViewModel = ViewModelProviders.of(requireActivity()).get(BlockingNetworkViewModel.class);
         mViewModel.fetchStatistics();
         mViewModel.getRestaurantStatistics().observe(this, input -> {
             if (input == null)
                 return;
+            handleLoadingRefresh(input);
+            networkViewModel.updateStatus(input, null);
             if (input.getStatus() == Resource.Status.SUCCESS && input.getData() != null) {
                 setupData(input.getData());
-            } else if (input.getStatus() != Resource.Status.LOADING) {
-                Utils.toast(requireContext(), input.getMessage());
             }
+
         });
+
+        networkViewModel.shouldTryAgain(s -> {
+            mViewModel.fetchStatistics();
+            return null;
+        });
+
     }
 
     private void setupData(@NonNull ManagerStatsModel data) {
