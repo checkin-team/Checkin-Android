@@ -1,4 +1,4 @@
-package com.checkin.app.checkin.Auth
+package com.checkin.app.checkin.auth.activities
 
 import android.accounts.Account
 import android.accounts.AccountManager
@@ -22,9 +22,17 @@ import androidx.lifecycle.Observer
 import butterknife.BindView
 import butterknife.ButterKnife
 import butterknife.OnClick
-import com.checkin.app.checkin.Auth.OtpVerificationDialog.AuthCallback
-import com.checkin.app.checkin.Auth.SignupUserInfoFragment.Companion.KEY_NAME
 import com.checkin.app.checkin.R
+import com.checkin.app.checkin.auth.AuthFragmentInteraction
+import com.checkin.app.checkin.auth.AuthResultModel
+import com.checkin.app.checkin.auth.AuthViewModel
+import com.checkin.app.checkin.auth.exceptions.InvalidOTPException
+import com.checkin.app.checkin.auth.fragments.AuthOptionsFragment
+import com.checkin.app.checkin.auth.fragments.OtpVerificationDialog
+import com.checkin.app.checkin.auth.fragments.OtpVerificationDialog.AuthCallback
+import com.checkin.app.checkin.auth.fragments.SignupUserInfoFragment
+import com.checkin.app.checkin.auth.fragments.SignupUserInfoFragment.Companion.KEY_NAME
+import com.checkin.app.checkin.auth.services.DeviceTokenService
 import com.checkin.app.checkin.data.config.RemoteConfig
 import com.checkin.app.checkin.data.resource.Resource
 import com.checkin.app.checkin.home.activities.HomeActivity
@@ -39,7 +47,6 @@ import com.google.android.gms.auth.api.signin.GoogleSignIn
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions
 import com.google.android.gms.common.api.ApiException
 import com.google.android.gms.tasks.Task
-import com.google.firebase.FirebaseException
 import com.google.firebase.auth.*
 import java.util.*
 
@@ -117,8 +124,8 @@ class AuthActivity : AppCompatActivity(), AuthFragmentInteraction, AuthCallback 
         vCircleProgress.visibility = View.GONE
     }
 
-    private fun authenticateWithCredential(credential: AuthCredential?) {
-        mAuth.signInWithCredential(credential!!)
+    private fun authenticateWithCredential(credential: AuthCredential) {
+        mAuth.signInWithCredential(credential)
                 .addOnCompleteListener(this) { task: Task<AuthResult?> ->
                     if (task.isSuccessful) {
                         assert(mAuth.currentUser != null)
@@ -231,17 +238,23 @@ class AuthActivity : AppCompatActivity(), AuthFragmentInteraction, AuthCallback 
         }
     }
 
-    override fun onSuccessVerification(dialog: DialogInterface?, credential: PhoneAuthCredential) {
-        authenticateWithCredential(credential)
+    override fun onSuccessVerification(dialog: DialogInterface?, credential: PhoneAuthCredential, idToken: String) {
+        authViewModel.setFireBaseIdToken(idToken)
+        authViewModel.login()
         dialog?.dismiss()
+        hideDarkBack()
     }
 
     override fun onCancelVerification(dialog: DialogInterface?) {
         hideDarkBack()
     }
 
-    override fun onFailedVerification(dialog: DialogInterface?, exception: FirebaseException) {
-        dialog?.dismiss()
+    override fun onFailedVerification(dialog: DialogInterface?, exception: Exception) {
+        toast(exception.message ?: getString(R.string.error_authentication_phone))
+        if (exception !is InvalidOTPException) {
+            dialog?.dismiss()
+            hideDarkBack()
+        }
     }
 
     override fun onBackPressed() {

@@ -1,4 +1,4 @@
-package com.checkin.app.checkin.Auth
+package com.checkin.app.checkin.auth.fragments
 
 import android.app.Activity
 import android.content.DialogInterface
@@ -12,15 +12,19 @@ import androidx.appcompat.app.AlertDialog
 import butterknife.BindView
 import butterknife.ButterKnife
 import butterknife.OnClick
-import com.checkin.app.checkin.Auth.OtpVerificationDialog
 import com.checkin.app.checkin.R
+import com.checkin.app.checkin.auth.PhoneAuth
+import com.checkin.app.checkin.auth.exceptions.InvalidOTPException
+import com.checkin.app.checkin.misc.exceptions.NoConnectivityException
 import com.checkin.app.checkin.utility.Constants.DEFAULT_OTP_AUTO_RETRIEVAL_TIMEOUT
 import com.checkin.app.checkin.utility.Utils
 import com.checkin.app.checkin.utility.toast
 import com.google.firebase.FirebaseException
 import com.google.firebase.FirebaseNetworkException
 import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.auth.FirebaseAuthInvalidCredentialsException
 import com.google.firebase.auth.PhoneAuthCredential
+import com.google.firebase.auth.PhoneAuthProvider
 
 class OtpVerificationDialog internal constructor(val activity: Activity, authCallback: AuthCallback?) : AlertDialog(activity) {
     @BindView(R.id.ed_otp)
@@ -32,20 +36,23 @@ class OtpVerificationDialog internal constructor(val activity: Activity, authCal
 
     private val mPhoneAuth: PhoneAuth by lazy {
         object : PhoneAuth(mAuth) {
-            override fun onVerificationSuccess(credential: PhoneAuthCredential?) {
-                credential?.let {
-                    mListener?.onSuccessVerification(this@OtpVerificationDialog, it)
-                }
+            override fun onVerificationSuccess(credential: PhoneAuthCredential) {
+                authenticateCredential(credential)
             }
 
             override fun onVerificationError(e: FirebaseException) {
                 Log.e(TAG, "PhoneAuth - Verification Failed: ", e)
-                context.toast(if (e is FirebaseNetworkException) R.string.error_unavailable_network else R.string.error_authentication_phone)
-                mListener?.onFailedVerification(this@OtpVerificationDialog, e)
+                val err = if (e is FirebaseNetworkException) NoConnectivityException() else e
+                mListener?.onFailedVerification(this@OtpVerificationDialog, err)
             }
 
             override fun onOtpRetrievalTimedOut() {
                 setOtpTimeout(0L)
+            }
+
+            override fun onCodeSent(verificationId: String, forceResendingToken: PhoneAuthProvider.ForceResendingToken) {
+                super.onCodeSent(verificationId, forceResendingToken)
+                setOtpTimeout(DEFAULT_OTP_AUTO_RETRIEVAL_TIMEOUT)
             }
         }
     }
@@ -82,10 +89,34 @@ class OtpVerificationDialog internal constructor(val activity: Activity, authCal
     private fun verifyOtp(otp: String) {
         val credential = mPhoneAuth.verifyOtp(otp)
         if (credential == null) {
-            Utils.toast(context, "Verification proof not received!")
+            context.toast("Verification proof not received!")
             return
         }
-        mListener?.onSuccessVerification(this, credential)
+        authenticateCredential(credential)
+    }
+
+    private fun authenticateCredential(credential: PhoneAuthCredential) {
+        mAuth.signInWithCredential(credential).addOnCompleteListener {
+            var err = it.exception
+            val status = if (it.isSuccessful) mAuth.currentUser?.let {
+                var result = false
+                it.getIdToken(false).addOnCompleteListener { tokenResult ->
+                    if (tokenResult.isSuccessful) tokenResult.result?.token?.let { token ->
+                        result = true
+                        mListener?.onSuccessVerification(this, credential, token)
+                    } else err = tokenResult.exception
+                }
+                result
+            } ?: false else false
+            if (!status) {
+                if (err is FirebaseAuthInvalidCredentialsException)
+                    err = InvalidOTPException()
+                err?.let {
+                    mListener?.onFailedVerification(this, it)
+                    Utils.logErrors(TAG, it, context.getString(R.string.error_authentication_phone))
+                }
+            }
+        }
     }
 
     @OnClick(R.id.btn_resend_otp)
@@ -100,14 +131,14 @@ class OtpVerificationDialog internal constructor(val activity: Activity, authCal
     }
 
     fun verifyPhoneNumber(phone: String?) {
-        mPhoneNo = phone
-        setOtpTimeout(DEFAULT_OTP_AUTO_RETRIEVAL_TIMEOUT)
+        mPhoneNo = phone ?: return
         mPhoneAuth.verifyPhoneNo(phone, activity)
+        setOtpTimeout(0L)
     }
 
     private fun setOtpTimeout(timeout: Long) {
         updateTimeout(timeout)
-        if (timeout > 0) {
+        if (timeout > 0L) {
             object : CountDownTimer(timeout, 1000) {
                 override fun onTick(millisUntilFinished: Long) {
                     updateTimeout(millisUntilFinished)
@@ -125,6 +156,8 @@ class OtpVerificationDialog internal constructor(val activity: Activity, authCal
         val sec = time / 1000 - min * 60
         if (time > 0L) {
             tvRemainingTime.text = Utils.formatTime(min, sec)
+            tvRemainingTime.visibility = View.VISIBLE
+            btnResendOtp.visibility = View.INVISIBLE
         } else {
             tvRemainingTime.visibility = View.INVISIBLE
             btnResendOtp.visibility = View.VISIBLE
@@ -132,9 +165,9 @@ class OtpVerificationDialog internal constructor(val activity: Activity, authCal
     }
 
     interface AuthCallback {
-        fun onSuccessVerification(dialog: DialogInterface?, credential: PhoneAuthCredential)
+        fun onSuccessVerification(dialog: DialogInterface?, credential: PhoneAuthCredential, idToken: String)
         fun onCancelVerification(dialog: DialogInterface?)
-        fun onFailedVerification(dialog: DialogInterface?, exception: FirebaseException)
+        fun onFailedVerification(dialog: DialogInterface?, exception: Exception)
     }
 
     override fun onDetachedFromWindow() {
@@ -165,12 +198,12 @@ class OtpVerificationDialog internal constructor(val activity: Activity, authCal
         private val TAG = OtpVerificationDialog::class.java.simpleName
 
         private val defaultAuthCallback: AuthCallback = object : AuthCallback {
-            override fun onSuccessVerification(dialog: DialogInterface?, credential: PhoneAuthCredential) {
+            override fun onSuccessVerification(dialog: DialogInterface?, credential: PhoneAuthCredential, idToken: String) {
                 dialog?.dismiss()
             }
 
             override fun onCancelVerification(dialog: DialogInterface?) {}
-            override fun onFailedVerification(dialog: DialogInterface?, exception: FirebaseException) {
+            override fun onFailedVerification(dialog: DialogInterface?, exception: Exception) {
                 dialog?.dismiss()
             }
         }

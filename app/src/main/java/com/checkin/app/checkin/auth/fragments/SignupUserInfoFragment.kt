@@ -1,4 +1,4 @@
-package com.checkin.app.checkin.Auth
+package com.checkin.app.checkin.auth.fragments
 
 import android.os.Bundle
 import android.view.View
@@ -11,6 +11,8 @@ import androidx.lifecycle.ViewModelProviders
 import butterknife.BindView
 import butterknife.OnClick
 import com.checkin.app.checkin.R
+import com.checkin.app.checkin.auth.AuthFragmentInteraction
+import com.checkin.app.checkin.auth.AuthViewModel
 import com.checkin.app.checkin.misc.fragments.BaseFragment
 import com.checkin.app.checkin.user.models.UserModel.GENDER
 import com.checkin.app.checkin.utility.DebouncedOnClickListener
@@ -87,7 +89,8 @@ class SignupUserInfoFragment : BaseFragment() {
             Toast.makeText(context, "Please select gender", Toast.LENGTH_SHORT).show()
             return
         }
-        fragmentInteraction.onUserInfoProcess(firstname, lastname, username, genderChosen)
+        val gender = genderChosen ?: GENDER.MALE
+        fragmentInteraction.onUserInfoProcess(firstname, lastname, username, gender)
     }
 
     companion object {

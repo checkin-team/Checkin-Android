@@ -1,4 +1,4 @@
-package com.checkin.app.checkin.Auth
+package com.checkin.app.checkin.auth.fragments
 
 import android.content.Intent
 import android.os.Bundle
@@ -9,6 +9,7 @@ import android.widget.EditText
 import butterknife.BindView
 import butterknife.OnClick
 import com.checkin.app.checkin.R
+import com.checkin.app.checkin.auth.AuthFragmentInteraction
 import com.checkin.app.checkin.misc.fragments.BaseFragment
 import com.checkin.app.checkin.utility.Utils
 import com.checkin.app.checkin.utility.parentActivityDelegate

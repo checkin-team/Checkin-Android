@@ -52,7 +52,7 @@
         </activity-alias>
 
         <activity
-            android:name=".Auth.AuthActivity"
+            android:name=".auth.activities.AuthActivity"
             android:screenOrientation="portrait"
             android:theme="@style/Theme.AppCompat.Light.NoActionBar" />
         <activity
@@ -96,7 +96,7 @@
         <activity android:name=".misc.activities.UpdateAppActivity" />
 
         <service
-            android:name=".Auth.AuthenticatorService"
+            android:name=".auth.services.AuthenticatorService"
             android:enabled="true"
             android:exported="true">
             <intent-filter>
@@ -108,7 +108,7 @@
                 android:resource="@xml/authenticator" />
         </service>
         <service android:name=".location.FetchAddressIntentService" />
-        <service android:name=".Auth.DeviceTokenService" />
+        <service android:name=".auth.services.DeviceTokenService" />
         <service android:name=".data.notifications.ActiveSessionNotificationService" />
         <service android:name=".location.UserCurrentLocationService" />
 

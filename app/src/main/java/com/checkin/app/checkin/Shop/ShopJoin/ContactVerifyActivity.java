@@ -4,9 +4,7 @@ package com.checkin.app.checkin.Shop.ShopJoin;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
-import android.widget.Toast;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
@@ -14,13 +12,15 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentStatePagerAdapter;
 
-import com.checkin.app.checkin.Auth.OtpVerificationDialog;
 import com.checkin.app.checkin.R;
+import com.checkin.app.checkin.auth.exceptions.InvalidOTPException;
+import com.checkin.app.checkin.auth.fragments.OtpVerificationDialog;
 import com.checkin.app.checkin.misc.views.DynamicSwipableViewPager;
+import com.checkin.app.checkin.utility.Utils;
 import com.google.android.material.tabs.TabLayout;
-import com.google.firebase.FirebaseException;
-import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.PhoneAuthCredential;
+
+import org.jetbrains.annotations.NotNull;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -32,7 +32,6 @@ public class ContactVerifyActivity extends AppCompatActivity implements TabPhone
     @BindView(R.id.pager)
     DynamicSwipableViewPager vPager;
 
-    private FirebaseAuth mAuth;
     private String mEmail;
 
     @Override
@@ -47,8 +46,6 @@ public class ContactVerifyActivity extends AppCompatActivity implements TabPhone
         for (View v : vTabs.getTouchables()) {
             v.setClickable(false);
         }
-
-        mAuth = FirebaseAuth.getInstance();
     }
 
     @Override
@@ -67,20 +64,11 @@ public class ContactVerifyActivity extends AppCompatActivity implements TabPhone
     }
 
     @Override
-    public void onSuccessVerification(DialogInterface dialog, PhoneAuthCredential credential) {
-        mAuth.signInWithCredential(credential).addOnCompleteListener(task -> {
-            if (task.isSuccessful()) {
-                mAuth.getCurrentUser().getIdToken(false).addOnSuccessListener(result -> {
-                    Intent intent = new Intent(getApplicationContext(), ShopJoinActivity.class);
-                    intent.putExtra(ShopJoinActivity.KEY_SHOP_PHONE_TOKEN, result.getToken());
-                    intent.putExtra(ShopJoinActivity.KEY_SHOP_EMAIL, mEmail);
-                    startActivity(intent);
-                });
-            } else {
-                Log.e(TAG, "Authentication failed", task.getException());
-                Toast.makeText(getApplicationContext(), R.string.error_authentication, Toast.LENGTH_SHORT).show();
-            }
-        });
+    public void onSuccessVerification(DialogInterface dialog, @NotNull PhoneAuthCredential credential, @NotNull String idToken) {
+        Intent intent = new Intent(getApplicationContext(), ShopJoinActivity.class);
+        intent.putExtra(ShopJoinActivity.KEY_SHOP_PHONE_TOKEN, idToken);
+        intent.putExtra(ShopJoinActivity.KEY_SHOP_EMAIL, mEmail);
+        startActivity(intent);
         dialog.dismiss();
     }
 
@@ -90,8 +78,9 @@ public class ContactVerifyActivity extends AppCompatActivity implements TabPhone
     }
 
     @Override
-    public void onFailedVerification(DialogInterface dialog, FirebaseException exception) {
-        dialog.dismiss();
+    public void onFailedVerification(DialogInterface dialog, @NotNull Exception exception) {
+        Utils.toast(this, exception.getLocalizedMessage());
+        if (!(exception instanceof InvalidOTPException)) dialog.dismiss();
     }
 
     private class TabAdapter extends FragmentStatePagerAdapter {

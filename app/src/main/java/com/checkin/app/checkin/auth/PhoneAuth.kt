@@ -1,4 +1,4 @@
-package com.checkin.app.checkin.Auth
+package com.checkin.app.checkin.auth
 
 import android.app.Activity
 import com.checkin.app.checkin.utility.Constants.DEFAULT_OTP_AUTO_RETRIEVAL_TIMEOUT
@@ -14,12 +14,12 @@ abstract class PhoneAuth protected constructor(firebaseAuth: FirebaseAuth) : OnV
     private val mPhoneAuthProvider = PhoneAuthProvider.getInstance(firebaseAuth)
     private var mVerificationId: String? = null
 
-    fun verifyPhoneNo(phoneNo: String?, activity: Activity?) {
+    fun verifyPhoneNo(phoneNo: String, activity: Activity) {
         mPhoneAuthProvider.verifyPhoneNumber(
-                phoneNo!!,
+                phoneNo,
                 DEFAULT_OTP_AUTO_RETRIEVAL_TIMEOUT,
                 TimeUnit.MILLISECONDS,
-                activity!!,
+                activity,
                 this)
     }
 
@@ -43,7 +43,7 @@ abstract class PhoneAuth protected constructor(firebaseAuth: FirebaseAuth) : OnV
         onOtpRetrievalTimedOut()
     }
 
-    protected abstract fun onVerificationSuccess(credential: PhoneAuthCredential?)
+    protected abstract fun onVerificationSuccess(credential: PhoneAuthCredential)
     protected abstract fun onVerificationError(e: FirebaseException)
     protected abstract fun onOtpRetrievalTimedOut()
 }

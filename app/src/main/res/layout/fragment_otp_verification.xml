@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".Auth.OtpVerificationFragment"
+    tools:context=".auth.OtpVerificationFragment"
     android:paddingStart="@dimen/spacing_extra_large"
     android:paddingEnd="@dimen/spacing_extra_large"
     android:paddingTop="@dimen/spacing_gigantic"

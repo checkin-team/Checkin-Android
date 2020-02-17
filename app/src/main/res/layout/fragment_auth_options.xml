@@ -6,7 +6,7 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:orientation="vertical"
-    tools:context=".Auth.AuthOptionsFragment">
+    tools:context=".auth.fragments.AuthOptionsFragment">
 
     <com.checkin.app.checkin.misc.views.PrefixEditText
         android:id="@+id/ed_phone"

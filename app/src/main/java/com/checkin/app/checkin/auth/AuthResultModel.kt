@@ -1,4 +1,4 @@
-package com.checkin.app.checkin.Auth
+package com.checkin.app.checkin.auth
 
 import com.fasterxml.jackson.annotation.JsonProperty
 

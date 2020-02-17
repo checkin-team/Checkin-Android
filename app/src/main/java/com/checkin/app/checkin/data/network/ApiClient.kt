@@ -4,8 +4,8 @@ import android.accounts.AccountManager
 import android.content.Context
 import android.os.Build
 import android.util.Log
-import com.checkin.app.checkin.Auth.AuthPreferences
 import com.checkin.app.checkin.BuildConfig
+import com.checkin.app.checkin.auth.AuthPreferences
 import com.checkin.app.checkin.data.Converters
 import com.checkin.app.checkin.misc.exceptions.NoConnectivityException
 import com.checkin.app.checkin.utility.Constants

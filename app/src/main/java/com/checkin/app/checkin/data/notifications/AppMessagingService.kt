@@ -10,8 +10,8 @@ import android.os.Build
 import android.util.Log
 import androidx.annotation.RequiresApi
 import androidx.core.app.NotificationCompat
-import com.checkin.app.checkin.Auth.DeviceTokenService
 import com.checkin.app.checkin.R
+import com.checkin.app.checkin.auth.services.DeviceTokenService
 import com.checkin.app.checkin.data.Converters.objectMapper
 import com.checkin.app.checkin.data.notifications.Constants.notificationID
 import com.checkin.app.checkin.data.notifications.MessageUtils.createDefaultChannels

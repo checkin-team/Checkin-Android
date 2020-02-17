@@ -5,27 +5,26 @@ import android.os.Bundle;
 import android.text.Editable;
 import android.text.Selection;
 import android.text.TextWatcher;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.ViewModelProviders;
 
-import com.checkin.app.checkin.Auth.OtpVerificationDialog;
 import com.checkin.app.checkin.R;
+import com.checkin.app.checkin.auth.exceptions.InvalidOTPException;
+import com.checkin.app.checkin.auth.fragments.OtpVerificationDialog;
 import com.checkin.app.checkin.data.resource.Resource;
 import com.checkin.app.checkin.user.models.UserModel;
 import com.checkin.app.checkin.user.viewmodels.UserViewModel;
 import com.checkin.app.checkin.utility.Utils;
-import com.google.firebase.FirebaseException;
-import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.PhoneAuthCredential;
+
+import org.jetbrains.annotations.NotNull;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -53,7 +52,6 @@ public class ProfileEditActivity extends AppCompatActivity implements OtpVerific
     TextView tvErrorPhoneNumber;
 
     private UserViewModel mUserViewModel;
-    private FirebaseAuth mAuth;
     private String phone_token = "";
 
     @Override
@@ -70,8 +68,6 @@ public class ProfileEditActivity extends AppCompatActivity implements OtpVerific
         }
 
         getData();
-
-        mAuth = FirebaseAuth.getInstance();
     }
 
     private void getData() {
@@ -201,21 +197,10 @@ public class ProfileEditActivity extends AppCompatActivity implements OtpVerific
     }
 
     @Override
-    public void onSuccessVerification(DialogInterface dialog, PhoneAuthCredential credential) {
-
-        mAuth.signInWithCredential(credential).addOnCompleteListener(task -> {
-            if (task.isSuccessful() && mAuth.getCurrentUser() != null) {
-                mAuth.getCurrentUser().getIdToken(false).addOnSuccessListener(result -> {
-                    phone_token = result.getToken();
-                    hitApiSaveProfile();
-                    disablePhoneSaveButton("Saved");
-                });
-            } else {
-                Log.e(TAG, "Authentication failed", task.getException());
-                Toast.makeText(getApplicationContext(), R.string.error_authentication, Toast.LENGTH_SHORT).show();
-            }
-        });
-        dialog.dismiss();
+    public void onSuccessVerification(DialogInterface dialog, @NotNull PhoneAuthCredential credential, @NotNull String idToken) {
+        phone_token = idToken;
+        hitApiSaveProfile();
+        disablePhoneSaveButton("Saved");
     }
 
     @Override
@@ -223,8 +208,8 @@ public class ProfileEditActivity extends AppCompatActivity implements OtpVerific
     }
 
     @Override
-    public void onFailedVerification(DialogInterface dialog, FirebaseException exception) {
-        Utils.toast(getApplicationContext(), exception.getMessage());
-        dialog.dismiss();
+    public void onFailedVerification(DialogInterface dialog, Exception exception) {
+        Utils.toast(this, exception.getLocalizedMessage());
+        if (!(exception instanceof InvalidOTPException)) dialog.dismiss();
     }
 }

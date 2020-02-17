@@ -1,4 +1,4 @@
-package com.checkin.app.checkin.Auth
+package com.checkin.app.checkin.auth.fragments
 
 import android.content.Context
 import android.os.Bundle

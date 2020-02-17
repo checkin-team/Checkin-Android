@@ -1,4 +1,4 @@
-package com.checkin.app.checkin.Auth;
+package com.checkin.app.checkin.auth.services;
 
 import android.Manifest;
 import android.accounts.AbstractAccountAuthenticator;
@@ -14,6 +14,7 @@ import android.util.Log;
 
 import androidx.core.app.ActivityCompat;
 
+import com.checkin.app.checkin.auth.activities.AuthActivity;
 import com.checkin.app.checkin.utility.Constants;
 
 public class AccountAuthenticator extends AbstractAccountAuthenticator {
@@ -95,6 +96,4 @@ public class AccountAuthenticator extends AbstractAccountAuthenticator {
     public Bundle hasFeatures(AccountAuthenticatorResponse accountAuthenticatorResponse, Account account, String[] strings) {
         throw new UnsupportedOperationException();
     }
-
-
 }

@@ -6,7 +6,6 @@ import android.content.DialogInterface
 import android.content.Intent
 import android.graphics.Rect
 import android.os.Bundle
-import android.util.Log
 import android.view.View
 import android.widget.ImageView
 import android.widget.TextView
@@ -24,10 +23,11 @@ import androidx.viewpager2.widget.ViewPager2
 import butterknife.BindView
 import butterknife.ButterKnife
 import butterknife.OnClick
-import com.checkin.app.checkin.Auth.OtpVerificationDialog
-import com.checkin.app.checkin.Auth.PhoneEditDialog
-import com.checkin.app.checkin.Auth.PhoneInteraction
 import com.checkin.app.checkin.R
+import com.checkin.app.checkin.auth.exceptions.InvalidOTPException
+import com.checkin.app.checkin.auth.fragments.OtpVerificationDialog
+import com.checkin.app.checkin.auth.fragments.PhoneEditDialog
+import com.checkin.app.checkin.auth.fragments.PhoneInteraction
 import com.checkin.app.checkin.data.notifications.DeepLinkUtil
 import com.checkin.app.checkin.data.resource.ProblemModel
 import com.checkin.app.checkin.data.resource.Resource
@@ -55,12 +55,9 @@ import com.checkin.app.checkin.session.scheduled.fragments.*
 import com.checkin.app.checkin.session.scheduled.viewmodels.NewScheduledSessionViewModel
 import com.checkin.app.checkin.user.viewmodels.UserViewModel
 import com.checkin.app.checkin.utility.*
-import com.crashlytics.android.Crashlytics
 import com.google.android.material.appbar.AppBarLayout
 import com.google.android.material.tabs.TabLayout
 import com.google.android.material.tabs.TabLayoutMediator
-import com.google.firebase.FirebaseException
-import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.PhoneAuthCredential
 import com.rd.PageIndicatorView2
 import com.rd.animation.type.AnimationType
@@ -90,7 +87,7 @@ class PublicRestaurantProfileActivity : BaseActivity(), AppBarLayout.OnOffsetCha
     @BindView(R.id.tv_restaurant_public_distance)
     internal lateinit var tvDistance: TextView
     @BindView(R.id.im_restaurant_banner_distance)
-    internal lateinit var imDistance:ImageView
+    internal lateinit var imDistance: ImageView
     @BindView(R.id.appbar_restaurant_public)
     internal lateinit var appbar: AppBarLayout
     @BindView(R.id.toolbar_restaurant_public)
@@ -141,7 +138,6 @@ class PublicRestaurantProfileActivity : BaseActivity(), AppBarLayout.OnOffsetCha
             }
         }
     }
-    private val firebaseAuth: FirebaseAuth by lazy { FirebaseAuth.getInstance() }
 
     private val childSizeUtil by lazy { ChildSizeMeasureViewPager2(vpFragment) }
 
@@ -531,29 +527,17 @@ class PublicRestaurantProfileActivity : BaseActivity(), AppBarLayout.OnOffsetCha
         scheduledSessionViewModel.syncScheduleInfo(selectedDate, countPeople, restaurantId)
     }
 
-    override fun onSuccessVerification(dialog: DialogInterface?, credential: PhoneAuthCredential) {
-        firebaseAuth.signInWithCredential(credential).addOnCompleteListener { task ->
-            val status = if (task.isSuccessful) firebaseAuth.currentUser?.let {
-                it.getIdToken(false).addOnSuccessListener { result ->
-                    userViewModel.patchUserPhone(result.token!!)
-                }
-                true
-            } ?: false else false
-            if (!status) {
-                Crashlytics.log(Log.ERROR, TAG, getString(R.string.error_authentication_phone))
-                Crashlytics.logException(task.exception)
-                Utils.toast(this, R.string.error_authentication_phone)
-            }
-        }
+    override fun onSuccessVerification(dialog: DialogInterface?, credential: PhoneAuthCredential, idToken: String) {
+        userViewModel.patchUserPhone(idToken)
         dialog?.dismiss()
     }
 
     override fun onCancelVerification(dialog: DialogInterface?) {
     }
 
-    override fun onFailedVerification(dialog: DialogInterface?, exception: FirebaseException) {
-        Utils.toast(applicationContext, exception.message)
-        dialog?.dismiss()
+    override fun onFailedVerification(dialog: DialogInterface?, exception: Exception) {
+        toast(exception.message ?: getString(R.string.error_authentication_phone))
+        if (exception !is InvalidOTPException) dialog?.dismiss()
     }
 
     private fun setupPhoneDialog(): AlertDialog {

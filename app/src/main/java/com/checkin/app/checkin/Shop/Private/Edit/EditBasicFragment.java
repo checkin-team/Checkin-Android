@@ -4,7 +4,6 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.os.Bundle;
 import android.text.Editable;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -16,19 +15,20 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProviders;
 
-import com.checkin.app.checkin.Auth.OtpVerificationDialog;
 import com.checkin.app.checkin.R;
 import com.checkin.app.checkin.Shop.Private.ShopProfileViewModel;
 import com.checkin.app.checkin.Shop.RestaurantModel;
+import com.checkin.app.checkin.auth.exceptions.InvalidOTPException;
+import com.checkin.app.checkin.auth.fragments.OtpVerificationDialog;
 import com.checkin.app.checkin.data.resource.Resource;
 import com.checkin.app.checkin.misc.views.MultiSpinner;
 import com.checkin.app.checkin.misc.views.PrefixEditText;
 import com.checkin.app.checkin.misc.views.TimeEditText;
 import com.checkin.app.checkin.utility.Utils;
 import com.fasterxml.jackson.databind.JsonNode;
-import com.google.firebase.FirebaseException;
-import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.PhoneAuthCredential;
+
+import org.jetbrains.annotations.NotNull;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -63,7 +63,6 @@ public class EditBasicFragment extends Fragment implements OtpVerificationDialog
     private Unbinder unbinder;
     private BasicFragmentInteraction mListener;
     private ShopProfileViewModel mViewModel;
-    private FirebaseAuth mAuth;
 
 
     public static EditBasicFragment newInstance(BasicFragmentInteraction listener) {
@@ -84,8 +83,6 @@ public class EditBasicFragment extends Fragment implements OtpVerificationDialog
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         if (getActivity() == null)
             return;
-
-        mAuth = FirebaseAuth.getInstance();
 
         mViewModel = ViewModelProviders.of(getActivity()).get(ShopProfileViewModel.class);
 
@@ -184,22 +181,12 @@ public class EditBasicFragment extends Fragment implements OtpVerificationDialog
     }
 
     @Override
-    public void onSuccessVerification(DialogInterface dialog, PhoneAuthCredential credential) {
-        Log.e(TAG, "success Verification");
-        mAuth.signInWithCredential(credential).addOnCompleteListener(task -> {
-            if (task.isSuccessful()) {
-                mAuth.getCurrentUser().getIdToken(false).addOnSuccessListener(result -> {
-                    Utils.toast(requireContext(), "Phone verified!");
+    public void onSuccessVerification(DialogInterface dialog, @NotNull PhoneAuthCredential credential, @NotNull String idToken) {
+        Utils.toast(requireContext(), "Phone verified!");
 
-                    mViewModel.updateShopContact(result.getToken(), null);
-                    btnVerifyPhone.setVisibility(GONE);
-                    checkDataValid();
-                });
-            } else {
-                Log.e(TAG, "Authentication failed", task.getException());
-                Utils.toast(requireContext(), R.string.error_authentication);
-            }
-        });
+        mViewModel.updateShopContact(idToken, null);
+        btnVerifyPhone.setVisibility(GONE);
+        checkDataValid();
         dialog.dismiss();
     }
 
@@ -208,8 +195,9 @@ public class EditBasicFragment extends Fragment implements OtpVerificationDialog
     }
 
     @Override
-    public void onFailedVerification(DialogInterface dialog, FirebaseException exception) {
-        dialog.dismiss();
+    public void onFailedVerification(DialogInterface dialog, @NonNull Exception exception) {
+        Utils.toast(requireContext(), exception.getLocalizedMessage());
+        if (!(exception instanceof InvalidOTPException)) dialog.dismiss();
     }
 
     private void setupValues(RestaurantModel restaurant) {
