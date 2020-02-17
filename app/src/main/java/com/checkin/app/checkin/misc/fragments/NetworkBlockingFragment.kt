@@ -59,6 +59,9 @@ class NetworkBlockingFragment : BaseFragment() {
             view?.setBackgroundColor(ContextCompat.getColor(requireContext(), R.color.translucent_white))
             containerLoading.visibility = View.VISIBLE
             containerError.visibility = View.GONE
+        } else {
+            view?.visibility = View.GONE
+            view?.setBackgroundColor(ContextCompat.getColor(requireContext(), R.color.transparent))
         }
     }
 

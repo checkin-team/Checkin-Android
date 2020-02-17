@@ -68,7 +68,7 @@ class ManagerLiveOrdersFragment : BaseFragment() {
             it?.let {
                 handleLoadingRefresh(it)
                 networkViewModel.updateStatus(it)
-                if (it.status == Resource.Status.SUCCESS) setupData(it.data!!)
+                if (it.status == Resource.Status.SUCCESS && it.data != null) setupData(it.data)
             }
         })
 

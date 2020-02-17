@@ -100,6 +100,9 @@ abstract class UserMenuGroupModelHolder : EpoxyModelWithHolder<UserMenuGroupMode
             mAdapter = SubGroupPagerAdapter(itemListener)
             vPager.adapter = mAdapter
             vPager.registerOnPageChangeCallback(childSizeUtil)
+            // To fill up viewpager views so on page change, the child view already exists and
+            // thus the group can be resized automatically.
+            vPager.offscreenPageLimit = 2
 
             TabLayoutMediator(vTabs, vPager) { tab, pos ->
                 val tabOne = LayoutInflater.from(context).inflate(R.layout.tab_menu_subgroup, null)

@@ -86,7 +86,6 @@ class ManagerWorkActivity : BaseAccountActivity(), LiveOrdersInteraction {
         setLiveOrdersActivation(isActivated)
         pagerAdapter.oldValActivated = isActivated
 
-
         val shouldOpenInvoice = intent.getBooleanExtra(KEY_NOTIF_OPEN_LAST_TABLES, false)
         if (shouldOpenInvoice) {
             pagerManager.setCurrentItem(2, true)
@@ -108,7 +107,7 @@ class ManagerWorkActivity : BaseAccountActivity(), LiveOrdersInteraction {
             }
         }
         supportFragmentManager.inTransaction {
-            add(android.R.id.content, networkFragment, NetworkBlockingFragment.FRAGMENT_TAG)
+            add(R.id.frg_container_activity, networkFragment, NetworkBlockingFragment.FRAGMENT_TAG)
         }
     }
 

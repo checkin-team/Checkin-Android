@@ -58,6 +58,7 @@ class ExpandableTextView @JvmOverloads constructor(context: Context, attrs: Attr
     }
 
     fun toggle() {
+        if (trimmedText == originalText) return
         trimmed = !trimmed
         setText()
 //        requestFocusFromTouch()
