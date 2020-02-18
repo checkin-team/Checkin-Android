@@ -2,8 +2,9 @@
     <string name="app_name">Checkin</string>
     <string name="account_type">com.checkin.accounts</string>
 
+    <string name="app_old_version_button_update">Update app</string>
     <string name="app_old_version_dialog_title">Update your app</string>
-    <string name="app_old_version_dialog_message">Your app has grown old. Update it from play store to continue to use it.</string>
+    <string name="app_old_version_dialog_message">Your app needs to be updated\nfrom the play store to use it.</string>
 
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
