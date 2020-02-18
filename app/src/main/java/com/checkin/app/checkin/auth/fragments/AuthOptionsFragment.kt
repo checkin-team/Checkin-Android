@@ -2,7 +2,6 @@ package com.checkin.app.checkin.auth.fragments
 
 import android.content.Intent
 import android.os.Bundle
-import android.util.Log
 import android.view.View
 import android.view.ViewGroup
 import android.widget.EditText
@@ -44,7 +43,8 @@ class AuthOptionsFragment : BaseFragment() {
         } ?: false
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        btnLoginFb.setReadPermissions(listOf("email", "user_friends"))
+        btnLoginFb.setPermissions("email", "public_profile")
+        btnLoginFb.setFragment(this)
         btnLoginFb.registerCallback(mFacebookCallbackManager, object : FacebookCallback<LoginResult> {
             override fun onSuccess(loginResult: LoginResult) {
                 mInteractionListener.onFacebookAuth(loginResult)
@@ -53,7 +53,7 @@ class AuthOptionsFragment : BaseFragment() {
             override fun onCancel() {}
 
             override fun onError(error: FacebookException) {
-                Log.e(TAG, "FacebookAuth - Verification Failed: ", error)
+                Utils.logErrors(TAG, error, "FacebookAuth - Verification Failed")
                 context?.toast(R.string.error_authentication_facebook)
             }
         })

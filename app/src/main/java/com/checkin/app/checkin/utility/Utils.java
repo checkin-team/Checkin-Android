@@ -43,6 +43,7 @@ import com.crashlytics.android.Crashlytics;
 import com.golovin.fluentstackbar.FluentSnackbar;
 import com.google.android.material.snackbar.Snackbar;
 import com.google.android.material.tabs.TabLayout;
+import com.google.firebase.auth.FirebaseAuth;
 
 import java.io.IOException;
 import java.lang.reflect.Field;
@@ -513,6 +514,7 @@ public final class Utils {
     }
 
     public static boolean logoutFromApp(Context context) {
+        FirebaseAuth.getInstance().signOut();
         if (!AuthPreferences.removeCurrentAccount(context))
             return false;
         Utils.resetStuff(context);

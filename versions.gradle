@@ -17,7 +17,7 @@ ext.versions = [
         objectBox         : '2.5.0',
         // 2.9.7+ changes minSdk to API 26+
         jackson           : '2.9.6',
-        facebook          : '4.37.0',
+        facebook          : '[5,6)',
         butterknife       : '10.2.0',
         glide             : '4.10.0',
         // Include okhttp3 library of lower version because 3.13.x supports only API 21+

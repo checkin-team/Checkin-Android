@@ -133,8 +133,8 @@ class AuthActivity : AppCompatActivity(), AuthFragmentInteraction, AuthCallback 
                             authViewModel.setFireBaseIdToken(tokenResult.token)
                             authViewModel.login()
                         }
-                    } else {
-                        Log.e(TAG, "Authentication failed", task.exception)
+                    } else if (task.exception != null) {
+                        Utils.logErrors(TAG, task.exception, "Authentication failed")
                         Toast.makeText(applicationContext, R.string.error_authentication, Toast.LENGTH_SHORT).show()
                     }
                 }
@@ -191,8 +191,8 @@ class AuthActivity : AppCompatActivity(), AuthFragmentInteraction, AuthCallback 
         eulaDialog.show()
     }
 
-    override fun onUserInfoProcess(firstName: String, lastName: String, userName: String, gender: GENDER) {
-        authViewModel.register(firstName, lastName, gender, userName)
+    override fun onUserInfoProcess(firstName: String, lastName: String, username: String, gender: GENDER) {
+        authViewModel.register(firstName, lastName, gender, username)
     }
 
     override fun onGoogleAuth() {

@@ -10,7 +10,6 @@ import com.checkin.app.checkin.data.Converters
 import com.checkin.app.checkin.misc.exceptions.NoConnectivityException
 import com.checkin.app.checkin.utility.Constants
 import com.checkin.app.checkin.utility.Utils.isNetworkConnected
-import com.facebook.FacebookSdk.getCacheDir
 import dagger.Module
 import dagger.Provides
 import okhttp3.Cache
@@ -28,7 +27,7 @@ import javax.net.ssl.HttpsURLConnection
 class ApiClient {
     private fun provideClient(context: Context): OkHttpClient {
         val cacheSize = 10 * 1024 * 1024 // 10 MB
-        val cache = Cache(getCacheDir(), cacheSize.toLong())
+        val cache = Cache(context.cacheDir, cacheSize.toLong())
 
         val httpClientBuilder = OkHttpClient.Builder()
         handleNetworkInterceptor(httpClientBuilder, context)
