@@ -12,8 +12,8 @@ import io.objectbox.annotation.Transient
 
 @Entity
 data class AccountModel(
-        @Id(assignable = true)
-        var pk: Long,
+        @Id var id: Long,
+        val pk: Long,
         @JsonProperty("target_pk") val targetPk: Long,
         @JsonProperty("acc_type")
         @JsonDeserialize(using = ACCOUNT_TYPE.Companion.Deserializer::class)
