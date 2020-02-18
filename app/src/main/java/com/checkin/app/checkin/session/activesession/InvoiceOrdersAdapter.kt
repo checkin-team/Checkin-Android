@@ -48,8 +48,11 @@ class InvoiceOrdersAdapter(private var mOrderedItems: List<SessionOrderedItemMod
             if (mClickListener != null)
                 imCancelOrder.visibility = View.VISIBLE
             tvName.text = orderedItem.formatItemDetail()
-            if (!orderedItem.item.isVegetarian)
-                tvName.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ic_non_veg, 0, 0, 0)
+            orderedItem.item.isVegetarian.let {
+                if (it != null)
+                    tvName.setCompoundDrawablesWithIntrinsicBounds(if (it) R.drawable.ic_veg else R.drawable.ic_non_veg, 0, 0, 0)
+                else tvName.setCompoundDrawablesWithIntrinsicBounds(0, 0, 0, 0)
+            }
             tvPrice.text = Utils.getCurrencyFormat(itemView.context).format(orderedItem.formatCost())
         }
     }

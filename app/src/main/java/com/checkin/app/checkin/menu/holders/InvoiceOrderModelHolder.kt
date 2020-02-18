@@ -30,8 +30,11 @@ abstract class InvoiceOrderModelHolder : EpoxyModelWithHolder<InvoiceOrderModelH
             tvItemName.text = "${data.item.name} x ${data.quantity} (${data.itemType})"
             tvItemPrice.text = Utils.formatCurrencyAmount(itemView.context, data.cost)
             tvCustomized.visibility = if (data.isCustomized) View.VISIBLE else View.GONE
-            if (!data.item.isVegetarian) tvItemName.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ic_non_veg, 0, 0, 0)
-            else tvItemName.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ic_veg, 0, 0, 0)
+            data.item.isVegetarian.let {
+                if (it != null)
+                    tvItemName.setCompoundDrawablesWithIntrinsicBounds(if (it) R.drawable.ic_veg else R.drawable.ic_non_veg, 0, 0, 0)
+                else tvItemName.setCompoundDrawablesWithIntrinsicBounds(0, 0, 0, 0)
+            }
         }
     }
 }

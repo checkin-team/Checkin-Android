@@ -92,7 +92,7 @@ public class InventoryGroupModel {
             return nonVegItems;
         nonVegItems = new ArrayList<>();
         for (InventoryItemModel item : items) {
-            if (!item.isVegetarian())
+            if (item.isVegetarian() != null && !item.isVegetarian())
                 nonVegItems.add(item);
         }
         return nonVegItems;
@@ -103,7 +103,7 @@ public class InventoryGroupModel {
             return vegItems;
         vegItems = new ArrayList<>();
         for (InventoryItemModel item : items) {
-            if (item.isVegetarian())
+            if (item.isVegetarian() == null || item.isVegetarian())
                 vegItems.add(item);
         }
         return vegItems;

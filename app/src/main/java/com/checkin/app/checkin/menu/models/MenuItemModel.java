@@ -3,9 +3,9 @@ package com.checkin.app.checkin.menu.models;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
-import com.checkin.app.checkin.data.db.AppDatabase;
-import com.checkin.app.checkin.data.Converters;
 import com.checkin.app.checkin.Inventory.Adapter.InventoryItemAdapter;
+import com.checkin.app.checkin.data.Converters;
+import com.checkin.app.checkin.data.db.AppDatabase;
 import com.fasterxml.jackson.annotation.JsonAutoDetect;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
@@ -19,6 +19,7 @@ import io.objectbox.annotation.Convert;
 import io.objectbox.annotation.Entity;
 import io.objectbox.annotation.Id;
 import io.objectbox.annotation.Transient;
+import io.objectbox.annotation.Uid;
 import io.objectbox.relation.ToMany;
 import io.objectbox.relation.ToOne;
 
@@ -58,7 +59,9 @@ public class MenuItemModel implements Serializable {
     private List<AVAILABLE_MEAL> availableMeals;
 
     @JsonProperty("is_vegetarian")
-    private boolean isVegetarian;
+    @Nullable
+    @Uid(7852223907661117103L)
+    private Boolean isVegetarian;
 
     @JsonProperty("image")
     private String image;
@@ -131,7 +134,8 @@ public class MenuItemModel implements Serializable {
         this.name = name;
     }
 
-    public boolean isVegetarian() {
+    @Nullable
+    public Boolean isVegetarian() {
         return isVegetarian;
     }
 

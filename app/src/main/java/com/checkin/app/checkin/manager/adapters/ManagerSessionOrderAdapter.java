@@ -149,10 +149,10 @@ public class ManagerSessionOrderAdapter extends HeaderFooterRecyclerViewAdapter 
             tvItemName.setText(order.getItem().getName());
             tvQuantity.setText(order.formatQuantityItemType());
 
-            if (!order.getItem().isVegetarian())
-                tvItemName.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ic_non_veg, 0, 0, 0);
-            else
-                tvItemName.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ic_veg, 0, 0, 0);
+            Boolean isVeg = order.getItem().isVegetarian();
+            if (isVeg != null) {
+                tvItemName.setCompoundDrawablesWithIntrinsicBounds(isVeg ? R.drawable.ic_veg : R.drawable.ic_non_veg, 0, 0, 0);
+            } else tvItemName.setCompoundDrawablesWithIntrinsicBounds(0, 0, 0, 0);
 
             if (order.getRemarks() != null) {
                 tvRemarks.setText(order.getRemarks());

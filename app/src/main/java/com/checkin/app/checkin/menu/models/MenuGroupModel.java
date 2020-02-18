@@ -94,7 +94,7 @@ public class MenuGroupModel implements Cloneable {
         if (nonVegItems == null) {
             nonVegItems = new ArrayList<>();
             for (MenuItemModel item : items) {
-                if (!item.isVegetarian())
+                if (item.isVegetarian() != null && !item.isVegetarian())
                     nonVegItems.add(item);
             }
         }
@@ -105,7 +105,7 @@ public class MenuGroupModel implements Cloneable {
         if (vegItems == null) {
             vegItems = new ArrayList<>();
             for (MenuItemModel item : items) {
-                if (item.isVegetarian())
+                if (item.isVegetarian() == null || item.isVegetarian())
                     vegItems.add(item);
             }
         }

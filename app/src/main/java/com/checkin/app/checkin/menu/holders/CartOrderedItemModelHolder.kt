@@ -62,7 +62,12 @@ abstract class CartOrderedItemModelHolder : EpoxyModelWithHolder<CartOrderedItem
             tvCustomize.visibility = if (data.isCustomized()) View.VISIBLE else View.GONE
             tvItemQuantity.text = data.quantity.toString()
             tvItemPrice.text = Utils.formatCurrencyAmount(context, data.cost)
-            imItemType.setImageResource(if (!data.itemModel.isVegetarian) R.drawable.ic_non_veg else R.drawable.ic_veg)
+            data.itemModel.isVegetarian.also {
+                if (it != null) {
+                    imItemType.visibility = View.VISIBLE
+                    imItemType.setImageResource(if (it) R.drawable.ic_veg else R.drawable.ic_non_veg)
+                } else imItemType.visibility = View.INVISIBLE
+            }
         }
 
         private fun showAddQuantity() {
