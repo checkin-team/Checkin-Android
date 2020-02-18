@@ -5,14 +5,12 @@ import com.fasterxml.jackson.annotation.JsonProperty
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize
 import com.fasterxml.jackson.databind.annotation.JsonSerialize
 import com.fasterxml.jackson.databind.node.ObjectNode
-import io.objectbox.annotation.Convert
-import io.objectbox.annotation.Entity
-import io.objectbox.annotation.Id
-import io.objectbox.annotation.Transient
+import io.objectbox.annotation.*
 
 @Entity
 data class AccountModel(
         @Id var id: Long,
+        @Uid(597209738448975281L)
         val pk: Long,
         @JsonProperty("target_pk") val targetPk: Long,
         @JsonProperty("acc_type")
