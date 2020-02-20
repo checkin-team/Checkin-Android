@@ -50,9 +50,10 @@ class ManagerInvoiceFragment : BaseFragment(), ShopInvoiceInteraction {
 
     override fun updateScreen() {
         super.updateScreen()
-        mViewModel.fetchShopSessions(mViewModel.mShopPk)
         mViewModel.filterFrom(Utils.getCurrentFormattedDateInvoice())
         mViewModel.filterTo(Utils.getCurrentFormattedDateInvoice())
+        mViewModel.updateResults()
+
     }
 
     override fun onClickSession(data: RestaurantSessionModel?) {

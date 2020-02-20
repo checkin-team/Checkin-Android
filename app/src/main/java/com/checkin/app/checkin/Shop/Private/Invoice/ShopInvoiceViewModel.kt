@@ -8,7 +8,7 @@ import com.checkin.app.checkin.data.resource.Resource
 class ShopInvoiceViewModel(application: Application) : BaseViewModel(application) {
     private val mShopInvoiceRepository: ShopInvoiceRepository = ShopInvoiceRepository.getInstance(application)
 
-    public var mShopPk: Long = 0
+    private var mShopPk: Long = 0
     private var fromDate: String? = null
     private var toDate: String? = null
     private var mPrevResults: LiveData<Resource<List<RestaurantSessionModel>>>? = null

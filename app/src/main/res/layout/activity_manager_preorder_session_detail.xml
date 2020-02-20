@@ -42,7 +42,7 @@
                     android:gravity="bottom|start"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/tv_manager_scheduled_session_customer_name"
+                    app:layout_constraintTop_toBottomOf="@id/tv_manager_scheduled_session_customer_name"
                     tools:text="New customer" />
     
                 <TextView
@@ -61,7 +61,7 @@
                     style="@style/CallButtonTextStyle"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/tv_manager_scheduled_session_order_id"
+                    app:layout_constraintTop_toBottomOf="@id/tv_manager_scheduled_session_order_id"
                     app:layout_constraintVertical_bias="0.0" />
             </androidx.constraintlayout.widget.ConstraintLayout>
         </androidx.appcompat.widget.Toolbar>
