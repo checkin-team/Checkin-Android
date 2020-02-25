@@ -16,7 +16,6 @@ import com.checkin.app.checkin.home.model.NearbyRestaurantModel
 import com.checkin.app.checkin.misc.holders.BaseViewHolder
 import com.checkin.app.checkin.restaurant.activities.openPublicRestaurantProfile
 import com.checkin.app.checkin.utility.Utils
-import com.checkin.app.checkin.utility.navigateToLocation
 import com.rd.PageIndicatorView
 import com.rd.animation.type.AnimationType
 
@@ -72,17 +71,12 @@ class NearbyRestaurantAdapter : RecyclerView.Adapter<BaseViewHolder<Any>>() {
         internal lateinit var imDistance: ImageView
         @BindView(R.id.container_restaurant_banner_offer)
         internal lateinit var containerOffer: ViewGroup
-        @BindView(R.id.tv_restaurant_banner_navigate)
-        internal lateinit var tvNavigateBtn: TextView
 
         private var mRestaurantData: NearbyRestaurantModel? = null
 
         init {
             ButterKnife.bind(this, itemView)
 
-            tvNavigateBtn.setOnClickListener {
-                mRestaurantData?.geolocation?.run { navigateToLocation(itemView.context) }
-            }
             itemView.setOnClickListener {
                 mRestaurantData?.let { itemView.context.openPublicRestaurantProfile(it.pk) }
             }
@@ -94,7 +88,7 @@ class NearbyRestaurantAdapter : RecyclerView.Adapter<BaseViewHolder<Any>>() {
             tvCuisines.text = data.cuisines.let {
                 if (it.isNotEmpty()) {
                     val maxLen = it.size.coerceAtMost(3)
-                    it.slice(0 until maxLen).joinToString(" ")
+                    it.slice(0 until maxLen).joinToString(" • ")
                 } else "-"
             }
 
