@@ -17,62 +17,33 @@
         android:layout_marginBottom="@dimen/spacing_extra_small"
         app:cardCornerRadius="@dimen/card_corner_radius_small"
         app:cardElevation="@dimen/card_elevation">
-
+    
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent">
-
-            <ImageView
-                android:id="@+id/im_restaurant_banner_distance"
-                android:layout_width="wrap_content"
-                android:layout_height="@dimen/size_extra_small_icon"
-                android:src="@drawable/ic_distance_walking"
-                app:layout_constraintBottom_toBottomOf="@id/tv_restaurant_banner_navigate"
-                app:layout_constraintEnd_toEndOf="@id/im_restaurant_banner_cuisines"
-                app:layout_constraintStart_toStartOf="@id/im_restaurant_banner_cuisines"
-                app:layout_constraintTop_toTopOf="@id/tv_restaurant_banner_navigate" />
-
-            <TextView
-                android:id="@+id/tv_restaurant_banner_distance"
-                style="@style/GreySmallTextStyle"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                app:layout_constraintBottom_toBottomOf="@id/im_restaurant_banner_distance"
-                app:layout_constraintStart_toStartOf="@id/tv_restaurant_banner_cuisines"
-                app:layout_constraintTop_toTopOf="@id/im_restaurant_banner_distance"
-                tools:text="3 KM" />
-
+        
             <TextView
                 android:id="@+id/tv_restaurant_banner_count_checkins"
                 style="@style/RoundedPurpleGradientButtonStyle"
-                android:layout_width="0dp"
-                android:layout_marginBottom="@dimen/spacing_tiny"
-                app:layout_constraintBottom_toTopOf="@id/tv_restaurant_banner_navigate"
-                app:layout_constraintEnd_toEndOf="@id/tv_restaurant_banner_navigate"
-                app:layout_constraintStart_toStartOf="@id/tv_restaurant_banner_navigate"
+                android:layout_width="wrap_content"
+                android:layout_marginEnd="@dimen/spacing_normal"
+                android:paddingStart="@dimen/spacing_small"
+                android:paddingEnd="@dimen/spacing_small"
+                app:layout_constraintBottom_toBottomOf="@id/tv_restaurant_banner_cuisines"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="@id/tv_restaurant_banner_cuisines"
                 tools:text="Checkin 2k" />
-
-            <TextView
-                android:id="@+id/tv_restaurant_banner_navigate"
-                style="@style/RoundedWhiteWithGreyBorderButtonStyle"
-                android:layout_marginEnd="13dp"
-                android:layout_marginBottom="@dimen/spacing_small"
-                android:drawableStart="@drawable/ic_navigate_arrow"
-                android:drawablePadding="@dimen/spacing_extra_tiny"
-                android:text="Navigate"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent" />
-
+        
             <ImageView
                 android:id="@+id/im_restaurant_banner_cuisines"
-                android:layout_width="wrap_content"
+                android:layout_width="@dimen/size_extra_small_button"
                 android:layout_height="@dimen/size_extra_small_icon"
-                android:layout_marginStart="13dp"
+                android:layout_marginStart="@dimen/spacing_small"
+                android:layout_marginBottom="@dimen/spacing_extra_small"
                 android:src="@drawable/ic_banner_cuisines"
-                app:layout_constraintBottom_toBottomOf="@id/tv_restaurant_banner_count_checkins"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="@id/tv_restaurant_banner_count_checkins" />
-
+                app:layout_constraintBottom_toTopOf="@id/frameLayout"
+                app:layout_constraintStart_toStartOf="parent" />
+        
             <TextView
                 android:id="@+id/tv_restaurant_banner_cuisines"
                 style="@style/GreySmallTextStyle"
@@ -86,7 +57,53 @@
                 app:layout_constraintHorizontal_bias="0"
                 app:layout_constraintStart_toEndOf="@id/im_restaurant_banner_cuisines"
                 app:layout_constraintTop_toTopOf="@id/im_restaurant_banner_cuisines"
-                tools:text="Pure Veg  American  Burgers" />
+                tools:text="Pure Veg • American • Burgers" />
+        
+            <FrameLayout
+                android:id="@+id/frameLayout"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/spacing_normal"
+                android:layout_marginBottom="@dimen/spacing_normal"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="parent">
+            
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
+                
+                    <TextView
+                        android:id="@+id/tv_restaurant_banner_distance"
+                        style="@style/GreySmallTextStyle"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="@dimen/spacing_extra_small"
+                        app:layout_constraintBottom_toBottomOf="@id/im_restaurant_banner_distance"
+                        app:layout_constraintStart_toEndOf="@id/im_restaurant_banner_distance"
+                        app:layout_constraintTop_toTopOf="@id/im_restaurant_banner_distance"
+                        tools:text="3 KM" />
+                
+                    <ImageView
+                        android:id="@+id/im_restaurant_banner_distance"
+                        android:layout_width="@dimen/size_extra_small_icon"
+                        android:layout_height="@dimen/size_extra_small_icon"
+                        android:src="@drawable/ic_distance_walking"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+            
+                </androidx.constraintlayout.widget.ConstraintLayout>
+            
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:fontFamily="@font/josefinsans_bold"
+                    android:text="Opens tomorrow at 11 AM"
+                    android:textColor="@color/greenish_teal"
+                    android:textSize="@dimen/font_normal"
+                    android:visibility="invisible" />
+            </FrameLayout>
+    
         </androidx.constraintlayout.widget.ConstraintLayout>
     </androidx.cardview.widget.CardView>
 
@@ -101,7 +118,29 @@
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="@dimen/height_restaurant_image_banner">
-
+    
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/cl_restaurant_banner_closed_cover"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@color/translucent_black"
+                android:elevation="@dimen/spacing_unit"
+                android:visibility="gone">
+        
+                <TextView
+                    android:id="@+id/tv_restaurant_banner_closed"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="@dimen/spacing_large"
+                    android:fontFamily="@font/josefinsans_bold"
+                    android:text="Closed"
+                    android:textColor="@color/orange_red"
+                    android:textSize="@dimen/font_small"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent" />
+            </androidx.constraintlayout.widget.ConstraintLayout>
+    
             <ImageView
                 android:id="@+id/im_restaurant_banner_cover"
                 android:layout_width="match_parent"
@@ -116,6 +155,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/spacing_medium"
                 android:background="@drawable/btn_small_bordered_grey"
+                android:elevation="@dimen/spacing_extra_tiny"
                 android:paddingStart="@dimen/spacing_small"
                 android:paddingTop="@dimen/spacing_extra_small"
                 android:paddingEnd="@dimen/spacing_small"
