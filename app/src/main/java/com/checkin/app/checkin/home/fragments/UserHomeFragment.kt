@@ -93,17 +93,19 @@ class UserHomeFragment : BaseFragment(), LiveSessionTrackerInteraction {
         vpLiveSession.adapter = mLiveSessionAdapter
 
         epoxyRvNearbyRestaurants.withModels {
-            mViewModel.nearbyRestaurants.value?.data?.forEachIndexed { id, data ->
+            mViewModel.nearbyRestaurants.value?.data?.forEachIndexed { it, data ->
                 nearbyRestaurantModelHolder {
-                    id(id)
+                    id(it)
                     restaurantModel(data)
                 }
-            } ?: shimmerModelHolder {
+            } ?: listOf(shimmerModelHolder {
                 id("sb1")
                 withHomeRestaurantBannerLayout()
-            }
+            }, shimmerModelHolder {
+                id("sb1")
+                withHomeRestaurantBannerLayout()
+            })
         }
-        epoxyRvNearbyRestaurants.requestModelBuild()
 
         mViewModel.nearbyRestaurants.observe(this, Observer {
             it?.let { listResource ->
@@ -133,6 +135,8 @@ class UserHomeFragment : BaseFragment(), LiveSessionTrackerInteraction {
 
         mLiveSessionViewModel.fetchScheduledSessions()
         mLiveSessionViewModel.fetchLiveActiveSession()
+        epoxyRvNearbyRestaurants.requestModelBuild()
+        epoxyRvNearbyRestaurants.setHasFixedSize(false)
     }
 
     override fun updateScreen() {
