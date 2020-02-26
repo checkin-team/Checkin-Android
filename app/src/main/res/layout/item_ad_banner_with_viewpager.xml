@@ -5,7 +5,7 @@
     android:layout_height="@dimen/height_advertisement_banner"
     android:layout_marginStart="@dimen/spacing_small"
     android:layout_marginEnd="@dimen/spacing_small">
-
+    
     <androidx.viewpager.widget.ViewPager
         android:id="@+id/vp_home_banner"
         android:layout_width="match_parent"

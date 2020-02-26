@@ -5,29 +5,29 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/white">
-
+    
     <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
         android:id="@+id/sr_home"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
-
+        
         <androidx.core.widget.NestedScrollView
             android:id="@+id/nested_sv_home"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             app:layout_behavior="@string/appbar_scrolling_view_behavior">
-
+            
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="vertical"
                 android:paddingBottom="@dimen/spacing_medium">
-
+                
                 <FrameLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:background="@color/white_four">
-
+                    
                     <com.airbnb.epoxy.EpoxyRecyclerView
                         android:id="@+id/epoxy_rv_home_banner"
                         android:layout_width="match_parent"
@@ -37,50 +37,49 @@
                         android:paddingEnd="@dimen/spacing_tiny"
                         tools:listitem="@layout/item_ad_banner" />
                 </FrameLayout>
-
+                
                 <FrameLayout
                     android:id="@+id/container_home_live_session"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:background="@color/white_four"
-                    android:paddingTop="@dimen/spacing_extra_tiny"
-                    android:paddingBottom="@dimen/spacing_small"
                     android:paddingStart="@dimen/spacing_small"
+                    android:paddingTop="@dimen/spacing_extra_tiny"
                     android:paddingEnd="@dimen/spacing_small"
+                    android:paddingBottom="@dimen/spacing_small"
                     android:visibility="gone">
-
+                    
                     <androidx.viewpager2.widget.ViewPager2
                         android:id="@+id/vp_home_session_live"
                         android:layout_width="match_parent"
                         android:layout_height="@dimen/height_home_session_live_card" />
                 </FrameLayout>
-
+                
                 <RelativeLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:paddingStart="@dimen/spacing_small"
                     android:paddingTop="@dimen/spacing_small"
                     android:paddingEnd="@dimen/spacing_small">
-
+                    
                     <TextView
                         android:id="@+id/tv_home_nearby_restaurants_title"
                         style="@style/GreyBoldTextStyle"
                         android:layout_width="wrap_content"
-                        android:fontFamily="@font/opensans_bold"
                         android:layout_height="wrap_content"
                         android:layout_marginStart="@dimen/spacing_tiny"
+                        android:fontFamily="@font/opensans_bold"
                         android:text="Around You" />
-
-                    <androidx.recyclerview.widget.RecyclerView
-                        android:id="@+id/rv_home_nearby_restaurants"
+                    
+                    <com.airbnb.epoxy.EpoxyRecyclerView
+                        android:id="@+id/epoxy_rv_home_nearby_restaurants"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_below="@id/tv_home_nearby_restaurants_title"
-                        android:nestedScrollingEnabled="false"
                         android:orientation="horizontal"
                         tools:listitem="@layout/item_home_restaurant_banner" />
                 </RelativeLayout>
-
+            
             </LinearLayout>
         </androidx.core.widget.NestedScrollView>
     </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
