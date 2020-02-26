@@ -8,8 +8,6 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.Observer
-import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.RecyclerView
 import androidx.viewpager2.widget.ViewPager2
 import butterknife.BindView
 import com.airbnb.epoxy.EpoxyRecyclerView
@@ -18,9 +16,9 @@ import com.checkin.app.checkin.data.config.RemoteConfig
 import com.checkin.app.checkin.data.notifications.MESSAGE_TYPE
 import com.checkin.app.checkin.data.notifications.MessageUtils
 import com.checkin.app.checkin.data.resource.Resource
+import com.checkin.app.checkin.home.epoxy.nearbyRestaurantModelHolder
 import com.checkin.app.checkin.home.holders.LiveSessionTrackerAdapter
 import com.checkin.app.checkin.home.holders.LiveSessionTrackerInteraction
-import com.checkin.app.checkin.home.holders.NearbyRestaurantAdapter
 import com.checkin.app.checkin.home.model.LiveSessionDetailModel
 import com.checkin.app.checkin.home.model.SessionType
 import com.checkin.app.checkin.home.model.TopAdBannerModel
@@ -29,6 +27,7 @@ import com.checkin.app.checkin.home.viewmodels.LiveSessionViewModel
 import com.checkin.app.checkin.menu.activities.ActiveSessionMenuActivity
 import com.checkin.app.checkin.misc.fragments.BaseFragment
 import com.checkin.app.checkin.misc.holders.adBannerModelHolder
+import com.checkin.app.checkin.misc.holders.shimmerModelHolder
 import com.checkin.app.checkin.restaurant.activities.openPublicRestaurantProfile
 import com.checkin.app.checkin.restaurant.models.RestaurantLocationModel
 import com.checkin.app.checkin.session.activesession.ActiveSessionActivity
@@ -43,14 +42,14 @@ class UserHomeFragment : BaseFragment(), LiveSessionTrackerInteraction {
 
     @BindView(R.id.epoxy_rv_home_banner)
     internal lateinit var epoxyRvHomeBanner: EpoxyRecyclerView
-    @BindView(R.id.rv_home_nearby_restaurants)
-    internal lateinit var rvNearbyRestaurants: RecyclerView
+    @BindView(R.id.epoxy_rv_home_nearby_restaurants)
+    internal lateinit var epoxyRvNearbyRestaurants: EpoxyRecyclerView
     @BindView(R.id.container_home_live_session)
     internal lateinit var containerLiveSession: ViewGroup
     @BindView(R.id.vp_home_session_live)
     internal lateinit var vpLiveSession: ViewPager2
 
-    private lateinit var mRestAdapter: NearbyRestaurantAdapter
+    //  private lateinit var mRestAdapter: NearbyRestaurantAdapter
     private lateinit var mLiveSessionAdapter: LiveSessionTrackerAdapter
 
     private val mViewModel: HomeViewModel by activityViewModels()
@@ -89,24 +88,27 @@ class UserHomeFragment : BaseFragment(), LiveSessionTrackerInteraction {
                 }
             }
         }
-        mRestAdapter = NearbyRestaurantAdapter()
         mLiveSessionAdapter = LiveSessionTrackerAdapter(this)
 
         vpLiveSession.adapter = mLiveSessionAdapter
 
-        rvNearbyRestaurants.layoutManager = LinearLayoutManager(context)
-        rvNearbyRestaurants.adapter = mRestAdapter
-
-        rvNearbyRestaurants.addOnScrollListener(object : RecyclerView.OnScrollListener() {
-            override fun onScrollStateChanged(recyclerView: RecyclerView, newState: Int) {
-                enableDisableSwipeRefresh(newState == RecyclerView.SCROLL_STATE_IDLE)
+        epoxyRvNearbyRestaurants.withModels {
+            mViewModel.nearbyRestaurants.value?.data?.forEachIndexed { id, data ->
+                nearbyRestaurantModelHolder {
+                    id(id)
+                    restaurantModel(data)
+                }
+            } ?: shimmerModelHolder {
+                id("sb1")
+                withHomeRestaurantBannerLayout()
             }
-        })
+        }
+        epoxyRvNearbyRestaurants.requestModelBuild()
 
         mViewModel.nearbyRestaurants.observe(this, Observer {
             it?.let { listResource ->
                 when (listResource.status) {
-                    Resource.Status.SUCCESS -> listResource.data?.let(mRestAdapter::updateData)
+                    Resource.Status.SUCCESS -> epoxyRvNearbyRestaurants.requestModelBuild()
                     else -> pass
                 }
             }
