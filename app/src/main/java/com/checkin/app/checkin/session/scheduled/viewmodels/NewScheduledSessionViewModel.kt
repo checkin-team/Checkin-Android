@@ -112,6 +112,7 @@ class NewScheduledSessionViewModel(application: Application) : BaseViewModel(app
 
             override fun onFailure() {
                 mPaytmCallbackData.postValue(error<ObjectNode>("Sorry, but PayTM transaction failed", null))
+                error(Resource.Status.ERROR_INVALID_REQUEST, "Sorry, but PayTM transaction failed", null, null)
             }
         }
         doPostPaytmCallback(data, listener)
