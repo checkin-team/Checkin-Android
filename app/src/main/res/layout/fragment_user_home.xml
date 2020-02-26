@@ -74,9 +74,8 @@
                     <com.airbnb.epoxy.EpoxyRecyclerView
                         android:id="@+id/epoxy_rv_home_nearby_restaurants"
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
+                        android:layout_height="match_parent"
                         android:layout_below="@id/tv_home_nearby_restaurants_title"
-                        android:orientation="horizontal"
                         tools:listitem="@layout/item_home_restaurant_banner" />
                 </RelativeLayout>
             
