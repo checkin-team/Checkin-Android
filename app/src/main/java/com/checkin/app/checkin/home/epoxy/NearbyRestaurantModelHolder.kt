@@ -4,6 +4,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
+import androidx.constraintlayout.widget.ConstraintLayout
 import butterknife.BindView
 import com.airbnb.epoxy.EpoxyAttribute
 import com.airbnb.epoxy.EpoxyModelClass
@@ -19,6 +20,9 @@ abstract class NearbyRestaurantModelHolder : EpoxyModelWithHolder<NearbyRestaura
 
     @EpoxyAttribute
     internal lateinit var restaurantModel: NearbyRestaurantModel
+
+    @EpoxyAttribute
+    var restaurantOpen: Boolean = false
 
     override fun bind(holder: Holder) {
         holder.bindData(restaurantModel)
@@ -47,6 +51,13 @@ abstract class NearbyRestaurantModelHolder : EpoxyModelWithHolder<NearbyRestaura
         internal lateinit var imDistance: ImageView
         @BindView(R.id.container_restaurant_banner_offer)
         internal lateinit var containerOffer: ViewGroup
+        @BindView(R.id.cl_restaurant_banner_location)
+        internal lateinit var clLocation: ConstraintLayout
+        @BindView(R.id.cl_restaurant_banner_closed_cover)
+        internal lateinit var clClosedCover: ConstraintLayout
+        @BindView(R.id.tv_restaurant_banner_opening_timings)
+        internal lateinit var tvOpenTimings: TextView
+
 
         override fun bindData(data: NearbyRestaurantModel) {
             itemView.setOnClickListener {
@@ -85,6 +96,20 @@ abstract class NearbyRestaurantModelHolder : EpoxyModelWithHolder<NearbyRestaura
             data.covers.let {
                 if (it.getOrNull(0) != null) Utils.loadImageOrDefault(imRestaurantBanner, it[0], R.drawable.cover_restaurant_unknown)
                 else imRestaurantBanner.setImageResource(R.drawable.cover_restaurant_unknown)
+            }
+
+            if (restaurantOpen) {
+                clClosedCover.visibility = View.GONE
+                clLocation.visibility = View.VISIBLE
+                tvOpenTimings.visibility = View.GONE
+
+
+            } else {
+                clClosedCover.visibility = View.VISIBLE
+                clLocation.visibility = View.GONE
+                tvOpenTimings.visibility = View.VISIBLE
+                tvOpenTimings.text = data.formatOpeningTimings
+
             }
         }
 
