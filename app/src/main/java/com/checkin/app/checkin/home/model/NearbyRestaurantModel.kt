@@ -1,9 +1,12 @@
 package com.checkin.app.checkin.home.model
 
+import android.util.Log
 import com.checkin.app.checkin.misc.models.GeolocationModel
 import com.checkin.app.checkin.utility.Utils
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties
 import com.fasterxml.jackson.annotation.JsonProperty
+import java.text.SimpleDateFormat
+import java.util.*
 
 @JsonIgnoreProperties(ignoreUnknown = true)
 data class NearbyRestaurantModel(
@@ -19,7 +22,9 @@ data class NearbyRestaurantModel(
         val distance: Double,
         val ratings: Double,
         val cuisines: List<String>,
-        val offer: RestaurantListingOfferModel?
+        val offer: RestaurantListingOfferModel?,
+        val is_open: Boolean,
+        val timings: TimingModel
 ) {
     val formatDistance: String
         get() = "$distance ${if (distance <= 1.0) "km" else "kms"}"
@@ -30,4 +35,23 @@ data class NearbyRestaurantModel(
     val formatRating: String
         get() = if (ratings < 1.0) "---" else ratings.toString()
 
+    val formatOpeningTimings: String
+        get() {
+            if (is_open) {
+                return "Restaurant open"
+            }
+
+            val formatter = SimpleDateFormat("HH:mm:ss", Locale.getDefault())
+            val present = formatter.format(Calendar.getInstance().time)
+            Log.d("HOLA", present)
+            val openTime: Date = formatter.parse(timings.open)
+            Log.d("HOLA", openTime.toString())
+            val closeTime: Date = formatter.parse(timings.close)
+            Log.d("HOLA", closeTime.toString())
+            val currentTime = formatter.parse(present)
+            Log.d("HOLA", currentTime.toString())
+            var day: String = if (currentTime.after(closeTime)) "tomorrow" else "today"
+            val openingTime = SimpleDateFormat("HH:mm a", Locale.getDefault()).format(openTime)
+            return "Opens $day at $openingTime"
+        }
 }
