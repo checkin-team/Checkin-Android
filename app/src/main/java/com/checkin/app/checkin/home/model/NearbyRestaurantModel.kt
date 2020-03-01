@@ -1,6 +1,5 @@
 package com.checkin.app.checkin.home.model
 
-import android.util.Log
 import com.checkin.app.checkin.misc.models.GeolocationModel
 import com.checkin.app.checkin.utility.Utils
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties
@@ -43,13 +42,9 @@ data class NearbyRestaurantModel(
 
             val formatter = SimpleDateFormat("HH:mm:ss", Locale.getDefault())
             val present = formatter.format(Calendar.getInstance().time)
-            Log.d("HOLA", present)
             val openTime: Date = formatter.parse(timings.open)
-            Log.d("HOLA", openTime.toString())
             val closeTime: Date = formatter.parse(timings.close)
-            Log.d("HOLA", closeTime.toString())
             val currentTime = formatter.parse(present)
-            Log.d("HOLA", currentTime.toString())
             var day: String = if (currentTime.after(closeTime)) "tomorrow" else "today"
             val openingTime = SimpleDateFormat("HH:mm a", Locale.getDefault()).format(openTime)
             return "Opens $day at $openingTime"

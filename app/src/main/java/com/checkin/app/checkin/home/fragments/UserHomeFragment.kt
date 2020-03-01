@@ -35,9 +35,7 @@ import com.checkin.app.checkin.session.models.ScheduledSessionStatus
 import com.checkin.app.checkin.session.scheduled.activities.PreorderSessionDetailActivity
 import com.checkin.app.checkin.session.scheduled.activities.QSRFoodReadyActivity
 import com.checkin.app.checkin.session.scheduled.activities.QSRSessionDetailActivity
-import com.checkin.app.checkin.utility.Utils
 import com.checkin.app.checkin.utility.pass
-import java.util.*
 
 class UserHomeFragment : BaseFragment(), LiveSessionTrackerInteraction {
     override val rootLayout = R.layout.fragment_user_home
@@ -100,7 +98,6 @@ class UserHomeFragment : BaseFragment(), LiveSessionTrackerInteraction {
                     id(it)
                     restaurantModel(data)
                     restaurantOpen(data.is_open)
-                    Utils.toast(requireContext(), "${data.timings.open} ${data.timings.close} ${Calendar.getInstance().time} ${data.is_open}")
                 }
             } ?: listOf(shimmerModelHolder {
                 id("sb1")
