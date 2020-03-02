@@ -160,14 +160,14 @@ class ShopRepository private constructor(context: Context) : BaseRepository() {
         }.asLiveData
     }
 
-    fun postRestaurantLogo(mShopPk: Long, pic: File, listener: ProgressRequestBody.UploadCallbacks): Call<GenericDetailModel> {
+    fun postRestaurantLogo(mShopPk: Long, pic: File, listener: ProgressRequestBody.UploadCallbacks<GenericDetailModel>): Call<GenericDetailModel> {
         val requestFile = RequestBody.create(MediaType.parse("image/jpeg"), pic)
         val requestBody = ProgressRequestBody(requestFile, listener)
         val body = MultipartBody.Part.createFormData("logo", "cover.jpg", requestBody)
         return mWebService.postRestaurantLogo(mShopPk, body)
     }
 
-    fun postRestaurantCover(mShopPk: Long, index: Int, pic: File, listener: ProgressRequestBody.UploadCallbacks): Call<GenericDetailModel> {
+    fun postRestaurantCover(mShopPk: Long, index: Int, pic: File, listener: ProgressRequestBody.UploadCallbacks<GenericDetailModel>): Call<GenericDetailModel> {
         val requestFile = RequestBody.create(MediaType.parse("image/jpeg"), pic)
         val requestBody = ProgressRequestBody(requestFile, listener)
         val body = MultipartBody.Part.createFormData("image", "cover.jpg", requestBody)

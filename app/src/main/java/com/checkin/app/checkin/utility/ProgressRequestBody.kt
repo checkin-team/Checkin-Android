@@ -1,12 +1,13 @@
 package com.checkin.app.checkin.utility
 
 import com.checkin.app.checkin.BuildConfig
+import com.checkin.app.checkin.data.network.ApiResponse
 import okhttp3.MediaType
 import okhttp3.RequestBody
 import okio.*
 import java.io.IOException
 
-class ProgressRequestBody(private val mDelegate: RequestBody, private val mListener: UploadCallbacks) : RequestBody() {
+class ProgressRequestBody(private val mDelegate: RequestBody, private val mListener: UploadCallbacks<*>) : RequestBody() {
     private var mUpdateProgressFlag = !BuildConfig.DEBUG
 
     override fun contentType(): MediaType? = mDelegate.contentType()
@@ -31,12 +32,12 @@ class ProgressRequestBody(private val mDelegate: RequestBody, private val mListe
         bufferedSink.flush()
     }
 
-    interface UploadCallbacks {
+    interface UploadCallbacks<T> {
         fun onProgressUpdate(percentage: Int)
 
-        fun onSuccess()
+        fun onSuccess(response: ApiResponse<T>)
 
-        fun onFailure()
+        fun onFailure(response: ApiResponse<T>)
     }
 
     internal inner class ProgressSink(delegate: Sink) : ForwardingSink(delegate) {

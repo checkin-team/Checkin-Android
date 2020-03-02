@@ -8,6 +8,7 @@ import androidx.lifecycle.Transformations
 import com.checkin.app.checkin.Shop.ShopModel.PAYMENT_MODE
 import com.checkin.app.checkin.data.BaseViewModel
 import com.checkin.app.checkin.data.Converters.objectMapper
+import com.checkin.app.checkin.data.network.ApiResponse
 import com.checkin.app.checkin.data.network.RetrofitCallAsyncTask
 import com.checkin.app.checkin.data.resource.Resource
 import com.checkin.app.checkin.data.resource.Resource.Companion.cloneResource
@@ -65,26 +66,26 @@ class ActiveSessionInvoiceViewModel(application: Application) : BaseViewModel(ap
         val data = objectMapper.createObjectNode()
         val keys = bundle.keySet()
         for (key in keys) {
-            data.put(key, bundle[key].toString())
+            data.put(key, bundle[key]?.toString())
         }
-        val listener: UploadCallbacks = object : UploadCallbacks {
+        val listener = object : UploadCallbacks<ObjectNode> {
             override fun onProgressUpdate(percentage: Int) {
                 mPaytmCallbackData.postValue(loading<ObjectNode>(null))
             }
 
-            override fun onSuccess() {
+            override fun onSuccess(response: ApiResponse<ObjectNode>) {
                 mPaytmCallbackData.postValue(success<ObjectNode>(null))
             }
 
-            override fun onFailure() {
+            override fun onFailure(response: ApiResponse<ObjectNode>) {
                 mPaytmCallbackData.postValue(error<ObjectNode>("Sorry, but PayTM transaction failed", null))
             }
         }
         doPostPaytmCallback(data, listener)
     }
 
-    private fun doPostPaytmCallback(data: ObjectNode, listener: UploadCallbacks) {
-        RetrofitCallAsyncTask<ObjectNode>(listener).execute(mRepository.syncPostPaytmCallback(data))
+    private fun doPostPaytmCallback(data: ObjectNode, listener: UploadCallbacks<ObjectNode>) {
+        RetrofitCallAsyncTask(listener).execute(mRepository.syncPostPaytmCallback(data))
     }
 
     val paytmCallbackData: LiveData<Resource<ObjectNode>> = mPaytmCallbackData

@@ -73,7 +73,7 @@ class UserRepository private constructor(context: Context) : BaseRepository() {
         }.asLiveData
     }
 
-    fun postUserProfilePic(pic: File, listener: UploadCallbacks): Call<GenericDetailModel> {
+    fun postUserProfilePic(pic: File, listener: UploadCallbacks<GenericDetailModel>): Call<GenericDetailModel> {
         val requestFile = RequestBody.create(MediaType.parse("image/jpeg"), pic)
         val requestBody = ProgressRequestBody(requestFile, listener)
         val body = MultipartBody.Part.createFormData("profile_pic", "profile.jpg", requestBody)

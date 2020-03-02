@@ -7,13 +7,13 @@ import androidx.lifecycle.Transformations
 import androidx.lifecycle.viewModelScope
 import com.checkin.app.checkin.data.BaseViewModel
 import com.checkin.app.checkin.data.Converters.objectMapper
+import com.checkin.app.checkin.data.network.ApiResponse
 import com.checkin.app.checkin.data.network.RetrofitCallAsyncTask
 import com.checkin.app.checkin.data.resource.Resource
 import com.checkin.app.checkin.data.resource.Resource.Companion.cloneResource
-import com.checkin.app.checkin.data.resource.Resource.Companion.error
+import com.checkin.app.checkin.data.resource.Resource.Companion.createResource
 import com.checkin.app.checkin.data.resource.Resource.Companion.errorNotFound
 import com.checkin.app.checkin.data.resource.Resource.Companion.loading
-import com.checkin.app.checkin.data.resource.Resource.Companion.success
 import com.checkin.app.checkin.misc.paytm.PaytmModel
 import com.checkin.app.checkin.session.SessionRepository
 import com.checkin.app.checkin.session.models.NewScheduledSessionModel
@@ -67,6 +67,8 @@ class NewScheduledSessionViewModel(application: Application) : BaseViewModel(app
     private var lastPaymentBundle: Bundle? = null
     val sessionAppliedPromo: LiveData<Resource<SessionPromoModel>> = mSessionPromo
 
+    val isOfferApplied: Boolean = mSessionPromo.value?.data != null
+
     private fun createNewScheduledSession(countPeople: Int, plannedTime: Date, restaurantId: Long, remarks: String?) {
         val body = NewScheduledSessionModel(countPeople = countPeople, plannedDatetime = plannedTime, remarks = remarks).apply {
             this.restaurantId = restaurantId
@@ -101,17 +103,17 @@ class NewScheduledSessionViewModel(application: Application) : BaseViewModel(app
         for (key in keys) {
             data.put(key, bundle[key]?.toString())
         }
-        val listener: UploadCallbacks = object : UploadCallbacks {
+        val listener = object : UploadCallbacks<ObjectNode> {
             override fun onProgressUpdate(percentage: Int) {
                 mPaytmCallbackData.postValue(loading<ObjectNode>(null))
             }
 
-            override fun onSuccess() {
-                mPaytmCallbackData.postValue(success<ObjectNode>(null))
+            override fun onSuccess(response: ApiResponse<ObjectNode>) {
+                mPaytmCallbackData.postValue(createResource(response))
             }
 
-            override fun onFailure() {
-                mPaytmCallbackData.postValue(error<ObjectNode>("Sorry, but PayTM transaction failed", null))
+            override fun onFailure(response: ApiResponse<ObjectNode>) {
+                mPaytmCallbackData.postValue(createResource(response))
             }
         }
         doPostPaytmCallback(data, listener)
@@ -132,8 +134,8 @@ class NewScheduledSessionViewModel(application: Application) : BaseViewModel(app
         mPaytmData.addSource(scheduledSessionRepository.postPaytmDetailRequest(sessionPk), mPaytmData::setValue)
     }
 
-    private fun doPostPaytmCallback(data: ObjectNode, listener: UploadCallbacks) {
-        RetrofitCallAsyncTask<ObjectNode>(listener).execute(scheduledSessionRepository.syncPostPaytmCallback(data))
+    private fun doPostPaytmCallback(data: ObjectNode, listener: UploadCallbacks<ObjectNode>) {
+        RetrofitCallAsyncTask(listener).execute(scheduledSessionRepository.syncPostPaytmCallback(data))
     }
 
     fun createNewQrSession(data: String) {
@@ -172,8 +174,6 @@ class NewScheduledSessionViewModel(application: Application) : BaseViewModel(app
         } else sessionRepository.allPromoCodes
         mPromoData.addSource(liveData, mPromoData::setValue)
     }
-
-    val isOfferApplied: Boolean = mSessionPromo.value?.data != null
 
     fun fetchSessionAppliedPromo() {
         mSessionPromo.addSource(scheduledSessionRepository.getSessionAppliedPromo(sessionPk), mSessionPromo::setValue)

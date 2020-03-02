@@ -251,7 +251,10 @@ class PublicRestaurantProfileActivity : BaseActivity(), AppBarLayout.OnOffsetCha
                             toast(resource.message)
                         }
                     } else if (resource.errorBody?.has("planned_datetime") == true) {
-                        toast(resource.errorBody.get("planned_datetime").get(0).asText())
+                        val msg = resource.errorBody.get("planned_datetime")?.let {
+                            it.get("detail") ?: it.get(0)
+                        }?.asText()
+                        toast(msg)
                     } else toast(resource.message)
                     Resource.Status.LOADING -> pass
                     else -> toast(resource.message)

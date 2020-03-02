@@ -166,14 +166,14 @@ public class ShopProfileViewModel extends BaseViewModel {
 
     public void updateCoverPic(File pictureFile, Context context, int index) {
         NotificationCompat.Builder builder = MessageUtils.createUploadNotification(context);
-        MessageUtils.NotificationUpdate notificationUpdate = new MessageUtils.NotificationUpdate(context, builder);
+        MessageUtils.NotificationUpdate<GenericDetailModel> notificationUpdate = new MessageUtils.NotificationUpdate<>(context, builder);
         doUploadImage(pictureFile, notificationUpdate, index);
     }
 
-    private void doUploadImage(File pictureFile, ProgressRequestBody.UploadCallbacks listener, int index) {
+    private void doUploadImage(File pictureFile, ProgressRequestBody.UploadCallbacks<GenericDetailModel> listener, int index) {
         if (index == -1)
-            new RetrofitCallAsyncTask<GenericDetailModel>(listener).execute(mRepository.postRestaurantLogo(mShopPk, pictureFile, listener));
+            new RetrofitCallAsyncTask(listener).execute(mRepository.postRestaurantLogo(mShopPk, pictureFile, listener));
         else
-            new RetrofitCallAsyncTask<GenericDetailModel>(listener).execute(mRepository.postRestaurantCover(mShopPk, index, pictureFile, listener));
+            new RetrofitCallAsyncTask(listener).execute(mRepository.postRestaurantCover(mShopPk, index, pictureFile, listener));
     }
 }

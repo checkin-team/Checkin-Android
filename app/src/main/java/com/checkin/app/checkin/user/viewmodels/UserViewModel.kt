@@ -5,6 +5,7 @@ import android.content.Context
 import androidx.lifecycle.LiveData
 import com.checkin.app.checkin.data.BaseViewModel
 import com.checkin.app.checkin.data.Converters.objectMapper
+import com.checkin.app.checkin.data.network.ApiResponse
 import com.checkin.app.checkin.data.network.RetrofitCallAsyncTask
 import com.checkin.app.checkin.data.notifications.MessageUtils
 import com.checkin.app.checkin.data.notifications.MessageUtils.NotificationUpdate
@@ -52,27 +53,28 @@ class UserViewModel(application: Application) : BaseViewModel(application) {
 
     fun updateProfilePic(pictureFile: File, context: Context) {
         val builder = MessageUtils.createUploadNotification(context)
-        val notificationUpdate: NotificationUpdate = object : NotificationUpdate(context, builder) {
+        val notificationUpdate = object : NotificationUpdate<GenericDetailModel>(context, builder) {
             override fun onProgressUpdate(percentage: Int) {
                 super.onProgressUpdate(percentage)
                 mImageUploadResult.postValue(loading<Void>(null))
             }
 
-            override fun onSuccess() {
-                super.onSuccess()
+            override fun onSuccess(response: ApiResponse<GenericDetailModel>) {
+                super.onSuccess(response)
                 mImageUploadResult.postValue(success<Void>(null))
             }
 
-            override fun onFailure() {
-                super.onFailure()
+            override fun onFailure(response: ApiResponse<GenericDetailModel>) {
+                super.onFailure(response)
                 mImageUploadResult.postValue(error<Void>("Unable to upload image", null))
             }
         }
         doUploadImage(pictureFile, notificationUpdate)
     }
 
-    private fun doUploadImage(pictureFile: File, listener: UploadCallbacks) {
-        RetrofitCallAsyncTask<GenericDetailModel>(listener).execute(mRepository.postUserProfilePic(pictureFile, listener))
+    private fun doUploadImage(pictureFile: File, listener: UploadCallbacks<GenericDetailModel>) {
+        RetrofitCallAsyncTask(listener)
+                .execute(mRepository.postUserProfilePic(pictureFile, listener))
     }
 
     fun postUserData(firstName: String?, lastName: String?, phoneToken: String, bio: String?) {

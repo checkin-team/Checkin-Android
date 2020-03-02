@@ -17,6 +17,7 @@ import androidx.annotation.RequiresApi
 import androidx.core.app.NotificationCompat
 import androidx.localbroadcastmanager.content.LocalBroadcastManager
 import com.checkin.app.checkin.R
+import com.checkin.app.checkin.data.network.ApiResponse
 import com.checkin.app.checkin.data.notifications.Constants.CHANNEL
 import com.checkin.app.checkin.data.notifications.Constants.CHANNEL_GROUP
 import com.checkin.app.checkin.data.notifications.Constants.FORMAT_SP_KEY_NOTIFICATION_CHANNEL
@@ -236,7 +237,7 @@ object MessageUtils {
         }
     }
 
-    open class NotificationUpdate(context: Context, val builder: NotificationCompat.Builder) : UploadCallbacks {
+    open class NotificationUpdate<T>(context: Context, val builder: NotificationCompat.Builder) : UploadCallbacks<T> {
         private val notificationManager: NotificationManager = context.getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
         private val notificationId: Int = notificationID
 
@@ -246,7 +247,7 @@ object MessageUtils {
             notificationManager.notify(notificationId, builder.build())
         }
 
-        override fun onSuccess() {
+        override fun onSuccess(response: ApiResponse<T>) {
             builder.setContentText("Upload completed.")
                     .setProgress(0, 0, false)
                     .setAutoCancel(true)
@@ -254,7 +255,7 @@ object MessageUtils {
             notificationManager.notify(notificationId, builder.build())
         }
 
-        override fun onFailure() {
+        override fun onFailure(response: ApiResponse<T>) {
             builder.setContentText("Upload error.")
                     .setProgress(0, 0, false)
                     .setAutoCancel(true)

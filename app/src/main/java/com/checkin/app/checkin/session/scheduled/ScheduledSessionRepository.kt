@@ -65,8 +65,8 @@ class ScheduledSessionRepository private constructor(context: Context) : BaseRep
         }.asLiveData
     }
 
-    fun syncPostPaytmCallback(data: ObjectNode?): Call<ObjectNode> {
-        return mWebService.postPaytmCallback(data!!)
+    fun syncPostPaytmCallback(data: ObjectNode): Call<ObjectNode> {
+        return mWebService.postPaytmCallback(data)
     }
 
     fun postPaytmDetailRequest(sessionId: Long): LiveData<Resource<PaytmModel>> {
