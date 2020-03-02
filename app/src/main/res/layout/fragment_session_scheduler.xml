@@ -18,61 +18,73 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 
-        <ImageView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="start"
-            android:src="@drawable/ic_calendar_color" />
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
 
-        <ScrollView
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:layout_gravity="end|center_vertical">
-
-            <LinearLayout
-                android:id="@+id/ll_container_scheduler_dates"
+            <ImageView
+                android:id="@+id/imageView2"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:orientation="horizontal">
+                android:src="@drawable/ic_calendar_color"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
 
-                <ViewStub
-                    android:id="@+id/stub_scheduled_date_1"
+            <HorizontalScrollView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:scrollbars="none"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@id/imageView2"
+                app:layout_constraintTop_toTopOf="parent">
+
+                <LinearLayout
+                    android:id="@+id/ll_container_scheduler_dates"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="@dimen/spacing_small"
-                    android:layout_marginEnd="@dimen/spacing_normal"
-                    android:layout="@layout/item_session_scheduled_day_date" />
+                    android:orientation="horizontal">
 
-                <ViewStub
-                    android:id="@+id/stub_scheduled_date_2"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginEnd="@dimen/spacing_normal"
-                    android:layout="@layout/item_session_scheduled_day_date" />
+                    <ViewStub
+                        android:id="@+id/stub_scheduled_date_1"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="@dimen/spacing_small"
+                        android:layout_marginEnd="@dimen/spacing_normal"
+                        android:layout="@layout/item_session_scheduled_day_date" />
 
-                <ViewStub
-                    android:id="@+id/stub_scheduled_date_3"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginEnd="@dimen/spacing_normal"
-                    android:layout="@layout/item_session_scheduled_day_date" />
+                    <ViewStub
+                        android:id="@+id/stub_scheduled_date_2"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginEnd="@dimen/spacing_normal"
+                        android:layout="@layout/item_session_scheduled_day_date" />
 
-                <ViewStub
-                    android:id="@+id/stub_scheduled_date_4"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginEnd="@dimen/spacing_normal"
-                    android:layout="@layout/item_session_scheduled_day_date" />
+                    <ViewStub
+                        android:id="@+id/stub_scheduled_date_3"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginEnd="@dimen/spacing_normal"
+                        android:layout="@layout/item_session_scheduled_day_date" />
 
-                <ViewStub
-                    android:id="@+id/stub_scheduled_date_5"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginEnd="@dimen/spacing_small"
-                    android:layout="@layout/item_session_scheduled_day_date" />
+                    <ViewStub
+                        android:id="@+id/stub_scheduled_date_4"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginEnd="@dimen/spacing_normal"
+                        android:layout="@layout/item_session_scheduled_day_date" />
 
-            </LinearLayout>
-        </ScrollView>
+                    <ViewStub
+                        android:id="@+id/stub_scheduled_date_5"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginEnd="@dimen/spacing_small"
+                        android:layout="@layout/item_session_scheduled_day_date" />
+
+                </LinearLayout>
+            </HorizontalScrollView>
+        </androidx.constraintlayout.widget.ConstraintLayout>
     </androidx.cardview.widget.CardView>
 
     <TextView
