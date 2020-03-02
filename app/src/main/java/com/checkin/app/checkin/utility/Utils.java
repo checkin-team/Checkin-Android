@@ -29,6 +29,11 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.annotation.DrawableRes;
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.annotation.StringRes;
+
 import com.checkin.app.checkin.R;
 import com.checkin.app.checkin.auth.AuthPreferences;
 import com.checkin.app.checkin.data.notifications.ActiveSessionNotificationService;
@@ -52,10 +57,6 @@ import java.util.Locale;
 import java.util.Map;
 import java.util.concurrent.TimeUnit;
 
-import androidx.annotation.DrawableRes;
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.annotation.StringRes;
 import kotlin.Pair;
 
 /**
@@ -242,7 +243,7 @@ public final class Utils {
     }
 
     public static String formatDateTo12HoursTime(@NonNull Date dateTime) {
-        return new SimpleDateFormat("HH:mm a", Locale.ENGLISH).format(dateTime);
+        return new SimpleDateFormat("hh:mm a", Locale.ENGLISH).format(dateTime);
     }
 
     public static String getCurrentFormattedDateInvoice() {
@@ -329,23 +330,6 @@ public final class Utils {
                 return String.format(Locale.getDefault(), "%d min%s", value, suffix);
         }
         return "Under 1 min";
-    }
-
-    public static String formatOpenTimings(@NonNull String openTime, @NonNull String closeTime) {
-        SimpleDateFormat formatter = new SimpleDateFormat("HH:mm:ss", Locale.getDefault());
-        String present = formatter.format(Calendar.getInstance().getTime());
-        try {
-            Date open = formatter.parse(openTime);
-            Date close = formatter.parse(closeTime);
-            Date current = formatter.parse(present);
-            String day = current.after(close) ? "tomorrow" : "today";
-            String openingIn12hrs = new SimpleDateFormat("HH:mm a", Locale.getDefault()).format(open);
-            return "Opens " + day + " at " + openingIn12hrs;
-        } catch (ParseException e) {
-            e.printStackTrace();
-        }
-        return "Opening soon";
-
     }
 
     public static Pair<TimeUnit, Long> getTimeDifference(@NonNull Date start, @NonNull Date end) {

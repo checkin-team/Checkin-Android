@@ -5,9 +5,12 @@ import android.app.Activity
 import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageManager
+import android.graphics.ColorMatrix
+import android.graphics.ColorMatrixColorFilter
 import android.location.LocationManager
 import android.net.Uri
 import android.view.View
+import android.widget.ImageView
 import androidx.annotation.ColorInt
 import androidx.annotation.StringRes
 import androidx.core.app.ActivityCompat
@@ -42,6 +45,10 @@ fun TabLayout.setTabBackground(@ColorInt color: Int) = (0 until tabCount).forEac
     getTabAt(it)?.view?.setBackgroundColor(color)
 }
 
+fun ImageView.blackAndWhite() {
+    colorFilter = ColorMatrixColorFilter(ColorMatrix().apply { setSaturation(0.0f) })
+}
+
 fun Context.toast(msg: String?) = Utils.toast(this, msg)
 fun Context.toast(@StringRes msgRes: Int) = Utils.toast(this, msgRes)
 
@@ -71,6 +78,8 @@ fun String.callPhoneNumber(context: Context) {
     ContextCompat.startActivity(context, Intent(Intent.ACTION_DIAL, phoneIntent), null)
 }
 
+fun String.toHtml() = Utils.fromHtml(this)
+
 /*
     Datetime
  */
@@ -96,6 +105,10 @@ operator fun Calendar.minus(other: Calendar): Int {
 }
 
 fun Date.toCalendar(): Calendar = Calendar.getInstance().apply { time = this@toCalendar }
+
+fun Date.add(unit: Int, amount: Int): Date = toCalendar()
+        .apply { add(unit, amount) }
+        .time
 
 /*
     Lifecycle

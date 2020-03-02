@@ -2,10 +2,11 @@ package com.checkin.app.checkin.home.viewmodels
 
 import android.app.Application
 import androidx.lifecycle.LiveData
+import androidx.lifecycle.Transformations
+import com.checkin.app.checkin.Shop.ShopRepository
 import com.checkin.app.checkin.data.BaseViewModel
 import com.checkin.app.checkin.data.Converters
 import com.checkin.app.checkin.data.resource.Resource
-import com.checkin.app.checkin.Shop.ShopRepository
 import com.checkin.app.checkin.home.model.NearbyRestaurantModel
 import com.checkin.app.checkin.session.SessionRepository
 import com.checkin.app.checkin.session.models.QRResultModel
@@ -21,17 +22,14 @@ class HomeViewModel(application: Application) : BaseViewModel(application) {
     private val mCancelDineInRequest = createNetworkLiveData<ObjectNode>()
     private val mNearbyRestaurants = createNetworkLiveData<List<NearbyRestaurantModel>>()
 
-    val sessionStatus: LiveData<Resource<SessionBasicModel>>
-        get() = mSessionStatus
-
-    val qrResult: LiveData<Resource<QRResultModel>>
-        get() = mQrResult
-
-    val cancelDineInData: LiveData<Resource<ObjectNode>>
-        get() = mCancelDineInRequest
-
-    val nearbyRestaurants: LiveData<Resource<List<NearbyRestaurantModel>>>
-        get() = mNearbyRestaurants
+    val sessionStatus: LiveData<Resource<SessionBasicModel>> = mSessionStatus
+    val qrResult: LiveData<Resource<QRResultModel>> = mQrResult
+    val cancelDineInData: LiveData<Resource<ObjectNode>> = mCancelDineInRequest
+    val nearbyRestaurants: LiveData<Resource<List<NearbyRestaurantModel>>> = Transformations.map(mNearbyRestaurants) {
+        it?.data?.let { list ->
+            Resource.cloneResource(it, list.sortedBy { !it.isOpen })
+        } ?: it
+    }
 
     override fun updateResults() {
         fetchSessionStatus()

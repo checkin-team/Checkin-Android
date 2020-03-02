@@ -116,7 +116,8 @@ public class ManagerSessionActivity extends AppCompatActivity implements Manager
                     ManagerSessionActivity.this.updateSessionHost(user);
                     break;
                 case MANAGER_SESSION_BILL_CHANGE:
-                    ManagerSessionActivity.this.updateBill(message.getRawData().getSessionBillTotal());
+                    Double total = message.getRawData().getSessionBillTotal();
+                    if (total != null) ManagerSessionActivity.this.updateBill(total);
                     break;
                 case MANAGER_SESSION_MEMBER_CHANGE:
                     ManagerSessionActivity.this.updateMemberCount(message.getRawData().getSessionCustomerCount());

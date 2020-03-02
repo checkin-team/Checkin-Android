@@ -14,6 +14,7 @@ import com.checkin.app.checkin.home.model.NearbyRestaurantModel
 import com.checkin.app.checkin.misc.epoxy.BaseEpoxyHolder
 import com.checkin.app.checkin.restaurant.activities.openPublicRestaurantProfile
 import com.checkin.app.checkin.utility.Utils
+import com.checkin.app.checkin.utility.blackAndWhite
 
 @EpoxyModelClass(layout = R.layout.item_home_restaurant_banner)
 abstract class NearbyRestaurantModelHolder : EpoxyModelWithHolder<NearbyRestaurantModelHolder.Holder>() {
@@ -21,12 +22,7 @@ abstract class NearbyRestaurantModelHolder : EpoxyModelWithHolder<NearbyRestaura
     @EpoxyAttribute
     internal lateinit var restaurantModel: NearbyRestaurantModel
 
-    @EpoxyAttribute
-    var restaurantOpen: Boolean = false
-
-    override fun bind(holder: Holder) {
-        holder.bindData(restaurantModel)
-    }
+    override fun bind(holder: Holder) = holder.bindData(restaurantModel)
 
     inner class Holder : BaseEpoxyHolder<NearbyRestaurantModel>() {
         @BindView(R.id.im_restaurant_banner_cover)
@@ -53,11 +49,8 @@ abstract class NearbyRestaurantModelHolder : EpoxyModelWithHolder<NearbyRestaura
         internal lateinit var containerOffer: ViewGroup
         @BindView(R.id.cl_restaurant_banner_location)
         internal lateinit var clLocation: ConstraintLayout
-        @BindView(R.id.cl_restaurant_banner_closed_cover)
-        internal lateinit var clClosedCover: ConstraintLayout
         @BindView(R.id.tv_restaurant_banner_opening_timings)
         internal lateinit var tvOpenTimings: TextView
-
 
         override fun bindData(data: NearbyRestaurantModel) {
             itemView.setOnClickListener {
@@ -97,21 +90,16 @@ abstract class NearbyRestaurantModelHolder : EpoxyModelWithHolder<NearbyRestaura
                 if (it.getOrNull(0) != null) Utils.loadImageOrDefault(imRestaurantBanner, it[0], R.drawable.cover_restaurant_unknown)
                 else imRestaurantBanner.setImageResource(R.drawable.cover_restaurant_unknown)
             }
-
-            if (restaurantOpen) {
-                clClosedCover.visibility = View.GONE
+            if (data.isOpen) {
+                imRestaurantBanner.colorFilter = null
                 clLocation.visibility = View.VISIBLE
                 tvOpenTimings.visibility = View.GONE
-
-
             } else {
-                clClosedCover.visibility = View.VISIBLE
+                imRestaurantBanner.blackAndWhite()
                 clLocation.visibility = View.GONE
                 tvOpenTimings.visibility = View.VISIBLE
-                tvOpenTimings.text = data.formatOpeningTimings
-
+                tvOpenTimings.text = data.timings.formatDescription(itemView.context)
             }
         }
-
     }
 }

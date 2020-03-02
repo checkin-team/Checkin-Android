@@ -1,6 +1,7 @@
 package com.checkin.app.checkin.home.model
 
 import com.checkin.app.checkin.misc.models.GeolocationModel
+import com.checkin.app.checkin.restaurant.models.TimingModel
 import com.checkin.app.checkin.utility.Utils
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties
 import com.fasterxml.jackson.annotation.JsonProperty
@@ -20,7 +21,7 @@ data class NearbyRestaurantModel(
         val ratings: Double,
         val cuisines: List<String>,
         val offer: RestaurantListingOfferModel?,
-        val is_open: Boolean,
+        @JsonProperty("is_open") val isOpen: Boolean,
         val timings: TimingModel
 ) {
     val formatDistance: String
@@ -31,8 +32,4 @@ data class NearbyRestaurantModel(
 
     val formatRating: String
         get() = if (ratings < 1.0) "---" else ratings.toString()
-
-    val formatOpeningTimings: String
-        get() =
-            if (is_open) "Restaurant open" else Utils.formatOpenTimings(timings.open, timings.close)
 }

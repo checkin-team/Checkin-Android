@@ -49,7 +49,6 @@ class UserHomeFragment : BaseFragment(), LiveSessionTrackerInteraction {
     @BindView(R.id.vp_home_session_live)
     internal lateinit var vpLiveSession: ViewPager2
 
-    //  private lateinit var mRestAdapter: NearbyRestaurantAdapter
     private lateinit var mLiveSessionAdapter: LiveSessionTrackerAdapter
 
     private val mViewModel: HomeViewModel by activityViewModels()
@@ -97,15 +96,13 @@ class UserHomeFragment : BaseFragment(), LiveSessionTrackerInteraction {
                 nearbyRestaurantModelHolder {
                     id(it)
                     restaurantModel(data)
-                    restaurantOpen(data.is_open)
                 }
-            } ?: listOf(shimmerModelHolder {
-                id("sb1")
-                withHomeRestaurantBannerLayout()
-            }, shimmerModelHolder {
-                id("sb1")
-                withHomeRestaurantBannerLayout()
-            })
+            } ?: (0 until 3L).map {
+                shimmerModelHolder {
+                    id("shimmer.rest", it)
+                    withHomeRestaurantBannerLayout()
+                }
+            }
         }
 
         mViewModel.nearbyRestaurants.observe(this, Observer {
@@ -136,7 +133,6 @@ class UserHomeFragment : BaseFragment(), LiveSessionTrackerInteraction {
 
         mLiveSessionViewModel.fetchScheduledSessions()
         mLiveSessionViewModel.fetchLiveActiveSession()
-        epoxyRvNearbyRestaurants.requestModelBuild()
         epoxyRvNearbyRestaurants.setHasFixedSize(false)
     }
 
